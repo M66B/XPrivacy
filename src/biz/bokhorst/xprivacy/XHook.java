@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.pm.PackageManager;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public abstract class XHook {
@@ -25,7 +26,7 @@ public abstract class XHook {
 		// Check context
 		if (context == null) {
 			warning("Context is null");
-			return null;
+			return false;
 		}
 
 		// Get package manager
@@ -47,17 +48,18 @@ public abstract class XHook {
 
 		// Get search package names
 		String[] searchPackageNames = System.getProperty(propertyName, "").split(",");
+		if (searchPackageNames.length == 0)
+			return false;
 
 		// Scan package names
 		Boolean found = false;
 		for (String packageName : packageNames)
 			for (String searchPackageName : searchPackageNames) {
 				Boolean equal = packageName.equals(searchPackageName);
-				if (equal)
+				if (equal) {
 					found = true;
-				if (equal)
 					info("search package=" + packageName + " *");
-				else
+				} else
 					verbose("search package=" + packageName);
 			}
 		if (!found)

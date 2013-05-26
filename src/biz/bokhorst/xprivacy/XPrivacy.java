@@ -2,12 +2,8 @@ package biz.bokhorst.xprivacy;
 
 import java.util.Arrays;
 
-import android.app.PendingIntent;
-import android.location.Criteria;
-import android.location.LocationListener;
 import android.net.Uri;
 import android.os.CancellationSignal;
-import android.os.Looper;
 import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
