@@ -2,8 +2,12 @@ package biz.bokhorst.xprivacy;
 
 import java.util.Arrays;
 
+import android.app.PendingIntent;
+import android.location.Criteria;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.CancellationSignal;
+import android.os.Looper;
 import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -17,7 +21,8 @@ public class XPrivacy implements IXposedHookLoadPackage {
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
-		XUtil.info(null, String.format("load package=%s process=%s", lpparam.packageName, lpparam.processName));
+		XUtil.log(null, XUtil.LOG_INFO,
+				String.format("load package=%s process=%s", lpparam.packageName, lpparam.processName));
 
 		// Load com.android.providers.contacts
 		if (lpparam.packageName.equals("com.android.providers.contacts")) {
@@ -39,31 +44,31 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					try {
-						XUtil.info(hook, "before");
+						XUtil.log(hook, XUtil.LOG_VERBOSE, "before");
 						hook.before(param);
 					} catch (Exception ex) {
-						XUtil.error(hook, "before " + Log.getStackTraceString(ex));
+						XUtil.log(hook, XUtil.LOG_ERROR, "before " + Log.getStackTraceString(ex));
 					}
 				}
 
 				@Override
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					try {
-						XUtil.info(hook, "after");
+						XUtil.log(hook, XUtil.LOG_VERBOSE, "after");
 						hook.after(param);
 					} catch (Exception ex) {
-						XUtil.error(hook, "after " + Log.getStackTraceString(ex));
+						XUtil.log(hook, XUtil.LOG_ERROR, "after " + Log.getStackTraceString(ex));
 					}
 				}
 			};
 
 			// Hook
 			findAndHookMethod(className, lpparam.classLoader, methodName, parameterTypesAndHook);
-			XUtil.info(hook, "hooked");
+			XUtil.log(hook, XUtil.LOG_INFO, "hooked");
 		} catch (NoSuchMethodError ignored) {
-			XUtil.error(hook, "method not found");
+			XUtil.log(hook, XUtil.LOG_ERROR, "method not found");
 		} catch (Exception ex) {
-			XUtil.error(hook, "hook " + Log.getStackTraceString(ex));
+			XUtil.log(hook, XUtil.LOG_ERROR, "hook " + Log.getStackTraceString(ex));
 		}
 	}
 }

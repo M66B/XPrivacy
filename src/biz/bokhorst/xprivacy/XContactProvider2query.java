@@ -1,8 +1,10 @@
 package biz.bokhorst.xprivacy;
 
 import android.content.ContentProvider;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Binder;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
@@ -19,12 +21,19 @@ public class XContactProvider2query extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		// Get uri
 		Uri uri = (Uri) param.args[0];
-		XUtil.info(this, "Uri=" + uri);
+		info("Uri=" + uri);
 
-		// Check if Facebook app
-		if (XUtil.isCallingPackage(this, (ContentProvider) param.thisObject, cPropertyDeny)) {
+		// Get context
+		ContentProvider contentProvider = (ContentProvider) param.thisObject;
+		Context context = getContext(contentProvider);
+
+		// Get uid of calling process
+		int uid = Binder.getCallingUid();
+
+		// Check if denied
+		if (isCallingPackage(context, uid, cPropertyDeny)) {
 			// Return empty cursor
-			XUtil.info(this, "returning XCursor");
+			info("deny " + context.getPackageName());
 			Cursor cursor = (Cursor) param.getResult();
 			if (cursor != null)
 				param.setResult(new XCursor(cursor));
