@@ -12,6 +12,10 @@ import de.robv.android.xposed.XC_MethodHook;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 
 public class XPrivacy implements IXposedHookLoadPackage {
+	static {
+		System.setProperty(XContactProvider2query.cPropertyDeny, "com.facebook.katana");
+	}
+
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		XUtil.info(null, String.format("load package=%s process=%s", lpparam.packageName, lpparam.processName));
 

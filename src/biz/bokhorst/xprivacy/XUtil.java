@@ -2,8 +2,6 @@ package biz.bokhorst.xprivacy;
 
 import java.util.List;
 
-import de.robv.android.xposed.XposedBridge;
-
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.ContentProvider;
@@ -11,9 +9,11 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Binder;
 
+import de.robv.android.xposed.XposedBridge;
+
 public class XUtil {
 
-	public static Boolean isCallingPackage(XHook hook, ContentProvider contentProvider, String searchPackageName) {
+	public static Boolean isCallingPackage(XHook hook, ContentProvider contentProvider, String propertyName) {
 		// Get content provider
 		if (contentProvider == null) {
 			XUtil.warning(hook, "ContentProvider is null");
@@ -35,26 +35,31 @@ public class XUtil {
 		}
 
 		// Get process ID
-		int pid = Binder.getCallingUid();
-		XUtil.info(hook, "search pid=" + pid + " name=" + XUtil.getProcessNameByUid(context, pid));
+		int uid = Binder.getCallingUid();
+		XUtil.info(hook, "search uid=" + uid + " name=" + XUtil.getProcessNameByUid(context, uid));
 
 		// Get package names
-		String[] packageNames = packageManager.getPackagesForUid(pid);
+		String[] packageNames = packageManager.getPackagesForUid(uid);
 		if (packageNames == null) {
 			XUtil.warning(hook, "packageNames is null");
 			return false;
 		}
 
+		// Get search package names
+		String[] searchPackageNames = System.getProperty(propertyName, "").split(",");
+
 		// Scan package names
 		Boolean found = false;
-		for (String packageName : packageNames) {
-			Boolean equal = packageName.equals(searchPackageName);
-			if (equal)
-				found = true;
-			XUtil.info(hook, "search package=" + packageName + (equal ? " *" : ""));
-		}
+		for (String packageName : packageNames)
+			for (String searchPackageName : searchPackageNames) {
+				Boolean equal = packageName.equals(searchPackageName);
+				if (equal)
+					found = true;
+				XUtil.info(hook, "search package=" + packageName + (equal ? " *" : ""));
+			}
 		if (!found)
-			XUtil.info(hook, "search package=" + searchPackageName + " ?");
+			for (String searchPackageName : searchPackageNames)
+				XUtil.info(hook, "search package=" + searchPackageName + " ?");
 
 		return found;
 	}
