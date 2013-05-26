@@ -3,6 +3,7 @@ XPrivacy
 
 Proof of concept for a privacy manager using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 
+Blocks access to the contact info for the Facebook app
 
 License
 -------
