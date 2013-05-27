@@ -8,7 +8,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XContactProvider2query extends XHook {
 
-	public final static String cPermissions = "XPrivacy.Contacts";
+	public final static String cPermissionName = "Contacts";
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
@@ -22,7 +22,7 @@ public class XContactProvider2query extends XHook {
 		info("uri=" + uri);
 
 		// Check if allowed
-		if (!isAllowed(Binder.getCallingUid(), cPermissions)) {
+		if (!isAllowed(Binder.getCallingUid(), cPermissionName)) {
 			// Return empty cursor
 			info("deny");
 			Cursor cursor = (Cursor) param.getResult();

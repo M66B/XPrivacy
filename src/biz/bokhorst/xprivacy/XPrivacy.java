@@ -13,12 +13,6 @@ import de.robv.android.xposed.XC_MethodHook;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 
 public class XPrivacy implements IXposedHookLoadPackage {
-	static {
-		// First entry * means default allow
-		System.setProperty(XContactProvider2query.cPermissions, "*,10090");
-		System.setProperty(XLocationManager.cPermissions, "*,10016");
-	}
-
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		XUtil.log(null, XUtil.LOG_INFO, String.format("load package=%s", lpparam.packageName));
 
@@ -28,11 +22,17 @@ public class XPrivacy implements IXposedHookLoadPackage {
 					String.class /* provider */);
 		}
 
-		// Load com.android.providers.contacts
+		// Load providers.contacts
 		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
 			hook(new XContactProvider2query(), lpparam, "com.android.providers.contacts.ContactsProvider2", "query",
 					Uri.class, String[].class /* projection */, String.class /* selection */,
 					String[].class /* selectionArgs */, String.class /* sortOrder */, CancellationSignal.class);
+		}
+
+		// Load settings.applications
+		else if (lpparam.packageName.equals("com.android.settings")) {
+			hook(new XInstalledAppDetails(), lpparam, "com.android.settings.applications.InstalledAppDetails",
+					"refreshUi");
 		}
 	}
 
