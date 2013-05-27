@@ -21,6 +21,11 @@ public class XUtil {
 				Log.println(priority, String.format("XPrivacy/%s", hook.getClass().getSimpleName()), msg);
 	}
 
+	public static void bug(XHook hook, Exception ex) {
+		log(hook, LOG_ERROR, ex.toString());
+		ex.printStackTrace();
+	}
+
 	public static void setListViewHeightBasedOnChildren(ListView listView) {
 		int height = 0;
 		int width = MeasureSpec.makeMeasureSpec(listView.getWidth(), MeasureSpec.AT_MOST);
@@ -35,6 +40,5 @@ public class XUtil {
 		ViewGroup.LayoutParams params = listView.getLayoutParams();
 		params.height = height + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 		listView.setLayoutParams(params);
-		//listView.requestLayout();
 	}
 }

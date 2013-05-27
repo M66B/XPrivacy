@@ -83,10 +83,8 @@ public class XInstalledAppDetails extends XHook {
 		privacyListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
 		// Create privacy list view adapter
-		String[] permissionNames = new String[] { XContactProvider2query.cPermissionName,
-				XLocationManager.cPermissionName };
 		ArrayAdapter<String> privacyListAdapter = new ArrayAdapter<String>(privacyView.getContext(),
-				android.R.layout.simple_list_item_multiple_choice, permissionNames);
+				android.R.layout.simple_list_item_multiple_choice, XHook.cPermissionNames);
 		privacyListView.setAdapter(privacyListAdapter);
 		XUtil.setListViewHeightBasedOnChildren(privacyListView);
 

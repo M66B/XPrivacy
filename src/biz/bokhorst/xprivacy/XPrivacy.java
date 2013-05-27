@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import android.net.Uri;
 import android.os.CancellationSignal;
-import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
@@ -20,19 +19,25 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		if (lpparam.packageName.equals("android")) {
 			hook(new XGetLastKnownLocation(), lpparam, "android.location.LocationManager", "getLastKnownLocation",
 					String.class /* provider */);
-		}
+		} else {
+			// Load any service/application
+			if (!lpparam.packageName.equals("system")) {
+				hook(new XApplicationOnCreate(), lpparam, "android.app.Service", "onCreate");
+				hook(new XApplicationOnCreate(), lpparam, "android.app.Application", "onCreate");
+			}
 
-		// Load providers.contacts
-		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
-			hook(new XContactProvider2query(), lpparam, "com.android.providers.contacts.ContactsProvider2", "query",
-					Uri.class, String[].class /* projection */, String.class /* selection */,
-					String[].class /* selectionArgs */, String.class /* sortOrder */, CancellationSignal.class);
-		}
+			// Load providers.contacts
+			if (lpparam.packageName.equals("com.android.providers.contacts")) {
+				hook(new XContactProvider2query(), lpparam, "com.android.providers.contacts.ContactsProvider2",
+						"query", Uri.class, String[].class /* projection */, String.class /* selection */,
+						String[].class /* selectionArgs */, String.class /* sortOrder */, CancellationSignal.class);
+			}
 
-		// Load settings.applications
-		else if (lpparam.packageName.equals("com.android.settings")) {
-			hook(new XInstalledAppDetails(), lpparam, "com.android.settings.applications.InstalledAppDetails",
-					"refreshUi");
+			// Load settings.applications
+			else if (lpparam.packageName.equals("com.android.settings")) {
+				hook(new XInstalledAppDetails(), lpparam, "com.android.settings.applications.InstalledAppDetails",
+						"refreshUi");
+			}
 		}
 	}
 
@@ -47,8 +52,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 						XUtil.log(hook, XUtil.LOG_DEBUG, "before");
 						hook.before(param);
 					} catch (Exception ex) {
-						XUtil.log(hook, XUtil.LOG_ERROR, "before " + Log.getStackTraceString(ex));
-						throw ex;
+						XUtil.bug(null, ex);
 					}
 				}
 
@@ -58,8 +62,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 						XUtil.log(hook, XUtil.LOG_DEBUG, "after");
 						hook.after(param);
 					} catch (Exception ex) {
-						XUtil.log(hook, XUtil.LOG_ERROR, "after " + Log.getStackTraceString(ex));
-						throw ex;
+						XUtil.bug(null, ex);
 					}
 				}
 			};
@@ -75,7 +78,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		} catch (NoSuchMethodError ignored) {
 			XUtil.log(hook, XUtil.LOG_ERROR, "method not found");
 		} catch (Exception ex) {
-			XUtil.log(hook, XUtil.LOG_ERROR, "hook " + Log.getStackTraceString(ex));
+			XUtil.bug(null, ex);
 		}
 	}
 }
