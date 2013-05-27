@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
@@ -11,18 +10,12 @@ public abstract class XHook {
 
 	abstract protected void after(MethodHookParam param) throws Throwable;
 
-	public Context getContext(ContentProvider contentProvider) {
-		// Check content provider
-		if (contentProvider == null) {
-			warning("ContentProvider is null");
-			return null;
-		}
+	public Boolean checkPackage(Context context, int uid, String propertyName) {
+		// Get search package names
+		String[] searchPackageNames = System.getProperty(propertyName, "").split(",");
+		if (searchPackageNames.length == 0)
+			return false;
 
-		// Get context
-		return contentProvider.getContext();
-	}
-
-	public Boolean isCallingPackage(Context context, int uid, String propertyName) {
 		// Check context
 		if (context == null) {
 			warning("Context is null");
@@ -46,31 +39,22 @@ public abstract class XHook {
 			return false;
 		}
 
-		// Get search package names
-		String[] searchPackageNames = System.getProperty(propertyName, "").split(",");
-		if (searchPackageNames.length == 0)
-			return false;
-
 		// Scan package names
 		Boolean found = false;
 		for (String packageName : packageNames)
 			for (String searchPackageName : searchPackageNames) {
-				Boolean equal = packageName.equals(searchPackageName);
+				Boolean equal = (searchPackageName == "*" || packageName.equals(searchPackageName));
 				if (equal) {
 					found = true;
-					info("search package=" + packageName + " *");
+					info("found package=" + packageName);
 				} else
-					verbose("search package=" + packageName);
+					debug("search package=" + packageName);
 			}
-		if (!found)
-			for (String searchPackageName : searchPackageNames)
-				verbose("search package=" + searchPackageName + " ?");
-
 		return found;
 	}
 
-	public void verbose(String message) {
-		XUtil.log(this, XUtil.LOG_VERBOSE, message);
+	public void debug(String message) {
+		XUtil.log(this, XUtil.LOG_DEBUG, message);
 	}
 
 	public void info(String message) {

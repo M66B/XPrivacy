@@ -21,19 +21,23 @@ public class XContactProvider2query extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		// Get uri
 		Uri uri = (Uri) param.args[0];
-		info("Uri=" + uri);
+		info("uri=" + uri);
 
 		// Get context
 		ContentProvider contentProvider = (ContentProvider) param.thisObject;
-		Context context = getContext(contentProvider);
+		Context context = contentProvider.getContext();
+		if (context == null) {
+			warning("Context is null");
+			return;
+		}
 
-		// Get uid of calling process
+		// Get calling uid
 		int uid = Binder.getCallingUid();
 
 		// Check if denied
-		if (isCallingPackage(context, uid, cPropertyDeny)) {
+		if (checkPackage(context, uid, cPropertyDeny)) {
 			// Return empty cursor
-			info("deny " + context.getPackageName());
+			info("deny");
 			Cursor cursor = (Cursor) param.getResult();
 			if (cursor != null)
 				param.setResult(new XCursor(cursor));
