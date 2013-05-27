@@ -14,13 +14,13 @@ import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 
 public class XPrivacy implements IXposedHookLoadPackage {
 	static {
-		System.setProperty(XContactProvider2query.cPropertyDeny, "com.facebook.katana");
-		System.setProperty(XLocationManager.cPropertyRandom, "com.sonyericsson.anthal.service,com.tmobile.themechooser");
+		// First entry * means default allow
+		System.setProperty(XContactProvider2query.cPermissions, "*,10090");
+		System.setProperty(XLocationManager.cPermissions, "*,10016");
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
-		XUtil.log(null, XUtil.LOG_INFO,
-				String.format("load package=%s process=%s", lpparam.packageName, lpparam.processName));
+		XUtil.log(null, XUtil.LOG_INFO, String.format("load package=%s", lpparam.packageName));
 
 		// Load android
 		if (lpparam.packageName.equals("android")) {

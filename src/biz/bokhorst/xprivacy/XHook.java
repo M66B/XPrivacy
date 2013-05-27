@@ -1,7 +1,7 @@
 package biz.bokhorst.xprivacy;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
@@ -10,47 +10,23 @@ public abstract class XHook {
 
 	abstract protected void after(MethodHookParam param) throws Throwable;
 
-	public Boolean checkPackage(Context context, int uid, String propertyName) {
-		// Get search package names
-		String[] searchPackageNames = System.getProperty(propertyName, "").split(",");
-		if (searchPackageNames.length == 0)
-			return false;
+	public Boolean isAllowed(int uid, String propertyName) {
+		// Get permissions
+		// TODO: cache
+		String[] permissions = System.getProperty(propertyName, "").split(",");
+		boolean defaultAllowed = (permissions.length > 0 && permissions[0].equals("*"));
+		List<Integer> lstExcept = new ArrayList<Integer>();
+		for (int idx = 1; idx < permissions.length; idx++)
+			lstExcept.add(Integer.parseInt(permissions[idx]));
 
-		// Check context
-		if (context == null) {
-			warning("Context is null");
-			return false;
-		}
+		// Check if allowed
+		boolean allowed = !lstExcept.contains(uid);
+		if (!defaultAllowed)
+			allowed = !allowed;
 
-		// Get package manager
-		PackageManager packageManager = context.getPackageManager();
-		if (packageManager == null) {
-			warning("PackageManager is null");
-			return false;
-		}
-
-		// Log process
-		info("search uid=" + uid + " name=" + XUtil.getProcessNameByUid(context, uid));
-
-		// Get package names
-		String[] packageNames = packageManager.getPackagesForUid(uid);
-		if (packageNames == null) {
-			warning("packageNames is null");
-			return false;
-		}
-
-		// Scan package names
-		Boolean found = false;
-		for (String packageName : packageNames)
-			for (String searchPackageName : searchPackageNames) {
-				Boolean equal = (searchPackageName == "*" || packageName.equals(searchPackageName));
-				if (equal) {
-					found = true;
-					info("found package=" + packageName);
-				} else
-					debug("search package=" + packageName);
-			}
-		return found;
+		// Result
+		info("uid=" + uid + " allowed=" + allowed);
+		return allowed;
 	}
 
 	public void debug(String message) {
