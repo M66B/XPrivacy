@@ -21,15 +21,17 @@ public class XPrivacy implements IXposedHookLoadPackage {
 			XUtil.log(null, XUtil.LOG_WARNING, String.format("Build version %d", Build.VERSION.SDK_INT));
 
 		// Load providers.contacts
-		if (lpparam.packageName.equals("com.android.providers.contacts")) {
-			hook(new XContactProvider2(), lpparam, "com.android.providers.contacts.ContactsProvider2", "query");
-		}
+		if (lpparam.packageName.equals("com.android.providers.contacts"))
+			hook(new XContentProvider("contacts"), lpparam, "com.android.providers.contacts.ContactsProvider2", "query");
+
+		// Load providers.calendar
+		else if (lpparam.packageName.equals("com.android.providers.calendar"))
+			hook(new XContentProvider("calendar"), lpparam, "com.android.providers.calendar.CalendarProvider2", "query");
 
 		// Load settings.applications
-		else if (lpparam.packageName.equals("com.android.settings")) {
+		else if (lpparam.packageName.equals("com.android.settings"))
 			hook(new XInstalledAppDetails(), lpparam, "com.android.settings.applications.InstalledAppDetails",
 					"refreshUi");
-		}
 	}
 
 	private void hook(final XHook hook, final LoadPackageParam lpparam, String className, String methodName) {

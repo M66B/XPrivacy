@@ -23,7 +23,7 @@
             android:value="XPrivacy" />
 
         <provider
-            android:name=".XContentProvider"
+            android:name=".XPrivacyProvider"
             android:authorities="biz.bokhorst.xprivacy.provider"
             android:enabled="true"
             android:exported="true"

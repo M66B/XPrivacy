@@ -13,8 +13,6 @@ import android.text.TextUtils;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public abstract class XHook {
-	public static final String[] cPermissionNames = new String[] { XContactProvider2.cPermissionName, };
-
 	abstract protected void before(MethodHookParam param) throws Throwable;
 
 	abstract protected void after(MethodHookParam param) throws Throwable;
@@ -28,7 +26,7 @@ public abstract class XHook {
 		}
 
 		// Query permissions
-		Cursor cursor = contentResolver.query(XContentProvider.CONTENT_URI, null, permissionName, null, null);
+		Cursor cursor = contentResolver.query(XPrivacyProvider.CONTENT_URI, null, permissionName, null, null);
 		if (cursor == null) {
 			warning("cursor is null");
 			return null;
@@ -39,7 +37,7 @@ public abstract class XHook {
 		}
 
 		// Get permissions
-		String permission = cursor.getString(cursor.getColumnIndex(XContentProvider.COL_PERMISSION));
+		String permission = cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_PERMISSION));
 		cursor.close();
 
 		// Return permissions
@@ -56,9 +54,9 @@ public abstract class XHook {
 
 		// Set permissions
 		ContentValues values = new ContentValues();
-		values.put(XContentProvider.COL_NAME, permissionName);
-		values.put(XContentProvider.COL_PERMISSION, TextUtils.join(",", permissions));
-		contentResolver.update(XContentProvider.CONTENT_URI, values, null, null);
+		values.put(XPrivacyProvider.COL_NAME, permissionName);
+		values.put(XPrivacyProvider.COL_PERMISSION, TextUtils.join(",", permissions));
+		contentResolver.update(XPrivacyProvider.CONTENT_URI, values, null, null);
 	}
 
 	protected boolean isAllowed(Context context, int uid, String permissionName) {

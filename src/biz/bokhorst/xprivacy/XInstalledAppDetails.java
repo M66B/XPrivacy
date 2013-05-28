@@ -17,6 +17,8 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XInstalledAppDetails extends XHook {
 
+	public static final String[] cPermissionNames = new String[] { "calendar", "contacts" };
+
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		// Do nothing
@@ -84,7 +86,7 @@ public class XInstalledAppDetails extends XHook {
 
 		// Create privacy list view adapter
 		ArrayAdapter<String> privacyListAdapter = new ArrayAdapter<String>(privacyView.getContext(),
-				android.R.layout.simple_list_item_multiple_choice, XHook.cPermissionNames);
+				android.R.layout.simple_list_item_multiple_choice, cPermissionNames);
 		privacyListView.setAdapter(privacyListAdapter);
 		XUtil.setListViewHeightBasedOnChildren(privacyListView);
 
