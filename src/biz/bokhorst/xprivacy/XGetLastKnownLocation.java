@@ -1,5 +1,10 @@
 package biz.bokhorst.xprivacy;
 
+import static de.robv.android.xposed.XposedHelpers.findField;
+
+import java.lang.reflect.Field;
+
+import android.content.Context;
 import android.location.Location;
 import android.os.Binder;
 
@@ -14,17 +19,17 @@ public class XGetLastKnownLocation extends XLocationManager {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Log provider
-		String provider = (String) param.args[0];
-		info("provider=" + provider);
+		// Get context
+		Field fieldContext = findField(param.thisObject.getClass(), "mContext");
+		Context context = (Context) fieldContext.get(param.thisObject);
 
 		// Check if allowed
-		if (!isAllowed(Binder.getCallingUid(), cPermissionName)) {
+		if (!isAllowed(context, Binder.getCallingUid(), cPermissionName)) {
 			Location location = (Location) param.getResult();
-			info("deny location=" + location);
 			if (location != null) {
+				info("deny" + location);
+				String provider = (String) param.args[0];
 				location = getRandomLocation(provider);
-				info("new=" + location);
 				param.setResult(location);
 			}
 		}

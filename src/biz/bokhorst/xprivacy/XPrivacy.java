@@ -13,14 +13,10 @@ public class XPrivacy implements IXposedHookLoadPackage {
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		XUtil.log(null, XUtil.LOG_INFO, String.format("load package=%s", lpparam.packageName));
 
-		// Load any
-		hook(new XContextImplInit(), lpparam, "android.app.ContextImpl", "init");
-
 		// Load android
 		if (lpparam.packageName.equals("android")) {
 			hook(new XGetLastKnownLocation(), lpparam, "android.location.LocationManager", "getLastKnownLocation");
 		} else {
-
 			// Load providers.contacts
 			if (lpparam.packageName.equals("com.android.providers.contacts")) {
 				hook(new XContactProvider2query(), lpparam, "com.android.providers.contacts.ContactsProvider2", "query");

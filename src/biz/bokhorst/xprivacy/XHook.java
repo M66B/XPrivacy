@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
@@ -12,7 +13,6 @@ import android.text.TextUtils;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public abstract class XHook {
-	public static final String cPermissionPrefix = "XPrivacy.";
 	public static final String[] cPermissionNames = new String[] { XContactProvider2query.cPermissionName,
 			XLocationManager.cPermissionName };
 
@@ -20,7 +20,34 @@ public abstract class XHook {
 
 	abstract protected void after(MethodHookParam param) throws Throwable;
 
-	protected void initialize(Context context) {
+	private String[] getPermissions(Context context, String permissionName) {
+		// Get content resolver
+		ContentResolver contentResolver = context.getContentResolver();
+		if (contentResolver == null) {
+			warning("contentResolver is null");
+			return null;
+		}
+
+		// Query permissions
+		Cursor cursor = contentResolver.query(XContentProvider.CONTENT_URI, null, permissionName, null, null);
+		if (cursor == null) {
+			warning("cursor is null");
+			return null;
+		}
+		if (!cursor.moveToNext()) {
+			warning("cursor is empty");
+			return null;
+		}
+
+		// Get permissions
+		String permission = cursor.getString(cursor.getColumnIndex(XContentProvider.COL_PERMISSION));
+		cursor.close();
+
+		// Return permissions
+		return (permission == null ? null : permission.split(","));
+	}
+
+	private void setPermissions(Context context, String permissionName, String[] permissions) {
 		// Get content resolver
 		ContentResolver contentResolver = context.getContentResolver();
 		if (contentResolver == null) {
@@ -28,24 +55,23 @@ public abstract class XHook {
 			return;
 		}
 
-		// Query permissions
-		Cursor cursor = contentResolver.query(XContentProvider.CONTENT_URI, null, null, null, null);
-		if (cursor == null) {
-			warning("cursor is null");
-			return;
-		}
-
-		// Process permissions
-		while (cursor.moveToNext())
-			System.setProperty(cPermissionPrefix + cursor.getString(cursor.getColumnIndex(XContentProvider.COL_NAME)),
-					cursor.getString(cursor.getColumnIndex(XContentProvider.COL_PERMISSION)));
+		// Set permissions
+		ContentValues values = new ContentValues();
+		values.put(XContentProvider.COL_NAME, permissionName);
+		values.put(XContentProvider.COL_PERMISSION, TextUtils.join(",", permissions));
+		contentResolver.update(XContentProvider.CONTENT_URI, values, null, null);
 	}
 
-	protected boolean isAllowed(int uid, String permissionName) {
+	protected boolean isAllowed(Context context, int uid, String permissionName) {
 		try {
+			// Check context
+			if (context == null) {
+				warning("context is null");
+				return true;
+			}
+
 			// Get permissions
-			String prop = System.getProperty(cPermissionPrefix + permissionName, "*");
-			String[] permissions = prop.split(",");
+			String[] permissions = getPermissions(context, permissionName);
 
 			// Decode permissions
 			List<String> listPermission = new ArrayList<String>();
@@ -59,7 +85,7 @@ public abstract class XHook {
 				allowed = !allowed;
 
 			// Result
-			info("uid=" + uid + " permission=" + permissionName + " allowed=" + allowed + " prop=" + prop);
+			info("get uid=" + uid + " permission=" + permissionName + " allowed=" + allowed);
 			return allowed;
 		} catch (Exception ex) {
 			XUtil.bug(this, ex);
@@ -67,10 +93,15 @@ public abstract class XHook {
 		}
 	}
 
-	protected void setAllowed(int uid, String permissionName, boolean allowed) {
+	protected void setAllowed(Context context, int uid, String permissionName, boolean allowed) {
+		// Check context
+		if (context == null) {
+			warning("context is null");
+			return;
+		}
+
 		// Get permissions
-		String prop = System.getProperty(cPermissionPrefix + permissionName, "*");
-		String[] permissions = prop.split(",");
+		String[] permissions = getPermissions(context, permissionName);
 
 		// Decode permissions
 		List<String> listPermission = new ArrayList<String>();
@@ -86,9 +117,9 @@ public abstract class XHook {
 				listPermission.add(sUid);
 
 		// Set permissions
-		prop = TextUtils.join(",", listPermission);
-		System.setProperty(cPermissionPrefix + permissionName, prop);
-		info("set uid=" + uid + " permission=" + permissionName + " allowed=" + allowed + " prop=" + prop);
+		permissions = listPermission.toArray(new String[listPermission.size()]);
+		setPermissions(context, permissionName, permissions);
+		info("set uid=" + uid + " permission=" + permissionName + " allowed=" + allowed);
 	}
 
 	protected void debug(String message) {

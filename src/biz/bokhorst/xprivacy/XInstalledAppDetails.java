@@ -49,7 +49,7 @@ public class XInstalledAppDetails extends XHook {
 		}
 
 		// Get first child
-		LinearLayout detailsView = (LinearLayout) ((ViewGroup) rootView).getChildAt(0);
+		final LinearLayout detailsView = (LinearLayout) ((ViewGroup) rootView).getChildAt(0);
 		if (detailsView == null) {
 			warning("detailsView is null");
 			return;
@@ -91,7 +91,7 @@ public class XInstalledAppDetails extends XHook {
 		// Set privacy values
 		for (int position = 0; position < privacyListView.getAdapter().getCount(); position++) {
 			String permissionName = (String) privacyListView.getItemAtPosition(position);
-			privacyListView.setItemChecked(position, isAllowed(appInfo.uid, permissionName));
+			privacyListView.setItemChecked(position, isAllowed(detailsView.getContext(), appInfo.uid, permissionName));
 		}
 
 		// Listen for privacy changes
@@ -101,7 +101,7 @@ public class XInstalledAppDetails extends XHook {
 				ListView privacyListView = (ListView) parent;
 				String permissionName = (String) privacyListView.getItemAtPosition(position);
 				boolean allowed = privacyListView.isItemChecked(position);
-				setAllowed(appInfo.uid, permissionName, allowed);
+				setAllowed(detailsView.getContext(), appInfo.uid, permissionName, allowed);
 			}
 		});
 

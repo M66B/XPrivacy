@@ -1,12 +1,14 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.Arrays;
+
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.util.Log;
+import android.os.Binder;
 
 public class XContentProvider extends ContentProvider {
 
@@ -18,6 +20,8 @@ public class XContentProvider extends ContentProvider {
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + CONTENT_PATH);
 	public static final String COL_NAME = "Name";
 	public static final String COL_PERMISSION = "Permission";
+
+	public static final String cPermissionPrefix = "XPrivacy.";
 
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -31,20 +35,16 @@ public class XContentProvider extends ContentProvider {
 
 	@Override
 	public String getType(Uri uri) {
-		Log.i(AUTHORITY, "getType");
 		if (sUriMatcher.match(uri) == CONTENT_TYPE)
 			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, CONTENT_PATH);
 		throw new IllegalArgumentException();
 	}
 
 	@Override
-	public Cursor query(Uri uri, String[] arg1, String arg2, String[] arg3, String arg4) {
-		Log.i(AUTHORITY, "query");
+	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		if (sUriMatcher.match(uri) == CONTENT_TYPE) {
 			MatrixCursor mc = new MatrixCursor(new String[] { COL_NAME, COL_PERMISSION });
-			for (String permissionName : XHook.cPermissionNames)
-				mc.addRow(new Object[] { permissionName,
-						System.getProperty(XHook.cPermissionPrefix + permissionName, "*") });
+			mc.addRow(new Object[] { selection, System.getProperty(cPermissionPrefix + selection, "*") });
 			return mc;
 		}
 		throw new IllegalArgumentException();
@@ -52,20 +52,25 @@ public class XContentProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		Log.i(AUTHORITY, "insert");
-		if (sUriMatcher.match(uri) == CONTENT_TYPE)
-			System.setProperty(XHook.cPermissionPrefix + values.getAsString(COL_NAME),
-					values.getAsString(COL_PERMISSION));
 		throw new IllegalArgumentException();
 	}
 
 	@Override
-	public int update(Uri uri, ContentValues values, String arg2, String[] arg3) {
-		return 0;
+	public int update(Uri uri, ContentValues values, String where, String[] selectionArgs) {
+		if (sUriMatcher.match(uri) == CONTENT_TYPE) {
+			int uid = Binder.getCallingUid();
+			String[] packages = getContext().getPackageManager().getPackagesForUid(uid);
+			if (Arrays.asList(packages).contains("com.android.settings"))
+				System.setProperty(cPermissionPrefix + values.getAsString(COL_NAME), values.getAsString(COL_PERMISSION));
+			else
+				throw new SecurityException();
+			return 1;
+		}
+		throw new IllegalArgumentException();
 	}
 
 	@Override
-	public int delete(Uri uri, String arg1, String[] arg2) {
-		return 0;
+	public int delete(Uri url, String where, String[] selectionArgs) {
+		throw new IllegalArgumentException();
 	}
 }
