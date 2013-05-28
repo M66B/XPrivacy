@@ -1,5 +1,10 @@
 package biz.bokhorst.xprivacy;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.HashSet;
 import java.util.Set;
 
 import android.os.Build;
@@ -22,19 +27,22 @@ public class XPrivacy implements IXposedHookLoadPackage {
 
 		// Load providers.contacts
 		if (lpparam.packageName.equals("com.android.providers.contacts"))
-			hook(new XContentProvider("contacts"), lpparam, "com.android.providers.contacts.ContactsProvider2", "query");
+			hook(new XContentProvider("contacts"), lpparam, "com.android.providers.contacts.ContactsProvider2",
+					"query", true);
 
 		// Load providers.calendar
 		else if (lpparam.packageName.equals("com.android.providers.calendar"))
-			hook(new XContentProvider("calendar"), lpparam, "com.android.providers.calendar.CalendarProvider2", "query");
+			hook(new XContentProvider("calendar"), lpparam, "com.android.providers.calendar.CalendarProvider2",
+					"query", true);
 
 		// Load settings
 		else if (lpparam.packageName.equals("com.android.settings"))
 			hook(new XInstalledAppDetails(), lpparam, "com.android.settings.applications.InstalledAppDetails",
-					"refreshUi");
+					"refreshUi", false);
 	}
 
-	private void hook(final XHook hook, final LoadPackageParam lpparam, String className, String methodName) {
+	private void hook(final XHook hook, final LoadPackageParam lpparam, String className, String methodName,
+			boolean visible) {
 		try {
 			// Create hook
 			XC_MethodHook methodHook = new XC_MethodHook() {
@@ -62,12 +70,18 @@ public class XPrivacy implements IXposedHookLoadPackage {
 			};
 
 			// Add hook
-			Set<XC_MethodHook.Unhook> hookSet;
-			Class<?> clazz = findClass(className, lpparam.classLoader);
-			if (methodName == null)
-				hookSet = XposedBridge.hookAllConstructors(clazz, methodHook);
-			else
-				hookSet = XposedBridge.hookAllMethods(clazz, methodName, methodHook);
+			Set<XC_MethodHook.Unhook> hookSet = new HashSet<XC_MethodHook.Unhook>();
+			Class<?> hookClass = findClass(className, lpparam.classLoader);
+			if (methodName == null) {
+				for (Constructor<?> constructor : hookClass.getDeclaredConstructors())
+					if (Modifier.isPublic(constructor.getModifiers()) ? visible : !visible)
+						hookSet.add(XposedBridge.hookMethod(constructor, methodHook));
+			} else {
+				for (Method method : hookClass.getDeclaredMethods())
+					if (method.getName().equals(methodName)
+							&& (Modifier.isPublic(method.getModifiers()) ? visible : !visible))
+						hookSet.add(XposedBridge.hookMethod(method, methodHook));
+			}
 
 			// Log
 			for (XC_MethodHook.Unhook unhook : hookSet) {

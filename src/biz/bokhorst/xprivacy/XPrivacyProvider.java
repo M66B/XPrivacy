@@ -42,6 +42,7 @@ public class XPrivacyProvider extends ContentProvider {
 
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+		// TODO: usage statistics
 		if (sUriMatcher.match(uri) == CONTENT_TYPE) {
 			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
 			MatrixCursor mc = new MatrixCursor(new String[] { COL_NAME, COL_PERMISSION });
@@ -58,6 +59,7 @@ public class XPrivacyProvider extends ContentProvider {
 
 	@Override
 	public int update(Uri uri, ContentValues values, String where, String[] selectionArgs) {
+		// TODO: register update time
 		if (sUriMatcher.match(uri) == CONTENT_TYPE) {
 			int uid = Binder.getCallingUid();
 			String[] packages = getContext().getPackageManager().getPackagesForUid(uid);

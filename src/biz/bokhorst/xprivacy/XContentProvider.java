@@ -10,6 +10,10 @@ public class XContentProvider extends XHook {
 
 	private String mPermissionName;
 
+	@SuppressWarnings("unused")
+	private XContentProvider() {
+	}
+
 	public XContentProvider(String permissionName) {
 		mPermissionName = permissionName;
 	}
