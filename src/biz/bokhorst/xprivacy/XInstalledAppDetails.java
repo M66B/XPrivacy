@@ -17,7 +17,7 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XInstalledAppDetails extends XHook {
 
-	public static final String[] cPermissionNames = new String[] { "calendar", "contacts" };
+	public static final String[] cPermissionNames = new String[] { "calendar", "contacts", "location" };
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

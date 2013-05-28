@@ -28,7 +28,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		else if (lpparam.packageName.equals("com.android.providers.calendar"))
 			hook(new XContentProvider("calendar"), lpparam, "com.android.providers.calendar.CalendarProvider2", "query");
 
-		// Load settings.applications
+		// Load settings
 		else if (lpparam.packageName.equals("com.android.settings"))
 			hook(new XInstalledAppDetails(), lpparam, "com.android.settings.applications.InstalledAppDetails",
 					"refreshUi");
@@ -71,8 +71,8 @@ public class XPrivacy implements IXposedHookLoadPackage {
 
 			// Log
 			for (XC_MethodHook.Unhook unhook : hookSet) {
-				XUtil.log(hook, XUtil.LOG_INFO,
-						String.format("hooked %s in %s", unhook.getHookedMethod().getName(), lpparam.packageName));
+				XUtil.log(hook, XUtil.LOG_INFO, String.format("hooked %s in %s (%d)", unhook.getHookedMethod()
+						.getName(), lpparam.packageName, hookSet.size()));
 				break;
 			}
 		} catch (ClassNotFoundError ignored) {
