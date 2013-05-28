@@ -6,7 +6,7 @@ import android.os.Binder;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
-public class XContactProvider2query extends XHook {
+public class XContactProvider2 extends XHook {
 
 	public final static String cPermissionName = "contacts";
 

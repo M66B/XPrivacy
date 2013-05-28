@@ -13,7 +13,7 @@ import android.text.TextUtils;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public abstract class XHook {
-	public static final String[] cPermissionNames = new String[] { XContactProvider2query.cPermissionName,
+	public static final String[] cPermissionNames = new String[] { XContactProvider2.cPermissionName,
 			XLocationManager.cPermissionName };
 
 	abstract protected void before(MethodHookParam param) throws Throwable;

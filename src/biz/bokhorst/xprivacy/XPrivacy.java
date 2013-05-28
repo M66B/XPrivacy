@@ -2,6 +2,8 @@ package biz.bokhorst.xprivacy;
 
 import java.util.Set;
 
+import android.os.Build;
+
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
@@ -11,22 +13,34 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class XPrivacy implements IXposedHookLoadPackage {
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
+		// Log load
 		XUtil.log(null, XUtil.LOG_INFO, String.format("load package=%s", lpparam.packageName));
 
-		// Load android
-		if (lpparam.packageName.equals("android")) {
-			hook(new XGetLastKnownLocation(), lpparam, "android.location.LocationManager", "getLastKnownLocation");
-		} else {
-			// Load providers.contacts
-			if (lpparam.packageName.equals("com.android.providers.contacts")) {
-				hook(new XContactProvider2query(), lpparam, "com.android.providers.contacts.ContactsProvider2", "query");
-			}
+		// Check version
+		if (Build.VERSION.SDK_INT != 16)
+			XUtil.log(null, XUtil.LOG_WARNING, String.format("Build version %d", Build.VERSION.SDK_INT));
 
-			// Load settings.applications
-			else if (lpparam.packageName.equals("com.android.settings")) {
-				hook(new XInstalledAppDetails(), lpparam, "com.android.settings.applications.InstalledAppDetails",
-						"refreshUi");
-			}
+		// Load any
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addGpsStatusListene");
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addNmeaListener");
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addProximityAlert");
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "getLastKnownLocation");
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "requestLocationUpdates");
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "requestSingleUpdate");
+
+		// hook(new XLocationManager(), lpparam,
+		// "android.location.LocationManagerService.Receiver",
+		// "callLocationChangedLocked");
+
+		// Load providers.contacts
+		if (lpparam.packageName.equals("com.android.providers.contacts")) {
+			hook(new XContactProvider2(), lpparam, "com.android.providers.contacts.ContactsProvider2", "query");
+		}
+
+		// Load settings.applications
+		else if (lpparam.packageName.equals("com.android.settings")) {
+			hook(new XInstalledAppDetails(), lpparam, "com.android.settings.applications.InstalledAppDetails",
+					"refreshUi");
 		}
 	}
 
@@ -64,9 +78,13 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				hookSet = XposedBridge.hookAllConstructors(clazz, methodHook);
 			else
 				hookSet = XposedBridge.hookAllMethods(clazz, methodName, methodHook);
-			for (XC_MethodHook.Unhook unhook : hookSet)
+
+			// Log
+			for (XC_MethodHook.Unhook unhook : hookSet) {
 				XUtil.log(hook, XUtil.LOG_INFO,
 						String.format("hooked %s in %s", unhook.getHookedMethod().getName(), lpparam.packageName));
+				break;
+			}
 		} catch (ClassNotFoundError ignored) {
 			XUtil.log(hook, XUtil.LOG_ERROR, "class not found");
 		} catch (NoSuchMethodError ignored) {
