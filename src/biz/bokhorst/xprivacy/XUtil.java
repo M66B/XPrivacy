@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -24,6 +25,13 @@ public class XUtil {
 	public static void bug(XHook hook, Exception ex) {
 		log(hook, LOG_ERROR, ex.toString());
 		ex.printStackTrace();
+	}
+
+	public static String getPackageName(Context context, int uid) {
+		String[] packages = context.getPackageManager().getPackagesForUid(uid);
+		if (packages != null && packages.length == 1)
+			return packages[0];
+		return Integer.toString(uid);
 	}
 
 	public static void setListViewHeightBasedOnChildren(ListView listView) {

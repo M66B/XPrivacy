@@ -73,7 +73,7 @@ public class XInstalledAppDetails extends XHook {
 				LinearLayout.LayoutParams.WRAP_CONTENT);
 		llpSeparator.setMargins(0, 8, 0, 0);
 		privacyTitle.setLayoutParams(llpSeparator);
-		privacyTitle.setText(String.format("Privacy (%d)", appInfo.uid));
+		privacyTitle.setText("Privacy");
 		privacyView.addView(privacyTitle);
 
 		// Create privacy list view

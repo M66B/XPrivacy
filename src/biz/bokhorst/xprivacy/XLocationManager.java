@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import android.location.Location;
 
 public abstract class XLocationManager extends XHook {
-	public final static String cPermissionName = "Location";
+	public final static String cPermissionName = "location";
 
 	protected Location getRandomLocation(String provider) {
 		Location location = new Location(provider);

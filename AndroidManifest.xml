@@ -28,7 +28,7 @@
             android:enabled="true"
             android:exported="true"
             android:grantUriPermissions="true"
-            android:multiprocess="false"
+            android:multiprocess="true"
             android:syncable="false" >
         </provider>
     </application>

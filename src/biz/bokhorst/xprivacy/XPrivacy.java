@@ -41,7 +41,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 						hook.before(param);
 					} catch (Exception ex) {
 						XUtil.bug(null, ex);
-						// throw ex;
+						throw ex;
 					}
 				}
 
@@ -52,7 +52,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 						hook.after(param);
 					} catch (Exception ex) {
 						XUtil.bug(null, ex);
-						// throw ex;
+						throw ex;
 					}
 				}
 			};
@@ -66,7 +66,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				hookSet = XposedBridge.hookAllMethods(clazz, methodName, methodHook);
 			for (XC_MethodHook.Unhook unhook : hookSet)
 				XUtil.log(hook, XUtil.LOG_INFO,
-						String.format("hooked %s of %s", unhook.getHookedMethod().getName(), lpparam.packageName));
+						String.format("hooked %s in %s", unhook.getHookedMethod().getName(), lpparam.packageName));
 		} catch (ClassNotFoundError ignored) {
 			XUtil.log(hook, XUtil.LOG_ERROR, "class not found");
 		} catch (NoSuchMethodError ignored) {

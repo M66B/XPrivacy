@@ -27,7 +27,6 @@ public class XGetLastKnownLocation extends XLocationManager {
 		if (!isAllowed(context, Binder.getCallingUid(), cPermissionName)) {
 			Location location = (Location) param.getResult();
 			if (location != null) {
-				info("deny" + location);
 				String provider = (String) param.args[0];
 				location = getRandomLocation(provider);
 				param.setResult(location);

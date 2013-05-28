@@ -64,7 +64,7 @@ public class XCursor implements Cursor {
 
 	@Override
 	public int getCount() {
-		return mCursor.getCount();
+		return 0;
 	}
 
 	@Override
@@ -149,48 +149,40 @@ public class XCursor implements Cursor {
 
 	@Override
 	public boolean move(int arg0) {
-		// return mCursor.move(arg0);
 		return false;
 	}
 
 	@Override
 	public boolean moveToFirst() {
-		// return mCursor.moveToFirst();
 		return false;
 	}
 
 	@Override
 	public boolean moveToLast() {
-		// return mCursor.moveToLast();
 		return false;
 	}
 
 	@Override
 	public boolean moveToNext() {
-		// return mCursor.moveToLast();
 		return false;
 	}
 
 	@Override
 	public boolean moveToPosition(int arg0) {
-		// return mCursor.moveToPosition(arg0);
 		return false;
 	}
 
 	@Override
 	public boolean moveToPrevious() {
-		// return mCursor.moveToPrevious();
 		return false;
 	}
 
 	@Override
 	public void registerContentObserver(ContentObserver arg0) {
-		// mCursor.registerContentObserver(arg0);
 	}
 
 	@Override
 	public void registerDataSetObserver(DataSetObserver arg0) {
-		// mCursor.registerDataSetObserver(arg0);
 	}
 
 	@Override
@@ -201,22 +193,18 @@ public class XCursor implements Cursor {
 
 	@Override
 	public Bundle respond(Bundle arg0) {
-		// return mCursor.respond(arg0);
 		return Bundle.EMPTY;
 	}
 
 	@Override
 	public void setNotificationUri(ContentResolver arg0, Uri arg1) {
-		// mCursor.setNotificationUri(arg0, arg1);
 	}
 
 	@Override
 	public void unregisterContentObserver(ContentObserver arg0) {
-		// mCursor.unregisterContentObserver(arg0);
 	}
 
 	@Override
 	public void unregisterDataSetObserver(DataSetObserver arg0) {
-		// mCursor.unregisterDataSetObserver(arg0);
 	}
 }

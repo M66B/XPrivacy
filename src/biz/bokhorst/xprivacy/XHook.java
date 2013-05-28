@@ -85,7 +85,8 @@ public abstract class XHook {
 				allowed = !allowed;
 
 			// Result
-			info("get uid=" + uid + " permission=" + permissionName + " allowed=" + allowed);
+			info(String.format("get package=%s permission=%s allowed=%b", XUtil.getPackageName(context, uid),
+					permissionName, allowed));
 			return allowed;
 		} catch (Exception ex) {
 			XUtil.bug(this, ex);
@@ -119,7 +120,8 @@ public abstract class XHook {
 		// Set permissions
 		permissions = listPermission.toArray(new String[listPermission.size()]);
 		setPermissions(context, permissionName, permissions);
-		info("set uid=" + uid + " permission=" + permissionName + " allowed=" + allowed);
+		info(String.format("set package=%s permission=%s allowed=%b", XUtil.getPackageName(context, uid),
+				permissionName, allowed));
 	}
 
 	protected void debug(String message) {
