@@ -20,18 +20,6 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		if (Build.VERSION.SDK_INT != 16)
 			XUtil.log(null, XUtil.LOG_WARNING, String.format("Build version %d", Build.VERSION.SDK_INT));
 
-		// Load any
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addGpsStatusListene");
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addNmeaListener");
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addProximityAlert");
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "getLastKnownLocation");
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "requestLocationUpdates");
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "requestSingleUpdate");
-
-		// hook(new XLocationManager(), lpparam,
-		// "android.location.LocationManagerService.Receiver",
-		// "callLocationChangedLocked");
-
 		// Load providers.contacts
 		if (lpparam.packageName.equals("com.android.providers.contacts")) {
 			hook(new XContactProvider2(), lpparam, "com.android.providers.contacts.ContactsProvider2", "query");
