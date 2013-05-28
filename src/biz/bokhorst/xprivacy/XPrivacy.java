@@ -1,36 +1,29 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.Arrays;
-
-import android.net.Uri;
-import android.os.CancellationSignal;
+import java.util.Set;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.XC_MethodHook;
-import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
+import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class XPrivacy implements IXposedHookLoadPackage {
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		XUtil.log(null, XUtil.LOG_INFO, String.format("load package=%s", lpparam.packageName));
 
+		// Load any
+		hook(new XContextImplInit(), lpparam, "android.app.ContextImpl", "init");
+
 		// Load android
 		if (lpparam.packageName.equals("android")) {
-			hook(new XGetLastKnownLocation(), lpparam, "android.location.LocationManager", "getLastKnownLocation",
-					String.class /* provider */);
+			hook(new XGetLastKnownLocation(), lpparam, "android.location.LocationManager", "getLastKnownLocation");
 		} else {
-			// Load any service/application
-			if (!lpparam.packageName.equals("system")) {
-				hook(new XApplicationOnCreate(), lpparam, "android.app.Service", "onCreate");
-				hook(new XApplicationOnCreate(), lpparam, "android.app.Application", "onCreate");
-			}
 
 			// Load providers.contacts
 			if (lpparam.packageName.equals("com.android.providers.contacts")) {
-				hook(new XContactProvider2query(), lpparam, "com.android.providers.contacts.ContactsProvider2",
-						"query", Uri.class, String[].class /* projection */, String.class /* selection */,
-						String[].class /* selectionArgs */, String.class /* sortOrder */, CancellationSignal.class);
+				hook(new XContactProvider2query(), lpparam, "com.android.providers.contacts.ContactsProvider2", "query");
 			}
 
 			// Load settings.applications
@@ -41,8 +34,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		}
 	}
 
-	private void hook(final XHook hook, final LoadPackageParam lpparam, String className, String methodName,
-			Object... parameterTypes) {
+	private void hook(final XHook hook, final LoadPackageParam lpparam, String className, String methodName) {
 		try {
 			// Create hook
 			XC_MethodHook methodHook = new XC_MethodHook() {
@@ -53,6 +45,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 						hook.before(param);
 					} catch (Exception ex) {
 						XUtil.bug(null, ex);
+						// throw ex;
 					}
 				}
 
@@ -63,16 +56,21 @@ public class XPrivacy implements IXposedHookLoadPackage {
 						hook.after(param);
 					} catch (Exception ex) {
 						XUtil.bug(null, ex);
+						// throw ex;
 					}
 				}
 			};
 
 			// Add hook
-			Object[] parameterTypesAndHook = Arrays.copyOf(parameterTypes, parameterTypes.length + 1);
-			parameterTypesAndHook[parameterTypes.length] = methodHook;
-			findAndHookMethod(className, lpparam.classLoader, methodName, parameterTypesAndHook);
-			XUtil.log(hook, XUtil.LOG_INFO, "hooked");
-
+			Set<XC_MethodHook.Unhook> hookSet;
+			Class<?> clazz = findClass(className, lpparam.classLoader);
+			if (methodName == null)
+				hookSet = XposedBridge.hookAllConstructors(clazz, methodHook);
+			else
+				hookSet = XposedBridge.hookAllMethods(clazz, methodName, methodHook);
+			for (XC_MethodHook.Unhook unhook : hookSet)
+				XUtil.log(hook, XUtil.LOG_INFO,
+						String.format("hooked %s of %s", unhook.getHookedMethod().getName(), lpparam.packageName));
 		} catch (ClassNotFoundError ignored) {
 			XUtil.log(hook, XUtil.LOG_ERROR, "class not found");
 		} catch (NoSuchMethodError ignored) {

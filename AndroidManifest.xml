@@ -12,9 +12,25 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <meta-data android:value="true" android:name="xposedmodule"/>
-        <meta-data android:value="2.0*" android:name="xposedminversion"/>
-        <meta-data android:value="XPrivacy" android:name="xposeddescription"/>
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="2.0*" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="XPrivacy" />
+
+        <provider
+            android:name=".XContentProvider"
+            android:authorities="biz.bokhorst.xprivacy.provider"
+            android:enabled="true"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            android:multiprocess="false"
+            android:syncable="false" >
+        </provider>
     </application>
 
 </manifest>

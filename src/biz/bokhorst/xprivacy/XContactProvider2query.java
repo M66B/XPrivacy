@@ -17,10 +17,6 @@ public class XContactProvider2query extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Log uri
-		Uri uri = (Uri) param.args[0];
-		info("uri=" + uri);
-
 		// Check if allowed
 		if (!isAllowed(Binder.getCallingUid(), cPermissionName)) {
 			// Return empty cursor
