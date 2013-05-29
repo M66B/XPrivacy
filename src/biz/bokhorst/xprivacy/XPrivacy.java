@@ -24,6 +24,21 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		if (Build.VERSION.SDK_INT != 16)
 			XUtil.log(null, XUtil.LOG_WARNING, String.format("Build version %d", Build.VERSION.SDK_INT));
 
+		// TODO: block android ID
+		// TODO: block device ID (IMEI/MEID/ESN)
+		// TODO: block subscriber ID (IMSI)
+		// TODO: block MMS/SMS (read/send)
+		// TODO: block SIM/ICC(ID) serialno/SMS/etc
+		// TODO: block own/in/outgoing number/history/calling
+		// TODO: block GPS/network/other location
+		// TODO: block accounts (list/details)
+		// TODO: block browser history/bookmarks/etc
+		// TODO: block mobile info (operator, country)
+		// TODO: block Wi-Fi info (networks, MAC)
+		// TODO: block BT info (MAC)
+		// TODO: block audio/photos/video
+		// TODO: block system logs
+
 		// Any app
 		//hook(new XContextImpl(), lpparam, "android.app.ContextImpl", "getSystemService", true);
 
