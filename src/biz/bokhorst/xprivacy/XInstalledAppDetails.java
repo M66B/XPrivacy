@@ -35,6 +35,7 @@ public class XInstalledAppDetails extends XHook {
 		cPermissions.put("calendar", new String[] { "READ_CALENDAR", "WRITE_CALENDAR" });
 		cPermissions.put("contacts", new String[] { "READ_CONTACTS", "WRITE_CONTACTS" });
 		cPermissions.put("location", new String[] { "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
+		cPermissions.put("messages", new String[] { "READ_SMS" });
 	}
 
 	@Override

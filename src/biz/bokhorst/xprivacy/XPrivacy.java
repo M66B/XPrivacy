@@ -51,15 +51,26 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "requestSingleUpdate", true);
 		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "_requestLocationUpdates", false);
 
-		// Load providers.contacts
-		if (lpparam.packageName.equals("com.android.providers.contacts"))
+		// Load calendar provider
+		if (lpparam.packageName.equals("com.android.providers.calendar"))
+			hook(new XContentProvider("calendar"), lpparam, "com.android.providers.calendar.CalendarProvider2",
+					"query", true);
+
+		// Load contacts provider
+		else if (lpparam.packageName.equals("com.android.providers.contacts"))
 			hook(new XContentProvider("contacts"), lpparam, "com.android.providers.contacts.ContactsProvider2",
 					"query", true);
 
-		// Load providers.calendar
-		else if (lpparam.packageName.equals("com.android.providers.calendar"))
-			hook(new XContentProvider("calendar"), lpparam, "com.android.providers.calendar.CalendarProvider2",
-					"query", true);
+		// Load telephony provider
+		else if (lpparam.packageName.equals("com.android.providers.telephony")) {
+			hook(new XContentProvider("messages"), lpparam, "com.android.providers.telephony.SmsProvider", "query",
+					true);
+			hook(new XContentProvider("messages"), lpparam, "com.android.providers.telephony.MmsProvider", "query",
+					true);
+			hook(new XContentProvider("messages"), lpparam, "com.android.providers.telephony.MmsSmsProvider", "query",
+					true);
+			// com.android.providers.telephony.TelephonyProvider
+		}
 
 		// Load settings
 		else if (lpparam.packageName.equals("com.android.settings"))

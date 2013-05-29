@@ -3,9 +3,14 @@ XPrivacy
 
 Proof of concept for a privacy manager using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 
-* Blocks access to contact/calendar info for any application
-* Framework to extend blocking for other info
-* Extends manage applications with privacy settings
+Framework to return no or fake data for any application, simply managed from settings, manage applications.
+
+Currently implemented:
+
+* Calendar
+* Contacts
+* Location
+* Messages (SMS/MMS)
 
 License
 -------
