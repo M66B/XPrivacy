@@ -39,6 +39,8 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		// TODO: block BT info (MAC)
 		// TODO: block audio/photos/video
 		// TODO: block system logs
+		// TODO: default deny toggle
+		// TODO: handle application installation
 
 		// Any app
 		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addGpsStatusListener", true);
