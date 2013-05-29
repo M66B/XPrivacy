@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.os.Build;
+import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XposedBridge;
@@ -18,11 +19,11 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 public class XPrivacy implements IXposedHookLoadPackage {
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		// Log load
-		XUtil.log(null, XUtil.LOG_INFO, String.format("load package=%s", lpparam.packageName));
+		XUtil.log(null, Log.INFO, String.format("load package=%s", lpparam.packageName));
 
 		// Check version
 		if (Build.VERSION.SDK_INT != 16)
-			XUtil.log(null, XUtil.LOG_WARNING, String.format("Build version %d", Build.VERSION.SDK_INT));
+			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
 
 		// TODO: block android ID
 		// TODO: block device ID (IMEI/MEID/ESN)
@@ -40,7 +41,13 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		// TODO: block system logs
 
 		// Any app
-		//hook(new XContextImpl(), lpparam, "android.app.ContextImpl", "getSystemService", true);
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addGpsStatusListener", true);
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addNmeaListener", true);
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addProximityAlert", true);
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "getLastKnownLocation", true);
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "requestLocationUpdates", true);
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "requestSingleUpdate", true);
+		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "_requestLocationUpdates", false);
 
 		// Load providers.contacts
 		if (lpparam.packageName.equals("com.android.providers.contacts"))
@@ -66,9 +73,9 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					try {
-						XUtil.log(hook, XUtil.LOG_DEBUG, "before");
+						XUtil.log(hook, Log.DEBUG, "before");
 						hook.before(param);
-					} catch (Exception ex) {
+					} catch (Throwable ex) {
 						XUtil.bug(null, ex);
 						throw ex;
 					}
@@ -77,9 +84,9 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				@Override
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					try {
-						XUtil.log(hook, XUtil.LOG_DEBUG, "after");
+						XUtil.log(hook, Log.DEBUG, "after");
 						hook.after(param);
-					} catch (Exception ex) {
+					} catch (Throwable ex) {
 						XUtil.bug(null, ex);
 						throw ex;
 					}
@@ -102,15 +109,15 @@ public class XPrivacy implements IXposedHookLoadPackage {
 
 			// Log
 			for (XC_MethodHook.Unhook unhook : hookSet) {
-				XUtil.log(hook, XUtil.LOG_INFO, String.format("hooked %s in %s (%d)", unhook.getHookedMethod()
-						.getName(), lpparam.packageName, hookSet.size()));
+				XUtil.log(hook, Log.INFO, String.format("hooked %s in %s (%d)", unhook.getHookedMethod().getName(),
+						lpparam.packageName, hookSet.size()));
 				break;
 			}
 		} catch (ClassNotFoundError ignored) {
-			XUtil.log(hook, XUtil.LOG_ERROR, "class not found");
+			XUtil.log(hook, Log.ERROR, "class not found");
 		} catch (NoSuchMethodError ignored) {
-			XUtil.log(hook, XUtil.LOG_ERROR, "method not found");
-		} catch (Exception ex) {
+			XUtil.log(hook, Log.ERROR, "method not found");
+		} catch (Throwable ex) {
 			XUtil.bug(null, ex);
 		}
 	}

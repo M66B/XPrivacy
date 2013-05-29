@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -14,18 +15,25 @@ import android.os.Binder;
 
 public class XPrivacyProvider extends ContentProvider {
 
-	private static final int CONTENT_TYPE = 1;
-	private static final UriMatcher sUriMatcher;
-
 	public static final String AUTHORITY = "biz.bokhorst.xprivacy.provider";
-	public static final String CONTENT_PATH = "permissions";
-	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + CONTENT_PATH);
+	public static final String PATH_PERMISSIONS = "permissions";
+	public static final String PATH_LASTUSE = "lastuse";
+	public static final Uri URI_PERMISSIONS = Uri.parse("content://" + AUTHORITY + "/" + PATH_PERMISSIONS);
+	public static final Uri URI_LASTUSE = Uri.parse("content://" + AUTHORITY + "/" + PATH_LASTUSE);
+
 	public static final String COL_NAME = "Name";
 	public static final String COL_PERMISSION = "Permission";
+	public static final String COL_UID = "Uid";
+	public static final String COL_LASTUSE = "LastUse";
+
+	private static final UriMatcher sUriMatcher;
+	private static final int TYPE_PERMISSIONS = 1;
+	private static final int TYPE_LASTUSE = 2;
 
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sUriMatcher.addURI(AUTHORITY, CONTENT_PATH, CONTENT_TYPE);
+		sUriMatcher.addURI(AUTHORITY, PATH_PERMISSIONS, TYPE_PERMISSIONS);
+		sUriMatcher.addURI(AUTHORITY, PATH_LASTUSE, TYPE_LASTUSE);
 	}
 
 	@Override
@@ -35,19 +43,40 @@ public class XPrivacyProvider extends ContentProvider {
 
 	@Override
 	public String getType(Uri uri) {
-		if (sUriMatcher.match(uri) == CONTENT_TYPE)
-			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, CONTENT_PATH);
+		if (sUriMatcher.match(uri) == TYPE_PERMISSIONS)
+			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_PERMISSIONS);
+		else if (sUriMatcher.match(uri) == TYPE_LASTUSE)
+			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_LASTUSE);
 		throw new IllegalArgumentException();
 	}
 
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-		// TODO: usage statistics
-		if (sUriMatcher.match(uri) == CONTENT_TYPE) {
+		if (selectionArgs != null && selectionArgs.length == 2) {
+			// Get arguments
+			String permissionName = selectionArgs[0];
 			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
-			MatrixCursor mc = new MatrixCursor(new String[] { COL_NAME, COL_PERMISSION });
-			mc.addRow(new Object[] { selection, prefs.getString(selection, "*") });
-			return mc;
+
+			if (sUriMatcher.match(uri) == TYPE_PERMISSIONS) {
+				// Update usage count
+				if (selectionArgs[1] != null) {
+					int uid = Integer.parseInt(selectionArgs[1]);
+					SharedPreferences.Editor editor = prefs.edit();
+					editor.putLong(getUsagePref(uid, permissionName), new Date().getTime());
+					editor.commit();
+				}
+
+				// Return permission
+				MatrixCursor mc = new MatrixCursor(new String[] { COL_NAME, COL_PERMISSION });
+				mc.addRow(new Object[] { permissionName, prefs.getString(getPermissionPref(permissionName), "*") });
+				return mc;
+			} else if (sUriMatcher.match(uri) == TYPE_LASTUSE) {
+				// Return usage
+				int uid = Integer.parseInt(selectionArgs[1]);
+				MatrixCursor mc = new MatrixCursor(new String[] { COL_UID, COL_NAME, COL_LASTUSE });
+				mc.addRow(new Object[] { uid, permissionName, prefs.getLong(getUsagePref(uid, permissionName), 0) });
+				return mc;
+			}
 		}
 		throw new IllegalArgumentException();
 	}
@@ -59,20 +88,30 @@ public class XPrivacyProvider extends ContentProvider {
 
 	@Override
 	public int update(Uri uri, ContentValues values, String where, String[] selectionArgs) {
-		// TODO: register update time
-		if (sUriMatcher.match(uri) == CONTENT_TYPE) {
+		// TODO: register update time?
+		if (sUriMatcher.match(uri) == TYPE_PERMISSIONS) {
+			// Check update permission
 			int uid = Binder.getCallingUid();
 			String[] packages = getContext().getPackageManager().getPackagesForUid(uid);
 			if (Arrays.asList(packages).contains("com.android.settings")) {
+				// Update permission
 				SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putString(values.getAsString(COL_NAME), values.getAsString(COL_PERMISSION));
+				editor.putString(getPermissionPref(values.getAsString(COL_NAME)), values.getAsString(COL_PERMISSION));
 				editor.commit();
 			} else
 				throw new SecurityException();
 			return 1;
 		}
 		throw new IllegalArgumentException();
+	}
+
+	private String getPermissionPref(String permissionName) {
+		return COL_PERMISSION + "." + permissionName;
+	}
+
+	private String getUsagePref(int uid, String permissionName) {
+		return COL_LASTUSE + "." + uid + "." + permissionName;
 	}
 
 	@Override

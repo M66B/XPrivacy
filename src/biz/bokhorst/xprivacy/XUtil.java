@@ -9,21 +9,17 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 public class XUtil {
-	public static final int LOG_DEBUG = Log.DEBUG;
-	public static final int LOG_INFO = Log.INFO;
-	public static final int LOG_WARNING = Log.WARN;
-	public static final int LOG_ERROR = Log.ERROR;
 
 	public static void log(XHook hook, int priority, String msg) {
-		if (priority != LOG_DEBUG)
+		if (priority != Log.DEBUG)
 			if (hook == null)
 				Log.println(priority, "XPrivacy", msg);
 			else
 				Log.println(priority, String.format("XPrivacy/%s", hook.getClass().getSimpleName()), msg);
 	}
 
-	public static void bug(XHook hook, Exception ex) {
-		log(hook, LOG_ERROR, ex.toString());
+	public static void bug(XHook hook, Throwable ex) {
+		log(hook, Log.ERROR, ex.toString());
 		ex.printStackTrace();
 	}
 

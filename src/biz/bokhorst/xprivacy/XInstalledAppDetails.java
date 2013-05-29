@@ -1,8 +1,16 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
+import android.content.ContentResolver;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,7 +25,16 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XInstalledAppDetails extends XHook {
 
-	public static final String[] cPermissionNames = new String[] { "calendar", "contacts", "location" };
+	// @formatter:off
+	// @formatter:on
+
+	private static Map<String, String[]> cPermissions = new LinkedHashMap<String, String[]>();
+
+	static {
+		cPermissions.put("calendar", new String[] { "READ_CALENDAR", "WRITE_CALENDAR" });
+		cPermissions.put("contacts", new String[] { "READ_CONTACTS", "WRITE_CONTACTS" });
+		cPermissions.put("location", new String[] { "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
@@ -27,7 +44,6 @@ public class XInstalledAppDetails extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		// TODO: usage statistics
-		// TODO: use android permissions
 
 		// Get app entry
 		Field fieldAppEntry = findField(param.thisObject.getClass(), "mAppEntry");
@@ -60,6 +76,10 @@ public class XInstalledAppDetails extends XHook {
 			return;
 		}
 
+		// Get package manager
+		PackageManager pm = detailsView.getContext().getPackageManager();
+		ContentResolver cr = detailsView.getContext().getContentResolver();
+
 		// Remove existing privacy view
 		LinearLayout privacyView = (LinearLayout) detailsView.findViewById(1966);
 		if (privacyView != null)
@@ -81,22 +101,59 @@ public class XInstalledAppDetails extends XHook {
 		privacyTitle.setText("Privacy");
 		privacyView.addView(privacyTitle);
 
+		// Create internet title
+		TextView internetTitle = new TextView(privacyView.getContext());
+		internetTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT));
+		boolean internetGranted = (pm.checkPermission("android.permission.INTERNET", appInfo.packageName) == PackageManager.PERMISSION_GRANTED);
+		internetTitle.setText("has " + (internetGranted ? "" : "no ") + "internet access");
+		privacyView.addView(internetTitle);
+
+		// Add usage data
+		for (String permissionName : cPermissions.keySet()) {
+			Cursor cursor = cr.query(XPrivacyProvider.URI_LASTUSE, null, null,
+					new String[] { permissionName, Integer.toString(appInfo.uid) }, null);
+			if (cursor.moveToNext()) {
+				long lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_LASTUSE));
+				cursor.close();
+				TextView lastuseTitle = new TextView(privacyView.getContext());
+				lastuseTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+						LinearLayout.LayoutParams.WRAP_CONTENT));
+				lastuseTitle.setText(permissionName + ": " + (lastUsage == 0 ? "-" : new Date(lastUsage).toString()));
+				privacyView.addView(lastuseTitle);
+			}
+		}
+
 		// Create privacy list view
 		ListView privacyListView = new ListView(privacyView.getContext());
 		privacyListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT));
 		privacyListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
+		// Get permissions
+		List<String> listPermission = new ArrayList<String>();
+		for (String permissionName : cPermissions.keySet()) {
+			boolean permissionGranted = false;
+			for (String aPermission : cPermissions.get(permissionName))
+				if (pm.checkPermission("android.permission." + aPermission, appInfo.packageName) == PackageManager.PERMISSION_GRANTED) {
+					permissionGranted = true;
+					break;
+				}
+			if (permissionGranted)
+				listPermission.add(permissionName);
+		}
+
 		// Create privacy list view adapter
 		ArrayAdapter<String> privacyListAdapter = new ArrayAdapter<String>(privacyView.getContext(),
-				android.R.layout.simple_list_item_multiple_choice, cPermissionNames);
+				android.R.layout.simple_list_item_multiple_choice, listPermission);
 		privacyListView.setAdapter(privacyListAdapter);
 		XUtil.setListViewHeightBasedOnChildren(privacyListView);
 
 		// Set privacy values
 		for (int position = 0; position < privacyListView.getAdapter().getCount(); position++) {
 			String permissionName = (String) privacyListView.getItemAtPosition(position);
-			privacyListView.setItemChecked(position, isAllowed(detailsView.getContext(), appInfo.uid, permissionName));
+			privacyListView.setItemChecked(position,
+					isAllowed(detailsView.getContext(), appInfo.uid, permissionName, false));
 		}
 
 		// Listen for privacy changes
