@@ -1,7 +1,6 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashSet;
@@ -24,6 +23,9 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		// Check version
 		if (Build.VERSION.SDK_INT != 16)
 			XUtil.log(null, XUtil.LOG_WARNING, String.format("Build version %d", Build.VERSION.SDK_INT));
+
+		// Any app
+		//hook(new XContextImpl(), lpparam, "android.app.ContextImpl", "getSystemService", true);
 
 		// Load providers.contacts
 		if (lpparam.packageName.equals("com.android.providers.contacts"))
