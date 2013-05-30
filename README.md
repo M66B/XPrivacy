@@ -7,10 +7,13 @@ Module to return no or fake data for any application, simply managed from System
 
 Currently implemented:
 
+* Browser (bookmarks, searches, etc)
 * Calendar
+* Call log
 * Contacts
-* Location
+* Location (coarse/fine)
 * Messages (SMS/MMS)
+* Voicemail
 
 **Tested with CyanogenMod 10**
 

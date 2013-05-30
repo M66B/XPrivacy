@@ -47,23 +47,40 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		// TODO: handle application installation
 
 		// Load any app
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addGpsStatusListener", true);
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addNmeaListener", true);
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addProximityAlert", true);
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "getLastKnownLocation", true);
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "requestLocationUpdates", true);
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "requestSingleUpdate", true);
-		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "_requestLocationUpdates", false);
+		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "addGpsStatusListener",
+				true);
+		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "addNmeaListener", true);
+		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "addProximityAlert", true);
+		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "getLastKnownLocation",
+				true);
+		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "requestLocationUpdates",
+				true);
+		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "requestSingleUpdate", true);
+		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "_requestLocationUpdates",
+				false);
 
 		// Load calendar provider
-		if (lpparam.packageName.equals("com.android.providers.calendar"))
+		if (lpparam.packageName.equals("com.android.browser.provider")) {
+			hook(new XContentProvider("browser"), lpparam, "com.android.browser.provider.BrowserProvider", "query",
+					true);
+			hook(new XContentProvider("browser"), lpparam, "com.android.browser.provider.BrowserProvider2", "query",
+					true);
+		}
+
+		// Load calendar provider
+		else if (lpparam.packageName.equals("com.android.providers.calendar"))
 			hook(new XContentProvider("calendar"), lpparam, "com.android.providers.calendar.CalendarProvider2",
 					"query", true);
 
 		// Load contacts provider
-		else if (lpparam.packageName.equals("com.android.providers.contacts"))
+		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
+			hook(new XContentProvider("calllog"), lpparam, "com.android.providers.contacts.CallLogProvider", "query",
+					true);
 			hook(new XContentProvider("contacts"), lpparam, "com.android.providers.contacts.ContactsProvider2",
 					"query", true);
+			hook(new XContentProvider("voicemail"), lpparam, "com.android.providers.contacts.VoicemailContentProvider",
+					"query", true);
+		}
 
 		// Load telephony provider
 		else if (lpparam.packageName.equals("com.android.providers.telephony")) {
@@ -78,7 +95,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 
 		// Load settings
 		else if (lpparam.packageName.equals("com.android.settings"))
-			hook(new XInstalledAppDetails(), lpparam, "com.android.settings.applications.InstalledAppDetails",
+			hook(new XInstalledAppDetails(null), lpparam, "com.android.settings.applications.InstalledAppDetails",
 					"refreshUi", false);
 	}
 

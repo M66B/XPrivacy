@@ -30,16 +30,20 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XInstalledAppDetails extends XHook {
 
-	// @formatter:off
-	// @formatter:on
+	public XInstalledAppDetails(String permissionName) {
+		super(permissionName);
+	}
 
 	private static Map<String, String[]> cPermissions = new LinkedHashMap<String, String[]>();
 
 	static {
-		cPermissions.put("calendar", new String[] { "READ_CALENDAR", "WRITE_CALENDAR" });
-		cPermissions.put("contacts", new String[] { "READ_CONTACTS", "WRITE_CONTACTS" });
+		cPermissions.put("browser", new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" });
+		cPermissions.put("calendar", new String[] { "READ_CALENDAR" });
+		cPermissions.put("calllog", new String[] { "READ_CALL_LOG" });
+		cPermissions.put("contacts", new String[] { "READ_CONTACTS" });
 		cPermissions.put("location", new String[] { "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
 		cPermissions.put("messages", new String[] { "READ_SMS" });
+		cPermissions.put("voicemail", new String[] { "READ_WRITE_ALL_VOICEMAIL" });
 	}
 
 	@Override

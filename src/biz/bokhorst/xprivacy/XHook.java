@@ -15,6 +15,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public abstract class XHook {
 
+	protected String mPermissionName;
+
+	public XHook(String permissionName) {
+		mPermissionName = permissionName;
+	}
+
 	abstract protected void before(MethodHookParam param) throws Throwable;
 
 	abstract protected void after(MethodHookParam param) throws Throwable;

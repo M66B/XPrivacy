@@ -8,14 +8,8 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XContentProvider extends XHook {
 
-	private String mPermissionName;
-
-	@SuppressWarnings("unused")
-	private XContentProvider() {
-	}
-
 	public XContentProvider(String permissionName) {
-		mPermissionName = permissionName;
+		super(permissionName);
 	}
 
 	@Override

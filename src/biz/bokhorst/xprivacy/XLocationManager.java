@@ -12,13 +12,17 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XLocationManager extends XHook {
 
+	public XLocationManager(String permissionName) {
+		super(permissionName);
+	}
+
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
 		if (!methodName.equals("getLastKnownLocation")) {
 			Context context = getContext(param);
 			int uid = Binder.getCallingUid();
-			if (!isAllowed(context, uid, "location", true)) {
+			if (!isAllowed(context, uid, mPermissionName, true)) {
 				info(String.format("deny %s package=%s", param.method.getName(), XUtil.getPackageName(context, uid)));
 				if (methodName.equals("addGpsStatusListener") || methodName.equals("addNmeaListener"))
 					param.setResult(false);
@@ -33,7 +37,7 @@ public class XLocationManager extends XHook {
 		if (param.method.getName().equals("getLastKnownLocation")) {
 			Context context = getContext(param);
 			int uid = Binder.getCallingUid();
-			if (!isAllowed(context, uid, "location", true)) {
+			if (!isAllowed(context, uid, mPermissionName, true)) {
 				String provider = (String) (param.args.length > 0 ? param.args[0] : null);
 				info(String.format("deny %s(%s) package=%s", param.method.getName(), provider,
 						XUtil.getPackageName(context, uid)));
