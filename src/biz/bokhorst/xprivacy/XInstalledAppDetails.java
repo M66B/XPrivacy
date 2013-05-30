@@ -2,16 +2,20 @@ package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -41,6 +45,63 @@ public class XInstalledAppDetails extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		// Do nothing
+	}
+
+	private class PermissionsAdapter extends ArrayAdapter<String> {
+		private List<String> mPermissions;
+		ApplicationInfo mAppInfo;
+
+		public PermissionsAdapter(Context context, int resource, List<String> objects, ApplicationInfo appInfo) {
+			super(context, resource, objects);
+			this.mPermissions = objects;
+			mAppInfo = appInfo;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// Get view info
+			String permissionName = mPermissions.get(position);
+			TextView textView = (TextView) super.getView(position, convertView, parent);
+
+			// Get resources
+			PackageManager pm = textView.getContext().getPackageManager();
+			String packageName = this.getClass().getPackage().getName();
+			Resources resources;
+			try {
+				resources = pm.getResourcesForApplication(packageName);
+			} catch (NameNotFoundException e) {
+				e.printStackTrace();
+				return textView;
+			}
+
+			// Localize text
+			int stringId = resources.getIdentifier("perm_" + permissionName, "string", packageName);
+			if (stringId != 0)
+				textView.setText(resources.getString(stringId));
+
+			// Check if permission granted
+			boolean permissionGranted = false;
+			for (String aPermission : cPermissions.get(permissionName))
+				if (pm.checkPermission("android.permission." + aPermission, mAppInfo.packageName) == PackageManager.PERMISSION_GRANTED) {
+					permissionGranted = true;
+					break;
+				}
+			if (!permissionGranted)
+				textView.setTextColor(Color.GRAY);
+
+			// Check last usage
+			ContentResolver cr = textView.getContext().getContentResolver();
+			Cursor cursor = cr.query(XPrivacyProvider.URI_LASTUSE, null, null,
+					new String[] { permissionName, Integer.toString(mAppInfo.uid) }, null);
+			if (cursor.moveToNext()) {
+				long lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_LASTUSE));
+				cursor.close();
+				if (lastUsage != 0)
+					textView.setTypeface(null, Typeface.BOLD_ITALIC);
+			}
+
+			return textView;
+		}
 	}
 
 	@Override
@@ -78,78 +139,27 @@ public class XInstalledAppDetails extends XHook {
 			return;
 		}
 
-		// Get package manager
+		// Get package manager / resources
 		PackageManager pm = detailsView.getContext().getPackageManager();
-		ContentResolver cr = detailsView.getContext().getContentResolver();
+		Resources resources = pm.getResourcesForApplication(this.getClass().getPackage().getName());
 
-		// Get granted permissions
-		List<String> listPermission = new ArrayList<String>();
-		for (String permissionName : cPermissions.keySet()) {
-			boolean permissionGranted = false;
-			for (String aPermission : cPermissions.get(permissionName))
-				if (pm.checkPermission("android.permission." + aPermission, appInfo.packageName) == PackageManager.PERMISSION_GRANTED) {
-					permissionGranted = true;
-					break;
-				}
-			if (permissionGranted)
-				listPermission.add(permissionName);
-		}
-
-		// Remove existing privacy view
-		LinearLayout privacyView = (LinearLayout) detailsView.findViewById(1966);
+		// Add privacy view
+		LinearLayout privacyView = (LinearLayout) detailsView.findViewById(R.id.vwAppSettings);
 		if (privacyView != null)
 			detailsView.removeView(privacyView);
+		LayoutInflater inflater = (LayoutInflater) detailsView.getContext().getSystemService(
+				Context.LAYOUT_INFLATER_SERVICE);
+		privacyView = (LinearLayout) inflater.inflate(resources.getLayout(R.layout.app_settings), null);
 
-		// Create privacy view
-		privacyView = new LinearLayout(detailsView.getContext());
-		privacyView.setId(1966);
-		privacyView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT));
-		privacyView.setOrientation(LinearLayout.VERTICAL);
+		// Check if internet access
+		if (pm.checkPermission("android.permission.INTERNET", appInfo.packageName) == PackageManager.PERMISSION_GRANTED)
+			privacyView.removeView(privacyView.findViewById(R.id.tvInternet));
 
-		// Create privacy title
-		TextView privacyTitle = new TextView(privacyView.getContext(), null, android.R.attr.listSeparatorTextViewStyle);
-		LinearLayout.LayoutParams llpSeparator = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT);
-		llpSeparator.setMargins(0, 8, 0, 0);
-		privacyTitle.setLayoutParams(llpSeparator);
-		privacyTitle.setText("Privacy");
-		privacyView.addView(privacyTitle);
-
-		// Create internet title
-		TextView internetTitle = new TextView(privacyView.getContext());
-		internetTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT));
-		boolean internetGranted = (pm.checkPermission("android.permission.INTERNET", appInfo.packageName) == PackageManager.PERMISSION_GRANTED);
-		internetTitle.setText("has " + (internetGranted ? "" : "no ") + "internet access");
-		privacyView.addView(internetTitle);
-
-		// Create last usage list
-		for (String permissionName : cPermissions.keySet()) {
-			Cursor cursor = cr.query(XPrivacyProvider.URI_LASTUSE, null, null,
-					new String[] { permissionName, Integer.toString(appInfo.uid) }, null);
-			if (cursor.moveToNext()) {
-				long lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_LASTUSE));
-				cursor.close();
-				TextView lastUsageTitle = new TextView(privacyView.getContext());
-				lastUsageTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-						LinearLayout.LayoutParams.WRAP_CONTENT));
-				lastUsageTitle.setText(permissionName + ": " + (lastUsage == 0 ? "-" : new Date(lastUsage).toString()));
-				if (!listPermission.contains(permissionName))
-					lastUsageTitle.setTextColor(Color.GRAY);
-				privacyView.addView(lastUsageTitle);
-			}
-		}
-
-		// Create privacy list view
-		ListView privacyListView = new ListView(privacyView.getContext());
-		privacyListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT));
-		privacyListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-		// Create privacy list view adapter
-		ArrayAdapter<String> privacyListAdapter = new ArrayAdapter<String>(privacyView.getContext(),
-				android.R.layout.simple_list_item_multiple_choice, listPermission);
+		// Fill privacy list view adapter
+		ListView privacyListView = (ListView) privacyView.findViewById(R.id.lvPrivacy);
+		List<String> permissionsList = new ArrayList<String>(cPermissions.keySet());
+		PermissionsAdapter privacyListAdapter = new PermissionsAdapter(privacyView.getContext(),
+				android.R.layout.simple_list_item_multiple_choice, permissionsList, appInfo);
 		privacyListView.setAdapter(privacyListAdapter);
 		XUtil.setListViewHeightBasedOnChildren(privacyListView);
 
@@ -171,10 +181,7 @@ public class XInstalledAppDetails extends XHook {
 			}
 		});
 
-		// Add privacy list
-		privacyView.addView(privacyListView);
-
-		// Add privacy view
+		// Display privacy view
 		detailsView.addView(privacyView);
 		detailsView.invalidate();
 	}

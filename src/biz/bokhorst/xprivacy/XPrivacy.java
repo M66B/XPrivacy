@@ -21,6 +21,10 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		// Log load
 		XUtil.log(null, Log.INFO, String.format("load package=%s", lpparam.packageName));
 
+		// Skip hooking self
+		if (lpparam.packageName.equals(XPrivacy.class.getPackage()))
+			return;
+
 		// Check version
 		if (Build.VERSION.SDK_INT != 16)
 			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
@@ -42,7 +46,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		// TODO: default deny toggle
 		// TODO: handle application installation
 
-		// Any app
+		// Load any app
 		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addGpsStatusListener", true);
 		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addNmeaListener", true);
 		hook(new XLocationManager(), lpparam, "android.location.LocationManager", "addProximityAlert", true);

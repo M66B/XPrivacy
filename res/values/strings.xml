@@ -1,5 +1,9 @@
 <resources>
 
     <string name="app_name">XPrivacy</string>
+    <string name="perm_calendar">Calendar</string>
+    <string name="perm_contacts">Contacts</string>
+    <string name="perm_location">Location</string>
+    <string name="perm_messages">SMS/MMS</string>
 
 </resources>
