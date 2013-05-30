@@ -23,6 +23,7 @@ public class XMain extends Activity {
 
 		// Check box default deny
 		final CheckBox cbDefaultDeny = (CheckBox) findViewById(R.id.cbDefaultDeny);
+		cbDefaultDeny.setEnabled(false);
 		cbDefaultDeny.setChecked(prefs.getBoolean(PREF_DEFAULTDENY, false));
 		cbDefaultDeny.setOnClickListener(new OnClickListener() {
 			@Override
