@@ -28,6 +28,7 @@ Planned:
 
 Installation:
 
+* Make a nandroid backup
 * Install the Xposed framework (see earlier for a link)
 * Install XPrivacy from [here](http://goo.im/devs/M66B/tools)
 * Enable XPrivacy from the Xposed Installer app
