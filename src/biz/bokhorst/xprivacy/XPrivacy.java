@@ -29,21 +29,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		if (Build.VERSION.SDK_INT != 16)
 			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
 
-		// TODO: block android ID
-		// TODO: block device ID (IMEI/MEID/ESN)
-		// TODO: block subscriber ID (IMSI)
-		// TODO: block SIM/ICC(ID) serialno/SMS/etc
-		// TODO: block own/in/outgoing number/calling
-		// TODO: block accounts (list/details)
-		// TODO: block mobile info (operator, country)
-		// TODO: block Wi-Fi info (networks, MAC)
-		// TODO: block BT info (MAC)
-		// TODO: block audio/photos/video
-		// TODO: block system logs
-		// TODO: default deny toggle
-		// TODO: handle application installation
-
-		// Load any app
+		// Location manager
 		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "addGpsStatusListener",
 				true);
 		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "addNmeaListener", true);
@@ -55,6 +41,22 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "requestSingleUpdate", true);
 		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "_requestLocationUpdates",
 				false);
+
+		// Settings secure
+		// if (!lpparam.packageName.equals("android") &&
+		// !lpparam.packageName.equals("com.android.providers.settings"))
+		hook(new XSettingsSecure("identification"), lpparam, "android.provider.Settings.Secure", "getString", true);
+
+		// Telephony
+		hook(new XTelephonyManager("identification"), lpparam, "android.telephony.TelephonyManager", "getDeviceId",
+				true);
+		hook(new XTelephonyManager("identification"), lpparam, "android.telephony.TelephonyManager", "getLine1Number",
+				true);
+		hook(new XTelephonyManager("identification"), lpparam, "android.telephony.TelephonyManager", "getMsisdn", true);
+		hook(new XTelephonyManager("identification"), lpparam, "android.telephony.TelephonyManager",
+				"getSimSerialNumber", true);
+		hook(new XTelephonyManager("identification"), lpparam, "android.telephony.TelephonyManager", "getSubscriberId",
+				true);
 
 		// Load calendar provider
 		if (lpparam.packageName.equals("com.android.browser.provider")) {

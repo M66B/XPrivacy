@@ -22,13 +22,11 @@ public class XLocationManager extends XHook {
 		if (!methodName.equals("getLastKnownLocation")) {
 			Context context = getContext(param);
 			int uid = Binder.getCallingUid();
-			if (!isAllowed(context, uid, true)) {
-				info(String.format("deny %s package=%s", param.method.getName(), XUtil.getPackageName(context, uid)));
+			if (!isAllowed(context, uid, true))
 				if (methodName.equals("addGpsStatusListener") || methodName.equals("addNmeaListener"))
 					param.setResult(false);
 				else
 					param.setResult(null);
-			}
 		}
 	}
 
@@ -39,8 +37,6 @@ public class XLocationManager extends XHook {
 			int uid = Binder.getCallingUid();
 			if (!isAllowed(context, uid, true)) {
 				String provider = (String) (param.args.length > 0 ? param.args[0] : null);
-				info(String.format("deny %s(%s) package=%s", param.method.getName(), provider,
-						XUtil.getPackageName(context, uid)));
 				if (param.getResultOrThrowable() != null)
 					param.setResult(getRandomLocation(provider));
 			}

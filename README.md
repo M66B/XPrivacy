@@ -3,7 +3,7 @@ XPrivacy
 
 Proof of concept for a privacy manager using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 
-Module to return no or fake data for any application, simply managed from System settings / Manage apps.
+Module to return no or fake data for any application, simply managed from the *Manage apps* menu.
 
 Currently implemented:
 
@@ -11,9 +11,21 @@ Currently implemented:
 * Calendar
 * Call log
 * Contacts
+* Identification (Android, phone ID/number, subscriber, SIM)
 * Location (coarse/fine)
 * Messages (SMS/MMS)
 * Voicemail
+
+Planned:
+
+* Take photo
+* Record audio
+* Record video
+* Accounts (list/details)
+* Incoming/outgoing number
+* System log
+* Default deny/allow toggle
+* Handle new application
 
 **Tested with CyanogenMod 10**
 

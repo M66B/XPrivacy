@@ -7,6 +7,7 @@
     <string name="perm_calendar">Calendar</string>
     <string name="perm_calllog">Call log</string>
     <string name="perm_contacts">Contacts</string>
+    <string name="perm_identification">Identification</string>
     <string name="perm_location">Location</string>
     <string name="perm_messages">SMS/MMS</string>
     <string name="perm_voicemail">Voicemail</string>
