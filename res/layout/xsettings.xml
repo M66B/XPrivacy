@@ -22,7 +22,8 @@
         android:paddingLeft="6dip"
         android:paddingTop="6dip"
         android:text="This application has no internet access"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textIsSelectable="false" />
 
     <ListView
         android:id="@+id/lvPrivacy"

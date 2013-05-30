@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 public class XMain extends Activity {
 	private static final String PREF_NAME = "Preferences";
@@ -20,7 +21,8 @@ public class XMain extends Activity {
 
 		final SharedPreferences prefs = getBaseContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
-		final CheckBox cbDefaultDeny = (CheckBox) (Button) findViewById(R.id.cbDefaultDeny);
+		// Check box default deny
+		final CheckBox cbDefaultDeny = (CheckBox) findViewById(R.id.cbDefaultDeny);
 		cbDefaultDeny.setChecked(prefs.getBoolean(PREF_DEFAULTDENY, false));
 		cbDefaultDeny.setOnClickListener(new OnClickListener() {
 			@Override
@@ -30,5 +32,14 @@ public class XMain extends Activity {
 				editor.commit();
 			}
 		});
+
+		// Show version
+		try {
+			PackageInfo pInfo = getBaseContext().getPackageManager().getPackageInfo(getPackageName(), 0);
+			TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
+			tvVersion.setText(String.format(getString(R.string.app_version), pInfo.versionName, pInfo.versionCode));
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+		}
 	}
 }

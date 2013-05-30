@@ -110,8 +110,8 @@ public abstract class XHook {
 		}
 
 		// Query permissions
-		Cursor cursor = contentResolver.query(XPrivacyProvider.URI_PERMISSIONS, null, null, new String[] {
-				permissionName, (usage ? Integer.toString(uid) : null) }, null);
+		Cursor cursor = contentResolver.query(XPrivacyProvider.URI_PERMISSIONS, null, permissionName, new String[] {
+				Integer.toString(uid), Boolean.toString(usage) }, null);
 		if (cursor == null) {
 			warning("cursor is null");
 			return null;

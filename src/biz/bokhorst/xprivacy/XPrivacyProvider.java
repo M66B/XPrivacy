@@ -54,13 +54,15 @@ public class XPrivacyProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		if (selectionArgs != null && selectionArgs.length == 2) {
 			// Get arguments
-			String permissionName = selectionArgs[0];
+			String permissionName = selection;
 			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
 
 			if (sUriMatcher.match(uri) == TYPE_PERMISSIONS) {
+				int uid = Integer.parseInt(selectionArgs[0]);
+				boolean usage = Boolean.parseBoolean(selectionArgs[1]);
+
 				// Update usage count
-				if (selectionArgs[1] != null) {
-					int uid = Integer.parseInt(selectionArgs[1]);
+				if (usage) {
 					SharedPreferences.Editor editor = prefs.edit();
 					editor.putLong(getUsagePref(uid, permissionName), new Date().getTime());
 					editor.commit();
