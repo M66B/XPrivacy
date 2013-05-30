@@ -26,6 +26,23 @@ Planned:
 
 **Tested with CyanogenMod 10**
 
+Installation:
+
+* Install the Xposed framework (see earlier for a link)
+* Install XPrivacy from [here](http://goo.im/devs/M66B/tools)
+* Enable XPrivacy from the Xposed Installer app
+* Reboot
+
+Usage:
+
+* Select *Manage apps* from the main menu
+* Select an app
+* Scroll down to disable permissions
+
+To see it in action: try disabling *location* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
+or try disabling *contacts* for the Contacts app.
+
+
 License
 -------
 
