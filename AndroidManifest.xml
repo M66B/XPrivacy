@@ -32,6 +32,15 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".XPackageChange" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
         <provider
             android:name=".XPrivacyProvider"
             android:authorities="biz.bokhorst.xprivacy.provider"

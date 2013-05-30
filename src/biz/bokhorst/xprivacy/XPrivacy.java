@@ -43,8 +43,6 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				false);
 
 		// Settings secure
-		// if (!lpparam.packageName.equals("android") &&
-		// !lpparam.packageName.equals("com.android.providers.settings"))
 		hook(new XSettingsSecure("identification"), lpparam, "android.provider.Settings.Secure", "getString", true);
 
 		// Telephony
