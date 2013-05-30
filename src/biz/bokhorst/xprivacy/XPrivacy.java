@@ -29,6 +29,8 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		if (Build.VERSION.SDK_INT != 16)
 			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
 
+		// TODO: check if CyanogenMod
+
 		// Location manager
 		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "addGpsStatusListener",
 				true);

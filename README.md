@@ -27,8 +27,12 @@ Planned:
 * Incoming/outgoing number
 * Default deny/allow toggle
 * Batch mode
+* Stop app after permission change
+* Add permission explanations
 
 **Tested with CyanogenMod 10**
+
+Reported to work with CyanogenMod 10.1 at least partly.
 
 Installation
 ------------
@@ -49,8 +53,13 @@ Usage
 To see it in action: try disabling *Identification* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 or try disabling *contacts* for the Contacts app.
 
-Extending
----------
+Frequently asked questions
+--------------------------
+
+* Will you restrict internet access? No, you can use a firewall app, like [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall)
+
+Developers
+----------
 
 To restrict new info:
 
