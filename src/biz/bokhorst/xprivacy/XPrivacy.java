@@ -32,12 +32,9 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		// TODO: block android ID
 		// TODO: block device ID (IMEI/MEID/ESN)
 		// TODO: block subscriber ID (IMSI)
-		// TODO: block MMS/SMS (read/send)
 		// TODO: block SIM/ICC(ID) serialno/SMS/etc
-		// TODO: block own/in/outgoing number/history/calling
-		// TODO: block GPS/network/other location
+		// TODO: block own/in/outgoing number/calling
 		// TODO: block accounts (list/details)
-		// TODO: block browser history/bookmarks/etc
 		// TODO: block mobile info (operator, country)
 		// TODO: block Wi-Fi info (networks, MAC)
 		// TODO: block BT info (MAC)
@@ -107,7 +104,6 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					try {
-						XUtil.log(hook, Log.DEBUG, "before");
 						hook.before(param);
 					} catch (Throwable ex) {
 						XUtil.bug(null, ex);
@@ -118,7 +114,6 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				@Override
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					try {
-						XUtil.log(hook, Log.DEBUG, "after");
 						hook.after(param);
 					} catch (Throwable ex) {
 						XUtil.bug(null, ex);

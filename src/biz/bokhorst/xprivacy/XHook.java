@@ -15,7 +15,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public abstract class XHook {
 
-	protected String mPermissionName;
+	private String mPermissionName;
 
 	public XHook(String permissionName) {
 		mPermissionName = permissionName;
@@ -24,6 +24,10 @@ public abstract class XHook {
 	abstract protected void before(MethodHookParam param) throws Throwable;
 
 	abstract protected void after(MethodHookParam param) throws Throwable;
+
+	protected boolean isAllowed(Context context, int uid, boolean usage) {
+		return isAllowed(context, uid, mPermissionName, usage);
+	}
 
 	protected boolean isAllowed(Context context, int uid, String permissionName, boolean usage) {
 		try {
@@ -61,6 +65,10 @@ public abstract class XHook {
 			XUtil.bug(this, ex);
 			return true;
 		}
+	}
+
+	protected void setAllowed(Context context, int uid, boolean allowed) {
+		setAllowed(context, uid, mPermissionName, allowed);
 	}
 
 	protected void setAllowed(Context context, int uid, String permissionName, boolean allowed) {
@@ -134,10 +142,6 @@ public abstract class XHook {
 		values.put(XPrivacyProvider.COL_NAME, permissionName);
 		values.put(XPrivacyProvider.COL_PERMISSION, TextUtils.join(",", permissions));
 		contentResolver.update(XPrivacyProvider.URI_PERMISSIONS, values, null, null);
-	}
-
-	protected void debug(String message) {
-		XUtil.log(this, Log.DEBUG, message);
 	}
 
 	protected void info(String message) {

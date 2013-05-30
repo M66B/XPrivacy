@@ -22,6 +22,16 @@
             android:name="xposeddescription"
             android:value="XPrivacy" />
 
+        <activity
+            android:name="biz.bokhorst.xprivacy.XMain"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name=".XPrivacyProvider"
             android:authorities="biz.bokhorst.xprivacy.provider"

@@ -153,7 +153,7 @@ public class XInstalledAppDetails extends XHook {
 			detailsView.removeView(privacyView);
 		LayoutInflater inflater = (LayoutInflater) detailsView.getContext().getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE);
-		privacyView = (LinearLayout) inflater.inflate(resources.getLayout(R.layout.app_settings), null);
+		privacyView = (LinearLayout) inflater.inflate(resources.getLayout(R.layout.xsettings), null);
 
 		// Check if internet access
 		if (pm.checkPermission("android.permission.INTERNET", appInfo.packageName) == PackageManager.PERMISSION_GRANTED)
