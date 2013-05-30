@@ -145,15 +145,18 @@ public class XInstalledAppDetails extends XHook {
 		}
 
 		// Get package manager / resources
+		String xPackageName = this.getClass().getPackage().getName();
 		PackageManager pm = detailsView.getContext().getPackageManager();
-		Resources resources = pm.getResourcesForApplication(this.getClass().getPackage().getName());
+		Resources resources = pm.getResourcesForApplication(xPackageName);
 
 		// Add privacy view
 		LinearLayout privacyView = (LinearLayout) detailsView.findViewById(R.id.vwAppSettings);
 		if (privacyView != null)
 			detailsView.removeView(privacyView);
-		LayoutInflater inflater = (LayoutInflater) detailsView.getContext().getSystemService(
-				Context.LAYOUT_INFLATER_SERVICE);
+
+		// Load privacy view
+		Context xContext = detailsView.getContext().createPackageContext(xPackageName, 0);
+		LayoutInflater inflater = (LayoutInflater) xContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		privacyView = (LinearLayout) inflater.inflate(resources.getLayout(R.layout.xsettings), null);
 
 		// Check if internet access

@@ -26,6 +26,7 @@ Planned:
 * Record video
 * Incoming/outgoing number
 * Default deny/allow toggle
+* Batch mode
 
 **Tested with CyanogenMod 10**
 
@@ -47,6 +48,18 @@ Usage
 
 To see it in action: try disabling *Identification* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 or try disabling *contacts* for the Contacts app.
+
+Extending
+---------
+
+To restrict new info:
+
+* Find the package/class/method that exposes the info
+* Create a class that extends XHook
+* Hook the method in XPrivacy
+* Update XInstalledAppDetails.java/strings.xml if it is a new permission
+* Figure out how to get a context from the class instance
+* Write a before and/or after method to restrict the info
 
 
 License
