@@ -64,12 +64,11 @@ Developers
 To restrict new info:
 
 * Find the package/class/method that exposes the info
-* Create a class that extends XHook
-* Hook the method in XPrivacy
-* Update XInstalledAppDetails.java/strings.xml if it is a new permission
+* Create a class that extends [XHook](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XHook.java)
+* Hook the method in [XPrivacy](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java)
+* Update [XInstalledAppDetails](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XInstalledAppDetails.java)/[strings](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml) if it is a new permission
 * Figure out how to get a context from the class instance
 * Write a before and/or after method to restrict the info
-
 
 License
 -------
