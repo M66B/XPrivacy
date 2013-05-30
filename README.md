@@ -5,6 +5,9 @@ Proof of concept for a privacy manager using the [Xposed framework](http://forum
 
 Module to return no or fake data for any application, simply managed from the *Manage apps* menu.
 
+Permissions
+-----------
+
 Currently implemented:
 
 * Browser (bookmarks, searches, etc)
@@ -26,7 +29,8 @@ Planned:
 
 **Tested with CyanogenMod 10**
 
-Installation:
+Installation
+------------
 
 * **Make a nandroid backup**
 * Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
@@ -34,13 +38,14 @@ Installation:
 * Enable XPrivacy from the Xposed Installer app
 * Reboot
 
-Usage:
+Usage
+-----
 
 * Select *Manage apps* from the main menu
 * Select an app
 * Scroll down to disable permissions
 
-To see it in action: try disabling *location* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
+To see it in action: try disabling *Identification* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 or try disabling *contacts* for the Contacts app.
 
 
