@@ -16,15 +16,16 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
+		// Do nothing
+	}
+
+	@Override
+	protected void after(MethodHookParam param) throws Throwable {
+		super.after(param);
 		Field fieldContext = findField(param.thisObject.getClass(), "sContext");
 		Context context = (Context) fieldContext.get(param.thisObject);
 		int uid = Binder.getCallingUid();
 		if (!isAllowed(context, uid, true))
 			param.setResult("PRIVATE");
-	}
-
-	@Override
-	protected void after(MethodHookParam param) throws Throwable {
-		// Do nothing
 	}
 }

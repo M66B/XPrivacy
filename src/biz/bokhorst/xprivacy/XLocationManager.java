@@ -32,12 +32,13 @@ public class XLocationManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
+		super.after(param);
 		if (param.method.getName().equals("getLastKnownLocation")) {
 			Context context = getContext(param);
 			int uid = Binder.getCallingUid();
 			if (!isAllowed(context, uid, true)) {
 				String provider = (String) (param.args.length > 0 ? param.args[0] : null);
-				if (param.getResultOrThrowable() != null)
+				if (param.getResult() != null)
 					param.setResult(getRandomLocation(provider));
 			}
 		}

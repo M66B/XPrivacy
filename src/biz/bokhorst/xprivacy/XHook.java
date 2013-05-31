@@ -24,7 +24,10 @@ public abstract class XHook {
 
 	abstract protected void before(MethodHookParam param) throws Throwable;
 
-	abstract protected void after(MethodHookParam param) throws Throwable;
+	protected void after(MethodHookParam param) throws Throwable {
+		// throw any exception
+		param.getResultOrThrowable();
+	}
 
 	protected boolean isAllowed(Context context, int uid, boolean usage) {
 		return isAllowed(context, uid, mPermissionName, usage);
@@ -68,7 +71,7 @@ public abstract class XHook {
 			cursor.close();
 
 			// Result
-			info(String.format("get method=%s.%s permission=%s allowed=%b", XUtil.getPackageName(context, uid),
+			info(String.format("get method=%s/%s permission=%s allowed=%b", XUtil.getPackageName(context, uid),
 					getMethodName(), permissionName, allowed));
 			return allowed;
 		} catch (Throwable ex) {

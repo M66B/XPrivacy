@@ -19,7 +19,7 @@ public class XContentProvider extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Check if allowed
+		super.after(param);
 		ContentProvider contentProvider = (ContentProvider) param.thisObject;
 		if (!isAllowed(contentProvider.getContext(), Binder.getCallingUid(), true)) {
 			// Return empty cursor

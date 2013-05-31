@@ -23,6 +23,7 @@ public class XSettingsSecure extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
+		super.after(param);
 		try {
 			if (Settings.Secure.ANDROID_ID.equals(param.args[1])) {
 				ContentResolver contentResolver = (ContentResolver) param.args[0];
@@ -31,9 +32,10 @@ public class XSettingsSecure extends XHook {
 				if (!isAllowed(context, Binder.getCallingUid(), true))
 					param.setResult(Long.toHexString(0xDEFACEL));
 			}
-		} catch (Throwable ex) {
+		} catch (IllegalArgumentException ex) {
 			XUtil.bug(this, ex);
-			// Exceptions happen because Android ID is requested before the system is completely initialized
+			// Android ID is requested before the
+			// system is completely initialized
 		}
 	}
 }

@@ -37,7 +37,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		cPermissions.put(cPermissionCalendar, new String[] { "READ_CALENDAR" });
 		cPermissions.put(cPermissionCalllog, new String[] { "READ_CALL_LOG" });
 		cPermissions.put(cPermissionContacts, new String[] { "READ_CONTACTS" });
-		cPermissions.put(cPermissionID, new String[] { "READ_PHONE_STATE" });
+		cPermissions.put(cPermissionID, new String[] {}); // READ_PHONE_STATE
 		cPermissions.put(cPermissionLocation, new String[] { "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
 		cPermissions.put(cPermissionMessages, new String[] { "READ_SMS" });
 		cPermissions.put(cPermissionVoicemail, new String[] { "READ_WRITE_ALL_VOICEMAIL" });
@@ -55,9 +55,9 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		if (Build.VERSION.SDK_INT != 16)
 			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
 
-		String osVersion = System.getProperty("os.version");
-		if (!osVersion.contains("cyanogenmod"))
-			XUtil.log(null, Log.WARN, String.format("OS version %s", osVersion));
+		// String osVersion = System.getProperty("os.version");
+		// if (!osVersion.contains("cyanogenmod"))
+		// XUtil.log(null, Log.WARN, String.format("OS version %s", osVersion));
 
 		// Location manager
 		hook(new XLocationManager("addGpsStatusListener", cPermissionLocation), lpparam,
@@ -164,8 +164,8 @@ public class XPrivacy implements IXposedHookLoadPackage {
 
 			// Log
 			for (XC_MethodHook.Unhook unhook : hookSet) {
-				XUtil.log(hook, Log.INFO, String.format("hooked %s in %s (%d)", unhook.getHookedMethod().getName(),
-						lpparam.packageName, hookSet.size()));
+				XUtil.log(hook, Log.INFO, String.format("hooked %s/%s in %s (%d)", hookClass.getPackage().getName(),
+						unhook.getHookedMethod().getName(), lpparam.packageName, hookSet.size()));
 				break;
 			}
 		} catch (ClassNotFoundError ignored) {
