@@ -85,8 +85,9 @@ public class XInstalledAppDetails extends XHook {
 				textView.setText(resources.getString(stringId));
 
 			// Check if permission granted
-			boolean permissionGranted = false;
-			for (String aPermission : cPermissions.get(permissionName))
+			String[] aPermissions = cPermissions.get(permissionName);
+			boolean permissionGranted = (aPermissions.length == 0);
+			for (String aPermission : aPermissions)
 				if (pm.checkPermission("android.permission." + aPermission, mAppInfo.packageName) == PackageManager.PERMISSION_GRANTED) {
 					permissionGranted = true;
 					break;
@@ -96,8 +97,8 @@ public class XInstalledAppDetails extends XHook {
 
 			// Check last usage
 			ContentResolver cr = textView.getContext().getContentResolver();
-			Cursor cursor = cr.query(XPrivacyProvider.URI_LASTUSE, null, null,
-					new String[] { permissionName, Integer.toString(mAppInfo.uid) }, null);
+			Cursor cursor = cr.query(XPrivacyProvider.URI_LASTUSE, null, permissionName,
+					new String[] { Integer.toString(mAppInfo.uid) }, null);
 			if (cursor.moveToNext()) {
 				long lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_LASTUSE));
 				cursor.close();

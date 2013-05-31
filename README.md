@@ -10,14 +10,14 @@ Permissions
 
 Currently implemented:
 
-* Browser (bookmarks, searches, etc)
+* Browser (bookmarks, searches, etc) **untested**
 * Calendar
 * Call log
 * Contacts
 * Identification (Android, phone, number, subscriber, SIM)
 * Location (coarse/fine)
 * Messages (SMS/MMS)
-* Voicemail
+* Voicemail **untested**
 
 Planned:
 
@@ -37,7 +37,8 @@ Reported to work with CyanogenMod 10.1 at least partly.
 Installation
 ------------
 
-* **Make a nandroid backup**
+* Root your device
+* **Make a backup**
 * Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 * Install XPrivacy from [here](http://goo.im/devs/M66B/tools)
 * Enable XPrivacy from the Xposed Installer app
