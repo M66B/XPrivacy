@@ -35,6 +35,8 @@
             android:name=".XAppSettings"
             android:exported="true" >
         </activity>
+        <activity android:name=".XBatchEdit" >
+        </activity>
 
         <receiver android:name=".XPackageChange" >
             <intent-filter>

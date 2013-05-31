@@ -59,7 +59,6 @@ public class XAppSettings extends Activity {
 		PermissionsAdapter privacyListAdapter = new PermissionsAdapter(getBaseContext(),
 				android.R.layout.simple_list_item_multiple_choice, permissionsList, appInfo);
 		lvPrivacy.setAdapter(privacyListAdapter);
-		// XUtil.setListViewHeightBasedOnChildren(privacyListView);
 
 		// Set privacy values
 		for (int position = 0; position < lvPrivacy.getAdapter().getCount(); position++) {
