@@ -41,7 +41,7 @@ Installation
 * Root your device
 * **Make a backup**
 * Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
-* Install XPrivacy from [here](http://goo.im/devs/M66B/tools)
+* Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 * Enable XPrivacy from the Xposed Installer app
 * Reboot
 
