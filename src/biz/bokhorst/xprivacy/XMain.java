@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class XMain extends Activity {
 	private static final String PREF_NAME = "Preferences";
-	private static final String PREF_DEFAULTDENY = "Preference.DefaultDeny";
+	private static final String PREF_DEBUG = "Preference.Debug";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +22,13 @@ public class XMain extends Activity {
 		final SharedPreferences prefs = getBaseContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
 		// Check box default deny
-		final CheckBox cbDefaultDeny = (CheckBox) findViewById(R.id.cbDefaultDeny);
-		cbDefaultDeny.setEnabled(false);
-		cbDefaultDeny.setChecked(prefs.getBoolean(PREF_DEFAULTDENY, false));
-		cbDefaultDeny.setOnClickListener(new OnClickListener() {
+		final CheckBox cbDebug = (CheckBox) findViewById(R.id.cbDebug);
+		cbDebug.setChecked(prefs.getBoolean(PREF_DEBUG, false));
+		cbDebug.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putBoolean(PREF_DEFAULTDENY, cbDefaultDeny.isChecked());
+				editor.putBoolean(PREF_DEBUG, cbDebug.isChecked());
 				editor.commit();
 			}
 		});

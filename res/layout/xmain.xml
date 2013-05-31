@@ -10,10 +10,10 @@
     tools:context=".MainActivity" >
 
     <CheckBox
-        android:id="@+id/cbDefaultDeny"
+        android:id="@+id/cbDebug"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_defaultdeny" />
+        android:text="@string/app_debug" />
 
     <TextView
         android:id="@+id/tvVersion"

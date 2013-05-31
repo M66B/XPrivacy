@@ -52,12 +52,12 @@ public class XPrivacyProvider extends ContentProvider {
 
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-		if (selectionArgs != null && selectionArgs.length == 2) {
+		if (selectionArgs != null) {
 			// Get arguments
 			String permissionName = selection;
 			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
 
-			if (sUriMatcher.match(uri) == TYPE_PERMISSIONS) {
+			if (sUriMatcher.match(uri) == TYPE_PERMISSIONS && selectionArgs.length == 2) {
 				int uid = Integer.parseInt(selectionArgs[0]);
 				boolean usage = Boolean.parseBoolean(selectionArgs[1]);
 
@@ -72,9 +72,9 @@ public class XPrivacyProvider extends ContentProvider {
 				MatrixCursor mc = new MatrixCursor(new String[] { COL_NAME, COL_PERMISSION });
 				mc.addRow(new Object[] { permissionName, prefs.getString(getPermissionPref(permissionName), "*") });
 				return mc;
-			} else if (sUriMatcher.match(uri) == TYPE_LASTUSE) {
+			} else if (sUriMatcher.match(uri) == TYPE_LASTUSE && selectionArgs.length == 1) {
 				// Return usage
-				int uid = Integer.parseInt(selectionArgs[0]);
+				int uid = Integer.parseInt(selectionArgs[1]);
 				MatrixCursor mc = new MatrixCursor(new String[] { COL_UID, COL_NAME, COL_LASTUSE });
 				mc.addRow(new Object[] { uid, permissionName, prefs.getLong(getUsagePref(uid, permissionName), 0) });
 				return mc;
