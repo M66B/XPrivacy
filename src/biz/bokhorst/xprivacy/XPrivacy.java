@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import android.os.Build;
@@ -17,6 +19,30 @@ import de.robv.android.xposed.XC_MethodHook;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class XPrivacy implements IXposedHookLoadPackage {
+
+	// This should correspond with perm_<name> in strings.xml
+	private static final String cPermissionBrowser = "browser";
+	private static final String cPermissionCalendar = "calendar";
+	private static final String cPermissionCalllog = "calllog";
+	private static final String cPermissionContacts = "contacts";
+	private static final String cPermissionID = "identification";
+	private static final String cPermissionLocation = "location";
+	private static final String cPermissionMessages = "messages";
+	private static final String cPermissionVoicemail = "voicemail";
+
+	public static Map<String, String[]> cPermissions = new LinkedHashMap<String, String[]>();
+
+	static {
+		cPermissions.put(cPermissionBrowser, new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" });
+		cPermissions.put(cPermissionCalendar, new String[] { "READ_CALENDAR" });
+		cPermissions.put(cPermissionCalllog, new String[] { "READ_CALL_LOG" });
+		cPermissions.put(cPermissionContacts, new String[] { "READ_CONTACTS" });
+		cPermissions.put(cPermissionID, new String[] { "READ_PHONE_STATE" });
+		cPermissions.put(cPermissionLocation, new String[] { "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
+		cPermissions.put(cPermissionMessages, new String[] { "READ_SMS" });
+		cPermissions.put(cPermissionVoicemail, new String[] { "READ_WRITE_ALL_VOICEMAIL" });
+	}
+
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		// Log load
 		XUtil.log(null, Log.INFO, String.format("load package=%s", lpparam.packageName));
@@ -32,63 +58,65 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		// TODO: check if CyanogenMod
 
 		// Location manager
-		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "addGpsStatusListener",
+		hook(new XLocationManager(cPermissionLocation), lpparam, "android.location.LocationManager",
+				"addGpsStatusListener", true);
+		hook(new XLocationManager(cPermissionLocation), lpparam, "android.location.LocationManager", "addNmeaListener",
 				true);
-		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "addNmeaListener", true);
-		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "addProximityAlert", true);
-		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "getLastKnownLocation",
-				true);
-		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "requestLocationUpdates",
-				true);
-		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "requestSingleUpdate", true);
-		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "_requestLocationUpdates",
-				false);
+		hook(new XLocationManager(cPermissionLocation), lpparam, "android.location.LocationManager",
+				"addProximityAlert", true);
+		hook(new XLocationManager(cPermissionLocation), lpparam, "android.location.LocationManager",
+				"getLastKnownLocation", true);
+		hook(new XLocationManager(cPermissionLocation), lpparam, "android.location.LocationManager",
+				"requestLocationUpdates", true);
+		hook(new XLocationManager(cPermissionLocation), lpparam, "android.location.LocationManager",
+				"requestSingleUpdate", true);
+		hook(new XLocationManager(cPermissionLocation), lpparam, "android.location.LocationManager",
+				"_requestLocationUpdates", false);
 
 		// Settings secure
-		hook(new XSettingsSecure("identification"), lpparam, "android.provider.Settings.Secure", "getString", true);
+		hook(new XSettingsSecure(cPermissionID), lpparam, "android.provider.Settings.Secure", "getString", true);
 
 		// Telephony
-		hook(new XTelephonyManager("identification"), lpparam, "android.telephony.TelephonyManager", "getDeviceId",
+		hook(new XTelephonyManager(cPermissionID), lpparam, "android.telephony.TelephonyManager", "getDeviceId", true);
+		hook(new XTelephonyManager(cPermissionID), lpparam, "android.telephony.TelephonyManager", "getLine1Number",
 				true);
-		hook(new XTelephonyManager("identification"), lpparam, "android.telephony.TelephonyManager", "getLine1Number",
+		hook(new XTelephonyManager(cPermissionID), lpparam, "android.telephony.TelephonyManager", "getMsisdn", true);
+		hook(new XTelephonyManager(cPermissionID), lpparam, "android.telephony.TelephonyManager", "getSimSerialNumber",
 				true);
-		hook(new XTelephonyManager("identification"), lpparam, "android.telephony.TelephonyManager", "getMsisdn", true);
-		hook(new XTelephonyManager("identification"), lpparam, "android.telephony.TelephonyManager",
-				"getSimSerialNumber", true);
-		hook(new XTelephonyManager("identification"), lpparam, "android.telephony.TelephonyManager", "getSubscriberId",
+		hook(new XTelephonyManager(cPermissionID), lpparam, "android.telephony.TelephonyManager", "getSubscriberId",
 				true);
 
 		// Load calendar provider
 		if (lpparam.packageName.equals("com.android.browser.provider")) {
-			hook(new XContentProvider("browser"), lpparam, "com.android.browser.provider.BrowserProvider", "query",
-					true);
-			hook(new XContentProvider("browser"), lpparam, "com.android.browser.provider.BrowserProvider2", "query",
-					true);
+			hook(new XContentProvider(cPermissionBrowser), lpparam, "com.android.browser.provider.BrowserProvider",
+					"query", true);
+			hook(new XContentProvider(cPermissionBrowser), lpparam, "com.android.browser.provider.BrowserProvider2",
+					"query", true);
 		}
 
 		// Load calendar provider
 		else if (lpparam.packageName.equals("com.android.providers.calendar"))
-			hook(new XContentProvider("calendar"), lpparam, "com.android.providers.calendar.CalendarProvider2",
-					"query", true);
+			hook(new XContentProvider(cPermissionCalendar), lpparam,
+					"com.android.providers.calendar.CalendarProvider2", "query", true);
 
 		// Load contacts provider
 		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
-			hook(new XContentProvider("calllog"), lpparam, "com.android.providers.contacts.CallLogProvider", "query",
-					true);
-			hook(new XContentProvider("contacts"), lpparam, "com.android.providers.contacts.ContactsProvider2",
+			hook(new XContentProvider(cPermissionCalllog), lpparam, "com.android.providers.contacts.CallLogProvider",
 					"query", true);
-			hook(new XContentProvider("voicemail"), lpparam, "com.android.providers.contacts.VoicemailContentProvider",
-					"query", true);
+			hook(new XContentProvider(cPermissionContacts), lpparam,
+					"com.android.providers.contacts.ContactsProvider2", "query", true);
+			hook(new XContentProvider(cPermissionVoicemail), lpparam,
+					"com.android.providers.contacts.VoicemailContentProvider", "query", true);
 		}
 
 		// Load telephony provider
 		else if (lpparam.packageName.equals("com.android.providers.telephony")) {
-			hook(new XContentProvider("messages"), lpparam, "com.android.providers.telephony.SmsProvider", "query",
-					true);
-			hook(new XContentProvider("messages"), lpparam, "com.android.providers.telephony.MmsProvider", "query",
-					true);
-			hook(new XContentProvider("messages"), lpparam, "com.android.providers.telephony.MmsSmsProvider", "query",
-					true);
+			hook(new XContentProvider(cPermissionMessages), lpparam, "com.android.providers.telephony.SmsProvider",
+					"query", true);
+			hook(new XContentProvider(cPermissionMessages), lpparam, "com.android.providers.telephony.MmsProvider",
+					"query", true);
+			hook(new XContentProvider(cPermissionMessages), lpparam, "com.android.providers.telephony.MmsSmsProvider",
+					"query", true);
 			// com.android.providers.telephony.TelephonyProvider
 		}
 

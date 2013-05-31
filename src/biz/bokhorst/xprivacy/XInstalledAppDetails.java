@@ -2,9 +2,7 @@ package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -32,19 +30,6 @@ public class XInstalledAppDetails extends XHook {
 
 	public XInstalledAppDetails(String permissionName) {
 		super(permissionName);
-	}
-
-	private static Map<String, String[]> cPermissions = new LinkedHashMap<String, String[]>();
-
-	static {
-		cPermissions.put("browser", new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" });
-		cPermissions.put("calendar", new String[] { "READ_CALENDAR" });
-		cPermissions.put("calllog", new String[] { "READ_CALL_LOG" });
-		cPermissions.put("contacts", new String[] { "READ_CONTACTS" });
-		cPermissions.put("identification", new String[] { "READ_PHONE_STATE" });
-		cPermissions.put("location", new String[] { "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
-		cPermissions.put("messages", new String[] { "READ_SMS" });
-		cPermissions.put("voicemail", new String[] { "READ_WRITE_ALL_VOICEMAIL" });
 	}
 
 	@Override
@@ -85,7 +70,7 @@ public class XInstalledAppDetails extends XHook {
 				textView.setText(resources.getString(stringId));
 
 			// Check if permission granted
-			String[] aPermissions = cPermissions.get(permissionName);
+			String[] aPermissions = XPrivacy.cPermissions.get(permissionName);
 			boolean permissionGranted = (aPermissions.length == 0);
 			for (String aPermission : aPermissions)
 				if (pm.checkPermission("android.permission." + aPermission, mAppInfo.packageName) == PackageManager.PERMISSION_GRANTED) {
@@ -97,10 +82,10 @@ public class XInstalledAppDetails extends XHook {
 
 			// Check last usage
 			ContentResolver cr = textView.getContext().getContentResolver();
-			Cursor cursor = cr.query(XPrivacyProvider.URI_LASTUSE, null, permissionName,
+			Cursor cursor = cr.query(XPrivacyProvider.URI_LASTUSED, null, permissionName,
 					new String[] { Integer.toString(mAppInfo.uid) }, null);
 			if (cursor.moveToNext()) {
-				long lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_LASTUSE));
+				long lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_LASTUSED));
 				cursor.close();
 				if (lastUsage != 0)
 					textView.setTypeface(null, Typeface.BOLD_ITALIC);
@@ -166,7 +151,7 @@ public class XInstalledAppDetails extends XHook {
 
 		// Fill privacy list view adapter
 		ListView privacyListView = (ListView) privacyView.findViewById(R.id.lvPrivacy);
-		List<String> permissionsList = new ArrayList<String>(cPermissions.keySet());
+		List<String> permissionsList = new ArrayList<String>(XPrivacy.cPermissions.keySet());
 		PermissionsAdapter privacyListAdapter = new PermissionsAdapter(privacyView.getContext(),
 				android.R.layout.simple_list_item_multiple_choice, permissionsList, appInfo);
 		privacyListView.setAdapter(privacyListAdapter);

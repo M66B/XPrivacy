@@ -1,14 +1,9 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.text.TextUtils;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -43,19 +38,28 @@ public abstract class XHook {
 				return true;
 			}
 
-			// Get permissions
-			String[] permissions = getPermissions(context, uid, permissionName, usage);
+			// Get content resolver
+			ContentResolver contentResolver = context.getContentResolver();
+			if (contentResolver == null) {
+				warning("contentResolver is null");
+				return true;
+			}
 
-			// Decode permissions
-			List<String> listPermission = new ArrayList<String>();
-			listPermission.addAll(Arrays.asList(permissions));
-			boolean defaultAllowed = listPermission.get(0).equals("*");
+			// Query permission
+			Cursor cursor = contentResolver.query(XPrivacyProvider.URI_PERMISSIONS, null, permissionName, new String[] {
+					Integer.toString(uid), Boolean.toString(usage) }, null);
+			if (cursor == null) {
+				warning("cursor is null");
+				return true;
+			}
 
-			// Check if allowed
-			String sUid = Integer.toString(uid);
-			boolean allowed = !listPermission.contains(sUid);
-			if (!defaultAllowed)
-				allowed = !allowed;
+			// Get permission
+			boolean allowed = true;
+			if (cursor.moveToNext())
+				allowed = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_ALLOWED)));
+			else
+				warning("cursor is empty");
+			cursor.close();
 
 			// Result
 			info(String.format("get package=%s permission=%s allowed=%b", XUtil.getPackageName(context, uid),
@@ -78,58 +82,12 @@ public abstract class XHook {
 			return;
 		}
 
-		// Get permissions
-		String[] permissions = getPermissions(context, uid, permissionName, false);
-
-		// Decode permissions
-		List<String> listPermission = new ArrayList<String>();
-		listPermission.addAll(Arrays.asList(permissions));
-		boolean defaultAllowed = listPermission.get(0).equals("*");
-
-		// Allow or deny
-		String sUid = Integer.toString(uid);
-		if (defaultAllowed ? allowed : !allowed)
-			listPermission.remove(sUid);
-		if (defaultAllowed ? !allowed : allowed)
-			if (!listPermission.contains(sUid))
-				listPermission.add(sUid);
-
-		// Set permissions
-		permissions = listPermission.toArray(new String[listPermission.size()]);
-		setPermissions(context, uid, permissionName, permissions);
-		info(String.format("set package=%s permission=%s allowed=%b", XUtil.getPackageName(context, uid),
-				permissionName, allowed));
-	}
-
-	private String[] getPermissions(Context context, int uid, String permissionName, boolean usage) {
-		// Get content resolver
-		ContentResolver contentResolver = context.getContentResolver();
-		if (contentResolver == null) {
-			warning("contentResolver is null");
-			return null;
+		// Check uid
+		if (uid == 0) {
+			warning("uid=0");
+			return;
 		}
 
-		// Query permissions
-		Cursor cursor = contentResolver.query(XPrivacyProvider.URI_PERMISSIONS, null, permissionName, new String[] {
-				Integer.toString(uid), Boolean.toString(usage) }, null);
-		if (cursor == null) {
-			warning("cursor is null");
-			return null;
-		}
-		if (!cursor.moveToNext()) {
-			warning("cursor is empty");
-			return null;
-		}
-
-		// Get permissions
-		String permission = cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_PERMISSION));
-		cursor.close();
-
-		// Return permissions
-		return (permission == null ? null : permission.split(","));
-	}
-
-	private void setPermissions(Context context, int uid, String permissionName, String[] permissions) {
 		// Get content resolver
 		ContentResolver contentResolver = context.getContentResolver();
 		if (contentResolver == null) {
@@ -139,9 +97,11 @@ public abstract class XHook {
 
 		// Set permissions
 		ContentValues values = new ContentValues();
-		values.put(XPrivacyProvider.COL_NAME, permissionName);
-		values.put(XPrivacyProvider.COL_PERMISSION, TextUtils.join(",", permissions));
-		contentResolver.update(XPrivacyProvider.URI_PERMISSIONS, values, null, null);
+		values.put(XPrivacyProvider.COL_ALLOWED, Boolean.toString(allowed));
+		contentResolver.update(XPrivacyProvider.URI_PERMISSIONS, values, permissionName, null);
+
+		info(String.format("set package=%s permission=%s allowed=%b", XUtil.getPackageName(context, uid),
+				permissionName, allowed));
 	}
 
 	protected void info(String message) {
