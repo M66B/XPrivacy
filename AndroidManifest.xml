@@ -23,7 +23,7 @@
             android:value="XPrivacy" />
 
         <activity
-            android:name="biz.bokhorst.xprivacy.XMain"
+            android:name=".XMain"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,10 +31,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".XAppSettings"
+            android:exported="true" >
+        </activity>
 
         <receiver android:name=".XPackageChange" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
                 <data android:scheme="package" />

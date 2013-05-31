@@ -25,7 +25,7 @@ public class XTelephonyManager extends XHook {
 		Field fieldContext = findField(param.thisObject.getClass(), "sContext");
 		Context context = (Context) fieldContext.get(param.thisObject);
 		int uid = Binder.getCallingUid();
-		if (!isAllowed(context, uid, true))
+		if (!getAllowed(context, uid, true))
 			param.setResult("PRIVATE");
 	}
 }

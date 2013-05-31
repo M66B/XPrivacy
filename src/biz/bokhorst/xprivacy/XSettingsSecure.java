@@ -29,7 +29,7 @@ public class XSettingsSecure extends XHook {
 				ContentResolver contentResolver = (ContentResolver) param.args[0];
 				Field fieldContext = findField(contentResolver.getClass(), "mContext");
 				Context context = (Context) fieldContext.get(contentResolver);
-				if (!isAllowed(context, Binder.getCallingUid(), true))
+				if (!getAllowed(context, Binder.getCallingUid(), true))
 					param.setResult(Long.toHexString(0xDEFACEL));
 			}
 		} catch (IllegalArgumentException ex) {
