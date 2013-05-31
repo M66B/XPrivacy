@@ -97,6 +97,7 @@ public abstract class XHook {
 
 		// Set permissions
 		ContentValues values = new ContentValues();
+		values.put(XPrivacyProvider.COL_UID, uid);
 		values.put(XPrivacyProvider.COL_ALLOWED, Boolean.toString(allowed));
 		contentResolver.update(XPrivacyProvider.URI_PERMISSIONS, values, permissionName, null);
 

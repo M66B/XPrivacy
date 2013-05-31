@@ -108,12 +108,13 @@ public class XPrivacyProvider extends ContentProvider {
 		// TODO: register update time?
 		if (sUriMatcher.match(uri) == TYPE_PERMISSIONS) {
 			// Check update permission
-			int uid = Binder.getCallingUid();
-			String[] packages = getContext().getPackageManager().getPackagesForUid(uid);
+			int cuid = Binder.getCallingUid();
+			String[] packages = getContext().getPackageManager().getPackagesForUid(cuid);
 			List<String> listPackage = new ArrayList<String>(Arrays.asList(packages));
 			String packageName = this.getClass().getPackage().getName();
 			if (listPackage.contains("com.android.settings") || listPackage.contains(packageName)) {
 				// Get argument
+				int uid = values.getAsInteger(COL_UID);
 				boolean allowed = Boolean.parseBoolean(values.getAsString(COL_ALLOWED));
 
 				// Get permissions
@@ -139,9 +140,10 @@ public class XPrivacyProvider extends ContentProvider {
 				SharedPreferences.Editor editor = prefs.edit();
 				editor.putString(getPermissionPref(permissionName), permissions);
 				editor.commit();
+
+				return 1; // rows
 			} else
 				throw new SecurityException();
-			return 1;
 		}
 		throw new IllegalArgumentException();
 	}

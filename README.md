@@ -29,6 +29,7 @@ Planned:
 * Batch mode
 * Stop app after permission change
 * Add permission explanations
+* Move permission management entirely to provider
 
 **Tested with CyanogenMod 10**
 
