@@ -10,10 +10,16 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public abstract class XHook {
 
+	private String mMethodName;
 	private String mPermissionName;
 
-	public XHook(String permissionName) {
+	public XHook(String methodName, String permissionName) {
+		mMethodName = methodName;
 		mPermissionName = permissionName;
+	}
+
+	public String getMethodName() {
+		return mMethodName;
 	}
 
 	abstract protected void before(MethodHookParam param) throws Throwable;
@@ -62,8 +68,8 @@ public abstract class XHook {
 			cursor.close();
 
 			// Result
-			info(String.format("get package=%s permission=%s allowed=%b", XUtil.getPackageName(context, uid),
-					permissionName, allowed));
+			info(String.format("get method=%s.%s permission=%s allowed=%b", XUtil.getPackageName(context, uid),
+					getMethodName(), permissionName, allowed));
 			return allowed;
 		} catch (Throwable ex) {
 			XUtil.bug(this, ex);
@@ -101,8 +107,8 @@ public abstract class XHook {
 		values.put(XPrivacyProvider.COL_ALLOWED, Boolean.toString(allowed));
 		contentResolver.update(XPrivacyProvider.URI_PERMISSIONS, values, permissionName, null);
 
-		info(String.format("set package=%s permission=%s allowed=%b", XUtil.getPackageName(context, uid),
-				permissionName, allowed));
+		info(String.format("set method=%s.%s permission=%s allowed=%b", XUtil.getPackageName(context, uid),
+				getMethodName(), permissionName, allowed));
 	}
 
 	protected void info(String message) {

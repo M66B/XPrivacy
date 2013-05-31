@@ -10,8 +10,8 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XTelephonyManager extends XHook {
 
-	public XTelephonyManager(String permissionName) {
-		super(permissionName);
+	public XTelephonyManager(String methodName, String permissionName) {
+		super(methodName, permissionName);
 	}
 
 	@Override

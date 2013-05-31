@@ -12,8 +12,8 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSettingsSecure extends XHook {
 
-	public XSettingsSecure(String permissionName) {
-		super(permissionName);
+	public XSettingsSecure(String methodName, String permissionName) {
+		super(methodName, permissionName);
 	}
 
 	@Override

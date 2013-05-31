@@ -28,8 +28,8 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XInstalledAppDetails extends XHook {
 
-	public XInstalledAppDetails(String permissionName) {
-		super(permissionName);
+	public XInstalledAppDetails(String methodName, String permissionName) {
+		super(methodName, permissionName);
 	}
 
 	@Override

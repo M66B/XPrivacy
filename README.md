@@ -10,7 +10,7 @@ Permissions
 
 Currently implemented:
 
-* Browser (bookmarks, searches, etc) **untested**
+* Browser (bookmarks, searches, etc)
 * Calendar
 * Call log
 * Contacts
