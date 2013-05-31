@@ -33,6 +33,7 @@ public class XSettingsSecure extends XHook {
 			}
 		} catch (Throwable ex) {
 			XUtil.bug(this, ex);
+			// Exceptions happen because Android ID is requested before the system is completely initialized
 		}
 	}
 }

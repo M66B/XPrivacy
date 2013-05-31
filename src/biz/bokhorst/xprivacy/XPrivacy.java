@@ -41,6 +41,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "requestLocationUpdates",
 				true);
 		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "requestSingleUpdate", true);
+		// requestLocationUpdates is not hooked/called for all apps for unknown reasons
 		hook(new XLocationManager("location"), lpparam, "android.location.LocationManager", "_requestLocationUpdates",
 				false);
 
@@ -58,7 +59,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		hook(new XTelephonyManager("identification"), lpparam, "android.telephony.TelephonyManager", "getSubscriberId",
 				true);
 
-		// Load calendar provider
+		// Load browser provider
 		if (lpparam.packageName.equals("com.android.browser.provider")) {
 			hook(new XContentProvider("browser"), lpparam, "com.android.browser.provider.BrowserProvider", "query",
 					true);
