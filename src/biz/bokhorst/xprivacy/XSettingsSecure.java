@@ -23,7 +23,7 @@ public class XSettingsSecure extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		super.after(param);
+		param.getResultOrThrowable();
 		try {
 			String name = (String) param.args[1];
 			if (Settings.Secure.ANDROID_ID.equals(name))

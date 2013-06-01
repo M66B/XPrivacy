@@ -29,9 +29,8 @@ public class XLocationManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		super.after(param);
 		if (param.method.getName().equals("getLastKnownLocation"))
-			if (param.getResult() != null)
+			if (param.getResultOrThrowable() != null)
 				if (!isAllowed(param)) {
 					String provider = (String) param.args[0];
 					param.setResult(getRandomLocation(provider));

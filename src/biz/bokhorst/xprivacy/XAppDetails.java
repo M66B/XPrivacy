@@ -31,9 +31,6 @@ public class XAppDetails extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// TODO: usage statistics
-		super.after(param);
-
 		// Get app entry
 		Field fieldAppEntry = findField(param.thisObject.getClass(), "mAppEntry");
 		Object appEntry = fieldAppEntry.get(param.thisObject);

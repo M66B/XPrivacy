@@ -33,9 +33,8 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		super.after(param);
 		if (!param.method.getName().equals("listen"))
-			if (param.getResult() != null)
+			if (param.getResultOrThrowable() != null)
 				if (!isAllowed(param))
 					param.setResult("PRIVATE");
 	}

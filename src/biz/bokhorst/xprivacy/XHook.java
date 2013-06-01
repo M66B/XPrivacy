@@ -21,10 +21,7 @@ public abstract class XHook {
 
 	abstract protected void before(MethodHookParam param) throws Throwable;
 
-	protected void after(MethodHookParam param) throws Throwable {
-		// throw any exception
-		param.getResultOrThrowable();
-	}
+	abstract protected void after(MethodHookParam param) throws Throwable;
 
 	abstract protected boolean isAllowed(MethodHookParam param) throws Throwable;
 
