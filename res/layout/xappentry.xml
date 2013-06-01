@@ -6,19 +6,18 @@
 
     <ImageView
         android:id="@+id/imgAppEntryIcon"
-        android:layout_width="32dip"
-        android:layout_height="32dip" />
+        android:layout_width="?android:attr/listPreferredItemHeight"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:gravity="center_vertical" />
 
-    <TextView
+    <CheckedTextView
         android:id="@+id/tvAppEntryName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="6dip"
-        android:textIsSelectable="false" />
-
-    <CheckBox
-        android:id="@+id/chkAppEntryPermission"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
+        android:textAppearance="?android:attr/textAppearanceListItem" />
 
 </LinearLayout>

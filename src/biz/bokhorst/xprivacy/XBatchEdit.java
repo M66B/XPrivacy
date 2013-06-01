@@ -16,10 +16,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -61,6 +60,57 @@ public class XBatchEdit extends Activity {
 		lvApp.setAdapter(appAdapter);
 	}
 
+	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> {
+
+		private String mPermissionName;
+
+		public AppListAdapter(Context context, int resource, List<XApplicationInfo> objects, String permissionName) {
+			super(context, resource, objects);
+			mPermissionName = permissionName;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View row = inflater.inflate(R.layout.xappentry, parent, false);
+			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgAppEntryIcon);
+			final CheckedTextView tvApp = (CheckedTextView) row.findViewById(R.id.tvAppEntryName);
+
+			// Get entry
+			final XApplicationInfo appEntry = getItem(position);
+
+			// Set icon
+			imgIcon.setImageDrawable(appEntry.getDrawable());
+
+			// Set icon/title
+			tvApp.setText(appEntry.toString());
+
+			// Check if internet access
+			if (!appEntry.hasInternet())
+				tvApp.setTextColor(Color.GRAY);
+
+			// Check if used
+			if (appEntry.isUsed())
+				tvApp.setTypeface(null, Typeface.BOLD_ITALIC);
+
+			// Set privacy
+
+			// Change privacy
+			tvApp.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					boolean allowed = XPermissions.getAllowed(null, getBaseContext(), appEntry.getUid(),
+							mPermissionName, false);
+					allowed = !allowed;
+					tvApp.setChecked(!allowed);
+					XPermissions.setAllowed(null, getBaseContext(), appEntry.getUid(), mPermissionName, allowed);
+				}
+			});
+
+			return row;
+		}
+	}
+
 	private class XApplicationInfo implements Comparable<XApplicationInfo> {
 		private Drawable mDrawable;
 		private String mApplicationName;
@@ -100,57 +150,6 @@ public class XBatchEdit extends Activity {
 		@Override
 		public int compareTo(XApplicationInfo other) {
 			return toString().compareTo(other.toString());
-		}
-	}
-
-	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> {
-		String mPermissionName;
-
-		public AppListAdapter(Context context, int resource, List<XApplicationInfo> objects, String permissionName) {
-			super(context, resource, objects);
-			mPermissionName = permissionName;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.xappentry, parent, false);
-			ImageView icon = (ImageView) row.findViewById(R.id.imgAppEntryIcon);
-			TextView tvApp = (TextView) row.findViewById(R.id.tvAppEntryName);
-			final CheckBox chkPermission = (CheckBox) row.findViewById(R.id.chkAppEntryPermission);
-
-			// Get entry
-			final XApplicationInfo appEntry = getItem(position);
-
-			// Set icon
-			icon.setImageDrawable(appEntry.getDrawable());
-
-			// Set icon/title
-			tvApp.setText(appEntry.toString());
-
-			// Check if internet access
-			if (!appEntry.hasInternet())
-				tvApp.setTextColor(Color.GRAY);
-
-			// Check if used
-			if (appEntry.isUsed())
-				tvApp.setTypeface(null, Typeface.BOLD_ITALIC);
-
-			// Set check box
-			boolean allowed = XPermissions.getAllowed(null, getBaseContext(), appEntry.getUid(), mPermissionName,
-					chkPermission.isChecked());
-			chkPermission.setChecked(!allowed);
-
-			// Handle check box click
-			chkPermission.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					XPermissions.setAllowed(null, getBaseContext(), appEntry.getUid(), mPermissionName,
-							!chkPermission.isChecked());
-				}
-			});
-
-			return row;
 		}
 	}
 }
