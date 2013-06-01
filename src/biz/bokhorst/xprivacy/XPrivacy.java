@@ -62,6 +62,8 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		hook(new XTelephonyManager("getSubscriberId", XPermissions.cPhone), lpparam,
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("listen", XPermissions.cPhone), lpparam, "android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("_listen", XPermissions.cPhone), lpparam, "android.telephony.TelephonyManager",
+				false);
 
 		// Load browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {

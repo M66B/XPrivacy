@@ -35,6 +35,8 @@ public class XPermissions {
 		cPermissions.put(cVoicemail, new String[] { "READ_WRITE_ALL_VOICEMAIL" });
 	}
 
+	// android.intent.action.NEW_OUTGOING_CALL: PROCESS_OUTGOING_CALLS
+
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;
 
