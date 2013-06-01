@@ -19,11 +19,13 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 public class XPrivacy implements IXposedHookLoadPackage {
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
+
 		// Log load
 		XUtil.log(null, Log.INFO, String.format("load package=%s", lpparam.packageName));
 
 		// Skip hooking self
-		if (lpparam.packageName.equals(XPrivacy.class.getPackage()))
+		String self = XPrivacy.class.getPackage().getName();
+		if (lpparam.packageName.equals(self))
 			return;
 
 		// Check version
@@ -64,6 +66,8 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("listen", XPermissions.cIdentification), lpparam,
 				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("_listen", XPermissions.cIdentification), lpparam,
+				"android.telephony.TelephonyManager", false);
 
 		// Load browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {
@@ -137,17 +141,16 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				for (Constructor<?> constructor : hookClass.getDeclaredConstructors())
 					if (Modifier.isPublic(constructor.getModifiers()) ? visible : !visible)
 						hookSet.add(XposedBridge.hookMethod(constructor, methodHook));
-			} else {
+			} else
 				for (Method method : hookClass.getDeclaredMethods())
 					if (method.getName().equals(hook.getMethodName())
 							&& (Modifier.isPublic(method.getModifiers()) ? visible : !visible))
 						hookSet.add(XposedBridge.hookMethod(method, methodHook));
-			}
 
 			// Log
 			for (XC_MethodHook.Unhook unhook : hookSet) {
-				XUtil.log(hook, Log.INFO, String.format("hooked %s/%s in %s (%d)", hookClass.getPackage().getName(),
-						unhook.getHookedMethod().getName(), lpparam.packageName, hookSet.size()));
+				XUtil.log(hook, Log.INFO, String.format("hooked %s.%s in %s (%d)", hookClass.getName(), unhook
+						.getHookedMethod().getName(), lpparam.packageName, hookSet.size()));
 				break;
 			}
 		} catch (ClassNotFoundError ignored) {

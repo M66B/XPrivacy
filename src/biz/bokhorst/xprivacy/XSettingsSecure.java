@@ -27,8 +27,9 @@ public class XSettingsSecure extends XHook {
 		try {
 			String name = (String) param.args[1];
 			if (Settings.Secure.ANDROID_ID.equals(name))
-				if (!isAllowed(param))
-					param.setResult(Long.toHexString(0xDEFACEL));
+				if (param.getResult() != null)
+					if (!isAllowed(param))
+						param.setResult(Long.toHexString(0xDEFACEL));
 		} catch (IllegalArgumentException ex) {
 			// Android ID is requested before system initialization
 			XUtil.bug(this, ex);

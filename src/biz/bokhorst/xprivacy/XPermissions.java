@@ -107,9 +107,9 @@ public class XPermissions {
 			cursor.close();
 
 			// Result
-			XUtil.log(hook, Log.INFO, String.format("get method=%s/%s permission=%s allowed=%b",
-					XUtil.getPackageName(context, uid), (hook == null ? null : hook.getMethodName()), permissionName,
-					allowed));
+			XUtil.log(hook, Log.INFO,
+					String.format("get method=%s/%s permission=%s allowed=%b", getPackageName(context, uid),
+							(hook == null ? null : hook.getMethodName()), permissionName, allowed));
 			return allowed;
 		} catch (Throwable ex) {
 			XUtil.bug(hook, ex);
@@ -144,7 +144,13 @@ public class XPermissions {
 		contentResolver.update(XPrivacyProvider.URI_PERMISSIONS, values, permissionName, null);
 
 		XUtil.log(hook, Log.INFO, String.format("set method=%s.%s permission=%s allowed=%b",
-				XUtil.getPackageName(context, uid), (hook == null ? null : hook.getMethodName()), permissionName,
-				allowed));
+				getPackageName(context, uid), (hook == null ? null : hook.getMethodName()), permissionName, allowed));
+	}
+
+	private static String getPackageName(Context context, int uid) {
+		String[] packages = context.getPackageManager().getPackagesForUid(uid);
+		if (packages != null && packages.length == 1)
+			return packages[0];
+		return Integer.toString(uid);
 	}
 }

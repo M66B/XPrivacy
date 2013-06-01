@@ -23,11 +23,29 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (param.method.getName().equals("listen"))
-		/* if (!isAllowed(param)) */{
+		if (param.method.getName().equals("listen")) {
 			PhoneStateListener listener = (PhoneStateListener) param.args[0];
-			param.args[0] = new XPhoneStateListener(listener);
+			if (listener != null)
+				if (!isAllowed(param))
+					param.args[0] = new XPhoneStateListener(listener);
 		}
+	}
+
+	@Override
+	protected void after(MethodHookParam param) throws Throwable {
+		super.after(param);
+		if (!param.method.getName().equals("listen"))
+			if (param.getResult() != null)
+				if (!isAllowed(param))
+					param.setResult("PRIVATE");
+	}
+
+	@Override
+	protected boolean isAllowed(MethodHookParam param) throws Throwable {
+		Field fieldContext = findField(param.thisObject.getClass(), "sContext");
+		Context context = (Context) fieldContext.get(param.thisObject);
+		int uid = Binder.getCallingUid();
+		return getAllowed(context, uid, true);
 	}
 
 	private class XPhoneStateListener extends PhoneStateListener {
@@ -44,8 +62,12 @@ public class XTelephonyManager extends XHook {
 
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
-			XUtil.log(null, Log.INFO, mListener.getClass().getPackage().getName() + ": " + incomingNumber);
-			mListener.onCallStateChanged(state, "12345");
+			try {
+				XUtil.log(XTelephonyManager.this, Log.INFO, mListener.getClass().getPackage().getName() + ": "
+						+ incomingNumber);
+			} catch (Throwable ex) {
+			}
+			mListener.onCallStateChanged(state, "PRIVATE");
 		}
 
 		@Override
@@ -93,21 +115,5 @@ public class XTelephonyManager extends XHook {
 		public void onSignalStrengthsChanged(SignalStrength signalStrength) {
 			mListener.onSignalStrengthsChanged(signalStrength);
 		}
-	}
-
-	@Override
-	protected void after(MethodHookParam param) throws Throwable {
-		super.after(param);
-		if (!param.method.getName().equals("listen"))
-			if (!isAllowed(param))
-				param.setResult("PRIVATE");
-	}
-
-	@Override
-	protected boolean isAllowed(MethodHookParam param) throws Throwable {
-		Field fieldContext = findField(param.thisObject.getClass(), "sContext");
-		Context context = (Context) fieldContext.get(param.thisObject);
-		int uid = Binder.getCallingUid();
-		return getAllowed(context, uid, true);
 	}
 }

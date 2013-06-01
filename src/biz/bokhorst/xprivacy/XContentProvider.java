@@ -21,12 +21,11 @@ public class XContentProvider extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		super.after(param);
-		if (!isAllowed(param)) {
-			// Return empty cursor
-			Cursor cursor = (Cursor) param.getResultOrThrowable();
-			if (cursor != null)
+		// Return empty cursor
+		Cursor cursor = (Cursor) param.getResult();
+		if (cursor != null)
+			if (!isAllowed(param))
 				param.setResult(new XCursor(cursor));
-		}
 	}
 
 	@Override
