@@ -134,9 +134,15 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				}
 			};
 
+			// Find class
+			Class<?> hookClass = findClass(className, lpparam.classLoader);
+			if (hookClass == null) {
+				XUtil.log(hook, Log.WARN, "Class not found: " + className);
+				return;
+			}
+
 			// Add hook
 			Set<XC_MethodHook.Unhook> hookSet = new HashSet<XC_MethodHook.Unhook>();
-			Class<?> hookClass = findClass(className, lpparam.classLoader);
 			if (hook.getMethodName() == null) {
 				for (Constructor<?> constructor : hookClass.getDeclaredConstructors())
 					if (Modifier.isPublic(constructor.getModifiers()) ? visible : !visible)
@@ -147,16 +153,18 @@ public class XPrivacy implements IXposedHookLoadPackage {
 							&& (Modifier.isPublic(method.getModifiers()) ? visible : !visible))
 						hookSet.add(XposedBridge.hookMethod(method, methodHook));
 
+			// Check if found
+			if (hookSet.isEmpty()) {
+				XUtil.log(hook, Log.WARN, "Method not found: " + hook.getMethodName());
+				return;
+			}
+
 			// Log
 			for (XC_MethodHook.Unhook unhook : hookSet) {
-				XUtil.log(hook, Log.INFO, String.format("hooked %s.%s in %s (%d)", hookClass.getName(), unhook
-						.getHookedMethod().getName(), lpparam.packageName, hookSet.size()));
+				XUtil.log(hook, Log.INFO, String.format("%s: hooked %s.%s (%d)", lpparam.packageName,
+						hookClass.getName(), unhook.getHookedMethod().getName(), hookSet.size()));
 				break;
 			}
-		} catch (ClassNotFoundError ignored) {
-			XUtil.log(hook, Log.ERROR, "class not found");
-		} catch (NoSuchMethodError ignored) {
-			XUtil.log(hook, Log.ERROR, "method not found");
 		} catch (Throwable ex) {
 			XUtil.bug(null, ex);
 		}
