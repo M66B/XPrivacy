@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/tvAppName"
+        android:id="@+id/tvApp"
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,11 +19,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="6dip"
-        android:text="@string/settings_internet"
+        android:text="@string/settings_nointernet"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
     <TextView
+        android:id="@+id/tvUsed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="6dip"
@@ -32,6 +33,7 @@
         android:textIsSelectable="false" />
 
     <TextView
+        android:id="@+id/tvGranted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="6dip"
@@ -49,7 +51,7 @@
         android:textIsSelectable="false" />
 
     <ListView
-        android:id="@+id/lvPrivacy"
+        android:id="@+id/lvPermission"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="multipleChoice" />

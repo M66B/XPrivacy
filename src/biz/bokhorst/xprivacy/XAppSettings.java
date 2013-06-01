@@ -4,23 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class XAppSettings extends Activity {
 
@@ -46,94 +42,71 @@ public class XAppSettings extends Activity {
 		}
 
 		// Display app name
-		TextView tvAppName = (TextView) findViewById(R.id.tvAppName);
+		TextView tvAppName = (TextView) findViewById(R.id.tvApp);
 		tvAppName.setText(pm.getApplicationLabel(appInfo));
 
 		// Check if internet access
-		if (pm.checkPermission("android.permission.INTERNET", packageName) == PackageManager.PERMISSION_GRANTED)
+		if (XPermissions.hasInternet(getBaseContext(), packageName))
 			findViewById(R.id.tvInternet).setVisibility(View.GONE);
 
+		// Legend
+		TextView tvUsed = (TextView) findViewById(R.id.tvUsed);
+		tvUsed.setTypeface(null, Typeface.BOLD_ITALIC);
+		TextView tvGranted = (TextView) findViewById(R.id.tvGranted);
+		tvGranted.setTextColor(Color.GRAY);
+
 		// Fill privacy list view adapter
-		ListView lvPrivacy = (ListView) findViewById(R.id.lvPrivacy);
-		List<String> permissionsList = new ArrayList<String>(XPermissions.cPermissions.keySet());
-		PermissionsAdapter privacyListAdapter = new PermissionsAdapter(getBaseContext(),
-				android.R.layout.simple_list_item_multiple_choice, permissionsList, appInfo);
+		final ListView lvPrivacy = (ListView) findViewById(R.id.lvPermission);
+		List<String> listPermission = new ArrayList<String>(XPermissions.cPermissions.keySet());
+		PermissionAdapter privacyListAdapter = new PermissionAdapter(getBaseContext(),
+				android.R.layout.simple_list_item_multiple_choice, appInfo, listPermission);
 		lvPrivacy.setAdapter(privacyListAdapter);
 
 		// Set privacy values
 		for (int position = 0; position < lvPrivacy.getAdapter().getCount(); position++) {
 			String permissionName = (String) lvPrivacy.getItemAtPosition(position);
 			lvPrivacy.setItemChecked(position,
-					XUtil.getAllowed(null, getBaseContext(), appInfo.uid, permissionName, false));
+					!XPermissions.getAllowed(null, getBaseContext(), appInfo.uid, permissionName, false));
 		}
 
 		// Listen for privacy changes
-		lvPrivacy.setOnItemClickListener(new OnItemClickListener() {
+		lvPrivacy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				ListView privacyListView = (ListView) parent;
-				String permissionName = (String) privacyListView.getItemAtPosition(position);
-				boolean allowed = privacyListView.isItemChecked(position);
-				XUtil.setAllowed(null, getBaseContext(), appInfo.uid, permissionName, allowed);
+				String permissionName = (String) lvPrivacy.getItemAtPosition(position);
+				boolean allowed = !lvPrivacy.isItemChecked(position);
+				XPermissions.setAllowed(null, getBaseContext(), appInfo.uid, permissionName, allowed);
 			}
 		});
 	}
 
-	private class PermissionsAdapter extends ArrayAdapter<String> {
-		private List<String> mPermissions;
-		ApplicationInfo mAppInfo;
+	private class PermissionAdapter extends ArrayAdapter<String> {
+		private ApplicationInfo mAppInfo;
 
-		public PermissionsAdapter(Context context, int resource, List<String> objects, ApplicationInfo appInfo) {
+		public PermissionAdapter(Context context, int resource, ApplicationInfo appInfo, List<String> objects) {
 			super(context, resource, objects);
-			this.mPermissions = objects;
 			mAppInfo = appInfo;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// Get view info
-			String permissionName = mPermissions.get(position);
-			TextView textView = (TextView) super.getView(position, convertView, parent);
+			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View row = inflater.inflate(android.R.layout.simple_list_item_multiple_choice, parent, false);
+			TextView tvPermission = (TextView) row.findViewById(android.R.id.text1);
 
-			// Get resources
-			PackageManager pm = textView.getContext().getPackageManager();
-			String packageName = this.getClass().getPackage().getName();
-			Resources resources;
-			try {
-				resources = pm.getResourcesForApplication(packageName);
-			} catch (NameNotFoundException e) {
-				e.printStackTrace();
-				return textView;
-			}
+			// Display localize name
+			String permissionName = getItem(position);
+			tvPermission.setText(XPermissions.getLocalizedName(getBaseContext(), permissionName));
 
-			// Localize text
-			int stringId = resources.getIdentifier("perm_" + permissionName, "string", packageName);
-			if (stringId != 0)
-				textView.setText(resources.getString(stringId));
+			// Display if permission granted
+			if (!XPermissions.isGranted(getBaseContext(), mAppInfo.packageName, permissionName))
+				tvPermission.setTextColor(Color.GRAY);
 
-			// Check if permission granted
-			String[] aPermissions = XPermissions.cPermissions.get(permissionName);
-			boolean permissionGranted = (aPermissions.length == 0);
-			for (String aPermission : aPermissions)
-				if (pm.checkPermission("android.permission." + aPermission, mAppInfo.packageName) == PackageManager.PERMISSION_GRANTED) {
-					permissionGranted = true;
-					break;
-				}
-			if (!permissionGranted)
-				textView.setTextColor(Color.GRAY);
+			// Display if used
+			if (XPermissions.isUsed(getBaseContext(), mAppInfo.uid, permissionName))
+				tvPermission.setTypeface(null, Typeface.BOLD_ITALIC);
 
-			// Check last usage
-			ContentResolver cr = textView.getContext().getContentResolver();
-			Cursor cursor = cr.query(XPrivacyProvider.URI_LASTUSED, null, permissionName,
-					new String[] { Integer.toString(mAppInfo.uid) }, null);
-			if (cursor.moveToNext()) {
-				long lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_LASTUSED));
-				cursor.close();
-				if (lastUsage != 0)
-					textView.setTypeface(null, Typeface.BOLD_ITALIC);
-			}
-
-			return textView;
+			return row;
 		}
 	}
 }

@@ -27,11 +27,11 @@ public abstract class XHook {
 	}
 
 	protected boolean getAllowed(Context context, int uid, boolean usage) {
-		return XUtil.getAllowed(this, context, uid, mPermissionName, usage);
+		return XPermissions.getAllowed(this, context, uid, mPermissionName, usage);
 	}
 
 	protected void setAllowed(Context context, int uid, boolean allowed) {
-		XUtil.setAllowed(this, context, uid, mPermissionName, allowed);
+		XPermissions.setAllowed(this, context, uid, mPermissionName, allowed);
 	}
 
 	protected void info(String message) {

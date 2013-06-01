@@ -6,8 +6,8 @@
     android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/tvPermission"
         style="?android:attr/listSeparatorTextViewStyle"
-        android:text="@string/app_batchedit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dip"
@@ -15,11 +15,36 @@
         android:textIsSelectable="false" />
 
     <TextView
-        android:id="@+id/tvPermission"
+        android:id="@+id/tvUsed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="6dip"
+        android:text="@string/settings_permused"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textIsSelectable="false" />
+
+    <TextView
+        android:id="@+id/tvInternet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="6dip"
+        android:text="@string/settings_nointernet"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textIsSelectable="false" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6dip"
+        android:paddingLeft="6dip"
+        android:text="@string/settings_restrict"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textIsSelectable="false" />
+
+    <ListView
+        android:id="@+id/lvApp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:choiceMode="multipleChoice" />
 
 </LinearLayout>

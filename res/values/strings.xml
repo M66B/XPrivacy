@@ -14,9 +14,9 @@
     <string name="perm_location">Location</string>
     <string name="perm_messages">SMS/MMS</string>
     <string name="perm_voicemail">Voicemail</string>
-    <string name="settings_internet">This application has no internet access</string>
-    <string name="settings_permused">Bold: permission used</string>
-    <string name="settings_permgranted">Gray: permission not granted</string>
-    <string name="settings_restrict">Uncheck to restrict information:</string>
+    <string name="settings_nointernet">No internet access</string>
+    <string name="settings_permused">Permission used</string>
+    <string name="settings_permgranted">Permission not granted</string>
+    <string name="settings_restrict">Check to restrict information:</string>
 
 </resources>

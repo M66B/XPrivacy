@@ -11,28 +11,6 @@
     tools:context=".MainActivity" >
 
     <TextView
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="6dip"
-        android:layout_marginTop="8dip"
-        android:text="@string/app_batchedit"
-        android:textIsSelectable="false" />
-
-    <Spinner
-        android:id="@+id/spinPermission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawSelectorOnTop="true" >
-    </Spinner>
-
-    <CheckBox
-        android:id="@+id/cbDebug"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_debug" />
-
-    <TextView
         android:id="@+id/tvVersion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,5 +22,21 @@
         android:layout_height="wrap_content"
         android:text="@string/app_copyright"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dip"
+        android:layout_marginTop="8dip"
+        android:text="@string/app_batchedit"
+        android:textIsSelectable="false" />
+
+    <ListView
+        android:id="@+id/lvPermission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:choiceMode="singleChoice"
+        android:stackFromBottom="true" />
 
 </LinearLayout>
