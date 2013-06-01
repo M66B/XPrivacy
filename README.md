@@ -24,7 +24,7 @@ Planned:
 * Take photo
 * Record audio
 * Record video
-* Outgoing number
+* Incoming/outgoing number
 * Add permission explanations
 
 **Tested with CyanogenMod 10**
