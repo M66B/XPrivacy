@@ -23,20 +23,24 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (param.method.getName().equals("listen")) {
+		if (param.method.getName().equals("listen") || param.method.getName().equals("_listen")) {
+			info("before listen");
 			PhoneStateListener listener = (PhoneStateListener) param.args[0];
-			if (listener != null)
-				if (!isAllowed(param))
-					param.args[0] = new XPhoneStateListener(listener);
+			if (listener == null)
+				info("listener is null");
+			else
+				/* if (!isAllowed(param)) */
+				param.args[0] = new XPhoneStateListener(listener);
 		}
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (!param.method.getName().equals("listen"))
-			if (param.getResultOrThrowable() != null)
-				if (!isAllowed(param))
-					param.setResult("PRIVATE");
+		if (param.method.getName().equals("listen") || param.method.getName().equals("_listen"))
+			info("after listen");
+		else if (param.getResultOrThrowable() != null)
+			if (!isAllowed(param))
+				param.setResult(XPermissions.cDefaceString);
 	}
 
 	@Override
@@ -66,7 +70,7 @@ public class XTelephonyManager extends XHook {
 						+ incomingNumber);
 			} catch (Throwable ex) {
 			}
-			mListener.onCallStateChanged(state, "PRIVATE");
+			mListener.onCallStateChanged(state, XPermissions.cDefaceString);
 		}
 
 		@Override

@@ -35,6 +35,9 @@ public class XPermissions {
 		cPermissions.put(cVoicemail, new String[] { "READ_WRITE_ALL_VOICEMAIL" });
 	}
 
+	public static final String cDefaceString = "PRIVATE";
+	public static final long cDefaceHex = 0xDEFACEL;
+
 	public static boolean hasInternet(Context context, String packageName) {
 		PackageManager pm = context.getPackageManager();
 		return (pm.checkPermission("android.permission.INTERNET", packageName) == PackageManager.PERMISSION_GRANTED);
