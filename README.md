@@ -25,11 +25,7 @@ Planned:
 * Record audio
 * Record video
 * Incoming/outgoing number
-* Default deny/allow toggle
-* Batch mode
-* Stop app after permission change
 * Add permission explanations
-* Move permission management entirely to provider
 
 **Tested with CyanogenMod 10**
 
