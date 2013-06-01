@@ -53,18 +53,15 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				"android.provider.Settings.Secure");
 
 		// Telephony
-		hook(new XTelephonyManager("getDeviceId", XPermissions.cIdentification), lpparam,
+		hook(new XTelephonyManager("getDeviceId", XPermissions.cPhone), lpparam, "android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getLine1Number", XPermissions.cPhone), lpparam,
 				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getLine1Number", XPermissions.cIdentification), lpparam,
+		hook(new XTelephonyManager("getMsisdn", XPermissions.cPhone), lpparam, "android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getSimSerialNumber", XPermissions.cPhone), lpparam,
 				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getMsisdn", XPermissions.cIdentification), lpparam,
+		hook(new XTelephonyManager("getSubscriberId", XPermissions.cPhone), lpparam,
 				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getSimSerialNumber", XPermissions.cIdentification), lpparam,
-				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getSubscriberId", XPermissions.cIdentification), lpparam,
-				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("listen", XPermissions.cIdentification), lpparam,
-				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("listen", XPermissions.cPhone), lpparam, "android.telephony.TelephonyManager");
 
 		// Load browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {
@@ -79,8 +76,8 @@ public class XPrivacy implements IXposedHookLoadPackage {
 
 		// Load contacts provider
 		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
-			hook(new XContentProvider(XPermissions.cCalllog), lpparam,
-					"com.android.providers.contacts.CallLogProvider", true);
+			hook(new XContentProvider(XPermissions.cPhone), lpparam, "com.android.providers.contacts.CallLogProvider",
+					true);
 			hook(new XContentProvider(XPermissions.cContacts), lpparam,
 					"com.android.providers.contacts.ContactsProvider2");
 			hook(new XContentProvider(XPermissions.cVoicemail), lpparam,

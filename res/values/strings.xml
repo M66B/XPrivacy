@@ -8,11 +8,11 @@
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="perm_browser">Browser info</string>
     <string name="perm_calendar">Calendar</string>
-    <string name="perm_calllog">Call log</string>
     <string name="perm_contacts">Contacts</string>
     <string name="perm_identification">Identification</string>
     <string name="perm_location">Location</string>
     <string name="perm_messages">SMS/MMS</string>
+    <string name="perm_phone">Phone</string>
     <string name="perm_voicemail">Voicemail</string>
     <string name="settings_nointernet">No internet access</string>
     <string name="settings_permused">Permission used</string>
