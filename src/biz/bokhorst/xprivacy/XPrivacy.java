@@ -43,8 +43,7 @@ public class XPrivacy implements IXposedHookLoadPackage {
 				"android.location.LocationManager");
 		hook(new XLocationManager("requestSingleUpdate", XPermissions.cLocation), lpparam,
 				"android.location.LocationManager");
-		// requestLocationUpdates is not hooked/called for all apps for unknown
-		// reasons
+		// requestLocationUpdates not working for all apps for unknown reasons
 		hook(new XLocationManager("_requestLocationUpdates", XPermissions.cLocation), lpparam,
 				"android.location.LocationManager", false);
 
@@ -62,6 +61,8 @@ public class XPrivacy implements IXposedHookLoadPackage {
 		hook(new XTelephonyManager("getSimSerialNumber", XPermissions.cIdentification), lpparam,
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getSubscriberId", XPermissions.cIdentification), lpparam,
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("listen", XPermissions.cIdentification), lpparam,
 				"android.telephony.TelephonyManager");
 
 		// Load browser provider
@@ -96,8 +97,8 @@ public class XPrivacy implements IXposedHookLoadPackage {
 
 		// Load settings
 		else if (lpparam.packageName.equals("com.android.settings"))
-			hook(new XAppDetails("refreshUi", null), lpparam,
-					"com.android.settings.applications.InstalledAppDetails", false);
+			hook(new XAppDetails("refreshUi", null), lpparam, "com.android.settings.applications.InstalledAppDetails",
+					false);
 	}
 
 	private void hook(final XHook hook, final LoadPackageParam lpparam, String className) {

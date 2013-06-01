@@ -19,35 +19,31 @@ public class XLocationManager extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
-		if (!methodName.equals("getLastKnownLocation")) {
-			Context context = getContext(param);
-			int uid = Binder.getCallingUid();
-			if (!getAllowed(context, uid, true))
+		if (!methodName.equals("getLastKnownLocation"))
+			if (!isAllowed(param))
 				if (methodName.equals("addGpsStatusListener") || methodName.equals("addNmeaListener"))
 					param.setResult(false);
 				else
 					param.setResult(null);
-		}
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		super.after(param);
-		if (param.method.getName().equals("getLastKnownLocation")) {
-			Context context = getContext(param);
-			int uid = Binder.getCallingUid();
-			if (!getAllowed(context, uid, true)) {
-				String provider = (String) (param.args.length > 0 ? param.args[0] : null);
-				if (param.getResult() != null)
+		if (param.method.getName().equals("getLastKnownLocation"))
+			if (!isAllowed(param))
+				if (param.getResult() != null) {
+					String provider = (String) param.args[0];
 					param.setResult(getRandomLocation(provider));
-			}
-		}
+				}
 	}
 
-	private Context getContext(MethodHookParam param) throws IllegalAccessException, NoSuchFieldError {
+	@Override
+	protected boolean isAllowed(MethodHookParam param) throws Throwable {
 		Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 		Context context = (Context) fieldContext.get(param.thisObject);
-		return context;
+		int uid = Binder.getCallingUid();
+		return getAllowed(context, uid, true);
 	}
 
 	private Location getRandomLocation(String provider) {

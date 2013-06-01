@@ -25,17 +25,23 @@ public class XSettingsSecure extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		super.after(param);
 		try {
-			if (Settings.Secure.ANDROID_ID.equals(param.args[1])) {
-				ContentResolver contentResolver = (ContentResolver) param.args[0];
-				Field fieldContext = findField(contentResolver.getClass(), "mContext");
-				Context context = (Context) fieldContext.get(contentResolver);
-				if (!getAllowed(context, Binder.getCallingUid(), true))
+			String name = (String) param.args[1];
+			if (Settings.Secure.ANDROID_ID.equals(name))
+				if (!isAllowed(param))
 					param.setResult(Long.toHexString(0xDEFACEL));
-			}
 		} catch (IllegalArgumentException ex) {
+			// Android ID is requested before system initialization
 			XUtil.bug(this, ex);
-			// Android ID is requested before the
-			// system is completely initialized
 		}
 	}
+
+	@Override
+	protected boolean isAllowed(MethodHookParam param) throws Throwable {
+		ContentResolver contentResolver = (ContentResolver) param.args[0];
+		Field fieldContext = findField(contentResolver.getClass(), "mContext");
+		Context context = (Context) fieldContext.get(contentResolver);
+		int uid = Binder.getCallingUid();
+		return getAllowed(context, uid, true);
+	}
+
 }

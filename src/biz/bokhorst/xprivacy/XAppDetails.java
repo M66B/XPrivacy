@@ -99,4 +99,9 @@ public class XAppDetails extends XHook {
 		detailsView.addView(privacyButtonView);
 		detailsView.invalidate();
 	}
+
+	@Override
+	protected boolean isAllowed(MethodHookParam param) throws Throwable {
+		return true;
+	}
 }

@@ -26,6 +26,8 @@ public abstract class XHook {
 		param.getResultOrThrowable();
 	}
 
+	abstract protected boolean isAllowed(MethodHookParam param) throws Throwable;
+
 	protected boolean getAllowed(Context context, int uid, boolean usage) {
 		return XPermissions.getAllowed(this, context, uid, mPermissionName, usage);
 	}

@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import android.content.ContentProvider;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Binder;
 
@@ -20,12 +21,19 @@ public class XContentProvider extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		super.after(param);
-		ContentProvider contentProvider = (ContentProvider) param.thisObject;
-		if (!getAllowed(contentProvider.getContext(), Binder.getCallingUid(), true)) {
+		if (!isAllowed(param)) {
 			// Return empty cursor
 			Cursor cursor = (Cursor) param.getResultOrThrowable();
 			if (cursor != null)
 				param.setResult(new XCursor(cursor));
 		}
+	}
+
+	@Override
+	protected boolean isAllowed(MethodHookParam param) throws Throwable {
+		ContentProvider contentProvider = (ContentProvider) param.thisObject;
+		Context context = contentProvider.getContext();
+		int uid = Binder.getCallingUid();
+		return getAllowed(context, uid, true);
 	}
 }

@@ -24,7 +24,7 @@ Planned:
 * Take photo
 * Record audio
 * Record video
-* Incoming/outgoing number
+* Outgoing number
 * Add permission explanations
 
 **Tested with CyanogenMod 10**
@@ -46,7 +46,7 @@ Usage
 
 * Select *Manage apps* from the main menu
 * Select an app
-* Scroll down to disable permissions
+* Press the XPrivacy button
 
 To see it in action: try disabling *Identification* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 or try disabling *contacts* for the Contacts app.
