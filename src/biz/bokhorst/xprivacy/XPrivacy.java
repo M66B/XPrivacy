@@ -63,8 +63,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Intent send: media
 		hook(new XActivity("startActivityForResult", XRestriction.cPhone, MediaStore.ACTION_IMAGE_CAPTURE),
 				"android.app.Activity");
-		hook(new XActivity("startActivityForResult", XRestriction.cPhone, MediaStore.ACTION_IMAGE_CAPTURE_SECURE),
-				"android.app.Activity");
+		if (Build.VERSION.SDK_INT >= 17)
+			hook(new XActivity("startActivityForResult", XRestriction.cPhone, MediaStore.ACTION_IMAGE_CAPTURE_SECURE),
+					"android.app.Activity");
 		hook(new XActivity("startActivityForResult", XRestriction.cPhone, MediaStore.ACTION_VIDEO_CAPTURE),
 				"android.app.Activity");
 	}
