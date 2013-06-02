@@ -24,6 +24,13 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:text="@string/app_info"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

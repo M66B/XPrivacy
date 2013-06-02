@@ -24,6 +24,15 @@ public class XMain extends Activity {
 		// Set layout
 		setContentView(R.layout.xmain);
 
+		// Show version
+		try {
+			PackageInfo pInfo = getBaseContext().getPackageManager().getPackageInfo(getPackageName(), 0);
+			TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
+			tvVersion.setText(String.format(getString(R.string.app_version), pInfo.versionName, pInfo.versionCode));
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+		}
+
 		// Fill permission list view adapter
 		final List<String> listPermission = new ArrayList<String>(XPermissions.cPermissions.keySet());
 		final ListView lvPermission = (ListView) findViewById(R.id.lvPermission);
@@ -44,14 +53,6 @@ public class XMain extends Activity {
 			}
 		});
 
-		// Show version
-		try {
-			PackageInfo pInfo = getBaseContext().getPackageManager().getPackageInfo(getPackageName(), 0);
-			TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
-			tvVersion.setText(String.format(getString(R.string.app_version), pInfo.versionName, pInfo.versionCode));
-		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
-		}
 	}
 
 	private class PermissionAdapter extends ArrayAdapter<String> {
