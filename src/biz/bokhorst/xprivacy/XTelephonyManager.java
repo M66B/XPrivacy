@@ -26,8 +26,10 @@ public class XTelephonyManager extends XHook {
 		if (param.method.getName().equals("listen") || param.method.getName().equals("_listen")) {
 			PhoneStateListener listener = (PhoneStateListener) param.args[0];
 			if (listener != null)
-				if (isRestricted(param))
+				if (isRestricted(param)) {
+					XUtil.log(this, Log.INFO, listener.getClass().getPackage().getName() + ": replacing listener");
 					param.args[0] = new XPhoneStateListener(listener);
+				}
 		}
 	}
 
@@ -62,8 +64,8 @@ public class XTelephonyManager extends XHook {
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
 			try {
-				XUtil.log(XTelephonyManager.this, Log.INFO, mListener.getClass().getPackage().getName() + ": "
-						+ incomingNumber);
+				XUtil.log(XTelephonyManager.this, Log.INFO, mListener.getClass().getPackage().getName()
+						+ ": onCallStateChanged");
 			} catch (Throwable ex) {
 			}
 			mListener.onCallStateChanged(state, XRestriction.cDefaceString);
