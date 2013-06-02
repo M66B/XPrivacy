@@ -19,11 +19,15 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		// Check version
 		if (Build.VERSION.SDK_INT != 16)
 			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
+
+		// Workaround bug in Xposed
+		hook(new XLocationManager("_requestLocationUpdates", XPermissions.cLocation),
+				"android.location.LocationManager", false);
+		hook(new XTelephonyManager("_listen", XPermissions.cPhone), "android.telephony.TelephonyManager", false);
 
 		// Location manager
 		hook(new XLocationManager("addGpsStatusListener", XPermissions.cLocation), "android.location.LocationManager");
@@ -32,9 +36,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XLocationManager("getLastKnownLocation", XPermissions.cLocation), "android.location.LocationManager");
 		hook(new XLocationManager("requestLocationUpdates", XPermissions.cLocation), "android.location.LocationManager");
 		hook(new XLocationManager("requestSingleUpdate", XPermissions.cLocation), "android.location.LocationManager");
-		// requestLocationUpdates not working for all apps for unknown reasons
-		hook(new XLocationManager("_requestLocationUpdates", XPermissions.cLocation),
-				"android.location.LocationManager", false);
 
 		// Settings secure
 		hook(new XSettingsSecure("getString", XPermissions.cIdentification), "android.provider.Settings.Secure");
@@ -46,7 +47,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XTelephonyManager("getSimSerialNumber", XPermissions.cPhone), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getSubscriberId", XPermissions.cPhone), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("listen", XPermissions.cPhone), "android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("listen", XPermissions.cPhone), "android.telephony.TelephonyManager", false);
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
@@ -58,45 +58,43 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		if (lpparam.packageName.equals(self))
 			return;
 
-		ClassLoader classLoader = lpparam.classLoader;
-
 		// Load browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {
-			hook(new XContentProvider(XPermissions.cBrowser), classLoader,
+			hook(new XContentProvider(XPermissions.cBrowser), lpparam.classLoader,
 					"com.android.browser.provider.BrowserProvider");
-			hook(new XContentProvider(XPermissions.cBrowser), classLoader,
+			hook(new XContentProvider(XPermissions.cBrowser), lpparam.classLoader,
 					"com.android.browser.provider.BrowserProvider2");
 		}
 
 		// Load calendar provider
 		else if (lpparam.packageName.equals("com.android.providers.calendar"))
-			hook(new XContentProvider(XPermissions.cCalendar), classLoader,
+			hook(new XContentProvider(XPermissions.cCalendar), lpparam.classLoader,
 					"com.android.providers.calendar.CalendarProvider2");
 
 		// Load contacts provider
 		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
-			hook(new XContentProvider(XPermissions.cPhone), classLoader,
-					"com.android.providers.contacts.CallLogProvider", true);
-			hook(new XContentProvider(XPermissions.cContacts), classLoader,
+			hook(new XContentProvider(XPermissions.cPhone), lpparam.classLoader,
+					"com.android.providers.contacts.CallLogProvider");
+			hook(new XContentProvider(XPermissions.cContacts), lpparam.classLoader,
 					"com.android.providers.contacts.ContactsProvider2");
-			hook(new XContentProvider(XPermissions.cVoicemail), classLoader,
+			hook(new XContentProvider(XPermissions.cVoicemail), lpparam.classLoader,
 					"com.android.providers.contacts.VoicemailContentProvider");
 		}
 
 		// Load telephony provider
 		else if (lpparam.packageName.equals("com.android.providers.telephony")) {
-			hook(new XContentProvider(XPermissions.cMessages), classLoader,
+			hook(new XContentProvider(XPermissions.cMessages), lpparam.classLoader,
 					"com.android.providers.telephony.SmsProvider");
-			hook(new XContentProvider(XPermissions.cMessages), classLoader,
+			hook(new XContentProvider(XPermissions.cMessages), lpparam.classLoader,
 					"com.android.providers.telephony.MmsProvider");
-			hook(new XContentProvider(XPermissions.cMessages), classLoader,
+			hook(new XContentProvider(XPermissions.cMessages), lpparam.classLoader,
 					"com.android.providers.telephony.MmsSmsProvider");
 			// com.android.providers.telephony.TelephonyProvider
 		}
 
 		// Load settings
 		else if (lpparam.packageName.equals("com.android.settings"))
-			hook(new XAppDetails("refreshUi", null), classLoader,
+			hook(new XAppDetails("refreshUi", null), lpparam.classLoader,
 					"com.android.settings.applications.InstalledAppDetails", false);
 	}
 
@@ -114,7 +112,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	private void hook(final XHook hook, ClassLoader classLoader, String className, boolean visible) {
 		try {
-			// Create hook
+			// Create hook method
 			XC_MethodHook methodHook = new XC_MethodHook() {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -140,7 +138,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Find class
 			Class<?> hookClass = findClass(className, classLoader);
 			if (hookClass == null) {
-				XUtil.log(hook, Log.WARN, "Class not found: " + className);
+				XUtil.log(hook, Log.WARN,
+						String.format("%s: class not found: %s", AndroidAppHelper.currentPackageName(), className));
 				return;
 			}
 
@@ -158,7 +157,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			// Check if found
 			if (hookSet.isEmpty()) {
-				XUtil.log(hook, Log.WARN, "Method not found: " + hook.getMethodName());
+				XUtil.log(
+						hook,
+						Log.WARN,
+						String.format("%s: method not found: %s.%s", AndroidAppHelper.currentPackageName(),
+								hookClass.getName(), hook.getMethodName()));
 				return;
 			}
 
