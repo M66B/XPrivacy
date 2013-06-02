@@ -12,15 +12,15 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XLocationManager extends XHook {
 
-	public XLocationManager(String methodName, String permissionName) {
-		super(methodName, permissionName);
+	public XLocationManager(String methodName, String restrictionName) {
+		super(methodName, restrictionName);
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
 		if (!methodName.equals("getLastKnownLocation"))
-			if (!isAllowed(param))
+			if (isRestricted(param))
 				if (methodName.equals("addGpsStatusListener") || methodName.equals("addNmeaListener"))
 					param.setResult(false);
 				else
@@ -31,18 +31,18 @@ public class XLocationManager extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		if (param.method.getName().equals("getLastKnownLocation"))
 			if (param.getResultOrThrowable() != null)
-				if (!isAllowed(param)) {
+				if (isRestricted(param)) {
 					String provider = (String) param.args[0];
 					param.setResult(getRandomLocation(provider));
 				}
 	}
 
 	@Override
-	protected boolean isAllowed(MethodHookParam param) throws Throwable {
+	protected boolean isRestricted(MethodHookParam param) throws Throwable {
 		Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 		Context context = (Context) fieldContext.get(param.thisObject);
 		int uid = Binder.getCallingUid();
-		return getAllowed(context, uid, true);
+		return getRestricted(context, uid, true);
 	}
 
 	private Location getRandomLocation(String provider) {

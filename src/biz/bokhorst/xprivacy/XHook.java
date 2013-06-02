@@ -8,11 +8,11 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public abstract class XHook {
 
 	private String mMethodName;
-	private String mPermissionName;
+	private String mRestrictionName;
 
-	public XHook(String methodName, String permissionName) {
+	public XHook(String methodName, String restrictionName) {
 		mMethodName = methodName;
-		mPermissionName = permissionName;
+		mRestrictionName = restrictionName;
 	}
 
 	public String getMethodName() {
@@ -23,14 +23,14 @@ public abstract class XHook {
 
 	abstract protected void after(MethodHookParam param) throws Throwable;
 
-	abstract protected boolean isAllowed(MethodHookParam param) throws Throwable;
+	abstract protected boolean isRestricted(MethodHookParam param) throws Throwable;
 
-	protected boolean getAllowed(Context context, int uid, boolean usage) {
-		return XPermissions.getAllowed(this, context, uid, mPermissionName, usage);
+	protected boolean getRestricted(Context context, int uid, boolean usage) {
+		return XRestriction.getRestricted(this, context, uid, mRestrictionName, usage);
 	}
 
-	protected void setAllowed(Context context, int uid, boolean allowed) {
-		XPermissions.setAllowed(this, context, uid, mPermissionName, allowed);
+	protected void setRestricted(Context context, int uid, boolean restricted) {
+		XRestriction.setRestricted(this, context, uid, mRestrictionName, restricted);
 	}
 
 	protected void info(String message) {

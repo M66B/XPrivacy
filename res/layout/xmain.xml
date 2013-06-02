@@ -47,7 +47,7 @@
         android:textIsSelectable="false" />
 
     <ListView
-        android:id="@+id/lvPermission"
+        android:id="@+id/lvRestriction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"

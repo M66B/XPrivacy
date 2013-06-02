@@ -27,33 +27,33 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
 
 		// Workaround bug in Xposed
-		hook(new XLocationManager("_requestLocationUpdates", XPermissions.cLocation),
+		hook(new XLocationManager("_requestLocationUpdates", XRestriction.cLocation),
 				"android.location.LocationManager", false);
-		hook(new XTelephonyManager("_listen", XPermissions.cPhone), "android.telephony.TelephonyManager", false);
+		hook(new XTelephonyManager("_listen", XRestriction.cPhone), "android.telephony.TelephonyManager", false);
 
 		// Location manager
-		hook(new XLocationManager("addGpsStatusListener", XPermissions.cLocation), "android.location.LocationManager");
-		hook(new XLocationManager("addNmeaListener", XPermissions.cLocation), "android.location.LocationManager");
-		hook(new XLocationManager("addProximityAlert", XPermissions.cLocation), "android.location.LocationManager");
-		hook(new XLocationManager("getLastKnownLocation", XPermissions.cLocation), "android.location.LocationManager");
-		hook(new XLocationManager("requestLocationUpdates", XPermissions.cLocation), "android.location.LocationManager");
-		hook(new XLocationManager("requestSingleUpdate", XPermissions.cLocation), "android.location.LocationManager");
+		hook(new XLocationManager("addGpsStatusListener", XRestriction.cLocation), "android.location.LocationManager");
+		hook(new XLocationManager("addNmeaListener", XRestriction.cLocation), "android.location.LocationManager");
+		hook(new XLocationManager("addProximityAlert", XRestriction.cLocation), "android.location.LocationManager");
+		hook(new XLocationManager("getLastKnownLocation", XRestriction.cLocation), "android.location.LocationManager");
+		hook(new XLocationManager("requestLocationUpdates", XRestriction.cLocation), "android.location.LocationManager");
+		hook(new XLocationManager("requestSingleUpdate", XRestriction.cLocation), "android.location.LocationManager");
 
 		// Settings secure
-		hook(new XSettingsSecure("getString", XPermissions.cIdentification), "android.provider.Settings.Secure");
+		hook(new XSettingsSecure("getString", XRestriction.cIdentification), "android.provider.Settings.Secure");
 
 		// Telephony
-		hook(new XTelephonyManager("getDeviceId", XPermissions.cPhone), "android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getLine1Number", XPermissions.cPhone), "android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getMsisdn", XPermissions.cPhone), "android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getSimSerialNumber", XPermissions.cPhone), "android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getSubscriberId", XPermissions.cPhone), "android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("listen", XPermissions.cPhone), "android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getDeviceId", XRestriction.cPhone), "android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getLine1Number", XRestriction.cPhone), "android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getMsisdn", XRestriction.cPhone), "android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getSimSerialNumber", XRestriction.cPhone), "android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getSubscriberId", XRestriction.cPhone), "android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("listen", XRestriction.cPhone), "android.telephony.TelephonyManager");
 
 		// Intents
-		hook(new XActivityThread("handleReceiver", XPermissions.cPhone, Intent.ACTION_NEW_OUTGOING_CALL),
+		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, Intent.ACTION_NEW_OUTGOING_CALL),
 				"android.app.ActivityThread", false);
-		hook(new XActivityThread("handleReceiver", XPermissions.cPhone, TelephonyManager.ACTION_PHONE_STATE_CHANGED),
+		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, TelephonyManager.ACTION_PHONE_STATE_CHANGED),
 				"android.app.ActivityThread", false);
 	}
 
@@ -68,41 +68,41 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Load browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {
-			hook(new XContentProvider(XPermissions.cBrowser), lpparam.classLoader,
+			hook(new XContentProvider(XRestriction.cBrowser), lpparam.classLoader,
 					"com.android.browser.provider.BrowserProvider");
-			hook(new XContentProvider(XPermissions.cBrowser), lpparam.classLoader,
+			hook(new XContentProvider(XRestriction.cBrowser), lpparam.classLoader,
 					"com.android.browser.provider.BrowserProvider2");
 		}
 
 		// Load calendar provider
 		else if (lpparam.packageName.equals("com.android.providers.calendar"))
-			hook(new XContentProvider(XPermissions.cCalendar), lpparam.classLoader,
+			hook(new XContentProvider(XRestriction.cCalendar), lpparam.classLoader,
 					"com.android.providers.calendar.CalendarProvider2");
 
 		// Load contacts provider
 		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
-			hook(new XContentProvider(XPermissions.cPhone), lpparam.classLoader,
+			hook(new XContentProvider(XRestriction.cPhone), lpparam.classLoader,
 					"com.android.providers.contacts.CallLogProvider");
-			hook(new XContentProvider(XPermissions.cContacts), lpparam.classLoader,
+			hook(new XContentProvider(XRestriction.cContacts), lpparam.classLoader,
 					"com.android.providers.contacts.ContactsProvider2");
-			hook(new XContentProvider(XPermissions.cMessages), lpparam.classLoader,
+			hook(new XContentProvider(XRestriction.cMessages), lpparam.classLoader,
 					"com.android.providers.contacts.VoicemailContentProvider");
 		}
 
 		// Load telephony provider
 		else if (lpparam.packageName.equals("com.android.providers.telephony")) {
-			hook(new XContentProvider(XPermissions.cMessages), lpparam.classLoader,
+			hook(new XContentProvider(XRestriction.cMessages), lpparam.classLoader,
 					"com.android.providers.telephony.SmsProvider");
-			hook(new XContentProvider(XPermissions.cMessages), lpparam.classLoader,
+			hook(new XContentProvider(XRestriction.cMessages), lpparam.classLoader,
 					"com.android.providers.telephony.MmsProvider");
-			hook(new XContentProvider(XPermissions.cMessages), lpparam.classLoader,
+			hook(new XContentProvider(XRestriction.cMessages), lpparam.classLoader,
 					"com.android.providers.telephony.MmsSmsProvider");
 			// com.android.providers.telephony.TelephonyProvider
 		}
 
 		// Load settings
 		else if (lpparam.packageName.equals("com.android.settings"))
-			hook(new XAppDetails("refreshUi", null), lpparam.classLoader,
+			hook(new XAppDetails("refreshUi"), lpparam.classLoader,
 					"com.android.settings.applications.InstalledAppDetails", false);
 	}
 

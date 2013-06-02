@@ -12,8 +12,8 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSettingsSecure extends XHook {
 
-	public XSettingsSecure(String methodName, String permissionName) {
-		super(methodName, permissionName);
+	public XSettingsSecure(String methodName, String restrictionName) {
+		super(methodName, restrictionName);
 	}
 
 	@Override
@@ -28,8 +28,8 @@ public class XSettingsSecure extends XHook {
 			String name = (String) param.args[1];
 			if (Settings.Secure.ANDROID_ID.equals(name))
 				if (param.getResult() != null)
-					if (!isAllowed(param))
-						param.setResult(Long.toHexString(XPermissions.cDefaceHex));
+					if (isRestricted(param))
+						param.setResult(Long.toHexString(XRestriction.cDefaceHex));
 		} catch (IllegalArgumentException ex) {
 			// Android ID is requested before system initialization
 			XUtil.bug(this, ex);
@@ -37,12 +37,11 @@ public class XSettingsSecure extends XHook {
 	}
 
 	@Override
-	protected boolean isAllowed(MethodHookParam param) throws Throwable {
+	protected boolean isRestricted(MethodHookParam param) throws Throwable {
 		ContentResolver contentResolver = (ContentResolver) param.args[0];
 		Field fieldContext = findField(contentResolver.getClass(), "mContext");
 		Context context = (Context) fieldContext.get(contentResolver);
 		int uid = Binder.getCallingUid();
-		return getAllowed(context, uid, true);
+		return getRestricted(context, uid, true);
 	}
-
 }

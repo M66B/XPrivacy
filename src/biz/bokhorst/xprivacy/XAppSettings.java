@@ -46,7 +46,7 @@ public class XAppSettings extends Activity {
 		tvAppName.setText(String.format("%s (%d)", pm.getApplicationLabel(appInfo), appInfo.uid));
 
 		// Check if internet access
-		if (XPermissions.hasInternet(getBaseContext(), packageName))
+		if (XRestriction.hasInternet(getBaseContext(), packageName))
 			findViewById(R.id.tvInternet).setVisibility(View.GONE);
 
 		// Legend
@@ -56,34 +56,34 @@ public class XAppSettings extends Activity {
 		tvGranted.setTextColor(Color.GRAY);
 
 		// Fill privacy list view adapter
-		final ListView lvPrivacy = (ListView) findViewById(R.id.lvPermission);
-		List<String> listPermission = new ArrayList<String>(XPermissions.cPermissions.keySet());
-		PermissionAdapter privacyListAdapter = new PermissionAdapter(getBaseContext(),
-				android.R.layout.simple_list_item_multiple_choice, appInfo, listPermission);
-		lvPrivacy.setAdapter(privacyListAdapter);
+		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
+		List<String> listRestriction = new ArrayList<String>(XRestriction.cRestriction.keySet());
+		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(getBaseContext(),
+				android.R.layout.simple_list_item_multiple_choice, appInfo, listRestriction);
+		lvRestriction.setAdapter(privacyListAdapter);
 
 		// Set privacy values
-		for (int position = 0; position < lvPrivacy.getAdapter().getCount(); position++) {
-			String permissionName = (String) lvPrivacy.getItemAtPosition(position);
-			lvPrivacy.setItemChecked(position,
-					!XPermissions.getAllowed(null, getBaseContext(), appInfo.uid, permissionName, false));
+		for (int position = 0; position < lvRestriction.getAdapter().getCount(); position++) {
+			String restrictionName = (String) lvRestriction.getItemAtPosition(position);
+			lvRestriction.setItemChecked(position,
+					XRestriction.getRestricted(null, getBaseContext(), appInfo.uid, restrictionName, false));
 		}
 
 		// Listen for privacy changes
-		lvPrivacy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		lvRestriction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				String permissionName = (String) lvPrivacy.getItemAtPosition(position);
-				boolean allowed = !lvPrivacy.isItemChecked(position);
-				XPermissions.setAllowed(null, getBaseContext(), appInfo.uid, permissionName, allowed);
+				String restrictionName = (String) lvRestriction.getItemAtPosition(position);
+				boolean restricted = lvRestriction.isItemChecked(position);
+				XRestriction.setRestricted(null, getBaseContext(), appInfo.uid, restrictionName, restricted);
 			}
 		});
 	}
 
-	private class PermissionAdapter extends ArrayAdapter<String> {
+	private class RestrictionAdapter extends ArrayAdapter<String> {
 		private ApplicationInfo mAppInfo;
 
-		public PermissionAdapter(Context context, int resource, ApplicationInfo appInfo, List<String> objects) {
+		public RestrictionAdapter(Context context, int resource, ApplicationInfo appInfo, List<String> objects) {
 			super(context, resource, objects);
 			mAppInfo = appInfo;
 		}
@@ -92,19 +92,19 @@ public class XAppSettings extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(android.R.layout.simple_list_item_multiple_choice, parent, false);
-			TextView tvPermission = (TextView) row.findViewById(android.R.id.text1);
+			TextView tvRestriction = (TextView) row.findViewById(android.R.id.text1);
 
 			// Display localize name
-			String permissionName = getItem(position);
-			tvPermission.setText(XPermissions.getLocalizedName(getBaseContext(), permissionName));
+			String restrictionName = getItem(position);
+			tvRestriction.setText(XRestriction.getLocalizedName(getBaseContext(), restrictionName));
 
-			// Display if permission granted
-			if (!XPermissions.isGranted(getBaseContext(), mAppInfo.packageName, permissionName))
-				tvPermission.setTextColor(Color.GRAY);
+			// Display if restriction granted
+			if (!XRestriction.isGranted(getBaseContext(), mAppInfo.packageName, restrictionName))
+				tvRestriction.setTextColor(Color.GRAY);
 
 			// Display if used
-			if (XPermissions.isUsed(getBaseContext(), mAppInfo.uid, permissionName))
-				tvPermission.setTypeface(null, Typeface.BOLD_ITALIC);
+			if (XRestriction.isUsed(getBaseContext(), mAppInfo.uid, restrictionName))
+				tvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
 
 			return row;
 		}

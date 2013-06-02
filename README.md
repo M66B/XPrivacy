@@ -21,8 +21,10 @@ Currently implemented:
 Planned:
 
 * Take photo
-* Record audio
+* Record audio (microphone)
 * Record video
+* Default deny for new apps
+* Filter by used/granted
 
 **Tested with CyanogenMod 10**
 
@@ -47,6 +49,9 @@ Usage
 
 To see it in action: try disabling *Identification* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 or try disabling *Contacts* for the Contacts app.
+
+Some restrictions require a reboot.
+
 
 Frequently asked questions
 --------------------------

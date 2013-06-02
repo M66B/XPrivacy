@@ -20,8 +20,8 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XAppDetails extends XHook {
 
-	public XAppDetails(String methodName, String permissionName) {
-		super(methodName, permissionName);
+	public XAppDetails(String methodName) {
+		super(methodName, null);
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class XAppDetails extends XHook {
 	}
 
 	@Override
-	protected boolean isAllowed(MethodHookParam param) throws Throwable {
+	protected boolean isRestricted(MethodHookParam param) throws Throwable {
 		return true;
 	}
 }

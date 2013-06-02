@@ -6,15 +6,15 @@
 
     <ImageView
         android:id="@+id/imgAppEntryIcon"
-        android:layout_width="?android:attr/listPreferredItemHeight"
-        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_width="?android:attr/listPreferredItemHeightLarge"
+        android:layout_height="?android:attr/listPreferredItemHeightLarge"
         android:contentDescription="@string/settings_icon"
         android:gravity="center_vertical" />
 
     <CheckedTextView
         android:id="@+id/tvAppEntryName"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_height="?android:attr/listPreferredItemHeightLarge"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:gravity="center_vertical"
         android:paddingLeft="8dip"

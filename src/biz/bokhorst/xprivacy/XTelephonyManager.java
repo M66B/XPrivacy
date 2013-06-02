@@ -17,34 +17,34 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XTelephonyManager extends XHook {
 
-	public XTelephonyManager(String methodName, String permissionName) {
-		super(methodName, permissionName);
+	public XTelephonyManager(String methodName, String restrictionName) {
+		super(methodName, restrictionName);
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (param.method.getName().equals("listen")) {
+		if (param.method.getName().equals("listen") || param.method.getName().equals("_listen")) {
 			PhoneStateListener listener = (PhoneStateListener) param.args[0];
 			if (listener != null)
-				if (!isAllowed(param))
+				if (isRestricted(param))
 					param.args[0] = new XPhoneStateListener(listener);
 		}
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (!param.method.getName().equals("listen"))
+		if (!param.method.getName().equals("listen") && !param.method.getName().equals("_listen"))
 			if (param.getResultOrThrowable() != null)
-				if (!isAllowed(param))
-					param.setResult(XPermissions.cDefaceString);
+				if (isRestricted(param))
+					param.setResult(XRestriction.cDefaceString);
 	}
 
 	@Override
-	protected boolean isAllowed(MethodHookParam param) throws Throwable {
+	protected boolean isRestricted(MethodHookParam param) throws Throwable {
 		Field fieldContext = findField(param.thisObject.getClass(), "sContext");
 		Context context = (Context) fieldContext.get(param.thisObject);
 		int uid = Binder.getCallingUid();
-		return getAllowed(context, uid, true);
+		return getRestricted(context, uid, true);
 	}
 
 	private class XPhoneStateListener extends PhoneStateListener {
@@ -66,7 +66,7 @@ public class XTelephonyManager extends XHook {
 						+ incomingNumber);
 			} catch (Throwable ex) {
 			}
-			mListener.onCallStateChanged(state, XPermissions.cDefaceString);
+			mListener.onCallStateChanged(state, XRestriction.cDefaceString);
 		}
 
 		@Override

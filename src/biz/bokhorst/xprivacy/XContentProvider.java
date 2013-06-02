@@ -9,8 +9,8 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XContentProvider extends XHook {
 
-	public XContentProvider(String permissionName) {
-		super("query", permissionName);
+	public XContentProvider(String restrictionName) {
+		super("query", restrictionName);
 	}
 
 	@Override
@@ -23,15 +23,15 @@ public class XContentProvider extends XHook {
 		// Return empty cursor
 		Cursor cursor = (Cursor) param.getResultOrThrowable();
 		if (cursor != null)
-			if (!isAllowed(param))
+			if (isRestricted(param))
 				param.setResult(new XCursor(cursor));
 	}
 
 	@Override
-	protected boolean isAllowed(MethodHookParam param) throws Throwable {
+	protected boolean isRestricted(MethodHookParam param) throws Throwable {
 		ContentProvider contentProvider = (ContentProvider) param.thisObject;
 		Context context = contentProvider.getContext();
 		int uid = Binder.getCallingUid();
-		return getAllowed(context, uid, true);
+		return getRestricted(context, uid, true);
 	}
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -27,7 +28,7 @@ import android.widget.TextView;
 
 public class XBatchEdit extends Activity {
 
-	public static final String cExtraPermissionName = "Permission";
+	public static final String cRestrictionName = "Restriction";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +36,13 @@ public class XBatchEdit extends Activity {
 		// Set layout
 		setContentView(R.layout.xbatchedit);
 
-		// Get permission name
+		// Get restriction name
 		Bundle extras = getIntent().getExtras();
-		final String permissionName = extras.getString(cExtraPermissionName);
+		final String restrictionName = extras.getString(cRestrictionName);
 
-		// Display permission name
-		TextView tvPermission = (TextView) findViewById(R.id.tvPermission);
-		tvPermission.setText(XPermissions.getLocalizedName(getBaseContext(), permissionName));
+		// Display restriction name
+		TextView tvRestriction = (TextView) findViewById(R.id.tvRestriction);
+		tvRestriction.setText(XRestriction.getLocalizedName(getBaseContext(), restrictionName));
 
 		// Legend
 		TextView tvUsed = (TextView) findViewById(R.id.tvUsed);
@@ -56,7 +57,7 @@ public class XBatchEdit extends Activity {
 		for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA)) {
 			XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
 			if (xAppInfo == null) {
-				xAppInfo = new XApplicationInfo(appInfo, permissionName, pm);
+				xAppInfo = new XApplicationInfo(appInfo, restrictionName, pm);
 				mapApp.put(appInfo.uid, xAppInfo);
 				listApp.add(xAppInfo);
 			} else
@@ -66,17 +67,17 @@ public class XBatchEdit extends Activity {
 
 		// Fill app list view adapter
 		ListView lvApp = (ListView) findViewById(R.id.lvApp);
-		AppListAdapter appAdapter = new AppListAdapter(getBaseContext(), R.layout.xappentry, listApp, permissionName);
+		AppListAdapter appAdapter = new AppListAdapter(getBaseContext(), R.layout.xappentry, listApp, restrictionName);
 		lvApp.setAdapter(appAdapter);
 	}
 
 	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> {
 
-		private String mPermissionName;
+		private String mRestrictionName;
 
-		public AppListAdapter(Context context, int resource, List<XApplicationInfo> objects, String permissionName) {
+		public AppListAdapter(Context context, int resource, List<XApplicationInfo> objects, String restrictionName) {
 			super(context, resource, objects);
-			mPermissionName = permissionName;
+			mRestrictionName = restrictionName;
 		}
 
 		@Override
@@ -104,19 +105,19 @@ public class XBatchEdit extends Activity {
 				tvApp.setTypeface(null, Typeface.BOLD_ITALIC);
 
 			// Set privacy
-			boolean allowed = XPermissions
-					.getAllowed(null, getBaseContext(), appEntry.getUid(), mPermissionName, false);
-			tvApp.setChecked(!allowed);
+			boolean restricted = XRestriction.getRestricted(null, getBaseContext(), appEntry.getUid(),
+					mRestrictionName, false);
+			tvApp.setChecked(restricted);
 
 			// Change privacy
 			tvApp.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					boolean allowed = XPermissions.getAllowed(null, getBaseContext(), appEntry.getUid(),
-							mPermissionName, false);
-					allowed = !allowed;
-					tvApp.setChecked(!allowed);
-					XPermissions.setAllowed(null, getBaseContext(), appEntry.getUid(), mPermissionName, allowed);
+					boolean restricted = XRestriction.getRestricted(null, getBaseContext(), appEntry.getUid(),
+							mRestrictionName, false);
+					restricted = !restricted;
+					tvApp.setChecked(restricted);
+					XRestriction.setRestricted(null, getBaseContext(), appEntry.getUid(), mRestrictionName, restricted);
 				}
 			});
 
@@ -131,12 +132,12 @@ public class XBatchEdit extends Activity {
 		private boolean mIsUsed;
 		private int mUid;
 
-		public XApplicationInfo(ApplicationInfo appInfo, String permissionName, PackageManager packageManager) {
+		public XApplicationInfo(ApplicationInfo appInfo, String restrictionName, PackageManager packageManager) {
 			mDrawable = appInfo.loadIcon(packageManager);
 			mListApplicationName = new ArrayList<String>();
 			mListApplicationName.add((String) packageManager.getApplicationLabel(appInfo));
-			mHasInternet = XPermissions.hasInternet(getBaseContext(), appInfo.packageName);
-			mIsUsed = XPermissions.isUsed(getBaseContext(), appInfo.uid, permissionName);
+			mHasInternet = XRestriction.hasInternet(getBaseContext(), appInfo.packageName);
+			mIsUsed = XRestriction.isUsed(getBaseContext(), appInfo.uid, restrictionName);
 			mUid = appInfo.uid;
 		}
 
@@ -161,6 +162,7 @@ public class XBatchEdit extends Activity {
 		}
 
 		@Override
+		@SuppressLint("DefaultLocale")
 		public String toString() {
 			return String.format("%s (%d)", TextUtils.join(", ", mListApplicationName), mUid);
 		}

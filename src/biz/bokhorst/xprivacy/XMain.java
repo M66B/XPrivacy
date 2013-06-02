@@ -30,6 +30,8 @@ import android.widget.TextView;
 
 public class XMain extends Activity {
 
+	private final static int cXposedMinVersion = 34;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,10 +50,10 @@ public class XMain extends Activity {
 		// Check Xposed version
 		String processVersion = getInstalledAppProcessVersion(null);
 		String bridgeVersion = getJarInstalledVersion(null);
-		if (processVersion == null || bridgeVersion == null || Integer.parseInt(processVersion) < 35) {
+		if (processVersion == null || bridgeVersion == null || Integer.parseInt(processVersion) < cXposedMinVersion) {
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.app_name));
-			alertDialog.setMessage(getString(R.string.app_notxposed));
+			alertDialog.setMessage(String.format(getString(R.string.app_notxposed), cXposedMinVersion));
 			alertDialog.setIcon(R.drawable.ic_launcher);
 			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 				@Override
@@ -65,21 +67,21 @@ public class XMain extends Activity {
 		TextView tvXVersion = (TextView) findViewById(R.id.tvXVersion);
 		tvXVersion.setText(String.format(getString(R.string.app_xversion), processVersion, bridgeVersion));
 
-		// Fill permission list view adapter
-		final List<String> listPermission = new ArrayList<String>(XPermissions.cPermissions.keySet());
-		final ListView lvPermission = (ListView) findViewById(R.id.lvPermission);
-		PermissionAdapter permissionAdapter = new PermissionAdapter(getBaseContext(),
-				android.R.layout.simple_list_item_1, listPermission);
-		lvPermission.setAdapter(permissionAdapter);
+		// Fill restriction list view adapter
+		final List<String> listRestriction = new ArrayList<String>(XRestriction.cRestriction.keySet());
+		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
+		RestrictionAdapter restrictionAdapter = new RestrictionAdapter(getBaseContext(),
+				android.R.layout.simple_list_item_1, listRestriction);
+		lvRestriction.setAdapter(restrictionAdapter);
 
 		// Listen for privacy changes
-		lvPermission.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		lvRestriction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-				String permissionName = listPermission.get(position);
+				String restrictionName = listRestriction.get(position);
 				Intent intentBatch = new Intent(getBaseContext(), XBatchEdit.class);
-				intentBatch.putExtra(XBatchEdit.cExtraPermissionName, permissionName);
+				intentBatch.putExtra(XBatchEdit.cRestrictionName, restrictionName);
 				intentBatch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(intentBatch);
 			}
@@ -87,9 +89,9 @@ public class XMain extends Activity {
 
 	}
 
-	private class PermissionAdapter extends ArrayAdapter<String> {
+	private class RestrictionAdapter extends ArrayAdapter<String> {
 
-		public PermissionAdapter(Context context, int resource, List<String> objects) {
+		public RestrictionAdapter(Context context, int resource, List<String> objects) {
 			super(context, resource, objects);
 		}
 
@@ -101,11 +103,11 @@ public class XMain extends Activity {
 						Context.LAYOUT_INFLATER_SERVICE);
 				row = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
 			}
-			TextView tvPermission = (TextView) row.findViewById(android.R.id.text1);
+			TextView tvRestriction = (TextView) row.findViewById(android.R.id.text1);
 
 			// Display localize name
-			String permissionName = getItem(position);
-			tvPermission.setText(XPermissions.getLocalizedName(getBaseContext(), permissionName));
+			String restrictionName = getItem(position);
+			tvRestriction.setText(XRestriction.getLocalizedName(getBaseContext(), restrictionName));
 
 			return row;
 		}
