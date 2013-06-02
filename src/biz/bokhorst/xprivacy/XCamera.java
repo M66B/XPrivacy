@@ -1,5 +1,8 @@
 package biz.bokhorst.xprivacy;
 
+import android.app.AndroidAppHelper;
+import android.content.Context;
+import android.os.Binder;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XCamera extends XHook {
@@ -21,7 +24,8 @@ public class XCamera extends XHook {
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		// How to get context?
-		return false;
+		Context context = AndroidAppHelper.currentApplication().getBaseContext();
+		int uid = Binder.getCallingUid();
+		return getRestricted(context, uid, true);
 	}
 }
