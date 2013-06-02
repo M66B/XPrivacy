@@ -32,6 +32,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.location.LocationManager", false);
 		hook(new XTelephonyManager("_listen", XRestriction.cPhone), "android.telephony.TelephonyManager", false);
 
+		// Camera
+		hook(new XCamera("takePicture", XRestriction.cMedia), "android.hardware.Camera");
+
 		// Location manager
 		hook(new XLocationManager("addGpsStatusListener", XRestriction.cLocation), "android.location.LocationManager");
 		hook(new XLocationManager("addNmeaListener", XRestriction.cLocation), "android.location.LocationManager");
@@ -51,19 +54,19 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XTelephonyManager("getSubscriberId", XRestriction.cPhone), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("listen", XRestriction.cPhone), "android.telephony.TelephonyManager");
 
-		// Intent/calling
+		// Intent receive: calling
 		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, Intent.ACTION_NEW_OUTGOING_CALL),
 				"android.app.ActivityThread", false);
 		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, TelephonyManager.ACTION_PHONE_STATE_CHANGED),
 				"android.app.ActivityThread", false);
 
-		// Intent/media
-		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, MediaStore.ACTION_IMAGE_CAPTURE),
-				"android.app.ActivityThread", false);
-		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, MediaStore.ACTION_IMAGE_CAPTURE_SECURE),
-				"android.app.ActivityThread", false);
-		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, MediaStore.ACTION_VIDEO_CAPTURE),
-				"android.app.ActivityThread", false);
+		// Intent send: media
+		hook(new XActivity("startActivityForResult", XRestriction.cPhone, MediaStore.ACTION_IMAGE_CAPTURE),
+				"android.app.Activity");
+		hook(new XActivity("startActivityForResult", XRestriction.cPhone, MediaStore.ACTION_IMAGE_CAPTURE_SECURE),
+				"android.app.Activity");
+		hook(new XActivity("startActivityForResult", XRestriction.cPhone, MediaStore.ACTION_VIDEO_CAPTURE),
+				"android.app.Activity");
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {

@@ -27,7 +27,8 @@ public class XTelephonyManager extends XHook {
 			PhoneStateListener listener = (PhoneStateListener) param.args[0];
 			if (listener != null)
 				if (isRestricted(param)) {
-					XUtil.log(this, Log.INFO, listener.getClass().getPackage().getName() + ": replacing listener");
+					int uid = Binder.getCallingUid();
+					XUtil.log(this, Log.INFO, "Replacing PhoneStateListener for " + uid);
 					param.args[0] = new XPhoneStateListener(listener);
 				}
 		}

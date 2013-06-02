@@ -31,10 +31,11 @@ public class XRestriction {
 		cRestriction.put(cContacts, new String[] { "READ_CONTACTS" });
 		cRestriction.put(cIdentification, new String[] {});
 		cRestriction.put(cLocation, new String[] { "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
-		cRestriction.put(cMedia, new String[] {}); // TODO: permissions
+		cRestriction.put(cMedia, new String[] { "CAMERA" });
 		cRestriction.put(cMessages, new String[] { "READ_SMS", "READ_WRITE_ALL_VOICEMAIL" });
 		cRestriction.put(cPhone, new String[] { "READ_CALL_LOG", "READ_PHONE_STATE", "PROCESS_OUTGOING_CALLS" });
 	}
+	// TODO: uses-feature
 
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;
