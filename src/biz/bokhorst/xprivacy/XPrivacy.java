@@ -59,7 +59,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		// Log load
-		XUtil.log(null, Log.INFO, String.format("load package=%s", lpparam.packageName));
+		XUtil.log(null, Log.INFO, String.format("load %s", lpparam.packageName));
 
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();

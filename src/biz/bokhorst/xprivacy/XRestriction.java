@@ -110,9 +110,11 @@ public class XRestriction {
 			cursor.close();
 
 			// Result
-			XUtil.log(hook, Log.INFO, String.format("get method=%s/%s restriction=%s restricted=%b",
-					getPackageName(context, uid), (hook == null ? null : hook.getMethodName()), restrictionName,
-					restricted));
+			XUtil.log(
+					hook,
+					Log.INFO,
+					String.format("get %s/%s %s=%b", getPackageName(context, uid),
+							(hook == null ? null : hook.getMethodName()), restrictionName, restricted));
 			return restricted;
 		} catch (Throwable ex) {
 			XUtil.bug(hook, ex);
@@ -146,8 +148,10 @@ public class XRestriction {
 		values.put(XPrivacyProvider.COL_RESTRICTED, Boolean.toString(restricted));
 		contentResolver.update(XPrivacyProvider.URI_RESTRICTIONS, values, restrictionName, null);
 
-		XUtil.log(hook, Log.INFO,
-				String.format("set method=%s.%s restriction=%s restricted=%b", getPackageName(context, uid),
+		XUtil.log(
+				hook,
+				Log.INFO,
+				String.format("set %s.%s %s=%b", getPackageName(context, uid),
 						(hook == null ? null : hook.getMethodName()), restrictionName, restricted));
 	}
 

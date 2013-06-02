@@ -19,6 +19,10 @@ public abstract class XHook {
 		return mMethodName;
 	}
 
+	public String getRestrictionName() {
+		return mRestrictionName;
+	}
+
 	abstract protected void before(MethodHookParam param) throws Throwable;
 
 	abstract protected void after(MethodHookParam param) throws Throwable;
