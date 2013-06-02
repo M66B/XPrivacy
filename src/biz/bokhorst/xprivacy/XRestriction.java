@@ -18,6 +18,7 @@ public class XRestriction {
 	public static final String cContacts = "contacts";
 	public static final String cIdentification = "identification";
 	public static final String cLocation = "location";
+	public static final String cMedia = "media";
 	public static final String cMessages = "messages";
 	public static final String cPhone = "phone";
 	public static final String cVoicemail = "voicemail";
@@ -30,6 +31,7 @@ public class XRestriction {
 		cRestriction.put(cContacts, new String[] { "READ_CONTACTS" });
 		cRestriction.put(cIdentification, new String[] {});
 		cRestriction.put(cLocation, new String[] { "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
+		cRestriction.put(cMedia, new String[] {}); // TODO: permissions
 		cRestriction.put(cMessages, new String[] { "READ_SMS", "READ_WRITE_ALL_VOICEMAIL" });
 		cRestriction.put(cPhone, new String[] { "READ_CALL_LOG", "READ_PHONE_STATE", "PROCESS_OUTGOING_CALLS" });
 	}

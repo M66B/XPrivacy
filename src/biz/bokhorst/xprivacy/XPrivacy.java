@@ -9,6 +9,7 @@ import java.util.Set;
 import android.app.AndroidAppHelper;
 import android.content.Intent;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -50,10 +51,18 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XTelephonyManager("getSubscriberId", XRestriction.cPhone), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("listen", XRestriction.cPhone), "android.telephony.TelephonyManager");
 
-		// Intents
+		// Intent/calling
 		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, Intent.ACTION_NEW_OUTGOING_CALL),
 				"android.app.ActivityThread", false);
 		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, TelephonyManager.ACTION_PHONE_STATE_CHANGED),
+				"android.app.ActivityThread", false);
+
+		// Intent/media
+		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, MediaStore.ACTION_IMAGE_CAPTURE),
+				"android.app.ActivityThread", false);
+		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, MediaStore.ACTION_IMAGE_CAPTURE_SECURE),
+				"android.app.ActivityThread", false);
+		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, MediaStore.ACTION_VIDEO_CAPTURE),
 				"android.app.ActivityThread", false);
 	}
 

@@ -10,7 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivityThread extends XHook {
@@ -29,21 +31,30 @@ public class XActivityThread extends XHook {
 				// Get intent
 				Field fieldIntent = findField(param.args[0].getClass(), "intent");
 				Intent intent = (Intent) fieldIntent.get(param.args[0]);
+				if (intent != null && intent.getAction() != null)
+					XUtil.log(this, Log.INFO, "Intent action=" + intent.getAction());
 
 				// Process intent
 				if (intent != null && mActionName.equals(intent.getAction())) {
-					Bundle bundle = intent.getExtras();
-					if (bundle == null)
-						return;
-					if (isRestricted(param)) {
-						if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
-							String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
-							if (phoneNumber != null)
-								intent.putExtra(Intent.EXTRA_PHONE_NUMBER, XRestriction.cDefaceString);
-						} else if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
-							String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
-							if (phoneNumber != null)
-								intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, XRestriction.cDefaceString);
+					if (mActionName.equals(MediaStore.ACTION_IMAGE_CAPTURE)
+							|| mActionName.equals(MediaStore.ACTION_IMAGE_CAPTURE_SECURE)
+							|| mActionName.equals(MediaStore.ACTION_VIDEO_CAPTURE)) {
+						if (isRestricted(param))
+							param.setResult(null);
+					} else {
+						Bundle bundle = intent.getExtras();
+						if (bundle == null)
+							return;
+						if (isRestricted(param)) {
+							if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
+								String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
+								if (phoneNumber != null)
+									intent.putExtra(Intent.EXTRA_PHONE_NUMBER, XRestriction.cDefaceString);
+							} else if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
+								String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+								if (phoneNumber != null)
+									intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, XRestriction.cDefaceString);
+							}
 						}
 					}
 				}

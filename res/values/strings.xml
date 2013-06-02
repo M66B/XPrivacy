@@ -12,6 +12,7 @@
     <string name="restrict_contacts">Contacts</string>
     <string name="restrict_identification">Identification</string>
     <string name="restrict_location">Location</string>
+    <string name="restrict_media">Media</string>
     <string name="restrict_messages">Messages</string>
     <string name="restrict_phone">Phone</string>
     <string name="settings_nointernet">No internet access</string>
