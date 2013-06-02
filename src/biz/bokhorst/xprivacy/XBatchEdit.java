@@ -14,6 +14,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,13 +51,21 @@ public class XBatchEdit extends Activity {
 
 		// Get app list
 		PackageManager pm = getBaseContext().getPackageManager();
-		final List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
-		for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA))
-			listApp.add(new XApplicationInfo(appInfo, permissionName, pm));
+		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
+		List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
+		for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA)) {
+			XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
+			if (xAppInfo == null) {
+				xAppInfo = new XApplicationInfo(appInfo, permissionName, pm);
+				mapApp.put(appInfo.uid, xAppInfo);
+				listApp.add(xAppInfo);
+			} else
+				xAppInfo.AddApplicationName((String) pm.getApplicationLabel(appInfo));
+		}
 		Collections.sort(listApp);
 
 		// Fill app list view adapter
-		final ListView lvApp = (ListView) findViewById(R.id.lvApp);
+		ListView lvApp = (ListView) findViewById(R.id.lvApp);
 		AppListAdapter appAdapter = new AppListAdapter(getBaseContext(), R.layout.xappentry, listApp, permissionName);
 		lvApp.setAdapter(appAdapter);
 	}
@@ -94,6 +104,9 @@ public class XBatchEdit extends Activity {
 				tvApp.setTypeface(null, Typeface.BOLD_ITALIC);
 
 			// Set privacy
+			boolean allowed = XPermissions
+					.getAllowed(null, getBaseContext(), appEntry.getUid(), mPermissionName, false);
+			tvApp.setChecked(!allowed);
 
 			// Change privacy
 			tvApp.setOnClickListener(new View.OnClickListener() {
@@ -113,17 +126,22 @@ public class XBatchEdit extends Activity {
 
 	private class XApplicationInfo implements Comparable<XApplicationInfo> {
 		private Drawable mDrawable;
-		private String mApplicationName;
+		private List<String> mListApplicationName;
 		private boolean mHasInternet;
 		private boolean mIsUsed;
 		private int mUid;
 
 		public XApplicationInfo(ApplicationInfo appInfo, String permissionName, PackageManager packageManager) {
 			mDrawable = appInfo.loadIcon(packageManager);
-			mApplicationName = (String) packageManager.getApplicationLabel(appInfo);
+			mListApplicationName = new ArrayList<String>();
+			mListApplicationName.add((String) packageManager.getApplicationLabel(appInfo));
 			mHasInternet = XPermissions.hasInternet(getBaseContext(), appInfo.packageName);
 			mIsUsed = XPermissions.isUsed(getBaseContext(), appInfo.uid, permissionName);
 			mUid = appInfo.uid;
+		}
+
+		public void AddApplicationName(String Name) {
+			mListApplicationName.add(Name);
 		}
 
 		public Drawable getDrawable() {
@@ -144,12 +162,12 @@ public class XBatchEdit extends Activity {
 
 		@Override
 		public String toString() {
-			return mApplicationName;
+			return String.format("%s (%d)", TextUtils.join(", ", mListApplicationName), mUid);
 		}
 
 		@Override
 		public int compareTo(XApplicationInfo other) {
-			return toString().compareTo(other.toString());
+			return toString().compareToIgnoreCase(other.toString());
 		}
 	}
 }

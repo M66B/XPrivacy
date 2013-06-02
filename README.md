@@ -12,20 +12,17 @@ Currently implemented:
 
 * Browser (bookmarks, searches, etc)
 * Calendar
-* Call log
 * Contacts
-* Identification (Android, phone, number, subscriber, SIM)
+* Identification
 * Location (coarse/fine)
-* Messages (SMS/MMS)
-* Voicemail **untested**
+* Messages (SMS/MMS, voicemail: **untested**)
+* Phone (call log, incoming/outgoing number, phone ID/number, subscriber ID, SIM serial)
 
 Planned:
 
 * Take photo
 * Record audio
 * Record video
-* Incoming/outgoing number
-* Add permission explanations
 
 **Tested with CyanogenMod 10**
 

@@ -30,12 +30,9 @@ public class XPermissions {
 		cPermissions.put(cContacts, new String[] { "READ_CONTACTS" });
 		cPermissions.put(cIdentification, new String[] {});
 		cPermissions.put(cLocation, new String[] { "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
-		cPermissions.put(cMessages, new String[] { "READ_SMS" });
-		cPermissions.put(cPhone, new String[] { "READ_CALL_LOG", "READ_PHONE_STATE" });
-		cPermissions.put(cVoicemail, new String[] { "READ_WRITE_ALL_VOICEMAIL" });
+		cPermissions.put(cMessages, new String[] { "READ_SMS", "READ_WRITE_ALL_VOICEMAIL" });
+		cPermissions.put(cPhone, new String[] { "READ_CALL_LOG", "READ_PHONE_STATE", "PROCESS_OUTGOING_CALLS" });
 	}
-
-	// android.intent.action.NEW_OUTGOING_CALL: PROCESS_OUTGOING_CALLS
 
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;

@@ -7,7 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.app.AndroidAppHelper;
+import android.content.Intent;
 import android.os.Build;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -47,6 +49,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XTelephonyManager("getSimSerialNumber", XPermissions.cPhone), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getSubscriberId", XPermissions.cPhone), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("listen", XPermissions.cPhone), "android.telephony.TelephonyManager");
+
+		// Intents
+		hook(new XActivityThread("handleReceiver", XPermissions.cPhone, Intent.ACTION_NEW_OUTGOING_CALL),
+				"android.app.ActivityThread", false);
+		hook(new XActivityThread("handleReceiver", XPermissions.cPhone, TelephonyManager.ACTION_PHONE_STATE_CHANGED),
+				"android.app.ActivityThread", false);
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
@@ -77,7 +85,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"com.android.providers.contacts.CallLogProvider");
 			hook(new XContentProvider(XPermissions.cContacts), lpparam.classLoader,
 					"com.android.providers.contacts.ContactsProvider2");
-			hook(new XContentProvider(XPermissions.cVoicemail), lpparam.classLoader,
+			hook(new XContentProvider(XPermissions.cMessages), lpparam.classLoader,
 					"com.android.providers.contacts.VoicemailContentProvider");
 		}
 

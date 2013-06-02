@@ -43,7 +43,7 @@ public class XAppSettings extends Activity {
 
 		// Display app name
 		TextView tvAppName = (TextView) findViewById(R.id.tvApp);
-		tvAppName.setText(pm.getApplicationLabel(appInfo));
+		tvAppName.setText(String.format("%s (%d)", pm.getApplicationLabel(appInfo), appInfo.uid));
 
 		// Check if internet access
 		if (XPermissions.hasInternet(getBaseContext(), packageName))
