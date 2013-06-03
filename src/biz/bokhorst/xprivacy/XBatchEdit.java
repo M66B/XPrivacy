@@ -42,7 +42,7 @@ public class XBatchEdit extends Activity {
 
 		// Display restriction name
 		TextView tvRestriction = (TextView) findViewById(R.id.tvRestriction);
-		tvRestriction.setText(XRestriction.getLocalizedName(getBaseContext(), restrictionName));
+		tvRestriction.setText(XRestriction.getLocalizedName(this, restrictionName));
 
 		// Legend
 		TextView tvUsed = (TextView) findViewById(R.id.tvUsed);
@@ -51,23 +51,22 @@ public class XBatchEdit extends Activity {
 		tvInternet.setTextColor(Color.GRAY);
 
 		// Get app list
-		PackageManager pm = getBaseContext().getPackageManager();
 		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
 		List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
-		for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA)) {
+		for (ApplicationInfo appInfo : getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA)) {
 			XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
 			if (xAppInfo == null) {
-				xAppInfo = new XApplicationInfo(appInfo, restrictionName, pm);
+				xAppInfo = new XApplicationInfo(appInfo, restrictionName, getPackageManager());
 				mapApp.put(appInfo.uid, xAppInfo);
 				listApp.add(xAppInfo);
 			} else
-				xAppInfo.AddApplicationName((String) pm.getApplicationLabel(appInfo));
+				xAppInfo.AddApplicationName((String) getPackageManager().getApplicationLabel(appInfo));
 		}
 		Collections.sort(listApp);
 
 		// Fill app list view adapter
 		ListView lvApp = (ListView) findViewById(R.id.lvApp);
-		AppListAdapter appAdapter = new AppListAdapter(getBaseContext(), R.layout.xappentry, listApp, restrictionName);
+		AppListAdapter appAdapter = new AppListAdapter(this, R.layout.xappentry, listApp, restrictionName);
 		lvApp.setAdapter(appAdapter);
 	}
 
@@ -82,7 +81,7 @@ public class XBatchEdit extends Activity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.xappentry, parent, false);
 			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgAppEntryIcon);
 			final CheckedTextView tvApp = (CheckedTextView) row.findViewById(R.id.tvAppEntryName);
@@ -105,17 +104,20 @@ public class XBatchEdit extends Activity {
 				tvApp.setTypeface(null, Typeface.BOLD_ITALIC);
 
 			// Set privacy
-			boolean restricted = XRestriction.getRestricted(null, getBaseContext(), appEntry.getUid(), mRestrictionName, null, false);
+			boolean restricted = XRestriction.getRestricted(null, row.getContext(), appEntry.getUid(),
+					mRestrictionName, null, false);
 			tvApp.setChecked(restricted);
 
 			// Change privacy
 			tvApp.setOnClickListener(new View.OnClickListener() {
 				@Override
-				public void onClick(View v) {
-					boolean restricted = XRestriction.getRestricted(null, getBaseContext(), appEntry.getUid(), mRestrictionName, null, false);
+				public void onClick(View view) {
+					boolean restricted = XRestriction.getRestricted(null, view.getContext(), appEntry.getUid(),
+							mRestrictionName, null, false);
 					restricted = !restricted;
 					tvApp.setChecked(restricted);
-					XRestriction.setRestricted(null, getBaseContext(), appEntry.getUid(), mRestrictionName, null, restricted);
+					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName, null,
+							restricted);
 				}
 			});
 

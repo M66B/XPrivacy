@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.Arrays;
 import java.util.List;
 
 import android.os.Bundle;
@@ -30,7 +29,7 @@ public class XMain extends Activity {
 
 		// Show version
 		try {
-			PackageInfo pInfo = getBaseContext().getPackageManager().getPackageInfo(getPackageName(), 0);
+			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 			TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
 			tvVersion.setText(String.format(getString(R.string.app_version), pInfo.versionName, pInfo.versionCode));
 		} catch (Throwable ex) {
@@ -57,10 +56,10 @@ public class XMain extends Activity {
 		tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
 
 		// Fill restriction list view adapter
-		final List<String> listRestriction = Arrays.asList(XRestriction.cRestriction);
+		final List<String> listRestriction = XRestriction.getRestrictions();
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
-		RestrictionAdapter restrictionAdapter = new RestrictionAdapter(getBaseContext(), android.R.layout.simple_list_item_1,
-				Arrays.asList(XRestriction.cRestriction));
+		RestrictionAdapter restrictionAdapter = new RestrictionAdapter(getBaseContext(),
+				android.R.layout.simple_list_item_1, listRestriction);
 		lvRestriction.setAdapter(restrictionAdapter);
 
 		// Listen for privacy changes
@@ -69,7 +68,7 @@ public class XMain extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				String restrictionName = listRestriction.get(position);
-				Intent intentBatch = new Intent(getBaseContext(), XBatchEdit.class);
+				Intent intentBatch = new Intent(view.getContext(), XBatchEdit.class);
 				intentBatch.putExtra(XBatchEdit.cRestrictionName, restrictionName);
 				intentBatch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(intentBatch);
@@ -88,14 +87,15 @@ public class XMain extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View row = convertView;
 			if (row == null) {
-				LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
+						Context.LAYOUT_INFLATER_SERVICE);
 				row = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
 			}
 			TextView tvRestriction = (TextView) row.findViewById(android.R.id.text1);
 
 			// Display localize name
 			String restrictionName = getItem(position);
-			tvRestriction.setText(XRestriction.getLocalizedName(getBaseContext(), restrictionName));
+			tvRestriction.setText(XRestriction.getLocalizedName(row.getContext(), restrictionName));
 
 			return row;
 		}

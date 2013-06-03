@@ -37,7 +37,7 @@ public abstract class XHook {
 	}
 
 	protected Context getApplicationContext() {
-		return AndroidAppHelper.currentApplication().getBaseContext();
+		return AndroidAppHelper.currentApplication();
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) {

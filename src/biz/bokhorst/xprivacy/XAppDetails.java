@@ -71,9 +71,9 @@ public class XAppDetails extends XHook {
 
 		// Get helpers
 		String xPackageName = this.getClass().getPackage().getName();
-		PackageManager pm = containerView.getContext().getPackageManager();
-		Resources resources = pm.getResourcesForApplication(xPackageName);
-		final Context xContext = containerView.getContext().createPackageContext(xPackageName, 0);
+		PackageManager pm = rootView.getContext().getPackageManager();
+		Resources xResources = pm.getResourcesForApplication(xPackageName);
+		final Context xContext = rootView.getContext().createPackageContext(xPackageName, 0);
 		LayoutInflater inflater = (LayoutInflater) xContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		// Remove privacy button
@@ -82,7 +82,7 @@ public class XAppDetails extends XHook {
 			detailsView.removeView(privacyButtonView);
 
 		// Add privacy button
-		privacyButtonView = (LinearLayout) inflater.inflate(resources.getLayout(R.layout.xappbutton), null);
+		privacyButtonView = (LinearLayout) inflater.inflate(xResources.getLayout(R.layout.xappbutton), null);
 		Button btnXPrivacy = (Button) privacyButtonView.findViewById(R.id.btnXPrivacy);
 		btnXPrivacy.setOnClickListener(new OnClickListener() {
 			@Override

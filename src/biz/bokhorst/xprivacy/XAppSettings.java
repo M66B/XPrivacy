@@ -1,12 +1,10 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -32,10 +30,9 @@ public class XAppSettings extends Activity {
 		String packageName = extras.getString(cExtraPackageName);
 
 		// Get app info
-		PackageManager pm = getBaseContext().getPackageManager();
 		final ApplicationInfo appInfo;
 		try {
-			appInfo = pm.getApplicationInfo(packageName, 0);
+			appInfo = getPackageManager().getApplicationInfo(packageName, 0);
 		} catch (Throwable ex) {
 			XUtil.bug(null, ex);
 			return;
@@ -43,10 +40,10 @@ public class XAppSettings extends Activity {
 
 		// Display app name
 		TextView tvAppName = (TextView) findViewById(R.id.tvApp);
-		tvAppName.setText(String.format("%s (%d)", pm.getApplicationLabel(appInfo), appInfo.uid));
+		tvAppName.setText(String.format("%s (%d)", getPackageManager().getApplicationLabel(appInfo), appInfo.uid));
 
 		// Check if internet access
-		if (XRestriction.hasInternet(getBaseContext(), packageName))
+		if (XRestriction.hasInternet(this, packageName))
 			findViewById(R.id.tvInternet).setVisibility(View.GONE);
 
 		// Legend
@@ -57,14 +54,15 @@ public class XAppSettings extends Activity {
 
 		// Fill privacy list view adapter
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
-		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(getBaseContext(), android.R.layout.simple_list_item_multiple_choice, appInfo,
-				Arrays.asList(XRestriction.cRestriction));
+		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(this,
+				android.R.layout.simple_list_item_multiple_choice, appInfo, XRestriction.getRestrictions());
 		lvRestriction.setAdapter(privacyListAdapter);
 
 		// Set privacy values
 		for (int position = 0; position < lvRestriction.getAdapter().getCount(); position++) {
 			String restrictionName = (String) lvRestriction.getItemAtPosition(position);
-			lvRestriction.setItemChecked(position, XRestriction.getRestricted(null, getBaseContext(), appInfo.uid, restrictionName, null, false));
+			lvRestriction.setItemChecked(position,
+					XRestriction.getRestricted(null, this, appInfo.uid, restrictionName, null, false));
 		}
 
 		// Listen for privacy changes
@@ -73,7 +71,7 @@ public class XAppSettings extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				String restrictionName = (String) lvRestriction.getItemAtPosition(position);
 				boolean restricted = lvRestriction.isItemChecked(position);
-				XRestriction.setRestricted(null, getBaseContext(), appInfo.uid, restrictionName, null, restricted);
+				XRestriction.setRestricted(null, view.getContext(), appInfo.uid, restrictionName, null, restricted);
 			}
 		});
 	}
@@ -88,20 +86,20 @@ public class XAppSettings extends Activity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(android.R.layout.simple_list_item_multiple_choice, parent, false);
 			TextView tvRestriction = (TextView) row.findViewById(android.R.id.text1);
 
 			// Display localize name
 			String restrictionName = getItem(position);
-			tvRestriction.setText(XRestriction.getLocalizedName(getBaseContext(), restrictionName));
+			tvRestriction.setText(XRestriction.getLocalizedName(row.getContext(), restrictionName));
 
 			// Display if restriction granted
-			if (!XRestriction.hasPermission(getBaseContext(), mAppInfo.packageName, restrictionName))
+			if (!XRestriction.hasPermission(row.getContext(), mAppInfo.packageName, restrictionName))
 				tvRestriction.setTextColor(Color.GRAY);
 
 			// Display if used
-			if (XRestriction.isUsed(getBaseContext(), mAppInfo.uid, restrictionName))
+			if (XRestriction.isUsed(row.getContext(), mAppInfo.uid, restrictionName))
 				tvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
 
 			return row;

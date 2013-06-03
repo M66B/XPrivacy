@@ -28,52 +28,61 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
 
 		// Workaround bug in Xposed
-		hook(new XLocationManager("_requestLocationUpdates", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }),
-				"android.location.LocationManager", false);
-		hook(new XTelephonyManager("_listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }), "android.telephony.TelephonyManager", false);
+		hook(new XLocationManager("_requestLocationUpdates", XRestriction.cLocation, new String[] {
+				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager", false);
+		hook(new XTelephonyManager("_listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager", false);
 
 		// Camera
 		hook(new XCamera("takePicture", XRestriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
 		// Location manager
-		hook(new XLocationManager("addGpsStatusListener", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }),
-				"android.location.LocationManager");
-		hook(new XLocationManager("addNmeaListener", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }),
-				"android.location.LocationManager");
-		hook(new XLocationManager("addProximityAlert", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }),
-				"android.location.LocationManager");
-		hook(new XLocationManager("getLastKnownLocation", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }),
-				"android.location.LocationManager");
-		hook(new XLocationManager("requestLocationUpdates", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }),
-				"android.location.LocationManager");
-		hook(new XLocationManager("requestSingleUpdate", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }),
-				"android.location.LocationManager");
+		hook(new XLocationManager("addGpsStatusListener", XRestriction.cLocation, new String[] {
+				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
+		hook(new XLocationManager("addNmeaListener", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
+				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
+		hook(new XLocationManager("addProximityAlert", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
+				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
+		hook(new XLocationManager("getLastKnownLocation", XRestriction.cLocation, new String[] {
+				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
+		hook(new XLocationManager("requestLocationUpdates", XRestriction.cLocation, new String[] {
+				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
+		hook(new XLocationManager("requestSingleUpdate", XRestriction.cLocation, new String[] {
+				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
 
 		// Settings secure
 		hook(new XSettingsSecure("getString", XRestriction.cIdentification), "android.provider.Settings.Secure");
 
 		// Telephony
-		hook(new XTelephonyManager("getDeviceId", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }), "android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getLine1Number", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }), "android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getMsisdn", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }), "android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getSimSerialNumber", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }), "android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getSubscriberId", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }), "android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }), "android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getDeviceId", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getLine1Number", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getMsisdn", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getSimSerialNumber", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getSubscriberId", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
 
 		// getMsisdn, listen: check permissions
 
 		// Intent receive: calling
-		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, new String[] { "PROCESS_OUTGOING_CALLS" }, Intent.ACTION_NEW_OUTGOING_CALL),
-				"android.app.ActivityThread", false);
-		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }, TelephonyManager.ACTION_PHONE_STATE_CHANGED),
-				"android.app.ActivityThread", false);
+		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, new String[] { "PROCESS_OUTGOING_CALLS" },
+				Intent.ACTION_NEW_OUTGOING_CALL), "android.app.ActivityThread", false);
+		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" },
+				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ActivityThread", false);
 
 		// Intent send: media
-		hook(new XActivity("startActivityForResult", XRestriction.cPhone, new String[] { "CAMERA" }, MediaStore.ACTION_IMAGE_CAPTURE), "android.app.Activity");
+		hook(new XActivity("startActivityForResult", XRestriction.cPhone, new String[] { "CAMERA" },
+				MediaStore.ACTION_IMAGE_CAPTURE), "android.app.Activity");
 		if (Build.VERSION.SDK_INT >= 17)
-			hook(new XActivity("startActivityForResult", XRestriction.cPhone, new String[] { "CAMERA" }, MediaStore.ACTION_IMAGE_CAPTURE_SECURE),
-					"android.app.Activity");
-		hook(new XActivity("startActivityForResult", XRestriction.cPhone, new String[] { "CAMERA" }, MediaStore.ACTION_VIDEO_CAPTURE), "android.app.Activity");
+			hook(new XActivity("startActivityForResult", XRestriction.cPhone, new String[] { "CAMERA" },
+					MediaStore.ACTION_IMAGE_CAPTURE_SECURE), "android.app.Activity");
+		hook(new XActivity("startActivityForResult", XRestriction.cPhone, new String[] { "CAMERA" },
+				MediaStore.ACTION_VIDEO_CAPTURE), "android.app.Activity");
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
@@ -87,10 +96,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Load browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {
-			hook(new XContentProvider(XRestriction.cBrowser, new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" }), lpparam.classLoader,
-					"com.android.browser.provider.BrowserProvider");
-			hook(new XContentProvider(XRestriction.cBrowser, new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" }), lpparam.classLoader,
-					"com.android.browser.provider.BrowserProvider2");
+			hook(new XContentProvider(XRestriction.cBrowser, new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" }),
+					lpparam.classLoader, "com.android.browser.provider.BrowserProvider");
+			hook(new XContentProvider(XRestriction.cBrowser, new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" }),
+					lpparam.classLoader, "com.android.browser.provider.BrowserProvider2");
 		}
 
 		// Load calendar provider
@@ -104,14 +113,16 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"com.android.providers.contacts.CallLogProvider");
 			hook(new XContentProvider(XRestriction.cContacts, new String[] { "READ_CONTACTS" }), lpparam.classLoader,
 					"com.android.providers.contacts.ContactsProvider2");
-			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_WRITE_ALL_VOICEMAIL" }), lpparam.classLoader,
-					"com.android.providers.contacts.VoicemailContentProvider");
+			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_WRITE_ALL_VOICEMAIL" }),
+					lpparam.classLoader, "com.android.providers.contacts.VoicemailContentProvider");
 		}
 
 		// Load telephony provider
 		else if (lpparam.packageName.equals("com.android.providers.telephony")) {
-			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }), lpparam.classLoader, "com.android.providers.telephony.SmsProvider");
-			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }), lpparam.classLoader, "com.android.providers.telephony.MmsProvider");
+			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }), lpparam.classLoader,
+					"com.android.providers.telephony.SmsProvider");
+			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }), lpparam.classLoader,
+					"com.android.providers.telephony.MmsProvider");
 			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }), lpparam.classLoader,
 					"com.android.providers.telephony.MmsSmsProvider");
 			// com.android.providers.telephony.TelephonyProvider
@@ -119,7 +130,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Load settings
 		else if (lpparam.packageName.equals("com.android.settings"))
-			hook(new XAppDetails("refreshUi"), lpparam.classLoader, "com.android.settings.applications.InstalledAppDetails", false);
+			hook(new XAppDetails("refreshUi"), lpparam.classLoader,
+					"com.android.settings.applications.InstalledAppDetails", false);
 	}
 
 	private void hook(final XHook hook, String className) {
@@ -162,7 +174,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Find class
 			Class<?> hookClass = findClass(className, classLoader);
 			if (hookClass == null) {
-				XUtil.log(hook, Log.WARN, String.format("%s: class not found: %s", AndroidAppHelper.currentPackageName(), className));
+				XUtil.log(hook, Log.WARN,
+						String.format("%s: class not found: %s", AndroidAppHelper.currentPackageName(), className));
 				return;
 			}
 
@@ -174,20 +187,27 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						hookSet.add(XposedBridge.hookMethod(constructor, methodHook));
 			} else
 				for (Method method : hookClass.getDeclaredMethods())
-					if (method.getName().equals(hook.getMethodName()) && (Modifier.isPublic(method.getModifiers()) ? visible : !visible))
+					if (method.getName().equals(hook.getMethodName())
+							&& (Modifier.isPublic(method.getModifiers()) ? visible : !visible))
 						hookSet.add(XposedBridge.hookMethod(method, methodHook));
 
 			// Check if found
 			if (hookSet.isEmpty()) {
-				XUtil.log(hook, Log.WARN,
-						String.format("%s: method not found: %s.%s", AndroidAppHelper.currentPackageName(), hookClass.getName(), hook.getMethodName()));
+				XUtil.log(
+						hook,
+						Log.WARN,
+						String.format("%s: method not found: %s.%s", AndroidAppHelper.currentPackageName(),
+								hookClass.getName(), hook.getMethodName()));
 				return;
 			}
 
 			// Log
 			for (XC_MethodHook.Unhook unhook : hookSet) {
-				XUtil.log(hook, Log.INFO, String.format("%s: hooked %s.%s (%d)", AndroidAppHelper.currentPackageName(), hookClass.getName(), unhook
-						.getHookedMethod().getName(), hookSet.size()));
+				XUtil.log(
+						hook,
+						Log.INFO,
+						String.format("%s: hooked %s.%s (%d)", AndroidAppHelper.currentPackageName(),
+								hookClass.getName(), unhook.getHookedMethod().getName(), hookSet.size()));
 				break;
 			}
 		} catch (Throwable ex) {

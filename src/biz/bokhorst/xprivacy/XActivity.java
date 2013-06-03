@@ -3,8 +3,8 @@ package biz.bokhorst.xprivacy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Process;
 import android.util.Log;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivity extends XHook {
@@ -42,7 +42,6 @@ public class XActivity extends XHook {
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
 		Context context = (Context) param.thisObject;
 		int uid = Binder.getCallingUid();
-		uid = Process.myUid();
 		return getRestricted(context, uid, true);
 	}
 }

@@ -65,7 +65,8 @@ public class XTelephonyManager extends XHook {
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
 			try {
-				XUtil.log(XTelephonyManager.this, Log.INFO, mListener.getClass().getPackage().getName() + ": onCallStateChanged");
+				XUtil.log(XTelephonyManager.this, Log.INFO, mListener.getClass().getPackage().getName()
+						+ ": onCallStateChanged");
 			} catch (Throwable ex) {
 			}
 			mListener.onCallStateChanged(state, XRestriction.cDefaceString);
