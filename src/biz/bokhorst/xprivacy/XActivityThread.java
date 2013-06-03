@@ -1,14 +1,10 @@
 package biz.bokhorst.xprivacy;
 
 import static de.robv.android.xposed.XposedHelpers.findField;
-import static de.robv.android.xposed.XposedHelpers.findMethodExact;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -59,13 +55,5 @@ public class XActivityThread extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		// Do nothing
-	}
-
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Method method = findMethodExact(param.thisObject.getClass(), "getSystemContext", new Object[0]);
-		Context context = (Context) method.invoke(param.thisObject, new Object[0]);
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
 	}
 }
