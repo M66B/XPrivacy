@@ -9,6 +9,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -121,6 +122,19 @@ public class XBatchEdit extends Activity {
 				}
 			});
 
+			// Long click: app settings
+			tvApp.setLongClickable(true);
+			tvApp.setOnLongClickListener(new View.OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View view) {
+					Intent intentSettings = new Intent(view.getContext(), XAppSettings.class);
+					intentSettings.putExtra(XAppSettings.cExtraPackageName, appEntry.getPackageName());
+					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					view.getContext().startActivity(intentSettings);
+					return true;
+				}
+			});
+
 			return row;
 		}
 	}
@@ -128,6 +142,7 @@ public class XBatchEdit extends Activity {
 	private class XApplicationInfo implements Comparable<XApplicationInfo> {
 		private Drawable mDrawable;
 		private List<String> mListApplicationName;
+		private String mPackageName;
 		private boolean mHasInternet;
 		private boolean mIsUsed;
 		private int mUid;
@@ -136,6 +151,7 @@ public class XBatchEdit extends Activity {
 			mDrawable = appInfo.loadIcon(packageManager);
 			mListApplicationName = new ArrayList<String>();
 			mListApplicationName.add((String) packageManager.getApplicationLabel(appInfo));
+			mPackageName = appInfo.packageName;
 			mHasInternet = XRestriction.hasInternet(getBaseContext(), appInfo.packageName);
 			mIsUsed = XRestriction.isUsed(getBaseContext(), appInfo.uid, restrictionName);
 			mUid = appInfo.uid;
@@ -143,6 +159,10 @@ public class XBatchEdit extends Activity {
 
 		public void AddApplicationName(String Name) {
 			mListApplicationName.add(Name);
+		}
+
+		public String getPackageName() {
+			return mPackageName;
 		}
 
 		public Drawable getDrawable() {

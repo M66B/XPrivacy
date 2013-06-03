@@ -3,11 +3,14 @@ package biz.bokhorst.xprivacy;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +77,7 @@ public class XAppSettings extends Activity {
 				XRestriction.setRestricted(null, view.getContext(), appInfo.uid, restrictionName, null, restricted);
 			}
 		});
+
 	}
 
 	private class RestrictionAdapter extends ArrayAdapter<String> {
@@ -91,7 +95,7 @@ public class XAppSettings extends Activity {
 			TextView tvRestriction = (TextView) row.findViewById(android.R.id.text1);
 
 			// Display localize name
-			String restrictionName = getItem(position);
+			final String restrictionName = getItem(position);
 			tvRestriction.setText(XRestriction.getLocalizedName(row.getContext(), restrictionName));
 
 			// Display if restriction granted
@@ -101,6 +105,25 @@ public class XAppSettings extends Activity {
 			// Display if used
 			if (XRestriction.isUsed(row.getContext(), mAppInfo.uid, restrictionName))
 				tvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
+			// Long click: permissions
+
+			tvRestriction.setLongClickable(true);
+			tvRestriction.setOnLongClickListener(new View.OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View view) {
+					AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
+					alertDialog.setTitle(getString(R.string.app_name));
+					alertDialog.setMessage(TextUtils.join(",  ", XRestriction.getPermissions(restrictionName)));
+					alertDialog.setIcon(R.drawable.ic_launcher);
+					alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
+					alertDialog.show();
+					return true;
+				}
+			});
 
 			return row;
 		}

@@ -29,17 +29,46 @@ public class XRestriction {
 
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
 
+	static {
+		mRestrictions.put(cBrowser, new ArrayList<String>());
+		mRestrictions.put(cCalendar, new ArrayList<String>());
+		mRestrictions.put(cContacts, new ArrayList<String>());
+		mRestrictions.put(cIdentification, new ArrayList<String>());
+		mRestrictions.put(cLocation, new ArrayList<String>());
+		mRestrictions.put(cMedia, new ArrayList<String>());
+		mRestrictions.put(cMessages, new ArrayList<String>());
+		mRestrictions.put(cPhone, new ArrayList<String>());
+
+		// Temporary solution
+		mRestrictions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
+		mRestrictions.get(cBrowser).add("GLOBAL_SEARCH");
+		mRestrictions.get(cCalendar).add("READ_CALENDAR");
+		mRestrictions.get(cContacts).add("READ_CONTACTS");
+		mRestrictions.get(cLocation).add("ACCESS_COARSE_LOCATION");
+		mRestrictions.get(cLocation).add("ACCESS_FINE_LOCATION");
+		mRestrictions.get(cMedia).add("CAMERA");
+		mRestrictions.get(cMessages).add("READ_WRITE_ALL_VOICEMAIL");
+		mRestrictions.get(cMessages).add("READ_SMS");
+		mRestrictions.get(cPhone).add("READ_PHONE_STATE");
+		mRestrictions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
+		mRestrictions.get(cPhone).add("READ_CALL_LOG");
+	}
+
 	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {
 		// TODO: register method name for more granularity
 		if (!mRestrictions.containsKey(restrictionName))
-			mRestrictions.put(restrictionName, new ArrayList<String>());
+			XUtil.log(null, Log.WARN, "Missing restriction " + restrictionName);
 		for (String permission : permissions)
 			if (!mRestrictions.get(restrictionName).contains(permission))
-				mRestrictions.get(restrictionName).add(permission);
+				XUtil.log(null, Log.WARN, "Missing permission " + permission);
 	}
 
 	public static List<String> getRestrictions() {
 		return new ArrayList<String>(mRestrictions.keySet());
+	}
+
+	public static List<String> getPermissions(String restrictionName) {
+		return mRestrictions.get(restrictionName);
 	}
 
 	public static boolean hasInternet(Context context, String packageName) {
