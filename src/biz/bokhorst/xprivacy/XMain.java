@@ -62,7 +62,7 @@ public class XMain extends Activity {
 				android.R.layout.simple_list_item_1, listRestriction);
 		lvRestriction.setAdapter(restrictionAdapter);
 
-		// Listen for privacy changes
+		// Click: batch edit
 		lvRestriction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,7 +74,6 @@ public class XMain extends Activity {
 				startActivity(intentBatch);
 			}
 		});
-
 	}
 
 	private class RestrictionAdapter extends ArrayAdapter<String> {
@@ -93,8 +92,10 @@ public class XMain extends Activity {
 			}
 			TextView tvRestriction = (TextView) row.findViewById(android.R.id.text1);
 
-			// Display localize name
+			// Get entry
 			String restrictionName = getItem(position);
+
+			// Display localize name
 			tvRestriction.setText(XRestriction.getLocalizedName(row.getContext(), restrictionName));
 
 			return row;

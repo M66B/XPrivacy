@@ -66,9 +66,16 @@ public class XBatchEdit extends Activity {
 		Collections.sort(listApp);
 
 		// Fill app list view adapter
-		ListView lvApp = (ListView) findViewById(R.id.lvApp);
+		final ListView lvApp = (ListView) findViewById(R.id.lvApp);
 		AppListAdapter appAdapter = new AppListAdapter(this, R.layout.xappentry, listApp, restrictionName);
 		lvApp.setAdapter(appAdapter);
+
+		// Set restriction values
+		for (int position = 0; position < lvApp.getAdapter().getCount(); position++) {
+			XApplicationInfo appInfo = (XApplicationInfo) lvApp.getItemAtPosition(position);
+			lvApp.setItemChecked(position,
+					XRestriction.getRestricted(null, this, appInfo.getUid(), restrictionName, null, false));
+		}
 	}
 
 	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> {
@@ -85,7 +92,7 @@ public class XBatchEdit extends Activity {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.xappentry, parent, false);
 			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgAppEntryIcon);
-			final CheckedTextView tvApp = (CheckedTextView) row.findViewById(R.id.tvAppEntryName);
+			final CheckedTextView ctvApp = (CheckedTextView) row.findViewById(R.id.tvAppEntryName);
 
 			// Get entry
 			final XApplicationInfo appEntry = getItem(position);
@@ -94,37 +101,32 @@ public class XBatchEdit extends Activity {
 			imgIcon.setImageDrawable(appEntry.getDrawable());
 
 			// Set icon/title
-			tvApp.setText(appEntry.toString());
+			ctvApp.setText(appEntry.toString());
 
 			// Check if internet access
 			if (!appEntry.hasInternet())
-				tvApp.setTextColor(Color.GRAY);
+				ctvApp.setTextColor(Color.GRAY);
 
 			// Check if used
 			if (appEntry.isUsed())
-				tvApp.setTypeface(null, Typeface.BOLD_ITALIC);
+				ctvApp.setTypeface(null, Typeface.BOLD_ITALIC);
 
-			// Set privacy
-			boolean restricted = XRestriction.getRestricted(null, row.getContext(), appEntry.getUid(),
-					mRestrictionName, null, false);
-			tvApp.setChecked(restricted);
-
-			// Change privacy
-			tvApp.setOnClickListener(new View.OnClickListener() {
+			// Listen for restriction changes
+			ctvApp.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					boolean restricted = XRestriction.getRestricted(null, view.getContext(), appEntry.getUid(),
 							mRestrictionName, null, false);
 					restricted = !restricted;
-					tvApp.setChecked(restricted);
+					ctvApp.setChecked(restricted);
 					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName, null,
 							restricted);
 				}
 			});
 
 			// Long click: app settings
-			tvApp.setLongClickable(true);
-			tvApp.setOnLongClickListener(new View.OnLongClickListener() {
+			ctvApp.setLongClickable(true);
+			ctvApp.setOnLongClickListener(new View.OnLongClickListener() {
 				@Override
 				public boolean onLongClick(View view) {
 					Intent intentSettings = new Intent(view.getContext(), XAppSettings.class);
