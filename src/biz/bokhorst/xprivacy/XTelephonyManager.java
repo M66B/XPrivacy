@@ -17,8 +17,8 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XTelephonyManager extends XHook {
 
-	public XTelephonyManager(String methodName, String restrictionName) {
-		super(methodName, restrictionName);
+	public XTelephonyManager(String methodName, String restrictionName, String[] permissions) {
+		super(methodName, restrictionName, permissions);
 	}
 
 	@Override
@@ -65,8 +65,7 @@ public class XTelephonyManager extends XHook {
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
 			try {
-				XUtil.log(XTelephonyManager.this, Log.INFO, mListener.getClass().getPackage().getName()
-						+ ": onCallStateChanged");
+				XUtil.log(XTelephonyManager.this, Log.INFO, mListener.getClass().getPackage().getName() + ": onCallStateChanged");
 			} catch (Throwable ex) {
 			}
 			mListener.onCallStateChanged(state, XRestriction.cDefaceString);

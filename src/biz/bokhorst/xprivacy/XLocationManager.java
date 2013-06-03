@@ -12,8 +12,8 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XLocationManager extends XHook {
 
-	public XLocationManager(String methodName, String restrictionName) {
-		super(methodName, restrictionName);
+	public XLocationManager(String methodName, String restrictionName, String[] permissions) {
+		super(methodName, restrictionName, permissions);
 	}
 
 	@Override

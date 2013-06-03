@@ -105,19 +105,17 @@ public class XBatchEdit extends Activity {
 				tvApp.setTypeface(null, Typeface.BOLD_ITALIC);
 
 			// Set privacy
-			boolean restricted = XRestriction.getRestricted(null, getBaseContext(), appEntry.getUid(),
-					mRestrictionName, false);
+			boolean restricted = XRestriction.getRestricted(null, getBaseContext(), appEntry.getUid(), mRestrictionName, null, false);
 			tvApp.setChecked(restricted);
 
 			// Change privacy
 			tvApp.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					boolean restricted = XRestriction.getRestricted(null, getBaseContext(), appEntry.getUid(),
-							mRestrictionName, false);
+					boolean restricted = XRestriction.getRestricted(null, getBaseContext(), appEntry.getUid(), mRestrictionName, null, false);
 					restricted = !restricted;
 					tvApp.setChecked(restricted);
-					XRestriction.setRestricted(null, getBaseContext(), appEntry.getUid(), mRestrictionName, restricted);
+					XRestriction.setRestricted(null, getBaseContext(), appEntry.getUid(), mRestrictionName, null, restricted);
 				}
 			});
 

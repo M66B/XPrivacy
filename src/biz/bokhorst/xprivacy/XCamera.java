@@ -4,8 +4,8 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XCamera extends XHook {
 
-	public XCamera(String methodName, String restrictionName) {
-		super(methodName, restrictionName);
+	public XCamera(String methodName, String restrictionName, String[] permissions) {
+		super(methodName, restrictionName, permissions);
 	}
 
 	@Override

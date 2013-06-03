@@ -14,8 +14,8 @@ public class XActivityThread extends XHook {
 
 	private String mActionName;
 
-	public XActivityThread(String methodName, String restrictionName, String actionName) {
-		super(methodName, restrictionName);
+	public XActivityThread(String methodName, String restrictionName, String[] permissions, String actionName) {
+		super(methodName, restrictionName, permissions);
 		mActionName = actionName;
 	}
 

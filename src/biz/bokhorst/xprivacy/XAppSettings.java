@@ -1,6 +1,6 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
@@ -57,16 +57,14 @@ public class XAppSettings extends Activity {
 
 		// Fill privacy list view adapter
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
-		List<String> listRestriction = new ArrayList<String>(XRestriction.cRestriction.keySet());
-		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(getBaseContext(),
-				android.R.layout.simple_list_item_multiple_choice, appInfo, listRestriction);
+		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(getBaseContext(), android.R.layout.simple_list_item_multiple_choice, appInfo,
+				Arrays.asList(XRestriction.cRestriction));
 		lvRestriction.setAdapter(privacyListAdapter);
 
 		// Set privacy values
 		for (int position = 0; position < lvRestriction.getAdapter().getCount(); position++) {
 			String restrictionName = (String) lvRestriction.getItemAtPosition(position);
-			lvRestriction.setItemChecked(position,
-					XRestriction.getRestricted(null, getBaseContext(), appInfo.uid, restrictionName, false));
+			lvRestriction.setItemChecked(position, XRestriction.getRestricted(null, getBaseContext(), appInfo.uid, restrictionName, null, false));
 		}
 
 		// Listen for privacy changes
@@ -75,7 +73,7 @@ public class XAppSettings extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				String restrictionName = (String) lvRestriction.getItemAtPosition(position);
 				boolean restricted = lvRestriction.isItemChecked(position);
-				XRestriction.setRestricted(null, getBaseContext(), appInfo.uid, restrictionName, restricted);
+				XRestriction.setRestricted(null, getBaseContext(), appInfo.uid, restrictionName, null, restricted);
 			}
 		});
 	}
@@ -99,7 +97,7 @@ public class XAppSettings extends Activity {
 			tvRestriction.setText(XRestriction.getLocalizedName(getBaseContext(), restrictionName));
 
 			// Display if restriction granted
-			if (!XRestriction.isGranted(getBaseContext(), mAppInfo.packageName, restrictionName))
+			if (!XRestriction.hasPermission(getBaseContext(), mAppInfo.packageName, restrictionName))
 				tvRestriction.setTextColor(Color.GRAY);
 
 			// Display if used

@@ -1,6 +1,6 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.os.Bundle;
@@ -57,10 +57,10 @@ public class XMain extends Activity {
 		tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
 
 		// Fill restriction list view adapter
-		final List<String> listRestriction = new ArrayList<String>(XRestriction.cRestriction.keySet());
+		final List<String> listRestriction = Arrays.asList(XRestriction.cRestriction);
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
-		RestrictionAdapter restrictionAdapter = new RestrictionAdapter(getBaseContext(),
-				android.R.layout.simple_list_item_1, listRestriction);
+		RestrictionAdapter restrictionAdapter = new RestrictionAdapter(getBaseContext(), android.R.layout.simple_list_item_1,
+				Arrays.asList(XRestriction.cRestriction));
 		lvRestriction.setAdapter(restrictionAdapter);
 
 		// Listen for privacy changes
@@ -88,8 +88,7 @@ public class XMain extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View row = convertView;
 			if (row == null) {
-				LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
-						Context.LAYOUT_INFLATER_SERVICE);
+				LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				row = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
 			}
 			TextView tvRestriction = (TextView) row.findViewById(android.R.id.text1);

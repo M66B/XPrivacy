@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.content.ContentResolver;
@@ -23,43 +24,40 @@ public class XRestriction {
 	public static final String cPhone = "phone";
 	public static final String cVoicemail = "voicemail";
 
-	public static Map<String, String[]> cRestriction = new LinkedHashMap<String, String[]>();
-
-	static {
-		cRestriction.put(cBrowser, new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" });
-		cRestriction.put(cCalendar, new String[] { "READ_CALENDAR" });
-		cRestriction.put(cContacts, new String[] { "READ_CONTACTS" });
-		cRestriction.put(cIdentification, new String[] {});
-		cRestriction.put(cLocation, new String[] { "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
-		cRestriction.put(cMedia, new String[] { "CAMERA" });
-		cRestriction.put(cMessages, new String[] { "READ_SMS", "READ_WRITE_ALL_VOICEMAIL" });
-		cRestriction.put(cPhone, new String[] { "READ_CALL_LOG", "READ_PHONE_STATE", "PROCESS_OUTGOING_CALLS" });
-	}
-	// TODO: uses-feature
+	public static String[] cRestriction = { cBrowser, cCalendar, cContacts, cIdentification, cLocation, cMedia, cMessages, cPhone, cVoicemail };
 
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;
+
+	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
+
+	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {
+		// TODO: register method name for more granularity
+		if (mRestrictions.containsKey(restrictionName))
+			for (String permission : permissions)
+				if (!mRestrictions.get(restrictionName).contains(permission))
+					mRestrictions.get(restrictionName).add(permission);
+	}
 
 	public static boolean hasInternet(Context context, String packageName) {
 		PackageManager pm = context.getPackageManager();
 		return (pm.checkPermission("android.permission.INTERNET", packageName) == PackageManager.PERMISSION_GRANTED);
 	}
 
-	public static boolean isGranted(Context context, String packageName, String restrictionName) {
-		String[] aRestrictions = cRestriction.get(restrictionName);
-		if (aRestrictions.length == 0)
+	public static boolean hasPermission(Context context, String packageName, String restrictionName) {
+		List<String> listPermission = mRestrictions.get(restrictionName);
+		if (listPermission.size() == 0)
 			return true;
 		PackageManager pm = context.getPackageManager();
-		for (String aRestriction : aRestrictions)
-			if (pm.checkPermission("android.permission." + aRestriction, packageName) == PackageManager.PERMISSION_GRANTED)
+		for (String permission : listPermission)
+			if (pm.checkPermission("android.permission." + permission, packageName) == PackageManager.PERMISSION_GRANTED)
 				return true;
 		return false;
 	}
 
 	public static boolean isUsed(Context context, int uid, String restrictionName) {
 		ContentResolver cr = context.getContentResolver();
-		Cursor cursor = cr.query(XPrivacyProvider.URI_LASTUSED, null, restrictionName,
-				new String[] { Integer.toString(uid) }, null);
+		Cursor cursor = cr.query(XPrivacyProvider.URI_LASTUSED, null, restrictionName, new String[] { Integer.toString(uid) }, null);
 		if (cursor.moveToNext()) {
 			long lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_LASTUSED));
 			cursor.close();
@@ -74,7 +72,7 @@ public class XRestriction {
 		return (stringId == 0 ? null : context.getString(stringId));
 	}
 
-	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage) {
+	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, String methodName, boolean usage) {
 		try {
 			// Check context
 			if (context == null) {
@@ -106,18 +104,14 @@ public class XRestriction {
 			// Get restriction
 			boolean restricted = true;
 			if (cursor.moveToNext())
-				restricted = Boolean.parseBoolean(cursor.getString(cursor
-						.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
+				restricted = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
 			else
 				XUtil.log(hook, Log.WARN, "cursor is empty");
 			cursor.close();
 
 			// Result
-			XUtil.log(
-					hook,
-					Log.INFO,
-					String.format("get %s/%s %s=%b", getPackageName(context, uid),
-							(hook == null ? null : hook.getMethodName()), restrictionName, restricted));
+			XUtil.log(hook, Log.INFO,
+					String.format("get %s/%s %s=%b", getPackageName(context, uid), (hook == null ? null : hook.getMethodName()), restrictionName, restricted));
 			return restricted;
 		} catch (Throwable ex) {
 			XUtil.bug(hook, ex);
@@ -125,7 +119,7 @@ public class XRestriction {
 		}
 	}
 
-	public static void setRestricted(XHook hook, Context context, int uid, String restrictionName, boolean restricted) {
+	public static void setRestricted(XHook hook, Context context, int uid, String restrictionName, String methodName, boolean restricted) {
 		// Check context
 		if (context == null) {
 			XUtil.log(hook, Log.WARN, "context is null");
@@ -151,11 +145,8 @@ public class XRestriction {
 		values.put(XPrivacyProvider.COL_RESTRICTED, Boolean.toString(restricted));
 		contentResolver.update(XPrivacyProvider.URI_RESTRICTIONS, values, restrictionName, null);
 
-		XUtil.log(
-				hook,
-				Log.INFO,
-				String.format("set %s.%s %s=%b", getPackageName(context, uid),
-						(hook == null ? null : hook.getMethodName()), restrictionName, restricted));
+		XUtil.log(hook, Log.INFO,
+				String.format("set %s.%s %s=%b", getPackageName(context, uid), (hook == null ? null : hook.getMethodName()), restrictionName, restricted));
 	}
 
 	private static String getPackageName(Context context, int uid) {

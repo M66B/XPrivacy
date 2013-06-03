@@ -12,9 +12,10 @@ public abstract class XHook {
 	private String mMethodName;
 	private String mRestrictionName;
 
-	public XHook(String methodName, String restrictionName) {
+	public XHook(String methodName, String restrictionName, String[] permissions) {
 		mMethodName = methodName;
 		mRestrictionName = restrictionName;
+		XRestriction.registerMethod(methodName, restrictionName, permissions);
 	}
 
 	public String getMethodName() {
@@ -40,11 +41,11 @@ public abstract class XHook {
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) {
-		return XRestriction.getRestricted(this, context, uid, mRestrictionName, usage);
+		return XRestriction.getRestricted(this, context, uid, mRestrictionName, mMethodName, usage);
 	}
 
 	protected void setRestricted(Context context, int uid, boolean restricted) {
-		XRestriction.setRestricted(this, context, uid, mRestrictionName, restricted);
+		XRestriction.setRestricted(this, context, uid, mRestrictionName, mMethodName, restricted);
 	}
 
 	protected void info(String message) {

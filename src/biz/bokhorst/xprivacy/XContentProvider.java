@@ -9,8 +9,8 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XContentProvider extends XHook {
 
-	public XContentProvider(String restrictionName) {
-		super("query", restrictionName);
+	public XContentProvider(String restrictionName, String[] permissions) {
+		super("query", restrictionName, permissions);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 public class XAppDetails extends XHook {
 
 	public XAppDetails(String methodName) {
-		super(methodName, null);
+		super(methodName, null, new String[0]);
 	}
 
 	@Override

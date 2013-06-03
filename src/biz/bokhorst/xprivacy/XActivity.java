@@ -11,8 +11,8 @@ public class XActivity extends XHook {
 
 	private String mActionName;
 
-	public XActivity(String methodName, String restrictionName, String actionName) {
-		super(methodName, restrictionName);
+	public XActivity(String methodName, String restrictionName, String[] permissions, String actionName) {
+		super(methodName, restrictionName, permissions);
 		mActionName = actionName;
 	}
 
