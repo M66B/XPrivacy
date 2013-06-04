@@ -13,6 +13,14 @@ public class XContentProvider extends XHook {
 		super("query", restrictionName, permissions);
 	}
 
+	// @formatter:off
+
+	// public abstract Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
+	// public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder, CancellationSignal cancellationSignal)
+	// frameworks/base/core/java/android/content/ContentProvider.java
+
+	// @formatter:on
+
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		// Do nothing

@@ -16,6 +16,13 @@ public class XSettingsSecure extends XHook {
 		super(methodName, restrictionName, new String[] {});
 	}
 
+	// @formatter:off
+
+	// public synchronized static String getString(ContentResolver resolver, String name)
+	// frameworks/base/core/java/android/provider/Settings.java
+
+	// @formatter:on
+
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		// Do nothing

@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.Binder;
-import android.os.Process;
 import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -22,14 +21,21 @@ public class XTelephonyManager extends XHook {
 		super(methodName, restrictionName, permissions);
 	}
 
+	// public String getDeviceId()
+	// public String getLine1Number()
+	// public String getMsisdn()
+	// public String getSimSerialNumber()
+	// public String getSubscriberId()
+	// public void listen(PhoneStateListener listener, int events)
+	// frameworks/base/telephony/java/android/telephony/TelephonyManager.java
+
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		if (param.method.getName().equals("listen") || param.method.getName().equals("_listen")) {
 			PhoneStateListener listener = (PhoneStateListener) param.args[0];
 			if (listener != null)
 				if (isRestricted(param)) {
-					XUtil.log(this, Log.INFO, "Replacing PhoneStateListener " + " uid=" + Process.myUid() + " call="
-							+ Binder.getCallingUid());
+					XUtil.log(this, Log.INFO, "Replacing listener uid=" + Binder.getCallingUid());
 					param.args[0] = new XPhoneStateListener(listener);
 				}
 		}
@@ -38,12 +44,11 @@ public class XTelephonyManager extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (!param.method.getName().equals("listen") && !param.method.getName().equals("_listen"))
-			if (param.getResultOrThrowable() != null) {
-				XUtil.log(this, Log.INFO,
-						this.getMethodName() + " uid=" + Process.myUid() + " call=" + Binder.getCallingUid());
-				if (isRestricted(param))
+			if (param.getResultOrThrowable() != null)
+				if (isRestricted(param)) {
+					XUtil.log(this, Log.INFO, this.getMethodName() + " uid=" + Binder.getCallingUid());
 					param.setResult(XRestriction.cDefaceString);
-			}
+				}
 	}
 
 	@Override

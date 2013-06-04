@@ -1,16 +1,20 @@
 package biz.bokhorst.xprivacy;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Binder;
-import android.os.Process;
-import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivity extends XHook {
 
 	private String mActionName;
+
+	// @formatter:off
+
+	// public void startActivityForResult(Intent intent, int requestCode)
+	// public void startActivityForResult(Intent intent, int requestCode, Bundle options)
+	// frameworks/base/core/java/android/app/Activity.java
+
+	// @formatter:on
 
 	public XActivity(String methodName, String restrictionName, String[] permissions, String actionName) {
 		super(methodName, restrictionName, permissions);
@@ -19,32 +23,17 @@ public class XActivity extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		try {
-			// Get intent
-			Intent intent = (Intent) param.args[0];
-			if (intent != null && intent.getAction() != null)
-				XUtil.log(this, Log.INFO, "Start action=" + intent.getAction() + " uid=" + Process.myUid() + " call="
-						+ Binder.getCallingUid());
-			XUtil.dumpIntent(intent);
+		// Get intent
+		Intent intent = (Intent) param.args[0];
 
-			// Process intent
-			if (intent != null && mActionName.equals(intent.getAction()))
-				if (isRestricted(param))
-					param.setResult(null);
-		} catch (Throwable ex) {
-			XUtil.bug(this, ex);
-		}
+		// Process intent
+		if (intent != null && mActionName.equals(intent.getAction()))
+			if (isRestricted(param))
+				param.setResult(null);
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		// Do nothing
-	}
-
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = (Context) param.thisObject;
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
 	}
 }

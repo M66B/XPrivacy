@@ -63,9 +63,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
-
-		hook(new XTelephonyRegistry("notifyCallState", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"com.android.server.TelephonyRegistry");
 		// Workaround bug in Xposed
 		hook(new XTelephonyManager("_listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager", false);
@@ -86,12 +83,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					MediaStore.ACTION_IMAGE_CAPTURE_SECURE), "android.app.Activity");
 		hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },
 				MediaStore.ACTION_VIDEO_CAPTURE), "android.app.Activity");
-
-		// Intent send: incoming phone
-		hook(new XContextImpl("sendBroadcast", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" },
-				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ContextImpl");
-		hook(new XContextImpl("sendOrderedBroadcast", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" },
-				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ContextImpl");
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {

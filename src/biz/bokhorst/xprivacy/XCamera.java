@@ -8,10 +8,19 @@ public class XCamera extends XHook {
 		super(methodName, restrictionName, permissions);
 	}
 
+	// @formatter:off
+
+	// public final void takePicture(ShutterCallback shutter, PictureCallback raw, PictureCallback jpeg)
+	// public final void takePicture(ShutterCallback shutter, PictureCallback raw, PictureCallback postview, PictureCallback jpeg)
+	// frameworks/base/core/java/android/hardware/Camera.java
+
+	// @formatter:on
+
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		if (isRestricted(param))
 			param.setResult(null);
+		// TODO: send dummy pictures
 	}
 
 	@Override

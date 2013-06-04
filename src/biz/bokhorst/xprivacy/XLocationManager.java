@@ -16,6 +16,25 @@ public class XLocationManager extends XHook {
 		super(methodName, restrictionName, permissions);
 	}
 
+	// @formatter:off
+
+	// public boolean addGpsStatusListener(GpsStatus.Listener listener)
+	// public boolean addNmeaListener(GpsStatus.NmeaListener listener)
+	// public void addProximityAlert(double latitude, double longitude, float radius, long expiration, PendingIntent intent)
+	// public Location getLastKnownLocation(String provider)
+	// public void requestLocationUpdates(String provider, long minTime, float minDistance, LocationListener listener)
+	// public void requestLocationUpdates(String provider, long minTime, float minDistance, LocationListener listener, Looper looper)
+	// public void requestLocationUpdates(long minTime, float minDistance, Criteria criteria, LocationListener listener, Looper looper)
+	// public void requestLocationUpdates(String provider, long minTime, float minDistance, PendingIntent intent)
+	// public void requestLocationUpdates(long minTime, float minDistance, Criteria criteria, PendingIntent intent)
+	// public void requestSingleUpdate(String provider, LocationListener listener, Looper looper)
+	// public void requestSingleUpdate(Criteria criteria, LocationListener listener, Looper looper)
+	// public void requestSingleUpdate(String provider, PendingIntent intent)
+	// public void requestSingleUpdate(Criteria criteria, PendingIntent intent)
+	// frameworks/base/location/java/android/location/LocationManager.java
+
+	// @formatter:on
+
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
@@ -25,6 +44,7 @@ public class XLocationManager extends XHook {
 					param.setResult(false);
 				else
 					param.setResult(null);
+		// TODO: wrap listener
 	}
 
 	@Override

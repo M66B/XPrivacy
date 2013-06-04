@@ -56,7 +56,7 @@ public class XRestriction {
 
 	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {
 		// TODO: register method name for more granularity
-		if (!mRestrictions.containsKey(restrictionName))
+		if (restrictionName != null && !mRestrictions.containsKey(restrictionName))
 			XUtil.log(null, Log.WARN, "Missing restriction " + restrictionName);
 		for (String permission : permissions)
 			if (!mRestrictions.get(restrictionName).contains(permission))
