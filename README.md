@@ -17,13 +17,15 @@ Currently implemented:
 * Location (coarse/fine)
 * Messages (SMS/MMS, voicemail: **untested**)
 * Phone (call log, incoming/outgoing number, phone ID/number, subscriber ID, SIM serial)
+* Take photo
+
+* Restriction management
+* Default restrict new apps
 
 Planned:
 
-* Take photo
 * Record audio (microphone)
 * Record video
-* Default deny for new apps
 * Filter by used/granted
 
 **Tested with CyanogenMod 10**

@@ -187,7 +187,7 @@ public class XRestriction {
 		XUtil.log(
 				hook,
 				Log.INFO,
-				String.format("set %s.%s %s=%b", getPackageName(context, uid),
+				String.format("set %s/%s %s=%b", getPackageName(context, uid),
 						(hook == null ? null : hook.getMethodName()), restrictionName, restricted));
 	}
 

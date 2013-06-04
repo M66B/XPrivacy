@@ -3,7 +3,10 @@ package biz.bokhorst.xprivacy;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.util.Log;
 
 public class XPackageChange extends BroadcastReceiver {
 
@@ -16,14 +19,24 @@ public class XPackageChange extends BroadcastReceiver {
 
 			if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
 				// Handle package add
+				XUtil.log(null, Log.INFO, "Installed package=" + packageName);
+
+				// Default deny new apps
+				if (!packageName.equals("com.android.vending"))
+					try {
+						PackageManager pm = context.getPackageManager();
+						ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
+						for (String restrictionName : XRestriction.getRestrictions())
+							XRestriction.setRestricted(null, context, appInfo.uid, restrictionName, null, true);
+					} catch (Throwable ex) {
+						XUtil.bug(null, ex);
+					}
+
+				// Send intent to edit settings
 				Intent intentSettings = new Intent(context, XAppSettings.class);
 				intentSettings.putExtra(XAppSettings.cExtraPackageName, packageName);
 				intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
 				context.startActivity(intentSettings);
-			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
-				// TODO: handle package replaced
-			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED)) {
-				// TODO: handle package removed
 			}
 		}
 	}

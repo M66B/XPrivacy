@@ -76,6 +76,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ActivityThread", false);
 
 		// Intent send: media
+		// TODO: replace by hooking intent receiver
 		hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },
 				MediaStore.ACTION_IMAGE_CAPTURE), "android.app.Activity");
 		if (Build.VERSION.SDK_INT >= 17)
