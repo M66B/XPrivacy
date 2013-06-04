@@ -4,9 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 public class XUtil {
@@ -45,5 +49,17 @@ public class XUtil {
 		} catch (Throwable ex) {
 		}
 		return -1;
+	}
+
+	public static void dumpIntent(Intent i) {
+		Bundle bundle = i.getExtras();
+		if (bundle != null) {
+			Set<String> keys = bundle.keySet();
+			Iterator<String> it = keys.iterator();
+			while (it.hasNext()) {
+				String key = it.next();
+				log(null, Log.INFO, "[" + key + "=" + bundle.get(key) + "]");
+			}
+		}
 	}
 }

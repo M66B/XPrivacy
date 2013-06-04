@@ -28,6 +28,7 @@ public class XActivityThread extends XHook {
 				Intent intent = (Intent) fieldIntent.get(param.args[0]);
 				if (intent != null && intent.getAction() != null)
 					XUtil.log(this, Log.INFO, "Handle action=" + intent.getAction());
+				XUtil.dumpIntent(intent);
 
 				// Process intent
 				if (intent != null && mActionName.equals(intent.getAction())) {

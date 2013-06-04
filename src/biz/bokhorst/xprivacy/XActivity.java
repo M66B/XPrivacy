@@ -23,6 +23,7 @@ public class XActivity extends XHook {
 			Intent intent = (Intent) param.args[0];
 			if (intent != null && intent.getAction() != null)
 				XUtil.log(this, Log.INFO, "Send action=" + intent.getAction());
+			XUtil.dumpIntent(intent);
 
 			// Process intent
 			if (intent != null && mActionName.equals(intent.getAction()))

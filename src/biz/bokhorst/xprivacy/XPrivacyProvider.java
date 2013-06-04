@@ -33,6 +33,8 @@ public class XPrivacyProvider extends ContentProvider {
 	private static final int TYPE_RESTRICTIONS = 1;
 	private static final int TYPE_LASTUSED = 2;
 
+	// TODO: change notifications
+	
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		sUriMatcher.addURI(AUTHORITY, PATH_RESTRICTIONS, TYPE_RESTRICTIONS);
