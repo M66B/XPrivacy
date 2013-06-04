@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Process;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -22,7 +23,8 @@ public class XActivity extends XHook {
 			// Get intent
 			Intent intent = (Intent) param.args[0];
 			if (intent != null && intent.getAction() != null)
-				XUtil.log(this, Log.INFO, "Start action=" + intent.getAction() + " uid=" + Binder.getCallingUid());
+				XUtil.log(this, Log.INFO, "Start action=" + intent.getAction() + " uid=" + Process.myUid() + " call="
+						+ Binder.getCallingUid());
 			XUtil.dumpIntent(intent);
 
 			// Process intent

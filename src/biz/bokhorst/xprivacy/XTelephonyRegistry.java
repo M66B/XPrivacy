@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import android.content.Context;
 import android.os.Binder;
+import android.os.Process;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -19,7 +20,7 @@ public class XTelephonyRegistry extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		// void notifyCallState(int state, String incomingNumber)
 		String number = (String) param.args[1];
-		XUtil.log(this, Log.INFO, "Number=" + number);
+		XUtil.log(this, Log.INFO, "Number=" + number + " uid=" + Process.myUid() + " call=" + Binder.getCallingUid());
 	}
 
 	@Override
