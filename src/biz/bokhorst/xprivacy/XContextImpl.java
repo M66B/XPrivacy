@@ -1,21 +1,19 @@
 package biz.bokhorst.xprivacy;
 
-import static de.robv.android.xposed.XposedHelpers.findField;
-
-import java.lang.reflect.Field;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
-public class XActivityThread extends XHook {
+public class XContextImpl extends XHook {
 
 	private String mActionName;
 
-	public XActivityThread(String methodName, String restrictionName, String[] permissions, String actionName) {
+	public XContextImpl(String methodName, String restrictionName, String[] permissions, String actionName) {
 		super(methodName, restrictionName, permissions);
 		mActionName = actionName;
 	}
@@ -25,10 +23,9 @@ public class XActivityThread extends XHook {
 		try {
 			if (param.args[0] != null) {
 				// Get intent
-				Field fieldIntent = findField(param.args[0].getClass(), "intent");
-				Intent intent = (Intent) fieldIntent.get(param.args[0]);
+				Intent intent = (Intent) param.args[0];
 				if (intent != null && intent.getAction() != null)
-					XUtil.log(this, Log.INFO, "Handle action=" + intent.getAction() + " uid=" + Binder.getCallingUid());
+					XUtil.log(this, Log.INFO, "Send action=" + intent.getAction() + " uid=" + Binder.getCallingUid());
 				XUtil.dumpIntent(intent);
 
 				// Process intent
@@ -59,5 +56,12 @@ public class XActivityThread extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		// Do nothing
+	}
+
+	@Override
+	protected boolean isRestricted(MethodHookParam param) throws Throwable {
+		Context context = (Context) (Context) param.thisObject;
+		int uid = Binder.getCallingUid();
+		return getRestricted(context, uid, true);
 	}
 }

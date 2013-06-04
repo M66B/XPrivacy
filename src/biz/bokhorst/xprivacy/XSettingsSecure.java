@@ -32,6 +32,7 @@ public class XSettingsSecure extends XHook {
 						param.setResult(Long.toHexString(XRestriction.cDefaceHex));
 		} catch (IllegalArgumentException ex) {
 			// Android ID is requested before system initialization
+			// "Attempt to launch content provider before system ready"
 			XUtil.bug(this, ex);
 		}
 	}

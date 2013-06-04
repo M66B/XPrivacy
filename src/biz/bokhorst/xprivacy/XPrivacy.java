@@ -27,12 +27,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		if (Build.VERSION.SDK_INT != 16)
 			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
 
-		// Workaround bug in Xposed
-		hook(new XLocationManager("_requestLocationUpdates", XRestriction.cLocation, new String[] {
-				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager", false);
-		hook(new XTelephonyManager("_listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager", false);
-
 		// Camera
 		hook(new XCamera("takePicture", XRestriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
@@ -49,6 +43,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
 		hook(new XLocationManager("requestSingleUpdate", XRestriction.cLocation, new String[] {
 				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
+		// Workaround bug in Xposed
+		hook(new XLocationManager("_requestLocationUpdates", XRestriction.cLocation, new String[] {
+				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager", false);
 
 		// Settings secure
 		hook(new XSettingsSecure("getString", XRestriction.cIdentification), "android.provider.Settings.Secure");
@@ -67,6 +64,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XTelephonyManager("listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 
+		hook(new XTelephonyRegistry("notifyCallState", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"com.android.server.TelephonyRegistry");
+		// Workaround bug in Xposed
+		hook(new XTelephonyManager("_listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager", false);
+
 		// getMsisdn, listen: check permissions
 
 		// Intent receive: calling
@@ -83,6 +86,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					MediaStore.ACTION_IMAGE_CAPTURE_SECURE), "android.app.Activity");
 		hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },
 				MediaStore.ACTION_VIDEO_CAPTURE), "android.app.Activity");
+
+		// Intent send: incoming phone
+		hook(new XContextImpl("sendBroadcast", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" },
+				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ContextImpl");
+		hook(new XContextImpl("sendOrderedBroadcast", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" },
+				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ContextImpl");
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
