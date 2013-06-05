@@ -45,6 +45,7 @@ Installation
 * Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 * Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 * Enable XPrivacy from the Xposed Installer app
+* Flash the Xposed fix from [here](http://goo.im/devs/M66B/xprivacy)
 * Reboot
 
 Usage
@@ -58,8 +59,6 @@ To see it in action: try disabling *Identification* for [Android Id Info](https:
 or try disabling *Contacts* for the Contacts app.
 
 Applying some restrictions requires an app restart or a reboot.
-
-**Due to a known bug in the Xposed framework in/outgoing call restriction only works on modified ROM's**
 
 Frequently asked questions
 --------------------------

@@ -59,13 +59,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
 		hook(new XLocationManager("requestSingleUpdate", XRestriction.cLocation, new String[] {
 				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
-		// Workaround bug in Xposed
-		hook(new XLocationManager("_requestLocationUpdates", XRestriction.cLocation, new String[] {
-				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager", false);
 
 		// Media recorder
-		// Workaround bug in Xposed: hooking setOutputFile not possible
-		hook(new XMediaRecorder("prepare", XRestriction.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),
+		hook(new XMediaRecorder("setOutputFile", XRestriction.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),
 				"android.media.MediaRecorder");
 
 		// Settings secure
@@ -108,9 +104,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
-		// Workaround bug in Xposed
-		hook(new XTelephonyManager("_listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager", false);
 
 		// Intent receive: calling
 		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, new String[] { "PROCESS_OUTGOING_CALLS" },
