@@ -31,6 +31,7 @@ public class XActivity extends XHook {
 		if (intent != null && mActionName.equals(intent.getAction()))
 			if (isRestricted(param)) {
 				param.setResult(null);
+				// Let user know
 				String format = XUtil.getXString(getApplicationContext(), R.string.msg_restricted);
 				String text = String.format(format, mActionName);
 				Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
