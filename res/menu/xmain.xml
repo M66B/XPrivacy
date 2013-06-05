@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:title="@string/menu_tests">
+        <menu>
+            <item
+                android:id="@+id/menu_capimage"
+                android:title="@string/menu_capimage"/>
+            <item
+                android:id="@+id/menu_capvideo"
+                android:title="@string/menu_capvideo"/>
+        </menu>
+    </item>
+
+</menu>
