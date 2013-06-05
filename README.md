@@ -17,10 +17,9 @@ Currently implemented:
 * Location (coarse/fine)
 * Messages (SMS/MMS, voicemail: **untested**)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
-* Take photo
+* Take photos
 * Record audio
 * Record video
-
 * Restriction management
 * Default restrict new apps
 
