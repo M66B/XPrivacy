@@ -15,6 +15,7 @@ import android.util.Log;
 public class XRestriction {
 
 	// This should correspond with restrict_<name> in strings.xml
+	public static final String cAccounts = "accounts";
 	public static final String cBrowser = "browser";
 	public static final String cCalendar = "calendar";
 	public static final String cContacts = "contacts";
@@ -31,6 +32,7 @@ public class XRestriction {
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
 
 	static {
+		mRestrictions.put(cAccounts, new ArrayList<String>());
 		mRestrictions.put(cBrowser, new ArrayList<String>());
 		mRestrictions.put(cCalendar, new ArrayList<String>());
 		mRestrictions.put(cContacts, new ArrayList<String>());
@@ -42,6 +44,7 @@ public class XRestriction {
 		mRestrictions.put(cStorage, new ArrayList<String>());
 
 		// Temporary solution
+		mRestrictions.get(cAccounts).add("GET_ACCOUNTS");
 		mRestrictions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
 		mRestrictions.get(cBrowser).add("GLOBAL_SEARCH");
 		mRestrictions.get(cCalendar).add("READ_CALENDAR");

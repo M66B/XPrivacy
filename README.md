@@ -20,13 +20,14 @@ Currently implemented:
 * Take photos
 * Record audio
 * Record video
+* Accounts (0.5)
 * Restriction management
 * Batch edit restrictions
 * Default restrict new apps
 
 Planned:
 
-* Accounts
+* Media library
 * APN's
 * Wi-Fi MAC addresses
 * CellInfo
@@ -73,6 +74,7 @@ Developers
 To restrict new info:
 
 * Find the package/class/method that exposes the info (look into the Android documentation/sources)
+* Figure out a way to get a context (see existing code for examples)
 * Create a class that extends [XHook](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XHook.java)
 * Hook the method in [XPrivacy](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java)
 * Write a before and/or after method to restrict the info
