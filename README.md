@@ -19,14 +19,10 @@ Currently implemented:
 * Phone (call log, incoming/outgoing number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN)
 * Take photo
 * Record audio
+* Record video
 
 * Restriction management
 * Default restrict new apps
-
-Planned:
-
-* Record video
-* Access SDCARD
 
 **Tested with CyanogenMod 10**
 

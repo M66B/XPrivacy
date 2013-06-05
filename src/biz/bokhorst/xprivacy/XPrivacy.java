@@ -57,7 +57,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Media recorder
 		hook(new XMediaRecorder("setOutputFile", XRestriction.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),
-				"android.media.MediaRecorder", false);
+				"android.media.MediaRecorder");
 
 		// Settings secure
 		hook(new XSettingsSecure("getString", XRestriction.cIdentification), "android.provider.Settings.Secure");

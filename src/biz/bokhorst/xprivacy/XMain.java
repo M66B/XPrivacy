@@ -111,7 +111,7 @@ public class XMain extends Activity {
 				return true;
 			case R.id.menu_recordvideo:
 				MediaRecorder vrecorder = new MediaRecorder();
-				vrecorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
+				vrecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 				vrecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 				vrecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
 				vrecorder.setOutputFile(Environment.getExternalStorageDirectory().getPath() + "/XPrivacy.3gpp");
