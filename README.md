@@ -76,6 +76,7 @@ To restrict new info:
 * Create a class that extends [XHook](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XHook.java)
 * Hook the method in [XPrivacy](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java)
 * Write a before and/or after method to restrict the info
+* Do a [pull request](https://help.github.com/articles/using-pull-requests) if you want to contribute
 
 License
 -------
