@@ -2,17 +2,12 @@ package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import android.content.Context;
-import android.location.GpsStatus.NmeaListener;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.location.LocationListener;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -49,10 +44,9 @@ public class XLocationManager extends XHook {
 		String methodName = param.method.getName();
 		if (!methodName.equals("getLastKnownLocation"))
 			if (isRestricted(param))
-				if (methodName.equals("addNmeaListener")) {
-					NmeaListener nmeaListener = (NmeaListener) param.args[0];
-					param.args[0] = new XNmeaListener(nmeaListener);
-				} else if (methodName.equals("requestLocationUpdates"))
+				if (methodName.equals("addNmeaListener"))
+					param.setResult(null);
+				else if (methodName.equals("requestLocationUpdates"))
 					replaceLocationListener(param, 3);
 				else if (methodName.equals("_requestLocationUpdates"))
 					replaceLocationListener(param, 5);
@@ -63,7 +57,8 @@ public class XLocationManager extends XHook {
 	private void replaceLocationListener(MethodHookParam param, int arg) {
 		if (param.args[arg] != null && LocationListener.class.isAssignableFrom(param.args[arg].getClass())) {
 			LocationListener listener = (LocationListener) param.args[arg];
-			param.args[arg] = new XLocationListener(listener);
+			if (listener != null)
+				param.args[arg] = new XLocationListener(listener);
 		} else
 			param.setResult(null);
 	}
@@ -105,41 +100,6 @@ public class XLocationManager extends XHook {
 		double lon = Math.random() * 360;
 		BigDecimal longitude = new BigDecimal(lon > 180 ? lon - 180 : -lon);
 		return longitude.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
-	}
-
-	private class XNmeaListener implements NmeaListener {
-
-		private NmeaListener mNmeaListener;
-
-		public XNmeaListener(NmeaListener nmeaListener) {
-			mNmeaListener = nmeaListener;
-		}
-
-		@Override
-		public void onNmeaReceived(long timestamp, String nmea) {
-			XUtil.log(null, Log.INFO, nmea);
-			if (nmea.startsWith("$GPGLL")) {
-				// $GPGLL,3751.65,S,14507.36,E*77
-				// $GPGLL,4916.45,N,12311.12,W,225444,A
-				String[] data = nmea.split(",");
-				if (data.length == 7) {
-					double lat = getRandomLat();
-					double lon = getRandomLon();
-					SimpleDateFormat formatter = new SimpleDateFormat("HHmmss", Locale.US);
-					data[1] = String.format("%d00.00", (int) lat);
-					data[2] = (lat > 0 ? "N" : "S");
-					data[3] = String.format("%d00.00", (int) lon);
-					data[4] = (lon > 0 ? "W" : "E");
-					data[5] = formatter.format(new Date());
-					XUtil.log(null, Log.INFO, nmea);
-					nmea = TextUtils.join(",", data);
-				} else {
-					nmea = null;
-				}
-			}
-			if (nmea != null)
-				mNmeaListener.onNmeaReceived(timestamp, nmea);
-		}
 	}
 
 	private class XLocationListener implements LocationListener {

@@ -16,7 +16,7 @@ Currently implemented:
 * Identification
 * Location (coarse/fine)
 * Messages (SMS/MMS, voicemail: **untested**)
-* Phone (call log, incoming/outgoing number, phone ID/number, subscriber ID, SIM serial)
+* Phone (call log, incoming/outgoing number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN)
 * Take photo
 
 * Restriction management
@@ -26,7 +26,7 @@ Planned:
 
 * Record audio (microphone)
 * Record video
-* Filter by used/granted
+* Access SDCARD
 
 **Tested with CyanogenMod 10**
 
