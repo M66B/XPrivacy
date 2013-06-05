@@ -2,13 +2,16 @@ package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import android.content.Context;
 import android.location.GpsStatus.NmeaListener;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.location.LocationListener;
 
@@ -50,15 +53,15 @@ public class XLocationManager extends XHook {
 					NmeaListener nmeaListener = (NmeaListener) param.args[0];
 					param.args[0] = new XNmeaListener(nmeaListener);
 				} else if (methodName.equals("requestLocationUpdates"))
-					restrictListener(param, 3);
+					replaceLocationListener(param, 3);
 				else if (methodName.equals("_requestLocationUpdates"))
-					restrictListener(param, 5);
+					replaceLocationListener(param, 5);
 				else if (methodName.equals("requestSingleUpdate"))
-					restrictListener(param, 1);
+					replaceLocationListener(param, 1);
 	}
 
-	private void restrictListener(MethodHookParam param, int arg) {
-		if (param.args[arg] != null && param.args[arg].getClass().isAssignableFrom(LocationListener.class)) {
+	private void replaceLocationListener(MethodHookParam param, int arg) {
+		if (param.args[arg] != null && LocationListener.class.isAssignableFrom(param.args[arg].getClass())) {
 			LocationListener listener = (LocationListener) param.args[arg];
 			param.args[arg] = new XLocationListener(listener);
 		} else
@@ -115,8 +118,27 @@ public class XLocationManager extends XHook {
 		@Override
 		public void onNmeaReceived(long timestamp, String nmea) {
 			XUtil.log(null, Log.INFO, nmea);
-			// mNmeaListener.onNmeaReceived(timestamp, nmea);
-			// TODO: transform NMEA data
+			if (nmea.startsWith("$GPGLL")) {
+				// $GPGLL,3751.65,S,14507.36,E*77
+				// $GPGLL,4916.45,N,12311.12,W,225444,A
+				String[] data = nmea.split(",");
+				if (data.length == 7) {
+					double lat = getRandomLat();
+					double lon = getRandomLon();
+					SimpleDateFormat formatter = new SimpleDateFormat("HHmmss", Locale.US);
+					data[1] = String.format("%d00.00", (int) lat);
+					data[2] = (lat > 0 ? "N" : "S");
+					data[3] = String.format("%d00.00", (int) lon);
+					data[4] = (lon > 0 ? "W" : "E");
+					data[5] = formatter.format(new Date());
+					XUtil.log(null, Log.INFO, nmea);
+					nmea = TextUtils.join(",", data);
+				} else {
+					nmea = null;
+				}
+			}
+			if (nmea != null)
+				mNmeaListener.onNmeaReceived(timestamp, nmea);
 		}
 	}
 
