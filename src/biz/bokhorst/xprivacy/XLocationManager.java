@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import android.content.Context;
 import android.location.Location;
 import android.os.Binder;
+import android.os.Bundle;
+import android.util.Log;
+import android.location.LocationListener;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
@@ -42,9 +45,14 @@ public class XLocationManager extends XHook {
 			if (isRestricted(param))
 				if (methodName.equals("addGpsStatusListener") || methodName.equals("addNmeaListener"))
 					param.setResult(false);
-				else
-					param.setResult(null);
-		// TODO: wrap listener
+				else {
+					if (param.args[3] != null && param.args[3].getClass().isAssignableFrom(LocationListener.class)) {
+						XUtil.log(this, Log.INFO, "Replacing location listener");
+						LocationListener listener = (LocationListener) param.args[3];
+						param.args[3] = new XLocationListener(listener);
+					} else
+						param.setResult(null);
+				}
 	}
 
 	@Override
@@ -82,5 +90,34 @@ public class XLocationManager extends XHook {
 		double lon = Math.random() * 360;
 		BigDecimal longitude = new BigDecimal(lon > 180 ? lon - 180 : -lon);
 		return longitude.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+	}
+
+	private class XLocationListener implements LocationListener {
+
+		private LocationListener mLocationListener;
+
+		public XLocationListener(LocationListener locationListener) {
+			mLocationListener = locationListener;
+		}
+
+		@Override
+		public void onLocationChanged(Location location) {
+			mLocationListener.onLocationChanged(getRandomLocation(location.getProvider()));
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+			mLocationListener.onProviderDisabled(provider);
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			mLocationListener.onProviderEnabled(provider);
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			mLocationListener.onStatusChanged(provider, status, extras);
+		}
 	}
 }
