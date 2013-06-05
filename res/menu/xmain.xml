@@ -9,7 +9,10 @@
             <item
                 android:id="@+id/menu_capvideo"
                 android:title="@string/menu_capvideo"/>
-        </menu>
+            <item
+                android:id="@+id/menu_recordmic"
+                android:title="@string/menu_recordmic"/>
+            </menu>
     </item>
 
 </menu>

@@ -2,6 +2,9 @@ package biz.bokhorst.xprivacy;
 
 import java.util.List;
 
+import android.media.AudioFormat;
+import android.media.AudioRecord;
+import android.media.MediaRecorder.AudioSource;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.app.Activity;
@@ -101,6 +104,17 @@ public class XMain extends Activity {
 			intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 			startActivityForResult(intent, R.id.menu_capvideo);
 			return true;
+		case R.id.menu_recordmic:
+			int bufferSize = AudioRecord.getMinBufferSize(44100, AudioFormat.CHANNEL_IN_MONO,
+					AudioFormat.ENCODING_PCM_16BIT);
+			AudioRecord recorder = new AudioRecord(AudioSource.MIC, 44100, AudioFormat.CHANNEL_IN_MONO,
+					AudioFormat.ENCODING_PCM_16BIT, bufferSize);
+			recorder.startRecording();
+			try {
+				Thread.sleep(1000);
+			} catch (Throwable ex) {
+			}
+			recorder.stop();
 		default:
 			return super.onOptionsItemSelected(item);
 		}

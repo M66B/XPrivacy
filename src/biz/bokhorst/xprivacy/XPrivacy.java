@@ -27,6 +27,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		if (Build.VERSION.SDK_INT != 16)
 			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
 
+		// Audio record
+		hook(new XCamera("startRecording", XRestriction.cMedia, new String[] { "RECORD_AUDIO" }),
+				"android.media.AudioRecord");
+
 		// Camera
 		hook(new XCamera("setPreviewCallback", XRestriction.cMedia, new String[] { "CAMERA" }),
 				"android.hardware.Camera");
