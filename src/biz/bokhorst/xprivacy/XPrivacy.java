@@ -28,6 +28,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
 
 		// Camera
+		hook(new XCamera("setPreviewCallback", XRestriction.cMedia, new String[] { "CAMERA" }),
+				"android.hardware.Camera");
+		hook(new XCamera("setPreviewCallbackWithBuffer", XRestriction.cMedia, new String[] { "CAMERA" }),
+				"android.hardware.Camera");
+		hook(new XCamera("setOneShotPreviewCallback", XRestriction.cMedia, new String[] { "CAMERA" }),
+				"android.hardware.Camera");
 		hook(new XCamera("takePicture", XRestriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
 		// Location manager

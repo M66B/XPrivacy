@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import android.widget.Toast;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XCamera extends XHook {
@@ -11,6 +12,9 @@ public class XCamera extends XHook {
 
 	// @formatter:off
 
+	// public final void setPreviewCallback(PreviewCallback cb)
+	// public final void setPreviewCallbackWithBuffer(PreviewCallback cb)
+	// public final void setOneShotPreviewCallback(PreviewCallback cb)
 	// public final void takePicture(ShutterCallback shutter, PictureCallback raw, PictureCallback jpeg)
 	// public final void takePicture(ShutterCallback shutter, PictureCallback raw, PictureCallback postview, PictureCallback jpeg)
 	// frameworks/base/core/java/android/hardware/Camera.java
@@ -27,7 +31,6 @@ public class XCamera extends XHook {
 			Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
 			toast.show();
 		}
-		// TODO: send dummy pictures
 	}
 
 	@Override
