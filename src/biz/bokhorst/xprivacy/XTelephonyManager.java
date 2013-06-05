@@ -22,10 +22,22 @@ public class XTelephonyManager extends XHook {
 	}
 
 	// public String getDeviceId()
+	// public String getIsimDomain()
+	// public String getIsimImpi()
+	// public String[] getIsimImpu()
+	// public String getLine1AlphaTag()
 	// public String getLine1Number()
 	// public String getMsisdn()
+	// public String getNetworkCountryIso()
+	// public String getNetworkOperator()
+	// public String getNetworkOperatorName()
+	// public String getSimCountryIso()
+	// public String getSimOperator()
+	// public String getSimOperatorName()
 	// public String getSimSerialNumber()
 	// public String getSubscriberId()
+	// public String getVoiceMailAlphaTag()
+	// public String getVoiceMailNumber()
 	// public void listen(PhoneStateListener listener, int events)
 	// frameworks/base/telephony/java/android/telephony/TelephonyManager.java
 
@@ -34,10 +46,8 @@ public class XTelephonyManager extends XHook {
 		if (param.method.getName().equals("listen") || param.method.getName().equals("_listen")) {
 			PhoneStateListener listener = (PhoneStateListener) param.args[0];
 			if (listener != null)
-				if (isRestricted(param)) {
-					XUtil.log(this, Log.INFO, "Replacing listener uid=" + Binder.getCallingUid());
+				if (isRestricted(param))
 					param.args[0] = new XPhoneStateListener(listener);
-				}
 		}
 	}
 

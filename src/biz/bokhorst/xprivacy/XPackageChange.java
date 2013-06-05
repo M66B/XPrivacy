@@ -34,7 +34,7 @@ public class XPackageChange extends BroadcastReceiver {
 
 				// Send intent to edit settings
 				Intent intentSettings = new Intent(context, XAppSettings.class);
-				intentSettings.putExtra(XAppSettings.cExtraPackageName, packageName);
+				intentSettings.putExtra(XAppSettings.cPackageName, packageName);
 				intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
 				context.startActivity(intentSettings);
 			}

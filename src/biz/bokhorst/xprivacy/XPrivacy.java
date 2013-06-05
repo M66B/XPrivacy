@@ -56,7 +56,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager", false);
 
 		// Media recorder
-		hook(new XMediaRecorder("setOutputFile", XRestriction.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),
+		// Workaround bug in Xposed: hooking setOutputFile not possible
+		hook(new XMediaRecorder("prepare", XRestriction.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),
 				"android.media.MediaRecorder");
 
 		// Settings secure
@@ -77,6 +78,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getMsisdn", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getNetworkCountryIso", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getNetworkOperator", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getNetworkOperatorName", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getSimCountryIso", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getSimOperator", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
@@ -86,6 +93,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XTelephonyManager("getSimSerialNumber", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getSubscriberId", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getVoiceMailAlphaTag", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getVoiceMailNumber", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
@@ -100,12 +111,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ActivityThread", false);
 
 		// Intent send: media
-		// TODO: replace by hooking intent receiver
 		hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },
 				MediaStore.ACTION_IMAGE_CAPTURE), "android.app.Activity");
 		if (Build.VERSION.SDK_INT >= 17)
 			hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },
-					MediaStore.ACTION_IMAGE_CAPTURE_SECURE), "android.app.Activity");
+					"android.media.action.IMAGE_CAPTURE_SECURE"), "android.app.Activity");
 		hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },
 				MediaStore.ACTION_VIDEO_CAPTURE), "android.app.Activity");
 	}

@@ -85,7 +85,7 @@ public class XAppDetails extends XHook {
 			@Override
 			public void onClick(View v) {
 				Intent intentSettings = new Intent(xContext, XAppSettings.class);
-				intentSettings.putExtra(XAppSettings.cExtraPackageName, appInfo.packageName);
+				intentSettings.putExtra(XAppSettings.cPackageName, appInfo.packageName);
 				intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				xContext.startActivity(intentSettings);
 			}

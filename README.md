@@ -16,13 +16,22 @@ Currently implemented:
 * Identification
 * Location (coarse/fine)
 * Messages (SMS/MMS, voicemail: **untested**)
-* Phone (call log, incoming/outgoing number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN)
+* Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
 * Take photo
 * Record audio
 * Record video
 
 * Restriction management
 * Default restrict new apps
+
+Planned:
+
+* Accounts
+* APN's
+* Network details
+* Wi-Fi MAC addresses
+* CellInfo
+* Read external storage (if possible)
 
 **Tested with CyanogenMod 10**
 
@@ -56,6 +65,8 @@ Frequently asked questions
 --------------------------
 
 * Will you restrict internet access? No, you can use a firewall app, like [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall)
+* Will you block outgoing SMS/MMS, the iptables command? No, XPrivacy is about restricting information, not about blocking actions.
+* Will you force online state? No, XPrivacy is about restricting information.
 
 Developers
 ----------

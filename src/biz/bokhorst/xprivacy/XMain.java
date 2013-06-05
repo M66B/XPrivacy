@@ -114,7 +114,7 @@ public class XMain extends Activity {
 				vrecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 				vrecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 				vrecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
-				vrecorder.setOutputFile(Environment.getExternalStorageDirectory().getPath() + "/XPrivacy.3gpp");
+				vrecorder.setOutputFile(Environment.getExternalStorageDirectory() + "/" + "XPrivacy.3gpp");
 				vrecorder.prepare();
 				vrecorder.start();
 				Thread.sleep(1000);
@@ -130,9 +130,7 @@ public class XMain extends Activity {
 				arecorder.stop();
 				return true;
 			case R.id.menu_readsdcard:
-				File sdcard = Environment.getExternalStorageDirectory();
-				File folder = new File(sdcard.getAbsolutePath() + "/");
-				File file = new File(folder, "XPrivacy.test");
+				File file = new File(Environment.getExternalStorageDirectory() + "/" + "XPrivacy.test");
 				FileInputStream fis = new FileInputStream(file);
 				InputStreamReader isr = new InputStreamReader(fis);
 				isr.read();

@@ -130,7 +130,8 @@ public class XBatchEdit extends Activity {
 				@Override
 				public boolean onLongClick(View view) {
 					Intent intentSettings = new Intent(view.getContext(), XAppSettings.class);
-					intentSettings.putExtra(XAppSettings.cExtraPackageName, appEntry.getPackageName());
+					intentSettings.putExtra(XAppSettings.cPackageName, appEntry.getPackageName());
+					intentSettings.putExtra(XAppSettings.cRestrictionExclude, mRestrictionName);
 					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					view.getContext().startActivity(intentSettings);
 					return true;

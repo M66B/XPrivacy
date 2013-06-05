@@ -19,7 +19,8 @@ import android.widget.TextView;
 
 public class XAppSettings extends Activity {
 
-	public static final String cExtraPackageName = "PackageName";
+	public static final String cPackageName = "PackageName";
+	public static final String cRestrictionExclude = "RestrictionExclude";
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,7 +29,8 @@ public class XAppSettings extends Activity {
 
 		// Get package name
 		Bundle extras = getIntent().getExtras();
-		String packageName = extras.getString(cExtraPackageName);
+		String packageName = extras.getString(cPackageName);
+		String restrictionExclude = extras.getString(cRestrictionExclude);
 
 		// Get app info
 		final ApplicationInfo appInfo;
@@ -53,10 +55,15 @@ public class XAppSettings extends Activity {
 		TextView tvGranted = (TextView) findViewById(R.id.tvGranted);
 		tvGranted.setTextColor(Color.GRAY);
 
+		// Build list with restrictions
+		List<String> listRestriction = XRestriction.getRestrictions();
+		if (restrictionExclude != null)
+			listRestriction.remove(restrictionExclude);
+
 		// Fill privacy list view adapter
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
 		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(this,
-				android.R.layout.simple_list_item_multiple_choice, appInfo, XRestriction.getRestrictions());
+				android.R.layout.simple_list_item_multiple_choice, appInfo, listRestriction);
 		lvRestriction.setAdapter(privacyListAdapter);
 
 		// Set restriction values
