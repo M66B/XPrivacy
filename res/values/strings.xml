@@ -11,6 +11,7 @@
     <string name="menu_capimage">Capture image</string>
     <string name="menu_capvideo">Capture video</string>
     <string name="menu_recordmic">Record mic</string>
+    <string name="menu_readsdcard">Read sdcard</string>
     <string name="msg_restricted" formatted="false">"XPrivacy: %s restricted"</string>
     <string name="restrict_browser">Browser</string>
     <string name="restrict_calendar">Calendar</string>
@@ -20,6 +21,7 @@
     <string name="restrict_media">Media</string>
     <string name="restrict_messages">Messages</string>
     <string name="restrict_phone">Phone</string>
+    <string name="restrict_storage">Storage</string>
     <string name="settings_nointernet">No internet access</string>
     <string name="settings_restrictionused">Restriction used</string>
     <string name="settings_permnotgranted">Permission not granted</string>

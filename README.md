@@ -18,13 +18,13 @@ Currently implemented:
 * Messages (SMS/MMS, voicemail: **untested**)
 * Phone (call log, incoming/outgoing number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN)
 * Take photo
+* Record audio
 
 * Restriction management
 * Default restrict new apps
 
 Planned:
 
-* Record audio (microphone)
 * Record video
 * Access SDCARD
 

@@ -23,6 +23,7 @@ public class XRestriction {
 	public static final String cMedia = "media";
 	public static final String cMessages = "messages";
 	public static final String cPhone = "phone";
+	public static final String cStorage = "storage";
 
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;
@@ -38,6 +39,7 @@ public class XRestriction {
 		mRestrictions.put(cMedia, new ArrayList<String>());
 		mRestrictions.put(cMessages, new ArrayList<String>());
 		mRestrictions.put(cPhone, new ArrayList<String>());
+		mRestrictions.put(cStorage, new ArrayList<String>());
 
 		// Temporary solution
 		mRestrictions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
@@ -47,11 +49,13 @@ public class XRestriction {
 		mRestrictions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mRestrictions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mRestrictions.get(cMedia).add("CAMERA");
+		mRestrictions.get(cMedia).add("RECORD_AUDIO");
 		mRestrictions.get(cMessages).add("READ_WRITE_ALL_VOICEMAIL");
 		mRestrictions.get(cMessages).add("READ_SMS");
 		mRestrictions.get(cPhone).add("READ_PHONE_STATE");
 		mRestrictions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mRestrictions.get(cPhone).add("READ_CALL_LOG");
+		mRestrictions.get(cStorage).add("READ_EXTERNAL_STORAGE");
 	}
 
 	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {

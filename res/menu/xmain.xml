@@ -12,7 +12,10 @@
             <item
                 android:id="@+id/menu_recordmic"
                 android:title="@string/menu_recordmic"/>
-            </menu>
+            <item
+                android:id="@+id/menu_readsdcard"
+                android:title="@string/menu_readsdcard"/>
+        </menu>
     </item>
 
 </menu>

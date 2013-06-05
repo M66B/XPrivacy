@@ -1,11 +1,15 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder.AudioSource;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -105,9 +109,9 @@ public class XMain extends Activity {
 			startActivityForResult(intent, R.id.menu_capvideo);
 			return true;
 		case R.id.menu_recordmic:
-			int bufferSize = AudioRecord.getMinBufferSize(44100, AudioFormat.CHANNEL_IN_MONO,
+			int bufferSize = AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_IN_MONO,
 					AudioFormat.ENCODING_PCM_16BIT);
-			AudioRecord recorder = new AudioRecord(AudioSource.MIC, 44100, AudioFormat.CHANNEL_IN_MONO,
+			AudioRecord recorder = new AudioRecord(AudioSource.MIC, 8000, AudioFormat.CHANNEL_IN_MONO,
 					AudioFormat.ENCODING_PCM_16BIT, bufferSize);
 			recorder.startRecording();
 			try {
@@ -115,6 +119,21 @@ public class XMain extends Activity {
 			} catch (Throwable ex) {
 			}
 			recorder.stop();
+			return true;
+		case R.id.menu_readsdcard:
+			try {
+				File sdcard = Environment.getExternalStorageDirectory();
+				File folder = new File(sdcard.getAbsolutePath() + "/");
+				File file = new File(folder, "XPrivacy.test");
+				FileInputStream fis = new FileInputStream(file);
+				InputStreamReader isr = new InputStreamReader(fis);
+				isr.read();
+				isr.close();
+				fis.close();
+			} catch (Throwable ex) {
+				XUtil.bug(null, ex);
+			}
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
