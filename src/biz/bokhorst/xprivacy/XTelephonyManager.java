@@ -47,7 +47,10 @@ public class XTelephonyManager extends XHook {
 			if (param.getResultOrThrowable() != null)
 				if (isRestricted(param)) {
 					XUtil.log(this, Log.INFO, this.getMethodName() + " uid=" + Binder.getCallingUid());
-					param.setResult(XRestriction.cDefaceString);
+					if (param.method.getName().equals("getIsimImpu"))
+						param.setResult(new String[] { XRestriction.cDefaceString });
+					else
+						param.setResult(XRestriction.cDefaceString);
 				}
 	}
 

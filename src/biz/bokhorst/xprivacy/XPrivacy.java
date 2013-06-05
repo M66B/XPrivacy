@@ -53,9 +53,23 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Telephony
 		hook(new XTelephonyManager("getDeviceId", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getIsimDomain", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getIsimImpi", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getIsimImpu", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getLine1AlphaTag", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getLine1Number", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getMsisdn", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getSimCountryIso", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getSimOperator", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getSimOperatorName", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getSimSerialNumber", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
@@ -66,8 +80,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Workaround bug in Xposed
 		hook(new XTelephonyManager("_listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager", false);
-
-		// getMsisdn, listen: check permissions
 
 		// Intent receive: calling
 		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, new String[] { "PROCESS_OUTGOING_CALLS" },
