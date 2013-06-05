@@ -7,6 +7,10 @@
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
     <string name="app_batchedit">Batch edit</string>
+    <string name="menu_tests">Tests</string>
+    <string name="menu_capimage">Capture image</string>
+    <string name="menu_capvideo">Capture video</string>
+    <string name="msg_restricted" formatted="false">"XPrivacy: %s restricted"</string>
     <string name="restrict_browser">Browser</string>
     <string name="restrict_calendar">Calendar</string>
     <string name="restrict_contacts">Contacts</string>

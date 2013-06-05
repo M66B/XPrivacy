@@ -5,15 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.util.Log;
+import android.widget.Toast;
 
 public class XTestCallReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Bundle bundle = intent.getExtras();
 		if (bundle != null) {
-			XUtil.log(null, Log.INFO, "In " + bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER));
-			XUtil.log(null, Log.INFO, "Out " + bundle.getString(Intent.EXTRA_PHONE_NUMBER));
+			String incoming = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+			String outgoing = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
+			String msg = String.format("XPrivacy: Phone in={0} out={1}", incoming, outgoing);
+			Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
+			toast.show();
 		}
 	}
 }

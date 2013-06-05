@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.util.List;
 
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -10,12 +11,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class XMain extends Activity {
 
@@ -74,6 +79,42 @@ public class XMain extends Activity {
 				startActivity(intentBatch);
 			}
 		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.xmain, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		Intent intent;
+		switch (item.getItemId()) {
+		case R.id.menu_capimage:
+			intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			startActivityForResult(intent, R.id.menu_capimage);
+			return true;
+		case R.id.menu_capvideo:
+			intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+			startActivityForResult(intent, R.id.menu_capvideo);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Toast toast = null;
+		if (requestCode == R.id.menu_capimage)
+			toast = Toast.makeText(this, "XPrivacy: image captured", Toast.LENGTH_LONG);
+		else if (requestCode == R.id.menu_capvideo)
+			toast = Toast.makeText(this, "XPrivacy: video captured", Toast.LENGTH_LONG);
+		if (toast != null)
+			toast.show();
 	}
 
 	private class RestrictionAdapter extends ArrayAdapter<String> {

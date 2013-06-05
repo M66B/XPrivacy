@@ -7,8 +7,11 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="16" />
 
+    <!-- Tests -->
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:allowBackup="true"

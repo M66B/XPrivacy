@@ -5,7 +5,6 @@ import java.lang.reflect.Field;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,10 +69,8 @@ public class XAppDetails extends XHook {
 		}
 
 		// Get helpers
-		String xPackageName = this.getClass().getPackage().getName();
-		PackageManager pm = rootView.getContext().getPackageManager();
-		Resources xResources = pm.getResourcesForApplication(xPackageName);
-		final Context xContext = rootView.getContext().createPackageContext(xPackageName, 0);
+		final Context xContext = XUtil.getXContext(rootView.getContext());
+		Resources xResources = XUtil.getXResources(rootView.getContext());
 		LayoutInflater inflater = (LayoutInflater) xContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		// Remove privacy button

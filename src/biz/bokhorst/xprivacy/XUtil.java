@@ -9,7 +9,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -49,6 +52,21 @@ public class XUtil {
 		} catch (Throwable ex) {
 		}
 		return -1;
+	}
+
+	public static Context getXContext(Context context) throws Throwable {
+		String xPackageName = XPrivacy.class.getPackage().getName();
+		return context.createPackageContext(xPackageName, 0);
+	}
+
+	public static Resources getXResources(Context context) throws Throwable {
+		String xPackageName = XPrivacy.class.getPackage().getName();
+		PackageManager pm = context.getPackageManager();
+		return pm.getResourcesForApplication(xPackageName);
+	}
+
+	public static String getXString(Context context, int id) throws Throwable {
+		return getXResources(context).getString(id);
 	}
 
 	public static void dumpIntent(Intent i) {
