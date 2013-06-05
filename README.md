@@ -21,13 +21,13 @@ Currently implemented:
 * Record audio
 * Record video
 * Restriction management
+* Batch edit restrictions
 * Default restrict new apps
 
 Planned:
 
 * Accounts
 * APN's
-* Network details
 * Wi-Fi MAC addresses
 * CellInfo
 * Read external storage (if possible)
