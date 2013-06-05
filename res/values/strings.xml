@@ -10,6 +10,7 @@
     <string name="menu_tests">Tests</string>
     <string name="menu_capimage">Capture image</string>
     <string name="menu_capvideo">Capture video</string>
+    <string name="menu_recordvideo">Record video</string>
     <string name="menu_recordmic">Record mic</string>
     <string name="menu_readsdcard">Read sdcard</string>
     <string name="msg_restricted" formatted="false">"XPrivacy: %s restricted"</string>

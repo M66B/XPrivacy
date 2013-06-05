@@ -7,6 +7,7 @@ import java.util.List;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
+import android.media.MediaRecorder;
 import android.media.MediaRecorder.AudioSource;
 import android.os.Bundle;
 import android.os.Environment;
@@ -97,31 +98,38 @@ public class XMain extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
-		Intent intent;
-		switch (item.getItemId()) {
-		case R.id.menu_capimage:
-			intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			startActivityForResult(intent, R.id.menu_capimage);
-			return true;
-		case R.id.menu_capvideo:
-			intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-			startActivityForResult(intent, R.id.menu_capvideo);
-			return true;
-		case R.id.menu_recordmic:
-			int bufferSize = AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_IN_MONO,
-					AudioFormat.ENCODING_PCM_16BIT);
-			AudioRecord recorder = new AudioRecord(AudioSource.MIC, 8000, AudioFormat.CHANNEL_IN_MONO,
-					AudioFormat.ENCODING_PCM_16BIT, bufferSize);
-			recorder.startRecording();
-			try {
+		try {
+			Intent intent;
+			switch (item.getItemId()) {
+			case R.id.menu_capimage:
+				intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				startActivityForResult(intent, R.id.menu_capimage);
+				return true;
+			case R.id.menu_capvideo:
+				intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+				startActivityForResult(intent, R.id.menu_capvideo);
+				return true;
+			case R.id.menu_recordvideo:
+				MediaRecorder vrecorder = new MediaRecorder();
+				vrecorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
+				vrecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+				vrecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+				vrecorder.setOutputFile(Environment.getExternalStorageDirectory().getPath() + "/XPrivacy.3gpp");
+				vrecorder.prepare();
+				vrecorder.start();
 				Thread.sleep(1000);
-			} catch (Throwable ex) {
-			}
-			recorder.stop();
-			return true;
-		case R.id.menu_readsdcard:
-			try {
+				vrecorder.stop();
+				return true;
+			case R.id.menu_recordmic:
+				int bufferSize = AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_IN_MONO,
+						AudioFormat.ENCODING_PCM_16BIT);
+				AudioRecord arecorder = new AudioRecord(AudioSource.MIC, 8000, AudioFormat.CHANNEL_IN_MONO,
+						AudioFormat.ENCODING_PCM_16BIT, bufferSize);
+				arecorder.startRecording();
+				Thread.sleep(1000);
+				arecorder.stop();
+				return true;
+			case R.id.menu_readsdcard:
 				File sdcard = Environment.getExternalStorageDirectory();
 				File folder = new File(sdcard.getAbsolutePath() + "/");
 				File file = new File(folder, "XPrivacy.test");
@@ -130,12 +138,13 @@ public class XMain extends Activity {
 				isr.read();
 				isr.close();
 				fis.close();
-			} catch (Throwable ex) {
-				XUtil.bug(null, ex);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 			}
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
 			return true;
-		default:
-			return super.onOptionsItemSelected(item);
 		}
 	}
 

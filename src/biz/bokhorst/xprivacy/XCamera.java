@@ -1,7 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import android.widget.Toast;
-
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XCamera extends XHook {
@@ -25,11 +23,7 @@ public class XCamera extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (isRestricted(param)) {
 			param.setResult(null);
-			// Let user know
-			String format = XUtil.getXString(getApplicationContext(), R.string.msg_restricted);
-			String text = String.format(format, getMethodName());
-			Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
-			toast.show();
+			notifyUser();
 		}
 	}
 

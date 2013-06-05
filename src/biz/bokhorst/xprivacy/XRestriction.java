@@ -50,6 +50,7 @@ public class XRestriction {
 		mRestrictions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mRestrictions.get(cMedia).add("CAMERA");
 		mRestrictions.get(cMedia).add("RECORD_AUDIO");
+		mRestrictions.get(cMedia).add("RECORD_VIDEO");
 		mRestrictions.get(cMessages).add("READ_WRITE_ALL_VOICEMAIL");
 		mRestrictions.get(cMessages).add("READ_SMS");
 		mRestrictions.get(cPhone).add("READ_PHONE_STATE");

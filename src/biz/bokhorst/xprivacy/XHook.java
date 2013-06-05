@@ -4,6 +4,7 @@ import android.app.AndroidAppHelper;
 import android.content.Context;
 import android.os.Binder;
 import android.util.Log;
+import android.widget.Toast;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
@@ -46,6 +47,17 @@ public abstract class XHook {
 
 	protected void setRestricted(Context context, int uid, boolean restricted) {
 		XRestriction.setRestricted(this, context, uid, mRestrictionName, mMethodName, restricted);
+	}
+
+	protected void notifyUser() throws Throwable {
+		notifyUser(getApplicationContext());
+	}
+
+	protected void notifyUser(Context context) throws Throwable {
+		String format = XUtil.getXString(context, R.string.msg_restricted);
+		String text = String.format(format, getMethodName());
+		Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+		toast.show();
 	}
 
 	protected void info(String message) {

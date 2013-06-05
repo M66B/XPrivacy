@@ -2,15 +2,15 @@ package biz.bokhorst.xprivacy;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
-public class XAudioRecord extends XHook {
+public class XMediaRecorder extends XHook {
 
-	public XAudioRecord(String methodName, String restrictionName, String[] permissions) {
+	public XMediaRecorder(String methodName, String restrictionName, String[] permissions) {
 		super(methodName, restrictionName, permissions);
 	}
 
-	// public void startRecording()
-	// public void startRecording(MediaSyncEvent syncEvent)
-	// frameworks/base/media/java/android/media/AudioRecord.java
+	// public void setOutputFile(FileDescriptor fd)
+	// public void setOutputFile(String path)
+	// frameworks/base/media/java/android/media/MediaRecorder.java
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
