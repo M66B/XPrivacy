@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 
 import android.content.Context;
+import android.location.GpsStatus.NmeaListener;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Bundle;
@@ -21,7 +22,6 @@ public class XLocationManager extends XHook {
 
 	// @formatter:off
 
-	// public boolean addGpsStatusListener(GpsStatus.Listener listener)
 	// public boolean addNmeaListener(GpsStatus.NmeaListener listener)
 	// public void addProximityAlert(double latitude, double longitude, float radius, long expiration, PendingIntent intent)
 	// public Location getLastKnownLocation(String provider)
@@ -43,13 +43,25 @@ public class XLocationManager extends XHook {
 		String methodName = param.method.getName();
 		if (!methodName.equals("getLastKnownLocation"))
 			if (isRestricted(param))
-				if (methodName.equals("addGpsStatusListener") || methodName.equals("addNmeaListener"))
-					param.setResult(false);
-				else {
+				if (methodName.equals("addNmeaListener")) {
+					// addNmeaListener
+					NmeaListener nmeaListener = (NmeaListener) param.args[0];
+					param.args[0] = new XNmeaListener(nmeaListener);
+					XUtil.log(this, Log.INFO, "Replacing NMEA listener");
+				} else if (methodName.equals("requestLocationUpdates")) {
+					// requestLocationUpdates
 					if (param.args[3] != null && param.args[3].getClass().isAssignableFrom(LocationListener.class)) {
 						XUtil.log(this, Log.INFO, "Replacing location listener");
 						LocationListener listener = (LocationListener) param.args[3];
 						param.args[3] = new XLocationListener(listener);
+					} else
+						param.setResult(null);
+				} else if (methodName.equals("requestSingleUpdate")) {
+					// requestSingleUpdate
+					if (param.args[1] != null && param.args[1].getClass().isAssignableFrom(LocationListener.class)) {
+						XUtil.log(this, Log.INFO, "Replacing location listener");
+						LocationListener listener = (LocationListener) param.args[1];
+						param.args[1] = new XLocationListener(listener);
 					} else
 						param.setResult(null);
 				}
@@ -90,6 +102,21 @@ public class XLocationManager extends XHook {
 		double lon = Math.random() * 360;
 		BigDecimal longitude = new BigDecimal(lon > 180 ? lon - 180 : -lon);
 		return longitude.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+	}
+
+	private class XNmeaListener implements NmeaListener {
+
+		private NmeaListener mNmeaListener;
+
+		public XNmeaListener(NmeaListener nmeaListener) {
+			mNmeaListener = nmeaListener;
+		}
+
+		@Override
+		public void onNmeaReceived(long timestamp, String nmea) {
+			XUtil.log(null, Log.INFO, nmea);
+			mNmeaListener.onNmeaReceived(timestamp, nmea);
+		}
 	}
 
 	private class XLocationListener implements LocationListener {

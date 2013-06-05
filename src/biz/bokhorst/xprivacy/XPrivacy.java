@@ -31,8 +31,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XCamera("takePicture", XRestriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
 		// Location manager
-		hook(new XLocationManager("addGpsStatusListener", XRestriction.cLocation, new String[] {
-				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
 		hook(new XLocationManager("addNmeaListener", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
 				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
 		hook(new XLocationManager("addProximityAlert", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
