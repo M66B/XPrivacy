@@ -2,6 +2,7 @@ package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.util.Date;
 
 import android.content.Context;
 import android.location.GpsStatus.NmeaListener;
@@ -34,6 +35,8 @@ public class XLocationManager extends XHook {
 	// public void requestSingleUpdate(Criteria criteria, LocationListener listener, Looper looper)
 	// public void requestSingleUpdate(String provider, PendingIntent intent)
 	// public void requestSingleUpdate(Criteria criteria, PendingIntent intent)
+	// private void _requestLocationUpdates(String provider, Criteria criteria, long minTime, float minDistance, boolean singleShot, LocationListener listener, Looper looper)
+	// private void _requestLocationUpdates(String provider, Criteria criteria, long minTime, float minDistance, boolean singleShot, PendingIntent intent)
 	// frameworks/base/location/java/android/location/LocationManager.java
 
 	// @formatter:on
@@ -44,27 +47,22 @@ public class XLocationManager extends XHook {
 		if (!methodName.equals("getLastKnownLocation"))
 			if (isRestricted(param))
 				if (methodName.equals("addNmeaListener")) {
-					// addNmeaListener
 					NmeaListener nmeaListener = (NmeaListener) param.args[0];
 					param.args[0] = new XNmeaListener(nmeaListener);
-					XUtil.log(this, Log.INFO, "Replacing NMEA listener");
-				} else if (methodName.equals("requestLocationUpdates")) {
-					// requestLocationUpdates
-					if (param.args[3] != null && param.args[3].getClass().isAssignableFrom(LocationListener.class)) {
-						XUtil.log(this, Log.INFO, "Replacing location listener");
-						LocationListener listener = (LocationListener) param.args[3];
-						param.args[3] = new XLocationListener(listener);
-					} else
-						param.setResult(null);
-				} else if (methodName.equals("requestSingleUpdate")) {
-					// requestSingleUpdate
-					if (param.args[1] != null && param.args[1].getClass().isAssignableFrom(LocationListener.class)) {
-						XUtil.log(this, Log.INFO, "Replacing location listener");
-						LocationListener listener = (LocationListener) param.args[1];
-						param.args[1] = new XLocationListener(listener);
-					} else
-						param.setResult(null);
-				}
+				} else if (methodName.equals("requestLocationUpdates"))
+					restrictListener(param, 3);
+				else if (methodName.equals("_requestLocationUpdates"))
+					restrictListener(param, 5);
+				else if (methodName.equals("requestSingleUpdate"))
+					restrictListener(param, 1);
+	}
+
+	private void restrictListener(MethodHookParam param, int arg) {
+		if (param.args[arg] != null && param.args[arg].getClass().isAssignableFrom(LocationListener.class)) {
+			LocationListener listener = (LocationListener) param.args[arg];
+			param.args[arg] = new XLocationListener(listener);
+		} else
+			param.setResult(null);
 	}
 
 	@Override
@@ -73,7 +71,8 @@ public class XLocationManager extends XHook {
 			if (param.getResultOrThrowable() != null)
 				if (isRestricted(param)) {
 					String provider = (String) param.args[0];
-					param.setResult(getRandomLocation(provider));
+					Location randomLocation = getRandomLocation(provider);
+					param.setResult(randomLocation);
 				}
 	}
 
@@ -89,6 +88,7 @@ public class XLocationManager extends XHook {
 		Location location = new Location(provider);
 		location.setLatitude(getRandomLat());
 		location.setLongitude(getRandomLon());
+		location.setTime(new Date().getTime());
 		return location;
 	}
 
@@ -115,7 +115,8 @@ public class XLocationManager extends XHook {
 		@Override
 		public void onNmeaReceived(long timestamp, String nmea) {
 			XUtil.log(null, Log.INFO, nmea);
-			mNmeaListener.onNmeaReceived(timestamp, nmea);
+			// mNmeaListener.onNmeaReceived(timestamp, nmea);
+			// TODO: transform NMEA data
 		}
 	}
 
@@ -129,7 +130,8 @@ public class XLocationManager extends XHook {
 
 		@Override
 		public void onLocationChanged(Location location) {
-			mLocationListener.onLocationChanged(getRandomLocation(location.getProvider()));
+			Location randomLocation = getRandomLocation(location.getProvider());
+			mLocationListener.onLocationChanged(randomLocation);
 		}
 
 		@Override
