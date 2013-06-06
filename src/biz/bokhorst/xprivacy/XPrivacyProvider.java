@@ -145,30 +145,8 @@ public class XPrivacyProvider extends ContentProvider {
 				editor.commit();
 
 				// Update package list
-				if (XRestriction.cStorage.equals(restrictionName)) {
-					// Get current package list
-					String storageRestrictions = prefs.getString(getPackagesPref(restrictionName), null);
-
-					// Update package list
-					List<String> listStoragePackage = new ArrayList<String>();
-					if (storageRestrictions != null)
-						listStoragePackage.addAll(Arrays.asList(storageRestrictions.split(",")));
-					for (String storagePackage : getContext().getPackageManager().getPackagesForUid(uid))
-						if (!allowed && !listStoragePackage.contains(storagePackage))
-							listStoragePackage.add(storagePackage);
-						else if (allowed && listStoragePackage.contains(storagePackage))
-							listStoragePackage.remove(storagePackage);
-
-					// Store package list
-					String storagePackages = TextUtils.join(",", listStoragePackage);
-					if (storagePackages.equals(""))
-						storagePackages = null;
-					SharedPreferences.Editor sEditor = prefs.edit();
-					sEditor.putString(getPackagesPref(restrictionName), storagePackages);
-					sEditor.commit();
-
-					XUtil.log(null, Log.INFO, "Storage packages=" + storagePackages);
-				}
+				if (XRestriction.cStorage.equals(restrictionName))
+					updateStoragePackages(uid, allowed);
 
 				return 1; // rows
 			} else
@@ -177,17 +155,44 @@ public class XPrivacyProvider extends ContentProvider {
 		throw new IllegalArgumentException();
 	}
 
+	private void updateStoragePackages(int uid, boolean allowed) {
+		// Get storage packages
+		SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_WORLD_READABLE);
+		String storagePackages = prefs.getString(getPackagesPref(XRestriction.cStorage), "");
+
+		// Build package list
+		List<String> listStoragePackage = new ArrayList<String>();
+		if (!storagePackages.equals(""))
+			listStoragePackage.addAll(Arrays.asList(storagePackages.split(",")));
+
+		// Update package list
+		for (String storagePackage : getContext().getPackageManager().getPackagesForUid(uid))
+			if (!allowed && !listStoragePackage.contains(storagePackage))
+				listStoragePackage.add(storagePackage);
+			else if (allowed && listStoragePackage.contains(storagePackage))
+				listStoragePackage.remove(storagePackage);
+
+		// Store storage packages
+		storagePackages = TextUtils.join(",", listStoragePackage);
+		SharedPreferences.Editor sEditor = prefs.edit();
+		sEditor.putString(getPackagesPref(XRestriction.cStorage), storagePackages);
+		sEditor.commit();
+		XUtil.log(null, Log.INFO, "Storage packages=" + storagePackages);
+	}
+
 	public static boolean getRestricted(XHook hook, Context context, String packageName, String restrictionName,
 			String methodName, boolean usage) throws Throwable {
+		// Get storage packages
+		Context xContext = XUtil.getXContext(context);
+		SharedPreferences prefs = xContext.getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
+		String storagePackages = prefs.getString(getPackagesPref(restrictionName), "");
+		XUtil.log(null, Log.INFO, "Storage packages=" + storagePackages);
+
+		// Check if restricted
 		boolean restricted = false;
-		if (XRestriction.cStorage.equals(restrictionName))
-			if (!XPrivacy.class.getPackage().getName().equals(packageName)) {
-				Context xContext = XUtil.getXContext(context);
-				SharedPreferences prefs = xContext.getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
-				String storagePackages = prefs.getString(getPackagesPref(restrictionName), null);
-				if (storagePackages != null)
-					restricted = Arrays.asList(storagePackages.split(",")).contains(packageName);
-			}
+		if (!storagePackages.equals(""))
+			restricted = Arrays.asList(storagePackages.split(",")).contains(packageName);
+
 		XUtil.log(hook, Log.INFO, "package=" + packageName + " restricted=" + restricted);
 		return restricted;
 	}
