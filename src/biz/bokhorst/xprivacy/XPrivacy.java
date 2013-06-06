@@ -65,8 +65,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.media.MediaRecorder");
 
 		// Settings secure
-		hook(new XPackageManagerService("getPackageGids", XRestriction.cStorage,
-				new String[] { "READ_EXTERNAL_STORAGE" }), "com.android.server.pm.PackageManagerService");
+		hook(new XPackageManagerService("getPackageGids", XRestriction.cStorage, new String[] {
+				"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE" }), "com.android.server.pm.PackageManagerService");
 
 		// Settings secure
 		hook(new XSettingsSecure("getString", XRestriction.cIdentification), "android.provider.Settings.Secure");

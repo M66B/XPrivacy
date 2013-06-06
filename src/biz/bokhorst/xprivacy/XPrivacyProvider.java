@@ -15,6 +15,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class XPrivacyProvider extends ContentProvider {
 
@@ -33,8 +34,8 @@ public class XPrivacyProvider extends ContentProvider {
 	private static final int TYPE_RESTRICTIONS = 1;
 	private static final int TYPE_LASTUSED = 2;
 
-	// TODO: change notifications
-	
+	private static final String cPackages = "Packages";
+
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		sUriMatcher.addURI(AUTHORITY, PATH_RESTRICTIONS, TYPE_RESTRICTIONS);
@@ -59,7 +60,7 @@ public class XPrivacyProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String restrictionName, String[] selectionArgs, String sortOrder) {
 		if (selectionArgs != null) {
 			// Get arguments
-			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
+			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_WORLD_READABLE);
 
 			if (sUriMatcher.match(uri) == TYPE_RESTRICTIONS && selectionArgs.length == 2) {
 				// Get arguments
@@ -120,7 +121,7 @@ public class XPrivacyProvider extends ContentProvider {
 				boolean allowed = !Boolean.parseBoolean(values.getAsString(COL_RESTRICTED));
 
 				// Get restrictions
-				SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
+				SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_WORLD_READABLE);
 				String restrictions = prefs.getString(getRestrictionPref(restrictionName), "*");
 
 				// Decode restrictions
@@ -143,6 +144,32 @@ public class XPrivacyProvider extends ContentProvider {
 				editor.putString(getRestrictionPref(restrictionName), restrictions);
 				editor.commit();
 
+				// Update package list
+				if (XRestriction.cStorage.equals(restrictionName)) {
+					// Get current package list
+					String storageRestrictions = prefs.getString(getPackagesPref(restrictionName), null);
+
+					// Update package list
+					List<String> listStoragePackage = new ArrayList<String>();
+					if (storageRestrictions != null)
+						listStoragePackage.addAll(Arrays.asList(storageRestrictions.split(",")));
+					for (String storagePackage : getContext().getPackageManager().getPackagesForUid(uid))
+						if (!allowed && !listStoragePackage.contains(storagePackage))
+							listStoragePackage.add(storagePackage);
+						else if (allowed && listStoragePackage.contains(storagePackage))
+							listStoragePackage.remove(storagePackage);
+
+					// Store package list
+					String storagePackages = TextUtils.join(",", listStoragePackage);
+					if (storagePackages.equals(""))
+						storagePackages = null;
+					SharedPreferences.Editor sEditor = prefs.edit();
+					sEditor.putString(getPackagesPref(restrictionName), storagePackages);
+					sEditor.commit();
+
+					XUtil.log(null, Log.INFO, "Storage packages=" + storagePackages);
+				}
+
 				return 1; // rows
 			} else
 				throw new SecurityException();
@@ -150,12 +177,31 @@ public class XPrivacyProvider extends ContentProvider {
 		throw new IllegalArgumentException();
 	}
 
-	private String getRestrictionPref(String restrictionName) {
+	public static boolean getRestricted(XHook hook, Context context, String packageName, String restrictionName,
+			String methodName, boolean usage) throws Throwable {
+		boolean restricted = false;
+		if (XRestriction.cStorage.equals(restrictionName))
+			if (!XPrivacy.class.getPackage().getName().equals(packageName)) {
+				Context xContext = XUtil.getXContext(context);
+				SharedPreferences prefs = xContext.getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
+				String storagePackages = prefs.getString(getPackagesPref(restrictionName), null);
+				if (storagePackages != null)
+					restricted = Arrays.asList(storagePackages.split(",")).contains(packageName);
+			}
+		XUtil.log(hook, Log.INFO, "package=" + packageName + " restricted=" + restricted);
+		return restricted;
+	}
+
+	private static String getRestrictionPref(String restrictionName) {
 		return COL_RESTRICTED + "." + restrictionName;
 	}
 
-	private String getUsagePref(int uid, String restrictionName) {
+	private static String getUsagePref(int uid, String restrictionName) {
 		return COL_LASTUSED + "." + uid + "." + restrictionName;
+	}
+
+	private static String getPackagesPref(String restrictionName) {
+		return cPackages + "." + restrictionName;
 	}
 
 	@Override

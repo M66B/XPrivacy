@@ -21,17 +21,16 @@ Currently implemented:
 * Record audio
 * Record video
 * Accounts (0.5)
+* Read sdcard (0.5)
 * Restriction management
 * Batch edit restrictions
 * Default restrict new apps
 
 Planned:
 
-* Media library
 * APN's
 * Wi-Fi MAC addresses
 * CellInfo
-* Read external storage (if possible)
 
 **Tested with CyanogenMod 10**
 

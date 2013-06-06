@@ -60,6 +60,7 @@ public class XRestriction {
 		mRestrictions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mRestrictions.get(cPhone).add("READ_CALL_LOG");
 		mRestrictions.get(cStorage).add("READ_EXTERNAL_STORAGE");
+		mRestrictions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
 	}
 
 	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {
