@@ -13,16 +13,15 @@ Currently implemented:
 * Browser (bookmarks, searches, etc)
 * Calendar
 * Contacts
-* Identification
+* Identification (Android ID, Wi-Fi MAC address)
 * Location (coarse/fine)
 * Messages (SMS/MMS, voicemail: **untested**)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
 * Take photos
 * Record audio
 * Record video
-* Accounts (0.5)
-* Read sdcard (0.5)
-* Wi-Fi MAC address (0.5)
+* Accounts
+* Read sdcard (revoke permission)
 * Restriction management
 * Batch edit restrictions
 * Default restrict new apps
@@ -56,7 +55,7 @@ Usage
 To see it in action: try disabling *Identification* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 or try disabling *Contacts* for the Contacts app.
 
-Applying some restrictions requires an app restart or a reboot.
+**Applying some restrictions requires an app restart**
 
 Frequently asked questions
 --------------------------
