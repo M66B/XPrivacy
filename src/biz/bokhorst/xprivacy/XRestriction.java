@@ -28,6 +28,7 @@ public class XRestriction {
 
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;
+	public static final String cDefacedMac = "DE:FA:CE:DE:FA:CE";
 
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
 

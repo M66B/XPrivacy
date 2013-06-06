@@ -28,7 +28,6 @@ Currently implemented:
 
 Planned:
 
-* APN's
 * Wi-Fi MAC addresses
 * CellInfo
 
