@@ -38,6 +38,7 @@ public class XAppDetails extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		// Get app entry
+		// CM10/CM10.1
 		Field fieldAppEntry = findField(param.thisObject.getClass(), "mAppEntry");
 		Object appEntry = fieldAppEntry.get(param.thisObject);
 		if (appEntry == null) {
@@ -46,6 +47,7 @@ public class XAppDetails extends XHook {
 		}
 
 		// Get app info
+		// CM10/CM10.1
 		Field fieldInfo = findField(appEntry.getClass(), "info");
 		final ApplicationInfo appInfo = (ApplicationInfo) fieldInfo.get(appEntry);
 		if (appInfo == null) {
@@ -54,6 +56,7 @@ public class XAppDetails extends XHook {
 		}
 
 		// Get root view
+		// CM10/CM10.1
 		Field fieldRootView = findField(param.thisObject.getClass(), "mRootView");
 		ScrollView rootView = (ScrollView) fieldRootView.get(param.thisObject);
 		if (rootView == null) {
