@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
@@ -60,7 +61,7 @@ public class XPrivacyProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String restrictionName, String[] selectionArgs, String sortOrder) {
 		if (selectionArgs != null) {
 			// Get arguments
-			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_WORLD_READABLE);
+			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
 
 			if (sUriMatcher.match(uri) == TYPE_RESTRICTIONS && selectionArgs.length == 2) {
 				// Get arguments
@@ -121,7 +122,7 @@ public class XPrivacyProvider extends ContentProvider {
 				boolean allowed = !Boolean.parseBoolean(values.getAsString(COL_RESTRICTED));
 
 				// Get restrictions
-				SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_WORLD_READABLE);
+				SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
 				String restrictions = prefs.getString(getRestrictionPref(restrictionName), "*");
 
 				// Decode restrictions
@@ -146,7 +147,7 @@ public class XPrivacyProvider extends ContentProvider {
 
 				// Update package list
 				if (XRestriction.cStorage.equals(restrictionName))
-					updateStoragePackages(uid, allowed);
+					updateStoragePackages(XRestriction.cStorage, uid, allowed);
 
 				return 1; // rows
 			} else
@@ -155,10 +156,13 @@ public class XPrivacyProvider extends ContentProvider {
 		throw new IllegalArgumentException();
 	}
 
-	private void updateStoragePackages(int uid, boolean allowed) {
+	@SuppressWarnings("deprecation")
+	@SuppressLint("WorldReadableFiles")
+	private void updateStoragePackages(String restrictionName, int uid, boolean allowed) {
 		// Get storage packages
-		SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_WORLD_READABLE);
-		String storagePackages = prefs.getString(getPackagesPref(XRestriction.cStorage), "");
+		SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY + "." + XRestriction.cStorage,
+				Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS);
+		String storagePackages = prefs.getString(getPackagesPref(restrictionName), "");
 
 		// Build package list
 		List<String> listStoragePackage = new ArrayList<String>();
@@ -177,22 +181,25 @@ public class XPrivacyProvider extends ContentProvider {
 		SharedPreferences.Editor sEditor = prefs.edit();
 		sEditor.putString(getPackagesPref(XRestriction.cStorage), storagePackages);
 		sEditor.commit();
-		XUtil.log(null, Log.INFO, "Storage packages=" + storagePackages);
 	}
 
+	@SuppressWarnings("deprecation")
+	@SuppressLint("WorldReadableFiles")
 	public static boolean getRestricted(XHook hook, Context context, String packageName, String restrictionName,
 			String methodName, boolean usage) throws Throwable {
 		// Get storage packages
 		Context xContext = XUtil.getXContext(context);
-		SharedPreferences prefs = xContext.getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
+		SharedPreferences prefs = xContext.getSharedPreferences(AUTHORITY + "." + XRestriction.cStorage,
+				Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS);
 		String storagePackages = prefs.getString(getPackagesPref(restrictionName), "");
-		XUtil.log(null, Log.INFO, "Storage packages=" + storagePackages);
+
+		// Build package list
+		List<String> listStoragePackage = new ArrayList<String>();
+		if (!storagePackages.equals(""))
+			listStoragePackage.addAll(Arrays.asList(storagePackages.split(",")));
 
 		// Check if restricted
-		boolean restricted = false;
-		if (!storagePackages.equals(""))
-			restricted = Arrays.asList(storagePackages.split(",")).contains(packageName);
-
+		boolean restricted = listStoragePackage.contains(packageName);
 		XUtil.log(hook, Log.INFO, "package=" + packageName + " restricted=" + restricted);
 		return restricted;
 	}
