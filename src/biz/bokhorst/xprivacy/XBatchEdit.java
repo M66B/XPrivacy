@@ -108,7 +108,7 @@ public class XBatchEdit extends Activity {
 			boolean restricted = XRestriction.getRestricted(null, row.getContext(), appEntry.getUid(),
 					mRestrictionName, false);
 			ctvApp.setChecked(restricted);
-			
+
 			// Listen for restriction changes
 			ctvApp.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -117,8 +117,7 @@ public class XBatchEdit extends Activity {
 							mRestrictionName, false);
 					restricted = !restricted;
 					ctvApp.setChecked(restricted);
-					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName,
-							restricted);
+					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName, restricted);
 				}
 			});
 

@@ -33,6 +33,7 @@ Planned:
 * Account auth token
 * System log
 * ICC read SMS
+* Camera preview
 
 **Tested with CyanogenMod 10**
 
