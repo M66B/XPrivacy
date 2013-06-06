@@ -70,7 +70,7 @@ public class XAppSettings extends Activity {
 		for (int position = 0; position < lvRestriction.getAdapter().getCount(); position++) {
 			String restrictionName = (String) lvRestriction.getItemAtPosition(position);
 			lvRestriction.setItemChecked(position,
-					XRestriction.getRestricted(null, this, appInfo.uid, restrictionName, null, false));
+					XRestriction.getRestricted(null, this, appInfo.uid, restrictionName, false));
 		}
 
 		// Listen for restriction changes
@@ -79,7 +79,7 @@ public class XAppSettings extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				String restrictionName = (String) lvRestriction.getItemAtPosition(position);
 				boolean restricted = lvRestriction.isItemChecked(position);
-				XRestriction.setRestricted(null, view.getContext(), appInfo.uid, restrictionName, null, restricted);
+				XRestriction.setRestricted(null, view.getContext(), appInfo.uid, restrictionName, restricted);
 			}
 		});
 	}

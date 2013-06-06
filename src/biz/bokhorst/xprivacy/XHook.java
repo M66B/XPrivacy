@@ -42,11 +42,11 @@ public abstract class XHook {
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) {
-		return XRestriction.getRestricted(this, context, uid, mRestrictionName, mMethodName, usage);
+		return XRestriction.getRestricted(this, context, uid, mRestrictionName, usage);
 	}
 
 	protected void setRestricted(Context context, int uid, boolean restricted) {
-		XRestriction.setRestricted(this, context, uid, mRestrictionName, mMethodName, restricted);
+		XRestriction.setRestricted(this, context, uid, mRestrictionName, restricted);
 	}
 
 	protected void notifyUser() throws Throwable {

@@ -27,7 +27,7 @@ public class XPackageChange extends BroadcastReceiver {
 						PackageManager pm = context.getPackageManager();
 						ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
 						for (String restrictionName : XRestriction.getRestrictions())
-							XRestriction.setRestricted(null, context, appInfo.uid, restrictionName, null, true);
+							XRestriction.setRestricted(null, context, appInfo.uid, restrictionName, true);
 					} catch (Throwable ex) {
 						XUtil.bug(null, ex);
 					}

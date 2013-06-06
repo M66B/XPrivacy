@@ -74,7 +74,7 @@ public class XBatchEdit extends Activity {
 		for (int position = 0; position < lvApp.getAdapter().getCount(); position++) {
 			XApplicationInfo appInfo = (XApplicationInfo) lvApp.getItemAtPosition(position);
 			lvApp.setItemChecked(position,
-					XRestriction.getRestricted(null, this, appInfo.getUid(), restrictionName, null, false));
+					XRestriction.getRestricted(null, this, appInfo.getUid(), restrictionName, false));
 		}
 	}
 
@@ -116,10 +116,10 @@ public class XBatchEdit extends Activity {
 				@Override
 				public void onClick(View view) {
 					boolean restricted = XRestriction.getRestricted(null, view.getContext(), appEntry.getUid(),
-							mRestrictionName, null, false);
+							mRestrictionName, false);
 					restricted = !restricted;
 					ctvApp.setChecked(restricted);
-					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName, null,
+					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName,
 							restricted);
 				}
 			});

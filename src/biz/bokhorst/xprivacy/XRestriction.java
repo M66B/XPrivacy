@@ -28,7 +28,7 @@ public class XRestriction {
 
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;
-	public static final String cDefacedMac = "DE:FA:CE:DE:FA:CE";
+	public static final String cDefacedMac = "de:fa:ce:de:fa:ce";
 
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
 
@@ -116,8 +116,7 @@ public class XRestriction {
 		return (stringId == 0 ? null : context.getString(stringId));
 	}
 
-	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName,
-			String methodName, boolean usage) {
+	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage) {
 		try {
 			// Check context
 			if (context == null) {
@@ -168,8 +167,7 @@ public class XRestriction {
 		}
 	}
 
-	public static void setRestricted(XHook hook, Context context, int uid, String restrictionName, String methodName,
-			boolean restricted) {
+	public static void setRestricted(XHook hook, Context context, int uid, String restrictionName, boolean restricted) {
 		// Check context
 		if (context == null) {
 			XUtil.log(hook, Log.WARN, "context is null");
