@@ -13,7 +13,7 @@
     <string name="menu_recordvideo">Record video</string>
     <string name="menu_recordmic">Record mic</string>
     <string name="menu_readsdcard">Read sdcard</string>
-    <string name="msg_restricted" formatted="false">"XPrivacy: %s restricted"</string>
+    <string name="msg_restricted" formatted="false">"XPrivacy: %s/%s restricted"</string>
     <string name="restrict_accounts">Accounts</string>
     <string name="restrict_browser">Browser</string>
     <string name="restrict_calendar">Calendar</string>
@@ -27,6 +27,7 @@
     <string name="settings_nointernet">No internet access</string>
     <string name="settings_restrictionused">Restriction used</string>
     <string name="settings_permnotgranted">Permission not granted</string>
+    <string name="settings_longpress">Long press for app settings</string>
     <string name="settings_restrict">Check to restrict information:</string>
     <string name="settings_icon">Icon</string>
 

@@ -23,6 +23,13 @@ public class XAppDetails extends XHook {
 		super(methodName, null, new String[0]);
 	}
 
+	// @formatter:off
+
+	// packages/apps/Settings/res/layout/installed_app_details.xml
+	// packages/apps/Settings/src/com/android/settings/applications/InstalledAppDetails.java
+
+	// @formatter:on
+
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		// Do nothing

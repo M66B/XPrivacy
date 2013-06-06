@@ -1,13 +1,13 @@
 package biz.bokhorst.xprivacy;
 
-import static de.robv.android.xposed.XposedHelpers.findField;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
+import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XPackageManagerService extends XHook {
 
@@ -55,6 +55,7 @@ public class XPackageManagerService extends XHook {
 	}
 
 	private Context getContext(MethodHookParam param) throws Throwable {
+		// CM10/CM10.1
 		Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 		return (Context) fieldContext.get(param.thisObject);
 	}

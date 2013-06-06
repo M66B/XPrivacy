@@ -12,6 +12,7 @@ import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.content.Context;
 import android.os.Binder;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XAccountManager extends XHook {
@@ -46,6 +47,7 @@ public class XAccountManager extends XHook {
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
+		// CM10/CM10.1
 		Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 		Context context = (Context) fieldContext.get(param.thisObject);
 		int uid = Binder.getCallingUid();

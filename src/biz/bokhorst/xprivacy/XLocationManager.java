@@ -33,8 +33,6 @@ public class XLocationManager extends XHook {
 	// public void requestSingleUpdate(Criteria criteria, LocationListener listener, Looper looper)
 	// public void requestSingleUpdate(String provider, PendingIntent intent)
 	// public void requestSingleUpdate(Criteria criteria, PendingIntent intent)
-	// private void _requestLocationUpdates(String provider, Criteria criteria, long minTime, float minDistance, boolean singleShot, LocationListener listener, Looper looper)
-	// private void _requestLocationUpdates(String provider, Criteria criteria, long minTime, float minDistance, boolean singleShot, PendingIntent intent)
 	// frameworks/base/location/java/android/location/LocationManager.java
 
 	// @formatter:on
@@ -48,8 +46,6 @@ public class XLocationManager extends XHook {
 					param.setResult(null);
 				else if (methodName.equals("requestLocationUpdates"))
 					replaceLocationListener(param, 3);
-				else if (methodName.equals("_requestLocationUpdates"))
-					replaceLocationListener(param, 5);
 				else if (methodName.equals("requestSingleUpdate"))
 					replaceLocationListener(param, 1);
 	}
@@ -76,6 +72,7 @@ public class XLocationManager extends XHook {
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
+		// CM10/CM10.1
 		Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 		Context context = (Context) fieldContext.get(param.thisObject);
 		int uid = Binder.getCallingUid();

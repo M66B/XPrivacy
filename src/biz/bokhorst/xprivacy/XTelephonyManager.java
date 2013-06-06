@@ -43,7 +43,7 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (param.method.getName().equals("listen") || param.method.getName().equals("_listen")) {
+		if (param.method.getName().equals("listen")) {
 			PhoneStateListener listener = (PhoneStateListener) param.args[0];
 			if (listener != null)
 				if (isRestricted(param))
@@ -53,7 +53,7 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (!param.method.getName().equals("listen") && !param.method.getName().equals("_listen"))
+		if (!param.method.getName().equals("listen"))
 			if (param.getResultOrThrowable() != null)
 				if (isRestricted(param)) {
 					XUtil.log(this, Log.INFO, this.getMethodName() + " uid=" + Binder.getCallingUid());
@@ -66,6 +66,7 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
+		// CM10/CM10.1
 		Field fieldContext = findField(param.thisObject.getClass(), "sContext");
 		Context context = (Context) fieldContext.get(param.thisObject);
 		int uid = Binder.getCallingUid();

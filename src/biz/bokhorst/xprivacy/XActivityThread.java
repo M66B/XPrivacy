@@ -25,6 +25,7 @@ public class XActivityThread extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (param.args[0] != null) {
 			// Get intent
+			// CM10/CM10.1
 			Field fieldIntent = findField(param.args[0].getClass(), "intent");
 			Intent intent = (Intent) fieldIntent.get(param.args[0]);
 
