@@ -69,13 +69,6 @@ public class XBatchEdit extends Activity {
 		final ListView lvApp = (ListView) findViewById(R.id.lvApp);
 		AppListAdapter appAdapter = new AppListAdapter(this, R.layout.xappentry, listApp, restrictionName);
 		lvApp.setAdapter(appAdapter);
-
-		// Set restriction values
-		for (int position = 0; position < lvApp.getAdapter().getCount(); position++) {
-			XApplicationInfo appInfo = (XApplicationInfo) lvApp.getItemAtPosition(position);
-			lvApp.setItemChecked(position,
-					XRestriction.getRestricted(null, this, appInfo.getUid(), restrictionName, false));
-		}
 	}
 
 	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> {
@@ -111,6 +104,11 @@ public class XBatchEdit extends Activity {
 			if (appEntry.isUsed())
 				ctvApp.setTypeface(null, Typeface.BOLD_ITALIC);
 
+			// Display restriction
+			boolean restricted = XRestriction.getRestricted(null, row.getContext(), appEntry.getUid(),
+					mRestrictionName, false);
+			ctvApp.setChecked(restricted);
+			
 			// Listen for restriction changes
 			ctvApp.setOnClickListener(new View.OnClickListener() {
 				@Override
