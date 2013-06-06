@@ -22,13 +22,13 @@ Currently implemented:
 * Record video
 * Accounts (0.5)
 * Read sdcard (0.5)
+* Wi-Fi MAC address (0.5)
 * Restriction management
 * Batch edit restrictions
 * Default restrict new apps
 
 Planned:
 
-* Wi-Fi MAC addresses
 * CellInfo
 
 **Tested with CyanogenMod 10**

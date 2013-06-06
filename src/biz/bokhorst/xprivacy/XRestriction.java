@@ -50,6 +50,7 @@ public class XRestriction {
 		mRestrictions.get(cBrowser).add("GLOBAL_SEARCH");
 		mRestrictions.get(cCalendar).add("READ_CALENDAR");
 		mRestrictions.get(cContacts).add("READ_CONTACTS");
+		mRestrictions.get(cIdentification).add("ACCESS_WIFI_STATE");
 		mRestrictions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mRestrictions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mRestrictions.get(cMedia).add("CAMERA");
