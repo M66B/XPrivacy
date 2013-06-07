@@ -64,12 +64,16 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XMediaRecorder("setOutputFile", XRestriction.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),
 				"android.media.MediaRecorder");
 
-		// Settings secure
+		// Package manager
 		hook(new XPackageManagerService("getPackageGids", XRestriction.cStorage, new String[] {
 				"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE" }), "com.android.server.pm.PackageManagerService");
 
 		// Settings secure
 		hook(new XSettingsSecure("getString", XRestriction.cIdentification), "android.provider.Settings.Secure");
+
+		// SMS manager
+		hook(new XSmsManager("getAllMessagesFromIcc", XRestriction.cMessages, new String[] { "RECEIVE_SMS" }),
+				"android.telephony.SmsManager");
 
 		// Telephony
 		hook(new XTelephonyManager("getDeviceId", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
@@ -153,10 +157,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Load contacts provider
 		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
-			hook(new XContentProvider(XRestriction.cPhone, new String[] { "READ_CALL_LOG" }), lpparam.classLoader,
-					"com.android.providers.contacts.CallLogProvider");
 			hook(new XContentProvider(XRestriction.cContacts, new String[] { "READ_CONTACTS" }), lpparam.classLoader,
 					"com.android.providers.contacts.ContactsProvider2");
+			hook(new XContentProvider(XRestriction.cPhone, new String[] { "READ_CALL_LOG" }), lpparam.classLoader,
+					"com.android.providers.contacts.CallLogProvider");
 			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_WRITE_ALL_VOICEMAIL" }),
 					lpparam.classLoader, "com.android.providers.contacts.VoicemailContentProvider");
 		}
@@ -169,7 +173,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"com.android.providers.telephony.MmsProvider");
 			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }), lpparam.classLoader,
 					"com.android.providers.telephony.MmsSmsProvider");
-			// com.android.providers.telephony.TelephonyProvider
+			hook(new XContentProvider(XRestriction.cPhone, new String[] { "WRITE_APN_SETTINGS" }), lpparam.classLoader,
+					"com.android.providers.telephony.TelephonyProvider");
 		}
 
 		// Load settings

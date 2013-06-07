@@ -58,9 +58,11 @@ public class XRestriction {
 		mRestrictions.get(cMedia).add("RECORD_VIDEO");
 		mRestrictions.get(cMessages).add("READ_WRITE_ALL_VOICEMAIL");
 		mRestrictions.get(cMessages).add("READ_SMS");
+		mRestrictions.get(cMessages).add("RECEIVE_SMS");
 		mRestrictions.get(cPhone).add("READ_PHONE_STATE");
 		mRestrictions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mRestrictions.get(cPhone).add("READ_CALL_LOG");
+		mRestrictions.get(cPhone).add("WRITE_APN_SETTINGS");
 		mRestrictions.get(cStorage).add("READ_EXTERNAL_STORAGE");
 		mRestrictions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
 	}

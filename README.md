@@ -10,12 +10,13 @@ Permissions
 
 Currently implemented:
 
+* APN info (0.6)
 * Browser (bookmarks, searches, etc)
 * Calendar
 * Contacts
 * Identification (Android ID, Wi-Fi MAC address)
 * Location (coarse/fine)
-* Messages (SMS/MMS, voicemail: **untested**)
+* Messages (SMS/MMS, voicemail: **untested**, ICC SMS: 0.6)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
 * Take photos (Media)
 * Record audio (Media)
@@ -29,11 +30,8 @@ Currently implemented:
 Planned:
 
 * Cell info
-* APN info
 * Account auth token
 * System log
-* ICC read SMS
-* Camera preview
 
 **Tested with CyanogenMod 10**
 

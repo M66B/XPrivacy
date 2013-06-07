@@ -3,12 +3,14 @@ package biz.bokhorst.xprivacy;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.media.MediaRecorder.AudioSource;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -101,6 +103,11 @@ public class XMain extends Activity {
 		try {
 			Intent intent;
 			switch (item.getItemId()) {
+			case R.id.menu_reportissue:
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+						Uri.parse("https://github.com/M66B/XPrivacy/issues"));
+				startActivity(browserIntent);
+				return true;
 			case R.id.menu_capimage:
 				intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				startActivityForResult(intent, R.id.menu_capimage);
@@ -136,6 +143,17 @@ public class XMain extends Activity {
 				isr.read();
 				isr.close();
 				fis.close();
+				return true;
+			case R.id.menu_readsmsicc:
+				Class<?> smsManager = Class.forName("android.telephony.SmsManager");
+				Method getDefault = smsManager.getMethod("getDefault");
+				Object defaultInstance = getDefault.invoke(null);
+				Method getAllMessagesFromIcc = smsManager.getMethod("getAllMessagesFromIcc");
+				getAllMessagesFromIcc.invoke(defaultInstance);
+				return true;
+			case R.id.menu_queryapn:
+				getApplicationContext().getContentResolver().query(Uri.parse("content://telephony/carriers/current"),
+						null, null, null, null);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

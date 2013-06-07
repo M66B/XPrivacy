@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <item
+        android:id="@+id/menu_reportissue"
+        android:title="@string/menu_reportissue"/>
     <item android:title="@string/menu_tests">
         <menu>
             <item
@@ -18,6 +21,12 @@
             <item
                 android:id="@+id/menu_readsdcard"
                 android:title="@string/menu_readsdcard"/>
+            <item
+                android:id="@+id/menu_readsmsicc"
+                android:title="@string/menu_readsmsicc"/>
+            <item
+                android:id="@+id/menu_queryapn"
+                android:title="@string/menu_queryapn"/>
         </menu>
     </item>
 
