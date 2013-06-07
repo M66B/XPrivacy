@@ -11,6 +11,7 @@ Permissions
 Currently implemented:
 
 * APN info
+* Boot start (0.7)
 * Browser (bookmarks, searches, etc)
 * Calendar
 * Contacts
@@ -58,6 +59,12 @@ To see it in action: try disabling *Identification* for [Android Id Info](https:
 or try disabling *Contacts* for the Contacts app.
 
 **Applying some restrictions requires an app restart**
+
+Enabling storage restriction means blocking access to external storage (typically the SD card).
+Because of the nature of this restriction, there is no usage data for this restriction.
+All other restrictions have usage data and send no or fake data.
+The only exception is boot complete: this is not really a restriction,
+but makes it possible to block an application for doing things when the system starts.
 
 Frequently asked questions
 --------------------------
