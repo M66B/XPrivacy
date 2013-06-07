@@ -4,30 +4,5 @@
     <item
         android:id="@+id/menu_reportissue"
         android:title="@string/menu_reportissue"/>
-    <item android:title="@string/menu_tests">
-        <menu>
-            <item
-                android:id="@+id/menu_capimage"
-                android:title="@string/menu_capimage"/>
-            <item
-                android:id="@+id/menu_capvideo"
-                android:title="@string/menu_capvideo"/>
-            <item
-                android:id="@+id/menu_recordvideo"
-                android:title="@string/menu_recordvideo"/>
-            <item
-                android:id="@+id/menu_recordmic"
-                android:title="@string/menu_recordmic"/>
-            <item
-                android:id="@+id/menu_readsdcard"
-                android:title="@string/menu_readsdcard"/>
-            <item
-                android:id="@+id/menu_readsmsicc"
-                android:title="@string/menu_readsmsicc"/>
-            <item
-                android:id="@+id/menu_queryapn"
-                android:title="@string/menu_queryapn"/>
-        </menu>
-    </item>
 
 </menu>

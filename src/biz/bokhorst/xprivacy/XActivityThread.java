@@ -29,35 +29,38 @@ public class XActivityThread extends XHook {
 			// CM10/CM10.1
 			Field fieldIntent = findField(param.args[0].getClass(), "intent");
 			Intent intent = (Intent) fieldIntent.get(param.args[0]);
+			if (intent != null) {
+				String action = intent.getAction();
+				XUtil.log(this, Log.INFO, "action=" + action);
 
-			// Check action
-			if (intent != null && mActionName.equals(intent.getAction())) {
-				if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-					// Boot completed
-					if (isRestricted(param))
-						param.setResult(null);
-				} else if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
-					// Outgoing call
-					Bundle bundle = intent.getExtras();
-					if (bundle != null) {
-						String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
-						if (phoneNumber != null)
-							if (isRestricted(param))
-								intent.putExtra(Intent.EXTRA_PHONE_NUMBER, XRestriction.cDefaceString);
-					}
-
-				} else if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
-					// Incoming call
-					Bundle bundle = intent.getExtras();
-					if (bundle != null) {
-						String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
-						if (phoneNumber != null) {
-							if (isRestricted(param))
-								intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, XRestriction.cDefaceString);
+				// Check action
+				if (mActionName.equals(action)) {
+					if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+						// Boot completed
+						if (isRestricted(param))
+							param.setResult(null);
+					} else if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
+						// Outgoing call
+						Bundle bundle = intent.getExtras();
+						if (bundle != null) {
+							String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
+							if (phoneNumber != null)
+								if (isRestricted(param))
+									intent.putExtra(Intent.EXTRA_PHONE_NUMBER, XRestriction.cDefaceString);
 						}
-					}
-				} else
-					XUtil.log(this, Log.WARN, "Unhandled action=" + mActionName);
+					} else if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
+						// Incoming call
+						Bundle bundle = intent.getExtras();
+						if (bundle != null) {
+							String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+							if (phoneNumber != null) {
+								if (isRestricted(param))
+									intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, XRestriction.cDefaceString);
+							}
+						}
+					} else
+						XUtil.log(this, Log.WARN, "Unhandled action=" + mActionName);
+				}
 			}
 		}
 	}

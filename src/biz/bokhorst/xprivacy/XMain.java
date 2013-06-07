@@ -1,19 +1,9 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.util.List;
 
-import android.media.AudioFormat;
-import android.media.AudioRecord;
-import android.media.MediaRecorder;
-import android.media.MediaRecorder.AudioSource;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -30,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class XMain extends Activity {
 
@@ -101,59 +90,11 @@ public class XMain extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		try {
-			Intent intent;
 			switch (item.getItemId()) {
 			case R.id.menu_reportissue:
 				Intent browserIntent = new Intent(Intent.ACTION_VIEW,
 						Uri.parse("https://github.com/M66B/XPrivacy/issues"));
 				startActivity(browserIntent);
-				return true;
-			case R.id.menu_capimage:
-				intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivityForResult(intent, R.id.menu_capimage);
-				return true;
-			case R.id.menu_capvideo:
-				intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-				startActivityForResult(intent, R.id.menu_capvideo);
-				return true;
-			case R.id.menu_recordvideo:
-				MediaRecorder vrecorder = new MediaRecorder();
-				vrecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-				vrecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-				vrecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
-				vrecorder.setOutputFile(Environment.getExternalStorageDirectory() + "/" + "XPrivacy.3gpp");
-				vrecorder.prepare();
-				vrecorder.start();
-				Thread.sleep(1000);
-				vrecorder.stop();
-				return true;
-			case R.id.menu_recordmic:
-				int bufferSize = AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_IN_MONO,
-						AudioFormat.ENCODING_PCM_16BIT);
-				AudioRecord arecorder = new AudioRecord(AudioSource.MIC, 8000, AudioFormat.CHANNEL_IN_MONO,
-						AudioFormat.ENCODING_PCM_16BIT, bufferSize);
-				arecorder.startRecording();
-				Thread.sleep(1000);
-				arecorder.stop();
-				return true;
-			case R.id.menu_readsdcard:
-				File file = new File(Environment.getExternalStorageDirectory() + "/" + "XPrivacy.test");
-				FileInputStream fis = new FileInputStream(file);
-				InputStreamReader isr = new InputStreamReader(fis);
-				isr.read();
-				isr.close();
-				fis.close();
-				return true;
-			case R.id.menu_readsmsicc:
-				Class<?> smsManager = Class.forName("android.telephony.SmsManager");
-				Method getDefault = smsManager.getMethod("getDefault");
-				Object defaultInstance = getDefault.invoke(null);
-				Method getAllMessagesFromIcc = smsManager.getMethod("getAllMessagesFromIcc");
-				getAllMessagesFromIcc.invoke(defaultInstance);
-				return true;
-			case R.id.menu_queryapn:
-				getApplicationContext().getContentResolver().query(Uri.parse("content://telephony/carriers/current"),
-						null, null, null, null);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -162,17 +103,6 @@ public class XMain extends Activity {
 			XUtil.bug(null, ex);
 			return true;
 		}
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Toast toast = null;
-		if (requestCode == R.id.menu_capimage)
-			toast = Toast.makeText(this, "XPrivacy: image captured", Toast.LENGTH_LONG);
-		else if (requestCode == R.id.menu_capvideo)
-			toast = Toast.makeText(this, "XPrivacy: video captured", Toast.LENGTH_LONG);
-		if (toast != null)
-			toast.show();
 	}
 
 	private class RestrictionAdapter extends ArrayAdapter<String> {

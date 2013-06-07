@@ -8,14 +8,6 @@
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
     <string name="app_batchedit">Batch edit</string>
     <string name="menu_reportissue">Report issue</string>
-    <string name="menu_tests">Tests</string>
-    <string name="menu_capimage">Capture image</string>
-    <string name="menu_capvideo">Capture video</string>
-    <string name="menu_recordvideo">Record video</string>
-    <string name="menu_recordmic">Record mic</string>
-    <string name="menu_readsdcard">Read sdcard</string>
-    <string name="menu_readsmsicc">Read SMS ICC</string>
-    <string name="menu_queryapn">Query APN</string>
     <string name="msg_restricted" formatted="false">"XPrivacy: %s/%s restricted"</string>
     <string name="restrict_accounts">Accounts</string>
     <string name="restrict_boot">Boot (run at system start)</string>
