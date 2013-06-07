@@ -1,7 +1,7 @@
 XPrivacy
 ========
 
-Proof of concept for a privacy manager using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
+Privacy manager using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 
 Module to return no or fake data for any application, simply managed from the *Manage apps* menu.
 
@@ -66,6 +66,13 @@ Frequently asked questions
 * Will you block outgoing SMS/MMS, the iptables command? No, XPrivacy is about restricting information, not about blocking actions.
 * Will you force online state? No, XPrivacy is about restricting information.
 * Which functions are exactly restricted? See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java).
+
+Similar solutions
+-----------------
+
+* [PDroid](http://forum.xda-developers.com/showthread.php?t=1357056)
+* [PDroid 2.0](http://forum.xda-developers.com/showthread.php?t=1923576)
+* [OpenPDroid](http://forum.xda-developers.com/showthread.php?t=2098156)
 
 Developers
 ----------
