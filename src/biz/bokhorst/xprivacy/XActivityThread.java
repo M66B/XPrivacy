@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivityThread extends XHook {
@@ -51,7 +52,8 @@ public class XActivityThread extends XHook {
 						if (isRestricted(param))
 							intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, XRestriction.cDefaceString);
 					}
-				}
+				} else
+					XUtil.log(this, Log.WARN, "Unhandled action=" + mActionName);
 			}
 		}
 	}

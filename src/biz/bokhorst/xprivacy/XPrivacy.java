@@ -34,6 +34,16 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.accounts.AccountManager");
 		hook(new XAccountManager("getAccountsByTypeAndFeatures", XRestriction.cAccounts,
 				new String[] { "GET_ACCOUNTS" }), "android.accounts.AccountManager");
+		hook(new XAccountManager("hasFeatures", XRestriction.cAccounts, new String[] { "GET_ACCOUNTS" }),
+				"android.accounts.AccountManager");
+		hook(new XAccountManager("addOnAccountsUpdatedListener", XRestriction.cAccounts,
+				new String[] { "GET_ACCOUNTS" }), "android.accounts.AccountManager");
+		hook(new XAccountManager("getAuthToken", XRestriction.cAccounts, new String[] { "USE_CREDENTIALS" }),
+				"android.accounts.AccountManager");
+		hook(new XAccountManager("getAuthTokenByFeatures", XRestriction.cAccounts, new String[] { "MANAGE_ACCOUNTS" }),
+				"android.accounts.AccountManager");
+		hook(new XAccountManager("blockingGetAuthToken", XRestriction.cAccounts, new String[] { "USE_CREDENTIALS" }),
+				"android.accounts.AccountManager");
 
 		// Audio record
 		hook(new XCamera("startRecording", XRestriction.cMedia, new String[] { "RECORD_AUDIO" }),

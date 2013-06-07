@@ -46,6 +46,8 @@ public class XRestriction {
 
 		// Temporary solution
 		mRestrictions.get(cAccounts).add("GET_ACCOUNTS");
+		mRestrictions.get(cAccounts).add("USE_CREDENTIALS");
+		mRestrictions.get(cAccounts).add("MANAGE_ACCOUNTS");
 		mRestrictions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
 		mRestrictions.get(cBrowser).add("GLOBAL_SEARCH");
 		mRestrictions.get(cCalendar).add("READ_CALENDAR");

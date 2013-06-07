@@ -8,6 +8,7 @@ import android.content.Context;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Bundle;
+import android.util.Log;
 import android.location.LocationListener;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -42,12 +43,14 @@ public class XLocationManager extends XHook {
 		String methodName = param.method.getName();
 		if (!methodName.equals("getLastKnownLocation"))
 			if (isRestricted(param))
-				if (methodName.equals("addNmeaListener"))
+				if (methodName.equals("addNmeaListener") || methodName.equals("addProximityAlert"))
 					param.setResult(null);
 				else if (methodName.equals("requestLocationUpdates"))
 					replaceLocationListener(param, 3);
 				else if (methodName.equals("requestSingleUpdate"))
 					replaceLocationListener(param, 1);
+				else
+					XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 
 	private void replaceLocationListener(MethodHookParam param, int arg) {

@@ -21,7 +21,7 @@ Currently implemented:
 * Take photos (Media)
 * Record audio (Media)
 * Record video (Media)
-* Accounts
+* Accounts (auth token: 0.6)
 * Read sdcard (revoke permission)
 * Restriction management
 * Batch edit restrictions
@@ -30,7 +30,6 @@ Currently implemented:
 Planned:
 
 * Cell info
-* Account auth token
 * System log
 
 **Tested with CyanogenMod 10**
@@ -45,7 +44,7 @@ Installation
 * Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 * Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 * Enable XPrivacy from the Xposed Installer app
-* Flash the Xposed fix from [here](http://goo.im/devs/M66B/xprivacy)
+* Flash the Xposed fix from [here](http://goo.im/devs/M66B/xprivacy) **CM10 only**
 * Reboot
 
 Usage
