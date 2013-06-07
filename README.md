@@ -11,7 +11,7 @@ Permissions
 Currently implemented:
 
 * APN info
-* Boot start (0.7)
+* Boot start apps
 * Browser (bookmarks, searches, etc)
 * Calendar
 * Contacts
@@ -31,6 +31,7 @@ Currently implemented:
 Planned:
 
 * System log
+* Boot start providers
 * CM10.1 support
 
 **Tested with CyanogenMod 10**
