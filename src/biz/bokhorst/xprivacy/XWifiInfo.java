@@ -13,12 +13,13 @@ public class XWifiInfo extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (isRestricted(param))
-			param.setResult(XRestriction.cDefacedMac);
+		// Do nothing
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Do nothing
+		if (param.getResultOrThrowable() != null)
+			if (isRestricted(param))
+				param.setResult(XRestriction.cDefacedMac);
 	}
 }

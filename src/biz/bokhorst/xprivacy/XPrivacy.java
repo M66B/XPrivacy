@@ -86,26 +86,44 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.telephony.SmsManager");
 
 		// Telephony
+		hook(new XTelephonyManager("disableLocationUpdates", XRestriction.cLocation,
+				new String[] { "CONTROL_LOCATION_UPDATES", }), "android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("enableLocationUpdates", XRestriction.cLocation,
+				new String[] { "CONTROL_LOCATION_UPDATES", }), "android.telephony.TelephonyManager");
+
+		hook(new XTelephonyManager("getAllCellInfo", XRestriction.cLocation, new String[] { "ACCESS_COARSE_UPDATES", }),
+				"android.telephony.TelephonyManager");
+		hook(new XTelephonyManager("getCellLocation", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
+				"ACCESS_FINE_LOCATION" }), "android.telephony.TelephonyManager");
+
 		hook(new XTelephonyManager("getDeviceId", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
+
 		hook(new XTelephonyManager("getIsimDomain", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getIsimImpi", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getIsimImpu", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
+
 		hook(new XTelephonyManager("getLine1AlphaTag", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getLine1Number", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
+
 		hook(new XTelephonyManager("getMsisdn", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
+
+		hook(new XTelephonyManager("getNeighboringCellInfo", XRestriction.cLocation,
+				new String[] { "ACCESS_COARSE_UPDATES" }), "android.telephony.TelephonyManager");
+
 		hook(new XTelephonyManager("getNetworkCountryIso", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getNetworkOperator", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getNetworkOperatorName", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
+
 		hook(new XTelephonyManager("getSimCountryIso", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getSimOperator", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
@@ -114,13 +132,16 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getSimSerialNumber", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
+
 		hook(new XTelephonyManager("getSubscriberId", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
+
 		hook(new XTelephonyManager("getVoiceMailAlphaTag", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getVoiceMailNumber", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
 				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+
+		hook(new XTelephonyManager("listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE", }),
 				"android.telephony.TelephonyManager");
 
 		// Wi-Fi info

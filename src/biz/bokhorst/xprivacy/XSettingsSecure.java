@@ -30,18 +30,18 @@ public class XSettingsSecure extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		param.getResultOrThrowable();
-		try {
-			String name = (String) param.args[1];
-			if (Settings.Secure.ANDROID_ID.equals(name))
-				if (param.getResult() != null)
-					if (isRestricted(param))
-						param.setResult(Long.toHexString(XRestriction.cDefaceHex));
-		} catch (IllegalArgumentException ex) {
-			// Android ID is requested before system initialization
-			// "Attempt to launch content provider before system ready"
-			XUtil.bug(this, ex);
-		}
+		if (param.getResultOrThrowable() != null)
+			try {
+				String name = (String) param.args[1];
+				if (Settings.Secure.ANDROID_ID.equals(name))
+					if (param.getResult() != null)
+						if (isRestricted(param))
+							param.setResult(Long.toHexString(XRestriction.cDefaceHex));
+			} catch (IllegalArgumentException ex) {
+				// Android ID is requested before system initialization
+				// "Attempt to launch content provider before system ready"
+				XUtil.bug(this, ex);
+			}
 	}
 
 	@Override

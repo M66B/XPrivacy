@@ -53,15 +53,6 @@ public class XLocationManager extends XHook {
 					XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 
-	private void replaceLocationListener(MethodHookParam param, int arg) {
-		if (param.args[arg] != null && LocationListener.class.isAssignableFrom(param.args[arg].getClass())) {
-			LocationListener listener = (LocationListener) param.args[arg];
-			if (listener != null)
-				param.args[arg] = new XLocationListener(listener);
-		} else
-			param.setResult(null);
-	}
-
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (param.method.getName().equals("getLastKnownLocation"))
@@ -80,6 +71,15 @@ public class XLocationManager extends XHook {
 		Context context = (Context) fieldContext.get(param.thisObject);
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
+	}
+
+	private void replaceLocationListener(MethodHookParam param, int arg) {
+		if (param.args[arg] != null && LocationListener.class.isAssignableFrom(param.args[arg].getClass())) {
+			LocationListener listener = (LocationListener) param.args[arg];
+			if (listener != null)
+				param.args[arg] = new XLocationListener(listener);
+		} else
+			param.setResult(null);
 	}
 
 	private Location getRandomLocation(String provider) {

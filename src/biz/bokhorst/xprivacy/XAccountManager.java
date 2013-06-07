@@ -41,27 +41,28 @@ public class XAccountManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (isRestricted(param)) {
-			String methodName = param.method.getName();
-			if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType"))
-				param.setResult(new Account[0]);
-			else if (methodName.equals("getAccountsByTypeAndFeatures"))
-				param.setResult(new XFutureAccount[0]);
-			else if (methodName.equals("hasFeatures"))
-				param.setResult(new XFutureBoolean[0]);
-			else if (methodName.equals("addOnAccountsUpdatedListener"))
-				param.setResult(null);
-			else if (methodName.equals("getAuthToken") || methodName.equals("getAuthTokenByFeatures"))
-				param.setResult(new XFutureBundle[0]);
-			else if (methodName.equals("blockingGetAuthToken"))
-				param.setResult(null);
-			else
-				XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
-		}
+		// Do nothing
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
+		String methodName = param.method.getName();
+		if (methodName.equals("addOnAccountsUpdatedListener") || param.getResultOrThrowable() != null)
+			if (isRestricted(param))
+				if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType"))
+					param.setResult(new Account[0]);
+				else if (methodName.equals("getAccountsByTypeAndFeatures"))
+					param.setResult(new XFutureAccount[0]);
+				else if (methodName.equals("hasFeatures"))
+					param.setResult(new XFutureBoolean[0]);
+				else if (methodName.equals("addOnAccountsUpdatedListener"))
+					param.setResult(null);
+				else if (methodName.equals("getAuthToken") || methodName.equals("getAuthTokenByFeatures"))
+					param.setResult(new XFutureBundle[0]);
+				else if (methodName.equals("blockingGetAuthToken"))
+					param.setResult(null);
+				else
+					XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 
 	@Override

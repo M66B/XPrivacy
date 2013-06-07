@@ -17,12 +17,13 @@ public class XSmsManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (isRestricted(param))
-			param.setResult(new ArrayList<SmsMessage>());
+		// Do nothing
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Do nothing
+		if (param.getResultOrThrowable() != null)
+			if (isRestricted(param))
+				param.setResult(new ArrayList<SmsMessage>());
 	}
 }

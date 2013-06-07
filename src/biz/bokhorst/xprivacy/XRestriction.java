@@ -55,6 +55,8 @@ public class XRestriction {
 		mRestrictions.get(cIdentification).add("ACCESS_WIFI_STATE");
 		mRestrictions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mRestrictions.get(cLocation).add("ACCESS_FINE_LOCATION");
+		mRestrictions.get(cLocation).add("ACCESS_COARSE_UPDATES");
+		mRestrictions.get(cLocation).add("CONTROL_LOCATION_UPDATES");
 		mRestrictions.get(cMedia).add("CAMERA");
 		mRestrictions.get(cMedia).add("RECORD_AUDIO");
 		mRestrictions.get(cMedia).add("RECORD_VIDEO");

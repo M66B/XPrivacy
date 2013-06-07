@@ -33,24 +33,26 @@ public class XPackageManagerService extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		Context context = getContext(param);
-		String packageName = (String) param.args[0];
-		String methodName = this.getMethodName();
-		if (XPrivacyProvider.getRestricted(this, context, packageName, mRestrictionName, methodName, true)) {
-			// Get gids
-			int[] gids = (int[]) param.getResultOrThrowable();
+		if (param.getResultOrThrowable() != null) {
+			Context context = getContext(param);
+			String packageName = (String) param.args[0];
+			String methodName = this.getMethodName();
+			if (XPrivacyProvider.getRestricted(this, context, packageName, mRestrictionName, methodName, true)) {
+				// Get gids
+				int[] gids = (int[]) param.getResultOrThrowable();
 
-			// Build list of gids
-			List<Integer> listGids = new ArrayList<Integer>();
-			for (int i = 0; i < gids.length; i++)
-				if (gids[i] != sdcard_r && gids[i] != sdcard_rw)
-					listGids.add(gids[i]);
+				// Build list of gids
+				List<Integer> listGids = new ArrayList<Integer>();
+				for (int i = 0; i < gids.length; i++)
+					if (gids[i] != sdcard_r && gids[i] != sdcard_rw)
+						listGids.add(gids[i]);
 
-			// return gids
-			gids = new int[listGids.size()];
-			for (int i = 0; i < listGids.size(); i++)
-				gids[i] = listGids.get(i);
-			param.setResult(gids);
+				// return gids
+				gids = new int[listGids.size()];
+				for (int i = 0; i < listGids.size(); i++)
+					gids[i] = listGids.get(i);
+				param.setResult(gids);
+			}
 		}
 	}
 

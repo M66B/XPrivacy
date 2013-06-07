@@ -15,7 +15,7 @@ Currently implemented:
 * Calendar
 * Contacts
 * Identification (Android ID, Wi-Fi MAC address)
-* Location (coarse/fine)
+* Location (coarse/fine, cell location/info: 0.6)
 * Messages (SMS/MMS, voicemail: **untested**, ICC SMS: 0.6)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
 * Take photos (Media)
@@ -29,7 +29,6 @@ Currently implemented:
 
 Planned:
 
-* Cell info
 * System log
 
 **Tested with CyanogenMod 10**

@@ -1,11 +1,13 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 import android.os.Binder;
 import android.telephony.CellLocation;
+import android.telephony.NeighboringCellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
@@ -21,6 +23,10 @@ public class XTelephonyManager extends XHook {
 		super(methodName, restrictionName, permissions);
 	}
 
+	// public void disableLocationUpdates()
+	// public void enableLocationUpdates()
+	// public List<CellInfo> getAllCellInfo()
+	// public CellLocation getCellLocation()
 	// public String getDeviceId()
 	// public String getIsimDomain()
 	// public String getIsimImpi()
@@ -28,6 +34,7 @@ public class XTelephonyManager extends XHook {
 	// public String getLine1AlphaTag()
 	// public String getLine1Number()
 	// public String getMsisdn()
+	// public List<NeighboringCellInfo> getNeighboringCellInfo()
 	// public String getNetworkCountryIso()
 	// public String getNetworkOperator()
 	// public String getNetworkOperatorName()
@@ -48,17 +55,27 @@ public class XTelephonyManager extends XHook {
 			if (listener != null)
 				if (isRestricted(param))
 					param.args[0] = new XPhoneStateListener(listener);
-		}
+		} else if (param.method.getName().equals("disableLocationUpdates")
+				|| param.method.getName().equals("enableLocationUpdates"))
+			if (isRestricted(param))
+				param.setResult(null);
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (!param.method.getName().equals("listen"))
+		if (!param.method.getName().equals("listen") && !param.method.getName().equals("disableLocationUpdates")
+				&& !param.method.getName().equals("enableLocationUpdates"))
 			if (param.getResultOrThrowable() != null)
 				if (isRestricted(param)) {
 					XUtil.log(this, Log.INFO, this.getMethodName() + " uid=" + Binder.getCallingUid());
-					if (param.method.getName().equals("getIsimImpu"))
+					if (param.method.getName().equals("getAllCellInfo"))
+						param.setResult(new ArrayList<CellInfo>());
+					else if (param.method.getName().equals("getCellLocation"))
+						param.setResult(CellLocation.getEmpty());
+					else if (param.method.getName().equals("getIsimImpu"))
 						param.setResult(new String[] { XRestriction.cDefaceString });
+					else if (param.method.getName().equals("getNeighboringCellInfo"))
+						param.setResult(new ArrayList<NeighboringCellInfo>());
 					else
 						param.setResult(XRestriction.cDefaceString);
 				}
@@ -97,12 +114,12 @@ public class XTelephonyManager extends XHook {
 
 		@Override
 		public void onCellInfoChanged(List<CellInfo> cellInfo) {
-			mListener.onCellInfoChanged(cellInfo);
+			mListener.onCellInfoChanged(new ArrayList<CellInfo>());
 		}
 
 		@Override
 		public void onCellLocationChanged(CellLocation location) {
-			mListener.onCellLocationChanged(location);
+			mListener.onCellLocationChanged(CellLocation.getEmpty());
 		}
 
 		@Override
