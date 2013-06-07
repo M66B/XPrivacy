@@ -62,9 +62,9 @@ or try disabling *Contacts* for the Contacts app.
 Frequently asked questions
 --------------------------
 
-* Will you restrict internet access? No, you can use a firewall app, like [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall)
-* Will you block outgoing SMS/MMS, the iptables command? No, XPrivacy is about restricting information, not about blocking actions.
-* Will you force online state? No, XPrivacy is about restricting information.
+* Will you restrict internet access? No, you can use a firewall app, like [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall).
+* Will you block outgoing SMS/MMS, the iptables command or force online state? No, XPrivacy is about restricting information, not about blocking actions.
+* Will you make it possible to enter fake information? No, I want to keep things as simple as possible for maximum stability.
 * Which functions are exactly restricted? See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java).
 
 Similar solutions
