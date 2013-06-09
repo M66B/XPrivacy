@@ -3,7 +3,65 @@ XPrivacy
 
 Privacy manager using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 
-Module to return no or fake data for any application, simply managed from the *Manage apps* menu.
+Description
+-----------
+
+XPrivacy can prevent leaking privacy sensitive information for any application
+(including associated background services and content providers).
+XPrivacy can restrict the types of information an application can access.
+This is done by feeding an application with no or fake data.
+There are several easy to use information type groups, for example *contacts* or *location*.
+Restricting for example access to contacts for an application,
+will result in sending an empty contact list to the application.
+Similar, restricting access to your location for an application,
+will result in sending random locations to the application.
+
+XPrivacy doesn't revoke permissions from an application,
+which means that most applications will continue to work as before and won't force close.
+There is one exception to this, access to external storage (typically an SD card) is restricted by denying access.
+There is no other way to realize this, since this permission is handled by Android in a special way.
+Android delegates handling of this permission to the underlying Linux file system.
+
+You can always allow an application access to an information type again
+in case restricting the information type resulted into problems for the application.
+
+Any new installed application will have no access to any information type
+to prevent leaking privacy sensitive data from the beginning.
+Soon after installing a new application
+XPrivacy will ask which information types you want the new application to allow access to.
+XPrivacy comes with a batch editor, which allows you to easily enable or disable access to an information type
+for applications selected from a list of all installed applications.
+
+To help you identify potential information leakage,
+XPrivacy will monitor (attempts of) information usage for all applications.
+XPrivacy will highlight an information type for an application (or an application name in the batch editor)
+as soon as information of the information type has been used.
+XPrivacy will also display if an application has internet access
+and if an application has permissions to access an information type
+(not in the batch editor, since checking permissions for all applications is quite slow).
+
+XPrivacy also allows you to prevent starting an application at boot (when Android starts),
+which not only prevents leaking information at that moment, but will also make your device start faster.
+
+XPrivacy is accessible for each application from the Android manage apps menu.
+The batch editor is accessible from the application list or drawer.
+
+XPrivacy is built using the Xposed framework.
+XPrivacy taps into a number of selected functions of Android through the Xposed framework.
+Depending on the function XPrivacy conditionally skips execution of the original function
+(for example when an application tries to set a proximity alert)
+or alters the result of the original function (for example to return empty calendar information).
+
+XPrivacy has been tested with CyanogenMod 10 and 10.1 (Android 4.1 and 4.2),
+and will likely work with any Android version 4.1 or 4.2 variant, including stock ROM's.
+Root access is needed to install the Xposed framework.
+Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xposed binary,
+which is provided as download.
+
+If you encounter any bug or information leakage please [report an issue](https://github.com/M66B/XPrivacy/issues).
+If you have any question or want to request a new feature, you can leave a message in the XDA XPrivacy forum thread.
+
+**Using XPrivacy is entirely at your own risk**
 
 Permissions
 -----------
@@ -11,7 +69,7 @@ Permissions
 Currently implemented:
 
 * APN info
-* Boot start apps
+* Boot start apps (including content providers)
 * Browser (bookmarks, searches, etc)
 * Calendar
 * Contacts
@@ -31,12 +89,9 @@ Currently implemented:
 Planned:
 
 * System log
-* Boot start providers
+* Battery info
+* Application info
 * CM10.1 support
-
-**Tested with CyanogenMod 10**
-
-Reported to work with CyanogenMod 10.1 at least partly.
 
 Installation
 ------------
