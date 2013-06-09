@@ -63,8 +63,8 @@ If you have any question or want to request a new feature, you can leave a messa
 
 **Using XPrivacy is entirely at your own risk**
 
-Permissions
------------
+Information restrictions
+------------------------
 
 Currently implemented:
 
