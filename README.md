@@ -66,7 +66,8 @@ If you have any question or want to request a new feature, you can leave a messa
 Screenshots
 -----------
 
-![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/manage_apps.png)![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png)![App drawer](https://raw.github.com/M66B/XPrivacy/master/screenshots/drawer.png)![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png)
+![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/manage_apps.png)![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png)
+![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png)
 
 Information restrictions
 ------------------------
@@ -96,7 +97,6 @@ Planned:
 * System log
 * Battery info
 * Application info
-* CM10.1 support
 
 Installation
 ------------
@@ -106,7 +106,7 @@ Installation
 * Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 * Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 * Enable XPrivacy from the Xposed Installer app
-* Flash the Xposed fix from [here](http://goo.im/devs/M66B/xprivacy) **CM10 only**
+* Flash the correct Xposed fix from [here](http://goo.im/devs/M66B/xprivacy)
 * Reboot
 
 Usage
