@@ -77,20 +77,17 @@ public class XActivityThread extends XHook {
 			}
 		} else if (methodName.equals("installContentProviders")) {
 			try {
-				boolean systemReady = false;
-				if (systemReady) {
-					Context context = (Context) param.args[0];
-					@SuppressWarnings("unchecked")
-					List<ProviderInfo> providers = (List<ProviderInfo>) param.args[1];
-					List<ProviderInfo> allowed = new ArrayList<ProviderInfo>();
-					for (ProviderInfo provider : providers) {
-						int uid = provider.applicationInfo.uid;
-						XUtil.log(this, Log.INFO, "Provider=" + provider.getClass().getName() + " uid=" + uid);
-						if (!getRestricted(context, uid, true))
-							allowed.add(provider);
-					}
-					param.args[1] = allowed;
+				Context context = (Context) param.args[0];
+				@SuppressWarnings("unchecked")
+				List<ProviderInfo> providers = (List<ProviderInfo>) param.args[1];
+				List<ProviderInfo> allowed = new ArrayList<ProviderInfo>();
+				for (ProviderInfo provider : providers) {
+					int uid = provider.applicationInfo.uid;
+					XUtil.log(this, Log.INFO, "provider=" + provider.getClass().getName() + " uid=" + uid);
+					if (uid == 1000 || !getRestricted(context, uid, true))
+						allowed.add(provider);
 				}
+				param.args[1] = allowed;
 			} catch (Throwable ex) {
 				XUtil.bug(this, ex);
 			}
