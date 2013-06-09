@@ -63,6 +63,11 @@ If you have any question or want to request a new feature, you can leave a messa
 
 **Using XPrivacy is entirely at your own risk**
 
+Screenshots
+-----------
+
+![Manage apps](https://github.com/M66B/XPrivacy/blob/master/screenshots/manage_apps.png)![App details](https://github.com/M66B/XPrivacy/blob/master/screenshots/app_details.png)![App drawer](https://github.com/M66B/XPrivacy/blob/master/screenshots/drawer.png)![Batch edit](https://github.com/M66B/XPrivacy/blob/master/screenshots/batch_edit_select.png)![Batch edit](https://github.com/M66B/XPrivacy/blob/master/screenshots/batch_edit_apps.png)
+
 Information restrictions
 ------------------------
 
