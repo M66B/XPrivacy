@@ -87,7 +87,7 @@ public class XTelephonyManager extends XHook {
 		Field fieldContext = findField(param.thisObject.getClass(), "sContext");
 		Context context = (Context) fieldContext.get(param.thisObject);
 		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
+		return (uid != XRestriction.cUidAndroid && getRestricted(context, uid, true));
 	}
 
 	private class XPhoneStateListener extends PhoneStateListener {

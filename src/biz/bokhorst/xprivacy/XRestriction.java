@@ -31,6 +31,8 @@ public class XRestriction {
 	public static final long cDefaceHex = 0xDEFACEL;
 	public static final String cDefacedMac = "de:fa:ce:de:fa:ce";
 
+	public static final int cUidAndroid = 1000;
+
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
 
 	static {

@@ -71,7 +71,7 @@ public class XAccountManager extends XHook {
 		Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 		Context context = (Context) fieldContext.get(param.thisObject);
 		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
+		return (uid != XRestriction.cUidAndroid && getRestricted(context, uid, true));
 	}
 
 	private class XFutureAccount implements AccountManagerFuture<Account[]> {
