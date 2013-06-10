@@ -17,14 +17,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="6dip"
-        android:text="@string/settings_longpress"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="false" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:paddingBottom="6dip"
         android:paddingLeft="6dip"
         android:text="@string/settings_restrict"

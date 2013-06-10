@@ -11,18 +11,18 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/imgAppEntryGranted"
-            android:layout_width="24dip"
-            android:layout_height="24dip"
-            android:contentDescription="@string/settings_icon"
-            android:src="@drawable/granted" />
-
-        <ImageView
             android:id="@+id/imgAppEntryUsed"
             android:layout_width="24dip"
             android:layout_height="24dip"
-            android:contentDescription="@string/settings_icon"
+            android:contentDescription="@string/help_used"
             android:src="@drawable/used" />
+
+        <ImageView
+            android:id="@+id/imgAppEntryGranted"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:contentDescription="@string/help_granted"
+            android:src="@drawable/granted" />
     </LinearLayout>
 
     <CheckedTextView

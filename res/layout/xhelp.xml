@@ -7,6 +7,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/used"
+        android:gravity="center_vertical"
+        android:text="@string/help_used"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textIsSelectable="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:drawableLeft="@drawable/internet"
         android:gravity="center_vertical"
         android:text="@string/help_internet"
@@ -19,15 +28,6 @@
         android:drawableLeft="@drawable/granted"
         android:gravity="center_vertical"
         android:text="@string/help_granted"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textIsSelectable="false" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/used"
-        android:gravity="center_vertical"
-        android:text="@string/help_used"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textIsSelectable="false" />
 

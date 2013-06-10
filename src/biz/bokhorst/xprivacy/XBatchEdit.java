@@ -100,6 +100,16 @@ public class XBatchEdit extends Activity {
 
 			// Set icon
 			imgIcon.setImageDrawable(appEntry.getDrawable());
+			imgIcon.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Intent intentSettings = new Intent(view.getContext(), XAppEdit.class);
+					intentSettings.putExtra(XAppEdit.cPackageName, appEntry.getPackageName());
+					intentSettings.putExtra(XAppEdit.cRestrictionExclude, mRestrictionName);
+					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					view.getContext().startActivity(intentSettings);
+				}
+			});
 
 			// Set icon/title
 			ctvApp.setText(appEntry.toString());
@@ -128,20 +138,6 @@ public class XBatchEdit extends Activity {
 					restricted = !restricted;
 					ctvApp.setChecked(restricted);
 					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName, restricted);
-				}
-			});
-
-			// Long click: app settings
-			ctvApp.setLongClickable(true);
-			ctvApp.setOnLongClickListener(new View.OnLongClickListener() {
-				@Override
-				public boolean onLongClick(View view) {
-					Intent intentSettings = new Intent(view.getContext(), XAppEdit.class);
-					intentSettings.putExtra(XAppEdit.cPackageName, appEntry.getPackageName());
-					intentSettings.putExtra(XAppEdit.cRestrictionExclude, mRestrictionName);
-					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					view.getContext().startActivity(intentSettings);
-					return true;
 				}
 			});
 

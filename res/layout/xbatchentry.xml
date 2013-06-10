@@ -8,7 +8,7 @@
         android:id="@+id/imgBatchEntryIcon"
         android:layout_width="?android:attr/listPreferredItemHeightSmall"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
-        android:contentDescription="@string/settings_icon" />
+        android:contentDescription="@string/help_icon" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -18,18 +18,18 @@
         android:paddingLeft="4dip" >
 
         <ImageView
-            android:id="@+id/imgBatchEntryInternet"
-            android:layout_width="24dip"
-            android:layout_height="24dip"
-            android:contentDescription="@string/settings_icon"
-            android:src="@drawable/internet" />
-
-        <ImageView
             android:id="@+id/imgBatchEntryUsed"
             android:layout_width="24dip"
             android:layout_height="24dip"
-            android:contentDescription="@string/settings_icon"
+            android:contentDescription="@string/help_used"
             android:src="@drawable/used" />
+
+        <ImageView
+            android:id="@+id/imgBatchEntryInternet"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:contentDescription="@string/help_internet"
+            android:src="@drawable/internet" />
     </LinearLayout>
 
     <CheckedTextView

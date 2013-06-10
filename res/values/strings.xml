@@ -6,7 +6,7 @@
     <string name="app_xversion" formatted="false">Xposed version: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
-    <string name="app_batchedit">Batch edit</string>
+    <string name="app_batchedit">Browse by category</string>
     <string name="menu_reportissue">Report issue</string>
     <string name="msg_restricted" formatted="false">"XPrivacy: %s/%s restricted"</string>
     <string name="restrict_accounts">Accounts</string>
@@ -20,12 +20,11 @@
     <string name="restrict_messages">Messages (SMS, MMS)</string>
     <string name="restrict_phone">Phone (ID, numbers, calls)</string>
     <string name="restrict_storage">Storage (SD card)</string>
-    <string name="settings_longpress">Long press for app settings</string>
     <string name="settings_restrict">Check to restrict information:</string>
-    <string name="settings_icon">Icon</string>
+    <string name="help_icon">Icon</string>
     <string name="help_application">Application</string>
     <string name="help_internet">has internet permission</string>
-    <string name="help_granted">has permission granted</string>
-    <string name="help_used">has used information type</string>
+    <string name="help_granted">has Android permission</string>
+    <string name="help_used">has accessed this data</string>
 
 </resources>

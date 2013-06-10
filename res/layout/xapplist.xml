@@ -23,13 +23,13 @@
             android:id="@+id/imgAppEntryIcon"
             android:layout_width="?android:attr/listPreferredItemHeightSmall"
             android:layout_height="?android:attr/listPreferredItemHeightSmall"
-            android:contentDescription="@string/settings_icon" />
+            android:contentDescription="@string/help_icon" />
 
         <ImageView
             android:id="@+id/imgAppEntryInternet"
             android:layout_width="24dip"
             android:layout_height="24dip"
-            android:contentDescription="@string/settings_icon"
+            android:contentDescription="@string/help_internet"
             android:src="@drawable/internet" />
     </LinearLayout>
 
