@@ -5,15 +5,14 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -49,12 +48,6 @@ public class XAppSettings extends Activity {
 		if (XRestriction.hasInternet(this, packageName))
 			findViewById(R.id.tvInternet).setVisibility(View.GONE);
 
-		// Legend
-		TextView tvUsed = (TextView) findViewById(R.id.tvUsed);
-		tvUsed.setTypeface(null, Typeface.BOLD_ITALIC);
-		TextView tvGranted = (TextView) findViewById(R.id.tvGranted);
-		tvGranted.setTextColor(Color.GRAY);
-
 		// Build list with restrictions
 		List<String> listRestriction = XRestriction.getRestrictions();
 		if (restrictionExclude != null)
@@ -62,26 +55,9 @@ public class XAppSettings extends Activity {
 
 		// Fill privacy list view adapter
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
-		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(this,
-				android.R.layout.simple_list_item_multiple_choice, appInfo, listRestriction);
+		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(this, R.layout.xappentry, appInfo,
+				listRestriction);
 		lvRestriction.setAdapter(privacyListAdapter);
-
-		// Set restriction values
-		for (int position = 0; position < lvRestriction.getAdapter().getCount(); position++) {
-			String restrictionName = (String) lvRestriction.getItemAtPosition(position);
-			lvRestriction.setItemChecked(position,
-					XRestriction.getRestricted(null, this, appInfo.uid, restrictionName, false));
-		}
-
-		// Listen for restriction changes
-		lvRestriction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				String restrictionName = (String) lvRestriction.getItemAtPosition(position);
-				boolean restricted = lvRestriction.isItemChecked(position);
-				XRestriction.setRestricted(null, view.getContext(), appInfo.uid, restrictionName, restricted);
-			}
-		});
 	}
 
 	private class RestrictionAdapter extends ArrayAdapter<String> {
@@ -95,8 +71,10 @@ public class XAppSettings extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(android.R.layout.simple_list_item_multiple_choice, parent, false);
-			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(android.R.id.text1);
+			View row = inflater.inflate(R.layout.xappentry, parent, false);
+			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgAppEntryGranted);
+			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgAppEntryUsed);
+			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.tvAppEntryName);
 
 			// Get entry
 			final String restrictionName = getItem(position);
@@ -106,11 +84,30 @@ public class XAppSettings extends Activity {
 
 			// Display if restriction granted
 			if (!XRestriction.hasPermission(row.getContext(), mAppInfo.packageName, restrictionName))
-				ctvRestriction.setTextColor(Color.GRAY);
+				imgGranted.setVisibility(View.INVISIBLE);
 
 			// Display if used
 			if (XRestriction.isUsed(row.getContext(), mAppInfo.uid, restrictionName))
 				ctvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
+			else
+				imgUsed.setVisibility(View.INVISIBLE);
+
+			// Display restriction
+			boolean restricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.uid, restrictionName,
+					false);
+			ctvRestriction.setChecked(restricted);
+
+			// Listen for restriction changes
+			ctvRestriction.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					boolean restricted = XRestriction.getRestricted(null, view.getContext(), mAppInfo.uid,
+							restrictionName, false);
+					restricted = !restricted;
+					ctvRestriction.setChecked(restricted);
+					XRestriction.setRestricted(null, view.getContext(), mAppInfo.uid, restrictionName, restricted);
+				}
+			});
 
 			return row;
 		}

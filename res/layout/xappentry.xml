@@ -10,24 +10,14 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/imgAppEntryInternet"
+            android:id="@+id/imgAppEntryGranted"
             android:layout_width="16dip"
             android:layout_height="16dip"
             android:layout_marginLeft="2dip"
             android:layout_marginRight="2dip"
             android:contentDescription="@string/settings_icon"
             android:gravity="center_vertical"
-            android:src="@drawable/internet" />
-
-        <ImageView
-            android:id="@+id/imgAppEntryPermissions"
-            android:layout_width="16dip"
-            android:layout_height="16dip"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            android:contentDescription="@string/settings_icon"
-            android:gravity="center_vertical"
-            android:src="@drawable/permissions" />
+            android:src="@drawable/granted" />
 
         <ImageView
             android:id="@+id/imgAppEntryUsed"
