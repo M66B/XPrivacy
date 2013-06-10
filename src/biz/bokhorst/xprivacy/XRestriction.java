@@ -129,6 +129,9 @@ public class XRestriction {
 
 	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage) {
 		try {
+			if (uid == XRestriction.cUidAndroid)
+				return true;
+
 			// Check context
 			if (context == null) {
 				XUtil.log(hook, Log.WARN, "context is null");
@@ -142,9 +145,6 @@ public class XRestriction {
 				XUtil.logStack(hook);
 				return true;
 			}
-
-			if (uid == XRestriction.cUidAndroid)
-				return true;
 
 			// Get content resolver
 			ContentResolver contentResolver = context.getContentResolver();
