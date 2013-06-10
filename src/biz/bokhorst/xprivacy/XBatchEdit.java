@@ -8,6 +8,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -34,7 +35,7 @@ public class XBatchEdit extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
-		setContentView(R.layout.xbatchedit);
+		setContentView(R.layout.xbatchlist);
 
 		// Get restriction name
 		Bundle extras = getIntent().getExtras();
@@ -43,6 +44,18 @@ public class XBatchEdit extends Activity {
 		// Display restriction name
 		TextView tvRestriction = (TextView) findViewById(R.id.tvRestriction);
 		tvRestriction.setText(XRestriction.getLocalizedName(this, restrictionName));
+
+		// Handle help
+		tvRestriction.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Dialog dialog = new Dialog(XBatchEdit.this);
+				dialog.setContentView(R.layout.xhelp);
+				dialog.setTitle(getString(R.string.help_application));
+				dialog.setCancelable(true);
+				dialog.show();
+			}
+		});
 
 		// Get app list
 		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();

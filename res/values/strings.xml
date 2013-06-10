@@ -23,5 +23,9 @@
     <string name="settings_longpress">Long press for app settings</string>
     <string name="settings_restrict">Check to restrict information:</string>
     <string name="settings_icon">Icon</string>
+    <string name="help_application">Application</string>
+    <string name="help_internet">has internet permission</string>
+    <string name="help_granted">has permission granted</string>
+    <string name="help_used">has used information type</string>
 
 </resources>
