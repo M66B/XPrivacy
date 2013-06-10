@@ -26,6 +26,10 @@ public class XUtil {
 				Log.println(priority, String.format("XPrivacy/%s", hook.getClass().getSimpleName()), msg);
 	}
 
+	public static void logStack(XHook hook) {
+		log(hook, Log.INFO, Log.getStackTraceString(new Exception()));
+	}
+
 	public static void bug(XHook hook, Throwable ex) {
 		log(hook, Log.ERROR, ex.toString());
 		ex.printStackTrace();

@@ -18,8 +18,6 @@ public class XActivityThread extends XHook {
 
 	private String mActionName;
 
-	private final static int cUidAndroid = 1000;
-
 	public XActivityThread(String methodName, String restrictionName, String[] permissions, String actionName) {
 		super(methodName, restrictionName, permissions);
 		mActionName = actionName;
@@ -86,7 +84,7 @@ public class XActivityThread extends XHook {
 				for (ProviderInfo provider : providers) {
 					int uid = provider.applicationInfo.uid;
 					XUtil.log(this, Log.INFO, "provider=" + provider.getClass().getName() + " uid=" + uid);
-					if (uid == cUidAndroid || !getRestricted(context, uid, true))
+					if (!getRestricted(context, uid, true))
 						allowed.add(provider);
 				}
 				param.args[1] = allowed;

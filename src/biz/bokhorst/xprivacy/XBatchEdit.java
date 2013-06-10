@@ -60,15 +60,16 @@ public class XBatchEdit extends Activity {
 		// Get app list
 		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
 		List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
-		for (ApplicationInfo appInfo : getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA)) {
-			XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
-			if (xAppInfo == null) {
-				xAppInfo = new XApplicationInfo(appInfo, restrictionName, getPackageManager());
-				mapApp.put(appInfo.uid, xAppInfo);
-				listApp.add(xAppInfo);
-			} else
-				xAppInfo.AddApplicationName((String) getPackageManager().getApplicationLabel(appInfo));
-		}
+		for (ApplicationInfo appInfo : getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA))
+			if (appInfo.uid != XRestriction.cUidAndroid) {
+				XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
+				if (xAppInfo == null) {
+					xAppInfo = new XApplicationInfo(appInfo, restrictionName, getPackageManager());
+					mapApp.put(appInfo.uid, xAppInfo);
+					listApp.add(xAppInfo);
+				} else
+					xAppInfo.AddApplicationName((String) getPackageManager().getApplicationLabel(appInfo));
+			}
 		Collections.sort(listApp);
 
 		// Fill app list view adapter

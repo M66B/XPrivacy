@@ -55,6 +55,10 @@ public class XAppDetails extends XHook {
 			return;
 		}
 
+		// Check for Android
+		if (appInfo.uid == XRestriction.cUidAndroid)
+			return;
+
 		// Get root view
 		// CM10/CM10.1
 		Field fieldRootView = findField(param.thisObject.getClass(), "mRootView");

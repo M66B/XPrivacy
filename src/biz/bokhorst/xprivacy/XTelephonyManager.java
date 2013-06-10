@@ -83,17 +83,11 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		try {
-			// CM10/CM10.1
-			Field fieldContext = findField(param.thisObject.getClass(), "sContext");
-			Context context = (Context) fieldContext.get(param.thisObject);
-			int uid = Binder.getCallingUid();
-			return getRestricted(context, uid, true);
-		} catch (IllegalArgumentException ex) {
-			// "Attempt to launch content provider before system ready"
-			XUtil.log(this, Log.WARN, ex.getMessage());
-			return true;
-		}
+		// CM10/CM10.1
+		Field fieldContext = findField(param.thisObject.getClass(), "sContext");
+		Context context = (Context) fieldContext.get(param.thisObject);
+		int uid = Binder.getCallingUid();
+		return getRestricted(context, uid, true);
 	}
 
 	private class XPhoneStateListener extends PhoneStateListener {
@@ -110,11 +104,6 @@ public class XTelephonyManager extends XHook {
 
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
-			try {
-				XUtil.log(XTelephonyManager.this, Log.INFO, mListener.getClass().getPackage().getName()
-						+ ": onCallStateChanged");
-			} catch (Throwable ex) {
-			}
 			mListener.onCallStateChanged(state, XRestriction.cDefaceString);
 		}
 

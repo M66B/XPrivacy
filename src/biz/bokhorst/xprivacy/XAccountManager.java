@@ -52,13 +52,13 @@ public class XAccountManager extends XHook {
 				if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType"))
 					param.setResult(new Account[0]);
 				else if (methodName.equals("getAccountsByTypeAndFeatures"))
-					param.setResult(new XFutureAccount[0]);
+					param.setResult(new XFutureAccount());
 				else if (methodName.equals("hasFeatures"))
-					param.setResult(new XFutureBoolean[0]);
+					param.setResult(new XFutureBoolean());
 				else if (methodName.equals("addOnAccountsUpdatedListener"))
 					param.setResult(null);
 				else if (methodName.equals("getAuthToken") || methodName.equals("getAuthTokenByFeatures"))
-					param.setResult(new XFutureBundle[0]);
+					param.setResult(new XFutureBundle());
 				else if (methodName.equals("blockingGetAuthToken"))
 					param.setResult(null);
 				else
@@ -67,17 +67,11 @@ public class XAccountManager extends XHook {
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		try {
-			// CM10/CM10.1
-			Field fieldContext = findField(param.thisObject.getClass(), "mContext");
-			Context context = (Context) fieldContext.get(param.thisObject);
-			int uid = Binder.getCallingUid();
-			return getRestricted(context, uid, true);
-		} catch (IllegalArgumentException ex) {
-			// "Attempt to launch content provider before system ready"
-			XUtil.log(this, Log.WARN, ex.getMessage());
-			return true;
-		}
+		// CM10/CM10.1
+		Field fieldContext = findField(param.thisObject.getClass(), "mContext");
+		Context context = (Context) fieldContext.get(param.thisObject);
+		int uid = Binder.getCallingUid();
+		return getRestricted(context, uid, true);
 	}
 
 	private class XFutureAccount implements AccountManagerFuture<Account[]> {

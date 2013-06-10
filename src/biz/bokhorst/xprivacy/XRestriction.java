@@ -31,6 +31,8 @@ public class XRestriction {
 	public static final long cDefaceHex = 0xDEFACEL;
 	public static final String cDefacedMac = "de:fa:ce:de:fa:ce";
 
+	public final static int cUidAndroid = 1000;
+
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
 
 	static {
@@ -130,19 +132,25 @@ public class XRestriction {
 			// Check context
 			if (context == null) {
 				XUtil.log(hook, Log.WARN, "context is null");
+				XUtil.logStack(hook);
 				return true;
 			}
 
 			// Check uid
 			if (uid == 0) {
 				XUtil.log(hook, Log.WARN, "uid=0");
+				XUtil.logStack(hook);
 				return true;
 			}
+
+			if (uid == XRestriction.cUidAndroid)
+				return true;
 
 			// Get content resolver
 			ContentResolver contentResolver = context.getContentResolver();
 			if (contentResolver == null) {
 				XUtil.log(hook, Log.WARN, "contentResolver is null");
+				XUtil.logStack(hook);
 				return true;
 			}
 
