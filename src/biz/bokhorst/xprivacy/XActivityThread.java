@@ -77,9 +77,17 @@ public class XActivityThread extends XHook {
 			}
 		} else if (methodName.equals("installContentProviders")) {
 			try {
-				Context context = (Context) param.args[0];
+				// Get providers
 				@SuppressWarnings("unchecked")
 				List<ProviderInfo> providers = (List<ProviderInfo>) param.args[1];
+
+				// Skip if Android
+				for (ProviderInfo aProvider : providers)
+					if (aProvider.applicationInfo.uid == XRestriction.cUidAndroid)
+						return;
+
+				// Check if restricted
+				Context context = (Context) param.args[0];
 				List<ProviderInfo> allowed = new ArrayList<ProviderInfo>();
 				for (ProviderInfo provider : providers) {
 					int uid = provider.applicationInfo.uid;
@@ -87,6 +95,8 @@ public class XActivityThread extends XHook {
 					if (!getRestricted(context, uid, true))
 						allowed.add(provider);
 				}
+
+				// Set result
 				param.args[1] = allowed;
 			} catch (Throwable ex) {
 				XUtil.bug(this, ex);
