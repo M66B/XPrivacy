@@ -130,7 +130,7 @@ public class XRestriction {
 	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage) {
 		try {
 			if (uid == XRestriction.cUidAndroid)
-				return true;
+				return false;
 
 			// Check context
 			if (context == null) {
