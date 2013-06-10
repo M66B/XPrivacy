@@ -8,6 +8,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Binder;
 import android.provider.Settings;
+import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSettingsSecure extends XHook {
@@ -41,11 +42,18 @@ public class XSettingsSecure extends XHook {
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		ContentResolver contentResolver = (ContentResolver) param.args[0];
-		// CM10/CM10.1
-		Field fieldContext = findField(contentResolver.getClass(), "mContext");
-		Context context = (Context) fieldContext.get(contentResolver);
-		int uid = Binder.getCallingUid();
-		return (uid != XRestriction.cUidAndroid && getRestricted(context, uid, true));
+		try {
+			ContentResolver contentResolver = (ContentResolver) param.args[0];
+			// CM10/CM10.1
+			Field fieldContext = findField(contentResolver.getClass(), "mContext");
+			Context context = (Context) fieldContext.get(contentResolver);
+			int uid = Binder.getCallingUid();
+			return getRestricted(context, uid, true);
+		} catch (IllegalArgumentException ex) {
+			// "Attempt to launch content provider before system ready"
+			XUtil.log(this, Log.WARN, ex.getMessage());
+			return true;
+		}
+
 	}
 }

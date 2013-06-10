@@ -67,11 +67,17 @@ public class XAccountManager extends XHook {
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		// CM10/CM10.1
-		Field fieldContext = findField(param.thisObject.getClass(), "mContext");
-		Context context = (Context) fieldContext.get(param.thisObject);
-		int uid = Binder.getCallingUid();
-		return (uid != XRestriction.cUidAndroid && getRestricted(context, uid, true));
+		try {
+			// CM10/CM10.1
+			Field fieldContext = findField(param.thisObject.getClass(), "mContext");
+			Context context = (Context) fieldContext.get(param.thisObject);
+			int uid = Binder.getCallingUid();
+			return getRestricted(context, uid, true);
+		} catch (IllegalArgumentException ex) {
+			// "Attempt to launch content provider before system ready"
+			XUtil.log(this, Log.WARN, ex.getMessage());
+			return true;
+		}
 	}
 
 	private class XFutureAccount implements AccountManagerFuture<Account[]> {
