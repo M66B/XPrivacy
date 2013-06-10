@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class XAppSettings extends Activity {
+public class XAppEdit extends Activity {
 
 	public static final String cPackageName = "PackageName";
 	public static final String cRestrictionExclude = "RestrictionExclude";
@@ -24,7 +24,7 @@ public class XAppSettings extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
-		setContentView(R.layout.xappsettings);
+		setContentView(R.layout.xappedit);
 
 		// Get package name
 		Bundle extras = getIntent().getExtras();
@@ -44,9 +44,14 @@ public class XAppSettings extends Activity {
 		TextView tvAppName = (TextView) findViewById(R.id.tvApp);
 		tvAppName.setText(String.format("%s (%d)", getPackageManager().getApplicationLabel(appInfo), appInfo.uid));
 
+		// Display app icon
+		ImageView imgIcon = (ImageView) findViewById(R.id.imgAppEntryIcon);
+		imgIcon.setImageDrawable(appInfo.loadIcon(getPackageManager()));
+
 		// Check if internet access
-		if (XRestriction.hasInternet(this, packageName))
-			findViewById(R.id.tvInternet).setVisibility(View.GONE);
+		ImageView imgInternet = (ImageView) findViewById(R.id.imgAppEntryInternet);
+		if (!XRestriction.hasInternet(this, packageName))
+			imgInternet.setVisibility(View.INVISIBLE);
 
 		// Build list with restrictions
 		List<String> listRestriction = XRestriction.getRestrictions();
@@ -55,8 +60,7 @@ public class XAppSettings extends Activity {
 
 		// Fill privacy list view adapter
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
-		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(this, R.layout.xappentry, appInfo,
-				listRestriction);
+		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(this, R.layout.xappentry, appInfo, listRestriction);
 		lvRestriction.setAdapter(privacyListAdapter);
 	}
 
@@ -93,16 +97,14 @@ public class XAppSettings extends Activity {
 				imgUsed.setVisibility(View.INVISIBLE);
 
 			// Display restriction
-			boolean restricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.uid, restrictionName,
-					false);
+			boolean restricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.uid, restrictionName, false);
 			ctvRestriction.setChecked(restricted);
 
 			// Listen for restriction changes
 			ctvRestriction.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					boolean restricted = XRestriction.getRestricted(null, view.getContext(), mAppInfo.uid,
-							restrictionName, false);
+					boolean restricted = XRestriction.getRestricted(null, view.getContext(), mAppInfo.uid, restrictionName, false);
 					restricted = !restricted;
 					ctvRestriction.setChecked(restricted);
 					XRestriction.setRestricted(null, view.getContext(), mAppInfo.uid, restrictionName, restricted);

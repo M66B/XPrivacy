@@ -20,9 +20,6 @@
     <string name="restrict_messages">Messages (SMS, MMS)</string>
     <string name="restrict_phone">Phone (ID, number, calls)</string>
     <string name="restrict_storage">Storage (SD card)</string>
-    <string name="settings_nointernet">No internet access</string>
-    <string name="settings_restrictionused">Restriction used</string>
-    <string name="settings_permnotgranted">Permission not granted</string>
     <string name="settings_longpress">Long press for app settings</string>
     <string name="settings_restrict">Check to restrict information:</string>
     <string name="settings_icon">Icon</string>

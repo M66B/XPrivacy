@@ -123,9 +123,9 @@ public class XBatchEdit extends Activity {
 			ctvApp.setOnLongClickListener(new View.OnLongClickListener() {
 				@Override
 				public boolean onLongClick(View view) {
-					Intent intentSettings = new Intent(view.getContext(), XAppSettings.class);
-					intentSettings.putExtra(XAppSettings.cPackageName, appEntry.getPackageName());
-					intentSettings.putExtra(XAppSettings.cRestrictionExclude, mRestrictionName);
+					Intent intentSettings = new Intent(view.getContext(), XAppEdit.class);
+					intentSettings.putExtra(XAppEdit.cPackageName, appEntry.getPackageName());
+					intentSettings.putExtra(XAppEdit.cRestrictionExclude, mRestrictionName);
 					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					view.getContext().startActivity(intentSettings);
 					return true;

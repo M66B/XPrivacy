@@ -13,18 +13,29 @@
         android:layout_marginTop="8dip"
         android:textIsSelectable="false" />
 
-    <TextView
-        android:id="@+id/tvInternet"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="6dip"
-        android:text="@string/settings_nointernet"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="false" />
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/imgAppEntryIcon"
+            android:layout_width="?android:attr/listPreferredItemHeightSmall"
+            android:layout_height="?android:attr/listPreferredItemHeightSmall"
+            android:contentDescription="@string/settings_icon" />
+
+        <ImageView
+            android:id="@+id/imgAppEntryInternet"
+            android:layout_width="?android:attr/listPreferredItemHeightSmall"
+            android:layout_height="?android:attr/listPreferredItemHeightSmall"
+            android:contentDescription="@string/settings_icon"
+            android:src="@drawable/internet" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dip"
         android:paddingBottom="6dip"
         android:paddingLeft="6dip"
         android:text="@string/settings_restrict"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
@@ -8,32 +8,27 @@
         android:id="@+id/imgBatchEntryIcon"
         android:layout_width="?android:attr/listPreferredItemHeightSmall"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
-        android:contentDescription="@string/settings_icon"
-        android:gravity="center_vertical" />
+        android:contentDescription="@string/settings_icon" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="4dip" >
 
         <ImageView
             android:id="@+id/imgBatchEntryInternet"
-            android:layout_width="16dip"
-            android:layout_height="16dip"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
             android:contentDescription="@string/settings_icon"
-            android:gravity="center_vertical"
             android:src="@drawable/internet" />
 
         <ImageView
             android:id="@+id/imgBatchEntryUsed"
-            android:layout_width="16dip"
-            android:layout_height="16dip"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
             android:contentDescription="@string/settings_icon"
-            android:gravity="center_vertical"
             android:src="@drawable/used" />
     </LinearLayout>
 

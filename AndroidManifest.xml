@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".XAppSettings"
+            android:name=".XAppEdit"
             android:exported="true" >
         </activity>
         <activity android:name=".XBatchEdit" >
