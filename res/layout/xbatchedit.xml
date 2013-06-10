@@ -14,31 +14,13 @@
         android:textIsSelectable="false" />
 
     <TextView
-        android:id="@+id/tvUsed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="6dip"
-        android:text="@string/settings_restrictionused"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="false" />
-
-    <TextView
-        android:id="@+id/tvInternet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="6dip"
-        android:text="@string/settings_nointernet"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="false" />
-
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="6dip"
         android:text="@string/settings_longpress"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
-    
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

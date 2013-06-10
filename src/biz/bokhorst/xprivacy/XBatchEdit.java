@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -45,12 +44,6 @@ public class XBatchEdit extends Activity {
 		TextView tvRestriction = (TextView) findViewById(R.id.tvRestriction);
 		tvRestriction.setText(XRestriction.getLocalizedName(this, restrictionName));
 
-		// Legend
-		TextView tvUsed = (TextView) findViewById(R.id.tvUsed);
-		tvUsed.setTypeface(null, Typeface.BOLD_ITALIC);
-		TextView tvInternet = (TextView) findViewById(R.id.tvInternet);
-		tvInternet.setTextColor(Color.GRAY);
-
 		// Get app list
 		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
 		List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
@@ -67,7 +60,7 @@ public class XBatchEdit extends Activity {
 
 		// Fill app list view adapter
 		final ListView lvApp = (ListView) findViewById(R.id.lvApp);
-		AppListAdapter appAdapter = new AppListAdapter(this, R.layout.xappentry, listApp, restrictionName);
+		AppListAdapter appAdapter = new AppListAdapter(this, R.layout.xbatchentry, listApp, restrictionName);
 		lvApp.setAdapter(appAdapter);
 	}
 
@@ -83,9 +76,11 @@ public class XBatchEdit extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.xappentry, parent, false);
-			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgAppEntryIcon);
-			final CheckedTextView ctvApp = (CheckedTextView) row.findViewById(R.id.tvAppEntryName);
+			View row = inflater.inflate(R.layout.xbatchentry, parent, false);
+			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgBatchEntryIcon);
+			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgBatchEntryInternet);
+			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgBatchEntryUsed);
+			final CheckedTextView ctvApp = (CheckedTextView) row.findViewById(R.id.tvBatchEntryName);
 
 			// Get entry
 			final XApplicationInfo appEntry = getItem(position);
@@ -98,11 +93,13 @@ public class XBatchEdit extends Activity {
 
 			// Check if internet access
 			if (!appEntry.hasInternet())
-				ctvApp.setTextColor(Color.GRAY);
+				imgInternet.setVisibility(View.INVISIBLE);
 
 			// Check if used
 			if (appEntry.isUsed())
 				ctvApp.setTypeface(null, Typeface.BOLD_ITALIC);
+			else
+				imgUsed.setVisibility(View.INVISIBLE);
 
 			// Display restriction
 			boolean restricted = XRestriction.getRestricted(null, row.getContext(), appEntry.getUid(),

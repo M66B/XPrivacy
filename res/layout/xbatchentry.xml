@@ -4,13 +4,20 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
+    <ImageView
+        android:id="@+id/imgBatchEntryIcon"
+        android:layout_width="?android:attr/listPreferredItemHeightSmall"
+        android:layout_height="?android:attr/listPreferredItemHeightSmall"
+        android:contentDescription="@string/settings_icon"
+        android:gravity="center_vertical" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/imgAppEntryInternet"
+            android:id="@+id/imgBatchEntryInternet"
             android:layout_width="16dip"
             android:layout_height="16dip"
             android:layout_marginLeft="2dip"
@@ -20,17 +27,7 @@
             android:src="@drawable/internet" />
 
         <ImageView
-            android:id="@+id/imgAppEntryPermissions"
-            android:layout_width="16dip"
-            android:layout_height="16dip"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            android:contentDescription="@string/settings_icon"
-            android:gravity="center_vertical"
-            android:src="@drawable/permissions" />
-
-        <ImageView
-            android:id="@+id/imgAppEntryUsed"
+            android:id="@+id/imgBatchEntryUsed"
             android:layout_width="16dip"
             android:layout_height="16dip"
             android:layout_marginLeft="2dip"
@@ -41,7 +38,7 @@
     </LinearLayout>
 
     <CheckedTextView
-        android:id="@+id/tvAppEntryName"
+        android:id="@+id/tvBatchEntryName"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"

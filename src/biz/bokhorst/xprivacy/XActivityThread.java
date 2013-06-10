@@ -17,7 +17,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XActivityThread extends XHook {
 
 	private String mActionName;
-	
+
 	private final static int cUidAndroid = 1000;
 
 	public XActivityThread(String methodName, String restrictionName, String[] permissions, String actionName) {
