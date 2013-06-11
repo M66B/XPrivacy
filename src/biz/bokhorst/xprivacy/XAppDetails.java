@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,6 +58,10 @@ public class XAppDetails extends XHook {
 
 		// Check for Android
 		if (appInfo.uid == XRestriction.cUidAndroid)
+			return;
+
+		// Check for self
+		if (appInfo.packageName.equals(XAppDetails.class.getPackage().getName()))
 			return;
 
 		// Get root view

@@ -115,10 +115,11 @@ public class XRestriction {
 		try {
 			PackageManager pm = context.getPackageManager();
 			PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
-			for (String rPermission : pInfo.requestedPermissions)
-				for (String permission : listPermission)
-					if (rPermission.toLowerCase().contains(permission.toLowerCase()))
-						return true;
+			if (pInfo != null)
+				for (String rPermission : pInfo.requestedPermissions)
+					for (String permission : listPermission)
+						if (rPermission.toLowerCase().contains(permission.toLowerCase()))
+							return true;
 		} catch (Throwable ex) {
 			XUtil.bug(null, ex);
 			return false;

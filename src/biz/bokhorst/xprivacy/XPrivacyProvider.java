@@ -115,7 +115,7 @@ public class XPrivacyProvider extends ContentProvider {
 			int cuid = Binder.getCallingUid();
 			String[] packages = getContext().getPackageManager().getPackagesForUid(cuid);
 			List<String> listPackage = new ArrayList<String>(Arrays.asList(packages));
-			String packageName = this.getClass().getPackage().getName();
+			String packageName = XPrivacyProvider.class.getPackage().getName();
 			if (listPackage.contains(packageName)) {
 				// Get argument
 				int uid = values.getAsInteger(COL_UID);

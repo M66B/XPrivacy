@@ -59,12 +59,12 @@ public class XUtil {
 	}
 
 	public static Context getXContext(Context context) throws Throwable {
-		String xPackageName = XPrivacy.class.getPackage().getName();
+		String xPackageName = XUtil.class.getPackage().getName();
 		return context.createPackageContext(xPackageName, 0);
 	}
 
 	public static Resources getXResources(Context context) throws Throwable {
-		String xPackageName = XPrivacy.class.getPackage().getName();
+		String xPackageName = XUtil.class.getPackage().getName();
 		PackageManager pm = context.getPackageManager();
 		return pm.getResourcesForApplication(xPackageName);
 	}
