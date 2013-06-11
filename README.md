@@ -6,11 +6,11 @@ Privacy manager using the [Xposed framework](http://forum.xda-developers.com/sho
 Description
 -----------
 
-XPrivacy can prevent leaking privacy sensitive information for any application
+XPrivacy can prevent leaking privacy sensitive data for any application
 (including associated background services and content providers).
-XPrivacy can restrict the types of information an application can access.
+XPrivacy can restrict the categories of data an application can access.
 This is done by feeding an application with no or fake data.
-There are several easy to use information type groups, for example *contacts* or *location*.
+There are several easy to use data categories, for example *contacts* or *location*.
 Restricting for example access to contacts for an application,
 will result in sending an empty contact list to the application.
 Similar, restricting access to your location for an application,
@@ -22,43 +22,43 @@ There is one exception to this, access to external storage (typically an SD card
 There is no other way to realize this, since this permission is handled by Android in a special way.
 Android delegates handling of this permission to the underlying Linux file system.
 
-You can always allow an application access to an information type again
-in case restricting the information type resulted into problems for the application.
+You can always allow an application access to a data category again
+in case restricting the data category resulted into problems for the application.
 
-Any new installed application will have no access to any information type
+Any new installed application will have no access to any data category
 to prevent leaking privacy sensitive data from the beginning.
 Soon after installing a new application
-XPrivacy will ask which information types you want the new application to allow access to.
-XPrivacy comes with a batch editor, which allows you to easily enable or disable access to an information type
+XPrivacy will ask which data categories you want the new application to allow access to.
+XPrivacy comes with a category browser, which allows you to easily enable or disable access to a data category
 for applications selected from a list of all installed applications.
 
-To help you identify potential information leakage,
-XPrivacy will monitor (attempts of) information usage for all applications.
-XPrivacy will highlight an information type for an application (or an application name in the batch editor)
-as soon as information of the information type has been used.
+To help you identify potential data leakage,
+XPrivacy will monitor (attempts of) data usage for all applications.
+XPrivacy will highlight a data category for an application (or an application name in the category browser)
+as soon as data of the data category has been used.
 XPrivacy will also display if an application has internet access
-and if an application has permissions to access an information type
-(not in the batch editor, since checking permissions for all applications is quite slow).
+and if an application has Android permissions to access data in a data category
+(not in the category browser, since checking permissions for all applications is quite slow).
 
 XPrivacy also allows you to prevent starting an application at boot (when Android starts),
-which not only prevents leaking information at that moment, but will also make your device start faster.
+which not only prevents leaking data at that moment, but will also make your device start faster.
 
 XPrivacy is accessible for each application from the Android manage apps menu.
-The batch editor is accessible from the application list or drawer.
+The category browser is accessible from the application list or application drawer.
 
 XPrivacy is built using the Xposed framework.
 XPrivacy taps into a number of selected functions of Android through the Xposed framework.
 Depending on the function XPrivacy conditionally skips execution of the original function
 (for example when an application tries to set a proximity alert)
-or alters the result of the original function (for example to return empty calendar information).
+or alters the result of the original function (for example to return empty calendar data).
 
 XPrivacy has been tested with CyanogenMod 10 and 10.1 (Android 4.1 and 4.2),
 and will likely work with any Android version 4.1 or 4.2 variant, including stock ROM's.
 Root access is needed to install the Xposed framework.
 Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xposed binary,
-which is provided as download.
+which is provided as download for both Android version 4.1 and 4.2.
 
-If you encounter any bug or information leakage please [report an issue](https://github.com/M66B/XPrivacy/issues).
+If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues).
 If you have any question or want to request a new feature, you can leave a message in the XDA XPrivacy forum thread.
 
 **Using XPrivacy is entirely at your own risk**
@@ -68,9 +68,10 @@ Screenshots
 
 ![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/manage_apps.png)![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png)
 ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png)
+![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
 
-Information restrictions
-------------------------
+Data restrictions
+-----------------
 
 Currently implemented:
 
@@ -131,8 +132,8 @@ Frequently asked questions
 --------------------------
 
 * Will you restrict internet access? No, you can use a firewall app, like [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall).
-* Will you block outgoing SMS/MMS, the iptables command or force online state? No, XPrivacy is about restricting information, not about blocking actions.
-* Will you make it possible to enter fake information? No, I want to keep things as simple as possible for maximum stability.
+* Will you block outgoing SMS/MMS, the iptables command or force online state? No, XPrivacy is about restricting data, not about blocking actions.
+* Will you make it possible to enter fake data? No, I want to keep things as simple as possible for maximum stability.
 * Which functions are exactly restricted? See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java).
 
 Similar solutions
