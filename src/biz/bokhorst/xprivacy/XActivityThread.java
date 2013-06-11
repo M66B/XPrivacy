@@ -41,10 +41,8 @@ public class XActivityThread extends XHook {
 				Field fieldIntent = findField(param.args[0].getClass(), "intent");
 				Intent intent = (Intent) fieldIntent.get(param.args[0]);
 				if (intent != null) {
-					String action = intent.getAction();
-					XUtil.log(this, Log.INFO, "action=" + action);
-
 					// Check action
+					String action = intent.getAction();
 					if (mActionName.equals(action)) {
 						if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 							// Boot completed

@@ -50,10 +50,8 @@ public class XContentProvider extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Get uri
+		// Check uri
 		Uri uri = (Uri) param.args[0];
-		XUtil.log(this, Log.INFO, "uri=" + uri);
-
 		if (mUriStart == null || uri.toString().startsWith(mUriStart)) {
 			// Return empty cursor
 			Cursor cursor = (Cursor) param.getResultOrThrowable();
