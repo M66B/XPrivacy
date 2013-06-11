@@ -173,8 +173,9 @@ public class XRestriction {
 			}
 
 			// Query restriction
+			String methodName = (hook == null ? null : hook.getMethodName());
 			Cursor cursor = contentResolver.query(XPrivacyProvider.URI_RESTRICTIONS, null, restrictionName,
-					new String[] { Integer.toString(uid), Boolean.toString(usage) }, null);
+					new String[] { Integer.toString(uid), Boolean.toString(usage), methodName }, null);
 			if (cursor == null) {
 				XUtil.log(hook, Log.WARN, "cursor is null");
 				return false;

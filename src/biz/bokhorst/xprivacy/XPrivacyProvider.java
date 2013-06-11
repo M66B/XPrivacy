@@ -2,8 +2,10 @@ package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.content.ContentProvider;
@@ -63,15 +65,19 @@ public class XPrivacyProvider extends ContentProvider {
 			// Get arguments
 			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
 
-			if (sUriMatcher.match(uri) == TYPE_RESTRICTIONS && selectionArgs.length == 2) {
+			if (sUriMatcher.match(uri) == TYPE_RESTRICTIONS && selectionArgs.length >= 2) {
 				// Get arguments
 				int uid = Integer.parseInt(selectionArgs[0]);
 				boolean usage = Boolean.parseBoolean(selectionArgs[1]);
+				String methodName = (selectionArgs.length >= 3 ? selectionArgs[2] : null);
 
 				// Update usage count
 				if (usage) {
+					long timestamp = new Date().getTime();
 					SharedPreferences.Editor editor = prefs.edit();
-					editor.putLong(getUsagePref(uid, restrictionName), new Date().getTime());
+					editor.putLong(getUsagePref(uid, restrictionName), timestamp);
+					if (methodName != null)
+						editor.putLong(getMethodPref(uid, restrictionName, methodName), timestamp);
 					editor.commit();
 				}
 
@@ -147,7 +153,7 @@ public class XPrivacyProvider extends ContentProvider {
 
 				// Update package list
 				if (XRestriction.cStorage.equals(restrictionName))
-					updateStoragePackages(XRestriction.cStorage, uid, allowed);
+					updateStoragePackages(uid, XRestriction.cStorage, allowed);
 
 				return 1; // rows
 			} else
@@ -158,7 +164,7 @@ public class XPrivacyProvider extends ContentProvider {
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
-	private void updateStoragePackages(String restrictionName, int uid, boolean allowed) {
+	private void updateStoragePackages(int uid, String restrictionName, boolean allowed) {
 		// Get storage packages
 		SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY + "." + XRestriction.cStorage,
 				Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS);
@@ -181,6 +187,18 @@ public class XPrivacyProvider extends ContentProvider {
 		SharedPreferences.Editor sEditor = prefs.edit();
 		sEditor.putString(getPackagesPref(XRestriction.cStorage), storagePackages);
 		sEditor.commit();
+	}
+
+	public static String[] getMethodUsage(Context context, int uid, String restrictionName) {
+		SharedPreferences prefs = context.getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
+		Map<String, ?> all = prefs.getAll();
+		String prefix = getUsagePref(uid, restrictionName) + ".";
+		List<String> listMethod = new ArrayList<String>();
+		for (String pref : all.keySet())
+			if (pref.startsWith(prefix))
+				listMethod.add(pref.substring(prefix.length()));
+		Collections.sort(listMethod);
+		return listMethod.toArray(new String[0]);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -210,6 +228,10 @@ public class XPrivacyProvider extends ContentProvider {
 
 	private static String getUsagePref(int uid, String restrictionName) {
 		return COL_LASTUSED + "." + uid + "." + restrictionName;
+	}
+
+	private static String getMethodPref(int uid, String restrictionName, String methodName) {
+		return getUsagePref(uid, restrictionName) + "." + methodName;
 	}
 
 	private static String getPackagesPref(String restrictionName) {

@@ -8,8 +8,10 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -132,6 +134,26 @@ public class XBatchEdit extends Activity {
 				ctvApp.setTypeface(null, Typeface.BOLD_ITALIC);
 			else
 				imgUsed.setVisibility(View.INVISIBLE);
+
+			// Handle used click
+			imgUsed.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					String localRestrictionName = XRestriction.getLocalizedName(view.getContext(), mRestrictionName);
+					String[] methodName = XPrivacyProvider.getMethodUsage(view.getContext(), appEntry.getUid(),
+							mRestrictionName);
+					AlertDialog alertDialog = new AlertDialog.Builder(XBatchEdit.this).create();
+					alertDialog.setTitle(localRestrictionName);
+					alertDialog.setMessage(TextUtils.join("\n", methodName));
+					alertDialog.setIcon(R.drawable.ic_launcher);
+					alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
+					alertDialog.show();
+				}
+			});
 
 			// Display restriction
 			boolean restricted = XRestriction.getRestricted(null, row.getContext(), appEntry.getUid(),

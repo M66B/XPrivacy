@@ -3,11 +3,14 @@ package biz.bokhorst.xprivacy;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,6 +105,26 @@ public class XAppEdit extends Activity {
 				ctvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
 			else
 				imgUsed.setVisibility(View.INVISIBLE);
+
+			// Handle used click
+			imgUsed.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					String localRestrictionName = XRestriction.getLocalizedName(view.getContext(), restrictionName);
+					String[] methodName = XPrivacyProvider.getMethodUsage(view.getContext(), mAppInfo.uid,
+							restrictionName);
+					AlertDialog alertDialog = new AlertDialog.Builder(XAppEdit.this).create();
+					alertDialog.setTitle(localRestrictionName);
+					alertDialog.setMessage(TextUtils.join("\n", methodName));
+					alertDialog.setIcon(R.drawable.ic_launcher);
+					alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
+					alertDialog.show();
+				}
+			});
 
 			// Display restriction
 			boolean restricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.uid, restrictionName,
