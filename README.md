@@ -63,17 +63,16 @@ If you have any question or want to request a new feature, you can leave a messa
 Screenshots
 -----------
 
-![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/xposed.png)![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/manage_apps.png)
-![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png)![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)
-![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png)![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
+![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/xposed.png) ![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/manage_apps.png)
+![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)
+![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
 
 Data restrictions
 -----------------
 
-Currently implemented:
-
+* Accounts (including auth token)
 * APN info
-* Boot start apps (including content providers)
+* Application info
 * Browser (bookmarks, searches, etc)
 * Calendar
 * Contacts
@@ -81,19 +80,14 @@ Currently implemented:
 * Location (coarse/fine, cell location/info)
 * Messages (SMS/MMS, voicemail: **untested**, ICC SMS)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
-* Take photos (Media)
 * Record audio (Media)
 * Record video (Media)
-* Accounts (auth token)
 * Read sdcard (revoke permission)
+* Take photos (Media)
+
 * Restriction management
 * Category browser
 * Default restrict new apps
-
-Planned:
-
-* Battery info
-* Application info
 
 Installation
 ------------
@@ -131,6 +125,7 @@ Frequently asked questions
 * Will you block outgoing SMS/MMS, the iptables command or force online state? No, XPrivacy is about restricting data, not about blocking actions.
 * Will you make it possible to enter fake data? No, I want to keep things as simple as possible for maximum stability.
 * Which functions are exactly restricted? See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java).
+* What did you fix in the Xposed framework? See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51bae5d3dda).
 
 Similar solutions
 -----------------

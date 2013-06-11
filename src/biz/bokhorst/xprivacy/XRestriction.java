@@ -28,6 +28,7 @@ public class XRestriction {
 	public static final String cMessages = "messages";
 	public static final String cPhone = "phone";
 	public static final String cStorage = "storage";
+	public static final String cSystem = "system";
 
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;
@@ -52,6 +53,7 @@ public class XRestriction {
 		mRestrictions.put(cMessages, new ArrayList<String>());
 		mRestrictions.put(cPhone, new ArrayList<String>());
 		mRestrictions.put(cStorage, new ArrayList<String>());
+		mRestrictions.put(cSystem, new ArrayList<String>());
 
 		// Temporary solution
 		mRestrictions.get(cAccounts).add("GET_ACCOUNTS");

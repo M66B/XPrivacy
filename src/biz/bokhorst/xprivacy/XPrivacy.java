@@ -45,6 +45,26 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XAccountManager("blockingGetAuthToken", XRestriction.cAccounts, new String[] { "USE_CREDENTIALS" }),
 				"android.accounts.AccountManager");
 
+		// Application package manager
+		hook(new XApplicationPackageManager("getInstalledApplications", XRestriction.cSystem, new String[] {}),
+				"android.app.ApplicationPackageManager");
+		hook(new XApplicationPackageManager("getInstalledPackages", XRestriction.cSystem, new String[] {}),
+				"android.app.ApplicationPackageManager");
+		hook(new XApplicationPackageManager("getInstalledThemePackages", XRestriction.cSystem, new String[] {}),
+				"android.app.ApplicationPackageManager");
+		hook(new XApplicationPackageManager("getPreferredPackages", XRestriction.cSystem, new String[] {}),
+				"android.app.ApplicationPackageManager");
+		hook(new XApplicationPackageManager("queryBroadcastReceivers", XRestriction.cSystem, new String[] {}),
+				"android.app.ApplicationPackageManager");
+		hook(new XApplicationPackageManager("queryContentProviders", XRestriction.cSystem, new String[] {}),
+				"android.app.ApplicationPackageManager");
+		hook(new XApplicationPackageManager("queryIntentActivities", XRestriction.cSystem, new String[] {}),
+				"android.app.ApplicationPackageManager");
+		hook(new XApplicationPackageManager("queryIntentActivityOptions", XRestriction.cSystem, new String[] {}),
+				"android.app.ApplicationPackageManager");
+		hook(new XApplicationPackageManager("queryIntentServices", XRestriction.cSystem, new String[] {}),
+				"android.app.ApplicationPackageManager");
+
 		// Audio record
 		hook(new XCamera("startRecording", XRestriction.cMedia, new String[] { "RECORD_AUDIO" }),
 				"android.media.AudioRecord");
