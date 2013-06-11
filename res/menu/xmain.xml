@@ -2,7 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_reportissue"
-        android:title="@string/menu_reportissue"/>
+        android:id="@+id/menu_report"
+        android:title="@string/menu_report"/>
+    <item
+        android:id="@+id/menu_about"
+        android:title="@string/menu_about"/>
 
 </menu>

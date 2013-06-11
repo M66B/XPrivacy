@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,15 +32,6 @@ public class XMain extends Activity {
 		// Set layout
 		setContentView(R.layout.xmain);
 
-		// Show version
-		try {
-			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-			TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
-			tvVersion.setText(String.format(getString(R.string.app_version), pInfo.versionName, pInfo.versionCode));
-		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
-		}
-
 		// Check Xposed version
 		int xVersion = XUtil.getXposedVersion();
 		if (xVersion < cXposedMinVersion) {
@@ -54,10 +46,6 @@ public class XMain extends Activity {
 			});
 			alertDialog.show();
 		}
-
-		// Show Xposed version
-		TextView tvXVersion = (TextView) findViewById(R.id.tvXVersion);
-		tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
 
 		// Fill restriction list view adapter
 		final List<String> listRestriction = XRestriction.getRestrictions();
@@ -91,10 +79,35 @@ public class XMain extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		try {
 			switch (item.getItemId()) {
-			case R.id.menu_reportissue:
+			case R.id.menu_report:
+				// Report issue
 				Intent browserIntent = new Intent(Intent.ACTION_VIEW,
 						Uri.parse("https://github.com/M66B/XPrivacy/issues"));
 				startActivity(browserIntent);
+				return true;
+			case R.id.menu_about:
+				// About
+				Dialog dialog = new Dialog(this);
+				dialog.setTitle(getString(R.string.app_name));
+				dialog.setContentView(R.layout.xabout);
+
+				// Show version
+				try {
+					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+					TextView tvVersion = (TextView) dialog.findViewById(R.id.tvVersion);
+					tvVersion.setText(String.format(getString(R.string.app_version), pInfo.versionName,
+							pInfo.versionCode));
+				} catch (Throwable ex) {
+					XUtil.bug(null, ex);
+				}
+
+				// Show Xposed version
+				int xVersion = XUtil.getXposedVersion();
+				TextView tvXVersion = (TextView) dialog.findViewById(R.id.tvXVersion);
+				tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
+
+				dialog.setCancelable(true);
+				dialog.show();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

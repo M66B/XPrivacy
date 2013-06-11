@@ -52,8 +52,8 @@ public class XBatchEdit extends Activity {
 			@Override
 			public void onClick(View v) {
 				Dialog dialog = new Dialog(XBatchEdit.this);
-				dialog.setContentView(R.layout.xhelp);
 				dialog.setTitle(getString(R.string.help_application));
+				dialog.setContentView(R.layout.xhelp);
 				dialog.setCancelable(true);
 				dialog.show();
 			}

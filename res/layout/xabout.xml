@@ -9,26 +9,30 @@
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <TextView
-        android:id="@+id/tvRestriction"
-        style="?android:attr/listSeparatorTextViewStyle"
+        android:id="@+id/tvVersion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableRight="@drawable/help"
-        android:textIsSelectable="false" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/tvXVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textIsSelectable="true" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dip"
-        android:text="@string/settings_restrict"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textIsSelectable="false" />
+        android:text="@string/app_copyright"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <ListView
-        android:id="@+id/lvApp"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dip"
-        android:choiceMode="multipleChoice" />
+        android:autoLink="web"
+        android:text="@string/app_info"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>

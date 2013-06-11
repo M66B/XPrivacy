@@ -11,38 +11,9 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/tvVersion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="true" />
-
-    <TextView
-        android:id="@+id/tvXVersion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="true" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_copyright"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:text="@string/app_info"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dip"
-        android:layout_marginTop="8dip"
         android:text="@string/app_batchedit"
         android:textIsSelectable="false" />
 
@@ -50,6 +21,7 @@
         android:id="@+id/lvRestriction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dip"
         android:choiceMode="singleChoice" />
 
 </LinearLayout>

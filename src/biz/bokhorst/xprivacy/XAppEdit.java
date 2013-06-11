@@ -48,8 +48,8 @@ public class XAppEdit extends Activity {
 			@Override
 			public void onClick(View v) {
 				Dialog dialog = new Dialog(XAppEdit.this);
-				dialog.setContentView(R.layout.xhelp);
 				dialog.setTitle(getString(R.string.help_application));
+				dialog.setContentView(R.layout.xhelp);
 				dialog.setCancelable(true);
 				dialog.show();
 			}
