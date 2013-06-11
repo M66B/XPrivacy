@@ -40,9 +40,6 @@ XPrivacy will also display if an application has internet access
 and if an application has Android permissions to access data in a data category
 (not in the category browser, since checking permissions for all applications is quite slow).
 
-XPrivacy also allows you to prevent starting an application at boot (when Android starts),
-which not only prevents leaking data at that moment, but will also make your device start faster.
-
 XPrivacy is accessible for each application from the Android manage apps menu.
 The category browser is accessible from the application list or application drawer.
 
@@ -66,9 +63,9 @@ If you have any question or want to request a new feature, you can leave a messa
 Screenshots
 -----------
 
-![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/manage_apps.png)![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png)
-![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png)
-![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
+![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/xposed.png)![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/manage_apps.png)
+![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png)![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)
+![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png)![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
 
 Data restrictions
 -----------------
@@ -90,12 +87,11 @@ Currently implemented:
 * Accounts (auth token)
 * Read sdcard (revoke permission)
 * Restriction management
-* Batch edit restrictions
+* Category browser
 * Default restrict new apps
 
 Planned:
 
-* System log
 * Battery info
 * Application info
 

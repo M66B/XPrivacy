@@ -11,7 +11,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PermissionInfo;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -36,11 +35,14 @@ public class XRestriction {
 
 	public final static int cUidAndroid = 1000;
 
+	public final static boolean cExpert = false;
+
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
 
 	static {
 		mRestrictions.put(cAccounts, new ArrayList<String>());
-		mRestrictions.put(cBoot, new ArrayList<String>());
+		if (cExpert)
+			mRestrictions.put(cBoot, new ArrayList<String>());
 		mRestrictions.put(cBrowser, new ArrayList<String>());
 		mRestrictions.put(cCalendar, new ArrayList<String>());
 		mRestrictions.put(cContacts, new ArrayList<String>());
@@ -55,7 +57,8 @@ public class XRestriction {
 		mRestrictions.get(cAccounts).add("GET_ACCOUNTS");
 		mRestrictions.get(cAccounts).add("USE_CREDENTIALS");
 		mRestrictions.get(cAccounts).add("MANAGE_ACCOUNTS");
-		mRestrictions.get(cBoot).add("RECEIVE_BOOT_COMPLETED");
+		if (cExpert)
+			mRestrictions.get(cBoot).add("RECEIVE_BOOT_COMPLETED");
 		mRestrictions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
 		mRestrictions.get(cBrowser).add("GLOBAL_SEARCH");
 		mRestrictions.get(cCalendar).add("READ_CALENDAR");
