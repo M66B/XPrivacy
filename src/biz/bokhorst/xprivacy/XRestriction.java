@@ -5,10 +5,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PermissionInfo;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -98,14 +101,23 @@ public class XRestriction {
 		return (pm.checkPermission("android.permission.INTERNET", packageName) == PackageManager.PERMISSION_GRANTED);
 	}
 
+	@SuppressLint("DefaultLocale")
 	public static boolean hasPermission(Context context, String packageName, String restrictionName) {
 		List<String> listPermission = mRestrictions.get(restrictionName);
 		if (listPermission == null || listPermission.size() == 0)
 			return true;
-		PackageManager pm = context.getPackageManager();
-		for (String permission : listPermission)
-			if (pm.checkPermission("android.permission." + permission, packageName) == PackageManager.PERMISSION_GRANTED)
-				return true;
+
+		try {
+			PackageManager pm = context.getPackageManager();
+			PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
+			for (String rPermission : pInfo.requestedPermissions)
+				for (String permission : listPermission)
+					if (rPermission.toLowerCase().contains(permission.toLowerCase()))
+						return true;
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+			return false;
+		}
 		return false;
 	}
 
