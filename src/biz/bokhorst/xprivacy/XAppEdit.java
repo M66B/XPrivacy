@@ -20,7 +20,6 @@ import android.widget.TextView;
 public class XAppEdit extends Activity {
 
 	public static final String cPackageName = "PackageName";
-	public static final String cRestrictionExclude = "RestrictionExclude";
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,7 +29,6 @@ public class XAppEdit extends Activity {
 		// Get package name
 		Bundle extras = getIntent().getExtras();
 		String packageName = extras.getString(cPackageName);
-		String restrictionExclude = extras.getString(cRestrictionExclude);
 
 		// Get app info
 		final ApplicationInfo appInfo;
@@ -66,15 +64,10 @@ public class XAppEdit extends Activity {
 		if (!XRestriction.hasInternet(this, packageName))
 			imgInternet.setVisibility(View.INVISIBLE);
 
-		// Build list with restrictions
-		List<String> listRestriction = XRestriction.getRestrictions();
-		if (restrictionExclude != null)
-			listRestriction.remove(restrictionExclude);
-
 		// Fill privacy list view adapter
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
 		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(this, R.layout.xappentry, appInfo,
-				listRestriction);
+				XRestriction.getRestrictions());
 		lvRestriction.setAdapter(privacyListAdapter);
 	}
 

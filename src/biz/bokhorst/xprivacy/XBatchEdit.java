@@ -31,6 +31,8 @@ public class XBatchEdit extends Activity {
 
 	public static final String cRestrictionName = "Restriction";
 
+	private AppListAdapter mAppAdapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,8 +77,14 @@ public class XBatchEdit extends Activity {
 
 		// Fill app list view adapter
 		final ListView lvApp = (ListView) findViewById(R.id.lvApp);
-		AppListAdapter appAdapter = new AppListAdapter(this, R.layout.xbatchentry, listApp, restrictionName);
-		lvApp.setAdapter(appAdapter);
+		mAppAdapter = new AppListAdapter(this, R.layout.xbatchentry, listApp, restrictionName);
+		lvApp.setAdapter(mAppAdapter);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mAppAdapter.notifyDataSetChanged();
 	}
 
 	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> {
@@ -107,7 +115,6 @@ public class XBatchEdit extends Activity {
 				public void onClick(View view) {
 					Intent intentSettings = new Intent(view.getContext(), XAppEdit.class);
 					intentSettings.putExtra(XAppEdit.cPackageName, appEntry.getPackageName());
-					intentSettings.putExtra(XAppEdit.cRestrictionExclude, mRestrictionName);
 					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					view.getContext().startActivity(intentSettings);
 				}
