@@ -97,7 +97,7 @@ Installation
 
 * Root your device
 * **Make a backup**
-* Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler*
+* Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), **including the disabler**
 * Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 * Enable XPrivacy from the Xposed Installer app
 * Flash the correct Xposed fix from [here](http://goo.im/devs/M66B/xprivacy)
@@ -129,6 +129,8 @@ Frequently asked questions
 * Will you make it possible to enter fake data? No, I want to keep things as simple as possible for maximum stability.
 * Which functions are exactly restricted? See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java).
 * What did you fix in the Xposed framework? See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51bae5d3dda).
+* Does XPrivacy use the Android permissions for something? No, Android permissions are just displayed as a guideline.
+* How can I reset all XPrivacy settings? *Manage apps* > *XPrivacy* > *Clear data*
 
 Similar solutions
 -----------------
