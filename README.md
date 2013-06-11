@@ -85,6 +85,9 @@ Data
 * Read sdcard (revoke permission)
 * Take photos
 
+Features
+--------
+
 * Restriction management
 * Category browser
 * Default restrict new apps
