@@ -67,23 +67,23 @@ Screenshots
 ![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)
 ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
 
-Data restrictions
------------------
+Data
+----
 
 * Accounts (including auth token)
-* APN info
-* Application info
-* Browser (bookmarks, searches, etc)
+* APN data
+* Application data (installed apps)
+* Browser (bookmarks, searches)
 * Calendar
 * Contacts
 * Identification (Android ID, Wi-Fi MAC address)
 * Location (coarse/fine, cell location/info)
 * Messages (SMS/MMS, voicemail: **untested**, ICC SMS)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
-* Record audio (Media)
-* Record video (Media)
+* Record audio
+* Record video
 * Read sdcard (revoke permission)
-* Take photos (Media)
+* Take photos
 
 * Restriction management
 * Category browser
@@ -94,7 +94,7 @@ Installation
 
 * Root your device
 * **Make a backup**
-* Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
+* Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler*
 * Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 * Enable XPrivacy from the Xposed Installer app
 * Flash the correct Xposed fix from [here](http://goo.im/devs/M66B/xprivacy)
@@ -134,16 +134,16 @@ Similar solutions
 * [PDroid 2.0](http://forum.xda-developers.com/showthread.php?t=1923576)
 * [OpenPDroid](http://forum.xda-developers.com/showthread.php?t=2098156)
 
-Developers
+Developing
 ----------
 
-To restrict new info:
+To restrict new data:
 
-* Find the package/class/method that exposes the info (look into the Android documentation/sources)
+* Find the package/class/method that exposes the data (look into the Android documentation/sources)
 * Figure out a way to get a context (see existing code for examples)
 * Create a class that extends [XHook](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XHook.java)
 * Hook the method in [XPrivacy](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java)
-* Write a before and/or after method to restrict the info
+* Write a before and/or after method to restrict the data
 * Do a [pull request](https://help.github.com/articles/using-pull-requests) if you want to contribute
 
 License
