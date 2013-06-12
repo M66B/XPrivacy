@@ -77,7 +77,7 @@ public class XAppEdit extends Activity {
 		// Fill privacy list view adapter
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
 		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(this, R.layout.xappentry, appInfo,
-				XRestriction.getRestrictions());
+				XRestriction.getRestrictions(this));
 		lvRestriction.setAdapter(privacyListAdapter);
 	}
 

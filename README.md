@@ -159,8 +159,12 @@ Changelog
 * Several user interface improvements
 * Android version check
 * Async app list fetch
+* Expert mode: prevent app start
 * Added Dutch/Flemish translation
-* Added Bulgarian translation, thank you *Borislav*
+* Added Bulgarian translation, thanks @borislavba
+* Added German translation, thanks *Nosferatu*
+* Added Greek translation, thanks @mikeNG
+* Added Slovenian translation, thanks @kv1dr
 
 Similar solutions
 -----------------

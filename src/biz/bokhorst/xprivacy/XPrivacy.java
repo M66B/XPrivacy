@@ -165,16 +165,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.net.wifi.WifiInfo");
 
 		// Intent receive: calling
-		if (XRestriction.cExpert)
-			hook(new XActivityThread("handleReceiver", XRestriction.cBoot, new String[] { "RECEIVE_BOOT_COMPLETED" },
-					Intent.ACTION_BOOT_COMPLETED), "android.app.ActivityThread", false);
+		hook(new XActivityThread("handleReceiver", XRestriction.cBoot, new String[] { "RECEIVE_BOOT_COMPLETED" },
+				Intent.ACTION_BOOT_COMPLETED), "android.app.ActivityThread", false);
 		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, new String[] { "PROCESS_OUTGOING_CALLS" },
 				Intent.ACTION_NEW_OUTGOING_CALL), "android.app.ActivityThread", false);
 		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" },
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ActivityThread", false);
-		if (XRestriction.cExpert)
-			hook(new XActivityThread("installContentProviders", XRestriction.cBoot, new String[] {}, null),
-					"android.app.ActivityThread", false);
 
 		// Intent send: media
 		hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },

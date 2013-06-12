@@ -3,12 +3,8 @@ package biz.bokhorst.xprivacy;
 import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ProviderInfo;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -47,7 +43,8 @@ public class XActivityThread extends XHook {
 						if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 							// Boot completed
 							if (isRestricted(param))
-								param.setResult(null);
+								if (XRestriction.getSetting(this, getApplicationContext(), XRestriction.cExpertMode))
+									param.setResult(null);
 						} else if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
 							// Outgoing call
 							Bundle bundle = intent.getExtras();
@@ -72,32 +69,6 @@ public class XActivityThread extends XHook {
 							XUtil.log(this, Log.WARN, "Unhandled action=" + mActionName);
 					}
 				}
-			}
-		} else if (methodName.equals("installContentProviders")) {
-			try {
-				// Get providers
-				@SuppressWarnings("unchecked")
-				List<ProviderInfo> providers = (List<ProviderInfo>) param.args[1];
-
-				// Skip if Android
-				for (ProviderInfo aProvider : providers)
-					if (aProvider.applicationInfo.uid == XRestriction.cUidAndroid)
-						return;
-
-				// Check if restricted
-				Context context = (Context) param.args[0];
-				List<ProviderInfo> allowed = new ArrayList<ProviderInfo>();
-				for (ProviderInfo provider : providers) {
-					int uid = provider.applicationInfo.uid;
-					XUtil.log(this, Log.INFO, "provider=" + provider.getClass().getName() + " uid=" + uid);
-					if (!getRestricted(context, uid, true))
-						allowed.add(provider);
-				}
-
-				// Set result
-				param.args[1] = allowed;
-			} catch (Throwable ex) {
-				XUtil.bug(this, ex);
 			}
 		} else
 			XUtil.log(this, Log.WARN, "Unknown method=" + methodName);

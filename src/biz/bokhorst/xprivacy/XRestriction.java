@@ -36,14 +36,13 @@ public class XRestriction {
 
 	public final static int cUidAndroid = 1000;
 
-	public final static boolean cExpert = false;
+	public final static String cExpertMode = "ExpertMode";
 
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
 
 	static {
 		mRestrictions.put(cAccounts, new ArrayList<String>());
-		if (cExpert)
-			mRestrictions.put(cBoot, new ArrayList<String>());
+		mRestrictions.put(cBoot, new ArrayList<String>());
 		mRestrictions.put(cBrowser, new ArrayList<String>());
 		mRestrictions.put(cCalendar, new ArrayList<String>());
 		mRestrictions.put(cContacts, new ArrayList<String>());
@@ -59,8 +58,7 @@ public class XRestriction {
 		mRestrictions.get(cAccounts).add("GET_ACCOUNTS");
 		mRestrictions.get(cAccounts).add("USE_CREDENTIALS");
 		mRestrictions.get(cAccounts).add("MANAGE_ACCOUNTS");
-		if (cExpert)
-			mRestrictions.get(cBoot).add("RECEIVE_BOOT_COMPLETED");
+		mRestrictions.get(cBoot).add("RECEIVE_BOOT_COMPLETED");
 		mRestrictions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
 		mRestrictions.get(cBrowser).add("GLOBAL_SEARCH");
 		mRestrictions.get(cCalendar).add("READ_CALENDAR");
@@ -93,8 +91,11 @@ public class XRestriction {
 				XUtil.log(null, Log.WARN, "Missing permission " + permission);
 	}
 
-	public static List<String> getRestrictions() {
-		return new ArrayList<String>(mRestrictions.keySet());
+	public static List<String> getRestrictions(Context context) {
+		List<String> listRestriction = new ArrayList<String>(mRestrictions.keySet());
+		if (!XRestriction.getSetting(null, context, XRestriction.cExpertMode))
+			listRestriction.remove(cBoot);
+		return listRestriction;
 	}
 
 	public static List<String> getPermissions(String restrictionName) {
@@ -128,15 +129,14 @@ public class XRestriction {
 	}
 
 	public static boolean isUsed(Context context, int uid, String restrictionName) {
+		long lastUsage = 0;
 		ContentResolver cr = context.getContentResolver();
 		Cursor cursor = cr.query(XPrivacyProvider.URI_USAGE, null, restrictionName,
 				new String[] { Integer.toString(uid) }, null);
-		if (cursor.moveToNext()) {
-			long lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_TIME));
-			cursor.close();
-			return (lastUsage != 0);
-		}
-		return false;
+		if (cursor.moveToNext())
+			lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_TIME));
+		cursor.close();
+		return (lastUsage != 0);
 	}
 
 	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage) {
@@ -172,6 +172,7 @@ public class XRestriction {
 					new String[] { Integer.toString(uid), Boolean.toString(usage), methodName }, null);
 			if (cursor == null) {
 				XUtil.log(hook, Log.WARN, "cursor is null");
+				XUtil.logStack(null);
 				return false;
 			}
 
@@ -180,8 +181,10 @@ public class XRestriction {
 			if (cursor.moveToNext())
 				restricted = Boolean.parseBoolean(cursor.getString(cursor
 						.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
-			else
+			else {
 				XUtil.log(hook, Log.WARN, "cursor is empty");
+				XUtil.logStack(null);
+			}
 			cursor.close();
 
 			// Result
@@ -228,6 +231,39 @@ public class XRestriction {
 				Log.INFO,
 				String.format("set %s/%s %s=%b", getPackageName(context, uid),
 						(hook == null ? null : hook.getMethodName()), restrictionName, restricted));
+	}
+
+	public static boolean getSetting(XHook hook, Context context, String settingName) {
+		boolean enabled = false;
+		if (context == null) {
+			XUtil.log(hook, Log.WARN, "context is null");
+			XUtil.logStack(hook);
+		} else
+			try {
+				ContentResolver cr = context.getContentResolver();
+				Cursor cursor = cr.query(XPrivacyProvider.URI_SETTING, null, settingName, null, null);
+				if (cursor.moveToNext())
+					enabled = Boolean
+							.parseBoolean(cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_ENABLED)));
+				else {
+					XUtil.log(hook, Log.WARN, "cursor is empty setting=" + settingName);
+					XUtil.logStack(hook);
+				}
+				cursor.close();
+			} catch (Throwable ex) {
+				XUtil.log(hook, Log.ERROR, "get setting=" + settingName);
+				XUtil.bug(hook, ex);
+			}
+		XUtil.log(hook, Log.INFO, String.format("get %s=%b", settingName, enabled));
+		return enabled;
+	}
+
+	public static void setSetting(XHook hook, Context context, String settingName, boolean enabled) {
+		ContentResolver contentResolver = context.getContentResolver();
+		ContentValues values = new ContentValues();
+		values.put(XPrivacyProvider.COL_ENABLED, Boolean.toString(enabled));
+		contentResolver.update(XPrivacyProvider.URI_SETTING, values, settingName, null);
+		XUtil.log(hook, Log.INFO, String.format("set %s=%b", settingName, enabled));
 	}
 
 	public static String getLocalizedName(Context context, String restrictionName) {

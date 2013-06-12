@@ -238,8 +238,8 @@ public class XBatchEdit extends Activity {
 			mListApplicationName = new ArrayList<String>();
 			mListApplicationName.add((String) packageManager.getApplicationLabel(appInfo));
 			mPackageName = appInfo.packageName;
-			mHasInternet = XRestriction.hasInternet(getBaseContext(), appInfo.packageName);
-			mIsUsed = XRestriction.isUsed(getBaseContext(), appInfo.uid, restrictionName);
+			mHasInternet = XRestriction.hasInternet(XBatchEdit.this, appInfo.packageName);
+			mIsUsed = XRestriction.isUsed(XBatchEdit.this, appInfo.uid, restrictionName);
 			mUid = appInfo.uid;
 		}
 
