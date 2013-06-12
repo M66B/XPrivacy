@@ -161,10 +161,10 @@ Changelog
 * Async app list fetch
 * Expert mode: prevent app start
 * Added Dutch/Flemish translation
-* Added Bulgarian translation, thanks @borislavba
-* Added German translation, thanks *Nosferatu*
-* Added Greek translation, thanks @mikeNG
-* Added Slovenian translation, thanks @kv1dr
+* Added Bulgarian translation, thanks [borislavba](https://github.com/borislavba)
+* Added German translation, thanks [NosferatuAlucard](https://github.com/NosferatuAlucard)
+* Added Greek translation, thanks [mikeNG](https://github.com/mikeNG)
+* Added Slovenian translation, thanks [kv1dr](https://github.com/kv1dr)
 
 Similar solutions
 -----------------
