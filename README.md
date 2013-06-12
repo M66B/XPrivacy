@@ -6,51 +6,56 @@ Privacy manager using the [Xposed framework](http://forum.xda-developers.com/sho
 Description
 -----------
 
-XPrivacy can prevent leaking privacy sensitive data for any application
-(including associated background services and content providers).
+XPrivacy can prevent applications (including associated background services and content providers)
+from leaking privacy sensitive data.
 XPrivacy can restrict the categories of data an application can access.
 This is done by feeding an application with no or fake data.
-There are several easy to use data categories, for example *contacts* or *location*.
-Restricting for example access to contacts for an application,
-will result in sending an empty contact list to the application.
-Similar, restricting access to your location for an application,
-will result in sending random locations to the application.
+There are several data categories which can be restricted, for example *contacts* or *location*.
+For example, if you restrict access to contacts for an application,
+this will result in sending an empty contact list to the application if it requests access to your contacts.
+Similarly, restricting an application's access to your location
+will result in a random location being sent to the application.
 
-XPrivacy doesn't revoke permissions from an application,
+XPrivacy doesn't revoke (i.e. block) permissions from an application,
 which means that most applications will continue to work as before and won't force close.
 There is one exception to this, access to external storage (typically an SD card) is restricted by denying access.
 There is no other way to realize this, since this permission is handled by Android in a special way.
 Android delegates handling of this permission to the underlying Linux file system.
 
-You can always allow an application access to a data category again
-in case restricting the data category resulted into problems for the application.
+If restricting a category of data for an application results in problems for that application,
+it is possible to allow access to the data category again.
 
-Any new installed application will have no access to any data category
-to prevent leaking privacy sensitive data from the beginning.
-Soon after installing a new application
-XPrivacy will ask which data categories you want the new application to allow access to.
-XPrivacy comes with a category browser, which allows you to easily enable or disable access to a data category
-for applications selected from a list of all installed applications.
+By default, all newly-installed applications will have no access to any data category at all,
+to prevent a new application from leaking sensitive information after installation.
+Shortly after installing a new application,
+XPrivacy will ask which data categories you want the new application to have access to.
+XPrivacy comes with a category browser,
+which allows you to quickly enable or disable applications' access to a particular data category
+(i.e. to view and control all access to the camera, for example).
 
-To help you identify potential data leakage,
-XPrivacy will monitor (attempts of) data usage for all applications.
-XPrivacy will highlight a data category for an application (or an application name in the category browser)
+To help you identify potential data leaks,
+XPrivacy will monitor attempts made by all applications to access sensitive data.
+XPrivacy will highlight (with a yellow triangle) a data category for an application
+(or an application name in the category browser)
 as soon as data of the data category has been used.
-XPrivacy will also display if an application has internet access
-and if an application has Android permissions to access data in a data category
-(not in the category browser, since checking permissions for all applications is quite slow).
+XPrivacy will also display if an application has internet access,
+indicating that the application poses a risk of sharing the information it obtains with an external server.
+If an application has requested Android permissions to access data in a data category,
+it will also be displayed (with a green tick),
+but this will only be shown when looking at an individual application,
+since checking permissions for all applications is quite slow.
 
-XPrivacy is accessible for each application from the Android manage apps menu.
+XPrivacy is accessible for each application from the Android *Manage apps* menu.
 The category browser is accessible from the application list or application drawer.
 
 XPrivacy is built using the Xposed framework.
 XPrivacy taps into a number of selected functions of Android through the Xposed framework.
-Depending on the function XPrivacy conditionally skips execution of the original function
+Depending on the function, XPrivacy conditionally skips execution of the original function
 (for example when an application tries to set a proximity alert)
 or alters the result of the original function (for example to return empty calendar data).
 
 XPrivacy has been tested with CyanogenMod 10 and 10.1 (Android 4.1 and 4.2),
-and will likely work with any Android version 4.1 or 4.2 variant, including stock ROM's.
+and will likely work with any Android version 4.1 or 4.2 variant, including stock ROMs.
 Root access is needed to install the Xposed framework.
 Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xposed binary,
 which is provided as download for both Android version 4.1 and 4.2.
