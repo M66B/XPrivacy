@@ -123,8 +123,6 @@ or try disabling *Contacts* for the Contacts app.
 Enabling storage restriction means blocking access to external storage (typically the SD card).
 Because of the nature of this restriction, there is no usage data for this restriction.
 All other restrictions have usage data and send no or fake data.
-The only exception is boot complete: this is not really a restriction,
-but makes it possible to block an application for doing things when the system starts.
 
 Tricks:
 
