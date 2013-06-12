@@ -1,0 +1,33 @@
+<resources>
+
+    <string name="app_name">XPrivacy</string>
+    <string name="app_notxposed" formatted="false">Xposed framework versie %d+ is niet geïnstalleerd</string>
+    <string name="app_wrongandroid">Alleen getest met Android versie 4.1 and 4.2 (JellyBean)</string>
+    <string name="app_version" formatted="false">XPrivacy versie: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed framework versie: %d</string>
+    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
+    <string name="app_batchedit">Blader per categorie</string>
+    <string name="menu_report">Rapporteer probleem</string>
+    <string name="menu_about">Over</string>
+    <string name="msg_restricted" formatted="false">%s beperkt door XPrivacy</string>
+    <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
+    <string name="restrict_boot">Boot (run at system start)</string>
+    <string name="restrict_browser">Browser (bladwijzers/geschiedenis)</string>
+    <string name="restrict_calendar">Kalender</string>
+    <string name="restrict_contacts">Contacten</string>
+    <string name="restrict_identification">Identificatie (apparaat, Wi-Fi)</string>
+    <string name="restrict_location">Locatie (fijn/grof)</string>
+    <string name="restrict_media">Media (audio, foto, video)</string>
+    <string name="restrict_messages">Berichten (SMS, MMS)</string>
+    <string name="restrict_phone">Telefoon (ID, nummers, oproepen)</string>
+    <string name="restrict_storage">Externe opslag (SD card)</string>
+    <string name="restrict_system">Systeem (geïnstalleerde apps)</string>
+    <string name="settings_restrict">Vink om te beperken:</string>
+    <string name="help_icon">Icoon</string>
+    <string name="help_application">Applicatie</string>
+    <string name="help_internet">heeft internet rechten</string>
+    <string name="help_granted">heeft Android rechten</string>
+    <string name="help_used">heeft deze data gebruikt</string>
+
+</resources>
