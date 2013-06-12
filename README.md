@@ -70,7 +70,8 @@ Features
 * Simple to use
 * No need to patch anything (source, [smali](https://code.google.com/p/smali/))
 * For any (stock) variant of Android version 4.1 or 4.2 (JellyBean)
-* New apps are by default restricted
+* New apps are restricted by default
+* Displays data actually used by an app
 * Open source
 
 Restricted data
@@ -86,19 +87,20 @@ Restricted data
 * Location (coarse/fine, cell location/info)
 * Messages (SMS/MMS, voicemail: **untested**, ICC SMS)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
-* Record audio (including microphone)
-* Record video
-* Read sdcard (revoke permission)
-* Take photos
+* Recording audio (including microphone)
+* Recording video
+* Reading sdcard (revoke permission)
+* Taking photos
 
 Installation
 ------------
 
 * Root your device
 * **Make a backup**
-* Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), **including the disabler**
+* Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler*
 * Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 * Enable XPrivacy from the Xposed Installer app
+* Reboot into recovery
 * Flash the correct Xposed fix from [here](http://goo.im/devs/M66B/xprivacy)
 * Reboot
 
