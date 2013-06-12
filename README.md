@@ -92,14 +92,14 @@ Restricted data
 Installation
 ------------
 
-* Root your device
-* **Make a backup**
-* Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler*
-* Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
-* Enable XPrivacy from the Xposed Installer app
-* Reboot into recovery
-* Flash the correct Xposed fix from [here](http://goo.im/devs/M66B/xprivacy)
-* Reboot
+1. Root your device
+2. **Make a backup**
+3. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler*
+4. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
+5. Enable XPrivacy from the Xposed Installer app
+6. Reboot into recovery
+7. Flash the correct Xposed fix from [here](http://goo.im/devs/M66B/xprivacy)
+8. Reboot
 
 Upgrading
 ---------
