@@ -97,6 +97,7 @@ Restricted data
 Installation
 ------------
 
+0. Requirement: Android 4.1+ (JellyBean)
 1. Root your device
 2. **Make a backup**
 3. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler*
