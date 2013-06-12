@@ -130,6 +130,11 @@ All other restrictions have usage data and send no or fake data.
 The only exception is boot complete: this is not really a restriction,
 but makes it possible to block an application for doing things when the system starts.
 
+Tricks:
+
+* Click the application icon in the category browser to go to the app restriction settings
+* Click the orange triangle to see the actual Android methods used
+
 Frequently asked questions
 --------------------------
 
