@@ -146,7 +146,9 @@ Frequently asked questions
 Support
 -------
 
-If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues).
+If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues),
+preferably including a logcat (use [pastebin](http://pastebin.com/) or a similar service).
+
 If you have any question or want to request a new feature,
 you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
