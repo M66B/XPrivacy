@@ -1,0 +1,35 @@
+<resources>
+
+    <string name="app_name">XPrivacy</string>
+    <string name="app_notxposed" formatted="false">Xposed framework različice %d+ ni nameščen</string>
+    <string name="app_wrongandroid">Testirano samo na Androidu različice 4.1 in 4.2 (JellyBean)</string>
+    <string name="app_version" formatted="false">XPrivacy različica: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed framework različica: %d</string>
+    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
+    <string name="app_batchedit">Prebrskaj po kategorijah</string>
+    <string name="menu_settings">Nastavitve</string>
+    <string name="menu_report">Javi napako</string>
+    <string name="menu_about">O programu</string>
+    <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
+    <string name="restrict_accounts">Računi (Google, Facebook, itd)</string>
+    <string name="restrict_boot">Zagon (zagon programa ob zagonu sistema)</string>
+    <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>
+    <string name="restrict_calendar">Koledar</string>
+    <string name="restrict_contacts">Stiki</string>
+    <string name="restrict_identification">Identifikacija (naprava, Wi-Fi)</string>
+    <string name="restrict_location">Lokacija (približna/natančna)</string>
+    <string name="restrict_media">Medij (zvok, slike, video)</string>
+    <string name="restrict_messages">Sporočila (SMS, MMS)</string>
+    <string name="restrict_phone">Telefon (ID, številke, klici)</string>
+    <string name="restrict_storage">Zunanja shramba (spominska kartica)</string>
+    <string name="restrict_system">Sistem (nameščeni programi)</string>
+    <string name="settings_restrict">Oblkjukaj za omejitev pravic:</string>
+    <string name="settings_expert">Napredni način</string>
+    <string name="help_icon">Ikona</string>
+    <string name="help_application">Program</string>
+    <string name="help_internet">uporablja internetno dovoljenje</string>
+    <string name="help_granted">uporablja Android dovoljenja</string>
+    <string name="help_used">je uporabljal te podatke</string>
+
+</resources>
