@@ -1,0 +1,32 @@
+<resources>
+
+    <string name="app_name">XPrivacy</string>
+    <string name="app_notxposed" formatted="false">Xposed framework версия %d+ не е инсталирана</string>
+    <string name="app_version" formatted="false">Версия: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed версия: %d</string>
+    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_info">Информация: https://github.com/M66B/XPrivacy/</string>
+    <string name="app_batchedit">Разглеждане по категории</string>
+    <string name="menu_report">Съобщаване за проблем</string>
+    <string name="menu_about">Относно</string>
+    <string name="msg_restricted" formatted="false">%s е ограничен от XPrivacy</string>
+    <string name="restrict_accounts">Сметки (Google, Facebook и т.н.)</string>
+    <string name="restrict_boot">Стартиране (при пускане на системата)</string>
+    <string name="restrict_browser">Браузър (отметки/история)</string>
+    <string name="restrict_calendar">Календар</string>
+    <string name="restrict_contacts">Контакти</string>
+    <string name="restrict_identification">Идентификация (устройство, Wi-Fi)</string>
+    <string name="restrict_location">Местоположение (точно/приблизително)</string>
+    <string name="restrict_media">Медия (аудио, снимки, клипове)</string>
+    <string name="restrict_messages">Съобщения (SMS, MMS)</string>
+    <string name="restrict_phone">Телефон (ID, номера, обаждания)</string>
+    <string name="restrict_storage">Място за съхранение (SD карта)</string>
+    <string name="restrict_system">Система (инсталирани приложения)</string>
+    <string name="settings_restrict">Отбележи за ограничаване:</string>
+    <string name="help_icon">Икона</string>
+    <string name="help_application">Приложение</string>
+    <string name="help_internet">има разрешение за интернет</string>
+    <string name="help_granted">има разрешение в Android</string>
+    <string name="help_used">имало e достъп до тези данни</string>
+
+</resources>
