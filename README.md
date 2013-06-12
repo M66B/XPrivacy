@@ -60,15 +60,20 @@ If you have any question or want to request a new feature, you can leave a messa
 
 **Using XPrivacy is entirely at your own risk**
 
-Screenshots
------------
-
 ![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/xposed.png) ![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/manage_apps.png)
 ![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)
 ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
 
-Data
-----
+Features
+--------
+
+* Simple to use
+* No need to patch anything (source, [smali](https://code.google.com/p/smali/))
+* For any (stock) variant of Android version 4.1 or 4.2 (JellyBean)
+* New apps are by default restricted
+
+Restricted data
+---------------
 
 * Accounts (including auth token)
 * [APN](http://en.wikipedia.org/wiki/Access_Point_Name) data
@@ -84,13 +89,6 @@ Data
 * Record video
 * Read sdcard (revoke permission)
 * Take photos
-
-Features
---------
-
-* Restriction management
-* Category browser
-* Default restrict new apps
 
 Installation
 ------------
