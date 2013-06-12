@@ -185,7 +185,8 @@ Contributing
 
 Translations:
 
-* [Strings](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml)
+* Translate the strings in [this file](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml)
+* Send the translated file to me [via an XDA PM](http://forum.xda-developers.com/member.php?u=2799345)
 
 Restrict new data:
 
