@@ -161,9 +161,10 @@ Changelog
 
 **Version 0.12**
 
-* Several user interface improvements
 * Android version check
+* Check if XPrivacy is enabled
 * Async app list fetch
+* Several user interface improvements
 * Expert mode: prevent app start
 * Added Dutch/Flemish translation
 * Added Bulgarian translation, thanks [borislavba](https://github.com/borislavba)
