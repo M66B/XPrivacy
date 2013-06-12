@@ -61,13 +61,6 @@ which is provided as download for both Android version 4.1 and 4.2.
 ![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)
 ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
 
-Support
--------
-
-If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues).
-If you have any question or want to request a new feature,
-you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
-
 Features
 --------
 
@@ -149,6 +142,13 @@ Frequently asked questions
 * Does XPrivacy use the Android permissions for something? No, Android permissions are just displayed as a guideline.
 * How can I reset all XPrivacy settings? *Manage apps* > *XPrivacy* > *Clear data*
 * Will XPrivacy make my device slower? Not noticeable.
+
+Support
+-------
+
+If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues).
+If you have any question or want to request a new feature,
+you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
 Similar solutions
 -----------------
