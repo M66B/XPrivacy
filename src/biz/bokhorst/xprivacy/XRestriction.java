@@ -139,12 +139,6 @@ public class XRestriction {
 		return false;
 	}
 
-	public static String getLocalizedName(Context context, String restrictionName) {
-		String packageName = XRestriction.class.getPackage().getName();
-		int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
-		return (stringId == 0 ? null : context.getString(stringId));
-	}
-
 	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage) {
 		try {
 			if (uid == XRestriction.cUidAndroid)
@@ -234,6 +228,12 @@ public class XRestriction {
 				Log.INFO,
 				String.format("set %s/%s %s=%b", getPackageName(context, uid),
 						(hook == null ? null : hook.getMethodName()), restrictionName, restricted));
+	}
+
+	public static String getLocalizedName(Context context, String restrictionName) {
+		String packageName = XRestriction.class.getPackage().getName();
+		int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
+		return (stringId == 0 ? null : context.getString(stringId));
 	}
 
 	private static String getPackageName(Context context, int uid) {

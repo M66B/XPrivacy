@@ -67,7 +67,7 @@ public class XPrivacyProvider extends ContentProvider {
 	@Override
 	public Cursor query(Uri uri, String[] projection, String restrictionName, String[] selectionArgs, String sortOrder) {
 		if (selectionArgs != null) {
-			// Get arguments
+			// Get preferences
 			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
 
 			if (sUriMatcher.match(uri) == TYPE_RESTRICTION && selectionArgs.length >= 2) {
@@ -177,6 +177,11 @@ public class XPrivacyProvider extends ContentProvider {
 		throw new IllegalArgumentException();
 	}
 
+	@Override
+	public int delete(Uri url, String where, String[] selectionArgs) {
+		throw new IllegalArgumentException();
+	}
+
 	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
 	private void updateStoragePackages(int uid, String restrictionName, boolean allowed) {
@@ -239,10 +244,5 @@ public class XPrivacyProvider extends ContentProvider {
 
 	private static String getPackagesPref(String restrictionName) {
 		return cPackages + "." + restrictionName;
-	}
-
-	@Override
-	public int delete(Uri url, String where, String[] selectionArgs) {
-		throw new IllegalArgumentException();
 	}
 }
