@@ -55,15 +55,18 @@ Root access is needed to install the Xposed framework.
 Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xposed binary,
 which is provided as download for both Android version 4.1 and 4.2.
 
-If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues).
-If you have any question or want to request a new feature,
-you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
-
 **Using XPrivacy is entirely at your own risk**
 
 ![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/xposed.png) ![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/manage_apps.png)
 ![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)
 ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
+
+Support
+-------
+
+If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues).
+If you have any question or want to request a new feature,
+you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
 Features
 --------
