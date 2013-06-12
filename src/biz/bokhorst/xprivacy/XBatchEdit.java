@@ -25,6 +25,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
@@ -56,8 +57,10 @@ public class XBatchEdit extends Activity {
 			@Override
 			public void onClick(View v) {
 				Dialog dialog = new Dialog(XBatchEdit.this);
+				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
 				dialog.setContentView(R.layout.xhelp);
+				dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
 				dialog.setCancelable(true);
 				dialog.show();
 			}
