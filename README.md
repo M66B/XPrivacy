@@ -56,7 +56,8 @@ Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xpose
 which is provided as download for both Android version 4.1 and 4.2.
 
 If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues).
-If you have any question or want to request a new feature, you can leave a message in the XDA XPrivacy forum thread.
+If you have any question or want to request a new feature,
+you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
 **Using XPrivacy is entirely at your own risk**
 
@@ -151,7 +152,11 @@ Similar solutions
 Contributing
 ------------
 
-To restrict new data:
+Translations:
+
+* [Strings](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml)
+
+Restrict new data:
 
 * Find the package/class/method that exposes the data (look into the Android documentation/sources)
 * Figure out a way to get a context (see existing code for examples)
