@@ -66,6 +66,20 @@ public class XMain extends Activity {
 			alertDialog.show();
 		}
 
+		// Check if XPrivacy is enabled
+		if (!XUtil.isXposedEnabled()) {
+			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			alertDialog.setTitle(getString(R.string.app_name));
+			alertDialog.setMessage(String.format(getString(R.string.app_notenabled), cXposedMinVersion));
+			alertDialog.setIcon(R.drawable.ic_launcher);
+			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+			alertDialog.show();
+		}
+
 		// Fill restriction list view adapter
 		final List<String> listRestriction = XRestriction.getRestrictions(this);
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);

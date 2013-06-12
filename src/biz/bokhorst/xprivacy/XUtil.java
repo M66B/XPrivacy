@@ -2,6 +2,8 @@ package biz.bokhorst.xprivacy;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.regex.Matcher;
@@ -52,6 +54,22 @@ public class XUtil {
 		} catch (Throwable ex) {
 		}
 		return -1;
+	}
+
+	public static boolean isXposedEnabled() {
+		try {
+			String module;
+			boolean found = false;
+			String self = XUtil.class.getPackage().getName();
+			BufferedReader fileWhitelist = new BufferedReader(new FileReader("/data/xposed/modules.whitelist"));
+			while (!found && (module = fileWhitelist.readLine()) != null)
+				found = module.equals(self);
+			fileWhitelist.close();
+			return found;
+		} catch (IOException ex) {
+			bug(null, ex);
+			return false;
+		}
 	}
 
 	public static Context getXContext(Context context) throws Throwable {

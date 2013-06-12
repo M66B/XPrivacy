@@ -2,6 +2,7 @@
 
     <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed framework versie %d+ is niet geïnstalleerd</string>
+    <string name="app_notenabled">XPrivacy is niet aangezet in de Xposed installer</string>
     <string name="app_wrongandroid">Alleen getest met Android versie 4.1 and 4.2 (JellyBean)</string>
     <string name="app_version" formatted="false">XPrivacy versie: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework versie: %d</string>
