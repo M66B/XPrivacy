@@ -2,6 +2,7 @@
 
     <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed framework version %d+ not installed</string>
+    <string name="app_wrongandroid">Only tested with Android version 4.1 and 4.2 (JellyBean)</string>
     <string name="app_version" formatted="false">Version: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed version: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>

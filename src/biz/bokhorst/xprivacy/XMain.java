@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.util.List;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,6 +32,21 @@ public class XMain extends Activity {
 		super.onCreate(savedInstanceState);
 		// Set layout
 		setContentView(R.layout.xmain);
+
+		// Check Android version
+		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
+				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR1) {
+			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			alertDialog.setTitle(getString(R.string.app_name));
+			alertDialog.setMessage(getString(R.string.app_wrongandroid));
+			alertDialog.setIcon(R.drawable.ic_launcher);
+			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+			alertDialog.show();
+		}
 
 		// Check Xposed version
 		int xVersion = XUtil.getXposedVersion();

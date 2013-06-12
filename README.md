@@ -127,7 +127,7 @@ All other restrictions have usage data and send no or fake data.
 Tricks:
 
 * Click the application icon in the category browser to go to the app restriction settings
-* Click the orange triangle to see the actual Android methods used
+* Click the orange triangle to see the actual Android functions that were used by the app
 
 Frequently asked questions
 --------------------------

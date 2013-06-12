@@ -23,10 +23,6 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	public void initZygote(StartupParam startupParam) throws Throwable {
-		// Check version
-		if (Build.VERSION.SDK_INT != 16)
-			XUtil.log(null, Log.WARN, String.format("Build version %d", Build.VERSION.SDK_INT));
-
 		// Account manager
 		hook(new XAccountManager("getAccounts", XRestriction.cAccounts, new String[] { "GET_ACCOUNTS" }),
 				"android.accounts.AccountManager");
