@@ -30,6 +30,6 @@
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetno dovoljenje</string>
     <string name="help_granted">uporablja Android dovoljenja</string>
-    <string name="help_used">je uporabljal te datoteke</string>
+    <string name="help_used">je uporabljal te podatke</string>
 
 </resources>
