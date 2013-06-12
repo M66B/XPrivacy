@@ -71,6 +71,7 @@ Features
 * No need to patch anything (source, [smali](https://code.google.com/p/smali/))
 * For any (stock) variant of Android version 4.1 or 4.2 (JellyBean)
 * New apps are by default restricted
+* Open source
 
 Restricted data
 ---------------
