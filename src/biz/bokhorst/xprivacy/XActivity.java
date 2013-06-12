@@ -30,7 +30,7 @@ public class XActivity extends XHook {
 		if (intent != null && mActionName.equals(intent.getAction()))
 			if (isRestricted(param)) {
 				param.setResult(null);
-				notifyUser();
+				notifyUser(mActionName);
 			}
 	}
 

@@ -49,13 +49,13 @@ public abstract class XHook {
 		XRestriction.setRestricted(this, context, uid, mRestrictionName, restricted);
 	}
 
-	protected void notifyUser() throws Throwable {
-		notifyUser(getApplicationContext());
+	protected void notifyUser(String message) throws Throwable {
+		notifyUser(getApplicationContext(), message);
 	}
 
-	protected void notifyUser(Context context) throws Throwable {
+	protected void notifyUser(Context context, String message) throws Throwable {
 		String format = XUtil.getXString(context, R.string.msg_restricted);
-		String text = String.format(format, this.getClass().getSimpleName(), getMethodName());
+		String text = String.format(format, message);
 		Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
 		toast.show();
 	}

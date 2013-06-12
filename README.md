@@ -103,6 +103,13 @@ Installation
 * Flash the correct Xposed fix from [here](http://goo.im/devs/M66B/xprivacy)
 * Reboot
 
+Upgrading
+---------
+
+* Uninstall the previous version
+* Reboot your device
+* Follow the installation instructions
+
 Usage
 -----
 
@@ -131,6 +138,7 @@ Frequently asked questions
 * What did you fix in the Xposed framework? See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51bae5d3dda).
 * Does XPrivacy use the Android permissions for something? No, Android permissions are just displayed as a guideline.
 * How can I reset all XPrivacy settings? *Manage apps* > *XPrivacy* > *Clear data*
+* Will XPrivacy make my device slower? Not noticeable.
 
 Similar solutions
 -----------------

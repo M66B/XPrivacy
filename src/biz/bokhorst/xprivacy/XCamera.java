@@ -23,7 +23,7 @@ public class XCamera extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (isRestricted(param)) {
 			param.setResult(null);
-			notifyUser();
+			notifyUser(this.getClass().getSimpleName());
 		}
 	}
 

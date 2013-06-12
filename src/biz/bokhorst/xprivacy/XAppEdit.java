@@ -1,13 +1,17 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -110,13 +114,22 @@ public class XAppEdit extends Activity {
 			imgUsed.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
+					// Get audit
+					ContentResolver contentResolver = view.getContext().getContentResolver();
+					Cursor cursor = contentResolver.query(XPrivacyProvider.URI_AUDIT, null, restrictionName,
+							new String[] { Integer.toString(mAppInfo.uid) }, null);
+					List<String> listAudit = new ArrayList<String>();
+					while (cursor.moveToNext())
+						listAudit.add(cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_METHOD)));
+					cursor.close();
+					Collections.sort(listAudit);
+
+					// Display audit
 					String localRestrictionName = XRestriction.getLocalizedName(view.getContext(), restrictionName);
-					String[] methodName = XPrivacyProvider.getMethodUsage(view.getContext(), mAppInfo.uid,
-							restrictionName);
 					AlertDialog alertDialog = new AlertDialog.Builder(XAppEdit.this).create();
 					alertDialog.setTitle(localRestrictionName);
-					alertDialog.setMessage(TextUtils.join("\n", methodName));
 					alertDialog.setIcon(R.drawable.ic_launcher);
+					alertDialog.setMessage(TextUtils.join("\n", listAudit));
 					alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {

@@ -2,10 +2,8 @@ package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.content.ContentProvider;
@@ -23,26 +21,31 @@ import android.util.Log;
 public class XPrivacyProvider extends ContentProvider {
 
 	public static final String AUTHORITY = "biz.bokhorst.xprivacy.provider";
-	public static final String PATH_RESTRICTIONS = "restrictions";
-	public static final String PATH_LASTUSED = "lastuse";
-	public static final Uri URI_RESTRICTIONS = Uri.parse("content://" + AUTHORITY + "/" + PATH_RESTRICTIONS);
-	public static final Uri URI_LASTUSED = Uri.parse("content://" + AUTHORITY + "/" + PATH_LASTUSED);
+	public static final String PATH_RESTRICTION = "restriction";
+	public static final String PATH_USAGE = "usage";
+	public static final String PATH_AUDIT = "audit";
+	public static final Uri URI_RESTRICTION = Uri.parse("content://" + AUTHORITY + "/" + PATH_RESTRICTION);
+	public static final Uri URI_USAGE = Uri.parse("content://" + AUTHORITY + "/" + PATH_USAGE);
+	public static final Uri URI_AUDIT = Uri.parse("content://" + AUTHORITY + "/" + PATH_AUDIT);
 
-	public static final String COL_NAME = "Name";
-	public static final String COL_RESTRICTED = "Restricted";
 	public static final String COL_UID = "Uid";
-	public static final String COL_LASTUSED = "LastUsed";
+	public static final String COL_RESTRICTION = "Restriction";
+	public static final String COL_RESTRICTED = "Restricted";
+	public static final String COL_METHOD = "Method";
+	public static final String COL_TIME = "Time";
 
 	private static final UriMatcher sUriMatcher;
-	private static final int TYPE_RESTRICTIONS = 1;
-	private static final int TYPE_LASTUSED = 2;
+	private static final int TYPE_RESTRICTION = 1;
+	private static final int TYPE_USAGE = 2;
+	private static final int TYPE_AUDIT = 3;
 
 	private static final String cPackages = "Packages";
 
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sUriMatcher.addURI(AUTHORITY, PATH_RESTRICTIONS, TYPE_RESTRICTIONS);
-		sUriMatcher.addURI(AUTHORITY, PATH_LASTUSED, TYPE_LASTUSED);
+		sUriMatcher.addURI(AUTHORITY, PATH_RESTRICTION, TYPE_RESTRICTION);
+		sUriMatcher.addURI(AUTHORITY, PATH_USAGE, TYPE_USAGE);
+		sUriMatcher.addURI(AUTHORITY, PATH_AUDIT, TYPE_AUDIT);
 	}
 
 	@Override
@@ -52,10 +55,12 @@ public class XPrivacyProvider extends ContentProvider {
 
 	@Override
 	public String getType(Uri uri) {
-		if (sUriMatcher.match(uri) == TYPE_RESTRICTIONS)
-			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_RESTRICTIONS);
-		else if (sUriMatcher.match(uri) == TYPE_LASTUSED)
-			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_LASTUSED);
+		if (sUriMatcher.match(uri) == TYPE_RESTRICTION)
+			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_RESTRICTION);
+		else if (sUriMatcher.match(uri) == TYPE_USAGE)
+			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_USAGE);
+		else if (sUriMatcher.match(uri) == TYPE_AUDIT)
+			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_AUDIT);
 		throw new IllegalArgumentException();
 	}
 
@@ -65,7 +70,7 @@ public class XPrivacyProvider extends ContentProvider {
 			// Get arguments
 			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
 
-			if (sUriMatcher.match(uri) == TYPE_RESTRICTIONS && selectionArgs.length >= 2) {
+			if (sUriMatcher.match(uri) == TYPE_RESTRICTION && selectionArgs.length >= 2) {
 				// Get arguments
 				int uid = Integer.parseInt(selectionArgs[0]);
 				boolean usage = Boolean.parseBoolean(selectionArgs[1]);
@@ -86,22 +91,32 @@ public class XPrivacyProvider extends ContentProvider {
 
 				// Decode restrictions
 				List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
-				boolean defaultAllowed = listRestriction.get(0).equals("*");
+				boolean defaultRestricted = listRestriction.get(0).equals("*");
 
-				// Check if allowed
-				boolean allowed = !listRestriction.contains(Integer.toString(uid));
-				if (!defaultAllowed)
-					allowed = !allowed;
+				// Check if restricted
+				boolean restricted = !listRestriction.contains(Integer.toString(uid));
+				if (!defaultRestricted)
+					restricted = !restricted;
 
 				// Return restriction
-				MatrixCursor cursor = new MatrixCursor(new String[] { COL_NAME, COL_RESTRICTED });
-				cursor.addRow(new Object[] { restrictionName, Boolean.toString(!allowed) });
+				MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_RESTRICTED });
+				cursor.addRow(new Object[] { uid, restrictionName, Boolean.toString(!restricted) });
 				return cursor;
-			} else if (sUriMatcher.match(uri) == TYPE_LASTUSED && selectionArgs.length == 1) {
+			} else if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs.length == 1) {
 				// Return usage
 				int uid = Integer.parseInt(selectionArgs[0]);
-				MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_NAME, COL_LASTUSED });
+				MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_TIME });
 				cursor.addRow(new Object[] { uid, restrictionName, prefs.getLong(getUsagePref(uid, restrictionName), 0) });
+				return cursor;
+			} else if (sUriMatcher.match(uri) == TYPE_AUDIT && selectionArgs.length == 1) {
+				// Return audit
+				int uid = Integer.parseInt(selectionArgs[0]);
+				String prefix = getUsagePref(uid, restrictionName) + ".";
+				MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_TIME });
+				for (String pref : prefs.getAll().keySet())
+					if (pref.startsWith(prefix))
+						cursor.addRow(new Object[] { uid, restrictionName, pref.substring(prefix.length()),
+								prefs.getLong(pref, 0) });
 				return cursor;
 			}
 		}
@@ -116,7 +131,7 @@ public class XPrivacyProvider extends ContentProvider {
 	@Override
 	public int update(Uri uri, ContentValues values, String restrictionName, String[] selectionArgs) {
 		// TODO: register update time?
-		if (sUriMatcher.match(uri) == TYPE_RESTRICTIONS) {
+		if (sUriMatcher.match(uri) == TYPE_RESTRICTION) {
 			// Check update restriction
 			int cuid = Binder.getCallingUid();
 			String[] packages = getContext().getPackageManager().getPackagesForUid(cuid);
@@ -189,18 +204,6 @@ public class XPrivacyProvider extends ContentProvider {
 		sEditor.commit();
 	}
 
-	public static String[] getMethodUsage(Context context, int uid, String restrictionName) {
-		SharedPreferences prefs = context.getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
-		Map<String, ?> all = prefs.getAll();
-		String prefix = getUsagePref(uid, restrictionName) + ".";
-		List<String> listMethod = new ArrayList<String>();
-		for (String pref : all.keySet())
-			if (pref.startsWith(prefix))
-				listMethod.add(pref.substring(prefix.length()));
-		Collections.sort(listMethod);
-		return listMethod.toArray(new String[0]);
-	}
-
 	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
 	public static boolean getRestricted(XHook hook, Context context, String packageName, String restrictionName,
@@ -227,7 +230,7 @@ public class XPrivacyProvider extends ContentProvider {
 	}
 
 	private static String getUsagePref(int uid, String restrictionName) {
-		return COL_LASTUSED + "." + uid + "." + restrictionName;
+		return COL_TIME + "." + uid + "." + restrictionName;
 	}
 
 	private static String getMethodPref(int uid, String restrictionName, String methodName) {

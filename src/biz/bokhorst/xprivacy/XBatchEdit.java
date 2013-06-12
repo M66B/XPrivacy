@@ -10,11 +10,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -139,13 +141,22 @@ public class XBatchEdit extends Activity {
 			imgUsed.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
+					// Get audit
+					ContentResolver contentResolver = view.getContext().getContentResolver();
+					Cursor cursor = contentResolver.query(XPrivacyProvider.URI_AUDIT, null, mRestrictionName,
+							new String[] { Integer.toString(appEntry.getUid()) }, null);
+					List<String> listAudit = new ArrayList<String>();
+					while (cursor.moveToNext())
+						listAudit.add(cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_METHOD)));
+					cursor.close();
+					Collections.sort(listAudit);
+
+					// Display audit
 					String localRestrictionName = XRestriction.getLocalizedName(view.getContext(), mRestrictionName);
-					String[] methodName = XPrivacyProvider.getMethodUsage(view.getContext(), appEntry.getUid(),
-							mRestrictionName);
 					AlertDialog alertDialog = new AlertDialog.Builder(XBatchEdit.this).create();
 					alertDialog.setTitle(localRestrictionName);
-					alertDialog.setMessage(TextUtils.join("\n", methodName));
 					alertDialog.setIcon(R.drawable.ic_launcher);
+					alertDialog.setMessage(TextUtils.join("\n", listAudit));
 					alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {

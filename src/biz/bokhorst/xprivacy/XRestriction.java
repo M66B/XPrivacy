@@ -129,10 +129,10 @@ public class XRestriction {
 
 	public static boolean isUsed(Context context, int uid, String restrictionName) {
 		ContentResolver cr = context.getContentResolver();
-		Cursor cursor = cr.query(XPrivacyProvider.URI_LASTUSED, null, restrictionName,
+		Cursor cursor = cr.query(XPrivacyProvider.URI_USAGE, null, restrictionName,
 				new String[] { Integer.toString(uid) }, null);
 		if (cursor.moveToNext()) {
-			long lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_LASTUSED));
+			long lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_TIME));
 			cursor.close();
 			return (lastUsage != 0);
 		}
@@ -174,7 +174,7 @@ public class XRestriction {
 
 			// Query restriction
 			String methodName = (hook == null ? null : hook.getMethodName());
-			Cursor cursor = contentResolver.query(XPrivacyProvider.URI_RESTRICTIONS, null, restrictionName,
+			Cursor cursor = contentResolver.query(XPrivacyProvider.URI_RESTRICTION, null, restrictionName,
 					new String[] { Integer.toString(uid), Boolean.toString(usage), methodName }, null);
 			if (cursor == null) {
 				XUtil.log(hook, Log.WARN, "cursor is null");
@@ -199,7 +199,7 @@ public class XRestriction {
 			return restricted;
 		} catch (Throwable ex) {
 			XUtil.bug(hook, ex);
-			return true;
+			return false;
 		}
 	}
 
@@ -227,7 +227,7 @@ public class XRestriction {
 		ContentValues values = new ContentValues();
 		values.put(XPrivacyProvider.COL_UID, uid);
 		values.put(XPrivacyProvider.COL_RESTRICTED, Boolean.toString(restricted));
-		contentResolver.update(XPrivacyProvider.URI_RESTRICTIONS, values, restrictionName, null);
+		contentResolver.update(XPrivacyProvider.URI_RESTRICTION, values, restrictionName, null);
 
 		XUtil.log(
 				hook,
