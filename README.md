@@ -151,6 +151,17 @@ preferably including a [logcat](http://developer.android.com/tools/help/logcat.h
 If you have any question or want to request a new feature,
 you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
+Changelog
+---------
+
+**Version 0.12**
+
+* Several user interface improvements
+* Android version check
+* Async app list fetch
+* Added Dutch/Flemish translation
+* Added Bulgarian translation, thank you *Borislav*
+
 Similar solutions
 -----------------
 
