@@ -71,7 +71,7 @@ Data
 ----
 
 * Accounts (including auth token)
-* APN data
+* [APN](http://en.wikipedia.org/wiki/Access_Point_Name) data
 * Application data (installed apps)
 * Browser (bookmarks, searches)
 * Calendar
@@ -80,7 +80,7 @@ Data
 * Location (coarse/fine, cell location/info)
 * Messages (SMS/MMS, voicemail: **untested**, ICC SMS)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
-* Record audio
+* Record audio (including microphone)
 * Record video
 * Read sdcard (revoke permission)
 * Take photos
