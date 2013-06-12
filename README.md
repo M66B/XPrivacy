@@ -148,8 +148,8 @@ Similar solutions
 * [PDroid 2.0](http://forum.xda-developers.com/showthread.php?t=1923576)
 * [OpenPDroid](http://forum.xda-developers.com/showthread.php?t=2098156)
 
-Developing
-----------
+Contributing
+------------
 
 To restrict new data:
 
