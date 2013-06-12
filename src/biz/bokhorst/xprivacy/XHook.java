@@ -16,7 +16,8 @@ public abstract class XHook {
 	public XHook(String methodName, String restrictionName, String[] permissions) {
 		mMethodName = methodName;
 		mRestrictionName = restrictionName;
-		XRestriction.registerMethod(methodName, restrictionName, permissions);
+		if (restrictionName != null)
+			XRestriction.registerMethod(methodName, restrictionName, permissions);
 	}
 
 	public String getMethodName() {
