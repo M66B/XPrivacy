@@ -19,6 +19,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.SparseArray;
@@ -30,13 +31,14 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class XBatchEdit extends Activity {
 
 	public static final String cRestrictionName = "Restriction";
 
-	private AppListAdapter mAppAdapter;
+	private AppListAdapter mAppAdapter = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,32 +68,65 @@ public class XBatchEdit extends Activity {
 			}
 		});
 
-		// Get app list
-		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
-		List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
-		for (ApplicationInfo appInfo : getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA))
-			if (appInfo.uid != XRestriction.cUidAndroid
-					&& !appInfo.packageName.equals(XBatchEdit.class.getPackage().getName())) {
-				XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
-				if (xAppInfo == null) {
-					xAppInfo = new XApplicationInfo(appInfo, restrictionName, getPackageManager());
-					mapApp.put(appInfo.uid, xAppInfo);
-					listApp.add(xAppInfo);
-				} else
-					xAppInfo.AddApplicationName((String) getPackageManager().getApplicationLabel(appInfo));
-			}
-		Collections.sort(listApp);
-
-		// Fill app list view adapter
-		final ListView lvApp = (ListView) findViewById(R.id.lvApp);
-		mAppAdapter = new AppListAdapter(this, R.layout.xbatchentry, listApp, restrictionName);
-		lvApp.setAdapter(mAppAdapter);
+		// Start task to get app list
+		AppListTask appListTask = new AppListTask();
+		appListTask.execute(restrictionName);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mAppAdapter.notifyDataSetChanged();
+		if (mAppAdapter != null)
+			mAppAdapter.notifyDataSetChanged();
+	}
+
+	private class AppListTask extends AsyncTask<String, Integer, List<XApplicationInfo>> {
+
+		private String mRestrictionName;
+
+		@Override
+		protected List<XApplicationInfo> doInBackground(String... params) {
+			// Get app list
+			mRestrictionName = params[0];
+			SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
+			List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
+			for (ApplicationInfo appInfo : getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA))
+				if (appInfo.uid != XRestriction.cUidAndroid
+						&& !appInfo.packageName.equals(XBatchEdit.class.getPackage().getName())) {
+					XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
+					if (xAppInfo == null) {
+						xAppInfo = new XApplicationInfo(appInfo, mRestrictionName, getPackageManager());
+						mapApp.put(appInfo.uid, xAppInfo);
+						listApp.add(xAppInfo);
+					} else
+						xAppInfo.AddApplicationName((String) getPackageManager().getApplicationLabel(appInfo));
+				}
+			Collections.sort(listApp);
+			return listApp;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			// Show indeterminate progress circle
+			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
+			progressBar.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		protected void onPostExecute(List<XApplicationInfo> listApp) {
+			super.onPostExecute(listApp);
+
+			// Display app list
+			mAppAdapter = new AppListAdapter(XBatchEdit.this, R.layout.xbatchentry, listApp, mRestrictionName);
+			final ListView lvApp = (ListView) findViewById(R.id.lvApp);
+			lvApp.setAdapter(mAppAdapter);
+
+			// Hide indeterminate progress circle
+			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
+			progressBar.setVisibility(View.GONE);
+		}
 	}
 
 	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> {
