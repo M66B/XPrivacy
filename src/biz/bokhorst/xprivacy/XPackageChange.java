@@ -18,7 +18,7 @@ public class XPackageChange extends BroadcastReceiver {
 			int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 			boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
 
-			if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
+			if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED) && !replacing) {
 				// Package added
 				XUtil.log(null, Log.INFO, "Added package=" + packageName + " uid=" + uid);
 
