@@ -1,7 +1,23 @@
 XPrivacy
 ========
 
-Privacy manager using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
+The ultimate, yet easy to use, privacy manager
+
+Index
+-----
+
+* [Description](https://github.com/M66B/XPrivacy#description)
+* [Features](https://github.com/M66B/XPrivacy#features)
+* [Restricted data](https://github.com/M66B/XPrivacy#restricted-data)
+* [Installation](https://github.com/M66B/XPrivacy#installation)
+* [Upgrading](https://github.com/M66B/XPrivacy#upgrading)
+* [Usage](https://github.com/M66B/XPrivacy#usage)
+* [Frequently asked questions](https://github.com/M66B/XPrivacy#frequently-asked-questions)
+* [Support](https://github.com/M66B/XPrivacy#support)
+* [Changelog](https://github.com/M66B/XPrivacy#changelog)
+* [Similar solutions](https://github.com/M66B/XPrivacy#similar-solutions)
+* [Contributing](https://github.com/M66B/XPrivacy#contributing)
+* [License](https://github.com/M66B/XPrivacy#license)
 
 Description
 -----------
@@ -48,7 +64,7 @@ since checking permissions for all applications is quite slow.
 XPrivacy is accessible for each application from the Android *Manage apps* menu.
 The category browser is accessible from the application list or application drawer.
 
-XPrivacy is built using the Xposed framework.
+XPrivacy is built using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401).
 XPrivacy taps into a number of selected functions of Android through the Xposed framework.
 Depending on the function, XPrivacy conditionally skips execution of the original function
 (for example when an application tries to set a proximity alert)
@@ -110,9 +126,8 @@ Installation
 Upgrading
 ---------
 
-* Uninstall the previous version
+* Install the new version (replacing the previous version)
 * Reboot your device
-* Follow the installation instructions
 
 Usage
 -----
