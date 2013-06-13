@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
-    android:versionCode="19"
-    android:versionName="0.12" >
+    android:versionCode="20"
+    android:versionName="0.13" >
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="16" />
+        android:targetSdkVersion="17" />
 
     <application
         android:allowBackup="true"
@@ -41,18 +41,9 @@
         <receiver android:name=".XPackageChange" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
                 <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".XTestCallReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".XTestCallReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </receiver>
 

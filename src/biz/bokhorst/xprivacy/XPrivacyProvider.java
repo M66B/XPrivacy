@@ -34,7 +34,7 @@ public class XPrivacyProvider extends ContentProvider {
 	public static final String COL_RESTRICTION = "Restriction";
 	public static final String COL_RESTRICTED = "Restricted";
 	public static final String COL_METHOD = "Method";
-	public static final String COL_TIME = "Time";
+	public static final String COL_USED = "Used";
 	public static final String COL_SETTING = "Setting";
 	public static final String COL_ENABLED = "Enabled";
 
@@ -114,7 +114,7 @@ public class XPrivacyProvider extends ContentProvider {
 			// Return usage
 			String restrictionName = selection;
 			int uid = Integer.parseInt(selectionArgs[0]);
-			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_TIME });
+			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_USED });
 			cursor.addRow(new Object[] { uid, restrictionName, prefs.getLong(getUsagePref(uid, restrictionName), 0) });
 			return cursor;
 		} else if (sUriMatcher.match(uri) == TYPE_AUDIT && selectionArgs != null && selectionArgs.length == 1) {
@@ -122,7 +122,7 @@ public class XPrivacyProvider extends ContentProvider {
 			String restrictionName = selection;
 			int uid = Integer.parseInt(selectionArgs[0]);
 			String prefix = getUsagePref(uid, restrictionName) + ".";
-			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_TIME });
+			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_USED });
 			for (String pref : prefs.getAll().keySet())
 				if (pref.startsWith(prefix))
 					cursor.addRow(new Object[] { uid, restrictionName, pref.substring(prefix.length()),
@@ -140,18 +140,16 @@ public class XPrivacyProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		throw new IllegalArgumentException(uri.toString());
+		// Check access
+		enforcePermission();
+
+		throw new IllegalArgumentException();
 	}
 
 	@Override
 	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 		// Check access
-		int cuid = Binder.getCallingUid();
-		String[] packages = getContext().getPackageManager().getPackagesForUid(cuid);
-		List<String> listPackage = new ArrayList<String>(Arrays.asList(packages));
-		String packageName = XPrivacyProvider.class.getPackage().getName();
-		if (!listPackage.contains(packageName))
-			throw new SecurityException();
+		enforcePermission();
 
 		// Get preferences
 		SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
@@ -206,9 +204,45 @@ public class XPrivacyProvider extends ContentProvider {
 	}
 
 	@Override
-	public int delete(Uri url, String where, String[] selectionArgs) {
+	public int delete(Uri uri, String where, String[] selectionArgs) {
+		// Check access
+		enforcePermission();
+
+		if (sUriMatcher.match(uri) == TYPE_AUDIT && selectionArgs != null && selectionArgs.length == 1) {
+			// Get arguments
+			String restrictionName = where;
+			int uid = Integer.parseInt(selectionArgs[0]);
+
+			// Delete audit trail
+			int rows = 0;
+			String prefix = getUsagePref(uid, restrictionName);
+			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = prefs.edit();
+			for (String pref : prefs.getAll().keySet())
+				if (pref.startsWith(prefix)) {
+					rows++;
+					editor.remove(pref);
+					XUtil.log(null, Log.INFO, "Removed audit=" + pref);
+				}
+			editor.commit();
+			return rows;
+		}
 		throw new IllegalArgumentException();
 	}
+
+	private void enforcePermission() throws SecurityException {
+		// Only XPrivacy can insert, update or delete
+		int cuid = Binder.getCallingUid();
+		String[] packages = getContext().getPackageManager().getPackagesForUid(cuid);
+		List<String> listPackage = new ArrayList<String>(Arrays.asList(packages));
+		String self = XPrivacyProvider.class.getPackage().getName();
+		if (!listPackage.contains(self))
+			throw new SecurityException();
+	}
+
+	// The following two methods represent an ugly, not very secure hack
+	// Unfortunately the package manager service doesn't have a context
+	// Please contact me if you know a better solution
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
@@ -218,19 +252,21 @@ public class XPrivacyProvider extends ContentProvider {
 				Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS);
 		String storagePackages = prefs.getString(getPackagesPref(restrictionName), "");
 
-		// Build package list
+		// Current storage package list
 		List<String> listStoragePackage = new ArrayList<String>();
 		if (!storagePackages.equals(""))
 			listStoragePackage.addAll(Arrays.asList(storagePackages.split(",")));
 
-		// Update package list
-		for (String storagePackage : getContext().getPackageManager().getPackagesForUid(uid))
-			if (!allowed && !listStoragePackage.contains(storagePackage))
-				listStoragePackage.add(storagePackage);
-			else if (allowed && listStoragePackage.contains(storagePackage))
-				listStoragePackage.remove(storagePackage);
+		// Update storage package list
+		String[] packages = getContext().getPackageManager().getPackagesForUid(uid);
+		if (packages != null)
+			for (String storagePackage : packages)
+				if (!allowed && !listStoragePackage.contains(storagePackage))
+					listStoragePackage.add(storagePackage);
+				else if (allowed && listStoragePackage.contains(storagePackage))
+					listStoragePackage.remove(storagePackage);
 
-		// Store storage packages
+		// Store storage package list
 		storagePackages = TextUtils.join(",", listStoragePackage);
 		SharedPreferences.Editor sEditor = prefs.edit();
 		sEditor.putString(getPackagesPref(XRestriction.cStorage), storagePackages);
@@ -247,12 +283,12 @@ public class XPrivacyProvider extends ContentProvider {
 				Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS);
 		String storagePackages = prefs.getString(getPackagesPref(restrictionName), "");
 
-		// Build package list
+		// Build storage package list
 		List<String> listStoragePackage = new ArrayList<String>();
 		if (!storagePackages.equals(""))
 			listStoragePackage.addAll(Arrays.asList(storagePackages.split(",")));
 
-		// Check if restricted
+		// Check if package restricted
 		boolean restricted = listStoragePackage.contains(packageName);
 		XUtil.log(hook, Log.INFO, "package=" + packageName + " restricted=" + restricted);
 		return restricted;
@@ -263,7 +299,7 @@ public class XPrivacyProvider extends ContentProvider {
 	}
 
 	private static String getUsagePref(int uid, String restrictionName) {
-		return COL_TIME + "." + uid + "." + restrictionName;
+		return COL_USED + "." + uid + "." + restrictionName;
 	}
 
 	private static String getMethodPref(int uid, String restrictionName, String methodName) {

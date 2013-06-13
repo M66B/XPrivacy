@@ -134,7 +134,7 @@ public class XRestriction {
 		Cursor cursor = cr.query(XPrivacyProvider.URI_USAGE, null, restrictionName,
 				new String[] { Integer.toString(uid) }, null);
 		if (cursor.moveToNext())
-			lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_TIME));
+			lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_USED));
 		cursor.close();
 		return (lastUsage != 0);
 	}
@@ -264,6 +264,12 @@ public class XRestriction {
 		values.put(XPrivacyProvider.COL_ENABLED, Boolean.toString(enabled));
 		contentResolver.update(XPrivacyProvider.URI_SETTING, values, settingName, null);
 		XUtil.log(hook, Log.INFO, String.format("set %s=%b", settingName, enabled));
+	}
+
+	public static void deleteAuditTrail(Context context, int uid) {
+		for (String restrictionName : XRestriction.getRestrictions(context))
+			context.getContentResolver().delete(XPrivacyProvider.URI_AUDIT, restrictionName,
+					new String[] { Integer.toString(uid) });
 	}
 
 	public static String getLocalizedName(Context context, String restrictionName) {

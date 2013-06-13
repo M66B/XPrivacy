@@ -173,6 +173,10 @@ Changelog
 * Added Greek translation, thanks [mikeNG](https://github.com/mikeNG)
 * Added Slovenian translation, thanks [kv1dr](https://github.com/kv1dr)
 
+**Version 0.13**
+
+* Remove restrictions/audit trail when uninstalling app
+
 Similar solutions
 -----------------
 
