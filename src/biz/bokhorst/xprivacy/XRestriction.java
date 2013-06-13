@@ -1,6 +1,8 @@
 package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +41,9 @@ public class XRestriction {
 
 	public final static String cExpertMode = "ExpertMode";
 
+	private final static int cCacheTimeoutMs = 30 * 1000;
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
+	private static Map<String, CacheEntry> mRestrictionCache = new HashMap<String, CacheEntry>();
 
 	static {
 		mRestrictions.put(cAccounts, new ArrayList<String>());
@@ -142,6 +146,7 @@ public class XRestriction {
 		return (lastUsage != 0);
 	}
 
+	@SuppressLint("DefaultLocale")
 	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage) {
 		try {
 			if (uid == XRestriction.cUidAndroid)
@@ -159,6 +164,27 @@ public class XRestriction {
 				XUtil.log(hook, Log.WARN, "uid=0");
 				XUtil.logStack(hook);
 				return false;
+			}
+
+			// Check restriction
+			if (restrictionName == null || restrictionName.equals("")) {
+				XUtil.log(hook, Log.WARN, "restriction empty");
+				XUtil.logStack(hook);
+				return false;
+			}
+
+			// Check cache
+			String key = String.format("%d.%s", uid, restrictionName);
+			synchronized (mRestrictionCache) {
+				if (mRestrictionCache.containsKey(key)) {
+					CacheEntry entry = mRestrictionCache.get(key);
+					if (entry.isExpired())
+						mRestrictionCache.remove(key);
+					else {
+						logRestriction(hook, context, uid, "get", restrictionName, entry.isRestricted(), true);
+						return entry.isRestricted();
+					}
+				}
 			}
 
 			// Get content resolver
@@ -190,12 +216,15 @@ public class XRestriction {
 			}
 			cursor.close();
 
+			// Add to cache
+			synchronized (mRestrictionCache) {
+				if (mRestrictionCache.containsKey(key))
+					mRestrictionCache.remove(key);
+				mRestrictionCache.put(key, new CacheEntry(restricted));
+			}
+
 			// Result
-			XUtil.log(
-					hook,
-					Log.INFO,
-					String.format("get %s/%s %s=%b", getPackageName(context, uid),
-							(hook == null ? null : hook.getMethodName()), restrictionName, restricted));
+			logRestriction(hook, context, uid, "get", restrictionName, restricted, false);
 			return restricted;
 		} catch (Throwable ex) {
 			XUtil.bug(hook, ex);
@@ -229,11 +258,8 @@ public class XRestriction {
 		values.put(XPrivacyProvider.COL_RESTRICTED, Boolean.toString(restricted));
 		contentResolver.update(XPrivacyProvider.URI_RESTRICTION, values, restrictionName, null);
 
-		XUtil.log(
-				hook,
-				Log.INFO,
-				String.format("set %s/%s %s=%b", getPackageName(context, uid),
-						(hook == null ? null : hook.getMethodName()), restrictionName, restricted));
+		// Result
+		logRestriction(hook, context, uid, "set", restrictionName, restricted, false);
 	}
 
 	public static boolean getSetting(XHook hook, Context context, String settingName) {
@@ -275,10 +301,18 @@ public class XRestriction {
 					new String[] { Integer.toString(uid) });
 	}
 
+	// Helper methods
+
 	public static String getLocalizedName(Context context, String restrictionName) {
 		String packageName = XRestriction.class.getPackage().getName();
 		int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
 		return (stringId == 0 ? null : context.getString(stringId));
+	}
+
+	private static void logRestriction(XHook hook, Context context, int uid, String prefix, String restrictionName,
+			boolean restricted, boolean cached) {
+		XUtil.log(hook, Log.INFO, String.format("%s %s/%s %s=%b%s", prefix, getPackageName(context, uid),
+				(hook == null ? null : hook.getMethodName()), restrictionName, restricted, (cached ? " *" : "")));
 	}
 
 	private static String getPackageName(Context context, int uid) {
@@ -286,5 +320,25 @@ public class XRestriction {
 		if (packages != null && packages.length == 1)
 			return packages[0];
 		return Integer.toString(uid);
+	}
+
+	// Helper classes
+
+	private static class CacheEntry {
+		public long mTimestamp;
+		public boolean mRestricted;
+
+		public CacheEntry(boolean restricted) {
+			mTimestamp = new Date().getTime();
+			mRestricted = restricted;
+		}
+
+		public boolean isExpired() {
+			return (mTimestamp + cCacheTimeoutMs < new Date().getTime());
+		}
+
+		public boolean isRestricted() {
+			return mRestricted;
+		}
 	}
 }

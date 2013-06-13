@@ -178,9 +178,10 @@ Changelog
 
 **Version 0.13**
 
-* Internet restriction
+* Internet restriction (revoke permission)
 * Remove restrictions/audit trail when uninstalling an app
 * Custom write permission for privacy provider
+* Restriction caching (Play store installed app browse should be fast again)
 
 **Version 0.12**
 
