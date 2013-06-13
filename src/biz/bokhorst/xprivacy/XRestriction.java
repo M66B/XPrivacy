@@ -43,6 +43,7 @@ public class XRestriction {
 	public final static int cUidAndroid = 1000;
 	public final static String cExpertMode = "ExpertMode";
 
+	public final static boolean cPro = true;
 	public final static boolean cExperimental = false;
 
 	private final static int cCacheTimeoutMs = 30 * 1000;
@@ -59,7 +60,8 @@ public class XRestriction {
 		mRestrictions.put(cBoot, new ArrayList<String>());
 		mRestrictions.put(cBrowser, new ArrayList<String>());
 		mRestrictions.put(cCalendar, new ArrayList<String>());
-		mRestrictions.put(cCalling, new ArrayList<String>());
+		if (cPro)
+			mRestrictions.put(cCalling, new ArrayList<String>());
 		mRestrictions.put(cContacts, new ArrayList<String>());
 		mRestrictions.put(cIdentification, new ArrayList<String>());
 		mRestrictions.put(cInternet, new ArrayList<String>());
@@ -69,7 +71,8 @@ public class XRestriction {
 		if (XRestriction.cExperimental)
 			mRestrictions.put(cNetwork, new ArrayList<String>());
 		mRestrictions.put(cPhone, new ArrayList<String>());
-		mRestrictions.put(cStorage, new ArrayList<String>());
+		if (cPro)
+			mRestrictions.put(cStorage, new ArrayList<String>());
 		mRestrictions.put(cSystem, new ArrayList<String>());
 
 		// Permissions
@@ -80,11 +83,14 @@ public class XRestriction {
 		mRestrictions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
 		mRestrictions.get(cBrowser).add("GLOBAL_SEARCH");
 		mRestrictions.get(cCalendar).add("READ_CALENDAR");
-		mRestrictions.get(cCalling).add("SEND_SMS");
-		mRestrictions.get(cCalling).add("CALL_PHONE");
+		if (cPro) {
+			mRestrictions.get(cCalling).add("SEND_SMS");
+			mRestrictions.get(cCalling).add("CALL_PHONE");
+		}
 		mRestrictions.get(cContacts).add("READ_CONTACTS");
 		mRestrictions.get(cIdentification).add("ACCESS_WIFI_STATE");
-		mRestrictions.get(cInternet).add("INTERNET");
+		if (cPro)
+			mRestrictions.get(cInternet).add("INTERNET");
 		mRestrictions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mRestrictions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mRestrictions.get(cLocation).add("ACCESS_COARSE_UPDATES");
@@ -101,8 +107,10 @@ public class XRestriction {
 		mRestrictions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mRestrictions.get(cPhone).add("READ_CALL_LOG");
 		mRestrictions.get(cPhone).add("WRITE_APN_SETTINGS");
-		mRestrictions.get(cStorage).add("READ_EXTERNAL_STORAGE");
-		mRestrictions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
+		if (cPro) {
+			mRestrictions.get(cStorage).add("READ_EXTERNAL_STORAGE");
+			mRestrictions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
+		}
 	}
 
 	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {
@@ -163,8 +171,18 @@ public class XRestriction {
 		return (lastUsage != 0);
 	}
 
-	@SuppressLint("DefaultLocale")
+	public static boolean getRestrictedCached(XHook hook, Context context, int uid, String restrictionName,
+			boolean usage) {
+		return getRestricted(hook, context, uid, restrictionName, usage, true);
+	}
+
 	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage) {
+		return getRestricted(hook, context, uid, restrictionName, usage, false);
+	}
+
+	@SuppressLint("DefaultLocale")
+	private static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage,
+			boolean cache) {
 		try {
 			if (uid == XRestriction.cUidAndroid)
 				return false;
@@ -192,17 +210,18 @@ public class XRestriction {
 
 			// Check cache
 			String key = String.format("%d.%s", uid, restrictionName);
-			synchronized (mRestrictionCache) {
-				if (mRestrictionCache.containsKey(key)) {
-					CacheEntry entry = mRestrictionCache.get(key);
-					if (entry.isExpired())
-						mRestrictionCache.remove(key);
-					else {
-						logRestriction(hook, context, uid, "get", restrictionName, entry.isRestricted(), true);
-						return entry.isRestricted();
+			if (cache)
+				synchronized (mRestrictionCache) {
+					if (mRestrictionCache.containsKey(key)) {
+						CacheEntry entry = mRestrictionCache.get(key);
+						if (entry.isExpired())
+							mRestrictionCache.remove(key);
+						else {
+							logRestriction(hook, context, uid, "get", restrictionName, entry.isRestricted(), true);
+							return entry.isRestricted();
+						}
 					}
 				}
-			}
 
 			// Get content resolver
 			ContentResolver contentResolver = context.getContentResolver();

@@ -29,6 +29,8 @@ public class XAppEdit extends Activity {
 
 	public static final String cPackageName = "PackageName";
 
+	private RestrictionAdapter mPrivacyListAdapter = null;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
@@ -76,9 +78,16 @@ public class XAppEdit extends Activity {
 
 		// Fill privacy list view adapter
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
-		RestrictionAdapter privacyListAdapter = new RestrictionAdapter(this, R.layout.xappentry, appInfo,
+		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xappentry, appInfo,
 				XRestriction.getRestrictions(this));
-		lvRestriction.setAdapter(privacyListAdapter);
+		lvRestriction.setAdapter(mPrivacyListAdapter);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (mPrivacyListAdapter != null)
+			mPrivacyListAdapter.notifyDataSetChanged();
 	}
 
 	private class RestrictionAdapter extends ArrayAdapter<String> {

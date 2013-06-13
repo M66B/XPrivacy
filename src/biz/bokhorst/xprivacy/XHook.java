@@ -63,7 +63,7 @@ public abstract class XHook {
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) {
-		return XRestriction.getRestricted(this, context, uid, mRestrictionName, usage);
+		return XRestriction.getRestrictedCached(this, context, uid, mRestrictionName, usage);
 	}
 
 	protected void setRestricted(Context context, int uid, boolean restricted) {

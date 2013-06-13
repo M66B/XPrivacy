@@ -119,10 +119,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// Package manager service
-		hook(new XPackageManagerService("getPackageGids", XRestriction.cInternet, new String[] { "INTERNET" }),
-				"com.android.server.pm.PackageManagerService");
-		hook(new XPackageManagerService("getPackageGids", XRestriction.cStorage, new String[] {
-				"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE" }), "com.android.server.pm.PackageManagerService");
+		if (XRestriction.cPro) {
+			hook(new XPackageManagerService("getPackageGids", XRestriction.cInternet, new String[] { "INTERNET" }),
+					"com.android.server.pm.PackageManagerService");
+			hook(new XPackageManagerService("getPackageGids", XRestriction.cStorage, new String[] {
+					"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE" }), "com.android.server.pm.PackageManagerService");
+		}
 
 		// Settings secure
 		hook(new XSettingsSecure("getString", XRestriction.cIdentification), "android.provider.Settings.Secure");
@@ -130,12 +132,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// SMS manager
 		hook(new XSmsManager("getAllMessagesFromIcc", XRestriction.cMessages, new String[] { "RECEIVE_SMS" }),
 				"android.telephony.SmsManager");
-		hook(new XSmsManager("sendDataMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
-				"android.telephony.SmsManager");
-		hook(new XSmsManager("sendMultipartTextMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
-				"android.telephony.SmsManager");
-		hook(new XSmsManager("sendTextMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
-				"android.telephony.SmsManager");
+		if (XRestriction.cPro) {
+			hook(new XSmsManager("sendDataMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
+					"android.telephony.SmsManager");
+			hook(new XSmsManager("sendMultipartTextMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
+					"android.telephony.SmsManager");
+			hook(new XSmsManager("sendTextMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
+					"android.telephony.SmsManager");
+		}
 
 		// Telephony
 		hook(new XTelephonyManager("disableLocationUpdates", XRestriction.cLocation,
@@ -209,18 +213,20 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ActivityThread", false);
 
 		// Intent send: call
-		hook(new XActivity("startActivities", XRestriction.cCalling, new String[] { "CALL_PHONE" }, Intent.ACTION_CALL),
-				"android.app.Activity");
-		hook(new XActivity("startActivity", XRestriction.cCalling, new String[] { "CALL_PHONE" }, Intent.ACTION_CALL),
-				"android.app.Activity");
-		hook(new XActivity("startActivityForResult", XRestriction.cCalling, new String[] { "CALL_PHONE" },
-				Intent.ACTION_CALL), "android.app.Activity");
-		hook(new XActivity("startActivityFromChild", XRestriction.cCalling, new String[] { "CALL_PHONE" },
-				Intent.ACTION_CALL), "android.app.Activity");
-		hook(new XActivity("startActivityFromFragment", XRestriction.cCalling, new String[] { "CALL_PHONE" },
-				Intent.ACTION_CALL), "android.app.Activity");
-		hook(new XActivity("startActivityIfNeeded", XRestriction.cCalling, new String[] { "CALL_PHONE" },
-				Intent.ACTION_CALL), "android.app.Activity");
+		if (XRestriction.cPro) {
+			hook(new XActivity("startActivities", XRestriction.cCalling, new String[] { "CALL_PHONE" },
+					Intent.ACTION_CALL), "android.app.Activity");
+			hook(new XActivity("startActivity", XRestriction.cCalling, new String[] { "CALL_PHONE" },
+					Intent.ACTION_CALL), "android.app.Activity");
+			hook(new XActivity("startActivityForResult", XRestriction.cCalling, new String[] { "CALL_PHONE" },
+					Intent.ACTION_CALL), "android.app.Activity");
+			hook(new XActivity("startActivityFromChild", XRestriction.cCalling, new String[] { "CALL_PHONE" },
+					Intent.ACTION_CALL), "android.app.Activity");
+			hook(new XActivity("startActivityFromFragment", XRestriction.cCalling, new String[] { "CALL_PHONE" },
+					Intent.ACTION_CALL), "android.app.Activity");
+			hook(new XActivity("startActivityIfNeeded", XRestriction.cCalling, new String[] { "CALL_PHONE" },
+					Intent.ACTION_CALL), "android.app.Activity");
+		}
 
 		// Intent send: media
 		hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },
