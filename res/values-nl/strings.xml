@@ -19,6 +19,7 @@
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_contacts">Contacten</string>
     <string name="restrict_identification">Identificatie (apparaat, Wi-Fi)</string>
+    <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Locatie (fijn/grof)</string>
     <string name="restrict_media">Media (audio, foto, video)</string>
     <string name="restrict_messages">Berichten (SMS, MMS)</string>
