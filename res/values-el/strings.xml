@@ -17,12 +17,14 @@
     <string name="restrict_boot">Εκκίνηση (τρέχει κατά την εκκίνηση του συστήματος)</string>
     <string name="restrict_browser">Browser (σελιδοδείκτες/ιστορικό)</string>
     <string name="restrict_calendar">Ημερολόγιο</string>
+    <string name="restrict_calling">Calling</string>
     <string name="restrict_contacts">Επαφές</string>
     <string name="restrict_identification">Ταυτότητα (συσκευή, Wi-Fi)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Τοποθεσία (ακριβής/μερική)</string>
     <string name="restrict_media">Πολυμέσα (ήχοι, φωτογραφίες, βίντεο)</string>
     <string name="restrict_messages">Μηνύματα (SMS, MMS)</string>
+    <string name="restrict_network">Network (addresses)</string>
     <string name="restrict_phone">Τηλέφωνο (στοιχεία, αριθμοί, κλήσεις)</string>
     <string name="restrict_storage">Εξ. αποθηκευτικός χώρος (κάρτα SD)</string>
     <string name="restrict_system">Σύστημα (εγκατεστημένες εφαρμογές)</string>

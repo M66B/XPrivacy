@@ -124,6 +124,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// SMS manager
 		hook(new XSmsManager("getAllMessagesFromIcc", XRestriction.cMessages, new String[] { "RECEIVE_SMS" }),
 				"android.telephony.SmsManager");
+		hook(new XSmsManager("sendDataMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
+				"android.telephony.SmsManager");
+		hook(new XSmsManager("sendMultipartTextMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
+				"android.telephony.SmsManager");
+		hook(new XSmsManager("sendTextMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
+				"android.telephony.SmsManager");
 
 		// Telephony
 		hook(new XTelephonyManager("disableLocationUpdates", XRestriction.cLocation,

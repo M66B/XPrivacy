@@ -23,6 +23,7 @@ public class XRestriction {
 	public static final String cBoot = "boot";
 	public static final String cBrowser = "browser";
 	public static final String cCalendar = "calendar";
+	public static final String cCalling = "calling";
 	public static final String cContacts = "contacts";
 	public static final String cIdentification = "identification";
 	public static final String cInternet = "internet";
@@ -53,6 +54,7 @@ public class XRestriction {
 		mRestrictions.put(cBoot, new ArrayList<String>());
 		mRestrictions.put(cBrowser, new ArrayList<String>());
 		mRestrictions.put(cCalendar, new ArrayList<String>());
+		mRestrictions.put(cCalling, new ArrayList<String>());
 		mRestrictions.put(cContacts, new ArrayList<String>());
 		mRestrictions.put(cIdentification, new ArrayList<String>());
 		mRestrictions.put(cInternet, new ArrayList<String>());
@@ -73,6 +75,7 @@ public class XRestriction {
 		mRestrictions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
 		mRestrictions.get(cBrowser).add("GLOBAL_SEARCH");
 		mRestrictions.get(cCalendar).add("READ_CALENDAR");
+		mRestrictions.get(cCalling).add("SEND_SMS");
 		mRestrictions.get(cContacts).add("READ_CONTACTS");
 		mRestrictions.get(cIdentification).add("ACCESS_WIFI_STATE");
 		mRestrictions.get(cInternet).add("INTERNET");

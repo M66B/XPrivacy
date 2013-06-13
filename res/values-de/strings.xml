@@ -17,12 +17,14 @@
     <string name="restrict_boot">Boot (Beim Systemstart ausführen)</string>
     <string name="restrict_browser">Browser (Lesezeichen/Verlauf)</string>
     <string name="restrict_calendar">Kalender</string>
+    <string name="restrict_calling">Calling</string>
     <string name="restrict_contacts">Kontakte</string>
     <string name="restrict_identification">Identität (Gerät, Wi-Fi)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Standort (genau/ungefähr)</string>
     <string name="restrict_media">Medien (Audio, Foto, Video)</string>
     <string name="restrict_messages">Nachrichten (SMS, MMS)</string>
+    <string name="restrict_network">Network (addresses)</string>
     <string name="restrict_phone">Telefon (ID, Nummern, Anrufe)</string>
     <string name="restrict_storage">Externer Speicher (SD Karte)</string>
     <string name="restrict_system">System (installierte Apps)</string>

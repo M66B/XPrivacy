@@ -17,7 +17,10 @@ public class XSmsManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		// Do nothing
+		String methodName = param.method.getName();
+		if (!methodName.equals("getAllMessagesFromIcc"))
+			if (isRestricted(param))
+				param.setResult(null);
 	}
 
 	@Override

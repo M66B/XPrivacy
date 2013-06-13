@@ -17,6 +17,7 @@
     <string name="restrict_boot">Boot (run at system start)</string>
     <string name="restrict_browser">Browser (bookmarks/history)</string>
     <string name="restrict_calendar">Calendar</string>
+    <string name="restrict_calling">Calling</string>
     <string name="restrict_contacts">Contacts</string>
     <string name="restrict_identification">Identification (device, Wi-Fi)</string>
     <string name="restrict_internet">Internet</string>
