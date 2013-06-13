@@ -66,7 +66,7 @@ public class XTelephonyManager extends XHook {
 		String methodName = param.method.getName();
 		if (!methodName.equals("listen") && !methodName.equals("disableLocationUpdates")
 				&& !methodName.equals("enableLocationUpdates"))
-			if (param.getResultOrThrowable() != null)
+			if (param.getResult() != null)
 				if (isRestricted(param)) {
 					XUtil.log(this, Log.INFO, this.getMethodName() + " uid=" + Binder.getCallingUid());
 					if (methodName.equals("getAllCellInfo"))

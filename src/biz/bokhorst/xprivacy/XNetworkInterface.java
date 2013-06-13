@@ -30,7 +30,7 @@ public class XNetworkInterface extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResultOrThrowable() != null) {
+		if (param.getResult() != null) {
 			NetworkInterface ni = (NetworkInterface) param.thisObject;
 			if (!ni.isLoopback())
 				if (isRestricted(param)) {

@@ -19,6 +19,10 @@ public abstract class XHook {
 	private String mRestrictionName;
 
 	public XHook(String methodName, String restrictionName, String[] permissions) {
+		// Sanity check
+		if (methodName == null)
+			throw new IllegalArgumentException();
+
 		mMethodName = methodName;
 		mRestrictionName = restrictionName;
 		if (restrictionName != null)

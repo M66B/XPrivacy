@@ -30,12 +30,11 @@ public class XSettingsSecure extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResultOrThrowable() != null) {
+		if (param.getResult() != null) {
 			String name = (String) param.args[1];
 			if (Settings.Secure.ANDROID_ID.equals(name))
-				if (param.getResult() != null)
-					if (isRestricted(param))
-						param.setResult(Long.toHexString(XRestriction.cDefaceHex));
+				if (isRestricted(param))
+					param.setResult(Long.toHexString(XRestriction.cDefaceHex));
 		}
 	}
 

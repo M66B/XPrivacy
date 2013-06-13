@@ -47,7 +47,7 @@ public class XAccountManager extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
-		if (methodName.equals("addOnAccountsUpdatedListener") || param.getResultOrThrowable() != null)
+		if (methodName.equals("addOnAccountsUpdatedListener") || param.getResult() != null)
 			if (isRestricted(param))
 				if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType"))
 					param.setResult(new Account[0]);

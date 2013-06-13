@@ -36,14 +36,13 @@ public class XPackageManagerService extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResultOrThrowable() != null) {
-			Context context = getContext(param);
-			String packageName = (String) param.args[0];
-			String methodName = this.getMethodName();
-			if (XPrivacyProvider.getRestricted(this, context, packageName, mRestrictionName, methodName, true)) {
-				// Get gids
-				int[] gids = (int[]) param.getResultOrThrowable();
-
+		Context context = getContext(param);
+		String packageName = (String) param.args[0];
+		String methodName = this.getMethodName();
+		if (XPrivacyProvider.getRestricted(this, context, packageName, mRestrictionName, methodName, true)) {
+			// Get gids
+			int[] gids = (int[]) param.getResult();
+			if (gids != null) {
 				// Build list of gids
 				List<Integer> listGids = new ArrayList<Integer>();
 				for (int i = 0; i < gids.length; i++)

@@ -50,6 +50,11 @@ public class XRestriction {
 	private static Map<String, CacheEntry> mRestrictionCache = new HashMap<String, CacheEntry>();
 
 	static {
+		// This is a workaround, the idea was to use registerMethod
+		// Static data is not shared across VM's
+		// If you know a better solution, please let me know
+
+		// Restrictions
 		mRestrictions.put(cAccounts, new ArrayList<String>());
 		mRestrictions.put(cBoot, new ArrayList<String>());
 		mRestrictions.put(cBrowser, new ArrayList<String>());
@@ -67,7 +72,7 @@ public class XRestriction {
 		mRestrictions.put(cStorage, new ArrayList<String>());
 		mRestrictions.put(cSystem, new ArrayList<String>());
 
-		// Temporary solution
+		// Permissions
 		mRestrictions.get(cAccounts).add("GET_ACCOUNTS");
 		mRestrictions.get(cAccounts).add("USE_CREDENTIALS");
 		mRestrictions.get(cAccounts).add("MANAGE_ACCOUNTS");
@@ -120,6 +125,7 @@ public class XRestriction {
 	}
 
 	public static boolean hasInternet(Context context, String packageName) {
+		// TODO: check if internet permission restricted
 		PackageManager pm = context.getPackageManager();
 		return (pm.checkPermission("android.permission.INTERNET", packageName) == PackageManager.PERMISSION_GRANTED);
 	}

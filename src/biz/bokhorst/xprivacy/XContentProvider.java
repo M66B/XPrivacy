@@ -53,7 +53,7 @@ public class XContentProvider extends XHook {
 		Uri uri = (Uri) param.args[0];
 		if (mUriStart == null || uri.toString().startsWith(mUriStart)) {
 			// Return empty cursor
-			Cursor cursor = (Cursor) param.getResultOrThrowable();
+			Cursor cursor = (Cursor) param.getResult();
 			if (cursor != null)
 				if (isRestricted(param))
 					param.setResult(new XCursor(cursor));
