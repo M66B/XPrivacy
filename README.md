@@ -196,6 +196,7 @@ Changelog
 
 * Restrict calling (untested)
 * Restrict sending SMS/MMS (untested)
+* Fix setting restrictions in the app list
 
 **Version 0.13**
 
