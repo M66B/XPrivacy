@@ -3,7 +3,7 @@
     <string name="app_name">XPrivacy</string>
     <string name="app_wrongandroid">Testirano samo na Androidu različice 4.1 in 4.2 (JellyBean)</string>
     <string name="app_notxposed" formatted="false">Xposed framework različice %d+ ni nameščen</string>
-    <string name="app_notenabled">XPrivacy is not enabled in the Xposed installer</string>
+    <string name="app_notenabled">XPrivacy ni omogočen v Xposed installer</string>
     <string name="app_version" formatted="false">XPrivacy različica: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework različica: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
@@ -17,14 +17,14 @@
     <string name="restrict_boot">Zagon (zagon programa ob zagonu sistema)</string>
     <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>
     <string name="restrict_calendar">Koledar</string>
-    <string name="restrict_calling">Calling</string>
+    <string name="restrict_calling">Klicanje</string>
     <string name="restrict_contacts">Stiki</string>
     <string name="restrict_identification">Identifikacija (naprava, Wi-Fi)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Lokacija (približna/natančna)</string>
     <string name="restrict_media">Medij (zvok, slike, video)</string>
     <string name="restrict_messages">Sporočila (SMS, MMS)</string>
-    <string name="restrict_network">Network (addresses)</string>
+    <string name="restrict_network">Omrežje (naslovi)</string>
     <string name="restrict_phone">Telefon (ID, številke, klici)</string>
     <string name="restrict_storage">Zunanja shramba (spominska kartica)</string>
     <string name="restrict_system">Sistem (nameščeni programi)</string>
