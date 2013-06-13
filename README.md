@@ -169,13 +169,15 @@ Tricks:
 Frequently asked questions
 --------------------------
 
-* Will you block outgoing SMS/MMS, the iptables command or force online state? No, XPrivacy is about restricting data, not about blocking actions.
+* Will you block the iptables command or force online state? Maybe in a later stage.
 * Will you make it possible to enter fake data? No, I want to keep things as simple as possible for maximum stability.
 * Which functions are exactly restricted? See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java).
 * What did you fix in the Xposed framework? See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51bae5d3dda).
 * Does XPrivacy use the Android permissions for something? No, Android permissions are just displayed as a guideline.
 * How can I reset all XPrivacy settings? *Manage apps* > *XPrivacy* > *Clear data*
-* Will XPrivacy make my device slower? Not noticeable.
+* Will XPrivacy make my device slower? Maybe a little, but it will be probably not noticeable.
+* Does XPrivacy use a lot of memory? Almost nothing.
+* Can I backup XPrivacy and settings? Yes, you can, but for now you can only restore the back onto the same device.
 
 Support
 -------
