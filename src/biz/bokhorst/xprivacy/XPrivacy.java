@@ -90,7 +90,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XMediaRecorder("setOutputFile", XRestriction.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),
 				"android.media.MediaRecorder");
 
-		// Package manager
+		// Package manager service
+		hook(new XPackageManagerService("getPackageGids", XRestriction.cInternet, new String[] { "INTERNET" }),
+				"com.android.server.pm.PackageManagerService");
 		hook(new XPackageManagerService("getPackageGids", XRestriction.cStorage, new String[] {
 				"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE" }), "com.android.server.pm.PackageManagerService");
 

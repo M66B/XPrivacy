@@ -11,6 +11,9 @@
 
     <permission
         android:name="biz.bokhorst.xprivacy.provider.WRITE"
+        android:description="@string/app_name"
+        android:label="@string/app_name"
+        android:permissionGroup="android.permission-group.PERSONAL_INFO"
         android:protectionLevel="signature" />
 
     <application

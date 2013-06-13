@@ -23,8 +23,11 @@ public class XPackageManagerService extends XHook {
 
 	final static int sdcard_r = 1028;
 	final static int sdcard_rw = 1015;
+	final static int inet = 3003;
+	final static int inet_raw = 3004;
 
 	// system/core/include/private/android_filesystem_config.h
+	// frameworks/base/data/etc/platform.xml
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
@@ -44,7 +47,12 @@ public class XPackageManagerService extends XHook {
 				// Build list of gids
 				List<Integer> listGids = new ArrayList<Integer>();
 				for (int i = 0; i < gids.length; i++)
-					if (gids[i] != sdcard_r && gids[i] != sdcard_rw)
+					if ((gids[i] == sdcard_r || gids[i] == sdcard_rw) && mRestrictionName.equals(XRestriction.cStorage))
+						;
+					else if ((gids[i] == inet || gids[i] == inet_raw)
+							&& mRestrictionName.equals(XRestriction.cInternet))
+						;
+					else
 						listGids.add(gids[i]);
 
 				// return gids

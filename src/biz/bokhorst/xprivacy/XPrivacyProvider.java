@@ -184,8 +184,8 @@ public class XPrivacyProvider extends ContentProvider {
 			editor.commit();
 
 			// Update package list
-			if (XRestriction.cStorage.equals(restrictionName))
-				updateStoragePackages(uid, XRestriction.cStorage, allowed);
+			if (XRestriction.cInternet.equals(restrictionName) || XRestriction.cStorage.equals(restrictionName))
+				updatePackages(uid, restrictionName, allowed);
 
 			return 1; // rows
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING) {
@@ -246,30 +246,32 @@ public class XPrivacyProvider extends ContentProvider {
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
-	private void updateStoragePackages(int uid, String restrictionName, boolean allowed) {
-		// Get storage packages
-		SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY + "." + XRestriction.cStorage,
+	private void updatePackages(int uid, String restrictionName, boolean allowed) {
+		// Get packages
+		SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY + "." + restrictionName,
 				Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS);
-		String storagePackages = prefs.getString(getPackagesPref(restrictionName), "");
+		String packages = prefs.getString(getPackagesPref(restrictionName), "");
 
-		// Current storage package list
-		List<String> listStoragePackage = new ArrayList<String>();
-		if (!storagePackages.equals(""))
-			listStoragePackage.addAll(Arrays.asList(storagePackages.split(",")));
+		// Build package list
+		List<String> listPackage = new ArrayList<String>();
+		if (!packages.equals(""))
+			listPackage.addAll(Arrays.asList(packages.split(",")));
 
-		// Update storage package list
-		String[] packages = getContext().getPackageManager().getPackagesForUid(uid);
-		if (packages != null)
-			for (String storagePackage : packages)
-				if (!allowed && !listStoragePackage.contains(storagePackage))
-					listStoragePackage.add(storagePackage);
-				else if (allowed && listStoragePackage.contains(storagePackage))
-					listStoragePackage.remove(storagePackage);
+		// Update package list
+		String[] uidPackages = getContext().getPackageManager().getPackagesForUid(uid);
+		if (uidPackages != null)
+			for (String uidPackage : uidPackages) {
+				XUtil.log(null, Log.INFO, "package=" + uidPackage + " " + restrictionName + "=" + !allowed);
+				if (!allowed && !listPackage.contains(uidPackage))
+					listPackage.add(uidPackage);
+				else if (allowed && listPackage.contains(uidPackage))
+					listPackage.remove(uidPackage);
+			}
 
-		// Store storage package list
-		storagePackages = TextUtils.join(",", listStoragePackage);
+		// Store package list
+		packages = TextUtils.join(",", listPackage);
 		SharedPreferences.Editor sEditor = prefs.edit();
-		sEditor.putString(getPackagesPref(XRestriction.cStorage), storagePackages);
+		sEditor.putString(getPackagesPref(restrictionName), packages);
 		sEditor.commit();
 	}
 
@@ -277,20 +279,20 @@ public class XPrivacyProvider extends ContentProvider {
 	@SuppressLint("WorldReadableFiles")
 	public static boolean getRestricted(XHook hook, Context context, String packageName, String restrictionName,
 			String methodName, boolean usage) throws Throwable {
-		// Get storage packages
+		// Get packages
 		Context xContext = XUtil.getXContext(context);
-		SharedPreferences prefs = xContext.getSharedPreferences(AUTHORITY + "." + XRestriction.cStorage,
+		SharedPreferences prefs = xContext.getSharedPreferences(AUTHORITY + "." + restrictionName,
 				Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS);
 		String storagePackages = prefs.getString(getPackagesPref(restrictionName), "");
 
-		// Build storage package list
-		List<String> listStoragePackage = new ArrayList<String>();
+		// Build package list
+		List<String> listPackage = new ArrayList<String>();
 		if (!storagePackages.equals(""))
-			listStoragePackage.addAll(Arrays.asList(storagePackages.split(",")));
+			listPackage.addAll(Arrays.asList(storagePackages.split(",")));
 
 		// Check if package restricted
-		boolean restricted = listStoragePackage.contains(packageName);
-		XUtil.log(hook, Log.INFO, "package=" + packageName + " restricted=" + restricted);
+		boolean restricted = listPackage.contains(packageName);
+		XUtil.log(hook, Log.INFO, "package=" + packageName + " " + restrictionName + "=" + restricted);
 		return restricted;
 	}
 

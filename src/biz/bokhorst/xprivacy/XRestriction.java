@@ -23,6 +23,7 @@ public class XRestriction {
 	public static final String cCalendar = "calendar";
 	public static final String cContacts = "contacts";
 	public static final String cIdentification = "identification";
+	public static final String cInternet = "internet";
 	public static final String cLocation = "location";
 	public static final String cMedia = "media";
 	public static final String cMessages = "messages";
@@ -47,6 +48,7 @@ public class XRestriction {
 		mRestrictions.put(cCalendar, new ArrayList<String>());
 		mRestrictions.put(cContacts, new ArrayList<String>());
 		mRestrictions.put(cIdentification, new ArrayList<String>());
+		mRestrictions.put(cInternet, new ArrayList<String>());
 		mRestrictions.put(cLocation, new ArrayList<String>());
 		mRestrictions.put(cMedia, new ArrayList<String>());
 		mRestrictions.put(cMessages, new ArrayList<String>());
@@ -64,6 +66,7 @@ public class XRestriction {
 		mRestrictions.get(cCalendar).add("READ_CALENDAR");
 		mRestrictions.get(cContacts).add("READ_CONTACTS");
 		mRestrictions.get(cIdentification).add("ACCESS_WIFI_STATE");
+		mRestrictions.get(cInternet).add("INTERNET");
 		mRestrictions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mRestrictions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mRestrictions.get(cLocation).add("ACCESS_COARSE_UPDATES");

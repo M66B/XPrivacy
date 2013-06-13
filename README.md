@@ -34,9 +34,10 @@ will result in a random location being sent to the application.
 
 XPrivacy doesn't revoke (i.e. block) permissions from an application,
 which means that most applications will continue to work as before and won't force close.
-There is one exception to this, access to external storage (typically an SD card) is restricted by denying access.
-There is no other way to realize this, since this permission is handled by Android in a special way.
-Android delegates handling of this permission to the underlying Linux file system.
+There are two exceptions to this, access to the internet and to external storage (typically an SD card)
+is restricted by denying access (revoking permissions).
+There is no other way to realize this, since these permissions are handled by Android in a special way.
+Android delegates handling of these permission to the underlying Linux network/file system.
 
 If restricting a category of data for an application results in problems for that application,
 it is possible to allow access to the data category again.
@@ -102,6 +103,7 @@ Restricted data
 * Calendar
 * Contacts
 * Identification (Android ID, Wi-Fi MAC address)
+* Internet (revoke permission)
 * Location (coarse/fine, cell location/info)
 * Messages (SMS/MMS, voicemail: **untested**, ICC SMS)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
@@ -141,8 +143,8 @@ or try disabling *Contacts* for the Contacts app.
 
 **Applying some restrictions requires an app restart**
 
-Enabling storage restriction means blocking access to external storage (typically the SD card).
-Because of the nature of this restriction, there is no usage data for this restriction.
+Enabling internet or storage restriction means blocking access to the internet or to external storage (typically the SD card).
+Because of the nature of these restrictions, there is no usage data for these restrictions.
 All other restrictions have usage data and send no or fake data.
 
 Tricks:
@@ -153,7 +155,6 @@ Tricks:
 Frequently asked questions
 --------------------------
 
-* Will you restrict internet access? No, you can use a firewall app, like [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall).
 * Will you block outgoing SMS/MMS, the iptables command or force online state? No, XPrivacy is about restricting data, not about blocking actions.
 * Will you make it possible to enter fake data? No, I want to keep things as simple as possible for maximum stability.
 * Which functions are exactly restricted? See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java).
@@ -177,6 +178,7 @@ Changelog
 
 **Version 0.13**
 
+* Internet restriction
 * Remove restrictions/audit trail when uninstalling an app
 * Custom write permission for privacy provider
 
