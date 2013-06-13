@@ -13,6 +13,8 @@ import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.net.LocalServerSocket;
+import android.net.LocalSocket;
 import android.net.Uri;
 import android.os.Binder;
 import android.text.TextUtils;
@@ -54,8 +56,34 @@ public class XPrivacyProvider extends ContentProvider {
 		sUriMatcher.addURI(AUTHORITY, PATH_SETTING, TYPE_SETTING);
 	}
 
+	private LocalServerSocket mSocket;
+	private Thread mThread;
+
+	private void test() {
+		try {
+			mSocket = new LocalServerSocket("XPrivacy");
+			mThread = new Thread(new Runnable() {
+				public void run() {
+					while (true)
+						try {
+							LocalSocket connection = mSocket.accept();
+							int b = connection.getInputStream().read();
+							XUtil.log(null, Log.INFO, "Received=" + b);
+							connection.close();
+						} catch (Throwable ex) {
+							XUtil.bug(null, ex);
+						}
+				}
+			});
+			mThread.start();
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+		}
+	}
+
 	@Override
 	public boolean onCreate() {
+		test();
 		return true;
 	}
 
