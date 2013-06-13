@@ -240,8 +240,9 @@ public class XPrivacyProvider extends ContentProvider {
 			throw new SecurityException();
 	}
 
-	// The following two methods represent an ugly, not very secure hack
-	// Unfortunately the package manager service doesn't have a context
+	// The following two methods represent an ugly, not very secure workaround
+	// It is not possible to query a provider from the package manager service
+	// It will result in a stack overflow
 	// Please contact me if you know a better solution
 
 	@SuppressWarnings("deprecation")
@@ -277,8 +278,8 @@ public class XPrivacyProvider extends ContentProvider {
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
-	public static boolean getRestricted(XHook hook, Context context, String packageName, String restrictionName,
-			String methodName, boolean usage) throws Throwable {
+	public static boolean getRestricted(XHook hook, Context context, int uid, String packageName,
+			String restrictionName, boolean usage) throws Throwable {
 		// Get packages
 		Context xContext = XUtil.getXContext(context);
 		SharedPreferences prefs = xContext.getSharedPreferences(AUTHORITY + "." + restrictionName,
@@ -292,7 +293,7 @@ public class XPrivacyProvider extends ContentProvider {
 
 		// Check if package restricted
 		boolean restricted = listPackage.contains(packageName);
-		XUtil.log(hook, Log.INFO, "package=" + packageName + " " + restrictionName + "=" + restricted);
+		XUtil.log(hook, Log.INFO, "package=" + packageName + " uid=" + uid + " " + restrictionName + "=" + restricted);
 		return restricted;
 	}
 

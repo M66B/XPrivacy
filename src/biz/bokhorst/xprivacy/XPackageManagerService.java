@@ -1,10 +1,12 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
@@ -36,10 +38,15 @@ public class XPackageManagerService extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		Context context = getContext(param);
+		// Get argument
 		String packageName = (String) param.args[0];
-		String methodName = this.getMethodName();
-		if (XPrivacyProvider.getRestricted(this, context, packageName, mRestrictionName, methodName, true)) {
+
+		// public int getPackageUid(String packageName, int userId)
+		Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class, int.class);
+		int uid = (Integer) method.invoke(param.thisObject, packageName, 0);
+
+		Context context = getContext(param);
+		if (getRestricted(context, uid, packageName, true)) {
 			// Get gids
 			int[] gids = (int[]) param.getResult();
 			if (gids != null) {
