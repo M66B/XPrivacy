@@ -74,6 +74,18 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.hardware.Camera");
 		hook(new XCamera("takePicture", XRestriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
+		// Connectivity manager
+		if (XRestriction.cExperimental) {
+			hook(new XConnectivityManager("getActiveNetworkInfo", XRestriction.cNetwork,
+					new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
+			hook(new XConnectivityManager("getActiveNetworkInfoForUid", XRestriction.cNetwork,
+					new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
+			hook(new XConnectivityManager("getAllNetworkInfo", XRestriction.cNetwork,
+					new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
+			hook(new XConnectivityManager("getNetworkInfo", XRestriction.cNetwork,
+					new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
+		}
+
 		// Location manager
 		hook(new XLocationManager("addNmeaListener", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
 				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
@@ -89,6 +101,16 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Media recorder
 		hook(new XMediaRecorder("setOutputFile", XRestriction.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),
 				"android.media.MediaRecorder");
+
+		// Network interface
+		if (XRestriction.cExperimental) {
+			hook(new XNetworkInterface("getHardwareAddress", XRestriction.cNetwork,
+					new String[] { "ACCESS_NETWORK_STATE" }), "java.net.NetworkInterface");
+			hook(new XNetworkInterface("getInetAddresses", XRestriction.cNetwork,
+					new String[] { "ACCESS_NETWORK_STATE" }), "java.net.NetworkInterface");
+			hook(new XNetworkInterface("getInterfaceAddresses", XRestriction.cNetwork,
+					new String[] { "ACCESS_NETWORK_STATE" }), "java.net.NetworkInterface");
+		}
 
 		// Package manager service
 		hook(new XPackageManagerService("getPackageGids", XRestriction.cInternet, new String[] { "INTERNET" }),

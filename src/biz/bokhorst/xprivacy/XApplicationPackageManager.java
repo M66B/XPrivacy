@@ -38,8 +38,8 @@ public class XApplicationPackageManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (isRestricted(param))
+		if (isRestricted(param)) {
+			String methodName = param.method.getName();
 			if (methodName.equals("getInstalledApplications"))
 				param.setResult(new ArrayList<ApplicationInfo>());
 			else if (methodName.equals("getInstalledPackages") || methodName.equals("getInstalledThemePackages")
@@ -52,6 +52,7 @@ public class XApplicationPackageManager extends XHook {
 				param.setResult(new ArrayList<ProviderInfo>());
 			else
 				XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
+		}
 	}
 
 	@Override

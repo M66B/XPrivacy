@@ -4,6 +4,7 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.lang.reflect.Field;
 
+import android.app.AndroidAppHelper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -43,7 +44,8 @@ public class XActivityThread extends XHook {
 						if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 							// Boot completed
 							if (isRestricted(param))
-								if (XRestriction.getSetting(this, getApplicationContext(), XRestriction.cExpertMode))
+								if (XRestriction.getSetting(this, AndroidAppHelper.currentApplication(),
+										XRestriction.cExpertMode))
 									param.setResult(null);
 						} else if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
 							// Outgoing call

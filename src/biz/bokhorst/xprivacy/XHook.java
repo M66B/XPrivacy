@@ -1,5 +1,10 @@
 package biz.bokhorst.xprivacy;
 
+import static de.robv.android.xposed.XposedHelpers.findClass;
+import static de.robv.android.xposed.XposedHelpers.findField;
+
+import java.lang.reflect.Field;
+
 import android.app.AndroidAppHelper;
 import android.content.Context;
 import android.os.Binder;
@@ -33,13 +38,24 @@ public abstract class XHook {
 	abstract protected void after(MethodHookParam param) throws Throwable;
 
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = getApplicationContext();
+		Context context = AndroidAppHelper.currentApplication();
+		if (context == null)
+			try {
+				Class<?> atClass = findClass("android.app.ActivityThread", param.thisObject.getClass().getClassLoader());
+				Field fieldSystemContext = findField(atClass, "mSystemContext");
+				context = (Context) fieldSystemContext.get(null);
+				if (context == null) {
+					XUtil.log(this, Log.INFO, "No context, not restricting");
+					XUtil.logStack(this);
+					return false;
+				} else
+					XUtil.log(this, Log.INFO, "Using system context");
+			} catch (Throwable ex) {
+				XUtil.bug(this, ex);
+				return false;
+			}
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
-	}
-
-	protected Context getApplicationContext() {
-		return AndroidAppHelper.currentApplication();
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) {
@@ -51,7 +67,7 @@ public abstract class XHook {
 	}
 
 	protected void notifyUser(String message) throws Throwable {
-		notifyUser(getApplicationContext(), message);
+		notifyUser(AndroidAppHelper.currentApplication(), message);
 	}
 
 	protected void notifyUser(Context context, String message) throws Throwable {

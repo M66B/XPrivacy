@@ -29,6 +29,7 @@ public class XRestriction {
 	public static final String cLocation = "location";
 	public static final String cMedia = "media";
 	public static final String cMessages = "messages";
+	public static final String cNetwork = "network";
 	public static final String cPhone = "phone";
 	public static final String cStorage = "storage";
 	public static final String cSystem = "system";
@@ -36,10 +37,12 @@ public class XRestriction {
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;
 	public static final String cDefacedMac = "de:fa:ce:de:fa:ce";
+	public static final byte[] cDefaceBytes = new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
 
 	public final static int cUidAndroid = 1000;
-
 	public final static String cExpertMode = "ExpertMode";
+
+	public final static boolean cExperimental = false;
 
 	private final static int cCacheTimeoutMs = 30 * 1000;
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
@@ -56,6 +59,8 @@ public class XRestriction {
 		mRestrictions.put(cLocation, new ArrayList<String>());
 		mRestrictions.put(cMedia, new ArrayList<String>());
 		mRestrictions.put(cMessages, new ArrayList<String>());
+		if (XRestriction.cExperimental)
+			mRestrictions.put(cNetwork, new ArrayList<String>());
 		mRestrictions.put(cPhone, new ArrayList<String>());
 		mRestrictions.put(cStorage, new ArrayList<String>());
 		mRestrictions.put(cSystem, new ArrayList<String>());
@@ -81,6 +86,8 @@ public class XRestriction {
 		mRestrictions.get(cMessages).add("READ_WRITE_ALL_VOICEMAIL");
 		mRestrictions.get(cMessages).add("READ_SMS");
 		mRestrictions.get(cMessages).add("RECEIVE_SMS");
+		if (XRestriction.cExperimental)
+			mRestrictions.get(cNetwork).add("ACCESS_NETWORK_STATE");
 		mRestrictions.get(cPhone).add("READ_PHONE_STATE");
 		mRestrictions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mRestrictions.get(cPhone).add("READ_CALL_LOG");

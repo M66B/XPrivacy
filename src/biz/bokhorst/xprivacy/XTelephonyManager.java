@@ -50,31 +50,32 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (param.method.getName().equals("listen")) {
+		String methodName = param.method.getName();
+		if (methodName.equals("listen")) {
 			PhoneStateListener listener = (PhoneStateListener) param.args[0];
 			if (listener != null)
 				if (isRestricted(param))
 					param.args[0] = new XPhoneStateListener(listener);
-		} else if (param.method.getName().equals("disableLocationUpdates")
-				|| param.method.getName().equals("enableLocationUpdates"))
+		} else if (methodName.equals("disableLocationUpdates") || methodName.equals("enableLocationUpdates"))
 			if (isRestricted(param))
 				param.setResult(null);
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (!param.method.getName().equals("listen") && !param.method.getName().equals("disableLocationUpdates")
-				&& !param.method.getName().equals("enableLocationUpdates"))
+		String methodName = param.method.getName();
+		if (!methodName.equals("listen") && !methodName.equals("disableLocationUpdates")
+				&& !methodName.equals("enableLocationUpdates"))
 			if (param.getResultOrThrowable() != null)
 				if (isRestricted(param)) {
 					XUtil.log(this, Log.INFO, this.getMethodName() + " uid=" + Binder.getCallingUid());
-					if (param.method.getName().equals("getAllCellInfo"))
+					if (methodName.equals("getAllCellInfo"))
 						param.setResult(new ArrayList<CellInfo>());
-					else if (param.method.getName().equals("getCellLocation"))
+					else if (methodName.equals("getCellLocation"))
 						param.setResult(CellLocation.getEmpty());
-					else if (param.method.getName().equals("getIsimImpu"))
+					else if (methodName.equals("getIsimImpu"))
 						param.setResult(new String[] { XRestriction.cDefaceString });
-					else if (param.method.getName().equals("getNeighboringCellInfo"))
+					else if (methodName.equals("getNeighboringCellInfo"))
 						param.setResult(new ArrayList<NeighboringCellInfo>());
 					else
 						param.setResult(XRestriction.cDefaceString);
