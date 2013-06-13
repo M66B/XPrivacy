@@ -9,6 +9,7 @@ Index
 * [Description](https://github.com/M66B/XPrivacy#description)
 * [Features](https://github.com/M66B/XPrivacy#features)
 * [Restricted data](https://github.com/M66B/XPrivacy#restricted-data)
+* [Limitations](https://github.com/M66B/XPrivacy#limitations)
 * [Installation](https://github.com/M66B/XPrivacy#installation)
 * [Upgrading](https://github.com/M66B/XPrivacy#upgrading)
 * [Usage](https://github.com/M66B/XPrivacy#usage)
@@ -111,6 +112,12 @@ Restricted data
 * Recording video
 * Reading sdcard (revoke permission)
 * Taking photos
+
+Limitations
+-----------
+
+* The Google Services Framework (com.google.android.gsf) retrieves the Wi-Fi MAC address in an unusual way
+(within a thread, without context), which is currently not restricted by XPrivacy.
 
 Installation
 ------------
