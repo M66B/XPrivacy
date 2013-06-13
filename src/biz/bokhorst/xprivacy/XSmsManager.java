@@ -12,8 +12,15 @@ public class XSmsManager extends XHook {
 		super(methodName, restrictionName, permissions);
 	}
 
+	// @formatter:off
+
 	// public static ArrayList<SmsMessage> getAllMessagesFromIcc()
+	// public void sendDataMessage(String destinationAddress, String scAddress, short destinationPort, byte[] data, PendingIntent sentIntent, PendingIntent deliveryIntent)
+	// public void sendMultipartTextMessage(String destinationAddress, String scAddress, ArrayList<String> parts, ArrayList<PendingIntent> sentIntents, ArrayList<PendingIntent> deliveryIntents)
+	// public void sendTextMessage(String destinationAddress, String scAddress, String text, PendingIntent sentIntent, PendingIntent deliveryIntent)
 	// frameworks/base/telephony/java/android/telephony/SmsManager.java
+
+	// @formatter:on
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

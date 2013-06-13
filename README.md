@@ -9,6 +9,7 @@ Index
 * [Description](https://github.com/M66B/XPrivacy#description)
 * [Features](https://github.com/M66B/XPrivacy#features)
 * [Restricted data](https://github.com/M66B/XPrivacy#restricted-data)
+* [Restricted actions](https://github.com/M66B/XPrivacy#restricted-actions)
 * [Limitations](https://github.com/M66B/XPrivacy#limitations)
 * [Installation](https://github.com/M66B/XPrivacy#installation)
 * [Upgrading](https://github.com/M66B/XPrivacy#upgrading)
@@ -104,14 +105,20 @@ Restricted data
 * Calendar
 * Contacts
 * Identification (Android ID, Wi-Fi MAC address)
-* Internet (revoke permission)
 * Location (coarse/fine, cell location/info)
 * Messages (SMS/MMS, voicemail: **untested**, ICC SMS)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
 * Recording audio (including microphone)
 * Recording video
-* Reading sdcard (revoke permission)
 * Taking photos
+
+Restricted actions
+------------------
+
+* Calling (untested) (0.14)
+* Sending SMS/MMS (untested) (0.14)
+* Internet (revoke permission)
+* External storage (SD card) (revoke permission)
 
 Limitations
 -----------
@@ -182,6 +189,11 @@ you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-deve
 
 Changelog
 ---------
+
+**Version 0.14**
+
+* Restrict calling (untested)
+* Restrict sending SMS/MMS (untested)
 
 **Version 0.13**
 

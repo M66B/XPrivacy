@@ -22,6 +22,12 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
+	// @formatter:off
+
+	// http://developer.android.com/reference/android/Manifest.permission.html
+
+	// @formatter:on
+
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		// Account manager
 		hook(new XAccountManager("getAccounts", XRestriction.cAccounts, new String[] { "GET_ACCOUNTS" }),
@@ -201,6 +207,20 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				Intent.ACTION_NEW_OUTGOING_CALL), "android.app.ActivityThread", false);
 		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" },
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ActivityThread", false);
+
+		// Intent send: call
+		hook(new XActivity("startActivities", XRestriction.cCalling, new String[] { "CALL_PHONE" }, Intent.ACTION_CALL),
+				"android.app.Activity");
+		hook(new XActivity("startActivity", XRestriction.cCalling, new String[] { "CALL_PHONE" }, Intent.ACTION_CALL),
+				"android.app.Activity");
+		hook(new XActivity("startActivityForResult", XRestriction.cCalling, new String[] { "CALL_PHONE" },
+				Intent.ACTION_CALL), "android.app.Activity");
+		hook(new XActivity("startActivityFromChild", XRestriction.cCalling, new String[] { "CALL_PHONE" },
+				Intent.ACTION_CALL), "android.app.Activity");
+		hook(new XActivity("startActivityFromFragment", XRestriction.cCalling, new String[] { "CALL_PHONE" },
+				Intent.ACTION_CALL), "android.app.Activity");
+		hook(new XActivity("startActivityIfNeeded", XRestriction.cCalling, new String[] { "CALL_PHONE" },
+				Intent.ACTION_CALL), "android.app.Activity");
 
 		// Intent send: media
 		hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },

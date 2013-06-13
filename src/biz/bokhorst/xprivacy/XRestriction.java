@@ -81,6 +81,7 @@ public class XRestriction {
 		mRestrictions.get(cBrowser).add("GLOBAL_SEARCH");
 		mRestrictions.get(cCalendar).add("READ_CALENDAR");
 		mRestrictions.get(cCalling).add("SEND_SMS");
+		mRestrictions.get(cCalling).add("CALL_PHONE");
 		mRestrictions.get(cContacts).add("READ_CONTACTS");
 		mRestrictions.get(cIdentification).add("ACCESS_WIFI_STATE");
 		mRestrictions.get(cInternet).add("INTERNET");
