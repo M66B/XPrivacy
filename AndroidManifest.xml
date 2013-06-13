@@ -7,6 +7,12 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="biz.bokhorst.xprivacy.provider.WRITE" />
+
+    <permission
+        android:name="biz.bokhorst.xprivacy.provider.WRITE"
+        android:protectionLevel="signature" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -51,10 +57,11 @@
             android:name=".XPrivacyProvider"
             android:authorities="biz.bokhorst.xprivacy.provider"
             android:enabled="true"
+            android:excludeFromRecents="true"
             android:exported="true"
-            android:grantUriPermissions="true"
             android:multiprocess="true"
-            android:syncable="false" >
+            android:syncable="false"
+            android:writePermission="biz.bokhorst.xprivacy.provider.WRITE" >
         </provider>
     </application>
 

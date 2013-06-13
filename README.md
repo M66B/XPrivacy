@@ -175,6 +175,11 @@ you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-deve
 Changelog
 ---------
 
+**Version 0.13**
+
+* Remove restrictions/audit trail when uninstalling an app
+* Custom write permission for privacy provider
+
 **Version 0.12**
 
 * Android version check
@@ -187,10 +192,6 @@ Changelog
 * Added German translation, thanks [NosferatuAlucard](https://github.com/NosferatuAlucard)
 * Added Greek translation, thanks [mikeNG](https://github.com/mikeNG)
 * Added Slovenian translation, thanks [kv1dr](https://github.com/kv1dr)
-
-**Version 0.13**
-
-* Remove restrictions/audit trail when uninstalling app
 
 Similar solutions
 -----------------
