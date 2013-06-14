@@ -1,9 +1,9 @@
 <resources>
 
     <string name="app_name">XPrivacy</string>
-    <string name="app_wrongandroid">Приложението е тествано само с Android версия 4.1 и 4.2 (JellyBean)</string>
     <string name="app_notxposed" formatted="false">Xposed framework версия %d+ не е инсталирана</string>
-    <string name="app_notenabled">XPrivacy is not enabled in the Xposed installer</string>
+    <string name="app_notenabled">XPrivacy не е включено в инсталатора на Xposed</string>
+    <string name="app_wrongandroid">Приложението е тествано само с Android версия 4.1 и 4.2 (JellyBean)</string>
     <string name="app_version" formatted="false">XPrivacy версия: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework версия: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
@@ -17,14 +17,14 @@
     <string name="restrict_boot">Стартиране (при пускане на системата)</string>
     <string name="restrict_browser">Браузър (отметки/история)</string>
     <string name="restrict_calendar">Календар</string>
-    <string name="restrict_calling">Calling</string>
+    <string name="restrict_calling">Обаждане</string>
     <string name="restrict_contacts">Контакти</string>
     <string name="restrict_identification">Идентификация (устройство, Wi-Fi)</string>
-    <string name="restrict_internet">Internet</string>
+    <string name="restrict_internet">Интернет</string>
     <string name="restrict_location">Местоположение (точно/приблизително)</string>
-    <string name="restrict_network">Network (addresses)</string>
     <string name="restrict_media">Медия (аудио, снимки, клипове)</string>
     <string name="restrict_messages">Съобщения (SMS, MMS)</string>
+    <string name="restrict_network">Мрежа (адреси)</string>
     <string name="restrict_phone">Телефон (ID, номера, обаждания)</string>
     <string name="restrict_storage">Място за съхранение (SD карта)</string>
     <string name="restrict_system">Система (инсталирани приложения)</string>
