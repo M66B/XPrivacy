@@ -9,6 +9,7 @@ import java.util.Set;
 import android.app.AndroidAppHelper;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Process;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -29,6 +30,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	// @formatter:on
 
 	public void initZygote(StartupParam startupParam) throws Throwable {
+		// Log load
+		XUtil.log(null, Log.INFO, String.format("load %s", startupParam.modulePath));
+
 		// Account manager
 		hook(new XAccountManager("getAccounts", XRestriction.cAccounts, new String[] { "GET_ACCOUNTS" }),
 				"android.accounts.AccountManager");
@@ -240,7 +244,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		// Log load
-		XUtil.log(null, Log.INFO, String.format("load %s", lpparam.packageName));
+		XUtil.log(null, Log.INFO, String.format("load package=%s uid=%d", lpparam.packageName, Process.myUid()));
 
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();

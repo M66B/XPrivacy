@@ -65,6 +65,6 @@ public class XContentProvider extends XHook {
 		ContentProvider contentProvider = (ContentProvider) param.thisObject;
 		Context context = contentProvider.getContext();
 		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
+		return getRestricted(context, uid, null, true);
 	}
 }

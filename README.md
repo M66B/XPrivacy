@@ -178,6 +178,7 @@ Frequently asked questions
 * Will XPrivacy make my device slower? Maybe a little, but it will be probably not noticeable.
 * Does XPrivacy use a lot of memory? Almost nothing.
 * Can I backup XPrivacy and settings? Yes, you can, but for now you can only restore the back onto the same device.
+* What is export mode? In expert mode you can block apps from starting at device boot time.
 
 Support
 -------
