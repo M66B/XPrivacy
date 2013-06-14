@@ -7,8 +7,6 @@ import java.lang.reflect.Field;
 
 import android.app.AndroidAppHelper;
 import android.content.Context;
-import android.net.LocalSocket;
-import android.net.LocalSocketAddress;
 import android.os.Binder;
 import android.util.Log;
 import android.widget.Toast;
@@ -65,26 +63,12 @@ public abstract class XHook {
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) throws Throwable {
-		test();
 		return XRestriction.getRestrictedCached(this, context, uid, mRestrictionName, usage);
 	}
 
 	protected boolean getRestricted(Context context, int uid, String packageName, boolean usage) throws Throwable {
 		// Workaround
-		test();
 		return XPrivacyProvider.getRestricted(this, context, uid, packageName, mRestrictionName, usage);
-	}
-
-	private void test() {
-		try {
-			LocalSocket socket = new LocalSocket();
-			socket.connect(new LocalSocketAddress("XPrivacy"));
-			socket.getOutputStream().write(1);
-			socket.close();
-			XUtil.log(null, Log.INFO, "Sent");
-		} catch (Throwable ex) {
-			XUtil.bug(this, ex);
-		}
 	}
 
 	protected void setRestricted(Context context, int uid, boolean restricted) {
