@@ -1,6 +1,8 @@
 package biz.bokhorst.xprivacy;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -33,6 +35,7 @@ public class XActivity extends XHook {
 	}
 
 	@Override
+	@SuppressLint("DefaultLocale")
 	protected void before(MethodHookParam param) throws Throwable {
 		// Get intent(s)
 		Intent[] intents = null;
@@ -50,14 +53,31 @@ public class XActivity extends XHook {
 		// Process intent(s)
 		if (intents != null)
 			for (Intent intent : intents)
-				if (mActionName.equals(intent.getAction()))
-					if (isRestricted(param)) {
+				if (mActionName.equals(intent.getAction())) {
+					boolean restricted = false;
+					if (mActionName.equals(Intent.ACTION_VIEW)) {
+						Uri uri = intent.getData();
+						if (uri != null) {
+							String scheme = uri.getScheme();
+							if (scheme != null) {
+								scheme = scheme.toLowerCase();
+								if (scheme.equals("http") || scheme.equals("https"))
+									if (isRestricted(param))
+										restricted = true;
+							}
+						}
+					} else
+						restricted = isRestricted(param);
+
+					if (restricted) {
 						if (methodName.equals("startActivityIfNeeded"))
 							param.setResult(true);
 						else
 							param.setResult(null);
 						notifyUser(mActionName);
+						return;
 					}
+				}
 	}
 
 	@Override

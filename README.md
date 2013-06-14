@@ -104,7 +104,8 @@ Restricted data
 * Identification (Android ID, Wi-Fi MAC address)
 * Location (coarse/fine, cell location/info)
 * Messages (SMS/MMS, voicemail: **untested**, ICC SMS)
-* Network (untested) (0.15)
+* Network
+* Opening links (0.17)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
 * Recording audio (including microphone)
 * Recording video
@@ -195,7 +196,14 @@ you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-deve
 Changelog
 ---------
 
+**Version 0.17**
+
+* Restrict opening links ([issue](https://github.com/M66B/XPrivacy/issues/14))
+
 **Version 0.16**
+
+* Removed XPrivacy from *Manage apps*
+* Added application list to XPrivacy
 
 **Version 0.15**
 

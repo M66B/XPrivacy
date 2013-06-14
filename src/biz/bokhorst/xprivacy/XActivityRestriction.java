@@ -92,8 +92,7 @@ public class XActivityRestriction extends Activity {
 			SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
 			List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
 			for (ApplicationInfo appInfo : getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA))
-				if ((appInfo.uid == XRestriction.cUidAndroid ? expert : true)
-						&& !appInfo.packageName.equals(XActivityRestriction.class.getPackage().getName())) {
+				if ((appInfo.uid == XRestriction.cUidAndroid ? expert : true)) {
 					XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
 					if (xAppInfo == null) {
 						xAppInfo = new XApplicationInfo(appInfo, mRestrictionName, XActivityRestriction.this);
