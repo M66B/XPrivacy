@@ -101,10 +101,10 @@ Restricted data
 * Browser (bookmarks, searches)
 * Calendar
 * Contacts
-* Identification (Android ID, Wi-Fi MAC address)
+* Identification (Android ID, serial#)
 * Location (coarse/fine, cell location/info)
 * Messages (SMS/MMS, voicemail: **untested**, ICC SMS)
-* Network
+* Network (IPs, MACs, BSSID, SSID)
 * Opening links (0.17)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
 * Recording audio (including microphone)
@@ -199,6 +199,7 @@ Changelog
 **Version 0.17**
 
 * Restrict opening links ([issue](https://github.com/M66B/XPrivacy/issues/14))
+* Restrict serial# (system properties)
 
 **Version 0.16**
 

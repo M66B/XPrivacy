@@ -16,7 +16,7 @@
     <string name="msg_restricted" formatted="false">%s restricted by XPrivacy</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
     <string name="restrict_boot">Boot (run at system start)</string>
-    <string name="restrict_browser">Browser (bookmarks/history)</string>
+    <string name="restrict_browser">Browser (bookmarks/history/start)</string>
     <string name="restrict_calendar">Calendar</string>
     <string name="restrict_calling">Calling</string>
     <string name="restrict_contacts">Contacts</string>

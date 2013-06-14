@@ -149,7 +149,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// System properties
 		String[] gets = new String[] { "get", "getBoolean", "getInt", "getLong", "getLongString" };
 		for (String get : gets)
-			hook(new XSystemProperties(get, XRestriction.cSystem, new String[] {}, "ro.serialno"),
+			hook(new XSystemProperties(get, XRestriction.cIdentification, new String[] {}, "ro.serialno"),
 					"android.os.SystemProperties");
 
 		// Telephony

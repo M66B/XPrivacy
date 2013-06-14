@@ -21,13 +21,15 @@ public class XSystemProperties extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		String key = (String) param.args[0];
-		if (mKey.equals(key))
-			if (isRestricted(param))
-				if (param.args.length == 2)
-					param.setResult(param.args[1]);
-				else
-					param.setResult(null);
+		if (param.getResult() != null) {
+			String key = (String) param.args[0];
+			if (mKey.equals(key))
+				if (isRestricted(param))
+					if (param.args.length == 2 && !param.method.getName().equals("get"))
+						param.setResult(param.args[1]);
+					else
+						param.setResult(XRestriction.cDefaceString);
+		}
 	}
 
 	@Override
