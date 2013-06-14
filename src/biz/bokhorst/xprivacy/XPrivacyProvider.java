@@ -6,8 +6,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import de.robv.android.xposed.XSharedPreferences;
-
+import android.annotation.SuppressLint;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
@@ -20,6 +19,8 @@ import android.os.Binder;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
+
+import de.robv.android.xposed.XSharedPreferences;
 
 public class XPrivacyProvider extends ContentProvider {
 
@@ -77,6 +78,8 @@ public class XPrivacyProvider extends ContentProvider {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
+	@SuppressLint("WorldReadableFiles")
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		if (sUriMatcher.match(uri) == TYPE_RESTRICTION && selectionArgs != null && selectionArgs.length >= 2) {
 			// Get arguments
@@ -97,7 +100,7 @@ public class XPrivacyProvider extends ContentProvider {
 			}
 
 			// Get restrictions
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_PRIVATE);
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
 			boolean allowed = getAllowed(uid, restrictionName, prefs);
 
 			// Return restriction
@@ -144,6 +147,8 @@ public class XPrivacyProvider extends ContentProvider {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
+	@SuppressLint("WorldReadableFiles")
 	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 		// Check access
 		enforcePermission();
@@ -155,7 +160,7 @@ public class XPrivacyProvider extends ContentProvider {
 			boolean allowed = !Boolean.parseBoolean(values.getAsString(COL_RESTRICTED));
 
 			// Get restrictions
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_PRIVATE);
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
 			String restrictions = prefs.getString(getRestrictionPref(restrictionName), "*");
 
 			// Decode restrictions
@@ -236,12 +241,7 @@ public class XPrivacyProvider extends ContentProvider {
 	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName) {
 		// Get restrictions
 		XSharedPreferences xprefs = new XSharedPreferences(new File(getPrefFileName(PREF_RESTRICTION)));
-		boolean allowed = getAllowed(uid, restrictionName, xprefs);
-
-		// Result
-		XUtil.log(hook, Log.INFO, "get " + uid + "/" + (hook == null ? null : hook.getMethodName()) + " "
-				+ restrictionName + "=" + !allowed + " #");
-		return !allowed;
+		return !getAllowed(uid, restrictionName, xprefs);
 	}
 
 	// Private helper methods
