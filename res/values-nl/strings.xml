@@ -19,12 +19,12 @@
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Calling</string>
     <string name="restrict_contacts">Contacten</string>
-    <string name="restrict_identification">Identificatie (apparaat, Wi-Fi)</string>
+    <string name="restrict_identification">Identificatie (apparaat)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Locatie (fijn/grof)</string>
     <string name="restrict_media">Media (audio, foto, video)</string>
     <string name="restrict_messages">Berichten (SMS, MMS)</string>
-    <string name="restrict_network">Network (addresses)</string>
+    <string name="restrict_network">Netwerk (addresses)</string>
     <string name="restrict_phone">Telefoon (ID, nummers, oproepen)</string>
     <string name="restrict_storage">Externe opslag (SD card)</string>
     <string name="restrict_system">Systeem (geïnstalleerde apps)</string>

@@ -39,6 +39,7 @@ public class XRestriction {
 	public static final long cDefaceHex = 0xDEFACEL;
 	public static final String cDefacedMac = "de:fa:ce:de:fa:ce";
 	public static final byte[] cDefaceBytes = new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
+	public static final int cDefaceIP = 127 + (0 << 8) + (0 << 16) + (1 << 24);
 
 	public final static int cUidAndroid = 1000;
 	public final static String cExpertMode = "ExpertMode";
@@ -86,7 +87,6 @@ public class XRestriction {
 			mRestrictions.get(cCalling).add("CALL_PHONE");
 		}
 		mRestrictions.get(cContacts).add("READ_CONTACTS");
-		mRestrictions.get(cIdentification).add("ACCESS_WIFI_STATE");
 		if (cPro)
 			mRestrictions.get(cInternet).add("INTERNET");
 		mRestrictions.get(cLocation).add("ACCESS_COARSE_LOCATION");
@@ -100,6 +100,7 @@ public class XRestriction {
 		mRestrictions.get(cMessages).add("READ_SMS");
 		mRestrictions.get(cMessages).add("RECEIVE_SMS");
 		mRestrictions.get(cNetwork).add("ACCESS_NETWORK_STATE");
+		mRestrictions.get(cNetwork).add("ACCESS_WIFI_STATE");
 		mRestrictions.get(cPhone).add("READ_PHONE_STATE");
 		mRestrictions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mRestrictions.get(cPhone).add("READ_CALL_LOG");

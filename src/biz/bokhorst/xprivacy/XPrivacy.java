@@ -203,9 +203,15 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XTelephonyManager("listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE", }),
 				"android.telephony.TelephonyManager");
 
-		// Wi-Fi info
-		hook(new XWifiInfo("getMacAddress", XRestriction.cIdentification, new String[] { "ACCESS_WIFI_STATE" }),
-				"android.net.wifi.WifiInfo");
+		// Wi-Fi manager
+		hook(new XWifiManager("getConfiguredNetworks", XRestriction.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
+				"android.net.wifi.WifiManager");
+		hook(new XWifiManager("getConnectionInfo", XRestriction.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
+				"android.net.wifi.WifiManager");
+		hook(new XWifiManager("getDhcpInfo", XRestriction.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
+				"android.net.wifi.WifiManager");
+		hook(new XWifiManager("getScanResults", XRestriction.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
+				"android.net.wifi.WifiManager");
 
 		// Intent receive: calling
 		hook(new XActivityThread("handleReceiver", XRestriction.cBoot, new String[] { "RECEIVE_BOOT_COMPLETED" },

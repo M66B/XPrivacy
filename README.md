@@ -200,7 +200,9 @@ Changelog
 
 * Restrict Android (expert mode)
 * Restrict Google Service Framework (see also limitations)
+* Restrict Wi-Fi BSSID, IP and SSID
 * Restrict network info (untested)
+* No default deny for updated apps
 
 **Version 0.14**
 

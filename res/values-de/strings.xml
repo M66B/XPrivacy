@@ -19,7 +19,7 @@
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Calling</string>
     <string name="restrict_contacts">Kontakte</string>
-    <string name="restrict_identification">Identität (Gerät, Wi-Fi)</string>
+    <string name="restrict_identification">Identität (Gerät)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Standort (genau/ungefähr)</string>
     <string name="restrict_media">Medien (Audio, Foto, Video)</string>

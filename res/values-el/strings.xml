@@ -19,7 +19,7 @@
     <string name="restrict_calendar">Ημερολόγιο</string>
     <string name="restrict_calling">Calling</string>
     <string name="restrict_contacts">Επαφές</string>
-    <string name="restrict_identification">Ταυτότητα (συσκευή, Wi-Fi)</string>
+    <string name="restrict_identification">Ταυτότητα (συσκευή)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Τοποθεσία (ακριβής/μερική)</string>
     <string name="restrict_media">Πολυμέσα (ήχοι, φωτογραφίες, βίντεο)</string>
