@@ -198,7 +198,7 @@ Changelog
 
 **Version 0.17**
 
-* Restrict opening links ([issue](https://github.com/M66B/XPrivacy/issues/14))
+* Restrict opening links ([issue](https://github.com/M66B/XPrivacy/issues/15))
 * Restrict serial# (system properties)
 
 **Version 0.16**
