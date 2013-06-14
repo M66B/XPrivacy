@@ -55,7 +55,7 @@ public class XNetworkInterface extends XHook {
 			} else {
 				NetworkInterface ni = (NetworkInterface) param.thisObject;
 				if (!ni.isLoopback())
-					if (isRestricted(param)) {
+					if (isRestricted(param))
 						if (methodName.equals("getHardwareAddress")) {
 							// Hardware address
 							byte[] address = (byte[]) param.getResult();
@@ -77,7 +77,6 @@ public class XNetworkInterface extends XHook {
 							param.setResult(Collections.enumeration(listAddress));
 						} else
 							XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
-					}
 			}
 		}
 	}

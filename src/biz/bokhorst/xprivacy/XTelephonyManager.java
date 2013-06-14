@@ -12,7 +12,6 @@ import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.CellInfo;
-import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
@@ -67,8 +66,7 @@ public class XTelephonyManager extends XHook {
 		if (!methodName.equals("listen") && !methodName.equals("disableLocationUpdates")
 				&& !methodName.equals("enableLocationUpdates"))
 			if (param.getResult() != null)
-				if (isRestricted(param)) {
-					XUtil.log(this, Log.INFO, this.getMethodName() + " uid=" + Binder.getCallingUid());
+				if (isRestricted(param))
 					if (methodName.equals("getAllCellInfo"))
 						param.setResult(new ArrayList<CellInfo>());
 					else if (methodName.equals("getCellLocation"))
@@ -79,7 +77,6 @@ public class XTelephonyManager extends XHook {
 						param.setResult(new ArrayList<NeighboringCellInfo>());
 					else
 						param.setResult(XRestriction.cDefaceString);
-				}
 	}
 
 	@Override
