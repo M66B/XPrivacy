@@ -1,10 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import static de.robv.android.xposed.XposedHelpers.findClass;
-import static de.robv.android.xposed.XposedHelpers.findField;
-
-import java.lang.reflect.Field;
-
 import android.app.AndroidAppHelper;
 import android.content.Context;
 import android.os.Binder;
@@ -42,35 +37,13 @@ public abstract class XHook {
 	abstract protected void after(MethodHookParam param) throws Throwable;
 
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = AndroidAppHelper.currentApplication();
-		if (context == null)
-			try {
-				Class<?> atClass = findClass("android.app.ActivityThread", param.thisObject.getClass().getClassLoader());
-				Field fieldSystemContext = findField(atClass, "mSystemContext");
-				context = (Context) fieldSystemContext.get(null);
-				if (context == null) {
-					XUtil.log(this, Log.INFO, "No context, not restricting");
-					XUtil.logStack(this);
-					return false;
-				} else
-					XUtil.log(this, Log.INFO, "Using system context");
-			} catch (Throwable ex) {
-				XUtil.bug(this, ex);
-				return false;
-			}
 		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, null, true);
+		Context context = AndroidAppHelper.currentApplication();
+		return getRestricted(context, uid, true);
 	}
 
-	protected boolean getRestricted(Context context, int uid, String packageName, boolean usage) throws Throwable {
-		if (packageName == null)
-			return XRestriction.getRestrictedCached(this, context, uid, mRestrictionName, usage);
-		else
-			return XPrivacyProvider.getRestricted(this, context, uid, packageName, mRestrictionName, usage);
-	}
-
-	protected void setRestricted(Context context, int uid, boolean restricted) throws Throwable {
-		XRestriction.setRestricted(this, context, uid, mRestrictionName, restricted);
+	protected boolean getRestricted(Context context, int uid, boolean usage) throws Throwable {
+		return XRestriction.getRestricted(this, context, uid, mRestrictionName, usage, true);
 	}
 
 	protected void notifyUser(String message) throws Throwable {

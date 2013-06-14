@@ -1,11 +1,13 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import android.annotation.SuppressLint;
+import de.robv.android.xposed.XSharedPreferences;
+
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,20 +17,24 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
 public class XPrivacyProvider extends ContentProvider {
 
 	public static final String AUTHORITY = "biz.bokhorst.xprivacy.provider";
+	public static final String PREF_RESTRICTION = AUTHORITY;
+	public static final String PREF_USAGE = AUTHORITY + ".usage";
+	public static final String PREF_SETTINGS = AUTHORITY + ".settings";
 	public static final String PATH_RESTRICTION = "restriction";
 	public static final String PATH_USAGE = "usage";
 	public static final String PATH_AUDIT = "audit";
-	public static final String PATH_SETTING = "setting";
+	public static final String PATH_SETTINGS = "settings";
 	public static final Uri URI_RESTRICTION = Uri.parse("content://" + AUTHORITY + "/" + PATH_RESTRICTION);
 	public static final Uri URI_USAGE = Uri.parse("content://" + AUTHORITY + "/" + PATH_USAGE);
 	public static final Uri URI_AUDIT = Uri.parse("content://" + AUTHORITY + "/" + PATH_AUDIT);
-	public static final Uri URI_SETTING = Uri.parse("content://" + AUTHORITY + "/" + PATH_SETTING);
+	public static final Uri URI_SETTING = Uri.parse("content://" + AUTHORITY + "/" + PATH_SETTINGS);
 
 	public static final String COL_UID = "Uid";
 	public static final String COL_RESTRICTION = "Restriction";
@@ -44,14 +50,12 @@ public class XPrivacyProvider extends ContentProvider {
 	private static final int TYPE_AUDIT = 3;
 	private static final int TYPE_SETTING = 4;
 
-	private static final String cPackages = "Packages";
-
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		sUriMatcher.addURI(AUTHORITY, PATH_RESTRICTION, TYPE_RESTRICTION);
 		sUriMatcher.addURI(AUTHORITY, PATH_USAGE, TYPE_USAGE);
 		sUriMatcher.addURI(AUTHORITY, PATH_AUDIT, TYPE_AUDIT);
-		sUriMatcher.addURI(AUTHORITY, PATH_SETTING, TYPE_SETTING);
+		sUriMatcher.addURI(AUTHORITY, PATH_SETTINGS, TYPE_SETTING);
 	}
 
 	@Override
@@ -68,15 +72,12 @@ public class XPrivacyProvider extends ContentProvider {
 		else if (sUriMatcher.match(uri) == TYPE_AUDIT)
 			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_AUDIT);
 		else if (sUriMatcher.match(uri) == TYPE_SETTING)
-			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_SETTING);
+			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_SETTINGS);
 		throw new IllegalArgumentException();
 	}
 
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-		// Get preferences
-		SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
-
 		if (sUriMatcher.match(uri) == TYPE_RESTRICTION && selectionArgs != null && selectionArgs.length >= 2) {
 			// Get arguments
 			String restrictionName = selection;
@@ -87,7 +88,8 @@ public class XPrivacyProvider extends ContentProvider {
 			// Update usage count
 			if (usage) {
 				long timestamp = new Date().getTime();
-				SharedPreferences.Editor editor = prefs.edit();
+				SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = uprefs.edit();
 				editor.putLong(getUsagePref(uid, restrictionName), timestamp);
 				if (methodName != null)
 					editor.putLong(getMethodPref(uid, restrictionName, methodName), timestamp);
@@ -95,25 +97,18 @@ public class XPrivacyProvider extends ContentProvider {
 			}
 
 			// Get restrictions
-			String restrictions = prefs.getString(getRestrictionPref(restrictionName), "*");
-
-			// Decode restrictions
-			List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
-			boolean defaultRestricted = listRestriction.get(0).equals("*");
-
-			// Check if restricted
-			boolean restricted = !listRestriction.contains(Integer.toString(uid));
-			if (!defaultRestricted)
-				restricted = !restricted;
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_PRIVATE);
+			boolean allowed = getAllowed(uid, restrictionName, prefs);
 
 			// Return restriction
 			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_RESTRICTED });
-			cursor.addRow(new Object[] { uid, restrictionName, Boolean.toString(!restricted) });
+			cursor.addRow(new Object[] { uid, restrictionName, Boolean.toString(!allowed) });
 			return cursor;
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length == 1) {
 			// Return usage
 			String restrictionName = selection;
 			int uid = Integer.parseInt(selectionArgs[0]);
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
 			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_USED });
 			cursor.addRow(new Object[] { uid, restrictionName, prefs.getLong(getUsagePref(uid, restrictionName), 0) });
 			return cursor;
@@ -123,6 +118,7 @@ public class XPrivacyProvider extends ContentProvider {
 			int uid = Integer.parseInt(selectionArgs[0]);
 			String prefix = getUsagePref(uid, restrictionName) + ".";
 			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_USED });
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
 			for (String pref : prefs.getAll().keySet())
 				if (pref.startsWith(prefix))
 					cursor.addRow(new Object[] { uid, restrictionName, pref.substring(prefix.length()),
@@ -131,6 +127,7 @@ public class XPrivacyProvider extends ContentProvider {
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING && selectionArgs == null) {
 			// Return setting
 			String settingName = selection;
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
 			MatrixCursor cursor = new MatrixCursor(new String[] { COL_SETTING, COL_ENABLED });
 			cursor.addRow(new Object[] { settingName, prefs.getBoolean(getSettingPref(settingName), false) });
 			return cursor;
@@ -151,9 +148,6 @@ public class XPrivacyProvider extends ContentProvider {
 		// Check access
 		enforcePermission();
 
-		// Get preferences
-		SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
-
 		if (sUriMatcher.match(uri) == TYPE_RESTRICTION) {
 			// Get arguments
 			String restrictionName = selection;
@@ -161,6 +155,7 @@ public class XPrivacyProvider extends ContentProvider {
 			boolean allowed = !Boolean.parseBoolean(values.getAsString(COL_RESTRICTED));
 
 			// Get restrictions
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_PRIVATE);
 			String restrictions = prefs.getString(getRestrictionPref(restrictionName), "*");
 
 			// Decode restrictions
@@ -182,10 +177,7 @@ public class XPrivacyProvider extends ContentProvider {
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putString(getRestrictionPref(restrictionName), restrictions);
 			editor.commit();
-
-			// Update package list
-			if (XRestriction.cInternet.equals(restrictionName) || XRestriction.cStorage.equals(restrictionName))
-				updatePackages(uid, restrictionName, allowed);
+			setPrefFileReadable(PREF_RESTRICTION);
 
 			return 1; // rows
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING) {
@@ -194,6 +186,7 @@ public class XPrivacyProvider extends ContentProvider {
 
 			// Update setting
 			boolean enabled = Boolean.parseBoolean(values.getAsString(COL_ENABLED));
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putBoolean(getSettingPref(settingName), enabled);
 			editor.commit();
@@ -216,7 +209,7 @@ public class XPrivacyProvider extends ContentProvider {
 			// Delete audit trail
 			int rows = 0;
 			String prefix = getUsagePref(uid, restrictionName);
-			SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY, Context.MODE_PRIVATE);
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = prefs.edit();
 			for (String pref : prefs.getAll().keySet())
 				if (pref.startsWith(prefix)) {
@@ -230,6 +223,28 @@ public class XPrivacyProvider extends ContentProvider {
 		throw new IllegalArgumentException();
 	}
 
+	// Public helper methods
+
+	public static void setPrefFileReadable(String preference) {
+		new File(getPrefFileName(preference)).setReadable(true, false);
+	}
+
+	// The following method is used as fallback, when:
+	// - there is no context (Java threads)
+	// - the content provider cannot be queried (PackageManagerService)
+
+	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName) {
+		// Get restrictions
+		XSharedPreferences xprefs = new XSharedPreferences(new File(getPrefFileName(PREF_RESTRICTION)));
+		boolean allowed = getAllowed(uid, restrictionName, xprefs);
+
+		// Result
+		XUtil.log(hook, Log.INFO, "get uid=" + uid + " " + restrictionName + "=" + !allowed);
+		return !allowed;
+	}
+
+	// Private helper methods
+
 	private void enforcePermission() throws SecurityException {
 		// Only XPrivacy can insert, update or delete
 		int cuid = Binder.getCallingUid();
@@ -240,61 +255,24 @@ public class XPrivacyProvider extends ContentProvider {
 			throw new SecurityException();
 	}
 
-	// The following two methods represent an ugly, not very secure workaround
-	// It is not possible to query a provider from the package manager service
-	// It will result in a stack overflow
-	// Please contact me if you know a better solution
+	private static boolean getAllowed(int uid, String restrictionName, SharedPreferences prefs) {
+		// Get restrictions
+		String restrictions = prefs.getString(getRestrictionPref(restrictionName), "*");
 
-	@SuppressWarnings("deprecation")
-	@SuppressLint("WorldReadableFiles")
-	private void updatePackages(int uid, String restrictionName, boolean allowed) {
-		// Get packages
-		SharedPreferences prefs = getContext().getSharedPreferences(AUTHORITY + "." + restrictionName,
-				Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS);
-		String packages = prefs.getString(getPackagesPref(restrictionName), "");
+		// Decode restrictions
+		List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
+		boolean defaultRestricted = listRestriction.get(0).equals("*");
 
-		// Build package list
-		List<String> listPackage = new ArrayList<String>();
-		if (!packages.equals(""))
-			listPackage.addAll(Arrays.asList(packages.split(",")));
-
-		// Update package list
-		String[] uidPackages = getContext().getPackageManager().getPackagesForUid(uid);
-		if (uidPackages != null)
-			for (String uidPackage : uidPackages) {
-				XUtil.log(null, Log.INFO, "package=" + uidPackage + " " + restrictionName + "=" + !allowed);
-				if (!allowed && !listPackage.contains(uidPackage))
-					listPackage.add(uidPackage);
-				else if (allowed && listPackage.contains(uidPackage))
-					listPackage.remove(uidPackage);
-			}
-
-		// Store package list
-		packages = TextUtils.join(",", listPackage);
-		SharedPreferences.Editor sEditor = prefs.edit();
-		sEditor.putString(getPackagesPref(restrictionName), packages);
-		sEditor.commit();
+		// Check if restricted
+		boolean allowed = !listRestriction.contains(Integer.toString(uid));
+		if (!defaultRestricted)
+			allowed = !allowed;
+		return allowed;
 	}
 
-	@SuppressWarnings("deprecation")
-	@SuppressLint("WorldReadableFiles")
-	public static boolean getRestricted(XHook hook, Context context, int uid, String packageName,
-			String restrictionName, boolean usage) throws Throwable {
-		// Get packages
-		Context xContext = XUtil.getXContext(context);
-		SharedPreferences prefs = xContext.getSharedPreferences(AUTHORITY + "." + restrictionName,
-				Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS);
-		String storagePackages = prefs.getString(getPackagesPref(restrictionName), "");
-
-		// Build package list
-		List<String> listPackage = new ArrayList<String>();
-		if (!storagePackages.equals(""))
-			listPackage.addAll(Arrays.asList(storagePackages.split(",")));
-
-		// Check if package restricted
-		boolean restricted = listPackage.contains(packageName);
-		XUtil.log(hook, Log.INFO, "package=" + packageName + " uid=" + uid + " " + restrictionName + "=" + restricted);
-		return restricted;
+	private static String getPrefFileName(String preference) {
+		String packageName = XRestriction.class.getPackage().getName();
+		return Environment.getDataDirectory() + "/data/" + packageName + "/shared_prefs/" + preference + ".xml";
 	}
 
 	private static String getRestrictionPref(String restrictionName) {
@@ -311,9 +289,5 @@ public class XPrivacyProvider extends ContentProvider {
 
 	private static String getSettingPref(String settingName) {
 		return COL_SETTING + "." + settingName;
-	}
-
-	private static String getPackagesPref(String restrictionName) {
-		return cPackages + "." + restrictionName;
 	}
 }

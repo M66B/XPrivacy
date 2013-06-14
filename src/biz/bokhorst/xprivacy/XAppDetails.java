@@ -55,14 +55,6 @@ public class XAppDetails extends XHook {
 			return;
 		}
 
-		// Check for Android
-		if (appInfo.uid == XRestriction.cUidAndroid)
-			return;
-
-		// Check for self
-		if (appInfo.packageName.equals(XAppDetails.class.getPackage().getName()))
-			return;
-
 		// Get root view
 		// CM10/CM10.1
 		Field fieldRootView = findField(param.thisObject.getClass(), "mRootView");
@@ -85,6 +77,15 @@ public class XAppDetails extends XHook {
 			warning("detailsView is null");
 			return;
 		}
+
+		// Check for Android
+		boolean expert = XRestriction.getSetting(this, rootView.getContext(), XRestriction.cExpertMode);
+		if (appInfo.uid == XRestriction.cUidAndroid && !expert)
+			return;
+
+		// Check for self
+		if (appInfo.packageName.equals(XAppDetails.class.getPackage().getName()))
+			return;
 
 		// Get helpers
 		final Context xContext = XUtil.getXContext(rootView.getContext());

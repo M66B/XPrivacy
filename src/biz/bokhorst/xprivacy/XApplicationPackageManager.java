@@ -66,6 +66,6 @@ public class XApplicationPackageManager extends XHook {
 		Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 		Context context = (Context) fieldContext.get(param.thisObject);
 		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, null, true);
+		return getRestricted(context, uid, true);
 	}
 }

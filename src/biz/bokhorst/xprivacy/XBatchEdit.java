@@ -86,12 +86,15 @@ public class XBatchEdit extends Activity {
 
 		@Override
 		protected List<XApplicationInfo> doInBackground(String... params) {
-			// Get app list
+			// Get argument
 			mRestrictionName = params[0];
+			boolean expert = XRestriction.getSetting(null, XBatchEdit.this, XRestriction.cExpertMode);
+
+			// Get app list
 			SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
 			List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
 			for (ApplicationInfo appInfo : getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA))
-				if (appInfo.uid != XRestriction.cUidAndroid
+				if ((appInfo.uid == XRestriction.cUidAndroid ? expert : false)
 						&& !appInfo.packageName.equals(XBatchEdit.class.getPackage().getName())) {
 					XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
 					if (xAppInfo == null) {
@@ -206,7 +209,7 @@ public class XBatchEdit extends Activity {
 
 			// Display restriction
 			boolean restricted = XRestriction.getRestricted(null, row.getContext(), appEntry.getUid(),
-					mRestrictionName, false);
+					mRestrictionName, false, false);
 			ctvApp.setChecked(restricted);
 
 			// Listen for restriction changes
@@ -214,7 +217,7 @@ public class XBatchEdit extends Activity {
 				@Override
 				public void onClick(View view) {
 					boolean restricted = XRestriction.getRestricted(null, view.getContext(), appEntry.getUid(),
-							mRestrictionName, false);
+							mRestrictionName, false, false);
 					restricted = !restricted;
 					ctvApp.setChecked(restricted);
 					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName, restricted);

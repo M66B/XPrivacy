@@ -115,8 +115,9 @@ Restricted data
 Restricted actions
 ------------------
 
-* Calling (untested) (0.14)
-* Sending SMS/MMS (untested) (0.14)
+* Calling (untested)
+* Sending SMS
+* Sending MMS (untested)
 * Internet (revoke permission)
 * External storage (SD card) (revoke permission)
 
@@ -124,7 +125,7 @@ Limitations
 -----------
 
 * The Google Services Framework (com.google.android.gsf) retrieves the Wi-Fi MAC address in an unusual way
-(within a thread, without context), which is currently not restricted by XPrivacy.
+(within a thread, without context), it can be restricted by XPrivacy, but there will be no usage data available.
 
 Installation
 ------------
@@ -178,7 +179,7 @@ Frequently asked questions
 * Will XPrivacy make my device slower? Maybe a little, but it will be probably not noticeable.
 * Does XPrivacy use a lot of memory? Almost nothing.
 * Can I backup XPrivacy and settings? Yes, you can, but for now you can only restore the back onto the same device.
-* What is export mode? In expert mode you can block apps from starting at device boot time.
+* What is export mode? In expert mode you can block apps from starting at device boot time and apply restrictions to Android.
 * I don't see the XPrivacy button in *Manage apps*! You are probably using a customized stock ROM. Don't worry, you can do the same from the XPrivacy app.
 
 Support
@@ -193,6 +194,11 @@ you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-deve
 
 Changelog
 ---------
+
+**Version 0.15**
+
+* Restrict Android (expert mode)
+* Restrict Google Service Framework
 
 **Version 0.14**
 

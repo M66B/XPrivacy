@@ -45,6 +45,6 @@ public class XSettingsSecure extends XHook {
 		Field fieldContext = findField(contentResolver.getClass(), "mContext");
 		Context context = (Context) fieldContext.get(contentResolver);
 		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, null, true);
+		return getRestricted(context, uid, true);
 	}
 }

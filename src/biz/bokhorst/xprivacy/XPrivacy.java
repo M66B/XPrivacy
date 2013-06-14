@@ -33,6 +33,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Log load
 		XUtil.log(null, Log.INFO, String.format("load %s", startupParam.modulePath));
 
+		// Set preferences readable
+		XPrivacyProvider.setPrefFileReadable(XPrivacyProvider.PREF_RESTRICTION);
+
 		// Account manager
 		hook(new XAccountManager("getAccounts", XRestriction.cAccounts, new String[] { "GET_ACCOUNTS" }),
 				"android.accounts.AccountManager");

@@ -153,7 +153,7 @@ public class XAppEdit extends Activity {
 
 			// Display restriction
 			boolean restricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.uid, restrictionName,
-					false);
+					false, false);
 			ctvRestriction.setChecked(restricted);
 
 			// Listen for restriction changes
@@ -161,7 +161,7 @@ public class XAppEdit extends Activity {
 				@Override
 				public void onClick(View view) {
 					boolean restricted = XRestriction.getRestricted(null, view.getContext(), mAppInfo.uid,
-							restrictionName, false);
+							restrictionName, false, false);
 					restricted = !restricted;
 					ctvRestriction.setChecked(restricted);
 					XRestriction.setRestricted(null, view.getContext(), mAppInfo.uid, restrictionName, restricted);

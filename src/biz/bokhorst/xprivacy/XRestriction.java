@@ -171,29 +171,10 @@ public class XRestriction {
 		return (lastUsage != 0);
 	}
 
-	public static boolean getRestrictedCached(XHook hook, Context context, int uid, String restrictionName,
-			boolean usage) {
-		return getRestricted(hook, context, uid, restrictionName, usage, true);
-	}
-
-	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage) {
-		return getRestricted(hook, context, uid, restrictionName, usage, false);
-	}
-
 	@SuppressLint("DefaultLocale")
-	private static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage,
-			boolean cache) {
+	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage,
+			boolean useCache) {
 		try {
-			if (uid == XRestriction.cUidAndroid)
-				return false;
-
-			// Check context
-			if (context == null) {
-				XUtil.log(hook, Log.WARN, "context is null");
-				XUtil.logStack(hook);
-				return false;
-			}
-
 			// Check uid
 			if (uid == 0) {
 				XUtil.log(hook, Log.WARN, "uid=0");
@@ -208,9 +189,13 @@ public class XRestriction {
 				return false;
 			}
 
+			// Fallback
+			if (context == null || uid == XRestriction.cUidAndroid)
+				return XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName);
+
 			// Check cache
 			String key = String.format("%d.%s", uid, restrictionName);
-			if (cache)
+			if (useCache)
 				synchronized (mRestrictionCache) {
 					if (mRestrictionCache.containsKey(key)) {
 						CacheEntry entry = mRestrictionCache.get(key);
