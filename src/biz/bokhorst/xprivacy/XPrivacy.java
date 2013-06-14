@@ -114,11 +114,17 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.media.MediaRecorder");
 
 		// Network interface
+		hook(new XNetworkInterface("getByInetAddress", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
+				"java.net.NetworkInterface");
+		hook(new XNetworkInterface("getByName", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
+				"java.net.NetworkInterface");
 		hook(new XNetworkInterface("getHardwareAddress", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
 				"java.net.NetworkInterface");
 		hook(new XNetworkInterface("getInetAddresses", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
 				"java.net.NetworkInterface");
 		hook(new XNetworkInterface("getInterfaceAddresses", XRestriction.cNetwork,
+				new String[] { "ACCESS_NETWORK_STATE" }), "java.net.NetworkInterface");
+		hook(new XNetworkInterface("getNetworkInterfaces", XRestriction.cNetwork,
 				new String[] { "ACCESS_NETWORK_STATE" }), "java.net.NetworkInterface");
 
 		// Package manager service
