@@ -33,33 +33,34 @@ public class XPackageManagerService extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Get argument
-		String packageName = (String) param.args[0];
+		// Get result
+		int[] gids = (int[]) param.getResult();
+		if (gids != null) {
+			// Build list of gids
+			boolean modified = false;
+			List<Integer> listGids = new ArrayList<Integer>();
+			for (int i = 0; i < gids.length; i++)
+				if ((gids[i] == sdcard_r || gids[i] == sdcard_rw) && mRestrictionName.equals(XRestriction.cStorage))
+					modified = true;
+				else if ((gids[i] == inet || gids[i] == inet_raw) && mRestrictionName.equals(XRestriction.cInternet))
+					modified = true;
+				else
+					listGids.add(gids[i]);
 
-		// public int getPackageUid(String packageName, int userId)
-		Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class, int.class);
-		int uid = (Integer) method.invoke(param.thisObject, packageName, 0);
-
-		if (getRestricted(null, uid, true)) {
-			// Get gids
-			int[] gids = (int[]) param.getResult();
-			if (gids != null) {
-				// Build list of gids
-				List<Integer> listGids = new ArrayList<Integer>();
-				for (int i = 0; i < gids.length; i++)
-					if ((gids[i] == sdcard_r || gids[i] == sdcard_rw) && mRestrictionName.equals(XRestriction.cStorage))
-						;
-					else if ((gids[i] == inet || gids[i] == inet_raw)
-							&& mRestrictionName.equals(XRestriction.cInternet))
-						;
-					else
-						listGids.add(gids[i]);
-
-				// return gids
+			if (modified) {
+				// Build list of modified gids
 				gids = new int[listGids.size()];
 				for (int i = 0; i < listGids.size(); i++)
 					gids[i] = listGids.get(i);
-				param.setResult(gids);
+
+				// Get uid
+				String packageName = (String) param.args[0];
+				// public int getPackageUid(String packageName, int userId)
+				Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class, int.class);
+				int uid = (Integer) method.invoke(param.thisObject, packageName, 0);
+
+				if (getRestricted(null, uid, true))
+					param.setResult(gids);
 			}
 		}
 	}
