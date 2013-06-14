@@ -1,5 +1,7 @@
 package biz.bokhorst.xprivacy;
 
+import android.os.Build;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSystemProperties extends XHook {
@@ -19,12 +21,21 @@ public class XSystemProperties extends XHook {
 	// public static String getLongString(String key, String def)
 	// frameworks/base/core/java/android/os/SystemProperties.java
 
+	// private static String getString(String property)
+	// private static long getLong(String property)
+	// frameworks/base/core/java/android/os/Build.java
+
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		String key = (String) param.args[0];
 		if (mKey.equals(key))
 			if (isRestricted(param))
-				if (param.method.getName().equals("get"))
+				if (param.thisObject.getClass().equals(Build.class)) {
+					if (param.method.getName().equals("getString"))
+						param.setResult(XRestriction.cDefaceString);
+					else if (param.method.getName().equals("getLong"))
+						param.setResult(-1);
+				} else if (param.method.getName().equals("get"))
 					param.setResult(XRestriction.cDefaceString);
 				else
 					param.setResult(param.args[1]);
@@ -32,5 +43,6 @@ public class XSystemProperties extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
+		// Do nothing
 	}
 }

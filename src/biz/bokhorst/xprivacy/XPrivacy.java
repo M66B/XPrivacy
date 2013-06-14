@@ -152,6 +152,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hook(new XSystemProperties(get, XRestriction.cIdentification, new String[] {}, "ro.serialno"),
 					"android.os.SystemProperties");
 
+		hook(new XSystemProperties("getString", XRestriction.cIdentification, new String[] {}, "ro.serialno"),
+				"android.os.Build", true);
+		hook(new XSystemProperties("getLong", XRestriction.cIdentification, new String[] {}, "ro.serialno"),
+				"android.os.Build", true);
+
 		// Telephony
 		hook(new XTelephonyManager("disableLocationUpdates", XRestriction.cLocation,
 				new String[] { "CONTROL_LOCATION_UPDATES", }), "android.telephony.TelephonyManager");
