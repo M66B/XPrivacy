@@ -186,10 +186,6 @@ public class XRestriction {
 				return false;
 			}
 
-			// Fallback
-			if (context == null || uid == XRestriction.cUidAndroid)
-				return XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName);
-
 			// Check cache
 			String key = String.format("%d.%s", uid, restrictionName);
 			if (useCache)
@@ -205,34 +201,40 @@ public class XRestriction {
 					}
 				}
 
-			// Get content resolver
-			ContentResolver contentResolver = context.getContentResolver();
-			if (contentResolver == null) {
-				XUtil.log(hook, Log.WARN, "contentResolver is null");
-				XUtil.logStack(hook);
-				return false;
-			}
+			boolean restricted = false;
 
-			// Query restriction
-			String methodName = (hook == null ? null : hook.getMethodName());
-			Cursor cursor = contentResolver.query(XPrivacyProvider.URI_RESTRICTION, null, restrictionName,
-					new String[] { Integer.toString(uid), Boolean.toString(usage), methodName }, null);
-			if (cursor == null) {
-				XUtil.log(hook, Log.WARN, "cursor is null");
-				XUtil.logStack(null);
-				return false;
-			}
-
-			// Get restriction
-			boolean restricted = true;
-			if (cursor.moveToNext())
-				restricted = Boolean.parseBoolean(cursor.getString(cursor
-						.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
+			// Fallback: no usage data
+			if (context == null || uid == XRestriction.cUidAndroid)
+				restricted = XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName);
 			else {
-				XUtil.log(hook, Log.WARN, "cursor is empty");
-				XUtil.logStack(null);
+				// Get content resolver
+				ContentResolver contentResolver = context.getContentResolver();
+				if (contentResolver == null) {
+					XUtil.log(hook, Log.WARN, "contentResolver is null");
+					XUtil.logStack(hook);
+					return false;
+				}
+
+				// Query restriction
+				String methodName = (hook == null ? null : hook.getMethodName());
+				Cursor cursor = contentResolver.query(XPrivacyProvider.URI_RESTRICTION, null, restrictionName,
+						new String[] { Integer.toString(uid), Boolean.toString(usage), methodName }, null);
+				if (cursor == null) {
+					XUtil.log(hook, Log.WARN, "cursor is null");
+					XUtil.logStack(null);
+					return false;
+				}
+
+				// Get restriction
+				if (cursor.moveToNext())
+					restricted = Boolean.parseBoolean(cursor.getString(cursor
+							.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
+				else {
+					XUtil.log(hook, Log.WARN, "cursor is empty");
+					XUtil.logStack(null);
+				}
+				cursor.close();
 			}
-			cursor.close();
 
 			// Add to cache
 			synchronized (mRestrictionCache) {
@@ -319,24 +321,27 @@ public class XRestriction {
 					new String[] { Integer.toString(uid) });
 	}
 
-	// Helper methods
-
 	public static String getLocalizedName(Context context, String restrictionName) {
 		String packageName = XRestriction.class.getPackage().getName();
 		int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
 		return (stringId == 0 ? null : context.getString(stringId));
 	}
 
+	// Helper methods
+
 	private static void logRestriction(XHook hook, Context context, int uid, String prefix, String restrictionName,
 			boolean restricted, boolean cached) {
 		XUtil.log(hook, Log.INFO, String.format("%s %s/%s %s=%b%s", prefix, getPackageName(context, uid),
-				(hook == null ? null : hook.getMethodName()), restrictionName, restricted, (cached ? " *" : "")));
+				(hook == null ? null : hook.getMethodName()), restrictionName, restricted, (cached ? " *"
+						: (context == null ? " #" : ""))));
 	}
 
 	private static String getPackageName(Context context, int uid) {
-		String[] packages = context.getPackageManager().getPackagesForUid(uid);
-		if (packages != null && packages.length == 1)
-			return packages[0];
+		if (context != null) {
+			String[] packages = context.getPackageManager().getPackagesForUid(uid);
+			if (packages != null && packages.length == 1)
+				return packages[0];
+		}
 		return Integer.toString(uid);
 	}
 
