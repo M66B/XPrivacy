@@ -69,7 +69,7 @@ public abstract class XHook {
 			return XPrivacyProvider.getRestricted(this, context, uid, packageName, mRestrictionName, usage);
 	}
 
-	protected void setRestricted(Context context, int uid, boolean restricted) {
+	protected void setRestricted(Context context, int uid, boolean restricted) throws Throwable {
 		XRestriction.setRestricted(this, context, uid, mRestrictionName, restricted);
 	}
 

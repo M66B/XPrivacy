@@ -179,6 +179,7 @@ Frequently asked questions
 * Does XPrivacy use a lot of memory? Almost nothing.
 * Can I backup XPrivacy and settings? Yes, you can, but for now you can only restore the back onto the same device.
 * What is export mode? In expert mode you can block apps from starting at device boot time.
+* I don't see the XPrivacy button in *Manage apps*! You are probably using a customized stock ROM. Don't worry, you can do the same from the XPrivacy app.
 
 Support
 -------
