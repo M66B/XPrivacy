@@ -44,8 +44,6 @@ public class XRestriction {
 	public final static int cUidAndroid = 1000;
 	public final static String cExpertMode = "ExpertMode";
 
-	public final static boolean cPro = true;
-
 	private final static int cCacheTimeoutMs = 30 * 1000;
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
 	private static Map<String, CacheEntry> mRestrictionCache = new HashMap<String, CacheEntry>();
@@ -60,8 +58,7 @@ public class XRestriction {
 		mRestrictions.put(cBoot, new ArrayList<String>());
 		mRestrictions.put(cBrowser, new ArrayList<String>());
 		mRestrictions.put(cCalendar, new ArrayList<String>());
-		if (cPro)
-			mRestrictions.put(cCalling, new ArrayList<String>());
+		mRestrictions.put(cCalling, new ArrayList<String>());
 		mRestrictions.put(cContacts, new ArrayList<String>());
 		mRestrictions.put(cIdentification, new ArrayList<String>());
 		mRestrictions.put(cInternet, new ArrayList<String>());
@@ -70,8 +67,7 @@ public class XRestriction {
 		mRestrictions.put(cMessages, new ArrayList<String>());
 		mRestrictions.put(cNetwork, new ArrayList<String>());
 		mRestrictions.put(cPhone, new ArrayList<String>());
-		if (cPro)
-			mRestrictions.put(cStorage, new ArrayList<String>());
+		mRestrictions.put(cStorage, new ArrayList<String>());
 		mRestrictions.put(cSystem, new ArrayList<String>());
 
 		// Permissions
@@ -82,13 +78,10 @@ public class XRestriction {
 		mRestrictions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
 		mRestrictions.get(cBrowser).add("GLOBAL_SEARCH");
 		mRestrictions.get(cCalendar).add("READ_CALENDAR");
-		if (cPro) {
-			mRestrictions.get(cCalling).add("SEND_SMS");
-			mRestrictions.get(cCalling).add("CALL_PHONE");
-		}
+		mRestrictions.get(cCalling).add("SEND_SMS");
+		mRestrictions.get(cCalling).add("CALL_PHONE");
 		mRestrictions.get(cContacts).add("READ_CONTACTS");
-		if (cPro)
-			mRestrictions.get(cInternet).add("INTERNET");
+		mRestrictions.get(cInternet).add("INTERNET");
 		mRestrictions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mRestrictions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mRestrictions.get(cLocation).add("ACCESS_COARSE_UPDATES");
@@ -105,10 +98,8 @@ public class XRestriction {
 		mRestrictions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mRestrictions.get(cPhone).add("READ_CALL_LOG");
 		mRestrictions.get(cPhone).add("WRITE_APN_SETTINGS");
-		if (cPro) {
-			mRestrictions.get(cStorage).add("READ_EXTERNAL_STORAGE");
-			mRestrictions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
-		}
+		mRestrictions.get(cStorage).add("READ_EXTERNAL_STORAGE");
+		mRestrictions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
 	}
 
 	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {

@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class XAppEdit extends Activity {
+public class XActivitySingleApp extends Activity {
 
 	public static final String cPackageName = "PackageName";
 
@@ -34,7 +34,7 @@ public class XAppEdit extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
-		setContentView(R.layout.xapplist);
+		setContentView(R.layout.xsingleapplist);
 
 		// Get package name
 		Bundle extras = getIntent().getExtras();
@@ -57,7 +57,7 @@ public class XAppEdit extends Activity {
 		tvAppName.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Dialog dialog = new Dialog(XAppEdit.this);
+				Dialog dialog = new Dialog(XActivitySingleApp.this);
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
 				dialog.setContentView(R.layout.xhelp);
@@ -78,7 +78,7 @@ public class XAppEdit extends Activity {
 
 		// Fill privacy list view adapter
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
-		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xappentry, appInfo,
+		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xsingleappentry, appInfo,
 				XRestriction.getRestrictions(this));
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 	}
@@ -101,7 +101,7 @@ public class XAppEdit extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.xappentry, parent, false);
+			View row = inflater.inflate(R.layout.xsingleappentry, parent, false);
 			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgAppEntryGranted);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgAppEntryUsed);
 			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.tvAppEntryName);
@@ -138,7 +138,7 @@ public class XAppEdit extends Activity {
 
 					// Display audit
 					String localRestrictionName = XRestriction.getLocalizedName(view.getContext(), restrictionName);
-					AlertDialog alertDialog = new AlertDialog.Builder(XAppEdit.this).create();
+					AlertDialog alertDialog = new AlertDialog.Builder(XActivitySingleApp.this).create();
 					alertDialog.setTitle(localRestrictionName);
 					alertDialog.setIcon(R.drawable.ic_launcher);
 					alertDialog.setMessage(TextUtils.join("\n", listAudit));

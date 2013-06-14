@@ -1,40 +1,49 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.view.LayoutInflater;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ListView;
 import android.widget.TextView;
 
-public class XMain extends Activity {
+public class XFragmentMain extends FragmentActivity {
 
 	private final static int cXposedMinVersion = 34;
+
+	private PagerAdapter mPageAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		// Set layout
 		setContentView(R.layout.xmain);
+
+		// Setup pager
+		List<Fragment> listFragment = new ArrayList<Fragment>();
+		listFragment.add(new XFragmentApp());
+		listFragment.add(new XFragmentRestriction());
+		mPageAdapter = new PagerAdapter(getSupportFragmentManager(), listFragment);
+		ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+		viewPager.setAdapter(mPageAdapter);
 
 		// Check Android version
 		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
@@ -79,26 +88,25 @@ public class XMain extends Activity {
 			});
 			alertDialog.show();
 		}
+	}
 
-		// Fill restriction list view adapter
-		final List<String> listRestriction = XRestriction.getRestrictions(this);
-		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
-		RestrictionAdapter restrictionAdapter = new RestrictionAdapter(this, android.R.layout.simple_list_item_1,
-				listRestriction);
-		lvRestriction.setAdapter(restrictionAdapter);
+	private class PagerAdapter extends FragmentPagerAdapter {
+		private List<Fragment> mListfragment;
 
-		// Click: batch edit
-		lvRestriction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		public PagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+			super(fm);
+			mListfragment = fragments;
+		}
 
-				String restrictionName = listRestriction.get(position);
-				Intent intentBatch = new Intent(view.getContext(), XBatchEdit.class);
-				intentBatch.putExtra(XBatchEdit.cRestrictionName, restrictionName);
-				intentBatch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intentBatch);
-			}
-		});
+		@Override
+		public Fragment getItem(int position) {
+			return mListfragment.get(position);
+		}
+
+		@Override
+		public int getCount() {
+			return mListfragment.size();
+		}
 	}
 
 	@Override
@@ -122,11 +130,11 @@ public class XMain extends Activity {
 
 				// Expert mode
 				CheckBox cbSettings = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
-				cbSettings.setChecked(XRestriction.getSetting(null, XMain.this, XRestriction.cExpertMode));
+				cbSettings.setChecked(XRestriction.getSetting(null, XFragmentMain.this, XRestriction.cExpertMode));
 				cbSettings.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						XRestriction.setSetting(null, XMain.this, XRestriction.cExpertMode, isChecked);
+						XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cExpertMode, isChecked);
 					}
 				});
 
@@ -176,29 +184,4 @@ public class XMain extends Activity {
 		}
 	}
 
-	private class RestrictionAdapter extends ArrayAdapter<String> {
-
-		public RestrictionAdapter(Context context, int resource, List<String> objects) {
-			super(context, resource, objects);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View row = convertView;
-			if (row == null) {
-				LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
-						Context.LAYOUT_INFLATER_SERVICE);
-				row = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-			}
-			TextView tvRestriction = (TextView) row.findViewById(android.R.id.text1);
-
-			// Get entry
-			String restrictionName = getItem(position);
-
-			// Display localize name
-			tvRestriction.setText(XRestriction.getLocalizedName(row.getContext(), restrictionName));
-
-			return row;
-		}
-	}
 }

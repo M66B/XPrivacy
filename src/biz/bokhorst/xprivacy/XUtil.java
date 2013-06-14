@@ -60,6 +60,11 @@ public class XUtil {
 		return false;
 	}
 
+	public static boolean isPro() {
+		// Will be hooked to return true
+		return false;
+	}
+
 	public static Context getXContext(Context context) throws Throwable {
 		String xPackageName = XUtil.class.getPackage().getName();
 		return context.createPackageContext(xPackageName, 0);

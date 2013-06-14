@@ -28,8 +28,8 @@ public class XPackageChange extends BroadcastReceiver {
 						XRestriction.setRestricted(null, context, uid, restrictionName, true);
 
 				// Send intent to edit settings
-				Intent intentSettings = new Intent(context, XAppEdit.class);
-				intentSettings.putExtra(XAppEdit.cPackageName, packageName);
+				Intent intentSettings = new Intent(context, XActivitySingleApp.class);
+				intentSettings.putExtra(XActivitySingleApp.cPackageName, packageName);
 				intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
 				context.startActivity(intentSettings);
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {

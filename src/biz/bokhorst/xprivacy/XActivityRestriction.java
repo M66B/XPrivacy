@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -18,7 +17,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -34,7 +32,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class XBatchEdit extends Activity {
+public class XActivityRestriction extends Activity {
 
 	public static final String cRestrictionName = "Restriction";
 
@@ -44,7 +42,7 @@ public class XBatchEdit extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
-		setContentView(R.layout.xbatchlist);
+		setContentView(R.layout.xrestrictionlist);
 
 		// Get restriction name
 		Bundle extras = getIntent().getExtras();
@@ -58,7 +56,7 @@ public class XBatchEdit extends Activity {
 		tvRestriction.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Dialog dialog = new Dialog(XBatchEdit.this);
+				Dialog dialog = new Dialog(XActivityRestriction.this);
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
 				dialog.setContentView(R.layout.xhelp);
@@ -88,17 +86,17 @@ public class XBatchEdit extends Activity {
 		protected List<XApplicationInfo> doInBackground(String... params) {
 			// Get argument
 			mRestrictionName = params[0];
-			boolean expert = XRestriction.getSetting(null, XBatchEdit.this, XRestriction.cExpertMode);
+			boolean expert = XRestriction.getSetting(null, XActivityRestriction.this, XRestriction.cExpertMode);
 
 			// Get app list
 			SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
 			List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
 			for (ApplicationInfo appInfo : getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA))
 				if ((appInfo.uid == XRestriction.cUidAndroid ? expert : true)
-						&& !appInfo.packageName.equals(XBatchEdit.class.getPackage().getName())) {
+						&& !appInfo.packageName.equals(XActivityRestriction.class.getPackage().getName())) {
 					XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
 					if (xAppInfo == null) {
-						xAppInfo = new XApplicationInfo(appInfo, mRestrictionName, getPackageManager());
+						xAppInfo = new XApplicationInfo(appInfo, mRestrictionName, XActivityRestriction.this);
 						mapApp.put(appInfo.uid, xAppInfo);
 						listApp.add(xAppInfo);
 					} else
@@ -122,7 +120,8 @@ public class XBatchEdit extends Activity {
 			super.onPostExecute(listApp);
 
 			// Display app list
-			mAppAdapter = new AppListAdapter(XBatchEdit.this, R.layout.xbatchentry, listApp, mRestrictionName);
+			mAppAdapter = new AppListAdapter(XActivityRestriction.this, R.layout.xrestrictionentry, listApp,
+					mRestrictionName);
 			final ListView lvApp = (ListView) findViewById(R.id.lvApp);
 			lvApp.setAdapter(mAppAdapter);
 
@@ -144,7 +143,7 @@ public class XBatchEdit extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.xbatchentry, parent, false);
+			View row = inflater.inflate(R.layout.xrestrictionentry, parent, false);
 			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgBatchEntryIcon);
 			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgBatchEntryInternet);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgBatchEntryUsed);
@@ -158,14 +157,14 @@ public class XBatchEdit extends Activity {
 			imgIcon.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					Intent intentSettings = new Intent(view.getContext(), XAppEdit.class);
-					intentSettings.putExtra(XAppEdit.cPackageName, appEntry.getPackageName());
+					Intent intentSettings = new Intent(view.getContext(), XActivitySingleApp.class);
+					intentSettings.putExtra(XActivitySingleApp.cPackageName, appEntry.getPackageName());
 					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					view.getContext().startActivity(intentSettings);
 				}
 			});
 
-			// Set icon/title
+			// Set title
 			ctvApp.setText(appEntry.toString());
 
 			// Check if internet access
@@ -194,7 +193,7 @@ public class XBatchEdit extends Activity {
 
 					// Display audit
 					String localRestrictionName = XRestriction.getLocalizedName(view.getContext(), mRestrictionName);
-					AlertDialog alertDialog = new AlertDialog.Builder(XBatchEdit.this).create();
+					AlertDialog alertDialog = new AlertDialog.Builder(XActivityRestriction.this).create();
 					alertDialog.setTitle(localRestrictionName);
 					alertDialog.setIcon(R.drawable.ic_launcher);
 					alertDialog.setMessage(TextUtils.join("\n", listAudit));
@@ -225,60 +224,6 @@ public class XBatchEdit extends Activity {
 			});
 
 			return row;
-		}
-	}
-
-	private class XApplicationInfo implements Comparable<XApplicationInfo> {
-		private Drawable mDrawable;
-		private List<String> mListApplicationName;
-		private String mPackageName;
-		private boolean mHasInternet;
-		private boolean mIsUsed;
-		private int mUid;
-
-		public XApplicationInfo(ApplicationInfo appInfo, String restrictionName, PackageManager packageManager) {
-			mDrawable = appInfo.loadIcon(packageManager);
-			mListApplicationName = new ArrayList<String>();
-			mListApplicationName.add((String) packageManager.getApplicationLabel(appInfo));
-			mPackageName = appInfo.packageName;
-			mHasInternet = XRestriction.hasInternet(XBatchEdit.this, appInfo.packageName);
-			mIsUsed = XRestriction.isUsed(XBatchEdit.this, appInfo.uid, restrictionName);
-			mUid = appInfo.uid;
-		}
-
-		public void AddApplicationName(String Name) {
-			mListApplicationName.add(Name);
-		}
-
-		public String getPackageName() {
-			return mPackageName;
-		}
-
-		public Drawable getDrawable() {
-			return mDrawable;
-		}
-
-		public boolean hasInternet() {
-			return mHasInternet;
-		}
-
-		public boolean isUsed() {
-			return mIsUsed;
-		}
-
-		public int getUid() {
-			return mUid;
-		}
-
-		@Override
-		@SuppressLint("DefaultLocale")
-		public String toString() {
-			return String.format("%s (%d)", TextUtils.join(", ", mListApplicationName), mUid);
-		}
-
-		@Override
-		public int compareTo(XApplicationInfo other) {
-			return toString().compareToIgnoreCase(other.toString());
 		}
 	}
 }
