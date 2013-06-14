@@ -199,7 +199,7 @@ Changelog
 **Version 0.15**
 
 * Restrict Android (expert mode)
-* Restrict Google Service Framework (see also limitations)
+* Restrict Google Service Framework (see also [limitations](https://github.com/M66B/XPrivacy#limitations))
 * Restrict Wi-Fi BSSID, IP and SSID
 * Restrict network info
 * No default deny for updated apps
@@ -207,7 +207,8 @@ Changelog
 **Version 0.14**
 
 * Restrict calling (untested)
-* Restrict sending SMS/MMS (untested)
+* Restrict sending SMS
+* Restrict sending MMS (untested)
 * Fix setting restrictions in the app list
 
 **Version 0.13**
