@@ -78,9 +78,9 @@ which is provided as download for both Android version 4.1 and 4.2.
 
 **Using XPrivacy is entirely at your own risk**
 
-![Applications](https://raw.github.com/M66B/XPrivacy/master/screenshots/applications.png) ![Categories](https://raw.github.com/M66B/XPrivacy/master/screenshots/categories.png)
-![Category](https://raw.github.com/M66B/XPrivacy/master/screenshots/category.png) ![Application](https://raw.github.com/M66B/XPrivacy/master/screenshots/application.png)
-![Help](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
+![Xposed](https://raw.github.com/M66B/XPrivacy/master/screenshots/xposed.png) ![Applications](https://raw.github.com/M66B/XPrivacy/master/screenshots/applications.png)
+![Categories](https://raw.github.com/M66B/XPrivacy/master/screenshots/categories.png) ![Category](https://raw.github.com/M66B/XPrivacy/master/screenshots/category.png)
+![Application](https://raw.github.com/M66B/XPrivacy/master/screenshots/application.png) ![Help](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
 
 Features
 --------
