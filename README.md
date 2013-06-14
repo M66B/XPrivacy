@@ -125,6 +125,7 @@ Restricted actions
 Limitations
 -----------
 
+* Android can be restricted, but there will be no usage data available (orange triangle).
 * The Google Services Framework (com.google.android.gsf) retrieves the Wi-Fi MAC address in an unusual way
 (within a thread, without context), it can be restricted by XPrivacy, but there will be no usage data available.
 
@@ -174,6 +175,7 @@ Frequently asked questions
 * Will you block the iptables command or force online state? Maybe in a later stage.
 * Will you make it possible to enter fake data? No, I want to keep things as simple as possible for maximum stability.
 * Which functions are exactly restricted? See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java).
+* Do I really need to install the Xposed fix? If you like to have all data restricted, yes.
 * What did you fix in the Xposed framework? See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51bae5d3dda).
 * Does XPrivacy use the Android permissions for something? No, Android permissions are just displayed as a guideline.
 * How can I reset all XPrivacy settings? *Manage apps* > *XPrivacy* > *Clear data*
