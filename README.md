@@ -64,9 +64,6 @@ it will also be displayed (with a green tick),
 but this will only be shown when looking at an individual application,
 since checking permissions for all applications is quite slow.
 
-XPrivacy is accessible for each application from the Android *Manage apps* menu.
-The category browser is accessible from the application list or application drawer.
-
 XPrivacy is built using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401).
 XPrivacy taps into a number of selected functions of Android through the Xposed framework.
 Depending on the function, XPrivacy conditionally skips execution of the original function
@@ -81,9 +78,9 @@ which is provided as download for both Android version 4.1 and 4.2.
 
 **Using XPrivacy is entirely at your own risk**
 
-![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/xposed.png) ![Manage apps](https://raw.github.com/M66B/XPrivacy/master/screenshots/manage_apps.png)
-![App details](https://raw.github.com/M66B/XPrivacy/master/screenshots/app_details.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_select.png)
-![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/batch_edit_apps.png) ![Batch edit](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
+![Applications](https://raw.github.com/M66B/XPrivacy/master/screenshots/applications.png) ![Categories](https://raw.github.com/M66B/XPrivacy/master/screenshots/categories.png)
+![Category](https://raw.github.com/M66B/XPrivacy/master/screenshots/category.png) ![Application](https://raw.github.com/M66B/XPrivacy/master/screenshots/application.png)
+![Help](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
 
 Features
 --------
@@ -151,9 +148,9 @@ Upgrading
 Usage
 -----
 
-* Select *Manage apps* from the main menu
-* Select an app
-* Press the XPrivacy button
+* Start XPrivacy
+* Select an application
+* Set restrictions
 
 To see it in action: try disabling *Identification* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 or try disabling *Contacts* for the Contacts app.
@@ -166,6 +163,7 @@ All other restrictions have usage data and send no or fake data.
 
 Tricks:
 
+* Slide left/right for applications/categories
 * Click the application icon in the category browser to go to the app restriction settings
 * Click the orange triangle to see the actual Android functions that were used by the app
 
@@ -183,7 +181,6 @@ Frequently asked questions
 * Does XPrivacy use a lot of memory? Almost nothing.
 * Can I backup XPrivacy and settings? Yes, you can, but for now you can only restore the back onto the same device.
 * What is export mode? In expert mode you can block apps from starting at device boot time and apply restrictions to Android.
-* I don't see the XPrivacy button in *Manage apps*! You are probably using a customized stock ROM. Don't worry, you can do the same from the XPrivacy app.
 
 Support
 -------
@@ -197,6 +194,8 @@ you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-deve
 
 Changelog
 ---------
+
+**Version 0.16**
 
 **Version 0.15**
 
