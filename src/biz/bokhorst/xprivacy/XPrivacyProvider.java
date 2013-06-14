@@ -239,7 +239,8 @@ public class XPrivacyProvider extends ContentProvider {
 		boolean allowed = getAllowed(uid, restrictionName, xprefs);
 
 		// Result
-		XUtil.log(hook, Log.INFO, "get uid=" + uid + " " + restrictionName + "=" + !allowed);
+		XUtil.log(hook, Log.INFO, "get " + uid + "/" + (hook == null ? null : hook.getMethodName()) + " "
+				+ restrictionName + "=" + !allowed + " #");
 		return !allowed;
 	}
 

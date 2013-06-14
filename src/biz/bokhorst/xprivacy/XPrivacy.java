@@ -88,16 +88,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XCamera("takePicture", XRestriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
 		// Connectivity manager
-		if (XRestriction.cExperimental) {
-			hook(new XConnectivityManager("getActiveNetworkInfo", XRestriction.cNetwork,
-					new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
-			hook(new XConnectivityManager("getActiveNetworkInfoForUid", XRestriction.cNetwork,
-					new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
-			hook(new XConnectivityManager("getAllNetworkInfo", XRestriction.cNetwork,
-					new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
-			hook(new XConnectivityManager("getNetworkInfo", XRestriction.cNetwork,
-					new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
-		}
+		hook(new XConnectivityManager("getActiveNetworkInfo", XRestriction.cNetwork,
+				new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
+		hook(new XConnectivityManager("getActiveNetworkInfoForUid", XRestriction.cNetwork,
+				new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
+		hook(new XConnectivityManager("getAllNetworkInfo", XRestriction.cNetwork,
+				new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
+		hook(new XConnectivityManager("getNetworkInfo", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
+				"android.net.ConnectivityManager");
 
 		// Location manager
 		hook(new XLocationManager("addNmeaListener", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
@@ -116,14 +114,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.media.MediaRecorder");
 
 		// Network interface
-		if (XRestriction.cExperimental) {
-			hook(new XNetworkInterface("getHardwareAddress", XRestriction.cNetwork,
-					new String[] { "ACCESS_NETWORK_STATE" }), "java.net.NetworkInterface");
-			hook(new XNetworkInterface("getInetAddresses", XRestriction.cNetwork,
-					new String[] { "ACCESS_NETWORK_STATE" }), "java.net.NetworkInterface");
-			hook(new XNetworkInterface("getInterfaceAddresses", XRestriction.cNetwork,
-					new String[] { "ACCESS_NETWORK_STATE" }), "java.net.NetworkInterface");
-		}
+		hook(new XNetworkInterface("getHardwareAddress", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
+				"java.net.NetworkInterface");
+		hook(new XNetworkInterface("getInetAddresses", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
+				"java.net.NetworkInterface");
+		hook(new XNetworkInterface("getInterfaceAddresses", XRestriction.cNetwork,
+				new String[] { "ACCESS_NETWORK_STATE" }), "java.net.NetworkInterface");
 
 		// Package manager service
 		if (XRestriction.cPro) {

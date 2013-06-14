@@ -44,7 +44,6 @@ public class XRestriction {
 	public final static String cExpertMode = "ExpertMode";
 
 	public final static boolean cPro = true;
-	public final static boolean cExperimental = false;
 
 	private final static int cCacheTimeoutMs = 30 * 1000;
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
@@ -68,8 +67,7 @@ public class XRestriction {
 		mRestrictions.put(cLocation, new ArrayList<String>());
 		mRestrictions.put(cMedia, new ArrayList<String>());
 		mRestrictions.put(cMessages, new ArrayList<String>());
-		if (XRestriction.cExperimental)
-			mRestrictions.put(cNetwork, new ArrayList<String>());
+		mRestrictions.put(cNetwork, new ArrayList<String>());
 		mRestrictions.put(cPhone, new ArrayList<String>());
 		if (cPro)
 			mRestrictions.put(cStorage, new ArrayList<String>());
@@ -101,8 +99,7 @@ public class XRestriction {
 		mRestrictions.get(cMessages).add("READ_WRITE_ALL_VOICEMAIL");
 		mRestrictions.get(cMessages).add("READ_SMS");
 		mRestrictions.get(cMessages).add("RECEIVE_SMS");
-		if (XRestriction.cExperimental)
-			mRestrictions.get(cNetwork).add("ACCESS_NETWORK_STATE");
+		mRestrictions.get(cNetwork).add("ACCESS_NETWORK_STATE");
 		mRestrictions.get(cPhone).add("READ_PHONE_STATE");
 		mRestrictions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mRestrictions.get(cPhone).add("READ_CALL_LOG");

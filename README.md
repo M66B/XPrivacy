@@ -107,6 +107,7 @@ Restricted data
 * Identification (Android ID, Wi-Fi MAC address)
 * Location (coarse/fine, cell location/info)
 * Messages (SMS/MMS, voicemail: **untested**, ICC SMS)
+* Network (untested) (0.15)
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
 * Recording audio (including microphone)
 * Recording video
@@ -198,7 +199,8 @@ Changelog
 **Version 0.15**
 
 * Restrict Android (expert mode)
-* Restrict Google Service Framework
+* Restrict Google Service Framework (see also limitations)
+* Restrict network info (untested)
 
 **Version 0.14**
 
