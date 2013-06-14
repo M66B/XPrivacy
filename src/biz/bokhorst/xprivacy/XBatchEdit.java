@@ -94,7 +94,7 @@ public class XBatchEdit extends Activity {
 			SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
 			List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
 			for (ApplicationInfo appInfo : getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA))
-				if ((appInfo.uid == XRestriction.cUidAndroid ? expert : false)
+				if ((appInfo.uid == XRestriction.cUidAndroid ? expert : true)
 						&& !appInfo.packageName.equals(XBatchEdit.class.getPackage().getName())) {
 					XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
 					if (xAppInfo == null) {
