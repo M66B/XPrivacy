@@ -1,10 +1,21 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.net.Uri;
@@ -16,6 +27,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -178,12 +190,8 @@ public class XFragmentMain extends FragmentActivity {
 	private void optionExport() {
 		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
 			try {
-				// Create file
-				String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
-				String fileName = folder + File.separator + "XPrivacy.xml";
-				FileOutputStream fos = new FileOutputStream(new File(fileName));
-
-				// Create serializer
+				// Serialize
+				FileOutputStream fos = new FileOutputStream(getXmlFile());
 				XmlSerializer serializer = Xml.newSerializer();
 				serializer.setOutput(fos, "UTF-8");
 				serializer.startDocument(null, Boolean.valueOf(true));
@@ -228,7 +236,7 @@ public class XFragmentMain extends FragmentActivity {
 				fos.close();
 
 				// Display file name
-				Toast toast = Toast.makeText(this, fileName, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(this, getXmlFile().getAbsolutePath(), Toast.LENGTH_LONG);
 				toast.show();
 			} catch (Throwable ex) {
 				XUtil.bug(null, ex);
@@ -238,7 +246,57 @@ public class XFragmentMain extends FragmentActivity {
 	}
 
 	private void optionImport() {
+		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
+			try {
+				// Read XML
+				FileInputStream fis = new FileInputStream(getXmlFile());
+				InputStreamReader isr = new InputStreamReader(fis);
+				char[] inputBuffer = new char[fis.available()];
+				isr.read(inputBuffer);
+				String xml = new String(inputBuffer);
+				isr.close();
+				fis.close();
 
+				// Process XML
+				InputStream is = new ByteArrayInputStream(xml.getBytes("UTF-8"));
+				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+				DocumentBuilder db = dbf.newDocumentBuilder();
+				Document dom = db.parse(is);
+				dom.getDocumentElement().normalize();
+				NodeList items = dom.getElementsByTagName("Package");
+				for (int i = 0; i < items.getLength(); i++) {
+					// Process package
+					Node entry = items.item(i);
+					NamedNodeMap attrs = entry.getAttributes();
+					String packageName = attrs.getNamedItem("Name").getNodeValue();
+					String restrictionName = attrs.getNamedItem("Restriction").getNodeValue();
+
+					// Resolve uid
+					try {
+						PackageInfo pInfo = getPackageManager().getPackageInfo(packageName, 0);
+						if (pInfo != null) {
+							int uid = pInfo.applicationInfo.uid;
+							XRestriction.setRestricted(null, this, uid, restrictionName, true);
+						}
+					} catch (NameNotFoundException ex) {
+						XUtil.log(null, Log.WARN, "Not found package=" + packageName);
+					}
+				}
+
+				// Display file name
+				Toast toast = Toast.makeText(this, getXmlFile().getAbsolutePath(), Toast.LENGTH_LONG);
+				toast.show();
+			} catch (Throwable ex) {
+				XUtil.bug(null, ex);
+				Toast toast = Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG);
+				toast.show();
+			}
+	}
+
+	private File getXmlFile() {
+		String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
+		String fileName = folder + File.separator + "XPrivacy.xml";
+		return new File(fileName);
 	}
 
 	private void optionReportIssue() {
