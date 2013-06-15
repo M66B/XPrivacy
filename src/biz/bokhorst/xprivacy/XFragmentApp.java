@@ -56,7 +56,7 @@ public class XFragmentApp extends Fragment {
 			SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
 			List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
 			for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA))
-				if ((appInfo.uid == XRestriction.cUidAndroid ? expert : true)) {
+				if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 ? expert : true) {
 					XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
 					if (xAppInfo == null) {
 						xAppInfo = new XApplicationInfo(appInfo, null, mView.getContext());
