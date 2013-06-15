@@ -86,7 +86,7 @@ Features
 --------
 
 * Simple to use
-* No need to patch anything (source, [smali](https://code.google.com/p/smali/))
+* No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
 * For any (stock) variant of Android version 4.1 or 4.2 (JellyBean)
 * New apps are restricted by default
 * Displays data actually used by an app
@@ -114,11 +114,11 @@ Restricted data
 Restricted actions
 ------------------
 
-* Calling (untested)
+* Calling (**untested**)
 * Sending SMS
-* Sending MMS (untested)
-* Internet (revoke permission)
-* External storage (SD card) (revoke permission)
+* Sending MMS (**untested**)
+* Internet (revoke permission: no usage data)
+* External storage (SD card) (revoke permission: no usage data)
 
 Limitations
 -----------
@@ -181,7 +181,7 @@ Frequently asked questions
 * Will XPrivacy make my device slower? Maybe a little, but it will be probably not noticeable.
 * Does XPrivacy use a lot of memory? Almost nothing.
 * Can I backup XPrivacy and settings? Yes, you can, but for now you can only restore the back onto the same device.
-* What is export mode? In expert mode you can block apps from starting at device boot time and apply restrictions to system apps, including Android. **Be careful!**
+* What is expert mode? In expert mode you can block apps from starting at device boot time and apply restrictions to system apps, including Android. **Be careful!**
 
 Support
 -------
