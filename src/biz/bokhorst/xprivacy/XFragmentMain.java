@@ -157,6 +157,9 @@ public class XFragmentMain extends FragmentActivity {
 			case R.id.menu_report:
 				optionReportIssue();
 				return true;
+			case R.id.menu_pro:
+				optionPro();
+				return true;
 			case R.id.menu_about:
 				optionAbout();
 				return true;
@@ -189,6 +192,12 @@ public class XFragmentMain extends FragmentActivity {
 
 		dlgSettings.setCancelable(true);
 		dlgSettings.show();
+	}
+
+	private void optionPro() {
+		// Report issue
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
+		startActivity(browserIntent);
 	}
 
 	private void optionExport() {
@@ -239,8 +248,10 @@ public class XFragmentMain extends FragmentActivity {
 				serializer.flush();
 				fos.close();
 
-				// Display file name
-				Toast toast = Toast.makeText(this, getXmlFile().getAbsolutePath(), Toast.LENGTH_LONG);
+				// Display message
+				String message = String
+						.format("%s %s", getString(R.string.menu_export), getXmlFile().getAbsolutePath());
+				Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
 				toast.show();
 			} catch (Throwable ex) {
 				XUtil.bug(null, ex);
@@ -287,8 +298,10 @@ public class XFragmentMain extends FragmentActivity {
 					}
 				}
 
-				// Display file name
-				Toast toast = Toast.makeText(this, getXmlFile().getAbsolutePath(), Toast.LENGTH_LONG);
+				// Display message
+				String message = String
+						.format("%s %s", getString(R.string.menu_import), getXmlFile().getAbsolutePath());
+				Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
 				toast.show();
 			} catch (Throwable ex) {
 				XUtil.bug(null, ex);
