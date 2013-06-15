@@ -212,6 +212,7 @@ public class XRestriction {
 				Cursor cursor = contentResolver.query(XPrivacyProvider.URI_RESTRICTION, null, restrictionName,
 						new String[] { Integer.toString(uid), Boolean.toString(usage), methodName }, null);
 				if (cursor == null) {
+					// Can happen if memory low
 					XUtil.log(hook, Log.WARN, "cursor is null");
 					XUtil.logStack(null);
 					return false;

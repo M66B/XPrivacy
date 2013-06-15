@@ -8,6 +8,12 @@
         android:id="@+id/menu_report"
         android:title="@string/menu_report"/>
     <item
+        android:id="@+id/menu_export"
+        android:title="@string/menu_export"/>
+    <item
+        android:id="@+id/menu_import"
+        android:title="@string/menu_import"/>
+    <item
         android:id="@+id/menu_about"
         android:title="@string/menu_about"/>
 

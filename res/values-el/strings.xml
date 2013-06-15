@@ -12,6 +12,8 @@
     <string name="app_restriction">Categories</string>
     <string name="menu_settings">Ρυθμίσεις</string>
     <string name="menu_report">Αναφορά σφάλματος</string>
+    <string name="menu_export">Export</string>
+    <string name="menu_import">Import</string>
     <string name="menu_about">Σχετικά</string>
     <string name="msg_restricted" formatted="false">%s περιορίστικε από το XPrivacy</string>
     <string name="restrict_accounts">Λογαριασμοί (Google, Facebook, κλπ)</string>

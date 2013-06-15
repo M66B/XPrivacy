@@ -1,21 +1,29 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.xmlpull.v1.XmlSerializer;
 
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +31,7 @@ import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class XFragmentMain extends FragmentActivity {
 
@@ -121,59 +130,19 @@ public class XFragmentMain extends FragmentActivity {
 		try {
 			switch (item.getItemId()) {
 			case R.id.menu_settings:
-				// Settings
-				Dialog dlgSettings = new Dialog(this);
-				dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-				dlgSettings.setTitle(getString(R.string.app_name));
-				dlgSettings.setContentView(R.layout.xsettings);
-				dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
-
-				// Expert mode
-				CheckBox cbSettings = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
-				cbSettings.setChecked(XRestriction.getSetting(null, XFragmentMain.this, XRestriction.cExpertMode));
-				cbSettings.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cExpertMode, isChecked);
-					}
-				});
-
-				dlgSettings.setCancelable(true);
-				dlgSettings.show();
-
+				optionSettings();
 				return true;
-
+			case R.id.menu_export:
+				optionExport();
+				return true;
+			case R.id.menu_import:
+				optionImport();
+				return true;
 			case R.id.menu_report:
-				// Report issue
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-						Uri.parse("https://github.com/M66B/XPrivacy/issues"));
-				startActivity(browserIntent);
+				optionReportIssue();
 				return true;
 			case R.id.menu_about:
-				// About
-				Dialog dlgAbout = new Dialog(this);
-				dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-				dlgAbout.setTitle(getString(R.string.app_name));
-				dlgAbout.setContentView(R.layout.xabout);
-				dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
-
-				// Show version
-				try {
-					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-					TextView tvVersion = (TextView) dlgAbout.findViewById(R.id.tvVersion);
-					tvVersion.setText(String.format(getString(R.string.app_version), pInfo.versionName,
-							pInfo.versionCode));
-				} catch (Throwable ex) {
-					XUtil.bug(null, ex);
-				}
-
-				// Show Xposed version
-				int xVersion = XUtil.getXposedVersion();
-				TextView tvXVersion = (TextView) dlgAbout.findViewById(R.id.tvXVersion);
-				tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
-
-				dlgAbout.setCancelable(true);
-				dlgAbout.show();
+				optionAbout();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -184,4 +153,123 @@ public class XFragmentMain extends FragmentActivity {
 		}
 	}
 
+	private void optionSettings() {
+		// Settings
+		Dialog dlgSettings = new Dialog(this);
+		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+		dlgSettings.setTitle(getString(R.string.app_name));
+		dlgSettings.setContentView(R.layout.xsettings);
+		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
+
+		// Expert mode
+		CheckBox cbSettings = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
+		cbSettings.setChecked(XRestriction.getSetting(null, XFragmentMain.this, XRestriction.cExpertMode));
+		cbSettings.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cExpertMode, isChecked);
+			}
+		});
+
+		dlgSettings.setCancelable(true);
+		dlgSettings.show();
+	}
+
+	private void optionExport() {
+		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
+			try {
+				// Create file
+				String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
+				String fileName = folder + File.separator + "XPrivacy.xml";
+				FileOutputStream fos = new FileOutputStream(new File(fileName));
+
+				// Create serializer
+				XmlSerializer serializer = Xml.newSerializer();
+				serializer.setOutput(fos, "UTF-8");
+				serializer.startDocument(null, Boolean.valueOf(true));
+				serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+				serializer.startTag(null, "XPrivacy");
+
+				// Process restrictions
+				Cursor cursor = getContentResolver().query(XPrivacyProvider.URI_RESTRICTION, null, null,
+						new String[] { Integer.toString(0), Boolean.toString(false) }, null);
+				while (cursor.moveToNext()) {
+					// Decode uid
+					int uid = cursor.getInt(cursor.getColumnIndex(XPrivacyProvider.COL_UID));
+					boolean restricted = Boolean.parseBoolean(cursor.getString(cursor
+							.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
+					if (restricted) {
+						String[] packages = getPackageManager().getPackagesForUid(uid);
+						if (packages == null)
+							XUtil.log(null, Log.WARN, "No packages for uid=" + uid);
+						else
+							for (String packageName : packages) {
+								// Package
+								serializer.startTag(null, "Package");
+
+								// Package name
+								serializer.attribute(null, "Name", packageName);
+
+								// Restriction name
+								String restrictionName = cursor.getString(cursor
+										.getColumnIndex(XPrivacyProvider.COL_RESTRICTION));
+								serializer.attribute(null, "Restriction", restrictionName);
+
+								serializer.endTag(null, "Package");
+							}
+					}
+				}
+				cursor.close();
+
+				// End serialization
+				serializer.endTag(null, "XPrivacy");
+				serializer.endDocument();
+				serializer.flush();
+				fos.close();
+
+				// Display file name
+				Toast toast = Toast.makeText(this, fileName, Toast.LENGTH_LONG);
+				toast.show();
+			} catch (Throwable ex) {
+				XUtil.bug(null, ex);
+				Toast toast = Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG);
+				toast.show();
+			}
+	}
+
+	private void optionImport() {
+
+	}
+
+	private void optionReportIssue() {
+		// Report issue
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/M66B/XPrivacy/issues"));
+		startActivity(browserIntent);
+	}
+
+	private void optionAbout() {
+		// About
+		Dialog dlgAbout = new Dialog(this);
+		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+		dlgAbout.setTitle(getString(R.string.app_name));
+		dlgAbout.setContentView(R.layout.xabout);
+		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
+
+		// Show version
+		try {
+			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			TextView tvVersion = (TextView) dlgAbout.findViewById(R.id.tvVersion);
+			tvVersion.setText(String.format(getString(R.string.app_version), pInfo.versionName, pInfo.versionCode));
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+		}
+
+		// Show Xposed version
+		int xVersion = XUtil.getXposedVersion();
+		TextView tvXVersion = (TextView) dlgAbout.findViewById(R.id.tvXVersion);
+		tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
+
+		dlgAbout.setCancelable(true);
+		dlgAbout.show();
+	}
 }

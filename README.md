@@ -200,6 +200,7 @@ Changelog
 
 * Restrict opening links ([issue](https://github.com/M66B/XPrivacy/issues/15))
 * Restrict serial# (system properties)
+* Export/import
 
 **Version 0.16**
 

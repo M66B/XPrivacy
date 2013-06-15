@@ -12,6 +12,8 @@
     <string name="app_restriction">Categories</string>
     <string name="menu_settings">Nastavitve</string>
     <string name="menu_report">Javi napako</string>
+    <string name="menu_export">Export</string>
+    <string name="menu_import">Import</string>
     <string name="menu_about">O programu</string>
     <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
     <string name="restrict_accounts">Računi (Google, Facebook, itd)</string>

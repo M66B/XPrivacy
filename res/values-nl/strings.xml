@@ -12,6 +12,8 @@
     <string name="app_restriction">Categorieën</string>
     <string name="menu_settings">Instellingen</string>
     <string name="menu_report">Rapporteer probleem</string>
+    <string name="menu_export">Exporteren</string>
+    <string name="menu_import">Importeren</string>
     <string name="menu_about">Over</string>
     <string name="msg_restricted" formatted="false">%s beperkt door XPrivacy</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>

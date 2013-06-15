@@ -86,24 +86,51 @@ public class XPrivacyProvider extends ContentProvider {
 			boolean usage = Boolean.parseBoolean(selectionArgs[1]);
 			String methodName = (selectionArgs.length >= 3 ? selectionArgs[2] : null);
 
-			// Update usage count
-			if (usage) {
-				long timestamp = new Date().getTime();
-				SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-				SharedPreferences.Editor editor = uprefs.edit();
-				editor.putLong(getUsagePref(uid, restrictionName), timestamp);
-				if (methodName != null)
-					editor.putLong(getMethodPref(uid, restrictionName, methodName), timestamp);
-				editor.commit();
-			}
-
-			// Get restrictions
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
-			boolean allowed = getAllowed(uid, restrictionName, prefs);
-
-			// Return restriction
+			@SuppressWarnings("resource")
 			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_RESTRICTED });
-			cursor.addRow(new Object[] { uid, restrictionName, Boolean.toString(!allowed) });
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
+
+			if (uid == 0) {
+				// Build restriction list
+				List<String> listRestrictionName;
+				if (restrictionName == null)
+					listRestrictionName = XRestriction.getRestrictions(getContext());
+				else {
+					listRestrictionName = new ArrayList<String>();
+					listRestrictionName.add(restrictionName);
+				}
+
+				// Process restrictions
+				for (String restriction : listRestrictionName) {
+					String restrictions = prefs.getString(getRestrictionPref(restriction), "*");
+					List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
+					boolean defaultAllowed = listRestriction.get(0).equals("*");
+					if (defaultAllowed)
+						listRestriction.remove(0);
+					else
+						throw new IllegalArgumentException();
+
+					for (String sUid : listRestriction)
+						cursor.addRow(new Object[] { Integer.parseInt(sUid), restriction, true });
+				}
+			} else {
+				// Update usage count
+				if (usage) {
+					long timestamp = new Date().getTime();
+					SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
+					SharedPreferences.Editor editor = uprefs.edit();
+					editor.putLong(getUsagePref(uid, restrictionName), timestamp);
+					if (methodName != null)
+						editor.putLong(getMethodPref(uid, restrictionName, methodName), timestamp);
+					editor.commit();
+				}
+
+				// Get restrictions
+				boolean allowed = getAllowed(uid, restrictionName, prefs);
+
+				// Return restriction
+				cursor.addRow(new Object[] { uid, restrictionName, Boolean.toString(!allowed) });
+			}
 			return cursor;
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length == 1) {
 			// Return usage
@@ -260,11 +287,11 @@ public class XPrivacyProvider extends ContentProvider {
 
 		// Decode restrictions
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
-		boolean defaultRestricted = listRestriction.get(0).equals("*");
+		boolean defaultAllowed = listRestriction.get(0).equals("*");
 
 		// Check if restricted
 		boolean allowed = !listRestriction.contains(Integer.toString(uid));
-		if (!defaultRestricted)
+		if (!defaultAllowed)
 			allowed = !allowed;
 		return allowed;
 	}

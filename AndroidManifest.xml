@@ -8,6 +8,7 @@
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="biz.bokhorst.xprivacy.provider.WRITE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <permission
         android:name="biz.bokhorst.xprivacy.provider.WRITE"
