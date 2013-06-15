@@ -41,9 +41,13 @@ public class XSettingsSecure extends XHook {
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
 		ContentResolver contentResolver = (ContentResolver) param.args[0];
-		// CM10/CM10.1
-		Field fieldContext = findField(contentResolver.getClass(), "mContext");
-		Context context = (Context) fieldContext.get(contentResolver);
+		Context context = null;
+		try {
+			Field fieldContext = findField(contentResolver.getClass(), "mContext");
+			context = (Context) fieldContext.get(contentResolver);
+		} catch (Throwable ex) {
+			XUtil.bug(this, ex);
+		}
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
 	}

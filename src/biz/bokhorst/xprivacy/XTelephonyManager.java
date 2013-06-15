@@ -81,9 +81,13 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		// CM10/CM10.1
-		Field fieldContext = findField(param.thisObject.getClass(), "sContext");
-		Context context = (Context) fieldContext.get(param.thisObject);
+		Context context = null;
+		try {
+			Field fieldContext = findField(param.thisObject.getClass(), "sContext");
+			context = (Context) fieldContext.get(param.thisObject);
+		} catch (Throwable ex) {
+			XUtil.bug(this, ex);
+		}
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
 	}

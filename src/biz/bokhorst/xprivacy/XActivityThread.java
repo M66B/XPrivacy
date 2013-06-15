@@ -31,10 +31,18 @@ public class XActivityThread extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (param.args[0] != null) {
 			// Get intent
-			// CM10/CM10.1
-			Field fieldIntent = findField(param.args[0].getClass(), "intent");
-			Intent intent = (Intent) fieldIntent.get(param.args[0]);
-			if (intent != null) {
+			Intent intent = null;
+			try {
+				Field fieldIntent = findField(param.args[0].getClass(), "intent");
+				intent = (Intent) fieldIntent.get(param.args[0]);
+			} catch (Throwable ex) {
+				XUtil.bug(this, ex);
+			}
+
+			// Process intent
+			if (intent == null)
+				XUtil.log(this, Log.WARN, "Intent missing");
+			else {
 				// Check action
 				String action = intent.getAction();
 				if (mActionName.equals(action)) {
