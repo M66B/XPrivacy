@@ -8,12 +8,12 @@
     <string name="app_xversion" formatted="false">Xposed framework različica: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
-    <string name="app_app">Applications</string>
-    <string name="app_restriction">Categories</string>
+    <string name="app_app">Programi</string>
+    <string name="app_restriction">Kategorije</string>
     <string name="menu_settings">Nastavitve</string>
     <string name="menu_report">Javi napako</string>
-    <string name="menu_export">Export</string>
-    <string name="menu_import">Import</string>
+    <string name="menu_export">Izvozi</string>
+    <string name="menu_import">Uvozi</string>
     <string name="menu_about">O programu</string>
     <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
     <string name="restrict_accounts">Računi (Google, Facebook, itd)</string>
