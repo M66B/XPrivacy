@@ -17,6 +17,7 @@ import android.util.Log;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.XC_MethodHook;
 import static de.robv.android.xposed.XposedHelpers.findClass;
@@ -34,6 +35,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		XUtil.log(null, Log.INFO, String.format("load %s", startupParam.modulePath));
 
 		// Set preferences readable
+		// For compatibility with older versions
 		XPrivacyProvider.setPrefFileReadable(XPrivacyProvider.PREF_RESTRICTION);
 
 		// Account manager
@@ -55,47 +57,29 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.accounts.AccountManager");
 
 		// Application package manager
-		hook(new XApplicationPackageManager("getInstalledApplications", XRestriction.cSystem, new String[] {}),
-				"android.app.ApplicationPackageManager");
-		hook(new XApplicationPackageManager("getInstalledPackages", XRestriction.cSystem, new String[] {}),
-				"android.app.ApplicationPackageManager");
-		hook(new XApplicationPackageManager("getInstalledThemePackages", XRestriction.cSystem, new String[] {}),
-				"android.app.ApplicationPackageManager");
-		hook(new XApplicationPackageManager("getPreferredPackages", XRestriction.cSystem, new String[] {}),
-				"android.app.ApplicationPackageManager");
-		hook(new XApplicationPackageManager("queryBroadcastReceivers", XRestriction.cSystem, new String[] {}),
-				"android.app.ApplicationPackageManager");
-		hook(new XApplicationPackageManager("queryContentProviders", XRestriction.cSystem, new String[] {}),
-				"android.app.ApplicationPackageManager");
-		hook(new XApplicationPackageManager("queryIntentActivities", XRestriction.cSystem, new String[] {}),
-				"android.app.ApplicationPackageManager");
-		hook(new XApplicationPackageManager("queryIntentActivityOptions", XRestriction.cSystem, new String[] {}),
-				"android.app.ApplicationPackageManager");
-		hook(new XApplicationPackageManager("queryIntentServices", XRestriction.cSystem, new String[] {}),
-				"android.app.ApplicationPackageManager");
+		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getInstalledThemePackages",
+				"getPreferredPackages", "queryBroadcastReceivers", "queryContentProviders", "queryIntentActivities",
+				"queryIntentActivityOptions", "queryIntentServices" };
+		for (String am : ams)
+			hook(new XApplicationPackageManager(am, XRestriction.cSystem, new String[] {}),
+					"android.app.ApplicationPackageManager");
 
 		// Audio record
 		hook(new XCamera("startRecording", XRestriction.cMedia, new String[] { "RECORD_AUDIO" }),
 				"android.media.AudioRecord");
 
 		// Camera
-		hook(new XCamera("setPreviewCallback", XRestriction.cMedia, new String[] { "CAMERA" }),
-				"android.hardware.Camera");
-		hook(new XCamera("setPreviewCallbackWithBuffer", XRestriction.cMedia, new String[] { "CAMERA" }),
-				"android.hardware.Camera");
-		hook(new XCamera("setOneShotPreviewCallback", XRestriction.cMedia, new String[] { "CAMERA" }),
-				"android.hardware.Camera");
-		hook(new XCamera("takePicture", XRestriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
+		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
+				"setOneShotPreviewCallback", "takePicture" };
+		for (String cam : cams)
+			hook(new XCamera(cam, XRestriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
 		// Connectivity manager
-		hook(new XConnectivityManager("getActiveNetworkInfo", XRestriction.cNetwork,
-				new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
-		hook(new XConnectivityManager("getActiveNetworkInfoForUid", XRestriction.cNetwork,
-				new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
-		hook(new XConnectivityManager("getAllNetworkInfo", XRestriction.cNetwork,
-				new String[] { "ACCESS_NETWORK_STATE" }), "android.net.ConnectivityManager");
-		hook(new XConnectivityManager("getNetworkInfo", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
-				"android.net.ConnectivityManager");
+		String[] conns = new String[] { "getActiveNetworkInfo", "getActiveNetworkInfoForUid", "getAllNetworkInfo",
+				"getNetworkInfo" };
+		for (String conn : conns)
+			hook(new XConnectivityManager(conn, XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
+					"android.net.ConnectivityManager");
 
 		// Location manager
 		hook(new XLocationManager("addNmeaListener", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
@@ -114,18 +98,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.media.MediaRecorder");
 
 		// Network interface
-		hook(new XNetworkInterface("getByInetAddress", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
-				"java.net.NetworkInterface");
-		hook(new XNetworkInterface("getByName", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
-				"java.net.NetworkInterface");
-		hook(new XNetworkInterface("getHardwareAddress", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
-				"java.net.NetworkInterface");
-		hook(new XNetworkInterface("getInetAddresses", XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
-				"java.net.NetworkInterface");
-		hook(new XNetworkInterface("getInterfaceAddresses", XRestriction.cNetwork,
-				new String[] { "ACCESS_NETWORK_STATE" }), "java.net.NetworkInterface");
-		hook(new XNetworkInterface("getNetworkInterfaces", XRestriction.cNetwork,
-				new String[] { "ACCESS_NETWORK_STATE" }), "java.net.NetworkInterface");
+		String[] nets = new String[] { "getByInetAddress", "getByName", "getHardwareAddress", "getInetAddresses",
+				"getInterfaceAddresses", "getNetworkInterfaces" };
+		for (String net : nets)
+			hook(new XNetworkInterface(net, XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
+					"java.net.NetworkInterface");
 
 		// Package manager service
 		hook(new XPackageManagerService("getPackageGids", XRestriction.cInternet, new String[] { "INTERNET" }),
@@ -163,64 +140,22 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getCellLocation", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
 				"ACCESS_FINE_LOCATION" }), "android.telephony.TelephonyManager");
-
-		hook(new XTelephonyManager("getDeviceId", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-
-		hook(new XTelephonyManager("getIsimDomain", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getIsimImpi", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getIsimImpu", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-
-		hook(new XTelephonyManager("getLine1AlphaTag", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getLine1Number", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-
-		hook(new XTelephonyManager("getMsisdn", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-
 		hook(new XTelephonyManager("getNeighboringCellInfo", XRestriction.cLocation,
 				new String[] { "ACCESS_COARSE_UPDATES" }), "android.telephony.TelephonyManager");
 
-		hook(new XTelephonyManager("getNetworkCountryIso", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getNetworkOperator", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getNetworkOperatorName", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-
-		hook(new XTelephonyManager("getSimCountryIso", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getSimOperator", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getSimOperatorName", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getSimSerialNumber", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-
-		hook(new XTelephonyManager("getSubscriberId", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-
-		hook(new XTelephonyManager("getVoiceMailAlphaTag", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-		hook(new XTelephonyManager("getVoiceMailNumber", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
-				"android.telephony.TelephonyManager");
-
-		hook(new XTelephonyManager("listen", XRestriction.cPhone, new String[] { "READ_PHONE_STATE", }),
-				"android.telephony.TelephonyManager");
+		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
+				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getNetworkCountryIso", "getNetworkOperator",
+				"getNetworkOperatorName", "getSimCountryIso", "getSimOperator", "getSimOperatorName",
+				"getSimSerialNumber", "getSubscriberId", "getVoiceMailAlphaTag", "getVoiceMailNumber", "listen" };
+		for (String phone : phones)
+			hook(new XTelephonyManager(phone, XRestriction.cPhone, new String[] { "READ_PHONE_STATE" }),
+					"android.telephony.TelephonyManager");
 
 		// Wi-Fi manager
-		hook(new XWifiManager("getConfiguredNetworks", XRestriction.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
-				"android.net.wifi.WifiManager");
-		hook(new XWifiManager("getConnectionInfo", XRestriction.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
-				"android.net.wifi.WifiManager");
-		hook(new XWifiManager("getDhcpInfo", XRestriction.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
-				"android.net.wifi.WifiManager");
-		hook(new XWifiManager("getScanResults", XRestriction.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
-				"android.net.wifi.WifiManager");
+		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults" };
+		for (String wifi : wifis)
+			hook(new XWifiManager(wifi, XRestriction.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
+					"android.net.wifi.WifiManager");
 
 		// Intent receive: calling
 		hook(new XActivityThread("handleReceiver", XRestriction.cBoot, new String[] { "RECEIVE_BOOT_COMPLETED" },
@@ -264,6 +199,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hook(new XUtilHook("isXposedEnabled", null, new String[] {}), lpparam.classLoader, XUtil.class.getName());
 			return;
 		}
+
+		// Build SERIAL
+		if (XRestriction.getRestricted(null, null, Process.myUid(), XRestriction.cIdentification, true, false))
+			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", XRestriction.cDefaceString);
 
 		// Load browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {
