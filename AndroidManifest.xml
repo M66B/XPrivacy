@@ -30,7 +30,7 @@
             android:value="2.0*" />
         <meta-data
             android:name="xposeddescription"
-            android:value="XPrivacy" />
+            android:value="XPrivacy - The ultimate privacy manager" />
 
         <activity
             android:name=".XFragmentMain"
