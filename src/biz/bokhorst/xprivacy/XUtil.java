@@ -1,15 +1,22 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.KeyFactory;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Environment;
+import android.util.Base64;
 import android.util.Log;
 
 public class XUtil {
@@ -60,9 +67,62 @@ public class XUtil {
 		return false;
 	}
 
-	public static boolean isPro() {
-		// Will be hooked to return true
+	public static boolean isProVersion(Context context) {
+		try {
+			// Get license file name
+			String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
+			String fileName = folder + File.separator + "XPrivacy_license.txt";
+			File licenseFile = new File(fileName);
+			if (licenseFile.exists()) {
+				// Read license
+				XIniFile iniFile = new XIniFile(licenseFile);
+				byte[] email = iniFile.get("email", "").getBytes("UTF-8");
+				byte[] signature = hex2bytes(iniFile.get("signature", ""));
+				if (email.length == 0 || signature.length == 0)
+					return false;
+
+				// Verify license
+				return verifyData(email, signature, getPublicKey(context));
+			}
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+		}
 		return false;
+	}
+
+	private static byte[] hex2bytes(String hex) {
+		int len = hex.length();
+		byte[] result = new byte[len / 2];
+		for (int i = 0; i < len; i += 2)
+			result[i / 2] = (byte) ((Character.digit(hex.charAt(i), 16) << 4) + Character.digit(hex.charAt(i + 1), 16));
+		return result;
+	}
+
+	private static PublicKey getPublicKey(Context context) throws Throwable {
+		// read public key
+		String sPublicKey = "";
+		InputStreamReader isr = new InputStreamReader(context.getAssets().open("XPrivacy_public_key.txt"), "UTF-8");
+		BufferedReader br = new BufferedReader(isr);
+		String line = br.readLine();
+		while (line != null) {
+			if (!line.startsWith("-----"))
+				sPublicKey += line;
+			line = br.readLine();
+		}
+		br.close();
+		isr.close();
+
+		byte[] bPublicKey = Base64.decode(sPublicKey, Base64.NO_WRAP);
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		X509EncodedKeySpec encodedPubKeySpec = new X509EncodedKeySpec(bPublicKey);
+		return keyFactory.generatePublic(encodedPubKeySpec);
+	}
+
+	private static boolean verifyData(byte[] data, byte[] signature, PublicKey publicKey) throws Throwable {
+		Signature verifier = Signature.getInstance("SHA1withRSA");
+		verifier.initVerify(publicKey);
+		verifier.update(data);
+		return verifier.verify(signature);
 	}
 
 	public static Context getXContext(Context context) throws Throwable {
