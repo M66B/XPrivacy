@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -9,6 +10,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.SparseArray;
 
 public class XApplicationInfo implements Comparable<XApplicationInfo> {
 	private Drawable mDrawable;
@@ -18,7 +20,7 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 	private boolean mIsUsed;
 	private int mUid;
 
-	public XApplicationInfo(ApplicationInfo appInfo, String restrictionName, Context context) {
+	private XApplicationInfo(ApplicationInfo appInfo, String restrictionName, Context context) {
 		PackageManager pm = context.getPackageManager();
 		mDrawable = appInfo.loadIcon(pm);
 		mListApplicationName = new ArrayList<String>();
@@ -30,7 +32,31 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 		mUid = appInfo.uid;
 	}
 
-	public void AddApplicationName(String Name) {
+	public static List<XApplicationInfo> getXApplicationList(Context context, String restrictionName) {
+		// Get helpers
+		PackageManager pm = context.getPackageManager();
+		boolean expert = XRestriction.getSetting(null, context, XRestriction.cExpertMode);
+
+		// Get app list
+		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
+		List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
+		for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA))
+			if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 ? expert : true) {
+				XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
+				if (xAppInfo == null) {
+					xAppInfo = new XApplicationInfo(appInfo, restrictionName, context);
+					mapApp.put(appInfo.uid, xAppInfo);
+					listApp.add(xAppInfo);
+				} else
+					xAppInfo.AddApplicationName((String) pm.getApplicationLabel(appInfo));
+			}
+
+		// Sort result
+		Collections.sort(listApp);
+		return listApp;
+	}
+
+	private void AddApplicationName(String Name) {
 		mListApplicationName.add(Name);
 	}
 

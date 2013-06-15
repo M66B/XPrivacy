@@ -1,17 +1,12 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,25 +43,7 @@ public class XFragmentApp extends Fragment {
 
 		@Override
 		protected List<XApplicationInfo> doInBackground(String... params) {
-			// Get argument
-			boolean expert = XRestriction.getSetting(null, mView.getContext(), XRestriction.cExpertMode);
-
-			// Get app list
-			PackageManager pm = mView.getContext().getPackageManager();
-			SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
-			List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
-			for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA))
-				if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 ? expert : true) {
-					XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
-					if (xAppInfo == null) {
-						xAppInfo = new XApplicationInfo(appInfo, null, mView.getContext());
-						mapApp.put(appInfo.uid, xAppInfo);
-						listApp.add(xAppInfo);
-					} else
-						xAppInfo.AddApplicationName((String) pm.getApplicationLabel(appInfo));
-				}
-			Collections.sort(listApp);
-			return listApp;
+			return XApplicationInfo.getXApplicationList(mView.getContext(), null);
 		}
 
 		@Override

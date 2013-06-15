@@ -13,14 +13,11 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,25 +81,7 @@ public class XActivityRestriction extends Activity {
 
 		@Override
 		protected List<XApplicationInfo> doInBackground(String... params) {
-			// Get argument
-			mRestrictionName = params[0];
-			boolean expert = XRestriction.getSetting(null, XActivityRestriction.this, XRestriction.cExpertMode);
-
-			// Get app list
-			SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
-			List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
-			for (ApplicationInfo appInfo : getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA))
-				if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 ? expert : true) {
-					XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
-					if (xAppInfo == null) {
-						xAppInfo = new XApplicationInfo(appInfo, mRestrictionName, XActivityRestriction.this);
-						mapApp.put(appInfo.uid, xAppInfo);
-						listApp.add(xAppInfo);
-					} else
-						xAppInfo.AddApplicationName((String) getPackageManager().getApplicationLabel(appInfo));
-				}
-			Collections.sort(listApp);
-			return listApp;
+			return XApplicationInfo.getXApplicationList(XActivityRestriction.this, params[0]);
 		}
 
 		@Override
