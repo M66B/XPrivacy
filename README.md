@@ -101,22 +101,23 @@ Restricted data
 * Browser (bookmarks, searches)
 * Calendar
 * Contacts
-* Identification (Android ID, serial#)
+* Identification (Android ID, serial number)
 * Location (coarse/fine, cell location/info)
-* Messages (SMS/MMS, voicemail: **untested**, ICC SMS)
+* Messages (SMS/MMS, including ICC SMS stored on SIM)
 * Network (IPs, MACs, BSSID, SSID)
-* Opening links (0.17)
+* Opening links
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
 * Recording audio (including microphone)
 * Recording video
 * Taking photos
+* Voicemail **untested**
 
 Restricted actions
 ------------------
 
-* Calling (**untested**)
+* Calling **untested**
 * Sending SMS
-* Sending MMS (**untested**)
+* Sending MMS **untested**
 * Internet (revoke permission: no usage data)
 * External storage (SD card) (revoke permission: no usage data)
 
@@ -130,14 +131,14 @@ Limitations
 Installation
 ------------
 
-0. Requirement: Android 4.1+ (JellyBean)
+0. Requirement: Android 4.1+ (JellyBean), check with *System Settings* > *About phone* > *Android version*
 1. Root your device
 2. **Make a backup**
 3. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler*
 4. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 5. Enable XPrivacy from the Xposed Installer app
 6. Reboot into recovery
-7. Flash the correct Xposed fix from [here](http://goo.im/devs/M66B/xprivacy)
+7. Flash the Xposed fix for your Android version from [here](http://goo.im/devs/M66B/xprivacy)
 8. Reboot
 
 Upgrading
