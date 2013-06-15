@@ -20,8 +20,6 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
-import de.robv.android.xposed.XSharedPreferences;
-
 public class XPrivacyProvider extends ContentProvider {
 
 	public static final String AUTHORITY = "biz.bokhorst.xprivacy.provider";
