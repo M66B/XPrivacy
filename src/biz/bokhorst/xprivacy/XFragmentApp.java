@@ -15,6 +15,8 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -85,6 +87,19 @@ public class XFragmentApp extends Fragment {
 			final ListView lvApp = (ListView) mView.findViewById(R.id.lvApp);
 			lvApp.setAdapter(mAppAdapter);
 
+			// Listen for clicks
+			lvApp.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					XApplicationInfo appEntry = (XApplicationInfo) lvApp.getAdapter().getItem(position);
+					Intent intentSettings = new Intent(view.getContext(), XActivitySingleApp.class);
+					intentSettings.putExtra(XActivitySingleApp.cPackageName, appEntry.getPackageName());
+					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					view.getContext().startActivity(intentSettings);
+				}
+			});
+
 			// Hide indeterminate progress circle
 			ProgressBar progressBar = (ProgressBar) mView.findViewById(R.id.pbApp);
 			progressBar.setVisibility(View.GONE);
@@ -106,10 +121,10 @@ public class XFragmentApp extends Fragment {
 			View row = inflater.inflate(R.layout.xappentry, parent, false);
 			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgAppEntryIcon);
 			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgAppEntryInternet);
-			final TextView tvApp = (TextView) row.findViewById(R.id.tvAppEntryName);
+			TextView tvApp = (TextView) row.findViewById(R.id.tvAppEntryName);
 
 			// Get entry
-			final XApplicationInfo appEntry = getItem(position);
+			XApplicationInfo appEntry = getItem(position);
 
 			// Set icon
 			imgIcon.setImageDrawable(appEntry.getDrawable());
@@ -120,17 +135,6 @@ public class XFragmentApp extends Fragment {
 
 			// Set title
 			tvApp.setText(appEntry.toString());
-
-			// Handle click
-			tvApp.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					Intent intentSettings = new Intent(view.getContext(), XActivitySingleApp.class);
-					intentSettings.putExtra(XActivitySingleApp.cPackageName, appEntry.getPackageName());
-					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					view.getContext().startActivity(intentSettings);
-				}
-			});
 
 			return row;
 		}
