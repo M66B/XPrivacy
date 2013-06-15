@@ -134,6 +134,10 @@ public class XFragmentMain extends FragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.xmain, menu);
+		if (!XUtil.isPro()) {
+			menu.removeItem(R.id.menu_export);
+			menu.removeItem(R.id.menu_import);
+		}
 		return true;
 	}
 

@@ -195,7 +195,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
 		if (lpparam.packageName.equals(self)) {
-			hook(new XUtilHook("isPro", null, new String[] {}), lpparam.classLoader, XUtil.class.getName());
 			hook(new XUtilHook("isXposedEnabled", null, new String[] {}), lpparam.classLoader, XUtil.class.getName());
 			return;
 		}

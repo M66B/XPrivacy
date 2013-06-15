@@ -202,7 +202,7 @@ Changelog
 * Display system apps in expert mode only
 * Restrict opening links ([issue](https://github.com/M66B/XPrivacy/issues/15))
 * Restrict serial number (system/build properties)
-* Export/import ([issue](https://github.com/M66B/XPrivacy/issues/18))
+* Export/import ([issue](https://github.com/M66B/XPrivacy/issues/18)) (Pro version only)
 
 **Version 0.16**
 
