@@ -189,6 +189,8 @@ XPrivacy asks for the following Android permissions:
 * Internet: to check for updates (only manual)
 * Storage: to export settings to the SD card (only [pro version](http://www.faircode.eu/xprivacy/))
 
+If you don't like this, you can always restrict XPrivacy itself ...
+
 Frequently asked questions
 --------------------------
 
