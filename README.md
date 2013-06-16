@@ -181,51 +181,51 @@ Tricks:
 Frequently asked questions
 --------------------------
 
-*Will XPrivacy make my device slower?*
+**(1) Will XPrivacy make my device slower?**
 
 Maybe a little bit, but it won't probably be not noticeable.
 
-*Does XPrivacy use a lot of memory?*
+**(2) Does XPrivacy use a lot of memory?**
 
 Almost nothing.
 
-*Can you help me with rooting my device?*
+**(3) Can you help me with rooting my device?**
 
 There are already enough guides to help you to root your device.
 Use your favorite search engine to find one.
 
-*Do I really need to install the Xposed fix?*
+**(4) Do I really need to install the Xposed fix?**
 
 If you like to have all data restricted, yes.
 
-*How can I reset all XPrivacy settings?*
+**(5) How can I reset all XPrivacy settings?**
 
 *Manage apps* > *XPrivacy* > *Clear data*
 
-*Can I backup XPrivacy and settings?*
+**(6) Can I backup XPrivacy and settings?**
 
 Yes, you can, but you can only restore onto the same device.
 Exporting/importing settings will work across devices.
 
-*What is expert mode?*
+**(7) What is expert mode?**
 
 In expert mode you can block applications from starting at device boot time (except content providers)
 and you will be able to restrict system applications, including Android itself. **Be careful!**
 
-*Will you block the iptables command or force online state?*
+**(8) Will you block the iptables command or force online state?**
 
 Maybe in a later stage.
 
-*Will you make it possible to enter fake data?*
+**(9) Will you make it possible to enter fake data?**
 
 Maybe in a later stage.
 For now I like to keep things as simple as possible for maximum stability.
 
-*Which functions are exactly restricted?*
+**(10) Which functions are exactly restricted?**
 
-A lot, see [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
+Many, see [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
 
-*What did you fix in the Xposed framework?*
+**(11) What did you fix in the Xposed framework?**
 
 See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51bae5d3dda).
 
