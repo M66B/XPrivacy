@@ -81,7 +81,8 @@ public class XActivityRestriction extends Activity {
 
 		@Override
 		protected List<XApplicationInfo> doInBackground(String... params) {
-			return XApplicationInfo.getXApplicationList(XActivityRestriction.this, params[0]);
+			mRestrictionName = params[0];
+			return XApplicationInfo.getXApplicationList(XActivityRestriction.this, mRestrictionName);
 		}
 
 		@Override
