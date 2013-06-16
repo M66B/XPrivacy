@@ -33,7 +33,8 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 	}
 
 	public static List<XApplicationInfo> getXApplicationList(Context context, String restrictionName) {
-		// Get helpers
+		// Get references
+		String self = XApplicationInfo.class.getPackage().getName();
 		PackageManager pm = context.getPackageManager();
 		boolean expert = XRestriction.getSetting(null, context, XRestriction.cExpertMode);
 
@@ -41,7 +42,7 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
 		List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
 		for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA))
-			if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 ? expert : true) {
+			if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 || appInfo.packageName.equals(self) ? expert : true) {
 				XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
 				if (xAppInfo == null) {
 					xAppInfo = new XApplicationInfo(appInfo, restrictionName, context);
