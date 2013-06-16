@@ -11,18 +11,19 @@
     <string name="app_app">Programi</string>
     <string name="app_restriction">Kategorije</string>
     <string name="menu_settings">Nastavitve</string>
-    <string name="menu_update">Check for updates</string>
+    <string name="menu_update">Check for update</string>
     <string name="menu_report">Javi napako</string>
     <string name="menu_export">Izvozi</string>
     <string name="menu_import">Uvozi</string>
     <string name="menu_pro">Pro version</string>
     <string name="menu_about">O programu</string>
+    <string name="msg_noupdate">No update available</string>
     <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
     <string name="restrict_accounts">Računi (Google, Facebook, itd)</string>
     <string name="restrict_boot">Zagon (zagon programa ob zagonu sistema)</string>
     <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>
     <string name="restrict_calendar">Koledar</string>
-    <string name="restrict_calling">Klicanje</string>
+    <string name="restrict_calling">Actions (call, message, browser)</string>
     <string name="restrict_contacts">Stiki</string>
     <string name="restrict_identification">Identifikacija (naprava)</string>
     <string name="restrict_internet">Internet</string>

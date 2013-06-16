@@ -17,12 +17,13 @@
     <string name="menu_import">Importeren</string>
     <string name="menu_pro">Pro versie</string>
     <string name="menu_about">Over</string>
+    <string name="msg_noupdate">Geen nieuwe versie beschikbaar</string>
     <string name="msg_restricted" formatted="false">%s beperkt door XPrivacy</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
     <string name="restrict_boot">Boot (start met systeem)</string>
     <string name="restrict_browser">Browser (bladwijzers/geschiedenis/start)</string>
     <string name="restrict_calendar">Kalender</string>
-    <string name="restrict_calling">Oproepen</string>
+    <string name="restrict_calling">Acties (oproep, bericht, browser)</string>
     <string name="restrict_contacts">Contacten</string>
     <string name="restrict_identification">Identificatie (apparaat)</string>
     <string name="restrict_internet">Internet</string>

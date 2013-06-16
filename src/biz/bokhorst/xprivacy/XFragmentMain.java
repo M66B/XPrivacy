@@ -335,12 +335,6 @@ public class XFragmentMain extends FragmentActivity {
 			}
 	}
 
-	private File getXmlFile() {
-		String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
-		String fileName = folder + File.separator + "XPrivacy.xml";
-		return new File(fileName);
-	}
-
 	private void optionAbout() {
 		// About
 		Dialog dlgAbout = new Dialog(this);
@@ -367,68 +361,106 @@ public class XFragmentMain extends FragmentActivity {
 		dlgAbout.show();
 	}
 
+	private File getXmlFile() {
+		String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
+		String fileName = folder + File.separator + "XPrivacy.xml";
+		return new File(fileName);
+	}
+
+	private String fetchJson(String... uri) {
+		try {
+			// Request downloads
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpResponse response = httpclient.execute(new HttpGet(uri[0]));
+			StatusLine statusLine = response.getStatusLine();
+
+			if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+				// Succeeded
+				ByteArrayOutputStream out = new ByteArrayOutputStream();
+				response.getEntity().writeTo(out);
+				out.close();
+				return out.toString("ISO-8859-1");
+			} else {
+				// Failed
+				response.getEntity().getContent().close();
+				throw new IOException(statusLine.getReasonPhrase());
+			}
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+			return ex.toString();
+		}
+	}
+
+	private void processJson(String json) {
+		try {
+			// Parse result
+			String version = null;
+			String url = null;
+			if (json != null)
+				if (json.startsWith("{")) {
+					long newest = 0;
+					String prefix = "XPrivacy_";
+					JSONObject jRoot = new JSONObject(json);
+					JSONArray jArray = jRoot.getJSONArray("list");
+					for (int i = 0; jArray != null && i < jArray.length(); i++) {
+						// File
+						JSONObject jEntry = jArray.getJSONObject(i);
+						String filename = jEntry.getString("filename");
+						if (filename.startsWith(prefix)) {
+							// Check if newer
+							long modified = jEntry.getLong("modified");
+							if (modified > newest) {
+								newest = modified;
+								version = filename.substring(prefix.length()).replace(".apk", "");
+								url = "http://goo.im" + jEntry.getString("path");
+							}
+						}
+					}
+				} else {
+					Toast toast = Toast.makeText(XFragmentMain.this, json, Toast.LENGTH_LONG);
+					toast.show();
+				}
+
+			if (url == null || version == null) {
+				// Assume no update
+				String msg = getString(R.string.msg_noupdate);
+				Toast toast = Toast.makeText(XFragmentMain.this, msg, Toast.LENGTH_LONG);
+				toast.show();
+			} else {
+				// Compare versions
+				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				XVersion ourVersion = new XVersion(pInfo.versionName);
+				XVersion latestVersion = new XVersion(version);
+				if (ourVersion.compareTo(latestVersion) < 0) {
+					// Update available
+					Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+					startActivity(browserIntent);
+				} else {
+					// No update available
+					String msg = getString(R.string.msg_noupdate);
+					Toast toast = Toast.makeText(XFragmentMain.this, msg, Toast.LENGTH_LONG);
+					toast.show();
+				}
+			}
+		} catch (Throwable ex) {
+			Toast toast = Toast.makeText(XFragmentMain.this, ex.toString(), Toast.LENGTH_LONG);
+			toast.show();
+			XUtil.bug(null, ex);
+		}
+	}
+
 	private class UpdateTask extends AsyncTask<String, String, String> {
 
 		@Override
 		protected String doInBackground(String... uri) {
-			try {
-				HttpClient httpclient = new DefaultHttpClient();
-				HttpResponse response = httpclient.execute(new HttpGet(uri[0]));
-				String responseString = null;
-				StatusLine statusLine = response.getStatusLine();
-				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					response.getEntity().writeTo(out);
-					out.close();
-					responseString = out.toString("ISO-8859-1"); // ISO-8859-1,utf-8
-				} else {
-					response.getEntity().getContent().close();
-					throw new IOException(statusLine.getReasonPhrase());
-				}
-				return responseString;
-			} catch (Throwable ex) {
-				Toast toast = Toast.makeText(XFragmentMain.this, ex.toString(), Toast.LENGTH_LONG);
-				toast.show();
-				XUtil.bug(null, ex);
-				return null;
-			}
+			return fetchJson(uri);
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-
-			if (result != null)
-				try {
-					// Parse result
-					long newest = 0;
-					String latest = null;
-					String path = null;
-					JSONObject jRoot = new JSONObject(result);
-					JSONArray jArray = jRoot.getJSONArray("list");
-					for (int i = 0; i < jArray.length(); i++) {
-						JSONObject jEntry = jArray.getJSONObject(i);
-						String filename = jEntry.getString("filename");
-						if (filename.startsWith("XPrivacy_")) {
-							long modified = jEntry.getLong("modified");
-							if (modified > newest) {
-								newest = modified;
-								latest = filename;
-								path = jEntry.getString("path");
-							}
-						}
-					}
-
-					// Start download
-					if (path != null) {
-						Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://goo.im" + path));
-						startActivity(browserIntent);
-					}
-				} catch (Throwable ex) {
-					Toast toast = Toast.makeText(XFragmentMain.this, ex.toString(), Toast.LENGTH_LONG);
-					toast.show();
-					XUtil.bug(null, ex);
-				}
+		protected void onPostExecute(String json) {
+			super.onPostExecute(json);
+			if (json != null)
+				processJson(json);
 		}
 	}
 }

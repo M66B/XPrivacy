@@ -170,7 +170,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Intent send: browser
 		for (String activity : startActivities)
-			hook(new XActivity(activity, XRestriction.cBrowser, new String[] {}, Intent.ACTION_VIEW),
+			hook(new XActivity(activity, XRestriction.cCalling, new String[] {}, Intent.ACTION_VIEW),
 					"android.app.Activity");
 
 		// Intent send: call

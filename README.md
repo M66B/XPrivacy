@@ -106,7 +106,6 @@ Restricted data
 * Location (coarse/fine, cell location/info)
 * Messages (SMS/MMS, including ICC SMS stored on SIM)
 * Network (IPs, MACs, BSSID, SSID)
-* Opening links
 * Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
 * Recording audio (including microphone)
 * Recording video
@@ -119,6 +118,7 @@ Restricted actions
 * Calling **untested**
 * Sending SMS
 * Sending MMS **untested**
+* Opening links
 * Internet (revoke permission: no usage data)
 * External storage (SD card) (revoke permission: no usage data)
 
@@ -132,15 +132,16 @@ Limitations
 Installation
 ------------
 
-0. Requirement: Android 4.1+ (JellyBean), check with *System Settings* > *About phone* > *Android version*
+1. Requirement: Android 4.1+ (JellyBean), check with *System Settings* > *About phone* > *Android version*
 1. Root your device, the procedure varies depending on the brand and model of your device
-2. **Make a backup**
-3. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler*
-4. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
-5. Enable XPrivacy from the Xposed Installer app
-6. Reboot into recovery
-7. Flash the Xposed fix for your Android version from [here](http://goo.im/devs/M66B/xprivacy)
-8. Reboot
+1. **Make a backup**
+1. Enabled *System settings* > *Security* > *Unknown sources*
+1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler*
+1. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
+1. Enable XPrivacy from the Xposed Installer app
+1. Reboot into recovery
+1. Flash the Xposed fix for your Android version from [here](http://goo.im/devs/M66B/xprivacy)
+1. Reboot
 
 Upgrading
 ---------
@@ -186,7 +187,7 @@ Permissions
 XPrivacy asks for the following Android permissions:
 
 * Internet: to check for updates (only manual)
-* Storage: to export settings to the SD card
+* Storage: to export settings to the SD card (only [pro version](http://www.faircode.eu/xprivacy/))
 
 Frequently asked questions
 --------------------------
@@ -216,6 +217,7 @@ If you like to have all data restricted, yes.
 
 Yes, you can, but you can only restore onto the same device.
 Exporting/importing settings will work across devices.
+To export/import settings you will need the [pro version](http://www.faircode.eu/xprivacy/).
 
 **(7) What is expert mode?**
 
@@ -252,13 +254,18 @@ you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-deve
 Changelog
 ---------
 
+**Version 0.18**
+
+* Basic check for updates (manually)
+* Link to [pro version](http://www.faircode.eu/xprivacy/)
+
 **Version 0.17**
 
 * User interface improvements
 * Display system apps in expert mode only
 * Restrict opening links ([issue](https://github.com/M66B/XPrivacy/issues/15))
 * Restrict serial number (system/build properties)
-* Export/import ([issue](https://github.com/M66B/XPrivacy/issues/18)) (Pro version only)
+* Export/import ([issue](https://github.com/M66B/XPrivacy/issues/18)) ([pro version](http://www.faircode.eu/xprivacy/) only)
 
 **Version 0.16**
 

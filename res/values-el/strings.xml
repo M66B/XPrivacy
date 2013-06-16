@@ -11,18 +11,19 @@
     <string name="app_app">Applications</string>
     <string name="app_restriction">Categories</string>
     <string name="menu_settings">Ρυθμίσεις</string>
-    <string name="menu_update">Check for updates</string>
+    <string name="menu_update">Check for update</string>
     <string name="menu_report">Αναφορά σφάλματος</string>
     <string name="menu_export">Export</string>
     <string name="menu_import">Import</string>
     <string name="menu_pro">Pro version</string>
     <string name="menu_about">Σχετικά</string>
+    <string name="msg_noupdate">No update available</string>
     <string name="msg_restricted" formatted="false">%s περιορίστικε από το XPrivacy</string>
     <string name="restrict_accounts">Λογαριασμοί (Google, Facebook, κλπ)</string>
     <string name="restrict_boot">Εκκίνηση (τρέχει κατά την εκκίνηση του συστήματος)</string>
     <string name="restrict_browser">Browser (σελιδοδείκτες/ιστορικό)</string>
     <string name="restrict_calendar">Ημερολόγιο</string>
-    <string name="restrict_calling">Calling</string>
+    <string name="restrict_calling">Actions (call, message, browser)</string>
     <string name="restrict_contacts">Επαφές</string>
     <string name="restrict_identification">Ταυτότητα (συσκευή)</string>
     <string name="restrict_internet">Internet</string>

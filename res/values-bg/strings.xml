@@ -11,18 +11,19 @@
     <string name="app_app">Applications</string>
     <string name="app_restriction">Categories</string>
     <string name="menu_settings">Настройки</string>
-    <string name="menu_update">Check for updates</string>
+    <string name="menu_update">Check for update</string>
     <string name="menu_report">Съобщаване за проблем</string>
     <string name="menu_export">Export</string>
     <string name="menu_import">Import</string>
     <string name="menu_pro">Pro version</string>
     <string name="menu_about">Относно</string>
+    <string name="msg_noupdate">No update available</string>
     <string name="msg_restricted" formatted="false">%s е ограничен от XPrivacy</string>
     <string name="restrict_accounts">Сметки (Google, Facebook и т.н.)</string>
     <string name="restrict_boot">Стартиране (при пускане на системата)</string>
     <string name="restrict_browser">Браузър (отметки/история)</string>
     <string name="restrict_calendar">Календар</string>
-    <string name="restrict_calling">Обаждане</string>
+    <string name="restrict_calling">Actions (call, message, browser)</string>
     <string name="restrict_contacts">Контакти</string>
     <string name="restrict_identification">Идентификация (устройство, Wi-Fi)</string>
     <string name="restrict_internet">Интернет</string>
