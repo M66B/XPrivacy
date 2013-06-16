@@ -1,7 +1,7 @@
 XPrivacy
 ========
 
-The ultimate, yet easy to use, privacy manager
+The ultimate, yet easy to use, privacy manager for Android
 
 Index
 -----
@@ -76,6 +76,9 @@ and will likely work with any Android version 4.1 or 4.2 variant, including stoc
 Root access is needed to install the Xposed framework.
 Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xposed binary,
 which is provided as download for both Android version 4.1 and 4.2.
+
+[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif "Donate")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6RD9MCRSG6KLY)
+[![Flattr](http://api.flattr.com/button/button-compact-static-100x17.png "Flattr This!")](http://flattr.com/thing/1491130/ "The ultimate, yet easy to use, privacy manager")
 
 **Using XPrivacy is entirely at your own risk**
 
@@ -196,7 +199,7 @@ Frequently asked questions
 
 **(1) Will XPrivacy make my device slower?**
 
-Maybe a little bit, but it won't probably be not noticeable.
+Maybe a little bit, but it will probably not be noticeable.
 
 **(2) Does XPrivacy use a lot of memory?**
 
@@ -217,7 +220,8 @@ If you like to have all data restricted, yes.
 
 **(6) Can I backup XPrivacy and settings?**
 
-Yes, you can, but you can only restore onto the same device.
+Yes, you can, for example with [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup),
+but you can only restore onto the same device.
 Exporting/importing settings will work across devices.
 To export/import settings you will need the [pro version](http://www.faircode.eu/xprivacy/).
 
