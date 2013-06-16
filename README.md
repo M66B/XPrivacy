@@ -247,6 +247,11 @@ See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51
 
 Great care is taken to develop XPrivacy, nevertheless data could leak, although nobody has reported any data leak so far.
 
+**(13) Why is XPrivacy not in the Play store?**
+
+Google will probably remove XPrivacy from the Play store eventually,
+since it will be able to block advertisement (for example by revoking internet permissions).
+
 Support
 -------
 
