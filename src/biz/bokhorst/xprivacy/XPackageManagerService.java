@@ -54,10 +54,15 @@ public class XPackageManagerService extends XHook {
 					gids[i] = listGids.get(i);
 
 				// Get uid
-				String packageName = (String) param.args[0];
-				// public int getPackageUid(String packageName, int userId)
-				Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class, int.class);
-				int uid = (Integer) method.invoke(param.thisObject, packageName, 0);
+				int uid = -1;
+				try {
+					// public int getPackageUid(String packageName, int userId)
+					String packageName = (String) param.args[0];
+					Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class, int.class);
+					uid = (Integer) method.invoke(param.thisObject, packageName, 0);
+				} catch (Throwable ex) {
+					// getRestricted will log stack
+				}
 
 				if (getRestricted(null, uid, true))
 					param.setResult(gids);

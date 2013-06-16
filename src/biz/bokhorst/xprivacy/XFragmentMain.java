@@ -143,6 +143,7 @@ public class XFragmentMain extends FragmentActivity {
 		}
 
 		// TODO: PackageManagerService.getPackageUid
+		// Unfortunately the PMS class cannot be loaded by the app class loader
 
 		// Check content resolver
 		if (!checkField(getContentResolver(), "mContext", Context.class)) {
