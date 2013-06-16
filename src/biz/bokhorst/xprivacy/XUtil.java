@@ -76,21 +76,36 @@ public class XUtil {
 			if (licenseFile.exists()) {
 				// Read license
 				XIniFile iniFile = new XIniFile(licenseFile);
-				byte[] email = iniFile.get("email", "").getBytes("UTF-8");
-				byte[] signature = hex2bytes(iniFile.get("signature", ""));
-				if (email.length == 0 || signature.length == 0)
+				String name = iniFile.get("name", "");
+				String email = iniFile.get("email", "");
+				String signature = iniFile.get("signature", "");
+
+				// Get bytes
+				byte[] bEmail = email.getBytes("UTF-8");
+				byte[] bSignature = hex2bytes(signature);
+				if (bEmail.length == 0 || bSignature.length == 0) {
+					XUtil.log(null, Log.ERROR, "Invalid license file");
 					return false;
+				}
 
 				// Verify license
-				return verifyData(email, signature, getPublicKey(context));
-			}
+				boolean licensed = verifyData(bEmail, bSignature, getPublicKey(context));
+				if (licensed)
+					XUtil.log(null, Log.INFO, "Licensed to " + name + " (" + email + ")");
+				else
+					XUtil.log(null, Log.ERROR, "Invalid license for " + name + " (" + email + ")");
+				return licensed;
+			} else
+				XUtil.log(null, Log.INFO, "No license file found");
 		} catch (Throwable ex) {
+			XUtil.log(null, Log.ERROR, "Processing license");
 			XUtil.bug(null, ex);
 		}
 		return false;
 	}
 
 	private static byte[] hex2bytes(String hex) {
+		// Convert hex string to byte array
 		int len = hex.length();
 		byte[] result = new byte[len / 2];
 		for (int i = 0; i < len; i += 2)
@@ -99,7 +114,7 @@ public class XUtil {
 	}
 
 	private static PublicKey getPublicKey(Context context) throws Throwable {
-		// read public key
+		// Read public key
 		String sPublicKey = "";
 		InputStreamReader isr = new InputStreamReader(context.getAssets().open("XPrivacy_public_key.txt"), "UTF-8");
 		BufferedReader br = new BufferedReader(isr);
@@ -112,6 +127,7 @@ public class XUtil {
 		br.close();
 		isr.close();
 
+		// Create public key
 		byte[] bPublicKey = Base64.decode(sPublicKey, Base64.NO_WRAP);
 		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 		X509EncodedKeySpec encodedPubKeySpec = new X509EncodedKeySpec(bPublicKey);
@@ -119,6 +135,7 @@ public class XUtil {
 	}
 
 	private static boolean verifyData(byte[] data, byte[] signature, PublicKey publicKey) throws Throwable {
+		// Verify signature
 		Signature verifier = Signature.getInstance("SHA1withRSA");
 		verifier.initVerify(publicKey);
 		verifier.update(data);
