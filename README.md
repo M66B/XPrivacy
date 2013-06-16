@@ -80,7 +80,7 @@ which is provided as download for both Android version 4.1 and 4.2.
 
 **Realizing XPrivacy was a lot of work, so please support this project**
 
-Donate for the [Pro version](http://www.faircode.eu/xprivacy/) or
+Donate a few dollars for the [pro version](http://www.faircode.eu/xprivacy/) or
 
 [![Flattr](http://api.flattr.com/button/flattr-badge-large.png "Flattr This!")](http://flattr.com/thing/1491130/ "The ultimate, yet easy to use, privacy manager")
 
@@ -153,6 +153,10 @@ Installation
 1. Reboot into recovery
 1. Flash the Xposed fix for your Android version from [here](http://goo.im/devs/M66B/xprivacy)
 1. Reboot
+
+I do not recommend using XPrivacy in combination with any of the
+[similar solutions](https://github.com/M66B/XPrivacy#similar-solutions),
+because it will most probably result in conflicts (with as consequence data leakage).
 
 Upgrading
 ---------
@@ -263,6 +267,12 @@ Great care is taken to develop XPrivacy, nevertheless data could leak, although 
 
 Google will probably remove XPrivacy from the Play store eventually,
 since it will be able to block advertisement (for example by revoking internet permissions).
+
+**(14) I get 'No context for ...' !**
+
+A check of XPrivacy failed, resulting in potential data leakage.
+Please report the exact message in the XDA thread,
+stating the device and ROM you are using.
 
 Support
 -------
