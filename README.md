@@ -45,7 +45,7 @@ If restricting a category of data for an application results in problems for tha
 it is possible to allow access to the data category again.
 
 By default, all newly-installed applications will have no access to any data category at all,
-to prevent a new application from leaking sensitive information after installation.
+to prevent a new application from leaking sensitive data after installation.
 Shortly after installing a new application,
 XPrivacy will ask which data categories you want the new application to have access to.
 XPrivacy comes with a category browser,
@@ -58,7 +58,7 @@ XPrivacy will highlight (with a yellow triangle) a data category for an applicat
 (or an application name in the category browser)
 as soon as data of the data category has been used.
 XPrivacy will also display if an application has internet access,
-indicating that the application poses a risk of sharing the information it obtains with an external server.
+indicating that the application poses a risk of sharing the data it obtains with an external server.
 If an application has requested Android permissions to access data in a data category,
 it will also be displayed (with a green tick),
 but this will only be shown when looking at an individual application,
@@ -88,8 +88,8 @@ Features
 * Simple to use
 * No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
 * For any (stock) variant of Android version 4.1 or 4.2 (JellyBean)
-* New apps are restricted by default
-* Displays data actually used by an app
+* Newli installed applications are restricted by default
+* Displays data actually used by an application
 * Open source
 
 Restricted data
@@ -132,7 +132,7 @@ Installation
 ------------
 
 0. Requirement: Android 4.1+ (JellyBean), check with *System Settings* > *About phone* > *Android version*
-1. Root your device
+1. Root your device, the procedure varies depending on the brand and model of your device
 2. **Make a backup**
 3. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler*
 4. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
@@ -155,34 +155,79 @@ Usage
 * Set restrictions
 
 To see it in action: try disabling *Identification* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
-or try disabling *Contacts* for the Contacts app.
+or try disabling *Contacts* for the Contacts application
+(the Contacts application will continue to show a spinner, which is actually a bug in the Contacts application).
 
 **Applying some restrictions requires an app restart**
 
+If an application requested Android permissions for an data category,
+the category will be marked with a green check mark icon.
+If an application tried to use data, the data category will be marked with an orange triangle icon.
+These icons are only a guideline, because an application can access privacy sensitive data without Android permissions,
+for example the serial number of your device
+and because is not possible to monitor data usage in each and every situation,
+for example not for access to the internet or the external storage.
+
 Enabling internet or storage restriction means blocking access to the internet or to external storage (typically the SD card).
-Because of the nature of these restrictions, there is no usage data for these restrictions.
-All other restrictions have usage data and send no or fake data.
+This may result in error messages and even in force closes of the application.
 
 Tricks:
 
-* Slide left/right for applications/categories
 * Click the application icon in the category browser to go to the app restriction settings
 * Click the orange triangle to see the actual Android functions that were used by the app
+
+**Using XPrivacy is entirely at your own risk**
 
 Frequently asked questions
 --------------------------
 
-* Will you block the iptables command or force online state? Maybe in a later stage.
-* Will you make it possible to enter fake data? No, I want to keep things as simple as possible for maximum stability.
-* Which functions are exactly restricted? See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java).
-* Do I really need to install the Xposed fix? If you like to have all data restricted, yes.
-* What did you fix in the Xposed framework? See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51bae5d3dda).
-* Does XPrivacy use the Android permissions for something? No, Android permissions are just displayed as a guideline.
-* How can I reset all XPrivacy settings? *Manage apps* > *XPrivacy* > *Clear data*
-* Will XPrivacy make my device slower? Maybe a little, but it will be probably not noticeable.
-* Does XPrivacy use a lot of memory? Almost nothing.
-* Can I backup XPrivacy and settings? Yes, you can, but for now you can only restore the back onto the same device.
-* What is expert mode? In expert mode you can block apps from starting at device boot time and apply restrictions to system apps, including Android. **Be careful!**
+*Will XPrivacy make my device slower?*
+
+Maybe a little bit, but it won't probably be not noticeable.
+
+*Does XPrivacy use a lot of memory?*
+
+Almost nothing.
+
+*Can you help me with rooting my device?*
+
+There are already enough guides to help you to root your device.
+Use your favorite search engine to find one.
+
+*Do I really need to install the Xposed fix?*
+
+If you like to have all data restricted, yes.
+
+*How can I reset all XPrivacy settings?*
+
+*Manage apps* > *XPrivacy* > *Clear data*
+
+*Can I backup XPrivacy and settings?*
+
+Yes, you can, but you can only restore onto the same device.
+Exporting/importing settings will work across devices.
+
+*What is expert mode?*
+
+In expert mode you can block applications from starting at device boot time (except content providers)
+and you will be able to restrict system applications, including Android itself. **Be careful!**
+
+*Will you block the iptables command or force online state?*
+
+Maybe in a later stage.
+
+*Will you make it possible to enter fake data?*
+
+Maybe in a later stage.
+For now I like to keep things as simple as possible for maximum stability.
+
+*Which functions are exactly restricted?*
+
+A lot, see [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
+
+*What did you fix in the Xposed framework?*
+
+See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51bae5d3dda).
 
 Support
 -------
