@@ -77,6 +77,11 @@ public class XFragmentMain extends FragmentActivity {
 		ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 		viewPager.setAdapter(mPageAdapter);
 
+		// Sanity checks
+		checkRequirements();
+	}
+
+	private void checkRequirements() {
 		// Check Android version
 		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -229,7 +234,7 @@ public class XFragmentMain extends FragmentActivity {
 		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
 			try {
 				// Serialize
-				FileOutputStream fos = new FileOutputStream(getXmlFile());
+				FileOutputStream fos = new FileOutputStream(getExportFile());
 				XmlSerializer serializer = Xml.newSerializer();
 				serializer.setOutput(fos, "UTF-8");
 				serializer.startDocument(null, Boolean.valueOf(true));
@@ -275,7 +280,7 @@ public class XFragmentMain extends FragmentActivity {
 
 				// Display message
 				String message = String
-						.format("%s %s", getString(R.string.menu_export), getXmlFile().getAbsolutePath());
+						.format("%s %s", getString(R.string.menu_export), getExportFile().getAbsolutePath());
 				Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
 				toast.show();
 			} catch (Throwable ex) {
@@ -289,7 +294,7 @@ public class XFragmentMain extends FragmentActivity {
 		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
 			try {
 				// Read XML
-				FileInputStream fis = new FileInputStream(getXmlFile());
+				FileInputStream fis = new FileInputStream(getExportFile());
 				InputStreamReader isr = new InputStreamReader(fis);
 				char[] inputBuffer = new char[fis.available()];
 				isr.read(inputBuffer);
@@ -325,7 +330,7 @@ public class XFragmentMain extends FragmentActivity {
 
 				// Display message
 				String message = String
-						.format("%s %s", getString(R.string.menu_import), getXmlFile().getAbsolutePath());
+						.format("%s %s", getString(R.string.menu_import), getExportFile().getAbsolutePath());
 				Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
 				toast.show();
 			} catch (Throwable ex) {
@@ -361,7 +366,7 @@ public class XFragmentMain extends FragmentActivity {
 		dlgAbout.show();
 	}
 
-	private File getXmlFile() {
+	private File getExportFile() {
 		String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
 		String fileName = folder + File.separator + "XPrivacy.xml";
 		return new File(fileName);
