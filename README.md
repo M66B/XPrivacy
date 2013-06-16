@@ -14,6 +14,7 @@ Index
 * [Installation](https://github.com/M66B/XPrivacy#installation)
 * [Upgrading](https://github.com/M66B/XPrivacy#upgrading)
 * [Usage](https://github.com/M66B/XPrivacy#usage)
+* [Permissions](https://github.com/M66B/XPrivacy#permissions)
 * [Frequently asked questions](https://github.com/M66B/XPrivacy#frequently-asked-questions)
 * [Support](https://github.com/M66B/XPrivacy#support)
 * [Changelog](https://github.com/M66B/XPrivacy#changelog)
@@ -178,6 +179,14 @@ Tricks:
 * Click the orange triangle to see the actual Android functions that were used by the application
 
 **Using XPrivacy is entirely at your own risk**
+
+Permissions
+-----------
+
+XPrivacy asks for the following Android permissions:
+
+* Internet: to check for updates (only manual)
+* Storage: to export settings to the SD card
 
 Frequently asked questions
 --------------------------

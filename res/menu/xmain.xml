@@ -5,6 +5,9 @@
         android:id="@+id/menu_settings"
         android:title="@string/menu_settings"/>
     <item
+        android:id="@+id/menu_update"
+        android:title="@string/menu_update"/>
+    <item
         android:id="@+id/menu_report"
         android:title="@string/menu_report"/>
     <item

@@ -11,6 +11,7 @@
     <string name="app_app">Applicaties</string>
     <string name="app_restriction">Categorieën</string>
     <string name="menu_settings">Instellingen</string>
+    <string name="menu_update">Controleer op nieuwe versie</string>
     <string name="menu_report">Rapporteer probleem</string>
     <string name="menu_export">Exporteren</string>
     <string name="menu_import">Importeren</string>

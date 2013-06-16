@@ -1,9 +1,11 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -12,6 +14,14 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -19,6 +29,7 @@ import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -150,14 +161,17 @@ public class XFragmentMain extends FragmentActivity {
 			case R.id.menu_settings:
 				optionSettings();
 				return true;
+			case R.id.menu_update:
+				optionCheckUpdate();
+				return true;
+			case R.id.menu_report:
+				optionReportIssue();
+				return true;
 			case R.id.menu_export:
 				optionExport();
 				return true;
 			case R.id.menu_import:
 				optionImport();
-				return true;
-			case R.id.menu_report:
-				optionReportIssue();
 				return true;
 			case R.id.menu_pro:
 				optionPro();
@@ -196,8 +210,17 @@ public class XFragmentMain extends FragmentActivity {
 		dlgSettings.show();
 	}
 
-	private void optionPro() {
+	private void optionCheckUpdate() {
+		new UpdateTask().execute("http://goo.im/json2&path=/devs/M66B/xprivacy");
+	}
+
+	private void optionReportIssue() {
 		// Report issue
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/M66B/XPrivacy/issues"));
+		startActivity(browserIntent);
+	}
+
+	private void optionPro() {
 		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
 		startActivity(browserIntent);
 	}
@@ -318,12 +341,6 @@ public class XFragmentMain extends FragmentActivity {
 		return new File(fileName);
 	}
 
-	private void optionReportIssue() {
-		// Report issue
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/M66B/XPrivacy/issues"));
-		startActivity(browserIntent);
-	}
-
 	private void optionAbout() {
 		// About
 		Dialog dlgAbout = new Dialog(this);
@@ -348,5 +365,70 @@ public class XFragmentMain extends FragmentActivity {
 
 		dlgAbout.setCancelable(true);
 		dlgAbout.show();
+	}
+
+	private class UpdateTask extends AsyncTask<String, String, String> {
+
+		@Override
+		protected String doInBackground(String... uri) {
+			try {
+				HttpClient httpclient = new DefaultHttpClient();
+				HttpResponse response = httpclient.execute(new HttpGet(uri[0]));
+				String responseString = null;
+				StatusLine statusLine = response.getStatusLine();
+				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					response.getEntity().writeTo(out);
+					out.close();
+					responseString = out.toString("ISO-8859-1"); // ISO-8859-1,utf-8
+				} else {
+					response.getEntity().getContent().close();
+					throw new IOException(statusLine.getReasonPhrase());
+				}
+				return responseString;
+			} catch (Throwable ex) {
+				Toast toast = Toast.makeText(XFragmentMain.this, ex.toString(), Toast.LENGTH_LONG);
+				toast.show();
+				XUtil.bug(null, ex);
+				return null;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+
+			if (result != null)
+				try {
+					// Parse result
+					long newest = 0;
+					String latest = null;
+					String path = null;
+					JSONObject jRoot = new JSONObject(result);
+					JSONArray jArray = jRoot.getJSONArray("list");
+					for (int i = 0; i < jArray.length(); i++) {
+						JSONObject jEntry = jArray.getJSONObject(i);
+						String filename = jEntry.getString("filename");
+						if (filename.startsWith("XPrivacy_")) {
+							long modified = jEntry.getLong("modified");
+							if (modified > newest) {
+								newest = modified;
+								latest = filename;
+								path = jEntry.getString("path");
+							}
+						}
+					}
+
+					// Start download
+					if (path != null) {
+						Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://goo.im" + path));
+						startActivity(browserIntent);
+					}
+				} catch (Throwable ex) {
+					Toast toast = Toast.makeText(XFragmentMain.this, ex.toString(), Toast.LENGTH_LONG);
+					toast.show();
+					XUtil.bug(null, ex);
+				}
+		}
 	}
 }

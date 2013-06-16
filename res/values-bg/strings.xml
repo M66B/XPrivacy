@@ -11,6 +11,7 @@
     <string name="app_app">Applications</string>
     <string name="app_restriction">Categories</string>
     <string name="menu_settings">Настройки</string>
+    <string name="menu_update">Check for updates</string>
     <string name="menu_report">Съобщаване за проблем</string>
     <string name="menu_export">Export</string>
     <string name="menu_import">Import</string>

@@ -11,6 +11,7 @@
     <string name="app_app">Programi</string>
     <string name="app_restriction">Kategorije</string>
     <string name="menu_settings">Nastavitve</string>
+    <string name="menu_update">Check for updates</string>
     <string name="menu_report">Javi napako</string>
     <string name="menu_export">Izvozi</string>
     <string name="menu_import">Uvozi</string>
