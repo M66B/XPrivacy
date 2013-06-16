@@ -77,14 +77,22 @@ Root access is needed to install the Xposed framework.
 Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xposed binary,
 which is provided as download for both Android version 4.1 and 4.2.
 
-[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif "Donate")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6RD9MCRSG6KLY)
-[![Flattr](http://api.flattr.com/button/button-compact-static-100x17.png "Flattr This!")](http://flattr.com/thing/1491130/ "The ultimate, yet easy to use, privacy manager")
+
+**Realizing XPrivacy was a lot of work, so please support this project**
+
+Donate for the [Pro version](http://www.faircode.eu/xprivacy/) or
+
+[![Flattr](http://api.flattr.com/button/flattr-badge-large.png "Flattr This!")](http://flattr.com/thing/1491130/ "The ultimate, yet easy to use, privacy manager")
+
 
 **Using XPrivacy is entirely at your own risk**
 
-![Xposed](https://raw.github.com/M66B/XPrivacy/master/screenshots/xposed.png) ![Applications](https://raw.github.com/M66B/XPrivacy/master/screenshots/applications.png)
-![Categories](https://raw.github.com/M66B/XPrivacy/master/screenshots/categories.png) ![Category](https://raw.github.com/M66B/XPrivacy/master/screenshots/category.png)
-![Application](https://raw.github.com/M66B/XPrivacy/master/screenshots/application.png) ![Help](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
+![Xposed](https://raw.github.com/M66B/XPrivacy/master/screenshots/xposed.png)
+![Applications](https://raw.github.com/M66B/XPrivacy/master/screenshots/applications.png)
+![Categories](https://raw.github.com/M66B/XPrivacy/master/screenshots/categories.png)
+![Category](https://raw.github.com/M66B/XPrivacy/master/screenshots/category.png)
+![Application](https://raw.github.com/M66B/XPrivacy/master/screenshots/application.png)
+![Help](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
 
 Features
 --------
