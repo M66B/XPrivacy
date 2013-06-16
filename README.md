@@ -287,6 +287,11 @@ you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-deve
 Changelog
 ---------
 
+**Version 0.20** (in development)
+
+* Consider XPrivacy as system app (for expert mode)
+* Default deny new system apps in expert mode
+
 **Version 0.19**
 
 * More environment checks when starting
