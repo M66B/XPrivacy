@@ -147,7 +147,7 @@ Installation
 1. Root your device, the procedure varies depending on the brand and model of your device
 1. **Make a backup**
 1. Enabled *System settings* > *Security* > *Unknown sources*
-1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler*
+1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler* ([MIUI](http://en.miui.com/) is not supported by Xposed)
 1. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 1. Enable XPrivacy from the Xposed Installer app
 1. Reboot into recovery
