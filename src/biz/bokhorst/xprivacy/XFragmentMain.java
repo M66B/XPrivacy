@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -125,6 +127,62 @@ public class XFragmentMain extends FragmentActivity {
 			});
 			alertDialog.show();
 		}
+
+		// Check location manager
+		if (!checkField(getSystemService(Context.LOCATION_SERVICE), "mContext", Context.class)) {
+			String msg = "No context for location manager";
+			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+			toast.show();
+		}
+
+		// Check package manager
+		if (!checkField(getPackageManager(), "mContext", Context.class)) {
+			String msg = "No context for package manager";
+			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+			toast.show();
+		}
+
+		// TODO: PackageManagerService.getPackageUid
+
+		// Check content resolver
+		if (!checkField(getContentResolver(), "mContext", Context.class)) {
+			String msg = "No context for content resolver";
+			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+			toast.show();
+		}
+
+		// Check telephony manager
+		if (!checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class)) {
+			String msg = "No context for telephony manager";
+			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+			toast.show();
+		}
+	}
+
+	private boolean checkField(Object obj, String fieldName, Class<?> expectedClass) {
+		try {
+			// Find field
+			Field field = null;
+			Class<?> superClass = (obj == null ? null : obj.getClass());
+			while (superClass != null)
+				try {
+					field = superClass.getDeclaredField(fieldName);
+					field.setAccessible(true);
+					break;
+				} catch (Throwable ex) {
+					superClass = superClass.getSuperclass();
+				}
+
+			// Check field
+			if (field != null) {
+				Object value = field.get(obj);
+				if (value != null && expectedClass.isAssignableFrom(value.getClass()))
+					return true;
+			}
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+		}
+		return false;
 	}
 
 	private class PagerAdapter extends FragmentPagerAdapter {
@@ -279,8 +337,8 @@ public class XFragmentMain extends FragmentActivity {
 				fos.close();
 
 				// Display message
-				String message = String
-						.format("%s %s", getString(R.string.menu_export), getExportFile().getAbsolutePath());
+				String message = String.format("%s %s", getString(R.string.menu_export), getExportFile()
+						.getAbsolutePath());
 				Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
 				toast.show();
 			} catch (Throwable ex) {
@@ -329,8 +387,8 @@ public class XFragmentMain extends FragmentActivity {
 				}
 
 				// Display message
-				String message = String
-						.format("%s %s", getString(R.string.menu_import), getExportFile().getAbsolutePath());
+				String message = String.format("%s %s", getString(R.string.menu_import), getExportFile()
+						.getAbsolutePath());
 				Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
 				toast.show();
 			} catch (Throwable ex) {

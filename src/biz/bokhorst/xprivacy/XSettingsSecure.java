@@ -20,7 +20,7 @@ public class XSettingsSecure extends XHook {
 
 	// public synchronized static String getString(ContentResolver resolver, String name)
 	// frameworks/base/core/java/android/provider/Settings.java
-
+	// frameworks/base/core/java/android/content/ContentResolver.java
 	// @formatter:on
 
 	@Override
@@ -43,7 +43,7 @@ public class XSettingsSecure extends XHook {
 		ContentResolver contentResolver = (ContentResolver) param.args[0];
 		Context context = null;
 		try {
-			Field fieldContext = findField(contentResolver.getClass(), "mContext");
+			Field fieldContext = findField(ContentResolver.class, "mContext");
 			context = (Context) fieldContext.get(contentResolver);
 		} catch (Throwable ex) {
 			XUtil.bug(this, ex);
