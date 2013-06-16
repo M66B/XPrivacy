@@ -165,8 +165,8 @@ public class XRestriction {
 			boolean useCache) {
 		try {
 			// Check uid
-			if (uid == 0) {
-				XUtil.log(hook, Log.WARN, "uid=0");
+			if (uid <= 0) {
+				XUtil.log(hook, Log.WARN, "uid <= 0");
 				XUtil.logStack(hook);
 				return false;
 			}
@@ -193,41 +193,42 @@ public class XRestriction {
 					}
 				}
 
+			// Check if restricted
+			boolean fallback = true;
 			boolean restricted = false;
-
-			// Fallback: no usage data
-			if (context == null || uid == XRestriction.cUidAndroid)
-				restricted = XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName);
-			else {
+			if (context != null && uid != XRestriction.cUidAndroid) {
 				// Get content resolver
 				ContentResolver contentResolver = context.getContentResolver();
 				if (contentResolver == null) {
 					XUtil.log(hook, Log.WARN, "contentResolver is null");
 					XUtil.logStack(hook);
-					return false;
+				} else {
+					// Query restriction
+					String methodName = (hook == null ? null : hook.getMethodName());
+					Cursor cursor = contentResolver.query(XPrivacyProvider.URI_RESTRICTION, null, restrictionName,
+							new String[] { Integer.toString(uid), Boolean.toString(usage), methodName }, null);
+					if (cursor == null) {
+						// Can happen if memory low
+						XUtil.log(hook, Log.WARN, "cursor is null");
+						XUtil.logStack(null);
+					} else {
+						// Get restriction
+						if (cursor.moveToNext()) {
+							restricted = Boolean.parseBoolean(cursor.getString(cursor
+									.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
+							fallback = false;
+						} else {
+							XUtil.log(hook, Log.WARN, "cursor is empty");
+							XUtil.logStack(null);
+						}
+						cursor.close();
+					}
 				}
-
-				// Query restriction
-				String methodName = (hook == null ? null : hook.getMethodName());
-				Cursor cursor = contentResolver.query(XPrivacyProvider.URI_RESTRICTION, null, restrictionName,
-						new String[] { Integer.toString(uid), Boolean.toString(usage), methodName }, null);
-				if (cursor == null) {
-					// Can happen if memory low
-					XUtil.log(hook, Log.WARN, "cursor is null");
-					XUtil.logStack(null);
-					return false;
-				}
-
-				// Get restriction
-				if (cursor.moveToNext())
-					restricted = Boolean.parseBoolean(cursor.getString(cursor
-							.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
-				else {
-					XUtil.log(hook, Log.WARN, "cursor is empty");
-					XUtil.logStack(null);
-				}
-				cursor.close();
 			}
+
+			// Use fallback
+			if (fallback)
+				restricted = XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName);
 
 			// Add to cache
 			synchronized (mRestrictionCache) {
