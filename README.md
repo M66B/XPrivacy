@@ -258,6 +258,7 @@ Changelog
 
 * Basic check for updates (manually)
 * Link to [pro version](http://www.faircode.eu/xprivacy/)
+* Renamed category *Calling* to *Actions* and moved opening browsers links into this category
 
 **Version 0.17**
 
