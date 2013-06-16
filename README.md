@@ -243,6 +243,10 @@ Many, see [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/x
 
 See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51bae5d3dda).
 
+**(12) How safe is XPrivacy?**
+
+Great care is taken to develop XPrivacy, nevertheless data could leak, although nobody has reported any data leak so far.
+
 Support
 -------
 
@@ -255,6 +259,11 @@ you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-deve
 
 Changelog
 ---------
+
+**Version 0.19**
+
+* More environment checks when starting
+* More privacy (fallback procedure when low memory)
 
 **Version 0.18**
 
