@@ -150,31 +150,32 @@ Upgrading
 Usage
 -----
 
-* Start XPrivacy
+* Start the XPrivacy application
 * Select an application
-* Set restrictions
+* Set data restrictions
 
 To see it in action: try disabling *Identification* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 or try disabling *Contacts* for the Contacts application
 (the Contacts application will continue to show a spinner, which is actually a bug in the Contacts application).
 
-**Applying some restrictions requires an app restart**
+**Applying some restrictions requires restarting applications and/or your device**
 
-If an application requested Android permissions for an data category,
+If an application requested Android permissions for a data category,
 the category will be marked with a green check mark icon.
-If an application tried to use data, the data category will be marked with an orange triangle icon.
-These icons are only a guideline, because an application can access privacy sensitive data without Android permissions,
+If an application used/tried to use data, the data category will be marked with an orange triangle icon.
+These icons are just a guideline, because an application can access privacy sensitive data without Android permissions,
 for example the serial number of your device
 and because is not possible to monitor data usage in each and every situation,
 for example not for access to the internet or the external storage.
 
-Enabling internet or storage restriction means blocking access to the internet or to external storage (typically the SD card).
-This may result in error messages and even in force closes of the application.
+Enabling internet or storage restriction means blocking access to the internet
+or to the external storage (typically the SD card).
+This may result in error messages and even in forced closes of the application.
 
 Tricks:
 
-* Click the application icon in the category browser to go to the app restriction settings
-* Click the orange triangle to see the actual Android functions that were used by the app
+* Click the application icon in the data category browser to go to the application restriction settings
+* Click the orange triangle to see the actual Android functions that were used by the application
 
 **Using XPrivacy is entirely at your own risk**
 
