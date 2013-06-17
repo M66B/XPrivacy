@@ -42,7 +42,9 @@ public class XRestriction {
 	public static final int cDefaceIP = 127 + (0 << 8) + (0 << 16) + (1 << 24);
 
 	public final static int cUidAndroid = 1000;
-	public final static String cExpertMode = "ExpertMode";
+	public final static String cSettingExpert = "Expert";
+	public final static String cSettingLatitude = "Latitude";
+	public final static String cSettingLongitude = "Longitude";
 
 	private final static int cCacheTimeoutMs = 30 * 1000;
 	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
@@ -113,7 +115,8 @@ public class XRestriction {
 
 	public static List<String> getRestrictions(Context context) {
 		List<String> listRestriction = new ArrayList<String>(mRestrictions.keySet());
-		if (!XRestriction.getSetting(null, context, XRestriction.cExpertMode))
+		if (!Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
+				Boolean.FALSE.toString())))
 			listRestriction.remove(cBoot);
 		return listRestriction;
 	}
@@ -276,8 +279,8 @@ public class XRestriction {
 		logRestriction(hook, context, uid, "set", restrictionName, restricted, false);
 	}
 
-	public static boolean getSetting(XHook hook, Context context, String settingName) {
-		boolean enabled = false;
+	public static String getSetting(XHook hook, Context context, String settingName, String defaultValue) {
+		String value = defaultValue;
 		if (context == null) {
 			XUtil.log(hook, Log.WARN, "context is null");
 			XUtil.logStack(hook);
@@ -286,8 +289,7 @@ public class XRestriction {
 				ContentResolver cr = context.getContentResolver();
 				Cursor cursor = cr.query(XPrivacyProvider.URI_SETTING, null, settingName, null, null);
 				if (cursor.moveToNext())
-					enabled = Boolean
-							.parseBoolean(cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_ENABLED)));
+					value = cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_VALUE));
 				else {
 					XUtil.log(hook, Log.WARN, "cursor is empty setting=" + settingName);
 					XUtil.logStack(hook);
@@ -297,16 +299,16 @@ public class XRestriction {
 				XUtil.log(hook, Log.ERROR, "get setting=" + settingName);
 				XUtil.bug(hook, ex);
 			}
-		XUtil.log(hook, Log.INFO, String.format("get %s=%b", settingName, enabled));
-		return enabled;
+		XUtil.log(hook, Log.INFO, String.format("get %s=%s", settingName, value));
+		return value;
 	}
 
-	public static void setSetting(XHook hook, Context context, String settingName, boolean enabled) {
+	public static void setSetting(XHook hook, Context context, String settingName, String value) {
 		ContentResolver contentResolver = context.getContentResolver();
 		ContentValues values = new ContentValues();
-		values.put(XPrivacyProvider.COL_ENABLED, Boolean.toString(enabled));
+		values.put(XPrivacyProvider.COL_VALUE, value);
 		contentResolver.update(XPrivacyProvider.URI_SETTING, values, settingName, null);
-		XUtil.log(hook, Log.INFO, String.format("set %s=%b", settingName, enabled));
+		XUtil.log(hook, Log.INFO, String.format("set %s=%s", settingName, value));
 	}
 
 	public static void deleteAuditTrail(Context context, int uid) {

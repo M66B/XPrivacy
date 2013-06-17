@@ -52,9 +52,11 @@ import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -253,20 +255,51 @@ public class XFragmentMain extends FragmentActivity {
 	}
 
 	private void optionSettings() {
-		// Settings
-		Dialog dlgSettings = new Dialog(this);
+		// Build dialog
+		final Dialog dlgSettings = new Dialog(this);
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgSettings.setTitle(getString(R.string.app_name));
 		dlgSettings.setContentView(R.layout.xsettings);
 		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
 
-		// Expert mode
-		CheckBox cbSettings = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
-		cbSettings.setChecked(XRestriction.getSetting(null, XFragmentMain.this, XRestriction.cExpertMode));
-		cbSettings.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		// Reference controls
+		final CheckBox cbSettings = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
+		final EditText atLat = (EditText) dlgSettings.findViewById(R.id.etLat);
+		final EditText atLon = (EditText) dlgSettings.findViewById(R.id.etLon);
+		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
+
+		// Set current values
+		String sExpert = XRestriction.getSetting(null, XFragmentMain.this, XRestriction.cSettingExpert,
+				Boolean.FALSE.toString());
+		cbSettings.setChecked(Boolean.parseBoolean(sExpert));
+		atLat.setText(XRestriction.getSetting(null, XFragmentMain.this, XRestriction.cSettingLatitude, ""));
+		atLon.setText(XRestriction.getSetting(null, XFragmentMain.this, XRestriction.cSettingLongitude, ""));
+
+		// Wait for OK
+		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cExpertMode, isChecked);
+			public void onClick(View v) {
+				// Set expert mode
+				XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingExpert,
+						Boolean.toString(cbSettings.isChecked()));
+
+				// Set location
+				try {
+					float lat = Float.parseFloat(atLat.getText().toString());
+					float lon = Float.parseFloat(atLon.getText().toString());
+
+					XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingLatitude,
+							Float.toString(lat));
+					XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingLongitude,
+							Float.toString(lon));
+
+				} catch (Throwable ex) {
+					XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingLatitude, "");
+					XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingLongitude, "");
+				}
+
+				// Done
+				dlgSettings.dismiss();
 			}
 		});
 
@@ -367,6 +400,7 @@ public class XFragmentMain extends FragmentActivity {
 				DocumentBuilder db = dbf.newDocumentBuilder();
 				Document dom = db.parse(is);
 				dom.getDocumentElement().normalize();
+				
 				NodeList items = dom.getElementsByTagName("Package");
 				for (int i = 0; i < items.getLength(); i++) {
 					// Process package

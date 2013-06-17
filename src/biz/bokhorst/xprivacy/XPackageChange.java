@@ -23,7 +23,8 @@ public class XPackageChange extends BroadcastReceiver {
 			String packageName = inputUri.getSchemeSpecificPart();
 			int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 			boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
-			boolean expert = XRestriction.getSetting(null, context, XRestriction.cExpertMode);
+			boolean expert = Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
+					Boolean.FALSE.toString()));
 
 			// TODO: check permission changes when replacing
 

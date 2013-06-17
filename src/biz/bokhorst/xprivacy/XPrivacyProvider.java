@@ -41,7 +41,7 @@ public class XPrivacyProvider extends ContentProvider {
 	public static final String COL_METHOD = "Method";
 	public static final String COL_USED = "Used";
 	public static final String COL_SETTING = "Setting";
-	public static final String COL_ENABLED = "Enabled";
+	public static final String COL_VALUE = "Value";
 
 	private static final UriMatcher sUriMatcher;
 	private static final int TYPE_RESTRICTION = 1;
@@ -156,8 +156,8 @@ public class XPrivacyProvider extends ContentProvider {
 			// Return setting
 			String settingName = selection;
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
-			MatrixCursor cursor = new MatrixCursor(new String[] { COL_SETTING, COL_ENABLED });
-			cursor.addRow(new Object[] { settingName, prefs.getBoolean(getSettingPref(settingName), false) });
+			MatrixCursor cursor = new MatrixCursor(new String[] { COL_SETTING, COL_VALUE });
+			cursor.addRow(new Object[] { settingName, prefs.getString(getSettingPref(settingName), null) });
 			return cursor;
 		}
 		throw new IllegalArgumentException();
@@ -215,10 +215,9 @@ public class XPrivacyProvider extends ContentProvider {
 			String settingName = selection;
 
 			// Update setting
-			boolean enabled = Boolean.parseBoolean(values.getAsString(COL_ENABLED));
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = prefs.edit();
-			editor.putBoolean(getSettingPref(settingName), enabled);
+			editor.putString(getSettingPref(settingName), values.getAsString(COL_VALUE));
 			editor.commit();
 
 			return 1;

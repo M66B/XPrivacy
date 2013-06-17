@@ -30,10 +30,10 @@
                 android:textIsSelectable="false" />
 
             <EditText
-                android:id="@+id/edit_lat"
+                android:id="@+id/etLat"
                 android:layout_width="100dip"
                 android:layout_height="wrap_content"
-                android:digits="0123456789.,"
+                android:digits="-+0123456789.,"
                 android:inputType="number" />
         </TableRow>
 
@@ -48,15 +48,16 @@
                 android:textIsSelectable="false" />
 
             <EditText
-                android:id="@+id/edit_lon"
+                android:id="@+id/etLon"
                 android:layout_width="100dip"
                 android:layout_height="wrap_content"
-                android:digits="0123456789.,"
+                android:digits="-+0123456789.,"
                 android:inputType="number" />
         </TableRow>
     </TableLayout>
 
     <Button
+        android:id="@+id/btnOk"
         android:layout_width="75dip"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

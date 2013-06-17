@@ -36,7 +36,8 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 		// Get references
 		String self = XApplicationInfo.class.getPackage().getName();
 		PackageManager pm = context.getPackageManager();
-		boolean expert = XRestriction.getSetting(null, context, XRestriction.cExpertMode);
+		boolean expert = Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
+				Boolean.FALSE.toString()));
 
 		// Get app list
 		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
