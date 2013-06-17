@@ -367,6 +367,7 @@ Similar solutions
 * [PDroid 2.0](http://forum.xda-developers.com/showthread.php?t=1923576)
 * [OpenPDroid](http://forum.xda-developers.com/showthread.php?t=2098156)
 * [LBE Privacy Guard](https://play.google.com/store/apps/details?id=com.lbe.security.lite)
+* [CyanogenMod Incognito Mode](https://plus.google.com/100275307499530023476/posts/6jzWcRR6hyu)
 
 The PDroid family provides fake or no data, more or less in the same way as XPrivacy does.
 A difference is that you need to patch Android and that there is (therefore) only limited stock ROM support.
@@ -377,6 +378,9 @@ LBE Privacy Guard also features malware protecting and data traffic control.
 Some consider the closed source code of Chinese origin as a problem.
 
 The members of the PDroid family and XPrivacy hardly use memory, but LBE Privacy Guard does.
+
+The CyanogenMod Incognito Mode seems not to be fine grained and provides only privacy for personal data,
+if the content provider choses to do so.
 
 Contributing
 ------------
