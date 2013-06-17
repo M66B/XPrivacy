@@ -10,7 +10,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -285,8 +287,8 @@ public class XFragmentMain extends FragmentActivity {
 
 				// Set location
 				try {
-					float lat = Float.parseFloat(atLat.getText().toString());
-					float lon = Float.parseFloat(atLon.getText().toString());
+					float lat = Float.parseFloat(atLat.getText().toString().replace(',', '.'));
+					float lon = Float.parseFloat(atLon.getText().toString().replace(',', '.'));
 
 					XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingLatitude,
 							Float.toString(lat));
@@ -394,28 +396,42 @@ public class XFragmentMain extends FragmentActivity {
 				isr.close();
 				fis.close();
 
-				// Process XML
+				// Prepare XML document
 				InputStream is = new ByteArrayInputStream(xml.getBytes("UTF-8"));
 				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 				DocumentBuilder db = dbf.newDocumentBuilder();
 				Document dom = db.parse(is);
 				dom.getDocumentElement().normalize();
-				
+
+				// Process XML
+				Map<String, List<String>> mapPackage = new HashMap<String, List<String>>();
 				NodeList items = dom.getElementsByTagName("Package");
 				for (int i = 0; i < items.getLength(); i++) {
-					// Process package
+					// Process package restriction
 					Node entry = items.item(i);
 					NamedNodeMap attrs = entry.getAttributes();
 					String packageName = attrs.getNamedItem("Name").getNodeValue();
 					String restrictionName = attrs.getNamedItem("Restriction").getNodeValue();
 
-					// Resolve uid
+					// Map package restriction
+					if (!mapPackage.containsKey(packageName))
+						mapPackage.put(packageName, new ArrayList<String>());
+					mapPackage.get(packageName).add(restrictionName);
+				}
+
+				// Process result
+				for (String packageName : mapPackage.keySet()) {
 					try {
-						PackageInfo pInfo = getPackageManager().getPackageInfo(packageName, 0);
-						if (pInfo != null) {
-							int uid = pInfo.applicationInfo.uid;
+						// Get uid
+						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
+
+						// Reset existing restrictions
+						for (String restrictionName : XRestriction.getRestrictions(this))
+							XRestriction.setRestricted(null, this, uid, restrictionName, false);
+
+						// Set imported restrictions
+						for (String restrictionName : mapPackage.get(packageName))
 							XRestriction.setRestricted(null, this, uid, restrictionName, true);
-						}
 					} catch (NameNotFoundException ex) {
 						XUtil.log(null, Log.WARN, "Not found package=" + packageName);
 					}

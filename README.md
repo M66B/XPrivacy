@@ -287,9 +287,12 @@ you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-deve
 Changelog
 ---------
 
-**Version 0.21** (in development)
+**Version 0.22** (in development)
 
-* Settings for latitude/longitude
+**Version 0.21**
+
+* Settings for latitude/longitude (Christmas Island is at latitude -10.5, longitude 105.667)
+* Undo existing restrictions for apps when importing restrictions (only for apps with exported settings)
 
 **Version 0.20**
 
@@ -363,6 +366,17 @@ Similar solutions
 * [PDroid](http://forum.xda-developers.com/showthread.php?t=1357056)
 * [PDroid 2.0](http://forum.xda-developers.com/showthread.php?t=1923576)
 * [OpenPDroid](http://forum.xda-developers.com/showthread.php?t=2098156)
+* [LBE Privacy Guard](https://play.google.com/store/apps/details?id=com.lbe.security.lite)
+
+The PDroid family provides fake or no data, more or less in the same way as XPrivacy does.
+A difference is that you need to patch Android and that there is (therefore) only limited stock ROM support.
+The PDroid family is open source.
+
+LBE Privacy Guard revokes permissions, which will make some applications unusable.
+LBE Privacy Guard also features malware protecting and data traffic control.
+Some consider the closed source code of Chinese origin as a problem.
+
+The members of the PDroid family and XPrivacy hardly use memory, but LBE Privacy Guard does.
 
 Contributing
 ------------
