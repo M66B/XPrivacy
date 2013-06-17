@@ -1,11 +1,15 @@
 package biz.bokhorst.xprivacy;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class XPackageChange extends BroadcastReceiver {
@@ -28,25 +32,44 @@ public class XPackageChange extends BroadcastReceiver {
 				XUtil.log(null, Log.INFO, "Added package=" + packageName + " uid=" + uid);
 
 				boolean system = false;
-				if (!expert)
-					try {
-						PackageInfo pInfo = context.getPackageManager().getPackageInfo(packageName, 0);
-						system = (pInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
-					} catch (Throwable ex) {
-					}
+				PackageInfo pInfo = null;
+				PackageManager pm = context.getPackageManager();
+				try {
+					pInfo = pm.getPackageInfo(packageName, 0);
+					system = (pInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+				} catch (Throwable ex) {
+					XUtil.bug(null, ex);
+					return;
+				}
 
 				if (expert ? true : !system) {
-					// Default deny new apps
-					for (String restrictionName : XRestriction.getRestrictions(context))
-						XRestriction.setRestricted(null, context, uid, restrictionName, true);
+					// Default deny new user apps
+					if (!system)
+						for (String restrictionName : XRestriction.getRestrictions(context))
+							XRestriction.setRestricted(null, context, uid, restrictionName, true);
 
-					// TODO: notification
+					// Build result intent
+					Intent resultIntent = new Intent(context, XActivitySingleApp.class);
+					resultIntent.putExtra(XActivitySingleApp.cPackageName, packageName);
+					resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
 
-					// Send intent to edit settings
-					Intent intentSettings = new Intent(context, XActivitySingleApp.class);
-					intentSettings.putExtra(XActivitySingleApp.cPackageName, packageName);
-					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-					context.startActivity(intentSettings);
+					// Build pending inent
+					PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, resultIntent,
+							PendingIntent.FLAG_UPDATE_CURRENT);
+
+					// Build notification
+					NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+					notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+					notificationBuilder.setContentTitle(context.getString(R.string.app_name));
+					notificationBuilder.setContentText(pm.getApplicationLabel(pInfo.applicationInfo));
+					notificationBuilder.setContentIntent(pendingIntent);
+					notificationBuilder.setWhen(System.currentTimeMillis());
+					notificationBuilder.setAutoCancel(true);
+
+					// Notify
+					NotificationManager notificationManager = (NotificationManager) context
+							.getSystemService(Context.NOTIFICATION_SERVICE);
+					notificationManager.notify(pInfo.applicationInfo.uid, notificationBuilder.build());
 				}
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 				// Package removed

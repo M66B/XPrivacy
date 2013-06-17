@@ -290,7 +290,9 @@ Changelog
 **Version 0.20** (in development)
 
 * Consider XPrivacy as system app (for expert mode)
-* Default deny new system apps in expert mode
+* Fixed category browser ([bug](https://github.com/M66B/XPrivacy/issues/30), [fix](https://github.com/M66B/XPrivacy/pull/28))
+* Notify when new application installed ([feuture request](https://github.com/M66B/XPrivacy/issues/10))
+* Notify when new system application is installed in expert mode (default allow)
 
 **Version 0.19**
 
