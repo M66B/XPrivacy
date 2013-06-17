@@ -36,6 +36,8 @@
     <string name="restrict_system">System (installierte Apps)</string>
     <string name="settings_restrict">Haken setzen zum einschränken:</string>
     <string name="settings_expert">Expertenmodus</string>
+    <string name="settings_lat">Latitude</string>
+    <string name="settings_lon">Longitude</string>
     <string name="help_icon">Icon</string>
     <string name="help_application">Anwendung</string>
     <string name="help_internet">hat Internetberechtigung</string>

@@ -36,6 +36,8 @@
     <string name="restrict_system">Sistem (nameščeni programi)</string>
     <string name="settings_restrict">Oblkjukaj za omejitev pravic:</string>
     <string name="settings_expert">Napredni način</string>
+    <string name="settings_lat">Latitude</string>
+    <string name="settings_lon">Longitude</string>
     <string name="help_icon">Ikona</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetno dovoljenje</string>

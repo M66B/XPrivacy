@@ -36,6 +36,8 @@
     <string name="restrict_system">System (installed apps)</string>
     <string name="settings_restrict">Check to restrict:</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_lat">Latitude</string>
+    <string name="settings_lon">Longitude</string>
     <string name="help_icon">Icon</string>
     <string name="help_application">Application</string>
     <string name="help_internet">has internet permission</string>

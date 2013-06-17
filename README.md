@@ -287,7 +287,11 @@ you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-deve
 Changelog
 ---------
 
-**Version 0.20** (in development)
+**Version 0.21** (in development)
+
+* Settings for latitude/longitude
+
+**Version 0.20**
 
 * Consider XPrivacy as system app (for expert mode)
 * Fixed category browser ([bug](https://github.com/M66B/XPrivacy/issues/30), [fix](https://github.com/M66B/XPrivacy/pull/28))

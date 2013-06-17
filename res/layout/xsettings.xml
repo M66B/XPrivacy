@@ -15,4 +15,51 @@
         android:text="@string/settings_expert"
         android:textAppearance="?android:attr/textAppearance" />
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_lat"
+                android:textIsSelectable="false" />
+
+            <EditText
+                android:id="@+id/edit_lat"
+                android:layout_width="100dip"
+                android:layout_height="wrap_content"
+                android:digits="0123456789.,"
+                android:inputType="number" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_lon"
+                android:textIsSelectable="false" />
+
+            <EditText
+                android:id="@+id/edit_lon"
+                android:layout_width="100dip"
+                android:layout_height="wrap_content"
+                android:digits="0123456789.,"
+                android:inputType="number" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:layout_width="75dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@android:string/ok" />
+
 </LinearLayout>

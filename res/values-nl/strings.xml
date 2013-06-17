@@ -36,6 +36,8 @@
     <string name="restrict_system">Systeem (geïnstalleerde apps)</string>
     <string name="settings_restrict">Vink om te beperken:</string>
     <string name="settings_expert">Expert modus</string>
+    <string name="settings_lat">Breedte</string>
+    <string name="settings_lon">Lengte</string>
     <string name="help_icon">Icoon</string>
     <string name="help_application">Applicatie</string>
     <string name="help_internet">heeft internet rechten</string>

@@ -36,6 +36,8 @@
     <string name="restrict_system">Σύστημα (εγκατεστημένες εφαρμογές)</string>
     <string name="settings_restrict">Επιλέξτε για περιορισμό:</string>
     <string name="settings_expert">Για προχωρημένους</string>
+    <string name="settings_lat">Latitude</string>
+    <string name="settings_lon">Longitude</string>
     <string name="help_icon">Εικονίδιο</string>
     <string name="help_application">Εφαρμογή</string>
     <string name="help_internet">έχει άδεια internet</string>
