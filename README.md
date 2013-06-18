@@ -297,7 +297,7 @@ Changelog
 
 * Renamed category *Actions* to *Calling* again
 * Moved opening links to new category *View*
-* Export/import expert, latitude, longitude ([pro version](http://www.faircode.eu/xprivacy/) only)
+* Export/import settings, like expert, location ([pro version](http://www.faircode.eu/xprivacy/) only)
 
 **Version 0.21**
 
