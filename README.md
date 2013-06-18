@@ -287,11 +287,13 @@ you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-deve
 Changelog
 ---------
 
-**Version 0.22** (in development)
+**Version 0.23** (in development)
 
-* Export/import expert, latitude, longitude
+**Version 0.22**
+
 * Renamed category *Actions* to *Calling* again
 * Moved opening links to new category *View*
+* Export/import expert, latitude, longitude ([pro version](http://www.faircode.eu/xprivacy/) only)
 
 **Version 0.21**
 
@@ -302,7 +304,7 @@ Changelog
 
 * Consider XPrivacy as system app (for expert mode)
 * Fixed category browser ([bug](https://github.com/M66B/XPrivacy/issues/30), [fix](https://github.com/M66B/XPrivacy/pull/28))
-* Notify when new application installed ([feuture request](https://github.com/M66B/XPrivacy/issues/10))
+* Notify when new application installed ([feature request](https://github.com/M66B/XPrivacy/issues/10))
 * Notify when new system application is installed in expert mode (default allow)
 
 **Version 0.19**
