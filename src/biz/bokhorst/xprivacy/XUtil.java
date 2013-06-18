@@ -67,7 +67,7 @@ public class XUtil {
 		return false;
 	}
 
-	public static boolean isProVersion(Context context) {
+	public static String isProVersion(Context context) {
 		try {
 			// Get license file name
 			String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -85,7 +85,7 @@ public class XUtil {
 				byte[] bSignature = hex2bytes(signature);
 				if (bEmail.length == 0 || bSignature.length == 0) {
 					XUtil.log(null, Log.ERROR, "Invalid license file");
-					return false;
+					return null;
 				}
 
 				// Verify license
@@ -94,14 +94,16 @@ public class XUtil {
 					XUtil.log(null, Log.INFO, "Licensed to " + name + " (" + email + ")");
 				else
 					XUtil.log(null, Log.ERROR, "Invalid license for " + name + " (" + email + ")");
-				return licensed;
+
+				// Return result
+				return (licensed ? name : null);
 			} else
 				XUtil.log(null, Log.INFO, "No license file found");
 		} catch (Throwable ex) {
 			XUtil.log(null, Log.ERROR, "Processing license");
 			XUtil.bug(null, ex);
 		}
-		return false;
+		return null;
 	}
 
 	private static byte[] hex2bytes(String hex) {

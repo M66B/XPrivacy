@@ -17,6 +17,7 @@
     <string name="menu_about">Относно</string>
     <string name="msg_noupdate">Няма налично обновление</string>
     <string name="msg_restricted" formatted="false">%s е ограничен от XPrivacy</string>
+    <string name="msg_licensed" formatted="false">Licensed to: %s</string>
     <string name="restrict_accounts">Сметки (Google, Facebook и т.н.)</string>
     <string name="restrict_boot">Стартиране (при пускане на системата)</string>
     <string name="restrict_browser">Браузър (отметки/история)</string>

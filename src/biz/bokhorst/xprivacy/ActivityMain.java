@@ -128,12 +128,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.xmain, menu);
-		if (XUtil.isProVersion(this))
-			menu.removeItem(R.id.menu_pro);
-		else {
+		if (XUtil.isProVersion(this) == null) {
 			menu.removeItem(R.id.menu_export);
 			menu.removeItem(R.id.menu_import);
-		}
+		} else
+			menu.removeItem(R.id.menu_pro);
 		return true;
 	}
 
@@ -536,6 +535,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		int xVersion = XUtil.getXposedVersion();
 		TextView tvXVersion = (TextView) dlgAbout.findViewById(R.id.tvXVersion);
 		tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
+
+		// Show license
+		String licensed = XUtil.isProVersion(this);
+		TextView tvLicensed = (TextView) dlgAbout.findViewById(R.id.tvLicensed);
+		if (licensed == null)
+			tvLicensed.setVisibility(View.GONE);
+		else
+			tvLicensed.setText(String.format(getString(R.string.msg_licensed), licensed));
 
 		dlgAbout.setCancelable(true);
 		dlgAbout.show();
