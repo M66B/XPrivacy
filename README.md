@@ -49,14 +49,14 @@ By default, all newly-installed applications will have no access to any data cat
 to prevent a new application from leaking sensitive data after installation.
 Shortly after installing a new application,
 XPrivacy will ask which data categories you want the new application to have access to.
-XPrivacy comes with a category browser,
+XPrivacy comes with an application browser,
 which allows you to quickly enable or disable applications' access to a particular data category
 (i.e. to view and control all access to the camera, for example).
 
 To help you identify potential data leaks,
 XPrivacy will monitor attempts made by all applications to access sensitive data.
 XPrivacy will highlight (with a yellow triangle) a data category for an application
-(or an application name in the category browser)
+(or an application name in the application browser)
 as soon as data of the data category has been used.
 XPrivacy will also display if an application has internet access,
 indicating that the application poses a risk of sharing the data it obtains with an external server.
@@ -165,7 +165,7 @@ Usage
 -----
 
 * Start XPrivacy
-* Select an application
+* Select a data category
 * Set data restrictions
 
 To see it in action: try restricting the category *Identification* for
@@ -189,7 +189,7 @@ This may result in error messages and even in forced closes of the application.
 
 Tricks:
 
-* Click the application icon in the data category browser to go to the application restriction settings
+* Click the application icon in the application browser to go to the application restriction settings
 * Click the orange triangle to see the actual Android functions that were used by the application
 
 **Using XPrivacy is entirely at your own risk**
