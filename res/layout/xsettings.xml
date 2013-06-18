@@ -33,8 +33,7 @@
                 android:id="@+id/etLat"
                 android:layout_width="100dip"
                 android:layout_height="wrap_content"
-                android:digits="-0123456789.,"
-                android:inputType="number" />
+                android:inputType="numberDecimal|numberSigned" />
         </TableRow>
 
         <TableRow
@@ -51,8 +50,7 @@
                 android:id="@+id/etLon"
                 android:layout_width="100dip"
                 android:layout_height="wrap_content"
-                android:digits="-0123456789.,"
-                android:inputType="number" />
+                android:inputType="numberDecimal|numberSigned" />
         </TableRow>
     </TableLayout>
 

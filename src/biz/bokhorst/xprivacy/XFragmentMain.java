@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -289,6 +290,8 @@ public class XFragmentMain extends FragmentActivity {
 				try {
 					float lat = Float.parseFloat(atLat.getText().toString().replace(',', '.'));
 					float lon = Float.parseFloat(atLon.getText().toString().replace(',', '.'));
+					if (lat < -90 || lat > 90 || lon < -180 || lon > 180)
+						throw new InvalidParameterException();
 
 					XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingLatitude,
 							Float.toString(lat));
