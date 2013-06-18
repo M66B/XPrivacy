@@ -100,7 +100,7 @@ Features
 * Simple to use
 * No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
 * For any (stock) variant of Android version 4.1 or 4.2 (JellyBean)
-* Newli installed applications are restricted by default
+* Newly installed applications are restricted by default
 * Displays data actually used by an application
 * Open source
 
@@ -109,18 +109,18 @@ Restricted data
 
 * Accounts (including auth token)
 * [APN](http://en.wikipedia.org/wiki/Access_Point_Name) data
-* Application data (installed apps)
-* Browser (bookmarks, searches)
+* Application data (list of installed apps)
+* Browser (bookmarks, search history)
 * Calendar
 * Contacts
 * Identification (Android ID, serial number)
 * Location (coarse/fine, cell location/info)
 * Messages (SMS/MMS, including ICC SMS stored on SIM)
 * Network (IPs, MACs, BSSID, SSID)
-* Phone (call log, in/outgoing/voicemail number, phone ID/number, subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network details)
+* Phone (call log, own/in/outgoing/voicemail number, phone/subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network info)
 * Recording audio (including microphone)
-* Recording video
 * Taking photos
+* Recording video
 * Voicemail **untested**
 
 Restricted actions
@@ -129,16 +129,14 @@ Restricted actions
 * Calling **untested**
 * Sending SMS
 * Sending MMS **untested**
-* Opening links
+* Opening links in the browser
 * Internet (revoke permission: no usage data)
 * External storage (SD card) (revoke permission: no usage data)
 
 Limitations
 -----------
 
-* Android can be restricted, but there will be no usage data available (orange triangle).
-* The Google Services Framework (com.google.android.gsf) retrieves the Wi-Fi MAC address in an unusual way
-(within a thread, without context), it can be restricted by XPrivacy, but there will be no usage data available.
+* Android can be restricted, but there will be no usage data available (orange triangles)
 
 Installation
 ------------
@@ -149,14 +147,14 @@ Installation
 1. Enabled *System settings* > *Security* > *Unknown sources*
 1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler* ([MIUI](http://en.miui.com/) is not supported by Xposed)
 1. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
-1. Enable XPrivacy from the Xposed Installer app
+1. Enable XPrivacy from the Xposed installer
 1. Reboot into recovery
 1. Flash the Xposed fix for your Android version from [here](http://goo.im/devs/M66B/xprivacy)
 1. Reboot
 
 I do not recommend using XPrivacy in combination with any of the
 [similar solutions](https://github.com/M66B/XPrivacy#similar-solutions),
-because it will most probably result in conflicts (with as consequence data leakage).
+because it will most probably result in conflicts (with as possible consequence data leakage).
 
 Upgrading
 ---------
@@ -167,12 +165,13 @@ Upgrading
 Usage
 -----
 
-* Start the XPrivacy application
+* Start XPrivacy
 * Select an application
 * Set data restrictions
 
-To see it in action: try disabling *Identification* for [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
-or try disabling *Contacts* for the Contacts application
+To see it in action: try restricting the category *Identification* for
+[Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
+or try restriction the category *Contacts* for the Contacts application
 (the Contacts application will continue to show a spinner, which is actually a bug in the Contacts application).
 
 **Applying some restrictions requires restarting applications and/or your device**
@@ -201,7 +200,7 @@ Permissions
 
 XPrivacy asks for the following Android permissions:
 
-* Internet: to check for updates (only manual)
+* Internet: to check for updates (only manual from the menu)
 * Storage: to export settings to the SD card (only [pro version](http://www.faircode.eu/xprivacy/))
 
 If you don't like this, you can always restrict XPrivacy itself ...
@@ -250,6 +249,7 @@ Maybe in a later stage.
 
 Maybe in a later stage.
 For now I like to keep things as simple as possible for maximum stability.
+Since version 0.21 you can enter a fake location.
 
 **(10) Which functions are exactly restricted?**
 
@@ -266,7 +266,7 @@ Great care is taken to develop XPrivacy, nevertheless data could leak, although 
 **(13) Why is XPrivacy not in the Play store?**
 
 Google will probably remove XPrivacy from the Play store eventually,
-since it will be able to block advertisement (for example by revoking internet permissions).
+since it will be able to block advertisements (for example by revoking internet permissions).
 
 **(14) I get 'No context for ...' !**
 
@@ -281,8 +281,10 @@ If you encounter any bug or data leakage please [report an issue](https://github
 preferably including a [logcat](http://developer.android.com/tools/help/logcat.html)
 (use [pastebin](http://pastebin.com/) or a similar service).
 
-If you have any question or want to request a new feature,
-you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
+If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues),
+but check if there doesn´t already exist a similar request.
+
+If you have any question, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
 Changelog
 ---------
@@ -386,7 +388,7 @@ Some consider the closed source code of Chinese origin as a problem.
 The members of the PDroid family and XPrivacy hardly use memory, but LBE Privacy Guard does.
 
 The CyanogenMod Incognito Mode seems not to be fine grained and provides only privacy for personal data,
-if the content provider choses to do so.
+if the associated content provider chooses to do so.
 
 Contributing
 ------------
@@ -395,6 +397,7 @@ Translations:
 
 * Translate the strings in [this file](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml)
 * Send the translated file to me [via an XDA PM](http://forum.xda-developers.com/member.php?u=2799345)
+* Translators do not have to donate for the [pro version](http://www.faircode.eu/xprivacy/)
 
 Restrict new data:
 
