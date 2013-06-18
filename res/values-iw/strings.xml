@@ -1,0 +1,48 @@
+<resources>
+
+    <string name="app_name">XPrivacy</string>
+    <string name="app_notxposed" formatted="false">Xposed framework  לא מותקן</string>
+    <string name="app_notenabled">XPrivacy לא מאופשר באפליקציה הראשית</string>
+    <string name="app_wrongandroid">נבדק עם גירסאות 4.1 ו4.2</string>
+    <string name="app_version" formatted="false">XPrivacy גירסא: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed framework גירסא: %d</string>
+    <string name="app_copyright">זכויות יוצרים \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_info">פרטים: https://github.com/M66B/XPrivacy/</string>
+    <string name="app_app">אפליקציות</string>
+    <string name="app_restriction">קטגוריות</string>
+    <string name="menu_settings">הגדרות</string>
+    <string name="menu_update">בדוק עדכונים</string>
+    <string name="menu_report">דווח על תקלה</string>
+    <string name="menu_export">ייצא</string>
+    <string name="menu_import">ייבא</string>
+    <string name="menu_pro">גירסא מקצועית</string>
+    <string name="menu_about">אודות</string>
+    <string name="msg_noupdate">לא קיימים עדכונים</string>
+    <string name="msg_restricted" formatted="false">%s מוגבל על ידי XPrivacy</string>
+    <string name="restrict_accounts">חשבונות (גוגל, פייסבוק וכו)</string>
+    <string name="restrict_boot">עלייה עם המערכת</string>
+    <string name="restrict_browser">דפדן(מועדפים\היסטוריה)</string>
+    <string name="restrict_calendar">יומן</string>
+    <string name="restrict_calling">חיוג ( טלפון, סמס, הודעת מולטימדיה)</string>
+    <string name="restrict_contacts">אנשי קשר</string>
+    <string name="restrict_identification">מספר זיהוי של המכשיר</string>
+    <string name="restrict_internet">Internet</string>
+    <string name="restrict_location">מיקום</string>
+    <string name="restrict_media">מדיה ( קול, תמונות ווידאו)</string>
+    <string name="restrict_messages">הודעות (סמס,הודעת מולטימדיה)</string>
+    <string name="restrict_network">רשת (כתובות)</string>
+    <string name="restrict_phone">טלפון(מזהה, מספרים, שיחות)</string>
+    <string name="restrict_storage">זיכרון חיצוני</string>
+    <string name="restrict_system">מערכת(אפליקציות מוגבלות)</string>
+    <string name="restrict_view">גישה לממשק משתמש</string>
+    <string name="settings_restrict">סמן כדי להגביל</string>
+    <string name="settings_expert">מצב מתקדם</string>
+    <string name="settings_lat">Latitude</string>
+    <string name="settings_lon">Longitude</string>
+    <string name="help_icon">אייקון</string>
+    <string name="help_application">אפליקציה</string>
+    <string name="help_internet">יש הרשאות אינטרנט</string>
+    <string name="help_granted">יש הרשאות אנדרואיד</string>
+    <string name="help_used">כבר שומש מידע זה</string>
+
+</resources>
