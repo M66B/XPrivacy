@@ -23,7 +23,7 @@
     <string name="restrict_boot">Boot (Beim Systemstart ausführen)</string>
     <string name="restrict_browser">Browser (Lesezeichen/Verlauf)</string>
     <string name="restrict_calendar">Kalender</string>
-    <string name="restrict_calling">Actions (call, message, browser)</string>
+    <string name="restrict_calling">Calling (phone, SMS, MMS)</string>
     <string name="restrict_contacts">Kontakte</string>
     <string name="restrict_identification">Identität (Gerät)</string>
     <string name="restrict_internet">Internet</string>
@@ -34,6 +34,7 @@
     <string name="restrict_phone">Telefon (ID, Nummern, Anrufe)</string>
     <string name="restrict_storage">Externer Speicher (SD Karte)</string>
     <string name="restrict_system">System (installierte Apps)</string>
+    <string name="restrict_view">View (browser)</string>
     <string name="settings_restrict">Haken setzen zum einschränken:</string>
     <string name="settings_expert">Expertenmodus</string>
     <string name="settings_lat">Latitude</string>

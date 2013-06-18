@@ -290,6 +290,8 @@ Changelog
 **Version 0.22** (in development)
 
 * Export/import expert, latitude, longitude
+* Renamed category *Actions* to *Calling* again
+* Moved opening links to new category *View*
 
 **Version 0.21**
 

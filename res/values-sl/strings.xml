@@ -23,7 +23,7 @@
     <string name="restrict_boot">Zagon (zagon programa ob zagonu sistema)</string>
     <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>
     <string name="restrict_calendar">Koledar</string>
-    <string name="restrict_calling">Akcije (klici, sporočila, brskalnik)</string>
+    <string name="restrict_calling">Calling (phone, SMS, MMS)</string>
     <string name="restrict_contacts">Stiki</string>
     <string name="restrict_identification">Identifikacija (naprava)</string>
     <string name="restrict_internet">Internet</string>
@@ -34,6 +34,7 @@
     <string name="restrict_phone">Telefon (ID, številke, klici)</string>
     <string name="restrict_storage">Zunanja shramba (spominska kartica)</string>
     <string name="restrict_system">Sistem (nameščeni programi)</string>
+    <string name="restrict_view">View (browser)</string>
     <string name="settings_restrict">Oblkjukaj za omejitev pravic:</string>
     <string name="settings_expert">Napredni način</string>
     <string name="settings_lat">Latitude</string>

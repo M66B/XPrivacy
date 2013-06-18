@@ -23,7 +23,7 @@
     <string name="restrict_boot">Boot (start met systeem)</string>
     <string name="restrict_browser">Browser (bladwijzers/geschiedenis)</string>
     <string name="restrict_calendar">Kalender</string>
-    <string name="restrict_calling">Acties (oproep, bericht, browser)</string>
+    <string name="restrict_calling">Oproepen (telefoon, SMS, MMS)</string>
     <string name="restrict_contacts">Contacten</string>
     <string name="restrict_identification">Identificatie (apparaat)</string>
     <string name="restrict_internet">Internet</string>
@@ -34,6 +34,7 @@
     <string name="restrict_phone">Telefoon (ID, nummers, oproepen)</string>
     <string name="restrict_storage">Externe opslag (SD card)</string>
     <string name="restrict_system">Systeem (geïnstalleerde apps)</string>
+    <string name="restrict_view">Tonen (browser)</string>
     <string name="settings_restrict">Vink om te beperken:</string>
     <string name="settings_expert">Expert modus</string>
     <string name="settings_lat">Breedte</string>

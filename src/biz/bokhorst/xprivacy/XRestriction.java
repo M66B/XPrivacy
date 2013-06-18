@@ -34,6 +34,7 @@ public class XRestriction {
 	public static final String cPhone = "phone";
 	public static final String cStorage = "storage";
 	public static final String cSystem = "system";
+	public static final String cView = "view";
 
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;
@@ -71,6 +72,7 @@ public class XRestriction {
 		mRestrictions.put(cPhone, new ArrayList<String>());
 		mRestrictions.put(cStorage, new ArrayList<String>());
 		mRestrictions.put(cSystem, new ArrayList<String>());
+		mRestrictions.put(cView, new ArrayList<String>());
 
 		// Permissions
 		mRestrictions.get(cAccounts).add("GET_ACCOUNTS");
