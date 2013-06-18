@@ -289,6 +289,8 @@ Changelog
 
 **Version 0.22** (in development)
 
+* Export/import expert, latitude, longitude
+
 **Version 0.21**
 
 * Settings for latitude/longitude (Christmas Island is at latitude -10.5, longitude 105.667)

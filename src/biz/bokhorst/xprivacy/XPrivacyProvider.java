@@ -157,7 +157,15 @@ public class XPrivacyProvider extends ContentProvider {
 			String settingName = selection;
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
 			MatrixCursor cursor = new MatrixCursor(new String[] { COL_SETTING, COL_VALUE });
-			cursor.addRow(new Object[] { settingName, prefs.getString(getSettingPref(settingName), null) });
+			if (settingName == null) {
+				for (String settingKey : prefs.getAll().keySet())
+					try {
+						cursor.addRow(new Object[] { getSettingName(settingKey), prefs.getString(settingKey, null) });
+					} catch (Throwable ex) {
+						// Legacy boolean
+					}
+			} else
+				cursor.addRow(new Object[] { settingName, prefs.getString(getSettingPref(settingName), null) });
 			return cursor;
 		}
 		throw new IllegalArgumentException();
@@ -314,5 +322,9 @@ public class XPrivacyProvider extends ContentProvider {
 
 	private static String getSettingPref(String settingName) {
 		return COL_SETTING + "." + settingName;
+	}
+
+	private static String getSettingName(String settingKey) {
+		return settingKey.substring(COL_SETTING.length() + 1);
 	}
 }

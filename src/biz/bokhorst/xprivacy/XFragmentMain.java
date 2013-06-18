@@ -336,12 +336,27 @@ public class XFragmentMain extends FragmentActivity {
 				serializer.startTag(null, "XPrivacy");
 
 				// Process restrictions
-				Cursor cursor = getContentResolver().query(XPrivacyProvider.URI_RESTRICTION, null, null,
+				Cursor sCursor = getContentResolver().query(XPrivacyProvider.URI_SETTING, null, null, null, null);
+				while (sCursor.moveToNext()) {
+					// Get setting
+					String setting = sCursor.getString(sCursor.getColumnIndex(XPrivacyProvider.COL_SETTING));
+					String value = sCursor.getString(sCursor.getColumnIndex(XPrivacyProvider.COL_VALUE));
+
+					// Serialize setting
+					serializer.startTag(null, "Setting");
+					serializer.attribute(null, "Name", setting);
+					serializer.attribute(null, "Value", value);
+					serializer.endTag(null, "Setting");
+				}
+				sCursor.close();
+
+				// Process restrictions
+				Cursor rCursor = getContentResolver().query(XPrivacyProvider.URI_RESTRICTION, null, null,
 						new String[] { Integer.toString(0), Boolean.toString(false) }, null);
-				while (cursor.moveToNext()) {
+				while (rCursor.moveToNext()) {
 					// Decode uid
-					int uid = cursor.getInt(cursor.getColumnIndex(XPrivacyProvider.COL_UID));
-					boolean restricted = Boolean.parseBoolean(cursor.getString(cursor
+					int uid = rCursor.getInt(rCursor.getColumnIndex(XPrivacyProvider.COL_UID));
+					boolean restricted = Boolean.parseBoolean(rCursor.getString(rCursor
 							.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
 					if (restricted) {
 						String[] packages = getPackageManager().getPackagesForUid(uid);
@@ -356,7 +371,7 @@ public class XFragmentMain extends FragmentActivity {
 								serializer.attribute(null, "Name", packageName);
 
 								// Restriction name
-								String restrictionName = cursor.getString(cursor
+								String restrictionName = rCursor.getString(rCursor
 										.getColumnIndex(XPrivacyProvider.COL_RESTRICTION));
 								serializer.attribute(null, "Restriction", restrictionName);
 
@@ -364,7 +379,7 @@ public class XFragmentMain extends FragmentActivity {
 							}
 					}
 				}
-				cursor.close();
+				rCursor.close();
 
 				// End serialization
 				serializer.endTag(null, "XPrivacy");
@@ -403,12 +418,23 @@ public class XFragmentMain extends FragmentActivity {
 				Document dom = db.parse(is);
 				dom.getDocumentElement().normalize();
 
-				// Process XML
-				Map<String, List<String>> mapPackage = new HashMap<String, List<String>>();
-				NodeList items = dom.getElementsByTagName("Package");
-				for (int i = 0; i < items.getLength(); i++) {
+				// Process settings
+				NodeList sItems = dom.getElementsByTagName("Setting");
+				for (int i = 0; i < sItems.getLength(); i++) {
 					// Process package restriction
-					Node entry = items.item(i);
+					Node entry = sItems.item(i);
+					NamedNodeMap attrs = entry.getAttributes();
+					String setting = attrs.getNamedItem("Name").getNodeValue();
+					String value = attrs.getNamedItem("Value").getNodeValue();
+					XRestriction.setSetting(null, this, setting, value);
+				}
+
+				// Process restrictions
+				Map<String, List<String>> mapPackage = new HashMap<String, List<String>>();
+				NodeList rItems = dom.getElementsByTagName("Package");
+				for (int i = 0; i < rItems.getLength(); i++) {
+					// Process package restriction
+					Node entry = rItems.item(i);
 					NamedNodeMap attrs = entry.getAttributes();
 					String packageName = attrs.getNamedItem("Name").getNodeValue();
 					String restrictionName = attrs.getNamedItem("Restriction").getNodeValue();
