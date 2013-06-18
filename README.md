@@ -224,6 +224,8 @@ Use your favorite search engine to find one.
 **(4) Do I really need to install the Xposed fix?**
 
 If you like to have all data restricted, yes.
+The current Xposed version cannot hook all functions with the same name having different parameters,
+like [requestLocationUpdates](http://developer.android.com/reference/android/location/LocationManager.html#requestLocationUpdates(long, float, android.location.Criteria, android.app.PendingIntent)).
 
 **(5) How can I reset all XPrivacy settings?**
 
