@@ -42,8 +42,11 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 		// Get app list
 		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
 		List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
-		for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA))
-			if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 || appInfo.packageName.equals(self) ? expert : true) {
+		for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA)) {
+			boolean system = ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
+			system = system || appInfo.packageName.equals(self);
+			system = system || appInfo.packageName.equals("de.robv.android.xposed.installer");
+			if (system ? expert : true) {
 				XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
 				if (xAppInfo == null) {
 					xAppInfo = new XApplicationInfo(appInfo, restrictionName, context);
@@ -52,6 +55,7 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 				} else
 					xAppInfo.AddApplicationName((String) pm.getApplicationLabel(appInfo));
 			}
+		}
 
 		// Sort result
 		Collections.sort(listApp);
