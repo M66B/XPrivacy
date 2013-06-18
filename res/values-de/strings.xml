@@ -8,8 +8,6 @@
     <string name="app_xversion" formatted="false">Xposed Framework Version: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
-    <string name="app_app">Applications</string>
-    <string name="app_restriction">Categories</string>
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_update">Check for update</string>
     <string name="menu_report">Fehler melden</string>
@@ -39,7 +37,6 @@
     <string name="settings_expert">Expertenmodus</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
-    <string name="help_icon">Icon</string>
     <string name="help_application">Anwendung</string>
     <string name="help_internet">hat Internetberechtigung</string>
     <string name="help_granted">hat Android Berechtigung</string>

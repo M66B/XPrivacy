@@ -8,8 +8,6 @@
     <string name="app_xversion" formatted="false">Έκδοση Xposed framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 M. Bokhorst (M66B)</string>
     <string name="app_info">Πληροφορίες: https://github.com/M66B/XPrivacy/</string>
-    <string name="app_app">Applications</string>
-    <string name="app_restriction">Categories</string>
     <string name="menu_settings">Ρυθμίσεις</string>
     <string name="menu_update">Check for update</string>
     <string name="menu_report">Αναφορά σφάλματος</string>
@@ -39,7 +37,6 @@
     <string name="settings_expert">Για προχωρημένους</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
-    <string name="help_icon">Εικονίδιο</string>
     <string name="help_application">Εφαρμογή</string>
     <string name="help_internet">έχει άδεια internet</string>
     <string name="help_granted">έχει άδεια Android</string>

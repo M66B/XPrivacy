@@ -8,8 +8,6 @@
     <string name="app_xversion" formatted="false">Xposed framework גירסא: %d</string>
     <string name="app_copyright">זכויות יוצרים \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="app_info">פרטים: https://github.com/M66B/XPrivacy/</string>
-    <string name="app_app">אפליקציות</string>
-    <string name="app_restriction">קטגוריות</string>
     <string name="menu_settings">הגדרות</string>
     <string name="menu_update">בדוק עדכונים</string>
     <string name="menu_report">דווח על תקלה</string>
@@ -39,7 +37,6 @@
     <string name="settings_expert">מצב מתקדם</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
-    <string name="help_icon">אייקון</string>
     <string name="help_application">אפליקציה</string>
     <string name="help_internet">יש הרשאות אינטרנט</string>
     <string name="help_granted">יש הרשאות אנדרואיד</string>

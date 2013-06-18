@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
-    android:versionCode="27"
-    android:versionName="0.22" >
+    android:versionCode="28"
+    android:versionName="0.22.1" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -34,7 +34,7 @@
             android:value="XPrivacy - The ultimate privacy manager" />
 
         <activity
-            android:name=".XFragmentMain"
+            android:name=".ActivityMain"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,10 +43,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".XActivitySingleApp"
+            android:name=".ActivityApp"
             android:exported="true" >
-        </activity>
-        <activity android:name=".XActivityRestriction" >
         </activity>
 
         <receiver android:name=".XPackageChange" >

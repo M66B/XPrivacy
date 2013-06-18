@@ -1,5 +1,7 @@
 package biz.bokhorst.xprivacy;
 
+import biz.bokhorst.xprivacy.R;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -11,6 +13,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,60 +35,161 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
 
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Xml;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class XFragmentMain extends FragmentActivity {
+public class ActivityMain extends Activity implements OnItemSelectedListener {
 
-	private final static int cXposedMinVersion = 34;
-
-	private PagerAdapter mPageAdapter;
+	private AppListAdapter mAppAdapter = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		// Set layout
-		setContentView(R.layout.xmain);
+		setContentView(R.layout.xmainlist);
 
-		// Setup pager
-		List<Fragment> listFragment = new ArrayList<Fragment>();
-		listFragment.add(new XFragmentApp());
-		listFragment.add(new XFragmentRestriction());
-		mPageAdapter = new PagerAdapter(getSupportFragmentManager(), listFragment);
-		ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-		viewPager.setAdapter(mPageAdapter);
+		// Get localized restriction name
+		List<String> listRestriction = XRestriction.getRestrictions(this);
+		List<String> listLocalizedRestriction = new ArrayList<String>();
+		for (String restrictionName : listRestriction)
+			listLocalizedRestriction.add(XRestriction.getLocalizedName(this, restrictionName));
 
-		// Sanity checks
+		// Build spinner adapter
+		ArrayAdapter<String> spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+		spAdapter.addAll(listLocalizedRestriction);
+
+		// Setup spinner
+		Spinner spRestriction = (Spinner) findViewById(R.id.spRestriction);
+		spRestriction.setAdapter(spAdapter);
+		spRestriction.setOnItemSelectedListener(this);
+		spRestriction.setEnabled(false);
+
+		// Handle help
+		ImageView ivHelp = (ImageView) findViewById(R.id.ivHelp);
+		ivHelp.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Dialog dialog = new Dialog(ActivityMain.this);
+				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+				dialog.setTitle(getString(R.string.help_application));
+				dialog.setContentView(R.layout.xhelp);
+				dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
+				dialog.setCancelable(true);
+				dialog.show();
+			}
+		});
+
+		// Start task to get app list
+		AppListTask appListTask = new AppListTask();
+		appListTask.execute(listRestriction.get(0));
+
+		// Check environment
 		checkRequirements();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.xmain, menu);
+		if (XUtil.isProVersion(this))
+			menu.removeItem(R.id.menu_pro);
+		else {
+			menu.removeItem(R.id.menu_export);
+			menu.removeItem(R.id.menu_import);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		try {
+			switch (item.getItemId()) {
+			case R.id.menu_settings:
+				optionSettings();
+				return true;
+			case R.id.menu_update:
+				optionCheckUpdate();
+				return true;
+			case R.id.menu_report:
+				optionReportIssue();
+				return true;
+			case R.id.menu_export:
+				optionExport();
+				return true;
+			case R.id.menu_import:
+				optionImport();
+				return true;
+			case R.id.menu_pro:
+				optionPro();
+				return true;
+			case R.id.menu_about:
+				optionAbout();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+			}
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+			return true;
+		}
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+		if (mAppAdapter != null) {
+			String restrictionName = XRestriction.getRestrictions(getApplicationContext()).get(pos);
+			mAppAdapter.setRestrictionName(restrictionName);
+		}
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+		if (mAppAdapter != null)
+			mAppAdapter.setRestrictionName(null);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (mAppAdapter != null)
+			mAppAdapter.notifyDataSetChanged();
 	}
 
 	private void checkRequirements() {
@@ -106,10 +210,10 @@ public class XFragmentMain extends FragmentActivity {
 
 		// Check Xposed version
 		int xVersion = XUtil.getXposedVersion();
-		if (xVersion < cXposedMinVersion) {
+		if (xVersion < XRestriction.cXposedMinVersion) {
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.app_name));
-			alertDialog.setMessage(String.format(getString(R.string.app_notxposed), cXposedMinVersion));
+			alertDialog.setMessage(String.format(getString(R.string.app_notxposed), XRestriction.cXposedMinVersion));
 			alertDialog.setIcon(R.drawable.ic_launcher);
 			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 				@Override
@@ -123,7 +227,7 @@ public class XFragmentMain extends FragmentActivity {
 		if (!XUtil.isXposedEnabled()) {
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.app_name));
-			alertDialog.setMessage(String.format(getString(R.string.app_notenabled), cXposedMinVersion));
+			alertDialog.setMessage(getString(R.string.app_notenabled));
 			alertDialog.setIcon(R.drawable.ic_launcher);
 			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 				@Override
@@ -191,72 +295,6 @@ public class XFragmentMain extends FragmentActivity {
 		return false;
 	}
 
-	private class PagerAdapter extends FragmentPagerAdapter {
-		private List<Fragment> mListfragment;
-
-		public PagerAdapter(FragmentManager fm, List<Fragment> fragments) {
-			super(fm);
-			mListfragment = fragments;
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			return mListfragment.get(position);
-		}
-
-		@Override
-		public int getCount() {
-			return mListfragment.size();
-		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.xmain, menu);
-		if (XUtil.isProVersion(this))
-			menu.removeItem(R.id.menu_pro);
-		else {
-			menu.removeItem(R.id.menu_export);
-			menu.removeItem(R.id.menu_import);
-		}
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		try {
-			switch (item.getItemId()) {
-			case R.id.menu_settings:
-				optionSettings();
-				return true;
-			case R.id.menu_update:
-				optionCheckUpdate();
-				return true;
-			case R.id.menu_report:
-				optionReportIssue();
-				return true;
-			case R.id.menu_export:
-				optionExport();
-				return true;
-			case R.id.menu_import:
-				optionImport();
-				return true;
-			case R.id.menu_pro:
-				optionPro();
-				return true;
-			case R.id.menu_about:
-				optionAbout();
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-			}
-		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
-			return true;
-		}
-	}
-
 	private void optionSettings() {
 		// Build dialog
 		final Dialog dlgSettings = new Dialog(this);
@@ -272,18 +310,18 @@ public class XFragmentMain extends FragmentActivity {
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
-		String sExpert = XRestriction.getSetting(null, XFragmentMain.this, XRestriction.cSettingExpert,
+		String sExpert = XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingExpert,
 				Boolean.FALSE.toString());
 		cbSettings.setChecked(Boolean.parseBoolean(sExpert));
-		atLat.setText(XRestriction.getSetting(null, XFragmentMain.this, XRestriction.cSettingLatitude, ""));
-		atLon.setText(XRestriction.getSetting(null, XFragmentMain.this, XRestriction.cSettingLongitude, ""));
+		atLat.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, ""));
+		atLon.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLongitude, ""));
 
 		// Wait for OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// Set expert mode
-				XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingExpert,
+				XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingExpert,
 						Boolean.toString(cbSettings.isChecked()));
 
 				// Set location
@@ -293,14 +331,13 @@ public class XFragmentMain extends FragmentActivity {
 					if (lat < -90 || lat > 90 || lon < -180 || lon > 180)
 						throw new InvalidParameterException();
 
-					XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingLatitude,
-							Float.toString(lat));
-					XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingLongitude,
+					XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, Float.toString(lat));
+					XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingLongitude,
 							Float.toString(lon));
 
 				} catch (Throwable ex) {
-					XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingLatitude, "");
-					XRestriction.setSetting(null, XFragmentMain.this, XRestriction.cSettingLongitude, "");
+					XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, "");
+					XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingLongitude, "");
 				}
 
 				// Done
@@ -560,14 +597,14 @@ public class XFragmentMain extends FragmentActivity {
 						}
 					}
 				} else {
-					Toast toast = Toast.makeText(XFragmentMain.this, json, Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(ActivityMain.this, json, Toast.LENGTH_LONG);
 					toast.show();
 				}
 
 			if (url == null || version == null) {
 				// Assume no update
 				String msg = getString(R.string.msg_noupdate);
-				Toast toast = Toast.makeText(XFragmentMain.this, msg, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(ActivityMain.this, msg, Toast.LENGTH_LONG);
 				toast.show();
 			} else {
 				// Compare versions
@@ -581,12 +618,12 @@ public class XFragmentMain extends FragmentActivity {
 				} else {
 					// No update available
 					String msg = getString(R.string.msg_noupdate);
-					Toast toast = Toast.makeText(XFragmentMain.this, msg, Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(ActivityMain.this, msg, Toast.LENGTH_LONG);
 					toast.show();
 				}
 			}
 		} catch (Throwable ex) {
-			Toast toast = Toast.makeText(XFragmentMain.this, ex.toString(), Toast.LENGTH_LONG);
+			Toast toast = Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG);
 			toast.show();
 			XUtil.bug(null, ex);
 		}
@@ -604,6 +641,144 @@ public class XFragmentMain extends FragmentActivity {
 			super.onPostExecute(json);
 			if (json != null)
 				processJson(json);
+		}
+	}
+
+	private class AppListTask extends AsyncTask<String, Integer, List<XApplicationInfo>> {
+
+		private String mRestrictionName;
+
+		@Override
+		protected List<XApplicationInfo> doInBackground(String... params) {
+			mRestrictionName = params[0];
+			return XApplicationInfo.getXApplicationList(ActivityMain.this);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			// Show indeterminate progress circle
+			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
+			progressBar.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		protected void onPostExecute(List<XApplicationInfo> listApp) {
+			super.onPostExecute(listApp);
+
+			// Display app list
+			mAppAdapter = new AppListAdapter(ActivityMain.this, R.layout.xmainentry, listApp, mRestrictionName);
+			ListView lvApp = (ListView) findViewById(R.id.lvApp);
+			lvApp.setAdapter(mAppAdapter);
+
+			// Hide indeterminate progress circle
+			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
+			progressBar.setVisibility(View.GONE);
+
+			// Enable spinner
+			Spinner spRestriction = (Spinner) findViewById(R.id.spRestriction);
+			spRestriction.setEnabled(true);
+		}
+	}
+
+	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> {
+
+		private String mRestrictionName;
+
+		public AppListAdapter(Context context, int resource, List<XApplicationInfo> objects,
+				String initialRestrictionName) {
+			super(context, resource, objects);
+			mRestrictionName = initialRestrictionName;
+		}
+
+		public void setRestrictionName(String restrictionName) {
+			mRestrictionName = restrictionName;
+			notifyDataSetChanged();
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View row = inflater.inflate(R.layout.xmainentry, parent, false);
+			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgEntryIcon);
+			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgEntryInternet);
+			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgEntryUsed);
+			final CheckedTextView ctvApp = (CheckedTextView) row.findViewById(R.id.tvEntryName);
+
+			// Get entry
+			final XApplicationInfo appEntry = getItem(position);
+
+			// Set icon
+			imgIcon.setImageDrawable(appEntry.getDrawable());
+			imgIcon.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Intent intentSettings = new Intent(view.getContext(), ActivityApp.class);
+					intentSettings.putExtra(ActivityApp.cPackageName, appEntry.getPackageName());
+					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					view.getContext().startActivity(intentSettings);
+				}
+			});
+
+			// Set title
+			ctvApp.setText(appEntry.toString());
+
+			// Check if internet access
+			imgInternet.setVisibility(appEntry.hasInternet() ? View.VISIBLE : View.INVISIBLE);
+
+			// Check if used
+			boolean used = XRestriction.isUsed(row.getContext(), appEntry.getUid(), mRestrictionName);
+			ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
+			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
+
+			// Handle used click
+			imgUsed.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// Get audit
+					ContentResolver contentResolver = view.getContext().getContentResolver();
+					Cursor cursor = contentResolver.query(XPrivacyProvider.URI_AUDIT, null, mRestrictionName,
+							new String[] { Integer.toString(appEntry.getUid()) }, null);
+					List<String> listAudit = new ArrayList<String>();
+					while (cursor.moveToNext())
+						listAudit.add(cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_METHOD)));
+					cursor.close();
+					Collections.sort(listAudit);
+
+					// Display audit
+					String localRestrictionName = XRestriction.getLocalizedName(view.getContext(), mRestrictionName);
+					AlertDialog alertDialog = new AlertDialog.Builder(ActivityMain.this).create();
+					alertDialog.setTitle(localRestrictionName);
+					alertDialog.setIcon(R.drawable.ic_launcher);
+					alertDialog.setMessage(TextUtils.join("\n", listAudit));
+					alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
+					alertDialog.show();
+				}
+			});
+
+			// Display restriction
+			boolean restricted = XRestriction.getRestricted(null, row.getContext(), appEntry.getUid(),
+					mRestrictionName, false, false);
+			ctvApp.setChecked(restricted);
+
+			// Listen for restriction changes
+			ctvApp.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					boolean restricted = XRestriction.getRestricted(null, view.getContext(), appEntry.getUid(),
+							mRestrictionName, false, false);
+					restricted = !restricted;
+					ctvApp.setChecked(restricted);
+					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName, restricted);
+				}
+			});
+
+			return row;
 		}
 	}
 }

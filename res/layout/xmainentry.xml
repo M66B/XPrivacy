@@ -5,10 +5,10 @@
     android:orientation="horizontal" >
 
     <ImageView
-        android:id="@+id/imgAppEntryIcon"
+        android:id="@+id/imgEntryIcon"
         android:layout_width="?android:attr/listPreferredItemHeightSmall"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
-        android:contentDescription="@string/help_icon" />
+        android:contentDescription="@string/help_application" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -18,21 +18,28 @@
         android:paddingLeft="4dip" >
 
         <ImageView
-            android:id="@+id/imgAppEntryInternet"
+            android:id="@+id/imgEntryUsed"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:contentDescription="@string/help_used"
+            android:src="@drawable/used" />
+
+        <ImageView
+            android:id="@+id/imgEntryInternet"
             android:layout_width="24dip"
             android:layout_height="24dip"
             android:contentDescription="@string/help_internet"
             android:src="@drawable/internet" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvAppEntryName"
+    <CheckedTextView
+        android:id="@+id/tvEntryName"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:gravity="center_vertical"
         android:paddingLeft="8dip"
         android:paddingRight="8dip"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="false" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>

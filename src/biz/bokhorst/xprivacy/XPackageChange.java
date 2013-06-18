@@ -50,8 +50,8 @@ public class XPackageChange extends BroadcastReceiver {
 							XRestriction.setRestricted(null, context, uid, restrictionName, true);
 
 					// Build result intent
-					Intent resultIntent = new Intent(context, XActivitySingleApp.class);
-					resultIntent.putExtra(XActivitySingleApp.cPackageName, packageName);
+					Intent resultIntent = new Intent(context, ActivityApp.class);
+					resultIntent.putExtra(ActivityApp.cPackageName, packageName);
 					resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
 
 					// Build pending inent

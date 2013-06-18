@@ -212,7 +212,7 @@ Frequently asked questions
 
 Maybe a little bit, but it will probably not be noticeable.
 
-**(2) Does XPrivacy use a lot of memory?**
+**(2) Does XPrivacy use a lot of memory or battery?**
 
 Almost nothing.
 
@@ -276,6 +276,12 @@ A check of XPrivacy failed, resulting in potential data leakage.
 Please report the exact message in the XDA thread,
 stating the device and ROM you are using.
 
+**(15) Do I need to install Xposed/the fix again when I install an update of my ROM?**
+Yes, mostly you have to.
+XPrivacy will warn you when Xposed isn't installed,
+the wrong version of Xposed is installed
+or when the XPrivacy is not enabled in Xposed.
+
 Support
 -------
 
@@ -292,6 +298,11 @@ Changelog
 ---------
 
 **Version 0.23** (in development)
+
+* Location range check
+* Other location input method
+* Simplified user interface
+* Added Hebrew translation
 
 **Version 0.22**
 

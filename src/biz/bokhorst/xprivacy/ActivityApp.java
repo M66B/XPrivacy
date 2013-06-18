@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class XActivitySingleApp extends Activity {
+public class ActivityApp extends Activity {
 
 	public static final String cPackageName = "PackageName";
 
@@ -34,7 +34,7 @@ public class XActivitySingleApp extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
-		setContentView(R.layout.xsingleapplist);
+		setContentView(R.layout.xrestrictionlist);
 
 		// Get package name
 		Bundle extras = getIntent().getExtras();
@@ -57,7 +57,7 @@ public class XActivitySingleApp extends Activity {
 		tvAppName.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Dialog dialog = new Dialog(XActivitySingleApp.this);
+				Dialog dialog = new Dialog(ActivityApp.this);
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
 				dialog.setContentView(R.layout.xhelp);
@@ -78,7 +78,7 @@ public class XActivitySingleApp extends Activity {
 
 		// Fill privacy list view adapter
 		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
-		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xsingleappentry, appInfo,
+		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xrestrictionentry, appInfo,
 				XRestriction.getRestrictions(this));
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 	}
@@ -101,7 +101,7 @@ public class XActivitySingleApp extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.xsingleappentry, parent, false);
+			View row = inflater.inflate(R.layout.xrestrictionentry, parent, false);
 			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgAppEntryGranted);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgAppEntryUsed);
 			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.tvAppEntryName);
@@ -138,7 +138,7 @@ public class XActivitySingleApp extends Activity {
 
 					// Display audit
 					String localRestrictionName = XRestriction.getLocalizedName(view.getContext(), restrictionName);
-					AlertDialog alertDialog = new AlertDialog.Builder(XActivitySingleApp.this).create();
+					AlertDialog alertDialog = new AlertDialog.Builder(ActivityApp.this).create();
 					alertDialog.setTitle(localRestrictionName);
 					alertDialog.setIcon(R.drawable.ic_launcher);
 					alertDialog.setMessage(TextUtils.join("\n", listAudit));

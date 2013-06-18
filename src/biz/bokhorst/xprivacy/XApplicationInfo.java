@@ -17,22 +17,19 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 	private List<String> mListApplicationName;
 	private String mPackageName;
 	private boolean mHasInternet;
-	private boolean mIsUsed;
 	private int mUid;
 
-	private XApplicationInfo(ApplicationInfo appInfo, String restrictionName, Context context) {
+	private XApplicationInfo(ApplicationInfo appInfo, Context context) {
 		PackageManager pm = context.getPackageManager();
 		mDrawable = appInfo.loadIcon(pm);
 		mListApplicationName = new ArrayList<String>();
 		mListApplicationName.add((String) pm.getApplicationLabel(appInfo));
 		mPackageName = appInfo.packageName;
 		mHasInternet = XRestriction.hasInternet(context, appInfo.packageName);
-		if (restrictionName != null)
-			mIsUsed = XRestriction.isUsed(context, appInfo.uid, restrictionName);
 		mUid = appInfo.uid;
 	}
 
-	public static List<XApplicationInfo> getXApplicationList(Context context, String restrictionName) {
+	public static List<XApplicationInfo> getXApplicationList(Context context) {
 		// Get references
 		String self = XApplicationInfo.class.getPackage().getName();
 		PackageManager pm = context.getPackageManager();
@@ -49,7 +46,7 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 			if (system ? expert : true) {
 				XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
 				if (xAppInfo == null) {
-					xAppInfo = new XApplicationInfo(appInfo, restrictionName, context);
+					xAppInfo = new XApplicationInfo(appInfo, context);
 					mapApp.put(appInfo.uid, xAppInfo);
 					listApp.add(xAppInfo);
 				} else
@@ -76,10 +73,6 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 
 	public boolean hasInternet() {
 		return mHasInternet;
-	}
-
-	public boolean isUsed() {
-		return mIsUsed;
 	}
 
 	public int getUid() {

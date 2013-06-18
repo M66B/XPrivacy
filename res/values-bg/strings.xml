@@ -8,8 +8,6 @@
     <string name="app_xversion" formatted="false">Xposed framework версия: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="app_info">Информация: https://github.com/M66B/XPrivacy/</string>
-    <string name="app_app">Приложения</string>
-    <string name="app_restriction">Категории</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_update">Проверка за обновление</string>
     <string name="menu_report">Съобщаване за проблем</string>
@@ -39,7 +37,6 @@
     <string name="settings_expert">Режим за експерти</string>
     <string name="settings_lat">Геогр. ширина</string>
     <string name="settings_lon">Геогр. дължина</string>
-    <string name="help_icon">Икона</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">има разрешение за интернет</string>
     <string name="help_granted">има разрешение в Android</string>

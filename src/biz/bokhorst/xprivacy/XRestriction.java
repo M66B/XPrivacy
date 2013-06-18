@@ -42,6 +42,7 @@ public class XRestriction {
 	public static final byte[] cDefaceBytes = new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
 	public static final int cDefaceIP = 127 + (0 << 8) + (0 << 16) + (1 << 24);
 
+	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
 	public final static String cSettingExpert = "Expert";
 	public final static String cSettingLatitude = "Latitude";
@@ -162,7 +163,9 @@ public class XRestriction {
 		if (cursor.moveToNext())
 			lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_USED));
 		cursor.close();
-		return (lastUsage != 0);
+		boolean used = (lastUsage != 0);
+		logRestriction(null, context, uid, "used", restrictionName, used, false);
+		return used;
 	}
 
 	@SuppressLint("DefaultLocale")

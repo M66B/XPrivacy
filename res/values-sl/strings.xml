@@ -8,8 +8,6 @@
     <string name="app_xversion" formatted="false">Xposed framework različica: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
-    <string name="app_app">Programi</string>
-    <string name="app_restriction">Kategorije</string>
     <string name="menu_settings">Nastavitve</string>
     <string name="menu_update">Preveri za posodobitvami</string>
     <string name="menu_report">Javi napako</string>
@@ -39,7 +37,6 @@
     <string name="settings_expert">Napredni način</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
-    <string name="help_icon">Ikona</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetno dovoljenje</string>
     <string name="help_granted">uporablja Android dovoljenja</string>
