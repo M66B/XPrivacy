@@ -341,6 +341,11 @@ XPrivacy will warn you when Xposed isn't installed,
 the wrong version of Xposed is installed
 or when the XPrivacy is not enabled in Xposed.
 
+**(16) Can I restrict an application with root access?**
+
+Yes, you can, but the application could circumvent anything, since root access means it can do anything it likes.
+Nevertheless the application was probably not built to circumvent everything this way.
+
 Support
 -------
 
