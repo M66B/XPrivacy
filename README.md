@@ -8,8 +8,7 @@ Index
 
 * [Description](https://github.com/M66B/XPrivacy#description)
 * [Features](https://github.com/M66B/XPrivacy#features)
-* [Restricted data](https://github.com/M66B/XPrivacy#restricted-data)
-* [Restricted actions](https://github.com/M66B/XPrivacy#restricted-actions)
+* [Restricted data/actions](https://github.com/M66B/XPrivacy#restricted-data-actions)
 * [Limitations](https://github.com/M66B/XPrivacy#limitations)
 * [Installation](https://github.com/M66B/XPrivacy#installation)
 * [Upgrading](https://github.com/M66B/XPrivacy#upgrading)
@@ -103,34 +102,88 @@ Features
 * Displays data actually used by an application
 * Open source
 
-Restricted data
----------------
+Restricted data/actions
+-----------------------
 
-* Accounts (including auth token)
-* [APN](http://en.wikipedia.org/wiki/Access_Point_Name) data
-* Application data (list of installed apps)
-* Browser (bookmarks, search history)
+For easy usage, data is restricted by category:
+
+* Accounts
+	* return an empty account list
+	* return fake account info
+	* return empty authorization tokens
+* Boot
+	* prevent applications to start during device startup
+* Browser
+	* return an empty bookmark list
+	* return empty search history
 * Calendar
+	* return an empty calendar
+* Calling
+	* prevent calls from being placed
+	* prevent SMS messages from being sent
+	* prevent MMS messages from being sent
+	* prevent data messages from being sent
 * Contacts
-* Identification (Android ID, serial number)
-* Location (coarse/fine, cell location/info)
-* Messages (SMS/MMS, including ICC SMS stored on SIM)
-* Network (IPs, MACs, BSSID, SSID)
-* Phone (call log, own/in/outgoing/voicemail number, phone/subscriber ID, SIM info, ISIM, IMPI, IMPU, MSISDN, network info)
-* Recording audio (including microphone)
-* Taking photos
-* Recording video
-* Voicemail **untested**
-
-Restricted actions
-------------------
-
-* Calling **untested**
-* Sending SMS
-* Sending MMS **untested**
-* Opening links in the browser
-* Internet (revoke permission: no usage data)
-* External storage (SD card) (revoke permission: no usage data)
+	* return an empty contact list
+* Identification
+    * return a fake Android ID
+    * return a fake device serial number
+* Internet
+	* revoke access to the internet
+* Location
+	* return a random or set location
+	* return empty cell location
+	* return an empty list of (neighboring) cell info
+	* prevents proximity alerts from being set
+	* prevents sending NMEA data to the application
+* Media
+	* prevent recording audio (including from the microphone)
+	* prevent taking pictures
+	* prevent recording video
+	* you will be notified if an application tries to perform any of these actions
+* Messages
+	* return an empty SMS/MMS message list
+	* return an empty list of SMS messages stored on the SIM (ICC SMS)
+	* return an empty list of voicemails
+* Network
+	* return fake IP's
+	* return fake MAC addresses
+	* return fake BSSID/SSID
+	* return fake network information
+	* return an empty list of networks
+	* return an empty list of configured Wi-Fi networks
+	* return an empty list of Wi-Fi scan results
+* Phone:
+	* return a fake own/in/outgoing/voicemail number
+	* return a fake subscriber ID
+	* return a fake phone device ID
+	* return a fake ISIM/ISIM domain
+	* return a fake IMPI/IMPU
+	* return a fake MSISDN
+	* return fake mobile network info (country, operator/name)
+	* return fake SIM info (serial number, country, operator/name)
+	* return empty [APN](http://en.wikipedia.org/wiki/Access_Point_Name) list
+	* return no currently used APN
+	* return an empty call log
+	* return an empty list of voicemail messages
+	* prevent phone state from being sent to an application
+		* Call forwarding indication
+		* Call state changed (ringing, off-hook)
+		* Cell info changed
+		* Cell location changed
+		* Mobile data connection state change / being used
+		* Message waiting indication
+		* Service state changed (service/no service)
+		* Signal level changed
+* Storage
+	* revoke permission to the external storage (SD card)
+* System
+	* return an empty list of installed applications
+	* return an empty list of content providers
+	* return an empty list of broadcast receivers
+	* return an empty list of actions that can be performed
+* View
+	* prevent links from opening in the browser
 
 Limitations
 -----------
