@@ -30,7 +30,7 @@ public class XActivity extends XHook {
 	// @formatter:on
 
 	public XActivity(String methodName, String restrictionName, String[] permissions, String actionName) {
-		super(methodName, restrictionName, permissions);
+		super(methodName, restrictionName, permissions, actionName);
 		mActionName = actionName;
 	}
 
@@ -62,12 +62,12 @@ public class XActivity extends XHook {
 							if (scheme != null) {
 								scheme = scheme.toLowerCase();
 								if (scheme.equals("http") || scheme.equals("https"))
-									if (isRestricted(param))
+									if (isRestricted(param, mActionName))
 										restricted = true;
 							}
 						}
 					} else
-						restricted = isRestricted(param);
+						restricted = isRestricted(param, mActionName);
 
 					if (restricted) {
 						if (methodName.equals("startActivityIfNeeded"))

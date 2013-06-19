@@ -12,9 +12,13 @@ import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.Build;
+import android.provider.MediaStore;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 public class XRestriction {
@@ -114,6 +118,8 @@ public class XRestriction {
 		for (String am : ams)
 			mMethods.get(cSystem).add(am);
 
+		mMethods.get(XRestriction.cMedia).add("startRecording");
+
 		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
 				"setOneShotPreviewCallback", "takePicture" };
 		for (String cam : cams)
@@ -146,9 +152,12 @@ public class XRestriction {
 		// SMS manager
 		String[] smses = new String[] { "sendDataMessage", "sendMultipartTextMessage", "sendTextMessage" };
 		for (String sms : smses)
-			mMethods.get(cMessages).add(sms);
+			mMethods.get(cCalling).add(sms);
 
-		// TODO: system properties
+		String[] props = new String[] { "ro.gsm.imei", "net.hostname", "ro.serialno", "ro.boot.serialno",
+				"ro.boot.wifimacaddr", "ro.boot.btmacaddr" };
+		for (String prop : props)
+			mMethods.get(cIdentification).add(prop);
 
 		String[] tlocs = new String[] { "disableLocationUpdates", "enableLocationUpdates", "getAllCellInfo",
 				"getCellLocation", "getNeighboringCellInfo" };
@@ -166,9 +175,30 @@ public class XRestriction {
 		for (String wifi : wifis)
 			mMethods.get(cNetwork).add(wifi);
 
-		// TODO: intents
+		// Incoming intent
+		mMethods.get(cBoot).add(Intent.ACTION_BOOT_COMPLETED);
+		mMethods.get(cPhone).add(Intent.ACTION_NEW_OUTGOING_CALL);
+		mMethods.get(cPhone).add(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
 
-		// TODO: providers
+		// Outgoing intents
+		mMethods.get(cView).add(Intent.ACTION_VIEW);
+		mMethods.get(cCalling).add(Intent.ACTION_CALL);
+		mMethods.get(cMedia).add(MediaStore.ACTION_IMAGE_CAPTURE);
+		if (Build.VERSION.SDK_INT >= 17)
+			mMethods.get(cMedia).add("android.media.action.IMAGE_CAPTURE_SECURE");
+		mMethods.get(cMedia).add(MediaStore.ACTION_VIDEO_CAPTURE);
+
+		// Content providers
+		mMethods.get(cBrowser).add("BrowserProvider");
+		mMethods.get(cBrowser).add("BrowserProvider2");
+		mMethods.get(cCalendar).add("CalendarProvider2");
+		mMethods.get(cContacts).add("ContactsProvider2");
+		mMethods.get(cPhone).add("CallLogProvider");
+		mMethods.get(cMessages).add("VoicemailContentProvider");
+		mMethods.get(cMessages).add("SmsProvider");
+		mMethods.get(cMessages).add("MmsProvider");
+		mMethods.get(cMessages).add("MmsSmsProvider");
+		mMethods.get(cPhone).add("TelephonyProvider");
 	}
 
 	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {

@@ -16,7 +16,7 @@ public class XActivityThread extends XHook {
 	private String mActionName;
 
 	public XActivityThread(String methodName, String restrictionName, String[] permissions, String actionName) {
-		super(methodName, restrictionName, permissions);
+		super(methodName, restrictionName, permissions, actionName);
 		mActionName = actionName;
 	}
 
@@ -48,7 +48,7 @@ public class XActivityThread extends XHook {
 				if (mActionName.equals(action)) {
 					if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 						// Boot completed
-						if (isRestricted(param))
+						if (isRestricted(param, mActionName))
 							if (Boolean.parseBoolean(XRestriction.getSetting(this,
 									AndroidAppHelper.currentApplication(), XRestriction.cSettingExpert,
 									Boolean.FALSE.toString())))
@@ -59,7 +59,7 @@ public class XActivityThread extends XHook {
 						if (bundle != null) {
 							String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
 							if (phoneNumber != null)
-								if (isRestricted(param))
+								if (isRestricted(param, mActionName))
 									intent.putExtra(Intent.EXTRA_PHONE_NUMBER, XRestriction.cDefaceString);
 						}
 					} else if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
@@ -68,7 +68,7 @@ public class XActivityThread extends XHook {
 						if (bundle != null) {
 							String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
 							if (phoneNumber != null) {
-								if (isRestricted(param))
+								if (isRestricted(param, mActionName))
 									intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, XRestriction.cDefaceString);
 							}
 						}

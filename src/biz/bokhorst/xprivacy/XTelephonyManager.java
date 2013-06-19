@@ -19,7 +19,7 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 public class XTelephonyManager extends XHook {
 
 	public XTelephonyManager(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions);
+		super(methodName, restrictionName, permissions, null);
 	}
 
 	// public void disableLocationUpdates()

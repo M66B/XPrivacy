@@ -1,17 +1,14 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.Arrays;
-import java.util.List;
-
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSystemProperties extends XHook {
 
-	private List<String> mKeyList;
+	private String mPropertyName;
 
-	public XSystemProperties(String methodName, String restrictionName, String[] permissions, String[] keys) {
-		super(methodName, restrictionName, permissions);
-		mKeyList = Arrays.asList(keys);
+	public XSystemProperties(String methodName, String restrictionName, String[] permissions, String propertyName) {
+		super(methodName, restrictionName, permissions, propertyName);
+		mPropertyName = propertyName;
 	}
 
 	// public static String get(String key)
@@ -25,8 +22,8 @@ public class XSystemProperties extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		String key = (String) param.args[0];
-		if (key != null && mKeyList.contains(key))
-			if (isRestricted(param))
+		if (mPropertyName.equals(key))
+			if (isRestricted(param, mPropertyName))
 				if (param.method.getName().equals("get"))
 					param.setResult(XRestriction.cDefaceString);
 				else

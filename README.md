@@ -249,7 +249,6 @@ This may result in error messages and even in forced closes of the application.
 Tricks:
 
 * Click the application icon in the application browser to go to the application restriction settings
-* Click the orange triangle to see the actual Android functions that were used by the application
 
 **Using XPrivacy is entirely at your own risk**
 
@@ -365,6 +364,13 @@ Changelog
 
 * Display application version
 * More granular restrictions
+* Restrict system properties:
+	* ro.gsm.imei
+	* net.hostname
+	* ro.boot.serialno
+	* ro.boot.wifimacaddr
+	* ro.boot.btmacaddr
+	* Let me know if there more should be restricted
 
 **Version 0.23**
 

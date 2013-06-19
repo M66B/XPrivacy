@@ -20,7 +20,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XAccountManager extends XHook {
 
 	public XAccountManager(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions);
+		super(methodName, restrictionName, permissions, null);
 	}
 
 	// @formatter:off

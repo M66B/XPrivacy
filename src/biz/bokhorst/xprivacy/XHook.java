@@ -10,18 +10,21 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public abstract class XHook {
 
-	private String mMethodName;
-	private String mRestrictionName;
+	protected String mMethodName;
+	protected String mRestrictionName;
+	protected String mSpecifier;
 
-	public XHook(String methodName, String restrictionName, String[] permissions) {
+	public XHook(String methodName, String restrictionName, String[] permissions, String specifier) {
 		// Sanity check
 		if (methodName == null)
 			throw new IllegalArgumentException();
 
 		mMethodName = methodName;
 		mRestrictionName = restrictionName;
+		mSpecifier = specifier;
+
 		if (restrictionName != null)
-			XRestriction.registerMethod(methodName, restrictionName, permissions);
+			XRestriction.registerMethod(getSpecifier(), restrictionName, permissions);
 	}
 
 	public String getMethodName() {
@@ -32,14 +35,22 @@ public abstract class XHook {
 		return mRestrictionName;
 	}
 
+	public String getSpecifier() {
+		return (mSpecifier == null ? mMethodName : mSpecifier);
+	}
+
 	abstract protected void before(MethodHookParam param) throws Throwable;
 
 	abstract protected void after(MethodHookParam param) throws Throwable;
 
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
+		return isRestricted(param, mMethodName);
+	}
+
+	protected boolean isRestricted(MethodHookParam param, String methodName) throws Throwable {
 		int uid = Binder.getCallingUid();
 		Context context = AndroidAppHelper.currentApplication();
-		return getRestricted(context, uid, true);
+		return XRestriction.getRestricted(this, context, uid, mRestrictionName, methodName, true, true);
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) throws Throwable {

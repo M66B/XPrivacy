@@ -125,9 +125,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		String[] props = new String[] { "ro.gsm.imei", "net.hostname", "ro.serialno", "ro.boot.serialno",
 				"ro.boot.wifimacaddr", "ro.boot.btmacaddr" };
 		String[] getters = new String[] { "get", "getBoolean", "getInt", "getLong", "getLongString" };
-		for (String getter : getters)
-			hook(new XSystemProperties(getter, XRestriction.cIdentification, new String[] {}, props),
-					"android.os.SystemProperties");
+		for (String prop : props)
+			for (String getter : getters)
+				hook(new XSystemProperties(getter, XRestriction.cIdentification, new String[] {}, prop),
+						"android.os.SystemProperties");
 
 		// Telephony
 		hook(new XTelephonyManager("disableLocationUpdates", XRestriction.cLocation,
@@ -204,37 +205,40 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Load browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {
-			hook(new XContentProvider(XRestriction.cBrowser, new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" }),
+			hook(new XContentProvider(XRestriction.cBrowser,
+					new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" }, "BrowserProvider"),
 					lpparam.classLoader, "com.android.browser.provider.BrowserProvider");
-			hook(new XContentProvider(XRestriction.cBrowser, new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" }),
+			hook(new XContentProvider(XRestriction.cBrowser,
+					new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" }, "BrowserProvider2"),
 					lpparam.classLoader, "com.android.browser.provider.BrowserProvider2");
 		}
 
 		// Load calendar provider
 		else if (lpparam.packageName.equals("com.android.providers.calendar"))
-			hook(new XContentProvider(XRestriction.cCalendar, new String[] { "READ_CALENDAR" }), lpparam.classLoader,
-					"com.android.providers.calendar.CalendarProvider2");
+			hook(new XContentProvider(XRestriction.cCalendar, new String[] { "READ_CALENDAR" }, "CalendarProvider2"),
+					lpparam.classLoader, "com.android.providers.calendar.CalendarProvider2");
 
 		// Load contacts provider
 		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
-			hook(new XContentProvider(XRestriction.cContacts, new String[] { "READ_CONTACTS" }), lpparam.classLoader,
-					"com.android.providers.contacts.ContactsProvider2");
-			hook(new XContentProvider(XRestriction.cPhone, new String[] { "READ_CALL_LOG" }), lpparam.classLoader,
-					"com.android.providers.contacts.CallLogProvider");
-			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_WRITE_ALL_VOICEMAIL" }),
-					lpparam.classLoader, "com.android.providers.contacts.VoicemailContentProvider");
+			hook(new XContentProvider(XRestriction.cContacts, new String[] { "READ_CONTACTS" }, "ContactsProvider2"),
+					lpparam.classLoader, "com.android.providers.contacts.ContactsProvider2");
+			hook(new XContentProvider(XRestriction.cPhone, new String[] { "READ_CALL_LOG" }, "CallLogProvider"),
+					lpparam.classLoader, "com.android.providers.contacts.CallLogProvider");
+			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_WRITE_ALL_VOICEMAIL" },
+					"VoicemailContentProvider"), lpparam.classLoader,
+					"com.android.providers.contacts.VoicemailContentProvider");
 		}
 
 		// Load telephony provider
 		else if (lpparam.packageName.equals("com.android.providers.telephony")) {
-			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }), lpparam.classLoader,
-					"com.android.providers.telephony.SmsProvider");
-			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }), lpparam.classLoader,
-					"com.android.providers.telephony.MmsProvider");
-			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }), lpparam.classLoader,
-					"com.android.providers.telephony.MmsSmsProvider");
-			hook(new XContentProvider(XRestriction.cPhone, new String[] { "WRITE_APN_SETTINGS" }), lpparam.classLoader,
-					"com.android.providers.telephony.TelephonyProvider");
+			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }, "SmsProvider"),
+					lpparam.classLoader, "com.android.providers.telephony.SmsProvider");
+			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }, "MmsProvider"),
+					lpparam.classLoader, "com.android.providers.telephony.MmsProvider");
+			hook(new XContentProvider(XRestriction.cMessages, new String[] { "READ_SMS" }, "MmsSmsProvider"),
+					lpparam.classLoader, "com.android.providers.telephony.MmsSmsProvider");
+			hook(new XContentProvider(XRestriction.cPhone, new String[] { "WRITE_APN_SETTINGS" }, "TelephonyProvider"),
+					lpparam.classLoader, "com.android.providers.telephony.TelephonyProvider");
 		}
 	}
 

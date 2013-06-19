@@ -10,16 +10,13 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XContentProvider extends XHook {
 
+	private String mProviderName;
 	private String mUriStart;
 
-	public XContentProvider(String restrictionName, String[] permissions) {
-		super("query", restrictionName, permissions);
+	public XContentProvider(String restrictionName, String[] permissions, String providerName) {
+		super("query", restrictionName, permissions, providerName);
+		mProviderName = providerName;
 		mUriStart = null;
-	}
-
-	public XContentProvider(String restrictionName, String[] permissions, String uriStart) {
-		super("query", restrictionName, permissions);
-		mUriStart = uriStart;
 	}
 
 	// @formatter:off
@@ -55,7 +52,7 @@ public class XContentProvider extends XHook {
 			// Return empty cursor
 			Cursor cursor = (Cursor) param.getResult();
 			if (cursor != null)
-				if (isRestricted(param))
+				if (isRestricted(param, mProviderName))
 					param.setResult(new XCursor(cursor));
 		}
 	}

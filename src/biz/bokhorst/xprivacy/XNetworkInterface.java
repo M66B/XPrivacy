@@ -15,7 +15,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XNetworkInterface extends XHook {
 
 	public XNetworkInterface(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions);
+		super(methodName, restrictionName, permissions, null);
 	}
 
 	// public static NetworkInterface getByInetAddress(InetAddress address)

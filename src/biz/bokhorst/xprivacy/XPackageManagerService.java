@@ -11,7 +11,7 @@ public class XPackageManagerService extends XHook {
 	private String mRestrictionName;
 
 	public XPackageManagerService(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions);
+		super(methodName, restrictionName, permissions, null);
 		mRestrictionName = restrictionName;
 	}
 
