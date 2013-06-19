@@ -191,6 +191,10 @@ public class XRestriction {
 		return listRestriction;
 	}
 
+	public static List<String> getMethodNames(Context context, String restrictionName) {
+		return mMethods.get(restrictionName);
+	}
+
 	public static List<String> getPermissions(String restrictionName) {
 		return mPermissions.get(restrictionName);
 	}
@@ -226,16 +230,16 @@ public class XRestriction {
 		return false;
 	}
 
-	public static boolean isUsed(Context context, int uid, String restrictionName) {
+	public static boolean isUsed(Context context, int uid, String restrictionName, String methodName) {
 		long lastUsage = 0;
 		ContentResolver cr = context.getContentResolver();
 		Cursor cursor = cr.query(XPrivacyProvider.URI_USAGE, null, restrictionName,
-				new String[] { Integer.toString(uid) }, null);
+				new String[] { Integer.toString(uid), methodName }, null);
 		if (cursor.moveToNext())
 			lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_USED));
 		cursor.close();
 		boolean used = (lastUsage != 0);
-		logRestriction(null, context, uid, "used", restrictionName, used, false);
+		logRestriction(null, context, uid, "used", restrictionName, methodName, used, false);
 		return used;
 	}
 
@@ -266,7 +270,8 @@ public class XRestriction {
 						if (entry.isExpired())
 							mRestrictionCache.remove(keyCache);
 						else {
-							logRestriction(hook, context, uid, "get", restrictionName, entry.isRestricted(), true);
+							logRestriction(hook, context, uid, "get", restrictionName, methodName,
+									entry.isRestricted(), true);
 							return entry.isRestricted();
 						}
 					}
@@ -316,7 +321,7 @@ public class XRestriction {
 			}
 
 			// Result
-			logRestriction(hook, context, uid, "get", restrictionName, restricted, false);
+			logRestriction(hook, context, uid, "get", restrictionName, methodName, restricted, false);
 			return restricted;
 		} catch (Throwable ex) {
 			XUtil.bug(hook, ex);
@@ -353,7 +358,7 @@ public class XRestriction {
 		contentResolver.update(XPrivacyProvider.URI_RESTRICTION, values, restrictionName, null);
 
 		// Result
-		logRestriction(hook, context, uid, "set", restrictionName, restricted, false);
+		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false);
 	}
 
 	public static String getSetting(XHook hook, Context context, String settingName, String defaultValue) {
@@ -388,9 +393,9 @@ public class XRestriction {
 		XUtil.log(hook, Log.INFO, String.format("set %s=%s", settingName, value));
 	}
 
-	public static void deleteAuditTrail(Context context, int uid) {
+	public static void deleteUsageData(Context context, int uid) {
 		for (String restrictionName : XRestriction.getRestrictions(context))
-			context.getContentResolver().delete(XPrivacyProvider.URI_AUDIT, restrictionName,
+			context.getContentResolver().delete(XPrivacyProvider.URI_USAGE, restrictionName,
 					new String[] { Integer.toString(uid) });
 	}
 
@@ -403,10 +408,9 @@ public class XRestriction {
 	// Helper methods
 
 	private static void logRestriction(XHook hook, Context context, int uid, String prefix, String restrictionName,
-			boolean restricted, boolean cached) {
-		XUtil.log(hook, Log.INFO, String.format("%s %s/%s %s=%b%s", prefix, getPackageName(context, uid),
-				(hook == null ? null : hook.getMethodName()), restrictionName, restricted, (cached ? " *"
-						: (context == null ? " #" : ""))));
+			String methodName, boolean restricted, boolean cached) {
+		XUtil.log(hook, Log.INFO, String.format("%s %s/%s %s=%b%s", prefix, getPackageName(context, uid), methodName,
+				restrictionName, restricted, (cached ? " *" : (context == null ? " #" : ""))));
 	}
 
 	private static String getPackageName(Context context, int uid) {

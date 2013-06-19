@@ -81,7 +81,7 @@ public class XPackageChange extends BroadcastReceiver {
 					XRestriction.setRestricted(null, context, uid, restrictionName, null, false);
 
 				// Remove audit trail
-				XRestriction.deleteAuditTrail(context, uid);
+				XRestriction.deleteUsageData(context, uid);
 			}
 		}
 	}

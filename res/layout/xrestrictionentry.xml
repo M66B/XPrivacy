@@ -11,14 +11,14 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/imgAppEntryUsed"
+            android:id="@+id/imgUsed"
             android:layout_width="24dip"
             android:layout_height="24dip"
             android:contentDescription="@string/help_used"
             android:src="@drawable/used" />
 
         <ImageView
-            android:id="@+id/imgAppEntryGranted"
+            android:id="@+id/imgGranted"
             android:layout_width="24dip"
             android:layout_height="24dip"
             android:contentDescription="@string/help_granted"
@@ -26,7 +26,7 @@
     </LinearLayout>
 
     <CheckedTextView
-        android:id="@+id/tvAppEntryName"
+        android:id="@+id/ctvName"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"

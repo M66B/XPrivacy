@@ -13,7 +13,6 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,6 @@ import org.xmlpull.v1.XmlSerializer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,7 +49,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
@@ -708,10 +705,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.xmainentry, parent, false);
-			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgEntryIcon);
-			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgEntryInternet);
-			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgEntryUsed);
-			final CheckedTextView ctvApp = (CheckedTextView) row.findViewById(R.id.tvEntryName);
+			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
+			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
+			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
+			final CheckedTextView ctvApp = (CheckedTextView) row.findViewById(R.id.ctvName);
 
 			// Get entry
 			final XApplicationInfo appEntry = getItem(position);
@@ -735,38 +732,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			imgInternet.setVisibility(appEntry.hasInternet() ? View.VISIBLE : View.INVISIBLE);
 
 			// Check if used
-			boolean used = XRestriction.isUsed(row.getContext(), appEntry.getUid(), mRestrictionName);
+			boolean used = XRestriction.isUsed(row.getContext(), appEntry.getUid(), mRestrictionName, null);
 			ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
-
-			// Handle used click
-			imgUsed.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					// Get audit
-					ContentResolver contentResolver = view.getContext().getContentResolver();
-					Cursor cursor = contentResolver.query(XPrivacyProvider.URI_AUDIT, null, mRestrictionName,
-							new String[] { Integer.toString(appEntry.getUid()) }, null);
-					List<String> listAudit = new ArrayList<String>();
-					while (cursor.moveToNext())
-						listAudit.add(cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_METHOD)));
-					cursor.close();
-					Collections.sort(listAudit);
-
-					// Display audit
-					String localRestrictionName = XRestriction.getLocalizedName(view.getContext(), mRestrictionName);
-					AlertDialog alertDialog = new AlertDialog.Builder(ActivityMain.this).create();
-					alertDialog.setTitle(localRestrictionName);
-					alertDialog.setIcon(R.drawable.ic_launcher);
-					alertDialog.setMessage(TextUtils.join("\n", listAudit));
-					alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					});
-					alertDialog.show();
-				}
-			});
 
 			// Display restriction
 			boolean restricted = XRestriction.getRestricted(null, row.getContext(), appEntry.getUid(),

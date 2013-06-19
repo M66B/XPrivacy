@@ -44,8 +44,8 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
-    <ListView
-        android:id="@+id/lvRestriction"
+    <ExpandableListView
+        android:id="@+id/elvRestriction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dip"

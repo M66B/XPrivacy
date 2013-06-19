@@ -1,28 +1,21 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
-import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class ActivityApp extends Activity {
@@ -77,7 +70,7 @@ public class ActivityApp extends Activity {
 			imgInternet.setVisibility(View.INVISIBLE);
 
 		// Fill privacy list view adapter
-		final ListView lvRestriction = (ListView) findViewById(R.id.lvRestriction);
+		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xrestrictionentry, appInfo,
 				XRestriction.getRestrictions(this));
 		lvRestriction.setAdapter(mPrivacyListAdapter);
@@ -90,24 +83,41 @@ public class ActivityApp extends Activity {
 			mPrivacyListAdapter.notifyDataSetChanged();
 	}
 
-	private class RestrictionAdapter extends ArrayAdapter<String> {
+	private class RestrictionAdapter extends BaseExpandableListAdapter {
+		private Context mContext;
 		private ApplicationInfo mAppInfo;
+		private List<String> mRestrictions;
 
-		public RestrictionAdapter(Context context, int resource, ApplicationInfo appInfo, List<String> objects) {
-			super(context, resource, objects);
+		public RestrictionAdapter(Context context, int resource, ApplicationInfo appInfo, List<String> restrictions) {
 			mAppInfo = appInfo;
+			mRestrictions = restrictions;
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public Object getGroup(int groupPosition) {
+			return mRestrictions.get(groupPosition);
+		}
+
+		@Override
+		public int getGroupCount() {
+			return mRestrictions.size();
+		}
+
+		@Override
+		public long getGroupId(int groupPosition) {
+			return groupPosition;
+		}
+
+		@Override
+		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.xrestrictionentry, parent, false);
-			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgAppEntryGranted);
-			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgAppEntryUsed);
-			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.tvAppEntryName);
+			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
+			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
+			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.ctvName);
 
 			// Get entry
-			final String restrictionName = getItem(position);
+			final String restrictionName = (String) getGroup(groupPosition);
 
 			// Display localized name
 			ctvRestriction.setText(XRestriction.getLocalizedName(row.getContext(), restrictionName));
@@ -117,39 +127,10 @@ public class ActivityApp extends Activity {
 				imgGranted.setVisibility(View.INVISIBLE);
 
 			// Display if used
-			if (XRestriction.isUsed(row.getContext(), mAppInfo.uid, restrictionName))
+			if (XRestriction.isUsed(row.getContext(), mAppInfo.uid, restrictionName, null))
 				ctvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
 			else
 				imgUsed.setVisibility(View.INVISIBLE);
-
-			// Handle used click
-			imgUsed.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					// Get audit
-					ContentResolver contentResolver = view.getContext().getContentResolver();
-					Cursor cursor = contentResolver.query(XPrivacyProvider.URI_AUDIT, null, restrictionName,
-							new String[] { Integer.toString(mAppInfo.uid) }, null);
-					List<String> listAudit = new ArrayList<String>();
-					while (cursor.moveToNext())
-						listAudit.add(cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_METHOD)));
-					cursor.close();
-					Collections.sort(listAudit);
-
-					// Display audit
-					String localRestrictionName = XRestriction.getLocalizedName(view.getContext(), restrictionName);
-					AlertDialog alertDialog = new AlertDialog.Builder(ActivityApp.this).create();
-					alertDialog.setTitle(localRestrictionName);
-					alertDialog.setIcon(R.drawable.ic_launcher);
-					alertDialog.setMessage(TextUtils.join("\n", listAudit));
-					alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					});
-					alertDialog.show();
-				}
-			});
 
 			// Display restriction
 			boolean restricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.uid, restrictionName,
@@ -165,10 +146,79 @@ public class ActivityApp extends Activity {
 					restricted = !restricted;
 					ctvRestriction.setChecked(restricted);
 					XRestriction.setRestricted(null, view.getContext(), mAppInfo.uid, restrictionName, null, restricted);
+					notifyDataSetChanged();
 				}
 			});
 
 			return row;
+		}
+
+		@Override
+		public Object getChild(int groupPosition, int childPosition) {
+			return XRestriction.getMethodNames(mContext, (String) getGroup(groupPosition)).get(childPosition);
+		}
+
+		@Override
+		public long getChildId(int groupPosition, int childPosition) {
+			return childPosition;
+		}
+
+		@Override
+		public int getChildrenCount(int groupPosition) {
+			return XRestriction.getMethodNames(mContext, (String) getGroup(groupPosition)).size();
+		}
+
+		@Override
+		public boolean isChildSelectable(int groupPosition, int childPosition) {
+			return false;
+		}
+
+		@Override
+		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
+				ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View row = inflater.inflate(R.layout.xrestrictionchild, parent, false);
+			final CheckedTextView ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
+
+			// Get entry
+			final String restrictionName = (String) getGroup(groupPosition);
+			final String methodName = (String) getChild(groupPosition, childPosition);
+
+			// Display method name
+			ctvMethodName.setText(methodName);
+
+			boolean parentRestricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.uid,
+					restrictionName, null, false, false);
+			ctvMethodName.setEnabled(parentRestricted);
+
+			// Display if used
+			if (XRestriction.isUsed(row.getContext(), mAppInfo.uid, restrictionName, methodName))
+				ctvMethodName.setTypeface(null, Typeface.BOLD_ITALIC);
+
+			// Display restriction
+			boolean restricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.uid, restrictionName,
+					methodName, false, false);
+			ctvMethodName.setChecked(restricted);
+
+			// Listen for restriction changes
+			ctvMethodName.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					boolean restricted = XRestriction.getRestricted(null, view.getContext(), mAppInfo.uid,
+							restrictionName, methodName, false, false);
+					restricted = !restricted;
+					ctvMethodName.setChecked(restricted);
+					XRestriction.setRestricted(null, view.getContext(), mAppInfo.uid, restrictionName, methodName,
+							restricted);
+				}
+			});
+
+			return row;
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			return true;
 		}
 	}
 }

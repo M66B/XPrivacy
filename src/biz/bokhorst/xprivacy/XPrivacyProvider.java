@@ -28,11 +28,9 @@ public class XPrivacyProvider extends ContentProvider {
 	public static final String PREF_SETTINGS = AUTHORITY + ".settings";
 	public static final String PATH_RESTRICTION = "restriction";
 	public static final String PATH_USAGE = "usage";
-	public static final String PATH_AUDIT = "audit";
 	public static final String PATH_SETTINGS = "settings";
 	public static final Uri URI_RESTRICTION = Uri.parse("content://" + AUTHORITY + "/" + PATH_RESTRICTION);
 	public static final Uri URI_USAGE = Uri.parse("content://" + AUTHORITY + "/" + PATH_USAGE);
-	public static final Uri URI_AUDIT = Uri.parse("content://" + AUTHORITY + "/" + PATH_AUDIT);
 	public static final Uri URI_SETTING = Uri.parse("content://" + AUTHORITY + "/" + PATH_SETTINGS);
 
 	public static final String COL_UID = "Uid";
@@ -46,14 +44,12 @@ public class XPrivacyProvider extends ContentProvider {
 	private static final UriMatcher sUriMatcher;
 	private static final int TYPE_RESTRICTION = 1;
 	private static final int TYPE_USAGE = 2;
-	private static final int TYPE_AUDIT = 3;
-	private static final int TYPE_SETTING = 4;
+	private static final int TYPE_SETTING = 3;
 
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		sUriMatcher.addURI(AUTHORITY, PATH_RESTRICTION, TYPE_RESTRICTION);
 		sUriMatcher.addURI(AUTHORITY, PATH_USAGE, TYPE_USAGE);
-		sUriMatcher.addURI(AUTHORITY, PATH_AUDIT, TYPE_AUDIT);
 		sUriMatcher.addURI(AUTHORITY, PATH_SETTINGS, TYPE_SETTING);
 	}
 
@@ -68,8 +64,6 @@ public class XPrivacyProvider extends ContentProvider {
 			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_RESTRICTION);
 		else if (sUriMatcher.match(uri) == TYPE_USAGE)
 			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_USAGE);
-		else if (sUriMatcher.match(uri) == TYPE_AUDIT)
-			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_AUDIT);
 		else if (sUriMatcher.match(uri) == TYPE_SETTING)
 			return String.format("vnd.android.cursor.dir/%s.%s", AUTHORITY, PATH_SETTINGS);
 		throw new IllegalArgumentException();
@@ -132,25 +126,20 @@ public class XPrivacyProvider extends ContentProvider {
 				cursor.addRow(new Object[] { uid, restrictionName, Boolean.toString(!allowed) });
 			}
 			return cursor;
-		} else if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length == 1) {
+		} else if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length >= 1) {
 			// Return usage
 			String restrictionName = selection;
 			int uid = Integer.parseInt(selectionArgs[0]);
+			String methodName = (selectionArgs.length >= 2 ? selectionArgs[1] : null);
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_USED });
-			cursor.addRow(new Object[] { uid, restrictionName, prefs.getLong(getUsagePref(uid, restrictionName), 0) });
-			return cursor;
-		} else if (sUriMatcher.match(uri) == TYPE_AUDIT && selectionArgs != null && selectionArgs.length == 1) {
-			// Return audit
-			String restrictionName = selection;
-			int uid = Integer.parseInt(selectionArgs[0]);
-			String prefix = getUsagePref(uid, restrictionName) + ".";
 			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_USED });
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-			for (String pref : prefs.getAll().keySet())
-				if (pref.startsWith(prefix))
-					cursor.addRow(new Object[] { uid, restrictionName, pref.substring(prefix.length()),
-							prefs.getLong(pref, 0) });
+			if (methodName == null)
+				cursor.addRow(new Object[] { uid, restrictionName, null,
+						prefs.getLong(getUsagePref(uid, restrictionName), 0) });
+			else
+				cursor.addRow(new Object[] { uid, restrictionName, methodName,
+						prefs.getLong(getUsagePref(uid, restrictionName, methodName), 0) });
+
 			return cursor;
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING && selectionArgs == null) {
 			// Return setting
@@ -241,7 +230,7 @@ public class XPrivacyProvider extends ContentProvider {
 		// Check access
 		enforcePermission();
 
-		if (sUriMatcher.match(uri) == TYPE_AUDIT && selectionArgs != null && selectionArgs.length == 1) {
+		if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length == 1) {
 			// Get arguments
 			String restrictionName = where;
 			int uid = Integer.parseInt(selectionArgs[0]);
