@@ -18,8 +18,24 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 	private String mPackageName;
 	private boolean mHasInternet;
 	private int mUid;
+	private String mVersion;
+
+	public XApplicationInfo(String packageName, Context context) {
+		// Get app info
+		try {
+			ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
+			this.Initialize(appInfo, context);
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+			return;
+		}
+	}
 
 	private XApplicationInfo(ApplicationInfo appInfo, Context context) {
+		this.Initialize(appInfo, context);
+	}
+
+	private void Initialize(ApplicationInfo appInfo, Context context) {
 		PackageManager pm = context.getPackageManager();
 		mDrawable = appInfo.loadIcon(pm);
 		mListApplicationName = new ArrayList<String>();
@@ -27,6 +43,11 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 		mPackageName = appInfo.packageName;
 		mHasInternet = XRestriction.hasInternet(context, appInfo.packageName);
 		mUid = appInfo.uid;
+		try {
+			mVersion = pm.getPackageInfo(appInfo.packageName, 0).versionName;
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+		}
 	}
 
 	public static List<XApplicationInfo> getXApplicationList(Context context) {
@@ -60,16 +81,7 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 	}
 
 	private static String getApplicationName(ApplicationInfo appInfo, PackageManager pm) {
-		if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-			String version = "";
-			try {
-				version = pm.getPackageInfo(appInfo.packageName, 0).versionName;
-			} catch (Throwable ex) {
-				XUtil.bug(null, ex);
-			}
-			return String.format("%s (%s)", pm.getApplicationLabel(appInfo), version);
-		} else
-			return (String) pm.getApplicationLabel(appInfo);
+		return (String) pm.getApplicationLabel(appInfo);
 	}
 
 	private void AddApplicationName(String Name) {
@@ -90,6 +102,10 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 
 	public int getUid() {
 		return mUid;
+	}
+
+	public String getVersion() {
+		return mVersion;
 	}
 
 	@Override
