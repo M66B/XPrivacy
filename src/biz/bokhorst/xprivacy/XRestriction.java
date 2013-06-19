@@ -106,59 +106,72 @@ public class XRestriction {
 		mPermissions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
 
 		// Methods
+
+		// Account manager
 		String[] accs = new String[] { "getAccounts", "getAccountsByType", "getAccountsByTypeAndFeatures",
 				"hasFeatures", "addOnAccountsUpdatedListener", "getAuthToken", "getAuthTokenByFeatures",
 				"blockingGetAuthToken" };
 		for (String acc : accs)
 			mMethods.get(cAccounts).add(acc);
 
+		// Application package manager
 		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getInstalledThemePackages",
 				"getPreferredPackages", "queryBroadcastReceivers", "queryContentProviders", "queryIntentActivities",
 				"queryIntentActivityOptions", "queryIntentServices" };
 		for (String am : ams)
 			mMethods.get(cSystem).add(am);
 
+		// Audio record
 		mMethods.get(XRestriction.cMedia).add("startRecording");
 
+		// Camera
 		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
 				"setOneShotPreviewCallback", "takePicture" };
 		for (String cam : cams)
 			mMethods.get(cMedia).add(cam);
 
+		// Connectivity manager
 		String[] conns = new String[] { "getActiveNetworkInfo", "getActiveNetworkInfoForUid", "getAllNetworkInfo",
 				"getNetworkInfo" };
 		for (String conn : conns)
 			mMethods.get(cNetwork).add(conn);
 
-		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation",
+		// Location manager
+		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
 				"requestLocationUpdates", "requestSingleUpdate" };
 		for (String loc : locs)
 			mMethods.get(cLocation).add(loc);
 
+		// Media recorder
 		mMethods.get(cMedia).add("setOutputFile");
 
+		// Network interface
 		String[] nets = new String[] { "getByInetAddress", "getByName", "getHardwareAddress", "getInetAddresses",
 				"getInterfaceAddresses", "getNetworkInterfaces" };
 		for (String net : nets)
 			mMethods.get(cNetwork).add(net);
 
+		// Package manager service
 		mMethods.get(cInternet).add("getPackageGids");
 		mMethods.get(cStorage).add("getPackageGids");
 
+		// Settings secure
 		mMethods.get(cIdentification).add("getString");
 
+		// SMS manager
 		mMethods.get(cMessages).add("getAllMessagesFromIcc");
 
-		// SMS manager
 		String[] smses = new String[] { "sendDataMessage", "sendMultipartTextMessage", "sendTextMessage" };
 		for (String sms : smses)
 			mMethods.get(cCalling).add(sms);
 
+		// System properties
 		String[] props = new String[] { "ro.gsm.imei", "net.hostname", "ro.serialno", "ro.boot.serialno",
 				"ro.boot.wifimacaddr", "ro.boot.btmacaddr" };
 		for (String prop : props)
 			mMethods.get(cIdentification).add(prop);
 
+		// Telephony
 		String[] tlocs = new String[] { "disableLocationUpdates", "enableLocationUpdates", "getAllCellInfo",
 				"getCellLocation", "getNeighboringCellInfo" };
 		for (String tloc : tlocs)
@@ -171,18 +184,23 @@ public class XRestriction {
 		for (String phone : phones)
 			mMethods.get(cPhone).add(phone);
 
+		// Wi-Fi manager
 		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults" };
 		for (String wifi : wifis)
 			mMethods.get(cNetwork).add(wifi);
 
-		// Incoming intent
+		// Intent receive: calling
 		mMethods.get(cBoot).add(Intent.ACTION_BOOT_COMPLETED);
 		mMethods.get(cPhone).add(Intent.ACTION_NEW_OUTGOING_CALL);
 		mMethods.get(cPhone).add(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
 
-		// Outgoing intents
+		// Intent send: browser
 		mMethods.get(cView).add(Intent.ACTION_VIEW);
+
+		// Intent send: call
 		mMethods.get(cCalling).add(Intent.ACTION_CALL);
+
+		// Intent send: media
 		mMethods.get(cMedia).add(MediaStore.ACTION_IMAGE_CAPTURE);
 		if (Build.VERSION.SDK_INT >= 17)
 			mMethods.get(cMedia).add("android.media.action.IMAGE_CAPTURE_SECURE");

@@ -126,8 +126,8 @@ For easy usage, data is restricted by category:
 * Contacts
 	* return an empty contact list
 * Identification
-    * return a fake Android ID
-    * return a fake device serial number
+	* return a fake Android ID
+	* return a fake device serial number
 * Internet
 	* revoke access to the internet
 * Location
@@ -371,6 +371,7 @@ Changelog
 	* ro.boot.wifimacaddr
 	* ro.boot.btmacaddr
 	* Let me know if there more should be restricted
+* Fixed location battery drain bug ([issue](https://github.com/M66B/XPrivacy/issues/38))
 
 **Version 0.23**
 
@@ -485,7 +486,6 @@ Translations:
 
 * Translate the strings in [this file](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml)
 * Send the translated file to me [via an XDA PM](http://forum.xda-developers.com/member.php?u=2799345)
-* Translators do not have to donate for the [pro version](http://www.faircode.eu/xprivacy/)
 
 Restrict new data:
 
@@ -495,6 +495,8 @@ Restrict new data:
 * Hook the method in [XPrivacy](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java)
 * Write a before and/or after method to restrict the data
 * Do a [pull request](https://help.github.com/articles/using-pull-requests) if you want to contribute
+
+Contributors do not have to donate for the [pro version](http://www.faircode.eu/xprivacy/).
 
 License
 -------

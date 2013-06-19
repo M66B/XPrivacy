@@ -88,6 +88,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
 		hook(new XLocationManager("getLastKnownLocation", XRestriction.cLocation, new String[] {
 				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
+		hook(new XLocationManager("removeUpdates", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
+				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
 		hook(new XLocationManager("requestLocationUpdates", XRestriction.cLocation, new String[] {
 				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
 		hook(new XLocationManager("requestSingleUpdate", XRestriction.cLocation, new String[] {

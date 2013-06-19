@@ -3,6 +3,8 @@ package biz.bokhorst.xprivacy;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.content.Context;
 import android.location.Location;
@@ -25,6 +27,8 @@ public class XLocationManager extends XHook {
 	// public boolean addNmeaListener(GpsStatus.NmeaListener listener)
 	// public void addProximityAlert(double latitude, double longitude, float radius, long expiration, PendingIntent intent)
 	// public Location getLastKnownLocation(String provider)
+	// public void removeUpdates(LocationListener listener)
+	// public void removeUpdates(PendingIntent intent)
 	// public void requestLocationUpdates(String provider, long minTime, float minDistance, LocationListener listener)
 	// public void requestLocationUpdates(String provider, long minTime, float minDistance, LocationListener listener, Looper looper)
 	// public void requestLocationUpdates(long minTime, float minDistance, Criteria criteria, LocationListener listener, Looper looper)
@@ -47,6 +51,8 @@ public class XLocationManager extends XHook {
 					param.setResult(false);
 				else if (methodName.equals("addProximityAlert"))
 					param.setResult(null);
+				else if (methodName.equals("removeUpdates"))
+					removeLocationListener(param);
 				else if (methodName.equals("requestLocationUpdates"))
 					replaceLocationListener(param, 3);
 				else if (methodName.equals("requestSingleUpdate"))
@@ -88,13 +94,34 @@ public class XLocationManager extends XHook {
 		return context;
 	}
 
+	private static final Map<LocationListener, XLocationListener> mListener = new HashMap<LocationListener, XLocationListener>();
+
+	private void removeLocationListener(MethodHookParam param) {
+		if (param.args[0] != null && LocationListener.class.isAssignableFrom(param.args[0].getClass())) {
+			LocationListener listener = (LocationListener) param.args[0];
+			synchronized (mListener) {
+				if (mListener.containsKey(listener)) {
+					param.args[0] = mListener.get(listener);
+					mListener.remove(listener);
+					XUtil.log(this, Log.INFO, "Removed count=" + mListener.size());
+				} else
+					XUtil.log(this, Log.WARN, "Not found count=" + mListener.size());
+			}
+		}
+	}
+
 	private void replaceLocationListener(MethodHookParam param, int arg) throws Throwable {
 		if (param.args[arg] != null && LocationListener.class.isAssignableFrom(param.args[arg].getClass())) {
 			LocationListener listener = (LocationListener) param.args[arg];
 			if (listener != null) {
 				Context context = getContext(param);
 				Location baseLocation = getBaseLocation(context);
-				param.args[arg] = new XLocationListener(listener, baseLocation);
+				XLocationListener xLocationListener = new XLocationListener(listener, baseLocation);
+				synchronized (mListener) {
+					mListener.put(listener, xLocationListener);
+					XUtil.log(this, Log.INFO, "Added count=" + mListener.size());
+				}
+				param.args[arg] = xLocationListener;
 			}
 		} else
 			param.setResult(null);
