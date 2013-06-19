@@ -8,7 +8,7 @@ Index
 
 * [Description](https://github.com/M66B/XPrivacy#description)
 * [Features](https://github.com/M66B/XPrivacy#features)
-* [Restricted data/actions](https://github.com/M66B/XPrivacy#restricted-data-actions)
+* [Restricted data/actions](https://github.com/M66B/XPrivacy#restricted-dataactions)
 * [Limitations](https://github.com/M66B/XPrivacy#limitations)
 * [Installation](https://github.com/M66B/XPrivacy#installation)
 * [Upgrading](https://github.com/M66B/XPrivacy#upgrading)
