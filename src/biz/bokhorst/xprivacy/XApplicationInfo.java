@@ -23,7 +23,7 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 		PackageManager pm = context.getPackageManager();
 		mDrawable = appInfo.loadIcon(pm);
 		mListApplicationName = new ArrayList<String>();
-		mListApplicationName.add((String) pm.getApplicationLabel(appInfo));
+		mListApplicationName.add(getApplicationName(appInfo, pm));
 		mPackageName = appInfo.packageName;
 		mHasInternet = XRestriction.hasInternet(context, appInfo.packageName);
 		mUid = appInfo.uid;
@@ -50,13 +50,26 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 					mapApp.put(appInfo.uid, xAppInfo);
 					listApp.add(xAppInfo);
 				} else
-					xAppInfo.AddApplicationName((String) pm.getApplicationLabel(appInfo));
+					xAppInfo.AddApplicationName(getApplicationName(appInfo, pm));
 			}
 		}
 
 		// Sort result
 		Collections.sort(listApp);
 		return listApp;
+	}
+
+	private static String getApplicationName(ApplicationInfo appInfo, PackageManager pm) {
+		if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+			String version = "";
+			try {
+				version = pm.getPackageInfo(appInfo.packageName, 0).versionName;
+			} catch (Throwable ex) {
+				XUtil.bug(null, ex);
+			}
+			return String.format("%s (%s)", pm.getApplicationLabel(appInfo), version);
+		} else
+			return (String) pm.getApplicationLabel(appInfo);
 	}
 
 	private void AddApplicationName(String Name) {
@@ -82,7 +95,7 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 	@Override
 	@SuppressLint("DefaultLocale")
 	public String toString() {
-		return String.format("%s (%d)", TextUtils.join(", ", mListApplicationName), mUid);
+		return String.format("%s", TextUtils.join(", ", mListApplicationName));
 	}
 
 	@Override

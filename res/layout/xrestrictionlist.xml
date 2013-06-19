@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dip"
         android:text="@string/settings_restrict"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
     <ListView

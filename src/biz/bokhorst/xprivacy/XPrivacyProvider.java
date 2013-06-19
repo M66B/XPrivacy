@@ -121,12 +121,12 @@ public class XPrivacyProvider extends ContentProvider {
 					SharedPreferences.Editor editor = uprefs.edit();
 					editor.putLong(getUsagePref(uid, restrictionName), timestamp);
 					if (methodName != null)
-						editor.putLong(getMethodPref(uid, restrictionName, methodName), timestamp);
+						editor.putLong(getUsagePref(uid, restrictionName, methodName), timestamp);
 					editor.commit();
 				}
 
 				// Get restrictions
-				boolean allowed = getAllowed(uid, restrictionName, prefs);
+				boolean allowed = getAllowed(uid, restrictionName, methodName, prefs);
 
 				// Return restriction
 				cursor.addRow(new Object[] { uid, restrictionName, Boolean.toString(!allowed) });
@@ -190,6 +190,7 @@ public class XPrivacyProvider extends ContentProvider {
 			// Get arguments
 			String restrictionName = selection;
 			int uid = values.getAsInteger(COL_UID);
+			String methodName = values.getAsString(COL_METHOD);
 			boolean allowed = !Boolean.parseBoolean(values.getAsString(COL_RESTRICTED));
 
 			// Get restrictions
@@ -214,6 +215,8 @@ public class XPrivacyProvider extends ContentProvider {
 			// Update restriction
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putString(getRestrictionPref(restrictionName), restrictions);
+			if (methodName != null)
+				editor.putBoolean(getExceptionPref(uid, restrictionName, methodName), allowed);
 			editor.commit();
 			setPrefFileReadable(PREF_RESTRICTION);
 
@@ -273,7 +276,7 @@ public class XPrivacyProvider extends ContentProvider {
 	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName, String methodName) {
 		// Get restrictions
 		XSharedPreferences xprefs = new XSharedPreferences(new File(getPrefFileName(PREF_RESTRICTION)));
-		return !getAllowed(uid, restrictionName, xprefs);
+		return !getAllowed(uid, restrictionName, methodName, xprefs);
 	}
 
 	// Private helper methods
@@ -288,7 +291,7 @@ public class XPrivacyProvider extends ContentProvider {
 			throw new SecurityException();
 	}
 
-	private static boolean getAllowed(int uid, String restrictionName, SharedPreferences prefs) {
+	private static boolean getAllowed(int uid, String restrictionName, String methodName, SharedPreferences prefs) {
 		// Get restrictions
 		String restrictions = prefs.getString(getRestrictionPref(restrictionName), "*");
 
@@ -300,6 +303,12 @@ public class XPrivacyProvider extends ContentProvider {
 		boolean allowed = !listRestriction.contains(Integer.toString(uid));
 		if (!defaultAllowed)
 			allowed = !allowed;
+
+		// Check for exception
+		if (!allowed && methodName != null)
+			if (prefs.getBoolean(getExceptionPref(uid, restrictionName, methodName), false))
+				allowed = true;
+
 		return allowed;
 	}
 
@@ -309,19 +318,26 @@ public class XPrivacyProvider extends ContentProvider {
 	}
 
 	private static String getRestrictionPref(String restrictionName) {
-		return COL_RESTRICTED + "." + restrictionName;
+		return String.format("%s.%s", COL_RESTRICTED, restrictionName);
 	}
 
+	@SuppressLint("DefaultLocale")
+	private static String getExceptionPref(int uid, String restrictionName, String methodName) {
+		return String.format("%s.%d.%s.%s", COL_METHOD, uid, restrictionName, methodName);
+	}
+
+	@SuppressLint("DefaultLocale")
 	private static String getUsagePref(int uid, String restrictionName) {
-		return COL_USED + "." + uid + "." + restrictionName;
+		return String.format("%s.%d.%s", COL_USED, uid, restrictionName);
 	}
 
-	private static String getMethodPref(int uid, String restrictionName, String methodName) {
-		return getUsagePref(uid, restrictionName) + "." + methodName;
+	@SuppressLint("DefaultLocale")
+	private static String getUsagePref(int uid, String restrictionName, String methodName) {
+		return String.format("%s.%d.%s.%s", COL_USED, uid, restrictionName, methodName);
 	}
 
 	private static String getSettingPref(String settingName) {
-		return COL_SETTING + "." + settingName;
+		return String.format("%s.%s", COL_SETTING, settingName);
 	}
 
 	private static String getSettingName(String settingKey) {
