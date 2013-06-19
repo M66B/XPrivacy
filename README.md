@@ -217,8 +217,12 @@ because it will most probably result in conflicts (with as possible consequence 
 Upgrading
 ---------
 
+* **Make a backup**
 * Install the new version (replacing the previous version)
 * Reboot your device
+
+You can check for updates using the options menu.
+If there is an update the browser will download it.
 
 Usage
 -----
