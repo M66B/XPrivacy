@@ -63,7 +63,6 @@
                     android:id="@+id/tvPackageName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dip"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textIsSelectable="false" />
 
@@ -71,6 +70,7 @@
                     android:id="@+id/tvUid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dip"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textIsSelectable="false" />
             </LinearLayout>
