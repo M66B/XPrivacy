@@ -135,7 +135,7 @@ For easy usage, data is restricted by category:
 	* return empty cell location
 	* return an empty list of (neighboring) cell info
 	* prevents proximity alerts from being set
-	* prevents sending NMEA data to the application
+	* prevents sending NMEA data to an application
 * Media
 	* prevent recording audio (including from the microphone)
 	* prevent taking pictures
@@ -184,6 +184,7 @@ For easy usage, data is restricted by category:
 	* return an empty list of actions that can be performed
 * View
 	* prevent links from opening in the browser
+	* you will be notified if an application tries to open a link
 
 Limitations
 -----------
@@ -329,7 +330,8 @@ Please report the exact message in the XDA thread,
 stating the device and ROM you are using.
 
 **(15) Do I need to install Xposed/the fix again when I install an update of my ROM?**
-Yes, mostly you have to.
+
+Yes, mostly you will have to.
 XPrivacy will warn you when Xposed isn't installed,
 the wrong version of Xposed is installed
 or when the XPrivacy is not enabled in Xposed.
