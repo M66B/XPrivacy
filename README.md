@@ -186,6 +186,11 @@ For easy usage, data is restricted by category:
 	* prevent links from opening in the browser
 	* you will be notified if an application tries to open a link
 
+Planned restrictions:
+
+* Wi-Fi IPv6 addresses
+* [IMEI](http://en.wikipedia.org/wiki/International_Mobile_Station_Equipment_Identity) numbers (system properties)
+
 Limitations
 -----------
 
