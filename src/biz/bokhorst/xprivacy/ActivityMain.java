@@ -492,11 +492,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 						// Reset existing restrictions
 						for (String restrictionName : XRestriction.getRestrictions(this))
-							XRestriction.setRestricted(null, this, uid, restrictionName, false);
+							XRestriction.setRestricted(null, this, uid, restrictionName, null, false);
 
 						// Set imported restrictions
 						for (String restrictionName : mapPackage.get(packageName))
-							XRestriction.setRestricted(null, this, uid, restrictionName, true);
+							XRestriction.setRestricted(null, this, uid, restrictionName, null, true);
 					} catch (NameNotFoundException ex) {
 						XUtil.log(null, Log.WARN, "Not found package=" + packageName);
 					}
@@ -770,7 +770,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 			// Display restriction
 			boolean restricted = XRestriction.getRestricted(null, row.getContext(), appEntry.getUid(),
-					mRestrictionName, false, false);
+					mRestrictionName, null, false, false);
 			ctvApp.setChecked(restricted);
 
 			// Listen for restriction changes
@@ -778,10 +778,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				@Override
 				public void onClick(View view) {
 					boolean restricted = XRestriction.getRestricted(null, view.getContext(), appEntry.getUid(),
-							mRestrictionName, false, false);
+							mRestrictionName, null, false, false);
 					restricted = !restricted;
 					ctvApp.setChecked(restricted);
-					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName, restricted);
+					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName, null,
+							restricted);
 				}
 			});
 

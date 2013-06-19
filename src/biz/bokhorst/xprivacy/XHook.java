@@ -43,7 +43,7 @@ public abstract class XHook {
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) throws Throwable {
-		return XRestriction.getRestricted(this, context, uid, mRestrictionName, usage, true);
+		return XRestriction.getRestricted(this, context, uid, mRestrictionName, mMethodName, usage, true);
 	}
 
 	protected void notifyUser(String message) throws Throwable {

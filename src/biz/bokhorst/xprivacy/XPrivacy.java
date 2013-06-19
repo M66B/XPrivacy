@@ -116,15 +116,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// SMS manager
 		hook(new XSmsManager("getAllMessagesFromIcc", XRestriction.cMessages, new String[] { "RECEIVE_SMS" }),
 				"android.telephony.SmsManager");
-		hook(new XSmsManager("sendDataMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
-				"android.telephony.SmsManager");
-		hook(new XSmsManager("sendMultipartTextMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
-				"android.telephony.SmsManager");
-		hook(new XSmsManager("sendTextMessage", XRestriction.cCalling, new String[] { "SEND_SMS" }),
-				"android.telephony.SmsManager");
+		String[] smses = new String[] { "sendDataMessage", "sendMultipartTextMessage", "sendTextMessage" };
+		for (String sms : smses)
+			hook(new XSmsManager(sms, XRestriction.cCalling, new String[] { "SEND_SMS" }),
+					"android.telephony.SmsManager");
 
 		// System properties
-		String[] props = new String[] { "ro.serialno" };
+		String[] props = new String[] { "ro.gsm.imei", "net.hostname", "ro.serialno", "ro.boot.serialno",
+				"ro.boot.wifimacaddr", "ro.boot.btmacaddr" };
 		String[] getters = new String[] { "get", "getBoolean", "getInt", "getLong", "getLongString" };
 		for (String getter : getters)
 			hook(new XSystemProperties(getter, XRestriction.cIdentification, new String[] {}, props),
@@ -200,7 +199,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// Build SERIAL
-		if (XRestriction.getRestricted(null, null, Process.myUid(), XRestriction.cIdentification, true, false))
+		if (XRestriction.getRestricted(null, null, Process.myUid(), XRestriction.cIdentification, null, true, false))
 			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", XRestriction.cDefaceString);
 
 		// Load browser provider

@@ -47,7 +47,7 @@ public class XPackageChange extends BroadcastReceiver {
 					// Default deny new user apps
 					if (!system)
 						for (String restrictionName : XRestriction.getRestrictions(context))
-							XRestriction.setRestricted(null, context, uid, restrictionName, true);
+							XRestriction.setRestricted(null, context, uid, restrictionName, null, true);
 
 					// Build result intent
 					Intent resultIntent = new Intent(context, ActivityApp.class);
@@ -78,7 +78,7 @@ public class XPackageChange extends BroadcastReceiver {
 
 				// Remove existing restrictions
 				for (String restrictionName : XRestriction.getRestrictions(context))
-					XRestriction.setRestricted(null, context, uid, restrictionName, false);
+					XRestriction.setRestricted(null, context, uid, restrictionName, null, false);
 
 				// Remove audit trail
 				XRestriction.deleteAuditTrail(context, uid);

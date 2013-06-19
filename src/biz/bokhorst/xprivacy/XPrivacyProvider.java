@@ -270,7 +270,7 @@ public class XPrivacyProvider extends ContentProvider {
 	// - there is no context (Java threads)
 	// - the content provider cannot be queried (PackageManagerService)
 
-	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName) {
+	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName, String methodName) {
 		// Get restrictions
 		XSharedPreferences xprefs = new XSharedPreferences(new File(getPrefFileName(PREF_RESTRICTION)));
 		return !getAllowed(uid, restrictionName, xprefs);

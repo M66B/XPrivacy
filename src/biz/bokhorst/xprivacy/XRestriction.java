@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -36,6 +37,10 @@ public class XRestriction {
 	public static final String cSystem = "system";
 	public static final String cView = "view";
 
+	private static final String cRestrictionNames[] = new String[] { cAccounts, cBoot, cBrowser, cCalendar, cCalling,
+			cContacts, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cPhone, cStorage, cSystem,
+			cView };
+
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;
 	public static final String cDefacedMac = "de:fa:ce:de:fa:ce";
@@ -44,12 +49,14 @@ public class XRestriction {
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
+
 	public final static String cSettingExpert = "Expert";
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
 
 	private final static int cCacheTimeoutMs = 30 * 1000;
-	private static Map<String, List<String>> mRestrictions = new LinkedHashMap<String, List<String>>();
+	private static Map<String, List<String>> mPermissions = new LinkedHashMap<String, List<String>>();
+	private static Map<String, List<String>> mMethods = new LinkedHashMap<String, List<String>>();
 	private static Map<String, CacheEntry> mRestrictionCache = new HashMap<String, CacheEntry>();
 
 	static {
@@ -58,66 +65,126 @@ public class XRestriction {
 		// If you know a better solution, please let me know
 
 		// Restrictions
-		mRestrictions.put(cAccounts, new ArrayList<String>());
-		mRestrictions.put(cBoot, new ArrayList<String>());
-		mRestrictions.put(cBrowser, new ArrayList<String>());
-		mRestrictions.put(cCalendar, new ArrayList<String>());
-		mRestrictions.put(cCalling, new ArrayList<String>());
-		mRestrictions.put(cContacts, new ArrayList<String>());
-		mRestrictions.put(cIdentification, new ArrayList<String>());
-		mRestrictions.put(cInternet, new ArrayList<String>());
-		mRestrictions.put(cLocation, new ArrayList<String>());
-		mRestrictions.put(cMedia, new ArrayList<String>());
-		mRestrictions.put(cMessages, new ArrayList<String>());
-		mRestrictions.put(cNetwork, new ArrayList<String>());
-		mRestrictions.put(cPhone, new ArrayList<String>());
-		mRestrictions.put(cStorage, new ArrayList<String>());
-		mRestrictions.put(cSystem, new ArrayList<String>());
-		mRestrictions.put(cView, new ArrayList<String>());
+		for (String restrictionName : cRestrictionNames) {
+			mPermissions.put(restrictionName, new ArrayList<String>());
+			mMethods.put(restrictionName, new ArrayList<String>());
+		}
 
 		// Permissions
-		mRestrictions.get(cAccounts).add("GET_ACCOUNTS");
-		mRestrictions.get(cAccounts).add("USE_CREDENTIALS");
-		mRestrictions.get(cAccounts).add("MANAGE_ACCOUNTS");
-		mRestrictions.get(cBoot).add("RECEIVE_BOOT_COMPLETED");
-		mRestrictions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
-		mRestrictions.get(cBrowser).add("GLOBAL_SEARCH");
-		mRestrictions.get(cCalendar).add("READ_CALENDAR");
-		mRestrictions.get(cCalling).add("SEND_SMS");
-		mRestrictions.get(cCalling).add("CALL_PHONE");
-		mRestrictions.get(cContacts).add("READ_CONTACTS");
-		mRestrictions.get(cInternet).add("INTERNET");
-		mRestrictions.get(cLocation).add("ACCESS_COARSE_LOCATION");
-		mRestrictions.get(cLocation).add("ACCESS_FINE_LOCATION");
-		mRestrictions.get(cLocation).add("ACCESS_COARSE_UPDATES");
-		mRestrictions.get(cLocation).add("CONTROL_LOCATION_UPDATES");
-		mRestrictions.get(cMedia).add("CAMERA");
-		mRestrictions.get(cMedia).add("RECORD_AUDIO");
-		mRestrictions.get(cMedia).add("RECORD_VIDEO");
-		mRestrictions.get(cMessages).add("READ_WRITE_ALL_VOICEMAIL");
-		mRestrictions.get(cMessages).add("READ_SMS");
-		mRestrictions.get(cMessages).add("RECEIVE_SMS");
-		mRestrictions.get(cNetwork).add("ACCESS_NETWORK_STATE");
-		mRestrictions.get(cNetwork).add("ACCESS_WIFI_STATE");
-		mRestrictions.get(cPhone).add("READ_PHONE_STATE");
-		mRestrictions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
-		mRestrictions.get(cPhone).add("READ_CALL_LOG");
-		mRestrictions.get(cPhone).add("WRITE_APN_SETTINGS");
-		mRestrictions.get(cStorage).add("READ_EXTERNAL_STORAGE");
-		mRestrictions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
+		mPermissions.get(cAccounts).add("GET_ACCOUNTS");
+		mPermissions.get(cAccounts).add("USE_CREDENTIALS");
+		mPermissions.get(cAccounts).add("MANAGE_ACCOUNTS");
+		mPermissions.get(cBoot).add("RECEIVE_BOOT_COMPLETED");
+		mPermissions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
+		mPermissions.get(cBrowser).add("GLOBAL_SEARCH");
+		mPermissions.get(cCalendar).add("READ_CALENDAR");
+		mPermissions.get(cCalling).add("SEND_SMS");
+		mPermissions.get(cCalling).add("CALL_PHONE");
+		mPermissions.get(cContacts).add("READ_CONTACTS");
+		mPermissions.get(cInternet).add("INTERNET");
+		mPermissions.get(cLocation).add("ACCESS_COARSE_LOCATION");
+		mPermissions.get(cLocation).add("ACCESS_FINE_LOCATION");
+		mPermissions.get(cLocation).add("ACCESS_COARSE_UPDATES");
+		mPermissions.get(cLocation).add("CONTROL_LOCATION_UPDATES");
+		mPermissions.get(cMedia).add("CAMERA");
+		mPermissions.get(cMedia).add("RECORD_AUDIO");
+		mPermissions.get(cMedia).add("RECORD_VIDEO");
+		mPermissions.get(cMessages).add("READ_WRITE_ALL_VOICEMAIL");
+		mPermissions.get(cMessages).add("READ_SMS");
+		mPermissions.get(cMessages).add("RECEIVE_SMS");
+		mPermissions.get(cNetwork).add("ACCESS_NETWORK_STATE");
+		mPermissions.get(cNetwork).add("ACCESS_WIFI_STATE");
+		mPermissions.get(cPhone).add("READ_PHONE_STATE");
+		mPermissions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
+		mPermissions.get(cPhone).add("READ_CALL_LOG");
+		mPermissions.get(cPhone).add("WRITE_APN_SETTINGS");
+		mPermissions.get(cStorage).add("READ_EXTERNAL_STORAGE");
+		mPermissions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
+
+		// Methods
+		String[] accs = new String[] { "getAccounts", "getAccountsByType", "getAccountsByTypeAndFeatures",
+				"hasFeatures", "addOnAccountsUpdatedListener", "getAuthToken", "getAuthTokenByFeatures",
+				"blockingGetAuthToken" };
+		for (String acc : accs)
+			mMethods.get(cAccounts).add(acc);
+
+		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getInstalledThemePackages",
+				"getPreferredPackages", "queryBroadcastReceivers", "queryContentProviders", "queryIntentActivities",
+				"queryIntentActivityOptions", "queryIntentServices" };
+		for (String am : ams)
+			mMethods.get(cSystem).add(am);
+
+		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
+				"setOneShotPreviewCallback", "takePicture" };
+		for (String cam : cams)
+			mMethods.get(cMedia).add(cam);
+
+		String[] conns = new String[] { "getActiveNetworkInfo", "getActiveNetworkInfoForUid", "getAllNetworkInfo",
+				"getNetworkInfo" };
+		for (String conn : conns)
+			mMethods.get(cNetwork).add(conn);
+
+		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation",
+				"requestLocationUpdates", "requestSingleUpdate" };
+		for (String loc : locs)
+			mMethods.get(cLocation).add(loc);
+
+		mMethods.get(cMedia).add("setOutputFile");
+
+		String[] nets = new String[] { "getByInetAddress", "getByName", "getHardwareAddress", "getInetAddresses",
+				"getInterfaceAddresses", "getNetworkInterfaces" };
+		for (String net : nets)
+			mMethods.get(cNetwork).add(net);
+
+		mMethods.get(cInternet).add("getPackageGids");
+		mMethods.get(cStorage).add("getPackageGids");
+
+		mMethods.get(cIdentification).add("getString");
+
+		mMethods.get(cMessages).add("getAllMessagesFromIcc");
+
+		// SMS manager
+		String[] smses = new String[] { "sendDataMessage", "sendMultipartTextMessage", "sendTextMessage" };
+		for (String sms : smses)
+			mMethods.get(cMessages).add(sms);
+
+		// TODO: system properties
+
+		String[] tlocs = new String[] { "disableLocationUpdates", "enableLocationUpdates", "getAllCellInfo",
+				"getCellLocation", "getNeighboringCellInfo" };
+		for (String tloc : tlocs)
+			mMethods.get(cLocation).add(tloc);
+
+		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
+				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getNetworkCountryIso", "getNetworkOperator",
+				"getNetworkOperatorName", "getSimCountryIso", "getSimOperator", "getSimOperatorName",
+				"getSimSerialNumber", "getSubscriberId", "getVoiceMailAlphaTag", "getVoiceMailNumber", "listen" };
+		for (String phone : phones)
+			mMethods.get(cPhone).add(phone);
+
+		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults" };
+		for (String wifi : wifis)
+			mMethods.get(cNetwork).add(wifi);
+
+		// TODO: intents
+
+		// TODO: providers
 	}
 
 	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {
-		// TODO: register method name for more granularity
-		if (restrictionName != null && !mRestrictions.containsKey(restrictionName))
+		if (restrictionName != null && !mPermissions.containsKey(restrictionName))
 			XUtil.log(null, Log.WARN, "Missing restriction " + restrictionName);
+
 		for (String permission : permissions)
-			if (!mRestrictions.get(restrictionName).contains(permission))
+			if (!mPermissions.get(restrictionName).contains(permission))
 				XUtil.log(null, Log.WARN, "Missing permission " + permission);
+
+		if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
+			XUtil.log(null, Log.WARN, "Missing method " + methodName);
 	}
 
 	public static List<String> getRestrictions(Context context) {
-		List<String> listRestriction = new ArrayList<String>(mRestrictions.keySet());
+		List<String> listRestriction = Arrays.asList(cRestrictionNames);
 		if (!Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
 				Boolean.FALSE.toString())))
 			listRestriction.remove(cBoot);
@@ -125,7 +192,11 @@ public class XRestriction {
 	}
 
 	public static List<String> getPermissions(String restrictionName) {
-		return mRestrictions.get(restrictionName);
+		return mPermissions.get(restrictionName);
+	}
+
+	public static List<String> getMethods(String restrictionName) {
+		return mMethods.get(restrictionName);
 	}
 
 	public static boolean hasInternet(Context context, String packageName) {
@@ -136,7 +207,7 @@ public class XRestriction {
 
 	@SuppressLint("DefaultLocale")
 	public static boolean hasPermission(Context context, String packageName, String restrictionName) {
-		List<String> listPermission = mRestrictions.get(restrictionName);
+		List<String> listPermission = mPermissions.get(restrictionName);
 		if (listPermission == null || listPermission.size() == 0)
 			return true;
 
@@ -169,8 +240,8 @@ public class XRestriction {
 	}
 
 	@SuppressLint("DefaultLocale")
-	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName, boolean usage,
-			boolean useCache) {
+	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName,
+			String methodName, boolean usage, boolean useCache) {
 		try {
 			// Check uid
 			if (uid <= 0) {
@@ -187,13 +258,13 @@ public class XRestriction {
 			}
 
 			// Check cache
-			String key = String.format("%d.%s", uid, restrictionName);
+			String keyCache = String.format("%d.%s.%s", uid, restrictionName, methodName);
 			if (useCache)
 				synchronized (mRestrictionCache) {
-					if (mRestrictionCache.containsKey(key)) {
-						CacheEntry entry = mRestrictionCache.get(key);
+					if (mRestrictionCache.containsKey(keyCache)) {
+						CacheEntry entry = mRestrictionCache.get(keyCache);
 						if (entry.isExpired())
-							mRestrictionCache.remove(key);
+							mRestrictionCache.remove(keyCache);
 						else {
 							logRestriction(hook, context, uid, "get", restrictionName, entry.isRestricted(), true);
 							return entry.isRestricted();
@@ -212,7 +283,6 @@ public class XRestriction {
 					XUtil.logStack(hook);
 				} else {
 					// Query restriction
-					String methodName = (hook == null ? null : hook.getMethodName());
 					Cursor cursor = contentResolver.query(XPrivacyProvider.URI_RESTRICTION, null, restrictionName,
 							new String[] { Integer.toString(uid), Boolean.toString(usage), methodName }, null);
 					if (cursor == null) {
@@ -236,13 +306,13 @@ public class XRestriction {
 
 			// Use fallback
 			if (fallback)
-				restricted = XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName);
+				restricted = XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
 
 			// Add to cache
 			synchronized (mRestrictionCache) {
-				if (mRestrictionCache.containsKey(key))
-					mRestrictionCache.remove(key);
-				mRestrictionCache.put(key, new CacheEntry(restricted));
+				if (mRestrictionCache.containsKey(keyCache))
+					mRestrictionCache.remove(keyCache);
+				mRestrictionCache.put(keyCache, new CacheEntry(restricted));
 			}
 
 			// Result
@@ -254,7 +324,8 @@ public class XRestriction {
 		}
 	}
 
-	public static void setRestricted(XHook hook, Context context, int uid, String restrictionName, boolean restricted) {
+	public static void setRestricted(XHook hook, Context context, int uid, String restrictionName, String methodName,
+			boolean restricted) {
 		// Check context
 		if (context == null) {
 			XUtil.log(hook, Log.WARN, "context is null");
@@ -277,6 +348,7 @@ public class XRestriction {
 		// Set restrictions
 		ContentValues values = new ContentValues();
 		values.put(XPrivacyProvider.COL_UID, uid);
+		values.put(XPrivacyProvider.COL_METHOD, methodName);
 		values.put(XPrivacyProvider.COL_RESTRICTED, Boolean.toString(restricted));
 		contentResolver.update(XPrivacyProvider.URI_RESTRICTION, values, restrictionName, null);
 
