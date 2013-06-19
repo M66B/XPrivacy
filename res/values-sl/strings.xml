@@ -17,7 +17,7 @@
     <string name="menu_about">O programu</string>
     <string name="msg_noupdate">Na voljo ni posodobitev</string>
     <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
-    <string name="msg_licensed" formatted="false">Licensed to: %s</string>
+    <string name="msg_licensed" formatted="false">Licencirano na: %s</string>
     <string name="restrict_accounts">Računi (Google, Facebook, itd)</string>
     <string name="restrict_boot">Zagon (zagon programa ob zagonu sistema)</string>
     <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>
@@ -33,7 +33,7 @@
     <string name="restrict_phone">Telefon (ID, številke, klici)</string>
     <string name="restrict_storage">Zunanja shramba (spominska kartica)</string>
     <string name="restrict_system">Sistem (nameščeni programi)</string>
-    <string name="restrict_view">Prikaz (brskalnik)</string>
+    <string name="restrict_view">Pogled (brskalnik)</string>
     <string name="settings_restrict">Oblkjukaj za omejitev pravic:</string>
     <string name="settings_expert">Napredni način</string>
     <string name="settings_lat">Geografska širina</string>
