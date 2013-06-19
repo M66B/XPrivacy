@@ -184,7 +184,7 @@ public class XRestriction {
 	}
 
 	public static List<String> getRestrictions(Context context) {
-		List<String> listRestriction = Arrays.asList(cRestrictionNames);
+		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
 		if (!Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
 				Boolean.FALSE.toString())))
 			listRestriction.remove(cBoot);
