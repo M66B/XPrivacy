@@ -203,7 +203,8 @@ public class XPrivacyProvider extends ContentProvider {
 
 			// Update restriction
 			SharedPreferences.Editor editor = prefs.edit();
-			editor.putString(getRestrictionPref(restrictionName), restrictions);
+			if (methodName == null || !allowed)
+				editor.putString(getRestrictionPref(restrictionName), restrictions);
 			if (methodName != null)
 				editor.putBoolean(getExceptionPref(uid, restrictionName, methodName), allowed);
 			editor.commit();
