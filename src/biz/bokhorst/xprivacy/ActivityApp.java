@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ public class ActivityApp extends Activity {
 
 		// Get package name
 		Bundle extras = getIntent().getExtras();
-		String packageName = extras.getString(cPackageName);
+		final String packageName = extras.getString(cPackageName);
 
 		// Get app info
 		XApplicationInfo xAppInfo = new XApplicationInfo(packageName, this);
@@ -65,6 +66,18 @@ public class ActivityApp extends Activity {
 		ImageView imgIcon = (ImageView) findViewById(R.id.imgAppEntryIcon);
 		imgIcon.setImageDrawable(xAppInfo.getDrawable());
 
+		// Handle icon click
+		imgIcon.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intentApp = getPackageManager().getLaunchIntentForPackage(packageName);
+				if (intentApp != null) {
+					intentApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					view.getContext().startActivity(intentApp);
+				}
+			}
+		});
+
 		// Check if internet access
 		ImageView imgInternet = (ImageView) findViewById(R.id.imgAppEntryInternet);
 		if (!XRestriction.hasInternet(this, packageName))
@@ -72,6 +85,7 @@ public class ActivityApp extends Activity {
 
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
+		lvRestriction.setGroupIndicator(null);
 		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xrestrictionentry, xAppInfo,
 				XRestriction.getRestrictions(this));
 		lvRestriction.setAdapter(mPrivacyListAdapter);
@@ -88,10 +102,13 @@ public class ActivityApp extends Activity {
 		private Context mContext;
 		private XApplicationInfo mAppInfo;
 		private List<String> mRestrictions;
+		private boolean mExpert;
 
 		public RestrictionAdapter(Context context, int resource, XApplicationInfo appInfo, List<String> restrictions) {
 			mAppInfo = appInfo;
 			mRestrictions = restrictions;
+			mExpert = Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
+					Boolean.FALSE.toString()));
 		}
 
 		@Override
@@ -113,9 +130,18 @@ public class ActivityApp extends Activity {
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.xrestrictionentry, parent, false);
+			ImageView imgIndicator = (ImageView) row.findViewById(R.id.imgIndicator);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.ctvName);
+
+			// Indicator state
+			imgIndicator.setImageResource(isExpanded ? android.R.drawable.arrow_up_float
+					: android.R.drawable.arrow_down_float);
+
+			// Disable indicator for empty groups
+			if (!mExpert || getChildrenCount(groupPosition) == 0)
+				imgIndicator.setVisibility(View.INVISIBLE);
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
@@ -167,7 +193,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return XRestriction.getMethodNames(mContext, (String) getGroup(groupPosition)).size();
+			return (mExpert ? XRestriction.getMethodNames(mContext, (String) getGroup(groupPosition)).size() : 0);
 		}
 
 		@Override

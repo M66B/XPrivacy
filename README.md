@@ -372,6 +372,9 @@ Changelog
 * Fixed to strict system restriction category
 * Restrict bluetooth devices / MAC
 * More compatibility checks
+* Granular restrictions in expert mode only
+* Hide indicator when no functions in restriction group
+* Start application from application details icon
 
 **Version 0.24**
 

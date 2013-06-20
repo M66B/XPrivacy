@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import static de.robv.android.xposed.XposedHelpers.findField;
 import biz.bokhorst.xprivacy.R;
 
 import java.io.ByteArrayInputStream;

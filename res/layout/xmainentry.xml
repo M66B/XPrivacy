@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:paddingLeft="4dip" >
+        android:paddingLeft="6dip" >
 
         <ImageView
             android:id="@+id/imgUsed"
@@ -38,8 +38,8 @@
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:gravity="center_vertical"
-        android:paddingLeft="8dip"
-        android:paddingRight="8dip"
+        android:paddingLeft="6dip"
+        android:paddingRight="6dip"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>

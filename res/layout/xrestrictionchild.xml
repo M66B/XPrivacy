@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingLeft="80dip" >
+    android:paddingLeft="60dip" >
 
-    <!-- 32 + 24 + 24 -->
+    <!-- 12 + 6 + 24 + 6 = 48 + 12 = 60 -->
 
     <CheckedTextView
         android:id="@+id/ctvMethodName"
@@ -13,8 +13,8 @@
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:gravity="center_vertical"
-        android:paddingLeft="8dip"
-        android:paddingRight="8dip"
+        android:paddingLeft="6dip"
+        android:paddingRight="6dip"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>
