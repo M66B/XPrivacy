@@ -44,7 +44,7 @@ public class XWifiManager extends XHook {
 					// BSSID
 					try {
 						Field fieldBSSID = findField(WifiInfo.class, "mBSSID");
-						fieldBSSID.set(wInfo, XRestriction.cDefacedMac);
+						fieldBSSID.set(wInfo, XRestriction.getDefacedMac());
 					} catch (Throwable ex) {
 						XUtil.bug(this, ex);
 					}
@@ -60,7 +60,7 @@ public class XWifiManager extends XHook {
 					// MAC address
 					try {
 						Field fieldMAC = findField(WifiInfo.class, "mMacAddress");
-						fieldMAC.set(wInfo, XRestriction.cDefacedMac);
+						fieldMAC.set(wInfo, XRestriction.getDefacedMac());
 					} catch (Throwable ex) {
 						XUtil.bug(this, ex);
 					}
@@ -68,11 +68,11 @@ public class XWifiManager extends XHook {
 					// SSID
 					try {
 						Field fieldSSID = findField(WifiInfo.class, "mSSID");
-						fieldSSID.set(wInfo, XRestriction.cDefaceString);
+						fieldSSID.set(wInfo, XRestriction.getDefacedString());
 					} catch (Throwable ex) {
 						try {
 							Field fieldWifiSsid = findField(WifiInfo.class, "mWifiSsid");
-							fieldWifiSsid.set(wInfo, XRestriction.cDefacedMac);
+							fieldWifiSsid.set(wInfo, XRestriction.getDefacedMac());
 						} catch (Throwable exex) {
 							XUtil.bug(this, exex);
 						}
@@ -83,11 +83,11 @@ public class XWifiManager extends XHook {
 			DhcpInfo dInfo = (DhcpInfo) param.getResult();
 			if (dInfo != null)
 				if (isRestricted(param)) {
-					dInfo.ipAddress = XRestriction.cDefaceIPInt;
-					dInfo.gateway = XRestriction.cDefaceIPInt;
-					dInfo.dns1 = XRestriction.cDefaceIPInt;
-					dInfo.dns2 = XRestriction.cDefaceIPInt;
-					dInfo.serverAddress = XRestriction.cDefaceIPInt;
+					dInfo.ipAddress = XRestriction.getDefacedIPInt();
+					dInfo.gateway = XRestriction.getDefacedIPInt();
+					dInfo.dns1 = XRestriction.getDefacedIPInt();
+					dInfo.dns2 = XRestriction.getDefacedIPInt();
+					dInfo.serverAddress = XRestriction.getDefacedIPInt();
 				}
 		}
 	}

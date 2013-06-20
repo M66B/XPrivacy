@@ -35,7 +35,7 @@ public class XSettingsSecure extends XHook {
 			String name = (String) param.args[1];
 			if (Settings.Secure.ANDROID_ID.equals(name))
 				if (isRestricted(param))
-					param.setResult(Long.toHexString(XRestriction.cDefaceHex));
+					param.setResult(Long.toHexString(XRestriction.getDefacedHex()));
 		}
 	}
 

@@ -45,8 +45,9 @@ public class XNetworkInterface extends XHook {
 				if (isRestricted(param))
 					if (methodName.equals("getHardwareAddress")) {
 						byte[] address = (byte[]) param.getResult();
+						byte[] defaced = XRestriction.getDefacedBytes();
 						for (int i = 0; i < address.length; i++)
-							address[i] = XRestriction.cDefaceBytes[i % XRestriction.cDefaceBytes.length];
+							address[i] = defaced[i % defaced.length];
 						param.setResult(address);
 					} else if (methodName.equals("getInetAddresses")) {
 						@SuppressWarnings("unchecked")

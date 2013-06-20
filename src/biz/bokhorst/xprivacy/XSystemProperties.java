@@ -25,7 +25,7 @@ public class XSystemProperties extends XHook {
 		if (mPropertyName.equals(key))
 			if (isRestricted(param, mPropertyName))
 				if (param.method.getName().equals("get"))
-					param.setResult(XRestriction.cDefaceString);
+					param.setResult(XRestriction.getDefacedString());
 				else
 					param.setResult(param.args[1]);
 	}

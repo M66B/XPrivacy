@@ -60,7 +60,7 @@ public class XActivityThread extends XHook {
 							String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
 							if (phoneNumber != null)
 								if (isRestricted(param, mActionName))
-									intent.putExtra(Intent.EXTRA_PHONE_NUMBER, XRestriction.cDefaceString);
+									intent.putExtra(Intent.EXTRA_PHONE_NUMBER, XRestriction.getDefacedString());
 						}
 					} else if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
 						// Incoming call
@@ -69,7 +69,8 @@ public class XActivityThread extends XHook {
 							String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
 							if (phoneNumber != null) {
 								if (isRestricted(param, mActionName))
-									intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, XRestriction.cDefaceString);
+									intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER,
+											XRestriction.getDefacedString());
 							}
 						}
 					} else

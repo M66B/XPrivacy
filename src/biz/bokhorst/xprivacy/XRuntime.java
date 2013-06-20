@@ -40,9 +40,9 @@ public class XRuntime extends XHook {
 				String command = TextUtils.join(" ", progs);
 				XUtil.log(this, Log.INFO, "exec(" + command + ")");
 				if ((mCommand == null && !command.startsWith("sh") && !command.startsWith("su"))
-						|| command.startsWith(mCommand))
+						|| (command != null && command.startsWith(mCommand)))
 					if (isRestricted(param, mCommand == null ? getMethodName() : mCommand))
-						param.setThrowable(new IOException(XRestriction.cDefaceString));
+						param.setThrowable(new IOException(XRestriction.getDefacedString()));
 			}
 		} else if (isRestricted(param))
 			param.setResult(null);

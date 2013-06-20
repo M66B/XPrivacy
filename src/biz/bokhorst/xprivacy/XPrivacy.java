@@ -209,7 +209,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Build SERIAL
 		if (XRestriction.getRestricted(null, null, Process.myUid(), XRestriction.cIdentification, null, true, false))
-			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", XRestriction.cDefaceString);
+			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", XRestriction.getDefacedString());
 
 		// Load browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {

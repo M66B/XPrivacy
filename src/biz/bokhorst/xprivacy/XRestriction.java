@@ -46,13 +46,6 @@ public class XRestriction {
 			cContacts, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cPhone, cStorage, cShell,
 			cSystem, cView };
 
-	public static final String cDefaceString = "DEFACE";
-	public static final long cDefaceHex = 0xDEFACEL;
-	public static final String cDefacedMac = "de:fa:ce:de:fa:ce";
-	public static final byte[] cDefaceBytes = new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
-	public static final int cDefaceIPInt = 127 + (0 << 8) + (0 << 16) + (1 << 24);
-	public static final byte[] cDefaceIPBytes = new byte[] { 10, 1, 1, 1 };
-
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
 
@@ -460,6 +453,30 @@ public class XRestriction {
 		String packageName = XRestriction.class.getPackage().getName();
 		int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
 		return (stringId == 0 ? null : context.getString(stringId));
+	}
+
+	public static String getDefacedString() {
+		return "DEFACE";
+	}
+
+	public static long getDefacedHex() {
+		return 0xDEFACEL;
+	}
+
+	public static String getDefacedMac() {
+		return "de:fa:ce:de:fa:ce";
+	}
+
+	public static byte[] getDefacedBytes() {
+		return new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
+	}
+
+	public static int getDefacedIPInt() {
+		return 127 + (0 << 8) + (0 << 16) + (1 << 24);
+	}
+
+	public static byte[] getDefacedIPBytes() {
+		return new byte[] { 10, 1, 1, 1 };
 	}
 
 	// Helper methods
