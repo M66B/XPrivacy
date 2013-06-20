@@ -2,7 +2,7 @@ package biz.bokhorst.xprivacy;
 
 import biz.bokhorst.xprivacy.XHook;
 
-import java.util.Set;
+import java.util.HashSet;
 
 import android.bluetooth.BluetoothDevice;
 import android.util.Log;
@@ -31,12 +31,9 @@ public class XBluetoothAdapter extends XHook {
 				String methodName = param.method.getName();
 				if (methodName.equals("getAddress"))
 					param.setResult(XRestriction.cDefacedMac);
-				else if (methodName.equals("getBondedDevices")) {
-					@SuppressWarnings("unchecked")
-					Set<BluetoothDevice> devices = (Set<BluetoothDevice>) param.getResult();
-					devices.clear();
-					param.setResult(devices);
-				} else
+				else if (methodName.equals("getBondedDevices"))
+					param.setResult(new HashSet<BluetoothDevice>());
+				else
 					XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
 			}
 	}
