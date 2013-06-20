@@ -47,7 +47,7 @@
             android:exported="true" >
         </activity>
 
-        <receiver android:name=".XPackageChange" >
+        <receiver android:name=".PackageChange" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />

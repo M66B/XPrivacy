@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -12,7 +13,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-public class XPackageChange extends BroadcastReceiver {
+public class PackageChange extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -26,12 +27,12 @@ public class XPackageChange extends BroadcastReceiver {
 			boolean expert = Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
 					Boolean.FALSE.toString()));
 
-			// TODO: check permission changes when replacing
+			// Log
+			XUtil.log(null, Log.INFO, intent.getAction() + " package=" + packageName + " uid=" + uid + " replacing="
+					+ replacing);
 
 			if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED) && !replacing) {
 				// Package added
-				XUtil.log(null, Log.INFO, "Added package=" + packageName + " uid=" + uid);
-
 				boolean system = false;
 				PackageInfo pInfo = null;
 				PackageManager pm = context.getPackageManager();
@@ -54,8 +55,8 @@ public class XPackageChange extends BroadcastReceiver {
 					resultIntent.putExtra(ActivityApp.cPackageName, packageName);
 					resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
 
-					// Build pending inent
-					PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, resultIntent,
+					// Build pending intent
+					PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
 							PendingIntent.FLAG_UPDATE_CURRENT);
 
 					// Build notification
@@ -66,21 +67,21 @@ public class XPackageChange extends BroadcastReceiver {
 					notificationBuilder.setContentIntent(pendingIntent);
 					notificationBuilder.setWhen(System.currentTimeMillis());
 					notificationBuilder.setAutoCancel(true);
+					Notification notification = notificationBuilder.build();
 
 					// Notify
 					NotificationManager notificationManager = (NotificationManager) context
 							.getSystemService(Context.NOTIFICATION_SERVICE);
-					notificationManager.notify(pInfo.applicationInfo.uid, notificationBuilder.build());
+					notificationManager.notify(pInfo.applicationInfo.uid, notification);
 				}
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 				// Package removed
-				XUtil.log(null, Log.INFO, "Removed package=" + packageName + " uid=" + uid);
 
 				// Remove existing restrictions
 				for (String restrictionName : XRestriction.getRestrictions(context))
 					XRestriction.setRestricted(null, context, uid, restrictionName, null, false);
 
-				// Remove audit trail
+				// Remove usage data
 				XRestriction.deleteUsageData(context, uid);
 			}
 		}

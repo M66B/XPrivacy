@@ -187,8 +187,7 @@ For easy usage, data is restricted by category:
 
 Planned restrictions:
 
-* IPv6 addresses
-* Shell commands
+* Shell commands, including superuser
 
 Limitations
 -----------
@@ -372,6 +371,7 @@ Changelog
 * Fixed text wrapping application info
 * Fixed to strict network restrictions (network state available now)
 * Fixed to strict system restrictions (start activity available now)
+* Fixed multiple installation notifications ([issue](https://github.com/M66B/XPrivacy/issues/42))
 * Restrict bluetooth devices / MAC
 * More compatibility checks
 * Granular restrictions in expert mode only
