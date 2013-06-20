@@ -58,7 +58,7 @@ public class XRestriction {
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
 
-	private final static int cCacheTimeoutMs = 30 * 1000;
+	private final static int cCacheTimeoutMs = 15 * 1000;
 	private static Map<String, List<String>> mPermissions = new LinkedHashMap<String, List<String>>();
 	private static Map<String, List<String>> mMethods = new LinkedHashMap<String, List<String>>();
 	private static Map<String, CacheEntry> mRestrictionCache = new HashMap<String, CacheEntry>();
@@ -362,12 +362,13 @@ public class XRestriction {
 			// Use fallback
 			if (fallback)
 				restricted = XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
-
-			// Add to cache
-			synchronized (mRestrictionCache) {
-				if (mRestrictionCache.containsKey(keyCache))
-					mRestrictionCache.remove(keyCache);
-				mRestrictionCache.put(keyCache, new CacheEntry(restricted));
+			else {
+				// Add to cache
+				synchronized (mRestrictionCache) {
+					if (mRestrictionCache.containsKey(keyCache))
+						mRestrictionCache.remove(keyCache);
+					mRestrictionCache.put(keyCache, new CacheEntry(restricted));
+				}
 			}
 
 			// Result
