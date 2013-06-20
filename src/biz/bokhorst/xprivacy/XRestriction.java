@@ -57,6 +57,7 @@ public class XRestriction {
 	private static Map<String, List<String>> mPermissions = new LinkedHashMap<String, List<String>>();
 	private static Map<String, List<String>> mMethods = new LinkedHashMap<String, List<String>>();
 	private static Map<String, CacheEntry> mRestrictionCache = new HashMap<String, CacheEntry>();
+	private static Map<UsageData, UsageData> mUsageQueue = new LinkedHashMap<UsageData, UsageData>();
 
 	static {
 		// This is a workaround, the idea was to use registerMethod
@@ -281,6 +282,10 @@ public class XRestriction {
 	}
 
 	public static boolean isUsed(Context context, int uid, String restrictionName, String methodName) {
+		return (getUsed(context, uid, restrictionName, methodName) != 0);
+	}
+
+	public static long getUsed(Context context, int uid, String restrictionName, String methodName) {
 		long lastUsage = 0;
 		ContentResolver cr = context.getContentResolver();
 		Cursor cursor = cr.query(XPrivacyProvider.URI_USAGE, null, restrictionName,
@@ -290,7 +295,7 @@ public class XRestriction {
 		cursor.close();
 		boolean used = (lastUsage != 0);
 		logRestriction(null, context, uid, "used", restrictionName, methodName, used, false);
-		return used;
+		return lastUsage;
 	}
 
 	@SuppressLint("DefaultLocale")
@@ -356,13 +361,53 @@ public class XRestriction {
 						}
 						cursor.close();
 					}
+
+					// Send usage data
+					UsageData data = null;
+					do {
+						int size = 0;
+						synchronized (mUsageQueue) {
+							if (mUsageQueue.size() > 0) {
+								data = mUsageQueue.keySet().iterator().next();
+								mUsageQueue.remove(data);
+								size = mUsageQueue.size();
+							} else
+								data = null;
+						}
+						if (data != null) {
+							try {
+								XUtil.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
+								ContentValues values = new ContentValues();
+								values.put(XPrivacyProvider.COL_UID, data.getUid());
+								values.put(XPrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
+								values.put(XPrivacyProvider.COL_METHOD, data.getMethodName());
+								values.put(XPrivacyProvider.COL_USED, data.getTimeStamp());
+								if (contentResolver.update(XPrivacyProvider.URI_USAGE, values, null, null) <= 0)
+									XUtil.log(hook, Log.INFO, "Error updating usage data=" + data);
+							} catch (Throwable ex) {
+								XUtil.bug(hook, ex);
+							}
+						}
+					} while (data != null);
 				}
 			}
 
 			// Use fallback
-			if (fallback)
+			if (fallback) {
+				// Queue usage data
+				UsageData usageData = new UsageData(uid, restrictionName, methodName);
+				synchronized (mUsageQueue) {
+					if (mUsageQueue.containsKey(usageData)) {
+						mUsageQueue.remove(usageData);
+						XUtil.log(hook, Log.INFO, "Replacing usage data=" + usageData);
+					}
+					mUsageQueue.put(usageData, usageData);
+					XUtil.log(hook, Log.INFO, "Queue usage data=" + usageData + " size=" + mUsageQueue.size());
+				}
+
+				// Fallback
 				restricted = XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
-			else {
+			} else {
 				// Add to cache
 				synchronized (mRestrictionCache) {
 					if (mRestrictionCache.containsKey(keyCache))
@@ -406,7 +451,8 @@ public class XRestriction {
 		values.put(XPrivacyProvider.COL_UID, uid);
 		values.put(XPrivacyProvider.COL_METHOD, methodName);
 		values.put(XPrivacyProvider.COL_RESTRICTED, Boolean.toString(restricted));
-		contentResolver.update(XPrivacyProvider.URI_RESTRICTION, values, restrictionName, null);
+		if (contentResolver.update(XPrivacyProvider.URI_RESTRICTION, values, restrictionName, null) <= 0)
+			XUtil.log(hook, Log.INFO, "Error updating restriction=" + restrictionName);
 
 		// Result
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false);
@@ -442,7 +488,8 @@ public class XRestriction {
 		ContentResolver contentResolver = context.getContentResolver();
 		ContentValues values = new ContentValues();
 		values.put(XPrivacyProvider.COL_VALUE, value);
-		contentResolver.update(XPrivacyProvider.URI_SETTING, values, settingName, null);
+		if (contentResolver.update(XPrivacyProvider.URI_SETTING, values, settingName, null) <= 0)
+			XUtil.log(hook, Log.INFO, "Error updating setting=" + settingName);
 		XUtil.log(hook, Log.INFO, String.format("set %s=%s", settingName, value));
 	}
 
@@ -502,8 +549,8 @@ public class XRestriction {
 	// Helper classes
 
 	private static class CacheEntry {
-		public long mTimestamp;
-		public boolean mRestricted;
+		private long mTimestamp;
+		private boolean mRestricted;
 
 		public CacheEntry(boolean restricted) {
 			mTimestamp = new Date().getTime();
@@ -516,6 +563,47 @@ public class XRestriction {
 
 		public boolean isRestricted() {
 			return mRestricted;
+		}
+	}
+
+	private static class UsageData {
+		private Integer mUid;
+		private String mRestrictionName;
+		private String mMethodName;
+		private long mTimeStamp;
+
+		public UsageData(int uid, String restrictionName, String methodName) {
+			mUid = uid;
+			mRestrictionName = restrictionName;
+			mMethodName = methodName;
+			mTimeStamp = new Date().getTime();
+		}
+
+		public int getUid() {
+			return mUid;
+		}
+
+		public String getRestrictionName() {
+			return mRestrictionName;
+		}
+
+		public String getMethodName() {
+			return mMethodName;
+		}
+
+		public long getTimeStamp() {
+			return mTimeStamp;
+		}
+
+		@Override
+		public int hashCode() {
+			return mUid.hashCode() ^ mRestrictionName.hashCode();
+		}
+
+		@Override
+		@SuppressLint("DefaultLocale")
+		public String toString() {
+			return String.format("%d/%s/%s", mUid, mRestrictionName, mMethodName);
 		}
 	}
 }

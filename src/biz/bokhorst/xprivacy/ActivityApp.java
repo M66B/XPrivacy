@@ -1,6 +1,9 @@
 package biz.bokhorst.xprivacy;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -214,16 +217,23 @@ public class ActivityApp extends Activity {
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
 			final String methodName = (String) getChild(groupPosition, childPosition);
+			long lastUsage = XRestriction.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, methodName);
 
 			// Display method name
-			ctvMethodName.setText(methodName);
+			if (lastUsage == 0)
+				ctvMethodName.setText(methodName);
+			else {
+				Date date = new Date(lastUsage);
+				SimpleDateFormat format = new SimpleDateFormat("dd/HH:mm", Locale.US);
+				ctvMethodName.setText(String.format("%s @ %s", methodName, format.format(date)));
+			}
 
 			boolean parentRestricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.getUid(),
 					restrictionName, null, false, false);
 			ctvMethodName.setEnabled(parentRestricted);
 
 			// Display if used
-			if (XRestriction.isUsed(row.getContext(), mAppInfo.getUid(), restrictionName, methodName))
+			if (lastUsage != 0)
 				ctvMethodName.setTypeface(null, Typeface.BOLD_ITALIC);
 
 			// Display restriction

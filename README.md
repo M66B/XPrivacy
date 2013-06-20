@@ -365,7 +365,9 @@ Changelog
 
 **Version 0.27** (in development)
 
-* Randomize/set defaced data
+* Register more usage data
+* Display time of last usage
+* Randomize/set defaced data (planned)
 
 **Version 0.26**
 

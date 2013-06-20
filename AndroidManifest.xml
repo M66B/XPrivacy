@@ -63,8 +63,9 @@
             android:excludeFromRecents="true"
             android:exported="true"
             android:multiprocess="true"
-            android:syncable="false"
-            android:writePermission="biz.bokhorst.xprivacy.provider.WRITE" >
+            android:syncable="false" >
+
+            <!-- android:writePermission="biz.bokhorst.xprivacy.provider.WRITE" -->
         </provider>
     </application>
 

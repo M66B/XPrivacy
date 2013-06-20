@@ -110,12 +110,12 @@ public class XPrivacyProvider extends ContentProvider {
 			} else {
 				// Update usage count
 				if (usage) {
-					long timestamp = new Date().getTime();
+					long timeStamp = new Date().getTime();
 					SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = uprefs.edit();
-					editor.putLong(getUsagePref(uid, restrictionName), timestamp);
+					editor.putLong(getUsagePref(uid, restrictionName), timeStamp);
 					if (methodName != null)
-						editor.putLong(getUsagePref(uid, restrictionName, methodName), timestamp);
+						editor.putLong(getUsagePref(uid, restrictionName, methodName), timeStamp);
 					editor.commit();
 				}
 
@@ -157,7 +157,8 @@ public class XPrivacyProvider extends ContentProvider {
 				cursor.addRow(new Object[] { settingName, prefs.getString(getSettingPref(settingName), null) });
 			return cursor;
 		}
-		throw new IllegalArgumentException();
+
+		throw new IllegalArgumentException(uri.toString());
 	}
 
 	@Override
@@ -165,17 +166,17 @@ public class XPrivacyProvider extends ContentProvider {
 		// Check access
 		enforcePermission();
 
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException(uri.toString());
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
 	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-		// Check access
-		enforcePermission();
-
 		if (sUriMatcher.match(uri) == TYPE_RESTRICTION) {
+			// Check access
+			enforcePermission();
+
 			// Get arguments
 			String restrictionName = selection;
 			int uid = values.getAsInteger(COL_UID);
@@ -211,7 +212,27 @@ public class XPrivacyProvider extends ContentProvider {
 			setPrefFileReadable(PREF_RESTRICTION);
 
 			return 1; // rows
+		} else if (sUriMatcher.match(uri) == TYPE_USAGE) {
+			// Get arguments
+			int uid = values.getAsInteger(COL_UID);
+			String restrictionName = values.getAsString(XPrivacyProvider.COL_RESTRICTION);
+			String methodName = values.getAsString(COL_METHOD);
+			long timeStamp = values.getAsLong(XPrivacyProvider.COL_USED);
+			XUtil.log(null, Log.INFO, String.format("Update usage data %d/%s/%s", uid, restrictionName, methodName));
+
+			// Update usage data
+			SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = uprefs.edit();
+			editor.putLong(getUsagePref(uid, restrictionName), timeStamp);
+			if (methodName != null)
+				editor.putLong(getUsagePref(uid, restrictionName, methodName), timeStamp);
+			editor.commit();
+
+			return 1;
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING) {
+			// Check access
+			enforcePermission();
+
 			// Get arguments
 			String settingName = selection;
 
@@ -223,6 +244,7 @@ public class XPrivacyProvider extends ContentProvider {
 
 			return 1;
 		}
+
 		throw new IllegalArgumentException(uri.toString());
 	}
 
@@ -250,7 +272,8 @@ public class XPrivacyProvider extends ContentProvider {
 			editor.commit();
 			return rows;
 		}
-		throw new IllegalArgumentException();
+
+		throw new IllegalArgumentException(uri.toString());
 	}
 
 	// Public helper methods
