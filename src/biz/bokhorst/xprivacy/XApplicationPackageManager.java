@@ -27,11 +27,11 @@ public class XApplicationPackageManager extends XHook {
 	// public List<PackageInfo> getInstalledPackages(int flags)
 	// public List<PackageInfo> getInstalledThemePackages()
 	// public List<PackageInfo> getPreferredPackages(int flags)
-	// public List<ResolveInfo> queryBroadcastReceivers(Intent intent, int flags)
-	// public List<ProviderInfo> queryContentProviders(String processName, int uid, int flags)
-	// public List<ResolveInfo> queryIntentActivities(Intent intent, int flags)
-	// public List<ResolveInfo> queryIntentActivityOptions(ComponentName caller, Intent[] specifics, Intent intent, int flags)
-	// public List<ResolveInfo> queryIntentServices(Intent intent, int flags)
+	// # public List<ResolveInfo> queryBroadcastReceivers(Intent intent, int flags)
+	// # public List<ProviderInfo> queryContentProviders(String processName, int uid, int flags)
+	// # public List<ResolveInfo> queryIntentActivities(Intent intent, int flags)
+	// # public List<ResolveInfo> queryIntentActivityOptions(ComponentName caller, Intent[] specifics, Intent intent, int flags)
+	// # public List<ResolveInfo> queryIntentServices(Intent intent, int flags)
 	// frameworks/base/core/java/android/app/ApplicationPackageManager.java
 	
 	// @formatter:on

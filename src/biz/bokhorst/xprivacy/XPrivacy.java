@@ -82,13 +82,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		for (String cam : cams)
 			hook(new XCamera(cam, XRestriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
-		// Connectivity manager
-		String[] conns = new String[] { "getActiveNetworkInfo", "getActiveNetworkInfoForUid", "getAllNetworkInfo",
-				"getNetworkInfo" };
-		for (String conn : conns)
-			hook(new XConnectivityManager(conn, XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
-					"android.net.ConnectivityManager");
-
 		// Location manager
 		hook(new XLocationManager("addNmeaListener", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
 				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
@@ -108,8 +101,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.media.MediaRecorder");
 
 		// Network interface
-		String[] nets = new String[] { "getByInetAddress", "getByName", "getHardwareAddress", "getInetAddresses",
-				"getInterfaceAddresses", "getNetworkInterfaces" };
+		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };
 		for (String net : nets)
 			hook(new XNetworkInterface(net, XRestriction.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
 					"java.net.NetworkInterface");

@@ -1,5 +1,9 @@
 package biz.bokhorst.xprivacy;
 
+import static de.robv.android.xposed.XposedHelpers.findField;
+
+import java.lang.reflect.Field;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
@@ -18,13 +22,14 @@ public class XNetworkInterface extends XHook {
 		super(methodName, restrictionName, permissions, null);
 	}
 
-	// public static NetworkInterface getByInetAddress(InetAddress address)
-	// public static NetworkInterface getByName(String interfaceName)
 	// public byte[] getHardwareAddress()
 	// public Enumeration<InetAddress> getInetAddresses()
 	// public List<InterfaceAddress> getInterfaceAddresses()
-	// public static Enumeration<NetworkInterface> getNetworkInterfaces()
 	// libcore/luni/src/main/java/java/net/NetworkInterface.java
+
+	// libcore/luni/src/main/java/java/net/InetAddress.java
+	// libcore/luni/src/main/java/java/net/Inet4Address.java
+	// libcore/luni/src/main/java/java/net/InterfaceAddress.java
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
@@ -35,49 +40,57 @@ public class XNetworkInterface extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		if (param.getResult() != null) {
 			String methodName = param.method.getName();
-			if (methodName.equals("getByInetAddress") || methodName.equals("getByName")) {
-				// Get by InetAddress / name
-				NetworkInterface ni = (NetworkInterface) param.getResult();
-				if (!ni.isLoopback())
-					if (isRestricted(param))
-						param.setResult(null);
-			} else if (methodName.equals("getNetworkInterfaces")) {
-				if (isRestricted(param)) {
-					// Network interfaces
-					@SuppressWarnings("unchecked")
-					Enumeration<NetworkInterface> networks = (Enumeration<NetworkInterface>) param.getResult();
-					List<NetworkInterface> listNetwork = new ArrayList<NetworkInterface>();
-					for (NetworkInterface network : Collections.list(networks))
-						if (network.isLoopback())
-							listNetwork.add(network);
-					param.setResult(Collections.enumeration(listNetwork));
-				}
-			} else {
-				NetworkInterface ni = (NetworkInterface) param.thisObject;
-				if (!ni.isLoopback())
-					if (isRestricted(param))
-						if (methodName.equals("getHardwareAddress")) {
-							// Hardware address
-							byte[] address = (byte[]) param.getResult();
-							for (int i = 0; i < address.length; i++)
-								address[i] = XRestriction.cDefaceBytes[i % XRestriction.cDefaceBytes.length];
-							param.setResult(address);
-						} else if (methodName.equals("getInetAddresses")) {
-							// Inet addresses
-							@SuppressWarnings("unchecked")
-							Enumeration<InetAddress> addresses = (Enumeration<InetAddress>) param.getResult();
-							List<InetAddress> listAddress = new ArrayList<InetAddress>();
-							for (InetAddress address : Collections.list(addresses))
-								if (address.isAnyLocalAddress() || address.isLinkLocalAddress()
-										|| address.isLoopbackAddress())
-									listAddress.add(address);
-							param.setResult(Collections.enumeration(listAddress));
-						} else if (methodName.equals("getInterfaceAddresses"))
-							// Interface addresses
-							param.setResult(new ArrayList<InterfaceAddress>());
-						else
-							XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
-			}
+			NetworkInterface ni = (NetworkInterface) param.thisObject;
+			if (!ni.isLoopback())
+				if (isRestricted(param))
+					if (methodName.equals("getHardwareAddress")) {
+						byte[] address = (byte[]) param.getResult();
+						for (int i = 0; i < address.length; i++)
+							address[i] = XRestriction.cDefaceBytes[i % XRestriction.cDefaceBytes.length];
+						param.setResult(address);
+					} else if (methodName.equals("getInetAddresses")) {
+						@SuppressWarnings("unchecked")
+						Enumeration<InetAddress> addresses = (Enumeration<InetAddress>) param.getResult();
+						List<InetAddress> listAddress = new ArrayList<InetAddress>();
+						for (InetAddress address : Collections.list(addresses))
+							if (address.isAnyLocalAddress() || address.isLoopbackAddress())
+								listAddress.add(address);
+							else
+								listAddress.add(getInetAddressEmpty());
+						param.setResult(Collections.enumeration(listAddress));
+					} else if (methodName.equals("getInterfaceAddresses")) {
+						@SuppressWarnings("unchecked")
+						List<InterfaceAddress> listAddress = (List<InterfaceAddress>) param.getResult();
+						for (InterfaceAddress address : listAddress) {
+							// address
+							try {
+								Field fieldAddress = findField(InterfaceAddress.class, "address");
+								fieldAddress.set(address, getInetAddressEmpty());
+							} catch (Throwable ex) {
+								XUtil.bug(this, ex);
+							}
+
+							// broadcastAddress
+							try {
+								Field fieldBroadcastAddress = findField(InterfaceAddress.class, "broadcastAddress");
+								fieldBroadcastAddress.set(address, getInetAddressEmpty());
+							} catch (Throwable ex) {
+								XUtil.bug(this, ex);
+							}
+						}
+					} else
+						XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
+		}
+	}
+
+	public static InetAddress getInetAddressEmpty() {
+		try {
+			Field unspecified = Inet4Address.class.getDeclaredField("ALL");
+			unspecified.setAccessible(true);
+			return (InetAddress) unspecified.get(Inet4Address.class);
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+			return null;
 		}
 	}
 }

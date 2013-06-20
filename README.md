@@ -188,6 +188,7 @@ For easy usage, data is restricted by category:
 Planned restrictions:
 
 * IPv6 addresses
+* Shell commands
 
 Limitations
 -----------
@@ -208,7 +209,7 @@ Installation
 1. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 1. Enable XPrivacy from the Xposed installer
 1. Reboot into recovery
-1. Flash the Xposed fix for your Android version from [here](http://goo.im/devs/M66B/xprivacy)
+1. Flash the Xposed fix for your Android version (4.1 or 4.2) from [here](http://goo.im/devs/M66B/xprivacy)
 1. Reboot
 
 I do not recommend using XPrivacy in combination with any of the
@@ -369,7 +370,8 @@ Changelog
 
 * Fixed network usage data
 * Fixed text wrapping application info
-* Fixed to strict system restriction category
+* Fixed to strict network restrictions (network state available now)
+* Fixed to strict system restrictions (start activity available now)
 * Restrict bluetooth devices / MAC
 * More compatibility checks
 * Granular restrictions in expert mode only

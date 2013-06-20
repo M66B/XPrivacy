@@ -49,7 +49,8 @@ public class XRestriction {
 	public static final long cDefaceHex = 0xDEFACEL;
 	public static final String cDefacedMac = "de:fa:ce:de:fa:ce";
 	public static final byte[] cDefaceBytes = new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
-	public static final int cDefaceIP = 127 + (0 << 8) + (0 << 16) + (1 << 24);
+	public static final int cDefaceIPInt = 127 + (0 << 8) + (0 << 16) + (1 << 24);
+	public static final byte[] cDefaceIPBytes = new byte[] { 10, 1, 1, 1 };
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
@@ -98,6 +99,7 @@ public class XRestriction {
 		mPermissions.get(cMessages).add("RECEIVE_SMS");
 		mPermissions.get(cNetwork).add("ACCESS_NETWORK_STATE");
 		mPermissions.get(cNetwork).add("ACCESS_WIFI_STATE");
+		mPermissions.get(cNetwork).add("BLUETOOTH");
 		mPermissions.get(cPhone).add("READ_PHONE_STATE");
 		mPermissions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mPermissions.get(cPhone).add("READ_CALL_LOG");
@@ -136,12 +138,6 @@ public class XRestriction {
 		for (String cam : cams)
 			mMethods.get(cMedia).add(cam);
 
-		// Connectivity manager
-		String[] conns = new String[] { "getActiveNetworkInfo", "getActiveNetworkInfoForUid", "getAllNetworkInfo",
-				"getNetworkInfo" };
-		for (String conn : conns)
-			mMethods.get(cNetwork).add(conn);
-
 		// Location manager
 		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
 				"requestLocationUpdates", "requestSingleUpdate" };
@@ -152,8 +148,7 @@ public class XRestriction {
 		mMethods.get(cMedia).add("setOutputFile");
 
 		// Network interface
-		String[] nets = new String[] { "getByInetAddress", "getByName", "getHardwareAddress", "getInetAddresses",
-				"getInterfaceAddresses", "getNetworkInterfaces" };
+		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };
 		for (String net : nets)
 			mMethods.get(cNetwork).add(net);
 
