@@ -153,6 +153,7 @@ public class XRestriction {
 		mMethods.get(cShell).add("exec");
 		mMethods.get(cShell).add("load");
 		mMethods.get(cShell).add("loadLibrary");
+		mMethods.get(cShell).add("start");
 
 		// Settings secure
 		mMethods.get(cIdentification).add("getString");

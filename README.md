@@ -180,7 +180,7 @@ For easy usage, data is restricted by category:
 * Shell
 	* Linux shell
 	* Superuser shell
-	* Load library
+	* Load/library
 * System
 	* return an empty list of installed applications
 * View
@@ -363,9 +363,13 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
-**Version 0.26** (in development)
+**Version 0.27** (in development)
 
 * Randomize/set defaced data
+
+**Version 0.26**
+
+* Restrict process builder (shell, superuser)
 
 **Version 0.25**
 
