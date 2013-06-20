@@ -266,7 +266,7 @@ public class XRestriction {
 		try {
 			PackageManager pm = context.getPackageManager();
 			PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
-			if (pInfo != null)
+			if (pInfo != null && pInfo.requestedPermissions != null)
 				for (String rPermission : pInfo.requestedPermissions)
 					for (String permission : listPermission)
 						if (rPermission.toLowerCase().contains(permission.toLowerCase()))

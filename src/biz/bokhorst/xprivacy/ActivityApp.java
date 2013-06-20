@@ -43,13 +43,9 @@ public class ActivityApp extends Activity {
 		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
 		tvVersion.setText(xAppInfo.getVersion());
 
-		// Display package name
+		// Display package name / uid
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
-		tvPackageName.setText(packageName);
-
-		// Display uid
-		TextView tvUid = (TextView) findViewById(R.id.tvUid);
-		tvUid.setText(Integer.toString(xAppInfo.getUid()));
+		tvPackageName.setText(String.format("%s %d", packageName, xAppInfo.getUid()));
 
 		// Handle help
 		tvAppName.setOnClickListener(new View.OnClickListener() {
