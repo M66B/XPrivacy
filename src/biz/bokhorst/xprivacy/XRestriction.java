@@ -126,6 +126,10 @@ public class XRestriction {
 		// Audio record
 		mMethods.get(XRestriction.cMedia).add("startRecording");
 
+		// Bluetooth adapter
+		mMethods.get(XRestriction.cNetwork).add("getAddress");
+		mMethods.get(XRestriction.cNetwork).add("getBondedDevices");
+
 		// Camera
 		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
 				"setOneShotPreviewCallback", "takePicture" };

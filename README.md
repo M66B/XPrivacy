@@ -147,12 +147,14 @@ For easy usage, data is restricted by category:
 	* return an empty list of voicemails
 * Network
 	* return fake IP's
-	* return fake MAC addresses
+	* return fake MAC's
 	* return fake BSSID/SSID
 	* return fake network information
 	* return an empty list of networks
 	* return an empty list of configured Wi-Fi networks
 	* return an empty list of Wi-Fi scan results
+	* return an empty list of bluetooth devices
+	* return fake MAC bluetooth
 * Phone:
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID
@@ -186,7 +188,6 @@ For easy usage, data is restricted by category:
 Planned restrictions:
 
 * IPv6 addresses
-* BT MAC addresses
 
 Limitations
 -----------
@@ -369,6 +370,7 @@ Changelog
 * Fixed network usage data
 * Fixed text wrapping application info
 * Fixed to strict system restriction category
+* Restrict bluetooth devices / MAC
 
 **Version 0.24**
 

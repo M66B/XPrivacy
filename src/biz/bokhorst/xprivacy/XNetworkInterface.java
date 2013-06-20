@@ -72,11 +72,10 @@ public class XNetworkInterface extends XHook {
 										|| address.isLoopbackAddress())
 									listAddress.add(address);
 							param.setResult(Collections.enumeration(listAddress));
-						} else if (methodName.equals("getInterfaceAddresses")) {
+						} else if (methodName.equals("getInterfaceAddresses"))
 							// Interface addresses
-							List<InterfaceAddress> listAddress = new ArrayList<InterfaceAddress>();
-							param.setResult(Collections.enumeration(listAddress));
-						} else
+							param.setResult(new ArrayList<InterfaceAddress>());
+						else
 							XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
 			}
 		}
