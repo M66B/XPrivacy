@@ -136,6 +136,9 @@ For easy usage, data is restricted by category:
 	* return an empty list of (neighboring) cell info
 	* prevents proximity alerts from being set
 	* prevents sending NMEA data to an application
+	* prevent phone state from being sent to an application
+		* Cell info changed
+		* Cell location changed
 * Media
 	* prevent recording audio (including from the microphone)
 	* prevent taking pictures
@@ -147,14 +150,11 @@ For easy usage, data is restricted by category:
 	* return an empty list of voicemails
 * Network
 	* return fake IP's
-	* return fake MAC's
+	* return fake MAC's (network, Wi-Fi, bluetooth)
 	* return fake BSSID/SSID
-	* return fake network information
-	* return an empty list of networks
-	* return an empty list of configured Wi-Fi networks
 	* return an empty list of Wi-Fi scan results
+	* return an empty list of configured Wi-Fi networks
 	* return an empty list of bluetooth devices
-	* return fake MAC bluetooth
 * Phone:
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID
@@ -171,8 +171,6 @@ For easy usage, data is restricted by category:
 	* prevent phone state from being sent to an application
 		* Call forwarding indication
 		* Call state changed (ringing, off-hook)
-		* Cell info changed
-		* Cell location changed
 		* Mobile data connection state change / being used
 		* Message waiting indication
 		* Service state changed (service/no service)
