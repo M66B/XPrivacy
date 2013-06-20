@@ -77,7 +77,7 @@ Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xpose
 which is provided as download for both Android version 4.1 and 4.2.
 
 
-**Realizing XPrivacy was a lot of work, so please support this project**
+**XPrivacy was a lot of work, so please support this project**
 
 Donate a few dollars for the [pro version](http://www.faircode.eu/xprivacy/) or
 
@@ -179,17 +179,14 @@ For easy usage, data is restricted by category:
 	* revoke permission to the external storage (SD card)
 * System
 	* return an empty list of installed applications
-	* return an empty list of content providers
-	* return an empty list of broadcast receivers
-	* return an empty list of actions that can be performed
 * View
 	* prevent links from opening in the browser
 	* you will be notified if an application tries to open a link
 
 Planned restrictions:
 
-* Wi-Fi IPv6 addresses
-* [IMEI](http://en.wikipedia.org/wiki/International_Mobile_Station_Equipment_Identity) numbers (system properties)
+* IPv6 addresses
+* BT MAC addresses
 
 Limitations
 -----------
@@ -200,10 +197,13 @@ Installation
 ------------
 
 1. Requirement: Android 4.1+ (JellyBean), check with *System Settings* > *About phone* > *Android version*
-1. Root your device, the procedure varies depending on the brand and model of your device
 1. **Make a backup**
-1. Enabled *System settings* > *Security* > *Unknown sources*
-1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), *including the disabler* ([MIUI](http://en.miui.com/) is not supported by Xposed)
+1. If not done already: root your device; the procedure depends on the brand and model of your device
+1. Enable *System settings* > *Security* > *Unknown sources*
+1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
+	* Be sure to follow all installation steps
+	* Download and copy the Xposed disabler to your SD card to disable Xposed in case of troubles
+	* [MIUI](http://en.miui.com/) is not supported by Xposed
 1. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 1. Enable XPrivacy from the Xposed installer
 1. Reboot into recovery
@@ -364,7 +364,13 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
-**Version 0.24** (in development)
+**Version 0.25** (in development)
+
+* Fixed network usage data
+* Fixed text wrapping application info
+* Fixed to strict system restriction category
+
+**Version 0.24**
 
 * Display application version
 * More granular restrictions

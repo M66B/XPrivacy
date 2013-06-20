@@ -48,7 +48,7 @@ public class XNetworkInterface extends XHook {
 					Enumeration<NetworkInterface> networks = (Enumeration<NetworkInterface>) param.getResult();
 					List<NetworkInterface> listNetwork = new ArrayList<NetworkInterface>();
 					for (NetworkInterface network : Collections.list(networks))
-						if (!network.isLoopback())
+						if (network.isLoopback())
 							listNetwork.add(network);
 					param.setResult(Collections.enumeration(listNetwork));
 				}
@@ -68,7 +68,8 @@ public class XNetworkInterface extends XHook {
 							Enumeration<InetAddress> addresses = (Enumeration<InetAddress>) param.getResult();
 							List<InetAddress> listAddress = new ArrayList<InetAddress>();
 							for (InetAddress address : Collections.list(addresses))
-								if (!address.isLoopbackAddress())
+								if (address.isAnyLocalAddress() || address.isLinkLocalAddress()
+										|| address.isLoopbackAddress())
 									listAddress.add(address);
 							param.setResult(Collections.enumeration(listAddress));
 						} else if (methodName.equals("getInterfaceAddresses")) {
