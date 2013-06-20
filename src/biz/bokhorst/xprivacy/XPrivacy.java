@@ -58,8 +58,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Application package manager
 		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getInstalledThemePackages",
-				"getPreferredPackages", "queryBroadcastReceivers", "queryContentProviders", "queryIntentActivities",
-				"queryIntentActivityOptions", "queryIntentServices" };
+				"getPreferredPackages" };
+		// "queryBroadcastReceivers", "queryContentProviders",
+		// "queryIntentActivities", "queryIntentActivityOptions",
+		// "queryIntentServices"
 		for (String am : ams)
 			hook(new XApplicationPackageManager(am, XRestriction.cSystem, new String[] {}),
 					"android.app.ApplicationPackageManager");
