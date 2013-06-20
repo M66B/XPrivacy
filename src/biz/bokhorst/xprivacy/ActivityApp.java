@@ -140,8 +140,11 @@ public class ActivityApp extends Activity {
 					: android.R.drawable.arrow_down_float);
 
 			// Disable indicator for empty groups
-			if (!mExpert || getChildrenCount(groupPosition) == 0)
-				imgIndicator.setVisibility(View.INVISIBLE);
+			if (mExpert) {
+				if (getChildrenCount(groupPosition) == 0)
+					imgIndicator.setVisibility(View.INVISIBLE);
+			} else
+				imgIndicator.setVisibility(View.GONE);
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
