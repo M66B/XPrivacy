@@ -1,7 +1,6 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
-import java.net.InetAddress;
 import java.util.ArrayList;
 
 import android.net.DhcpInfo;
@@ -53,7 +52,7 @@ public class XWifiManager extends XHook {
 					// IP address
 					try {
 						Field fieldIp = findField(WifiInfo.class, "mIpAddress");
-						fieldIp.set(wInfo, InetAddress.getLocalHost());
+						fieldIp.set(wInfo, XNetworkInterface.getInetAddressEmpty());
 					} catch (Throwable ex) {
 						XUtil.bug(this, ex);
 					}
@@ -71,7 +70,12 @@ public class XWifiManager extends XHook {
 						Field fieldSSID = findField(WifiInfo.class, "mSSID");
 						fieldSSID.set(wInfo, XRestriction.cDefaceString);
 					} catch (Throwable ex) {
-						XUtil.bug(this, ex);
+						try {
+							Field fieldWifiSsid = findField(WifiInfo.class, "mWifiSsid");
+							fieldWifiSsid.set(wInfo, XRestriction.cDefacedMac);
+						} catch (Throwable exex) {
+							XUtil.bug(this, exex);
+						}
 					}
 				}
 		} else if (param.method.getName().equals("getDhcpInfo")) {
@@ -79,11 +83,11 @@ public class XWifiManager extends XHook {
 			DhcpInfo dInfo = (DhcpInfo) param.getResult();
 			if (dInfo != null)
 				if (isRestricted(param)) {
-					dInfo.ipAddress = XRestriction.cDefaceIP;
-					dInfo.gateway = XRestriction.cDefaceIP;
-					dInfo.dns1 = XRestriction.cDefaceIP;
-					dInfo.dns2 = XRestriction.cDefaceIP;
-					dInfo.serverAddress = XRestriction.cDefaceIP;
+					dInfo.ipAddress = XRestriction.cDefaceIPInt;
+					dInfo.gateway = XRestriction.cDefaceIPInt;
+					dInfo.dns1 = XRestriction.cDefaceIPInt;
+					dInfo.dns2 = XRestriction.cDefaceIPInt;
+					dInfo.serverAddress = XRestriction.cDefaceIPInt;
 				}
 		}
 	}

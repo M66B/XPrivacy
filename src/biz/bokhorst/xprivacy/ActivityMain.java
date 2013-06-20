@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.net.InterfaceAddress;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -267,8 +268,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 		// WifiInfo
 		if (!checkField(WifiInfo.class, "mBSSID") || !checkField(WifiInfo.class, "mIpAddress")
-				|| !checkField(WifiInfo.class, "mMacAddress") || !checkField(WifiInfo.class, "mSSID")) {
+				|| !checkField(WifiInfo.class, "mMacAddress")
+				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid"))) {
 			String msg = "Incompatible WifiInfo";
+			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+			toast.show();
+		}
+
+		// InterfaceAddress
+		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
+				|| XNetworkInterface.getInetAddressEmpty() == null) {
+			String msg = "Incompatible InterfaceAddress";
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
