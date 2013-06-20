@@ -363,7 +363,11 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
-**Version 0.25** (in development)
+**Version 0.26** (in development)
+
+* Randomize/set defaced data
+
+**Version 0.25**
 
 * Fixed network usage data
 * Fixed text wrapping application info

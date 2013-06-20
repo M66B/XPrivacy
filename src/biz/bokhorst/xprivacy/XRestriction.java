@@ -412,10 +412,12 @@ public class XRestriction {
 	}
 
 	public static String getSetting(XHook hook, Context context, String settingName, String defaultValue) {
+		// TODO: settings caching
 		String value = defaultValue;
 		if (context == null) {
 			XUtil.log(hook, Log.WARN, "context is null");
 			XUtil.logStack(hook);
+			// TODO: fallback
 		} else
 			try {
 				ContentResolver cr = context.getContentResolver();
