@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import static de.robv.android.xposed.XposedHelpers.findField;
 import biz.bokhorst.xprivacy.R;
 
 import java.io.ByteArrayInputStream;
@@ -45,6 +46,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -235,14 +237,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 		// Check location manager
 		if (!checkField(getSystemService(Context.LOCATION_SERVICE), "mContext", Context.class)) {
-			String msg = "No context for location manager";
+			String msg = "Incompatible location manager";
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
 
 		// Check package manager
 		if (!checkField(getPackageManager(), "mContext", Context.class)) {
-			String msg = "No context for package manager";
+			String msg = "Incompatible package manager";
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
@@ -252,14 +254,22 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 		// Check content resolver
 		if (!checkField(getContentResolver(), "mContext", Context.class)) {
-			String msg = "No context for content resolver";
+			String msg = "Incompatible content resolver";
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
 
 		// Check telephony manager
 		if (!checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class)) {
-			String msg = "No context for telephony manager";
+			String msg = "Incompatible telephony manager";
+			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+			toast.show();
+		}
+
+		// WifiInfo
+		if (!checkField(WifiInfo.class, "mBSSID") || !checkField(WifiInfo.class, "mIpAddress")
+				|| !checkField(WifiInfo.class, "mMacAddress") || !checkField(WifiInfo.class, "mSSID")) {
+			String msg = "Incompatible WifiInfo";
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
@@ -289,6 +299,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			XUtil.bug(null, ex);
 		}
 		return false;
+	}
+
+	private boolean checkField(Class<?> clazz, String fieldName) {
+		try {
+			clazz.getDeclaredField(fieldName);
+			return true;
+		} catch (Throwable ex) {
+			XUtil.bug(null, ex);
+			return false;
+		}
 	}
 
 	private void optionSettings() {

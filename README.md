@@ -332,7 +332,7 @@ Great care is taken to develop XPrivacy, nevertheless data could leak, although 
 Google will probably remove XPrivacy from the Play store eventually,
 since it will be able to block advertisements (for example by revoking internet permissions).
 
-**(14) I get 'No context for ...' !**
+**(14) I get 'Incompatible ...' !**
 
 A check of XPrivacy failed, resulting in potential data leakage.
 Please report the exact message in the XDA thread,
@@ -371,6 +371,7 @@ Changelog
 * Fixed text wrapping application info
 * Fixed to strict system restriction category
 * Restrict bluetooth devices / MAC
+* More compatibility checks
 
 **Version 0.24**
 
