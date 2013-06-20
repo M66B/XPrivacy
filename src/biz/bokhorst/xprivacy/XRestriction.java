@@ -38,12 +38,13 @@ public class XRestriction {
 	public static final String cNetwork = "network";
 	public static final String cPhone = "phone";
 	public static final String cStorage = "storage";
+	public static final String cShell = "shell";
 	public static final String cSystem = "system";
 	public static final String cView = "view";
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBoot, cBrowser, cCalendar, cCalling,
-			cContacts, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cPhone, cStorage, cSystem,
-			cView };
+			cContacts, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cPhone, cStorage, cShell,
+			cSystem, cView };
 
 	public static final String cDefaceString = "DEFACE";
 	public static final long cDefaceHex = 0xDEFACEL;
@@ -154,7 +155,11 @@ public class XRestriction {
 		mMethods.get(cStorage).add("getPackageGids");
 
 		// Runtime
-		mMethods.get(cSystem).add("exec");
+		mMethods.get(cShell).add("sh");
+		mMethods.get(cShell).add("su");
+		mMethods.get(cShell).add("exec");
+		mMethods.get(cShell).add("load");
+		mMethods.get(cShell).add("loadLibrary");
 
 		// Settings secure
 		mMethods.get(cIdentification).add("getString");
@@ -190,8 +195,10 @@ public class XRestriction {
 		for (String wifi : wifis)
 			mMethods.get(cNetwork).add(wifi);
 
-		// Intent receive: calling
+		// Intent receive: boot
 		mMethods.get(cBoot).add(Intent.ACTION_BOOT_COMPLETED);
+
+		// Intent receive: calling
 		mMethods.get(cPhone).add(Intent.ACTION_NEW_OUTGOING_CALL);
 		mMethods.get(cPhone).add(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
 

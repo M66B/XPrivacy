@@ -32,6 +32,7 @@
     <string name="restrict_network">Network (addresses)</string>
     <string name="restrict_phone">Τηλέφωνο (στοιχεία, αριθμοί, κλήσεις)</string>
     <string name="restrict_storage">Εξ. αποθηκευτικός χώρος (κάρτα SD)</string>
+    <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">Σύστημα (εγκατεστημένες εφαρμογές)</string>
     <string name="restrict_view">View (browser)</string>
     <string name="settings_restrict">Επιλέξτε για περιορισμό:</string>

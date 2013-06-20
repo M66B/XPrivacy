@@ -110,7 +110,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE" }), "com.android.server.pm.PackageManagerService");
 
 		// Runtime
-		hook(new XRuntime("exec", XRestriction.cSystem, new String[] {}), "java.lang.Runtime");
+		hook(new XRuntime("exec", XRestriction.cShell, new String[] {}, "sh"), "java.lang.Runtime");
+		hook(new XRuntime("exec", XRestriction.cShell, new String[] {}, "su"), "java.lang.Runtime");
+		hook(new XRuntime("exec", XRestriction.cShell, new String[] {}, null), "java.lang.Runtime");
+		hook(new XRuntime("load", XRestriction.cShell, new String[] {}, null), "java.lang.Runtime");
+		hook(new XRuntime("loadLibrary", XRestriction.cShell, new String[] {}, null), "java.lang.Runtime");
 
 		// Settings secure
 		hook(new XSettingsSecure("getString", XRestriction.cIdentification), "android.provider.Settings.Secure");
@@ -159,9 +163,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hook(new XWifiManager(wifi, XRestriction.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
 					"android.net.wifi.WifiManager");
 
-		// Intent receive: calling
+		// Intent receive: boot
 		hook(new XActivityThread("handleReceiver", XRestriction.cBoot, new String[] { "RECEIVE_BOOT_COMPLETED" },
 				Intent.ACTION_BOOT_COMPLETED), "android.app.ActivityThread", false);
+
+		// Intent receive: calling
 		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, new String[] { "PROCESS_OUTGOING_CALLS" },
 				Intent.ACTION_NEW_OUTGOING_CALL), "android.app.ActivityThread", false);
 		hook(new XActivityThread("handleReceiver", XRestriction.cPhone, new String[] { "READ_PHONE_STATE" },

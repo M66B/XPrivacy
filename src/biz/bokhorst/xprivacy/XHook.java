@@ -10,9 +10,9 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public abstract class XHook {
 
-	protected String mMethodName;
-	protected String mRestrictionName;
-	protected String mSpecifier;
+	private String mMethodName;
+	private String mRestrictionName;
+	private String mSpecifier;
 
 	public XHook(String methodName, String restrictionName, String[] permissions, String specifier) {
 		// Sanity check

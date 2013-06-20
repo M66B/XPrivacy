@@ -32,6 +32,7 @@
     <string name="restrict_network">Omrežje (naslovi)</string>
     <string name="restrict_phone">Telefon (ID, številke, klici)</string>
     <string name="restrict_storage">Zunanja shramba (spominska kartica)</string>
+    <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">Sistem (nameščeni programi)</string>
     <string name="restrict_view">Pogled (brskalnik)</string>
     <string name="settings_restrict">Oblkjukaj za omejitev pravic:</string>

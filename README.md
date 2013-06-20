@@ -177,15 +177,15 @@ For easy usage, data is restricted by category:
 		* Signal level changed
 * Storage
 	* revoke permission to the external storage (SD card)
+* Shell
+	* Linux shell
+	* Superuser shell
+	* Load library
 * System
 	* return an empty list of installed applications
 * View
 	* prevent links from opening in the browser
 	* you will be notified if an application tries to open a link
-
-Planned restrictions:
-
-* Shell commands, including superuser
 
 Limitations
 -----------
@@ -370,11 +370,13 @@ Changelog
 * Fixed to strict network restrictions (network state available now)
 * Fixed to strict system restrictions (start activity available now)
 * Fixed multiple installation notifications ([issue](https://github.com/M66B/XPrivacy/issues/42))
-* Restrict bluetooth devices / MAC
+* Restrict bluetooth MAC / devices
 * More compatibility checks
 * Granular restrictions in expert mode only
 * Hide indicator when no functions in restriction group
 * Start application from application details icon
+* Restrict shell commands, including superuser
+* Restrict loading libraries (category shell)
 
 **Version 0.24**
 

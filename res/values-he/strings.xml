@@ -32,6 +32,7 @@
     <string name="restrict_network">רשת (כתובות)</string>
     <string name="restrict_phone">טלפון(מזהה, מספרים, שיחות)</string>
     <string name="restrict_storage">זיכרון חיצוני</string>
+    <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">מערכת(אפליקציות מוגבלות)</string>
     <string name="restrict_view">גישה לממשק משתמש</string>
     <string name="settings_restrict">סמן כדי להגביל</string>

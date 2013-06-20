@@ -2,13 +2,17 @@ package biz.bokhorst.xprivacy;
 
 import java.io.IOException;
 
+import android.text.TextUtils;
 import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XRuntime extends XHook {
 
-	public XRuntime(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions, null);
+	private String mCommand;
+
+	public XRuntime(String methodName, String restrictionName, String[] permissions, String command) {
+		super(methodName, restrictionName, permissions, command);
+		mCommand = command;
 	}
 
 	// public Process exec(String[] progArray)
@@ -17,25 +21,31 @@ public class XRuntime extends XHook {
 	// public Process exec(String prog)
 	// public Process exec(String prog, String[] envp)
 	// public Process exec(String prog, String[] envp, File directory)
+	// public void load(String pathName)
+	// public void loadLibrary(String libName)
 	// libcore/luni/src/main/java/java/lang/Runtime.java
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		// Get programs
-		String[] progs;
-		if (String.class.isAssignableFrom(param.args[0].getClass()))
-			progs = new String[] { (String) param.args[0] };
-		else
-			progs = (String[]) param.args[0];
+		if (param.method.getName().equals("exec")) {
+			// Get programs
+			String[] progs;
+			if (String.class.isAssignableFrom(param.args[0].getClass()))
+				progs = new String[] { (String) param.args[0] };
+			else
+				progs = (String[]) param.args[0];
 
-		// Check programs
-		if (progs != null)
-			for (String prog : progs) {
-				XUtil.log(this, Log.INFO, "exec(" + prog + ")");
-				if (prog.startsWith("ip"))
-					if (isRestricted(param))
-						throw new IOException(XRestriction.cDefaceString);
+			// Check programs
+			if (progs != null) {
+				String command = TextUtils.join(" ", progs);
+				XUtil.log(this, Log.INFO, "exec(" + command + ")");
+				if ((mCommand == null && !command.startsWith("sh") && !command.startsWith("su"))
+						|| command.startsWith(mCommand))
+					if (isRestricted(param, mCommand == null ? getMethodName() : mCommand))
+						param.setThrowable(new IOException(XRestriction.cDefaceString));
 			}
+		} else if (isRestricted(param))
+			param.setResult(null);
 	}
 
 	@Override

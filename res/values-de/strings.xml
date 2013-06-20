@@ -32,6 +32,7 @@
     <string name="restrict_network">Network (addresses)</string>
     <string name="restrict_phone">Telefon (ID, Nummern, Anrufe)</string>
     <string name="restrict_storage">Externer Speicher (SD Karte)</string>
+    <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>
     <string name="restrict_view">View (browser)</string>
     <string name="settings_restrict">Haken setzen zum einschränken:</string>

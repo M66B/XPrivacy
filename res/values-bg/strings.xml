@@ -32,6 +32,7 @@
     <string name="restrict_network">Мрежа (адреси)</string>
     <string name="restrict_phone">Телефон (ID, номера, обаждания)</string>
     <string name="restrict_storage">Място за съхранение (SD карта)</string>
+    <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">Система (инсталирани приложения)</string>
     <string name="restrict_view">View (browser)</string>
     <string name="settings_restrict">Отбележи за ограничаване:</string>
