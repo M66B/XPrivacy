@@ -109,6 +109,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XPackageManagerService("getPackageGids", XRestriction.cStorage, new String[] {
 				"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE" }), "com.android.server.pm.PackageManagerService");
 
+		// Runtime
+		hook(new XRuntime("exec", XRestriction.cSystem, new String[] {}), "java.lang.Runtime");
+
 		// Settings secure
 		hook(new XSettingsSecure("getString", XRestriction.cIdentification), "android.provider.Settings.Secure");
 

@@ -153,6 +153,9 @@ public class XRestriction {
 		mMethods.get(cInternet).add("getPackageGids");
 		mMethods.get(cStorage).add("getPackageGids");
 
+		// Runtime
+		mMethods.get(cSystem).add("exec");
+
 		// Settings secure
 		mMethods.get(cIdentification).add("getString");
 
