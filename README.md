@@ -369,7 +369,7 @@ Changelog
 
 **Version 0.26**
 
-* Restrict process builder (shell, superuser)
+* Restrict process builder (shell, superuser) ([issue](https://github.com/M66B/XPrivacy/issues/44))
 
 **Version 0.25**
 
