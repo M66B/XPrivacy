@@ -200,8 +200,8 @@ public class ActivityApp extends Activity {
 			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.ctvName);
 
 			// Indicator state
-			imgIndicator.setImageResource(isExpanded ? R.drawable.expander_ic_minimized
-					: R.drawable.expander_ic_maximized);
+			imgIndicator.setImageResource(isExpanded ? R.drawable.expander_ic_maximized
+					: R.drawable.expander_ic_minimized);
 
 			// Disable indicator for empty groups
 			if (mExpert) {
