@@ -120,7 +120,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		spRestriction = (Spinner) findViewById(R.id.spRestriction);
 		spRestriction.setAdapter(spAdapter);
 		spRestriction.setOnItemSelectedListener(this);
-		spRestriction.setEnabled(false);
 
 		// Handle help
 		ImageView ivHelp = (ImageView) findViewById(R.id.ivHelp);
@@ -139,7 +138,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 		// Start task to get app list
 		AppListTask appListTask = new AppListTask();
-		appListTask.execute((String) spRestriction.getSelectedItem());
+		appListTask.execute(listRestriction.get(0));
 
 		// Check environment
 		checkRequirements();
@@ -367,14 +366,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		// Wait for OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(View view) {
 				// Set expert mode
 				XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingExpert,
 						Boolean.toString(cbSettings.isChecked()));
 				if (expert != cbSettings.isChecked()) {
 					// Start task to get app list
+
+					List<String> listRestriction = XRestriction.getRestrictions(view.getContext());
+					String restrictionName = listRestriction.get(0);
 					AppListTask appListTask = new AppListTask();
-					appListTask.execute((String) spRestriction.getSelectedItem());
+					appListTask.execute(restrictionName);
 				}
 
 				// Set location
@@ -720,9 +722,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			super.onPreExecute();
 
 			// Show indeterminate progress circle
-			ListView lvApp = (ListView) findViewById(R.id.lvApp);
+			spRestriction.setSelection(0);
+			spRestriction.setEnabled(false);
+			EditText etFilter = (EditText) findViewById(R.id.etFilter);
+			etFilter.setText("");
+			etFilter.setEnabled(false);
 			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
 			progressBar.setVisibility(View.VISIBLE);
+			ListView lvApp = (ListView) findViewById(R.id.lvApp);
 			lvApp.setVisibility(View.GONE);
 		}
 
@@ -739,6 +746,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
 			progressBar.setVisibility(View.GONE);
 			lvApp.setVisibility(View.VISIBLE);
+
+			// Enable search
+			EditText etFilter = (EditText) findViewById(R.id.etFilter);
+			etFilter.setEnabled(true);
 
 			// Enable spinner
 			Spinner spRestriction = (Spinner) findViewById(R.id.spRestriction);
