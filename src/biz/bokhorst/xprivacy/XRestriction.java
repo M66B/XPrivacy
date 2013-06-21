@@ -395,7 +395,7 @@ public class XRestriction {
 			// Use fallback
 			if (fallback) {
 				// Queue usage data
-				if (usage && !"getPackageGids".equals(methodName)) {
+				if (usage && uid != 1000 && !"getPackageGids".equals(methodName)) {
 					UsageData usageData = new UsageData(uid, restrictionName, methodName);
 					synchronized (mUsageQueue) {
 						if (mUsageQueue.containsKey(usageData)) {
