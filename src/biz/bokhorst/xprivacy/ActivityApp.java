@@ -1,7 +1,7 @@
 package biz.bokhorst.xprivacy;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -104,6 +106,9 @@ public class ActivityApp extends Activity {
 		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xrestrictionentry, mAppInfo,
 				XRestriction.getRestrictions(this));
 		lvRestriction.setAdapter(mPrivacyListAdapter);
+
+		// Up navigation
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -116,6 +121,14 @@ public class ActivityApp extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			Intent upIntent = NavUtils.getParentActivityIntent(this);
+			if (NavUtils.shouldUpRecreateTask(this, upIntent))
+				TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
+			else
+				NavUtils.navigateUpTo(this, upIntent);
+
+			return true;
 		case R.id.menu_all:
 			List<String> listRestriction = XRestriction.getRestrictions(this);
 

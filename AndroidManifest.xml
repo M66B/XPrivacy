@@ -44,7 +44,8 @@
         </activity>
         <activity
             android:name=".ActivityApp"
-            android:exported="true" >
+            android:exported="true"
+            android:parentActivityName=".ActivityMain" >
         </activity>
 
         <receiver android:name=".PackageChange" >
