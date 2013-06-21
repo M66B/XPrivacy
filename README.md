@@ -301,7 +301,8 @@ To export/import settings you will need the [pro version](http://www.faircode.eu
 **(7) What is expert mode?**
 
 In expert mode you can block applications from starting at device boot time (except content providers)
-and you will be able to restrict system applications, including Android itself. **Be careful!**
+and you will be able to restrict system applications, including Android itself (**Be careful!**).
+Furthermore you will be able to make exceptions for individual functions within a restriction category.
 
 **(8) Will you block the iptables command or force online state?**
 
@@ -347,12 +348,33 @@ or when the XPrivacy is not enabled in Xposed.
 
 Yes, you can, but the application could circumvent anything, since root access means it can do anything it likes.
 Nevertheless the application was probably not built to circumvent everything this way.
+Version 0.26 will allow you to restrict shell access for any application, which effectively means revoking root access.
 
 **(17) Will restrictions be applied immediately?**
 
 It can take up to 15 seconds before changes in restrictions will be effective, because of caching.
 Changing the internet and storage restriction requires an application restart.
 Please note that in many cases pressing *back*, only moves the application to the background.
+
+**(18) Can XPrivacy ask for restrictions on demand?**
+
+It cannot always, since it works deep within Android,
+and therefore it is IMHO not a good idea to ask for restrictions when it could,
+because this will probably only result into confusion.
+
+Newly installed applications are by default fully restricted.
+Restricting an application should not result into any force close (crash),
+please create an issue if this happens (see for support below),
+it only means that an application cannot see the restricted data.
+If an application should see the data, you can remove the associated restriction at any time.
+
+**(19) Does XPrivacy have a firewall?**
+
+Yes, you can restrict internet access for any application.
+If you want to partly enable internet, for example for Wi-Fi only,
+you will have to use a firewall application, like [AFWall+](http://forum.xda-developers.com/showthread.php?t=1957231).
+The reason is that XPrivacy works within Android
+and that detailed firewall rules can only be applied within the Linux kernel.
 
 Support
 -------
