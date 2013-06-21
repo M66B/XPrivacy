@@ -396,14 +396,15 @@ public class XRestriction {
 			if (fallback) {
 				// Queue usage data
 				UsageData usageData = new UsageData(uid, restrictionName, methodName);
-				synchronized (mUsageQueue) {
-					if (mUsageQueue.containsKey(usageData)) {
-						mUsageQueue.remove(usageData);
-						XUtil.log(hook, Log.INFO, "Replacing usage data=" + usageData);
+				if (usage && !"getPackageGids".equals(methodName))
+					synchronized (mUsageQueue) {
+						if (mUsageQueue.containsKey(usageData)) {
+							mUsageQueue.remove(usageData);
+							XUtil.log(hook, Log.INFO, "Replacing usage data=" + usageData);
+						}
+						mUsageQueue.put(usageData, usageData);
+						XUtil.log(hook, Log.INFO, "Queue usage data=" + usageData + " size=" + mUsageQueue.size());
 					}
-					mUsageQueue.put(usageData, usageData);
-					XUtil.log(hook, Log.INFO, "Queue usage data=" + usageData + " size=" + mUsageQueue.size());
-				}
 
 				// Fallback
 				restricted = XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
@@ -568,15 +569,22 @@ public class XRestriction {
 
 	private static class UsageData {
 		private Integer mUid;
-		private String mRestrictionName;
+		private String mRestriction;
 		private String mMethodName;
 		private long mTimeStamp;
+		private int mHash;
 
 		public UsageData(int uid, String restrictionName, String methodName) {
 			mUid = uid;
-			mRestrictionName = restrictionName;
+			mRestriction = restrictionName;
 			mMethodName = methodName;
 			mTimeStamp = new Date().getTime();
+
+			mHash = mUid.hashCode();
+			if (mRestriction != null)
+				mHash = mHash ^ mRestriction.hashCode();
+			if (mMethodName != null)
+				mHash = mHash ^ mMethodName.hashCode();
 		}
 
 		public int getUid() {
@@ -584,7 +592,7 @@ public class XRestriction {
 		}
 
 		public String getRestrictionName() {
-			return mRestrictionName;
+			return mRestriction;
 		}
 
 		public String getMethodName() {
@@ -597,13 +605,24 @@ public class XRestriction {
 
 		@Override
 		public int hashCode() {
-			return mUid.hashCode() ^ mRestrictionName.hashCode();
+			return mHash;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			UsageData other = (UsageData) obj;
+			// @formatter:off
+			return
+				(mUid.equals(other.mUid) &&
+				(mRestriction == null ? other.mRestriction == null : mRestriction.equals(other.mRestriction)) &&
+				(mMethodName == null ? other.mMethodName == null : mMethodName.equals(other.mMethodName)));
+			// @formatter:on
 		}
 
 		@Override
 		@SuppressLint("DefaultLocale")
 		public String toString() {
-			return String.format("%d/%s/%s", mUid, mRestrictionName, mMethodName);
+			return String.format("%d/%s/%s", mUid, mRestriction, mMethodName);
 		}
 	}
 }
