@@ -19,15 +19,16 @@
     <string name="msg_restricted" formatted="false">%s е ограничен от XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>
     <string name="restrict_accounts">Сметки (Google, Facebook и т.н.)</string>
+    <string name="restrict_audio">Audio (microphone)</string>
     <string name="restrict_boot">Стартиране (при пускане на системата)</string>
     <string name="restrict_browser">Браузър (отметки/история)</string>
     <string name="restrict_calendar">Календар</string>
     <string name="restrict_calling">Calling (phone, SMS, MMS)</string>
+    <string name="restrict_camera">Camera (photo, video)</string>
     <string name="restrict_contacts">Контакти</string>
     <string name="restrict_identification">Идентификация (устройство, Wi-Fi)</string>
     <string name="restrict_internet">Интернет</string>
     <string name="restrict_location">Местоположение (точно/приблизително)</string>
-    <string name="restrict_media">Медия (аудио, снимки, клипове)</string>
     <string name="restrict_messages">Съобщения (SMS, MMS)</string>
     <string name="restrict_network">Мрежа (адреси)</string>
     <string name="restrict_phone">Телефон (ID, номера, обаждания)</string>

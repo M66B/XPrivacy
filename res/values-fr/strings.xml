@@ -19,15 +19,16 @@
     <string name="msg_restricted" formatted="false">%s restreint par XPrivacy</string>
     <string name="msg_licensed" formatted="false">Autorisé à: %s</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc)</string>
+    <string name="restrict_audio">Audio (microphone)</string>
     <string name="restrict_boot">Boot (se lance au démarrage)</string>
     <string name="restrict_browser">Navigateur (marque-pages/historique)</string>
     <string name="restrict_calendar">Calendrier</string>
     <string name="restrict_calling">Appels (Téléphone, SMS, MMS)</string>
+    <string name="restrict_camera">Camera (photo, video)</string>
     <string name="restrict_contacts">Contacts</string>
     <string name="restrict_identification">Identification (Matériel)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Localisation (précise/approximative)</string>
-    <string name="restrict_media">Média (audio, photo, vidéo)</string>
     <string name="restrict_messages">Messages (SMS, MMS)</string>
     <string name="restrict_network">Réseaux (addresses)</string>
     <string name="restrict_phone">Téléphone (ID, numéros, appels)</string>

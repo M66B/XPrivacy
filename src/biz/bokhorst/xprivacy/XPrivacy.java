@@ -64,7 +64,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"android.app.ApplicationPackageManager");
 
 		// Audio record
-		hook(new XCamera("startRecording", XRestriction.cMedia, new String[] { "RECORD_AUDIO" }),
+		hook(new XCamera("startRecording", XRestriction.cAudio, new String[] { "RECORD_AUDIO" }),
 				"android.media.AudioRecord");
 
 		// Bluetooth adapter
@@ -77,7 +77,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
 				"setOneShotPreviewCallback", "takePicture" };
 		for (String cam : cams)
-			hook(new XCamera(cam, XRestriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
+			hook(new XCamera(cam, XRestriction.cCamera, new String[] { "CAMERA" }), "android.hardware.Camera");
 
 		// Location manager
 		hook(new XLocationManager("addNmeaListener", XRestriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
@@ -94,7 +94,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
 
 		// Media recorder
-		hook(new XMediaRecorder("setOutputFile", XRestriction.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),
+		hook(new XMediaRecorder("setOutputFile", XRestriction.cAudio, new String[] { "RECORD_AUDIO" }),
+				"android.media.MediaRecorder");
+		hook(new XMediaRecorder("setOutputFile", XRestriction.cCamera, new String[] { "RECORD_VIDEO" }),
 				"android.media.MediaRecorder");
 
 		// Network interface
@@ -192,12 +194,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"android.app.Activity");
 
 		// Intent send: media
-		hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },
+		hook(new XActivity("startActivityForResult", XRestriction.cCamera, new String[] { "CAMERA" },
 				MediaStore.ACTION_IMAGE_CAPTURE), "android.app.Activity");
 		if (Build.VERSION.SDK_INT >= 17)
-			hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },
+			hook(new XActivity("startActivityForResult", XRestriction.cCamera, new String[] { "CAMERA" },
 					"android.media.action.IMAGE_CAPTURE_SECURE"), "android.app.Activity");
-		hook(new XActivity("startActivityForResult", XRestriction.cMedia, new String[] { "CAMERA" },
+		hook(new XActivity("startActivityForResult", XRestriction.cCamera, new String[] { "CAMERA" },
 				MediaStore.ACTION_VIDEO_CAPTURE), "android.app.Activity");
 	}
 

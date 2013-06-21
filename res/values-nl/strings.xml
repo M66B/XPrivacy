@@ -19,15 +19,16 @@
     <string name="msg_restricted" formatted="false">%s beperkt door XPrivacy</string>
     <string name="msg_licensed" formatted="false">Gelicenseerd aan: %s</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
+    <string name="restrict_audio">Geluid (microfoon)</string>
     <string name="restrict_boot">Boot (start met systeem)</string>
     <string name="restrict_browser">Browser (bladwijzers/geschiedenis)</string>
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Oproepen (telefoon, SMS, MMS)</string>
+    <string name="restrict_camera">Camera (foto, video)</string>
     <string name="restrict_contacts">Contacten</string>
     <string name="restrict_identification">Identificatie (apparaat)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Locatie (fijn/grof)</string>
-    <string name="restrict_media">Media (audio, foto, video)</string>
     <string name="restrict_messages">Berichten (SMS, MMS)</string>
     <string name="restrict_network">Netwerk (addressen)</string>
     <string name="restrict_phone">Telefoon (ID, nummers, oproepen)</string>
