@@ -348,6 +348,12 @@ or when the XPrivacy is not enabled in Xposed.
 Yes, you can, but the application could circumvent anything, since root access means it can do anything it likes.
 Nevertheless the application was probably not built to circumvent everything this way.
 
+**(17) Will restrictions be applied immediately?**
+
+It can take up to 15 seconds before changes in restrictions will be effective, because of caching.
+Changing the internet and storage restriction requires an application restart.
+Please note that in many cases pressing *back*, only moves the application to the background.
+
 Support
 -------
 
