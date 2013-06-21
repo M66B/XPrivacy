@@ -226,9 +226,11 @@ If there is an update the browser will download it.
 Usage
 -----
 
-* Start XPrivacy
-* Select a data category
-* Set data restrictions
+1. Start XPrivacy
+2. Select a data category at the top, for example *Accounts*
+3. Restrict data of the selected data category for an application by ticking a check box
+4. Tap on the application icon to see the restrictions for all categories for the application
+5. Tap on the application icon to start the application to test (after previous step)
 
 To see it in action: try restricting the category *Identification* for
 [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
@@ -248,10 +250,6 @@ for example not for access to the internet or the external storage.
 Enabling internet or storage restriction means blocking access to the internet
 or to the external storage (typically the SD card).
 This may result in error messages and even in forced closes of the application.
-
-Tricks:
-
-* Click the application icon in the application browser to go to the application restriction settings
 
 **Using XPrivacy is entirely at your own risk**
 
