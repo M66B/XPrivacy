@@ -389,12 +389,16 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
+**Version 0.28** (in development)
+
+* Randomize/set defaced data (planned)
+
 **Version 0.27** (in development)
 
 * Register more usage data
 * Display time of last usage
-* Randomize/set defaced data (planned)
 * Added French translation
+* Added Slovak translation
 * Added simplified Chinese translation
 
 **Version 0.26**
