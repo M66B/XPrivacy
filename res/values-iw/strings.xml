@@ -15,6 +15,7 @@
     <string name="menu_import">ייבא</string>
     <string name="menu_pro">גירסא מקצועית</string>
     <string name="menu_about">אודות</string>
+    <string name="menu_all">All</string>
     <string name="msg_noupdate">לא קיימים עדכונים</string>
     <string name="msg_restricted" formatted="false">%s מוגבל על ידי XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>

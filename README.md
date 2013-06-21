@@ -397,11 +397,15 @@ Changelog
 
 **Version 0.27** (in development)
 
-* Register more usage data
-* Display time of last usage
+* Register more usage data (orange triangle)
+* Display time of last usage (application restriction details)
+* Highlight system applications (in expert mode)
+* New expander symbol
+* Menu *All* in application details to toggle all check boxes
 * Added French translation
 * Added Slovak translation
 * Added simplified Chinese translation
+* Updated Greek translation
 
 **Version 0.26**
 

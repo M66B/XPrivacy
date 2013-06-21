@@ -15,6 +15,7 @@
     <string name="menu_import">Importeren</string>
     <string name="menu_pro">Pro versie</string>
     <string name="menu_about">Over</string>
+    <string name="menu_all">Alles</string>
     <string name="msg_noupdate">Geen nieuwe versie beschikbaar</string>
     <string name="msg_restricted" formatted="false">%s beperkt door XPrivacy</string>
     <string name="msg_licensed" formatted="false">Gelicenseerd aan: %s</string>

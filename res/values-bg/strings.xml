@@ -15,6 +15,7 @@
     <string name="menu_import">Импортиране</string>
     <string name="menu_pro">Професионална версия</string>
     <string name="menu_about">Относно</string>
+    <string name="menu_all">All</string>
     <string name="msg_noupdate">Няма налично обновление</string>
     <string name="msg_restricted" formatted="false">%s е ограничен от XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>

@@ -13,6 +13,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -27,6 +30,7 @@ public class ActivityApp extends Activity {
 
 	public static final String cPackageName = "PackageName";
 
+	private XApplicationInfo mAppInfo;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,25 +43,25 @@ public class ActivityApp extends Activity {
 		final String packageName = extras.getString(cPackageName);
 
 		// Get app info
-		XApplicationInfo xAppInfo = new XApplicationInfo(packageName, this);
+		mAppInfo = new XApplicationInfo(packageName, this);
 
 		// Background color
-		if (xAppInfo.getIsSystem()) {
+		if (mAppInfo.getIsSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
 			llInfo.setBackgroundColor(Color.parseColor("#FFFDD0"));
 		}
 
 		// Display app name
 		TextView tvAppName = (TextView) findViewById(R.id.tvApp);
-		tvAppName.setText(xAppInfo.toString());
+		tvAppName.setText(mAppInfo.toString());
 
 		// Display version
 		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
-		tvVersion.setText(xAppInfo.getVersion());
+		tvVersion.setText(mAppInfo.getVersion());
 
 		// Display package name / uid
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
-		tvPackageName.setText(String.format("%s %d", packageName, xAppInfo.getUid()));
+		tvPackageName.setText(String.format("%s %d", packageName, mAppInfo.getUid()));
 
 		// Handle help
 		tvAppName.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +79,7 @@ public class ActivityApp extends Activity {
 
 		// Display app icon
 		ImageView imgIcon = (ImageView) findViewById(R.id.imgAppEntryIcon);
-		imgIcon.setImageDrawable(xAppInfo.getDrawable());
+		imgIcon.setImageDrawable(mAppInfo.getDrawable());
 
 		// Handle icon click
 		imgIcon.setOnClickListener(new View.OnClickListener() {
@@ -97,9 +101,45 @@ public class ActivityApp extends Activity {
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
-		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xrestrictionentry, xAppInfo,
+		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xrestrictionentry, mAppInfo,
 				XRestriction.getRestrictions(this));
 		lvRestriction.setAdapter(mPrivacyListAdapter);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.xapp, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_all:
+			List<String> listRestriction = XRestriction.getRestrictions(this);
+
+			// Get toggle
+			boolean restricted = false;
+			for (String restrictionName : listRestriction)
+				if (XRestriction.getRestricted(null, this, mAppInfo.getUid(), restrictionName, null, false, false)) {
+					restricted = true;
+					break;
+				}
+
+			// Do toggle
+			restricted = !restricted;
+			for (String restrictionName : listRestriction)
+				XRestriction.setRestricted(null, this, mAppInfo.getUid(), restrictionName, null, restricted);
+
+			// Refresh display
+			if (mPrivacyListAdapter != null)
+				mPrivacyListAdapter.notifyDataSetChanged();
+
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
