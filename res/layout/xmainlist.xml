@@ -28,8 +28,8 @@
 
         <ImageView
             android:id="@+id/ivHelp"
-            android:layout_width="32dip"
-            android:layout_height="32dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/help_application"
             android:src="@drawable/help" />
     </LinearLayout>
