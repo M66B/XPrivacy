@@ -1,0 +1,46 @@
+<resources>
+
+    <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
+    <string name="app_notenabled">Aplikácia XPrivacy nie je aktivovaná v Xposed</string>
+    <string name="app_wrongandroid">Testované len s Android verziou 4.1 a 4.2 (JellyBean)</string>
+    <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Verzia Xposed: %d</string>
+    <string name="app_info">Informácie: https://github.com/M66B/XPrivacy/</string>
+    <string name="menu_settings">Nastavenia</string>
+    <string name="menu_update">Aktualizovať</string>
+    <string name="menu_report">Nahlásiť problém</string>
+    <string name="menu_export">Exportovať</string>
+    <string name="menu_import">Importovať</string>
+    <string name="menu_pro">Pro verzia</string>
+    <string name="menu_about">O aplikácii</string>
+    <string name="msg_noupdate">K dispozícii nie je žiadna aktualizácia</string>
+    <string name="msg_restricted" formatted="false">%s obmedzené XPrivacy</string>
+    <string name="msg_licensed" formatted="false">Licencované na: %s</string>
+    <string name="restrict_accounts">Účty (Google, Facebook, atď.)</string>
+    <string name="restrict_boot">Štart (beh po štarte systému)</string>
+    <string name="restrict_browser">Prehliadač (záložky/história)</string>
+    <string name="restrict_calendar">Kalendár</string>
+    <string name="restrict_calling">Volanie (telefón, SMS, MMS)</string>
+    <string name="restrict_contacts">Kontakty</string>
+    <string name="restrict_identification">Identifikácia (zariadenie)</string>
+    <string name="restrict_internet">Internet</string>
+    <string name="restrict_location">Poloha (presná/približná)</string>
+    <string name="restrict_media">Media (audio, photo, video)</string>
+    <string name="restrict_messages">Správy (SMS, MMS)</string>
+    <string name="restrict_network">Sieť (adresy)</string>
+    <string name="restrict_phone">Telefón (ID, čísla, hovory)</string>
+    <string name="restrict_storage">Externé úložisko (SD karta)</string>
+    <string name="restrict_shell">Konzola (príkazy, superuser)</string>
+    <string name="restrict_system">Systém (nainštalované aplikácie)</string>
+    <string name="restrict_view">Zobrazenie (prehliadač)</string>
+    <string name="title_category">Kategória pre obmedzenie:</string>
+    <string name="title_restrict">Zaškrtnite pre obmedzenie:</string>
+    <string name="settings_expert">Režim experta</string>
+    <string name="settings_lat">Zemepisná šírka</string>
+    <string name="settings_lon">Zemepisná dĺžka</string>
+    <string name="help_application">Aplikácia</string>
+    <string name="help_internet">má internetové oprávnenie</string>
+    <string name="help_granted">má Android povolenie</string>
+    <string name="help_used">používa tieto dáta</string>
+
+</resources>
