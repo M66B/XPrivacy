@@ -25,16 +25,15 @@ public class XRestriction {
 
 	// This should correspond with restrict_<name> in strings.xml
 	public static final String cAccounts = "accounts";
-	public static final String cAudio = "audio";
 	public static final String cBoot = "boot";
 	public static final String cBrowser = "browser";
 	public static final String cCalendar = "calendar";
 	public static final String cCalling = "calling";
-	public static final String cCamera = "camera";
 	public static final String cContacts = "contacts";
 	public static final String cIdentification = "identification";
 	public static final String cInternet = "internet";
 	public static final String cLocation = "location";
+	public static final String cMedia = "media";
 	public static final String cMessages = "messages";
 	public static final String cNetwork = "network";
 	public static final String cPhone = "phone";
@@ -43,9 +42,9 @@ public class XRestriction {
 	public static final String cSystem = "system";
 	public static final String cView = "view";
 
-	private static final String cRestrictionNames[] = new String[] { cAccounts, cAudio, cBoot, cBrowser, cCalendar,
-			cCalling, cCamera, cContacts, cIdentification, cInternet, cLocation, cMessages, cNetwork, cPhone, cStorage,
-			cShell, cSystem, cView };
+	private static final String cRestrictionNames[] = new String[] { cAccounts, cBoot, cBrowser, cCalendar, cCalling,
+			cContacts, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cPhone, cStorage, cShell,
+			cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
@@ -75,21 +74,21 @@ public class XRestriction {
 		mPermissions.get(cAccounts).add("GET_ACCOUNTS");
 		mPermissions.get(cAccounts).add("USE_CREDENTIALS");
 		mPermissions.get(cAccounts).add("MANAGE_ACCOUNTS");
-		mPermissions.get(cAudio).add("RECORD_AUDIO");
 		mPermissions.get(cBoot).add("RECEIVE_BOOT_COMPLETED");
 		mPermissions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
 		mPermissions.get(cBrowser).add("GLOBAL_SEARCH");
 		mPermissions.get(cCalendar).add("READ_CALENDAR");
 		mPermissions.get(cCalling).add("SEND_SMS");
 		mPermissions.get(cCalling).add("CALL_PHONE");
-		mPermissions.get(cCamera).add("CAMERA");
-		mPermissions.get(cCamera).add("RECORD_VIDEO");
 		mPermissions.get(cContacts).add("READ_CONTACTS");
 		mPermissions.get(cInternet).add("INTERNET");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_UPDATES");
 		mPermissions.get(cLocation).add("CONTROL_LOCATION_UPDATES");
+		mPermissions.get(cMedia).add("CAMERA");
+		mPermissions.get(cMedia).add("RECORD_AUDIO");
+		mPermissions.get(cMedia).add("RECORD_VIDEO");
 		mPermissions.get(cMessages).add("READ_WRITE_ALL_VOICEMAIL");
 		mPermissions.get(cMessages).add("READ_SMS");
 		mPermissions.get(cMessages).add("RECEIVE_SMS");
@@ -119,7 +118,7 @@ public class XRestriction {
 			mMethods.get(cSystem).add(am);
 
 		// Audio record
-		mMethods.get(XRestriction.cAudio).add("startRecording");
+		mMethods.get(XRestriction.cMedia).add("startRecording");
 
 		// Bluetooth adapter
 		mMethods.get(XRestriction.cNetwork).add("getAddress");
@@ -129,7 +128,7 @@ public class XRestriction {
 		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
 				"setOneShotPreviewCallback", "takePicture" };
 		for (String cam : cams)
-			mMethods.get(cCamera).add(cam);
+			mMethods.get(cMedia).add(cam);
 
 		// Location manager
 		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
@@ -138,8 +137,7 @@ public class XRestriction {
 			mMethods.get(cLocation).add(loc);
 
 		// Media recorder
-		mMethods.get(cAudio).add("setOutputFile");
-		mMethods.get(cCamera).add("setOutputFile");
+		mMethods.get(cMedia).add("setOutputFile");
 
 		// Network interface
 		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };
@@ -206,10 +204,10 @@ public class XRestriction {
 		mMethods.get(cCalling).add(Intent.ACTION_CALL);
 
 		// Intent send: media
-		mMethods.get(cCamera).add(MediaStore.ACTION_IMAGE_CAPTURE);
+		mMethods.get(cMedia).add(MediaStore.ACTION_IMAGE_CAPTURE);
 		if (Build.VERSION.SDK_INT >= 17)
-			mMethods.get(cCamera).add("android.media.action.IMAGE_CAPTURE_SECURE");
-		mMethods.get(cCamera).add(MediaStore.ACTION_VIDEO_CAPTURE);
+			mMethods.get(cMedia).add("android.media.action.IMAGE_CAPTURE_SECURE");
+		mMethods.get(cMedia).add(MediaStore.ACTION_VIDEO_CAPTURE);
 
 		// Content providers
 		mMethods.get(cBrowser).add("BrowserProvider");
