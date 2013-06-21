@@ -391,9 +391,13 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
-**Version 0.28** (in development)
+**Version 0.29** (in development)
 
 * Randomize/set defaced data (planned)
+
+**Version 0.28**
+
+* Fixed wrong usage data in app list
 
 **Version 0.27**
 

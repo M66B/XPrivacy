@@ -14,7 +14,6 @@ import java.lang.reflect.Field;
 import java.net.InterfaceAddress;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +93,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		List<String> listLocalizedRestriction = new ArrayList<String>();
 		for (String restrictionName : listRestriction)
 			listLocalizedRestriction.add(XRestriction.getLocalizedName(this, restrictionName));
-		Collections.sort(listLocalizedRestriction);
 
 		// Build spinner adapter
 		ArrayAdapter<String> spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
