@@ -368,6 +368,7 @@ Changelog
 * Register more usage data
 * Display time of last usage
 * Randomize/set defaced data (planned)
+* Added simplified Chinese translation
 
 **Version 0.26**
 
