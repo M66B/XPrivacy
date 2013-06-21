@@ -89,6 +89,7 @@ Donate a few dollars for the [pro version](http://www.faircode.eu/xprivacy/) or
 ![Xposed](https://raw.github.com/M66B/XPrivacy/master/screenshots/xposed.png)
 ![Applications](https://raw.github.com/M66B/XPrivacy/master/screenshots/applications.png)
 ![Application](https://raw.github.com/M66B/XPrivacy/master/screenshots/application.png)
+![Expert](https://raw.github.com/M66B/XPrivacy/master/screenshots/expert.png)
 ![Help](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
 ![Settings](https://raw.github.com/M66B/XPrivacy/master/screenshots/settings.png)
 
