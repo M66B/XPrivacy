@@ -53,6 +53,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
@@ -78,6 +80,7 @@ import android.widget.Toast;
 
 public class ActivityMain extends Activity implements OnItemSelectedListener {
 
+	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 
 	@Override
@@ -97,8 +100,26 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		ArrayAdapter<String> spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
 		spAdapter.addAll(listLocalizedRestriction);
 
+		// Setup search
+		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
+		etFilter.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if (mAppAdapter != null)
+					mAppAdapter.getFilter().filter(etFilter.getText().toString());
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+
 		// Setup spinner
-		Spinner spRestriction = (Spinner) findViewById(R.id.spRestriction);
+		spRestriction = (Spinner) findViewById(R.id.spRestriction);
 		spRestriction.setAdapter(spAdapter);
 		spRestriction.setOnItemSelectedListener(this);
 		spRestriction.setEnabled(false);
@@ -120,7 +141,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 		// Start task to get app list
 		AppListTask appListTask = new AppListTask();
-		appListTask.execute(listRestriction.get(0));
+		appListTask.execute((String) spRestriction.getSelectedItem());
 
 		// Check environment
 		checkRequirements();
@@ -340,7 +361,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		// Set current values
 		String sExpert = XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingExpert,
 				Boolean.FALSE.toString());
-		cbSettings.setChecked(Boolean.parseBoolean(sExpert));
+		final boolean expert = Boolean.parseBoolean(sExpert);
+		cbSettings.setChecked(expert);
 		atLat.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, ""));
 		atLon.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLongitude, ""));
 
@@ -351,6 +373,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				// Set expert mode
 				XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingExpert,
 						Boolean.toString(cbSettings.isChecked()));
+				if (expert != cbSettings.isChecked()) {
+					// Start task to get app list
+					AppListTask appListTask = new AppListTask();
+					appListTask.execute((String) spRestriction.getSelectedItem());
+				}
 
 				// Set location
 				try {
@@ -695,8 +722,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			super.onPreExecute();
 
 			// Show indeterminate progress circle
+			ListView lvApp = (ListView) findViewById(R.id.lvApp);
 			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
 			progressBar.setVisibility(View.VISIBLE);
+			lvApp.setVisibility(View.GONE);
 		}
 
 		@Override
@@ -711,6 +740,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			// Hide indeterminate progress circle
 			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
 			progressBar.setVisibility(View.GONE);
+			lvApp.setVisibility(View.VISIBLE);
 
 			// Enable spinner
 			Spinner spRestriction = (Spinner) findViewById(R.id.spRestriction);

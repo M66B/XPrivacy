@@ -395,13 +395,16 @@ Changelog
 
 * Randomize/set defaced data (planned)
 
-**Version 0.27** (in development)
+**Version 0.27**
 
 * Register more usage data (orange triangle)
 * Display time of last usage (application restriction details)
 * Highlight system applications (in expert mode)
 * New expander symbol
 * Menu *All* in application details to toggle all check boxes
+* Action bar navigate up ([issue](https://github.com/M66B/XPrivacy/issues/12))
+* Refresh application list when toggling expert mode
+* Basic application search/filter
 * Added French translation
 * Added Slovak translation
 * Added simplified Chinese translation
