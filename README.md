@@ -404,7 +404,7 @@ Changelog
 * Menu *All* in application details to toggle all check boxes
 * Action bar navigate up ([issue](https://github.com/M66B/XPrivacy/issues/12))
 * Refresh application list when toggling expert mode
-* Basic application search/filter
+* Basic application search/filter ([issue](https://github.com/M66B/XPrivacy/issues/13))
 * Added French translation
 * Added Slovak translation
 * Added simplified Chinese translation
