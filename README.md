@@ -202,6 +202,7 @@ Installation
 1. Enable *System settings* > *Security* > *Unknown sources*
 1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 	* Be sure to follow all installation steps
+	* Be sure to install the latest version 2.1.4
 	* Download and copy the Xposed disabler to your SD card to disable Xposed in case of troubles
 	* [MIUI](http://en.miui.com/) is not supported by Xposed
 1. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
@@ -210,6 +211,7 @@ Installation
 1. Flash the Xposed fix for your Android version from [here](http://goo.im/devs/M66B/xprivacy)
 	* Android 4.1.x / CM10: Xposed_fix_4.1.zip
 	* Android 4.2.x / CM10.1: Xposed_fix_4.2.zip
+	* **This fix is only for Xposed version 2.1.4**
 1. Reboot
 
 I do not recommend using XPrivacy in combination with any of the
