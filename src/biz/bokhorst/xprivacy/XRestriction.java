@@ -395,8 +395,8 @@ public class XRestriction {
 			// Use fallback
 			if (fallback) {
 				// Queue usage data
-				UsageData usageData = new UsageData(uid, restrictionName, methodName);
-				if (usage && !"getPackageGids".equals(methodName))
+				if (usage && !"getPackageGids".equals(methodName)) {
+					UsageData usageData = new UsageData(uid, restrictionName, methodName);
 					synchronized (mUsageQueue) {
 						if (mUsageQueue.containsKey(usageData)) {
 							mUsageQueue.remove(usageData);
@@ -405,6 +405,7 @@ public class XRestriction {
 						mUsageQueue.put(usageData, usageData);
 						XUtil.log(hook, Log.INFO, "Queue usage data=" + usageData + " size=" + mUsageQueue.size());
 					}
+				}
 
 				// Fallback
 				restricted = XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);

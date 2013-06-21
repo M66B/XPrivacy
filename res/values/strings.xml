@@ -35,7 +35,8 @@
     <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">System (installed apps)</string>
     <string name="restrict_view">View (browser)</string>
-    <string name="settings_restrict">Check to restrict:</string>
+    <string name="title_category">Category to restrict:</string>
+    <string name="title_restrict">Check to restrict:</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>

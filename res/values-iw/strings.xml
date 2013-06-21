@@ -35,7 +35,8 @@
     <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">מערכת(אפליקציות מוגבלות)</string>
     <string name="restrict_view">גישה לממשק משתמש</string>
-    <string name="settings_restrict">סמן כדי להגביל</string>
+    <string name="title_category">Category to restrict:</string>
+    <string name="title_restrict">סמן כדי להגביל</string>
     <string name="settings_expert">מצב מתקדם</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>

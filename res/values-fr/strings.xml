@@ -35,7 +35,8 @@
     <string name="restrict_shell">Shell (commandes, root)</string>
     <string name="restrict_system">Système (applis installées)</string>
     <string name="restrict_view">Vue (navigateur)</string>
-    <string name="settings_restrict">Vérifier les restrictions:</string>
+    <string name="title_category">Category to restrict:</string>
+    <string name="title_restrict">Vérifier les restrictions:</string>
     <string name="settings_expert">Mode expert</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>

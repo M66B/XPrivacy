@@ -35,7 +35,8 @@
     <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">Система (инсталирани приложения)</string>
     <string name="restrict_view">View (browser)</string>
-    <string name="settings_restrict">Отбележи за ограничаване:</string>
+    <string name="title_category">Category to restrict:</string>
+    <string name="title_restrict">Отбележи за ограничаване:</string>
     <string name="settings_expert">Режим за експерти</string>
     <string name="settings_lat">Геогр. ширина</string>
     <string name="settings_lon">Геогр. дължина</string>
