@@ -206,7 +206,9 @@ Installation
 1. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 1. Enable XPrivacy from the Xposed installer
 1. Reboot into recovery
-1. Flash the Xposed fix for your Android version (4.1 or 4.2) from [here](http://goo.im/devs/M66B/xprivacy)
+1. Flash the Xposed fix for your Android version from [here](http://goo.im/devs/M66B/xprivacy)
+	* Android 4.1.x / CM10: Xposed_fix_4.1.zip
+	* Android 4.2.x / CM10.1: Xposed_fix_4.2.zip
 1. Reboot
 
 I do not recommend using XPrivacy in combination with any of the
