@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/imgIndicator"
-        android:layout_width="12dip"
-        android:layout_height="12dip"
+        android:layout_width="24dip"
+        android:layout_height="24dip"
         android:layout_gravity="center_vertical"
         android:contentDescription="@string/app_name"
         android:src="@android:drawable/arrow_down_float" />

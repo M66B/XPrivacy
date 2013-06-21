@@ -45,6 +45,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
@@ -742,33 +743,37 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			final CheckedTextView ctvApp = (CheckedTextView) row.findViewById(R.id.ctvName);
 
 			// Get entry
-			final XApplicationInfo appEntry = getItem(position);
+			final XApplicationInfo xAppInfo = getItem(position);
+
+			// Set background color
+			if (xAppInfo.getIsSystem())
+				row.setBackgroundColor(Color.parseColor("#FFFDD0"));
 
 			// Set icon
-			imgIcon.setImageDrawable(appEntry.getDrawable());
+			imgIcon.setImageDrawable(xAppInfo.getDrawable());
 			imgIcon.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					Intent intentSettings = new Intent(view.getContext(), ActivityApp.class);
-					intentSettings.putExtra(ActivityApp.cPackageName, appEntry.getPackageName());
+					intentSettings.putExtra(ActivityApp.cPackageName, xAppInfo.getPackageName());
 					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					view.getContext().startActivity(intentSettings);
 				}
 			});
 
 			// Set title
-			ctvApp.setText(appEntry.toString());
+			ctvApp.setText(xAppInfo.toString());
 
 			// Check if internet access
-			imgInternet.setVisibility(appEntry.hasInternet() ? View.VISIBLE : View.INVISIBLE);
+			imgInternet.setVisibility(xAppInfo.hasInternet() ? View.VISIBLE : View.INVISIBLE);
 
 			// Check if used
-			boolean used = XRestriction.isUsed(row.getContext(), appEntry.getUid(), mRestrictionName, null);
+			boolean used = XRestriction.isUsed(row.getContext(), xAppInfo.getUid(), mRestrictionName, null);
 			ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 
 			// Display restriction
-			boolean restricted = XRestriction.getRestricted(null, row.getContext(), appEntry.getUid(),
+			boolean restricted = XRestriction.getRestricted(null, row.getContext(), xAppInfo.getUid(),
 					mRestrictionName, null, false, false);
 			ctvApp.setChecked(restricted);
 
@@ -776,15 +781,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			ctvApp.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					boolean restricted = XRestriction.getRestricted(null, view.getContext(), appEntry.getUid(),
+					boolean restricted = XRestriction.getRestricted(null, view.getContext(), xAppInfo.getUid(),
 							mRestrictionName, null, false, false);
 					restricted = !restricted;
 					ctvApp.setChecked(restricted);
-					XRestriction.setRestricted(null, view.getContext(), appEntry.getUid(), mRestrictionName, null,
+					XRestriction.setRestricted(null, view.getContext(), xAppInfo.getUid(), mRestrictionName, null,
 							restricted);
 				}
 			});
 
+			row.refreshDrawableState();
 			return row;
 		}
 	}

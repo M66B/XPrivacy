@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ActivityApp extends Activity {
@@ -38,6 +40,12 @@ public class ActivityApp extends Activity {
 
 		// Get app info
 		XApplicationInfo xAppInfo = new XApplicationInfo(packageName, this);
+
+		// Background color
+		if (xAppInfo.getIsSystem()) {
+			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
+			llInfo.setBackgroundColor(Color.parseColor("#FFFDD0"));
+		}
 
 		// Display app name
 		TextView tvAppName = (TextView) findViewById(R.id.tvApp);
@@ -139,8 +147,8 @@ public class ActivityApp extends Activity {
 			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.ctvName);
 
 			// Indicator state
-			imgIndicator.setImageResource(isExpanded ? android.R.drawable.arrow_up_float
-					: android.R.drawable.arrow_down_float);
+			imgIndicator.setImageResource(isExpanded ? R.drawable.expander_ic_minimized
+					: R.drawable.expander_ic_maximized);
 
 			// Disable indicator for empty groups
 			if (mExpert) {

@@ -19,6 +19,7 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 	private boolean mHasInternet;
 	private int mUid;
 	private String mVersion;
+	private boolean mSystem;
 
 	public XApplicationInfo(String packageName, Context context) {
 		// Get app info
@@ -48,11 +49,13 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 		} catch (Throwable ex) {
 			XUtil.bug(null, ex);
 		}
+		mSystem = ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
+		mSystem = mSystem || appInfo.packageName.equals(XApplicationInfo.class.getPackage().getName());
+		mSystem = mSystem || appInfo.packageName.equals("de.robv.android.xposed.installer");
 	}
 
 	public static List<XApplicationInfo> getXApplicationList(Context context) {
 		// Get references
-		String self = XApplicationInfo.class.getPackage().getName();
 		PackageManager pm = context.getPackageManager();
 		boolean expert = Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
 				Boolean.FALSE.toString()));
@@ -61,17 +64,14 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
 		List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
 		for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA)) {
-			boolean system = ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
-			system = system || appInfo.packageName.equals(self);
-			system = system || appInfo.packageName.equals("de.robv.android.xposed.installer");
-			if (system ? expert : true) {
-				XApplicationInfo xAppInfo = mapApp.get(appInfo.uid);
-				if (xAppInfo == null) {
-					xAppInfo = new XApplicationInfo(appInfo, context);
+			XApplicationInfo xAppInfo = new XApplicationInfo(appInfo, context);
+			if (xAppInfo.getIsSystem() ? expert : true) {
+				XApplicationInfo yAppInfo = mapApp.get(appInfo.uid);
+				if (yAppInfo == null) {
 					mapApp.put(appInfo.uid, xAppInfo);
 					listApp.add(xAppInfo);
 				} else
-					xAppInfo.AddApplicationName(getApplicationName(appInfo, pm));
+					yAppInfo.AddApplicationName(getApplicationName(appInfo, pm));
 			}
 		}
 
@@ -106,6 +106,10 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 
 	public String getVersion() {
 		return mVersion;
+	}
+
+	public boolean getIsSystem() {
+		return mSystem;
 	}
 
 	@Override
