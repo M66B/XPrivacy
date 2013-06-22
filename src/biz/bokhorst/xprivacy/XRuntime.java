@@ -44,13 +44,13 @@ public class XRuntime extends XHook {
 					if (isRestricted(param, mCommand == null ? getMethodName() : mCommand))
 						param.setThrowable(new IOException(XRestriction.getDefacedString()));
 			}
-		} else if (param.getResult() != null)
-			if (isRestricted(param))
-				param.setResult(null);
+		}
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Do nothing
+		if (!param.method.getName().equals("exec"))
+			if (isRestricted(param))
+				param.setResult(new UnsatisfiedLinkError(XRestriction.getDefacedString()));
 	}
 }
