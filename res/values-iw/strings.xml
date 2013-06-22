@@ -41,6 +41,7 @@
     <string name="settings_expert">מצב מתקדם</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
+    <string name="settings_mac">MAC address</string>
     <string name="help_application">אפליקציה</string>
     <string name="help_internet">יש הרשאות אינטרנט</string>
     <string name="help_granted">יש הרשאות אנדרואיד</string>

@@ -1,0 +1,50 @@
+<resources>
+
+    <string name="app_name">XPrivacy</string>
+    <string name="app_notxposed" formatted="false">Xposed framework versiunea %d+ nu este instalata</string>
+    <string name="app_notenabled">XPrivacy nu este bifat in Xposed installer</string>
+    <string name="app_wrongandroid">A fost testat doar pe Android 4.1 si 4.2 (JellyBean)</string>
+    <string name="app_version" formatted="false">versiunea XPrivacy: %s (%d)</string>
+    <string name="app_xversion" formatted="false">versiunea Xposed framework: %d</string>
+    <string name="app_copyright">Drepturi de autor rezervate \u00A9 2013 M. Bokhorst (M66B)</string>
+    <string name="app_info">Informatii suplimentare: https://github.com/M66B/XPrivacy/</string>
+    <string name="menu_settings">Setari</string>
+    <string name="menu_update">Cauta update</string>
+    <string name="menu_report">Raporteaza o problema</string>
+    <string name="menu_export">Exporta</string>
+    <string name="menu_import">Importa</string>
+    <string name="menu_pro">Versiunea Pro</string>
+    <string name="menu_about">Despre</string>
+    <string name="menu_all">Tot</string>
+    <string name="msg_noupdate">Niciun update disponibil</string>
+    <string name="msg_restricted" formatted="false">%s Restrictionat de XPrivacy</string>
+    <string name="msg_licensed" formatted="false">Licentiat pentru: %s</string>
+    <string name="restrict_accounts">Conturi (Google, Facebook, etc)</string>
+    <string name="restrict_boot">Boot (porneste odata cu sistemul)</string>
+    <string name="restrict_browser">Browser (semne de carte/istorie)</string>
+    <string name="restrict_calendar">Calendar</string>
+    <string name="restrict_calling">Conversatii (apeluri, SMS, MMS)</string>
+    <string name="restrict_contacts">Contacte</string>
+    <string name="restrict_identification">Date de identificare (dispozitivul propriu)</string>
+    <string name="restrict_internet">Internet</string>
+    <string name="restrict_location">Locatie (fina/in mare)</string>
+    <string name="restrict_media">Media (audio, foto, video)</string>
+    <string name="restrict_messages">Mesaje (SMS, MMS)</string>
+    <string name="restrict_network">Retea Internet (adrese)</string>
+    <string name="restrict_phone">Telefon (date proprii de identificare, numere, apeluri)</string>
+    <string name="restrict_storage">Stocare externa (card SD)</string>
+    <string name="restrict_shell">Interfata (Shell) (comenzi, superuser)</string>
+    <string name="restrict_system">Sistem (aplicatii instalate)</string>
+    <string name="restrict_view">Acces browser</string>
+    <string name="title_category">Restrictioneaza categoria:</string>
+    <string name="title_restrict">Bifeaza pentru a restrictiona:</string>
+    <string name="settings_expert">Mod Expert</string>
+    <string name="settings_lat">Latitudine</string>
+    <string name="settings_lon">Longitudine</string>
+    <string name="settings_mac">MAC address</string>
+    <string name="help_application">Aplicatie</string>
+    <string name="help_internet">are permisiune Internet</string>
+    <string name="help_granted">are permisiune Android</string>
+    <string name="help_used">a utilizat aceste date</string>
+
+</resources>

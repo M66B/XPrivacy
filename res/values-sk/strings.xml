@@ -41,6 +41,7 @@
     <string name="settings_expert">Režim experta</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
+    <string name="settings_mac">MAC address</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové oprávnenie</string>
     <string name="help_granted">má Android povolenie</string>

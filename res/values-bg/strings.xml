@@ -41,6 +41,7 @@
     <string name="settings_expert">Режим за експерти</string>
     <string name="settings_lat">Геогр. ширина</string>
     <string name="settings_lon">Геогр. дължина</string>
+    <string name="settings_mac">MAC address</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">има разрешение за интернет</string>
     <string name="help_granted">има разрешение в Android</string>

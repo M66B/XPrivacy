@@ -41,6 +41,7 @@
     <string name="settings_expert">Napredni način</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
+    <string name="settings_mac">MAC address</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetno dovoljenje</string>
     <string name="help_granted">uporablja Android dovoljenja</string>

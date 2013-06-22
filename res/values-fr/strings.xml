@@ -41,6 +41,7 @@
     <string name="settings_expert">Mode expert</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
+    <string name="settings_mac">MAC address</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>
