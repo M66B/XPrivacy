@@ -69,6 +69,13 @@ public class XUtil {
 
 	public static String isProVersion(Context context) {
 		try {
+			// Check for pro app
+			PackageManager manager = context.getPackageManager();
+			if (manager.checkSignatures(context.getPackageName(), "biz.bokhorst.xprivacy.pro") == PackageManager.SIGNATURE_MATCH) {
+				XUtil.log(null, Log.INFO, "Pro version installed");
+				return "";
+			}
+
 			// Get license file name
 			String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
 			String fileName = folder + File.separator + "XPrivacy_license.txt";

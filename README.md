@@ -396,10 +396,15 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
+**Version 0.31*
+
+* Show storage folder in about
+* Fix Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/50))
+
 **Version 0.30**
 
 * Option to set MAC address
-* Fix Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/50))
+* Workaround Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/50))
 * Fixed notification for uninstalled apps ([issue](https://github.com/M66B/XPrivacy/issues/51))
 * Attemp to fix initial lag ([issue](https://github.com/M66B/XPrivacy/issues/59))
 * Added Romanian translation
