@@ -89,7 +89,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		setContentView(R.layout.xmainlist);
 
 		// Get localized restriction name
-		List<String> listRestriction = XRestriction.getRestrictions(this);
+		List<String> listRestriction = XRestriction.getRestrictions();
 		List<String> listLocalizedRestriction = new ArrayList<String>();
 		for (String restrictionName : listRestriction)
 			listLocalizedRestriction.add(XRestriction.getLocalizedName(this, restrictionName));
@@ -193,7 +193,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 		if (mAppAdapter != null) {
-			String restrictionName = XRestriction.getRestrictions(getApplicationContext()).get(pos);
+			String restrictionName = XRestriction.getRestrictions().get(pos);
 			mAppAdapter.setRestrictionName(restrictionName);
 		}
 	}
@@ -373,7 +373,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				if (expert != cbSettings.isChecked()) {
 					// Start task to get app list
 
-					List<String> listRestriction = XRestriction.getRestrictions(view.getContext());
+					List<String> listRestriction = XRestriction.getRestrictions();
 					String restrictionName = listRestriction.get(0);
 					AppListTask appListTask = new AppListTask();
 					appListTask.execute(restrictionName);
@@ -547,7 +547,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
 
 						// Reset existing restrictions
-						for (String restrictionName : XRestriction.getRestrictions(this))
+						for (String restrictionName : XRestriction.getRestrictions())
 							XRestriction.setRestricted(null, this, uid, restrictionName, null, false);
 
 						// Set imported restrictions

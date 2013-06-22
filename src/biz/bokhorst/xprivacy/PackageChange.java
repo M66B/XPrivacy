@@ -49,7 +49,7 @@ public class PackageChange extends BroadcastReceiver {
 				if (expert ? true : !system) {
 					// Default deny new user apps
 					if (!system)
-						for (String restrictionName : XRestriction.getRestrictions(context))
+						for (String restrictionName : XRestriction.getRestrictions())
 							XRestriction.setRestricted(null, context, uid, restrictionName, null, true);
 
 					// Build result intent
@@ -79,7 +79,7 @@ public class PackageChange extends BroadcastReceiver {
 				notificationManager.cancel(uid);
 
 				// Remove existing restrictions
-				for (String restrictionName : XRestriction.getRestrictions(context))
+				for (String restrictionName : XRestriction.getRestrictions())
 					XRestriction.setRestricted(null, context, uid, restrictionName, null, false);
 
 				// Remove usage data

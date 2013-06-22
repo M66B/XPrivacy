@@ -108,7 +108,7 @@ public class ActivityApp extends Activity {
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
 		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xrestrictionentry, mAppInfo,
-				XRestriction.getRestrictions(this));
+				XRestriction.getRestrictions());
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 
 		// Up navigation
@@ -134,7 +134,7 @@ public class ActivityApp extends Activity {
 
 			return true;
 		case R.id.menu_all:
-			List<String> listRestriction = XRestriction.getRestrictions(this);
+			List<String> listRestriction = XRestriction.getRestrictions();
 
 			// Get toggle
 			boolean restricted = false;

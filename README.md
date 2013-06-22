@@ -396,6 +396,8 @@ Changelog
 
 **Version 0.30** (in development)
 
+* Fixed notification for uninstalled apps ([issue](https://github.com/M66B/XPrivacy/issues/51))
+* Attemp to fix Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/50))
 * Randomize/set defaced data (planned)
 
 **Version 0.29**

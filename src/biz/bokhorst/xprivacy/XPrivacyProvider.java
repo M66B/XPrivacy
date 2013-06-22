@@ -88,7 +88,7 @@ public class XPrivacyProvider extends ContentProvider {
 				// Build restriction list
 				List<String> listRestrictionName;
 				if (restrictionName == null)
-					listRestrictionName = XRestriction.getRestrictions(getContext());
+					listRestrictionName = XRestriction.getRestrictions();
 				else {
 					listRestrictionName = new ArrayList<String>();
 					listRestrictionName.add(restrictionName);
@@ -144,7 +144,7 @@ public class XPrivacyProvider extends ContentProvider {
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING && selectionArgs == null) {
 			// Return setting
 			String settingName = selection;
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
 			MatrixCursor cursor = new MatrixCursor(new String[] { COL_SETTING, COL_VALUE });
 			if (settingName == null) {
 				for (String settingKey : prefs.getAll().keySet())
@@ -237,7 +237,7 @@ public class XPrivacyProvider extends ContentProvider {
 			String settingName = selection;
 
 			// Update setting
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putString(getSettingPref(settingName), values.getAsString(COL_VALUE));
 			editor.commit();
@@ -282,7 +282,7 @@ public class XPrivacyProvider extends ContentProvider {
 		new File(getPrefFileName(preference)).setReadable(true, false);
 	}
 
-	// The following method is used as fallback, when:
+	// The following methods are used as fallback, when:
 	// - there is no context (Java threads)
 	// - the content provider cannot be queried (PackageManagerService)
 
@@ -290,6 +290,12 @@ public class XPrivacyProvider extends ContentProvider {
 		// Get restrictions
 		XSharedPreferences xprefs = new XSharedPreferences(new File(getPrefFileName(PREF_RESTRICTION)));
 		return !getAllowed(uid, restrictionName, methodName, xprefs);
+	}
+
+	public static String getSettingFallback(String settingName, String defaultValue) {
+		// Get restrictions
+		XSharedPreferences xprefs = new XSharedPreferences(new File(getPrefFileName(PREF_SETTINGS)));
+		return xprefs.getString(settingName, defaultValue);
 	}
 
 	// Private helper methods
