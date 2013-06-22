@@ -26,6 +26,8 @@ public class PackageChange extends BroadcastReceiver {
 			boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
 			boolean expert = Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
 					Boolean.FALSE.toString()));
+			NotificationManager notificationManager = (NotificationManager) context
+					.getSystemService(Context.NOTIFICATION_SERVICE);
 
 			// Log
 			XUtil.log(null, Log.INFO, intent.getAction() + " package=" + packageName + " uid=" + uid + " replacing="
@@ -70,12 +72,11 @@ public class PackageChange extends BroadcastReceiver {
 					Notification notification = notificationBuilder.build();
 
 					// Notify
-					NotificationManager notificationManager = (NotificationManager) context
-							.getSystemService(Context.NOTIFICATION_SERVICE);
 					notificationManager.notify(pInfo.applicationInfo.uid, notification);
 				}
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 				// Package removed
+				notificationManager.cancel(uid);
 
 				// Remove existing restrictions
 				for (String restrictionName : XRestriction.getRestrictions(context))

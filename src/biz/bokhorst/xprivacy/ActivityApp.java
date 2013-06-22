@@ -46,6 +46,10 @@ public class ActivityApp extends Activity {
 
 		// Get app info
 		mAppInfo = new XApplicationInfo(packageName, this);
+		if (!mAppInfo.getIsInstalled()) {
+			finish();
+			return;
+		}
 
 		// Background color
 		if (mAppInfo.getIsSystem()) {

@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.SparseArray;
@@ -20,12 +21,15 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 	private int mUid;
 	private String mVersion;
 	private boolean mSystem;
+	private boolean mInstalled;
 
 	public XApplicationInfo(String packageName, Context context) {
 		// Get app info
 		try {
 			ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
 			this.Initialize(appInfo, context);
+		} catch (NameNotFoundException ex) {
+			mInstalled = false;
 		} catch (Throwable ex) {
 			XUtil.bug(null, ex);
 			return;
@@ -46,7 +50,11 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 		mUid = appInfo.uid;
 		try {
 			mVersion = pm.getPackageInfo(appInfo.packageName, 0).versionName;
+			mInstalled = true;
+		} catch (NameNotFoundException ex) {
+			mInstalled = false;
 		} catch (Throwable ex) {
+			mInstalled = false;
 			XUtil.bug(null, ex);
 		}
 		mSystem = ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
@@ -110,6 +118,10 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 
 	public boolean getIsSystem() {
 		return mSystem;
+	}
+
+	public boolean getIsInstalled() {
+		return mInstalled;
 	}
 
 	@Override
