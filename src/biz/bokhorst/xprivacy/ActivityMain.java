@@ -358,13 +358,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 		// Set current values
 		String sExpert = XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingExpert,
-				Boolean.FALSE.toString());
+				Boolean.FALSE.toString(), false);
 		final boolean expert = Boolean.parseBoolean(sExpert);
 		cbSettings.setChecked(expert);
-		etLat.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, ""));
-		etLon.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLongitude, ""));
+		etLat.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, "", false));
+		etLon.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLongitude, "", false));
 		etMac.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingMac,
-				XRestriction.getDefacedMac()));
+				XRestriction.getDefacedMac(), false));
 
 		// Wait for OK
 		btnOk.setOnClickListener(new View.OnClickListener() {

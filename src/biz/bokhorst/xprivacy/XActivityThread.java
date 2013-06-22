@@ -51,7 +51,7 @@ public class XActivityThread extends XHook {
 						if (isRestricted(param, mActionName))
 							if (Boolean.parseBoolean(XRestriction.getSetting(this,
 									AndroidAppHelper.currentApplication(), XRestriction.cSettingExpert,
-									Boolean.FALSE.toString())))
+									Boolean.FALSE.toString(), true)))
 								param.setResult(null);
 					} else if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
 						// Outgoing call

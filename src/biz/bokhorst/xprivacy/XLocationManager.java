@@ -129,8 +129,8 @@ public class XLocationManager extends XHook {
 	}
 
 	private Location getBaseLocation(Context context) {
-		String sLat = XRestriction.getSetting(this, context, XRestriction.cSettingLatitude, "");
-		String sLon = XRestriction.getSetting(this, context, XRestriction.cSettingLongitude, "");
+		String sLat = XRestriction.getSetting(this, context, XRestriction.cSettingLatitude, "", true);
+		String sLon = XRestriction.getSetting(this, context, XRestriction.cSettingLongitude, "", true);
 		if (sLat.equals("") || sLon.equals(""))
 			return null;
 		Location location = new Location("");

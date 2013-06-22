@@ -176,7 +176,7 @@ public class ActivityApp extends Activity {
 			mAppInfo = appInfo;
 			mRestrictions = restrictions;
 			mExpert = Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
-					Boolean.FALSE.toString()));
+					Boolean.FALSE.toString(), false));
 		}
 
 		@Override

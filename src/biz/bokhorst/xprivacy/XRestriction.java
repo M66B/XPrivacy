@@ -57,7 +57,8 @@ public class XRestriction {
 	private final static int cCacheTimeoutMs = 15 * 1000;
 	private static Map<String, List<String>> mPermissions = new LinkedHashMap<String, List<String>>();
 	private static Map<String, List<String>> mMethods = new LinkedHashMap<String, List<String>>();
-	private static Map<String, CacheEntry> mRestrictionCache = new HashMap<String, CacheEntry>();
+	private static Map<String, CRestriction> mRestrictionCache = new HashMap<String, CRestriction>();
+	private static Map<String, CSetting> mSettingsCache = new HashMap<String, CSetting>();
 	private static Map<UsageData, UsageData> mUsageQueue = new LinkedHashMap<UsageData, UsageData>();
 
 	static {
@@ -238,7 +239,7 @@ public class XRestriction {
 	public static List<String> getRestrictions() {
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
 		if (!Boolean.parseBoolean(XRestriction.getSetting(null, null, XRestriction.cSettingExpert,
-				Boolean.FALSE.toString())))
+				Boolean.FALSE.toString(), false)))
 			listRestriction.remove(cBoot);
 		return listRestriction;
 	}
@@ -322,7 +323,7 @@ public class XRestriction {
 			if (useCache)
 				synchronized (mRestrictionCache) {
 					if (mRestrictionCache.containsKey(keyCache)) {
-						CacheEntry entry = mRestrictionCache.get(keyCache);
+						CRestriction entry = mRestrictionCache.get(keyCache);
 						if (entry.isExpired())
 							mRestrictionCache.remove(keyCache);
 						else {
@@ -413,13 +414,13 @@ public class XRestriction {
 
 				// Fallback
 				restricted = XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
-			} else {
-				// Add to cache
-				synchronized (mRestrictionCache) {
-					if (mRestrictionCache.containsKey(keyCache))
-						mRestrictionCache.remove(keyCache);
-					mRestrictionCache.put(keyCache, new CacheEntry(restricted));
-				}
+			}
+
+			// Add to cache
+			synchronized (mRestrictionCache) {
+				if (mRestrictionCache.containsKey(keyCache))
+					mRestrictionCache.remove(keyCache);
+				mRestrictionCache.put(keyCache, new CRestriction(restricted));
 			}
 
 			// Result
@@ -465,8 +466,24 @@ public class XRestriction {
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false);
 	}
 
-	public static String getSetting(XHook hook, Context context, String settingName, String defaultValue) {
-		// TODO: settings caching
+	public static String getSetting(XHook hook, Context context, String settingName, String defaultValue,
+			boolean useCache) {
+		// Check cache
+		if (useCache)
+			synchronized (mSettingsCache) {
+				if (mSettingsCache.containsKey(settingName)) {
+					CSetting entry = mSettingsCache.get(settingName);
+					if (entry.isExpired())
+						mSettingsCache.remove(settingName);
+					else {
+						String value = mSettingsCache.get(settingName).getSettingsValue();
+						XUtil.log(hook, Log.INFO, String.format("get setting %s=%s *", settingName, value));
+						return value;
+					}
+				}
+			}
+
+		// Get setting
 		boolean fallback = true;
 		String value = defaultValue;
 		if (context != null) {
@@ -499,8 +516,16 @@ public class XRestriction {
 			}
 		}
 
+		// Use fallback
 		if (fallback)
 			value = XPrivacyProvider.getSettingFallback(settingName, defaultValue);
+
+		// Add to cache
+		synchronized (mSettingsCache) {
+			if (mSettingsCache.containsKey(settingName))
+				mSettingsCache.remove(settingName);
+			mSettingsCache.put(settingName, new CSetting(value));
+		}
 
 		XUtil.log(hook, Log.INFO, String.format("get setting %s=%s%s", settingName, value, (fallback ? " #" : "")));
 		return value;
@@ -536,7 +561,7 @@ public class XRestriction {
 	}
 
 	public static String getDefacedMac() {
-		return getSetting(null, null, cSettingMac, "de:fa:ce:de:fa:ce");
+		return getSetting(null, null, cSettingMac, "de:fa:ce:de:fa:ce", true);
 	}
 
 	public static byte[] getDefacedBytes() {
@@ -570,11 +595,11 @@ public class XRestriction {
 
 	// Helper classes
 
-	private static class CacheEntry {
+	private static class CRestriction {
 		private long mTimestamp;
 		private boolean mRestricted;
 
-		public CacheEntry(boolean restricted) {
+		public CRestriction(boolean restricted) {
 			mTimestamp = new Date().getTime();
 			mRestricted = restricted;
 		}
@@ -585,6 +610,24 @@ public class XRestriction {
 
 		public boolean isRestricted() {
 			return mRestricted;
+		}
+	}
+
+	private static class CSetting {
+		private long mTimestamp;
+		private String mValue;
+
+		public CSetting(String settingValue) {
+			mTimestamp = new Date().getTime();
+			mValue = settingValue;
+		}
+
+		public boolean isExpired() {
+			return (mTimestamp + cCacheTimeoutMs < new Date().getTime());
+		}
+
+		public String getSettingsValue() {
+			return mValue;
 		}
 	}
 
