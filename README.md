@@ -202,6 +202,8 @@ Limitations
 Installation
 ------------
 
+It seems like a lot of steps, but it is done in no time:
+
 1. Requirement: Android 4.1+ (JellyBean), check with *System Settings* > *About phone* > *Android version*
 1. **Make a backup**
 1. If not done already: root your device; the procedure depends on the brand and model of your device
