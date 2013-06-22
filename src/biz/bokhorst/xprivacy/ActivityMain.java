@@ -721,12 +721,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		protected void onPreExecute() {
 			super.onPreExecute();
 
-			// Show indeterminate progress circle
+			// Reset spinner
 			spRestriction.setSelection(0);
 			spRestriction.setEnabled(false);
+
+			// Reset filter
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setText("");
 			etFilter.setEnabled(false);
+
+			// Show indeterminate progress circle
 			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
 			progressBar.setVisibility(View.VISIBLE);
 			ListView lvApp = (ListView) findViewById(R.id.lvApp);
