@@ -47,10 +47,10 @@ public class XRuntime extends XHook {
 						param.setThrowable(new IOException(XRestriction.getDefacedString()));
 			}
 		} else if (methodName.equals("load") || methodName.equals("loadLibrary")) {
-			int uid = Process.myUid();
-			if (uid != 0 && uid != XRestriction.cUidAndroid) {
+			// Skip uid=0
+			if (Process.myUid() != 0) {
 				if (param.args.length > 0)
-					Log.i("XPrivacy", methodName + "(" + param.args[0] + ") uid=" + uid);
+					XUtil.log(this, Log.INFO, methodName + "(" + param.args[0] + ")");
 				if (isRestricted(param))
 					param.setResult(new UnsatisfiedLinkError(XRestriction.getDefacedString()));
 			}
