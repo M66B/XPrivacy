@@ -206,6 +206,7 @@ Installation
 	* Download and copy the Xposed disabler to your SD card to disable Xposed in case of troubles
 	* [MIUI](http://en.miui.com/) is not supported by Xposed
 1. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
+	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
 1. Enable XPrivacy from the Xposed installer
 1. Reboot into recovery
 1. Flash the Xposed fix for your Android version from [here](http://goo.im/devs/M66B/xprivacy)
