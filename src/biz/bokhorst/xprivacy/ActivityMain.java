@@ -230,9 +230,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		// Check Xposed version
 		int xVersion = XUtil.getXposedVersion();
 		if (xVersion < XRestriction.cXposedMinVersion) {
+			String msg = String.format(getString(R.string.app_notxposed), XRestriction.cXposedMinVersion);
+			XUtil.log(null, Log.WARN, msg);
+
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.app_name));
-			alertDialog.setMessage(String.format(getString(R.string.app_notxposed), XRestriction.cXposedMinVersion));
+			alertDialog.setMessage(msg);
 			alertDialog.setIcon(R.drawable.ic_launcher);
 			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 				@Override
@@ -244,9 +247,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 		// Check if XPrivacy is enabled
 		if (!XUtil.isXposedEnabled()) {
+			String msg = getString(R.string.app_notenabled);
+			XUtil.log(null, Log.WARN, msg);
+
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.app_name));
-			alertDialog.setMessage(getString(R.string.app_notenabled));
+			alertDialog.setMessage(msg);
 			alertDialog.setIcon(R.drawable.ic_launcher);
 			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 				@Override
@@ -259,6 +265,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		// Check location manager
 		if (!checkField(getSystemService(Context.LOCATION_SERVICE), "mContext", Context.class)) {
 			String msg = "Incompatible location manager";
+			XUtil.log(null, Log.WARN, msg);
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
@@ -266,6 +273,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		// Check package manager
 		if (!checkField(getPackageManager(), "mContext", Context.class)) {
 			String msg = "Incompatible package manager";
+			XUtil.log(null, Log.WARN, msg);
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
@@ -276,6 +284,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		// Check content resolver
 		if (!checkField(getContentResolver(), "mContext", Context.class)) {
 			String msg = "Incompatible content resolver";
+			XUtil.log(null, Log.WARN, msg);
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
@@ -283,6 +292,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		// Check telephony manager
 		if (!checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class)) {
 			String msg = "Incompatible telephony manager";
+			XUtil.log(null, Log.WARN, msg);
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
@@ -292,6 +302,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				|| !checkField(WifiInfo.class, "mMacAddress")
 				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid"))) {
 			String msg = "Incompatible WifiInfo";
+			XUtil.log(null, Log.WARN, msg);
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
@@ -300,6 +311,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
 				|| XNetworkInterface.getInetAddressEmpty() == null) {
 			String msg = "Incompatible InterfaceAddress";
+			XUtil.log(null, Log.WARN, msg);
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
