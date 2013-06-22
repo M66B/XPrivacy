@@ -42,4 +42,11 @@
         android:text="@string/app_info"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <TextView
+        android:id="@+id/tvStorage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textIsSelectable="true" />
+
 </LinearLayout>

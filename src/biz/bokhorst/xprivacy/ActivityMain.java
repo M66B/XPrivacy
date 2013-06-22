@@ -257,6 +257,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
+					Intent xInstallerIntent = getPackageManager().getLaunchIntentForPackage(
+							"de.robv.android.xposed.installer");
+					if (xInstallerIntent != null)
+						startActivity(xInstallerIntent);
 				}
 			});
 			alertDialog.show();
@@ -617,6 +621,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			tvLicensed.setVisibility(View.GONE);
 		else
 			tvLicensed.setText(String.format(getString(R.string.msg_licensed), licensed));
+
+		// Show external storage folder
+		TextView tvStorage = (TextView) dlgAbout.findViewById(R.id.tvStorage);
+		tvStorage.setText(Environment.getExternalStorageDirectory().toString());
 
 		dlgAbout.setCancelable(true);
 		dlgAbout.show();

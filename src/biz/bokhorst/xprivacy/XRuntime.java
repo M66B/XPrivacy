@@ -1,8 +1,11 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.IOException;
+import android.os.Process;
 
 import android.text.TextUtils;
+import android.util.Log;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XRuntime extends XHook {
@@ -20,15 +23,14 @@ public class XRuntime extends XHook {
 	// public Process exec(String prog)
 	// public Process exec(String prog, String[] envp)
 	// public Process exec(String prog, String[] envp, File directory)
-	// # public void load(String pathName)
-	// # public void loadLibrary(String libName)
 	// void load(String filename, ClassLoader loader)
 	// void loadLibrary(String libraryName, ClassLoader loader)
 	// libcore/luni/src/main/java/java/lang/Runtime.java
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (param.method.getName().equals("exec")) {
+		String methodName = param.method.getName();
+		if (methodName.equals("exec")) {
 			// Get programs
 			String[] progs;
 			if (String.class.isAssignableFrom(param.args[0].getClass()))
@@ -44,13 +46,20 @@ public class XRuntime extends XHook {
 					if (isRestricted(param, mCommand == null ? getMethodName() : mCommand))
 						param.setThrowable(new IOException(XRestriction.getDefacedString()));
 			}
-		}
+		} else if (methodName.equals("load") || methodName.equals("loadLibrary")) {
+			int uid = Process.myUid();
+			if (uid != 0 && uid != XRestriction.cUidAndroid) {
+				if (param.args.length > 0)
+					Log.i("XPrivacy", methodName + "(" + param.args[0] + ") uid=" + uid);
+				if (isRestricted(param))
+					param.setResult(new UnsatisfiedLinkError(XRestriction.getDefacedString()));
+			}
+		} else
+			XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
+
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (!param.method.getName().equals("exec"))
-			if (isRestricted(param))
-				param.setResult(new UnsatisfiedLinkError(XRestriction.getDefacedString()));
 	}
 }
