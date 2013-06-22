@@ -351,8 +351,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 		// Reference controls
 		final CheckBox cbSettings = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
-		final EditText atLat = (EditText) dlgSettings.findViewById(R.id.etLat);
-		final EditText atLon = (EditText) dlgSettings.findViewById(R.id.etLon);
+		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
+		final EditText etLon = (EditText) dlgSettings.findViewById(R.id.etLon);
+		final EditText etMac = (EditText) dlgSettings.findViewById(R.id.etMac);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
@@ -360,8 +361,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				Boolean.FALSE.toString());
 		final boolean expert = Boolean.parseBoolean(sExpert);
 		cbSettings.setChecked(expert);
-		atLat.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, ""));
-		atLon.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLongitude, ""));
+		etLat.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, ""));
+		etLon.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLongitude, ""));
+		etMac.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingMac,
+				XRestriction.getDefacedMac()));
 
 		// Wait for OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
@@ -381,8 +384,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 				// Set location
 				try {
-					float lat = Float.parseFloat(atLat.getText().toString().replace(',', '.'));
-					float lon = Float.parseFloat(atLon.getText().toString().replace(',', '.'));
+					float lat = Float.parseFloat(etLat.getText().toString().replace(',', '.'));
+					float lon = Float.parseFloat(etLon.getText().toString().replace(',', '.'));
 					if (lat < -90 || lat > 90 || lon < -180 || lon > 180)
 						throw new InvalidParameterException();
 
@@ -394,6 +397,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, "");
 					XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingLongitude, "");
 				}
+
+				// Set MAC address
+				XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingMac, etMac.getText().toString());
 
 				// Done
 				dlgSettings.dismiss();

@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
-    android:versionCode="38"
+    android:versionCode="39"
     android:versionName="0.30" >
 
     <uses-sdk

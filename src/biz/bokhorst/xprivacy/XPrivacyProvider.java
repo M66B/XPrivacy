@@ -295,7 +295,7 @@ public class XPrivacyProvider extends ContentProvider {
 	public static String getSettingFallback(String settingName, String defaultValue) {
 		// Get restrictions
 		XSharedPreferences xprefs = new XSharedPreferences(new File(getPrefFileName(PREF_SETTINGS)));
-		return xprefs.getString(settingName, defaultValue);
+		return xprefs.getString(getSettingPref(settingName), defaultValue);
 	}
 
 	// Private helper methods

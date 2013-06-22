@@ -52,6 +52,7 @@ public class XRestriction {
 	public final static String cSettingExpert = "Expert";
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
+	public final static String cSettingMac = "Mac";
 
 	private final static int cCacheTimeoutMs = 15 * 1000;
 	private static Map<String, List<String>> mPermissions = new LinkedHashMap<String, List<String>>();
@@ -483,6 +484,8 @@ public class XRestriction {
 					} else {
 						if (cursor.moveToNext()) {
 							value = cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_VALUE));
+							if (value == null)
+								value = defaultValue;
 							fallback = false;
 						} else {
 							XUtil.log(hook, Log.WARN, "cursor is empty");
@@ -533,7 +536,7 @@ public class XRestriction {
 	}
 
 	public static String getDefacedMac() {
-		return "de:fa:ce:de:fa:ce";
+		return getSetting(null, null, cSettingMac, "de:fa:ce:de:fa:ce");
 	}
 
 	public static byte[] getDefacedBytes() {

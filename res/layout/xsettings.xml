@@ -52,6 +52,23 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal|numberSigned" />
         </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_mac"
+                android:textIsSelectable="false" />
+
+            <EditText
+                android:id="@+id/etMac"
+                android:layout_width="150dip"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions" />
+        </TableRow>
     </TableLayout>
 
     <Button
