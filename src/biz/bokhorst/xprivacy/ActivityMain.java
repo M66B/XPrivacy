@@ -319,6 +319,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 			toast.show();
 		}
+
+		// Check runtime
+		try {
+			Runtime.class.getDeclaredMethod("load", String.class, ClassLoader.class);
+			Runtime.class.getDeclaredMethod("loadLibrary", String.class, ClassLoader.class);
+		} catch (NoSuchMethodException ex) {
+			String msg = "Incompatible Runtime";
+			XUtil.log(null, Log.WARN, msg);
+			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+			toast.show();
+		}
 	}
 
 	private boolean checkField(Object obj, String fieldName, Class<?> expectedClass) {
