@@ -394,11 +394,12 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
-**Version 0.30** (in development)
+**Version 0.30**
 
-* Fixed notification for uninstalled apps ([issue](https://github.com/M66B/XPrivacy/issues/51))
-* Attemp to fix Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/50))
 * Option to set MAC address
+* Attemp to fix Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/50))
+* Fixed notification for uninstalled apps ([issue](https://github.com/M66B/XPrivacy/issues/51))
+* Attemp to fix initial lag ([issue](https://github.com/M66B/XPrivacy/issues/59))
 * Added Romanian translation
 
 **Version 0.29**
