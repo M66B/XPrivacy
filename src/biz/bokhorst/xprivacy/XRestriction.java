@@ -304,6 +304,10 @@ public class XRestriction {
 	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName,
 			String methodName, boolean usage, boolean useCache) {
 		try {
+			// Do not restrict Android
+			if (uid == XRestriction.cUidAndroid)
+				return false;
+
 			// Check uid
 			if (uid <= 0) {
 				XUtil.log(hook, Log.WARN, "uid <= 0");
@@ -366,6 +370,7 @@ public class XRestriction {
 						}
 
 						// Send usage data
+						int count = 0;
 						UsageData data = null;
 						do {
 							int size = 0;
@@ -378,6 +383,7 @@ public class XRestriction {
 									data = null;
 							}
 							if (data != null) {
+								count++;
 								try {
 									XUtil.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
 									ContentValues values = new ContentValues();
@@ -391,7 +397,7 @@ public class XRestriction {
 									XUtil.bug(hook, ex);
 								}
 							}
-						} while (data != null);
+						} while (data != null && count < 3);
 					}
 				} catch (Throwable ex) {
 					XUtil.bug(hook, ex);
