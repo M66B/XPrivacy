@@ -290,7 +290,7 @@ public class ActivityApp extends Activity {
 			else {
 				Date date = new Date(lastUsage);
 				SimpleDateFormat format = new SimpleDateFormat("dd/HH:mm", Locale.US);
-				ctvMethodName.setText(String.format("%s @ %s", methodName, format.format(date)));
+				ctvMethodName.setText(String.format("%s @%s", methodName, format.format(date)));
 			}
 
 			boolean parentRestricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.getUid(),

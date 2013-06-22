@@ -98,7 +98,7 @@ public class XUtil {
 				// Return result
 				return (licensed ? name : null);
 			} else
-				XUtil.log(null, Log.INFO, "No license file found");
+				XUtil.log(null, Log.INFO, "No license folder=" + Environment.getExternalStorageDirectory());
 		} catch (Throwable ex) {
 			XUtil.log(null, Log.ERROR, "Processing license");
 			XUtil.bug(null, ex);
