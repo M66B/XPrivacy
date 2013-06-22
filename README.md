@@ -399,6 +399,7 @@ Changelog
 **Version 0.31*
 
 * Show storage folder in about
+* Support for XPrivacy Pro from Google Play
 * Fix Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/50))
 
 **Version 0.30**
