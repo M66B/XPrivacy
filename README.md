@@ -213,6 +213,7 @@ Installation
 	* Android 4.1.x / CM10: Xposed_fix_4.1.zip
 	* Android 4.2.x / CM10.1: Xposed_fix_4.2.zip
 	* **This fix is only for Xposed version 2.1.4**
+	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
 1. Reboot
 
 I do not recommend using XPrivacy in combination with any of the
