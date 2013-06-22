@@ -154,8 +154,8 @@ public class XRestriction {
 		mMethods.get(cShell).add("sh");
 		mMethods.get(cShell).add("su");
 		mMethods.get(cShell).add("exec");
-		// mMethods.get(cShell).add("load");
-		// mMethods.get(cShell).add("loadLibrary");
+		mMethods.get(cShell).add("load");
+		mMethods.get(cShell).add("loadLibrary");
 		mMethods.get(cShell).add("start");
 
 		// Settings secure
@@ -304,10 +304,6 @@ public class XRestriction {
 	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName,
 			String methodName, boolean usage, boolean useCache) {
 		try {
-			// Do not restrict Android
-			if (uid == XRestriction.cUidAndroid)
-				return false;
-
 			// Check uid
 			if (uid <= 0) {
 				XUtil.log(hook, Log.WARN, "uid <= 0");
@@ -370,7 +366,6 @@ public class XRestriction {
 						}
 
 						// Send usage data
-						int count = 0;
 						UsageData data = null;
 						do {
 							int size = 0;
@@ -383,7 +378,6 @@ public class XRestriction {
 									data = null;
 							}
 							if (data != null) {
-								count++;
 								try {
 									XUtil.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
 									ContentValues values = new ContentValues();
@@ -397,7 +391,7 @@ public class XRestriction {
 									XUtil.bug(hook, ex);
 								}
 							}
-						} while (data != null && count < 3);
+						} while (data != null);
 					}
 				} catch (Throwable ex) {
 					XUtil.bug(hook, ex);
@@ -406,7 +400,7 @@ public class XRestriction {
 			// Use fallback
 			if (fallback) {
 				// Queue usage data
-				if (usage && uid != 1000 && !"getPackageGids".equals(methodName)) {
+				if (usage && uid != XRestriction.cUidAndroid && !"getPackageGids".equals(methodName)) {
 					UsageData usageData = new UsageData(uid, restrictionName, methodName);
 					synchronized (mUsageQueue) {
 						if (mUsageQueue.containsKey(usageData))

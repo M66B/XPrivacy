@@ -22,6 +22,8 @@ public class XRuntime extends XHook {
 	// public Process exec(String prog, String[] envp, File directory)
 	// # public void load(String pathName)
 	// # public void loadLibrary(String libName)
+	// void load(String filename, ClassLoader loader)
+	// void loadLibrary(String libraryName, ClassLoader loader)
 	// libcore/luni/src/main/java/java/lang/Runtime.java
 
 	@Override
