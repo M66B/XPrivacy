@@ -154,8 +154,8 @@ public class XRestriction {
 		mMethods.get(cShell).add("sh");
 		mMethods.get(cShell).add("su");
 		mMethods.get(cShell).add("exec");
-		mMethods.get(cShell).add("load");
-		mMethods.get(cShell).add("loadLibrary");
+		// mMethods.get(cShell).add("load");
+		// mMethods.get(cShell).add("loadLibrary");
 		mMethods.get(cShell).add("start");
 
 		// Settings secure
@@ -403,10 +403,8 @@ public class XRestriction {
 				if (usage && uid != 1000 && !"getPackageGids".equals(methodName)) {
 					UsageData usageData = new UsageData(uid, restrictionName, methodName);
 					synchronized (mUsageQueue) {
-						if (mUsageQueue.containsKey(usageData)) {
+						if (mUsageQueue.containsKey(usageData))
 							mUsageQueue.remove(usageData);
-							XUtil.log(hook, Log.INFO, "Replacing usage data=" + usageData);
-						}
 						mUsageQueue.put(usageData, usageData);
 						XUtil.log(hook, Log.INFO, "Queue usage data=" + usageData + " size=" + mUsageQueue.size());
 					}

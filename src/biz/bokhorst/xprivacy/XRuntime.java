@@ -3,7 +3,6 @@ package biz.bokhorst.xprivacy;
 import java.io.IOException;
 
 import android.text.TextUtils;
-import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XRuntime extends XHook {
@@ -21,8 +20,8 @@ public class XRuntime extends XHook {
 	// public Process exec(String prog)
 	// public Process exec(String prog, String[] envp)
 	// public Process exec(String prog, String[] envp, File directory)
-	// public void load(String pathName)
-	// public void loadLibrary(String libName)
+	// # public void load(String pathName)
+	// # public void loadLibrary(String libName)
 	// libcore/luni/src/main/java/java/lang/Runtime.java
 
 	@Override
@@ -38,7 +37,6 @@ public class XRuntime extends XHook {
 			// Check programs
 			if (progs != null) {
 				String command = TextUtils.join(" ", progs);
-				XUtil.log(this, Log.INFO, "exec(" + command + ")");
 				if ((mCommand == null && !command.startsWith("sh") && !command.startsWith("su"))
 						|| (mCommand != null && command.startsWith(mCommand)))
 					if (isRestricted(param, mCommand == null ? getMethodName() : mCommand))

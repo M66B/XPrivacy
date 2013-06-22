@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
@@ -28,7 +27,6 @@ public class XProcessBuilder extends XHook {
 
 		// Check commands
 		String command = TextUtils.join(" ", listProg);
-		XUtil.log(this, Log.INFO, "start(" + command + ")");
 		if ((mCommand == null && !command.startsWith("sh") && !command.startsWith("su"))
 				|| (mCommand != null && command.startsWith(mCommand)))
 			if (isRestricted(param, mCommand == null ? getMethodName() : mCommand))

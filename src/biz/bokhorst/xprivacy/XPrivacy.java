@@ -114,8 +114,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XRuntime("exec", XRestriction.cShell, new String[] {}, "sh"), "java.lang.Runtime");
 		hook(new XRuntime("exec", XRestriction.cShell, new String[] {}, "su"), "java.lang.Runtime");
 		hook(new XRuntime("exec", XRestriction.cShell, new String[] {}, null), "java.lang.Runtime");
-		hook(new XRuntime("load", XRestriction.cShell, new String[] {}, null), "java.lang.Runtime");
-		hook(new XRuntime("loadLibrary", XRestriction.cShell, new String[] {}, null), "java.lang.Runtime");
+		// @formatter:off
+		//hook(new XRuntime("load", XRestriction.cShell, new String[] {}, null), "java.lang.Runtime");
+		//hook(new XRuntime("loadLibrary", XRestriction.cShell, new String[] {}, null), "java.lang.Runtime");
+		// @formatter:on
 
 		// Process builder
 		hook(new XProcessBuilder("start", XRestriction.cShell, new String[] {}, "sh"), "java.lang.ProcessBuilder");
