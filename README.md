@@ -79,7 +79,13 @@ which is provided as download for both Android version 4.1 and 4.2.
 
 **XPrivacy was a lot of work, so please support this project**
 
-Donate a few dollars for the [pro version](http://www.faircode.eu/xprivacy/) or
+Donate a few dollars for the [pro version](http://www.faircode.eu/xprivacy/)
+
+or
+
+buy [the pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) in Google Play
+
+or
 
 [![Flattr](http://api.flattr.com/button/flattr-badge-large.png "Flattr This!")](http://flattr.com/thing/1491130/ "The ultimate, yet easy to use, privacy manager")
 

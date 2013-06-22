@@ -47,7 +47,7 @@ public class XRuntime extends XHook {
 						param.setThrowable(new IOException(XRestriction.getDefacedString()));
 			}
 		} else if (methodName.equals("load") || methodName.equals("loadLibrary")) {
-			// Skip uid=0
+			// Skip pre Android
 			if (Process.myUid() != 0) {
 				if (param.args.length > 0)
 					XUtil.log(this, Log.INFO, methodName + "(" + param.args[0] + ")");
@@ -56,7 +56,6 @@ public class XRuntime extends XHook {
 			}
 		} else
 			XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
-
 	}
 
 	@Override
