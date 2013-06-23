@@ -239,8 +239,10 @@ public class XRestriction {
 	public static List<String> getRestrictions() {
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
 		if (!Boolean.parseBoolean(XRestriction.getSetting(null, null, XRestriction.cSettingExpert,
-				Boolean.FALSE.toString(), false)))
+				Boolean.FALSE.toString(), false))) {
 			listRestriction.remove(cBoot);
+			listRestriction.remove(cShell);
+		}
 		return listRestriction;
 	}
 
