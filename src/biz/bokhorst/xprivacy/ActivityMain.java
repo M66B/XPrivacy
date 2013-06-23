@@ -415,7 +415,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						Boolean.toString(cbSettings.isChecked()));
 				if (expert != cbSettings.isChecked()) {
 					// Start task to get app list
-
 					List<String> listRestriction = XRestriction.getRestrictions();
 					String restrictionName = listRestriction.get(0);
 					AppListTask appListTask = new AppListTask();
@@ -461,172 +460,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	}
 
 	private void optionPro() {
+		// Redirect to pro page
 		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
 		startActivity(browserIntent);
 	}
 
 	private void optionExport() {
-		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
-			try {
-				// Serialize
-				FileOutputStream fos = new FileOutputStream(getExportFile());
-				XmlSerializer serializer = Xml.newSerializer();
-				serializer.setOutput(fos, "UTF-8");
-				serializer.startDocument(null, Boolean.valueOf(true));
-				serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
-				serializer.startTag(null, "XPrivacy");
-
-				// Process settings
-				Cursor sCursor = getContentResolver().query(XPrivacyProvider.URI_SETTING, null, null, null, null);
-				while (sCursor.moveToNext()) {
-					// Get setting
-					String setting = sCursor.getString(sCursor.getColumnIndex(XPrivacyProvider.COL_SETTING));
-					String value = sCursor.getString(sCursor.getColumnIndex(XPrivacyProvider.COL_VALUE));
-
-					// Serialize setting
-					serializer.startTag(null, "Setting");
-					serializer.attribute(null, "Name", setting);
-					serializer.attribute(null, "Value", value);
-					serializer.endTag(null, "Setting");
-				}
-				sCursor.close();
-
-				// Process restrictions
-				Cursor rCursor = getContentResolver().query(XPrivacyProvider.URI_RESTRICTION, null, null,
-						new String[] { Integer.toString(0), Boolean.toString(false) }, null);
-				while (rCursor.moveToNext()) {
-					// Decode uid
-					int uid = rCursor.getInt(rCursor.getColumnIndex(XPrivacyProvider.COL_UID));
-					boolean restricted = Boolean.parseBoolean(rCursor.getString(rCursor
-							.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
-					String[] packages = getPackageManager().getPackagesForUid(uid);
-					if (packages == null)
-						XUtil.log(null, Log.WARN, "No packages for uid=" + uid);
-					else
-						for (String packageName : packages) {
-							// Package
-							serializer.startTag(null, "Package");
-
-							// Attribute package name
-							serializer.attribute(null, "Name", packageName);
-
-							// Attribute restriction name
-							String restrictionName = rCursor.getString(rCursor
-									.getColumnIndex(XPrivacyProvider.COL_RESTRICTION));
-							serializer.attribute(null, "Restriction", restrictionName);
-
-							// Attribute method name
-							String methodName = rCursor.getString(rCursor.getColumnIndex(XPrivacyProvider.COL_METHOD));
-							if (methodName != null)
-								serializer.attribute(null, "Method", methodName);
-
-							// Restricted indication
-							serializer.attribute(null, "Restricted", Boolean.toString(restricted));
-
-							serializer.endTag(null, "Package");
-						}
-				}
-				rCursor.close();
-
-				// End serialization
-				serializer.endTag(null, "XPrivacy");
-				serializer.endDocument();
-				serializer.flush();
-				fos.close();
-
-				// Display message
-				String message = String.format("%s %s", getString(R.string.menu_export), getExportFile()
-						.getAbsolutePath());
-				Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-				toast.show();
-			} catch (Throwable ex) {
-				XUtil.bug(null, ex);
-				Toast toast = Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG);
-				toast.show();
-			}
+		ExportTask exportTask = new ExportTask();
+		exportTask.execute(getExportFile());
 	}
 
 	private void optionImport() {
-		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
-			try {
-				// Read XML
-				FileInputStream fis = new FileInputStream(getExportFile());
-				InputStreamReader isr = new InputStreamReader(fis);
-				char[] inputBuffer = new char[fis.available()];
-				isr.read(inputBuffer);
-				String xml = new String(inputBuffer);
-				isr.close();
-				fis.close();
-
-				// Prepare XML document
-				InputStream is = new ByteArrayInputStream(xml.getBytes("UTF-8"));
-				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-				DocumentBuilder db = dbf.newDocumentBuilder();
-				Document dom = db.parse(is);
-				dom.getDocumentElement().normalize();
-
-				// Process settings
-				NodeList sItems = dom.getElementsByTagName("Setting");
-				for (int i = 0; i < sItems.getLength(); i++) {
-					// Process package restriction
-					Node entry = sItems.item(i);
-					NamedNodeMap attrs = entry.getAttributes();
-					String setting = attrs.getNamedItem("Name").getNodeValue();
-					String value = attrs.getNamedItem("Value").getNodeValue();
-					XRestriction.setSetting(null, this, setting, value);
-				}
-
-				// Process restrictions
-				Map<String, Map<String, List<String>>> mapPackage = new HashMap<String, Map<String, List<String>>>();
-				NodeList rItems = dom.getElementsByTagName("Package");
-				for (int i = 0; i < rItems.getLength(); i++) {
-					// Process package restriction
-					Node entry = rItems.item(i);
-					NamedNodeMap attrs = entry.getAttributes();
-					String packageName = attrs.getNamedItem("Name").getNodeValue();
-					String restrictionName = attrs.getNamedItem("Restriction").getNodeValue();
-					String methodName = (attrs.getNamedItem("Method") == null ? null : attrs.getNamedItem("Method")
-							.getNodeValue());
-
-					// Map package restriction
-					if (!mapPackage.containsKey(packageName))
-						mapPackage.put(packageName, new HashMap<String, List<String>>());
-					if (!mapPackage.get(packageName).containsKey(restrictionName))
-						mapPackage.get(packageName).put(restrictionName, new ArrayList<String>());
-					if (methodName != null)
-						mapPackage.get(packageName).get(restrictionName).add(methodName);
-				}
-
-				// Process result
-				for (String packageName : mapPackage.keySet()) {
-					try {
-						// Get uid
-						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
-
-						// Reset existing restrictions
-						XRestriction.deleteRestrictions(this, uid);
-
-						// Set imported restrictions
-						for (String restrictionName : mapPackage.get(packageName).keySet()) {
-							XRestriction.setRestricted(null, this, uid, restrictionName, null, true);
-							for (String methodName : mapPackage.get(packageName).get(restrictionName))
-								XRestriction.setRestricted(null, this, uid, restrictionName, methodName, false);
-						}
-					} catch (NameNotFoundException ex) {
-						XUtil.log(null, Log.WARN, "Not found package=" + packageName);
-					}
-				}
-
-				// Display message
-				String message = String.format("%s %s", getString(R.string.menu_import), getExportFile()
-						.getAbsolutePath());
-				Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-				toast.show();
-			} catch (Throwable ex) {
-				XUtil.bug(null, ex);
-				Toast toast = Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG);
-				toast.show();
-			}
+		ImportTask importTask = new ImportTask();
+		importTask.execute(getExportFile());
 	}
 
 	private void optionAbout() {
@@ -767,6 +613,199 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			super.onPostExecute(json);
 			if (json != null)
 				processJson(json);
+		}
+	}
+
+	private class ExportTask extends AsyncTask<File, String, String> {
+		private File mFile;
+
+		@Override
+		protected String doInBackground(File... params) {
+			mFile = params[0];
+			if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
+				try {
+					// Serialize
+					FileOutputStream fos = new FileOutputStream(mFile);
+					XmlSerializer serializer = Xml.newSerializer();
+					serializer.setOutput(fos, "UTF-8");
+					serializer.startDocument(null, Boolean.valueOf(true));
+					serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+					serializer.startTag(null, "XPrivacy");
+
+					// Process settings
+					Cursor sCursor = getContentResolver().query(XPrivacyProvider.URI_SETTING, null, null, null, null);
+					while (sCursor.moveToNext()) {
+						// Get setting
+						String setting = sCursor.getString(sCursor.getColumnIndex(XPrivacyProvider.COL_SETTING));
+						String value = sCursor.getString(sCursor.getColumnIndex(XPrivacyProvider.COL_VALUE));
+
+						// Serialize setting
+						serializer.startTag(null, "Setting");
+						serializer.attribute(null, "Name", setting);
+						serializer.attribute(null, "Value", value);
+						serializer.endTag(null, "Setting");
+					}
+					sCursor.close();
+
+					// Process restrictions
+					Cursor rCursor = getContentResolver().query(XPrivacyProvider.URI_RESTRICTION, null, null,
+							new String[] { Integer.toString(0), Boolean.toString(false) }, null);
+					while (rCursor.moveToNext()) {
+						// Decode uid
+						int uid = rCursor.getInt(rCursor.getColumnIndex(XPrivacyProvider.COL_UID));
+						boolean restricted = Boolean.parseBoolean(rCursor.getString(rCursor
+								.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
+						String[] packages = getPackageManager().getPackagesForUid(uid);
+						if (packages == null)
+							XUtil.log(null, Log.WARN, "No packages for uid=" + uid);
+						else
+							for (String packageName : packages) {
+								// Package
+								serializer.startTag(null, "Package");
+
+								// Attribute package name
+								serializer.attribute(null, "Name", packageName);
+
+								// Attribute restriction name
+								String restrictionName = rCursor.getString(rCursor
+										.getColumnIndex(XPrivacyProvider.COL_RESTRICTION));
+								serializer.attribute(null, "Restriction", restrictionName);
+
+								// Attribute method name
+								String methodName = rCursor.getString(rCursor
+										.getColumnIndex(XPrivacyProvider.COL_METHOD));
+								if (methodName != null)
+									serializer.attribute(null, "Method", methodName);
+
+								// Restricted indication
+								serializer.attribute(null, "Restricted", Boolean.toString(restricted));
+
+								serializer.endTag(null, "Package");
+							}
+					}
+					rCursor.close();
+
+					// End serialization
+					serializer.endTag(null, "XPrivacy");
+					serializer.endDocument();
+					serializer.flush();
+					fos.close();
+
+					// Display message
+					return String.format("%s %s", getString(R.string.menu_export), getExportFile().getAbsolutePath());
+				} catch (Throwable ex) {
+					XUtil.bug(null, ex);
+					return ex.toString();
+				}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result != null) {
+				Toast toast = Toast.makeText(ActivityMain.this, result, Toast.LENGTH_LONG);
+				toast.show();
+			}
+			super.onPostExecute(result);
+		}
+	}
+
+	private class ImportTask extends AsyncTask<File, Integer, String> {
+
+		private File mFile;
+
+		@Override
+		protected String doInBackground(File... params) {
+			mFile = params[0];
+			if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
+				try {
+					// Read XML
+					FileInputStream fis = new FileInputStream(mFile);
+					InputStreamReader isr = new InputStreamReader(fis);
+					char[] inputBuffer = new char[fis.available()];
+					isr.read(inputBuffer);
+					String xml = new String(inputBuffer);
+					isr.close();
+					fis.close();
+
+					// Prepare XML document
+					InputStream is = new ByteArrayInputStream(xml.getBytes("UTF-8"));
+					DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+					DocumentBuilder db = dbf.newDocumentBuilder();
+					Document dom = db.parse(is);
+					dom.getDocumentElement().normalize();
+
+					// Process settings
+					NodeList sItems = dom.getElementsByTagName("Setting");
+					for (int i = 0; i < sItems.getLength(); i++) {
+						// Process package restriction
+						Node entry = sItems.item(i);
+						NamedNodeMap attrs = entry.getAttributes();
+						String setting = attrs.getNamedItem("Name").getNodeValue();
+						String value = attrs.getNamedItem("Value").getNodeValue();
+						XRestriction.setSetting(null, ActivityMain.this, setting, value);
+					}
+
+					// Process restrictions
+					Map<String, Map<String, List<String>>> mapPackage = new HashMap<String, Map<String, List<String>>>();
+					NodeList rItems = dom.getElementsByTagName("Package");
+					for (int i = 0; i < rItems.getLength(); i++) {
+						// Process package restriction
+						Node entry = rItems.item(i);
+						NamedNodeMap attrs = entry.getAttributes();
+						String packageName = attrs.getNamedItem("Name").getNodeValue();
+						String restrictionName = attrs.getNamedItem("Restriction").getNodeValue();
+						String methodName = (attrs.getNamedItem("Method") == null ? null : attrs.getNamedItem("Method")
+								.getNodeValue());
+
+						// Map package restriction
+						if (!mapPackage.containsKey(packageName))
+							mapPackage.put(packageName, new HashMap<String, List<String>>());
+						if (!mapPackage.get(packageName).containsKey(restrictionName))
+							mapPackage.get(packageName).put(restrictionName, new ArrayList<String>());
+						if (methodName != null)
+							mapPackage.get(packageName).get(restrictionName).add(methodName);
+					}
+
+					// Process result
+					for (String packageName : mapPackage.keySet()) {
+						try {
+							// Get uid
+							int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
+
+							// Reset existing restrictions
+							XRestriction.deleteRestrictions(ActivityMain.this, uid);
+
+							// Set imported restrictions
+							for (String restrictionName : mapPackage.get(packageName).keySet()) {
+								XRestriction.setRestricted(null, ActivityMain.this, uid, restrictionName, null, true);
+								for (String methodName : mapPackage.get(packageName).get(restrictionName))
+									XRestriction.setRestricted(null, ActivityMain.this, uid, restrictionName,
+											methodName, false);
+							}
+						} catch (NameNotFoundException ex) {
+							XUtil.log(null, Log.WARN, "Not found package=" + packageName);
+						}
+					}
+
+					// Display message
+					return String.format("%s %s", getString(R.string.menu_import), getExportFile().getAbsolutePath());
+				} catch (Throwable ex) {
+					XUtil.bug(null, ex);
+					return ex.toString();
+				}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result != null) {
+				Toast toast = Toast.makeText(ActivityMain.this, result, Toast.LENGTH_LONG);
+				toast.show();
+				if (ActivityMain.this.mAppAdapter != null)
+					ActivityMain.this.mAppAdapter.notifyDataSetChanged();
+			}
+			super.onPostExecute(result);
 		}
 	}
 
