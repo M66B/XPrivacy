@@ -148,12 +148,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.xmain, menu);
-		if (XUtil.isProVersion(this) == null) {
-			menu.removeItem(R.id.menu_export);
-			menu.removeItem(R.id.menu_import);
-		} else
-			menu.removeItem(R.id.menu_pro);
 		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		boolean pro = (XUtil.isProVersion(this) != null);
+		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+
+		menu.findItem(R.id.menu_export).setEnabled(pro && mounted);
+		menu.findItem(R.id.menu_import).setEnabled(pro && mounted);
+		menu.findItem(R.id.menu_pro).setEnabled(!pro);
+
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
@@ -222,6 +229,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
+					Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
+					xposedIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy#installation"));
+					startActivity(xposedIntent);
 				}
 			});
 			alertDialog.show();
@@ -240,6 +250,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
+					Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
+					xposedIntent.setData(Uri.parse("http://forum.xda-developers.com/showthread.php?t=1574401"));
+					startActivity(xposedIntent);
 				}
 			});
 			alertDialog.show();
