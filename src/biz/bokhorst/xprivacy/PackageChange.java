@@ -55,7 +55,8 @@ public class PackageChange extends BroadcastReceiver {
 					// Build result intent
 					Intent resultIntent = new Intent(context, ActivityApp.class);
 					resultIntent.putExtra(ActivityApp.cPackageName, packageName);
-					resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+					resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_USER_ACTION
+							| Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 
 					// Build pending intent
 					PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
