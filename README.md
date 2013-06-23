@@ -408,6 +408,7 @@ Changelog
 
 * Move *Shell* category to expert mode
 * Export/import function restrictions ([pro version](http://www.faircode.eu/xprivacy/) only)
+* Added Japanese translation
 
 **Version 0.31*
 
