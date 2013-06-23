@@ -246,7 +246,7 @@ public class XRestriction {
 		return listRestriction;
 	}
 
-	public static List<String> getMethodNames(Context context, String restrictionName) {
+	public static List<String> getMethodNames(String restrictionName) {
 		return mMethods.get(restrictionName);
 	}
 

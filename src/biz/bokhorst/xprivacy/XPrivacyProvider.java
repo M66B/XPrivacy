@@ -81,7 +81,8 @@ public class XPrivacyProvider extends ContentProvider {
 			String methodName = (selectionArgs.length >= 3 ? selectionArgs[2] : null);
 
 			@SuppressWarnings("resource")
-			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_RESTRICTED });
+			MatrixCursor cursor = new MatrixCursor(
+					new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_RESTRICTED });
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
 
 			if (uid == 0) {
@@ -95,8 +96,9 @@ public class XPrivacyProvider extends ContentProvider {
 				}
 
 				// Process restrictions
-				for (String restriction : listRestrictionName) {
-					String restrictions = prefs.getString(getRestrictionPref(restriction), "*");
+				for (String eRestrictionName : listRestrictionName) {
+					// Get data
+					String restrictions = prefs.getString(getRestrictionPref(eRestrictionName), "*");
 					List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
 					boolean defaultAllowed = listRestriction.get(0).equals("*");
 					if (defaultAllowed)
@@ -104,8 +106,21 @@ public class XPrivacyProvider extends ContentProvider {
 					else
 						throw new IllegalArgumentException();
 
-					for (String sUid : listRestriction)
-						cursor.addRow(new Object[] { Integer.parseInt(sUid), restriction, true });
+					// Process data
+					for (String sUid : listRestriction) {
+						int eUid = Integer.parseInt(sUid);
+
+						// Category
+						cursor.addRow(new Object[] { eUid, eRestrictionName, null, true });
+
+						// Exceptions
+						for (String eMethodName : XRestriction.getMethodNames(eRestrictionName)) {
+							boolean allowed = prefs.getBoolean(getExceptionPref(eUid, eRestrictionName, eMethodName),
+									false);
+							if (allowed)
+								cursor.addRow(new Object[] { eUid, eRestrictionName, eMethodName, !allowed });
+						}
+					}
 				}
 			} else {
 				// Update usage count
@@ -123,7 +138,7 @@ public class XPrivacyProvider extends ContentProvider {
 				boolean allowed = getAllowed(uid, restrictionName, methodName, prefs);
 
 				// Return restriction
-				cursor.addRow(new Object[] { uid, restrictionName, Boolean.toString(!allowed) });
+				cursor.addRow(new Object[] { uid, restrictionName, null, Boolean.toString(!allowed) });
 			}
 			return cursor;
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length >= 1) {
@@ -213,6 +228,8 @@ public class XPrivacyProvider extends ContentProvider {
 
 			return 1; // rows
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE) {
+			// Word readable
+
 			// Get arguments
 			int uid = values.getAsInteger(COL_UID);
 			String restrictionName = values.getAsString(XPrivacyProvider.COL_RESTRICTION);

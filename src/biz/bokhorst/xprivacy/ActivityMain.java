@@ -463,7 +463,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 				serializer.startTag(null, "XPrivacy");
 
-				// Process restrictions
+				// Process settings
 				Cursor sCursor = getContentResolver().query(XPrivacyProvider.URI_SETTING, null, null, null, null);
 				while (sCursor.moveToNext()) {
 					// Get setting
@@ -486,26 +486,32 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					int uid = rCursor.getInt(rCursor.getColumnIndex(XPrivacyProvider.COL_UID));
 					boolean restricted = Boolean.parseBoolean(rCursor.getString(rCursor
 							.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
-					if (restricted) {
-						String[] packages = getPackageManager().getPackagesForUid(uid);
-						if (packages == null)
-							XUtil.log(null, Log.WARN, "No packages for uid=" + uid);
-						else
-							for (String packageName : packages) {
-								// Package
-								serializer.startTag(null, "Package");
+					String[] packages = getPackageManager().getPackagesForUid(uid);
+					if (packages == null)
+						XUtil.log(null, Log.WARN, "No packages for uid=" + uid);
+					else
+						for (String packageName : packages) {
+							// Package
+							serializer.startTag(null, "Package");
 
-								// Package name
-								serializer.attribute(null, "Name", packageName);
+							// Attribute package name
+							serializer.attribute(null, "Name", packageName);
 
-								// Restriction name
-								String restrictionName = rCursor.getString(rCursor
-										.getColumnIndex(XPrivacyProvider.COL_RESTRICTION));
-								serializer.attribute(null, "Restriction", restrictionName);
+							// Attribute restriction name
+							String restrictionName = rCursor.getString(rCursor
+									.getColumnIndex(XPrivacyProvider.COL_RESTRICTION));
+							serializer.attribute(null, "Restriction", restrictionName);
 
-								serializer.endTag(null, "Package");
-							}
-					}
+							// Attribute method name
+							String methodName = rCursor.getString(rCursor.getColumnIndex(XPrivacyProvider.COL_METHOD));
+							if (methodName != null)
+								serializer.attribute(null, "Method", methodName);
+
+							// Restricted indication
+							serializer.attribute(null, "Restricted", Boolean.toString(restricted));
+
+							serializer.endTag(null, "Package");
+						}
 				}
 				rCursor.close();
 
@@ -558,7 +564,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				}
 
 				// Process restrictions
-				Map<String, List<String>> mapPackage = new HashMap<String, List<String>>();
+				Map<String, Map<String, List<String>>> mapPackage = new HashMap<String, Map<String, List<String>>>();
 				NodeList rItems = dom.getElementsByTagName("Package");
 				for (int i = 0; i < rItems.getLength(); i++) {
 					// Process package restriction
@@ -566,11 +572,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					NamedNodeMap attrs = entry.getAttributes();
 					String packageName = attrs.getNamedItem("Name").getNodeValue();
 					String restrictionName = attrs.getNamedItem("Restriction").getNodeValue();
+					String methodName = (attrs.getNamedItem("Method") == null ? null : attrs.getNamedItem("Method")
+							.getNodeValue());
 
 					// Map package restriction
 					if (!mapPackage.containsKey(packageName))
-						mapPackage.put(packageName, new ArrayList<String>());
-					mapPackage.get(packageName).add(restrictionName);
+						mapPackage.put(packageName, new HashMap<String, List<String>>());
+					if (!mapPackage.get(packageName).containsKey(restrictionName))
+						mapPackage.get(packageName).put(restrictionName, new ArrayList<String>());
+					if (methodName != null)
+						mapPackage.get(packageName).get(restrictionName).add(methodName);
 				}
 
 				// Process result
@@ -580,12 +591,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
 
 						// Reset existing restrictions
-						for (String restrictionName : XRestriction.getRestrictions())
+						for (String restrictionName : XRestriction.getRestrictions()) {
+							for (String methodName : XRestriction.getMethodNames(restrictionName))
+								XRestriction.setRestricted(null, this, uid, restrictionName, methodName, true);
 							XRestriction.setRestricted(null, this, uid, restrictionName, null, false);
+						}
 
 						// Set imported restrictions
-						for (String restrictionName : mapPackage.get(packageName))
+						for (String restrictionName : mapPackage.get(packageName).keySet()) {
 							XRestriction.setRestricted(null, this, uid, restrictionName, null, true);
+							for (String methodName : mapPackage.get(packageName).get(restrictionName))
+								XRestriction.setRestricted(null, this, uid, restrictionName, methodName, false);
+						}
 					} catch (NameNotFoundException ex) {
 						XUtil.log(null, Log.WARN, "Not found package=" + packageName);
 					}

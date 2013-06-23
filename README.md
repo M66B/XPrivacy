@@ -404,6 +404,11 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
+**Version 0.31* (in development)
+
+* Move *Shell* category to expert mode
+* Export/import function restrictions ([pro version](http://www.faircode.eu/xprivacy/) only)
+
 **Version 0.31*
 
 * Show storage folder in about

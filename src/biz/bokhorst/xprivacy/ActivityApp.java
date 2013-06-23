@@ -107,7 +107,7 @@ public class ActivityApp extends Activity {
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
-		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.xrestrictionentry, mAppInfo,
+		mPrivacyListAdapter = new RestrictionAdapter(R.layout.xrestrictionentry, mAppInfo,
 				XRestriction.getRestrictions());
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 
@@ -167,15 +167,14 @@ public class ActivityApp extends Activity {
 	}
 
 	private class RestrictionAdapter extends BaseExpandableListAdapter {
-		private Context mContext;
 		private XApplicationInfo mAppInfo;
 		private List<String> mRestrictions;
 		private boolean mExpert;
 
-		public RestrictionAdapter(Context context, int resource, XApplicationInfo appInfo, List<String> restrictions) {
+		public RestrictionAdapter(int resource, XApplicationInfo appInfo, List<String> restrictions) {
 			mAppInfo = appInfo;
 			mRestrictions = restrictions;
-			mExpert = Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
+			mExpert = Boolean.parseBoolean(XRestriction.getSetting(null, null, XRestriction.cSettingExpert,
 					Boolean.FALSE.toString(), false));
 		}
 
@@ -254,7 +253,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public Object getChild(int groupPosition, int childPosition) {
-			return XRestriction.getMethodNames(mContext, (String) getGroup(groupPosition)).get(childPosition);
+			return XRestriction.getMethodNames((String) getGroup(groupPosition)).get(childPosition);
 		}
 
 		@Override
@@ -264,7 +263,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return (mExpert ? XRestriction.getMethodNames(mContext, (String) getGroup(groupPosition)).size() : 0);
+			return (mExpert ? XRestriction.getMethodNames((String) getGroup(groupPosition)).size() : 0);
 		}
 
 		@Override
