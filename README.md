@@ -404,6 +404,10 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
+**Version 0.33** (in development)
+
+* Option to switch between light/dark theme
+
 **Version 0.32**
 
 * Move *Shell* category to expert mode
@@ -598,6 +602,21 @@ Translations:
 
 * Translate the strings in [this file](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml)
 * Send the translated file to me [via an XDA PM](http://forum.xda-developers.com/member.php?u=2799345)
+
+Current translation:
+
+* English
+* Bulgarian (bg)
+* German (de)
+* Greek (el)
+* french (fr)
+* Hebrew (he/iw)
+* Japanese (ja)
+* Dutch/Flemish (nl)
+* Romanian (ro)
+* Slovak (sk)
+* Slovenian (sl)
+* Simplified Chinese (zh-rCN)
 
 Restrict new data:
 
