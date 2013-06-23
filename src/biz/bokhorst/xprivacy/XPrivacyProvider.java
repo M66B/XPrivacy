@@ -198,33 +198,8 @@ public class XPrivacyProvider extends ContentProvider {
 			String methodName = values.getAsString(COL_METHOD);
 			boolean allowed = !Boolean.parseBoolean(values.getAsString(COL_RESTRICTED));
 
-			// Get restrictions
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
-			String restrictions = prefs.getString(getRestrictionPref(restrictionName), "*");
-
-			// Decode restrictions
-			List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
-			boolean defaultAllowed = listRestriction.get(0).equals("*");
-
-			// Allow or deny
-			String sUid = Integer.toString(uid);
-			if (defaultAllowed ? allowed : !allowed)
-				listRestriction.remove(sUid);
-			if (defaultAllowed ? !allowed : allowed)
-				if (!listRestriction.contains(sUid))
-					listRestriction.add(sUid);
-
-			// Encode restrictions
-			restrictions = TextUtils.join(",", listRestriction.toArray(new String[0]));
-
-			// Update restriction
-			SharedPreferences.Editor editor = prefs.edit();
-			if (methodName == null || !allowed)
-				editor.putString(getRestrictionPref(restrictionName), restrictions);
-			if (methodName != null)
-				editor.putBoolean(getExceptionPref(uid, restrictionName, methodName), allowed);
-			editor.commit();
-			setPrefFileReadable(PREF_RESTRICTION);
+			// Update
+			updateRestriction(uid, restrictionName, methodName, allowed);
 
 			return 1; // rows
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE) {
@@ -258,6 +233,7 @@ public class XPrivacyProvider extends ContentProvider {
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putString(getSettingPref(settingName), values.getAsString(COL_VALUE));
 			editor.commit();
+			setPrefFileReadable(PREF_SETTINGS);
 
 			return 1;
 		}
@@ -270,7 +246,23 @@ public class XPrivacyProvider extends ContentProvider {
 		// Check access
 		enforcePermission();
 
-		if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length == 1) {
+		if (sUriMatcher.match(uri) == TYPE_RESTRICTION) {
+			// Get argument
+			int uid = Integer.parseInt(selectionArgs[0]);
+
+			// Set all restrictions to allowed
+			int rows = 0;
+			for (String restrictionName : XRestriction.getRestrictions()) {
+				for (String methodName : XRestriction.getMethodNames(restrictionName)) {
+					rows++;
+					updateRestriction(uid, restrictionName, methodName, false);
+				}
+				rows++;
+				updateRestriction(uid, restrictionName, null, true);
+			}
+
+			return rows;
+		} else if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length == 1) {
 			// Get arguments
 			String restrictionName = where;
 			int uid = Integer.parseInt(selectionArgs[0]);
@@ -346,6 +338,38 @@ public class XPrivacyProvider extends ContentProvider {
 				allowed = true;
 
 		return allowed;
+	}
+
+	@SuppressWarnings("deprecation")
+	@SuppressLint("WorldReadableFiles")
+	private void updateRestriction(int uid, String restrictionName, String methodName, boolean allowed) {
+		// Get restrictions
+		SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
+		String restrictions = prefs.getString(getRestrictionPref(restrictionName), "*");
+
+		// Decode restrictions
+		List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
+		boolean defaultAllowed = listRestriction.get(0).equals("*");
+
+		// Allow or deny
+		String sUid = Integer.toString(uid);
+		if (defaultAllowed ? allowed : !allowed)
+			listRestriction.remove(sUid);
+		if (defaultAllowed ? !allowed : allowed)
+			if (!listRestriction.contains(sUid))
+				listRestriction.add(sUid);
+
+		// Encode restrictions
+		restrictions = TextUtils.join(",", listRestriction.toArray(new String[0]));
+
+		// Update restriction
+		SharedPreferences.Editor editor = prefs.edit();
+		if (methodName == null || !allowed)
+			editor.putString(getRestrictionPref(restrictionName), restrictions);
+		if (methodName != null)
+			editor.putBoolean(getExceptionPref(uid, restrictionName, methodName), allowed);
+		editor.commit();
+		setPrefFileReadable(PREF_RESTRICTION);
 	}
 
 	private static String getPrefFileName(String preference) {

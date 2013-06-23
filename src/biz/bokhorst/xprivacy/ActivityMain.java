@@ -604,11 +604,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
 
 						// Reset existing restrictions
-						for (String restrictionName : XRestriction.getRestrictions()) {
-							for (String methodName : XRestriction.getMethodNames(restrictionName))
-								XRestriction.setRestricted(null, this, uid, restrictionName, methodName, true);
-							XRestriction.setRestricted(null, this, uid, restrictionName, null, false);
-						}
+						XRestriction.deleteRestrictions(this, uid);
 
 						// Set imported restrictions
 						for (String restrictionName : mapPackage.get(packageName).keySet()) {

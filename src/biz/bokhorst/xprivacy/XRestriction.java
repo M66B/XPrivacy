@@ -540,10 +540,17 @@ public class XRestriction {
 		XUtil.log(hook, Log.INFO, String.format("set setting %s=%s", settingName, value));
 	}
 
+	public static void deleteRestrictions(Context context, int uid) {
+		context.getContentResolver().delete(XPrivacyProvider.URI_RESTRICTION, null,
+				new String[] { Integer.toString(uid) });
+		XUtil.log(null, Log.INFO, "Delete restrictions uid=" + uid);
+	}
+
 	public static void deleteUsageData(Context context, int uid) {
 		for (String restrictionName : XRestriction.getRestrictions())
 			context.getContentResolver().delete(XPrivacyProvider.URI_USAGE, restrictionName,
 					new String[] { Integer.toString(uid) });
+		XUtil.log(null, Log.INFO, "Delete usage uid=" + uid);
 	}
 
 	public static String getLocalizedName(Context context, String restrictionName) {
