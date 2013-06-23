@@ -13,6 +13,7 @@
     <string name="menu_report">Raporteaza o problema</string>
     <string name="menu_export">Exporta</string>
     <string name="menu_import">Importa</string>
+    <string name="menu_theme">Switch theme</string>
     <string name="menu_pro">Versiunea Pro</string>
     <string name="menu_about">Despre</string>
     <string name="menu_all">Tot</string>

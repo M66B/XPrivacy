@@ -13,6 +13,7 @@
     <string name="menu_report">דווח על תקלה</string>
     <string name="menu_export">ייצא</string>
     <string name="menu_import">ייבא</string>
+    <string name="menu_theme">Switch theme</string>
     <string name="menu_pro">גירסא מקצועית</string>
     <string name="menu_about">אודות</string>
     <string name="menu_all">All</string>

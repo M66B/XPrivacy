@@ -38,6 +38,9 @@ public class ActivityApp extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
+		String sTheme = XRestriction.getSetting(null, this, XRestriction.cSettingTheme, null, false);
+		int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
+		setTheme(themeId);
 		setContentView(R.layout.xrestrictionlist);
 
 		// Get package name
@@ -54,7 +57,10 @@ public class ActivityApp extends Activity {
 		// Background color
 		if (mAppInfo.getIsSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
-			llInfo.setBackgroundColor(Color.parseColor("#FFFDD0"));
+			if (themeId == android.R.style.Theme_Holo_Light)
+				llInfo.setBackgroundColor(Color.parseColor("#FFFDD0"));
+			else
+				llInfo.setBackgroundColor(Color.DKGRAY);
 		}
 
 		// Display app name

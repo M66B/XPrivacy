@@ -13,6 +13,7 @@
     <string name="menu_report">Αναφορά σφάλματος</string>
     <string name="menu_export">Εξαγωγή</string>
     <string name="menu_import">Εισαγωγή</string>
+    <string name="menu_theme">Switch theme</string>
     <string name="menu_pro">Pro version</string>
     <string name="menu_about">Σχετικά</string>
     <string name="menu_all">All</string>

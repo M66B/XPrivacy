@@ -17,6 +17,9 @@
         android:id="@+id/menu_import"
         android:title="@string/menu_import"/>
     <item
+        android:id="@+id/menu_theme"
+        android:title="@string/menu_theme"/>
+    <item
         android:id="@+id/menu_pro"
         android:title="@string/menu_pro"/>
     <item

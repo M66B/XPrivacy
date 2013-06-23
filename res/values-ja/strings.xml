@@ -13,6 +13,7 @@
     <string name="menu_report">問題を報告</string>
     <string name="menu_export">エクスポート</string>
     <string name="menu_import">インポート</string>
+    <string name="menu_theme">Switch theme</string>
     <string name="menu_pro">Proバージョン</string>
     <string name="menu_about">アプリ情報</string>
     <string name="menu_all">全て</string>

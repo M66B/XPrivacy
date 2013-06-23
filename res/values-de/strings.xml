@@ -13,6 +13,7 @@
     <string name="menu_report">Fehler melden</string>
     <string name="menu_export">Export</string>
     <string name="menu_import">Import</string>
+    <string name="menu_theme">Switch theme</string>
     <string name="menu_pro">Pro version</string>
     <string name="menu_about">Über</string>
     <string name="menu_all">All</string>

@@ -13,6 +13,7 @@
     <string name="menu_report">报告问题</string>
     <string name="menu_export">导出</string>
     <string name="menu_import">导入</string>
+    <string name="menu_theme">Switch theme</string>
     <string name="menu_pro">专业版</string>
     <string name="menu_about">关于</string>
     <string name="menu_all">All</string>

@@ -53,6 +53,7 @@ public class XRestriction {
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
 	public final static String cSettingMac = "Mac";
+	public final static String cSettingTheme = "Theme";
 
 	private final static int cCacheTimeoutMs = 15 * 1000;
 	private static Map<String, List<String>> mPermissions = new LinkedHashMap<String, List<String>>();

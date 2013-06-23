@@ -13,6 +13,7 @@
     <string name="menu_report">Rapporteer probleem</string>
     <string name="menu_export">Exporteren</string>
     <string name="menu_import">Importeren</string>
+    <string name="menu_theme">Wissel thema</string>
     <string name="menu_pro">Pro versie</string>
     <string name="menu_about">Over</string>
     <string name="menu_all">Alles</string>

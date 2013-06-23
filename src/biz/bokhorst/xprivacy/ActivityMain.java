@@ -82,6 +82,7 @@ import android.widget.Toast;
 
 public class ActivityMain extends Activity implements OnItemSelectedListener {
 
+	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 
@@ -89,6 +90,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
+		String sTheme = XRestriction.getSetting(null, this, XRestriction.cSettingTheme, null, false);
+		mThemeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
+		setTheme(mThemeId);
 		setContentView(R.layout.xmainlist);
 
 		// Get localized restriction name
@@ -184,6 +188,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				return true;
 			case R.id.menu_import:
 				optionImport();
+				return true;
+			case R.id.menu_theme:
+				optionSwitchTheme();
 				return true;
 			case R.id.menu_pro:
 				optionPro();
@@ -476,6 +483,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	private void optionImport() {
 		ImportTask importTask = new ImportTask();
 		importTask.execute(getExportFile());
+	}
+
+	private void optionSwitchTheme() {
+		String sTheme = XRestriction.getSetting(null, this, XRestriction.cSettingTheme, null, false);
+		int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
+		if (themeId == android.R.style.Theme_Holo_Light)
+			XRestriction.setSetting(null, this, XRestriction.cSettingTheme,
+					Integer.toString(android.R.style.Theme_Holo));
+		else
+			XRestriction.setSetting(null, this, XRestriction.cSettingTheme,
+					Integer.toString(android.R.style.Theme_Holo_Light));
+		this.recreate();
 	}
 
 	private void optionAbout() {
@@ -969,7 +988,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 			// Set background color
 			if (xAppInfo.getIsSystem())
-				row.setBackgroundColor(Color.parseColor("#FFFDD0"));
+				if (mThemeId == android.R.style.Theme_Holo_Light)
+					row.setBackgroundColor(Color.parseColor("#FFFDD0"));
+				else
+					row.setBackgroundColor(Color.DKGRAY);
 
 			// Set icon
 			imgIcon.setImageDrawable(xAppInfo.getDrawable());

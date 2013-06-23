@@ -13,6 +13,7 @@
     <string name="menu_report">Съобщаване за проблем</string>
     <string name="menu_export">Експортиране</string>
     <string name="menu_import">Импортиране</string>
+    <string name="menu_theme">Switch theme</string>
     <string name="menu_pro">Професионална версия</string>
     <string name="menu_about">Относно</string>
     <string name="menu_all">All</string>
