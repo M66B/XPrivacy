@@ -38,6 +38,8 @@ import org.xmlpull.v1.XmlSerializer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -52,6 +54,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -618,6 +621,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 	private class ExportTask extends AsyncTask<File, String, String> {
 		private File mFile;
+		private final static int NOTIFY_ID = 1;
 
 		@Override
 		protected String doInBackground(File... params) {
@@ -633,6 +637,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					serializer.startTag(null, "XPrivacy");
 
 					// Process settings
+					publishProgress(getString(R.string.menu_settings));
 					Cursor sCursor = getContentResolver().query(XPrivacyProvider.URI_SETTING, null, null, null, null);
 					while (sCursor.moveToNext()) {
 						// Get setting
@@ -660,6 +665,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 							XUtil.log(null, Log.WARN, "No packages for uid=" + uid);
 						else
 							for (String packageName : packages) {
+								publishProgress(packageName);
+
 								// Package
 								serializer.startTag(null, "Package");
 
@@ -701,18 +708,52 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		}
 
 		@Override
+		protected void onPreExecute() {
+			notify(null);
+			super.onPreExecute();
+		}
+
+		@Override
+		protected void onProgressUpdate(String... values) {
+			notify(values[0]);
+			super.onProgressUpdate(values);
+		}
+
+		@Override
 		protected void onPostExecute(String result) {
+			// Cancel notification
+			NotificationManager notificationManager = (NotificationManager) ActivityMain.this
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.cancel(NOTIFY_ID);
+
+			// Display message
 			if (result != null) {
 				Toast toast = Toast.makeText(ActivityMain.this, result, Toast.LENGTH_LONG);
 				toast.show();
 			}
 			super.onPostExecute(result);
 		}
+
+		private void notify(String text) {
+			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityMain.this);
+			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+			notificationBuilder.setContentTitle(getString(R.string.menu_export));
+			if (text != null)
+				notificationBuilder.setContentText(text);
+			notificationBuilder.setWhen(System.currentTimeMillis());
+			notificationBuilder.setOngoing(true);
+			Notification notification = notificationBuilder.build();
+
+			NotificationManager notificationManager = (NotificationManager) ActivityMain.this
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.notify(NOTIFY_ID, notification);
+		}
 	}
 
-	private class ImportTask extends AsyncTask<File, Integer, String> {
+	private class ImportTask extends AsyncTask<File, String, String> {
 
 		private File mFile;
+		private final static int NOTIFY_ID = 2;
 
 		@Override
 		protected String doInBackground(File... params) {
@@ -736,6 +777,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					dom.getDocumentElement().normalize();
 
 					// Process settings
+					publishProgress(getString(R.string.menu_settings));
 					NodeList sItems = dom.getElementsByTagName("Setting");
 					for (int i = 0; i < sItems.getLength(); i++) {
 						// Process package restriction
@@ -770,6 +812,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					// Process result
 					for (String packageName : mapPackage.keySet()) {
 						try {
+							publishProgress(packageName);
+
 							// Get uid
 							int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
 
@@ -798,7 +842,25 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		}
 
 		@Override
+		protected void onPreExecute() {
+			notify(null);
+			super.onPreExecute();
+		}
+
+		@Override
+		protected void onProgressUpdate(String... values) {
+			notify(values[0]);
+			super.onProgressUpdate(values);
+		}
+
+		@Override
 		protected void onPostExecute(String result) {
+			// Cancel notification
+			NotificationManager notificationManager = (NotificationManager) ActivityMain.this
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.cancel(NOTIFY_ID);
+
+			// Display message
 			if (result != null) {
 				Toast toast = Toast.makeText(ActivityMain.this, result, Toast.LENGTH_LONG);
 				toast.show();
@@ -806,6 +868,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					ActivityMain.this.mAppAdapter.notifyDataSetChanged();
 			}
 			super.onPostExecute(result);
+		}
+
+		private void notify(String text) {
+			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityMain.this);
+			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+			notificationBuilder.setContentTitle(getString(R.string.menu_import));
+			if (text != null)
+				notificationBuilder.setContentText(text);
+			notificationBuilder.setWhen(System.currentTimeMillis());
+			notificationBuilder.setOngoing(true);
+			Notification notification = notificationBuilder.build();
+
+			NotificationManager notificationManager = (NotificationManager) ActivityMain.this
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.notify(NOTIFY_ID, notification);
 		}
 	}
 
