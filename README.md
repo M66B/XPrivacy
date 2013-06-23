@@ -315,7 +315,7 @@ To export/import settings you will need the [pro version](http://www.faircode.eu
 
 In expert mode you will be able to block applications from starting at device boot time,
 restrict shell access for applications (including super user)
-and restrict system applications, including Android itself (**Be careful!**).
+and restrict system applications, including Android itself. **Be careful!**
 Furthermore you will be able to make exceptions for individual functions within a restriction category.
 
 **(8) Will you block the iptables command or force online state?**
@@ -327,6 +327,7 @@ Maybe in a later stage.
 Maybe in a later stage.
 For now I like to keep things as simple as possible for maximum stability.
 Since version 0.21 you can enter a fake location.
+Since version 0.30 you can enter a fake MAC address.
 
 **(10) Which functions are exactly restricted?**
 
@@ -339,6 +340,7 @@ See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51
 **(12) How safe is XPrivacy?**
 
 Great care is taken to develop XPrivacy, nevertheless data could leak, although nobody has reported any data leak so far.
+So far no critical bugs have been reported.
 
 **(13) Why is XPrivacy not in the Play store?**
 
@@ -389,6 +391,12 @@ If you want to partly enable internet, for example for Wi-Fi only,
 you will have to use a firewall application, like [AFWall+](http://forum.xda-developers.com/showthread.php?t=1957231).
 The reason is that XPrivacy works within Android
 and that detailed firewall rules can only be applied within the Linux kernel.
+
+**(20) Could you ... with Android permissions?**
+
+Android permissions do not cover all restriction categories and if they do, then mostly only partly.
+Therefore Android permissions are only displayed as a guideline.
+Any function, like filtering and selecting, would be inherent incorrect.
 
 Support
 -------
