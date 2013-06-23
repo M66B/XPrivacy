@@ -413,7 +413,7 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
-**Version 0.33** (in development)
+**Version 0.33**
 
 * Option to switch between light/dark theme
 
