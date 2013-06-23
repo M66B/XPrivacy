@@ -313,8 +313,9 @@ To export/import settings you will need the [pro version](http://www.faircode.eu
 
 **(7) What is expert mode?**
 
-In expert mode you can block applications from starting at device boot time (except content providers)
-and you will be able to restrict system applications, including Android itself (**Be careful!**).
+In expert mode you will be able to block applications from starting at device boot time,
+restrict shell access for applications (including super user)
+and restrict system applications, including Android itself (**Be careful!**).
 Furthermore you will be able to make exceptions for individual functions within a restriction category.
 
 **(8) Will you block the iptables command or force online state?**
@@ -609,7 +610,7 @@ Current translation:
 * Bulgarian (bg)
 * German (de)
 * Greek (el)
-* french (fr)
+* French (fr)
 * Hebrew (he/iw)
 * Japanese (ja)
 * Dutch/Flemish (nl)
