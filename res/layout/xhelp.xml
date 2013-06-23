@@ -38,4 +38,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textIsSelectable="false" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:text="@string/app_help"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </LinearLayout>

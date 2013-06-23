@@ -8,7 +8,7 @@ Index
 
 * [Description](https://github.com/M66B/XPrivacy#description)
 * [Features](https://github.com/M66B/XPrivacy#features)
-* [Restricted data/actions](https://github.com/M66B/XPrivacy#restricted-dataactions)
+* [Restrictions](https://github.com/M66B/XPrivacy#restrictions)
 * [Limitations](https://github.com/M66B/XPrivacy#limitations)
 * [Installation](https://github.com/M66B/XPrivacy#installation)
 * [Upgrading](https://github.com/M66B/XPrivacy#upgrading)
@@ -109,8 +109,8 @@ Features
 * Displays data actually used by an application
 * Open source
 
-Restricted data/actions
------------------------
+Restrictions
+------------
 
 For easy usage, data is restricted by category:
 
@@ -404,13 +404,16 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
-**Version 0.32* (in development)
+**Version 0.32**
 
 * Move *Shell* category to expert mode
 * Export/import function restrictions ([pro version](http://www.faircode.eu/xprivacy/) only)
+* Ongoing notification while exporting/importing
+* Added link to restrictions in help
+* Prevent application details reached from notification to show up in recent
 * Added Japanese translation
 
-**Version 0.31*
+**Version 0.31**
 
 * Show storage folder in about
 * Support for XPrivacy Pro from Google Play
