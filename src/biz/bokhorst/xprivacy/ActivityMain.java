@@ -74,6 +74,7 @@ import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -978,6 +979,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.xmainentry, parent, false);
+			LinearLayout llIcon = (LinearLayout) row.findViewById(R.id.llIcon);
 			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
 			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
@@ -993,9 +995,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				else
 					row.setBackgroundColor(Color.DKGRAY);
 
-			// Set icon
-			imgIcon.setImageDrawable(xAppInfo.getDrawable());
-			imgIcon.setOnClickListener(new View.OnClickListener() {
+			// Click handler
+			llIcon.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					Intent intentSettings = new Intent(view.getContext(), ActivityApp.class);
@@ -1004,6 +1005,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					view.getContext().startActivity(intentSettings);
 				}
 			});
+
+			// Set icon
+			imgIcon.setImageDrawable(xAppInfo.getDrawable());
 
 			// Set title
 			ctvApp.setText(xAppInfo.toString());
