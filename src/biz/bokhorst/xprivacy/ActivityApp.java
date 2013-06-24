@@ -9,8 +9,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -125,6 +127,21 @@ public class ActivityApp extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.xapp, menu);
+
+		PackageManager pm = getPackageManager();
+		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName()) == null) {
+			menu.findItem(R.id.menu_app_launch).setEnabled(false);
+		}
+
+		boolean hasMarketLink = false;
+		try {
+			String installer = pm.getInstallerPackageName(mAppInfo.getPackageName());
+			if (installer != null)
+				hasMarketLink = installer.equals("com.android.vending") || installer.contains("google");
+		} catch (Exception e) {
+		}
+		menu.findItem(R.id.menu_app_store).setEnabled(hasMarketLink);
+
 		return true;
 	}
 
@@ -159,6 +176,17 @@ public class ActivityApp extends Activity {
 			if (mPrivacyListAdapter != null)
 				mPrivacyListAdapter.notifyDataSetChanged();
 
+			return true;
+		case R.id.menu_app_launch:
+			Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
+			startActivity(LaunchIntent);
+			return true;
+		case R.id.menu_app_settings:
+			startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+			    Uri.parse("package:" + mAppInfo.getPackageName())));
+			return true;
+		case R.id.menu_app_store:
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + mAppInfo.getPackageName())));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

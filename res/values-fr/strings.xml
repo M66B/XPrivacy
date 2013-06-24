@@ -17,6 +17,9 @@
     <string name="menu_pro">Version pro</string>
     <string name="menu_about">À propos</string>
     <string name="menu_all">All</string>
+    <string name="menu_app_launch">Launch app</string>
+    <string name="menu_app_settings">Settings</string>
+    <string name="menu_app_store">Play Store</string>
     <string name="msg_noupdate">Pas de mises à jour disponible</string>
     <string name="msg_restricted" formatted="false">%s restreint par XPrivacy</string>
     <string name="msg_licensed" formatted="false">Autorisé à: %s</string>
