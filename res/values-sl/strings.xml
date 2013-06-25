@@ -9,11 +9,11 @@
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
     <string name="menu_settings">Nastavitve</string>
-    <string name="menu_update">Preveri za posodobitvami</string>
+    <string name="menu_update">Preveri posodobitve</string>
     <string name="menu_report">Javi napako</string>
     <string name="menu_export">Izvozi</string>
     <string name="menu_import">Uvozi</string>
-    <string name="menu_theme">Switch theme</string>
+    <string name="menu_theme">Spremeni temo</string>
     <string name="menu_pro">Pro različica</string>
     <string name="menu_about">O programu</string>
     <string name="menu_all">Vse</string>
