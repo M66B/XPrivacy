@@ -3,46 +3,46 @@
     <string name="app_name">XPrivacy</string>
     <string name="app_wrongandroid">Nur getestet mit Android Version 4.1 and 4.2 (JellyBean)</string>
     <string name="app_notxposed" formatted="false">Xposed Framework Version %d+ ist nicht installiert</string>
-    <string name="app_notenabled">XPrivacy is not enabled in the Xposed installer</string>
+    <string name="app_notenabled">XPrivacy wurde in Xposed nicht aktiviert</string>
     <string name="app_version" formatted="false">XPrivacy Version: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed Framework Version: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
     <string name="menu_settings">Einstellungen</string>
-    <string name="menu_update">Check for update</string>
+    <string name="menu_update">Nach Updates suchen</string>
     <string name="menu_report">Fehler melden</string>
     <string name="menu_export">Export</string>
     <string name="menu_import">Import</string>
-    <string name="menu_theme">Switch theme</string>
+    <string name="menu_theme">Theme wechseln</string>
     <string name="menu_pro">Pro version</string>
     <string name="menu_about">Über</string>
-    <string name="menu_all">All</string>
-    <string name="msg_noupdate">No update available</string>
+    <string name="menu_all">Alle</string>
+    <string name="msg_noupdate">>Kein Update verfügbar</string>
     <string name="msg_restricted" formatted="false">%s eingeschränkt durch XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>
     <string name="restrict_accounts">Konten (Google, Facebook, etc.)</string>
     <string name="restrict_boot">Boot (Beim Systemstart ausführen)</string>
     <string name="restrict_browser">Browser (Lesezeichen/Verlauf)</string>
     <string name="restrict_calendar">Kalender</string>
-    <string name="restrict_calling">Calling (phone, SMS, MMS)</string>
+    <string name="restrict_calling">Telefonie (Telefon, SMS, MMS)</string>
     <string name="restrict_contacts">Kontakte</string>
     <string name="restrict_identification">Identität (Gerät)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Standort (genau/ungefähr)</string>
     <string name="restrict_media">Medien (Audio, Foto, Video)</string>
     <string name="restrict_messages">Nachrichten (SMS, MMS)</string>
-    <string name="restrict_network">Network (addresses)</string>
+    <string name="restrict_network">Netzwerk (-adressen)</string>
     <string name="restrict_phone">Telefon (ID, Nummern, Anrufe)</string>
     <string name="restrict_storage">Externer Speicher (SD Karte)</string>
-    <string name="restrict_shell">Shell (commands, superuser)</string>
+    <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>
-    <string name="restrict_view">View (browser)</string>
-    <string name="title_category">Category to restrict:</string>
-    <string name="title_restrict">Haken setzen zum einschränken:</string>
+    <string name="restrict_view">Link aufrufen (Browser)</string>
+    <string name="title_category">Einzuschränkende Kategorie:</string>
+    <string name="title_restrict">Haken setzen zum Einschränken:</string>
     <string name="settings_expert">Expertenmodus</string>
-    <string name="settings_lat">Latitude</string>
-    <string name="settings_lon">Longitude</string>
-    <string name="settings_mac">MAC address</string>
+    <string name="settings_lat">Breitengrad</string>
+    <string name="settings_lon">Längengrad</string>
+    <string name="settings_mac">MAC Adresse</string>
     <string name="help_application">Anwendung</string>
     <string name="help_internet">hat Internetberechtigung</string>
     <string name="help_granted">hat Android Berechtigung</string>
