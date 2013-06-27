@@ -420,6 +420,10 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
+**Version 0.36**
+
+* Forgot to remove debug code
+
 **Version 0.35** (in development)
 
 * Speed up import ([pro version](http://www.faircode.eu/xprivacy/) only) ([issue](https://github.com/M66B/XPrivacy/issues/70))

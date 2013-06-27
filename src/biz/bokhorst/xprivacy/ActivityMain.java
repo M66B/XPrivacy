@@ -294,7 +294,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		}
 
 		// Check location manager
-		if (checkField(getSystemService(Context.LOCATION_SERVICE), "mContext", Context.class))
+		if (!checkField(getSystemService(Context.LOCATION_SERVICE), "mContext", Context.class))
 			reportClass(getSystemService(Context.LOCATION_SERVICE).getClass());
 
 		// Check package manager
