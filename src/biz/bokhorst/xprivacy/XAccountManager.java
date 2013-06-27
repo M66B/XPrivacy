@@ -64,11 +64,10 @@ public class XAccountManager extends XHook {
 					synchronized (mListener) {
 						OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
 						XOnAccountsUpdateListener xlistener = mListener.get(listener);
-						if (xlistener != null) {
+						if (xlistener == null)
 							param.args[0] = xlistener;
+						else
 							XUtil.log(this, Log.INFO, "Removed count=" + mListener.size());
-						} else
-							XUtil.log(this, Log.WARN, "Not found count=" + mListener.size());
 					}
 				}
 		}
