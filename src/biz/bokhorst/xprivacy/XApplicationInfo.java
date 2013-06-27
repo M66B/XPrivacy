@@ -132,6 +132,6 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 
 	@Override
 	public int compareTo(XApplicationInfo other) {
-		return toString().compareToIgnoreCase(other.toString());
+		return toString().toUpperCase().compareToIgnoreCase(other.toString().toUpperCase());
 	}
 }

@@ -1,7 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import biz.bokhorst.xprivacy.R;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -16,6 +14,7 @@ import java.lang.reflect.Method;
 import java.net.InterfaceAddress;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +78,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SectionIndexer;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -974,14 +974,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		}
 	}
 
-	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> {
+	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> implements SectionIndexer {
 
 		private String mRestrictionName;
+		private Map<String, Integer> alphaIndexer;
+		private String[] sections;
 
 		public AppListAdapter(Context context, int resource, List<XApplicationInfo> objects,
 				String initialRestrictionName) {
 			super(context, resource, objects);
 			mRestrictionName = initialRestrictionName;
+			reindexSections();
 		}
 
 		public void setRestrictionName(String restrictionName) {
@@ -1054,6 +1057,75 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 			row.refreshDrawableState();
 			return row;
+		}
+
+		@Override
+		public int getPositionForSection(int section) {
+			if (section >= sections.length)
+				return super.getCount() - 1;
+
+			return alphaIndexer.get(sections[section]);
+		}
+
+		@Override
+		public int getSectionForPosition(int position) {
+			// Iterate over the sections to find the closest index
+			// that is not greater than the position
+			int closestIndex = 0;
+			int latestDelta = Integer.MAX_VALUE;
+
+			for (int i = 0; i < sections.length; i++) {
+				int current = alphaIndexer.get(sections[i]);
+				if (current == position) {
+					// If position matches an index, return it immediately
+					return i;
+				} else if (current < position) {
+					// Check if this is closer than the last index we inspected
+					int delta = position - current;
+					if (delta < latestDelta) {
+						closestIndex = i;
+						latestDelta = delta;
+					}
+				}
+			}
+
+			return closestIndex;
+		}
+
+		@Override
+		public Object[] getSections() {
+			return sections;
+		}
+
+		@Override
+		public void notifyDataSetChanged() {
+			super.notifyDataSetChanged();
+			reindexSections();
+		}
+
+		private void reindexSections() {
+			alphaIndexer = new HashMap<String, Integer>();
+			for (int i = getCount() - 1; i >= 0; i--) {
+				XApplicationInfo app = getItem(i);
+				String appName = app.toString();
+				String firstChar;
+				if (appName == null || appName.length() < 1) {
+					firstChar = "@";
+				} else {
+					firstChar = appName.substring(0, 1).toUpperCase();
+					if (firstChar.charAt(0) > 'Z' || firstChar.charAt(0) < 'A')
+						firstChar = "@";
+				}
+
+				alphaIndexer.put(firstChar, i);
+			}
+
+			// create a list from the set to sort
+			List<String> sectionList = new ArrayList<String>(alphaIndexer.keySet());
+			Collections.sort(sectionList);
+
+			sections = new String[sectionList.size()];
+			sectionList.toArray(sections);
 		}
 	}
 }

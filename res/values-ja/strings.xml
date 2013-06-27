@@ -17,6 +17,9 @@
     <string name="menu_pro">Proバージョン</string>
     <string name="menu_about">アプリ情報</string>
     <string name="menu_all">全て</string>
+    <string name="menu_app_launch">Launch app</string>
+    <string name="menu_app_settings">Settings</string>
+    <string name="menu_app_store">Play Store</string>
     <string name="msg_noupdate">更新はありません</string>
     <string name="msg_restricted" formatted="false">%s をXPrivacyが制限しました</string>
     <string name="msg_licensed" formatted="false">ライセンス先: %s</string>

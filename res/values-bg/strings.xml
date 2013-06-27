@@ -17,6 +17,9 @@
     <string name="menu_pro">Професионална версия</string>
     <string name="menu_about">Относно</string>
     <string name="menu_all">Всички</string>
+    <string name="menu_app_launch">Launch app</string>
+    <string name="menu_app_settings">Settings</string>
+    <string name="menu_app_store">Play Store</string>
     <string name="msg_noupdate">Няма налично обновление</string>
     <string name="msg_restricted" formatted="false">%s е ограничен от XPrivacy</string>
     <string name="msg_licensed" formatted="false">Лицензирано на: %s</string>
