@@ -424,6 +424,7 @@ Changelog
 
 * Use fastscroll on app list (thanks @[Tungstwenty](https://github.com/Tungstwenty))
 * Add actions to app option menu: Lauch app, Settings, Play Store (thanks @[Tungstwenty](https://github.com/Tungstwenty))
+* Added Spanish translation
 
 **Version 0.36**
 
@@ -644,18 +645,19 @@ Translations:
 
 Current translation:
 
-* English
 * Bulgarian (bg)
+* Dutch/Flemish (nl)
+* English
+* French (fr)
 * German (de)
 * Greek (el)
-* French (fr)
 * Hebrew (he/iw)
 * Japanese (ja)
-* Dutch/Flemish (nl)
 * Romanian (ro)
+* Simplified Chinese (zh-rCN)
 * Slovak (sk)
 * Slovenian (sl)
-* Simplified Chinese (zh-rCN)
+* Spanish (es)
 
 Restrict new data:
 
