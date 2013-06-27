@@ -3,8 +3,8 @@ package biz.bokhorst.xprivacy;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 import android.content.Context;
 import android.location.Location;
@@ -17,6 +17,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XLocationManager extends XHook {
+	private static final Map<LocationListener, XLocationListener> mListener = new WeakHashMap<LocationListener, XLocationListener>();
 
 	public XLocationManager(String methodName, String restrictionName, String[] permissions) {
 		super(methodName, restrictionName, permissions, null);
@@ -94,18 +95,15 @@ public class XLocationManager extends XHook {
 		return context;
 	}
 
-	private static final Map<LocationListener, XLocationListener> mListener = new HashMap<LocationListener, XLocationListener>();
-
 	private void removeLocationListener(MethodHookParam param) {
 		if (param.args[0] != null && LocationListener.class.isAssignableFrom(param.args[0].getClass())) {
 			LocationListener listener = (LocationListener) param.args[0];
 			synchronized (mListener) {
-				if (mListener.containsKey(listener)) {
-					param.args[0] = mListener.get(listener);
-					mListener.remove(listener);
-					XUtil.log(this, Log.INFO, "Removed count=" + mListener.size());
-				} else
+				XLocationListener xlistener = mListener.get(listener);
+				if (xlistener == null)
 					XUtil.log(this, Log.WARN, "Not found count=" + mListener.size());
+				else
+					param.args[0] = xlistener;
 			}
 		} else
 			param.setResult(null);
@@ -117,12 +115,12 @@ public class XLocationManager extends XHook {
 			if (listener != null) {
 				Context context = getContext(param);
 				Location baseLocation = getBaseLocation(context);
-				XLocationListener xLocationListener = new XLocationListener(listener, baseLocation);
+				XLocationListener xListener = new XLocationListener(listener, baseLocation);
 				synchronized (mListener) {
-					mListener.put(listener, xLocationListener);
+					mListener.put(listener, xListener);
 					XUtil.log(this, Log.INFO, "Added count=" + mListener.size());
 				}
-				param.args[arg] = xLocationListener;
+				param.args[arg] = xListener;
 			}
 		} else
 			param.setResult(null);
