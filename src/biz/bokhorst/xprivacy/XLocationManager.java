@@ -102,8 +102,10 @@ public class XLocationManager extends XHook {
 				XLocationListener xlistener = mListener.get(listener);
 				if (xlistener == null)
 					XUtil.log(this, Log.WARN, "Not found count=" + mListener.size());
-				else
+				else {
 					param.args[0] = xlistener;
+					mListener.remove(listener);
+				}
 			}
 		} else
 			param.setResult(null);
