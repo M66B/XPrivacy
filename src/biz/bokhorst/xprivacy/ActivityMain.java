@@ -10,7 +10,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.InterfaceAddress;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -292,68 +294,41 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		}
 
 		// Check location manager
-		if (!checkField(getSystemService(Context.LOCATION_SERVICE), "mContext", Context.class)) {
-			String msg = "Incompatible location manager";
-			XUtil.log(null, Log.WARN, msg);
-			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-			toast.show();
-		}
+		if (checkField(getSystemService(Context.LOCATION_SERVICE), "mContext", Context.class))
+			reportClass(getSystemService(Context.LOCATION_SERVICE).getClass());
 
 		// Check package manager
-		if (!checkField(getPackageManager(), "mContext", Context.class)) {
-			String msg = "Incompatible package manager";
-			XUtil.log(null, Log.WARN, msg);
-			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-			toast.show();
-		}
+		if (!checkField(getPackageManager(), "mContext", Context.class))
+			reportClass(getPackageManager().getClass());
 
 		// TODO: PackageManagerService.getPackageUid
 		// Unfortunately the PMS class cannot be loaded by the app class loader
 
 		// Check content resolver
-		if (!checkField(getContentResolver(), "mContext", Context.class)) {
-			String msg = "Incompatible content resolver";
-			XUtil.log(null, Log.WARN, msg);
-			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-			toast.show();
-		}
+		if (!checkField(getContentResolver(), "mContext", Context.class))
+			reportClass(getContentResolver().getClass());
 
 		// Check telephony manager
-		if (!checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class)) {
-			String msg = "Incompatible telephony manager";
-			XUtil.log(null, Log.WARN, msg);
-			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-			toast.show();
-		}
+		if (!checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class))
+			reportClass(getSystemService(Context.TELEPHONY_SERVICE).getClass());
 
 		// WifiInfo
 		if (!checkField(WifiInfo.class, "mBSSID") || !checkField(WifiInfo.class, "mIpAddress")
 				|| !checkField(WifiInfo.class, "mMacAddress")
-				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid"))) {
-			String msg = "Incompatible WifiInfo";
-			XUtil.log(null, Log.WARN, msg);
-			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-			toast.show();
-		}
+				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid")))
+			reportClass(WifiInfo.class);
 
 		// InterfaceAddress
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
-				|| XNetworkInterface.getInetAddressEmpty() == null) {
-			String msg = "Incompatible InterfaceAddress";
-			XUtil.log(null, Log.WARN, msg);
-			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-			toast.show();
-		}
+				|| XNetworkInterface.getInetAddressEmpty() == null)
+			reportClass(InterfaceAddress.class);
 
 		// Check runtime
 		try {
 			Runtime.class.getDeclaredMethod("load", String.class, ClassLoader.class);
 			Runtime.class.getDeclaredMethod("loadLibrary", String.class, ClassLoader.class);
 		} catch (NoSuchMethodException ex) {
-			String msg = "Incompatible Runtime";
-			XUtil.log(null, Log.WARN, msg);
-			Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-			toast.show();
+			reportClass(Runtime.class);
 		}
 	}
 
@@ -621,6 +596,65 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		} catch (Throwable ex) {
 			Toast toast = Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG);
 			toast.show();
+			XUtil.bug(null, ex);
+		}
+	}
+
+	private void reportClass(final Class<?> clazz) {
+		String msg = String.format("Incompatible %s", clazz.getName());
+		XUtil.log(null, Log.WARN, msg);
+
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setTitle(getString(R.string.app_name));
+		alertDialog.setMessage(msg);
+		alertDialog.setIcon(R.drawable.ic_launcher);
+		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				sendClassInfo(clazz);
+			}
+		});
+		alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		alertDialog.show();
+	}
+
+	private void sendClassInfo(Class<?> clazz) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(clazz.getName());
+		sb.append("\r\n");
+		sb.append("\r\n");
+		for (Constructor<?> constructor : clazz.getConstructors()) {
+			sb.append(constructor.toString());
+			sb.append("\r\n");
+		}
+		sb.append("\r\n");
+		for (Method method : clazz.getDeclaredMethods()) {
+			sb.append(method.toString());
+			sb.append("\r\n");
+		}
+		sb.append("\r\n");
+		for (Field field : clazz.getDeclaredFields()) {
+			sb.append(field.toString());
+			sb.append("\r\n");
+		}
+		sb.append("\r\n");
+		sendSupportInfo(sb.toString());
+	}
+
+	private void sendSupportInfo(String text) {
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("message/rfc822");
+		intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
+		intent.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy support info");
+		intent.putExtra(Intent.EXTRA_TEXT, text);
+		try {
+			startActivity(Intent.createChooser(intent, "Send mail..."));
+		} catch (Throwable ex) {
 			XUtil.bug(null, ex);
 		}
 	}

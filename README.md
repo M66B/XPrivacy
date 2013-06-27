@@ -424,6 +424,7 @@ Changelog
 
 * Speed up import ([pro version](http://www.faircode.eu/xprivacy/) only) ([issue](https://github.com/M66B/XPrivacy/issues/70))
 * Remove pro menu when pro version activated
+* Send support information for detected incompatibilities
 * Fix potential account data leak ([issue](https://github.com/M66B/XPrivacy/issues/75))
 * Fix potential resource leak in location listener
 * Updated German translation
