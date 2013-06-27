@@ -36,6 +36,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -974,6 +975,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		}
 	}
 
+	@SuppressLint("DefaultLocale")
 	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> implements SectionIndexer {
 
 		private String mRestrictionName;

@@ -183,7 +183,7 @@ public class ActivityApp extends Activity {
 			return true;
 		case R.id.menu_app_settings:
 			startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-			    Uri.parse("package:" + mAppInfo.getPackageName())));
+					Uri.parse("package:" + mAppInfo.getPackageName())));
 			return true;
 		case R.id.menu_app_store:
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + mAppInfo.getPackageName())));

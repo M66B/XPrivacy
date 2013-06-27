@@ -420,11 +420,16 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
+**Version 0.37** (in development)
+
+* Use fastscroll on app list (thanks @[Tungstwenty](https://github.com/Tungstwenty))
+* Add actions to app option menu: Lauch app, Settings, Play Store (thanks @[Tungstwenty](https://github.com/Tungstwenty))
+
 **Version 0.36**
 
 * Forgot to remove debug code
 
-**Version 0.35** (in development)
+**Version 0.35**
 
 * Speed up import ([pro version](http://www.faircode.eu/xprivacy/) only) ([issue](https://github.com/M66B/XPrivacy/issues/70))
 * Remove pro menu when pro version activated
