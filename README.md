@@ -415,7 +415,8 @@ Changelog
 
 **Version 0.35** (in development)
 
-* Remove pro menu for pro version
+* Speed up import ([pro version](http://www.faircode.eu/xprivacy/) only)
+* Remove pro menu when pro version activated
 * Updated German translation
 * Updated simplified Chinese translation
 

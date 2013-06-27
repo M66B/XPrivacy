@@ -20,6 +20,7 @@
     <string name="msg_noupdate">Niciun update disponibil</string>
     <string name="msg_restricted" formatted="false">%s Restrictionat de XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licentiat pentru: %s</string>
+    <string name="msg_done">Done</string>
     <string name="restrict_accounts">Conturi (Google, Facebook, etc)</string>
     <string name="restrict_boot">Boot (porneste odata cu sistemul)</string>
     <string name="restrict_browser">Browser (semne de carte/istorie)</string>

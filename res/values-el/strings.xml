@@ -20,6 +20,7 @@
     <string name="msg_noupdate">Δεν υπάρχουν διαθέσιμες ενημερώσεις</string>
     <string name="msg_restricted" formatted="false">%s περιορίστικε από το XPrivacy</string>
     <string name="msg_licensed" formatted="false">Άδεια για: %s</string>
+    <string name="msg_done">Done</string>
     <string name="restrict_accounts">Λογαριασμοί (Google, Facebook, κλπ)</string>
     <string name="restrict_boot">Εκκίνηση (τρέχει κατά την εκκίνηση του συστήματος)</string>
     <string name="restrict_browser">Browser (σελιδοδείκτες/ιστορικό)</string>

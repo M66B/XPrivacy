@@ -20,6 +20,7 @@
     <string name="msg_noupdate">K dispozícii nie je žiadna aktualizácia</string>
     <string name="msg_restricted" formatted="false">%s obmedzené XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
+    <string name="msg_done">Done</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atď.)</string>
     <string name="restrict_boot">Štart (beh po štarte systému)</string>
     <string name="restrict_browser">Prehliadač (záložky/história)</string>

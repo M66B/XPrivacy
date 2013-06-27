@@ -17,6 +17,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Environment;
+import android.os.Process;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -123,7 +124,7 @@ public class XPrivacyProvider extends ContentProvider {
 					}
 				}
 			} else {
-				// Update usage count
+				// Update usage time
 				if (usage) {
 					long timeStamp = new Date().getTime();
 					SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
@@ -131,7 +132,7 @@ public class XPrivacyProvider extends ContentProvider {
 					editor.putLong(getUsagePref(uid, restrictionName), timeStamp);
 					if (methodName != null)
 						editor.putLong(getUsagePref(uid, restrictionName, methodName), timeStamp);
-					editor.commit();
+					editor.apply();
 				}
 
 				// Get restrictions
@@ -218,7 +219,7 @@ public class XPrivacyProvider extends ContentProvider {
 			editor.putLong(getUsagePref(uid, restrictionName), timeStamp);
 			if (methodName != null)
 				editor.putLong(getUsagePref(uid, restrictionName, methodName), timeStamp);
-			editor.commit();
+			editor.apply();
 
 			return 1;
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING) {
@@ -232,7 +233,7 @@ public class XPrivacyProvider extends ContentProvider {
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putString(getSettingPref(settingName), values.getAsString(COL_VALUE));
-			editor.commit();
+			editor.apply();
 			setPrefFileReadable(PREF_SETTINGS);
 
 			return 1;
@@ -242,21 +243,32 @@ public class XPrivacyProvider extends ContentProvider {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
+	@SuppressLint("WorldReadableFiles")
 	public int delete(Uri uri, String where, String[] selectionArgs) {
 		// Check access
 		enforcePermission();
 
 		if (sUriMatcher.match(uri) == TYPE_RESTRICTION) {
+			int rows = 0;
+
 			// Get argument
 			int uid = Integer.parseInt(selectionArgs[0]);
 
-			// Set all restrictions to allowed
-			int rows = 0;
+			// Method restrictions
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
+			SharedPreferences.Editor editor = prefs.edit();
 			for (String restrictionName : XRestriction.getRestrictions()) {
 				for (String methodName : XRestriction.getMethodNames(restrictionName)) {
 					rows++;
-					updateRestriction(uid, restrictionName, methodName, false);
+					editor.remove(getExceptionPref(uid, restrictionName, methodName));
 				}
+			}
+			editor.apply();
+			setPrefFileReadable(PREF_RESTRICTION);
+
+			// Group restrictions
+			for (String restrictionName : XRestriction.getRestrictions()) {
 				rows++;
 				updateRestriction(uid, restrictionName, null, true);
 			}
@@ -278,7 +290,7 @@ public class XPrivacyProvider extends ContentProvider {
 					editor.remove(pref);
 					XUtil.log(null, Log.INFO, "Removed audit=" + pref);
 				}
-			editor.commit();
+			editor.apply();
 			return rows;
 		}
 
@@ -310,12 +322,7 @@ public class XPrivacyProvider extends ContentProvider {
 	// Private helper methods
 
 	private void enforcePermission() throws SecurityException {
-		// Only XPrivacy can insert, update or delete
-		int cuid = Binder.getCallingUid();
-		String[] packages = getContext().getPackageManager().getPackagesForUid(cuid);
-		List<String> listPackage = new ArrayList<String>(Arrays.asList(packages));
-		String self = XPrivacyProvider.class.getPackage().getName();
-		if (!listPackage.contains(self))
+		if (Binder.getCallingUid() != Process.myUid())
 			throw new SecurityException();
 	}
 
@@ -368,7 +375,7 @@ public class XPrivacyProvider extends ContentProvider {
 			editor.putString(getRestrictionPref(restrictionName), restrictions);
 		if (methodName != null)
 			editor.putBoolean(getExceptionPref(uid, restrictionName, methodName), allowed);
-		editor.commit();
+		editor.apply();
 		setPrefFileReadable(PREF_RESTRICTION);
 	}
 
