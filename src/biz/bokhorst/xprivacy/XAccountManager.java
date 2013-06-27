@@ -48,27 +48,29 @@ public class XAccountManager extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
 		if (methodName.equals("addOnAccountsUpdatedListener")) {
-			if (param.args[0] != null) {
-				OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
-				XOnAccountsUpdateListener xlistener = new XOnAccountsUpdateListener(listener);
-				synchronized (mListener) {
-					mListener.put(listener, xlistener);
-					XUtil.log(this, Log.INFO, "Added count=" + mListener.size());
-				}
-				param.args[0] = xlistener;
-			}
-		} else if (methodName.equals("removeOnAccountsUpdatedListener")) {
-			if (param.args[0] != null) {
-				synchronized (mListener) {
+			if (isRestricted(param))
+				if (param.args[0] != null) {
 					OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
-					XOnAccountsUpdateListener xlistener = mListener.get(listener);
-					if (xlistener != null) {
-						param.args[0] = xlistener;
-						XUtil.log(this, Log.INFO, "Removed count=" + mListener.size());
-					} else
-						XUtil.log(this, Log.WARN, "Not found count=" + mListener.size());
+					XOnAccountsUpdateListener xlistener = new XOnAccountsUpdateListener(listener);
+					synchronized (mListener) {
+						mListener.put(listener, xlistener);
+						XUtil.log(this, Log.INFO, "Added count=" + mListener.size());
+					}
+					param.args[0] = xlistener;
 				}
-			}
+		} else if (methodName.equals("removeOnAccountsUpdatedListener")) {
+			if (isRestricted(param))
+				if (param.args[0] != null) {
+					synchronized (mListener) {
+						OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
+						XOnAccountsUpdateListener xlistener = mListener.get(listener);
+						if (xlistener != null) {
+							param.args[0] = xlistener;
+							XUtil.log(this, Log.INFO, "Removed count=" + mListener.size());
+						} else
+							XUtil.log(this, Log.WARN, "Not found count=" + mListener.size());
+					}
+				}
 		}
 	}
 
