@@ -413,6 +413,12 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 Changelog
 ---------
 
+**Version 0.35** (in development)
+
+* Remove pro menu for pro version
+* Updated German translation
+* Updated simplified Chinese translation
+
 **Version 0.34**
 
 * Show edit icon in category browser

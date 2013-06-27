@@ -54,6 +54,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Process;
 import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -166,7 +167,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 		menu.findItem(R.id.menu_export).setEnabled(pro && mounted);
 		menu.findItem(R.id.menu_import).setEnabled(pro && mounted);
-		menu.findItem(R.id.menu_pro).setEnabled(!pro);
+		if (XUtil.isProVersion(this) != null)
+			menu.removeItem(R.id.menu_pro);
 
 		return super.onPrepareOptionsMenu(menu);
 	}
