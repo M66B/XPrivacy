@@ -108,9 +108,9 @@ public class XRestriction {
 		// Methods
 
 		// Account manager
-		String[] accs = new String[] { "getAccounts", "getAccountsByType", "getAccountsByTypeAndFeatures",
-				"hasFeatures", "addOnAccountsUpdatedListener", "getAuthToken", "getAuthTokenByFeatures",
-				"blockingGetAuthToken" };
+		String[] accs = new String[] { "addOnAccountsUpdatedListener", "blockingGetAuthToken", "getAccounts",
+				"getAccountsByType", "getAccountsByTypeAndFeatures", "getAuthToken", "getAuthTokenByFeatures",
+				"hasFeatures", "removeOnAccountsUpdatedListener" };
 		for (String acc : accs)
 			mMethods.get(cAccounts).add(acc);
 

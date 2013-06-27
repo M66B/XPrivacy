@@ -415,8 +415,10 @@ Changelog
 
 **Version 0.35** (in development)
 
-* Speed up import ([pro version](http://www.faircode.eu/xprivacy/) only)
+* Speed up import ([pro version](http://www.faircode.eu/xprivacy/) only) ([issue](https://github.com/M66B/XPrivacy/issues/70))
 * Remove pro menu when pro version activated
+* Fix potential account data leak ([issue](https://github.com/M66B/XPrivacy/issues/75))
+* Fix potential resource leak in location listener
 * Updated German translation
 * Updated simplified Chinese translation
 

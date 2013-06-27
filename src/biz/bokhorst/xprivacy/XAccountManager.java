@@ -4,11 +4,14 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 import android.accounts.Account;
 import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
+import android.accounts.OnAccountsUpdateListener;
 import android.accounts.OperationCanceledException;
 import android.content.Context;
 import android.os.Binder;
@@ -18,6 +21,7 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XAccountManager extends XHook {
+	private static final Map<OnAccountsUpdateListener, XOnAccountsUpdateListener> mListener = new WeakHashMap<OnAccountsUpdateListener, XOnAccountsUpdateListener>();
 
 	public XAccountManager(String methodName, String restrictionName, String[] permissions) {
 		super(methodName, restrictionName, permissions, null);
@@ -25,44 +29,69 @@ public class XAccountManager extends XHook {
 
 	// @formatter:off
 
+	// public void addOnAccountsUpdatedListener(final OnAccountsUpdateListener listener, Handler handler, boolean updateImmediately)
+	// public String blockingGetAuthToken(Account account, String authTokenType, boolean notifyAuthFailure)
 	// public Account[] getAccounts()
 	// public Account[] getAccountsByType(String type)
 	// public AccountManagerFuture<Account[]> getAccountsByTypeAndFeatures(final String type, final String[] features, AccountManagerCallback<Account[]> callback, Handler handler)
-	// public AccountManagerFuture<Boolean> hasFeatures(final Account account, final String[] features, AccountManagerCallback<Boolean> callback, Handler handler)
-	// public void addOnAccountsUpdatedListener(final OnAccountsUpdateListener listener, Handler handler, boolean updateImmediately)
 	// public AccountManagerFuture<Bundle> getAuthToken(final Account account, final String authTokenType, final Bundle options, final Activity activity, AccountManagerCallback<Bundle> callback, Handler handler)
 	// public AccountManagerFuture<Bundle> getAuthToken(final Account account, final String authTokenType, final boolean notifyAuthFailure, AccountManagerCallback<Bundle> callback, Handler handler)
 	// public AccountManagerFuture<Bundle> getAuthToken(final Account account, final String authTokenType, final Bundle options, final boolean notifyAuthFailure, AccountManagerCallback<Bundle> callback, Handler handler)
 	// public AccountManagerFuture<Bundle> getAuthTokenByFeatures(final String accountType, final String authTokenType, final String[] features, final Activity activity, final Bundle addAccountOptions, final Bundle getAuthTokenOptions, final AccountManagerCallback<Bundle> callback, final Handler handler)
-	// public String blockingGetAuthToken(Account account, String authTokenType, boolean notifyAuthFailure)
+	// public AccountManagerFuture<Boolean> hasFeatures(final Account account, final String[] features, AccountManagerCallback<Boolean> callback, Handler handler)
+	// public void removeOnAccountsUpdatedListener(OnAccountsUpdateListener listener)
 	// frameworks/base/core/java/android/accounts/AccountManager.java
 
 	// @formatter:on
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		// Do nothing
+		String methodName = param.method.getName();
+		if (methodName.equals("addOnAccountsUpdatedListener")) {
+			if (param.args[0] != null) {
+				OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
+				XOnAccountsUpdateListener xlistener = new XOnAccountsUpdateListener(listener);
+				synchronized (mListener) {
+					mListener.put(listener, xlistener);
+					XUtil.log(this, Log.INFO, "Added count=" + mListener.size());
+				}
+				param.args[0] = xlistener;
+			}
+		} else if (methodName.equals("removeOnAccountsUpdatedListener")) {
+			if (param.args[0] != null) {
+				synchronized (mListener) {
+					OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
+					XOnAccountsUpdateListener xlistener = mListener.get(listener);
+					if (xlistener != null) {
+						param.args[0] = xlistener;
+						XUtil.log(this, Log.INFO, "Removed count=" + mListener.size());
+					} else
+						XUtil.log(this, Log.WARN, "Not found count=" + mListener.size());
+				}
+			}
+		}
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
-		if (methodName.equals("addOnAccountsUpdatedListener") || param.getResult() != null)
-			if (isRestricted(param))
-				if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType"))
-					param.setResult(new Account[0]);
-				else if (methodName.equals("getAccountsByTypeAndFeatures"))
-					param.setResult(new XFutureAccount());
-				else if (methodName.equals("hasFeatures"))
-					param.setResult(new XFutureBoolean());
-				else if (methodName.equals("addOnAccountsUpdatedListener"))
-					param.setResult(null);
-				else if (methodName.equals("getAuthToken") || methodName.equals("getAuthTokenByFeatures"))
-					param.setResult(new XFutureBundle());
-				else if (methodName.equals("blockingGetAuthToken"))
-					param.setResult(null);
-				else
-					XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
+		if (!methodName.equals("addOnAccountsUpdatedListener") && !methodName.equals("removeOnAccountsUpdatedListener"))
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType"))
+						param.setResult(new Account[0]);
+					else if (methodName.equals("getAccountsByTypeAndFeatures"))
+						param.setResult(new XFutureAccount());
+					else if (methodName.equals("hasFeatures"))
+						param.setResult(new XFutureBoolean());
+					else if (methodName.equals("addOnAccountsUpdatedListener"))
+						param.setResult(null);
+					else if (methodName.equals("getAuthToken") || methodName.equals("getAuthTokenByFeatures"))
+						param.setResult(new XFutureBundle());
+					else if (methodName.equals("blockingGetAuthToken"))
+						param.setResult(null);
+					else
+						XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 
 	@Override
@@ -161,6 +190,19 @@ public class XAccountManager extends XHook {
 		@Override
 		public boolean isDone() {
 			return true;
+		}
+	}
+
+	private class XOnAccountsUpdateListener implements OnAccountsUpdateListener {
+		private OnAccountsUpdateListener mListener;
+
+		public XOnAccountsUpdateListener(OnAccountsUpdateListener listener) {
+			mListener = listener;
+		}
+
+		@Override
+		public void onAccountsUpdated(Account[] accounts) {
+			mListener.onAccountsUpdated(new Account[0]);
 		}
 	}
 }
