@@ -398,8 +398,15 @@ Android permissions do not cover all restriction categories and if they do, then
 Therefore Android permissions are only displayed as a guideline.
 Any function, like filtering and selecting, would be inherent incorrect.
 
+**(20) I get 'Unable to parse package'**
+
+This means the downloaded app is corrupt.
+Try disabling your popup blocker or download using another computer.
+
 Support
 -------
+
+*Before submitting any issue please ensure you are running the latest version of XPrivacy.*
 
 If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues),
 preferably including a [logcat](http://developer.android.com/tools/help/logcat.html)
