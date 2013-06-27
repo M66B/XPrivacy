@@ -80,18 +80,16 @@ public class XAccountManager extends XHook {
 		if (!methodName.equals("addOnAccountsUpdatedListener") && !methodName.equals("removeOnAccountsUpdatedListener"))
 			if (param.getResult() != null)
 				if (isRestricted(param))
-					if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType"))
+					if (methodName.equals("blockingGetAuthToken"))
+						param.setResult(null);
+					else if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType"))
 						param.setResult(new Account[0]);
 					else if (methodName.equals("getAccountsByTypeAndFeatures"))
 						param.setResult(new XFutureAccount());
-					else if (methodName.equals("hasFeatures"))
-						param.setResult(new XFutureBoolean());
-					else if (methodName.equals("addOnAccountsUpdatedListener"))
-						param.setResult(null);
 					else if (methodName.equals("getAuthToken") || methodName.equals("getAuthTokenByFeatures"))
 						param.setResult(new XFutureBundle());
-					else if (methodName.equals("blockingGetAuthToken"))
-						param.setResult(null);
+					else if (methodName.equals("hasFeatures"))
+						param.setResult(new XFutureBoolean());
 					else
 						XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
