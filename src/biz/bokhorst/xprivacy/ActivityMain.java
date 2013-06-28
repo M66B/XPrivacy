@@ -56,6 +56,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Process;
 import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -926,6 +927,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		@Override
 		protected List<ApplicationInfoEx> doInBackground(String... params) {
 			mRestrictionName = params[0];
+			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
 			return ApplicationInfoEx.getXApplicationList(ActivityMain.this);
 		}
 
