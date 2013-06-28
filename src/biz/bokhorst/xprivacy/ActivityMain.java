@@ -309,7 +309,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			reportClass(getContentResolver().getClass());
 
 		// Check telephony manager
-		if (!checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class))
+		if (!checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class)
+				&& !checkField(getSystemService(Context.TELEPHONY_SERVICE), "mContext", Context.class))
 			reportClass(getSystemService(Context.TELEPHONY_SERVICE).getClass());
 
 		// Check WifiInfo
