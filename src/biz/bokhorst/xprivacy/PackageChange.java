@@ -24,13 +24,13 @@ public class PackageChange extends BroadcastReceiver {
 			String packageName = inputUri.getSchemeSpecificPart();
 			int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 			boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
-			boolean expert = Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
+			boolean expert = Boolean.parseBoolean(Restriction.getSetting(null, context, Restriction.cSettingExpert,
 					Boolean.FALSE.toString(), false));
 			NotificationManager notificationManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 
 			// Log
-			XUtil.log(null, Log.INFO, intent.getAction() + " package=" + packageName + " uid=" + uid + " replacing="
+			Util.log(null, Log.INFO, intent.getAction() + " package=" + packageName + " uid=" + uid + " replacing="
 					+ replacing);
 
 			if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED) && !replacing) {
@@ -42,15 +42,15 @@ public class PackageChange extends BroadcastReceiver {
 					pInfo = pm.getPackageInfo(packageName, 0);
 					system = (pInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
 				} catch (Throwable ex) {
-					XUtil.bug(null, ex);
+					Util.bug(null, ex);
 					return;
 				}
 
 				if (expert ? true : !system) {
 					// Default deny new user apps
 					if (!system)
-						for (String restrictionName : XRestriction.getRestrictions())
-							XRestriction.setRestricted(null, context, uid, restrictionName, null, true);
+						for (String restrictionName : Restriction.getRestrictions())
+							Restriction.setRestricted(null, context, uid, restrictionName, null, true);
 
 					// Build result intent
 					Intent resultIntent = new Intent(context, ActivityApp.class);
@@ -80,11 +80,11 @@ public class PackageChange extends BroadcastReceiver {
 				notificationManager.cancel(uid);
 
 				// Remove existing restrictions
-				for (String restrictionName : XRestriction.getRestrictions())
-					XRestriction.setRestricted(null, context, uid, restrictionName, null, false);
+				for (String restrictionName : Restriction.getRestrictions())
+					Restriction.setRestricted(null, context, uid, restrictionName, null, false);
 
 				// Remove usage data
-				XRestriction.deleteUsageData(context, uid);
+				Restriction.deleteUsageData(context, uid);
 			}
 		}
 	}

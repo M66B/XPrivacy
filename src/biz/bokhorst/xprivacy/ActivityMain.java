@@ -94,16 +94,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
-		String sTheme = XRestriction.getSetting(null, this, XRestriction.cSettingTheme, null, false);
+		String sTheme = Restriction.getSetting(null, this, Restriction.cSettingTheme, null, false);
 		mThemeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
 		setTheme(mThemeId);
 		setContentView(R.layout.xmainlist);
 
 		// Get localized restriction name
-		List<String> listRestriction = XRestriction.getRestrictions();
+		List<String> listRestriction = Restriction.getRestrictions();
 		List<String> listLocalizedRestriction = new ArrayList<String>();
 		for (String restrictionName : listRestriction)
-			listLocalizedRestriction.add(XRestriction.getLocalizedName(this, restrictionName));
+			listLocalizedRestriction.add(Restriction.getLocalizedName(this, restrictionName));
 
 		// Build spinner adapter
 		ArrayAdapter<String> spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
@@ -164,12 +164,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		boolean pro = (XUtil.isProVersion(this) != null);
+		boolean pro = (Util.isProVersion(this) != null);
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
 		menu.findItem(R.id.menu_export).setEnabled(pro && mounted);
 		menu.findItem(R.id.menu_import).setEnabled(pro && mounted);
-		if (XUtil.isProVersion(this) != null)
+		if (Util.isProVersion(this) != null)
 			menu.removeItem(R.id.menu_pro);
 
 		return super.onPrepareOptionsMenu(menu);
@@ -207,7 +207,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				return super.onOptionsItemSelected(item);
 			}
 		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
+			Util.bug(null, ex);
 			return true;
 		}
 	}
@@ -215,7 +215,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 		if (mAppAdapter != null) {
-			String restrictionName = XRestriction.getRestrictions().get(pos);
+			String restrictionName = Restriction.getRestrictions().get(pos);
 			mAppAdapter.setRestrictionName(restrictionName);
 		}
 	}
@@ -253,10 +253,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		}
 
 		// Check Xposed version
-		int xVersion = XUtil.getXposedVersion();
-		if (xVersion < XRestriction.cXposedMinVersion) {
-			String msg = String.format(getString(R.string.app_notxposed), XRestriction.cXposedMinVersion);
-			XUtil.log(null, Log.WARN, msg);
+		int xVersion = Util.getXposedVersion();
+		if (xVersion < Restriction.cXposedMinVersion) {
+			String msg = String.format(getString(R.string.app_notxposed), Restriction.cXposedMinVersion);
+			Util.log(null, Log.WARN, msg);
 
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.app_name));
@@ -274,9 +274,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		}
 
 		// Check if XPrivacy is enabled
-		if (!XUtil.isXposedEnabled()) {
+		if (!Util.isXposedEnabled()) {
 			String msg = getString(R.string.app_notenabled);
-			XUtil.log(null, Log.WARN, msg);
+			Util.log(null, Log.WARN, msg);
 
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.app_name));
@@ -353,7 +353,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					return true;
 			}
 		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
+			Util.bug(null, ex);
 		}
 		return false;
 	}
@@ -363,7 +363,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			clazz.getDeclaredField(fieldName);
 			return true;
 		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
+			Util.bug(null, ex);
 			return false;
 		}
 	}
@@ -384,25 +384,25 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
-		String sExpert = XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingExpert,
+		String sExpert = Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingExpert,
 				Boolean.FALSE.toString(), false);
 		final boolean expert = Boolean.parseBoolean(sExpert);
 		cbSettings.setChecked(expert);
-		etLat.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, "", false));
-		etLon.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingLongitude, "", false));
-		etMac.setText(XRestriction.getSetting(null, ActivityMain.this, XRestriction.cSettingMac,
-				XRestriction.getDefacedMac(), false));
+		etLat.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingLatitude, "", false));
+		etLon.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingLongitude, "", false));
+		etMac.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingMac,
+				Restriction.getDefacedMac(), false));
 
 		// Wait for OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				// Set expert mode
-				XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingExpert,
+				Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingExpert,
 						Boolean.toString(cbSettings.isChecked()));
 				if (expert != cbSettings.isChecked()) {
 					// Start task to get app list
-					List<String> listRestriction = XRestriction.getRestrictions();
+					List<String> listRestriction = Restriction.getRestrictions();
 					String restrictionName = listRestriction.get(0);
 					AppListTask appListTask = new AppListTask();
 					appListTask.execute(restrictionName);
@@ -415,17 +415,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					if (lat < -90 || lat > 90 || lon < -180 || lon > 180)
 						throw new InvalidParameterException();
 
-					XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, Float.toString(lat));
-					XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingLongitude,
+					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLatitude, Float.toString(lat));
+					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLongitude,
 							Float.toString(lon));
 
 				} catch (Throwable ex) {
-					XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingLatitude, "");
-					XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingLongitude, "");
+					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLatitude, "");
+					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLongitude, "");
 				}
 
 				// Set MAC address
-				XRestriction.setSetting(null, ActivityMain.this, XRestriction.cSettingMac, etMac.getText().toString());
+				Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingMac, etMac.getText().toString());
 
 				// Done
 				dlgSettings.dismiss();
@@ -463,13 +463,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	}
 
 	private void optionSwitchTheme() {
-		String sTheme = XRestriction.getSetting(null, this, XRestriction.cSettingTheme, null, false);
+		String sTheme = Restriction.getSetting(null, this, Restriction.cSettingTheme, null, false);
 		int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
 		if (themeId == android.R.style.Theme_Holo_Light)
-			XRestriction.setSetting(null, this, XRestriction.cSettingTheme,
+			Restriction.setSetting(null, this, Restriction.cSettingTheme,
 					Integer.toString(android.R.style.Theme_Holo));
 		else
-			XRestriction.setSetting(null, this, XRestriction.cSettingTheme,
+			Restriction.setSetting(null, this, Restriction.cSettingTheme,
 					Integer.toString(android.R.style.Theme_Holo_Light));
 		this.recreate();
 	}
@@ -488,16 +488,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			TextView tvVersion = (TextView) dlgAbout.findViewById(R.id.tvVersion);
 			tvVersion.setText(String.format(getString(R.string.app_version), pInfo.versionName, pInfo.versionCode));
 		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
+			Util.bug(null, ex);
 		}
 
 		// Show Xposed version
-		int xVersion = XUtil.getXposedVersion();
+		int xVersion = Util.getXposedVersion();
 		TextView tvXVersion = (TextView) dlgAbout.findViewById(R.id.tvXVersion);
 		tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
 
 		// Show license
-		String licensed = XUtil.isProVersion(this);
+		String licensed = Util.isProVersion(this);
 		TextView tvLicensed = (TextView) dlgAbout.findViewById(R.id.tvLicensed);
 		if (licensed == null)
 			tvLicensed.setVisibility(View.GONE);
@@ -537,7 +537,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				throw new IOException(statusLine.getReasonPhrase());
 			}
 		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
+			Util.bug(null, ex);
 			return ex.toString();
 		}
 	}
@@ -580,8 +580,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			} else {
 				// Compare versions
 				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-				XVersion ourVersion = new XVersion(pInfo.versionName);
-				XVersion latestVersion = new XVersion(version);
+				Version ourVersion = new Version(pInfo.versionName);
+				Version latestVersion = new Version(version);
 				if (ourVersion.compareTo(latestVersion) < 0) {
 					// Update available
 					Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -596,13 +596,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		} catch (Throwable ex) {
 			Toast toast = Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG);
 			toast.show();
-			XUtil.bug(null, ex);
+			Util.bug(null, ex);
 		}
 	}
 
 	private void reportClass(final Class<?> clazz) {
 		String msg = String.format("Incompatible %s", clazz.getName());
-		XUtil.log(null, Log.WARN, msg);
+		Util.log(null, Log.WARN, msg);
 
 		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		alertDialog.setTitle(getString(R.string.app_name));
@@ -655,7 +655,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		try {
 			startActivity(Intent.createChooser(intent, "Send mail..."));
 		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
+			Util.bug(null, ex);
 		}
 	}
 
@@ -692,11 +692,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 				// Process settings
 				publishProgress(getString(R.string.menu_settings));
-				Cursor sCursor = getContentResolver().query(XPrivacyProvider.URI_SETTING, null, null, null, null);
+				Cursor sCursor = getContentResolver().query(PrivacyProvider.URI_SETTING, null, null, null, null);
 				while (sCursor.moveToNext()) {
 					// Get setting
-					String setting = sCursor.getString(sCursor.getColumnIndex(XPrivacyProvider.COL_SETTING));
-					String value = sCursor.getString(sCursor.getColumnIndex(XPrivacyProvider.COL_VALUE));
+					String setting = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_SETTING));
+					String value = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_VALUE));
 
 					// Serialize setting
 					serializer.startTag(null, "Setting");
@@ -707,16 +707,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				sCursor.close();
 
 				// Process restrictions
-				Cursor rCursor = getContentResolver().query(XPrivacyProvider.URI_RESTRICTION, null, null,
+				Cursor rCursor = getContentResolver().query(PrivacyProvider.URI_RESTRICTION, null, null,
 						new String[] { Integer.toString(0), Boolean.toString(false) }, null);
 				while (rCursor.moveToNext()) {
 					// Decode uid
-					int uid = rCursor.getInt(rCursor.getColumnIndex(XPrivacyProvider.COL_UID));
+					int uid = rCursor.getInt(rCursor.getColumnIndex(PrivacyProvider.COL_UID));
 					boolean restricted = Boolean.parseBoolean(rCursor.getString(rCursor
-							.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
+							.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
 					String[] packages = getPackageManager().getPackagesForUid(uid);
 					if (packages == null)
-						XUtil.log(null, Log.WARN, "No packages for uid=" + uid);
+						Util.log(null, Log.WARN, "No packages for uid=" + uid);
 					else
 						for (String packageName : packages) {
 							publishProgress(packageName);
@@ -729,11 +729,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 							// Attribute restriction name
 							String restrictionName = rCursor.getString(rCursor
-									.getColumnIndex(XPrivacyProvider.COL_RESTRICTION));
+									.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
 							serializer.attribute(null, "Restriction", restrictionName);
 
 							// Attribute method name
-							String methodName = rCursor.getString(rCursor.getColumnIndex(XPrivacyProvider.COL_METHOD));
+							String methodName = rCursor.getString(rCursor.getColumnIndex(PrivacyProvider.COL_METHOD));
 							if (methodName != null)
 								serializer.attribute(null, "Method", methodName);
 
@@ -754,7 +754,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				// Display message
 				return getString(R.string.msg_done);
 			} catch (Throwable ex) {
-				XUtil.bug(null, ex);
+				Util.bug(null, ex);
 				return ex.toString();
 			}
 		}
@@ -829,7 +829,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					NamedNodeMap attrs = entry.getAttributes();
 					String setting = attrs.getNamedItem("Name").getNodeValue();
 					String value = attrs.getNamedItem("Value").getNodeValue();
-					XRestriction.setSetting(null, ActivityMain.this, setting, value);
+					Restriction.setSetting(null, ActivityMain.this, setting, value);
 				}
 
 				// Process restrictions
@@ -862,24 +862,24 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
 
 						// Reset existing restrictions
-						XRestriction.deleteRestrictions(ActivityMain.this, uid);
+						Restriction.deleteRestrictions(ActivityMain.this, uid);
 
 						// Set imported restrictions
 						for (String restrictionName : mapPackage.get(packageName).keySet()) {
-							XRestriction.setRestricted(null, ActivityMain.this, uid, restrictionName, null, true);
+							Restriction.setRestricted(null, ActivityMain.this, uid, restrictionName, null, true);
 							for (String methodName : mapPackage.get(packageName).get(restrictionName))
-								XRestriction.setRestricted(null, ActivityMain.this, uid, restrictionName, methodName,
+								Restriction.setRestricted(null, ActivityMain.this, uid, restrictionName, methodName,
 										false);
 						}
 					} catch (NameNotFoundException ex) {
-						XUtil.log(null, Log.WARN, "Not found package=" + packageName);
+						Util.log(null, Log.WARN, "Not found package=" + packageName);
 					}
 				}
 
 				// Display message
 				return getString(R.string.msg_done);
 			} catch (Throwable ex) {
-				XUtil.bug(null, ex);
+				Util.bug(null, ex);
 				return ex.toString();
 			}
 		}
@@ -920,14 +920,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		}
 	}
 
-	private class AppListTask extends AsyncTask<String, Integer, List<XApplicationInfo>> {
+	private class AppListTask extends AsyncTask<String, Integer, List<ApplicationInfoEx>> {
 
 		private String mRestrictionName;
 
 		@Override
-		protected List<XApplicationInfo> doInBackground(String... params) {
+		protected List<ApplicationInfoEx> doInBackground(String... params) {
 			mRestrictionName = params[0];
-			return XApplicationInfo.getXApplicationList(ActivityMain.this);
+			return ApplicationInfoEx.getXApplicationList(ActivityMain.this);
 		}
 
 		@Override
@@ -951,7 +951,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		}
 
 		@Override
-		protected void onPostExecute(List<XApplicationInfo> listApp) {
+		protected void onPostExecute(List<ApplicationInfoEx> listApp) {
 			super.onPostExecute(listApp);
 
 			// Display app list
@@ -975,13 +975,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	}
 
 	@SuppressLint("DefaultLocale")
-	private class AppListAdapter extends ArrayAdapter<XApplicationInfo> implements SectionIndexer {
+	private class AppListAdapter extends ArrayAdapter<ApplicationInfoEx> implements SectionIndexer {
 
 		private String mRestrictionName;
 		private Map<String, Integer> alphaIndexer;
 		private String[] sections;
 
-		public AppListAdapter(Context context, int resource, List<XApplicationInfo> objects,
+		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
 			super(context, resource, objects);
 			mRestrictionName = initialRestrictionName;
@@ -1004,7 +1004,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			final CheckedTextView ctvApp = (CheckedTextView) row.findViewById(R.id.ctvName);
 
 			// Get entry
-			final XApplicationInfo xAppInfo = getItem(position);
+			final ApplicationInfoEx xAppInfo = getItem(position);
 
 			// Set background color
 			if (xAppInfo.getIsSystem())
@@ -1034,12 +1034,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			imgInternet.setVisibility(xAppInfo.hasInternet() ? View.VISIBLE : View.INVISIBLE);
 
 			// Check if used
-			boolean used = XRestriction.isUsed(row.getContext(), xAppInfo.getUid(), mRestrictionName, null);
+			boolean used = Restriction.isUsed(row.getContext(), xAppInfo.getUid(), mRestrictionName, null);
 			ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 
 			// Display restriction
-			boolean restricted = XRestriction.getRestricted(null, row.getContext(), xAppInfo.getUid(),
+			boolean restricted = Restriction.getRestricted(null, row.getContext(), xAppInfo.getUid(),
 					mRestrictionName, null, false, false);
 			ctvApp.setChecked(restricted);
 
@@ -1047,11 +1047,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			ctvApp.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					boolean restricted = XRestriction.getRestricted(null, view.getContext(), xAppInfo.getUid(),
+					boolean restricted = Restriction.getRestricted(null, view.getContext(), xAppInfo.getUid(),
 							mRestrictionName, null, false, false);
 					restricted = !restricted;
 					ctvApp.setChecked(restricted);
-					XRestriction.setRestricted(null, view.getContext(), xAppInfo.getUid(), mRestrictionName, null,
+					Restriction.setRestricted(null, view.getContext(), xAppInfo.getUid(), mRestrictionName, null,
 							restricted);
 				}
 			});
@@ -1107,7 +1107,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		private void reindexSections() {
 			alphaIndexer = new HashMap<String, Integer>();
 			for (int i = getCount() - 1; i >= 0; i--) {
-				XApplicationInfo app = getItem(i);
+				ApplicationInfoEx app = getItem(i);
 				String appName = app.toString();
 				String firstChar;
 				if (appName == null || appName.length() < 1) {

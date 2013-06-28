@@ -54,7 +54,7 @@ public class XAccountManager extends XHook {
 					XOnAccountsUpdateListener xlistener = new XOnAccountsUpdateListener(listener);
 					synchronized (mListener) {
 						mListener.put(listener, xlistener);
-						XUtil.log(this, Log.INFO, "Added count=" + mListener.size());
+						Util.log(this, Log.INFO, "Added count=" + mListener.size());
 					}
 					param.args[0] = xlistener;
 				}
@@ -65,7 +65,7 @@ public class XAccountManager extends XHook {
 						OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
 						XOnAccountsUpdateListener xlistener = mListener.get(listener);
 						if (xlistener == null)
-							XUtil.log(this, Log.WARN, "Not found count=" + mListener.size());
+							Util.log(this, Log.WARN, "Not found count=" + mListener.size());
 						else {
 							param.args[0] = xlistener;
 							mListener.remove(listener);
@@ -92,7 +92,7 @@ public class XAccountManager extends XHook {
 					else if (methodName.equals("hasFeatures"))
 						param.setResult(new XFutureBoolean());
 					else
-						XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
+						Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class XAccountManager extends XHook {
 			Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 			context = (Context) fieldContext.get(param.thisObject);
 		} catch (Throwable ex) {
-			XUtil.bug(this, ex);
+			Util.bug(this, ex);
 		}
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);

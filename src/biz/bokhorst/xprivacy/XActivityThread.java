@@ -36,12 +36,12 @@ public class XActivityThread extends XHook {
 				Field fieldIntent = findField(param.args[0].getClass(), "intent");
 				intent = (Intent) fieldIntent.get(param.args[0]);
 			} catch (Throwable ex) {
-				XUtil.bug(this, ex);
+				Util.bug(this, ex);
 			}
 
 			// Process intent
 			if (intent == null)
-				XUtil.log(this, Log.WARN, "Intent missing");
+				Util.log(this, Log.WARN, "Intent missing");
 			else {
 				// Check action
 				String action = intent.getAction();
@@ -49,8 +49,8 @@ public class XActivityThread extends XHook {
 					if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 						// Boot completed
 						if (isRestricted(param, mActionName))
-							if (Boolean.parseBoolean(XRestriction.getSetting(this,
-									AndroidAppHelper.currentApplication(), XRestriction.cSettingExpert,
+							if (Boolean.parseBoolean(Restriction.getSetting(this,
+									AndroidAppHelper.currentApplication(), Restriction.cSettingExpert,
 									Boolean.FALSE.toString(), true)))
 								param.setResult(null);
 					} else if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
@@ -60,7 +60,7 @@ public class XActivityThread extends XHook {
 							String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
 							if (phoneNumber != null)
 								if (isRestricted(param, mActionName))
-									intent.putExtra(Intent.EXTRA_PHONE_NUMBER, XRestriction.getDefacedString());
+									intent.putExtra(Intent.EXTRA_PHONE_NUMBER, Restriction.getDefacedString());
 						}
 					} else if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
 						// Incoming call
@@ -70,11 +70,11 @@ public class XActivityThread extends XHook {
 							if (phoneNumber != null) {
 								if (isRestricted(param, mActionName))
 									intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER,
-											XRestriction.getDefacedString());
+											Restriction.getDefacedString());
 							}
 						}
 					} else
-						XUtil.log(this, Log.WARN, "Unhandled action=" + mActionName);
+						Util.log(this, Log.WARN, "Unhandled action=" + mActionName);
 				}
 			}
 		}

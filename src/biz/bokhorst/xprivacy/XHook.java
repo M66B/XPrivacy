@@ -24,7 +24,7 @@ public abstract class XHook {
 		mSpecifier = specifier;
 
 		if (restrictionName != null)
-			XRestriction.registerMethod(getSpecifier(), restrictionName, permissions);
+			Restriction.registerMethod(getSpecifier(), restrictionName, permissions);
 	}
 
 	public String getMethodName() {
@@ -50,11 +50,11 @@ public abstract class XHook {
 	protected boolean isRestricted(MethodHookParam param, String methodName) throws Throwable {
 		int uid = Binder.getCallingUid();
 		Context context = AndroidAppHelper.currentApplication();
-		return XRestriction.getRestricted(this, context, uid, mRestrictionName, methodName, true, true);
+		return Restriction.getRestricted(this, context, uid, mRestrictionName, methodName, true, true);
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) throws Throwable {
-		return XRestriction.getRestricted(this, context, uid, mRestrictionName, mMethodName, usage, true);
+		return Restriction.getRestricted(this, context, uid, mRestrictionName, mMethodName, usage, true);
 	}
 
 	protected void notifyUser(String message) throws Throwable {
@@ -62,21 +62,21 @@ public abstract class XHook {
 	}
 
 	protected void notifyUser(Context context, String message) throws Throwable {
-		String format = XUtil.getXString(context, R.string.msg_restricted);
+		String format = Util.getXString(context, R.string.msg_restricted);
 		String text = String.format(format, message);
 		Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
 		toast.show();
 	}
 
 	protected void info(String message) {
-		XUtil.log(this, Log.INFO, message);
+		Util.log(this, Log.INFO, message);
 	}
 
 	protected void warning(String message) {
-		XUtil.log(this, Log.WARN, message);
+		Util.log(this, Log.WARN, message);
 	}
 
 	protected void error(String message) {
-		XUtil.log(this, Log.ERROR, message);
+		Util.log(this, Log.ERROR, message);
 	}
 }

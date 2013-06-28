@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -13,7 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
-public class XApplicationInfo implements Comparable<XApplicationInfo> {
+public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private Drawable mDrawable;
 	private List<String> mListApplicationName;
 	private String mPackageName;
@@ -23,7 +22,7 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 	private boolean mSystem;
 	private boolean mInstalled;
 
-	public XApplicationInfo(String packageName, Context context) {
+	public ApplicationInfoEx(String packageName, Context context) {
 		// Get app info
 		try {
 			ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
@@ -31,12 +30,12 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 		} catch (NameNotFoundException ex) {
 			mInstalled = false;
 		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
+			Util.bug(null, ex);
 			return;
 		}
 	}
 
-	private XApplicationInfo(ApplicationInfo appInfo, Context context) {
+	private ApplicationInfoEx(ApplicationInfo appInfo, Context context) {
 		this.Initialize(appInfo, context);
 	}
 
@@ -46,7 +45,7 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 		mListApplicationName = new ArrayList<String>();
 		mListApplicationName.add(getApplicationName(appInfo, pm));
 		mPackageName = appInfo.packageName;
-		mHasInternet = XRestriction.hasInternet(context, appInfo.packageName);
+		mHasInternet = Restriction.hasInternet(context, appInfo.packageName);
 		mUid = appInfo.uid;
 		try {
 			mVersion = pm.getPackageInfo(appInfo.packageName, 0).versionName;
@@ -55,26 +54,26 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 			mInstalled = false;
 		} catch (Throwable ex) {
 			mInstalled = false;
-			XUtil.bug(null, ex);
+			Util.bug(null, ex);
 		}
 		mSystem = ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
-		mSystem = mSystem || appInfo.packageName.equals(XApplicationInfo.class.getPackage().getName());
+		mSystem = mSystem || appInfo.packageName.equals(ApplicationInfoEx.class.getPackage().getName());
 		mSystem = mSystem || appInfo.packageName.equals("de.robv.android.xposed.installer");
 	}
 
-	public static List<XApplicationInfo> getXApplicationList(Context context) {
+	public static List<ApplicationInfoEx> getXApplicationList(Context context) {
 		// Get references
 		PackageManager pm = context.getPackageManager();
-		boolean expert = Boolean.parseBoolean(XRestriction.getSetting(null, context, XRestriction.cSettingExpert,
+		boolean expert = Boolean.parseBoolean(Restriction.getSetting(null, context, Restriction.cSettingExpert,
 				Boolean.FALSE.toString(), false));
 
 		// Get app list
-		SparseArray<XApplicationInfo> mapApp = new SparseArray<XApplicationInfo>();
-		List<XApplicationInfo> listApp = new ArrayList<XApplicationInfo>();
+		SparseArray<ApplicationInfoEx> mapApp = new SparseArray<ApplicationInfoEx>();
+		List<ApplicationInfoEx> listApp = new ArrayList<ApplicationInfoEx>();
 		for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA)) {
-			XApplicationInfo xAppInfo = new XApplicationInfo(appInfo, context);
+			ApplicationInfoEx xAppInfo = new ApplicationInfoEx(appInfo, context);
 			if (xAppInfo.getIsSystem() ? expert : true) {
-				XApplicationInfo yAppInfo = mapApp.get(appInfo.uid);
+				ApplicationInfoEx yAppInfo = mapApp.get(appInfo.uid);
 				if (yAppInfo == null) {
 					mapApp.put(appInfo.uid, xAppInfo);
 					listApp.add(xAppInfo);
@@ -125,13 +124,12 @@ public class XApplicationInfo implements Comparable<XApplicationInfo> {
 	}
 
 	@Override
-	@SuppressLint("DefaultLocale")
 	public String toString() {
 		return String.format("%s", TextUtils.join(", ", mListApplicationName));
 	}
 
 	@Override
-	public int compareTo(XApplicationInfo other) {
-		return toString().toUpperCase().compareToIgnoreCase(other.toString().toUpperCase());
+	public int compareTo(ApplicationInfoEx other) {
+		return toString().compareToIgnoreCase(other.toString());
 	}
 }

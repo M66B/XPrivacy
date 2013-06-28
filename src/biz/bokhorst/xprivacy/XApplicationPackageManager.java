@@ -39,7 +39,7 @@ public class XApplicationPackageManager extends XHook {
 					|| methodName.equals("getPreferredPackages"))
 				param.setResult(new ArrayList<PackageInfo>());
 			else
-				XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
+				Util.log(this, Log.WARN, "Unknown method=" + methodName);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class XApplicationPackageManager extends XHook {
 			Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 			context = (Context) fieldContext.get(param.thisObject);
 		} catch (Throwable ex) {
-			XUtil.bug(this, ex);
+			Util.bug(this, ex);
 		}
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);

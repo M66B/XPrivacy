@@ -35,7 +35,7 @@ public class XSettingsSecure extends XHook {
 			String name = (String) param.args[1];
 			if (Settings.Secure.ANDROID_ID.equals(name))
 				if (isRestricted(param))
-					param.setResult(Long.toHexString(XRestriction.getDefacedHex()));
+					param.setResult(Long.toHexString(Restriction.getDefacedHex()));
 		}
 	}
 
@@ -47,7 +47,7 @@ public class XSettingsSecure extends XHook {
 			Field fieldContext = findField(ContentResolver.class, "mContext");
 			context = (Context) fieldContext.get(contentResolver);
 		} catch (Throwable ex) {
-			XUtil.bug(this, ex);
+			Util.bug(this, ex);
 		}
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);

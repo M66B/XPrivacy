@@ -44,9 +44,9 @@ public class XWifiManager extends XHook {
 					// BSSID
 					try {
 						Field fieldBSSID = findField(WifiInfo.class, "mBSSID");
-						fieldBSSID.set(wInfo, XRestriction.getDefacedMac());
+						fieldBSSID.set(wInfo, Restriction.getDefacedMac());
 					} catch (Throwable ex) {
-						XUtil.bug(this, ex);
+						Util.bug(this, ex);
 					}
 
 					// IP address
@@ -54,27 +54,27 @@ public class XWifiManager extends XHook {
 						Field fieldIp = findField(WifiInfo.class, "mIpAddress");
 						fieldIp.set(wInfo, XNetworkInterface.getInetAddressEmpty());
 					} catch (Throwable ex) {
-						XUtil.bug(this, ex);
+						Util.bug(this, ex);
 					}
 
 					// MAC address
 					try {
 						Field fieldMAC = findField(WifiInfo.class, "mMacAddress");
-						fieldMAC.set(wInfo, XRestriction.getDefacedMac());
+						fieldMAC.set(wInfo, Restriction.getDefacedMac());
 					} catch (Throwable ex) {
-						XUtil.bug(this, ex);
+						Util.bug(this, ex);
 					}
 
 					// SSID
 					try {
 						Field fieldSSID = findField(WifiInfo.class, "mSSID");
-						fieldSSID.set(wInfo, XRestriction.getDefacedString());
+						fieldSSID.set(wInfo, Restriction.getDefacedString());
 					} catch (Throwable ex) {
 						try {
 							Field fieldWifiSsid = findField(WifiInfo.class, "mWifiSsid");
-							fieldWifiSsid.set(wInfo, XRestriction.getDefacedMac());
+							fieldWifiSsid.set(wInfo, Restriction.getDefacedMac());
 						} catch (Throwable exex) {
-							XUtil.bug(this, exex);
+							Util.bug(this, exex);
 						}
 					}
 				}
@@ -83,11 +83,11 @@ public class XWifiManager extends XHook {
 			DhcpInfo dInfo = (DhcpInfo) param.getResult();
 			if (dInfo != null)
 				if (isRestricted(param)) {
-					dInfo.ipAddress = XRestriction.getDefacedIPInt();
-					dInfo.gateway = XRestriction.getDefacedIPInt();
-					dInfo.dns1 = XRestriction.getDefacedIPInt();
-					dInfo.dns2 = XRestriction.getDefacedIPInt();
-					dInfo.serverAddress = XRestriction.getDefacedIPInt();
+					dInfo.ipAddress = Restriction.getDefacedIPInt();
+					dInfo.gateway = Restriction.getDefacedIPInt();
+					dInfo.dns1 = Restriction.getDefacedIPInt();
+					dInfo.dns2 = Restriction.getDefacedIPInt();
+					dInfo.serverAddress = Restriction.getDefacedIPInt();
 				}
 		}
 	}

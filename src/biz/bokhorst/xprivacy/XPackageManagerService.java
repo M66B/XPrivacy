@@ -40,9 +40,9 @@ public class XPackageManagerService extends XHook {
 			boolean modified = false;
 			List<Integer> listGids = new ArrayList<Integer>();
 			for (int i = 0; i < gids.length; i++)
-				if ((gids[i] == sdcard_r || gids[i] == sdcard_rw) && mRestrictionName.equals(XRestriction.cStorage))
+				if ((gids[i] == sdcard_r || gids[i] == sdcard_rw) && mRestrictionName.equals(Restriction.cStorage))
 					modified = true;
-				else if ((gids[i] == inet || gids[i] == inet_raw) && mRestrictionName.equals(XRestriction.cInternet))
+				else if ((gids[i] == inet || gids[i] == inet_raw) && mRestrictionName.equals(Restriction.cInternet))
 					modified = true;
 				else
 					listGids.add(gids[i]);

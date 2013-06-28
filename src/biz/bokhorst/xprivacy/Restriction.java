@@ -21,7 +21,7 @@ import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-public class XRestriction {
+public class Restriction {
 
 	// This should correspond with restrict_<name> in strings.xml
 	public static final String cAccounts = "accounts";
@@ -121,11 +121,11 @@ public class XRestriction {
 			mMethods.get(cSystem).add(am);
 
 		// Audio record
-		mMethods.get(XRestriction.cMedia).add("startRecording");
+		mMethods.get(Restriction.cMedia).add("startRecording");
 
 		// Bluetooth adapter
-		mMethods.get(XRestriction.cNetwork).add("getAddress");
-		mMethods.get(XRestriction.cNetwork).add("getBondedDevices");
+		mMethods.get(Restriction.cNetwork).add("getAddress");
+		mMethods.get(Restriction.cNetwork).add("getBondedDevices");
 
 		// Camera
 		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
@@ -227,19 +227,19 @@ public class XRestriction {
 
 	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {
 		if (restrictionName != null && !mPermissions.containsKey(restrictionName))
-			XUtil.log(null, Log.WARN, "Missing restriction " + restrictionName);
+			Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
 
 		for (String permission : permissions)
 			if (!mPermissions.get(restrictionName).contains(permission))
-				XUtil.log(null, Log.WARN, "Missing permission " + permission);
+				Util.log(null, Log.WARN, "Missing permission " + permission);
 
 		if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
-			XUtil.log(null, Log.WARN, "Missing method " + methodName);
+			Util.log(null, Log.WARN, "Missing method " + methodName);
 	}
 
 	public static List<String> getRestrictions() {
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
-		if (!Boolean.parseBoolean(XRestriction.getSetting(null, null, XRestriction.cSettingExpert,
+		if (!Boolean.parseBoolean(Restriction.getSetting(null, null, Restriction.cSettingExpert,
 				Boolean.FALSE.toString(), false))) {
 			listRestriction.remove(cBoot);
 			listRestriction.remove(cShell);
@@ -280,7 +280,7 @@ public class XRestriction {
 						if (rPermission.toLowerCase().contains(permission.toLowerCase()))
 							return true;
 		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
+			Util.bug(null, ex);
 			return false;
 		}
 		return false;
@@ -293,10 +293,10 @@ public class XRestriction {
 	public static long getUsed(Context context, int uid, String restrictionName, String methodName) {
 		long lastUsage = 0;
 		ContentResolver cr = context.getContentResolver();
-		Cursor cursor = cr.query(XPrivacyProvider.URI_USAGE, null, restrictionName,
+		Cursor cursor = cr.query(PrivacyProvider.URI_USAGE, null, restrictionName,
 				new String[] { Integer.toString(uid), methodName }, null);
 		if (cursor.moveToNext())
-			lastUsage = cursor.getLong(cursor.getColumnIndex(XPrivacyProvider.COL_USED));
+			lastUsage = cursor.getLong(cursor.getColumnIndex(PrivacyProvider.COL_USED));
 		cursor.close();
 		boolean used = (lastUsage != 0);
 		logRestriction(null, context, uid, "used", restrictionName, methodName, used, false);
@@ -309,15 +309,15 @@ public class XRestriction {
 		try {
 			// Check uid
 			if (uid <= 0) {
-				XUtil.log(hook, Log.WARN, "uid <= 0");
-				XUtil.logStack(hook);
+				Util.log(hook, Log.WARN, "uid <= 0");
+				Util.logStack(hook);
 				return false;
 			}
 
 			// Check restriction
 			if (restrictionName == null || restrictionName.equals("")) {
-				XUtil.log(hook, Log.WARN, "restriction empty");
-				XUtil.logStack(hook);
+				Util.log(hook, Log.WARN, "restriction empty");
+				Util.logStack(hook);
 				return false;
 			}
 
@@ -340,30 +340,30 @@ public class XRestriction {
 			// Check if restricted
 			boolean fallback = true;
 			boolean restricted = false;
-			if (context != null && uid != XRestriction.cUidAndroid)
+			if (context != null && uid != Restriction.cUidAndroid)
 				try {
 					// Get content resolver
 					ContentResolver contentResolver = context.getContentResolver();
 					if (contentResolver == null) {
-						XUtil.log(hook, Log.WARN, "contentResolver is null");
-						XUtil.logStack(hook);
+						Util.log(hook, Log.WARN, "contentResolver is null");
+						Util.logStack(hook);
 					} else {
 						// Query restriction
-						Cursor cursor = contentResolver.query(XPrivacyProvider.URI_RESTRICTION, null, restrictionName,
+						Cursor cursor = contentResolver.query(PrivacyProvider.URI_RESTRICTION, null, restrictionName,
 								new String[] { Integer.toString(uid), Boolean.toString(usage), methodName }, null);
 						if (cursor == null) {
 							// Can happen if memory low
-							XUtil.log(hook, Log.WARN, "cursor is null");
-							XUtil.logStack(null);
+							Util.log(hook, Log.WARN, "cursor is null");
+							Util.logStack(null);
 						} else {
 							// Get restriction
 							if (cursor.moveToNext()) {
 								restricted = Boolean.parseBoolean(cursor.getString(cursor
-										.getColumnIndex(XPrivacyProvider.COL_RESTRICTED)));
+										.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
 								fallback = false;
 							} else {
-								XUtil.log(hook, Log.WARN, "cursor is empty");
-								XUtil.logStack(null);
+								Util.log(hook, Log.WARN, "cursor is empty");
+								Util.logStack(null);
 							}
 							cursor.close();
 						}
@@ -382,39 +382,39 @@ public class XRestriction {
 							}
 							if (data != null) {
 								try {
-									XUtil.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
+									Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
 									ContentValues values = new ContentValues();
-									values.put(XPrivacyProvider.COL_UID, data.getUid());
-									values.put(XPrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
-									values.put(XPrivacyProvider.COL_METHOD, data.getMethodName());
-									values.put(XPrivacyProvider.COL_USED, data.getTimeStamp());
-									if (contentResolver.update(XPrivacyProvider.URI_USAGE, values, null, null) <= 0)
-										XUtil.log(hook, Log.INFO, "Error updating usage data=" + data);
+									values.put(PrivacyProvider.COL_UID, data.getUid());
+									values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
+									values.put(PrivacyProvider.COL_METHOD, data.getMethodName());
+									values.put(PrivacyProvider.COL_USED, data.getTimeStamp());
+									if (contentResolver.update(PrivacyProvider.URI_USAGE, values, null, null) <= 0)
+										Util.log(hook, Log.INFO, "Error updating usage data=" + data);
 								} catch (Throwable ex) {
-									XUtil.bug(hook, ex);
+									Util.bug(hook, ex);
 								}
 							}
 						} while (data != null);
 					}
 				} catch (Throwable ex) {
-					XUtil.bug(hook, ex);
+					Util.bug(hook, ex);
 				}
 
 			// Use fallback
 			if (fallback) {
 				// Queue usage data
-				if (usage && uid != XRestriction.cUidAndroid && !"getPackageGids".equals(methodName)) {
+				if (usage && uid != Restriction.cUidAndroid && !"getPackageGids".equals(methodName)) {
 					UsageData usageData = new UsageData(uid, restrictionName, methodName);
 					synchronized (mUsageQueue) {
 						if (mUsageQueue.containsKey(usageData))
 							mUsageQueue.remove(usageData);
 						mUsageQueue.put(usageData, usageData);
-						XUtil.log(hook, Log.INFO, "Queue usage data=" + usageData + " size=" + mUsageQueue.size());
+						Util.log(hook, Log.INFO, "Queue usage data=" + usageData + " size=" + mUsageQueue.size());
 					}
 				}
 
 				// Fallback
-				restricted = XPrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
+				restricted = PrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
 			}
 
 			// Add to cache
@@ -429,7 +429,7 @@ public class XRestriction {
 			return restricted;
 		} catch (Throwable ex) {
 			// Failsafe
-			XUtil.bug(hook, ex);
+			Util.bug(hook, ex);
 			return false;
 		}
 	}
@@ -438,30 +438,30 @@ public class XRestriction {
 			boolean restricted) {
 		// Check context
 		if (context == null) {
-			XUtil.log(hook, Log.WARN, "context is null");
+			Util.log(hook, Log.WARN, "context is null");
 			return;
 		}
 
 		// Check uid
 		if (uid == 0) {
-			XUtil.log(hook, Log.WARN, "uid=0");
+			Util.log(hook, Log.WARN, "uid=0");
 			return;
 		}
 
 		// Get content resolver
 		ContentResolver contentResolver = context.getContentResolver();
 		if (contentResolver == null) {
-			XUtil.log(hook, Log.WARN, "contentResolver is null");
+			Util.log(hook, Log.WARN, "contentResolver is null");
 			return;
 		}
 
 		// Set restrictions
 		ContentValues values = new ContentValues();
-		values.put(XPrivacyProvider.COL_UID, uid);
-		values.put(XPrivacyProvider.COL_METHOD, methodName);
-		values.put(XPrivacyProvider.COL_RESTRICTED, Boolean.toString(restricted));
-		if (contentResolver.update(XPrivacyProvider.URI_RESTRICTION, values, restrictionName, null) <= 0)
-			XUtil.log(hook, Log.INFO, "Error updating restriction=" + restrictionName);
+		values.put(PrivacyProvider.COL_UID, uid);
+		values.put(PrivacyProvider.COL_METHOD, methodName);
+		values.put(PrivacyProvider.COL_RESTRICTED, Boolean.toString(restricted));
+		if (contentResolver.update(PrivacyProvider.URI_RESTRICTION, values, restrictionName, null) <= 0)
+			Util.log(hook, Log.INFO, "Error updating restriction=" + restrictionName);
 
 		// Result
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false);
@@ -478,7 +478,7 @@ public class XRestriction {
 						mSettingsCache.remove(settingName);
 					else {
 						String value = mSettingsCache.get(settingName).getSettingsValue();
-						XUtil.log(hook, Log.INFO, String.format("get setting %s=%s *", settingName, value));
+						Util.log(hook, Log.INFO, String.format("get setting %s=%s *", settingName, value));
 						return value;
 					}
 				}
@@ -491,35 +491,35 @@ public class XRestriction {
 			try {
 				ContentResolver contentResolver = context.getContentResolver();
 				if (contentResolver == null) {
-					XUtil.log(hook, Log.WARN, "contentResolver is null");
-					XUtil.logStack(hook);
+					Util.log(hook, Log.WARN, "contentResolver is null");
+					Util.logStack(hook);
 				} else {
-					Cursor cursor = contentResolver.query(XPrivacyProvider.URI_SETTING, null, settingName, null, null);
+					Cursor cursor = contentResolver.query(PrivacyProvider.URI_SETTING, null, settingName, null, null);
 					if (cursor == null) {
 						// Can happen if memory low
-						XUtil.log(hook, Log.WARN, "cursor is null");
-						XUtil.logStack(null);
+						Util.log(hook, Log.WARN, "cursor is null");
+						Util.logStack(null);
 					} else {
 						if (cursor.moveToNext()) {
-							value = cursor.getString(cursor.getColumnIndex(XPrivacyProvider.COL_VALUE));
+							value = cursor.getString(cursor.getColumnIndex(PrivacyProvider.COL_VALUE));
 							if (value == null)
 								value = defaultValue;
 							fallback = false;
 						} else {
-							XUtil.log(hook, Log.WARN, "cursor is empty");
+							Util.log(hook, Log.WARN, "cursor is empty");
 						}
 						cursor.close();
 					}
 				}
 			} catch (Throwable ex) {
-				XUtil.bug(hook, ex);
-				XUtil.logStack(hook);
+				Util.bug(hook, ex);
+				Util.logStack(hook);
 			}
 		}
 
 		// Use fallback
 		if (fallback)
-			value = XPrivacyProvider.getSettingFallback(settingName, defaultValue);
+			value = PrivacyProvider.getSettingFallback(settingName, defaultValue);
 
 		// Add to cache
 		synchronized (mSettingsCache) {
@@ -528,34 +528,34 @@ public class XRestriction {
 			mSettingsCache.put(settingName, new CSetting(value));
 		}
 
-		XUtil.log(hook, Log.INFO, String.format("get setting %s=%s%s", settingName, value, (fallback ? " #" : "")));
+		Util.log(hook, Log.INFO, String.format("get setting %s=%s%s", settingName, value, (fallback ? " #" : "")));
 		return value;
 	}
 
 	public static void setSetting(XHook hook, Context context, String settingName, String value) {
 		ContentResolver contentResolver = context.getContentResolver();
 		ContentValues values = new ContentValues();
-		values.put(XPrivacyProvider.COL_VALUE, value);
-		if (contentResolver.update(XPrivacyProvider.URI_SETTING, values, settingName, null) <= 0)
-			XUtil.log(hook, Log.INFO, "Error updating setting=" + settingName);
-		XUtil.log(hook, Log.INFO, String.format("set setting %s=%s", settingName, value));
+		values.put(PrivacyProvider.COL_VALUE, value);
+		if (contentResolver.update(PrivacyProvider.URI_SETTING, values, settingName, null) <= 0)
+			Util.log(hook, Log.INFO, "Error updating setting=" + settingName);
+		Util.log(hook, Log.INFO, String.format("set setting %s=%s", settingName, value));
 	}
 
 	public static void deleteRestrictions(Context context, int uid) {
-		context.getContentResolver().delete(XPrivacyProvider.URI_RESTRICTION, null,
+		context.getContentResolver().delete(PrivacyProvider.URI_RESTRICTION, null,
 				new String[] { Integer.toString(uid) });
-		XUtil.log(null, Log.INFO, "Delete restrictions uid=" + uid);
+		Util.log(null, Log.INFO, "Delete restrictions uid=" + uid);
 	}
 
 	public static void deleteUsageData(Context context, int uid) {
-		for (String restrictionName : XRestriction.getRestrictions())
-			context.getContentResolver().delete(XPrivacyProvider.URI_USAGE, restrictionName,
+		for (String restrictionName : Restriction.getRestrictions())
+			context.getContentResolver().delete(PrivacyProvider.URI_USAGE, restrictionName,
 					new String[] { Integer.toString(uid) });
-		XUtil.log(null, Log.INFO, "Delete usage uid=" + uid);
+		Util.log(null, Log.INFO, "Delete usage uid=" + uid);
 	}
 
 	public static String getLocalizedName(Context context, String restrictionName) {
-		String packageName = XRestriction.class.getPackage().getName();
+		String packageName = Restriction.class.getPackage().getName();
 		int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
 		return (stringId == 0 ? null : context.getString(stringId));
 	}
@@ -588,7 +588,7 @@ public class XRestriction {
 
 	private static void logRestriction(XHook hook, Context context, int uid, String prefix, String restrictionName,
 			String methodName, boolean restricted, boolean cached) {
-		XUtil.log(hook, Log.INFO, String.format("%s %s/%s %s=%b%s", prefix, getPackageName(context, uid), methodName,
+		Util.log(hook, Log.INFO, String.format("%s %s/%s %s=%b%s", prefix, getPackageName(context, uid), methodName,
 				restrictionName, restricted, (cached ? " *" : (context == null ? " #" : ""))));
 	}
 

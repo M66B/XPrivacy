@@ -45,7 +45,7 @@ public class XNetworkInterface extends XHook {
 				if (isRestricted(param))
 					if (methodName.equals("getHardwareAddress")) {
 						byte[] address = (byte[]) param.getResult();
-						byte[] defaced = XRestriction.getDefacedBytes();
+						byte[] defaced = Restriction.getDefacedBytes();
 						for (int i = 0; i < address.length; i++)
 							address[i] = defaced[i % defaced.length];
 						param.setResult(address);
@@ -68,7 +68,7 @@ public class XNetworkInterface extends XHook {
 								Field fieldAddress = findField(InterfaceAddress.class, "address");
 								fieldAddress.set(address, getInetAddressEmpty());
 							} catch (Throwable ex) {
-								XUtil.bug(this, ex);
+								Util.bug(this, ex);
 							}
 
 							// broadcastAddress
@@ -76,11 +76,11 @@ public class XNetworkInterface extends XHook {
 								Field fieldBroadcastAddress = findField(InterfaceAddress.class, "broadcastAddress");
 								fieldBroadcastAddress.set(address, getInetAddressEmpty());
 							} catch (Throwable ex) {
-								XUtil.bug(this, ex);
+								Util.bug(this, ex);
 							}
 						}
 					} else
-						XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
+						Util.log(this, Log.WARN, "Unknown method=" + methodName);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class XNetworkInterface extends XHook {
 			unspecified.setAccessible(true);
 			return (InetAddress) unspecified.get(Inet4Address.class);
 		} catch (Throwable ex) {
-			XUtil.bug(null, ex);
+			Util.bug(null, ex);
 			return null;
 		}
 	}

@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class XIniFile {
+public class IniFile {
 
 	private Map<String, String> mIni = new HashMap<String, String>();
 
-	public XIniFile(File file) throws IOException {
+	public IniFile(File file) throws IOException {
 		String line;
 		Pattern pattern = Pattern.compile("\\s*([^=]*)=(.*)");
 		FileReader fr = new FileReader(file);

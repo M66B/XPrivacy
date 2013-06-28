@@ -21,7 +21,7 @@ import android.os.Process;
 import android.text.TextUtils;
 import android.util.Log;
 
-public class XPrivacyProvider extends ContentProvider {
+public class PrivacyProvider extends ContentProvider {
 
 	public static final String AUTHORITY = "biz.bokhorst.xprivacy.provider";
 	public static final String PREF_RESTRICTION = AUTHORITY;
@@ -90,7 +90,7 @@ public class XPrivacyProvider extends ContentProvider {
 				// Build restriction list
 				List<String> listRestrictionName;
 				if (restrictionName == null)
-					listRestrictionName = XRestriction.getRestrictions();
+					listRestrictionName = Restriction.getRestrictions();
 				else {
 					listRestrictionName = new ArrayList<String>();
 					listRestrictionName.add(restrictionName);
@@ -115,7 +115,7 @@ public class XPrivacyProvider extends ContentProvider {
 						cursor.addRow(new Object[] { eUid, eRestrictionName, null, true });
 
 						// Exceptions
-						for (String eMethodName : XRestriction.getMethodNames(eRestrictionName)) {
+						for (String eMethodName : Restriction.getMethodNames(eRestrictionName)) {
 							boolean allowed = prefs.getBoolean(getExceptionPref(eUid, eRestrictionName, eMethodName),
 									false);
 							if (allowed)
@@ -208,10 +208,10 @@ public class XPrivacyProvider extends ContentProvider {
 
 			// Get arguments
 			int uid = values.getAsInteger(COL_UID);
-			String restrictionName = values.getAsString(XPrivacyProvider.COL_RESTRICTION);
+			String restrictionName = values.getAsString(PrivacyProvider.COL_RESTRICTION);
 			String methodName = values.getAsString(COL_METHOD);
-			long timeStamp = values.getAsLong(XPrivacyProvider.COL_USED);
-			XUtil.log(null, Log.INFO, String.format("Update usage data %d/%s/%s", uid, restrictionName, methodName));
+			long timeStamp = values.getAsLong(PrivacyProvider.COL_USED);
+			Util.log(null, Log.INFO, String.format("Update usage data %d/%s/%s", uid, restrictionName, methodName));
 
 			// Update usage data
 			SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
@@ -258,8 +258,8 @@ public class XPrivacyProvider extends ContentProvider {
 			// Method restrictions
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
 			SharedPreferences.Editor editor = prefs.edit();
-			for (String restrictionName : XRestriction.getRestrictions()) {
-				for (String methodName : XRestriction.getMethodNames(restrictionName)) {
+			for (String restrictionName : Restriction.getRestrictions()) {
+				for (String methodName : Restriction.getMethodNames(restrictionName)) {
 					rows++;
 					editor.remove(getExceptionPref(uid, restrictionName, methodName));
 				}
@@ -268,7 +268,7 @@ public class XPrivacyProvider extends ContentProvider {
 			setPrefFileReadable(PREF_RESTRICTION);
 
 			// Group restrictions
-			for (String restrictionName : XRestriction.getRestrictions()) {
+			for (String restrictionName : Restriction.getRestrictions()) {
 				rows++;
 				updateRestriction(uid, restrictionName, null, true);
 			}
@@ -288,7 +288,7 @@ public class XPrivacyProvider extends ContentProvider {
 				if (pref.startsWith(prefix)) {
 					rows++;
 					editor.remove(pref);
-					XUtil.log(null, Log.INFO, "Removed audit=" + pref);
+					Util.log(null, Log.INFO, "Removed audit=" + pref);
 				}
 			editor.apply();
 			return rows;
@@ -380,7 +380,7 @@ public class XPrivacyProvider extends ContentProvider {
 	}
 
 	private static String getPrefFileName(String preference) {
-		String packageName = XRestriction.class.getPackage().getName();
+		String packageName = Restriction.class.getPackage().getName();
 		return Environment.getDataDirectory() + "/data/" + packageName + "/shared_prefs/" + preference + ".xml";
 	}
 

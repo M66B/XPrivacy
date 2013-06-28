@@ -19,7 +19,7 @@ import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 
-public class XUtil {
+public class Util {
 
 	public static void log(XHook hook, int priority, String msg) {
 		if (priority != Log.DEBUG)
@@ -72,7 +72,7 @@ public class XUtil {
 			// Check for pro app
 			PackageManager manager = context.getPackageManager();
 			if (manager.checkSignatures(context.getPackageName(), "biz.bokhorst.xprivacy.pro") == PackageManager.SIGNATURE_MATCH) {
-				XUtil.log(null, Log.INFO, "Pro version installed");
+				Util.log(null, Log.INFO, "Pro version installed");
 				return "";
 			}
 
@@ -82,7 +82,7 @@ public class XUtil {
 			File licenseFile = new File(fileName);
 			if (licenseFile.exists()) {
 				// Read license
-				XIniFile iniFile = new XIniFile(licenseFile);
+				IniFile iniFile = new IniFile(licenseFile);
 				String name = iniFile.get("name", "");
 				String email = iniFile.get("email", "");
 				String signature = iniFile.get("signature", "");
@@ -91,24 +91,24 @@ public class XUtil {
 				byte[] bEmail = email.getBytes("UTF-8");
 				byte[] bSignature = hex2bytes(signature);
 				if (bEmail.length == 0 || bSignature.length == 0) {
-					XUtil.log(null, Log.ERROR, "Invalid license file");
+					Util.log(null, Log.ERROR, "Invalid license file");
 					return null;
 				}
 
 				// Verify license
 				boolean licensed = verifyData(bEmail, bSignature, getPublicKey(context));
 				if (licensed)
-					XUtil.log(null, Log.INFO, "Licensed to " + name + " (" + email + ")");
+					Util.log(null, Log.INFO, "Licensed to " + name + " (" + email + ")");
 				else
-					XUtil.log(null, Log.ERROR, "Invalid license for " + name + " (" + email + ")");
+					Util.log(null, Log.ERROR, "Invalid license for " + name + " (" + email + ")");
 
 				// Return result
 				return (licensed ? name : null);
 			} else
-				XUtil.log(null, Log.INFO, "No license folder=" + Environment.getExternalStorageDirectory());
+				Util.log(null, Log.INFO, "No license folder=" + Environment.getExternalStorageDirectory());
 		} catch (Throwable ex) {
-			XUtil.log(null, Log.ERROR, "Processing license");
-			XUtil.bug(null, ex);
+			Util.log(null, Log.ERROR, "Processing license");
+			Util.bug(null, ex);
 		}
 		return null;
 	}
@@ -152,12 +152,12 @@ public class XUtil {
 	}
 
 	public static Context getXContext(Context context) throws Throwable {
-		String xPackageName = XUtil.class.getPackage().getName();
+		String xPackageName = Util.class.getPackage().getName();
 		return context.createPackageContext(xPackageName, 0);
 	}
 
 	public static Resources getXResources(Context context) throws Throwable {
-		String xPackageName = XUtil.class.getPackage().getName();
+		String xPackageName = Util.class.getPackage().getName();
 		PackageManager pm = context.getPackageManager();
 		return pm.getResourcesForApplication(xPackageName);
 	}

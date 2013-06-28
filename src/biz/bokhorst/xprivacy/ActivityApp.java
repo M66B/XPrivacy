@@ -34,13 +34,13 @@ public class ActivityApp extends Activity {
 
 	public static final String cPackageName = "PackageName";
 
-	private XApplicationInfo mAppInfo;
+	private ApplicationInfoEx mAppInfo;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
-		String sTheme = XRestriction.getSetting(null, this, XRestriction.cSettingTheme, null, false);
+		String sTheme = Restriction.getSetting(null, this, Restriction.cSettingTheme, null, false);
 		int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
 		setTheme(themeId);
 		setContentView(R.layout.xrestrictionlist);
@@ -50,7 +50,7 @@ public class ActivityApp extends Activity {
 		final String packageName = extras.getString(cPackageName);
 
 		// Get app info
-		mAppInfo = new XApplicationInfo(packageName, this);
+		mAppInfo = new ApplicationInfoEx(packageName, this);
 		if (!mAppInfo.getIsInstalled()) {
 			finish();
 			return;
@@ -109,14 +109,14 @@ public class ActivityApp extends Activity {
 
 		// Check if internet access
 		ImageView imgInternet = (ImageView) findViewById(R.id.imgAppEntryInternet);
-		if (!XRestriction.hasInternet(this, packageName))
+		if (!Restriction.hasInternet(this, packageName))
 			imgInternet.setVisibility(View.INVISIBLE);
 
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
 		mPrivacyListAdapter = new RestrictionAdapter(R.layout.xrestrictionentry, mAppInfo,
-				XRestriction.getRestrictions());
+				Restriction.getRestrictions());
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 
 		// Up navigation
@@ -157,12 +157,12 @@ public class ActivityApp extends Activity {
 
 			return true;
 		case R.id.menu_all:
-			List<String> listRestriction = XRestriction.getRestrictions();
+			List<String> listRestriction = Restriction.getRestrictions();
 
 			// Get toggle
 			boolean restricted = false;
 			for (String restrictionName : listRestriction)
-				if (XRestriction.getRestricted(null, this, mAppInfo.getUid(), restrictionName, null, false, false)) {
+				if (Restriction.getRestricted(null, this, mAppInfo.getUid(), restrictionName, null, false, false)) {
 					restricted = true;
 					break;
 				}
@@ -170,7 +170,7 @@ public class ActivityApp extends Activity {
 			// Do toggle
 			restricted = !restricted;
 			for (String restrictionName : listRestriction)
-				XRestriction.setRestricted(null, this, mAppInfo.getUid(), restrictionName, null, restricted);
+				Restriction.setRestricted(null, this, mAppInfo.getUid(), restrictionName, null, restricted);
 
 			// Refresh display
 			if (mPrivacyListAdapter != null)
@@ -201,14 +201,14 @@ public class ActivityApp extends Activity {
 	}
 
 	private class RestrictionAdapter extends BaseExpandableListAdapter {
-		private XApplicationInfo mAppInfo;
+		private ApplicationInfoEx mAppInfo;
 		private List<String> mRestrictions;
 		private boolean mExpert;
 
-		public RestrictionAdapter(int resource, XApplicationInfo appInfo, List<String> restrictions) {
+		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, List<String> restrictions) {
 			mAppInfo = appInfo;
 			mRestrictions = restrictions;
-			mExpert = Boolean.parseBoolean(XRestriction.getSetting(null, null, XRestriction.cSettingExpert,
+			mExpert = Boolean.parseBoolean(Restriction.getSetting(null, null, Restriction.cSettingExpert,
 					Boolean.FALSE.toString(), false));
 		}
 
@@ -251,20 +251,20 @@ public class ActivityApp extends Activity {
 			final String restrictionName = (String) getGroup(groupPosition);
 
 			// Display localized name
-			ctvRestriction.setText(XRestriction.getLocalizedName(row.getContext(), restrictionName));
+			ctvRestriction.setText(Restriction.getLocalizedName(row.getContext(), restrictionName));
 
 			// Display if restriction granted
-			if (!XRestriction.hasPermission(row.getContext(), mAppInfo.getPackageName(), restrictionName))
+			if (!Restriction.hasPermission(row.getContext(), mAppInfo.getPackageName(), restrictionName))
 				imgGranted.setVisibility(View.INVISIBLE);
 
 			// Display if used
-			if (XRestriction.isUsed(row.getContext(), mAppInfo.getUid(), restrictionName, null))
+			if (Restriction.isUsed(row.getContext(), mAppInfo.getUid(), restrictionName, null))
 				ctvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
 			else
 				imgUsed.setVisibility(View.INVISIBLE);
 
 			// Display restriction
-			boolean restricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.getUid(), restrictionName,
+			boolean restricted = Restriction.getRestricted(null, row.getContext(), mAppInfo.getUid(), restrictionName,
 					null, false, false);
 			ctvRestriction.setChecked(restricted);
 
@@ -272,11 +272,11 @@ public class ActivityApp extends Activity {
 			ctvRestriction.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					boolean restricted = XRestriction.getRestricted(null, view.getContext(), mAppInfo.getUid(),
+					boolean restricted = Restriction.getRestricted(null, view.getContext(), mAppInfo.getUid(),
 							restrictionName, null, false, false);
 					restricted = !restricted;
 					ctvRestriction.setChecked(restricted);
-					XRestriction.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName, null,
+					Restriction.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName, null,
 							restricted);
 					notifyDataSetChanged();
 				}
@@ -287,7 +287,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public Object getChild(int groupPosition, int childPosition) {
-			return XRestriction.getMethodNames((String) getGroup(groupPosition)).get(childPosition);
+			return Restriction.getMethodNames((String) getGroup(groupPosition)).get(childPosition);
 		}
 
 		@Override
@@ -297,7 +297,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return (mExpert ? XRestriction.getMethodNames((String) getGroup(groupPosition)).size() : 0);
+			return (mExpert ? Restriction.getMethodNames((String) getGroup(groupPosition)).size() : 0);
 		}
 
 		@Override
@@ -315,7 +315,7 @@ public class ActivityApp extends Activity {
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
 			final String methodName = (String) getChild(groupPosition, childPosition);
-			long lastUsage = XRestriction.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, methodName);
+			long lastUsage = Restriction.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, methodName);
 
 			// Display method name
 			if (lastUsage == 0)
@@ -326,7 +326,7 @@ public class ActivityApp extends Activity {
 				ctvMethodName.setText(String.format("%s %s", methodName, format.format(date)));
 			}
 
-			boolean parentRestricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.getUid(),
+			boolean parentRestricted = Restriction.getRestricted(null, row.getContext(), mAppInfo.getUid(),
 					restrictionName, null, false, false);
 			ctvMethodName.setEnabled(parentRestricted);
 
@@ -335,7 +335,7 @@ public class ActivityApp extends Activity {
 				ctvMethodName.setTypeface(null, Typeface.BOLD_ITALIC);
 
 			// Display restriction
-			boolean restricted = XRestriction.getRestricted(null, row.getContext(), mAppInfo.getUid(), restrictionName,
+			boolean restricted = Restriction.getRestricted(null, row.getContext(), mAppInfo.getUid(), restrictionName,
 					methodName, false, false);
 			ctvMethodName.setChecked(restricted);
 
@@ -343,11 +343,11 @@ public class ActivityApp extends Activity {
 			ctvMethodName.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					boolean restricted = XRestriction.getRestricted(null, view.getContext(), mAppInfo.getUid(),
+					boolean restricted = Restriction.getRestricted(null, view.getContext(), mAppInfo.getUid(),
 							restrictionName, methodName, false, false);
 					restricted = !restricted;
 					ctvMethodName.setChecked(restricted);
-					XRestriction.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName, methodName,
+					Restriction.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName, methodName,
 							restricted);
 				}
 			});

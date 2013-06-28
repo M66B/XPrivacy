@@ -59,7 +59,7 @@ public class XLocationManager extends XHook {
 				else if (methodName.equals("requestSingleUpdate"))
 					replaceLocationListener(param, 1);
 				else
-					XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
+					Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class XLocationManager extends XHook {
 			context = (Context) fieldContext.get(param.thisObject);
 		} catch (Throwable ex) {
 			// Not all location managers do have a context
-			XUtil.bug(this, ex);
+			Util.bug(this, ex);
 		}
 		return context;
 	}
@@ -102,7 +102,7 @@ public class XLocationManager extends XHook {
 			synchronized (mListener) {
 				XLocationListener xlistener = mListener.get(listener);
 				if (xlistener == null)
-					XUtil.log(this, Log.WARN, "Not found count=" + mListener.size());
+					Util.log(this, Log.WARN, "Not found count=" + mListener.size());
 				else {
 					param.args[0] = xlistener;
 					mListener.remove(listener);
@@ -121,7 +121,7 @@ public class XLocationManager extends XHook {
 				XLocationListener xListener = new XLocationListener(listener, baseLocation);
 				synchronized (mListener) {
 					mListener.put(listener, xListener);
-					XUtil.log(this, Log.INFO, "Added count=" + mListener.size());
+					Util.log(this, Log.INFO, "Added count=" + mListener.size());
 				}
 				param.args[arg] = xListener;
 			}
@@ -130,8 +130,8 @@ public class XLocationManager extends XHook {
 	}
 
 	private Location getBaseLocation(Context context) {
-		String sLat = XRestriction.getSetting(this, context, XRestriction.cSettingLatitude, "", true);
-		String sLon = XRestriction.getSetting(this, context, XRestriction.cSettingLongitude, "", true);
+		String sLat = Restriction.getSetting(this, context, Restriction.cSettingLatitude, "", true);
+		String sLon = Restriction.getSetting(this, context, Restriction.cSettingLongitude, "", true);
 		if (sLat.equals("") || sLon.equals(""))
 			return null;
 		Location location = new Location("");

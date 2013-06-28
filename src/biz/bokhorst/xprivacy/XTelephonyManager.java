@@ -72,11 +72,11 @@ public class XTelephonyManager extends XHook {
 					else if (methodName.equals("getCellLocation"))
 						param.setResult(CellLocation.getEmpty());
 					else if (methodName.equals("getIsimImpu"))
-						param.setResult(new String[] { XRestriction.getDefacedString() });
+						param.setResult(new String[] { Restriction.getDefacedString() });
 					else if (methodName.equals("getNeighboringCellInfo"))
 						param.setResult(new ArrayList<NeighboringCellInfo>());
 					else
-						param.setResult(XRestriction.getDefacedString());
+						param.setResult(Restriction.getDefacedString());
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class XTelephonyManager extends XHook {
 			Field fieldContext = findField(param.thisObject.getClass(), "sContext");
 			context = (Context) fieldContext.get(param.thisObject);
 		} catch (Throwable ex) {
-			XUtil.bug(this, ex);
+			Util.bug(this, ex);
 		}
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
@@ -106,7 +106,7 @@ public class XTelephonyManager extends XHook {
 
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
-			mListener.onCallStateChanged(state, XRestriction.getDefacedString());
+			mListener.onCallStateChanged(state, Restriction.getDefacedString());
 		}
 
 		@Override

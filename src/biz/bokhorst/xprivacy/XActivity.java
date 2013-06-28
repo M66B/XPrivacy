@@ -48,7 +48,7 @@ public class XActivity extends XHook {
 		else if (methodName.equals("startActivities"))
 			intents = (Intent[]) param.args[0];
 		else
-			XUtil.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 
 		// Process intent(s)
 		if (intents != null)

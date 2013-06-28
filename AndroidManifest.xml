@@ -58,7 +58,7 @@
         </receiver>
 
         <provider
-            android:name=".XPrivacyProvider"
+            android:name=".PrivacyProvider"
             android:authorities="biz.bokhorst.xprivacy.provider"
             android:enabled="true"
             android:excludeFromRecents="true"

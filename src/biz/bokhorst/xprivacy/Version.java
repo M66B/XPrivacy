@@ -1,10 +1,10 @@
 package biz.bokhorst.xprivacy;
 
-public class XVersion implements Comparable<XVersion> {
+public class Version implements Comparable<Version> {
 
 	private String mVersion;
 
-	public XVersion(String version) {
+	public Version(String version) {
 		mVersion = version;
 	}
 
@@ -13,7 +13,7 @@ public class XVersion implements Comparable<XVersion> {
 	}
 
 	@Override
-	public int compareTo(XVersion other) {
+	public int compareTo(Version other) {
 		String[] lhs = this.get().split("\\.");
 		String[] rhs = other.get().split("\\.");
 		int length = Math.max(lhs.length, rhs.length);
