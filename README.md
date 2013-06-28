@@ -30,9 +30,9 @@ XPrivacy can restrict the categories of data an application can access.
 This is done by feeding an application with no or fake data.
 There are several data categories which can be restricted, for example *contacts* or *location*.
 For example, if you restrict access to contacts for an application,
-this will result in sending an empty contact list to the application if it requests access to your contacts.
+this will result in sending an empty contact list to the application, when it requests access to your contacts.
 Similarly, restricting an application's access to your location
-will result in a random location being sent to the application.
+will result in a random or set location being sent to the application.
 
 XPrivacy doesn't revoke (i.e. block) permissions from an application,
 which means that most applications will continue to work as before and won't force close.
@@ -41,26 +41,26 @@ is restricted by denying access (revoking permissions).
 There is no other way to realize this, since these permissions are handled by Android in a special way.
 Android delegates handling of these permission to the underlying Linux network/file system.
 
-If restricting a category of data for an application results in problems for that application,
-it is possible to allow access to the data category again.
+If restricting a category of data for an application results in problems for the application,
+it is possible to allow access to the data category again to solve the issue.
 
-By default, all newly-installed applications will have no access to any data category at all,
-to prevent a new application from leaking sensitive data after installation.
+By default, all newly installed applications will have no access to any data category at all,
+to prevent a new application from leaking sensitive data right after installation.
 Shortly after installing a new application,
 XPrivacy will ask which data categories you want the new application to have access to.
 XPrivacy comes with an application browser,
 which allows you to quickly enable or disable applications' access to a particular data category
 (i.e. to view and control all access to the camera, for example).
+It is also possible to edit all data categories for one application.
 
 To help you identify potential data leaks,
 XPrivacy will monitor attempts made by all applications to access sensitive data.
-XPrivacy will highlight (with a yellow triangle) a data category for an application
-(or an application name in the application browser)
-as soon as data of the data category has been used.
+XPrivacy will display a yellow triangle icon as soon as data of a data category has been used.
 XPrivacy will also display if an application has internet access,
 indicating that the application poses a risk of sharing the data it obtains with an external server.
+This is just a guideline, since an application could access the internet through other applications too.
 If an application has requested Android permissions to access data in a data category,
-it will also be displayed (with a green tick),
+this will be displayed with a green tick icon,
 but this will only be shown when looking at an individual application,
 since checking permissions for all applications is quite slow.
 
@@ -71,7 +71,7 @@ Depending on the function, XPrivacy conditionally skips execution of the origina
 or alters the result of the original function (for example to return empty calendar data).
 
 XPrivacy has been tested with CyanogenMod 10 and 10.1 (Android 4.1 and 4.2),
-and will likely work with any Android version 4.1 or 4.2 variant, including stock ROMs.
+and will most likely work with any Android version 4.1 or 4.2 variant, including stock ROMs.
 Root access is needed to install the Xposed framework.
 Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xposed binary,
 which is provided as download for both Android version 4.1 and 4.2.
@@ -107,7 +107,7 @@ Features
 * For any (stock) variant of Android version 4.1 or 4.2 (JellyBean)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
-* Open source
+* Free and open source
 
 Restrictions
 ------------
@@ -209,8 +209,8 @@ It seems like a lot of steps, but it is done in no time:
 1. If not done already: root your device; the procedure depends on the brand and model of your device
 1. Enable *System settings* > *Security* > *Unknown sources*
 1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
-	* Be sure to follow all installation steps
-	* Be sure to install the latest version 2.1.4
+	* Be sure to follow **all** installation steps
+	* Be sure to install the latest **version 2.1.4**
 	* Download and copy the Xposed disabler to your SD card to disable Xposed in case of troubles
 	* [MIUI](http://en.miui.com/) is not supported by Xposed
 1. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
@@ -252,15 +252,17 @@ To see it in action: try restricting the category *Identification* for
 or try restriction the category *Contacts* for the Contacts application
 (the Contacts application will continue to show a spinner, which is actually a bug in the Contacts application).
 
-**Applying some restrictions requires restarting applications and/or your device**
+**Applying some restrictions require restarting applications and/or your device**
 
 If an application requested Android permissions for a data category,
 the category will be marked with a green check mark icon.
 If an application used/tried to use data, the data category will be marked with an orange triangle icon.
+If an application has internet permissions to access a world globe icon will be shown.
 These icons are just a guideline, because an application can access privacy sensitive data without Android permissions,
 for example the serial number of your device
 and because is not possible to monitor data usage in each and every situation,
 for example not for access to the internet or the external storage.
+An application could access the internet through another (sister) application.
 
 Enabling internet or storage restriction means blocking access to the internet
 or to the external storage (typically the SD card).
@@ -320,7 +322,7 @@ Furthermore you will be able to make exceptions for individual functions within 
 
 **(8) Will you block the iptables command or force online state?**
 
-Maybe in a later stage.
+No, this is too far from the goal of XPrivacy.
 
 **(9) Will you make it possible to enter fake data?**
 
@@ -339,7 +341,7 @@ See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51
 
 **(12) How safe is XPrivacy?**
 
-Great care is taken to develop XPrivacy, nevertheless data could leak, although nobody has reported any data leak so far.
+Great care has been taken to develop XPrivacy, nevertheless data could leak, although this is rare.
 So far no critical bugs have been reported.
 
 **(13) Why is XPrivacy not in the Play store?**
@@ -349,7 +351,7 @@ since it will be able to block advertisements (for example by revoking internet 
 
 **(14) I get 'Incompatible ...' !**
 
-A check of XPrivacy failed, resulting in potential data leakage.
+An internal check of XPrivacy failed, resulting in potential data leakage.
 Please press *OK* to send me the support information, so I can look into it.
 
 **(15) Do I need to install Xposed/the fix again when I install an update of my ROM?**
@@ -362,8 +364,9 @@ or when the XPrivacy is not enabled in Xposed.
 **(16) Can I restrict an application with root access?**
 
 Yes, you can, but the application could circumvent anything, since root access means it can do anything it likes.
-Nevertheless the application was probably not built to circumvent everything this way.
-Version 0.26 will allow you to restrict shell access for any application, which effectively means revoking root access.
+Nevertheless the application was probably not built to circumvent anything this way.
+Version 0.26 will allow you to restrict shell access for any application in expert mode,
+which effectively means revoking root access.
 
 **(17) Will restrictions be applied immediately?**
 
@@ -378,8 +381,8 @@ and therefore it is IMHO not a good idea to ask for restrictions when it could,
 because this will probably only result into confusion.
 
 Newly installed applications are by default fully restricted.
-Restricting an application should not result into any force close (crash),
-please create an issue if this happens (see for support below),
+Restricting an application should not result into any force closes (crashes),
+please create an issue if this happens (see the support secion below),
 it only means that an application cannot see the restricted data.
 If an application should see the data, you can remove the associated restriction at any time.
 
@@ -395,17 +398,15 @@ and that detailed firewall rules can only be applied within the Linux kernel.
 
 Android permissions do not cover all restriction categories and if they do, then mostly only partly.
 Therefore Android permissions are only displayed as a guideline.
-Any function, like filtering and selecting, would be inherent incorrect.
+Any function, like filtering and selecting based on Android permissions, would be inherent incorrect.
 
 **(20) I get 'Unable to parse package'**
 
-This means the downloaded app is corrupt.
+This means the downloaded apk is corrupt.
 Try disabling your popup blocker or download using another computer.
 
 Support
 -------
-
-*Before submitting any issue please ensure you are running the latest version of XPrivacy.*
 
 If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues),
 preferably including a [logcat](http://developer.android.com/tools/help/logcat.html)
@@ -414,15 +415,17 @@ preferably including a [logcat](http://developer.android.com/tools/help/logcat.h
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues),
 but check if there doesn´t already exist a similar request.
 
-If you have any question, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
+*Before submitting any issue please ensure you are running the latest version of XPrivacy.*
+
+If you have any question or suggestion, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
 Changelog
 ---------
 
 **Version 0.37** (in development)
 
-* Use fastscroll on app list (thanks @[Tungstwenty](https://github.com/Tungstwenty))
-* Add actions to app option menu: Lauch app, Settings, Play Store (thanks @[Tungstwenty](https://github.com/Tungstwenty))
+* Use fastscroll for application browser (thanks @[Tungstwenty](https://github.com/Tungstwenty))
+* Application option menu *Lauch*, *Settings* and *Play Store* (thanks @[Tungstwenty](https://github.com/Tungstwenty))
 * Fixed incompatible location manager message ([issue](https://github.com/M66B/XPrivacy/issues/83))
 * Added Spanish translation
 * Updated Japanese translation
@@ -635,6 +638,7 @@ The CyanogenMod Incognito Mode seems not to be fine grained and provides only pr
 if the associated content provider chooses to do so.
 
 The *Per App Settings Module* revokes permissions like LBE Privacy Guard does.
+This modules offers a lot of other, intersting features.
 
 Contributing
 ------------
@@ -642,7 +646,8 @@ Contributing
 Translations:
 
 * Translate the strings in [this file](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml)
-* Send the translated file to me [via an XDA PM](http://forum.xda-developers.com/member.php?u=2799345)
+* If you know how to, please create a [pull request](https://help.github.com/articles/using-pull-requests)
+* Else send me the translated file [via XDA PM](http://forum.xda-developers.com/member.php?u=2799345)
 
 Current translation:
 
