@@ -423,10 +423,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 0.37** (in development)
+**Version 0.37**
 
 * Use fastscroll for application browser (thanks @[Tungstwenty](https://github.com/Tungstwenty))
-* Application option menu *Lauch*, *Settings* and *Play Store* (thanks @[Tungstwenty](https://github.com/Tungstwenty))
+* Application option menu *Launch*, *Settings* and *Play Store* (thanks @[Tungstwenty](https://github.com/Tungstwenty))
 * Restrict LocationManager.sendExtraCommand (aGPS data)
 * Info links to [wiki](http://wiki.faircode.eu/index.php?title=XPrivacy) ([issue](https://github.com/M66B/XPrivacy/issues/65))
 * Fixed potential resource leak in phone state listener
