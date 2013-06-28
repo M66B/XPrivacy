@@ -22,7 +22,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.XC_MethodHook;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
-public class HookZygoteInit implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// @formatter:off
 
@@ -216,7 +216,7 @@ public class HookZygoteInit implements IXposedHookLoadPackage, IXposedHookZygote
 		Util.log(null, Log.INFO, String.format("load package=%s uid=%d", lpparam.packageName, Process.myUid()));
 
 		// Skip hooking self
-		String self = HookZygoteInit.class.getPackage().getName();
+		String self = XPrivacy.class.getPackage().getName();
 		if (lpparam.packageName.equals(self)) {
 			hook(new XUtilHook("isXposedEnabled", null, new String[] {}), lpparam.classLoader, Util.class.getName());
 			return;
