@@ -428,7 +428,7 @@ Changelog
 * Use fastscroll for application browser (thanks @[Tungstwenty](https://github.com/Tungstwenty))
 * Application option menu *Lauch*, *Settings* and *Play Store* (thanks @[Tungstwenty](https://github.com/Tungstwenty))
 * Restrict LocationManager.sendExtraCommand (aGPS data)
-* Info links to [wiki](http://wiki.faircode.eu/index.php?title=XPrivacy)
+* Info links to [wiki](http://wiki.faircode.eu/index.php?title=XPrivacy) [issue](https://github.com/M66B/XPrivacy/issues/65)
 * Fixed potential resource leak in phone state listener
 * Fixed incompatible location manager message ([issue](https://github.com/M66B/XPrivacy/issues/83))
 * Fixed incompatible telephony manager message ([issue](https://github.com/M66B/XPrivacy/issues/82))
