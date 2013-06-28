@@ -22,8 +22,8 @@ public class XInterfaceAddress extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		InetAddress address = (InetAddress) param.getResult();
 		if (address != null)
-			if (isRestricted(param))
-				if (!(address.isAnyLocalAddress() || address.isLoopbackAddress()))
-					param.setResult(InetAddress.getLocalHost());
+			if (!(address.isAnyLocalAddress() || address.isLoopbackAddress()))
+				if (isRestricted(param))
+					param.setResult(Restriction.getDefacedInetAddress());
 	}
 }

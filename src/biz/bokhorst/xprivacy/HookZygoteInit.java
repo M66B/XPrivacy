@@ -40,16 +40,16 @@ public class HookZygoteInit implements IXposedHookLoadPackage, IXposedHookZygote
 		PrivacyProvider.setPrefFileReadable(PrivacyProvider.PREF_SETTINGS);
 
 		// Account manager
-		hook(new XAccountManager("addOnAccountsUpdatedListener", Restriction.cAccounts,
-				new String[] { "GET_ACCOUNTS" }), "android.accounts.AccountManager");
+		hook(new XAccountManager("addOnAccountsUpdatedListener", Restriction.cAccounts, new String[] { "GET_ACCOUNTS" }),
+				"android.accounts.AccountManager");
 		hook(new XAccountManager("blockingGetAuthToken", Restriction.cAccounts, new String[] { "USE_CREDENTIALS" }),
 				"android.accounts.AccountManager");
 		hook(new XAccountManager("getAccounts", Restriction.cAccounts, new String[] { "GET_ACCOUNTS" }),
 				"android.accounts.AccountManager");
 		hook(new XAccountManager("getAccountsByType", Restriction.cAccounts, new String[] { "GET_ACCOUNTS" }),
 				"android.accounts.AccountManager");
-		hook(new XAccountManager("getAccountsByTypeAndFeatures", Restriction.cAccounts,
-				new String[] { "GET_ACCOUNTS" }), "android.accounts.AccountManager");
+		hook(new XAccountManager("getAccountsByTypeAndFeatures", Restriction.cAccounts, new String[] { "GET_ACCOUNTS" }),
+				"android.accounts.AccountManager");
 		hook(new XAccountManager("getAuthToken", Restriction.cAccounts, new String[] { "USE_CREDENTIALS" }),
 				"android.accounts.AccountManager");
 		hook(new XAccountManager("getAuthTokenByFeatures", Restriction.cAccounts, new String[] { "MANAGE_ACCOUNTS" }),
@@ -109,8 +109,8 @@ public class HookZygoteInit implements IXposedHookLoadPackage, IXposedHookZygote
 		// Package manager service
 		hook(new XPackageManagerService("getPackageGids", Restriction.cInternet, new String[] { "INTERNET" }),
 				"com.android.server.pm.PackageManagerService");
-		hook(new XPackageManagerService("getPackageGids", Restriction.cStorage, new String[] {
-				"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE" }), "com.android.server.pm.PackageManagerService");
+		hook(new XPackageManagerService("getPackageGids", Restriction.cStorage, new String[] { "READ_EXTERNAL_STORAGE",
+				"WRITE_EXTERNAL_STORAGE" }), "com.android.server.pm.PackageManagerService");
 
 		// Runtime
 		hook(new XRuntime("exec", Restriction.cShell, new String[] {}, "sh"), "java.lang.Runtime");
@@ -217,16 +217,14 @@ public class HookZygoteInit implements IXposedHookLoadPackage, IXposedHookZygote
 
 		// Build SERIAL
 		if (Restriction.getRestricted(null, null, Process.myUid(), Restriction.cIdentification, null, true, false))
-			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", Restriction.getDefacedString());
+			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", Restriction.getDefacedProp("SERIAL"));
 
 		// Load browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {
-			hook(new XContentProvider(Restriction.cBrowser,
-					new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" }, "BrowserProvider"),
-					lpparam.classLoader, "com.android.browser.provider.BrowserProvider");
-			hook(new XContentProvider(Restriction.cBrowser,
-					new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" }, "BrowserProvider2"),
-					lpparam.classLoader, "com.android.browser.provider.BrowserProvider2");
+			hook(new XContentProvider(Restriction.cBrowser, new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" },
+					"BrowserProvider"), lpparam.classLoader, "com.android.browser.provider.BrowserProvider");
+			hook(new XContentProvider(Restriction.cBrowser, new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" },
+					"BrowserProvider2"), lpparam.classLoader, "com.android.browser.provider.BrowserProvider2");
 		}
 
 		// Load calendar provider

@@ -4,7 +4,6 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.lang.reflect.Field;
 
-import android.app.AndroidAppHelper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -40,29 +39,24 @@ public class XActivityThread extends XHook {
 			}
 
 			// Process intent
-			if (intent == null)
-				Util.log(this, Log.WARN, "Intent missing");
-			else {
+			if (intent != null) {
 				// Check action
 				String action = intent.getAction();
 				if (mActionName.equals(action)) {
-					if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+					if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
 						// Boot completed
 						if (isRestricted(param, mActionName))
-							if (Boolean.parseBoolean(Restriction.getSetting(this,
-									AndroidAppHelper.currentApplication(), Restriction.cSettingExpert,
-									Boolean.FALSE.toString(), true)))
-								param.setResult(null);
-					} else if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
+							param.setResult(null);
+					} else if (action.equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
 						// Outgoing call
 						Bundle bundle = intent.getExtras();
 						if (bundle != null) {
 							String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
 							if (phoneNumber != null)
 								if (isRestricted(param, mActionName))
-									intent.putExtra(Intent.EXTRA_PHONE_NUMBER, Restriction.getDefacedString());
+									intent.putExtra(Intent.EXTRA_PHONE_NUMBER, Restriction.getDefacedPhoneNumber());
 						}
-					} else if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
+					} else if (action.equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
 						// Incoming call
 						Bundle bundle = intent.getExtras();
 						if (bundle != null) {
@@ -70,7 +64,7 @@ public class XActivityThread extends XHook {
 							if (phoneNumber != null) {
 								if (isRestricted(param, mActionName))
 									intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER,
-											Restriction.getDefacedString());
+											Restriction.getDefacedPhoneNumber());
 							}
 						}
 					} else

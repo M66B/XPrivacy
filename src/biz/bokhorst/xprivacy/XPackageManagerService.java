@@ -33,10 +33,10 @@ public class XPackageManagerService extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Get result
+		// Get group IDs
 		int[] gids = (int[]) param.getResult();
 		if (gids != null) {
-			// Build list of gids
+			// Build list of group IDs
 			boolean modified = false;
 			List<Integer> listGids = new ArrayList<Integer>();
 			for (int i = 0; i < gids.length; i++)

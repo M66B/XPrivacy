@@ -1,5 +1,8 @@
 package biz.bokhorst.xprivacy;
 
+import java.lang.reflect.Field;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -16,6 +19,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Location;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
@@ -293,8 +297,8 @@ public class Restriction {
 	public static long getUsed(Context context, int uid, String restrictionName, String methodName) {
 		long lastUsage = 0;
 		ContentResolver cr = context.getContentResolver();
-		Cursor cursor = cr.query(PrivacyProvider.URI_USAGE, null, restrictionName,
-				new String[] { Integer.toString(uid), methodName }, null);
+		Cursor cursor = cr.query(PrivacyProvider.URI_USAGE, null, restrictionName, new String[] {
+				Integer.toString(uid), methodName }, null);
 		if (cursor.moveToNext())
 			lastUsage = cursor.getLong(cursor.getColumnIndex(PrivacyProvider.COL_USED));
 		cursor.close();
@@ -560,12 +564,39 @@ public class Restriction {
 		return (stringId == 0 ? null : context.getString(stringId));
 	}
 
-	public static String getDefacedString() {
+	public static String getDefacedPhoneNumber() {
 		return "DEFACE";
 	}
 
-	public static long getDefacedHex() {
-		return 0xDEFACEL;
+	public static String getDefacedID() {
+		return Long.toHexString(0xDEFACEL);
+	}
+
+	public static String getDefacedProp(String name) {
+		if (name.equals("SERIAL"))
+			return "DEFACE";
+		else
+			return "DEFACE";
+
+	}
+
+	public static InetAddress getDefacedInetAddress() {
+		try {
+			Field unspecified = Inet4Address.class.getDeclaredField("ALL");
+			unspecified.setAccessible(true);
+			return (InetAddress) unspecified.get(Inet4Address.class);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return null;
+		}
+	}
+
+	public static int getDefacedIPInt() {
+		return 127 + (0 << 8) + (0 << 16) + (1 << 24);
+	}
+
+	public static byte[] getDefacedIPBytes() {
+		return new byte[] { 10, 1, 1, 1 };
 	}
 
 	public static String getDefacedMac() {
@@ -576,12 +607,20 @@ public class Restriction {
 		return new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
 	}
 
-	public static int getDefacedIPInt() {
-		return 127 + (0 << 8) + (0 << 16) + (1 << 24);
-	}
-
-	public static byte[] getDefacedIPBytes() {
-		return new byte[] { 10, 1, 1, 1 };
+	public static Location getDefacedLocation(Location location) {
+		String sLat = getSetting(null, null, Restriction.cSettingLatitude, "", true);
+		String sLon = getSetting(null, null, Restriction.cSettingLongitude, "", true);
+		if (sLat.equals("") || sLon.equals("")) {
+			// Christmas Island
+			location.setLatitude(-10.5);
+			location.setLongitude(105.667);
+		} else {
+			// 1 degree ~ 111111 m
+			// 1 m ~ 0,000009 degrees = 9e-6
+			location.setLatitude(Float.parseFloat(sLat) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
+			location.setLongitude(Float.parseFloat(sLon) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
+		}
+		return location;
 	}
 
 	// Helper methods

@@ -23,7 +23,7 @@ import com.android.internal.util.XmlUtils;
  * read-only and without listeners support. Instead, it is made to be
  * compatible with all ROMs.
  */
-public final class XSharedPreferences implements SharedPreferences {
+public final class SharedPreferencesEx implements SharedPreferences {
 	private static final String TAG = "ReadOnlySharedPreferences";
 	private final File mFile;
 	private Map<String, Object> mMap;
@@ -31,16 +31,16 @@ public final class XSharedPreferences implements SharedPreferences {
     private long mLastModified;
     private long mFileSize;
     
-	public XSharedPreferences(File prefFile) {
+	public SharedPreferencesEx(File prefFile) {
 		mFile = prefFile;
 		startLoadFromDisk();
     }
 	
-	public XSharedPreferences(String packageName) {
+	public SharedPreferencesEx(String packageName) {
 		this(packageName, packageName + "_preferences");
     }
 	
-	public XSharedPreferences(String packageName, String prefFileName) {
+	public SharedPreferencesEx(String packageName, String prefFileName) {
 		mFile = new File(Environment.getDataDirectory(), "data/" + packageName + "/shared_prefs/" + prefFileName + ".xml");
 		startLoadFromDisk();
     }
@@ -52,7 +52,7 @@ public final class XSharedPreferences implements SharedPreferences {
         new Thread("XSharedPreferences-load") {
             @Override
             public void run() {
-                synchronized (XSharedPreferences.this) {
+                synchronized (SharedPreferencesEx.this) {
                     loadFromDiskLocked();
                 }
             }

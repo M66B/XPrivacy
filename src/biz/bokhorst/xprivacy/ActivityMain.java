@@ -320,7 +320,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 		// Check InterfaceAddress
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
-				|| XNetworkInterface.getInetAddressEmpty() == null)
+				|| Restriction.getDefacedInetAddress() == null)
 			reportClass(InterfaceAddress.class);
 
 		// Check runtime
@@ -416,8 +416,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						throw new InvalidParameterException();
 
 					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLatitude, Float.toString(lat));
-					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLongitude,
-							Float.toString(lon));
+					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLongitude, Float.toString(lon));
 
 				} catch (Throwable ex) {
 					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLatitude, "");
@@ -466,8 +465,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		String sTheme = Restriction.getSetting(null, this, Restriction.cSettingTheme, null, false);
 		int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
 		if (themeId == android.R.style.Theme_Holo_Light)
-			Restriction.setSetting(null, this, Restriction.cSettingTheme,
-					Integer.toString(android.R.style.Theme_Holo));
+			Restriction.setSetting(null, this, Restriction.cSettingTheme, Integer.toString(android.R.style.Theme_Holo));
 		else
 			Restriction.setSetting(null, this, Restriction.cSettingTheme,
 					Integer.toString(android.R.style.Theme_Holo_Light));
@@ -1039,8 +1037,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 
 			// Display restriction
-			boolean restricted = Restriction.getRestricted(null, row.getContext(), xAppInfo.getUid(),
-					mRestrictionName, null, false, false);
+			boolean restricted = Restriction.getRestricted(null, row.getContext(), xAppInfo.getUid(), mRestrictionName,
+					null, false, false);
 			ctvApp.setChecked(restricted);
 
 			// Listen for restriction changes

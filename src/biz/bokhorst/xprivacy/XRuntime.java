@@ -32,11 +32,12 @@ public class XRuntime extends XHook {
 		String methodName = param.method.getName();
 		if (methodName.equals("exec")) {
 			// Get programs
-			String[] progs;
-			if (String.class.isAssignableFrom(param.args[0].getClass()))
-				progs = new String[] { (String) param.args[0] };
-			else
-				progs = (String[]) param.args[0];
+			String[] progs = null;
+			if (param.args[0] != null)
+				if (String.class.isAssignableFrom(param.args[0].getClass()))
+					progs = new String[] { (String) param.args[0] };
+				else
+					progs = (String[]) param.args[0];
 
 			// Check programs
 			if (progs != null) {
@@ -44,16 +45,13 @@ public class XRuntime extends XHook {
 				if ((mCommand == null && !command.startsWith("sh") && !command.startsWith("su"))
 						|| (mCommand != null && command.startsWith(mCommand)))
 					if (isRestricted(param, mCommand == null ? getMethodName() : mCommand))
-						param.setThrowable(new IOException(Restriction.getDefacedString()));
+						param.setThrowable(new IOException());
 			}
 		} else if (methodName.equals("load") || methodName.equals("loadLibrary")) {
 			// Skip pre Android
-			if (Process.myUid() != 0) {
-				if (param.args.length > 0)
-					Util.log(this, Log.INFO, methodName + "(" + param.args[0] + ")");
+			if (Process.myUid() != 0)
 				if (isRestricted(param))
-					param.setResult(new UnsatisfiedLinkError(Restriction.getDefacedString()));
-			}
+					param.setResult(new UnsatisfiedLinkError());
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}

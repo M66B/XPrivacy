@@ -48,8 +48,8 @@ public class XAccountManager extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
 		if (methodName.equals("addOnAccountsUpdatedListener")) {
-			if (isRestricted(param))
-				if (param.args[0] != null) {
+			if (param.args[0] != null)
+				if (isRestricted(param)) {
 					OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
 					XOnAccountsUpdateListener xlistener = new XOnAccountsUpdateListener(listener);
 					synchronized (mListener) {
@@ -59,8 +59,9 @@ public class XAccountManager extends XHook {
 					param.args[0] = xlistener;
 				}
 		} else if (methodName.equals("removeOnAccountsUpdatedListener")) {
-			if (isRestricted(param))
-				if (param.args[0] != null) {
+
+			if (param.args[0] != null)
+				if (isRestricted(param)) {
 					synchronized (mListener) {
 						OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
 						XOnAccountsUpdateListener xlistener = mListener.get(listener);

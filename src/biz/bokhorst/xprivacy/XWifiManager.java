@@ -52,7 +52,7 @@ public class XWifiManager extends XHook {
 					// IP address
 					try {
 						Field fieldIp = findField(WifiInfo.class, "mIpAddress");
-						fieldIp.set(wInfo, XNetworkInterface.getInetAddressEmpty());
+						fieldIp.set(wInfo, Restriction.getDefacedInetAddress());
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
@@ -68,11 +68,11 @@ public class XWifiManager extends XHook {
 					// SSID
 					try {
 						Field fieldSSID = findField(WifiInfo.class, "mSSID");
-						fieldSSID.set(wInfo, Restriction.getDefacedString());
+						fieldSSID.set(wInfo, Restriction.getDefacedProp("SSID"));
 					} catch (Throwable ex) {
 						try {
 							Field fieldWifiSsid = findField(WifiInfo.class, "mWifiSsid");
-							fieldWifiSsid.set(wInfo, Restriction.getDefacedMac());
+							fieldWifiSsid.set(wInfo, Restriction.getDefacedProp("SSID"));
 						} catch (Throwable exex) {
 							Util.bug(this, exex);
 						}

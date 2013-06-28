@@ -3,6 +3,8 @@ package biz.bokhorst.xprivacy;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import android.content.Context;
 import android.os.Binder;
@@ -12,11 +14,13 @@ import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.CellInfo;
+import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XTelephonyManager extends XHook {
+	private static final Map<PhoneStateListener, XPhoneStateListener> mListener = new WeakHashMap<PhoneStateListener, XPhoneStateListener>();
 
 	public XTelephonyManager(String methodName, String restrictionName, String[] permissions) {
 		super(methodName, restrictionName, permissions, null);
@@ -52,9 +56,30 @@ public class XTelephonyManager extends XHook {
 		String methodName = param.method.getName();
 		if (methodName.equals("listen")) {
 			PhoneStateListener listener = (PhoneStateListener) param.args[0];
+			int event = (Integer) param.args[1];
 			if (listener != null)
-				if (isRestricted(param))
-					param.args[0] = new XPhoneStateListener(listener);
+				if (isRestricted(param)) {
+					if (event == PhoneStateListener.LISTEN_NONE) {
+						// Remove
+						synchronized (mListener) {
+							XPhoneStateListener xlistener = mListener.get(listener);
+							if (xlistener == null)
+								Util.log(this, Log.WARN, "Not found count=" + mListener.size());
+							else {
+								param.args[0] = xlistener;
+								mListener.remove(listener);
+							}
+						}
+					} else {
+						// Replace
+						XPhoneStateListener xListener = new XPhoneStateListener(listener);
+						synchronized (mListener) {
+							mListener.put(listener, xListener);
+							Util.log(this, Log.INFO, "Added count=" + mListener.size());
+						}
+						param.args[0] = xListener;
+					}
+				}
 		} else if (methodName.equals("disableLocationUpdates") || methodName.equals("enableLocationUpdates"))
 			if (isRestricted(param))
 				param.setResult(null);
@@ -72,11 +97,11 @@ public class XTelephonyManager extends XHook {
 					else if (methodName.equals("getCellLocation"))
 						param.setResult(CellLocation.getEmpty());
 					else if (methodName.equals("getIsimImpu"))
-						param.setResult(new String[] { Restriction.getDefacedString() });
+						param.setResult(new String[] { Restriction.getDefacedProp(methodName) });
 					else if (methodName.equals("getNeighboringCellInfo"))
 						param.setResult(new ArrayList<NeighboringCellInfo>());
 					else
-						param.setResult(Restriction.getDefacedString());
+						param.setResult(Restriction.getDefacedProp(methodName));
 	}
 
 	@Override
@@ -106,7 +131,7 @@ public class XTelephonyManager extends XHook {
 
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
-			mListener.onCallStateChanged(state, Restriction.getDefacedString());
+			mListener.onCallStateChanged(state, Restriction.getDefacedPhoneNumber());
 		}
 
 		@Override

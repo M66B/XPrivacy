@@ -9,6 +9,8 @@ public class XUtilHook extends XHook {
 		super(methodName, restrictionName, permissions, null);
 	}
 
+	// isXposedEnabled
+
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		Util.log(this, Log.INFO, getMethodName() + "=true");

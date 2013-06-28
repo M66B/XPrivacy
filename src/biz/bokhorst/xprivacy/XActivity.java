@@ -41,13 +41,16 @@ public class XActivity extends XHook {
 		Intent[] intents = null;
 		String methodName = param.method.getName();
 		if (methodName.equals("startActivity") || methodName.equals("startActivityForResult")
-				|| methodName.equals("startActivityIfNeeded"))
-			intents = new Intent[] { (Intent) param.args[0] };
-		else if (methodName.equals("startActivityFromChild") || methodName.equals("startActivityFromFragment"))
-			intents = new Intent[] { (Intent) param.args[1] };
-		else if (methodName.equals("startActivities"))
-			intents = (Intent[]) param.args[0];
-		else
+				|| methodName.equals("startActivityIfNeeded")) {
+			if (param.args[0] != null)
+				intents = new Intent[] { (Intent) param.args[0] };
+		} else if (methodName.equals("startActivityFromChild") || methodName.equals("startActivityFromFragment")) {
+			if (param.args[1] != null)
+				intents = new Intent[] { (Intent) param.args[1] };
+		} else if (methodName.equals("startActivities")) {
+			if (param.args[0] != null)
+				intents = (Intent[]) param.args[0];
+		} else
 			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 
 		// Process intent(s)

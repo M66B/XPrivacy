@@ -3,7 +3,6 @@ package biz.bokhorst.xprivacy;
 import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.lang.reflect.Field;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
@@ -57,7 +56,7 @@ public class XNetworkInterface extends XHook {
 							if (address.isAnyLocalAddress() || address.isLoopbackAddress())
 								listAddress.add(address);
 							else
-								listAddress.add(getInetAddressEmpty());
+								listAddress.add(Restriction.getDefacedInetAddress());
 						param.setResult(Collections.enumeration(listAddress));
 					} else if (methodName.equals("getInterfaceAddresses")) {
 						@SuppressWarnings("unchecked")
@@ -66,7 +65,7 @@ public class XNetworkInterface extends XHook {
 							// address
 							try {
 								Field fieldAddress = findField(InterfaceAddress.class, "address");
-								fieldAddress.set(address, getInetAddressEmpty());
+								fieldAddress.set(address, Restriction.getDefacedInetAddress());
 							} catch (Throwable ex) {
 								Util.bug(this, ex);
 							}
@@ -74,24 +73,13 @@ public class XNetworkInterface extends XHook {
 							// broadcastAddress
 							try {
 								Field fieldBroadcastAddress = findField(InterfaceAddress.class, "broadcastAddress");
-								fieldBroadcastAddress.set(address, getInetAddressEmpty());
+								fieldBroadcastAddress.set(address, Restriction.getDefacedInetAddress());
 							} catch (Throwable ex) {
 								Util.bug(this, ex);
 							}
 						}
 					} else
 						Util.log(this, Log.WARN, "Unknown method=" + methodName);
-		}
-	}
-
-	public static InetAddress getInetAddressEmpty() {
-		try {
-			Field unspecified = Inet4Address.class.getDeclaredField("ALL");
-			unspecified.setAccessible(true);
-			return (InetAddress) unspecified.get(Inet4Address.class);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			return null;
 		}
 	}
 }

@@ -26,11 +26,13 @@ public class XProcessBuilder extends XHook {
 		List<String> listProg = builder.command();
 
 		// Check commands
-		String command = TextUtils.join(" ", listProg);
-		if ((mCommand == null && !command.startsWith("sh") && !command.startsWith("su"))
-				|| (mCommand != null && command.startsWith(mCommand)))
-			if (isRestricted(param, mCommand == null ? getMethodName() : mCommand))
-				param.setThrowable(new IOException(Restriction.getDefacedString()));
+		if (listProg != null) {
+			String command = TextUtils.join(" ", listProg);
+			if ((mCommand == null && !command.startsWith("sh") && !command.startsWith("su"))
+					|| (mCommand != null && command.startsWith(mCommand)))
+				if (isRestricted(param, mCommand == null ? getMethodName() : mCommand))
+					param.setThrowable(new IOException());
+		}
 	}
 
 	@Override

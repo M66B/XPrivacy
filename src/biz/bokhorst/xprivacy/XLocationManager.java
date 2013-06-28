@@ -1,8 +1,6 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -65,26 +63,15 @@ public class XLocationManager extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (param.method.getName().equals("getLastKnownLocation")) {
-			Location referenceLocation = (Location) param.getResult();
-			if (referenceLocation != null)
-				if (isRestricted(param)) {
-					String provider = (String) param.args[0];
-					Context context = getContext(param);
-					Location baseLocation = getBaseLocation(context);
-					Location randomLocation = getRandomLocation(provider, baseLocation, referenceLocation);
-					param.setResult(randomLocation);
-				}
+			Location location = (Location) param.getResult();
+			if (location != null)
+				if (isRestricted(param))
+					param.setResult(Restriction.getDefacedLocation(location));
 		}
 	}
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = getContext(param);
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
-	}
-
-	private Context getContext(MethodHookParam param) throws Throwable {
 		Context context = null;
 		try {
 			Field fieldContext = findField(param.thisObject.getClass(), "mContext");
@@ -93,7 +80,23 @@ public class XLocationManager extends XHook {
 			// Not all location managers do have a context
 			Util.bug(this, ex);
 		}
-		return context;
+		int uid = Binder.getCallingUid();
+		return getRestricted(context, uid, true);
+	}
+
+	private void replaceLocationListener(MethodHookParam param, int arg) throws Throwable {
+		if (param.args[arg] != null && LocationListener.class.isAssignableFrom(param.args[arg].getClass())) {
+			LocationListener listener = (LocationListener) param.args[arg];
+			if (listener != null) {
+				XLocationListener xListener = new XLocationListener(listener);
+				synchronized (mListener) {
+					mListener.put(listener, xListener);
+					Util.log(this, Log.INFO, "Added count=" + mListener.size());
+				}
+				param.args[arg] = xListener;
+			}
+		} else
+			param.setResult(null);
 	}
 
 	private void removeLocationListener(MethodHookParam param) {
@@ -112,76 +115,17 @@ public class XLocationManager extends XHook {
 			param.setResult(null);
 	}
 
-	private void replaceLocationListener(MethodHookParam param, int arg) throws Throwable {
-		if (param.args[arg] != null && LocationListener.class.isAssignableFrom(param.args[arg].getClass())) {
-			LocationListener listener = (LocationListener) param.args[arg];
-			if (listener != null) {
-				Context context = getContext(param);
-				Location baseLocation = getBaseLocation(context);
-				XLocationListener xListener = new XLocationListener(listener, baseLocation);
-				synchronized (mListener) {
-					mListener.put(listener, xListener);
-					Util.log(this, Log.INFO, "Added count=" + mListener.size());
-				}
-				param.args[arg] = xListener;
-			}
-		} else
-			param.setResult(null);
-	}
-
-	private Location getBaseLocation(Context context) {
-		String sLat = Restriction.getSetting(this, context, Restriction.cSettingLatitude, "", true);
-		String sLon = Restriction.getSetting(this, context, Restriction.cSettingLongitude, "", true);
-		if (sLat.equals("") || sLon.equals(""))
-			return null;
-		Location location = new Location("");
-		location.setLatitude(Float.parseFloat(sLat));
-		location.setLongitude(Float.parseFloat(sLon));
-		return location;
-	}
-
-	private Location getRandomLocation(String provider, Location baseLocation, Location referenceLocation) {
-		Location location = new Location(provider);
-		if (baseLocation == null || referenceLocation == null) {
-			location.setLatitude(getRandomLat());
-			location.setLongitude(getRandomLon());
-		} else {
-			// 1 degree ~ 111111 m
-			// 1 m ~ 0,000009 degrees = 9e-6
-			float accuracy = referenceLocation.getAccuracy();
-			location.setLatitude(baseLocation.getLatitude() + (Math.random() * 2.0 - 1.0) * accuracy * 9e-6);
-			location.setLongitude(baseLocation.getLongitude() + (Math.random() * 2.0 - 1.0) * accuracy * 9e-6);
-		}
-		location.setTime(new Date().getTime());
-		return location;
-	}
-
-	private double getRandomLat() {
-		double lat = Math.random() * 180;
-		BigDecimal latitude = new BigDecimal(lat > 90 ? lat - 90 : -lat);
-		return latitude.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
-	}
-
-	private double getRandomLon() {
-		double lon = Math.random() * 360;
-		BigDecimal longitude = new BigDecimal(lon > 180 ? lon - 180 : -lon);
-		return longitude.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
-	}
-
 	private class XLocationListener implements LocationListener {
 
 		private LocationListener mLocationListener;
-		private Location mBaseLocation;
 
-		public XLocationListener(LocationListener locationListener, Location baseLocation) {
+		public XLocationListener(LocationListener locationListener) {
 			mLocationListener = locationListener;
-			mBaseLocation = baseLocation;
 		}
 
 		@Override
 		public void onLocationChanged(Location location) {
-			Location randomLocation = getRandomLocation(location.getProvider(), mBaseLocation, location);
-			mLocationListener.onLocationChanged(randomLocation);
+			mLocationListener.onLocationChanged(location == null ? location : Restriction.getDefacedLocation(location));
 		}
 
 		@Override

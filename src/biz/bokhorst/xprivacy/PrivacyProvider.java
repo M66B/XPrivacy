@@ -309,13 +309,13 @@ public class PrivacyProvider extends ContentProvider {
 
 	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName, String methodName) {
 		// Get restrictions
-		XSharedPreferences xprefs = new XSharedPreferences(new File(getPrefFileName(PREF_RESTRICTION)));
+		SharedPreferencesEx xprefs = new SharedPreferencesEx(new File(getPrefFileName(PREF_RESTRICTION)));
 		return !getAllowed(uid, restrictionName, methodName, xprefs);
 	}
 
 	public static String getSettingFallback(String settingName, String defaultValue) {
 		// Get restrictions
-		XSharedPreferences xprefs = new XSharedPreferences(new File(getPrefFileName(PREF_SETTINGS)));
+		SharedPreferencesEx xprefs = new SharedPreferencesEx(new File(getPrefFileName(PREF_SETTINGS)));
 		return xprefs.getString(getSettingPref(settingName), defaultValue);
 	}
 
