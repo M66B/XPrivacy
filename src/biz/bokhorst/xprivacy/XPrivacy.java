@@ -83,18 +83,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hook(new XCamera(cam, Restriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
 		// Location manager
-		hook(new XLocationManager("addNmeaListener", Restriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
-				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
-		hook(new XLocationManager("addProximityAlert", Restriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
-				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
-		hook(new XLocationManager("getLastKnownLocation", Restriction.cLocation, new String[] {
-				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
-		hook(new XLocationManager("removeUpdates", Restriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
-				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
-		hook(new XLocationManager("requestLocationUpdates", Restriction.cLocation, new String[] {
-				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
-		hook(new XLocationManager("requestSingleUpdate", Restriction.cLocation, new String[] {
-				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
+		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
+				"requestLocationUpdates", "requestSingleUpdate", "sendExtraCommand" };
+		for (String loc : locs)
+			hook(new XLocationManager(loc, Restriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
+					"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
 
 		// Media recorder
 		hook(new XMediaRecorder("setOutputFile", Restriction.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),

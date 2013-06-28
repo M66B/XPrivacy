@@ -37,6 +37,7 @@ public class XLocationManager extends XHook {
 	// public void requestSingleUpdate(Criteria criteria, LocationListener listener, Looper looper)
 	// public void requestSingleUpdate(String provider, PendingIntent intent)
 	// public void requestSingleUpdate(Criteria criteria, PendingIntent intent)
+	// public boolean sendExtraCommand(String provider, String command, Bundle extras)
 	// frameworks/base/location/java/android/location/LocationManager.java
 
 	// @formatter:on
@@ -56,6 +57,8 @@ public class XLocationManager extends XHook {
 					replaceLocationListener(param, 3);
 				else if (methodName.equals("requestSingleUpdate"))
 					replaceLocationListener(param, 1);
+				else if (methodName.equals("sendExtraCommand"))
+					param.setResult(false);
 				else
 					Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}

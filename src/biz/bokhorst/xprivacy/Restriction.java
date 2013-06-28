@@ -139,7 +139,7 @@ public class Restriction {
 
 		// Location manager
 		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
-				"requestLocationUpdates", "requestSingleUpdate" };
+				"requestLocationUpdates", "requestSingleUpdate", "sendExtraCommand" };
 		for (String loc : locs)
 			mMethods.get(cLocation).add(loc);
 
