@@ -426,6 +426,7 @@ Changelog
 
 * Use fastscroll for application browser (thanks @[Tungstwenty](https://github.com/Tungstwenty))
 * Application option menu *Lauch*, *Settings* and *Play Store* (thanks @[Tungstwenty](https://github.com/Tungstwenty))
+* Restrict [location client](http://developer.android.com/reference/com/google/android/gms/location/LocationClient.html)
 * Fixed potential resource leak in phone state listener
 * Fixed incompatible location manager message ([issue](https://github.com/M66B/XPrivacy/issues/83))
 * Fixed incompatible telephony manager message ([issue](https://github.com/M66B/XPrivacy/issues/82))

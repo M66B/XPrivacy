@@ -82,6 +82,13 @@ public class HookZygoteInit implements IXposedHookLoadPackage, IXposedHookZygote
 		for (String cam : cams)
 			hook(new XCamera(cam, Restriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
+		// Location client
+		String[] locs = new String[] { "addGeofences", "getLastLocation", "removeLocationUpdates",
+				"requestLocationUpdates" };
+		for (String loc : locs)
+			hook(new XLocationClient(loc, Restriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
+					"ACCESS_FINE_LOCATION" }), "com.google.android.gms.location.LocationClient");
+
 		// Location manager
 		hook(new XLocationManager("addNmeaListener", Restriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
 				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
