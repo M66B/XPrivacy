@@ -137,11 +137,6 @@ public class Restriction {
 		for (String cam : cams)
 			mMethods.get(cMedia).add(cam);
 
-		// Location client
-		String[] clocs = new String[] { "addGeofences", "getLastLocation", "removeLocationUpdates" };
-		for (String cloc : clocs)
-			mMethods.get(cLocation).add(cloc);
-
 		// Location manager
 		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
 				"requestLocationUpdates", "requestSingleUpdate" };

@@ -82,13 +82,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		for (String cam : cams)
 			hook(new XCamera(cam, Restriction.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
-		// Location client
-		String[] locs = new String[] { "addGeofences", "getLastLocation", "removeLocationUpdates",
-				"requestLocationUpdates" };
-		for (String loc : locs)
-			hook(new XLocationClient(loc, Restriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
-					"ACCESS_FINE_LOCATION" }), "com.google.android.gms.location.LocationClient");
-
 		// Location manager
 		hook(new XLocationManager("addNmeaListener", Restriction.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
 				"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
@@ -226,7 +219,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		if (Restriction.getRestricted(null, null, Process.myUid(), Restriction.cIdentification, null, true, false))
 			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", Restriction.getDefacedProp("SERIAL"));
 
-		// Load browser provider
+		// Browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {
 			hook(new XContentProvider(Restriction.cBrowser, new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" },
 					"BrowserProvider"), lpparam.classLoader, "com.android.browser.provider.BrowserProvider");
@@ -234,12 +227,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"BrowserProvider2"), lpparam.classLoader, "com.android.browser.provider.BrowserProvider2");
 		}
 
-		// Load calendar provider
+		// Calendar provider
 		else if (lpparam.packageName.equals("com.android.providers.calendar"))
 			hook(new XContentProvider(Restriction.cCalendar, new String[] { "READ_CALENDAR" }, "CalendarProvider2"),
 					lpparam.classLoader, "com.android.providers.calendar.CalendarProvider2");
 
-		// Load contacts provider
+		// Contacts provider
 		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
 			hook(new XContentProvider(Restriction.cContacts, new String[] { "READ_CONTACTS" }, "ContactsProvider2"),
 					lpparam.classLoader, "com.android.providers.contacts.ContactsProvider2");
@@ -250,7 +243,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"com.android.providers.contacts.VoicemailContentProvider");
 		}
 
-		// Load telephony provider
+		// Load telephony providers
 		else if (lpparam.packageName.equals("com.android.providers.telephony")) {
 			hook(new XContentProvider(Restriction.cMessages, new String[] { "READ_SMS" }, "SmsProvider"),
 					lpparam.classLoader, "com.android.providers.telephony.SmsProvider");
