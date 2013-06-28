@@ -128,6 +128,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			}
 		});
 
+		// Handle info
+		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
+		imgInfo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				int position = spRestriction.getSelectedItemPosition();
+				if (position != AdapterView.INVALID_POSITION) {
+					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
+					infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s",
+							Restriction.getRestrictions().get(position))));
+					startActivity(infoIntent);
+				}
+			}
+		});
+
 		// Setup spinner
 		spRestriction = (Spinner) findViewById(R.id.spRestriction);
 		spRestriction.setAdapter(spAdapter);

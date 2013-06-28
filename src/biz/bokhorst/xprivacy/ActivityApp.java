@@ -234,6 +234,7 @@ public class ActivityApp extends Activity {
 			ImageView imgIndicator = (ImageView) row.findViewById(R.id.imgIndicator);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
+			ImageView imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.ctvName);
 
 			// Indicator state
@@ -250,9 +251,6 @@ public class ActivityApp extends Activity {
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
 
-			// Display localized name
-			ctvRestriction.setText(Restriction.getLocalizedName(row.getContext(), restrictionName));
-
 			// Display if restriction granted
 			if (!Restriction.hasPermission(row.getContext(), mAppInfo.getPackageName(), restrictionName))
 				imgGranted.setVisibility(View.INVISIBLE);
@@ -262,6 +260,20 @@ public class ActivityApp extends Activity {
 				ctvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
 			else
 				imgUsed.setVisibility(View.INVISIBLE);
+
+			// Handle info
+			imgInfo.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
+					infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s",
+							restrictionName)));
+					startActivity(infoIntent);
+				}
+			});
+
+			// Display localized name
+			ctvRestriction.setText(Restriction.getLocalizedName(row.getContext(), restrictionName));
 
 			// Display restriction
 			boolean restricted = Restriction.getRestricted(null, row.getContext(), mAppInfo.getUid(), restrictionName,
@@ -310,12 +322,24 @@ public class ActivityApp extends Activity {
 				ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.xrestrictionchild, parent, false);
+			ImageView imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 			final CheckedTextView ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
 			final String methodName = (String) getChild(groupPosition, childPosition);
 			long lastUsage = Restriction.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, methodName);
+
+			// Handle info
+			imgInfo.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
+					infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s#%s",
+							restrictionName, methodName)));
+					startActivity(infoIntent);
+				}
+			});
 
 			// Display method name
 			if (lastUsage == 0)

@@ -146,6 +146,7 @@ For easy usage, data is restricted by category:
 	* prevent phone state from being sent to an application
 		* Cell info changed
 		* Cell location changed
+	* prevent sending extra commands (aGPS data)
 * Media
 	* prevent recording audio (including from the microphone)
 	* prevent taking pictures
@@ -426,7 +427,8 @@ Changelog
 
 * Use fastscroll for application browser (thanks @[Tungstwenty](https://github.com/Tungstwenty))
 * Application option menu *Lauch*, *Settings* and *Play Store* (thanks @[Tungstwenty](https://github.com/Tungstwenty))
-* Restrict LocationManager.sendExtraCommand
+* Restrict LocationManager.sendExtraCommand (aGPS data)
+* Info links to [wiki](http://wiki.faircode.eu/index.php?title=XPrivacy)
 * Fixed potential resource leak in phone state listener
 * Fixed incompatible location manager message ([issue](https://github.com/M66B/XPrivacy/issues/83))
 * Fixed incompatible telephony manager message ([issue](https://github.com/M66B/XPrivacy/issues/82))
