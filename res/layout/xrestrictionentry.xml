@@ -34,6 +34,14 @@
             android:src="@drawable/granted" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imgInfo"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/help_application"
+        android:src="@drawable/info" />
+
     <CheckedTextView
         android:id="@+id/ctvName"
         android:layout_width="match_parent"
