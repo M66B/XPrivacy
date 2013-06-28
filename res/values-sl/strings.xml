@@ -17,7 +17,7 @@
     <string name="menu_pro">Pro različica</string>
     <string name="menu_about">O programu</string>
     <string name="menu_all">Vse</string>
-    <string name="menu_app_launch">Launch app</string>
+    <string name="menu_app_launch">Launch</string>
     <string name="menu_app_settings">Settings</string>
     <string name="menu_app_store">Play Store</string>
     <string name="msg_noupdate">Na voljo ni posodobitev</string>

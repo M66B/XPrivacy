@@ -17,7 +17,7 @@
     <string name="menu_pro">专业版</string>
     <string name="menu_about">关于</string>
     <string name="menu_all">All</string>
-    <string name="menu_app_launch">Launch app</string>
+    <string name="menu_app_launch">Launch</string>
     <string name="menu_app_settings">Settings</string>
     <string name="menu_app_store">Play Store</string>
     <string name="msg_noupdate">没有更新版本</string>

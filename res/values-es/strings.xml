@@ -17,7 +17,7 @@
     <string name="menu_pro">Versión Pro</string>
     <string name="menu_about">Acerca de</string>
     <string name="menu_all">Todas</string>
-    <string name="menu_app_launch">Ejecutar aplicación</string>
+    <string name="menu_app_launch">Ejecutar</string>
     <string name="menu_app_settings">Configuración</string>
     <string name="menu_app_store">Play Store</string>
     <string name="msg_noupdate">No hay actualizaciones disponibles</string>
