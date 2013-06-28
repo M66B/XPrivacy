@@ -90,6 +90,7 @@ public class XLocationManager extends XHook {
 			Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 			context = (Context) fieldContext.get(param.thisObject);
 		} catch (Throwable ex) {
+			// Not all location managers do have a context
 			XUtil.bug(this, ex);
 		}
 		return context;

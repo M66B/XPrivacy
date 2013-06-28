@@ -294,9 +294,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			alertDialog.show();
 		}
 
-		// Check location manager
-		if (!checkField(getSystemService(Context.LOCATION_SERVICE), "mContext", Context.class))
-			reportClass(getSystemService(Context.LOCATION_SERVICE).getClass());
+		// Location manager
+		// mContext is missing sometimes
 
 		// Check package manager
 		if (!checkField(getPackageManager(), "mContext", Context.class))
@@ -313,13 +312,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		if (!checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class))
 			reportClass(getSystemService(Context.TELEPHONY_SERVICE).getClass());
 
-		// WifiInfo
+		// Check WifiInfo
 		if (!checkField(WifiInfo.class, "mBSSID") || !checkField(WifiInfo.class, "mIpAddress")
 				|| !checkField(WifiInfo.class, "mMacAddress")
 				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid")))
 			reportClass(WifiInfo.class);
 
-		// InterfaceAddress
+		// Check InterfaceAddress
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
 				|| XNetworkInterface.getInetAddressEmpty() == null)
 			reportClass(InterfaceAddress.class);

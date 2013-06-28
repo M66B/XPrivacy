@@ -350,8 +350,7 @@ since it will be able to block advertisements (for example by revoking internet 
 **(14) I get 'Incompatible ...' !**
 
 A check of XPrivacy failed, resulting in potential data leakage.
-Please report the exact message in the XDA thread,
-stating the device and ROM you are using.
+Please press *OK* to send me the support information, so I can look into it.
 
 **(15) Do I need to install Xposed/the fix again when I install an update of my ROM?**
 
@@ -424,7 +423,9 @@ Changelog
 
 * Use fastscroll on app list (thanks @[Tungstwenty](https://github.com/Tungstwenty))
 * Add actions to app option menu: Lauch app, Settings, Play Store (thanks @[Tungstwenty](https://github.com/Tungstwenty))
+* Fixed incompatible location manager message ([issue](https://github.com/M66B/XPrivacy/issues/83))
 * Added Spanish translation
+* Updated Japanese translation
 
 **Version 0.36**
 
