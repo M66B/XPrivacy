@@ -434,6 +434,7 @@ Changelog
 * Fixed incompatible telephony manager message ([issue](https://github.com/M66B/XPrivacy/issues/82))
 * Added Spanish translation
 * Updated Japanese translation
+* Updated Slovenian translation
 
 **Version 0.36**
 
