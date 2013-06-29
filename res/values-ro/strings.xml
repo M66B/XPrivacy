@@ -47,6 +47,7 @@
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
     <string name="settings_mac">MAC address</string>
+    <string name="settings_phone">Phone number</string>
     <string name="help_application">Aplicatie</string>
     <string name="help_internet">are permisiune Internet</string>
     <string name="help_granted">are permisiune Android</string>

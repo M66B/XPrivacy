@@ -47,6 +47,7 @@
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
     <string name="settings_mac">MAC アドレス</string>
+    <string name="settings_phone">Phone number</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>

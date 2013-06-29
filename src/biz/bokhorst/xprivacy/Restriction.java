@@ -57,6 +57,8 @@ public class Restriction {
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
 	public final static String cSettingMac = "Mac";
+	public final static String cSettingImei = "IMEI";
+	public final static String cSettingPhone = "Phone";
 	public final static String cSettingTheme = "Theme";
 
 	private final static int cCacheTimeoutMs = 15 * 1000;
@@ -564,20 +566,49 @@ public class Restriction {
 		return (stringId == 0 ? null : context.getString(stringId));
 	}
 
-	public static String getDefacedPhoneNumber() {
-		return "DEFACE";
-	}
-
 	public static String getDefacedID() {
 		return Long.toHexString(0xDEFACEL);
 	}
 
-	public static String getDefacedProp(String name) {
-		if (name.equals("SERIAL"))
-			return "DEFACE";
-		else
-			return "DEFACE";
+	private final static String cDeface = "DEFACE";
 
+	public static String getDefacedProp(String name) {
+
+		// Serial number
+		if (name.equals("SERIAL") || name.equals("ro.serialno") || name.equals("ro.boot.serialno"))
+			return cDeface;
+
+		// MAC addresses
+		if (name.equals("ro.boot.btmacaddr") || name.equals("ro.boot.wifimacaddr"))
+			return getDefacedMac();
+
+		// IMEI
+		if (name.equals("getDeviceId") || name.equals("ro.gsm.imei"))
+			return getSetting(null, null, cSettingImei, cDeface, true);
+
+		// Phone
+		if (name.equals("PhoneNumber") || name.equals("getLine1AlphaTag") || name.equals("getLine1Number")
+				|| name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber"))
+			return getSetting(null, null, cSettingPhone, cDeface, true);
+
+		// XSystemProperties
+		// "net.hostname"
+		// XTelephonyManager:
+		// - public String getIsimDomain()
+		// - public String getIsimImpi()
+		// - public String[] getIsimImpu()
+		// - public String getMsisdn()
+		// - public String getNetworkCountryIso()
+		// - public String getNetworkOperator()
+		// - public String getNetworkOperatorName()
+		// - public String getSimCountryIso()
+		// - public String getSimOperator()
+		// - public String getSimOperatorName()
+		// - public String getSimSerialNumber()
+		// - public String getSubscriberId()
+		// XWifiManager: SSID
+
+		return cDeface;
 	}
 
 	public static InetAddress getDefacedInetAddress() {

@@ -143,7 +143,7 @@ public class XTelephonyManager extends XHook {
 
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
-			mListener.onCallStateChanged(state, Restriction.getDefacedPhoneNumber());
+			mListener.onCallStateChanged(state, Restriction.getDefacedProp("PhoneNumber"));
 		}
 
 		@Override

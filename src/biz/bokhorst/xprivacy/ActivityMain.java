@@ -425,6 +425,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
 		final EditText etLon = (EditText) dlgSettings.findViewById(R.id.etLon);
 		final EditText etMac = (EditText) dlgSettings.findViewById(R.id.etMac);
+		final EditText etImei = (EditText) dlgSettings.findViewById(R.id.etImei);
+		final EditText etPhone = (EditText) dlgSettings.findViewById(R.id.etPhone);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
@@ -434,8 +436,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		cbSettings.setChecked(expert);
 		etLat.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingLatitude, "", false));
 		etLon.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingLongitude, "", false));
-		etMac.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingMac,
-				Restriction.getDefacedMac(), false));
+		etMac.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingMac, "", false));
+		etImei.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingImei, "", false));
+		etPhone.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingPhone, "", false));
 
 		// Wait for OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
@@ -469,6 +472,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 				// Set MAC address
 				Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingMac, etMac.getText().toString());
+
+				// Set IMEI
+				Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingImei, etImei.getText().toString());
+
+				// Set phone number
+				Restriction
+						.setSetting(null, ActivityMain.this, Restriction.cSettingPhone, etPhone.getText().toString());
 
 				// Done
 				dlgSettings.dismiss();
