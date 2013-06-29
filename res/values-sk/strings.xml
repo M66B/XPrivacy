@@ -38,7 +38,7 @@
     <string name="restrict_messages">Správy (SMS, MMS)</string>
     <string name="restrict_network">Sieť (adresy)</string>
     <string name="restrict_phone">Telefón (ID, čísla, hovory)</string>
-    <string name="restrict_storage">Externé úložisko (SD karta)</string>
+    <string name="restrict_storage">Úložisko (media, SD karta)</string>
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
     <string name="restrict_view">Zobrazenie (prehliadač)</string>

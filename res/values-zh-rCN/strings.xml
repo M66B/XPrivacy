@@ -38,7 +38,7 @@
     <string name="restrict_messages">信息 (短信, 彩信)</string>
     <string name="restrict_network">网络 (地址)</string>
     <string name="restrict_phone">手机 (ID, 电话号码, 通话)</string>
-    <string name="restrict_storage">外部存储 (SD卡)</string>
+    <string name="restrict_storage">Storage (media, SD card)</string>
     <string name="restrict_shell">Shell (命令, 超级用户)</string>
     <string name="restrict_system">系统 (已安装的应用)</string>
     <string name="restrict_view">查看 (浏览器)</string>

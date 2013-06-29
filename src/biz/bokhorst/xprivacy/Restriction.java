@@ -115,6 +115,7 @@ public class Restriction {
 		mPermissions.get(cPhone).add("WRITE_APN_SETTINGS");
 		mPermissions.get(cStorage).add("READ_EXTERNAL_STORAGE");
 		mPermissions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
+		mPermissions.get(cStorage).add("WRITE_MEDIA_STORAGE");
 
 		// Methods
 

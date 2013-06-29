@@ -38,7 +38,7 @@
     <string name="restrict_messages">Mesaje (SMS, MMS)</string>
     <string name="restrict_network">Retea Internet (adrese)</string>
     <string name="restrict_phone">Telefon (date proprii de identificare, numere, apeluri)</string>
-    <string name="restrict_storage">Stocare externa (card SD)</string>
+    <string name="restrict_storage">Stocare (media, card SD)</string>
     <string name="restrict_shell">Interfata (Shell) (comenzi, superuser)</string>
     <string name="restrict_system">Sistem (aplicatii instalate)</string>
     <string name="restrict_view">Acces browser</string>

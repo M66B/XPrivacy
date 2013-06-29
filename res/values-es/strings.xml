@@ -38,7 +38,7 @@
     <string name="restrict_messages">Mensajes (SMS, MMS)</string>
     <string name="restrict_network">Red (direcciones)</string>
     <string name="restrict_phone">Teléfono (ID, números, llamadas)</string>
-    <string name="restrict_storage">Almacenamiento externo (tarjeta SD)</string>
+    <string name="restrict_storage">Almacenamiento (media, tarjeta SD)</string>
     <string name="restrict_shell">Terminal (comandos, superusuario)</string>
     <string name="restrict_system">Sistema (aplicaciones instaladas)</string>
     <string name="restrict_view">Ver (navegador)</string>

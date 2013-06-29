@@ -38,7 +38,7 @@
     <string name="restrict_messages">メッセージ (SMS, MMS)</string>
     <string name="restrict_network">ネットワーク (アドレス)</string>
     <string name="restrict_phone">電話 (ID, 電話番号, 通話)</string>
-    <string name="restrict_storage">外部ストレージ (SDカード)</string>
+    <string name="restrict_storage">Storage (media, SD card)</string>
     <string name="restrict_shell">Shell (コマンド, superuser)</string>
     <string name="restrict_system">システム (インストール済みアプリ)</string>
     <string name="restrict_view">表示 (ブラウザ)</string>

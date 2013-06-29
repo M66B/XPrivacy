@@ -38,7 +38,7 @@
     <string name="restrict_messages">Berichten (SMS, MMS)</string>
     <string name="restrict_network">Netwerk (addressen)</string>
     <string name="restrict_phone">Telefoon (ID, nummers, oproepen)</string>
-    <string name="restrict_storage">Externe opslag (SD card)</string>
+    <string name="restrict_storage">Opslag (media, SD card)</string>
     <string name="restrict_shell">Shell (commando&#8217;s, superuser)</string>
     <string name="restrict_system">Systeem (geïnstalleerde apps)</string>
     <string name="restrict_view">Tonen (browser)</string>

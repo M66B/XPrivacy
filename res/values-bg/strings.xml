@@ -38,7 +38,7 @@
     <string name="restrict_messages">Съобщения (SMS, MMS)</string>
     <string name="restrict_network">Мрежа (адреси)</string>
     <string name="restrict_phone">Телефон (ID, номера, обаждания)</string>
-    <string name="restrict_storage">Място за съхранение (SD карта)</string>
+    <string name="restrict_storage">Storage (media, SD card)</string>
     <string name="restrict_shell">Терминал (команди, суперпотребител)</string>
     <string name="restrict_system">Система (инсталирани приложения)</string>
     <string name="restrict_view">Преглед (браузър)</string>

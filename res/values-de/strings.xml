@@ -38,7 +38,7 @@
     <string name="restrict_messages">Nachrichten (SMS, MMS)</string>
     <string name="restrict_network">Netzwerk (-adressen)</string>
     <string name="restrict_phone">Telefon (ID, Nummern, Anrufe)</string>
-    <string name="restrict_storage">Externer Speicher (SD Karte)</string>
+    <string name="restrict_storage">Speicher (media, SD Karte)</string>
     <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>
     <string name="restrict_view">Link aufrufen (Browser)</string>

@@ -188,6 +188,7 @@ For easy usage, data is restricted by category:
 		* Service state changed (service/no service)
 		* Signal level changed
 * Storage
+	* revoke permission to the internal storage (media)
 	* revoke permission to the external storage (SD card)
 * Shell
 	* Linux shell
@@ -436,6 +437,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 
 Changelog
 ---------
+
+**Version 0.40** (in development)
+
+* Restrict access to (internal) media storage
 
 **Version 0.39**
 

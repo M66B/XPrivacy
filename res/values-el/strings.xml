@@ -38,7 +38,7 @@
     <string name="restrict_messages">Μηνύματα (SMS, MMS)</string>
     <string name="restrict_network">Δίκτυο (διευθύνσεις)</string>
     <string name="restrict_phone">Τηλέφωνο (στοιχεία, αριθμοί, κλήσεις)</string>
-    <string name="restrict_storage">Εξ. αποθηκευτικός χώρος (κάρτα SD)</string>
+    <string name="restrict_storage">Storage (media, SD card)</string>
     <string name="restrict_shell">Shell (εντολές, superuser)</string>
     <string name="restrict_system">Σύστημα (εγκατεστημένες εφαρμογές)</string>
     <string name="restrict_view">Εμφάνιση (browser)</string>
