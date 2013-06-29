@@ -425,6 +425,7 @@ Changelog
 
 **Version 0.38**
 
+* Added check box to filter restricted applications
 * Removed info icon from methods
 * Updated Slovak translation
 

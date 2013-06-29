@@ -75,7 +75,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -85,7 +87,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActivityMain extends Activity implements OnItemSelectedListener {
+public class ActivityMain extends Activity implements OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
 	private int mThemeId;
 	private Spinner spRestriction = null;
@@ -110,13 +112,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		ArrayAdapter<String> spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
 		spAdapter.addAll(listLocalizedRestriction);
 
+		// Setup filter
+		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+		cbFilter.setOnCheckedChangeListener(this);
+
 		// Setup search
 		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
 		etFilter.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if (mAppAdapter != null)
-					mAppAdapter.getFilter().filter(etFilter.getText().toString());
+					applyFilter();
 			}
 
 			@Override
@@ -233,13 +239,34 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		if (mAppAdapter != null) {
 			String restrictionName = Restriction.getRestrictions().get(pos);
 			mAppAdapter.setRestrictionName(restrictionName);
+			applyFilter();
 		}
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
-		if (mAppAdapter != null)
+		if (mAppAdapter != null) {
 			mAppAdapter.setRestrictionName(null);
+			applyFilter();
+		}
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+		if (buttonView == cbFilter)
+			if (mAppAdapter != null) {
+				EditText etFilter = (EditText) findViewById(R.id.etFilter);
+				etFilter.setText("");
+				etFilter.setEnabled(!isChecked);
+				applyFilter();
+			}
+	}
+
+	private void applyFilter() {
+		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+		EditText etFilter = (EditText) findViewById(R.id.etFilter);
+		mAppAdapter.getFilter().filter(cbFilter.isChecked() ? null : etFilter.getText().toString());
 	}
 
 	@Override
@@ -955,6 +982,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			spRestriction.setEnabled(false);
 
 			// Reset filter
+			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+			cbFilter.setChecked(false);
+			cbFilter.setEnabled(false);
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setText("");
 			etFilter.setEnabled(false);
@@ -981,6 +1011,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			lvApp.setVisibility(View.VISIBLE);
 
 			// Enable search
+			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+			cbFilter.setEnabled(true);
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setEnabled(true);
 
@@ -993,6 +1025,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	@SuppressLint("DefaultLocale")
 	private class AppListAdapter extends ArrayAdapter<ApplicationInfoEx> implements SectionIndexer {
 
+		private List<ApplicationInfoEx> lstApp;
 		private String mRestrictionName;
 		private Map<String, Integer> alphaIndexer;
 		private String[] sections;
@@ -1000,6 +1033,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
 			super(context, resource, objects);
+			lstApp = new ArrayList<ApplicationInfoEx>();
+			lstApp.addAll(objects);
 			mRestrictionName = initialRestrictionName;
 			reindexSections();
 		}
@@ -1007,6 +1042,53 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		public void setRestrictionName(String restrictionName) {
 			mRestrictionName = restrictionName;
 			notifyDataSetChanged();
+		}
+
+		@Override
+		public Filter getFilter() {
+			return new AppFilter();
+		}
+
+		private class AppFilter extends Filter {
+
+			public AppFilter() {
+			}
+
+			@Override
+			protected FilterResults performFiltering(CharSequence constraint) {
+				FilterResults results = new FilterResults();
+
+				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
+
+				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.lstApp) {
+					if (constraint == null) {
+						boolean restricted = Restriction.getRestricted(null, null, xAppInfo.getUid(), mRestrictionName,
+								null, false, false);
+						if (restricted)
+							lstApp.add(xAppInfo);
+					} else if (xAppInfo.toString().toLowerCase().contains(((String) constraint).toLowerCase()))
+						lstApp.add(xAppInfo);
+				}
+
+				synchronized (this) {
+					results.values = lstApp;
+					results.count = lstApp.size();
+				}
+
+				return results;
+			}
+
+			@Override
+			@SuppressWarnings("unchecked")
+			protected void publishResults(CharSequence constraint, FilterResults results) {
+				clear();
+				if (results.values == null)
+					notifyDataSetInvalidated();
+				else {
+					addAll((ArrayList<ApplicationInfoEx>) results.values);
+					notifyDataSetChanged();
+				}
+			}
 		}
 
 		@Override
