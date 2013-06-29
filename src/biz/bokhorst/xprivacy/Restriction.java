@@ -59,6 +59,7 @@ public class Restriction {
 	public final static String cSettingMac = "Mac";
 	public final static String cSettingImei = "IMEI";
 	public final static String cSettingPhone = "Phone";
+	public final static String cSettingId = "ID";
 	public final static String cSettingTheme = "Theme";
 
 	private final static int cCacheTimeoutMs = 15 * 1000;
@@ -566,10 +567,6 @@ public class Restriction {
 		return (stringId == 0 ? null : context.getString(stringId));
 	}
 
-	public static String getDefacedID() {
-		return Long.toHexString(0xDEFACEL);
-	}
-
 	private final static String cDeface = "DEFACE";
 
 	public static String getDefacedProp(String name) {
@@ -579,8 +576,8 @@ public class Restriction {
 			return cDeface;
 
 		// MAC addresses
-		if (name.equals("ro.boot.btmacaddr") || name.equals("ro.boot.wifimacaddr"))
-			return getDefacedMac();
+		if (name.equals("MAC") || name.equals("ro.boot.btmacaddr") || name.equals("ro.boot.wifimacaddr"))
+			return getSetting(null, null, cSettingMac, "de:fa:ce:de:fa:ce", true);
 
 		// IMEI
 		if (name.equals("getDeviceId") || name.equals("ro.gsm.imei"))
@@ -591,8 +588,11 @@ public class Restriction {
 				|| name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber"))
 			return getSetting(null, null, cSettingPhone, cDeface, true);
 
-		// XSystemProperties
-		// "net.hostname"
+		// Android ID
+		if (name.equals("ANDROID_ID"))
+			return getSetting(null, null, cSettingId, cDeface, true);
+
+		// XSystemProperties: "net.hostname"
 		// XTelephonyManager:
 		// - public String getIsimDomain()
 		// - public String getIsimImpi()
@@ -628,10 +628,6 @@ public class Restriction {
 
 	public static byte[] getDefacedIPBytes() {
 		return new byte[] { 10, 1, 1, 1 };
-	}
-
-	public static String getDefacedMac() {
-		return getSetting(null, null, cSettingMac, "de:fa:ce:de:fa:ce", true);
 	}
 
 	public static byte[] getDefacedBytes() {

@@ -425,9 +425,9 @@ Changelog
 
 **Version 0.38**
 
-* Added check box to filter restricted applications
-* Options to set IMEI and phone number
-* Use set MAC address for ro.boot.btmacaddr/ro.boot.wifimacaddr 
+* Added check box to filter restricted applications ([issue](https://github.com/M66B/XPrivacy/issues/79))
+* Options to set IMEI and phone number ([issue](https://github.com/M66B/XPrivacy/issues/39))
+* Use set MAC address for ro.boot.btmacaddr/ro.boot.wifimacaddr
 * Removed info icon from methods
 * Updated Slovak translation
 

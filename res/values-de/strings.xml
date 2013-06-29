@@ -48,6 +48,7 @@
     <string name="settings_lon">Längengrad</string>
     <string name="settings_mac">MAC Adresse</string>
     <string name="settings_phone">Phone number</string>
+    <string name="settings_id">Android ID</string>
     <string name="help_application">Anwendung</string>
     <string name="help_internet">hat Internetberechtigung</string>
     <string name="help_granted">hat Android Berechtigung</string>

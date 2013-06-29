@@ -50,6 +50,7 @@
     <string name="settings_mac">MAC address</string>
     <string name="settings_imei" translatable="false">IMEI</string>
     <string name="settings_phone">Phone number</string>
+    <string name="settings_id">Android ID</string>
     <string name="help_application">Application</string>
     <string name="help_internet">has internet permission</string>
     <string name="help_granted">has Android permission</string>

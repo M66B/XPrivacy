@@ -48,6 +48,7 @@
     <string name="settings_lon">Zemepisná dĺžka</string>
     <string name="settings_mac">MAC adresa</string>
     <string name="settings_phone">Phone number</string>
+    <string name="settings_id">Android ID</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové oprávnenie</string>
     <string name="help_granted">má Android povolenie</string>

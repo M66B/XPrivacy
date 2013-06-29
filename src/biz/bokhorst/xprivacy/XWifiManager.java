@@ -44,7 +44,7 @@ public class XWifiManager extends XHook {
 					// BSSID
 					try {
 						Field fieldBSSID = findField(WifiInfo.class, "mBSSID");
-						fieldBSSID.set(wInfo, Restriction.getDefacedMac());
+						fieldBSSID.set(wInfo, Restriction.getDefacedProp("MAC"));
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
@@ -60,7 +60,7 @@ public class XWifiManager extends XHook {
 					// MAC address
 					try {
 						Field fieldMAC = findField(WifiInfo.class, "mMacAddress");
-						fieldMAC.set(wInfo, Restriction.getDefacedMac());
+						fieldMAC.set(wInfo, Restriction.getDefacedProp("MAC"));
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}

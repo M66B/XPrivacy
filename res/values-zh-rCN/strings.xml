@@ -48,6 +48,7 @@
     <string name="settings_lon">经度</string>
     <string name="settings_mac">MAC address</string>
     <string name="settings_phone">Phone number</string>
+    <string name="settings_id">Android ID</string>
     <string name="help_application">应用</string>
     <string name="help_internet">可以联网</string>
     <string name="help_granted">有Android权限</string>

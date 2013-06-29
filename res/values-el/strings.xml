@@ -48,6 +48,7 @@
     <string name="settings_lon">Γεωγρ. μήκος</string>
     <string name="settings_mac">MAC address</string>
     <string name="settings_phone">Phone number</string>
+    <string name="settings_id">Android ID</string>
     <string name="help_application">Εφαρμογή</string>
     <string name="help_internet">έχει άδεια internet</string>
     <string name="help_granted">έχει άδεια Android</string>

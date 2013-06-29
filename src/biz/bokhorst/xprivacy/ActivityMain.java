@@ -427,6 +427,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etMac = (EditText) dlgSettings.findViewById(R.id.etMac);
 		final EditText etImei = (EditText) dlgSettings.findViewById(R.id.etImei);
 		final EditText etPhone = (EditText) dlgSettings.findViewById(R.id.etPhone);
+		final EditText etId = (EditText) dlgSettings.findViewById(R.id.etId);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
@@ -439,6 +440,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etMac.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingMac, "", false));
 		etImei.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingImei, "", false));
 		etPhone.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingPhone, "", false));
+		etId.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingId, "", false));
 
 		// Wait for OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
@@ -470,15 +472,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLongitude, "");
 				}
 
-				// Set MAC address
+				// Other settings
 				Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingMac, etMac.getText().toString());
-
-				// Set IMEI
 				Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingImei, etImei.getText().toString());
-
-				// Set phone number
 				Restriction
 						.setSetting(null, ActivityMain.this, Restriction.cSettingPhone, etPhone.getText().toString());
+				Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingId, etId.getText().toString());
 
 				// Done
 				dlgSettings.dismiss();

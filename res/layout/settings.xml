@@ -81,6 +81,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/settings_imei"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etImei"
+                    android:layout_width="200dip"
+                    android:layout_height="wrap_content"
+                    android:inputType="textNoSuggestions" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/settings_phone"
                     android:textIsSelectable="false" />
 
@@ -98,11 +115,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_imei"
+                    android:text="@string/settings_id"
                     android:textIsSelectable="false" />
 
                 <EditText
-                    android:id="@+id/etImei"
+                    android:id="@+id/etId"
                     android:layout_width="200dip"
                     android:layout_height="wrap_content"
                     android:inputType="textNoSuggestions" />
