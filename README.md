@@ -423,6 +423,11 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 0.38**
+
+* Removed info icon from methods
+* Updated Slovak translation
+
 **Version 0.37**
 
 * Use fastscroll for application browser (thanks @[Tungstwenty](https://github.com/Tungstwenty))
@@ -432,6 +437,7 @@ Changelog
 * Fixed potential resource leak in phone state listener
 * Fixed incompatible location manager message ([issue](https://github.com/M66B/XPrivacy/issues/83))
 * Fixed incompatible telephony manager message ([issue](https://github.com/M66B/XPrivacy/issues/82))
+* Increased thread priority to fetch app list
 * Added Spanish translation
 * Updated Japanese translation
 * Updated Slovenian translation
@@ -445,8 +451,8 @@ Changelog
 * Speed up import ([pro version](http://www.faircode.eu/xprivacy/) only) ([issue](https://github.com/M66B/XPrivacy/issues/70))
 * Remove pro menu when pro version activated
 * Send support information for detected incompatibilities ([issue](https://github.com/M66B/XPrivacy/issues/82), [issue](https://github.com/M66B/XPrivacy/issues/83))
-* Fix potential account data leak ([issue](https://github.com/M66B/XPrivacy/issues/75))
-* Fix potential resource leak in location listener
+* Fixed potential account data leak ([issue](https://github.com/M66B/XPrivacy/issues/75))
+* Fixed potential resource leak in location listener
 * Updated German translation
 * Updated simplified Chinese translation
 
@@ -471,7 +477,7 @@ Changelog
 
 * Show storage folder in about
 * Support for XPrivacy Pro from Google Play
-* Fix Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/50))
+* Fixed Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/50))
 
 **Version 0.30**
 
@@ -483,7 +489,7 @@ Changelog
 
 **Version 0.29**
 
-* Fix initial display of restrictions
+* Fixed initial display of restrictions
 
 **Version 0.28**
 
@@ -598,7 +604,7 @@ Changelog
 * Restrict calling (untested)
 * Restrict sending SMS
 * Restrict sending MMS (untested)
-* Fix setting restrictions in the app list
+* Fixed setting restrictions in the app list
 
 **Version 0.13**
 
