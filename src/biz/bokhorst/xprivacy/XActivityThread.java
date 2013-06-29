@@ -93,7 +93,7 @@ public class XActivityThread extends XHook {
 						return;
 					int uid = provider.applicationInfo.uid;
 					Util.log(this, Log.INFO, "provider=" + provider.getClass().getName() + " uid=" + uid);
-					if (!isRestricted(param))
+					if (!getRestricted(null, uid, true))
 						listAllowed.add(provider);
 				}
 
