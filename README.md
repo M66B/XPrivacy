@@ -425,7 +425,6 @@ Changelog
 
 **Version 0.39** (in development)
 
-* Restrict starting content providers ([issue](https://github.com/M66B/XPrivacy/issues/84))
 * Restrict user dictionary ([issue](https://github.com/M66B/XPrivacy/issues/89))
 
 **Version 0.38**

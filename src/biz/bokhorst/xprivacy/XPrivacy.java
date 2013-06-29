@@ -169,8 +169,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				Intent.ACTION_BOOT_COMPLETED), "android.app.ActivityThread", false);
 
 		// Start content providers at boot
-		hook(new XActivityThread("installContentProviders", Restriction.cBoot, new String[] {}, null),
-				"android.app.ActivityThread", false);
+		if (Restriction.cExperimental)
+			hook(new XActivityThread("installContentProviders", Restriction.cBoot, new String[] {}, null),
+					"android.app.ActivityThread", false);
 
 		// Intent receive: calling
 		hook(new XActivityThread("handleReceiver", Restriction.cPhone, new String[] { "PROCESS_OUTGOING_CALLS" },

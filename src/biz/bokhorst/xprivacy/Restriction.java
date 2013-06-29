@@ -52,6 +52,7 @@ public class Restriction {
 			cStorage, cShell, cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;
+	public final static boolean cExperimental = false;
 	public final static int cUidAndroid = 1000;
 
 	public final static String cSettingExpert = "Expert";
@@ -64,6 +65,7 @@ public class Restriction {
 	public final static String cSettingTheme = "Theme";
 
 	private final static int cCacheTimeoutMs = 15 * 1000;
+
 	private static Map<String, List<String>> mPermissions = new LinkedHashMap<String, List<String>>();
 	private static Map<String, List<String>> mMethods = new LinkedHashMap<String, List<String>>();
 	private static Map<String, CRestriction> mRestrictionCache = new HashMap<String, CRestriction>();
@@ -204,7 +206,8 @@ public class Restriction {
 
 		// Intent receive: boot
 		mMethods.get(cBoot).add(Intent.ACTION_BOOT_COMPLETED);
-		mMethods.get(cBoot).add("installContentProviders");
+		if (Restriction.cExperimental)
+			mMethods.get(cBoot).add("installContentProviders");
 
 		// Intent receive: calling
 		mMethods.get(cPhone).add(Intent.ACTION_NEW_OUTGOING_CALL);
