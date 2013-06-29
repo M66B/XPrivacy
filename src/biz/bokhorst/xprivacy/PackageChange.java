@@ -29,11 +29,7 @@ public class PackageChange extends BroadcastReceiver {
 			NotificationManager notificationManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 
-			// Log
-			Util.log(null, Log.INFO, intent.getAction() + " package=" + packageName + " uid=" + uid + " replacing="
-					+ replacing);
-
-			if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED) && !replacing) {
+			if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
 				// Package added
 				boolean system = false;
 				PackageInfo pInfo = null;
@@ -48,7 +44,7 @@ public class PackageChange extends BroadcastReceiver {
 
 				if (expert ? true : !system) {
 					// Default deny new user apps
-					if (!system)
+					if (!system && !replacing)
 						for (String restrictionName : Restriction.getRestrictions())
 							Restriction.setRestricted(null, context, uid, restrictionName, null, true);
 

@@ -438,6 +438,7 @@ Changelog
 **Version 0.39** (in development)
 
 * Restrict user dictionary ([issue](https://github.com/M66B/XPrivacy/issues/89))
+* Notification for updated applications (restrictions will be left alone) ([issue](https://github.com/M66B/XPrivacy/issues/96))
 
 **Version 0.38**
 
