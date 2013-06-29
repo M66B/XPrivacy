@@ -253,9 +253,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// User dictionary
-		else if (lpparam.packageName.equals("android.provider"))
+		else if (lpparam.packageName.equals("com.android.providers.userdictionary"))
 			hook(new XContentProvider(Restriction.cDictionary, new String[] { "READ_USER_DICTIONARY" },
-					"UserDictionary"), lpparam.classLoader, "android.provider.UserDictionary");
+					"UserDictionary"), lpparam.classLoader,
+					"com.android.providers.userdictionary.UserDictionaryProvider");
 	}
 
 	private void hook(final XHook hook, String className) {
