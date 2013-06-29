@@ -115,8 +115,7 @@ public class ActivityApp extends Activity {
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
-		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo,
-				Restriction.getRestrictions());
+		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, Restriction.getRestrictions());
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 
 		// Up navigation
@@ -322,24 +321,12 @@ public class ActivityApp extends Activity {
 				ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.restrictionchild, parent, false);
-			ImageView imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 			final CheckedTextView ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
 			final String methodName = (String) getChild(groupPosition, childPosition);
 			long lastUsage = Restriction.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, methodName);
-
-			// Handle info
-			imgInfo.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
-					infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s#%s",
-							restrictionName, methodName)));
-					startActivity(infoIntent);
-				}
-			});
 
 			// Display method name
 			if (lastUsage == 0)
