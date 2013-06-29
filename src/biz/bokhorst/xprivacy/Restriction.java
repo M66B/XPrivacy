@@ -310,7 +310,7 @@ public class Restriction {
 			lastUsage = cursor.getLong(cursor.getColumnIndex(PrivacyProvider.COL_USED));
 		cursor.close();
 		boolean used = (lastUsage != 0);
-		logRestriction(null, context, uid, "used", restrictionName, methodName, used, false);
+		logRestriction(null, context, uid, "used", restrictionName, methodName, used, false, 0);
 		return lastUsage;
 	}
 
@@ -318,6 +318,8 @@ public class Restriction {
 	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName,
 			String methodName, boolean usage, boolean useCache) {
 		try {
+			long start = System.currentTimeMillis();
+
 			// Check uid
 			if (uid <= 0) {
 				Util.log(hook, Log.WARN, "uid <= 0");
@@ -341,8 +343,9 @@ public class Restriction {
 						if (entry.isExpired())
 							mRestrictionCache.remove(keyCache);
 						else {
+							long delta = System.currentTimeMillis() - start;
 							logRestriction(hook, context, uid, "get", restrictionName, methodName,
-									entry.isRestricted(), true);
+									entry.isRestricted(), true, delta);
 							return entry.isRestricted();
 						}
 					}
@@ -436,7 +439,8 @@ public class Restriction {
 			}
 
 			// Result
-			logRestriction(hook, context, uid, "get", restrictionName, methodName, restricted, false);
+			long delta = System.currentTimeMillis() - start;
+			logRestriction(hook, context, uid, "get", restrictionName, methodName, restricted, false, delta);
 			return restricted;
 		} catch (Throwable ex) {
 			// Failsafe
@@ -475,7 +479,7 @@ public class Restriction {
 			Util.log(hook, Log.INFO, "Error updating restriction=" + restrictionName);
 
 		// Result
-		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false);
+		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
 	}
 
 	public static String getSetting(XHook hook, Context context, String settingName, String defaultValue,
@@ -657,9 +661,10 @@ public class Restriction {
 	// Helper methods
 
 	private static void logRestriction(XHook hook, Context context, int uid, String prefix, String restrictionName,
-			String methodName, boolean restricted, boolean cached) {
-		Util.log(hook, Log.INFO, String.format("%s %s/%s %s=%b%s", prefix, getPackageName(context, uid), methodName,
-				restrictionName, restricted, (cached ? " *" : (context == null ? " #" : ""))));
+			String methodName, boolean restricted, boolean cached, long ms) {
+		Util.log(hook, Log.INFO, String.format("%s %s/%s %s=%b%s%s", prefix, getPackageName(context, uid), methodName,
+				restrictionName, restricted, (cached ? " *" : (context == null ? " #" : "")), (ms > 1 ? " " + ms
+						+ " ms" : "")));
 	}
 
 	private static String getPackageName(Context context, int uid) {
