@@ -435,7 +435,7 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 0.39** (in development)
+**Version 0.39**
 
 * Restrict user dictionary ([issue](https://github.com/M66B/XPrivacy/issues/89))
 * Notification for updated applications (restrictions will be left alone) ([issue](https://github.com/M66B/XPrivacy/issues/96))
