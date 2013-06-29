@@ -132,6 +132,8 @@ For easy usage, data is restricted by category:
 	* prevent data messages from being sent
 * Contacts
 	* return an empty contact list
+* Dictionary
+	* return an empty user dictionary
 * Identification
 	* return a fake Android ID
 	* return a fake device serial number
