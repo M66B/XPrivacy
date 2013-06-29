@@ -99,6 +99,8 @@ or
 ![Help](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
 ![Settings](https://raw.github.com/M66B/XPrivacy/master/screenshots/settings.png)
 
+*Some shown features are only available in expert mode*
+
 Features
 --------
 
