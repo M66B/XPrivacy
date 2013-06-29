@@ -1,115 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <CheckBox
-        android:id="@+id/cbExpert"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/settings_expert"
-        android:textAppearance="?android:attr/textAppearance" />
+        android:orientation="vertical" >
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        <CheckBox
+            android:id="@+id/cbExpert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_expert"
+            android:textAppearance="?android:attr/textAppearance" />
 
-        <TableRow
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_lat"
-                android:textIsSelectable="false" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/etLat"
-                android:layout_width="100dip"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal|numberSigned" />
-        </TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_lat"
+                    android:textIsSelectable="false" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+                <EditText
+                    android:id="@+id/etLat"
+                    android:layout_width="100dip"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal|numberSigned" />
+            </TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_lon"
-                android:textIsSelectable="false" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/etLon"
-                android:layout_width="100dip"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal|numberSigned" />
-        </TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_lon"
+                    android:textIsSelectable="false" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+                <EditText
+                    android:id="@+id/etLon"
+                    android:layout_width="100dip"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal|numberSigned" />
+            </TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_mac"
-                android:textIsSelectable="false" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/etMac"
-                android:layout_width="200dip"
-                android:layout_height="wrap_content"
-                android:inputType="textNoSuggestions" />
-        </TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_mac"
+                    android:textIsSelectable="false" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+                <EditText
+                    android:id="@+id/etMac"
+                    android:layout_width="200dip"
+                    android:layout_height="wrap_content"
+                    android:inputType="textNoSuggestions" />
+            </TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_phone"
-                android:textIsSelectable="false" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/etPhone"
-                android:layout_width="150dip"
-                android:layout_height="wrap_content"
-                android:inputType="textNoSuggestions|phone" />
-        </TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_phone"
+                    android:textIsSelectable="false" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+                <EditText
+                    android:id="@+id/etPhone"
+                    android:layout_width="150dip"
+                    android:layout_height="wrap_content"
+                    android:inputType="textNoSuggestions|phone" />
+            </TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_imei"
-                android:textIsSelectable="false" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/etImei"
-                android:layout_width="200dip"
-                android:layout_height="wrap_content"
-                android:inputType="textNoSuggestions" />
-        </TableRow>
-    </TableLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_imei"
+                    android:textIsSelectable="false" />
 
-    <Button
-        android:id="@+id/btnOk"
-        android:layout_width="75dip"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@android:string/ok" />
+                <EditText
+                    android:id="@+id/etImei"
+                    android:layout_width="200dip"
+                    android:layout_height="wrap_content"
+                    android:inputType="textNoSuggestions" />
+            </TableRow>
+        </TableLayout>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="75dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@android:string/ok" />
+    </LinearLayout>
+
+</ScrollView>
