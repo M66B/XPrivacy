@@ -43,7 +43,7 @@ public class ActivityApp extends Activity {
 		String sTheme = Restriction.getSetting(null, this, Restriction.cSettingTheme, null, false);
 		int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
 		setTheme(themeId);
-		setContentView(R.layout.xrestrictionlist);
+		setContentView(R.layout.restrictionlist);
 
 		// Get package name
 		Bundle extras = getIntent().getExtras();
@@ -84,7 +84,7 @@ public class ActivityApp extends Activity {
 				Dialog dialog = new Dialog(ActivityApp.this);
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
-				dialog.setContentView(R.layout.xhelp);
+				dialog.setContentView(R.layout.help);
 				dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
 				dialog.setCancelable(true);
 				dialog.show();
@@ -115,7 +115,7 @@ public class ActivityApp extends Activity {
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
-		mPrivacyListAdapter = new RestrictionAdapter(R.layout.xrestrictionentry, mAppInfo,
+		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo,
 				Restriction.getRestrictions());
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 
@@ -126,7 +126,7 @@ public class ActivityApp extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.xapp, menu);
+		inflater.inflate(R.menu.app, menu);
 
 		PackageManager pm = getPackageManager();
 		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName()) == null) {
@@ -230,7 +230,7 @@ public class ActivityApp extends Activity {
 		@Override
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.xrestrictionentry, parent, false);
+			View row = inflater.inflate(R.layout.restrictionentry, parent, false);
 			ImageView imgIndicator = (ImageView) row.findViewById(R.id.imgIndicator);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
@@ -321,7 +321,7 @@ public class ActivityApp extends Activity {
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 				ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.xrestrictionchild, parent, false);
+			View row = inflater.inflate(R.layout.restrictionchild, parent, false);
 			ImageView imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 			final CheckedTextView ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
 

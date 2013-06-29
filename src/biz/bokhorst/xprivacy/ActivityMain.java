@@ -98,7 +98,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		String sTheme = Restriction.getSetting(null, this, Restriction.cSettingTheme, null, false);
 		mThemeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
 		setTheme(mThemeId);
-		setContentView(R.layout.xmainlist);
+		setContentView(R.layout.mainlist);
 
 		// Get localized restriction name
 		List<String> listRestriction = Restriction.getRestrictions();
@@ -156,7 +156,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				Dialog dialog = new Dialog(ActivityMain.this);
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
-				dialog.setContentView(R.layout.xhelp);
+				dialog.setContentView(R.layout.help);
 				dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
 				dialog.setCancelable(true);
 				dialog.show();
@@ -174,7 +174,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.xmain, menu);
+		inflater.inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -390,7 +390,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		final Dialog dlgSettings = new Dialog(this);
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgSettings.setTitle(getString(R.string.app_name));
-		dlgSettings.setContentView(R.layout.xsettings);
+		dlgSettings.setContentView(R.layout.settings);
 		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
 
 		// Reference controls
@@ -494,7 +494,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		Dialog dlgAbout = new Dialog(this);
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgAbout.setTitle(getString(R.string.app_name));
-		dlgAbout.setContentView(R.layout.xabout);
+		dlgAbout.setContentView(R.layout.about);
 		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
 
 		// Show version
@@ -971,7 +971,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			super.onPostExecute(listApp);
 
 			// Display app list
-			mAppAdapter = new AppListAdapter(ActivityMain.this, R.layout.xmainentry, listApp, mRestrictionName);
+			mAppAdapter = new AppListAdapter(ActivityMain.this, R.layout.mainentry, listApp, mRestrictionName);
 			ListView lvApp = (ListView) findViewById(R.id.lvApp);
 			lvApp.setAdapter(mAppAdapter);
 
@@ -1012,7 +1012,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.xmainentry, parent, false);
+			View row = inflater.inflate(R.layout.mainentry, parent, false);
 			LinearLayout llIcon = (LinearLayout) row.findViewById(R.id.llIcon);
 			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
 			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
