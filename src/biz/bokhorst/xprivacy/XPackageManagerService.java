@@ -64,7 +64,7 @@ public class XPackageManagerService extends XHook {
 					// getRestricted will log stack
 				}
 
-				if (getRestricted(null, uid, true))
+				if (getRestricted(null, uid, false))
 					param.setResult(gids);
 			}
 		}
