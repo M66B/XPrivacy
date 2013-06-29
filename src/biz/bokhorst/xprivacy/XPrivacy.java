@@ -168,6 +168,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XActivityThread("handleReceiver", Restriction.cBoot, new String[] { "RECEIVE_BOOT_COMPLETED" },
 				Intent.ACTION_BOOT_COMPLETED), "android.app.ActivityThread", false);
 
+		// Start content providers at boot
+		hook(new XActivityThread("installContentProviders", Restriction.cBoot, new String[] {}, null),
+				"android.app.ActivityThread", false);
+
 		// Intent receive: calling
 		hook(new XActivityThread("handleReceiver", Restriction.cPhone, new String[] { "PROCESS_OUTGOING_CALLS" },
 				Intent.ACTION_NEW_OUTGOING_CALL), "android.app.ActivityThread", false);
@@ -247,6 +251,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hook(new XContentProvider(Restriction.cPhone, new String[] { "WRITE_APN_SETTINGS" }, "TelephonyProvider"),
 					lpparam.classLoader, "com.android.providers.telephony.TelephonyProvider");
 		}
+
+		// User dictionary
+		else if (lpparam.packageName.equals("android.provider"))
+			hook(new XContentProvider(Restriction.cDictionary, new String[] { "READ_USER_DICTIONARY" },
+					"UserDictionary"), lpparam.classLoader, "android.provider.UserDictionary");
 	}
 
 	private void hook(final XHook hook, String className) {

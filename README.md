@@ -423,6 +423,11 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 0.39** (in development)
+
+* Restrict starting content providers ([issue](https://github.com/M66B/XPrivacy/issues/84))
+* Restrict user dictionary ([issue](https://github.com/M66B/XPrivacy/issues/89))
+
 **Version 0.38**
 
 * Added check box to filter restricted applications ([issue](https://github.com/M66B/XPrivacy/issues/79))

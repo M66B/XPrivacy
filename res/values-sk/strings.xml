@@ -30,6 +30,7 @@
     <string name="restrict_calendar">Kalendár</string>
     <string name="restrict_calling">Volanie (telefón, SMS, MMS)</string>
     <string name="restrict_contacts">Kontakty</string>
+    <string name="restrict_dictionary">Dictionary (user)</string>
     <string name="restrict_identification">Identifikácia (zariadenie)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Poloha (presná/približná)</string>

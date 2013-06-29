@@ -30,6 +30,7 @@
     <string name="restrict_calendar">Календар</string>
     <string name="restrict_calling">Обаждания, SMS, MMS)</string>
     <string name="restrict_contacts">Контакти</string>
+    <string name="restrict_dictionary">Dictionary (user)</string>
     <string name="restrict_identification">Идентификация (устройство, Wi-Fi)</string>
     <string name="restrict_internet">Интернет</string>
     <string name="restrict_location">Местоположение (точно/приблизително)</string>

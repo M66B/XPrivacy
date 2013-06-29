@@ -30,6 +30,7 @@
     <string name="restrict_calendar">日历</string>
     <string name="restrict_calling">通话 (语音, 短信, 彩信)</string>
     <string name="restrict_contacts">联系人</string>
+    <string name="restrict_dictionary">Dictionary (user)</string>
     <string name="restrict_identification">识别码 (设备)</string>
     <string name="restrict_internet">互联网</string>
     <string name="restrict_location">位置 (精细/粗略)</string>

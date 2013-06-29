@@ -30,6 +30,7 @@
     <string name="restrict_calendar">Calendrier</string>
     <string name="restrict_calling">Appels (Téléphone, SMS, MMS)</string>
     <string name="restrict_contacts">Contacts</string>
+    <string name="restrict_dictionary">Dictionary (user)</string>
     <string name="restrict_identification">Identification (Matériel)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Localisation (précise/approximative)</string>

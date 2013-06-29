@@ -30,6 +30,7 @@
     <string name="restrict_calendar">יומן</string>
     <string name="restrict_calling">חיוג ( טלפון, סמס, הודעת מולטימדיה)</string>
     <string name="restrict_contacts">אנשי קשר</string>
+    <string name="restrict_dictionary">Dictionary (user)</string>
     <string name="restrict_identification">מספר זיהוי של המכשיר</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">מיקום</string>

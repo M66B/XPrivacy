@@ -34,6 +34,7 @@ public class Restriction {
 	public static final String cCalendar = "calendar";
 	public static final String cCalling = "calling";
 	public static final String cContacts = "contacts";
+	public static final String cDictionary = "dictionary";
 	public static final String cIdentification = "identification";
 	public static final String cInternet = "internet";
 	public static final String cLocation = "location";
@@ -47,8 +48,8 @@ public class Restriction {
 	public static final String cView = "view";
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBoot, cBrowser, cCalendar, cCalling,
-			cContacts, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cPhone, cStorage, cShell,
-			cSystem, cView };
+			cContacts, cDictionary, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cPhone,
+			cStorage, cShell, cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
@@ -91,6 +92,7 @@ public class Restriction {
 		mPermissions.get(cCalling).add("SEND_SMS");
 		mPermissions.get(cCalling).add("CALL_PHONE");
 		mPermissions.get(cContacts).add("READ_CONTACTS");
+		mPermissions.get(cDictionary).add("READ_USER_DICTIONARY");
 		mPermissions.get(cInternet).add("INTERNET");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_FINE_LOCATION");
@@ -202,6 +204,7 @@ public class Restriction {
 
 		// Intent receive: boot
 		mMethods.get(cBoot).add(Intent.ACTION_BOOT_COMPLETED);
+		mMethods.get(cBoot).add("installContentProviders");
 
 		// Intent receive: calling
 		mMethods.get(cPhone).add(Intent.ACTION_NEW_OUTGOING_CALL);
@@ -224,6 +227,7 @@ public class Restriction {
 		mMethods.get(cBrowser).add("BrowserProvider2");
 		mMethods.get(cCalendar).add("CalendarProvider2");
 		mMethods.get(cContacts).add("ContactsProvider2");
+		mMethods.get(cDictionary).add("UserDictionary");
 		mMethods.get(cPhone).add("CallLogProvider");
 		mMethods.get(cMessages).add("VoicemailContentProvider");
 		mMethods.get(cMessages).add("SmsProvider");
