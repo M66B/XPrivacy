@@ -446,7 +446,7 @@ Changelog
 
 **Version 0.41** (in development)
 
-* Filter applications by used data
+* Filter applications by used data ([issue](https://github.com/M66B/XPrivacy/issues/79))
 
 **Version 0.40**
 
