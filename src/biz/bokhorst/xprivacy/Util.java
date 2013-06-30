@@ -70,8 +70,10 @@ public class Util {
 	public static String isProVersion(Context context) {
 		try {
 			// Check for pro app
+			String proPackageName = "biz.bokhorst.xprivacy.pro";
 			PackageManager manager = context.getPackageManager();
-			if (manager.checkSignatures(context.getPackageName(), "biz.bokhorst.xprivacy.pro") == PackageManager.SIGNATURE_MATCH) {
+			if (manager.checkSignatures(context.getPackageName(), proPackageName) == PackageManager.SIGNATURE_MATCH
+					&& hasMarketLink(context, proPackageName)) {
 				Util.log(null, Log.INFO, "Pro version installed");
 				return "";
 			}
@@ -111,6 +113,18 @@ public class Util {
 			Util.bug(null, ex);
 		}
 		return null;
+	}
+
+	public static boolean hasMarketLink(Context context, String packageName) {
+		try {
+			PackageManager pm = context.getPackageManager();
+			String installer = pm.getInstallerPackageName(packageName);
+			if (installer != null)
+				return installer.equals("com.android.vending") || installer.contains("google");
+		} catch (Exception ex) {
+			log(null, Log.WARN, ex.toString());
+		}
+		return false;
 	}
 
 	private static byte[] hex2bytes(String hex) {

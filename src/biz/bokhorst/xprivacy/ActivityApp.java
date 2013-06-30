@@ -128,18 +128,13 @@ public class ActivityApp extends Activity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.app, menu);
 
+		// Launch
 		PackageManager pm = getPackageManager();
-		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName()) == null) {
+		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName()) == null)
 			menu.findItem(R.id.menu_app_launch).setEnabled(false);
-		}
 
-		boolean hasMarketLink = false;
-		try {
-			String installer = pm.getInstallerPackageName(mAppInfo.getPackageName());
-			if (installer != null)
-				hasMarketLink = installer.equals("com.android.vending") || installer.contains("google");
-		} catch (Exception e) {
-		}
+		// Play
+		boolean hasMarketLink = Util.hasMarketLink(this, mAppInfo.getPackageName());
 		menu.findItem(R.id.menu_app_store).setEnabled(hasMarketLink);
 
 		return true;
