@@ -739,10 +739,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void sendSupportInfo(String text) {
+		String version = null;
+		try {
+			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			version = pInfo.versionName;
+		} catch (Throwable ex) {
+		}
+
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("message/rfc822");
 		intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
-		intent.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy support info");
+		intent.putExtra(Intent.EXTRA_SUBJECT, String.format("XPrivacy %s support info", version));
 		intent.putExtra(Intent.EXTRA_TEXT, text);
 		try {
 			startActivity(Intent.createChooser(intent, "Send mail..."));
