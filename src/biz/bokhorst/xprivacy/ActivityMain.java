@@ -934,6 +934,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		@Override
 		protected void onPostExecute(String result) {
 			notify(result, false);
+			ActivityMain.this.recreate();
 			super.onPostExecute(result);
 		}
 
