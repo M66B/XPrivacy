@@ -228,7 +228,7 @@ It seems like a lot of steps, but it is done in no time:
 1. Enable XPrivacy from the Xposed installer
 1. Reboot into recovery
 1. Flash the Xposed fix for your Android version from [here](http://goo.im/devs/M66B/xprivacy)
-	* Android ICS 4.0.x / CM9: Xposed_fix_4.0.zip **experimental !!!**
+	* Android ICS 4.0.x / CM9: Xposed_fix_4.0.zip
 	* Android JB 4.1.x / CM10: Xposed_fix_4.1.zip
 	* Android JB 4.2.x / CM10.1: Xposed_fix_4.2.zip
 	* **This fix is only for Xposed version 2.1.4**
@@ -724,6 +724,7 @@ Current translation:
 * Japanese (ja)
 * Polish (pl)
 * Romanian (ro)
+* Rusian (ru)
 * Simplified Chinese (zh-rCN)
 * Slovak (sk)
 * Slovenian (sl)
