@@ -446,6 +446,12 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 0.42** (in development)
+
+* Display notification when XPrivacy is not enabled also when Xposed installer is not present
+* Updated French translation
+* Updated Slovenian translation
+
 **Version 0.41**
 
 * Filter applications by used data ([issue](https://github.com/M66B/XPrivacy/issues/79))
