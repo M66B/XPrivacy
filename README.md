@@ -287,6 +287,7 @@ Permissions
 
 XPrivacy asks for the following Android permissions:
 
+* Boot: to check if XPrivacy is enabled
 * Internet: to check for updates (only manual from the menu)
 * Storage: to export settings to the SD card (only [pro version](http://www.faircode.eu/xprivacy/))
 
@@ -447,6 +448,8 @@ Changelog
 **Version 0.41** (in development)
 
 * Filter applications by used data ([issue](https://github.com/M66B/XPrivacy/issues/79))
+* Display notification when XPrivacy is not enabled in Xposed after boot
+* Attempt to fix delay when applying boot restriction
 * Added Polish translation
 * Updated Slovak translation
 
