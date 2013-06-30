@@ -64,6 +64,8 @@ public class PrivacyManager {
 	public final static String cSettingId = "ID";
 	public final static String cSettingTheme = "Theme";
 
+	private final static String cDeface = "DEFACE";
+
 	private final static int cCacheTimeoutMs = 15 * 1000;
 
 	private static Map<String, List<String>> mPermissions = new LinkedHashMap<String, List<String>>();
@@ -240,6 +242,8 @@ public class PrivacyManager {
 		mMethods.get(cPhone).add("TelephonyProvider");
 	}
 
+	// Data
+
 	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {
 		if (restrictionName != null && !mPermissions.containsKey(restrictionName))
 			Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
@@ -274,49 +278,13 @@ public class PrivacyManager {
 		return mMethods.get(restrictionName);
 	}
 
-	public static boolean hasInternet(Context context, String packageName) {
-		// TODO: check if internet permission restricted
-		PackageManager pm = context.getPackageManager();
-		return (pm.checkPermission("android.permission.INTERNET", packageName) == PackageManager.PERMISSION_GRANTED);
+	public static String getLocalizedName(Context context, String restrictionName) {
+		String packageName = PrivacyManager.class.getPackage().getName();
+		int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
+		return (stringId == 0 ? null : context.getString(stringId));
 	}
 
-	@SuppressLint("DefaultLocale")
-	public static boolean hasPermission(Context context, String packageName, String restrictionName) {
-		List<String> listPermission = mPermissions.get(restrictionName);
-		if (listPermission == null || listPermission.size() == 0)
-			return true;
-
-		try {
-			PackageManager pm = context.getPackageManager();
-			PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
-			if (pInfo != null && pInfo.requestedPermissions != null)
-				for (String rPermission : pInfo.requestedPermissions)
-					for (String permission : listPermission)
-						if (rPermission.toLowerCase().contains(permission.toLowerCase()))
-							return true;
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			return false;
-		}
-		return false;
-	}
-
-	public static boolean isUsed(Context context, int uid, String restrictionName, String methodName) {
-		return (getUsed(context, uid, restrictionName, methodName) != 0);
-	}
-
-	public static long getUsed(Context context, int uid, String restrictionName, String methodName) {
-		long lastUsage = 0;
-		ContentResolver cr = context.getContentResolver();
-		Cursor cursor = cr.query(PrivacyProvider.URI_USAGE, null, restrictionName, new String[] {
-				Integer.toString(uid), methodName }, null);
-		if (cursor.moveToNext())
-			lastUsage = cursor.getLong(cursor.getColumnIndex(PrivacyProvider.COL_USED));
-		cursor.close();
-		boolean used = (lastUsage != 0);
-		logRestriction(null, context, uid, "used", restrictionName, methodName, used, false, 0);
-		return lastUsage;
-	}
+	// Restrictions
 
 	@SuppressLint("DefaultLocale")
 	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName,
@@ -486,6 +454,64 @@ public class PrivacyManager {
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
 	}
 
+	public static class RestrictionDesc {
+		public int uid;
+		public boolean restricted;
+		public String restrictionName;
+		public String methodName;
+	}
+
+	public static List<RestrictionDesc> getRestrictions(Context context) {
+		List<RestrictionDesc> result = new ArrayList<RestrictionDesc>();
+		Cursor rCursor = context.getContentResolver().query(PrivacyProvider.URI_RESTRICTION, null, null,
+				new String[] { Integer.toString(0), Boolean.toString(false) }, null);
+		while (rCursor.moveToNext()) {
+			RestrictionDesc restriction = new RestrictionDesc();
+			restriction.uid = rCursor.getInt(rCursor.getColumnIndex(PrivacyProvider.COL_UID));
+			restriction.restricted = Boolean.parseBoolean(rCursor.getString(rCursor
+					.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
+			restriction.restrictionName = rCursor.getString(rCursor.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
+			restriction.methodName = rCursor.getString(rCursor.getColumnIndex(PrivacyProvider.COL_METHOD));
+			result.add(restriction);
+		}
+		rCursor.close();
+		return result;
+	}
+
+	public static void deleteRestrictions(Context context, int uid) {
+		context.getContentResolver().delete(PrivacyProvider.URI_RESTRICTION, null,
+				new String[] { Integer.toString(uid) });
+		Util.log(null, Log.INFO, "Delete restrictions uid=" + uid);
+	}
+
+	// Usage
+
+	public static boolean isUsed(Context context, int uid, String restrictionName, String methodName) {
+		return (getUsed(context, uid, restrictionName, methodName) != 0);
+	}
+
+	public static long getUsed(Context context, int uid, String restrictionName, String methodName) {
+		long lastUsage = 0;
+		ContentResolver cr = context.getContentResolver();
+		Cursor cursor = cr.query(PrivacyProvider.URI_USAGE, null, restrictionName, new String[] {
+				Integer.toString(uid), methodName }, null);
+		if (cursor.moveToNext())
+			lastUsage = cursor.getLong(cursor.getColumnIndex(PrivacyProvider.COL_USED));
+		cursor.close();
+		boolean used = (lastUsage != 0);
+		logRestriction(null, context, uid, "used", restrictionName, methodName, used, false, 0);
+		return lastUsage;
+	}
+
+	public static void deleteUsageData(Context context, int uid) {
+		for (String restrictionName : PrivacyManager.getRestrictions())
+			context.getContentResolver().delete(PrivacyProvider.URI_USAGE, restrictionName,
+					new String[] { Integer.toString(uid) });
+		Util.log(null, Log.INFO, "Delete usage uid=" + uid);
+	}
+
+	// Settings
+
 	public static String getSetting(XHook hook, Context context, String settingName, String defaultValue,
 			boolean useCache) {
 		// Check cache
@@ -560,26 +586,20 @@ public class PrivacyManager {
 		Util.log(hook, Log.INFO, String.format("set setting %s=%s", settingName, value));
 	}
 
-	public static void deleteRestrictions(Context context, int uid) {
-		context.getContentResolver().delete(PrivacyProvider.URI_RESTRICTION, null,
-				new String[] { Integer.toString(uid) });
-		Util.log(null, Log.INFO, "Delete restrictions uid=" + uid);
+	public static Map<String, String> getSettings(Context context) {
+		Map<String, String> result = new HashMap<String, String>();
+		Cursor sCursor = context.getContentResolver().query(PrivacyProvider.URI_SETTING, null, null, null, null);
+		while (sCursor.moveToNext()) {
+			// Get setting
+			String setting = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_SETTING));
+			String value = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_VALUE));
+			result.put(setting, value);
+		}
+		sCursor.close();
+		return result;
 	}
 
-	public static void deleteUsageData(Context context, int uid) {
-		for (String restrictionName : PrivacyManager.getRestrictions())
-			context.getContentResolver().delete(PrivacyProvider.URI_USAGE, restrictionName,
-					new String[] { Integer.toString(uid) });
-		Util.log(null, Log.INFO, "Delete usage uid=" + uid);
-	}
-
-	public static String getLocalizedName(Context context, String restrictionName) {
-		String packageName = PrivacyManager.class.getPackage().getName();
-		int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
-		return (stringId == 0 ? null : context.getString(stringId));
-	}
-
-	private final static String cDeface = "DEFACE";
+	// Defacing
 
 	public static String getDefacedProp(String name) {
 
@@ -678,6 +698,33 @@ public class PrivacyManager {
 				return packages[0];
 		}
 		return Integer.toString(uid);
+	}
+
+	public static boolean hasInternet(Context context, String packageName) {
+		// TODO: check if internet permission restricted
+		PackageManager pm = context.getPackageManager();
+		return (pm.checkPermission("android.permission.INTERNET", packageName) == PackageManager.PERMISSION_GRANTED);
+	}
+
+	@SuppressLint("DefaultLocale")
+	public static boolean hasPermission(Context context, String packageName, String restrictionName) {
+		List<String> listPermission = mPermissions.get(restrictionName);
+		if (listPermission == null || listPermission.size() == 0)
+			return true;
+
+		try {
+			PackageManager pm = context.getPackageManager();
+			PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
+			if (pInfo != null && pInfo.requestedPermissions != null)
+				for (String rPermission : pInfo.requestedPermissions)
+					for (String permission : listPermission)
+						if (rPermission.toLowerCase().contains(permission.toLowerCase()))
+							return true;
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return false;
+		}
+		return false;
 	}
 
 	// Helper classes

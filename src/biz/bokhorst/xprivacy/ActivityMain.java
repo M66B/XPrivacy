@@ -47,7 +47,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -749,58 +748,37 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 				// Process settings
 				publishProgress(getString(R.string.menu_settings));
-				Cursor sCursor = getContentResolver().query(PrivacyProvider.URI_SETTING, null, null, null, null);
-				while (sCursor.moveToNext()) {
-					// Get setting
-					String setting = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_SETTING));
-					String value = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_VALUE));
 
+				Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityMain.this);
+				for (String setting : mapSetting.keySet()) {
 					// Serialize setting
+					String value = mapSetting.get(setting);
 					serializer.startTag(null, "Setting");
 					serializer.attribute(null, "Name", setting);
 					serializer.attribute(null, "Value", value);
 					serializer.endTag(null, "Setting");
 				}
-				sCursor.close();
 
 				// Process restrictions
-				Cursor rCursor = getContentResolver().query(PrivacyProvider.URI_RESTRICTION, null, null,
-						new String[] { Integer.toString(0), Boolean.toString(false) }, null);
-				while (rCursor.moveToNext()) {
-					// Decode uid
-					int uid = rCursor.getInt(rCursor.getColumnIndex(PrivacyProvider.COL_UID));
-					boolean restricted = Boolean.parseBoolean(rCursor.getString(rCursor
-							.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
-					String[] packages = getPackageManager().getPackagesForUid(uid);
+				List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager
+						.getRestrictions(ActivityMain.this);
+				for (PrivacyManager.RestrictionDesc restriction : listRestriction) {
+					String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
 					if (packages == null)
-						Util.log(null, Log.WARN, "No packages for uid=" + uid);
+						Util.log(null, Log.WARN, "No packages for uid=" + restriction.uid);
 					else
 						for (String packageName : packages) {
 							publishProgress(packageName);
 
-							// Package
 							serializer.startTag(null, "Package");
-
-							// Attribute package name
 							serializer.attribute(null, "Name", packageName);
-
-							// Attribute restriction name
-							String restrictionName = rCursor.getString(rCursor
-									.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
-							serializer.attribute(null, "Restriction", restrictionName);
-
-							// Attribute method name
-							String methodName = rCursor.getString(rCursor.getColumnIndex(PrivacyProvider.COL_METHOD));
-							if (methodName != null)
-								serializer.attribute(null, "Method", methodName);
-
-							// Restricted indication
-							serializer.attribute(null, "Restricted", Boolean.toString(restricted));
-
+							serializer.attribute(null, "Restriction", restriction.restrictionName);
+							if (restriction.methodName != null)
+								serializer.attribute(null, "Method", restriction.methodName);
+							serializer.attribute(null, "Restricted", Boolean.toString(restriction.restricted));
 							serializer.endTag(null, "Package");
 						}
 				}
-				rCursor.close();
 
 				// End serialization
 				serializer.endTag(null, "XPrivacy");
