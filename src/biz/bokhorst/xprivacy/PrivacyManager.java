@@ -397,7 +397,7 @@ public class PrivacyManager {
 			// Use fallback
 			if (fallback) {
 				// Queue usage data
-				if (usage && uid != PrivacyManager.cUidAndroid && !"getPackageGids".equals(methodName)) {
+				if (usage && uid != PrivacyManager.cUidAndroid) {
 					UsageData usageData = new UsageData(uid, restrictionName, methodName);
 					synchronized (mUsageQueue) {
 						if (mUsageQueue.containsKey(usageData))
