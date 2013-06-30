@@ -447,6 +447,8 @@ Changelog
 **Version 0.41** (in development)
 
 * Filter applications by used data ([issue](https://github.com/M66B/XPrivacy/issues/79))
+* Added Polish translation
+* Updated Slovak translation
 
 **Version 0.40**
 
@@ -709,6 +711,7 @@ Current translation:
 * Greek (el)
 * Hebrew (he/iw)
 * Japanese (ja)
+* Polish (pl)
 * Romanian (ro)
 * Simplified Chinese (zh-rCN)
 * Slovak (sk)
