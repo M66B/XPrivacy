@@ -606,7 +606,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private File getExportFile() {
 		String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
-		String fileName = folder + File.separator + "XPrivacy.xml";
+		String fileName = folder + File.separator + "XPrivacy" + File.separator + "data.xml";
 		return new File(fileName);
 	}
 
@@ -746,13 +746,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		} catch (Throwable ex) {
 		}
 
-		Intent intent = new Intent(Intent.ACTION_SEND);
-		intent.setType("message/rfc822");
-		intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
-		intent.putExtra(Intent.EXTRA_SUBJECT, String.format("XPrivacy %s support info", version));
-		intent.putExtra(Intent.EXTRA_TEXT, text);
+		Intent sendEmail = new Intent(Intent.ACTION_SEND);
+		sendEmail.setType("message/rfc822");
+		sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
+		sendEmail.putExtra(Intent.EXTRA_SUBJECT, String.format("XPrivacy %s support info", version));
+		sendEmail.putExtra(Intent.EXTRA_TEXT, text);
 		try {
-			startActivity(Intent.createChooser(intent, "Send mail..."));
+			startActivity(sendEmail);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
