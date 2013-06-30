@@ -16,27 +16,24 @@ public class BootReceiver extends BroadcastReceiver {
 			// Create Xposed installer intent
 			Intent xInstallerIntent = context.getPackageManager().getLaunchIntentForPackage(
 					"de.robv.android.xposed.installer");
+			PendingIntent pi = (xInstallerIntent == null ? null : PendingIntent.getActivity(context, 0,
+					xInstallerIntent, PendingIntent.FLAG_UPDATE_CURRENT));
 
-			if (xInstallerIntent != null) {
-				// Create pending intent
-				PendingIntent pi = PendingIntent.getActivity(context, 0, xInstallerIntent,
-						PendingIntent.FLAG_UPDATE_CURRENT);
-
-				// Build notification
-				NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
-				notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-				notificationBuilder.setContentTitle(context.getString(R.string.app_name));
-				notificationBuilder.setContentText(context.getString(R.string.app_notenabled));
-				notificationBuilder.setWhen(System.currentTimeMillis());
-				notificationBuilder.setAutoCancel(true);
+			// Build notification
+			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+			notificationBuilder.setContentTitle(context.getString(R.string.app_name));
+			notificationBuilder.setContentText(context.getString(R.string.app_notenabled));
+			notificationBuilder.setWhen(System.currentTimeMillis());
+			notificationBuilder.setAutoCancel(true);
+			if (pi != null)
 				notificationBuilder.setContentIntent(pi);
-				Notification notification = notificationBuilder.build();
+			Notification notification = notificationBuilder.build();
 
-				// Display notification
-				NotificationManager notificationManager = (NotificationManager) context
-						.getSystemService(Context.NOTIFICATION_SERVICE);
-				notificationManager.notify(3, notification);
-			}
+			// Display notification
+			NotificationManager notificationManager = (NotificationManager) context
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.notify(3, notification);
 		}
 	}
 }
