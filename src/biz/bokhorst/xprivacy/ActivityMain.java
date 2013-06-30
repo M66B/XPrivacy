@@ -124,7 +124,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				mUsed = !mUsed;
 
 				CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-				cbFilter.setEnabled(!mUsed);
 				cbFilter.setChecked(false);
 
 				imgUsed.setImageDrawable(getResources().getDrawable(mUsed ? R.drawable.used : R.drawable.used_grayed));
@@ -278,7 +277,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (buttonView == cbFilter)
 			if (mAppAdapter != null) {
 				ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
-				imgUsed.setEnabled(!isChecked);
 				imgUsed.setImageDrawable(getResources().getDrawable(R.drawable.used_grayed));
 
 				EditText etFilter = (EditText) findViewById(R.id.etFilter);
