@@ -24,6 +24,6 @@ public class XInterfaceAddress extends XHook {
 		if (address != null)
 			if (!(address.isAnyLocalAddress() || address.isLoopbackAddress()))
 				if (isRestricted(param))
-					param.setResult(Restriction.getDefacedInetAddress());
+					param.setResult(PrivacyManager.getDefacedInetAddress());
 	}
 }

@@ -25,7 +25,7 @@ import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-public class Restriction {
+public class PrivacyManager {
 
 	// This should correspond with restrict_<name> in strings.xml
 	public static final String cAccounts = "accounts";
@@ -133,11 +133,11 @@ public class Restriction {
 			mMethods.get(cSystem).add(am);
 
 		// Audio record
-		mMethods.get(Restriction.cMedia).add("startRecording");
+		mMethods.get(PrivacyManager.cMedia).add("startRecording");
 
 		// Bluetooth adapter
-		mMethods.get(Restriction.cNetwork).add("getAddress");
-		mMethods.get(Restriction.cNetwork).add("getBondedDevices");
+		mMethods.get(PrivacyManager.cNetwork).add("getAddress");
+		mMethods.get(PrivacyManager.cNetwork).add("getBondedDevices");
 
 		// Camera
 		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
@@ -207,7 +207,7 @@ public class Restriction {
 
 		// Intent receive: boot
 		mMethods.get(cBoot).add(Intent.ACTION_BOOT_COMPLETED);
-		if (Restriction.cExperimental)
+		if (PrivacyManager.cExperimental)
 			mMethods.get(cBoot).add("installContentProviders");
 
 		// Intent receive: calling
@@ -254,7 +254,7 @@ public class Restriction {
 
 	public static List<String> getRestrictions() {
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
-		if (!Boolean.parseBoolean(Restriction.getSetting(null, null, Restriction.cSettingExpert,
+		if (!Boolean.parseBoolean(PrivacyManager.getSetting(null, null, PrivacyManager.cSettingExpert,
 				Boolean.FALSE.toString(), false))) {
 			listRestriction.remove(cBoot);
 			listRestriction.remove(cShell);
@@ -358,7 +358,7 @@ public class Restriction {
 			// Check if restricted
 			boolean fallback = true;
 			boolean restricted = false;
-			if (context != null && uid != Restriction.cUidAndroid)
+			if (context != null && uid != PrivacyManager.cUidAndroid)
 				try {
 					// Get content resolver
 					ContentResolver contentResolver = context.getContentResolver();
@@ -421,7 +421,7 @@ public class Restriction {
 			// Use fallback
 			if (fallback) {
 				// Queue usage data
-				if (usage && uid != Restriction.cUidAndroid && !"getPackageGids".equals(methodName)) {
+				if (usage && uid != PrivacyManager.cUidAndroid && !"getPackageGids".equals(methodName)) {
 					UsageData usageData = new UsageData(uid, restrictionName, methodName);
 					synchronized (mUsageQueue) {
 						if (mUsageQueue.containsKey(usageData))
@@ -567,14 +567,14 @@ public class Restriction {
 	}
 
 	public static void deleteUsageData(Context context, int uid) {
-		for (String restrictionName : Restriction.getRestrictions())
+		for (String restrictionName : PrivacyManager.getRestrictions())
 			context.getContentResolver().delete(PrivacyProvider.URI_USAGE, restrictionName,
 					new String[] { Integer.toString(uid) });
 		Util.log(null, Log.INFO, "Delete usage uid=" + uid);
 	}
 
 	public static String getLocalizedName(Context context, String restrictionName) {
-		String packageName = Restriction.class.getPackage().getName();
+		String packageName = PrivacyManager.class.getPackage().getName();
 		int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
 		return (stringId == 0 ? null : context.getString(stringId));
 	}
@@ -647,8 +647,8 @@ public class Restriction {
 	}
 
 	public static Location getDefacedLocation(Location location) {
-		String sLat = getSetting(null, null, Restriction.cSettingLatitude, "", true);
-		String sLon = getSetting(null, null, Restriction.cSettingLongitude, "", true);
+		String sLat = getSetting(null, null, PrivacyManager.cSettingLatitude, "", true);
+		String sLon = getSetting(null, null, PrivacyManager.cSettingLongitude, "", true);
 		if (sLat.equals("") || sLon.equals("")) {
 			// Christmas Island
 			location.setLatitude(-10.5);

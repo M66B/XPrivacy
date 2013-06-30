@@ -45,7 +45,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		mListApplicationName = new ArrayList<String>();
 		mListApplicationName.add(getApplicationName(appInfo, pm));
 		mPackageName = appInfo.packageName;
-		mHasInternet = Restriction.hasInternet(context, appInfo.packageName);
+		mHasInternet = PrivacyManager.hasInternet(context, appInfo.packageName);
 		mUid = appInfo.uid;
 		try {
 			mVersion = pm.getPackageInfo(appInfo.packageName, 0).versionName;
@@ -64,7 +64,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	public static List<ApplicationInfoEx> getXApplicationList(Context context) {
 		// Get references
 		PackageManager pm = context.getPackageManager();
-		boolean expert = Boolean.parseBoolean(Restriction.getSetting(null, context, Restriction.cSettingExpert,
+		boolean expert = Boolean.parseBoolean(PrivacyManager.getSetting(null, context, PrivacyManager.cSettingExpert,
 				Boolean.FALSE.toString(), false));
 
 		// Get app list

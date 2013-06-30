@@ -44,7 +44,7 @@ public class XNetworkInterface extends XHook {
 				if (isRestricted(param))
 					if (methodName.equals("getHardwareAddress")) {
 						byte[] address = (byte[]) param.getResult();
-						byte[] defaced = Restriction.getDefacedBytes();
+						byte[] defaced = PrivacyManager.getDefacedBytes();
 						for (int i = 0; i < address.length; i++)
 							address[i] = defaced[i % defaced.length];
 						param.setResult(address);
@@ -56,7 +56,7 @@ public class XNetworkInterface extends XHook {
 							if (address.isAnyLocalAddress() || address.isLoopbackAddress())
 								listAddress.add(address);
 							else
-								listAddress.add(Restriction.getDefacedInetAddress());
+								listAddress.add(PrivacyManager.getDefacedInetAddress());
 						param.setResult(Collections.enumeration(listAddress));
 					} else if (methodName.equals("getInterfaceAddresses")) {
 						@SuppressWarnings("unchecked")
@@ -65,7 +65,7 @@ public class XNetworkInterface extends XHook {
 							// address
 							try {
 								Field fieldAddress = findField(InterfaceAddress.class, "address");
-								fieldAddress.set(address, Restriction.getDefacedInetAddress());
+								fieldAddress.set(address, PrivacyManager.getDefacedInetAddress());
 							} catch (Throwable ex) {
 								Util.bug(this, ex);
 							}
@@ -73,7 +73,7 @@ public class XNetworkInterface extends XHook {
 							// broadcastAddress
 							try {
 								Field fieldBroadcastAddress = findField(InterfaceAddress.class, "broadcastAddress");
-								fieldBroadcastAddress.set(address, Restriction.getDefacedInetAddress());
+								fieldBroadcastAddress.set(address, PrivacyManager.getDefacedInetAddress());
 							} catch (Throwable ex) {
 								Util.bug(this, ex);
 							}

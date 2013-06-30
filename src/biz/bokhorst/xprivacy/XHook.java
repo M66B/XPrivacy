@@ -24,7 +24,7 @@ public abstract class XHook {
 		mSpecifier = specifier;
 
 		if (restrictionName != null)
-			Restriction.registerMethod(getSpecifier(), restrictionName, permissions);
+			PrivacyManager.registerMethod(getSpecifier(), restrictionName, permissions);
 	}
 
 	public String getMethodName() {
@@ -50,11 +50,11 @@ public abstract class XHook {
 	protected boolean isRestricted(MethodHookParam param, String methodName) throws Throwable {
 		int uid = Binder.getCallingUid();
 		Context context = AndroidAppHelper.currentApplication();
-		return Restriction.getRestricted(this, context, uid, mRestrictionName, methodName, true, true);
+		return PrivacyManager.getRestricted(this, context, uid, mRestrictionName, methodName, true, true);
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) throws Throwable {
-		return Restriction.getRestricted(this, context, uid, mRestrictionName, mMethodName, usage, true);
+		return PrivacyManager.getRestricted(this, context, uid, mRestrictionName, mMethodName, usage, true);
 	}
 
 	protected void notifyUser(String message) throws Throwable {

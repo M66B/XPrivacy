@@ -97,16 +97,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
-		String sTheme = Restriction.getSetting(null, this, Restriction.cSettingTheme, null, false);
+		String sTheme = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, null, false);
 		mThemeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
 		setTheme(mThemeId);
 		setContentView(R.layout.mainlist);
 
 		// Get localized restriction name
-		List<String> listRestriction = Restriction.getRestrictions();
+		List<String> listRestriction = PrivacyManager.getRestrictions();
 		List<String> listLocalizedRestriction = new ArrayList<String>();
 		for (String restrictionName : listRestriction)
-			listLocalizedRestriction.add(Restriction.getLocalizedName(this, restrictionName));
+			listLocalizedRestriction.add(PrivacyManager.getLocalizedName(this, restrictionName));
 
 		// Build spinner adapter
 		ArrayAdapter<String> spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
@@ -143,7 +143,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				if (position != AdapterView.INVALID_POSITION) {
 					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 					infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s",
-							Restriction.getRestrictions().get(position))));
+							PrivacyManager.getRestrictions().get(position))));
 					startActivity(infoIntent);
 				}
 			}
@@ -237,7 +237,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 		if (mAppAdapter != null) {
-			String restrictionName = Restriction.getRestrictions().get(pos);
+			String restrictionName = PrivacyManager.getRestrictions().get(pos);
 			mAppAdapter.setRestrictionName(restrictionName);
 			applyFilter();
 		}
@@ -297,8 +297,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Check Xposed version
 		int xVersion = Util.getXposedVersion();
-		if (xVersion < Restriction.cXposedMinVersion) {
-			String msg = String.format(getString(R.string.app_notxposed), Restriction.cXposedMinVersion);
+		if (xVersion < PrivacyManager.cXposedMinVersion) {
+			String msg = String.format(getString(R.string.app_notxposed), PrivacyManager.cXposedMinVersion);
 			Util.log(null, Log.WARN, msg);
 
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
@@ -364,7 +364,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Check InterfaceAddress
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
-				|| Restriction.getDefacedInetAddress() == null)
+				|| PrivacyManager.getDefacedInetAddress() == null)
 			reportClass(InterfaceAddress.class);
 
 		// Check runtime
@@ -431,27 +431,27 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
-		String sExpert = Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingExpert,
+		String sExpert = PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingExpert,
 				Boolean.FALSE.toString(), false);
 		final boolean expert = Boolean.parseBoolean(sExpert);
 		cbSettings.setChecked(expert);
-		etLat.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingLatitude, "", false));
-		etLon.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingLongitude, "", false));
-		etMac.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingMac, "", false));
-		etImei.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingImei, "", false));
-		etPhone.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingPhone, "", false));
-		etId.setText(Restriction.getSetting(null, ActivityMain.this, Restriction.cSettingId, "", false));
+		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "", false));
+		etLon.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude, "", false));
+		etMac.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMac, "", false));
+		etImei.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingImei, "", false));
+		etPhone.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingPhone, "", false));
+		etId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingId, "", false));
 
 		// Wait for OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				// Set expert mode
-				Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingExpert,
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingExpert,
 						Boolean.toString(cbSettings.isChecked()));
 				if (expert != cbSettings.isChecked()) {
 					// Start task to get app list
-					List<String> listRestriction = Restriction.getRestrictions();
+					List<String> listRestriction = PrivacyManager.getRestrictions();
 					String restrictionName = listRestriction.get(0);
 					AppListTask appListTask = new AppListTask();
 					appListTask.execute(restrictionName);
@@ -464,20 +464,25 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					if (lat < -90 || lat > 90 || lon < -180 || lon > 180)
 						throw new InvalidParameterException();
 
-					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLatitude, Float.toString(lat));
-					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLongitude, Float.toString(lon));
+					PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude,
+							Float.toString(lat));
+					PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude,
+							Float.toString(lon));
 
 				} catch (Throwable ex) {
-					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLatitude, "");
-					Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingLongitude, "");
+					PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "");
+					PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude, "");
 				}
 
 				// Other settings
-				Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingMac, etMac.getText().toString());
-				Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingImei, etImei.getText().toString());
-				Restriction
-						.setSetting(null, ActivityMain.this, Restriction.cSettingPhone, etPhone.getText().toString());
-				Restriction.setSetting(null, ActivityMain.this, Restriction.cSettingId, etId.getText().toString());
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingMac, etMac.getText()
+						.toString());
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingImei, etImei.getText()
+						.toString());
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingPhone, etPhone.getText()
+						.toString());
+				PrivacyManager
+						.setSetting(null, ActivityMain.this, PrivacyManager.cSettingId, etId.getText().toString());
 
 				// Done
 				dlgSettings.dismiss();
@@ -515,12 +520,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionSwitchTheme() {
-		String sTheme = Restriction.getSetting(null, this, Restriction.cSettingTheme, null, false);
+		String sTheme = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, null, false);
 		int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
 		if (themeId == android.R.style.Theme_Holo_Light)
-			Restriction.setSetting(null, this, Restriction.cSettingTheme, Integer.toString(android.R.style.Theme_Holo));
+			PrivacyManager.setSetting(null, this, PrivacyManager.cSettingTheme,
+					Integer.toString(android.R.style.Theme_Holo));
 		else
-			Restriction.setSetting(null, this, Restriction.cSettingTheme,
+			PrivacyManager.setSetting(null, this, PrivacyManager.cSettingTheme,
 					Integer.toString(android.R.style.Theme_Holo_Light));
 		this.recreate();
 	}
@@ -880,7 +886,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					NamedNodeMap attrs = entry.getAttributes();
 					String setting = attrs.getNamedItem("Name").getNodeValue();
 					String value = attrs.getNamedItem("Value").getNodeValue();
-					Restriction.setSetting(null, ActivityMain.this, setting, value);
+					PrivacyManager.setSetting(null, ActivityMain.this, setting, value);
 				}
 
 				// Process restrictions
@@ -913,13 +919,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
 
 						// Reset existing restrictions
-						Restriction.deleteRestrictions(ActivityMain.this, uid);
+						PrivacyManager.deleteRestrictions(ActivityMain.this, uid);
 
 						// Set imported restrictions
 						for (String restrictionName : mapPackage.get(packageName).keySet()) {
-							Restriction.setRestricted(null, ActivityMain.this, uid, restrictionName, null, true);
+							PrivacyManager.setRestricted(null, ActivityMain.this, uid, restrictionName, null, true);
 							for (String methodName : mapPackage.get(packageName).get(restrictionName))
-								Restriction.setRestricted(null, ActivityMain.this, uid, restrictionName, methodName,
+								PrivacyManager.setRestricted(null, ActivityMain.this, uid, restrictionName, methodName,
 										false);
 						}
 					} catch (NameNotFoundException ex) {
@@ -1071,8 +1077,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.lstApp) {
 					if (constraint == null) {
-						boolean restricted = Restriction.getRestricted(null, null, xAppInfo.getUid(), mRestrictionName,
-								null, false, false);
+						boolean restricted = PrivacyManager.getRestricted(null, null, xAppInfo.getUid(),
+								mRestrictionName, null, false, false);
 						if (restricted)
 							lstApp.add(xAppInfo);
 					} else if (xAppInfo.toString().toLowerCase().contains(((String) constraint).toLowerCase()))
@@ -1141,24 +1147,24 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			imgInternet.setVisibility(xAppInfo.hasInternet() ? View.VISIBLE : View.INVISIBLE);
 
 			// Check if used
-			boolean used = Restriction.isUsed(row.getContext(), xAppInfo.getUid(), mRestrictionName, null);
+			boolean used = PrivacyManager.isUsed(row.getContext(), xAppInfo.getUid(), mRestrictionName, null);
 			ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 
 			// Display restriction
-			boolean restricted = Restriction.getRestricted(null, row.getContext(), xAppInfo.getUid(), mRestrictionName,
-					null, false, false);
+			boolean restricted = PrivacyManager.getRestricted(null, row.getContext(), xAppInfo.getUid(),
+					mRestrictionName, null, false, false);
 			ctvApp.setChecked(restricted);
 
 			// Listen for restriction changes
 			ctvApp.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					boolean restricted = Restriction.getRestricted(null, view.getContext(), xAppInfo.getUid(),
+					boolean restricted = PrivacyManager.getRestricted(null, view.getContext(), xAppInfo.getUid(),
 							mRestrictionName, null, false, false);
 					restricted = !restricted;
 					ctvApp.setChecked(restricted);
-					Restriction.setRestricted(null, view.getContext(), xAppInfo.getUid(), mRestrictionName, null,
+					PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(), mRestrictionName, null,
 							restricted);
 				}
 			});

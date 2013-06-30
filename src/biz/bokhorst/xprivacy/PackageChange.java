@@ -23,8 +23,8 @@ public class PackageChange extends BroadcastReceiver {
 			String packageName = inputUri.getSchemeSpecificPart();
 			int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 			boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
-			boolean expert = Boolean.parseBoolean(Restriction.getSetting(null, context, Restriction.cSettingExpert,
-					Boolean.FALSE.toString(), false));
+			boolean expert = Boolean.parseBoolean(PrivacyManager.getSetting(null, context,
+					PrivacyManager.cSettingExpert, Boolean.FALSE.toString(), false));
 			NotificationManager notificationManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -44,8 +44,8 @@ public class PackageChange extends BroadcastReceiver {
 				if (expert ? true : !system) {
 					// Default deny new user apps
 					if (!system && !replacing)
-						for (String restrictionName : Restriction.getRestrictions())
-							Restriction.setRestricted(null, context, uid, restrictionName, null, true);
+						for (String restrictionName : PrivacyManager.getRestrictions())
+							PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
 
 					// Build result intent
 					Intent resultIntent = new Intent(context, ActivityApp.class);
@@ -75,11 +75,11 @@ public class PackageChange extends BroadcastReceiver {
 				notificationManager.cancel(uid);
 
 				// Remove existing restrictions
-				for (String restrictionName : Restriction.getRestrictions())
-					Restriction.setRestricted(null, context, uid, restrictionName, null, false);
+				for (String restrictionName : PrivacyManager.getRestrictions())
+					PrivacyManager.setRestricted(null, context, uid, restrictionName, null, false);
 
 				// Remove usage data
-				Restriction.deleteUsageData(context, uid);
+				PrivacyManager.deleteUsageData(context, uid);
 			}
 		}
 	}

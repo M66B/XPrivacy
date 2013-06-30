@@ -44,7 +44,7 @@ public class XWifiManager extends XHook {
 					// BSSID
 					try {
 						Field fieldBSSID = findField(WifiInfo.class, "mBSSID");
-						fieldBSSID.set(wInfo, Restriction.getDefacedProp("MAC"));
+						fieldBSSID.set(wInfo, PrivacyManager.getDefacedProp("MAC"));
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
@@ -52,7 +52,7 @@ public class XWifiManager extends XHook {
 					// IP address
 					try {
 						Field fieldIp = findField(WifiInfo.class, "mIpAddress");
-						fieldIp.set(wInfo, Restriction.getDefacedInetAddress());
+						fieldIp.set(wInfo, PrivacyManager.getDefacedInetAddress());
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
@@ -60,7 +60,7 @@ public class XWifiManager extends XHook {
 					// MAC address
 					try {
 						Field fieldMAC = findField(WifiInfo.class, "mMacAddress");
-						fieldMAC.set(wInfo, Restriction.getDefacedProp("MAC"));
+						fieldMAC.set(wInfo, PrivacyManager.getDefacedProp("MAC"));
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
@@ -68,11 +68,11 @@ public class XWifiManager extends XHook {
 					// SSID
 					try {
 						Field fieldSSID = findField(WifiInfo.class, "mSSID");
-						fieldSSID.set(wInfo, Restriction.getDefacedProp("SSID"));
+						fieldSSID.set(wInfo, PrivacyManager.getDefacedProp("SSID"));
 					} catch (Throwable ex) {
 						try {
 							Field fieldWifiSsid = findField(WifiInfo.class, "mWifiSsid");
-							fieldWifiSsid.set(wInfo, Restriction.getDefacedProp("SSID"));
+							fieldWifiSsid.set(wInfo, PrivacyManager.getDefacedProp("SSID"));
 						} catch (Throwable exex) {
 							Util.bug(this, exex);
 						}
@@ -83,11 +83,11 @@ public class XWifiManager extends XHook {
 			DhcpInfo dInfo = (DhcpInfo) param.getResult();
 			if (dInfo != null)
 				if (isRestricted(param)) {
-					dInfo.ipAddress = Restriction.getDefacedIPInt();
-					dInfo.gateway = Restriction.getDefacedIPInt();
-					dInfo.dns1 = Restriction.getDefacedIPInt();
-					dInfo.dns2 = Restriction.getDefacedIPInt();
-					dInfo.serverAddress = Restriction.getDefacedIPInt();
+					dInfo.ipAddress = PrivacyManager.getDefacedIPInt();
+					dInfo.gateway = PrivacyManager.getDefacedIPInt();
+					dInfo.dns1 = PrivacyManager.getDefacedIPInt();
+					dInfo.dns2 = PrivacyManager.getDefacedIPInt();
+					dInfo.serverAddress = PrivacyManager.getDefacedIPInt();
 				}
 		}
 	}

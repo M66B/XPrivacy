@@ -69,7 +69,7 @@ public class XLocationManager extends XHook {
 			Location location = (Location) param.getResult();
 			if (location != null)
 				if (isRestricted(param))
-					param.setResult(Restriction.getDefacedLocation(location));
+					param.setResult(PrivacyManager.getDefacedLocation(location));
 		}
 	}
 
@@ -128,7 +128,8 @@ public class XLocationManager extends XHook {
 
 		@Override
 		public void onLocationChanged(Location location) {
-			mLocationListener.onLocationChanged(location == null ? location : Restriction.getDefacedLocation(location));
+			mLocationListener.onLocationChanged(location == null ? location : PrivacyManager
+					.getDefacedLocation(location));
 		}
 
 		@Override

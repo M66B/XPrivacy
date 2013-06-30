@@ -90,7 +90,7 @@ public class PrivacyProvider extends ContentProvider {
 				// Build restriction list
 				List<String> listRestrictionName;
 				if (restrictionName == null)
-					listRestrictionName = Restriction.getRestrictions();
+					listRestrictionName = PrivacyManager.getRestrictions();
 				else {
 					listRestrictionName = new ArrayList<String>();
 					listRestrictionName.add(restrictionName);
@@ -115,7 +115,7 @@ public class PrivacyProvider extends ContentProvider {
 						cursor.addRow(new Object[] { eUid, eRestrictionName, null, true });
 
 						// Exceptions
-						for (String eMethodName : Restriction.getMethodNames(eRestrictionName)) {
+						for (String eMethodName : PrivacyManager.getMethodNames(eRestrictionName)) {
 							boolean allowed = prefs.getBoolean(getExceptionPref(eUid, eRestrictionName, eMethodName),
 									false);
 							if (allowed)
@@ -258,8 +258,8 @@ public class PrivacyProvider extends ContentProvider {
 			// Method restrictions
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
 			SharedPreferences.Editor editor = prefs.edit();
-			for (String restrictionName : Restriction.getRestrictions()) {
-				for (String methodName : Restriction.getMethodNames(restrictionName)) {
+			for (String restrictionName : PrivacyManager.getRestrictions()) {
+				for (String methodName : PrivacyManager.getMethodNames(restrictionName)) {
 					rows++;
 					editor.remove(getExceptionPref(uid, restrictionName, methodName));
 				}
@@ -268,7 +268,7 @@ public class PrivacyProvider extends ContentProvider {
 			setPrefFileReadable(PREF_RESTRICTION);
 
 			// Group restrictions
-			for (String restrictionName : Restriction.getRestrictions()) {
+			for (String restrictionName : PrivacyManager.getRestrictions()) {
 				rows++;
 				updateRestriction(uid, restrictionName, null, true);
 			}
@@ -380,7 +380,7 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	private static String getPrefFileName(String preference) {
-		String packageName = Restriction.class.getPackage().getName();
+		String packageName = PrivacyManager.class.getPackage().getName();
 		return Environment.getDataDirectory() + "/data/" + packageName + "/shared_prefs/" + preference + ".xml";
 	}
 

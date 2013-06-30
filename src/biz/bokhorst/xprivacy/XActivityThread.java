@@ -61,7 +61,7 @@ public class XActivityThread extends XHook {
 								if (phoneNumber != null)
 									if (isRestricted(param, mActionName))
 										intent.putExtra(Intent.EXTRA_PHONE_NUMBER,
-												Restriction.getDefacedProp("PhoneNumber"));
+												PrivacyManager.getDefacedProp("PhoneNumber"));
 							}
 						} else if (action.equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
 							// Incoming call
@@ -71,7 +71,7 @@ public class XActivityThread extends XHook {
 								if (phoneNumber != null) {
 									if (isRestricted(param, mActionName))
 										intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER,
-												Restriction.getDefacedProp("PhoneNumber"));
+												PrivacyManager.getDefacedProp("PhoneNumber"));
 								}
 							}
 						} else
@@ -89,7 +89,7 @@ public class XActivityThread extends XHook {
 				List<ProviderInfo> listAllowed = new ArrayList<ProviderInfo>();
 				for (ProviderInfo provider : listProvider) {
 					// Skip if Android
-					if (provider.applicationInfo.uid == Restriction.cUidAndroid)
+					if (provider.applicationInfo.uid == PrivacyManager.cUidAndroid)
 						return;
 					int uid = provider.applicationInfo.uid;
 					Util.log(this, Log.INFO, "provider=" + provider.getClass().getName() + " uid=" + uid);
