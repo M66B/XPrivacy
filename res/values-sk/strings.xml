@@ -30,7 +30,7 @@
     <string name="restrict_calendar">Kalendár</string>
     <string name="restrict_calling">Volanie (telefón, SMS, MMS)</string>
     <string name="restrict_contacts">Kontakty</string>
-    <string name="restrict_dictionary">Dictionary (user)</string>
+    <string name="restrict_dictionary">Slovník (užívateľ)</string>
     <string name="restrict_identification">Identifikácia (zariadenie)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Poloha (presná/približná)</string>
@@ -38,7 +38,7 @@
     <string name="restrict_messages">Správy (SMS, MMS)</string>
     <string name="restrict_network">Sieť (adresy)</string>
     <string name="restrict_phone">Telefón (ID, čísla, hovory)</string>
-    <string name="restrict_storage">Úložisko (media, SD karta)</string>
+    <string name="restrict_storage">Úložisko (médiá, SD karta)</string>
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
@@ -48,7 +48,7 @@
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
     <string name="settings_mac">MAC adresa</string>
-    <string name="settings_phone">Phone number</string>
+    <string name="settings_phone">Telefónne číslo</string>
     <string name="settings_id">Android ID</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové oprávnenie</string>
