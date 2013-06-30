@@ -238,7 +238,9 @@ Upgrading
 ---------
 
 * **Make a backup**
-* Install the new version (replacing the previous version)
+* **Do not remove the previous version** (else your settings will get lost)
+* Download the new version
+* Install the new version over the previous version
 * Reboot your device
 
 You can check for updates using the options menu.
