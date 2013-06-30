@@ -3,9 +3,11 @@ package biz.bokhorst.xprivacy;
 import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.pm.ProviderInfo;
 import android.nfc.NfcAdapter;
@@ -52,8 +54,10 @@ public class XActivityThread extends XHook {
 					if (mActionName.equals(action)) {
 						if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
 							// Boot completed
-							if (isRestricted(param, mActionName))
+							if (isRestricted(param, mActionName)) {
+								finish(param);
 								param.setResult(null);
+							}
 						} else if (action.equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
 							// Outgoing call
 							Bundle bundle = intent.getExtras();
@@ -78,8 +82,10 @@ public class XActivityThread extends XHook {
 						} else if (action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED)
 								|| action.equals(NfcAdapter.ACTION_TAG_DISCOVERED)
 								|| action.equals(NfcAdapter.ACTION_TECH_DISCOVERED)) {
-							if (isRestricted(param, mActionName))
+							if (isRestricted(param, mActionName)) {
+								finish(param);
 								param.setResult(null);
+							}
 						} else
 							Util.log(this, Log.WARN, "Unhandled action=" + mActionName);
 					}
@@ -110,6 +116,24 @@ public class XActivityThread extends XHook {
 			}
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+	}
+
+	private void finish(MethodHookParam param) {
+		// unscheduleGcIdler
+		try {
+			Method unschedule = param.thisObject.getClass().getDeclaredMethod("unscheduleGcIdler");
+			unschedule.invoke(param.thisObject);
+		} catch (Throwable ex) {
+			Util.bug(this, ex);
+		}
+
+		// data.finish
+		try {
+			BroadcastReceiver.PendingResult pr = (BroadcastReceiver.PendingResult) param.args[0];
+			pr.finish();
+		} catch (Throwable ex) {
+			Util.bug(this, ex);
+		}
 	}
 
 	@Override
