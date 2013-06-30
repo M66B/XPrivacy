@@ -446,10 +446,11 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 0.41** (in development)
+**Version 0.41**
 
 * Filter applications by used data ([issue](https://github.com/M66B/XPrivacy/issues/79))
 * Display notification when XPrivacy is not enabled in Xposed after boot
+* **Experimental** support for Android ICS 4.0.x
 * Attempt to fix delay when applying boot restriction
 * Added Polish translation
 * Updated Slovak translation

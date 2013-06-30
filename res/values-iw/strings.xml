@@ -3,7 +3,7 @@
     <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed framework  לא מותקן</string>
     <string name="app_notenabled">XPrivacy לא מאופשר באפליקציה הראשית</string>
-    <string name="app_wrongandroid">נבדק עם גירסאות 4.1 ו4.2</string>
+    <string name="app_wrongandroid">Only tested with Android version 4.0, 4.1 and 4.2</string>
     <string name="app_version" formatted="false">XPrivacy גירסא: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework גירסא: %d</string>
     <string name="app_copyright">זכויות יוצרים \u00A9 2013 by M. Bokhorst (M66B)</string>

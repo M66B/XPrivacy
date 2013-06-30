@@ -3,7 +3,7 @@
     <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed框架版本 %d+ 未安装</string>
     <string name="app_notenabled">XPrivacy没有在Xposed安装程序中开启</string>
-    <string name="app_wrongandroid">仅支持Android版本4.1和4.2(JellyBean)</string>
+    <string name="app_wrongandroid">Only tested with Android version 4.0, 4.1 and 4.2</string>
     <string name="app_version" formatted="false">XPrivacy版本: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed框架版本: %d</string>
     <string name="app_copyright">版权所有 \u00A9 2013 M. Bokhorst (M66B)</string>

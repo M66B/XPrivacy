@@ -311,7 +311,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void checkRequirements() {
 		// Check Android version
-		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
+		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH
+				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
+				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR1) {
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.app_name));
