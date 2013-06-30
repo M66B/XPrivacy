@@ -91,6 +91,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
+	private boolean mUsed = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,9 +112,30 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		ArrayAdapter<String> spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
 		spAdapter.addAll(listLocalizedRestriction);
 
-		// Setup filter
+		// Setup restriction filter
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 		cbFilter.setOnCheckedChangeListener(this);
+
+		// Setup used filter
+		final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
+		imgUsed.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mUsed = !mUsed;
+
+				CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+				cbFilter.setEnabled(!mUsed);
+				cbFilter.setChecked(false);
+
+				imgUsed.setImageDrawable(getResources().getDrawable(mUsed ? R.drawable.used : R.drawable.used_grayed));
+				EditText etFilter = (EditText) findViewById(R.id.etFilter);
+
+				etFilter.setEnabled(!mUsed);
+				etFilter.setText("");
+
+				applyFilter();
+			}
+		});
 
 		// Setup search
 		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
@@ -255,9 +277,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 		if (buttonView == cbFilter)
 			if (mAppAdapter != null) {
+				ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
+				imgUsed.setEnabled(!isChecked);
+				imgUsed.setImageDrawable(getResources().getDrawable(R.drawable.used_grayed));
+
 				EditText etFilter = (EditText) findViewById(R.id.etFilter);
-				etFilter.setText("");
 				etFilter.setEnabled(!isChecked);
+				etFilter.setText("");
+
 				applyFilter();
 			}
 	}
@@ -265,7 +292,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private void applyFilter() {
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 		EditText etFilter = (EditText) findViewById(R.id.etFilter);
-		mAppAdapter.getFilter().filter(cbFilter.isChecked() ? null : etFilter.getText().toString());
+		String filter = etFilter.getText().toString();
+
+		if (cbFilter.isChecked())
+			filter = null;
+		else if (mUsed)
+			filter = "\n";
+		else
+			filter = etFilter.getText().toString();
+
+		mAppAdapter.getFilter().filter(filter);
 	}
 
 	@Override
@@ -975,13 +1011,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			spRestriction.setSelection(0);
 			spRestriction.setEnabled(false);
 
-			// Reset filter
+			// Reset filters
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-			cbFilter.setChecked(false);
 			cbFilter.setEnabled(false);
+			cbFilter.setChecked(false);
+
+			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
+			imgUsed.setEnabled(false);
+			imgUsed.setImageDrawable(getResources().getDrawable(R.drawable.used_grayed));
+			mUsed = false;
+
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
-			etFilter.setText("");
 			etFilter.setEnabled(false);
+			etFilter.setText("");
 
 			// Show indeterminate progress circle
 			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
@@ -1004,9 +1046,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			progressBar.setVisibility(View.GONE);
 			lvApp.setVisibility(View.VISIBLE);
 
-			// Enable search
+			// Enable filters
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 			cbFilter.setEnabled(true);
+
+			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
+			imgUsed.setEnabled(true);
+
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setEnabled(true);
 
@@ -1056,9 +1102,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.lstApp) {
 					if (constraint == null) {
-						boolean restricted = PrivacyManager.getRestricted(null, null, xAppInfo.getUid(),
-								mRestrictionName, null, false, false);
+						boolean restricted = PrivacyManager.getRestricted(null, getApplicationContext(),
+								xAppInfo.getUid(), mRestrictionName, null, false, false);
 						if (restricted)
+							lstApp.add(xAppInfo);
+					} else if (constraint.toString().equals("\n")) {
+						if (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(), mRestrictionName, null) != 0)
 							lstApp.add(xAppInfo);
 					} else if (xAppInfo.toString().toLowerCase().contains(((String) constraint).toLowerCase()))
 						lstApp.add(xAppInfo);

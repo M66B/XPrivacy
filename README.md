@@ -444,6 +444,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 0.41** (in development)
+
+* Filter applications by used data
+
 **Version 0.40**
 
 * Restrict NFC discovery
