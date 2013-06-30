@@ -167,6 +167,10 @@ For easy usage, data is restricted by category:
 	* return an empty list of Wi-Fi scan results
 	* return an empty list of configured Wi-Fi networks
 	* return an empty list of bluetooth devices
+* NFC
+	* prevent receiving NDEF discovered
+	* prevent receiving TAG discovered
+	* prevent receiving TECH discovered
 * Phone:
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID
@@ -440,8 +444,9 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 0.40** (in development)
+**Version 0.40**
 
+* Restrict NFC discovery
 * Restrict access to (internal) media storage
 
 **Version 0.39**

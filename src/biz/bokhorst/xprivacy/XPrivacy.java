@@ -8,6 +8,7 @@ import java.util.Set;
 
 import android.app.AndroidAppHelper;
 import android.content.Intent;
+import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Process;
 import android.provider.MediaStore;
@@ -179,6 +180,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				Intent.ACTION_NEW_OUTGOING_CALL), "android.app.ActivityThread", false);
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cPhone, new String[] { "READ_PHONE_STATE" },
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ActivityThread", false);
+
+		// Intent receive: NFC
+		hook(new XActivityThread("handleReceiver", PrivacyManager.cNfc, new String[] { "NFC" },
+				NfcAdapter.ACTION_NDEF_DISCOVERED), "android.app.ActivityThread", false);
+		hook(new XActivityThread("handleReceiver", PrivacyManager.cNfc, new String[] { "NFC" },
+				NfcAdapter.ACTION_TAG_DISCOVERED), "android.app.ActivityThread", false);
+		hook(new XActivityThread("handleReceiver", PrivacyManager.cNfc, new String[] { "NFC" },
+				NfcAdapter.ACTION_TECH_DISCOVERED), "android.app.ActivityThread", false);
 
 		String[] startActivities = new String[] { "startActivities", "startActivity", "startActivityForResult",
 				"startActivityFromChild", "startActivityFromFragment", "startActivityIfNeeded" };

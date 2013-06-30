@@ -20,6 +20,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
+import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
@@ -41,6 +42,7 @@ public class PrivacyManager {
 	public static final String cMedia = "media";
 	public static final String cMessages = "messages";
 	public static final String cNetwork = "network";
+	public static final String cNfc = "nfc";
 	public static final String cPhone = "phone";
 	public static final String cStorage = "storage";
 	public static final String cShell = "shell";
@@ -48,7 +50,7 @@ public class PrivacyManager {
 	public static final String cView = "view";
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBoot, cBrowser, cCalendar, cCalling,
-			cContacts, cDictionary, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cPhone,
+			cContacts, cDictionary, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cNfc, cPhone,
 			cStorage, cShell, cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;
@@ -111,6 +113,7 @@ public class PrivacyManager {
 		mPermissions.get(cNetwork).add("ACCESS_NETWORK_STATE");
 		mPermissions.get(cNetwork).add("ACCESS_WIFI_STATE");
 		mPermissions.get(cNetwork).add("BLUETOOTH");
+		mPermissions.get(cNfc).add("NFC");
 		mPermissions.get(cPhone).add("READ_PHONE_STATE");
 		mPermissions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mPermissions.get(cPhone).add("READ_CALL_LOG");
@@ -215,6 +218,11 @@ public class PrivacyManager {
 		// Intent receive: calling
 		mMethods.get(cPhone).add(Intent.ACTION_NEW_OUTGOING_CALL);
 		mMethods.get(cPhone).add(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
+
+		// Intent receive: NFC
+		mMethods.get(cNfc).add(NfcAdapter.ACTION_NDEF_DISCOVERED);
+		mMethods.get(cNfc).add(NfcAdapter.ACTION_TAG_DISCOVERED);
+		mMethods.get(cNfc).add(NfcAdapter.ACTION_TECH_DISCOVERED);
 
 		// Intent send: browser
 		mMethods.get(cView).add(Intent.ACTION_VIEW);

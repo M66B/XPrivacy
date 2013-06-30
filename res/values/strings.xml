@@ -38,6 +38,7 @@
     <string name="restrict_media">Media (audio, photo, video)</string>
     <string name="restrict_messages">Messages (SMS, MMS)</string>
     <string name="restrict_network">Network (addresses)</string>
+    <string name="restrict_nfc" translatable="false">NFC</string>
     <string name="restrict_phone">Phone (ID, numbers, calls)</string>
     <string name="restrict_storage">Storage (media, SD card)</string>
     <string name="restrict_shell">Shell (commands, superuser)</string>

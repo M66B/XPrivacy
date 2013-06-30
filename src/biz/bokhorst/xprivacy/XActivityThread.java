@@ -8,6 +8,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.content.pm.ProviderInfo;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -74,6 +75,11 @@ public class XActivityThread extends XHook {
 												PrivacyManager.getDefacedProp("PhoneNumber"));
 								}
 							}
+						} else if (action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED)
+								|| action.equals(NfcAdapter.ACTION_TAG_DISCOVERED)
+								|| action.equals(NfcAdapter.ACTION_TECH_DISCOVERED)) {
+							if (isRestricted(param, mActionName))
+								param.setResult(null);
 						} else
 							Util.log(this, Log.WARN, "Unhandled action=" + mActionName);
 					}
