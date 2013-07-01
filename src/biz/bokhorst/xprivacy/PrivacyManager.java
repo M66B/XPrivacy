@@ -150,6 +150,9 @@ public class PrivacyManager {
 		for (String cam : cams)
 			mMethods.get(cMedia).add(cam);
 
+		// Identification
+		mMethods.get(PrivacyManager.cIdentification).add("SERIAL");
+
 		// Location manager
 		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
 				"requestLocationUpdates", "requestSingleUpdate", "sendExtraCommand" };
@@ -312,6 +315,11 @@ public class PrivacyManager {
 				Util.log(hook, Log.WARN, "restriction empty");
 				Util.logStack(hook);
 				return false;
+			}
+
+			if (methodName == null || methodName.equals("")) {
+				Util.log(hook, Log.WARN, "method empty");
+				Util.logStack(hook);
 			}
 
 			// Check cache

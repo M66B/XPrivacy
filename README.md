@@ -429,6 +429,10 @@ If your paranoid level is high, disable internet beforehand.
 If a restriction is causing this, try to figure out which one and if you found out,
 please document it in the [wiki](http://wiki.faircode.eu/index.php?title=XPrivacy).
 
+**(23) How can  make a logcat?**
+
+See [here](http://forum.xda-developers.com/showthread.php?t=1726238).
+
 Support
 -------
 
@@ -449,9 +453,10 @@ Changelog
 **Version 0.42** (in development)
 
 * Display notification when XPrivacy is not enabled also when Xposed installer is not present
+* Fix usage data for Build.SERIAL
 * Added Russian translation
 * Updated French translation
-* Updated Japanse translation
+* Updated Japanese translation
 * Updated Polish translation
 * Updated Slovenian translation
 
