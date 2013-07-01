@@ -22,7 +22,7 @@
     <string name="menu_app_store">Play Store</string>
     <string name="msg_noupdate">Brak aktualizacji</string>
     <string name="msg_restricted" formatted="false">%s jest ograniczone przez XPrivacy</string>
-    <string name="msg_licensed" formatted="false">Licensed to: %s</string>
+    <string name="msg_licensed" formatted="false">Licencjonowane dla: %s</string>
     <string name="msg_done">Gotowe</string>
     <string name="restrict_accounts">Konta (Google, Facebook, etc)</string>
     <string name="restrict_boot">Autostart (podczas uruchamiania systemu)</string>
@@ -53,6 +53,6 @@
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">posiada dostęp do internetu</string>
     <string name="help_granted">posiada dostęp do uprawnień Androida</string>
-    <string name="help_used">użyła następujących danych</string>
+    <string name="help_used">użyła dostpu do danych</string>
 
 </resources>
