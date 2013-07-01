@@ -449,7 +449,10 @@ Changelog
 **Version 0.42** (in development)
 
 * Display notification when XPrivacy is not enabled also when Xposed installer is not present
+* Added Russian translation
 * Updated French translation
+* Updated Japanse translation
+* Updated Polish translation
 * Updated Slovenian translation
 
 **Version 0.41**
