@@ -23,7 +23,6 @@ public class XApplicationPackageManager extends XHook {
 
 	// public List<ApplicationInfo> getInstalledApplications(int flags)
 	// public List<PackageInfo> getInstalledPackages(int flags)
-	// public List<PackageInfo> getInstalledThemePackages()
 	// public List<PackageInfo> getPreferredPackages(int flags)
 	// frameworks/base/core/java/android/app/ApplicationPackageManager.java
 	
@@ -35,8 +34,7 @@ public class XApplicationPackageManager extends XHook {
 			String methodName = param.method.getName();
 			if (methodName.equals("getInstalledApplications"))
 				param.setResult(new ArrayList<ApplicationInfo>());
-			else if (methodName.equals("getInstalledPackages") || methodName.equals("getInstalledThemePackages")
-					|| methodName.equals("getPreferredPackages"))
+			else if (methodName.equals("getInstalledPackages") || methodName.equals("getPreferredPackages"))
 				param.setResult(new ArrayList<PackageInfo>());
 			else
 				Util.log(this, Log.WARN, "Unknown method=" + methodName);

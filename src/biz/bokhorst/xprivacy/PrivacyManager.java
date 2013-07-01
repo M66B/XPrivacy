@@ -132,8 +132,7 @@ public class PrivacyManager {
 			mMethods.get(cAccounts).add(acc);
 
 		// Application package manager
-		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getInstalledThemePackages",
-				"getPreferredPackages" };
+		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getPreferredPackages" };
 		for (String am : ams)
 			mMethods.get(cSystem).add(am);
 

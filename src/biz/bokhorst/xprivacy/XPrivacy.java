@@ -61,8 +61,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				new String[] { "GET_ACCOUNTS" }), "android.accounts.AccountManager");
 
 		// Application package manager
-		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getInstalledThemePackages",
-				"getPreferredPackages" };
+		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getPreferredPackages" };
 		for (String am : ams)
 			hook(new XApplicationPackageManager(am, PrivacyManager.cSystem, new String[] {}),
 					"android.app.ApplicationPackageManager");
@@ -133,7 +132,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// System properties
 		String[] props = new String[] { "ro.gsm.imei", "net.hostname", "ro.serialno", "ro.boot.serialno",
 				"ro.boot.wifimacaddr", "ro.boot.btmacaddr" };
-		String[] getters = new String[] { "get", "getBoolean", "getInt", "getLong", "getLongString" };
+		String[] getters = new String[] { "get", "getBoolean", "getInt", "getLong" };
 		for (String prop : props)
 			for (String getter : getters)
 				hook(new XSystemProperties(getter, PrivacyManager.cIdentification, new String[] {}, prop),
@@ -145,8 +144,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XTelephonyManager("enableLocationUpdates", PrivacyManager.cLocation,
 				new String[] { "CONTROL_LOCATION_UPDATES", }), "android.telephony.TelephonyManager");
 
-		hook(new XTelephonyManager("getAllCellInfo", PrivacyManager.cLocation,
-				new String[] { "ACCESS_COARSE_UPDATES", }), "android.telephony.TelephonyManager");
+		if (Build.VERSION.SDK_INT >= 17)
+			hook(new XTelephonyManager("getAllCellInfo", PrivacyManager.cLocation,
+					new String[] { "ACCESS_COARSE_UPDATES", }), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getCellLocation", PrivacyManager.cLocation, new String[] {
 				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getNeighboringCellInfo", PrivacyManager.cLocation,

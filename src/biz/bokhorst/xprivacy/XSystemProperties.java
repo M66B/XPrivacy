@@ -16,7 +16,6 @@ public class XSystemProperties extends XHook {
 	// public static boolean getBoolean(String key, boolean def)
 	// public static int getInt(String key, int def)
 	// public static long getLong(String key, long def)
-	// public static String getLongString(String key, String def)
 	// frameworks/base/core/java/android/os/SystemProperties.java
 
 	@Override
