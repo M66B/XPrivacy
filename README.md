@@ -450,7 +450,7 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 0.42** (in development)
+**Version 0.42**
 
 * Display notification when XPrivacy is not enabled also when Xposed installer is not present
 * Better ICS compatibility ([issue](https://github.com/M66B/XPrivacy/issues/108))
