@@ -3,7 +3,7 @@
     <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed framework バージョン %d+ がインストールされていません</string>
     <string name="app_notenabled">XPrivacyがXposed installerで有効になっていません</string>
-    <string name="app_wrongandroid">Only tested with Android version 4.0, 4.1 and 4.2</string>
+    <string name="app_wrongandroid">Androidバージョン4.0, 4.1と4.2でのみ動作を確認しています。</string>
     <string name="app_version" formatted="false">XPrivacy バージョン: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework バージョン: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
@@ -30,7 +30,7 @@
     <string name="restrict_calendar">カレンダー</string>
     <string name="restrict_calling">通話 (電話, SMS, MMS)</string>
     <string name="restrict_contacts">連絡先</string>
-    <string name="restrict_dictionary">Dictionary (user)</string>
+    <string name="restrict_dictionary">辞書 (ユーザー)</string>
     <string name="restrict_identification">ID (端末)</string>
     <string name="restrict_internet">インターネット</string>
     <string name="restrict_location">位置情報 (高/低精度)</string>
@@ -38,7 +38,7 @@
     <string name="restrict_messages">メッセージ (SMS, MMS)</string>
     <string name="restrict_network">ネットワーク (アドレス)</string>
     <string name="restrict_phone">電話 (ID, 電話番号, 通話)</string>
-    <string name="restrict_storage">Storage (media, SD card)</string>
+    <string name="restrict_storage">ストレージ (メディア, SDカード)</string>
     <string name="restrict_shell">Shell (コマンド, superuser)</string>
     <string name="restrict_system">システム (インストール済みアプリ)</string>
     <string name="restrict_view">表示 (ブラウザ)</string>
@@ -48,11 +48,11 @@
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
     <string name="settings_mac">MAC アドレス</string>
-    <string name="settings_phone">Phone number</string>
+    <string name="settings_phone">電話番号</string>
     <string name="settings_id">Android ID</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>
-    <string name="help_used">はこのデータを使用しています</string>
+    <string name="help_used">はそのデータを使用しています</string>
 
 </resources>
