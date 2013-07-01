@@ -454,7 +454,8 @@ Changelog
 
 * Display notification when XPrivacy is not enabled also when Xposed installer is not present
 * ICS compatibility ([issue](https://github.com/M66B/XPrivacy/issues/108))
-* Fix usage data for Build.SERIAL
+* Fixed usage data for Build.SERIAL
+* Fixed crash on back ([issue](https://github.com/M66B/XPrivacy/issues/112))
 * Added Russian translation
 * Updated French translation
 * Updated Japanese translation
