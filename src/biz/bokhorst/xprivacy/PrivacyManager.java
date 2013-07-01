@@ -317,10 +317,11 @@ public class PrivacyManager {
 				return false;
 			}
 
-			if (methodName == null || methodName.equals("")) {
-				Util.log(hook, Log.WARN, "method empty");
-				Util.logStack(hook);
-			}
+			if (usage)
+				if (methodName == null || methodName.equals("")) {
+					Util.log(hook, Log.WARN, "method empty");
+					Util.logStack(hook);
+				}
 
 			// Check cache
 			String keyCache = String.format("%d.%s.%s", uid, restrictionName, methodName);
