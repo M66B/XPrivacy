@@ -419,17 +419,7 @@ Any function, like filtering and selecting based on Android permissions, would b
 This means the downloaded apk is corrupt.
 Try disabling your popup blocker or download using another computer.
 
-**(22) May device boots slow**
-
-This is probably caused by restrictions set in expert mode.
-Make a backup of XPrivacy, reset all settings as described in question 5 and
-reboot to see if any restriction is causing this.
-If your paranoid level is high, disable internet beforehand.
-
-If a restriction is causing this, try to figure out which one and if you found out,
-please document it in the [wiki](http://wiki.faircode.eu/index.php?title=XPrivacy).
-
-**(23) How can I make a logcat?**
+**(22) How can I make a logcat?**
 
 See [here](http://forum.xda-developers.com/showthread.php?t=1726238).
 
