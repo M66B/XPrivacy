@@ -449,6 +449,7 @@ Changelog
 
 * Updated Russian translation
 * Fixed internet/storage restriction for ICS
+* Split media/sdcard storage restriction (expert only) ([issue](https://github.com/M66B/XPrivacy/issues/125))
 
 **Version 0.42**
 

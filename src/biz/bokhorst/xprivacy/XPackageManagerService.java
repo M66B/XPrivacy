@@ -11,10 +11,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XPackageManagerService extends XHook {
 
 	private String mRestrictionName;
+	private String mAction;
 
-	public XPackageManagerService(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions, null);
+	public XPackageManagerService(String methodName, String restrictionName, String[] permissions, String action) {
+		super(methodName, restrictionName, permissions, action);
 		mRestrictionName = restrictionName;
+		mAction = action;
 	}
 
 	// public int[] getPackageGids(String packageName)
@@ -43,8 +45,10 @@ public class XPackageManagerService extends XHook {
 			boolean modified = false;
 			List<Integer> listGids = new ArrayList<Integer>();
 			for (int i = 0; i < gids.length; i++)
-				if ((gids[i] == sdcard_r || gids[i] == sdcard_rw || gids[i] == media_rw)
-						&& mRestrictionName.equals(PrivacyManager.cStorage))
+				if (gids[i] == media_rw && mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("media"))
+					modified = true;
+				else if ((gids[i] == sdcard_r || gids[i] == sdcard_rw)
+						&& mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("sdcard"))
 					modified = true;
 				else if ((gids[i] == inet || gids[i] == inet_raw) && mRestrictionName.equals(PrivacyManager.cInternet))
 					modified = true;
@@ -74,7 +78,7 @@ public class XPackageManagerService extends XHook {
 					Util.bug(this, ex);
 				}
 
-				if (uid >= 0 && getRestricted(null, uid, false))
+				if (uid >= 0 && getRestricted(null, uid, mAction, false))
 					param.setResult(gids);
 			}
 		}

@@ -100,10 +100,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"java.net.NetworkInterface");
 
 		// Package manager service
-		hook(new XPackageManagerService("getPackageGids", PrivacyManager.cInternet, new String[] { "INTERNET" }),
+		hook(new XPackageManagerService("getPackageGids", PrivacyManager.cInternet, new String[] { "INTERNET" }, "inet"),
 				"com.android.server.pm.PackageManagerService");
+		hook(new XPackageManagerService("getPackageGids", PrivacyManager.cStorage,
+				new String[] { "WRITE_MEDIA_STORAGE" }, "media"), "com.android.server.pm.PackageManagerService");
 		hook(new XPackageManagerService("getPackageGids", PrivacyManager.cStorage, new String[] {
-				"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "WRITE_MEDIA_STORAGE" }),
+				"READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE" }, "sdcard"),
 				"com.android.server.pm.PackageManagerService");
 
 		// Runtime

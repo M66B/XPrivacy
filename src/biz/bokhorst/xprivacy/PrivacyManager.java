@@ -167,8 +167,9 @@ public class PrivacyManager {
 			mMethods.get(cNetwork).add(net);
 
 		// Package manager service
-		mMethods.get(cInternet).add("getPackageGids");
-		mMethods.get(cStorage).add("getPackageGids");
+		mMethods.get(cInternet).add("inet");
+		mMethods.get(cStorage).add("media");
+		mMethods.get(cStorage).add("sdcard");
 
 		// Runtime
 		mMethods.get(cShell).add("sh");

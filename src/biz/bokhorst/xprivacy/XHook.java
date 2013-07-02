@@ -35,7 +35,7 @@ public abstract class XHook {
 		return mRestrictionName;
 	}
 
-	public String getSpecifier() {
+	private String getSpecifier() {
 		return (mSpecifier == null ? mMethodName : mSpecifier);
 	}
 
@@ -55,6 +55,10 @@ public abstract class XHook {
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) throws Throwable {
 		return PrivacyManager.getRestricted(this, context, uid, mRestrictionName, mMethodName, usage, true);
+	}
+
+	protected boolean getRestricted(Context context, int uid, String methodName, boolean usage) throws Throwable {
+		return PrivacyManager.getRestricted(this, context, uid, mRestrictionName, methodName, usage, true);
 	}
 
 	protected void notifyUser(String message) throws Throwable {
