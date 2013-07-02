@@ -239,6 +239,11 @@ I do not recommend using XPrivacy in combination with any of the
 [similar solutions](https://github.com/M66B/XPrivacy#similar-solutions),
 because it will most probably result in conflicts (with as possible consequence data leakage).
 
+If you want to uninstall XPrivacy, you have two options:
+
+1. Disable XPrivacy in the Xposed installer
+1. Uninstall Xposed using the Xposed installer
+
 Upgrading
 ---------
 
