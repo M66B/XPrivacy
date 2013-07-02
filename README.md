@@ -443,6 +443,7 @@ Changelog
 **Version 1.0** (in development)
 
 * Updated Russian translation
+* Fixed internet/storage restriction for ICS
 
 **Version 0.42**
 

@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Build;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XPackageManagerService extends XHook {
@@ -58,15 +60,21 @@ public class XPackageManagerService extends XHook {
 				// Get uid
 				int uid = -1;
 				try {
+					// ICS: public int getPackageUid(String packageName)
 					// public int getPackageUid(String packageName, int userId)
 					String packageName = (String) param.args[0];
-					Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class, int.class);
-					uid = (Integer) method.invoke(param.thisObject, packageName, 0);
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+						Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class, int.class);
+						uid = (Integer) method.invoke(param.thisObject, packageName, 0);
+					} else {
+						Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class);
+						uid = (Integer) method.invoke(param.thisObject, packageName);
+					}
 				} catch (Throwable ex) {
-					// getRestricted will log stack
+					Util.bug(this, ex);
 				}
 
-				if (getRestricted(null, uid, false))
+				if (uid >= 0 && getRestricted(null, uid, false))
 					param.setResult(gids);
 			}
 		}
