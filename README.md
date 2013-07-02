@@ -440,6 +440,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 1.0** (in development)
+
+* Updated Russian translation
+
 **Version 0.42**
 
 * Display notification when XPrivacy is not enabled also when Xposed installer is not present
