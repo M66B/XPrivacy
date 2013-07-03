@@ -447,6 +447,7 @@ Changelog
 * Fixed internet/storage restriction for ICS
 * Split media/sdcard storage restriction (expert only) ([issue](https://github.com/M66B/XPrivacy/issues/125))
 * Move shell restriction out of expert mode, load/Library by default not restricted
+* Fixed keyboard popup, thanks @[vipere](https://github.com/M66B/XPrivacy/pull/131)
 * Removed boot restriction
 * Updated German translation
 * Updated Polish translation
