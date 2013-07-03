@@ -55,6 +55,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Process;
 import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
@@ -93,6 +94,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 	private boolean mUsed = false;
+	private boolean mPro = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -197,6 +199,68 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Check environment
 		checkRequirements();
+
+		// Licensing
+		checkLicense();
+	}
+
+	private static final int LICENSED = 0x0100;
+	private static final int NOT_LICENSED = 0x0231;
+	private static final int RETRY = 0x0123;
+
+	private static final int ERROR_CONTACTING_SERVER = 0x101;
+	private static final int ERROR_INVALID_PACKAGE_NAME = 0x102;
+	private static final int ERROR_NON_MATCHING_UID = 0x103;
+
+	private void checkLicense() {
+		if (Util.hasProLicense(this) == null && Util.isProInstalled(this))
+			try {
+				int uid = getPackageManager().getApplicationInfo("biz.bokhorst.xprivacy.pro", 0).uid;
+				PrivacyManager.deleteRestrictions(this, uid);
+				Util.log(null, Log.INFO, "Licensing: check");
+				startActivityForResult(new Intent("biz.bokhorst.xprivacy.pro.CHECK"), 0);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (data != null) {
+			int code = data.getIntExtra("Code", -1);
+			int reason = data.getIntExtra("Reason", -1);
+
+			String sReason;
+			if (reason == LICENSED)
+				sReason = "LICENSED";
+			else if (reason == NOT_LICENSED)
+				sReason = "NOT_LICENSED";
+			else if (reason == RETRY)
+				sReason = "RETRY";
+			else if (reason == ERROR_CONTACTING_SERVER)
+				sReason = "ERROR_CONTACTING_SERVER";
+			else if (reason == ERROR_INVALID_PACKAGE_NAME)
+				sReason = "ERROR_INVALID_PACKAGE_NAME";
+			else if (reason == ERROR_NON_MATCHING_UID)
+				sReason = "ERROR_NON_MATCHING_UID";
+			else
+				sReason = Integer.toString(reason);
+
+			Util.log(null, Log.INFO, "Licensing: code=" + code + " reason=" + sReason);
+
+			if (code > 0) {
+				mPro = true;
+				invalidateOptionsMenu();
+			} else if (reason == RETRY) {
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						checkLicense();
+					}
+				}, 60 * 1000);
+			}
+		}
 	}
 
 	@Override
@@ -208,13 +272,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		boolean pro = (Util.isProVersion(this) != null);
+		boolean pro = (mPro || Util.hasProLicense(this) != null);
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
 		menu.findItem(R.id.menu_export).setEnabled(pro && mounted);
 		menu.findItem(R.id.menu_import).setEnabled(pro && mounted);
-		if (Util.isProVersion(this) != null)
-			menu.removeItem(R.id.menu_pro);
+		menu.findItem(R.id.menu_pro).setVisible(!pro);
 
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -593,7 +656,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
 
 		// Show license
-		String licensed = Util.isProVersion(this);
+		String licensed = Util.hasProLicense(this);
 		TextView tvLicensed = (TextView) dlgAbout.findViewById(R.id.tvLicensed);
 		if (licensed == null)
 			tvLicensed.setVisibility(View.GONE);

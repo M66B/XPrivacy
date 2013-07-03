@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Environment;
@@ -67,17 +68,8 @@ public class Util {
 		return false;
 	}
 
-	public static String isProVersion(Context context) {
+	public static String hasProLicense(Context context) {
 		try {
-			// Check for pro app
-			String proPackageName = "biz.bokhorst.xprivacy.pro";
-			PackageManager manager = context.getPackageManager();
-			if (manager.checkSignatures(context.getPackageName(), proPackageName) == PackageManager.SIGNATURE_MATCH
-					&& hasMarketLink(context, proPackageName)) {
-				Util.log(null, Log.INFO, "Pro version installed");
-				return "-";
-			}
-
 			// Get license file name
 			String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
 			String fileName = folder + File.separator + "XPrivacy_license.txt";
@@ -97,27 +89,44 @@ public class Util {
 				byte[] bEmail = email.getBytes("UTF-8");
 				byte[] bSignature = hex2bytes(signature);
 				if (bEmail.length == 0 || bSignature.length == 0) {
-					Util.log(null, Log.ERROR, "Invalid license file");
+					Util.log(null, Log.ERROR, "Licensing: invalid file");
 					return null;
 				}
 
 				// Verify license
 				boolean licensed = verifyData(bEmail, bSignature, getPublicKey(context));
 				if (licensed)
-					Util.log(null, Log.INFO, "Licensed to " + name + " (" + email + ")");
+					Util.log(null, Log.INFO, "Licensing: ok for " + name + " (" + email + ")");
 				else
-					Util.log(null, Log.ERROR, "Invalid license for " + name + " (" + email + ")");
+					Util.log(null, Log.ERROR, "Licensing: invalid for " + name + " (" + email + ")");
 
 				// Return result
 				if (licensed)
 					return name;
 			} else
-				Util.log(null, Log.INFO, "No license folder=" + Environment.getExternalStorageDirectory());
+				Util.log(null, Log.INFO, "Licensing: no license folder=" + Environment.getExternalStorageDirectory());
 		} catch (Throwable ex) {
-			Util.log(null, Log.ERROR, "Processing license");
 			Util.bug(null, ex);
 		}
 		return null;
+	}
+
+	public static boolean isProInstalled(Context context) {
+		try {
+			String proPackageName = "biz.bokhorst.xprivacy.pro";
+			PackageManager pm = context.getPackageManager();
+			PackageInfo pi = pm.getPackageInfo(proPackageName, 0);
+			Version vPro = new Version(pi.versionName);
+			if (pm.checkSignatures(context.getPackageName(), proPackageName) == PackageManager.SIGNATURE_MATCH
+					&& vPro.compareTo(new Version("1.4")) >= 0) {
+				Util.log(null, Log.INFO, "Licensing: enabler installed");
+				return true;
+			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+		Util.log(null, Log.INFO, "Licensing: enabler not installed");
+		return false;
 	}
 
 	public static boolean hasMarketLink(Context context, String packageName) {
