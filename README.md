@@ -120,8 +120,6 @@ For easy usage, data is restricted by category:
 	* return an empty account list
 	* return fake account info
 	* return empty authorization tokens
-* Boot
-	* prevent applications to start during device startup
 * Browser
 	* return an empty bookmark list
 	* return empty search history
@@ -334,8 +332,7 @@ To export/import settings you will need the [pro version](http://www.faircode.eu
 
 **(7) What is expert mode?**
 
-In expert mode you will be able to block applications from starting at device boot time,
-restrict shell access for applications (including super user)
+In expert mode you will be able to restrict shell access for applications (including super user)
 and restrict system applications, including Android itself. **Be careful!**
 Furthermore you will be able to make exceptions for individual functions within a restriction category.
 
@@ -450,6 +447,7 @@ Changelog
 * Updated Russian translation
 * Fixed internet/storage restriction for ICS
 * Split media/sdcard storage restriction (expert only) ([issue](https://github.com/M66B/XPrivacy/issues/125))
+* Removed boot restriction
 
 **Version 0.42**
 

@@ -4,12 +4,9 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.pm.ProviderInfo;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -52,13 +49,7 @@ public class XActivityThread extends XHook {
 					// Check action
 					String action = intent.getAction();
 					if (mActionName.equals(action)) {
-						if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-							// Boot completed
-							if (isRestricted(param, mActionName)) {
-								finish(param);
-								param.setResult(null);
-							}
-						} else if (action.equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
+						if (action.equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
 							// Outgoing call
 							Bundle bundle = intent.getExtras();
 							if (bundle != null) {
@@ -90,29 +81,6 @@ public class XActivityThread extends XHook {
 							Util.log(this, Log.WARN, "Unhandled action=" + mActionName);
 					}
 				}
-			}
-		} else if (methodName.equals("installContentProviders")) {
-			try {
-				// Get providers
-				@SuppressWarnings("unchecked")
-				List<ProviderInfo> listProvider = (List<ProviderInfo>) param.args[1];
-
-				// Build allowed list
-				List<ProviderInfo> listAllowed = new ArrayList<ProviderInfo>();
-				for (ProviderInfo provider : listProvider) {
-					// Skip if Android
-					if (provider.applicationInfo.uid == PrivacyManager.cUidAndroid)
-						return;
-					int uid = provider.applicationInfo.uid;
-					Util.log(this, Log.INFO, "provider=" + provider.getClass().getName() + " uid=" + uid);
-					if (getRestricted(null, uid, false))
-						listAllowed.add(provider);
-				}
-
-				// Set result
-				param.args[1] = listAllowed;
-			} catch (Throwable ex) {
-				Util.bug(this, ex);
 			}
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + methodName);

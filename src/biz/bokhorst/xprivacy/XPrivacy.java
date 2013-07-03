@@ -168,15 +168,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hook(new XWifiManager(wifi, PrivacyManager.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
 					"android.net.wifi.WifiManager");
 
-		// Intent receive: boot
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cBoot, new String[] { "RECEIVE_BOOT_COMPLETED" },
-				Intent.ACTION_BOOT_COMPLETED), "android.app.ActivityThread", false);
-
-		// Start content providers at boot
-		if (PrivacyManager.cExperimental)
-			hook(new XActivityThread("installContentProviders", PrivacyManager.cBoot, new String[] {}, null),
-					"android.app.ActivityThread", false);
-
 		// Intent receive: calling
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cPhone, new String[] { "PROCESS_OUTGOING_CALLS" },
 				Intent.ACTION_NEW_OUTGOING_CALL), "android.app.ActivityThread", false);

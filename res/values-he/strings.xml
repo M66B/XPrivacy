@@ -25,7 +25,6 @@
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>
     <string name="msg_done">Done</string>
     <string name="restrict_accounts">חשבונות (גוגל, פייסבוק וכו)</string>
-    <string name="restrict_boot">עלייה עם המערכת</string>
     <string name="restrict_browser">דפדן(מועדפים\היסטוריה)</string>
     <string name="restrict_calendar">יומן</string>
     <string name="restrict_calling">חיוג ( טלפון, סמס, הודעת מולטימדיה)</string>

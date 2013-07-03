@@ -25,7 +25,6 @@
     <string name="msg_licensed" formatted="false">Лицензирано на: %s</string>
     <string name="msg_done">Done</string>
     <string name="restrict_accounts">Сметки (Google, Facebook и т.н.)</string>
-    <string name="restrict_boot">Стартиране (при пускане на системата)</string>
     <string name="restrict_browser">Браузър (отметки/история)</string>
     <string name="restrict_calendar">Календар</string>
     <string name="restrict_calling">Обаждания, SMS, MMS)</string>

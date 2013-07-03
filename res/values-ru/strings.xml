@@ -25,7 +25,6 @@
     <string name="msg_licensed" formatted="false">Владелец лицензии: %s</string>
     <string name="msg_done">Готово</string>
     <string name="restrict_accounts">Учетные записи (Google, Facebook и т.д.)</string>
-    <string name="restrict_boot">При включении устройства</string>
     <string name="restrict_browser">Браузер (закладки/история)</string>
     <string name="restrict_calendar">Календарь</string>
     <string name="restrict_calling">Инициация звонков, отправка SMS/MMS</string>

@@ -25,7 +25,6 @@
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
     <string name="msg_done">Hotovo</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atď.)</string>
-    <string name="restrict_boot">Štart (beh po štarte systému)</string>
     <string name="restrict_browser">Prehliadač (záložky/história)</string>
     <string name="restrict_calendar">Kalendár</string>
     <string name="restrict_calling">Volanie (telefón, SMS, MMS)</string>

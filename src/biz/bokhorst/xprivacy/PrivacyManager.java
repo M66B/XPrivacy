@@ -30,7 +30,6 @@ public class PrivacyManager {
 
 	// This should correspond with restrict_<name> in strings.xml
 	public static final String cAccounts = "accounts";
-	public static final String cBoot = "boot";
 	public static final String cBrowser = "browser";
 	public static final String cCalendar = "calendar";
 	public static final String cCalling = "calling";
@@ -49,12 +48,11 @@ public class PrivacyManager {
 	public static final String cSystem = "system";
 	public static final String cView = "view";
 
-	private static final String cRestrictionNames[] = new String[] { cAccounts, cBoot, cBrowser, cCalendar, cCalling,
+	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
 			cContacts, cDictionary, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cNfc, cPhone,
 			cStorage, cShell, cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;
-	public final static boolean cExperimental = false;
 	public final static int cUidAndroid = 1000;
 
 	public final static String cSettingExpert = "Expert";
@@ -91,7 +89,6 @@ public class PrivacyManager {
 		mPermissions.get(cAccounts).add("GET_ACCOUNTS");
 		mPermissions.get(cAccounts).add("USE_CREDENTIALS");
 		mPermissions.get(cAccounts).add("MANAGE_ACCOUNTS");
-		mPermissions.get(cBoot).add("RECEIVE_BOOT_COMPLETED");
 		mPermissions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
 		mPermissions.get(cBrowser).add("GLOBAL_SEARCH");
 		mPermissions.get(cCalendar).add("READ_CALENDAR");
@@ -213,11 +210,6 @@ public class PrivacyManager {
 		for (String wifi : wifis)
 			mMethods.get(cNetwork).add(wifi);
 
-		// Intent receive: boot
-		mMethods.get(cBoot).add(Intent.ACTION_BOOT_COMPLETED);
-		if (PrivacyManager.cExperimental)
-			mMethods.get(cBoot).add("installContentProviders");
-
 		// Intent receive: calling
 		mMethods.get(cPhone).add(Intent.ACTION_NEW_OUTGOING_CALL);
 		mMethods.get(cPhone).add(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
@@ -270,10 +262,8 @@ public class PrivacyManager {
 	public static List<String> getRestrictions() {
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
 		if (!Boolean.parseBoolean(PrivacyManager.getSetting(null, null, PrivacyManager.cSettingExpert,
-				Boolean.FALSE.toString(), false))) {
-			listRestriction.remove(cBoot);
+				Boolean.FALSE.toString(), false)))
 			listRestriction.remove(cShell);
-		}
 		return listRestriction;
 	}
 
