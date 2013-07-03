@@ -444,10 +444,12 @@ Changelog
 
 **Version 1.0** (in development)
 
-* Updated Russian translation
 * Fixed internet/storage restriction for ICS
 * Split media/sdcard storage restriction (expert only) ([issue](https://github.com/M66B/XPrivacy/issues/125))
 * Removed boot restriction
+* Updated German translation
+* Updated Polish translation
+* Updated Russian translation
 
 **Version 0.42**
 
