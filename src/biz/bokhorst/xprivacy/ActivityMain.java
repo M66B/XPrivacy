@@ -610,8 +610,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private File getExportFile() {
 		String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
-		String fileName = folder + File.separator + "XPrivacy.xml";
-		return new File(fileName);
+		String fileName = folder + File.separator + ".xprivacy" + File.separator + "XPrivacy.xml";
+		File file = new File(fileName);
+		file.mkdirs();
+		return file;
 	}
 
 	private String fetchJson(String... uri) {

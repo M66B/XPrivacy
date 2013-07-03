@@ -75,13 +75,17 @@ public class Util {
 			if (manager.checkSignatures(context.getPackageName(), proPackageName) == PackageManager.SIGNATURE_MATCH
 					&& hasMarketLink(context, proPackageName)) {
 				Util.log(null, Log.INFO, "Pro version installed");
-				return "";
+				return "-";
 			}
 
 			// Get license file name
 			String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
 			String fileName = folder + File.separator + "XPrivacy_license.txt";
 			File licenseFile = new File(fileName);
+			if (!licenseFile.exists()) {
+				fileName = folder + File.separator + ".xprivacy" + File.separator + "XPrivacy_license.txt";
+				licenseFile = new File(fileName);
+			}
 			if (licenseFile.exists()) {
 				// Read license
 				IniFile iniFile = new IniFile(licenseFile);
@@ -105,7 +109,8 @@ public class Util {
 					Util.log(null, Log.ERROR, "Invalid license for " + name + " (" + email + ")");
 
 				// Return result
-				return (licensed ? name : null);
+				if (licensed)
+					return name;
 			} else
 				Util.log(null, Log.INFO, "No license folder=" + Environment.getExternalStorageDirectory());
 		} catch (Throwable ex) {
