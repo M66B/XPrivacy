@@ -57,7 +57,7 @@ public class XActivityThread extends XHook {
 								if (phoneNumber != null)
 									if (isRestricted(param, mActionName))
 										intent.putExtra(Intent.EXTRA_PHONE_NUMBER,
-												PrivacyManager.getDefacedProp("PhoneNumber"));
+												(String) PrivacyManager.getDefacedProp("PhoneNumber"));
 							}
 						} else if (action.equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
 							// Incoming call
@@ -67,7 +67,7 @@ public class XActivityThread extends XHook {
 								if (phoneNumber != null) {
 									if (isRestricted(param, mActionName))
 										intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER,
-												PrivacyManager.getDefacedProp("PhoneNumber"));
+												(String) PrivacyManager.getDefacedProp("PhoneNumber"));
 								}
 							}
 						} else if (action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED)

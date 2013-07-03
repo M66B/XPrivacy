@@ -610,7 +610,7 @@ public class PrivacyManager {
 
 	// Defacing
 
-	public static String getDefacedProp(String name) {
+	public static Object getDefacedProp(String name) {
 
 		// Serial number
 		if (name.equals("SERIAL") || name.equals("ro.serialno") || name.equals("ro.boot.serialno"))
@@ -626,29 +626,42 @@ public class PrivacyManager {
 
 		// Phone
 		if (name.equals("PhoneNumber") || name.equals("getLine1AlphaTag") || name.equals("getLine1Number")
-				|| name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber"))
+				|| name.equals("getMsisdn") || name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber"))
 			return getSetting(null, null, cSettingPhone, cDeface, true);
 
 		// Android ID
 		if (name.equals("ANDROID_ID"))
 			return getSetting(null, null, cSettingId, cDeface, true);
 
-		// XSystemProperties: "net.hostname"
-		// XTelephonyManager:
-		// - public String getIsimDomain()
-		// - public String getIsimImpi()
-		// - public String[] getIsimImpu()
-		// - public String getMsisdn()
-		// - public String getNetworkCountryIso()
-		// - public String getNetworkOperator()
-		// - public String getNetworkOperatorName()
-		// - public String getSimCountryIso()
-		// - public String getSimOperator()
-		// - public String getSimOperatorName()
-		// - public String getSimSerialNumber()
-		// - public String getSubscriberId()
-		// XWifiManager: SSID
+		// Telephony manager
+		if (name.equals("getIsimDomain"))
+			return null;
+		if (name.equals("getIsimImpi"))
+			return null;
+		if (name.equals("getIsimImpu"))
+			return null;
 
+		if (name.equals("getNetworkCountryIso")) // MCC
+			return "001"; // Test network
+		if (name.equals("getNetworkOperator")) // MCC+MNC
+			return "00101"; // Test network
+		if (name.equals("getNetworkOperatorName"))
+			return cDeface;
+
+		if (name.equals("getSimCountryIso")) // ISO country code
+			return "XX";
+		if (name.equals("getSimOperator"))
+			return cDeface;
+		if (name.equals("getSimOperatorName")) // MCC+MNC
+			return "00101"; // Test network
+		if (name.equals("getSimSerialNumber"))
+			return null;
+
+		if (name.equals("getSubscriberId")) // IMSI for a GSM phone
+			return null;
+
+		// XSystemProperties: "net.hostname"
+		// XWifiManager: SSID
 		return cDeface;
 	}
 

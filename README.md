@@ -137,6 +137,7 @@ For easy usage, data is restricted by category:
 * Identification
 	* return a fake Android ID
 	* return a fake device serial number
+	* return a fake host name
 * Internet
 	* revoke access to the internet
 * Location
@@ -171,13 +172,20 @@ For easy usage, data is restricted by category:
 	* prevent receiving TECH discovered
 * Phone:
 	* return a fake own/in/outgoing/voicemail number
-	* return a fake subscriber ID
-	* return a fake phone device ID
-	* return a fake ISIM/ISIM domain
-	* return a fake IMPI/IMPU
+	* return a empty subscriber ID (IMSI for a GSM phone)
+	* return a fake phone device ID (IMEI)
+	* return a empty ISIM/ISIM domain
+	* return a empty IMPI/IMPU
 	* return a fake MSISDN
-	* return fake mobile network info (country, operator/name)
-	* return fake SIM info (serial number, country, operator/name)
+	* return fake mobile network info
+		* Country: 001 (test network)
+		* Operator: 00101 (test network)
+		* Operator name: fake
+	* return fake SIM info
+		* Country: XX
+		* Operator: 00101
+		* Operator name: fake
+		* Serial number: empty
 	* return empty [APN](http://en.wikipedia.org/wiki/Access_Point_Name) list
 	* return no currently used APN
 	* return an empty call log
@@ -442,12 +450,13 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 1.0** (in development)
+**Version 0.43** (in development)
 
-* Fixed internet/storage restriction for ICS
 * Split media/sdcard storage restriction (expert only) ([issue](https://github.com/M66B/XPrivacy/issues/125))
 * Move shell restriction out of expert mode, load/Library by default not restricted
+* Fixed internet/storage restriction for ICS ([issue](https://github.com/M66B/XPrivacy/issues/123))
 * Fixed keyboard popup, thanks @[vipere](https://github.com/M66B/XPrivacy/pull/131)
+* Fixed and improved fake phone data ([issue](https://github.com/M66B/XPrivacy/issues/116), see also [Restrictions](https://github.com/M66B/XPrivacy#restrictions))
 * Removed boot restriction
 * Updated German translation
 * Updated Polish translation
