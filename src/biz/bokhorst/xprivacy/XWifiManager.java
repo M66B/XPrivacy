@@ -65,14 +65,17 @@ public class XWifiManager extends XHook {
 						Util.bug(this, ex);
 					}
 
-					// SSID
 					try {
+						// SSID (4.2-)
 						Field fieldSSID = findField(WifiInfo.class, "mSSID");
 						fieldSSID.set(wInfo, PrivacyManager.getDefacedProp("SSID"));
 					} catch (Throwable ex) {
 						try {
+							// WifiSsid (4.2+)
 							Field fieldWifiSsid = findField(WifiInfo.class, "mWifiSsid");
-							fieldWifiSsid.set(wInfo, PrivacyManager.getDefacedProp("SSID"));
+							Object mWifiSsid = fieldWifiSsid.get(wInfo);
+							Field fieldOctets = findField(mWifiSsid.getClass(), "octets");
+							fieldOctets.set(mWifiSsid, PrivacyManager.getDefacedProp("WifiSsid.octets"));
 						} catch (Throwable exex) {
 							Util.bug(this, exex);
 						}

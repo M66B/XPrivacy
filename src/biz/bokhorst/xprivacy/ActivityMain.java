@@ -396,8 +396,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Check WifiInfo
 		if (!checkField(WifiInfo.class, "mBSSID") || !checkField(WifiInfo.class, "mIpAddress")
 				|| !checkField(WifiInfo.class, "mMacAddress")
-				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid")))
+				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid"))) {
 			reportClass(WifiInfo.class);
+			// TODO: check mWifiSsid.octets
+		}
 
 		// Check InterfaceAddress
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")

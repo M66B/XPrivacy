@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -660,8 +661,17 @@ public class PrivacyManager {
 		if (name.equals("getSubscriberId")) // IMSI for a GSM phone
 			return null;
 
+		if (name.equals("SSID"))
+			return ""; // Hidden network
+		if (name.equals("WifiSsid.octets")) {
+			int size = 8;
+			ByteArrayOutputStream octets = new ByteArrayOutputStream(size);
+			for (int i = 0; i < size; i++)
+				octets.write(0);
+			return octets; // Hidden network
+		}
+
 		// XSystemProperties: "net.hostname"
-		// XWifiManager: SSID
 		return cDeface;
 	}
 
