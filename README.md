@@ -332,8 +332,8 @@ To export/import settings you will need the [pro version](http://www.faircode.eu
 
 **(7) What is expert mode?**
 
-In expert mode you will be able to restrict shell access for applications (including super user)
-and restrict system applications, including Android itself. **Be careful!**
+In expert mode you will be able to restrict restrict system applications, including Android itself.
+**Be careful!** This can result in force closes and boot loops.
 Furthermore you will be able to make exceptions for individual functions within a restriction category.
 
 **(8) Will you block the iptables command or force online state?**

@@ -260,11 +260,7 @@ public class PrivacyManager {
 	}
 
 	public static List<String> getRestrictions() {
-		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
-		if (!Boolean.parseBoolean(PrivacyManager.getSetting(null, null, PrivacyManager.cSettingExpert,
-				Boolean.FALSE.toString(), false)))
-			listRestriction.remove(cShell);
-		return listRestriction;
+		return new ArrayList<String>(Arrays.asList(cRestrictionNames));
 	}
 
 	public static List<String> getMethodNames(String restrictionName) {
@@ -459,6 +455,12 @@ public class PrivacyManager {
 
 		// Result
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
+
+		// Shell: do not restrict load/loadLibrary by default
+		if (restricted && restrictionName.equals(cShell) && methodName == null) {
+			setRestricted(hook, context, uid, restrictionName, "load", false);
+			setRestricted(hook, context, uid, restrictionName, "loadLibrary", false);
+		}
 	}
 
 	public static class RestrictionDesc {
