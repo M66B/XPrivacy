@@ -68,6 +68,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -101,6 +102,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		mThemeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
 		setTheme(mThemeId);
 		setContentView(R.layout.mainlist);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		// Get localized restriction name
 		List<String> listRestriction = PrivacyManager.getRestrictions();
