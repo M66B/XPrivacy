@@ -183,12 +183,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cPhone, new String[] { "READ_PHONE_STATE" },
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ActivityThread", false);
 
-		// Intent receive: connectivity change
-
-		// TODO: handle ConnectivityManager.CONNECTIVITY_ACTION(EXTRA_EXTRA_INFO)
-		// android.net.conn.CONNECTIVITY_CHANGE
-		// ACCESS_NETWORK_STATE / ACCESS_WIFI_STATE?
-
 		// Intent receive: NFC
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cNfc, new String[] { "NFC" },
 				NfcAdapter.ACTION_NDEF_DISCOVERED), "android.app.ActivityThread", false);
