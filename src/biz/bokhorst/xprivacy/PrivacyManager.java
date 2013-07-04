@@ -97,6 +97,7 @@ public class PrivacyManager {
 		mPermissions.get(cCalling).add("CALL_PHONE");
 		mPermissions.get(cContacts).add("READ_CONTACTS");
 		mPermissions.get(cDictionary).add("READ_USER_DICTIONARY");
+		mPermissions.get(cIdentification).add("READ_GSERVICES");
 		mPermissions.get(cInternet).add("INTERNET");
 		mPermissions.get(cInternet).add("ACCESS_NETWORK_STATE");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_LOCATION");
@@ -250,6 +251,7 @@ public class PrivacyManager {
 		mMethods.get(cMessages).add("MmsProvider");
 		mMethods.get(cMessages).add("MmsSmsProvider");
 		mMethods.get(cPhone).add("TelephonyProvider");
+		mMethods.get(cIdentification).add("GservicesProvider");
 	}
 
 	// Data

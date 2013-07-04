@@ -9,6 +9,7 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -192,5 +193,14 @@ public class Util {
 
 	public static String getXString(Context context, int id) throws Throwable {
 		return getXResources(context).getString(id);
+	}
+
+	public static boolean containsIgnoreCase(List<String> strings, String value) {
+		for (String s : strings) {
+			if (s.equalsIgnoreCase(value))
+				return true;
+		}
+
+		return false;
 	}
 }
