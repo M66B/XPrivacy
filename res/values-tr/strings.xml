@@ -1,0 +1,60 @@
+<resources>
+
+    <string name="app_name">XPrivacy</string>
+    <string name="app_notxposed" formatted="false">Xposed framework versiyon %d+ yüklü değil.</string>
+    <string name="app_notenabled">XPrivacy, Xposed yükleyicisinden etkinleştirlmedi.</string>
+    <string name="app_wrongandroid">Sadece Android versiyon 4.0, 4.1 ve 4.2 ile test edilmiştir.</string>
+    <string name="app_version" formatted="false">XPrivacy versiyon: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
+    <string name="app_copyright">Telif hakkı \u00A9 2013, M. Bokhorst (M66B)</string>
+    <string name="app_info">Bilgi(İngilizce): https://github.com/M66B/XPrivacy/</string>
+    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#restrictions</string>
+    <string name="menu_settings">Ayarlar</string>
+    <string name="menu_update">Güncelleştirme Ara</string>
+    <string name="menu_report">Problem Bildir</string>
+    <string name="menu_export">Ayarları dışa aktar</string>
+    <string name="menu_import">Ayarları içe aktar</string>
+    <string name="menu_theme">Temayı değiştir</string>
+    <string name="menu_pro">Pro versiyon</string>
+    <string name="menu_about">Hakkında</string>
+    <string name="menu_all">Tümü</string>
+    <string name="menu_app_launch">Çalıştır</string>
+    <string name="menu_app_settings">Ayarlar</string>
+    <string name="menu_app_store">Play Store</string>
+    <string name="msg_noupdate">Güncelleştirme yok</string>
+    <string name="msg_restricted" formatted="false">%s XPrivacy tarafından engellendi</string>
+    <string name="msg_licensed" formatted="false">%s adına lisanslıdır.</string>
+    <string name="msg_done">Bitti.</string>
+    <string name="restrict_accounts">Hesaplar (Google, Facebook, vb)</string>
+    <string name="restrict_browser">Tarayıcı (yer imleri/geçmiş)</string>
+    <string name="restrict_calendar">Takvim</string>
+    <string name="restrict_calling">Arama (telefon, SMS, MMS)</string>
+    <string name="restrict_contacts">Kişiler</string>
+    <string name="restrict_dictionary">Sözlük (kullıcı)</string>
+    <string name="restrict_identification">Kimlik (cihaz)</string>
+    <string name="restrict_internet">İnternet</string>
+    <string name="restrict_location">Konum (hassas/yaklaşık)</string>
+    <string name="restrict_media">Medya (ses, fotoğraf, video)</string>
+    <string name="restrict_messages">Mesajlar (SMS, MMS)</string>
+    <string name="restrict_network">Ağ (adresler (MAC) )</string>
+    <string name="restrict_nfc" translatable="false">NFC</string>
+    <string name="restrict_phone">Telefon (Kimlik, numaralar, aramalar)</string>
+    <string name="restrict_storage">Hafıza (media, SD kart)</string>
+    <string name="restrict_shell">Kabuk (komutlar, superuser)</string>
+    <string name="restrict_system">Sistem (yüklü uygulamalar)</string>
+    <string name="restrict_view">View (browser)</string>
+    <string name="title_category">Engellenecek kategori:</string>
+    <string name="title_restrict">Engellemek için işaretle:</string>
+    <string name="settings_expert">Uzman modu</string>
+    <string name="settings_lat">Enlem</string>
+    <string name="settings_lon">Boylam</string>
+    <string name="settings_mac">MAC adresi</string>
+    <string name="settings_imei" translatable="false">IMEI</string>
+    <string name="settings_phone">Telefon numarası</string>
+    <string name="settings_id">Android ID</string>
+    <string name="help_application">Uygulama</string>
+    <string name="help_internet">internet izni var</string>
+    <string name="help_granted">Android izni var</string>
+    <string name="help_used">bunu kullandı</string>
+
+</resources>
