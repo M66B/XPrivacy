@@ -93,6 +93,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XMediaRecorder("setOutputFile", PrivacyManager.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),
 				"android.media.MediaRecorder");
 
+		// Network info
+		String[] ninfos = new String[] { "getDetailedState", "getState", "isConnected", "isConnectedOrConnecting" };
+		for (String ninfo : ninfos)
+			hook(new XNetworkInfo(ninfo, PrivacyManager.cInternet, new String[] { "ACCESS_NETWORK_STATE" }),
+					"android.net.NetworkInfo");
+
 		// Network interface
 		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };
 		for (String net : nets)

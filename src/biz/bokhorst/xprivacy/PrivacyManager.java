@@ -159,6 +159,11 @@ public class PrivacyManager {
 		// Media recorder
 		mMethods.get(cMedia).add("setOutputFile");
 
+		// Network info
+		String[] ninfos = new String[] { "getDetailedState", "getState", "isConnected", "isConnectedOrConnecting" };
+		for (String ninfo : ninfos)
+			mMethods.get(cInternet).add(ninfo);
+
 		// Network interface
 		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };
 		for (String net : nets)
