@@ -174,6 +174,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		for (String wifi : wifis)
 			hook(new XWifiManager(wifi, PrivacyManager.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
 					"android.net.wifi.WifiManager");
+		hook(new XWifiManager("getConnectionInfo", PrivacyManager.cInternet, new String[] { "ACCESS_WIFI_STATE" }),
+				"android.net.wifi.WifiManager");
 
 		// Intent receive: calling
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cPhone, new String[] { "PROCESS_OUTGOING_CALLS" },

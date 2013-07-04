@@ -140,6 +140,8 @@ For easy usage, data is restricted by category:
 	* return a fake host name
 * Internet
 	* revoke access to the internet
+	* return fake disconnected state
+	* return fake supplicant disconnected state
 * Location
 	* return a random or set location
 	* return empty cell location

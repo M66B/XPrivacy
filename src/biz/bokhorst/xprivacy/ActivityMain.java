@@ -459,8 +459,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			reportClass(getSystemService(Context.TELEPHONY_SERVICE).getClass());
 
 		// Check WifiInfo
-		if (!checkField(WifiInfo.class, "mBSSID") || !checkField(WifiInfo.class, "mIpAddress")
-				|| !checkField(WifiInfo.class, "mMacAddress")
+		if (!checkField(WifiInfo.class, "mSupplicantState") || !checkField(WifiInfo.class, "mBSSID")
+				|| !checkField(WifiInfo.class, "mIpAddress") || !checkField(WifiInfo.class, "mMacAddress")
 				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid"))) {
 			reportClass(WifiInfo.class);
 			// TODO: check mWifiSsid.octets
