@@ -236,6 +236,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				false))
 			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", PrivacyManager.getDefacedProp("SERIAL"));
 
+
+		// Google services provider
+		if (lpparam.packageName.equals("com.google.android.gsf")) {
+			hook(new XContentProvider(PrivacyManager.cIdentification,
+					new String[] { "READ_GSERVICES" }, "GservicesProvider"),
+					lpparam.classLoader, "com.google.android.gsf.gservices.GservicesProvider");
+		}
+
 		// Browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {
 			hook(new XContentProvider(PrivacyManager.cBrowser,
