@@ -98,6 +98,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		for (String ninfo : ninfos)
 			hook(new XNetworkInfo(ninfo, PrivacyManager.cInternet, new String[] { "ACCESS_NETWORK_STATE" }),
 					"android.net.NetworkInfo");
+		// TODO: BT PAN
 
 		// Network interface
 		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };

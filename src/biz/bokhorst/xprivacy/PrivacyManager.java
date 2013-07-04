@@ -98,6 +98,7 @@ public class PrivacyManager {
 		mPermissions.get(cContacts).add("READ_CONTACTS");
 		mPermissions.get(cDictionary).add("READ_USER_DICTIONARY");
 		mPermissions.get(cInternet).add("INTERNET");
+		mPermissions.get(cInternet).add("ACCESS_NETWORK_STATE");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_UPDATES");
