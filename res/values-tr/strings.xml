@@ -2,7 +2,7 @@
 
     <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed framework versiyon %d+ yüklü değil.</string>
-    <string name="app_notenabled">XPrivacy, Xposed yükleyicisinden etkinleştirlmedi.</string>
+    <string name="app_notenabled">XPrivacy, Xposed yükleyicisinden etkinleştirilmedi.</string>
     <string name="app_wrongandroid">Sadece Android versiyon 4.0, 4.1 ve 4.2 ile test edilmiştir.</string>
     <string name="app_version" formatted="false">XPrivacy versiyon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
@@ -55,6 +55,6 @@
     <string name="help_application">Uygulama</string>
     <string name="help_internet">internet izni var</string>
     <string name="help_granted">Android izni var</string>
-    <string name="help_used">bunu kullandı</string>
+    <string name="help_used">bu izni kullandı</string>
 
 </resources>
