@@ -239,19 +239,29 @@ public class PrivacyManager {
 			mMethods.get(cMedia).add("android.media.action.IMAGE_CAPTURE_SECURE");
 		mMethods.get(cMedia).add(MediaStore.ACTION_VIDEO_CAPTURE);
 
-		// Content providers
+		// Browser provider
 		mMethods.get(cBrowser).add("BrowserProvider");
 		mMethods.get(cBrowser).add("BrowserProvider2");
+
+		// Calendar provider
 		mMethods.get(cCalendar).add("CalendarProvider2");
+
+		// Contacts provider
 		mMethods.get(cContacts).add("ContactsProvider2");
-		mMethods.get(cDictionary).add("UserDictionary");
 		mMethods.get(cPhone).add("CallLogProvider");
 		mMethods.get(cMessages).add("VoicemailContentProvider");
+
+		// Google services provider
+		mMethods.get(cIdentification).add("GservicesProvider");
+
+		// Telephony providers
 		mMethods.get(cMessages).add("SmsProvider");
 		mMethods.get(cMessages).add("MmsProvider");
 		mMethods.get(cMessages).add("MmsSmsProvider");
 		mMethods.get(cPhone).add("TelephonyProvider");
-		mMethods.get(cIdentification).add("GservicesProvider");
+
+		// User dictionary
+		mMethods.get(cDictionary).add("UserDictionary");
 	}
 
 	// Data

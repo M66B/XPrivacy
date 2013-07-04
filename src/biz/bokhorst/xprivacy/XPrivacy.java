@@ -188,7 +188,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// TODO: handle ConnectivityManager.CONNECTIVITY_ACTION(EXTRA_EXTRA_INFO)
 		// android.net.conn.CONNECTIVITY_CHANGE
 		// ACCESS_NETWORK_STATE / ACCESS_WIFI_STATE?
-		
+
 		// Intent receive: NFC
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cNfc, new String[] { "NFC" },
 				NfcAdapter.ACTION_NDEF_DISCOVERED), "android.app.ActivityThread", false);
@@ -236,14 +236,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				false))
 			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", PrivacyManager.getDefacedProp("SERIAL"));
 
-
-		// Google services provider
-		if (lpparam.packageName.equals("com.google.android.gsf")) {
-			hook(new XContentProvider(PrivacyManager.cIdentification,
-					new String[] { "READ_GSERVICES" }, "GservicesProvider"),
-					lpparam.classLoader, "com.google.android.gsf.gservices.GservicesProvider");
-		}
-
 		// Browser provider
 		if (lpparam.packageName.equals("com.android.browser")) {
 			hook(new XContentProvider(PrivacyManager.cBrowser,
@@ -270,7 +262,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"com.android.providers.contacts.VoicemailContentProvider");
 		}
 
-		// Load telephony providers
+		// Google services provider
+		else if (lpparam.packageName.equals("com.google.android.gsf"))
+			hook(new XContentProvider(PrivacyManager.cIdentification, new String[] { "READ_GSERVICES" },
+					"GservicesProvider"), lpparam.classLoader, "com.google.android.gsf.gservices.GservicesProvider");
+
+		// Telephony providers
 		else if (lpparam.packageName.equals("com.android.providers.telephony")) {
 			hook(new XContentProvider(PrivacyManager.cMessages, new String[] { "READ_SMS" }, "SmsProvider"),
 					lpparam.classLoader, "com.android.providers.telephony.SmsProvider");

@@ -138,6 +138,7 @@ For easy usage, data is restricted by category:
 	* return a fake Android ID
 	* return a fake device serial number
 	* return a fake host name
+	* return a fake Google services device ID
 * Internet
 	* revoke access to the internet
 	* return fake disconnected state
@@ -458,10 +459,11 @@ Changelog
 * Move shell restriction out of expert mode, load/Library by default not restricted
 * Move XPrivacy files to the folder .xprivacy ([pro version](http://www.faircode.eu/xprivacy/) only) ([issue](https://github.com/M66B/XPrivacy/issues/27))
 * Fake to be disconnected for internet restriction ([issue](https://github.com/M66B/XPrivacy/issues/132))
+* Fake Google services device ID, thanks @[vipere](https://github.com/vipere) ([issue])(https://github.com/M66B/XPrivacy/pull/135))
 * Fixed internet/storage restriction for ICS ([issue](https://github.com/M66B/XPrivacy/issues/123))
 * Fixed keyboard popup, thanks @[vipere](https://github.com/M66B/XPrivacy/pull/131)
 * Fixed and improved fake phone data ([issue](https://github.com/M66B/XPrivacy/issues/116), see also [Restrictions](https://github.com/M66B/XPrivacy#restrictions))
-* Fixed fake SSID for Android 4.2+ ([issue](https://github.com/M66B/XPrivacy/issues/116)
+* Fixed fake SSID for Android 4.2+ ([issue](https://github.com/M66B/XPrivacy/issues/116))
 * Removed boot restriction
 * Updated German translation
 * Updated Polish translation

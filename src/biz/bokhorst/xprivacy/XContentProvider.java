@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.util.Arrays;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -53,16 +54,15 @@ public class XContentProvider extends XHook {
 	}
 
 	@Override
+	@SuppressLint("DefaultLocale")
 	protected void after(MethodHookParam param) throws Throwable {
 		// Check uri
 		Uri uri = (Uri) param.args[0];
 		if (mUriStart == null || uri.toString().startsWith(mUriStart)) {
 
-			// If that's the Google services provider, block only the android_id
+			// Google services provider: block only android_id
 			if (uri.toString().toLowerCase().startsWith("content://com.google.android.gsf.gservices")) {
 				List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
-
-				// checking just selectionArgs might not be enough but should suffice for now
 				if (!Util.containsIgnoreCase(selectionArgs, "android_id"))
 					return;
 			}

@@ -196,11 +196,9 @@ public class Util {
 	}
 
 	public static boolean containsIgnoreCase(List<String> strings, String value) {
-		for (String s : strings) {
-			if (s.equalsIgnoreCase(value))
+		for (String string : strings)
+			if (string.equalsIgnoreCase(value))
 				return true;
-		}
-
 		return false;
 	}
 }
