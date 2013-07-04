@@ -138,7 +138,7 @@ For easy usage, data is restricted by category:
 	* return a fake Android ID
 	* return a fake device serial number
 	* return a fake host name
-	* return a fake Google services device ID
+	* return a fake Google services framework ID
 * Internet
 	* revoke access to the internet
 	* return fake disconnected state
@@ -203,10 +203,11 @@ For easy usage, data is restricted by category:
 * Storage
 	* revoke permission to the internal storage (media)
 	* revoke permission to the external storage (SD card)
+	* return fake unmounted state for external storage (SD card)
 * Shell
 	* Linux shell
 	* Superuser shell
-	* Load/library
+	* Load/library (by default not restricted)
 * System
 	* return an empty list of installed applications
 * View
@@ -458,18 +459,19 @@ Changelog
 * Split media/sdcard storage restriction (expert only) ([issue](https://github.com/M66B/XPrivacy/issues/125))
 * Move shell restriction out of expert mode, load/Library by default not restricted
 * Move XPrivacy files to the folder .xprivacy ([pro version](http://www.faircode.eu/xprivacy/) only) ([issue](https://github.com/M66B/XPrivacy/issues/27))
-* Fake to be disconnected for internet restriction ([issue](https://github.com/M66B/XPrivacy/issues/132))
-* Fake Google services device ID, thanks @[vipere](https://github.com/vipere) ([issue](https://github.com/M66B/XPrivacy/issues/134))
+* Fake disconnected state for internet restriction ([issue](https://github.com/M66B/XPrivacy/issues/132))
+* Fake unmounted state for storage restriction (external storage only)
+* Fake Google services framework ID, thanks @[vipere](https://github.com/vipere) ([issue](https://github.com/M66B/XPrivacy/issues/134))
 * Progress bar while loading applications, thanks @[Tungstwenty](https://github.com/Tungstwenty)
 * Fixed internet/storage restriction for ICS ([issue](https://github.com/M66B/XPrivacy/issues/123))
 * Fixed keyboard popup, thanks @[vipere](https://github.com/M66B/XPrivacy/pull/131)
 * Fixed and improved fake phone data ([issue](https://github.com/M66B/XPrivacy/issues/116), see also [Restrictions](https://github.com/M66B/XPrivacy#restrictions))
 * Fixed fake SSID for Android 4.2+ ([issue](https://github.com/M66B/XPrivacy/issues/116))
+* Added Turkish translation
 * Removed boot restriction
 * Updated German translation
 * Updated Polish translation
 * Updated Russian translation
-* Added Turkish translation
 
 **Version 0.42**
 

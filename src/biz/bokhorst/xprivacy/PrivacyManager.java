@@ -149,6 +149,9 @@ public class PrivacyManager {
 		for (String cam : cams)
 			mMethods.get(cMedia).add(cam);
 
+		// Environment
+		mMethods.get(PrivacyManager.cStorage).add("getExternalStorageState");
+
 		// Identification
 		mMethods.get(PrivacyManager.cIdentification).add("SERIAL");
 
@@ -217,6 +220,7 @@ public class PrivacyManager {
 		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults" };
 		for (String wifi : wifis)
 			mMethods.get(cNetwork).add(wifi);
+		mMethods.get(cInternet).add("getConnectionInfo");
 
 		// Intent receive: calling
 		mMethods.get(cPhone).add(Intent.ACTION_NEW_OUTGOING_CALL);

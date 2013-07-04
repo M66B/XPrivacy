@@ -82,6 +82,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		for (String cam : cams)
 			hook(new XCamera(cam, PrivacyManager.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
+		// Environment
+		hook(new XEnvironment("getExternalStorageState", PrivacyManager.cStorage, new String[] {}),
+				"android.os.Environment");
+
 		// Location manager
 		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
 				"requestLocationUpdates", "requestSingleUpdate", "sendExtraCommand" };
@@ -174,7 +178,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		for (String wifi : wifis)
 			hook(new XWifiManager(wifi, PrivacyManager.cNetwork, new String[] { "ACCESS_WIFI_STATE" }),
 					"android.net.wifi.WifiManager");
-		hook(new XWifiManager("getConnectionInfo", PrivacyManager.cInternet, new String[] { "ACCESS_WIFI_STATE" }),
+		hook(new XWifiManager("getConnectionInfo", PrivacyManager.cInternet, new String[] {}),
 				"android.net.wifi.WifiManager");
 
 		// Intent receive: calling
