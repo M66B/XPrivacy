@@ -213,15 +213,20 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
 	private void checkLicense() {
-		if (Util.hasProLicense(this) == null && Util.isProInstalled(this))
-			try {
-				int uid = getPackageManager().getApplicationInfo("biz.bokhorst.xprivacy.pro", 0).uid;
-				PrivacyManager.deleteRestrictions(this, uid);
-				Util.log(null, Log.INFO, "Licensing: check");
-				startActivityForResult(new Intent("biz.bokhorst.xprivacy.pro.CHECK"), 0);
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
+		if (Util.hasProLicense(this) == null) {
+			if (Util.isProInstalled(this))
+				try {
+					int uid = getPackageManager().getApplicationInfo("biz.bokhorst.xprivacy.pro", 0).uid;
+					PrivacyManager.deleteRestrictions(this, uid);
+					Util.log(null, Log.INFO, "Licensing: check");
+					startActivityForResult(new Intent("biz.bokhorst.xprivacy.pro.CHECK"), 0);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+		} else {
+			Toast toast = Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG);
+			toast.show();
+		}
 	}
 
 	@Override
