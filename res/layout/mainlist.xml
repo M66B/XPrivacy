@@ -88,23 +88,12 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/pbApp"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="50dip"
-        android:layout_height="50dip"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dip"
-        android:indeterminate="true"
-        android:visibility="gone" />
-
     <ListView
         android:id="@+id/lvApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dip"
         android:choiceMode="multipleChoice"
-        android:fastScrollEnabled="true"
-        android:visibility="gone" />
+        android:fastScrollEnabled="true" />
 
 </LinearLayout>

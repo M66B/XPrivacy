@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -61,7 +62,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		mSystem = mSystem || appInfo.packageName.equals("de.robv.android.xposed.installer");
 	}
 
-	public static List<ApplicationInfoEx> getXApplicationList(Context context) {
+	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
 		// Get references
 		PackageManager pm = context.getPackageManager();
 		boolean expert = Boolean.parseBoolean(PrivacyManager.getSetting(null, context, PrivacyManager.cSettingExpert,
@@ -70,7 +71,11 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		// Get app list
 		SparseArray<ApplicationInfoEx> mapApp = new SparseArray<ApplicationInfoEx>();
 		List<ApplicationInfoEx> listApp = new ArrayList<ApplicationInfoEx>();
-		for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA)) {
+		List<ApplicationInfo> apps = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+		dialog.setMax(apps.size());
+		int i = 1;
+		for (ApplicationInfo appInfo : apps) {
+		    dialog.setProgress(i++);
 			ApplicationInfoEx xAppInfo = new ApplicationInfoEx(appInfo, context);
 			if (xAppInfo.getIsSystem() ? expert : true) {
 				ApplicationInfoEx yAppInfo = mapApp.get(appInfo.uid);

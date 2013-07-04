@@ -42,6 +42,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -82,7 +83,6 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.SectionIndexer;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -1073,12 +1073,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private class AppListTask extends AsyncTask<String, Integer, List<ApplicationInfoEx>> {
 
 		private String mRestrictionName;
+		ProgressDialog dialog;
 
 		@Override
 		protected List<ApplicationInfoEx> doInBackground(String... params) {
 			mRestrictionName = params[0];
 			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
-			return ApplicationInfoEx.getXApplicationList(ActivityMain.this);
+			return ApplicationInfoEx.getXApplicationList(ActivityMain.this, dialog);
 		}
 
 		@Override
@@ -1103,11 +1104,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			etFilter.setEnabled(false);
 			etFilter.setText("");
 
-			// Show indeterminate progress circle
-			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
-			progressBar.setVisibility(View.VISIBLE);
-			ListView lvApp = (ListView) findViewById(R.id.lvApp);
-			lvApp.setVisibility(View.GONE);
+			// Show progress dialog
+			dialog = new ProgressDialog(((ListView) findViewById(R.id.lvApp)).getContext());
+			dialog.setMessage("Loading apps, please wait");
+			dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			dialog.setCancelable(false);
+			dialog.show();
 		}
 
 		@Override
@@ -1119,10 +1121,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			ListView lvApp = (ListView) findViewById(R.id.lvApp);
 			lvApp.setAdapter(mAppAdapter);
 
-			// Hide indeterminate progress circle
-			ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbApp);
-			progressBar.setVisibility(View.GONE);
-			lvApp.setVisibility(View.VISIBLE);
+			// Dismiss progress dialog
+			try {
+				dialog.dismiss();
+			} catch (Exception e) {
+			}
 
 			// Enable filters
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
