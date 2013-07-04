@@ -8,7 +8,6 @@
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
     <string name="app_copyright">Telif hakkı \u00A9 2013, M. Bokhorst (M66B)</string>
     <string name="app_info">Bilgi(İngilizce): https://github.com/M66B/XPrivacy/</string>
-    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#restrictions</string>
     <string name="menu_settings">Ayarlar</string>
     <string name="menu_update">Güncelleştirme Ara</string>
     <string name="menu_report">Problem Bildir</string>
@@ -38,7 +37,6 @@
     <string name="restrict_media">Medya (ses, fotoğraf, video)</string>
     <string name="restrict_messages">Mesajlar (SMS, MMS)</string>
     <string name="restrict_network">Ağ (adresler)</string>
-    <string name="restrict_nfc" translatable="false">NFC</string>
     <string name="restrict_phone">Telefon (Kimlik, numaralar, aramalar)</string>
     <string name="restrict_storage">Depolama (medya, SD kart)</string>
     <string name="restrict_shell">Kabuk (komutlar, superuser)</string>
@@ -50,7 +48,6 @@
     <string name="settings_lat">Enlem</string>
     <string name="settings_lon">Boylam</string>
     <string name="settings_mac">MAC adresi</string>
-    <string name="settings_imei" translatable="false">IMEI</string>
     <string name="settings_phone">Telefon numarası</string>
     <string name="settings_id">Android ID</string>
     <string name="help_application">Uygulama</string>

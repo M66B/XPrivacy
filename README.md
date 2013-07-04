@@ -469,6 +469,7 @@ Changelog
 * Updated German translation
 * Updated Polish translation
 * Updated Russian translation
+* Added Turkish translation
 
 **Version 0.42**
 
