@@ -283,7 +283,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
 		menu.findItem(R.id.menu_export).setEnabled(pro && mounted);
-		menu.findItem(R.id.menu_import).setEnabled(pro && mounted);
 		menu.findItem(R.id.menu_pro).setVisible(!pro);
 
 		return super.onPrepareOptionsMenu(menu);

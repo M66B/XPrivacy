@@ -463,12 +463,12 @@ Changelog
 * Fake unmounted state for storage restriction (external storage only)
 * Fake Google services framework ID, thanks @[vipere](https://github.com/vipere) ([issue](https://github.com/M66B/XPrivacy/issues/134))
 * Progress bar while loading applications, thanks @[Tungstwenty](https://github.com/Tungstwenty)
+* Removed boot restriction
 * Fixed internet/storage restriction for ICS ([issue](https://github.com/M66B/XPrivacy/issues/123))
 * Fixed keyboard popup, thanks @[vipere](https://github.com/M66B/XPrivacy/pull/131)
 * Fixed and improved fake phone data ([issue](https://github.com/M66B/XPrivacy/issues/116), see also [Restrictions](https://github.com/M66B/XPrivacy#restrictions))
 * Fixed fake SSID for Android 4.2+ ([issue](https://github.com/M66B/XPrivacy/issues/116))
 * Added Turkish translation
-* Removed boot restriction
 * Updated German translation
 * Updated Polish translation
 * Updated Russian translation
