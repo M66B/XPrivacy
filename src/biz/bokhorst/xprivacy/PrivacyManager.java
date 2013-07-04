@@ -479,6 +479,10 @@ public class PrivacyManager {
 		// Result
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
 
+		// Identification: do not restrict Google services provider by default
+		if (restricted && restrictionName.equals(cIdentification) && methodName == null)
+			setRestricted(hook, context, uid, restrictionName, "GservicesProvider", false);
+
 		// Shell: do not restrict load/loadLibrary by default
 		if (restricted && restrictionName.equals(cShell) && methodName == null) {
 			setRestricted(hook, context, uid, restrictionName, "load", false);

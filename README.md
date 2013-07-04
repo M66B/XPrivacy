@@ -461,7 +461,7 @@ Changelog
 * Move XPrivacy files to the folder .xprivacy ([pro version](http://www.faircode.eu/xprivacy/) only) ([issue](https://github.com/M66B/XPrivacy/issues/27))
 * Fake disconnected state for internet restriction ([issue](https://github.com/M66B/XPrivacy/issues/132))
 * Fake unmounted state for storage restriction (external storage only)
-* Fake Google services framework ID, thanks @[vipere](https://github.com/vipere) ([issue](https://github.com/M66B/XPrivacy/issues/134))
+* Fake Google services framework ID, not restricted by default, thanks @[vipere](https://github.com/vipere) ([issue](https://github.com/M66B/XPrivacy/issues/134))
 * Progress bar while loading applications, thanks @[Tungstwenty](https://github.com/Tungstwenty)
 * Removed boot restriction
 * Move import into the free version
