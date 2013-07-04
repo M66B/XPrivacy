@@ -1073,13 +1073,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private class AppListTask extends AsyncTask<String, Integer, List<ApplicationInfoEx>> {
 
 		private String mRestrictionName;
-		ProgressDialog dialog;
+		private ProgressDialog mProgressDialog;
 
 		@Override
 		protected List<ApplicationInfoEx> doInBackground(String... params) {
 			mRestrictionName = params[0];
 			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
-			return ApplicationInfoEx.getXApplicationList(ActivityMain.this, dialog);
+			return ApplicationInfoEx.getXApplicationList(ActivityMain.this, mProgressDialog);
 		}
 
 		@Override
@@ -1105,11 +1105,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			etFilter.setText("");
 
 			// Show progress dialog
-			dialog = new ProgressDialog(((ListView) findViewById(R.id.lvApp)).getContext());
-			dialog.setMessage("Loading apps, please wait");
-			dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			dialog.setCancelable(false);
-			dialog.show();
+			ListView lvApp = (ListView) findViewById(R.id.lvApp);
+			mProgressDialog = new ProgressDialog(lvApp.getContext());
+			mProgressDialog.setMessage(getString(R.string.msg_loading));
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			mProgressDialog.setCancelable(false);
+			mProgressDialog.show();
 		}
 
 		@Override
@@ -1123,8 +1124,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Dismiss progress dialog
 			try {
-				dialog.dismiss();
-			} catch (Exception e) {
+				mProgressDialog.dismiss();
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
 			}
 
 			// Enable filters

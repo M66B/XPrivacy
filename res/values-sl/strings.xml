@@ -23,6 +23,7 @@
     <string name="msg_noupdate">Na voljo ni posodobitev</string>
     <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencirano na: %s</string>
+    <string name="msg_loading">Loading</string>
     <string name="msg_done">Dokončano</string>
     <string name="restrict_accounts">Računi (Google, Facebook, itd)</string>
     <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>

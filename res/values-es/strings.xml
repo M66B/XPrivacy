@@ -23,6 +23,7 @@
     <string name="msg_noupdate">No hay actualizaciones disponibles</string>
     <string name="msg_restricted">%s restringido por XPrivacy</string>
     <string name="msg_licensed">Con licencia para: %s</string>
+    <string name="msg_loading">Loading</string>
     <string name="msg_done">Completado</string>
     <string name="restrict_accounts">Cuentas (Google, Facebook, etc)</string>
     <string name="restrict_browser">Navegador (marcadores/historial)</string>

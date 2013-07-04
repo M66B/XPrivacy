@@ -71,19 +71,18 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		// Get app list
 		SparseArray<ApplicationInfoEx> mapApp = new SparseArray<ApplicationInfoEx>();
 		List<ApplicationInfoEx> listApp = new ArrayList<ApplicationInfoEx>();
-		List<ApplicationInfo> apps = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-		dialog.setMax(apps.size());
-		int i = 1;
-		for (ApplicationInfo appInfo : apps) {
-		    dialog.setProgress(i++);
-			ApplicationInfoEx xAppInfo = new ApplicationInfoEx(appInfo, context);
+		List<ApplicationInfo> listAppInfo = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+		dialog.setMax(listAppInfo.size());
+		for (int app = 0; app < listAppInfo.size(); app++) {
+			dialog.setProgress(app + 1);
+			ApplicationInfoEx xAppInfo = new ApplicationInfoEx(listAppInfo.get(app), context);
 			if (xAppInfo.getIsSystem() ? expert : true) {
-				ApplicationInfoEx yAppInfo = mapApp.get(appInfo.uid);
+				ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
 				if (yAppInfo == null) {
-					mapApp.put(appInfo.uid, xAppInfo);
+					mapApp.put(xAppInfo.getUid(), xAppInfo);
 					listApp.add(xAppInfo);
 				} else
-					yAppInfo.AddApplicationName(getApplicationName(appInfo, pm));
+					yAppInfo.AddApplicationName(getApplicationName(listAppInfo.get(app), pm));
 			}
 		}
 
