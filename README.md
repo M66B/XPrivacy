@@ -469,6 +469,7 @@ Changelog
 * Fixed keyboard popup, thanks @[vipere](https://github.com/M66B/XPrivacy/pull/131)
 * Fixed and improved fake phone data ([issue](https://github.com/M66B/XPrivacy/issues/116), see also [Restrictions](https://github.com/M66B/XPrivacy#restrictions))
 * Fixed fake SSID for Android 4.2+ ([issue](https://github.com/M66B/XPrivacy/issues/116))
+* Added Czech translation
 * Added Turkish translation
 * Updated German translation
 * Updated Japanese translation
@@ -753,6 +754,7 @@ Translations:
 Current translation:
 
 * Bulgarian (bg)
+* Czech (cs)
 * Dutch/Flemish (nl)
 * English
 * French (fr)
@@ -767,6 +769,7 @@ Current translation:
 * Slovak (sk)
 * Slovenian (sl)
 * Spanish (es)
+* Turkish (tr)
 
 Restrict new data:
 
