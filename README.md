@@ -454,7 +454,7 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 0.43** (in development)
+**Version 0.43**
 
 * Split media/sdcard storage restriction (expert only) ([issue](https://github.com/M66B/XPrivacy/issues/125))
 * Move shell restriction out of expert mode, load/Library by default not restricted
@@ -465,7 +465,7 @@ Changelog
 * Progress bar while loading applications, thanks @[Tungstwenty](https://github.com/Tungstwenty)
 * Removed boot restriction
 * Check package manager service, Wi-Fi info and activity thread for compatibility
-* [Geocoding](http://en.wikipedia.org/wiki/Geocoding) of location names
+* [Geocoding](http://en.wikipedia.org/wiki/Geocoding) of location names ([issue](https://github.com/M66B/XPrivacy/issues/139))
 * Fixed internet/storage restriction for ICS ([issue](https://github.com/M66B/XPrivacy/issues/123))
 * Fixed keyboard popup, thanks @[vipere](https://github.com/M66B/XPrivacy/pull/131)
 * Fixed and improved fake phone data ([issue](https://github.com/M66B/XPrivacy/issues/116), see also [Restrictions](https://github.com/M66B/XPrivacy#restrictions))
