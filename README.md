@@ -755,7 +755,7 @@ Translations:
 * If you know how to, please create a [pull request](https://help.github.com/articles/using-pull-requests)
 * Else send me the translated file [via XDA PM](http://forum.xda-developers.com/member.php?u=2799345)
 
-Current translation:
+Current translations:
 
 * Bulgarian (bg)
 * Czech (cs)
