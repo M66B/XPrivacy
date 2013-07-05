@@ -447,37 +447,58 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			alertDialog.show();
 		}
 
-		// Location manager
-		// mContext is missing sometimes
+		// Activity thread: ReceiverData
+		try {
+			Class<?> clazz = Class.forName("android.app.ActivityThread$ReceiverData");
+			if (!checkField(clazz, "intent"))
+				reportClass(clazz);
+		} catch (Throwable ex) {
+			try {
+				reportClass(Class.forName("android.app.ActivityThread"));
+			} catch (Throwable exex) {
+				sendSupportInfo(exex.toString());
+			}
+		}
 
-		// Check package manager
-		if (!checkField(getPackageManager(), "mContext", Context.class))
-			reportClass(getPackageManager().getClass());
-
-		// TODO: PackageManagerService.getPackageUid
-		// Unfortunately the PMS class cannot be loaded by the app class loader
+		// Activity thread: unscheduleGcIdler
+		try {
+			Class<?> clazz = Class.forName("android.app.ActivityThread");
+			try {
+				clazz.getDeclaredMethod("unscheduleGcIdler");
+			} catch (NoSuchMethodException ex) {
+				reportClass(clazz);
+			}
+		} catch (Throwable ex) {
+			sendSupportInfo(ex.toString());
+		}
 
 		// Check content resolver
 		if (!checkField(getContentResolver(), "mContext", Context.class))
 			reportClass(getContentResolver().getClass());
 
-		// Check telephony manager
-		if (!checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class)
-				&& !checkField(getSystemService(Context.TELEPHONY_SERVICE), "mContext", Context.class))
-			reportClass(getSystemService(Context.TELEPHONY_SERVICE).getClass());
-
-		// Check WifiInfo
-		if (!checkField(WifiInfo.class, "mSupplicantState") || !checkField(WifiInfo.class, "mBSSID")
-				|| !checkField(WifiInfo.class, "mIpAddress") || !checkField(WifiInfo.class, "mMacAddress")
-				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid"))) {
-			reportClass(WifiInfo.class);
-			// TODO: check mWifiSsid.octets
-		}
-
-		// Check InterfaceAddress
+		// Check interface address
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
 				|| PrivacyManager.getDefacedInetAddress() == null)
 			reportClass(InterfaceAddress.class);
+
+		// Check package manager
+		if (!checkField(getPackageManager(), "mContext", Context.class))
+			reportClass(getPackageManager().getClass());
+
+		// Check package manager service
+		try {
+			Class<?> clazz = Class.forName("com.android.server.pm.PackageManagerService");
+			try {
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+					clazz.getDeclaredMethod("getPackageUid", String.class, int.class);
+				else
+					clazz.getDeclaredMethod("getPackageUid", String.class);
+			} catch (NoSuchMethodException ex) {
+				reportClass(clazz);
+			}
+		} catch (Throwable ex) {
+			sendSupportInfo(ex.toString());
+		}
 
 		// Check runtime
 		try {
@@ -485,6 +506,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Runtime.class.getDeclaredMethod("loadLibrary", String.class, ClassLoader.class);
 		} catch (NoSuchMethodException ex) {
 			reportClass(Runtime.class);
+		}
+
+		// Check telephony manager
+		if (!checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class)
+				&& !checkField(getSystemService(Context.TELEPHONY_SERVICE), "mContext", Context.class))
+			reportClass(getSystemService(Context.TELEPHONY_SERVICE).getClass());
+
+		// Check wifi info
+		if (!checkField(WifiInfo.class, "mSupplicantState") || !checkField(WifiInfo.class, "mBSSID")
+				|| !checkField(WifiInfo.class, "mIpAddress") || !checkField(WifiInfo.class, "mMacAddress")
+				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid"))) {
+			reportClass(WifiInfo.class);
+			// TODO: check mWifiSsid.octets
 		}
 	}
 
@@ -824,18 +858,23 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void sendSupportInfo(String text) {
-		String version = null;
+		String xversion = null;
 		try {
 			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-			version = pInfo.versionName;
+			xversion = pInfo.versionName;
 		} catch (Throwable ex) {
 		}
+
+		StringBuilder sb = new StringBuilder(text);
+		sb.insert(0, String.format("Android SDK %d\r\n", Build.VERSION.SDK_INT));
+		sb.insert(0, String.format("XPrivacy %s\r\n", xversion));
+		sb.append("\r\n");
 
 		Intent sendEmail = new Intent(Intent.ACTION_SEND);
 		sendEmail.setType("message/rfc822");
 		sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
-		sendEmail.putExtra(Intent.EXTRA_SUBJECT, String.format("XPrivacy %s support info", version));
-		sendEmail.putExtra(Intent.EXTRA_TEXT, text);
+		sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy support info");
+		sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
 		try {
 			startActivity(sendEmail);
 		} catch (Throwable ex) {
