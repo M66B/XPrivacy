@@ -471,8 +471,10 @@ Changelog
 * Fixed fake SSID for Android 4.2+ ([issue](https://github.com/M66B/XPrivacy/issues/116))
 * Added Turkish translation
 * Updated German translation
+* Updated Japanese translation
 * Updated Polish translation
 * Updated Russian translation
+* Updated Simplified Chinese translation
 * Updated Slovenian translation
 
 **Version 0.42**
