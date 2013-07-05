@@ -2,7 +2,7 @@
 
     <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
-    <string name="app_notenabled">Aplikácia XPrivacy nie je aktivovaná v Xposed</string>
+    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed</string>
     <string name="app_wrongandroid">Testované len s Android verziou 4.0, 4.1 a 4.2</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Verzia Xposed: %d</string>
@@ -23,7 +23,7 @@
     <string name="msg_noupdate">Nie je k dispozícii žiadna aktualizácia</string>
     <string name="msg_restricted" formatted="false">%s obmedzené pomocou XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
-    <string name="msg_loading">Loading</string>
+    <string name="msg_loading">Načítavanie</string>
     <string name="msg_done">Hotovo</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atď.)</string>
     <string name="restrict_browser">Prehliadač (záložky/história)</string>
@@ -53,6 +53,6 @@
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové oprávnenie</string>
     <string name="help_granted">má Android povolenie</string>
-    <string name="help_used">používa tieto dáta</string>
+    <string name="help_used">používala tieto dáta</string>
 
 </resources>
