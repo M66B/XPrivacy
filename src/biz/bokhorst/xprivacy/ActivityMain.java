@@ -615,10 +615,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					final List<Address> listAddress = new Geocoder(ActivityMain.this).getFromLocationName(search, 1);
 					if (listAddress.size() > 0) {
 						Address address = listAddress.get(0);
+
+						// Get coordinates
 						if (address.hasLatitude())
 							etLat.setText(Double.toString(address.getLatitude()));
 						if (address.hasLongitude())
 							etLon.setText(Double.toString(address.getLongitude()));
+
+						// Get address
+						StringBuilder sb = new StringBuilder();
+						for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+							if (i != 0)
+								sb.append(", ");
+							sb.append(address.getAddressLine(i));
+						}
+						etSearch.setText(sb.toString());
 					}
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
