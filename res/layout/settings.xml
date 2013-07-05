@@ -53,9 +53,7 @@
                     android:inputType="textNoSuggestions" />
             </TableRow>
 
-            <TableRow
-                android:divider="?android:dividerVertical"
-                android:showDividers="middle" >
+            <TableRow>
 
                 <TextView
                     android:text="@string/settings_mac"
@@ -99,9 +97,7 @@
                     android:inputType="textNoSuggestions" />
             </TableRow>
 
-            <TableRow
-                android:divider="?android:dividerVertical"
-                android:showDividers="middle" >
+            <TableRow>
 
                 <CheckBox
                     android:id="@+id/cbExpert"
