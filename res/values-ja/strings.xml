@@ -23,7 +23,7 @@
     <string name="msg_noupdate">更新はありません</string>
     <string name="msg_restricted" formatted="false">%s をXPrivacyが制限しました</string>
     <string name="msg_licensed" formatted="false">ライセンス先: %s</string>
-    <string name="msg_loading">Loading</string>
+    <string name="msg_loading">読み込み中</string>
     <string name="msg_done">完了</string>
     <string name="restrict_accounts">アカウント (Google, Facebookなど)</string>
     <string name="restrict_browser">ブラウザ (お気に入り/履歴)</string>
@@ -39,7 +39,7 @@
     <string name="restrict_network">ネットワーク (アドレス)</string>
     <string name="restrict_phone">電話 (ID, 電話番号, 通話)</string>
     <string name="restrict_storage">ストレージ (メディア, SDカード)</string>
-    <string name="restrict_shell">Shell (コマンド, superuser)</string>
+    <string name="restrict_shell">シェル (コマンド, Superuser)</string>
     <string name="restrict_system">システム (インストール済みアプリ)</string>
     <string name="restrict_view">表示 (ブラウザ)</string>
     <string name="title_category">制限するカテゴリ:</string>
