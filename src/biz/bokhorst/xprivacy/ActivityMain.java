@@ -526,7 +526,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (checkField(WifiInfo.class, "mWifiSsid"))
 			try {
 				Class<?> clazz = Class.forName("android.net.wifi.WifiSsid");
-				if (!checkField(clazz, "octets", ByteArrayOutputStream.class))
+				if (!checkField(clazz, "octets"))
 					reportClass(clazz);
 			} catch (Throwable ex) {
 				sendSupportInfo(ex.toString());
