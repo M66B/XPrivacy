@@ -1,0 +1,58 @@
+<resources>
+
+    <string name="app_name">XPrivacy</string>
+    <string name="app_notxposed" formatted="false">Xposed framework versjon %d+ er ikke installert</string>
+    <string name="app_notenabled">XPrivacy er ikke frigitt i Xposed installern</string>
+    <string name="app_wrongandroid">Bare testet med Android versjon 4.0, 4.1 og 4.2</string>
+    <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed framework versjon: %d</string>
+    <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013</string>
+    <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
+    <string name="menu_settings">Instillinger</string>
+    <string name="menu_update">Sjekk for oppdatering</string>
+    <string name="menu_report">Rapport en feil</string>
+    <string name="menu_export">Eksportere</string>
+    <string name="menu_import">Importere</string>
+    <string name="menu_theme">Bytt tema</string>
+    <string name="menu_pro">Pro versjon</string>
+    <string name="menu_about">Om</string>
+    <string name="menu_all">Alle</string>
+    <string name="menu_app_launch">Kjør</string>
+    <string name="menu_app_settings">Instillinger</string>
+    <string name="menu_app_store">Play Store</string>
+    <string name="msg_noupdate">Ingen oppdatering finnes</string>
+    <string name="msg_restricted" formatted="false">%s blokkert av XPrivacy</string>
+    <string name="msg_licensed" formatted="false">Lisensert til: %s</string>
+    <string name="msg_loading">Lader</string>
+    <string name="msg_done">Ferdig</string>
+    <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
+    <string name="restrict_browser">Browser (bookmarks/history)</string>
+    <string name="restrict_calendar">Kalender</string>
+    <string name="restrict_calling">Ringe (phone, SMS, MMS)</string>
+    <string name="restrict_contacts">Kontakter</string>
+    <string name="restrict_dictionary">Ordbok (bruker)</string>
+    <string name="restrict_identification">Identifikasjon (apparat)</string>
+    <string name="restrict_internet">Internet</string>
+    <string name="restrict_location">Posisjon (fin/grov)</string>
+    <string name="restrict_media">Medier (lyd, foto, video)</string>
+    <string name="restrict_messages">Meldinger (SMS, MMS)</string>
+    <string name="restrict_network">Nettverk (adresser)</string>
+    <string name="restrict_phone">Telefon (ID, nummere, oppringninger)</string>
+    <string name="restrict_storage">Minne (medier, SD kort)</string>
+    <string name="restrict_shell">Shell (kommandoer, superbruker)</string>
+    <string name="restrict_system">System (installerte apper)</string>
+    <string name="restrict_view">Betrakte (browser)</string>
+    <string name="title_category">Kategori å blokke:</string>
+    <string name="title_restrict">Marker til å blokke:</string>
+    <string name="settings_expert">Ekspert modus</string>
+    <string name="settings_lat">Breddegrad</string>
+    <string name="settings_lon">Lengdegrad</string>
+    <string name="settings_mac">MAC adresse</string>
+    <string name="settings_phone">Telefonnummer</string>
+    <string name="settings_id">Android ID</string>
+    <string name="help_application">Applikasjon</string>
+    <string name="help_internet">har internet tillatelse</string>
+    <string name="help_granted">har Android tillatelse</string>
+    <string name="help_used">nytta denne typen av data</string>
+
+</resources>

@@ -472,6 +472,7 @@ Changelog
 * Fixed fake SSID for Android 4.2+ ([issue](https://github.com/M66B/XPrivacy/issues/116))
 * Fixed rebuilding application list on orientation change
 * Added Czech translation
+* Added Norwegian translation
 * Added Turkish translation
 * Updated German translation
 * Updated Japanese translation
@@ -765,6 +766,7 @@ Current translation:
 * Greek (el)
 * Hebrew (he/iw)
 * Japanese (ja)
+* Norwegian (no)
 * Polish (pl)
 * Romanian (ro)
 * Rusian (ru)
