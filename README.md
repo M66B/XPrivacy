@@ -476,6 +476,7 @@ Changelog
 * Updated Polish translation
 * Updated Russian translation
 * Updated Simplified Chinese translation
+* Updated Slovak translation
 * Updated Slovenian translation
 
 **Version 0.42**
