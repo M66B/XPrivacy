@@ -50,6 +50,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.os.AsyncTask;
@@ -567,26 +569,53 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
 
 		// Reference controls
-		final CheckBox cbSettings = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
 		final EditText etLon = (EditText) dlgSettings.findViewById(R.id.etLon);
+		final EditText etSearch = (EditText) dlgSettings.findViewById(R.id.etSearch);
+		Button btnSearch = (Button) dlgSettings.findViewById(R.id.btnSearch);
 		final EditText etMac = (EditText) dlgSettings.findViewById(R.id.etMac);
 		final EditText etImei = (EditText) dlgSettings.findViewById(R.id.etImei);
 		final EditText etPhone = (EditText) dlgSettings.findViewById(R.id.etPhone);
 		final EditText etId = (EditText) dlgSettings.findViewById(R.id.etId);
+		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
 		String sExpert = PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingExpert,
 				Boolean.FALSE.toString(), false);
 		final boolean expert = Boolean.parseBoolean(sExpert);
-		cbSettings.setChecked(expert);
+
 		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "", false));
 		etLon.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude, "", false));
 		etMac.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMac, "", false));
 		etImei.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingImei, "", false));
 		etPhone.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingPhone, "", false));
 		etId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingId, "", false));
+		cbExpert.setChecked(expert);
+
+		// Handle search
+		etSearch.setEnabled(Geocoder.isPresent());
+		btnSearch.setEnabled(Geocoder.isPresent());
+		btnSearch.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				try {
+					etLat.setText("");
+					etLon.setText("");
+					String search = etSearch.getText().toString();
+					final List<Address> listAddress = new Geocoder(ActivityMain.this).getFromLocationName(search, 1);
+					if (listAddress.size() > 0) {
+						Address address = listAddress.get(0);
+						if (address.hasLatitude())
+							etLat.setText(Double.toString(address.getLatitude()));
+						if (address.hasLongitude())
+							etLon.setText(Double.toString(address.getLongitude()));
+					}
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+			}
+		});
 
 		// Wait for OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
@@ -594,8 +623,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			public void onClick(View view) {
 				// Set expert mode
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingExpert,
-						Boolean.toString(cbSettings.isChecked()));
-				if (expert != cbSettings.isChecked()) {
+						Boolean.toString(cbExpert.isChecked()));
+				if (expert != cbExpert.isChecked()) {
 					// Start task to get app list
 					List<String> listRestriction = PrivacyManager.getRestrictions();
 					String restrictionName = listRestriction.get(0);
