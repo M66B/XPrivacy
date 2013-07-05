@@ -519,10 +519,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Check wifi info
 		if (!checkField(WifiInfo.class, "mSupplicantState") || !checkField(WifiInfo.class, "mBSSID")
 				|| !checkField(WifiInfo.class, "mIpAddress") || !checkField(WifiInfo.class, "mMacAddress")
-				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid"))) {
+				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid")))
 			reportClass(WifiInfo.class);
-			// TODO: check mWifiSsid.octets
-		}
+
+		// Check mWifiSsid.octets
+		if (checkField(WifiInfo.class, "mWifiSsid"))
+			try {
+				Class<?> clazz = Class.forName("android.net.wifi.WifiSsid");
+				if (!checkField(clazz, "octets", ByteArrayOutputStream.class))
+					reportClass(clazz);
+			} catch (Throwable ex) {
+				sendSupportInfo(ex.toString());
+			}
 	}
 
 	private boolean checkField(Object obj, String fieldName, Class<?> expectedClass) {
