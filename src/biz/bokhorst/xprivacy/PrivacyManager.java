@@ -697,6 +697,10 @@ public class PrivacyManager {
 			return octets; // Hidden network
 		}
 
+		// Google services framework ID
+		if (name.equals("GSF_ID"))
+			return 0xDEFACE;
+
 		// XSystemProperties: "net.hostname"
 		return cDeface;
 	}
