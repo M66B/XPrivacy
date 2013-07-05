@@ -464,7 +464,7 @@ Changelog
 * Fake Google services framework ID, not restricted by default, thanks @[vipere](https://github.com/vipere) ([issue](https://github.com/M66B/XPrivacy/issues/134))
 * Progress bar while loading applications, thanks @[Tungstwenty](https://github.com/Tungstwenty)
 * Removed boot restriction
-* Check package manager service and activity thread for compatibility
+* Check package manager service, Wi-Fi info and activity thread for compatibility
 * [Geocoding](http://en.wikipedia.org/wiki/Geocoding) of location names
 * Fixed internet/storage restriction for ICS ([issue](https://github.com/M66B/XPrivacy/issues/123))
 * Fixed keyboard popup, thanks @[vipere](https://github.com/M66B/XPrivacy/pull/131)
