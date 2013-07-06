@@ -210,6 +210,10 @@ For easy usage, data is restricted by category:
 	* Load/library (by default not restricted)
 * System
 	* return an empty list of installed applications
+	* return an empty list of recent tasks
+	* return an empty list of running processes
+	* return an empty list of running services
+	* return an empty list of running tasks
 * View
 	* prevent links from opening in the browser
 	* you will be notified if an application tries to open a link
