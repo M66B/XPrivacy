@@ -596,7 +596,7 @@ public class PrivacyManager {
 					} else {
 						if (cursor.moveToNext()) {
 							value = cursor.getString(cursor.getColumnIndex(PrivacyProvider.COL_VALUE));
-							if (value == null)
+							if (value == null || value.equals(""))
 								value = defaultValue;
 							fallback = false;
 						} else {

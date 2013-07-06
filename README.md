@@ -476,6 +476,7 @@ Changelog
 * Restrict activity manager (running/recent processes/services/tasks)
 * Display no permissions granted as grayed to emphasis it is only a guideline
 * Add Wi-Fi scan result to location category too
+* Fixed empty default settings (empty MCC, MNC, country, etc)
 * Updated Polish translation
 
 **Version 1.0**
