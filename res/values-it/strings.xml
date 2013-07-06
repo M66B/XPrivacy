@@ -2,7 +2,7 @@
 
     <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed framework versione %d+ non è installato</string>
-    <string name="app_notenabled">XPrivacy non è abilitato nell'installer di Xposed framework</string>
+    <string name="app_notenabled">XPrivacy non è abilitato nell\'installer di Xposed framework</string>
     <string name="app_wrongandroid">Testato solamente con Android versione 4.0, 4.1 and 4.2</string>
     <string name="app_version" formatted="false">Versione di XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Versione di Xposed framework: %d</string>
@@ -50,6 +50,7 @@
     <string name="settings_mac">Indirizzo MAC</string>
     <string name="settings_phone">Numero di Telefono</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_country">Country</string>
     <string name="help_application">Applicazione</string>
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>

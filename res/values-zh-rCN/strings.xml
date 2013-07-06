@@ -50,6 +50,7 @@
     <string name="settings_mac">MAC 地址</string>
     <string name="settings_phone">手机号码</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_country">Country</string>
     <string name="help_application">应用</string>
     <string name="help_internet">可以联网</string>
     <string name="help_granted">有Android权限</string>

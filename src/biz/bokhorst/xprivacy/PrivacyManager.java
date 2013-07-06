@@ -64,6 +64,9 @@ public class PrivacyManager {
 	public final static String cSettingPhone = "Phone";
 	public final static String cSettingId = "ID";
 	public final static String cSettingGsfId = "GSF_ID";
+	public final static String cSettingMcc = "MCC";
+	public final static String cSettingMnc = "MNC";
+	public final static String cSettingCountry = "Country";
 	public final static String cSettingTheme = "Theme";
 
 	private final static String cDeface = "DEFACE";
@@ -669,19 +672,19 @@ public class PrivacyManager {
 		if (name.equals("getIsimImpu"))
 			return null;
 
-		if (name.equals("getNetworkCountryIso")) // MCC
-			return "001"; // Test network
-		if (name.equals("getNetworkOperator")) // MCC+MNC
-			return "00101"; // Test network
+		if (name.equals("getNetworkCountryIso")) // MCC: test network
+			return getSetting(null, null, cSettingMcc, "001", true);
+		if (name.equals("getNetworkOperator")) // MCC+MNC: test network
+			return getSetting(null, null, cSettingMcc, "001", true) + getSetting(null, null, cSettingMnc, "01", true);
 		if (name.equals("getNetworkOperatorName"))
 			return cDeface;
 
 		if (name.equals("getSimCountryIso")) // ISO country code
-			return "XX";
+			return getSetting(null, null, cSettingCountry, "XX", true);
 		if (name.equals("getSimOperator"))
 			return cDeface;
-		if (name.equals("getSimOperatorName")) // MCC+MNC
-			return "00101"; // Test network
+		if (name.equals("getSimOperatorName")) // MCC+MNC: test network
+			return getSetting(null, null, cSettingMcc, "001", true) + getSetting(null, null, cSettingMnc, "01", true);
 		if (name.equals("getSimSerialNumber"))
 			return null;
 

@@ -587,6 +587,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etPhone = (EditText) dlgSettings.findViewById(R.id.etPhone);
 		final EditText etId = (EditText) dlgSettings.findViewById(R.id.etId);
 		final EditText etGsfId = (EditText) dlgSettings.findViewById(R.id.etGsfId);
+		final EditText etMcc = (EditText) dlgSettings.findViewById(R.id.etMcc);
+		final EditText etMnc = (EditText) dlgSettings.findViewById(R.id.etMnc);
+		final EditText etCountry = (EditText) dlgSettings.findViewById(R.id.etCountry);
 		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
@@ -602,6 +605,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etPhone.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingPhone, "", false));
 		etId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingId, "", false));
 		etGsfId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingGsfId, "", false));
+		etMcc.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMcc, "", false));
+		etMnc.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMnc, "", false));
+		etCountry
+				.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingCountry, "", false));
 		cbExpert.setChecked(expert);
 
 		// Handle search
@@ -681,6 +688,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				PrivacyManager
 						.setSetting(null, ActivityMain.this, PrivacyManager.cSettingId, etId.getText().toString());
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingGsfId, etGsfId.getText()
+						.toString());
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingMcc, etMcc.getText()
+						.toString());
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingMnc, etMnc.getText()
+						.toString());
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingCountry, etCountry.getText()
 						.toString());
 
 				// Done
