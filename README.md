@@ -302,6 +302,11 @@ Filtering:
 * Tap the grayed triangle to filter applications that used the data
 * Type in the edit box to filter applications by name
 
+Expert mode:
+
+* *GservicesProvider* in the category *Identification* needs to be set manually
+* *load* and *loadLibrary* in the category *Shell* need to be set manually
+
 **Using XPrivacy is entirely at your own risk**
 
 Permissions
