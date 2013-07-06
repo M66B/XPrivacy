@@ -108,6 +108,7 @@ public class PrivacyManager {
 		mPermissions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_UPDATES");
 		mPermissions.get(cLocation).add("CONTROL_LOCATION_UPDATES");
+		mPermissions.get(cLocation).add("ACCESS_WIFI_STATE");
 		mPermissions.get(cMedia).add("CAMERA");
 		mPermissions.get(cMedia).add("RECORD_AUDIO");
 		mPermissions.get(cMedia).add("RECORD_VIDEO");
@@ -231,6 +232,7 @@ public class PrivacyManager {
 		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults" };
 		for (String wifi : wifis)
 			mMethods.get(cNetwork).add(wifi);
+		mMethods.get(cLocation).add("getScanResults");
 		mMethods.get(cInternet).add("getConnectionInfo");
 
 		// Intent receive: calling

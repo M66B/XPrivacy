@@ -153,6 +153,7 @@ For easy usage, data is restricted by category:
 		* Cell info changed
 		* Cell location changed
 	* prevent sending extra commands (aGPS data)
+	* return an empty list of Wi-Fi scan results
 * Media
 	* prevent recording audio (including from the microphone)
 	* prevent taking pictures
