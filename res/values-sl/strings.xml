@@ -23,7 +23,7 @@
     <string name="msg_noupdate">Na voljo ni posodobitev</string>
     <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencirano na: %s</string>
-    <string name="msg_loading">Loading</string>
+    <string name="msg_loading">Nalagam</string>
     <string name="msg_done">Dokončano</string>
     <string name="restrict_accounts">Računi (Google, Facebook, itd)</string>
     <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>
@@ -38,19 +38,19 @@
     <string name="restrict_messages">Sporočila (SMS, MMS)</string>
     <string name="restrict_network">Omrežje (naslovi)</string>
     <string name="restrict_phone">Telefon (ID, številke, klici)</string>
-    <string name="restrict_storage">Storage (media, SD card)</string>
+    <string name="restrict_storage">Pomnilnik (medij, SD kartica)</string>
     <string name="restrict_shell">Lupina (ukazi, superuser)</string>
     <string name="restrict_system">Sistem (nameščeni programi)</string>
     <string name="restrict_view">Pogled (brskalnik)</string>
     <string name="title_category">Kategorije za omejitev:</string>
-    <string name="title_restrict">Oblkjukaj za omejitev pravic:</string>
+    <string name="title_restrict">Označi za omejitev pravic:</string>
     <string name="settings_expert">Napredni način</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
     <string name="settings_mac">MAC naslov</string>
     <string name="settings_phone">Telefonska številka</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_country">Country</string>
+    <string name="settings_country">Država</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>
