@@ -459,6 +459,7 @@ Changelog
 * Display geocoded address
 * Setting for GSF ID, thanks @[vipere](https://github.com/vipere) ([issue](https://github.com/M66B/XPrivacy/issues/149))
 * Settings for [MCC](https://en.wikipedia.org/wiki/Mobile_country_code), [MNC](https://en.wikipedia.org/wiki/Mobile_Network_Code) and country ([ISO_3166-1](http://en.wikipedia.org/wiki/ISO_3166-1))
+* Fixed switching between filtering selected/used
 * Added Italian translation
 
 **Version 0.43**

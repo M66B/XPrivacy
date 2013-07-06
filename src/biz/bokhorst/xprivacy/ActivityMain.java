@@ -355,6 +355,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			if (mAppAdapter != null) {
 				ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
 				imgUsed.setImageDrawable(getResources().getDrawable(R.drawable.used_grayed));
+				mUsed = false;
 
 				EditText etFilter = (EditText) findViewById(R.id.etFilter);
 				etFilter.setEnabled(!isChecked);
