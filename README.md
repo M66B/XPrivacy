@@ -468,6 +468,7 @@ Changelog
 **Version 1.1** (in development)
 
 * Fixed switching from filtering selected to used
+* Restrict activity manager (running/recent processes/services/tasks)
 
 **Version 1.0**
 

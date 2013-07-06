@@ -452,6 +452,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			alertDialog.show();
 		}
 
+		// Activity manager
+		if (!checkField(getSystemService(Context.ACTIVITY_SERVICE), "mContext", Context.class))
+			reportClass(getSystemService(Context.ACTIVITY_SERVICE).getClass());
+
 		// Activity thread: ReceiverData
 		try {
 			Class<?> clazz = Class.forName("android.app.ActivityThread$ReceiverData");

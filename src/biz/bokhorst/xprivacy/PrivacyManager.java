@@ -125,6 +125,7 @@ public class PrivacyManager {
 		mPermissions.get(cStorage).add("READ_EXTERNAL_STORAGE");
 		mPermissions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
 		mPermissions.get(cStorage).add("WRITE_MEDIA_STORAGE");
+		mPermissions.get(cSystem).add("GET_TASKS");
 
 		// Methods
 
@@ -134,6 +135,12 @@ public class PrivacyManager {
 				"hasFeatures", "removeOnAccountsUpdatedListener" };
 		for (String acc : accs)
 			mMethods.get(cAccounts).add(acc);
+
+		// Activity manager
+		String[] acts = new String[] { "getRecentTasks", "getRunningAppProcesses", "getRunningServices",
+				"getRunningTasks" };
+		for (String act : acts)
+			mMethods.get(cSystem).add(act);
 
 		// Application package manager
 		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getPreferredPackages" };
