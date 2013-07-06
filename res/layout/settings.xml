@@ -61,7 +61,9 @@
 
                 <EditText
                     android:id="@+id/etMac"
-                    android:inputType="textNoSuggestions" />
+                    android:digits="0123456789ABCDEF:"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:maxLength="18" />
             </TableRow>
 
             <TableRow>

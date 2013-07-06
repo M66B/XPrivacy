@@ -653,8 +653,18 @@ public class PrivacyManager {
 			return cDeface;
 
 		// MAC addresses
-		if (name.equals("MAC") || name.equals("ro.boot.btmacaddr") || name.equals("ro.boot.wifimacaddr"))
-			return getSetting(null, null, cSettingMac, "de:fa:ce:de:fa:ce", true);
+		if (name.equals("MAC") || name.equals("ro.boot.btmacaddr") || name.equals("ro.boot.wifimacaddr")) {
+			String mac = getSetting(null, null, cSettingMac, "DE:FA:CE:DE:FA:CE", true);
+			mac = mac.replace(":", "");
+			while (mac.length() != 12)
+				mac = mac + "0";
+			if (mac.length() > 12)
+				mac = mac.substring(0, 12);
+			String result = "";
+			for (int i = 0; i < 12; i += 2)
+				result += mac.substring(i, i + 3) + ":";
+			return result;
+		}
 
 		// IMEI
 		if (name.equals("getDeviceId") || name.equals("ro.gsm.imei"))
