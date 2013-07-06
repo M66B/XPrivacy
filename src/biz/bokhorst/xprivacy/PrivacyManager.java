@@ -580,7 +580,7 @@ public class PrivacyManager {
 
 		// Get setting
 		boolean fallback = true;
-		String value = defaultValue;
+		String value = null;
 		if (context != null) {
 			try {
 				ContentResolver contentResolver = context.getContentResolver();
@@ -596,8 +596,6 @@ public class PrivacyManager {
 					} else {
 						if (cursor.moveToNext()) {
 							value = cursor.getString(cursor.getColumnIndex(PrivacyProvider.COL_VALUE));
-							if (value == null || value.equals(""))
-								value = defaultValue;
 							fallback = false;
 						} else {
 							Util.log(hook, Log.WARN, "cursor is empty");
@@ -614,6 +612,10 @@ public class PrivacyManager {
 		// Use fallback
 		if (fallback)
 			value = PrivacyProvider.getSettingFallback(settingName, defaultValue);
+
+		// Default value
+		if (value == null || value.equals(""))
+			value = defaultValue;
 
 		// Add to cache
 		synchronized (mSettingsCache) {

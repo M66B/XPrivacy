@@ -371,11 +371,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			// Log
 			for (XC_MethodHook.Unhook unhook : hookSet) {
-				Util.log(
-						hook,
-						Log.INFO,
-						String.format("%s: hooked %s.%s (%d)", AndroidAppHelper.currentPackageName(),
-								hookClass.getName(), unhook.getHookedMethod().getName(), hookSet.size()));
+				Util.log(hook, Log.INFO, String.format("%s: hooked %s.%s/%s (%d)",
+						AndroidAppHelper.currentPackageName(), hookClass.getName(), unhook.getHookedMethod().getName(),
+						hook.getRestrictionName(), hookSet.size()));
 				break;
 			}
 		} catch (Throwable ex) {
