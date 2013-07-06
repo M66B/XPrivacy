@@ -477,6 +477,7 @@ Changelog
 * Delete existing settings before import
 * Fixed switching between filtering selected/used
 * Added Italian translation
+* Updated Slovenian translation
 
 **Version 0.43**
 
