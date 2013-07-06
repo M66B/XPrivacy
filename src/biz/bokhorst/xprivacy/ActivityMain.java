@@ -127,17 +127,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		imgUsed.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				mUsed = !mUsed;
+				boolean used = !mUsed;
 
 				CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 				cbFilter.setChecked(false);
 
-				imgUsed.setImageDrawable(getResources().getDrawable(mUsed ? R.drawable.used : R.drawable.used_grayed));
-				EditText etFilter = (EditText) findViewById(R.id.etFilter);
+				imgUsed.setImageDrawable(getResources().getDrawable(used ? R.drawable.used : R.drawable.used_grayed));
 
-				etFilter.setEnabled(!mUsed);
+				EditText etFilter = (EditText) findViewById(R.id.etFilter);
+				etFilter.setEnabled(!used);
 				etFilter.setText("");
 
+				mUsed = used;
 				applyFilter();
 			}
 		});
