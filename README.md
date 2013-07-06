@@ -71,10 +71,10 @@ Depending on the function, XPrivacy conditionally skips execution of the origina
 or alters the result of the original function (for example to return empty calendar data).
 
 XPrivacy has been tested with CyanogenMod 10 and 10.1 (Android 4.1 and 4.2),
-and will most likely work with any Android version 4.1 or 4.2 variant, including stock ROMs.
+and will most likely work with any Android version 4.0, 4.1 or 4.2 variant, including stock ROMs.
 Root access is needed to install the Xposed framework.
 Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xposed binary,
-which is provided as download for both Android version 4.1 and 4.2.
+which is provided as download for both Android version 4.0, 4.1 and 4.2.
 
 
 **XPrivacy was a lot of work, so please support this project**
@@ -106,7 +106,7 @@ Features
 
 * Simple to use
 * No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
-* For any (stock) variant of Android version 4.1 or 4.2 (JellyBean)
+* For any (stock) variant of Android version 4.0, 4.1 or 4.2 (ICS, JellyBean)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
 * Free and open source
