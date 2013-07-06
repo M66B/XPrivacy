@@ -296,6 +296,12 @@ Enabling internet or storage restriction means blocking access to the internet
 or to the external storage (typically the SD card).
 This may result in error messages and even in forced closes of the application.
 
+Filtering:
+
+* Tick the check box to filter applications with restrictions
+* Tap the grayed triangle to filter applications that used the data
+* Type in the edit box to filter applications by name
+
 **Using XPrivacy is entirely at your own risk**
 
 Permissions
