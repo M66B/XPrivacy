@@ -1,0 +1,58 @@
+<resources>
+
+    <string name="app_name">XPrivacy</string>
+    <string name="app_notxposed" formatted="false">Xposed framework versione %d+ non è installato</string>
+    <string name="app_notenabled">XPrivacy non è abilitato nell'installer di Xposed framework</string>
+    <string name="app_wrongandroid">Testato solamente con Android versione 4.0, 4.1 and 4.2</string>
+    <string name="app_version" formatted="false">Versione di XPrivacy: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Versione di Xposed framework: %d</string>
+    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
+    <string name="menu_settings">Impostazioni</string>
+    <string name="menu_update">Controlla aggiornamenti</string>
+    <string name="menu_report">Segnala problema</string>
+    <string name="menu_export">Esporta</string>
+    <string name="menu_import">Importa</string>
+    <string name="menu_theme">Cambia tema</string>
+    <string name="menu_pro">Versione Pro</string>
+    <string name="menu_about">Riguardo a</string>
+    <string name="menu_all">Tutto</string>
+    <string name="menu_app_launch">Lancia</string>
+    <string name="menu_app_settings">Impostazioni</string>
+    <string name="menu_app_store">Play Store</string>
+    <string name="msg_noupdate">Nessun aggiornamento disponibile</string>
+    <string name="msg_restricted" formatted="false">%s limitato da XPrivacy</string>
+    <string name="msg_licensed" formatted="false">Licenziato a: %s</string>
+    <string name="msg_loading">Caricamento in corso</string>
+    <string name="msg_done">Fatto</string>
+    <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
+    <string name="restrict_browser">Browser (bookmarks/history)</string>
+    <string name="restrict_calendar">Calendario</string>
+    <string name="restrict_calling">Chiamate (Telefono, SMS, MMS)</string>
+    <string name="restrict_contacts">Contatti</string>
+    <string name="restrict_dictionary">Dizionario (utente)</string>
+    <string name="restrict_identification">Identificazione (dispositivo)</string>
+    <string name="restrict_internet">Internet</string>
+    <string name="restrict_location">Posizione (precisa/grossolana)</string>
+    <string name="restrict_media">Media (audio, foto, video)</string>
+    <string name="restrict_messages">Messaggi (SMS, MMS)</string>
+    <string name="restrict_network">Rete (indirizzi)</string>
+    <string name="restrict_phone">Telefono (ID, numeri, chiamate)</string>
+    <string name="restrict_storage">Memoria (media, scheda SD)</string>
+    <string name="restrict_shell">Shell (comandi, superuser)</string>
+    <string name="restrict_system">System (applicazioni installate)</string>
+    <string name="restrict_view">Visualizzazione (browser)</string>
+    <string name="title_category">Categoria da limitare:</string>
+    <string name="title_restrict">Spunta per limitare:</string>
+    <string name="settings_expert">Modalità esperto</string>
+    <string name="settings_lat">Latitudine</string>
+    <string name="settings_lon">Longitudine</string>
+    <string name="settings_mac">Indirizzo MAC</string>
+    <string name="settings_phone">Numero di Telefono</string>
+    <string name="settings_id">Android ID</string>
+    <string name="help_application">Applicazione</string>
+    <string name="help_internet">ha permesso internet</string>
+    <string name="help_granted">ha permesso Android</string>
+    <string name="help_used">ha usato questi dati</string>
+
+</resources>

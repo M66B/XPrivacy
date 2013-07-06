@@ -458,6 +458,7 @@ Changelog
 
 * Display geocoded address
 * Setting for GSF ID, thanks @[vipere](https://github.com/vipere) ([issue](https://github.com/M66B/XPrivacy/issues/149))
+* Added Italian translation
 
 **Version 0.43**
 
@@ -770,6 +771,7 @@ Current translations:
 * German (de)
 * Greek (el)
 * Hebrew (he/iw)
+* Italian (it)
 * Japanese (ja)
 * Norwegian (no)
 * Polish (pl)
