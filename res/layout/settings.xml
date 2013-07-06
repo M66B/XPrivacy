@@ -99,6 +99,17 @@
 
             <TableRow>
 
+                <TextView
+                    android:text="@string/settings_gsfid"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etGsfId"
+                    android:inputType="textNoSuggestions" />
+            </TableRow>
+
+            <TableRow>
+
                 <CheckBox
                     android:id="@+id/cbExpert"
                     android:layout_width="match_parent"

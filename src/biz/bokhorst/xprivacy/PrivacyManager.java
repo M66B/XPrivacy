@@ -63,6 +63,7 @@ public class PrivacyManager {
 	public final static String cSettingImei = "IMEI";
 	public final static String cSettingPhone = "Phone";
 	public final static String cSettingId = "ID";
+	public final static String cSettingGsfId = "GSF_ID";
 	public final static String cSettingTheme = "Theme";
 
 	private final static String cDeface = "DEFACE";
@@ -698,8 +699,15 @@ public class PrivacyManager {
 		}
 
 		// Google services framework ID
-		if (name.equals("GSF_ID"))
-			return 0xDEFACE;
+		if (name.equals("GSF_ID")) {
+			long gsfid = 0xDEFACE;
+			try {
+				gsfid = Long.parseLong(getSetting(null, null, cSettingGsfId, "DEFACE", true), 16);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+			return gsfid;
+		}
 
 		// XSystemProperties: "net.hostname"
 		return cDeface;

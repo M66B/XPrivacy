@@ -25,7 +25,6 @@ public class XActivityThread extends XHook {
 	// @formatter:off
 
 	// private void handleReceiver(ReceiverData data)
-	// private void installContentProviders(Context context, List<ProviderInfo> providers)
 	// frameworks/base/core/java/android/app/ActivityThread.java
 
 	// @formatter:on

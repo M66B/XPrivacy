@@ -56,7 +56,6 @@ public class XContentProvider extends XHook {
 		Uri uri = (Uri) param.args[0];
 		if (mUriStart == null || uri.toString().startsWith(mUriStart)) {
 
-			// Return empty cursor
 			Cursor cursor = (Cursor) param.getResult();
 			if (cursor != null) {
 				if (isRestricted(param, mProviderName)) {
@@ -65,12 +64,12 @@ public class XContentProvider extends XHook {
 					if (uri.toString().toLowerCase().startsWith("content://com.google.android.gsf.gservices")) {
 						List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
 						if (Util.containsIgnoreCase(selectionArgs, "android_id")) {
-							MatrixCursor c = new MatrixCursor(cursor.getColumnNames());
-							c.addRow(new Object[] {"android_id", PrivacyManager.getDefacedProp("GSF_ID")});
-							param.setResult(c);
+							MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
+							gsfCursor.addRow(new Object[] { "android_id", PrivacyManager.getDefacedProp("GSF_ID") });
+							param.setResult(gsfCursor);
 						}
-					}
-					else
+					} else
+						// Return empty cursor
 						param.setResult(new MatrixCursor(cursor.getColumnNames()));
 				}
 			}
@@ -84,5 +83,4 @@ public class XContentProvider extends XHook {
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
 	}
-
 }

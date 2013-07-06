@@ -586,6 +586,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etImei = (EditText) dlgSettings.findViewById(R.id.etImei);
 		final EditText etPhone = (EditText) dlgSettings.findViewById(R.id.etPhone);
 		final EditText etId = (EditText) dlgSettings.findViewById(R.id.etId);
+		final EditText etGsfId = (EditText) dlgSettings.findViewById(R.id.etGsfId);
 		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
@@ -600,6 +601,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etImei.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingImei, "", false));
 		etPhone.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingPhone, "", false));
 		etId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingId, "", false));
+		etGsfId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingGsfId, "", false));
 		cbExpert.setChecked(expert);
 
 		// Handle search
@@ -678,6 +680,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						.toString());
 				PrivacyManager
 						.setSetting(null, ActivityMain.this, PrivacyManager.cSettingId, etId.getText().toString());
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingGsfId, etGsfId.getText()
+						.toString());
 
 				// Done
 				dlgSettings.dismiss();
