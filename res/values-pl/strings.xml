@@ -43,7 +43,7 @@
     <string name="restrict_system">System (zainstalowane aplikacje)</string>
     <string name="restrict_view">Widok (przeglądarka)</string>
     <string name="title_category">Kategorie do ograniczenia:</string>
-    <string name="title_restrict">Zaznacz aby ograniczyć:</string>
+    <string name="title_restrict">Zaznacz aby odfiltrować:</string>
     <string name="settings_expert">Tryb eksperta</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>
@@ -52,8 +52,8 @@
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Kraj</string>
     <string name="help_application">Aplikacja</string>
-    <string name="help_internet">posiada dostęp do internetu</string>
-    <string name="help_granted">posiada dostęp do uprawnień Androida</string>
+    <string name="help_internet">wymaga dostępu do internetu</string>
+    <string name="help_granted">wymaga dostępu do tych uprawnień Androida</string>
     <string name="help_used">użyła dostępu do danych</string>
 
 </resources>

@@ -469,6 +469,7 @@ Changelog
 
 * Fixed switching from filtering selected to used
 * Restrict activity manager (running/recent processes/services/tasks)
+* Updated Polish translation
 
 **Version 1.0**
 
