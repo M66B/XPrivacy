@@ -474,6 +474,8 @@ Changelog
 
 * Fixed switching from filtering selected to used
 * Restrict activity manager (running/recent processes/services/tasks)
+* Display no permissions granted as grayed to emphasis it is only a guideline
+* Add Wi-Fi scan result to location category too
 * Updated Polish translation
 
 **Version 1.0**
