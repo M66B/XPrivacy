@@ -521,7 +521,7 @@ public class PrivacyManager {
 	public static void deleteRestrictions(Context context, int uid) {
 		context.getContentResolver().delete(PrivacyProvider.URI_RESTRICTION, null,
 				new String[] { Integer.toString(uid) });
-		Util.log(null, Log.INFO, "Delete restrictions uid=" + uid);
+		Util.log(null, Log.INFO, "Deleted restrictions uid=" + uid);
 	}
 
 	// Usage
@@ -547,7 +547,7 @@ public class PrivacyManager {
 		for (String restrictionName : PrivacyManager.getRestrictions())
 			context.getContentResolver().delete(PrivacyProvider.URI_USAGE, restrictionName,
 					new String[] { Integer.toString(uid) });
-		Util.log(null, Log.INFO, "Delete usage uid=" + uid);
+		Util.log(null, Log.INFO, "Deleted usage uid=" + uid);
 	}
 
 	// Settings
@@ -637,6 +637,11 @@ public class PrivacyManager {
 		}
 		sCursor.close();
 		return result;
+	}
+
+	public static void deleteSettings(Context context) {
+		context.getContentResolver().delete(PrivacyProvider.URI_SETTING, null, null);
+		Util.log(null, Log.INFO, "Deleted settings");
 	}
 
 	// Defacing

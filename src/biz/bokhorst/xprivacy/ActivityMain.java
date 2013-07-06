@@ -1091,6 +1091,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 				// Process settings
 				publishProgress(getString(R.string.menu_settings));
+				PrivacyManager.deleteSettings(ActivityMain.this);
 				NodeList sItems = dom.getElementsByTagName("Setting");
 				for (int i = 0; i < sItems.getLength(); i++) {
 					// Process package restriction

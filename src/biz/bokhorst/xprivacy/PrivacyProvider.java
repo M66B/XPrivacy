@@ -162,14 +162,14 @@ public class PrivacyProvider extends ContentProvider {
 			String settingName = selection;
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
 			MatrixCursor cursor = new MatrixCursor(new String[] { COL_SETTING, COL_VALUE });
-			if (settingName == null) {
+			if (settingName == null)
 				for (String settingKey : prefs.getAll().keySet())
 					try {
 						cursor.addRow(new Object[] { getSettingName(settingKey), prefs.getString(settingKey, null) });
 					} catch (Throwable ex) {
 						// Legacy boolean
 					}
-			} else
+			else
 				cursor.addRow(new Object[] { settingName, prefs.getString(getSettingPref(settingName), null) });
 			return cursor;
 		}
@@ -291,6 +291,18 @@ public class PrivacyProvider extends ContentProvider {
 					Util.log(null, Log.INFO, "Removed audit=" + pref);
 				}
 			editor.apply();
+			return rows;
+		} else if (sUriMatcher.match(uri) == TYPE_SETTING && selectionArgs == null) {
+			int rows = 0;
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
+			SharedPreferences.Editor editor = prefs.edit();
+			for (String pref : prefs.getAll().keySet()) {
+				rows++;
+				editor.remove(pref);
+				Util.log(null, Log.INFO, "Removed setting=" + pref);
+			}
+			editor.apply();
+			setPrefFileReadable(PREF_SETTINGS);
 			return rows;
 		}
 
