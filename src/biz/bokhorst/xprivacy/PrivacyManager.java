@@ -655,15 +655,14 @@ public class PrivacyManager {
 		// MAC addresses
 		if (name.equals("MAC") || name.equals("ro.boot.btmacaddr") || name.equals("ro.boot.wifimacaddr")) {
 			String mac = getSetting(null, null, cSettingMac, "DE:FA:CE:DE:FA:CE", true);
-			mac = mac.replace(":", "");
-			while (mac.length() != 12)
-				mac = mac + "0";
-			if (mac.length() > 12)
-				mac = mac.substring(0, 12);
-			String result = "";
-			for (int i = 0; i < 12; i += 2)
-				result += mac.substring(i, i + 3) + ":";
-			return result;
+			StringBuilder sb = new StringBuilder(mac.replace(":", ""));
+			while (sb.length() != 12)
+				sb.insert(0, '0');
+			while (sb.length() > 12)
+				sb.deleteCharAt(sb.length() - 1);
+			for (int i = 10; i > 0; i -= 2)
+				sb.insert(i, ':');
+			return sb.toString();
 		}
 
 		// IMEI
