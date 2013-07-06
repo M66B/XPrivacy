@@ -457,6 +457,7 @@ Changelog
 **Version 1.0** (in development)
 
 * Display geocoded address
+* Setting for GSF ID, thanks @[vipere](https://github.com/vipere) ([issue](https://github.com/M66B/XPrivacy/issues/149))
 
 **Version 0.43**
 
@@ -471,7 +472,7 @@ Changelog
 * Check package manager service, Wi-Fi info and activity thread for compatibility
 * [Geocoding](http://en.wikipedia.org/wiki/Geocoding) of location names ([issue](https://github.com/M66B/XPrivacy/issues/139))
 * Fixed internet/storage restriction for ICS ([issue](https://github.com/M66B/XPrivacy/issues/123))
-* Fixed keyboard popup, thanks @[vipere](https://github.com/M66B/XPrivacy/pull/131)
+* Fixed keyboard popup, thanks @[vipere](https://github.com/vipere)
 * Fixed and improved fake phone data ([issue](https://github.com/M66B/XPrivacy/issues/116), see also [Restrictions](https://github.com/M66B/XPrivacy#restrictions))
 * Fixed fake SSID for Android 4.2+ ([issue](https://github.com/M66B/XPrivacy/issues/116))
 * Fixed rebuilding application list on orientation change
