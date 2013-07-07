@@ -473,7 +473,9 @@ Changelog
 
 **Version 1.2** (in development)
 
+* Setting for SIM serial# ([ICCID](http://en.wikipedia.org/wiki/ICCID#ICCID)) ([issue](https://github.com/M66B/XPrivacy/issues/167))
 * Fixed possible location listener leak, thanks @[Tungstwenty](https://github.com/Tungstwenty)
+* Fixed MAC address for network info
 
 **Version 1.1**
 

@@ -153,6 +153,18 @@
             <TableRow>
 
                 <TextView
+                    android:text="@string/settings_iccid"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etIccId"
+                    android:inputType="numberDecimal|textNoSuggestions"
+                    android:maxLength="19" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
                     android:text="@string/settings_subscriber"
                     android:textIsSelectable="false" />
 

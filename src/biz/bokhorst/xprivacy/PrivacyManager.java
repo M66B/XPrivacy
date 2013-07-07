@@ -66,6 +66,7 @@ public class PrivacyManager {
 	public final static String cSettingMcc = "MCC";
 	public final static String cSettingMnc = "MNC";
 	public final static String cSettingCountry = "Country";
+	public final static String cSettingIccId = "ICC_ID";
 	public final static String cSettingSubscriber = "Subscriber";
 	public final static String cSettingFPermission = "FPermission";
 	public final static String cSettingExpert = "Expert";
@@ -740,7 +741,7 @@ public class PrivacyManager {
 		if (name.equals("getSimOperatorName")) // MCC+MNC: test network
 			return getSetting(null, null, cSettingMcc, "001", true) + getSetting(null, null, cSettingMnc, "01", true);
 		if (name.equals("getSimSerialNumber"))
-			return null;
+			return getSetting(null, null, cSettingIccId, null, true);
 
 		if (name.equals("getSubscriberId")) // IMSI for a GSM phone
 			return getSetting(null, null, cSettingSubscriber, null, true);
