@@ -500,7 +500,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Check interface address
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
-				|| PrivacyManager.getDefacedInetAddress() == null)
+				|| PrivacyManager.getDefacedProp("InetAddress") == null)
 			reportClass(InterfaceAddress.class);
 
 		// Check package manager

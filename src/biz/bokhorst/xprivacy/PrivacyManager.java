@@ -766,31 +766,25 @@ public class PrivacyManager {
 			return gsfid;
 		}
 
+		if (name.equals("InetAddress")) {
+			try {
+				Field unspecified = Inet4Address.class.getDeclaredField("ALL");
+				unspecified.setAccessible(true);
+				return (InetAddress) unspecified.get(Inet4Address.class);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return null;
+			}
+		}
+
+		if (name.equals("IPInt"))
+			return 127 + (0 << 8) + (0 << 16) + (1 << 24);
+
+		if (name.equals("Bytes3"))
+			return new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
+
 		// XSystemProperties: "net.hostname"
 		return cDeface;
-	}
-
-	public static InetAddress getDefacedInetAddress() {
-		try {
-			Field unspecified = Inet4Address.class.getDeclaredField("ALL");
-			unspecified.setAccessible(true);
-			return (InetAddress) unspecified.get(Inet4Address.class);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			return null;
-		}
-	}
-
-	public static int getDefacedIPInt() {
-		return 127 + (0 << 8) + (0 << 16) + (1 << 24);
-	}
-
-	public static byte[] getDefacedIPBytes() {
-		return new byte[] { 10, 1, 1, 1 };
-	}
-
-	public static byte[] getDefacedBytes() {
-		return new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
 	}
 
 	public static Location getDefacedLocation(Location location) {

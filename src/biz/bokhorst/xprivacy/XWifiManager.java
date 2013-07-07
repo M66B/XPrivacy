@@ -62,7 +62,7 @@ public class XWifiManager extends XHook {
 						// IP address
 						try {
 							Field fieldIp = findField(WifiInfo.class, "mIpAddress");
-							fieldIp.set(wInfo, PrivacyManager.getDefacedInetAddress());
+							fieldIp.set(wInfo, PrivacyManager.getDefacedProp("InetAddress"));
 						} catch (Throwable ex) {
 							Util.bug(this, ex);
 						}
@@ -93,11 +93,11 @@ public class XWifiManager extends XHook {
 			DhcpInfo dInfo = (DhcpInfo) param.getResult();
 			if (dInfo != null)
 				if (isRestricted(param)) {
-					dInfo.ipAddress = PrivacyManager.getDefacedIPInt();
-					dInfo.gateway = PrivacyManager.getDefacedIPInt();
-					dInfo.dns1 = PrivacyManager.getDefacedIPInt();
-					dInfo.dns2 = PrivacyManager.getDefacedIPInt();
-					dInfo.serverAddress = PrivacyManager.getDefacedIPInt();
+					dInfo.ipAddress = (Integer) PrivacyManager.getDefacedProp("IPInt");
+					dInfo.gateway = (Integer) PrivacyManager.getDefacedProp("IPInt");
+					dInfo.dns1 = (Integer) PrivacyManager.getDefacedProp("IPInt");
+					dInfo.dns2 = (Integer) PrivacyManager.getDefacedProp("IPInt");
+					dInfo.serverAddress = (Integer) PrivacyManager.getDefacedProp("IPInt");
 				}
 		}
 	}

@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -43,10 +44,9 @@ public class XNetworkInterface extends XHook {
 			if (!ni.isLoopback())
 				if (isRestricted(param))
 					if (methodName.equals("getHardwareAddress")) {
-						byte[] address = (byte[]) param.getResult();
-						byte[] defaced = PrivacyManager.getDefacedBytes();
-						for (int i = 0; i < address.length; i++)
-							address[i] = defaced[i % defaced.length];
+						String mac = (String) PrivacyManager.getDefacedProp("MAC");
+						long lMac = Long.parseLong(mac.replace(":", ""), 16);
+						byte[] address = ByteBuffer.allocate(8).putLong(lMac).array();
 						param.setResult(address);
 					} else if (methodName.equals("getInetAddresses")) {
 						@SuppressWarnings("unchecked")
@@ -56,7 +56,7 @@ public class XNetworkInterface extends XHook {
 							if (address.isAnyLocalAddress() || address.isLoopbackAddress())
 								listAddress.add(address);
 							else
-								listAddress.add(PrivacyManager.getDefacedInetAddress());
+								listAddress.add((InetAddress) PrivacyManager.getDefacedProp("InetAddress"));
 						param.setResult(Collections.enumeration(listAddress));
 					} else if (methodName.equals("getInterfaceAddresses")) {
 						@SuppressWarnings("unchecked")
@@ -65,7 +65,7 @@ public class XNetworkInterface extends XHook {
 							// address
 							try {
 								Field fieldAddress = findField(InterfaceAddress.class, "address");
-								fieldAddress.set(address, PrivacyManager.getDefacedInetAddress());
+								fieldAddress.set(address, PrivacyManager.getDefacedProp("InetAddress"));
 							} catch (Throwable ex) {
 								Util.bug(this, ex);
 							}
@@ -73,7 +73,7 @@ public class XNetworkInterface extends XHook {
 							// broadcastAddress
 							try {
 								Field fieldBroadcastAddress = findField(InterfaceAddress.class, "broadcastAddress");
-								fieldBroadcastAddress.set(address, PrivacyManager.getDefacedInetAddress());
+								fieldBroadcastAddress.set(address, PrivacyManager.getDefacedProp("InetAddress"));
 							} catch (Throwable ex) {
 								Util.bug(this, ex);
 							}
