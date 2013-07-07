@@ -472,13 +472,13 @@ Changelog
 
 **Version 1.1** (in development)
 
-* All view (disabled check box means some restrictions) ([issue](https://github.com/M66B/XPrivacy/issues/154))
+* All view (disabled check box means *some* restrictions) ([issue](https://github.com/M66B/XPrivacy/issues/154))
 * Restrict activity manager (running/recent processes/services/tasks) ([issue](https://github.com/M66B/XPrivacy/issues/157))
 * Display no permissions as grayed to emphasize it is only a guideline
-* Add Wi-Fi scan result to location category too
+* Add Wi-Fi scan result to location category
 * Fixed switching from filtering selected to used
 * Fixed empty default settings (empty MCC, MNC, country, etc)
-* Fixed navigate up
+* Fixed navigate up (ICS)
 * Updated Polish translation
 * Updated simplified Chinese translation
 * Updated Slovak translation

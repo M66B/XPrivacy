@@ -23,11 +23,11 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private boolean mSystem;
 	private boolean mInstalled;
 
-	public ApplicationInfoEx(String packageName, Context context) {
+	public ApplicationInfoEx(Context context, String packageName) {
 		// Get app info
 		try {
 			ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
-			this.Initialize(appInfo, context);
+			this.Initialize(context, appInfo);
 		} catch (NameNotFoundException ex) {
 			mInstalled = false;
 		} catch (Throwable ex) {
@@ -36,11 +36,11 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		}
 	}
 
-	private ApplicationInfoEx(ApplicationInfo appInfo, Context context) {
-		this.Initialize(appInfo, context);
+	private ApplicationInfoEx(Context context, ApplicationInfo appInfo) {
+		this.Initialize(context, appInfo);
 	}
 
-	private void Initialize(ApplicationInfo appInfo, Context context) {
+	private void Initialize(Context context, ApplicationInfo appInfo) {
 		PackageManager pm = context.getPackageManager();
 		mDrawable = appInfo.loadIcon(pm);
 		mListApplicationName = new ArrayList<String>();
@@ -75,7 +75,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		dialog.setMax(listAppInfo.size());
 		for (int app = 0; app < listAppInfo.size(); app++) {
 			dialog.setProgress(app + 1);
-			ApplicationInfoEx xAppInfo = new ApplicationInfoEx(listAppInfo.get(app), context);
+			ApplicationInfoEx xAppInfo = new ApplicationInfoEx(context, listAppInfo.get(app));
 			if (xAppInfo.getIsSystem() ? expert : true) {
 				ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
 				if (yAppInfo == null) {

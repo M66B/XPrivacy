@@ -50,7 +50,7 @@ public class ActivityApp extends Activity {
 		final String packageName = extras.getString(cPackageName);
 
 		// Get app info
-		mAppInfo = new ApplicationInfoEx(packageName, this);
+		mAppInfo = new ApplicationInfoEx(this, packageName);
 		if (!mAppInfo.getIsInstalled()) {
 			finish();
 			return;
@@ -247,7 +247,7 @@ public class ActivityApp extends Activity {
 			final String restrictionName = (String) getGroup(groupPosition);
 
 			// Display if restriction granted
-			if (!PrivacyManager.hasPermission(row.getContext(), mAppInfo.getPackageName(), restrictionName))
+			if (!PrivacyManager.hasPermission(row.getContext(), mAppInfo.getPackageName(), restrictionName, false))
 				imgGranted.setImageDrawable(getResources().getDrawable(R.drawable.granted_grayed));
 
 			// Display if used

@@ -103,7 +103,6 @@ public class PrivacyManager {
 		mPermissions.get(cDictionary).add("READ_USER_DICTIONARY");
 		mPermissions.get(cIdentification).add("READ_GSERVICES");
 		mPermissions.get(cInternet).add("INTERNET");
-		mPermissions.get(cInternet).add("ACCESS_NETWORK_STATE");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_UPDATES");
@@ -820,10 +819,12 @@ public class PrivacyManager {
 	}
 
 	@SuppressLint("DefaultLocale")
-	public static boolean hasPermission(Context context, String packageName, String restrictionName) {
+	public static boolean hasPermission(Context context, String packageName, String restrictionName, boolean strict) {
 		List<String> listPermission = mPermissions.get(restrictionName);
-		if (listPermission == null || listPermission.size() == 0)
-			return true;
+		if (!strict) {
+			if (listPermission == null || listPermission.size() == 0)
+				return true;
+		}
 
 		try {
 			PackageManager pm = context.getPackageManager();
