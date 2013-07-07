@@ -318,8 +318,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					try {
-						if (param.method.getName().equals(hook.getMethodName()))
-							hook.before(param);
+						hook.before(param);
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
 						report(ex);
@@ -332,9 +331,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					// Throw any exception
 					param.getResultOrThrowable();
 					try {
-						if (param.method.getName().equals(hook.getMethodName())) {
-							hook.after(param);
-						}
+						hook.after(param);
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
 						report(ex);
