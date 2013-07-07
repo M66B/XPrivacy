@@ -472,15 +472,14 @@ Changelog
 
 **Version 1.1** (in development)
 
-* All view (disabled check box means *some* restrictions) ([issue](https://github.com/M66B/XPrivacy/issues/154))
-* Filter applications by permissions for each category (default enabled)
+* *All* view (disabled check box means *some* restrictions) ([issue](https://github.com/M66B/XPrivacy/issues/154))
+* Filter applications by permissions (default enabled)
 * Restrict activity manager (running/recent processes/services/tasks) ([issue](https://github.com/M66B/XPrivacy/issues/157))
 * Restrict app widget manager ([issue](https://github.com/M66B/XPrivacy/issues/157))
-* Display no permissions as grayed to emphasize it is only a guideline
-* Add Wi-Fi scan result to location category
+* Add Wi-Fi scan result to location category (Google Maps)
 * Setting for subscriber ID ([IMSI](http://en.wikipedia.org/wiki/International_mobile_subscriber_identity)) ([issue](https://github.com/M66B/XPrivacy/issues/166))
 * Filter disabled applications ([issue](https://github.com/M66B/XPrivacy/issues/165))
-* Fixed switching from filtering selected to used
+* Fixed switching filtering
 * Fixed empty default settings (empty MCC, MNC, country, etc)
 * Fixed navigate up (ICS)
 * Added Hungarian translation

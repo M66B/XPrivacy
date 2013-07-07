@@ -96,6 +96,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 	private boolean mUsed = false;
+	private boolean mChangingFilter = false;
 	private boolean mPro = false;
 
 	@Override
@@ -128,18 +129,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		imgUsed.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				boolean used = !mUsed;
+				if (mChangingFilter)
+					return;
+				mChangingFilter = true;
+				mUsed = !mUsed;
 
 				CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 				cbFilter.setChecked(false);
 
-				imgUsed.setImageDrawable(getResources().getDrawable(used ? R.drawable.used : R.drawable.used_grayed));
+				imgUsed.setImageDrawable(getResources().getDrawable(mUsed ? R.drawable.used : R.drawable.used_grayed));
 
 				EditText etFilter = (EditText) findViewById(R.id.etFilter);
-				etFilter.setEnabled(!used);
+				etFilter.setEnabled(!mUsed);
 				etFilter.setText("");
 
-				mUsed = used;
+				mChangingFilter = false;
 				applyFilter();
 			}
 		});
@@ -355,6 +359,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 		if (buttonView == cbFilter)
 			if (mAppAdapter != null) {
+				if (mChangingFilter)
+					return;
+				mChangingFilter = true;
+
 				ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
 				imgUsed.setImageDrawable(getResources().getDrawable(R.drawable.used_grayed));
 				mUsed = false;
@@ -363,11 +371,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				etFilter.setEnabled(!isChecked);
 				etFilter.setText("");
 
+				mChangingFilter = false;
 				applyFilter();
 			}
 	}
 
 	private void applyFilter() {
+		if (mChangingFilter)
+			return;
+
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 		EditText etFilter = (EditText) findViewById(R.id.etFilter);
 		String filter = etFilter.getText().toString();
