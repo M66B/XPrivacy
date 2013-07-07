@@ -189,7 +189,7 @@ For easy usage, data is restricted by category:
 		* Country: XX
 		* Operator: 00101
 		* Operator name: fake
-		* Serial number: empty
+		* Serial number (ICCID): fake
 	* return empty [APN](http://en.wikipedia.org/wiki/Access_Point_Name) list
 	* return no currently used APN
 	* return an empty call log
