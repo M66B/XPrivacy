@@ -105,7 +105,6 @@ public class PrivacyManager {
 		mPermissions.get(cIdentification).add("READ_GSERVICES");
 		mPermissions.get(cIdentification).add("");
 		mPermissions.get(cInternet).add("INTERNET");
-		mPermissions.get(cInternet).add("");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_UPDATES");
@@ -129,7 +128,6 @@ public class PrivacyManager {
 		mPermissions.get(cStorage).add("READ_EXTERNAL_STORAGE");
 		mPermissions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
 		mPermissions.get(cStorage).add("WRITE_MEDIA_STORAGE");
-		mPermissions.get(cStorage).add("");
 		mPermissions.get(cSystem).add("GET_TASKS");
 		mPermissions.get(cSystem).add("");
 		mPermissions.get(cView).add("");
@@ -293,13 +291,15 @@ public class PrivacyManager {
 		if (restrictionName != null && !mPermissions.containsKey(restrictionName))
 			Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
 
-		if (permissions.length == 0)
-			if (!mPermissions.get(restrictionName).contains(""))
-				Util.log(null, Log.WARN, "Missing no permission restriction=" + restrictionName);
+		if (permissions != null) {
+			if (permissions.length == 0)
+				if (!mPermissions.get(restrictionName).contains(""))
+					Util.log(null, Log.WARN, "Missing no permission restriction=" + restrictionName);
 
-		for (String permission : permissions)
-			if (!mPermissions.get(restrictionName).contains(permission))
-				Util.log(null, Log.WARN, "Missing permission " + permission);
+			for (String permission : permissions)
+				if (!mPermissions.get(restrictionName).contains(permission))
+					Util.log(null, Log.WARN, "Missing permission " + permission);
+		}
 
 		if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
 			Util.log(null, Log.WARN, "Missing method " + methodName);
@@ -833,10 +833,8 @@ public class PrivacyManager {
 	public static boolean hasPermission(Context context, String packageName, String restrictionName) {
 		try {
 			List<String> listPermission = mPermissions.get(restrictionName);
-			if (listPermission.size() == 0) {
-				Util.log(null, Log.WARN, "No permission restriction=" + restrictionName);
+			if (listPermission.size() == 0)
 				return true;
-			}
 			PackageManager pm = context.getPackageManager();
 			PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
 			if (pInfo != null && pInfo.requestedPermissions != null)

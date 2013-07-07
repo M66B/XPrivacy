@@ -93,8 +93,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Environment
 		// This is to fake "unmounted", no permission required
-		hook(new XEnvironment("getExternalStorageState", PrivacyManager.cStorage, new String[] {}),
-				"android.os.Environment");
+		hook(new XEnvironment("getExternalStorageState", PrivacyManager.cStorage, null), "android.os.Environment");
 
 		// Location manager
 		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
@@ -111,7 +110,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// This is to fake "offline", no permission required
 		String[] ninfos = new String[] { "getDetailedState", "getState", "isConnected", "isConnectedOrConnecting" };
 		for (String ninfo : ninfos)
-			hook(new XNetworkInfo(ninfo, PrivacyManager.cInternet, new String[] {}), "android.net.NetworkInfo");
+			hook(new XNetworkInfo(ninfo, PrivacyManager.cInternet, null), "android.net.NetworkInfo");
 		// TODO: BT PAN
 
 		// Network interface
@@ -191,8 +190,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XWifiManager("getScanResults", PrivacyManager.cLocation, new String[] { "ACCESS_WIFI_STATE" }),
 				"android.net.wifi.WifiManager");
 		// This is to fake "offline", no permission required
-		hook(new XWifiManager("getConnectionInfo", PrivacyManager.cInternet, new String[] {}),
-				"android.net.wifi.WifiManager");
+		hook(new XWifiManager("getConnectionInfo", PrivacyManager.cInternet, null), "android.net.wifi.WifiManager");
 
 		// Intent receive: calling
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cPhone, new String[] { "PROCESS_OUTGOING_CALLS" },
@@ -238,7 +236,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
 		if (lpparam.packageName.equals(self)) {
-			hook(new XUtilHook("isXposedEnabled", null, new String[] {}), lpparam.classLoader, Util.class.getName());
+			hook(new XUtilHook("isXposedEnabled", null, null), lpparam.classLoader, Util.class.getName());
 			return;
 		}
 
