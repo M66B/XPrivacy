@@ -30,7 +30,8 @@
         <activity
             android:name=".ActivityMain"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,6 +42,9 @@
             android:name=".ActivityApp"
             android:exported="true"
             android:parentActivityName=".ActivityMain" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="biz.bokhorst.xprivacy.ActivityMain" />
         </activity>
 
         <receiver android:name=".BootReceiver" >

@@ -478,6 +478,7 @@ Changelog
 * Add Wi-Fi scan result to location category too
 * Fixed switching from filtering selected to used
 * Fixed empty default settings (empty MCC, MNC, country, etc)
+* Fixed navigate up
 * Updated Polish translation
 * Updated simplified Chinese translation
 
