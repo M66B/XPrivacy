@@ -176,7 +176,7 @@ For easy usage, data is restricted by category:
 	* prevent receiving TECH discovered
 * Phone:
 	* return a fake own/in/outgoing/voicemail number
-	* return a empty subscriber ID (IMSI for a GSM phone)
+	* return a fake subscriber ID (IMSI for a GSM phone)
 	* return a fake phone device ID (IMEI)
 	* return a empty ISIM/ISIM domain
 	* return a empty IMPI/IMPU
@@ -215,6 +215,7 @@ For easy usage, data is restricted by category:
 	* return an empty list of running processes
 	* return an empty list of running services
 	* return an empty list of running tasks
+	* return an empty list of widgets
 * View
 	* prevent links from opening in the browser
 	* you will be notified if an application tries to open a link
