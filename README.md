@@ -478,6 +478,7 @@ Changelog
 * Fixed switching from filtering selected to used
 * Fixed empty default settings (empty MCC, MNC, country, etc)
 * Updated Polish translation
+* Updated simplified Chinese translation
 
 **Version 1.0**
 
