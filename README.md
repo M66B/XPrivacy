@@ -473,8 +473,9 @@ Changelog
 **Version 1.1** (in development)
 
 * All view (disabled check box means *some* restrictions) ([issue](https://github.com/M66B/XPrivacy/issues/154))
-* Filter applications by permissions for each category
+* Filter applications by permissions for each category (default enabled)
 * Restrict activity manager (running/recent processes/services/tasks) ([issue](https://github.com/M66B/XPrivacy/issues/157))
+* Restrict app widget manager ([issue](https://github.com/M66B/XPrivacy/issues/157))
 * Display no permissions as grayed to emphasize it is only a guideline
 * Add Wi-Fi scan result to location category
 * Fixed switching from filtering selected to used
@@ -794,6 +795,7 @@ Contributing
 Translations:
 
 * Translate the strings in [this file](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml)
+* Omit lines with *translatable="false"*
 * If you know how to, please create a [pull request](https://help.github.com/articles/using-pull-requests)
 * Else send me the translated file [via XDA PM](http://forum.xda-developers.com/member.php?u=2799345)
 

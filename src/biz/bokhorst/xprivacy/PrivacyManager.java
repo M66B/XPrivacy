@@ -147,6 +147,9 @@ public class PrivacyManager {
 		for (String act : acts)
 			mMethods.get(cSystem).add(act);
 
+		// App widget manager
+		mMethods.get(cSystem).add("getInstalledProviders");
+
 		// Application package manager
 		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getPreferredPackages" };
 		for (String am : ams)
