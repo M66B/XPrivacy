@@ -74,7 +74,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.appwidget.AppWidgetManager");
 
 		// Application package manager
-		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getPreferredPackages" };
+		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getPreferredPackages",
+				"queryBroadcastReceivers", "queryContentProviders", "queryIntentActivities",
+				"queryIntentActivityOptions", "queryIntentServices" };
 		for (String am : ams)
 			hook(new XApplicationPackageManager(am, PrivacyManager.cSystem, new String[] {}),
 					"android.app.ApplicationPackageManager");
