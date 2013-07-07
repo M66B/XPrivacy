@@ -51,6 +51,7 @@
     <string name="settings_phone">Telefonní číslo</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Country</string>
+    <string name="settings_fpermission">Filter by permission</string>
     <string name="help_application">Aplikace</string>
     <string name="help_internet">má oprávnění k Internetu</string>
     <string name="help_granted">má Android oprávnění</string>

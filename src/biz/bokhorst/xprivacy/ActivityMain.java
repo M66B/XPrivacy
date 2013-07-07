@@ -597,10 +597,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etMcc = (EditText) dlgSettings.findViewById(R.id.etMcc);
 		final EditText etMnc = (EditText) dlgSettings.findViewById(R.id.etMnc);
 		final EditText etCountry = (EditText) dlgSettings.findViewById(R.id.etCountry);
+		final CheckBox cbFPermission = (CheckBox) dlgSettings.findViewById(R.id.cbFPermission);
 		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
+		String sFPermission = PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
+				Boolean.TRUE.toString(), false);
+		final boolean fPermission = Boolean.parseBoolean(sFPermission);
+
 		String sExpert = PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingExpert,
 				Boolean.FALSE.toString(), false);
 		final boolean expert = Boolean.parseBoolean(sExpert);
@@ -616,6 +621,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etMnc.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMnc, "", false));
 		etCountry
 				.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingCountry, "", false));
+		cbFPermission.setChecked(fPermission);
 		cbExpert.setChecked(expert);
 
 		// Handle search
@@ -657,17 +663,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				// Set expert mode
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingExpert,
-						Boolean.toString(cbExpert.isChecked()));
-				if (expert != cbExpert.isChecked()) {
-					// Start task to get app list
-					List<String> listRestriction = PrivacyManager.getRestrictions();
-					String restrictionName = listRestriction.get(0);
-					AppListTask appListTask = new AppListTask();
-					appListTask.execute(restrictionName);
-				}
-
 				// Set location
 				try {
 					float lat = Float.parseFloat(etLat.getText().toString().replace(',', '.'));
@@ -702,6 +697,20 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						.toString());
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingCountry, etCountry.getText()
 						.toString());
+
+				// Set filter by permission
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
+						Boolean.toString(cbFPermission.isChecked()));
+
+				// Set expert mode
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingExpert,
+						Boolean.toString(cbExpert.isChecked()));
+
+				// Refresh if needed
+				if (fPermission != cbFPermission.isChecked() || expert != cbExpert.isChecked()) {
+					AppListTask appListTask = new AppListTask();
+					appListTask.execute();
+				}
 
 				// Done
 				dlgSettings.dismiss();
@@ -1300,15 +1309,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		private void selectApps() {
 			mListAppSelected = new ArrayList<ApplicationInfoEx>();
-			for (ApplicationInfoEx appInfo : mListAppAll)
-				if (mRestrictionName == null) {
-					for (String restrictionName : PrivacyManager.getRestrictions())
-						if (PrivacyManager.hasPermission(mContext, appInfo.getPackageName(), restrictionName, true)) {
-							mListAppSelected.add(appInfo);
-							break;
-						}
-				} else if (PrivacyManager.hasPermission(mContext, appInfo.getPackageName(), mRestrictionName, true))
-					mListAppSelected.add(appInfo);
+			if (Boolean.parseBoolean(PrivacyManager.getSetting(null, ActivityMain.this,
+					PrivacyManager.cSettingFPermission, Boolean.TRUE.toString(), false))) {
+				for (ApplicationInfoEx appInfo : mListAppAll)
+					if (mRestrictionName == null) {
+						for (String restrictionName : PrivacyManager.getRestrictions())
+							if (PrivacyManager.hasPermission(mContext, appInfo.getPackageName(), restrictionName, true)) {
+								mListAppSelected.add(appInfo);
+								break;
+							}
+					} else if (PrivacyManager.hasPermission(mContext, appInfo.getPackageName(), mRestrictionName, true))
+						mListAppSelected.add(appInfo);
+			} else
+				mListAppSelected.addAll(mListAppAll);
 		}
 
 		@Override

@@ -51,6 +51,7 @@
     <string name="settings_phone">Номер телефона</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Country</string>
+    <string name="settings_fpermission">Filter by permission</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>

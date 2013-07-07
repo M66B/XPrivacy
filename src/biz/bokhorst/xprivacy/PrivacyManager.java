@@ -56,7 +56,6 @@ public class PrivacyManager {
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
 
-	public final static String cSettingExpert = "Expert";
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
 	public final static String cSettingMac = "Mac";
@@ -67,6 +66,8 @@ public class PrivacyManager {
 	public final static String cSettingMcc = "MCC";
 	public final static String cSettingMnc = "MNC";
 	public final static String cSettingCountry = "Country";
+	public final static String cSettingFPermission = "FPermission";
+	public final static String cSettingExpert = "Expert";
 	public final static String cSettingTheme = "Theme";
 
 	private final static String cDeface = "DEFACE";

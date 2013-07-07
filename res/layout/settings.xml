@@ -153,6 +153,15 @@
             <TableRow>
 
                 <CheckBox
+                    android:id="@+id/cbFPermission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_fpermission" />
+            </TableRow>
+
+            <TableRow>
+
+                <CheckBox
                     android:id="@+id/cbExpert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

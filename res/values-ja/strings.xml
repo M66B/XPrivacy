@@ -51,6 +51,7 @@
     <string name="settings_phone">電話番号</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Country</string>
+    <string name="settings_fpermission">Filter by permission</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>
