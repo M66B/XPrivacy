@@ -1274,23 +1274,41 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@SuppressLint("DefaultLocale")
 	private class AppListAdapter extends ArrayAdapter<ApplicationInfoEx> implements SectionIndexer {
 
-		private List<ApplicationInfoEx> lstApp;
+		private Context mContext;
+		private List<ApplicationInfoEx> mListAppAll;
+		private List<ApplicationInfoEx> mListAppSelected;
 		private String mRestrictionName;
-		private Map<String, Integer> alphaIndexer;
-		private String[] sections;
+		private Map<String, Integer> mAlphaIndexer;
+		private String[] mSections;
 
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
 			super(context, resource, objects);
-			lstApp = new ArrayList<ApplicationInfoEx>();
-			lstApp.addAll(objects);
+			mContext = context;
+			mListAppAll = new ArrayList<ApplicationInfoEx>();
+			mListAppAll.addAll(objects);
 			mRestrictionName = initialRestrictionName;
+			selectApps();
 			reindexSections();
 		}
 
 		public void setRestrictionName(String restrictionName) {
 			mRestrictionName = restrictionName;
+			selectApps();
 			notifyDataSetChanged();
+		}
+
+		private void selectApps() {
+			mListAppSelected = new ArrayList<ApplicationInfoEx>();
+			for (ApplicationInfoEx appInfo : mListAppAll)
+				if (mRestrictionName == null) {
+					for (String restrictionName : PrivacyManager.getRestrictions())
+						if (PrivacyManager.hasPermission(mContext, appInfo.getPackageName(), restrictionName, true)) {
+							mListAppSelected.add(appInfo);
+							break;
+						}
+				} else if (PrivacyManager.hasPermission(mContext, appInfo.getPackageName(), mRestrictionName, true))
+					mListAppSelected.add(appInfo);
 		}
 
 		@Override
@@ -1318,7 +1336,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 
-				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.lstApp) {
+				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListAppSelected) {
 					// Process constraint
 					if (constraint == null) {
 						boolean someRestricted = false;
@@ -1468,10 +1486,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		@Override
 		public int getPositionForSection(int section) {
-			if (section >= sections.length)
+			if (section >= mSections.length)
 				return super.getCount() - 1;
 
-			return alphaIndexer.get(sections[section]);
+			return mAlphaIndexer.get(mSections[section]);
 		}
 
 		@Override
@@ -1481,8 +1499,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			int closestIndex = 0;
 			int latestDelta = Integer.MAX_VALUE;
 
-			for (int i = 0; i < sections.length; i++) {
-				int current = alphaIndexer.get(sections[i]);
+			for (int i = 0; i < mSections.length; i++) {
+				int current = mAlphaIndexer.get(mSections[i]);
 				if (current == position) {
 					// If position matches an index, return it immediately
 					return i;
@@ -1501,7 +1519,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		@Override
 		public Object[] getSections() {
-			return sections;
+			return mSections;
 		}
 
 		@Override
@@ -1511,7 +1529,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		private void reindexSections() {
-			alphaIndexer = new HashMap<String, Integer>();
+			mAlphaIndexer = new HashMap<String, Integer>();
 			for (int i = getCount() - 1; i >= 0; i--) {
 				ApplicationInfoEx app = getItem(i);
 				String appName = app.toString();
@@ -1524,15 +1542,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						firstChar = "@";
 				}
 
-				alphaIndexer.put(firstChar, i);
+				mAlphaIndexer.put(firstChar, i);
 			}
 
 			// create a list from the set to sort
-			List<String> sectionList = new ArrayList<String>(alphaIndexer.keySet());
+			List<String> sectionList = new ArrayList<String>(mAlphaIndexer.keySet());
 			Collections.sort(sectionList);
 
-			sections = new String[sectionList.size()];
-			sectionList.toArray(sections);
+			mSections = new String[sectionList.size()];
+			sectionList.toArray(mSections);
 		}
 	}
 }
