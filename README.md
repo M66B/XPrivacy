@@ -481,6 +481,7 @@ Changelog
 * Fixed navigate up
 * Updated Polish translation
 * Updated simplified Chinese translation
+* Updated Slovak translation
 
 **Version 1.0**
 
