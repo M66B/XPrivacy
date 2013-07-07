@@ -439,12 +439,6 @@ you will have to use a firewall application, like [AFWall+](http://forum.xda-dev
 The reason is that XPrivacy works within Android
 and that detailed firewall rules can only be applied within the Linux kernel.
 
-**(20) Could you ... with Android permissions?**
-
-Android permissions do not cover all restriction categories and if they do, then mostly only partly.
-Therefore Android permissions are only displayed as a guideline.
-Any function, like filtering and selecting based on Android permissions, would be inherent incorrect.
-
 **(21) I get 'Unable to parse package'**
 
 This means the downloaded apk is corrupt.
@@ -471,7 +465,7 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 1.2** (in development)
+**Version 1.2**
 
 * Setting for SIM serial# ([ICCID](http://en.wikipedia.org/wiki/ICCID#ICCID)) ([issue](https://github.com/M66B/XPrivacy/issues/167))
 * Fixed possible location listener leak, thanks @[Tungstwenty](https://github.com/Tungstwenty)
