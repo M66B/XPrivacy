@@ -473,7 +473,7 @@ Changelog
 
 **Version 1.2** (in development)
 
-* Fix leaking location listener (Facebook?), thanks @[Tungstwenty](https://github.com/Tungstwenty)
+* Fixed possible location listener leak, thanks @[Tungstwenty](https://github.com/Tungstwenty)
 
 **Version 1.1**
 
