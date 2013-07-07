@@ -1321,15 +1321,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.lstApp) {
 					// Process constraint
 					if (constraint == null) {
-						boolean allRestricted = true;
+						boolean someRestricted = false;
 						if (mRestrictionName == null)
 							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
 									xAppInfo.getUid()))
-								allRestricted = allRestricted && restricted;
+								someRestricted = someRestricted || restricted;
 						else
-							allRestricted = PrivacyManager.getRestricted(null, getApplicationContext(),
+							someRestricted = PrivacyManager.getRestricted(null, getApplicationContext(),
 									xAppInfo.getUid(), mRestrictionName, null, false, false);
-						if (allRestricted)
+						if (someRestricted)
 							lstApp.add(xAppInfo);
 					} else if (constraint.toString().equals("\n")) {
 						boolean used = (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(),
