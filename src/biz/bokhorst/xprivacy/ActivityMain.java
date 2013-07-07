@@ -113,6 +113,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		List<String> listLocalizedRestriction = new ArrayList<String>();
 		for (String restrictionName : listRestriction)
 			listLocalizedRestriction.add(PrivacyManager.getLocalizedName(this, restrictionName));
+		listLocalizedRestriction.add(0, getString(R.string.menu_all));
 
 		// Build spinner adapter
 		ArrayAdapter<String> spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
@@ -335,7 +336,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 		if (mAppAdapter != null) {
-			String restrictionName = PrivacyManager.getRestrictions().get(pos);
+			String restrictionName = (pos == 0 ? null : PrivacyManager.getRestrictions().get(pos - 1));
 			mAppAdapter.setRestrictionName(restrictionName);
 			applyFilter();
 		}
@@ -1307,16 +1308,36 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			protected FilterResults performFiltering(CharSequence constraint) {
 				FilterResults results = new FilterResults();
 
+				// Get restrictions
+				final List<String> listRestriction;
+				if (mRestrictionName == null)
+					listRestriction = PrivacyManager.getRestrictions();
+				else {
+					listRestriction = new ArrayList<String>();
+					listRestriction.add(mRestrictionName);
+				}
+
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.lstApp) {
-					if (constraint == null) {
+					// Get all restricted, some used
+					boolean allRestricted = true;
+					boolean someUsed = false;
+					for (String restrictionName : listRestriction) {
 						boolean restricted = PrivacyManager.getRestricted(null, getApplicationContext(),
-								xAppInfo.getUid(), mRestrictionName, null, false, false);
-						if (restricted)
+								xAppInfo.getUid(), restrictionName, null, false, false);
+						boolean used = (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(),
+								restrictionName, null) != 0);
+						allRestricted = allRestricted && restricted;
+						someUsed = someUsed || used;
+					}
+
+					// Process constraint
+					if (constraint == null) {
+						if (allRestricted)
 							lstApp.add(xAppInfo);
 					} else if (constraint.toString().equals("\n")) {
-						if (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(), mRestrictionName, null) != 0)
+						if (someUsed)
 							lstApp.add(xAppInfo);
 					} else if (xAppInfo.toString().toLowerCase().contains(((String) constraint).toLowerCase()))
 						lstApp.add(xAppInfo);
@@ -1383,26 +1404,59 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Check if internet access
 			imgInternet.setVisibility(xAppInfo.hasInternet() ? View.VISIBLE : View.INVISIBLE);
 
+			// Get restrictions
+			final List<String> listRestriction;
+			if (mRestrictionName == null)
+				listRestriction = PrivacyManager.getRestrictions();
+			else {
+				listRestriction = new ArrayList<String>();
+				listRestriction.add(mRestrictionName);
+			}
+
 			// Check if used
-			boolean used = PrivacyManager.isUsed(row.getContext(), xAppInfo.getUid(), mRestrictionName, null);
-			ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
-			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
+			boolean someUsed = false;
+			for (String restrictionName : listRestriction)
+				if (PrivacyManager.isUsed(row.getContext(), xAppInfo.getUid(), restrictionName, null)) {
+					someUsed = true;
+					break;
+				}
+			ctvApp.setTypeface(null, someUsed ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
+			imgUsed.setVisibility(someUsed ? View.VISIBLE : View.INVISIBLE);
+
+			// Get all/some restricted
+			boolean allRestricted = true;
+			boolean someRestricted = false;
+			for (String restrictionName : listRestriction) {
+				boolean restricted = PrivacyManager.getRestricted(null, row.getContext(), xAppInfo.getUid(),
+						restrictionName, null, false, false);
+				allRestricted = allRestricted && restricted;
+				someRestricted = someRestricted || restricted;
+			}
 
 			// Display restriction
-			boolean restricted = PrivacyManager.getRestricted(null, row.getContext(), xAppInfo.getUid(),
-					mRestrictionName, null, false, false);
-			ctvApp.setChecked(restricted);
+			ctvApp.setChecked(allRestricted);
+			ctvApp.setEnabled(mRestrictionName == null && someRestricted ? allRestricted : true);
 
 			// Listen for restriction changes
 			ctvApp.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					boolean restricted = PrivacyManager.getRestricted(null, view.getContext(), xAppInfo.getUid(),
-							mRestrictionName, null, false, false);
-					restricted = !restricted;
-					ctvApp.setChecked(restricted);
-					PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(), mRestrictionName, null,
-							restricted);
+					// Get all/some restricted
+					boolean allRestricted = true;
+					boolean someRestricted = false;
+					for (String restrictionName : listRestriction) {
+						boolean restricted = PrivacyManager.getRestricted(null, view.getContext(), xAppInfo.getUid(),
+								restrictionName, null, false, false);
+						allRestricted = allRestricted && restricted;
+						someRestricted = someRestricted || restricted;
+					}
+
+					// Process click
+					allRestricted = !allRestricted;
+					for (String restrictionName : listRestriction)
+						PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(), restrictionName, null,
+								allRestricted);
+					ctvApp.setChecked(allRestricted);
 				}
 			});
 
