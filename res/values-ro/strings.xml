@@ -44,14 +44,15 @@
     <string name="restrict_view">Acces browser</string>
     <string name="title_category">Restrictioneaza categoria:</string>
     <string name="title_restrict">Bifeaza pentru a restrictiona:</string>
-    <string name="settings_expert">Mod Expert</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
     <string name="settings_mac">MAC address</string>
     <string name="settings_phone">Phone number</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Country</string>
+    <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_expert">Mod Expert</string>
     <string name="help_application">Aplicatie</string>
     <string name="help_internet">are permisiune Internet</string>
     <string name="help_granted">are permisiune Android</string>

@@ -44,14 +44,15 @@
     <string name="restrict_view">查看 (浏览器)</string>
     <string name="title_category">限制的类别：</string>
     <string name="title_restrict">勾选已限制:</string>
-    <string name="settings_expert">专家模式</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
     <string name="settings_mac">MAC 地址</string>
     <string name="settings_phone">手机号码</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">国家</string>
+    <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_expert">专家模式</string>
     <string name="help_application">应用</string>
     <string name="help_internet">表示联网的权限</string>
     <string name="help_granted">表示授予的权限</string>

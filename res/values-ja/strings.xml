@@ -44,14 +44,15 @@
     <string name="restrict_view">表示 (ブラウザ)</string>
     <string name="title_category">制限するカテゴリ:</string>
     <string name="title_restrict">チェックで制限:</string>
-    <string name="settings_expert">上級者向けモード</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
     <string name="settings_mac">MAC アドレス</string>
     <string name="settings_phone">電話番号</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Country</string>
+    <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_expert">上級者向けモード</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>

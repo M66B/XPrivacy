@@ -44,14 +44,15 @@
     <string name="restrict_view">גישה לממשק משתמש</string>
     <string name="title_category">Category to restrict:</string>
     <string name="title_restrict">סמן כדי להגביל</string>
-    <string name="settings_expert">מצב מתקדם</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
     <string name="settings_mac">MAC address</string>
     <string name="settings_phone">Phone number</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Country</string>
+    <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_expert">מצב מתקדם</string>
     <string name="help_application">אפליקציה</string>
     <string name="help_internet">יש הרשאות אינטרנט</string>
     <string name="help_granted">יש הרשאות אנדרואיד</string>

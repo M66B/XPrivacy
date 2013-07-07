@@ -152,6 +152,18 @@
 
             <TableRow>
 
+                <TextView
+                    android:text="@string/settings_subscriber"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etSubscriber"
+                    android:inputType="numberDecimal|textNoSuggestions"
+                    android:maxLength="15" />
+            </TableRow>
+
+            <TableRow>
+
                 <CheckBox
                     android:id="@+id/cbFPermission"
                     android:layout_width="match_parent"

@@ -44,14 +44,15 @@
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
     <string name="title_category">Zu beschränkende Kategorie:</string>
     <string name="title_restrict">Markieren zum Einschränken:</string>
-    <string name="settings_expert">Expertenmodus</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
     <string name="settings_mac">MAC Adresse</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Country</string>
+    <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_expert">Expertenmodus</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet Berechtigung</string>
     <string name="help_granted">hat Android Berechtigung</string>

@@ -44,14 +44,15 @@
     <string name="restrict_view">Betrakte (browser)</string>
     <string name="title_category">Kategori å blokke:</string>
     <string name="title_restrict">Marker til å blokke:</string>
-    <string name="settings_expert">Ekspert modus</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>
     <string name="settings_mac">MAC adresse</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Country</string>
+    <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_expert">Ekspert modus</string>
     <string name="help_application">Applikasjon</string>
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>

@@ -44,14 +44,15 @@
     <string name="restrict_view">Преглед (браузър)</string>
     <string name="title_category">Категория за ограничаване:</string>
     <string name="title_restrict">Отбележи за ограничаване:</string>
-    <string name="settings_expert">Режим за експерти</string>
     <string name="settings_lat">Геогр. ширина</string>
     <string name="settings_lon">Геогр. дължина</string>
     <string name="settings_mac">MAC адрес</string>
     <string name="settings_phone">Phone number</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Country</string>
+    <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_expert">Режим за експерти</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">има разрешение за интернет</string>
     <string name="help_granted">има разрешение в Android</string>

@@ -47,7 +47,6 @@
     <string name="restrict_view">View (browser)</string>
     <string name="title_category">Category to restrict:</string>
     <string name="title_restrict">Check to restrict:</string>
-    <string name="settings_expert">Expert mode</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
     <string name="settings_mac">MAC address</string>
@@ -58,7 +57,9 @@
     <string name="settings_mcc" translatable="false">MCC</string>
     <string name="settings_mnc" translatable="false">MNC</string>
     <string name="settings_country">Country</string>
+    <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Application</string>
     <string name="help_internet">has internet permission</string>
     <string name="help_granted">has Android permission</string>

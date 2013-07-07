@@ -44,14 +44,15 @@
     <string name="restrict_view">Zobrazení (v prohlížeči)</string>
     <string name="title_category">Kategorie pro omezení:</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
-    <string name="settings_expert">Režim Experta</string>
     <string name="settings_lat">Zeměpisná šířka</string>
     <string name="settings_lon">Zeměpisná délka</string>
     <string name="settings_mac">MAC adresa</string>
     <string name="settings_phone">Telefonní číslo</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Country</string>
+    <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_expert">Režim Experta</string>
     <string name="help_application">Aplikace</string>
     <string name="help_internet">má oprávnění k Internetu</string>
     <string name="help_granted">má Android oprávnění</string>

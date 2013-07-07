@@ -44,14 +44,15 @@
     <string name="restrict_view">Megtekintés (böngésző)</string>
     <string name="title_category">Kategória korlátozása:</string>
     <string name="title_restrict">Jelölje be a korlátozáshoz:</string>
-    <string name="settings_expert">Szakértői mód</string>
     <string name="settings_lat">Szélesség</string>
     <string name="settings_lon">Hosszúság</string>
     <string name="settings_mac">MAC-cím</string>
     <string name="settings_phone">Telefonszám</string>
     <string name="settings_id">Android azonosító</string>
     <string name="settings_country">Ország</string>
+    <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_expert">Szakértői mód</string>
     <string name="help_application">Alkalmazás</string>
     <string name="help_internet">Internet engedély</string>
     <string name="help_granted">Android engedély</string>

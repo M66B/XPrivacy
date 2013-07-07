@@ -44,14 +44,15 @@
     <string name="restrict_view">Widok (przeglądarka)</string>
     <string name="title_category">Kategorie do ograniczenia:</string>
     <string name="title_restrict">Zaznacz aby odfiltrować:</string>
-    <string name="settings_expert">Tryb eksperta</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>
     <string name="settings_mac">Adres MAC</string>
     <string name="settings_phone">Numer telefonu</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Kraj</string>
+    <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_expert">Tryb eksperta</string>
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">wymaga dostępu do internetu</string>
     <string name="help_granted">wymaga dostępu do tych uprawnień Androida</string>
