@@ -28,7 +28,7 @@
     <string name="msg_loading">Töltés</string>
     <string name="msg_done">Kész</string>
     <string name="restrict_accounts">Fiókok (Google, Facebook, stb.)</string>
-    <string name="restrict_browser">Böngésző (könyvjelzőt / előzmények)</string>
+    <string name="restrict_browser">Böngésző (könyvjelzők / előzmények)</string>
     <string name="restrict_calendar">Naptár</string>
     <string name="restrict_calling">Hívás (telefon, SMS, MMS)</string>
     <string name="restrict_contacts">Névjegyzék</string>
