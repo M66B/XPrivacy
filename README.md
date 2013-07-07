@@ -478,7 +478,7 @@ Changelog
 * Restrict app widget manager ([issue](https://github.com/M66B/XPrivacy/issues/157))
 * Display no permissions as grayed to emphasize it is only a guideline
 * Add Wi-Fi scan result to location category
-* Setting for subscriber ID ([IMSI](http://en.wikipedia.org/wiki/International_mobile_subscriber_identity))
+* Setting for subscriber ID ([IMSI](http://en.wikipedia.org/wiki/International_mobile_subscriber_identity)) ([issue](https://github.com/M66B/XPrivacy/issues/166))
 * Fixed switching from filtering selected to used
 * Fixed empty default settings (empty MCC, MNC, country, etc)
 * Fixed navigate up (ICS)
