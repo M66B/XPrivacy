@@ -8,7 +8,6 @@
     <string name="app_xversion" formatted="false">Xposed keretrendszer verzió: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 M. Bokhorst (M66B)</string>
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
-    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy # korlátozások</string>
     <string name="menu_settings">Beállítások</string>
     <string name="menu_update">Frissítés keresése</string>
     <string name="menu_report">Probléma bejelentése</string>
@@ -16,7 +15,6 @@
     <string name="menu_import">Importálás</string>
     <string name="menu_theme">Téma váltás</string>
     <string name="menu_pro">Pro verzió</string>
-    <string name="menu_flattr" translatable="false">Flattr</string>
     <string name="menu_about">Névjegy</string>
     <string name="menu_all">Minden</string>
     <string name="menu_app_launch">Indítás</string>
@@ -39,7 +37,6 @@
     <string name="restrict_media">Média (hang, fotó, videó)</string>
     <string name="restrict_messages">Üzenetek (SMS, MMS)</string>
     <string name="restrict_network">Hálózat (címek)</string>
-    <string name="restrict_nfc" translatable="false">NFC</string>
     <string name="restrict_phone">Telefon (ID, számok, hívások)</string>
     <string name="restrict_storage">Tárhely (média, SD kártya)</string>
     <string name="restrict_shell">Parancssor (parancsok, rendszergazda)</string>
@@ -51,13 +48,10 @@
     <string name="settings_lat">Szélesség</string>
     <string name="settings_lon">Hosszúság</string>
     <string name="settings_mac">MAC-cím</string>
-    <string name="settings_imei" translatable="false">IMEI</string>
     <string name="settings_phone">Telefonszám</string>
     <string name="settings_id">Android azonosító</string>
-    <string name="settings_gsfid" translatable="false">GSF azonosító</string>
-    <string name="settings_mcc" translatable="false">MCC</string>
-    <string name="settings_mnc" translatable="false">MNC</string>
     <string name="settings_country">Ország</string>
+    <string name="settings_fpermission">Filter by permission</string>
     <string name="help_application">Alkalmazás</string>
     <string name="help_internet">Internet engedély</string>
     <string name="help_granted">Android engedély</string>

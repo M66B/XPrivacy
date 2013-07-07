@@ -480,6 +480,7 @@ Changelog
 * Fixed switching from filtering selected to used
 * Fixed empty default settings (empty MCC, MNC, country, etc)
 * Fixed navigate up (ICS)
+* Added Hungarian translation
 * Updated Polish translation
 * Updated simplified Chinese translation
 * Updated Slovak translation
@@ -806,6 +807,7 @@ Current translations:
 * German (de)
 * Greek (el)
 * Hebrew (he/iw)
+* Hungarian (hu)
 * Italian (it)
 * Japanese (ja)
 * Norwegian (no)
