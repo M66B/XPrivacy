@@ -92,6 +92,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hook(new XCamera(cam, PrivacyManager.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
 		// Environment
+		// This is to fake "unmounted", no permission required
 		hook(new XEnvironment("getExternalStorageState", PrivacyManager.cStorage, new String[] {}),
 				"android.os.Environment");
 
@@ -107,10 +108,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.media.MediaRecorder");
 
 		// Network info
+		// This is to fake "offline", no permission required
 		String[] ninfos = new String[] { "getDetailedState", "getState", "isConnected", "isConnectedOrConnecting" };
 		for (String ninfo : ninfos)
-			hook(new XNetworkInfo(ninfo, PrivacyManager.cInternet, new String[] { "ACCESS_NETWORK_STATE" }),
-					"android.net.NetworkInfo");
+			hook(new XNetworkInfo(ninfo, PrivacyManager.cInternet, new String[] {}), "android.net.NetworkInfo");
 		// TODO: BT PAN
 
 		// Network interface
@@ -189,6 +190,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"android.net.wifi.WifiManager");
 		hook(new XWifiManager("getScanResults", PrivacyManager.cLocation, new String[] { "ACCESS_WIFI_STATE" }),
 				"android.net.wifi.WifiManager");
+		// This is to fake "offline", no permission required
 		hook(new XWifiManager("getConnectionInfo", PrivacyManager.cInternet, new String[] {}),
 				"android.net.wifi.WifiManager");
 
