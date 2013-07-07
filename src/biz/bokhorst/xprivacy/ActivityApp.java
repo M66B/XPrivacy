@@ -145,10 +145,11 @@ public class ActivityApp extends Activity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			Intent upIntent = NavUtils.getParentActivityIntent(this);
-			if (NavUtils.shouldUpRecreateTask(this, upIntent))
-				TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
-			else
-				NavUtils.navigateUpTo(this, upIntent);
+			if (upIntent != null)
+				if (NavUtils.shouldUpRecreateTask(this, upIntent))
+					TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
+				else
+					NavUtils.navigateUpTo(this, upIntent);
 
 			return true;
 		case R.id.menu_all:
