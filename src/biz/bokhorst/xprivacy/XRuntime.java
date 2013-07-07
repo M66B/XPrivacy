@@ -42,8 +42,8 @@ public class XRuntime extends XHook {
 			// Check programs
 			if (progs != null) {
 				String command = TextUtils.join(" ", progs);
-				if ((mCommand == null && !command.startsWith("sh ") && !command.startsWith("su "))
-						|| (mCommand != null && command.startsWith(mCommand + " ")))
+				if ((mCommand == null && !command.contains("sh ") && !command.contains("su "))
+						|| (mCommand != null && command.contains(mCommand + " ")))
 					if (isRestricted(param, mCommand == null ? getMethodName() : mCommand))
 						param.setThrowable(new IOException());
 			}
