@@ -247,7 +247,7 @@ public class ActivityApp extends Activity {
 			final String restrictionName = (String) getGroup(groupPosition);
 
 			// Display if restriction granted
-			if (!PrivacyManager.hasPermission(row.getContext(), mAppInfo.getPackageName(), restrictionName, false))
+			if (!PrivacyManager.hasPermission(row.getContext(), mAppInfo.getPackageName(), restrictionName))
 				imgGranted.setImageDrawable(getResources().getDrawable(R.drawable.granted_grayed));
 
 			// Display if used

@@ -103,7 +103,9 @@ public class PrivacyManager {
 		mPermissions.get(cContacts).add("READ_CONTACTS");
 		mPermissions.get(cDictionary).add("READ_USER_DICTIONARY");
 		mPermissions.get(cIdentification).add("READ_GSERVICES");
+		mPermissions.get(cIdentification).add("");
 		mPermissions.get(cInternet).add("INTERNET");
+		mPermissions.get(cInternet).add("");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_UPDATES");
@@ -123,10 +125,14 @@ public class PrivacyManager {
 		mPermissions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mPermissions.get(cPhone).add("READ_CALL_LOG");
 		mPermissions.get(cPhone).add("WRITE_APN_SETTINGS");
+		mPermissions.get(cShell).add("");
 		mPermissions.get(cStorage).add("READ_EXTERNAL_STORAGE");
 		mPermissions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
 		mPermissions.get(cStorage).add("WRITE_MEDIA_STORAGE");
+		mPermissions.get(cStorage).add("");
 		mPermissions.get(cSystem).add("GET_TASKS");
+		mPermissions.get(cSystem).add("");
+		mPermissions.get(cView).add("");
 
 		// Methods
 
@@ -286,6 +292,10 @@ public class PrivacyManager {
 	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {
 		if (restrictionName != null && !mPermissions.containsKey(restrictionName))
 			Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
+
+		if (permissions.length == 0)
+			if (!mPermissions.get(restrictionName).contains(""))
+				Util.log(null, Log.WARN, "Missing no permission restriction=" + restrictionName);
 
 		for (String permission : permissions)
 			if (!mPermissions.get(restrictionName).contains(permission))
@@ -820,20 +830,22 @@ public class PrivacyManager {
 	}
 
 	@SuppressLint("DefaultLocale")
-	public static boolean hasPermission(Context context, String packageName, String restrictionName, boolean strict) {
-		List<String> listPermission = mPermissions.get(restrictionName);
-		if (!strict) {
-			if (listPermission == null || listPermission.size() == 0)
-				return true;
-		}
-
+	public static boolean hasPermission(Context context, String packageName, String restrictionName) {
 		try {
+			List<String> listPermission = mPermissions.get(restrictionName);
+			if (listPermission.size() == 0) {
+				Util.log(null, Log.WARN, "No permission restriction=" + restrictionName);
+				return true;
+			}
 			PackageManager pm = context.getPackageManager();
 			PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
 			if (pInfo != null && pInfo.requestedPermissions != null)
 				for (String rPermission : pInfo.requestedPermissions)
 					for (String permission : listPermission)
-						if (rPermission.toLowerCase().contains(permission.toLowerCase()))
+						if (permission.equals("")) {
+							// No permission required
+							return true;
+						} else if (rPermission.toLowerCase().contains(permission.toLowerCase()))
 							return true;
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
