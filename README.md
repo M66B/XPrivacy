@@ -472,6 +472,7 @@ Changelog
 
 **Version 1.1** (in development)
 
+* All view (disabled check box means some restrictions)
 * Restrict activity manager (running/recent processes/services/tasks) ([issue](https://github.com/M66B/XPrivacy/issues/157))
 * Display no permissions as grayed to emphasize it is only a guideline
 * Add Wi-Fi scan result to location category too

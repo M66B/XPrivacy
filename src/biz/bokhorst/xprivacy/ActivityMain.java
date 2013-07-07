@@ -168,10 +168,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			public void onClick(View view) {
 				int position = spRestriction.getSelectedItemPosition();
-				if (position != AdapterView.INVALID_POSITION) {
+				if (position != AdapterView.INVALID_POSITION && position > 0) {
 					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 					infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s",
-							PrivacyManager.getRestrictions().get(position))));
+							PrivacyManager.getRestrictions().get(position - 1))));
 					startActivity(infoIntent);
 				}
 			}
@@ -199,7 +199,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Start task to get app list
 		AppListTask appListTask = new AppListTask();
-		appListTask.execute(listRestriction.get(0));
+		appListTask.execute();
 
 		// Check environment
 		checkRequirements();
@@ -1000,8 +1000,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 
 				// Process restrictions
-				List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager
-						.getRestrictions(ActivityMain.this);
+				List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager.getRestricted(ActivityMain.this);
 				for (PrivacyManager.RestrictionDesc restriction : listRestriction) {
 					String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
 					if (packages == null)
@@ -1204,7 +1203,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		@Override
 		protected List<ApplicationInfoEx> doInBackground(String... params) {
-			mRestrictionName = params[0];
+			mRestrictionName = null;
 			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
 			return ApplicationInfoEx.getXApplicationList(ActivityMain.this, mProgressDialog);
 		}
@@ -1320,24 +1319,22 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.lstApp) {
-					// Get all restricted, some used
-					boolean allRestricted = true;
-					boolean someUsed = false;
-					for (String restrictionName : listRestriction) {
-						boolean restricted = PrivacyManager.getRestricted(null, getApplicationContext(),
-								xAppInfo.getUid(), restrictionName, null, false, false);
-						boolean used = (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(),
-								restrictionName, null) != 0);
-						allRestricted = allRestricted && restricted;
-						someUsed = someUsed || used;
-					}
-
 					// Process constraint
 					if (constraint == null) {
+						boolean allRestricted = true;
+						if (mRestrictionName == null)
+							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
+									xAppInfo.getUid()))
+								allRestricted = allRestricted && restricted;
+						else
+							allRestricted = PrivacyManager.getRestricted(null, getApplicationContext(),
+									xAppInfo.getUid(), mRestrictionName, null, false, false);
 						if (allRestricted)
 							lstApp.add(xAppInfo);
 					} else if (constraint.toString().equals("\n")) {
-						if (someUsed)
+						boolean used = (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(),
+								mRestrictionName, null) != 0);
+						if (used)
 							lstApp.add(xAppInfo);
 					} else if (xAppInfo.toString().toLowerCase().contains(((String) constraint).toLowerCase()))
 						lstApp.add(xAppInfo);
@@ -1414,23 +1411,23 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 
 			// Check if used
-			boolean someUsed = false;
-			for (String restrictionName : listRestriction)
-				if (PrivacyManager.isUsed(row.getContext(), xAppInfo.getUid(), restrictionName, null)) {
-					someUsed = true;
-					break;
-				}
-			ctvApp.setTypeface(null, someUsed ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
-			imgUsed.setVisibility(someUsed ? View.VISIBLE : View.INVISIBLE);
+			boolean used = (PrivacyManager.getUsed(row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
+			ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
+			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 
 			// Get all/some restricted
 			boolean allRestricted = true;
 			boolean someRestricted = false;
-			for (String restrictionName : listRestriction) {
+			if (mRestrictionName == null)
+				for (boolean restricted : PrivacyManager.getRestricted(row.getContext(), xAppInfo.getUid())) {
+					allRestricted = allRestricted && restricted;
+					someRestricted = someRestricted || restricted;
+				}
+			else {
 				boolean restricted = PrivacyManager.getRestricted(null, row.getContext(), xAppInfo.getUid(),
-						restrictionName, null, false, false);
-				allRestricted = allRestricted && restricted;
-				someRestricted = someRestricted || restricted;
+						mRestrictionName, null, false, false);
+				allRestricted = restricted;
+				someRestricted = restricted;
 			}
 
 			// Display restriction
@@ -1444,11 +1441,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Get all/some restricted
 					boolean allRestricted = true;
 					boolean someRestricted = false;
-					for (String restrictionName : listRestriction) {
+					if (mRestrictionName == null)
+						for (boolean restricted : PrivacyManager.getRestricted(view.getContext(), xAppInfo.getUid())) {
+							allRestricted = allRestricted && restricted;
+							someRestricted = someRestricted || restricted;
+						}
+					else {
 						boolean restricted = PrivacyManager.getRestricted(null, view.getContext(), xAppInfo.getUid(),
-								restrictionName, null, false, false);
-						allRestricted = allRestricted && restricted;
-						someRestricted = someRestricted || restricted;
+								mRestrictionName, null, false, false);
+						allRestricted = restricted;
+						someRestricted = restricted;
 					}
 
 					// Process click

@@ -503,6 +503,22 @@ public class PrivacyManager {
 		}
 	}
 
+	public static List<Boolean> getRestricted(Context context, int uid) {
+		List<Boolean> listRestricted = new ArrayList<Boolean>();
+		ContentResolver contentResolver = context.getContentResolver();
+		if (contentResolver != null) {
+			Cursor cursor = contentResolver.query(PrivacyProvider.URI_RESTRICTION, null, null,
+					new String[] { Integer.toString(uid), Boolean.toString(false), null }, null);
+			if (cursor != null) {
+				while (cursor.moveToNext())
+					listRestricted.add(Boolean.parseBoolean(cursor.getString(cursor
+							.getColumnIndex(PrivacyProvider.COL_RESTRICTED))));
+				cursor.close();
+			}
+		}
+		return listRestricted;
+	}
+
 	public static class RestrictionDesc {
 		public int uid;
 		public boolean restricted;
@@ -510,7 +526,7 @@ public class PrivacyManager {
 		public String methodName;
 	}
 
-	public static List<RestrictionDesc> getRestrictions(Context context) {
+	public static List<RestrictionDesc> getRestricted(Context context) {
 		List<RestrictionDesc> result = new ArrayList<RestrictionDesc>();
 		Cursor rCursor = context.getContentResolver().query(PrivacyProvider.URI_RESTRICTION, null, null,
 				new String[] { Integer.toString(0), Boolean.toString(false) }, null);
@@ -535,17 +551,16 @@ public class PrivacyManager {
 
 	// Usage
 
-	public static boolean isUsed(Context context, int uid, String restrictionName, String methodName) {
-		return (getUsed(context, uid, restrictionName, methodName) != 0);
-	}
-
 	public static long getUsed(Context context, int uid, String restrictionName, String methodName) {
 		long lastUsage = 0;
 		ContentResolver cr = context.getContentResolver();
 		Cursor cursor = cr.query(PrivacyProvider.URI_USAGE, null, restrictionName, new String[] {
 				Integer.toString(uid), methodName }, null);
-		if (cursor.moveToNext())
-			lastUsage = cursor.getLong(cursor.getColumnIndex(PrivacyProvider.COL_USED));
+		while (cursor.moveToNext()) {
+			long usage = cursor.getLong(cursor.getColumnIndex(PrivacyProvider.COL_USED));
+			if (usage > lastUsage)
+				lastUsage = usage;
+		}
 		cursor.close();
 		boolean used = (lastUsage != 0);
 		logRestriction(null, context, uid, "used", restrictionName, methodName, used, false, 0);

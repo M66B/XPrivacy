@@ -251,7 +251,7 @@ public class ActivityApp extends Activity {
 				imgGranted.setImageDrawable(getResources().getDrawable(R.drawable.granted_grayed));
 
 			// Display if used
-			if (PrivacyManager.isUsed(row.getContext(), mAppInfo.getUid(), restrictionName, null))
+			if (PrivacyManager.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0)
 				ctvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
 			else
 				imgUsed.setVisibility(View.INVISIBLE);
