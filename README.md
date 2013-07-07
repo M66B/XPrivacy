@@ -471,7 +471,11 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 1.1** (in development)
+**Version 1.2** (in development)
+
+* Fix leaking location listener (Facebook?), thanks @[Tungstwenty](https://github.com/Tungstwenty)
+
+**Version 1.1**
 
 * *All* view (disabled check box means *some* restrictions) ([issue](https://github.com/M66B/XPrivacy/issues/154))
 * Filter applications by permissions (default enabled)
