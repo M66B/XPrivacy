@@ -475,6 +475,7 @@ Changelog
 
 * Increased maximum length of MNC to three digits ([issue](https://github.com/M66B/XPrivacy/issues/178))
 * Fixed shell commands starting with *sh* and *su*, like *show*, thanks @[Tungstwenty](https://github.com/Tungstwenty)
+* Fixed stuck notification bar while exporting ([issue](https://github.com/M66B/XPrivacy/issues/170))
 * Updated Arabic translation
 * Updated simplified Chinese translation
 * Updated Czech translation

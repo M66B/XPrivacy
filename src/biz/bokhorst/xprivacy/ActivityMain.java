@@ -1031,22 +1031,31 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 				// Process restrictions
 				List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager.getRestricted(ActivityMain.this);
+				Map<String, List<PrivacyManager.RestrictionDesc>> mapRestriction = new HashMap<String, List<PrivacyManager.RestrictionDesc>>();
 				for (PrivacyManager.RestrictionDesc restriction : listRestriction) {
 					String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
 					if (packages == null)
 						Util.log(null, Log.WARN, "No packages for uid=" + restriction.uid);
 					else
 						for (String packageName : packages) {
-							publishProgress(packageName);
-
-							serializer.startTag(null, "Package");
-							serializer.attribute(null, "Name", packageName);
-							serializer.attribute(null, "Restriction", restriction.restrictionName);
-							if (restriction.methodName != null)
-								serializer.attribute(null, "Method", restriction.methodName);
-							serializer.attribute(null, "Restricted", Boolean.toString(restriction.restricted));
-							serializer.endTag(null, "Package");
+							if (!mapRestriction.containsKey(packageName))
+								mapRestriction.put(packageName, new ArrayList<PrivacyManager.RestrictionDesc>());
+							mapRestriction.get(packageName).add(restriction);
 						}
+				}
+
+				// Process result
+				for (String packageName : mapRestriction.keySet()) {
+					publishProgress(packageName);
+					for (PrivacyManager.RestrictionDesc restrictionDesc : mapRestriction.get(packageName)) {
+						serializer.startTag(null, "Package");
+						serializer.attribute(null, "Name", packageName);
+						serializer.attribute(null, "Restriction", restrictionDesc.restrictionName);
+						if (restrictionDesc.methodName != null)
+							serializer.attribute(null, "Method", restrictionDesc.methodName);
+						serializer.attribute(null, "Restricted", Boolean.toString(restrictionDesc.restricted));
+						serializer.endTag(null, "Package");
+					}
 				}
 
 				// End serialization
