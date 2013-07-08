@@ -1342,13 +1342,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			if (Boolean.parseBoolean(PrivacyManager.getSetting(null, ActivityMain.this,
 					PrivacyManager.cSettingFPermission, Boolean.TRUE.toString(), false))) {
 				for (ApplicationInfoEx appInfo : mListAppAll)
-					if (mRestrictionName == null) {
-						for (String restrictionName : PrivacyManager.getRestrictions())
-							if (PrivacyManager.hasPermission(mContext, appInfo.getPackageName(), restrictionName)) {
-								mListAppSelected.add(appInfo);
-								break;
-							}
-					} else if (PrivacyManager.hasPermission(mContext, appInfo.getPackageName(), mRestrictionName))
+					if (mRestrictionName == null)
+						mListAppSelected.add(appInfo);
+					else if (PrivacyManager.hasPermission(mContext, appInfo.getPackageName(), mRestrictionName))
 						mListAppSelected.add(appInfo);
 			} else
 				mListAppSelected.addAll(mListAppAll);
