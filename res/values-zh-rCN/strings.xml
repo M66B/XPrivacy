@@ -8,6 +8,7 @@
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
     <string name="app_copyright">版权所有 \u00A9 2013 M. Bokhorst (M66B)</string>
     <string name="app_info">信息: https://github.com/M66B/XPrivacy/</string>
+    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#restrictions</string>
     <string name="menu_settings">设置</string>
     <string name="menu_update">检查更新</string>
     <string name="menu_report">报告问题</string>
@@ -15,6 +16,7 @@
     <string name="menu_import">导入配置</string>
     <string name="menu_theme">切换主题</string>
     <string name="menu_pro">专业版</string>
+    <string name="menu_flattr" translatable="false">Flattr</string>
     <string name="menu_about">关于</string>
     <string name="menu_all">全部</string>
     <string name="menu_app_launch">启动</string>
@@ -37,21 +39,27 @@
     <string name="restrict_media">媒体 (声音, 图片, 视频)</string>
     <string name="restrict_messages">信息 (短信, 彩信)</string>
     <string name="restrict_network">网络 (地址)</string>
+    <string name="restrict_nfc" translatable="false">NFC</string>
     <string name="restrict_phone">手机 (ID, 电话号码, 通话)</string>
     <string name="restrict_storage">存储 (媒体, SD 卡)</string>
     <string name="restrict_shell">Shell (命令, 超级用户)</string>
     <string name="restrict_system">系统 (已安装的应用)</string>
     <string name="restrict_view">查看 (浏览器)</string>
     <string name="title_category">限制的类别：</string>
-    <string name="title_restrict">勾选已限制:</string>
+    <string name="title_restrict">勾选限制:</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
     <string name="settings_mac">MAC 地址</string>
+    <string name="settings_imei" translatable="false">IMEI</string>
     <string name="settings_phone">手机号码</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_gsfid" translatable="false">GSF ID</string>
+    <string name="settings_mcc" translatable="false">MCC</string>
+    <string name="settings_mnc" translatable="false">MNC</string>
     <string name="settings_country">国家</string>
-    <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_iccid" translatable="false">ICC ID</string>
+    <string name="settings_subscriber">IMSI</string>
+    <string name="settings_fpermission">按权限筛选</string>
     <string name="settings_expert">专家模式</string>
     <string name="help_application">应用</string>
     <string name="help_internet">表示联网的权限</string>
