@@ -474,6 +474,7 @@ Changelog
 
 **Version 1.3** (in development)
 
+* Hide edit pencil in expert mode
 * Increased maximum length of MNC to three digits ([issue](https://github.com/M66B/XPrivacy/issues/178))
 * Fixed storage/internet restriction sometimes not working ([issue](https://github.com/M66B/XPrivacy/issues/174))
 * Fixed shell commands starting with *sh* and *su*, like *show*, thanks @[Tungstwenty](https://github.com/Tungstwenty)

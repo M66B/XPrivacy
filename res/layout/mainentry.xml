@@ -11,6 +11,7 @@
         android:orientation="horizontal" >
 
         <ImageView
+            android:id="@+id/imgEdit"
             android:layout_width="24dip"
             android:layout_height="24dip"
             android:layout_gravity="center_vertical"

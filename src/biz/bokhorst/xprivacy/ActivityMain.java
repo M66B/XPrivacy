@@ -1423,6 +1423,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.mainentry, parent, false);
 			LinearLayout llIcon = (LinearLayout) row.findViewById(R.id.llIcon);
+			ImageView imgEdit = (ImageView) row.findViewById(R.id.imgEdit);
 			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
 			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
@@ -1448,6 +1449,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					view.getContext().startActivity(intentSettings);
 				}
 			});
+
+			if (Boolean.parseBoolean(PrivacyManager.getSetting(null, row.getContext(), PrivacyManager.cSettingExpert,
+					Boolean.toString(Boolean.FALSE), true)))
+				imgEdit.setVisibility(View.GONE);
 
 			// Set icon
 			imgIcon.setImageDrawable(xAppInfo.getDrawable());
