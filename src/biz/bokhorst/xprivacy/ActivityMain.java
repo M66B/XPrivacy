@@ -1435,7 +1435,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Set background color
 			if (xAppInfo.getIsSystem())
 				if (mThemeId == android.R.style.Theme_Holo_Light)
-					row.setBackgroundColor(Color.parseColor("#FFFDD0"));
+					row.setBackgroundColor(getResources().getColor(R.color.Cream));
 				else
 					row.setBackgroundColor(Color.DKGRAY);
 

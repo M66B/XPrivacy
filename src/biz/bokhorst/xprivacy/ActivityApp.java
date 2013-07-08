@@ -60,7 +60,7 @@ public class ActivityApp extends Activity {
 		if (mAppInfo.getIsSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
 			if (themeId == android.R.style.Theme_Holo_Light)
-				llInfo.setBackgroundColor(Color.parseColor("#FFFDD0"));
+				llInfo.setBackgroundColor(getResources().getColor(R.color.Cream));
 			else
 				llInfo.setBackgroundColor(Color.DKGRAY);
 		}
