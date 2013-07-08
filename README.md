@@ -474,6 +474,7 @@ Changelog
 * Updated Arabic translation
 * Updated simplified Chinese translation
 * Updated Czech translation
+* Update French translation
 * Updated Slovak translation
 
 **Version 1.2**
