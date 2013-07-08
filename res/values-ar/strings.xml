@@ -8,7 +8,6 @@
     <string name="app_xversion" formatted="false">إطار  Xposed نسخة : %d</string>
     <string name="app_copyright">حقوق الطبع \u00A9 2013 ب M. Bokhorst (M66B)</string>
     <string name="app_info">لمزيد من المعلومات: https://github.com/M66B/XPrivacy/</string>
-    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#restrictions</string>
     <string name="menu_settings">الإعدادات</string>
     <string name="menu_update">فحص التحديثات</string>
     <string name="menu_report">التبليغ عن مشكلة</string>
@@ -16,7 +15,6 @@
     <string name="menu_import">إستيراد</string>
     <string name="menu_theme">تبديل الوضع</string>
     <string name="menu_pro">النسخة الكاملة</string>
-    <string name="menu_flattr" translatable="false">Flattr</string>
     <string name="menu_about">عن التطبيق</string>
     <string name="menu_all">تحديد الكل</string>
     <string name="menu_app_launch">تشغيل التطبيق</string>
@@ -39,7 +37,6 @@
     <string name="restrict_media">الميديا (صوت,صورة,فيديو) </string>
     <string name="restrict_messages">الرسائل (النصية , الوسائط)</string>
     <string name="restrict_network">الشبكة (العناوين)</string>
-    <string name="restrict_nfc" translatable="false">NFC</string>
     <string name="restrict_phone">الهاتف (المعرف,الأرقام,المكالمات)</string>
     <string name="restrict_storage">التخزين (الميديا’الذاكرة الخارجية)</string>
     <string name="restrict_shell">سطر الأوامر (الأوامر,المستخدم الجذر)</string>
@@ -51,9 +48,11 @@
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
     <string name="settings_mac">عنوان الماك</string>
-    <string name="settings_imei" translatable="false">IMEI</string>
     <string name="settings_phone">رقم الهاتف</string>
     <string name="settings_id">معرف الأندرويد</string>
+    <string name="settings_country">Country</string>
+    <string name="settings_subscriber">Subscriber ID</string>
+    <string name="settings_fpermission">Filter by permission</string>
     <string name="help_application">التطبيق</string>
     <string name="help_internet">لديه صلاحية الوصول للإنترنت</string>
     <string name="help_granted">لديه صلاحية أندرويد</string>
