@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">XPrivacy</string>
-    <string name="app_notxposed" formatted="false">Xposed framework version %d+ nie jest zainstalowany</string>
+    <string name="app_notxposed" formatted="false">Xposed framework wersja %d+ nie jest zainstalowany</string>
     <string name="app_notenabled">XPrivacy nie został włączony w instalatorze Xposed</string>
     <string name="app_wrongandroid">Testowane tylko z Androidem w wersji 4.0, 4.1 oraz 4.2</string>
     <string name="app_version" formatted="false">Wersja XPrivacy: %s (%d)</string>
@@ -51,7 +51,7 @@
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Kraj</string>
     <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_fpermission">Filtruj po uprawnieniach</string>
     <string name="settings_expert">Tryb eksperta</string>
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">wymaga dostępu do internetu</string>
