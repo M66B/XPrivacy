@@ -22,11 +22,11 @@ public class XPackageManagerService extends XHook {
 	// public int[] getPackageGids(String packageName)
 	// frameworks/base/services/java/com/android/server/pm/PackageManagerService.java
 
-	final static int sdcard_r = 1028;
-	final static int sdcard_rw = 1015;
-	final static int media_rw = 1023;
-	final static int inet = 3003;
-	final static int inet_raw = 3004;
+	final static int sdcard_r = 1028; // 4.1+
+	final static int sdcard_rw = 1015; // 4.0+
+	final static int media_rw = 1023; // 4.0+
+	final static int inet = 3003; // 4.0+
+	final static int inet_raw = 3004; // 4.0+
 
 	// system/core/include/private/android_filesystem_config.h
 	// frameworks/base/data/etc/platform.xml
