@@ -204,7 +204,8 @@ For easy usage, data is restricted by category:
 		* Service state changed (service/no service)
 		* Signal level changed
 * Storage
-	* revoke permission to the internal storage (media)
+	* revoke permission to the media storage
+		* this is not the same as the internal storage
 	* revoke permission to the external storage (SD card)
 	* return fake unmounted state for external storage (SD card)
 * Shell
