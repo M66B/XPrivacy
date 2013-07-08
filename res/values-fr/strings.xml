@@ -48,10 +48,10 @@
     <string name="settings_lon">Longitude</string>
     <string name="settings_mac">adresse MAC</string>
     <string name="settings_phone">Numéro de téléphone</string>
-    <string name="settings_id">Android ID</string>
-    <string name="settings_country">Country</string>
-    <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_id">ID Android</string>
+    <string name="settings_country">Pays</string>
+    <string name="settings_subscriber">ID Abonné</string>
+    <string name="settings_fpermission">Filtrer par permissions</string>
     <string name="settings_expert">Mode expert</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
