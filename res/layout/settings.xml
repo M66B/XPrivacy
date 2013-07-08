@@ -134,7 +134,7 @@
                 <EditText
                     android:id="@+id/etMnc"
                     android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="2" />
+                    android:maxLength="3" />
             </TableRow>
 
             <TableRow>
