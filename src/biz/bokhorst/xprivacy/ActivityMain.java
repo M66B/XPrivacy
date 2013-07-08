@@ -47,6 +47,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -100,12 +101,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private boolean mChangingFilter = false;
 	private boolean mPro = false;
 
-	public int getThemed(int attr) {
-		TypedValue typedvalueattr = new TypedValue();
-		getTheme().resolveAttribute(attr, typedvalueattr, true);
-		return typedvalueattr.resourceId;
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -146,7 +141,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 				cbFilter.setChecked(false);
 
-				imgUsed.setImageDrawable(getResources().getDrawable(getThemed(mUsed ? R.attr.icon_used : R.attr.icon_used_grayed)));
+				imgUsed.setImageDrawable(getResources().getDrawable(
+						getThemed(mUsed ? R.attr.icon_used : R.attr.icon_used_grayed)));
 
 				EditText etFilter = (EditText) findViewById(R.id.etFilter);
 				etFilter.setEnabled(!mUsed);
@@ -200,7 +196,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		ivHelp.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Dialog dialog = new Dialog(ActivityMain.this);
+				Dialog dialog = new Dialog(ActivityMain.this, getThemeId());
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
 				dialog.setContentView(R.layout.help);
@@ -416,7 +412,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			AlertDialog alertDialog = new AlertDialog.Builder(this, getThemeId()).create();
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(getString(R.string.app_wrongandroid));
 			alertDialog.setIcon(R.drawable.ic_launcher);
@@ -437,7 +433,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			String msg = String.format(getString(R.string.app_notxposed), PrivacyManager.cXposedMinVersion);
 			Util.log(null, Log.WARN, msg);
 
-			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			AlertDialog alertDialog = new AlertDialog.Builder(this, getThemeId()).create();
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(msg);
 			alertDialog.setIcon(R.drawable.ic_launcher);
@@ -457,7 +453,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			String msg = getString(R.string.app_notenabled);
 			Util.log(null, Log.WARN, msg);
 
-			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			AlertDialog alertDialog = new AlertDialog.Builder(this, getThemeId()).create();
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(msg);
 			alertDialog.setIcon(R.drawable.ic_launcher);
@@ -599,7 +595,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionSettings() {
 		// Build dialog
-		final Dialog dlgSettings = new Dialog(this);
+		final Dialog dlgSettings = new Dialog(this, getThemeId());
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgSettings.setTitle(getString(R.string.app_name));
 		dlgSettings.setContentView(R.layout.settings);
@@ -797,7 +793,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionAbout() {
 		// About
-		Dialog dlgAbout = new Dialog(this);
+		Dialog dlgAbout = new Dialog(this, getThemeId());
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgAbout.setTitle(getString(R.string.app_name));
 		dlgAbout.setContentView(R.layout.about);
@@ -927,7 +923,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		String msg = String.format("Incompatible %s", clazz.getName());
 		Util.log(null, Log.WARN, msg);
 
-		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		AlertDialog alertDialog = new AlertDialog.Builder(this, getThemeId()).create();
 		alertDialog.setTitle(getString(R.string.app_name));
 		alertDialog.setMessage(msg);
 		alertDialog.setIcon(R.drawable.ic_launcher);
@@ -1280,7 +1276,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Show progress dialog
 			ListView lvApp = (ListView) findViewById(R.id.lvApp);
-			mProgressDialog = new ProgressDialog(lvApp.getContext());
+			mProgressDialog = new ProgressDialog(lvApp.getContext(), getThemeId());
 			mProgressDialog.setMessage(getString(R.string.msg_loading));
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			mProgressDialog.setCancelable(false);
@@ -1605,5 +1601,20 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mSections = new String[sectionList.size()];
 			sectionList.toArray(mSections);
 		}
+	}
+
+	private int getThemeId() {
+		try {
+			String packageName = getClass().getPackage().getName();
+			return getPackageManager().getPackageInfo(packageName, PackageManager.GET_META_DATA).applicationInfo.theme;
+		} catch (Throwable ex) {
+			return -1;
+		}
+	}
+
+	public int getThemed(int attr) {
+		TypedValue typedvalueattr = new TypedValue();
+		getTheme().resolveAttribute(attr, typedvalueattr, true);
+		return typedvalueattr.resourceId;
 	}
 }

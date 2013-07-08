@@ -40,9 +40,11 @@ public class ActivityApp extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
-		//String sTheme = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, null, false);
-		//int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
-		//setTheme(themeId);
+		// String sTheme = PrivacyManager.getSetting(null, this,
+		// PrivacyManager.cSettingTheme, null, false);
+		// int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light :
+		// Integer.parseInt(sTheme));
+		// setTheme(themeId);
 		setContentView(R.layout.restrictionlist);
 
 		// Get package name
@@ -59,10 +61,10 @@ public class ActivityApp extends Activity {
 		// Background color
 		if (mAppInfo.getIsSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
-			//if (themeId == android.R.style.Theme_Holo_Light)
-				llInfo.setBackgroundColor(getResources().getColor(R.color.Cream));
-			//else
-			//	llInfo.setBackgroundColor(Color.DKGRAY);
+			// if (themeId == android.R.style.Theme_Holo_Light)
+			llInfo.setBackgroundColor(getResources().getColor(R.color.Cream));
+			// else
+			// llInfo.setBackgroundColor(Color.DKGRAY);
 		}
 
 		// Display app name
@@ -81,7 +83,8 @@ public class ActivityApp extends Activity {
 		tvAppName.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Dialog dialog = new Dialog(ActivityApp.this);
+
+				Dialog dialog = new Dialog(ActivityApp.this, getThemeId());
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
 				dialog.setContentView(R.layout.help);
@@ -120,7 +123,7 @@ public class ActivityApp extends Activity {
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 
 		// Up navigation
-		//getActionBar().setDisplayHomeAsUpEnabled(true);
+		// getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -366,6 +369,15 @@ public class ActivityApp extends Activity {
 		@Override
 		public boolean hasStableIds() {
 			return true;
+		}
+	}
+
+	private int getThemeId() {
+		try {
+			String packageName = getClass().getPackage().getName();
+			return getPackageManager().getPackageInfo(packageName, PackageManager.GET_META_DATA).applicationInfo.theme;
+		} catch (Throwable ex) {
+			return -1;
 		}
 	}
 }
