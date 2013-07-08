@@ -481,7 +481,9 @@ Changelog
 * Updated simplified Chinese translation
 * Updated Czech translation
 * Updated French translation
+* Updated Norwegian translation
 * Updated Slovak translation
+* Updated Slovenian translation
 
 **Version 1.2**
 

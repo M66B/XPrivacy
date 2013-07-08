@@ -49,9 +49,9 @@
     <string name="settings_mac">MAC adresse</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_country">Country</string>
-    <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_country">Land</string>
+    <string name="settings_subscriber">Abonnent ID</string>
+    <string name="settings_fpermission">Velg etter tillatelse</string>
     <string name="settings_expert">Ekspert modus</string>
     <string name="help_application">Applikasjon</string>
     <string name="help_internet">har internet tillatelse</string>
