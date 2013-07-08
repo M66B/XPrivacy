@@ -39,59 +39,60 @@ public class XPackageManagerService extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Get group IDs
-		int[] gids = (int[]) param.getResult();
-		if (gids != null) {
-			// Build list of group IDs
-			boolean modified = false;
+		// Get uid
+		int uid = -1;
+		try {
+			// ICS: public int getPackageUid(String packageName)
+			// public int getPackageUid(String packageName, int userId)
+			String packageName = (String) param.args[0];
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+				Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class, int.class);
+				uid = (Integer) method.invoke(param.thisObject, packageName, 0);
+			} else {
+				Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class);
+				uid = (Integer) method.invoke(param.thisObject, packageName);
+			}
+		} catch (Throwable ex) {
+			Util.bug(this, ex);
+		}
+
+		// Check if restricted
+		if (uid >= 0 && getRestricted(null, uid, mAction, false)) {
+			// Get group IDs
+			int[] gids = (int[]) param.getResult();
+			if (gids == null)
+				return;
+
+			// Build list of modified gids
 			List<Integer> listGids = new ArrayList<Integer>();
-			for (int i = 0; i < gids.length; i++)
+			for (int i = 0; i < gids.length; i++) {
+				Util.log(this, Log.INFO, "gid=" + gids[i] + " restriction=" + mRestrictionName + " action=" + mAction
+						+ " uid=" + uid);
 				if (gids[i] == media_rw) {
-					if (mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("media")) {
-						modified = true;
-						Util.log(this, Log.INFO, "Deny media_rw restriction=" + mRestrictionName + " action=" + mAction);
-					}
+					if (mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("media"))
+						Util.log(this, Log.INFO, "Deny media_rw uid=" + uid);
+					else
+						listGids.add(gids[i]);
 				} else if (gids[i] == sdcard_r || gids[i] == sdcard_rw) {
-					if (mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("sdcard")) {
-						modified = true;
-						Util.log(this, Log.INFO, "Deny sdcard_r/sdcard_rw restriction=" + mRestrictionName + " action="
-								+ mAction);
-					}
+					if (mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("sdcard"))
+						Util.log(this, Log.INFO, "Deny sdcard_r/sdcard_rw uid=" + uid);
+					else
+						listGids.add(gids[i]);
 				} else if (gids[i] == inet || gids[i] == inet_raw) {
-					if (mRestrictionName.equals(PrivacyManager.cInternet)) {
-						modified = true;
-						Util.log(this, Log.INFO, "Deny inet/inet_raw restriction=" + mRestrictionName + " action="
-								+ mAction);
-					}
+					if (mRestrictionName.equals(PrivacyManager.cInternet))
+						Util.log(this, Log.INFO, "Deny inet/inet_raw uid=" + uid);
+					else
+						listGids.add(gids[i]);
 				} else
 					listGids.add(gids[i]);
-
-			if (modified) {
-				// Build list of modified gids
-				gids = new int[listGids.size()];
-				for (int i = 0; i < listGids.size(); i++)
-					gids[i] = listGids.get(i);
-
-				// Get uid
-				int uid = -1;
-				try {
-					// ICS: public int getPackageUid(String packageName)
-					// public int getPackageUid(String packageName, int userId)
-					String packageName = (String) param.args[0];
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-						Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class, int.class);
-						uid = (Integer) method.invoke(param.thisObject, packageName, 0);
-					} else {
-						Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class);
-						uid = (Integer) method.invoke(param.thisObject, packageName);
-					}
-				} catch (Throwable ex) {
-					Util.bug(this, ex);
-				}
-
-				if (uid >= 0 && getRestricted(null, uid, mAction, false))
-					param.setResult(gids);
 			}
+
+			// Proces list of modified gids
+			int[] mGids = new int[listGids.size()];
+			for (int i = 0; i < listGids.size(); i++)
+				mGids[i] = listGids.get(i);
+
+			param.setResult(mGids);
 		}
 	}
 }
