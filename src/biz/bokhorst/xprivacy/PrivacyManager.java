@@ -371,9 +371,9 @@ public class PrivacyManager {
 						if (entry.isExpired())
 							mRestrictionCache.remove(keyCache);
 						else {
-							long delta = System.currentTimeMillis() - start;
+							long ms = System.currentTimeMillis() - start;
 							logRestriction(hook, context, uid, "get", restrictionName, methodName,
-									entry.isRestricted(), true, delta);
+									entry.isRestricted(), true, ms);
 							return entry.isRestricted();
 						}
 					}
@@ -467,8 +467,8 @@ public class PrivacyManager {
 			}
 
 			// Result
-			long delta = System.currentTimeMillis() - start;
-			logRestriction(hook, context, uid, "get", restrictionName, methodName, restricted, false, delta);
+			long ms = System.currentTimeMillis() - start;
+			logRestriction(hook, context, uid, "get", restrictionName, methodName, restricted, false, ms);
 			return restricted;
 		} catch (Throwable ex) {
 			// Failsafe
@@ -595,6 +595,8 @@ public class PrivacyManager {
 
 	public static String getSetting(XHook hook, Context context, String settingName, String defaultValue,
 			boolean useCache) {
+		long start = System.currentTimeMillis();
+
 		// Check cache
 		if (useCache)
 			synchronized (mSettingsCache) {
@@ -656,7 +658,12 @@ public class PrivacyManager {
 			mSettingsCache.put(settingName, new CSetting(value));
 		}
 
-		Util.log(hook, Log.INFO, String.format("get setting %s=%s%s", settingName, value, (fallback ? " #" : "")));
+		long ms = System.currentTimeMillis() - start;
+		Util.log(
+				hook,
+				Log.INFO,
+				String.format("get setting %s=%s%s%s", settingName, value, (fallback ? " #" : ""), (ms > 1 ? " " + ms
+						+ " ms" : "")));
 		return value;
 	}
 
@@ -690,7 +697,6 @@ public class PrivacyManager {
 	// Defacing
 
 	public static Object getDefacedProp(String name) {
-
 		// Serial number
 		if (name.equals("SERIAL") || name.equals("ro.serialno") || name.equals("ro.boot.serialno"))
 			return cDeface;
@@ -810,18 +816,8 @@ public class PrivacyManager {
 
 	private static void logRestriction(XHook hook, Context context, int uid, String prefix, String restrictionName,
 			String methodName, boolean restricted, boolean cached, long ms) {
-		Util.log(hook, Log.INFO, String.format("%s %s/%s %s=%b%s%s", prefix, getPackageName(context, uid), methodName,
-				restrictionName, restricted, (cached ? " *" : (context == null ? " #" : "")), (ms > 1 ? " " + ms
-						+ " ms" : "")));
-	}
-
-	private static String getPackageName(Context context, int uid) {
-		if (context != null) {
-			String[] packages = context.getPackageManager().getPackagesForUid(uid);
-			if (packages != null && packages.length == 1)
-				return packages[0];
-		}
-		return Integer.toString(uid);
+		Util.log(hook, Log.INFO, String.format("%s %d/%s %s=%b%s%s", prefix, uid, methodName, restrictionName,
+				restricted, (cached ? " *" : (context == null ? " #" : "")), (ms > 1 ? " " + ms + " ms" : "")));
 	}
 
 	public static boolean hasInternet(Context context, String packageName) {
