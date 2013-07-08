@@ -468,6 +468,8 @@ Changelog
 **Version 1.3** (in development)
 
 * Fixed shell commands starting with *sh* and *su*, like *show*, thanks @[Tungstwenty](https://github.com/Tungstwenty)
+* Updated simplified Chinese translation
+* Updated Slovak translation
 
 **Version 1.2**
 
