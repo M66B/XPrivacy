@@ -17,7 +17,7 @@
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/help_application"
             android:paddingLeft="6dip"
-            android:src="@drawable/edit_query" />
+            android:src="?attr/icon_edit" />
 
         <ImageView
             android:id="@+id/imgIcon"
@@ -39,14 +39,14 @@
             android:layout_width="24dip"
             android:layout_height="24dip"
             android:contentDescription="@string/help_used"
-            android:src="@drawable/used" />
+            android:src="?attr/icon_used" />
 
         <ImageView
             android:id="@+id/imgInternet"
             android:layout_width="24dip"
             android:layout_height="24dip"
             android:contentDescription="@string/help_internet"
-            android:src="@drawable/internet" />
+            android:src="?attr/icon_internet" />
     </LinearLayout>
 
     <CheckedTextView

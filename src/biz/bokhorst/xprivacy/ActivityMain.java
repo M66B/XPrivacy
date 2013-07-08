@@ -64,6 +64,7 @@ import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -92,20 +93,28 @@ import android.widget.Toast;
 
 public class ActivityMain extends Activity implements OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
-	private int mThemeId;
+	// private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 	private boolean mUsed = false;
 	private boolean mChangingFilter = false;
 	private boolean mPro = false;
 
+	public int getThemed(int attr) {
+		TypedValue typedvalueattr = new TypedValue();
+		getTheme().resolveAttribute(attr, typedvalueattr, true);
+		return typedvalueattr.resourceId;
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
-		String sTheme = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, null, false);
-		mThemeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
-		setTheme(mThemeId);
+		// String sTheme = PrivacyManager.getSetting(null, this,
+		// PrivacyManager.cSettingTheme, null, false);
+		// mThemeId = (sTheme == null ? android.R.style.Theme_Holo_Light :
+		// Integer.parseInt(sTheme));
+		// setTheme(mThemeId);
 		setContentView(R.layout.mainlist);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -137,7 +146,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 				cbFilter.setChecked(false);
 
-				imgUsed.setImageDrawable(getResources().getDrawable(mUsed ? R.drawable.used : R.drawable.used_grayed));
+				imgUsed.setImageDrawable(getResources().getDrawable(getThemed(mUsed ? R.attr.icon_used : R.attr.icon_used_grayed)));
 
 				EditText etFilter = (EditText) findViewById(R.id.etFilter);
 				etFilter.setEnabled(!mUsed);
@@ -364,7 +373,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				mChangingFilter = true;
 
 				ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
-				imgUsed.setImageDrawable(getResources().getDrawable(R.drawable.used_grayed));
+				imgUsed.setImageDrawable(getResources().getDrawable(getThemed(R.attr.icon_used_grayed)));
 				mUsed = false;
 
 				EditText etFilter = (EditText) findViewById(R.id.etFilter);
@@ -1262,7 +1271,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
 			imgUsed.setEnabled(false);
-			imgUsed.setImageDrawable(getResources().getDrawable(R.drawable.used_grayed));
+			imgUsed.setImageDrawable(getResources().getDrawable(getThemed(R.attr.icon_used_grayed)));
 			mUsed = false;
 
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
@@ -1434,10 +1443,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Set background color
 			if (xAppInfo.getIsSystem())
-				if (mThemeId == android.R.style.Theme_Holo_Light)
-					row.setBackgroundColor(getResources().getColor(R.color.Cream));
-				else
-					row.setBackgroundColor(Color.DKGRAY);
+				// if (mThemeId == android.R.style.Theme_Holo_Light)
+				row.setBackgroundColor(getResources().getColor(R.color.Cream));
+			// else
+			// row.setBackgroundColor(Color.DKGRAY);
 
 			// Click handler
 			llIcon.setOnClickListener(new View.OnClickListener() {

@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/used"
+        android:drawableLeft="?attr/icon_used"
         android:drawablePadding="6dip"
         android:gravity="center_vertical"
         android:text="@string/help_used"
@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/internet"
+        android:drawableLeft="?attr/icon_internet"
         android:drawablePadding="6dip"
         android:gravity="center_vertical"
         android:text="@string/help_internet"
@@ -31,7 +31,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/granted"
+        android:drawableLeft="?attr/icon_granted"
         android:drawablePadding="6dip"
         android:gravity="center_vertical"
         android:text="@string/help_granted"

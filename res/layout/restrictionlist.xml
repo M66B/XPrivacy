@@ -13,7 +13,7 @@
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableRight="@drawable/help"
+        android:drawableRight="?attr/icon_help"
         android:textIsSelectable="false" />
 
     <LinearLayout
@@ -39,7 +39,7 @@
                 android:layout_width="24dip"
                 android:layout_height="24dip"
                 android:contentDescription="@string/help_internet"
-                android:src="@drawable/internet" />
+                android:src="?attr/icon_internet" />
         </LinearLayout>
 
         <LinearLayout

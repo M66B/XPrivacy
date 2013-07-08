@@ -28,7 +28,7 @@
             android:layout_height="32dip"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/help_application"
-            android:src="@drawable/info" />
+            android:src="?attr/icon_info" />
 
         <Spinner
             android:id="@+id/spRestriction"
@@ -42,7 +42,7 @@
             android:layout_height="32dip"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/help_application"
-            android:src="@drawable/help" />
+            android:src="?attr/icon_help" />
     </LinearLayout>
 
     <RelativeLayout
@@ -75,7 +75,7 @@
                 android:layout_height="24dip"
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/help_used"
-                android:src="@drawable/used_grayed" />
+                android:src="?attr/icon_used_grayed" />
 
             <EditText
                 android:id="@+id/etFilter"

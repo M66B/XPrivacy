@@ -40,9 +40,9 @@ public class ActivityApp extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set layout
-		String sTheme = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, null, false);
-		int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
-		setTheme(themeId);
+		//String sTheme = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, null, false);
+		//int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
+		//setTheme(themeId);
 		setContentView(R.layout.restrictionlist);
 
 		// Get package name
@@ -59,10 +59,10 @@ public class ActivityApp extends Activity {
 		// Background color
 		if (mAppInfo.getIsSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
-			if (themeId == android.R.style.Theme_Holo_Light)
+			//if (themeId == android.R.style.Theme_Holo_Light)
 				llInfo.setBackgroundColor(getResources().getColor(R.color.Cream));
-			else
-				llInfo.setBackgroundColor(Color.DKGRAY);
+			//else
+			//	llInfo.setBackgroundColor(Color.DKGRAY);
 		}
 
 		// Display app name
@@ -120,7 +120,7 @@ public class ActivityApp extends Activity {
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 
 		// Up navigation
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		//getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

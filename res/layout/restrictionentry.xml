@@ -24,14 +24,14 @@
             android:layout_width="24dip"
             android:layout_height="24dip"
             android:contentDescription="@string/help_used"
-            android:src="@drawable/used" />
+            android:src="?attr/icon_used" />
 
         <ImageView
             android:id="@+id/imgGranted"
             android:layout_width="24dip"
             android:layout_height="24dip"
             android:contentDescription="@string/help_granted"
-            android:src="@drawable/granted" />
+            android:src="?attr/icon_granted" />
     </LinearLayout>
 
     <ImageView
@@ -40,7 +40,7 @@
         android:layout_height="32dip"
         android:layout_gravity="center_vertical"
         android:contentDescription="@string/help_application"
-        android:src="@drawable/info" />
+        android:src="?attr/icon_info" />
 
     <CheckedTextView
         android:id="@+id/ctvName"
