@@ -40,6 +40,8 @@ There are two exceptions to this, access to the internet and to external storage
 is restricted by denying access (revoking permissions).
 There is no other way to realize this, since these permissions are handled by Android in a special way.
 Android delegates handling of these permission to the underlying Linux network/file system.
+XPrivacy will fake offline (internet) and/or unmounted (storage) state,
+but some applications try to access the internet/storage nevertheless, potentially resulting in crashes.
 
 If restricting a category of data for an application results in problems for the application,
 it is possible to allow access to the data category again to solve the issue.
