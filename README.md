@@ -492,6 +492,7 @@ Changelog
 * Updated simplified Chinese translation
 * Updated Czech translation
 * Updated French translation
+* Updated Japanese translation
 * Updated Norwegian translation
 * Updated Polish translation
 * Updated Slovak translation
