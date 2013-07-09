@@ -402,9 +402,12 @@ since it will be able to block advertisements (for example by revoking internet 
 An internal check of XPrivacy failed, resulting in potential data leakage.
 Please press *OK* to send me the support information, so I can look into it.
 
-**(15) Do I need to install Xposed/the fix again when I install an update of my ROM?**
+**(15) Do I need to install Xposed/the fix again when I install an update of my kernel or ROM?**
 
-Yes, mostly you will have to.
+In case of a kernel update: no.
+
+In case of a ROM update: yes.
+
 XPrivacy will warn you when Xposed isn't installed,
 the wrong version of Xposed is installed
 or when the XPrivacy is not enabled in Xposed.
@@ -430,7 +433,7 @@ It can take up to 15 seconds before changes in restrictions will be effective, b
 Changing the internet and storage restriction requires an application restart.
 Please note that in many cases pressing *back*, only moves the application to the background.
 
-**(18) Can XPrivacy ask for restrictions on demand?**
+**(18) Can XPrivacy ask for restrictions on demand / display a message on data usage?**
 
 It cannot always, since it works deep within Android,
 and therefore it is IMHO not a good idea to ask for restrictions when it could,
