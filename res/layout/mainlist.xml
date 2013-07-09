@@ -10,6 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ActivityMain" >
 
+    <!-- Restriction category -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,72 +40,56 @@
             android:src="?attr/icon_help" />
     </LinearLayout>
 
-    <RelativeLayout
+    <!-- Filtering -->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <LinearLayout
+        <ImageView
+            android:layout_width="?android:attr/listPreferredItemHeightSmall"
+            android:layout_height="?android:attr/listPreferredItemHeightSmall"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/help_application"
+            android:paddingLeft="6dip"
+            android:paddingRight="6dip"
+            android:src="?attr/icon_edit" />
+
+        <ImageView
+            android:id="@+id/imgUsed"
+            android:layout_width="36dip"
+            android:layout_height="36dip"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/help_used"
+            android:src="?attr/icon_used_grayed" />
+
+        <EditText
+            android:id="@+id/etFilter"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6dip"
+            android:layout_weight="1"
+            android:inputType="textNoSuggestions"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <ImageView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/help_application"
+            android:src="?attr/icon_magnifier" />
+
+        <CheckBox
+            android:id="@+id/cbFilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_gravity="center_vertical"
+            android:paddingRight="6dip" />
+    </LinearLayout>
 
-            <ImageView
-                android:layout_width="24dip"
-                android:layout_height="24dip"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="@string/help_application"
-                android:paddingLeft="6dip"
-                android:src="?attr/icon_edit"
-                android:visibility="invisible" />
-
-            <ImageView
-                android:layout_width="?android:attr/listPreferredItemHeightSmall"
-                android:layout_height="?android:attr/listPreferredItemHeightSmall"
-                android:contentDescription="@string/help_application"
-                android:paddingLeft="6dip"
-                android:src="?attr/icon_launcher"
-                android:visibility="invisible" />
-
-            <ImageView
-                android:id="@+id/imgUsed"
-                android:layout_width="24dip"
-                android:layout_height="24dip"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="@string/help_used"
-                android:paddingLeft="6dip"
-                android:src="?attr/icon_used_grayed" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:orientation="horizontal" >
-
-            <ImageView
-                android:layout_width="24dip"
-                android:layout_height="24dip"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="@string/help_application"
-                android:src="?attr/icon_magnifier" />
-
-            <EditText
-                android:id="@+id/etFilter"
-                android:layout_width="100dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="6dip"
-                android:inputType="textNoSuggestions"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <CheckBox
-                android:id="@+id/cbFilter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
-        </LinearLayout>
-    </RelativeLayout>
+    <!-- Title -->
 
     <TextView
         android:layout_width="wrap_content"
@@ -112,10 +98,14 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
+    <!-- divider -->
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray" />
+
+    <!-- What it is all about -->
 
     <ListView
         android:id="@+id/lvApp"
@@ -124,6 +114,6 @@
         android:layout_marginTop="6dip"
         android:choiceMode="multipleChoice"
         android:fastScrollEnabled="true"
-        android:scrollbarStyle="outsideOverlay" />
+        android:scrollbarStyle="outsideInset" />
 
 </LinearLayout>

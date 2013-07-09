@@ -367,6 +367,7 @@ To export/import settings you will need the [pro version](http://www.faircode.eu
 In expert mode you will be able to restrict restrict system applications, including Android itself.
 **Be careful!** This can result in force closes and boot loops.
 Furthermore you will be able to make exceptions for individual functions within a restriction category.
+And finally you will get update notification for system applications (including Google apps).
 
 **(8) Will you block the iptables command or force online state?**
 
@@ -486,7 +487,6 @@ Changelog
 **Version 1.3** (in development)
 
 * Dark and light holo theme, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642) for the icons
-* Hide edit pencil in expert mode
 * Increased maximum length of MNC to three digits ([issue](https://github.com/M66B/XPrivacy/issues/178))
 * Fixed storage/internet restriction sometimes not working ([issue](https://github.com/M66B/XPrivacy/issues/174))
 * Fixed shell commands starting with *sh* and *su*, like *show*, thanks @[Tungstwenty](https://github.com/Tungstwenty)

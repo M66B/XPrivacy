@@ -83,7 +83,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.Spinner;
@@ -1428,7 +1427,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.mainentry, parent, false);
-			LinearLayout llIcon = (LinearLayout) row.findViewById(R.id.llIcon);
 			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
 			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
@@ -1441,8 +1439,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			if (xAppInfo.getIsSystem())
 				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_system)));
 
+			// Set icon
+			imgIcon.setImageDrawable(xAppInfo.getDrawable());
+
 			// Click handler
-			llIcon.setOnClickListener(new View.OnClickListener() {
+			imgIcon.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					Intent intentSettings = new Intent(view.getContext(), ActivityApp.class);
@@ -1451,9 +1452,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					view.getContext().startActivity(intentSettings);
 				}
 			});
-
-			// Set icon
-			imgIcon.setImageDrawable(xAppInfo.getDrawable());
 
 			// Set title
 			ctvApp.setText(xAppInfo.toString());
@@ -1522,6 +1520,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 			});
 
+			// Refresh
 			row.refreshDrawableState();
 			return row;
 		}

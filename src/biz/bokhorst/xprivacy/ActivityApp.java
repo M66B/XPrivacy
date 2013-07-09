@@ -64,26 +64,16 @@ public class ActivityApp extends Activity {
 		// Background color
 		if (mAppInfo.getIsSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
-			// if (themeId == android.R.style.Theme_Holo_Light)
 			llInfo.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_system)));
-			// else
-			// llInfo.setBackgroundColor(Color.DKGRAY);
 		}
 
 		// Display app name
 		TextView tvAppName = (TextView) findViewById(R.id.tvApp);
 		tvAppName.setText(mAppInfo.toString());
 
-		// Display version
-		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
-		tvVersion.setText(mAppInfo.getVersion());
-
-		// Display package name / uid
-		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
-		tvPackageName.setText(String.format("%s %d", packageName, mAppInfo.getUid()));
-
 		// Handle help
-		tvAppName.setOnClickListener(new View.OnClickListener() {
+		ImageView ivHelp = (ImageView) findViewById(R.id.ivHelp);
+		ivHelp.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
@@ -117,6 +107,14 @@ public class ActivityApp extends Activity {
 		ImageView imgInternet = (ImageView) findViewById(R.id.imgAppEntryInternet);
 		if (!PrivacyManager.hasInternet(this, packageName))
 			imgInternet.setVisibility(View.INVISIBLE);
+
+		// Display version
+		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
+		tvVersion.setText(mAppInfo.getVersion());
+
+		// Display package name / uid
+		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
+		tvPackageName.setText(String.format("%s %d", packageName, mAppInfo.getUid()));
 
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);

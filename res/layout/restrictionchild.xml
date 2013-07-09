@@ -14,7 +14,6 @@
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:gravity="center_vertical"
         android:paddingLeft="6dip"
-        android:paddingRight="6dip"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>
