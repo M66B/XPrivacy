@@ -47,7 +47,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Typeface;
 import android.location.Address;
@@ -93,7 +92,7 @@ import android.widget.Toast;
 
 public class ActivityMain extends Activity implements OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
-	// private int mThemeId;
+	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 	private boolean mUsed = false;
@@ -103,12 +102,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// Set theme
+		mThemeId = Integer.parseInt(PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme,
+				Integer.toString(R.style.CustomTheme_Light), false));
+		if (mThemeId != R.style.CustomTheme_Light && mThemeId != R.style.CustomTheme)
+			mThemeId = R.style.CustomTheme_Light;
+		setTheme(mThemeId);
+
 		// Set layout
-		// String sTheme = PrivacyManager.getSetting(null, this,
-		// PrivacyManager.cSettingTheme, null, false);
-		// mThemeId = (sTheme == null ? android.R.style.Theme_Holo_Light :
-		// Integer.parseInt(sTheme));
-		// setTheme(mThemeId);
 		setContentView(R.layout.mainlist);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -195,7 +196,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		ivHelp.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Dialog dialog = new Dialog(ActivityMain.this, getThemeId());
+				Dialog dialog = new Dialog(ActivityMain.this, mThemeId);
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
 				dialog.setContentView(R.layout.help);
@@ -411,7 +412,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			AlertDialog alertDialog = new AlertDialog.Builder(this, getThemeId()).create();
+			AlertDialog alertDialog = new AlertDialog.Builder(this, mThemeId).create();
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(getString(R.string.app_wrongandroid));
 			alertDialog.setIcon(R.drawable.ic_launcher);
@@ -432,7 +433,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			String msg = String.format(getString(R.string.app_notxposed), PrivacyManager.cXposedMinVersion);
 			Util.log(null, Log.WARN, msg);
 
-			AlertDialog alertDialog = new AlertDialog.Builder(this, getThemeId()).create();
+			AlertDialog alertDialog = new AlertDialog.Builder(this, mThemeId).create();
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(msg);
 			alertDialog.setIcon(R.drawable.ic_launcher);
@@ -452,7 +453,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			String msg = getString(R.string.app_notenabled);
 			Util.log(null, Log.WARN, msg);
 
-			AlertDialog alertDialog = new AlertDialog.Builder(this, getThemeId()).create();
+			AlertDialog alertDialog = new AlertDialog.Builder(this, mThemeId).create();
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(msg);
 			alertDialog.setIcon(R.drawable.ic_launcher);
@@ -594,7 +595,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionSettings() {
 		// Build dialog
-		final Dialog dlgSettings = new Dialog(this, getThemeId());
+		final Dialog dlgSettings = new Dialog(this, mThemeId);
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgSettings.setTitle(getString(R.string.app_name));
 		dlgSettings.setContentView(R.layout.settings);
@@ -779,20 +780,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionSwitchTheme() {
-		String sTheme = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, null, false);
-		int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light : Integer.parseInt(sTheme));
-		if (themeId == android.R.style.Theme_Holo_Light)
-			PrivacyManager.setSetting(null, this, PrivacyManager.cSettingTheme,
-					Integer.toString(android.R.style.Theme_Holo));
+		int themeId = Integer.parseInt(PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme,
+				Integer.toString(R.style.CustomTheme_Light), false));
+		if (themeId != R.style.CustomTheme_Light && themeId != R.style.CustomTheme)
+			themeId = R.style.CustomTheme_Light;
+		else if (themeId == R.style.CustomTheme_Light)
+			themeId = R.style.CustomTheme;
 		else
-			PrivacyManager.setSetting(null, this, PrivacyManager.cSettingTheme,
-					Integer.toString(android.R.style.Theme_Holo_Light));
+			themeId = R.style.CustomTheme_Light;
+		PrivacyManager.setSetting(null, this, PrivacyManager.cSettingTheme, Integer.toString(themeId));
 		this.recreate();
 	}
 
 	private void optionAbout() {
 		// About
-		Dialog dlgAbout = new Dialog(this, getThemeId());
+		Dialog dlgAbout = new Dialog(this, mThemeId);
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgAbout.setTitle(getString(R.string.app_name));
 		dlgAbout.setContentView(R.layout.about);
@@ -922,7 +924,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		String msg = String.format("Incompatible %s", clazz.getName());
 		Util.log(null, Log.WARN, msg);
 
-		AlertDialog alertDialog = new AlertDialog.Builder(this, getThemeId()).create();
+		AlertDialog alertDialog = new AlertDialog.Builder(this, mThemeId).create();
 		alertDialog.setTitle(getString(R.string.app_name));
 		alertDialog.setMessage(msg);
 		alertDialog.setIcon(R.drawable.ic_launcher);
@@ -1275,7 +1277,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Show progress dialog
 			ListView lvApp = (ListView) findViewById(R.id.lvApp);
-			mProgressDialog = new ProgressDialog(lvApp.getContext(), getThemeId());
+			mProgressDialog = new ProgressDialog(lvApp.getContext(), mThemeId);
 			mProgressDialog.setMessage(getString(R.string.msg_loading));
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			mProgressDialog.setCancelable(false);
@@ -1596,15 +1598,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			mSections = new String[sectionList.size()];
 			sectionList.toArray(mSections);
-		}
-	}
-
-	private int getThemeId() {
-		try {
-			String packageName = getClass().getPackage().getName();
-			return getPackageManager().getPackageInfo(packageName, PackageManager.GET_META_DATA).applicationInfo.theme;
-		} catch (Throwable ex) {
-			return -1;
 		}
 	}
 

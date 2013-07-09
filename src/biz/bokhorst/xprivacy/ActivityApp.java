@@ -32,19 +32,22 @@ import android.widget.TextView;
 
 public class ActivityApp extends Activity {
 
-	public static final String cPackageName = "PackageName";
-
+	private int mThemeId;
 	private ApplicationInfoEx mAppInfo;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 
+	public static final String cPackageName = "PackageName";
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// Set theme
+		mThemeId = Integer.parseInt(PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme,
+				Integer.toString(R.style.CustomTheme_Light), false));
+		if (mThemeId != R.style.CustomTheme_Light && mThemeId != R.style.CustomTheme)
+			mThemeId = R.style.CustomTheme_Light;
+		setTheme(mThemeId);
+
 		// Set layout
-		// String sTheme = PrivacyManager.getSetting(null, this,
-		// PrivacyManager.cSettingTheme, null, false);
-		// int themeId = (sTheme == null ? android.R.style.Theme_Holo_Light :
-		// Integer.parseInt(sTheme));
-		// setTheme(themeId);
 		setContentView(R.layout.restrictionlist);
 
 		// Get package name
@@ -84,7 +87,7 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				Dialog dialog = new Dialog(ActivityApp.this, getThemeId());
+				Dialog dialog = new Dialog(ActivityApp.this, mThemeId);
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
 				dialog.setContentView(R.layout.help);
@@ -369,15 +372,6 @@ public class ActivityApp extends Activity {
 		@Override
 		public boolean hasStableIds() {
 			return true;
-		}
-	}
-
-	private int getThemeId() {
-		try {
-			String packageName = getClass().getPackage().getName();
-			return getPackageManager().getPackageInfo(packageName, PackageManager.GET_META_DATA).applicationInfo.theme;
-		} catch (Throwable ex) {
-			return -1;
 		}
 	}
 
