@@ -24,6 +24,7 @@
     <string name="msg_restricted" formatted="false">%s 被 XPrivacy 限制</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">正在加载</string>
+    <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_done">完成</string>
     <string name="restrict_accounts">账户 (Google, Facebook等等)</string>
     <string name="restrict_browser">浏览器 (书签/历史)</string>
@@ -42,7 +43,6 @@
     <string name="restrict_shell">Shell (命令, 超级用户)</string>
     <string name="restrict_system">系统 (已安装的应用)</string>
     <string name="restrict_view">查看 (浏览器)</string>
-    <string name="title_category">限制的类别：</string>
     <string name="title_restrict">勾选限制:</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>

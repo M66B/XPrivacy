@@ -23,8 +23,7 @@ public class PackageChange extends BroadcastReceiver {
 			String packageName = inputUri.getSchemeSpecificPart();
 			int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 			boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
-			boolean expert = Boolean.parseBoolean(PrivacyManager.getSetting(null, context,
-					PrivacyManager.cSettingExpert, Boolean.FALSE.toString(), false));
+			boolean expert = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingExpert, false, false);
 			NotificationManager notificationManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -57,11 +56,15 @@ public class PackageChange extends BroadcastReceiver {
 					PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
 							PendingIntent.FLAG_UPDATE_CURRENT);
 
+					// Title
+					String title = String.format("%s %s", pm.getApplicationLabel(pInfo.applicationInfo),
+							pInfo.versionName);
+
 					// Build notification
 					NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
 					notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 					notificationBuilder.setContentTitle(context.getString(R.string.app_name));
-					notificationBuilder.setContentText(pm.getApplicationLabel(pInfo.applicationInfo));
+					notificationBuilder.setContentText(title);
 					notificationBuilder.setContentIntent(pendingIntent);
 					notificationBuilder.setWhen(System.currentTimeMillis());
 					notificationBuilder.setAutoCancel(true);

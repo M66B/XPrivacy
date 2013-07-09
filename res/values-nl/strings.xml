@@ -24,6 +24,7 @@
     <string name="msg_restricted" formatted="false">%s beperkt door XPrivacy</string>
     <string name="msg_licensed" formatted="false">Gelicenseerd aan: %s</string>
     <string name="msg_loading">Laden</string>
+    <string name="msg_edit">Klik op het applicatie pictogram om alle beperkingen te wijzigen</string>
     <string name="msg_done">Done</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
     <string name="restrict_browser">Browser (bladwijzers/geschiedenis)</string>
@@ -42,7 +43,6 @@
     <string name="restrict_shell">Shell (commando&#8217;s, superuser)</string>
     <string name="restrict_system">Systeem (geïnstalleerde apps)</string>
     <string name="restrict_view">Tonen (browser)</string>
-    <string name="title_category">Te beperken categorie:</string>
     <string name="title_restrict">Vink om te beperken:</string>
     <string name="settings_lat">Breedte</string>
     <string name="settings_lon">Lengte</string>

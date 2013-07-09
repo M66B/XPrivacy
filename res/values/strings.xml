@@ -26,6 +26,7 @@
     <string name="msg_restricted" formatted="false">%s restricted by XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>
     <string name="msg_loading">Loading</string>
+    <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_done">Done</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
     <string name="restrict_browser">Browser (bookmarks/history)</string>
@@ -45,7 +46,6 @@
     <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">System (installed apps)</string>
     <string name="restrict_view">View (browser)</string>
-    <string name="title_category">Category to restrict:</string>
     <string name="title_restrict">Check to restrict:</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>

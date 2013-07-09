@@ -65,8 +65,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
 		// Get references
 		PackageManager pm = context.getPackageManager();
-		boolean expert = Boolean.parseBoolean(PrivacyManager.getSetting(null, context, PrivacyManager.cSettingExpert,
-				Boolean.FALSE.toString(), false));
+		boolean expert = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingExpert, false, false);
 
 		// Get app list
 		SparseArray<ApplicationInfoEx> mapApp = new SparseArray<ApplicationInfoEx>();

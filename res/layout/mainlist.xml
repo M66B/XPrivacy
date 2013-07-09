@@ -48,6 +48,7 @@
         android:orientation="horizontal" >
 
         <ImageView
+            android:id="@+id/imgEdit"
             android:layout_width="?android:attr/listPreferredItemHeightSmall"
             android:layout_height="?android:attr/listPreferredItemHeightSmall"
             android:layout_gravity="center_vertical"

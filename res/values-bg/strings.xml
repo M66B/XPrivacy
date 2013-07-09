@@ -24,6 +24,7 @@
     <string name="msg_restricted" formatted="false">%s е ограничен от XPrivacy</string>
     <string name="msg_licensed" formatted="false">Лицензирано на: %s</string>
     <string name="msg_loading">Loading</string>
+    <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_done">Done</string>
     <string name="restrict_accounts">Сметки (Google, Facebook и т.н.)</string>
     <string name="restrict_browser">Браузър (отметки/история)</string>
@@ -42,7 +43,6 @@
     <string name="restrict_shell">Терминал (команди, суперпотребител)</string>
     <string name="restrict_system">Система (инсталирани приложения)</string>
     <string name="restrict_view">Преглед (браузър)</string>
-    <string name="title_category">Категория за ограничаване:</string>
     <string name="title_restrict">Отбележи за ограничаване:</string>
     <string name="settings_lat">Геогр. ширина</string>
     <string name="settings_lon">Геогр. дължина</string>

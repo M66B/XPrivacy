@@ -24,6 +24,7 @@
     <string name="msg_restricted" formatted="false">XPrivacy omezilo %s</string>
     <string name="msg_licensed" formatted="false">Licencováno na: %s</string>
     <string name="msg_loading">Probíhá načítání</string>
+    <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_done">Hotovo</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atd.)</string>
     <string name="restrict_browser">Prohlížeč (záložky/historie)</string>
@@ -42,7 +43,6 @@
     <string name="restrict_shell">Konzole (příkazy, superuser)</string>
     <string name="restrict_system">Systém (nainstalované aplikace)</string>
     <string name="restrict_view">Zobrazení (v prohlížeči)</string>
-    <string name="title_category">Kategorie pro omezení:</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
     <string name="settings_lat">Zeměpisná šířka</string>
     <string name="settings_lon">Zeměpisná délka</string>

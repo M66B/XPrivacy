@@ -41,10 +41,8 @@ public class ActivityApp extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set theme
-		mThemeId = Integer.parseInt(PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme,
-				Integer.toString(R.style.CustomTheme_Light), false));
-		if (mThemeId != R.style.CustomTheme_Light && mThemeId != R.style.CustomTheme)
-			mThemeId = R.style.CustomTheme_Light;
+		String themeName = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, "", false);
+		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 		setTheme(mThemeId);
 
 		// Set layout
@@ -208,8 +206,7 @@ public class ActivityApp extends Activity {
 		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, List<String> restrictions) {
 			mAppInfo = appInfo;
 			mRestrictions = restrictions;
-			mExpert = Boolean.parseBoolean(PrivacyManager.getSetting(null, null, PrivacyManager.cSettingExpert,
-					Boolean.FALSE.toString(), false));
+			mExpert = PrivacyManager.getSettingBool(null, null, PrivacyManager.cSettingExpert, false, false);
 		}
 
 		@Override

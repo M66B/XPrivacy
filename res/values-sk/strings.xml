@@ -24,6 +24,7 @@
     <string name="msg_restricted" formatted="false">%s obmedzené pomocou XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
     <string name="msg_loading">Načítavanie</string>
+    <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_done">Hotovo</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atď.)</string>
     <string name="restrict_browser">Prehliadač (záložky/história)</string>
@@ -42,7 +43,6 @@
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
-    <string name="title_category">Kategória pre obmedzenie:</string>
     <string name="title_restrict">Zaškrtnite pre obmedzenie:</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>

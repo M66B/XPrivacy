@@ -593,6 +593,12 @@ public class PrivacyManager {
 
 	// Settings
 
+	public static boolean getSettingBool(XHook hook, Context context, String settingName, boolean defaultValue,
+			boolean useCache) {
+		return Boolean.parseBoolean(PrivacyManager.getSetting(hook, context, settingName, Boolean
+				.toString(defaultValue).toString(), useCache));
+	}
+
 	public static String getSetting(XHook hook, Context context, String settingName, String defaultValue,
 			boolean useCache) {
 		long start = System.currentTimeMillis();

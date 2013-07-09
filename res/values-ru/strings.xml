@@ -24,6 +24,7 @@
     <string name="msg_restricted" formatted="false">%s запрещено XPrivacy</string>
     <string name="msg_licensed" formatted="false">Владелец лицензии: %s</string>
     <string name="msg_loading">Loading</string>
+    <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_done">Готово</string>
     <string name="restrict_accounts">Учетные записи (Google, Facebook и т.д.)</string>
     <string name="restrict_browser">Браузер (закладки/история)</string>
@@ -42,7 +43,6 @@
     <string name="restrict_shell">команды shell (вкл. суперпользователя)</string>
     <string name="restrict_system">Система (установленные приложения)</string>
     <string name="restrict_view">Просмотр (браузер)</string>
-    <string name="title_category">Зпретить категорию:</string>
     <string name="title_restrict">Отметьте приложения:</string>
     <string name="settings_lat">Широта</string>
     <string name="settings_lon">Долгота</string>

@@ -24,6 +24,7 @@
     <string name="msg_restricted" formatted="false">%s blokkert av XPrivacy</string>
     <string name="msg_licensed" formatted="false">Lisensert til: %s</string>
     <string name="msg_loading">Lader</string>
+    <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_done">Ferdig</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Browser (bookmarks/history)</string>
@@ -42,7 +43,6 @@
     <string name="restrict_shell">Shell (kommandoer, superbruker)</string>
     <string name="restrict_system">System (installerte apper)</string>
     <string name="restrict_view">Betrakte (browser)</string>
-    <string name="title_category">Kategori å blokke:</string>
     <string name="title_restrict">Marker til å blokke:</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>

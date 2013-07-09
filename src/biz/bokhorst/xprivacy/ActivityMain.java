@@ -95,17 +95,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 	private boolean mUsed = false;
-	private boolean mChangingFilter = false;
 	private boolean mPro = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set theme
-		mThemeId = Integer.parseInt(PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme,
-				Integer.toString(R.style.CustomTheme_Light), false));
-		if (mThemeId != R.style.CustomTheme_Light && mThemeId != R.style.CustomTheme)
-			mThemeId = R.style.CustomTheme_Light;
+		String themeName = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, "", false);
+		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 		setTheme(mThemeId);
 
 		// Set layout
@@ -158,27 +155,23 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		});
 
+		ImageView imgEdit = (ImageView) findViewById(R.id.imgEdit);
+		imgEdit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Toast toast = Toast.makeText(ActivityMain.this, getString(R.string.msg_edit), Toast.LENGTH_LONG);
+				toast.show();
+			}
+		});
+
 		// Setup used filter
 		final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
 		imgUsed.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (mChangingFilter)
-					return;
-				mChangingFilter = true;
 				mUsed = !mUsed;
-
-				CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-				cbFilter.setChecked(false);
-
 				imgUsed.setImageDrawable(getResources().getDrawable(
 						getThemed(mUsed ? R.attr.icon_used : R.attr.icon_used_grayed)));
-
-				EditText etFilter = (EditText) findViewById(R.id.etFilter);
-				etFilter.setEnabled(!mUsed);
-				etFilter.setText("");
-
-				mChangingFilter = false;
 				applyFilter();
 			}
 		});
@@ -188,8 +181,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etFilter.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if (mAppAdapter != null)
-					applyFilter();
+				applyFilter();
 			}
 
 			@Override
@@ -362,40 +354,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 		if (buttonView == cbFilter)
-			if (mAppAdapter != null) {
-				if (mChangingFilter)
-					return;
-				mChangingFilter = true;
-
-				ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
-				imgUsed.setImageDrawable(getResources().getDrawable(getThemed(R.attr.icon_used_grayed)));
-				mUsed = false;
-
-				EditText etFilter = (EditText) findViewById(R.id.etFilter);
-				etFilter.setEnabled(!isChecked);
-				etFilter.setText("");
-
-				mChangingFilter = false;
-				applyFilter();
-			}
+			applyFilter();
 	}
 
 	private void applyFilter() {
-		if (mChangingFilter)
-			return;
-
-		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-		EditText etFilter = (EditText) findViewById(R.id.etFilter);
-		String filter = etFilter.getText().toString();
-
-		if (cbFilter.isChecked())
-			filter = null;
-		else if (mUsed)
-			filter = "\n";
-		else
-			filter = etFilter.getText().toString();
-
-		mAppAdapter.getFilter().filter(filter);
+		if (mAppAdapter != null) {
+			EditText etFilter = (EditText) findViewById(R.id.etFilter);
+			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+			String filter = String.format("%b\n%s\n%b", mUsed, etFilter.getText().toString(), cbFilter.isChecked());
+			mAppAdapter.getFilter().filter(filter);
+		}
 	}
 
 	@Override
@@ -620,13 +588,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
-		String sFPermission = PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
-				Boolean.TRUE.toString(), false);
-		final boolean fPermission = Boolean.parseBoolean(sFPermission);
+		final boolean fPermission = PrivacyManager.getSettingBool(null, ActivityMain.this,
+				PrivacyManager.cSettingFPermission, true, false);
 
-		String sExpert = PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingExpert,
-				Boolean.FALSE.toString(), false);
-		final boolean expert = Boolean.parseBoolean(sExpert);
+		final boolean expert = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingExpert,
+				false, false);
 
 		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "", false));
 		etLon.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude, "", false));
@@ -779,15 +745,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionSwitchTheme() {
-		int themeId = Integer.parseInt(PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme,
-				Integer.toString(R.style.CustomTheme_Light), false));
-		if (themeId != R.style.CustomTheme_Light && themeId != R.style.CustomTheme)
-			themeId = R.style.CustomTheme_Light;
-		else if (themeId == R.style.CustomTheme_Light)
-			themeId = R.style.CustomTheme;
-		else
-			themeId = R.style.CustomTheme_Light;
-		PrivacyManager.setSetting(null, this, PrivacyManager.cSettingTheme, Integer.toString(themeId));
+		String themeName = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, "", false);
+		themeName = (themeName.equals("Dark") ? "Light" : "Dark");
+		PrivacyManager.setSetting(null, this, PrivacyManager.cSettingTheme, themeName);
 		this.recreate();
 	}
 
@@ -1344,8 +1304,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		private void selectApps() {
 			mListAppSelected = new ArrayList<ApplicationInfoEx>();
-			if (Boolean.parseBoolean(PrivacyManager.getSetting(null, ActivityMain.this,
-					PrivacyManager.cSettingFPermission, Boolean.TRUE.toString(), false))) {
+			if (PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFPermission, true, false)) {
 				for (ApplicationInfoEx appInfo : mListAppAll)
 					if (mRestrictionName == null)
 						mListAppSelected.add(appInfo);
@@ -1369,21 +1328,29 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			protected FilterResults performFiltering(CharSequence constraint) {
 				FilterResults results = new FilterResults();
 
-				// Get restrictions
-				final List<String> listRestriction;
-				if (mRestrictionName == null)
-					listRestriction = PrivacyManager.getRestrictions();
-				else {
-					listRestriction = new ArrayList<String>();
-					listRestriction.add(mRestrictionName);
-				}
+				// Get arguments
+				String[] components = ((String) constraint).split("\\n");
+				boolean fUsed = Boolean.parseBoolean(components[0]);
+				String fName = components[1];
+				boolean fRestricted = Boolean.parseBoolean(components[2]);
 
+				// Match applications
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
-
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListAppSelected) {
-					// Process constraint
-					if (constraint == null) {
-						boolean someRestricted = false;
+					// Get used
+					boolean used = false;
+					if (fUsed)
+						used = (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(), mRestrictionName,
+								null) != 0);
+
+					// Get contains
+					boolean contains = false;
+					if (!fName.equals(""))
+						contains = (xAppInfo.toString().toLowerCase().contains(((String) fName).toLowerCase()));
+
+					// Get some restricted
+					boolean someRestricted = false;
+					if (fRestricted)
 						if (mRestrictionName == null)
 							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
 									xAppInfo.getUid()))
@@ -1391,14 +1358,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						else
 							someRestricted = PrivacyManager.getRestricted(null, getApplicationContext(),
 									xAppInfo.getUid(), mRestrictionName, null, false, false);
-						if (someRestricted)
-							lstApp.add(xAppInfo);
-					} else if (constraint.toString().equals("\n")) {
-						boolean used = (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(),
-								mRestrictionName, null) != 0);
-						if (used)
-							lstApp.add(xAppInfo);
-					} else if (xAppInfo.toString().toLowerCase().contains(((String) constraint).toLowerCase()))
+
+					// Match application
+					if ((fUsed ? used : true) && (fName.equals("") ? true : contains)
+							&& (fRestricted ? someRestricted : true))
 						lstApp.add(xAppInfo);
 				}
 
