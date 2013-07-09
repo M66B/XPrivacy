@@ -200,7 +200,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
 				dialog.setContentView(R.layout.help);
-				dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
+				dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 				dialog.setCancelable(true);
 				dialog.show();
 			}
@@ -415,7 +415,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(getString(R.string.app_wrongandroid));
-			alertDialog.setIcon(R.drawable.ic_launcher);
+			alertDialog.setIcon(getThemed(R.attr.icon_launcher));
 			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -436,7 +436,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(msg);
-			alertDialog.setIcon(R.drawable.ic_launcher);
+			alertDialog.setIcon(getThemed(R.attr.icon_launcher));
 			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -456,7 +456,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(msg);
-			alertDialog.setIcon(R.drawable.ic_launcher);
+			alertDialog.setIcon(getThemed(R.attr.icon_launcher));
 			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -599,7 +599,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgSettings.setTitle(getString(R.string.app_name));
 		dlgSettings.setContentView(R.layout.settings);
-		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
+		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 
 		// Reference controls
 		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
@@ -798,7 +798,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgAbout.setTitle(getString(R.string.app_name));
 		dlgAbout.setContentView(R.layout.about);
-		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
+		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 
 		// Show version
 		try {
@@ -927,7 +927,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		alertDialog.setTitle(getString(R.string.app_name));
 		alertDialog.setMessage(msg);
-		alertDialog.setIcon(R.drawable.ic_launcher);
+		alertDialog.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -1098,7 +1098,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		private void notify(String text, boolean ongoing) {
 			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityMain.this);
-			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+			notificationBuilder.setSmallIcon(getThemed(R.attr.icon_launcher));
 			notificationBuilder.setContentTitle(getString(R.string.menu_export));
 			notificationBuilder.setContentText(text);
 			notificationBuilder.setWhen(System.currentTimeMillis());
@@ -1225,7 +1225,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		private void notify(String text, boolean ongoing) {
 			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityMain.this);
-			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+			notificationBuilder.setSmallIcon(getThemed(R.attr.icon_launcher));
 			notificationBuilder.setContentTitle(getString(R.string.menu_import));
 			notificationBuilder.setContentText(text);
 			notificationBuilder.setWhen(System.currentTimeMillis());

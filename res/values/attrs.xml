@@ -7,6 +7,9 @@
     <attr name="icon_internet" format="reference" />
     <attr name="icon_used_grayed" format="reference" />
     <attr name="icon_used" format="reference" />
+    <attr name="icon_expander_minimized" format="reference" />
+    <attr name="icon_expander_maximized" format="reference" />
+    <attr name="icon_launcher" format="reference" />
     <attr name="color_system" format="reference" />
 
 </resources>

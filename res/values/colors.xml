@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="Cream">#FFFDD0</color>
-    <color name="DimGray">#696969</color>
-    
-</resources>
+    <color name="color_system_light">#DFDFDF</color>
+    <color name="color_system_dark">#696969</color>
+</resources>

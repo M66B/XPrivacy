@@ -91,7 +91,7 @@ public class ActivityApp extends Activity {
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
 				dialog.setContentView(R.layout.help);
-				dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
+				dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 				dialog.setCancelable(true);
 				dialog.show();
 			}
@@ -240,8 +240,8 @@ public class ActivityApp extends Activity {
 			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.ctvName);
 
 			// Indicator state
-			imgIndicator.setImageResource(isExpanded ? R.drawable.expander_ic_maximized
-					: R.drawable.expander_ic_minimized);
+			imgIndicator.setImageResource(getThemed(isExpanded ? R.attr.icon_expander_maximized
+					: R.attr.icon_expander_minimized));
 
 			// Disable indicator for empty groups
 			if (mExpert) {

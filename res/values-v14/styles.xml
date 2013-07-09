@@ -3,32 +3,39 @@
     <!--
         Base application theme for API 14+. This theme completely replaces
         AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v11/styles.xml on API 14+ devices.    -->
+        res/values-v11/styles.xml on API 14+ devices.
+    -->
 
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- API 14 theme customizations can go here. -->
     </style>
 
     <style name="CustomTheme" parent="android:Theme.Holo">
-        <item name="icon_edit">@drawable/edit_holo_dark</item>
+        <item name="icon_edit">@drawable/edit_query_holo_dark</item>
         <item name="icon_granted">@drawable/granted_holo_dark</item>
         <item name="icon_help">@drawable/help_holo_dark</item>
         <item name="icon_info">@drawable/info_holo_dark</item>
         <item name="icon_internet">@drawable/internet_holo_dark</item>
         <item name="icon_used_grayed">@drawable/used_grayed_holo_dark</item>
         <item name="icon_used">@drawable/used_holo_dark</item>
-        <item name="color_system">@color/DimGray</item>
+        <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_dark</item>
+        <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_dark</item>
+        <item name="icon_launcher">@drawable/ic_launcher_holo_dark</item>
+        <item name="color_system">@color/color_system_dark</item>
     </style>
 
     <style name="CustomTheme.Light" parent="android:Theme.Holo.Light.DarkActionBar">
-        <item name="icon_edit">@drawable/edit_holo_light</item>
+        <item name="icon_edit">@drawable/edit_query_holo_light</item>
         <item name="icon_granted">@drawable/granted_holo_light</item>
         <item name="icon_help">@drawable/help_holo_light</item>
         <item name="icon_info">@drawable/info_holo_light</item>
         <item name="icon_internet">@drawable/internet_holo_light</item>
         <item name="icon_used_grayed">@drawable/used_grayed_holo_light</item>
         <item name="icon_used">@drawable/used_holo_light</item>
-        <item name="color_system">@color/Cream</item>
+        <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_light</item>
+        <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_light</item>
+        <item name="icon_launcher">@drawable/ic_launcher_holo_light</item>
+        <item name="color_system">@color/color_system_light</item>
     </style>
 
 </resources>
