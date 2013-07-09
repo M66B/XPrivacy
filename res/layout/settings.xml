@@ -180,6 +180,7 @@
                     android:id="@+id/cbFPermission"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_span="2"
                     android:text="@string/settings_fpermission" />
             </TableRow>
 
@@ -189,6 +190,7 @@
                     android:id="@+id/cbExpert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_span="2"
                     android:text="@string/settings_expert" />
             </TableRow>
         </TableLayout>

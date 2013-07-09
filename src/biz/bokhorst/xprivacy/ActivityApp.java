@@ -87,7 +87,7 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				Dialog dialog = new Dialog(ActivityApp.this, mThemeId);
+				Dialog dialog = new Dialog(ActivityApp.this);
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));
 				dialog.setContentView(R.layout.help);
