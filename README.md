@@ -409,6 +409,14 @@ XPrivacy will warn you when Xposed isn't installed,
 the wrong version of Xposed is installed
 or when the XPrivacy is not enabled in Xposed.
 
+The right order for ROM updates is:
+
+* Flash ROM
+* Flash Google apps, when required
+* Reboot
+* Enable Xposed
+* Reboot, flash fix
+
 **(16) Can I restrict an application with root access?**
 
 Yes, you can, but the application could circumvent anything, since root access means it can do anything it likes.
