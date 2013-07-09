@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ActivityMain" >
 
@@ -15,7 +14,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/activity_horizontal_margin" >
 
         <ImageView
             android:id="@+id/imgInfo"
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:paddingRight="6dip" />
+            android:paddingRight="17dip" />
     </LinearLayout>
 
     <!-- Title -->
@@ -99,11 +99,12 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
-    <!-- divider -->
+    <!-- Thin divider -->
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:background="@android:color/darker_gray" />
 
     <!-- What it is all about -->
@@ -115,6 +116,7 @@
         android:layout_marginTop="6dip"
         android:choiceMode="multipleChoice"
         android:fastScrollEnabled="true"
-        android:scrollbarStyle="outsideInset" />
+        android:paddingRight="12dip"
+        android:scrollbarStyle="insideInset" />
 
 </LinearLayout>
