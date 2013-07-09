@@ -10,6 +10,7 @@
     <attr name="icon_expander_minimized" format="reference" />
     <attr name="icon_expander_maximized" format="reference" />
     <attr name="icon_launcher" format="reference" />
+    <attr name="icon_magnifier" format="reference" />
     <attr name="color_system" format="reference" />
 
 </resources>

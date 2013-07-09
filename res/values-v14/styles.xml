@@ -21,6 +21,7 @@
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_dark</item>
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_dark</item>
         <item name="icon_launcher">@drawable/ic_launcher_holo_dark</item>
+        <item name="icon_magnifier">@drawable/mag_glass_holo_dark</item>
         <item name="color_system">@color/color_system_dark</item>
     </style>
 
@@ -35,6 +36,7 @@
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_light</item>
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_light</item>
         <item name="icon_launcher">@drawable/ic_launcher_holo_light</item>
+        <item name="icon_magnifier">@drawable/mag_glass_holo_light</item>
         <item name="color_system">@color/color_system_light</item>
     </style>
 
