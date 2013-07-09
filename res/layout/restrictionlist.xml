@@ -74,6 +74,11 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
     <ExpandableListView
         android:id="@+id/elvRestriction"
         android:layout_width="match_parent"

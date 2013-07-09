@@ -124,53 +124,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		ArrayAdapter<String> spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
 		spAdapter.addAll(listLocalizedRestriction);
 
-		// Setup restriction filter
-		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-		cbFilter.setOnCheckedChangeListener(this);
-
-		// Setup used filter
-		final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
-		imgUsed.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (mChangingFilter)
-					return;
-				mChangingFilter = true;
-				mUsed = !mUsed;
-
-				CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-				cbFilter.setChecked(false);
-
-				imgUsed.setImageDrawable(getResources().getDrawable(
-						getThemed(mUsed ? R.attr.icon_used : R.attr.icon_used_grayed)));
-
-				EditText etFilter = (EditText) findViewById(R.id.etFilter);
-				etFilter.setEnabled(!mUsed);
-				etFilter.setText("");
-
-				mChangingFilter = false;
-				applyFilter();
-			}
-		});
-
-		// Setup search
-		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
-		etFilter.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if (mAppAdapter != null)
-					applyFilter();
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-		});
-
 		// Handle info
 		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
 		imgInfo.setOnClickListener(new View.OnClickListener() {
@@ -205,6 +158,53 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				dialog.show();
 			}
 		});
+
+		// Setup used filter
+		final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
+		imgUsed.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mChangingFilter)
+					return;
+				mChangingFilter = true;
+				mUsed = !mUsed;
+
+				CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+				cbFilter.setChecked(false);
+
+				imgUsed.setImageDrawable(getResources().getDrawable(
+						getThemed(mUsed ? R.attr.icon_used : R.attr.icon_used_grayed)));
+
+				EditText etFilter = (EditText) findViewById(R.id.etFilter);
+				etFilter.setEnabled(!mUsed);
+				etFilter.setText("");
+
+				mChangingFilter = false;
+				applyFilter();
+			}
+		});
+
+		// Setup name filter
+		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
+		etFilter.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if (mAppAdapter != null)
+					applyFilter();
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+
+		// Setup restriction filter
+		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+		cbFilter.setOnCheckedChangeListener(this);
 
 		// Start task to get app list
 		AppListTask appListTask = new AppListTask();
@@ -1429,7 +1429,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.mainentry, parent, false);
 			LinearLayout llIcon = (LinearLayout) row.findViewById(R.id.llIcon);
-			ImageView imgEdit = (ImageView) row.findViewById(R.id.imgEdit);
 			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
 			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
@@ -1452,10 +1451,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					view.getContext().startActivity(intentSettings);
 				}
 			});
-
-			if (Boolean.parseBoolean(PrivacyManager.getSetting(null, row.getContext(), PrivacyManager.cSettingExpert,
-					Boolean.toString(Boolean.FALSE), true)))
-				imgEdit.setVisibility(View.GONE);
 
 			// Set icon
 			imgIcon.setImageDrawable(xAppInfo.getDrawable());
