@@ -49,9 +49,9 @@
     <string name="settings_mac">MAC adresi</string>
     <string name="settings_phone">Telefon numarası</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_country">Country</string>
-    <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_country">Ülke</string>
+    <string name="settings_subscriber">Sim Numarası (IMSI)</string>
+    <string name="settings_fpermission">İzne göre filtre et</string>
     <string name="settings_expert">Uzman modu</string>
     <string name="help_application">Uygulama</string>
     <string name="help_internet">internet izni var</string>
