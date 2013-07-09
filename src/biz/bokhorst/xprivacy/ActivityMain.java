@@ -49,7 +49,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -1439,10 +1438,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Set background color
 			if (xAppInfo.getIsSystem())
-				// if (mThemeId == android.R.style.Theme_Holo_Light)
-				row.setBackgroundColor(getResources().getColor(R.color.Cream));
-			// else
-			// row.setBackgroundColor(Color.DKGRAY);
+				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_system)));
 
 			// Click handler
 			llIcon.setOnClickListener(new View.OnClickListener() {

@@ -7,5 +7,6 @@
     <attr name="icon_internet" format="reference" />
     <attr name="icon_used_grayed" format="reference" />
     <attr name="icon_used" format="reference" />
+    <attr name="color_system" format="reference" />
 
 </resources>

@@ -22,9 +22,10 @@
         <item name="icon_granted">@drawable/granted_holo_dark</item>
         <item name="icon_help">@drawable/help_holo_dark</item>
         <item name="icon_info">@drawable/info_holo_dark</item>
-        <item name="icon_internet">@drawable/info_holo_dark</item>
+        <item name="icon_internet">@drawable/internet_holo_dark</item>
         <item name="icon_used_grayed">@drawable/used_grayed_holo_dark</item>
         <item name="icon_used">@drawable/used_holo_dark</item>
+        <item name="color_system">@color/system_dark</item>
     </style>
 
     <style name="CustomTheme.Light" parent="android:Theme.Light">
@@ -32,9 +33,10 @@
         <item name="icon_granted">@drawable/granted_holo_light</item>
         <item name="icon_help">@drawable/help_holo_light</item>
         <item name="icon_info">@drawable/info_holo_light</item>
-        <item name="icon_internet">@drawable/info_holo_light</item>
+        <item name="icon_internet">@drawable/internet_holo_light</item>
         <item name="icon_used_grayed">@drawable/used_grayed_holo_light</item>
         <item name="icon_used">@drawable/used_holo_light</item>
+        <item name="color_system">@color/system_light</item>
     </style>
 
 </resources>

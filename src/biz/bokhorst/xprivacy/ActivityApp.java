@@ -10,12 +10,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,7 +62,7 @@ public class ActivityApp extends Activity {
 		if (mAppInfo.getIsSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
 			// if (themeId == android.R.style.Theme_Holo_Light)
-			llInfo.setBackgroundColor(getResources().getColor(R.color.Cream));
+			llInfo.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_system)));
 			// else
 			// llInfo.setBackgroundColor(Color.DKGRAY);
 		}
@@ -379,5 +379,11 @@ public class ActivityApp extends Activity {
 		} catch (Throwable ex) {
 			return -1;
 		}
+	}
+
+	public int getThemed(int attr) {
+		TypedValue typedvalueattr = new TypedValue();
+		getTheme().resolveAttribute(attr, typedvalueattr, true);
+		return typedvalueattr.resourceId;
 	}
 }

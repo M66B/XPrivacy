@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="Cream">#FFFDD0</color>
+    <color name="system_light">#FFFDD0</color>
+    <color name="system_dark">#A9A9A9</color>
 
 </resources>
