@@ -3,8 +3,7 @@
     <!--
         Base application theme for API 14+. This theme completely replaces
         AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v11/styles.xml on API 14+ devices.
-    -->
+        res/values-v11/styles.xml on API 14+ devices.    -->
 
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- API 14 theme customizations can go here. -->
@@ -18,7 +17,7 @@
         <item name="icon_internet">@drawable/internet_holo_dark</item>
         <item name="icon_used_grayed">@drawable/used_grayed_holo_dark</item>
         <item name="icon_used">@drawable/used_holo_dark</item>
-        <item name="color_system">@color/system_dark</item>
+        <item name="color_system">@color/DimGray</item>
     </style>
 
     <style name="CustomTheme.Light" parent="android:Theme.Holo.Light.DarkActionBar">
@@ -29,7 +28,7 @@
         <item name="icon_internet">@drawable/internet_holo_light</item>
         <item name="icon_used_grayed">@drawable/used_grayed_holo_light</item>
         <item name="icon_used">@drawable/used_holo_light</item>
-        <item name="color_system">@color/system_light</item>
+        <item name="color_system">@color/Cream</item>
     </style>
 
 </resources>
