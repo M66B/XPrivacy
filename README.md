@@ -136,6 +136,8 @@ For easy usage, data is restricted by category:
 	* return an empty contact list
 * Dictionary
 	* return an empty user dictionary
+* E-mail
+	* return an empty list of accounts, e-mails, etc (provider)
 * Identification
 	* return a fake Android ID
 	* return a fake device serial number
@@ -218,6 +220,7 @@ For easy usage, data is restricted by category:
 	* return an empty list of running services
 	* return an empty list of running tasks
 	* return an empty list of widgets
+	* return an empty list of applications (provider)
 * View
 	* prevent links from opening in the browser
 	* you will be notified if an application tries to open a link
@@ -496,6 +499,8 @@ Changelog
 * Enable navigate up again
 * Added info icon to application view
 * Menu to restrict all applications ([issue](https://github.com/M66B/XPrivacy/issues/172))
+* Restrict E-mail provider ([issue](https://github.com/M66B/XPrivacy/issues/199))
+* Restrict application provider
 * Updated Japanese translation
 * Updated Polish translation
 * Updated Simplified Chinese translation

@@ -36,6 +36,7 @@ public class PrivacyManager {
 	public static final String cCalling = "calling";
 	public static final String cContacts = "contacts";
 	public static final String cDictionary = "dictionary";
+	public static final String cEMail = "email";
 	public static final String cIdentification = "identification";
 	public static final String cInternet = "internet";
 	public static final String cLocation = "location";
@@ -50,8 +51,8 @@ public class PrivacyManager {
 	public static final String cView = "view";
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
-			cContacts, cDictionary, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cNfc, cPhone,
-			cStorage, cShell, cSystem, cView };
+			cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cNfc,
+			cPhone, cStorage, cShell, cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
@@ -105,6 +106,7 @@ public class PrivacyManager {
 		mPermissions.get(cCalling).add("CALL_PHONE");
 		mPermissions.get(cContacts).add("READ_CONTACTS");
 		mPermissions.get(cDictionary).add("READ_USER_DICTIONARY");
+		mPermissions.get(cEMail).add("ACCESS_PROVIDER");
 		mPermissions.get(cIdentification).add("READ_GSERVICES");
 		mPermissions.get(cIdentification).add("");
 		mPermissions.get(cInternet).add("INTERNET");
@@ -268,6 +270,9 @@ public class PrivacyManager {
 			mMethods.get(cMedia).add("android.media.action.IMAGE_CAPTURE_SECURE");
 		mMethods.get(cMedia).add(MediaStore.ACTION_VIDEO_CAPTURE);
 
+		// Applications provider
+		mMethods.get(cSystem).add("ApplicationsProvider");
+
 		// Browser provider
 		mMethods.get(cBrowser).add("BrowserProvider");
 		mMethods.get(cBrowser).add("BrowserProvider2");
@@ -279,6 +284,9 @@ public class PrivacyManager {
 		mMethods.get(cContacts).add("ContactsProvider2");
 		mMethods.get(cPhone).add("CallLogProvider");
 		mMethods.get(cMessages).add("VoicemailContentProvider");
+
+		// E-mail provider
+		mMethods.get(cEMail).add("EMailProvider");
 
 		// Google services provider
 		mMethods.get(cIdentification).add("GservicesProvider");

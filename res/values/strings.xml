@@ -36,6 +36,7 @@
     <string name="restrict_calling">Calling (phone, SMS, MMS)</string>
     <string name="restrict_contacts">Contacts</string>
     <string name="restrict_dictionary">Dictionary (user)</string>
+    <string name="restrict_email" translatable="false">E-mail</string>
     <string name="restrict_identification">Identification (device)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Location (fine/coarse)</string>

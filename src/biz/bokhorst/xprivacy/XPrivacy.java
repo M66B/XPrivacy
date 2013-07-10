@@ -251,8 +251,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				false))
 			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", PrivacyManager.getDefacedProp("SERIAL"));
 
+		// Applications provider
+		if (lpparam.packageName.equals("com.android.providers.applications"))
+			hook(new XContentProvider(PrivacyManager.cSystem, new String[] {}, "ApplicationsProvider"),
+					lpparam.classLoader, "com.android.providers.applications.ApplicationsProvider");
+
 		// Browser provider
-		if (lpparam.packageName.equals("com.android.browser")) {
+		else if (lpparam.packageName.equals("com.android.browser")) {
 			hook(new XContentProvider(PrivacyManager.cBrowser,
 					new String[] { "READ_HISTORY_BOOKMARKS", "GLOBAL_SEARCH" }, "BrowserProvider"),
 					lpparam.classLoader, "com.android.browser.provider.BrowserProvider");
@@ -276,6 +281,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"VoicemailContentProvider"), lpparam.classLoader,
 					"com.android.providers.contacts.VoicemailContentProvider");
 		}
+
+		// E-mail provider
+		else if (lpparam.packageName.equals("com.android.email"))
+			hook(new XContentProvider(PrivacyManager.cEMail, new String[] { "ACCESS_PROVIDER" }, "EMailProvider"),
+					lpparam.classLoader, "com.android.email.provider.EmailProvider");
 
 		// Google services provider
 		else if (lpparam.packageName.equals("com.google.android.gsf"))
