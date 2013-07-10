@@ -204,10 +204,9 @@ For easy usage, data is restricted by category:
 		* Service state changed (service/no service)
 		* Signal level changed
 * Storage
-	* revoke permission to the media storage
-		* this is not the same as the internal storage
+	* revoke permission to the [media storage](http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/)
 	* revoke permission to the external storage (SD card)
-	* return fake unmounted state for external storage (SD card)
+	* return fake unmounted state
 * Shell
 	* Linux shell
 	* Superuser shell
