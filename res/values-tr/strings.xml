@@ -20,13 +20,13 @@
     <string name="menu_app_launch">Çalıştır</string>
     <string name="menu_app_settings">Ayarlar</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Select accounts to allow</string>
+    <string name="menu_accounts">İzin verilecek hesapları seç</string>
     <string name="msg_noupdate">Güncelleştirme yok</string>
     <string name="msg_restricted" formatted="false">%s XPrivacy tarafından engellendi</string>
     <string name="msg_licensed" formatted="false">%s adına lisanslıdır.</string>
     <string name="msg_loading">Yükleniyor</string>
-    <string name="msg_edit">Click the application icon to edit all restrictions</string>
-    <string name="msg_sure">Are you sure?</string>
+    <string name="msg_edit">Tüm izinleri düzenlemek için uygulamanın simgesine dokun</string>
+    <string name="msg_sure">Emin misin?</string>
     <string name="msg_done">Bitti</string>
     <string name="restrict_accounts">Hesaplar (Google, Facebook, vb)</string>
     <string name="restrict_browser">Tarayıcı (yer imleri/geçmiş)</string>
