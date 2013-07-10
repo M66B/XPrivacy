@@ -310,6 +310,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	public boolean onOptionsItemSelected(MenuItem item) {
 		try {
 			switch (item.getItemId()) {
+			case R.id.menu_all:
+				optionAll();
+				return true;
 			case R.id.menu_settings:
 				optionSettings();
 				return true;
@@ -574,6 +577,60 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Util.bug(null, ex);
 			return false;
 		}
+	}
+
+	private void optionAll() {
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setTitle(getString(R.string.app_name));
+		alertDialog.setMessage(getString(R.string.msg_sure));
+		alertDialog.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if (mAppAdapter != null) {
+							// Check if some restricted
+							boolean someRestricted = false;
+							for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
+								ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
+								if (mAppAdapter.getRestrictionName() == null) {
+									for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
+											xAppInfo.getUid()))
+										if (restricted) {
+											someRestricted = true;
+											break;
+										}
+								} else if (PrivacyManager.getRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+										mAppAdapter.getRestrictionName(), null, false, false))
+									someRestricted = true;
+								if (someRestricted)
+									break;
+							}
+
+							// Invert selection
+							for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
+								ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
+								if (mAppAdapter.getRestrictionName() == null) {
+									for (String restrictionName : PrivacyManager.getRestrictions())
+										PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+												restrictionName, null, !someRestricted);
+								} else
+									PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+											mAppAdapter.getRestrictionName(), null, !someRestricted);
+							}
+
+							// Refresh
+							mAppAdapter.notifyDataSetChanged();
+						}
+					}
+				});
+		alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(android.R.string.cancel),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+		alertDialog.show();
 	}
 
 	private void optionSettings() {
@@ -1320,6 +1377,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			notifyDataSetChanged();
 		}
 
+		public String getRestrictionName() {
+			return mRestrictionName;
+		}
+
 		private void selectApps() {
 			mListAppSelected = new ArrayList<ApplicationInfoEx>();
 			if (PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFPermission, true, false)) {
@@ -1368,11 +1429,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Get some restricted
 					boolean someRestricted = false;
 					if (fRestricted)
-						if (mRestrictionName == null)
+						if (mRestrictionName == null) {
 							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
 									xAppInfo.getUid()))
-								someRestricted = someRestricted || restricted;
-						else
+								if (restricted) {
+									someRestricted = true;
+									break;
+								}
+						} else
 							someRestricted = PrivacyManager.getRestricted(null, getApplicationContext(),
 									xAppInfo.getUid(), mRestrictionName, null, false, false);
 

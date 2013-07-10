@@ -26,6 +26,7 @@
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>
     <string name="msg_loading">Loading</string>
     <string name="msg_edit">Click the application icon to edit all restrictions</string>
+    <string name="msg_sure">Are you sure?</string>
     <string name="msg_done">Done</string>
     <string name="restrict_accounts">חשבונות (גוגל, פייסבוק וכו)</string>
     <string name="restrict_browser">דפדן(מועדפים\היסטוריה)</string>

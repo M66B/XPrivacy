@@ -492,9 +492,10 @@ Changelog
 
 **Version 1.4** (in development)
 
-* Select accounts available to an application
+* Menu to select allowed accounts for an application
 * Enable navigate up again
 * Added info icon to application view
+* Menu to restrict all applications ([issue](https://github.com/M66B/XPrivacy/issues/172))
 * Updated Japanese translation
 * Updated Polish translation
 * Updated Simplified Chinese translation

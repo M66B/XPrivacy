@@ -26,6 +26,7 @@
     <string name="msg_licensed" formatted="false">%s adına lisanslıdır.</string>
     <string name="msg_loading">Yükleniyor</string>
     <string name="msg_edit">Click the application icon to edit all restrictions</string>
+    <string name="msg_sure">Are you sure?</string>
     <string name="msg_done">Bitti</string>
     <string name="restrict_accounts">Hesaplar (Google, Facebook, vb)</string>
     <string name="restrict_browser">Tarayıcı (yer imleri/geçmiş)</string>
