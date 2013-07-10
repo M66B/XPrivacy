@@ -493,6 +493,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 1.5** (in development)
+
+* Updated Turkish translation
+
 **Version 1.4**
 
 * Menu to select allowed accounts for an application
