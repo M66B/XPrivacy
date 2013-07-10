@@ -493,14 +493,14 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 1.4** (in development)
+**Version 1.4**
 
 * Menu to select allowed accounts for an application
 * Enable navigate up again
 * Added info icon to application view
 * Menu to restrict all applications ([issue](https://github.com/M66B/XPrivacy/issues/172))
 * Restrict E-mail provider ([issue](https://github.com/M66B/XPrivacy/issues/199))
-* Restrict application provider
+* Restrict application provider (category system)
 * Fixed geocoding name feedback ([issue](https://github.com/M66B/XPrivacy/issues/198))
 * Updated Japanese translation
 * Updated Polish translation
