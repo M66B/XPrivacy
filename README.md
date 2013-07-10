@@ -488,6 +488,7 @@ Changelog
 
 * Dark and light holo theme, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642) for the icons and reviewing
 * Filter on used AND name AND restricted
+* Icon to clear text filter
 * Display application version number in new/updated notification
 * Increased maximum length of MNC to three digits ([issue](https://github.com/M66B/XPrivacy/issues/178))
 * Fixed storage/internet restriction sometimes not working ([issue](https://github.com/M66B/XPrivacy/issues/174))
