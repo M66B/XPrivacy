@@ -71,6 +71,7 @@ public class PrivacyManager {
 	public final static String cSettingFPermission = "FPermission";
 	public final static String cSettingExpert = "Expert";
 	public final static String cSettingTheme = "Theme";
+	public final static String cSettingSalt = "Salt";
 
 	private final static String cDeface = "DEFACE";
 
