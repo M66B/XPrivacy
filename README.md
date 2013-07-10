@@ -57,7 +57,7 @@ It is also possible to edit all data categories for one application.
 
 To help you identify potential data leaks,
 XPrivacy will monitor attempts made by all applications to access sensitive data.
-XPrivacy will display a yellow triangle icon as soon as data of a data category has been used.
+XPrivacy will display a warning triangle icon as soon as data of a data category has been used.
 XPrivacy will also display if an application has internet access,
 indicating that the application poses a risk of sharing the data it obtains with an external server.
 This is just a guideline, since an application could access the internet through other applications too.
@@ -226,7 +226,7 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
-* Android can be restricted, but there will be no usage data available (orange triangles)
+* Android can be restricted, but there will be no usage data available (warning triangles)
 
 Installation
 ------------
@@ -292,8 +292,8 @@ or try restriction the category *Contacts* for the Contacts application
 **Applying some restrictions require restarting applications and/or your device**
 
 If an application requested Android permissions for a data category,
-the category will be marked with a green check mark icon.
-If an application used/tried to use data, the data category will be marked with an orange triangle icon.
+the category will be marked with a check mark icon.
+If an application used/tried to use data, the data category will be marked with a warning triangle icon.
 If an application has internet permissions to access a world globe icon will be shown.
 These icons are just a guideline, because an application can access privacy sensitive data without Android permissions,
 for example the serial number of your device
@@ -307,9 +307,9 @@ This may result in error messages and even in forced closes of the application.
 
 Filtering:
 
-* Tick the check box to filter applications with restrictions
 * Tap the grayed triangle to filter applications that used the data
-* Type in the edit box to filter applications by name
+* Type in the edit box to filter applications by name (tap the cross to clear)
+* Tick the check box to filter applications with restrictions
 
 Expert mode:
 
