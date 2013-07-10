@@ -706,7 +706,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 						// Get address
 						StringBuilder sb = new StringBuilder();
-						for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+						for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
 							if (i != 0)
 								sb.append(", ");
 							sb.append(address.getAddressLine(i));

@@ -501,6 +501,7 @@ Changelog
 * Menu to restrict all applications ([issue](https://github.com/M66B/XPrivacy/issues/172))
 * Restrict E-mail provider ([issue](https://github.com/M66B/XPrivacy/issues/199))
 * Restrict application provider
+* Fixed geocoding name feedback ([issue](https://github.com/M66B/XPrivacy/issues/198))
 * Updated Japanese translation
 * Updated Polish translation
 * Updated Simplified Chinese translation
