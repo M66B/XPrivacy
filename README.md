@@ -494,6 +494,7 @@ Changelog
 **Version 1.4** (in development)
 
 * Select accounts available to an application
+* Enable navigate up again
 
 **Version 1.3**
 

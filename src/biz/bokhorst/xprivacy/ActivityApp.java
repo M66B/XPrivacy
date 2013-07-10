@@ -129,7 +129,7 @@ public class ActivityApp extends Activity implements DialogInterface.OnMultiChoi
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 
 		// Up navigation
-		// getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
