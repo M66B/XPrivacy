@@ -76,11 +76,12 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <ImageView
+            android:id="@+id/imgClear"
             android:layout_width="24dip"
             android:layout_height="24dip"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/help_application"
-            android:src="?attr/icon_magnifier" />
+            android:src="?attr/icon_clear_grayed" />
 
         <CheckBox
             android:id="@+id/cbFilter"

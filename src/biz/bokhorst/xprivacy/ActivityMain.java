@@ -182,6 +182,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etFilter.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				String text = etFilter.getText().toString();
+				ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
+				imgClear.setImageDrawable(getResources().getDrawable(
+						getThemed(text.equals("") ? R.attr.icon_clear_grayed : R.attr.icon_clear)));
 				applyFilter();
 			}
 
@@ -191,6 +195,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			@Override
 			public void afterTextChanged(Editable s) {
+			}
+		});
+
+		ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
+		imgClear.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				etFilter.setText("");
 			}
 		});
 
