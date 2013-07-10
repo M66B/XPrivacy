@@ -66,11 +66,17 @@ public class ActivityApp extends Activity implements DialogInterface.OnMultiChoi
 			return;
 		}
 
-		// Background color
-		if (mAppInfo.getIsSystem()) {
-			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
-			llInfo.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_system)));
-		}
+		// Handle info click
+		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
+		imgInfo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent infoIntent = new Intent(Intent.ACTION_VIEW);
+				infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s",
+						mAppInfo.toString())));
+				startActivity(infoIntent);
+			}
+		});
 
 		// Display app name
 		TextView tvAppName = (TextView) findViewById(R.id.tvApp);
@@ -91,6 +97,12 @@ public class ActivityApp extends Activity implements DialogInterface.OnMultiChoi
 				dialog.show();
 			}
 		});
+
+		// Background color
+		if (mAppInfo.getIsSystem()) {
+			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
+			llInfo.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_system)));
+		}
 
 		// Display app icon
 		ImageView imgIcon = (ImageView) findViewById(R.id.imgAppEntryIcon);

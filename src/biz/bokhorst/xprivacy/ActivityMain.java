@@ -1338,7 +1338,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		private class AppFilter extends Filter {
-
 			public AppFilter() {
 			}
 
@@ -1423,7 +1422,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Set icon
 			imgIcon.setImageDrawable(xAppInfo.getDrawable());
 
-			// Click handler
+			// Handle details click
 			imgIcon.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
