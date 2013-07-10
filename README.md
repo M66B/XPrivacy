@@ -495,6 +495,10 @@ Changelog
 
 * Select accounts available to an application
 * Enable navigate up again
+* Added info icon to application view
+* Updated Japanese translation
+* Updated Polish translation
+* Updated Simplified Chinese translation
 
 **Version 1.3**
 
