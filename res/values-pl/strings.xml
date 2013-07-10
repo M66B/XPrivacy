@@ -24,7 +24,7 @@
     <string name="msg_restricted" formatted="false">%s jest ograniczone przez XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencjonowane dla: %s</string>
     <string name="msg_loading">Ładowanie</string>
-    <string name="msg_edit">Click the application icon to edit all restrictions</string>
+    <string name="msg_edit">Kliknij na ikonę aplikacji aby zmodyfikować wszystkie ograniczenia</string>
     <string name="msg_done">Gotowe</string>
     <string name="restrict_accounts">Konta (Google, Facebook, etc)</string>
     <string name="restrict_browser">Przeglądarka (zakładki/historia)</string>
@@ -43,7 +43,7 @@
     <string name="restrict_shell">Powłoka (polecenia, superuser)</string>
     <string name="restrict_system">System (zainstalowane aplikacje)</string>
     <string name="restrict_view">Widok (przeglądarka)</string>
-    <string name="title_restrict">Zaznacz aby odfiltrować:</string>
+    <string name="title_restrict">Zaznacz aby zablokować:</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>
     <string name="settings_mac">Adres MAC</string>
@@ -51,7 +51,7 @@
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Kraj</string>
     <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Filtruj po uprawnieniach</string>
+    <string name="settings_fpermission">Filtruj według uprawnień</string>
     <string name="settings_expert">Tryb eksperta</string>
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">wymaga dostępu do internetu</string>
