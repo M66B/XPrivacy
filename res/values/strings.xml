@@ -22,7 +22,7 @@
     <string name="menu_app_launch">Launch</string>
     <string name="menu_app_settings">Settings</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Select accounts</string>
+    <string name="menu_accounts">Select accounts to allow</string>
     <string name="msg_noupdate">No update available</string>
     <string name="msg_restricted" formatted="false">%s restricted by XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>

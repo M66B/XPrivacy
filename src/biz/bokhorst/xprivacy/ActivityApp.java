@@ -162,6 +162,16 @@ public class ActivityApp extends Activity implements DialogInterface.OnMultiChoi
 	}
 
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// Accounts
+		boolean accountsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
+				PrivacyManager.cAccounts, null, false, false);
+		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
+
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:

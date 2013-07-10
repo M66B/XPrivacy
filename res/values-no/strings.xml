@@ -20,7 +20,7 @@
     <string name="menu_app_launch">Kjør</string>
     <string name="menu_app_settings">Instillinger</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Select accounts</string>
+    <string name="menu_accounts">Select accounts to allow</string>
     <string name="msg_noupdate">Ingen oppdatering finnes</string>
     <string name="msg_restricted" formatted="false">%s blokkert av XPrivacy</string>
     <string name="msg_licensed" formatted="false">Lisensert til: %s</string>

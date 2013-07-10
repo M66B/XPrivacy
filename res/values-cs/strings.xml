@@ -20,7 +20,7 @@
     <string name="menu_app_launch">Spustit</string>
     <string name="menu_app_settings">Nastavení</string>
     <string name="menu_app_store">Obchod Play</string>
-    <string name="menu_accounts">Select accounts</string>
+    <string name="menu_accounts">Select accounts to allow</string>
     <string name="msg_noupdate">Není k dispozici žádná aktualizace</string>
     <string name="msg_restricted" formatted="false">XPrivacy omezilo %s</string>
     <string name="msg_licensed" formatted="false">Licencováno na: %s</string>

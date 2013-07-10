@@ -20,7 +20,7 @@
     <string name="menu_app_launch">Starten</string>
     <string name="menu_app_settings">Einstellungen</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Select accounts</string>
+    <string name="menu_accounts">Select accounts to allow</string>
     <string name="msg_noupdate">Neuste Version bereits installiert</string>
     <string name="msg_restricted" formatted="false">%s beschränkt durch XPrivacy</string>
     <string name="msg_licensed" formatted="false">Lizensiert für: %s</string>
