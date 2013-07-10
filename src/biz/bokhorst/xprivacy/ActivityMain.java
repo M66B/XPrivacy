@@ -126,10 +126,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			public void onClick(View view) {
 				int position = spRestriction.getSelectedItemPosition();
-				if (position != AdapterView.INVALID_POSITION && position > 0) {
+				if (position != AdapterView.INVALID_POSITION) {
+					String title = (position == 0 ? "XPrivacy" : PrivacyManager.getRestrictions().get(position - 1));
+					String url = String.format("http://wiki.faircode.eu/index.php?title=%s", title);
 					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
-					infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s",
-							PrivacyManager.getRestrictions().get(position - 1))));
+					infoIntent.setData(Uri.parse(url));
 					startActivity(infoIntent);
 				}
 			}
