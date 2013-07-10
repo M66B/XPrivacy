@@ -463,9 +463,15 @@ Try disabling your popup blocker or download using another computer.
 
 See [here](http://forum.xda-developers.com/showthread.php?t=1726238).
 
-**(23) Do I need to install the Xposed fix again if I update XPrivacy?**
+**(23) Where can I find the settings of XPrivacy?**
 
-No, only if you update/reinstall Xposed.
+The settings of XPrivacy are stored as private application data,
+because the settings of XPrivacy should be considered as privacy sensitive data too.
+It is possible to backup the application and the data, but you can restore it onto the same device only.
+This is because Android assigns different UID's to the same applications on different devices.
+Exporting settings on one device and importing settings onto another device will work,
+but this requires the [pro version](http://www.faircode.eu/xprivacy/).
+If you want to backup the exported settings, they are in the folder *.xprivacy* on the SD card.
 
 Support
 -------
