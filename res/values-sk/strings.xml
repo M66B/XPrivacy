@@ -20,13 +20,13 @@
     <string name="menu_app_launch">Spustiť</string>
     <string name="menu_app_settings">Nastavenia</string>
     <string name="menu_app_store">Obchod Play</string>
-    <string name="menu_accounts">Select accounts to allow</string>
+    <string name="menu_accounts">Vybrať účty na povolenie</string>
     <string name="msg_noupdate">Nie je k dispozícii žiadna aktualizácia</string>
     <string name="msg_restricted" formatted="false">%s obmedzené pomocou XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
     <string name="msg_loading">Načítavanie</string>
-    <string name="msg_edit">Click the application icon to edit all restrictions</string>
-    <string name="msg_sure">Are you sure?</string>
+    <string name="msg_edit">Kliknite na ikonu aplikácie pre úpravu všetkých obmedzení</string>
+    <string name="msg_sure">Ste si istý?</string>
     <string name="msg_done">Hotovo</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atď.)</string>
     <string name="restrict_browser">Prehliadač (záložky/história)</string>
