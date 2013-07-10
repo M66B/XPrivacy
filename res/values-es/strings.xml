@@ -20,6 +20,7 @@
     <string name="menu_app_launch">Ejecutar</string>
     <string name="menu_app_settings">Configuración</string>
     <string name="menu_app_store">Play Store</string>
+    <string name="menu_accounts">Select accounts</string>
     <string name="msg_noupdate">No hay actualizaciones disponibles</string>
     <string name="msg_restricted">%s restringido por XPrivacy</string>
     <string name="msg_licensed">Con licencia para: %s</string>

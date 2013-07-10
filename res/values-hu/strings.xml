@@ -20,6 +20,7 @@
     <string name="menu_app_launch">Indítás</string>
     <string name="menu_app_settings">Beállítások</string>
     <string name="menu_app_store">Play Store</string>
+    <string name="menu_accounts">Select accounts</string>
     <string name="msg_noupdate">Nincs elérhető frissítés</string>
     <string name="msg_restricted" formatted="false">%s korlátozva az XPrivacy által</string>
     <string name="msg_licensed" formatted="false">Licensz tulajdonos: %s</string>

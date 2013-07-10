@@ -20,6 +20,7 @@
     <string name="menu_app_launch">تشغيل التطبيق</string>
     <string name="menu_app_settings">إعدادات التطبيق</string>
     <string name="menu_app_store">متجر قوقل</string>
+    <string name="menu_accounts">Select accounts</string>
     <string name="msg_noupdate">لا توجد تحديثات متاحة</string>
     <string name="msg_restricted" formatted="false">%s تم تقيده بواسطة XPrivacy</string>
     <string name="msg_licensed" formatted="false">مرخص ل: %s</string>

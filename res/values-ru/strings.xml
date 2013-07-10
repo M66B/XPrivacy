@@ -20,6 +20,7 @@
     <string name="menu_app_launch">Запустить приложение</string>
     <string name="menu_app_settings">Настройки приложения</string>
     <string name="menu_app_store">Play Маркет</string>
+    <string name="menu_accounts">Select accounts</string>
     <string name="msg_noupdate">Обновлений нет</string>
     <string name="msg_restricted" formatted="false">%s запрещено XPrivacy</string>
     <string name="msg_licensed" formatted="false">Владелец лицензии: %s</string>
