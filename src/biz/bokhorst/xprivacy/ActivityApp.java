@@ -1,13 +1,18 @@
 package biz.bokhorst.xprivacy;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -29,10 +34,12 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ActivityApp extends Activity {
+public class ActivityApp extends Activity implements DialogInterface.OnMultiChoiceClickListener {
 
 	private int mThemeId;
+	private String mPackageName;
 	private ApplicationInfoEx mAppInfo;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 
@@ -50,10 +57,10 @@ public class ActivityApp extends Activity {
 
 		// Get package name
 		Bundle extras = getIntent().getExtras();
-		final String packageName = extras.getString(cPackageName);
+		mPackageName = extras.getString(cPackageName);
 
 		// Get app info
-		mAppInfo = new ApplicationInfoEx(this, packageName);
+		mAppInfo = new ApplicationInfoEx(this, mPackageName);
 		if (!mAppInfo.getIsInstalled()) {
 			finish();
 			return;
@@ -93,7 +100,7 @@ public class ActivityApp extends Activity {
 		imgIcon.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intentApp = getPackageManager().getLaunchIntentForPackage(packageName);
+				Intent intentApp = getPackageManager().getLaunchIntentForPackage(mPackageName);
 				if (intentApp != null) {
 					intentApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					view.getContext().startActivity(intentApp);
@@ -103,7 +110,7 @@ public class ActivityApp extends Activity {
 
 		// Check if internet access
 		ImageView imgInternet = (ImageView) findViewById(R.id.imgAppEntryInternet);
-		if (!PrivacyManager.hasInternet(this, packageName))
+		if (!PrivacyManager.hasInternet(this, mPackageName))
 			imgInternet.setVisibility(View.INVISIBLE);
 
 		// Display version
@@ -112,7 +119,7 @@ public class ActivityApp extends Activity {
 
 		// Display package name / uid
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
-		tvPackageName.setText(String.format("%s %d", packageName, mAppInfo.getUid()));
+		tvPackageName.setText(String.format("%s %d", mPackageName, mAppInfo.getUid()));
 
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
@@ -152,28 +159,9 @@ public class ActivityApp extends Activity {
 					TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
 				else
 					NavUtils.navigateUpTo(this, upIntent);
-
 			return true;
 		case R.id.menu_all:
-			List<String> listRestriction = PrivacyManager.getRestrictions();
-
-			// Get toggle
-			boolean restricted = false;
-			for (String restrictionName : listRestriction)
-				if (PrivacyManager.getRestricted(null, this, mAppInfo.getUid(), restrictionName, null, false, false)) {
-					restricted = true;
-					break;
-				}
-
-			// Do toggle
-			restricted = !restricted;
-			for (String restrictionName : listRestriction)
-				PrivacyManager.setRestricted(null, this, mAppInfo.getUid(), restrictionName, null, restricted);
-
-			// Refresh display
-			if (mPrivacyListAdapter != null)
-				mPrivacyListAdapter.notifyDataSetChanged();
-
+			optionAll();
 			return true;
 		case R.id.menu_app_launch:
 			Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
@@ -186,8 +174,79 @@ public class ActivityApp extends Activity {
 		case R.id.menu_app_store:
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + mAppInfo.getPackageName())));
 			return true;
+		case R.id.menu_accounts:
+			optionAccounts();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void optionAll() {
+		List<String> listRestriction = PrivacyManager.getRestrictions();
+
+		// Get toggle
+		boolean restricted = false;
+		for (String restrictionName : listRestriction)
+			if (PrivacyManager.getRestricted(null, this, mAppInfo.getUid(), restrictionName, null, false, false)) {
+				restricted = true;
+				break;
+			}
+
+		// Do toggle
+		restricted = !restricted;
+		for (String restrictionName : listRestriction)
+			PrivacyManager.setRestricted(null, this, mAppInfo.getUid(), restrictionName, null, restricted);
+
+		// Refresh display
+		if (mPrivacyListAdapter != null)
+			mPrivacyListAdapter.notifyDataSetChanged();
+	}
+
+	private void optionAccounts() {
+		// Get accounts
+		List<CharSequence> listAccount = new ArrayList<CharSequence>();
+		AccountManager accountManager = AccountManager.get(getApplicationContext());
+		Account[] account = accountManager.getAccounts();
+		boolean[] selection = new boolean[account.length];
+		for (int i = 0; i < account.length; i++)
+			try {
+				listAccount.add(String.format("%s (%s)", account[i].name, account[i].type));
+				String sha1 = Util.sha1(account[i].name + account[i].type);
+				selection[i] = PrivacyManager.getSettingBool(null, this, String.format("%s.%s", mPackageName, sha1),
+						false, false);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+
+		// Build dialog
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle(getString(R.string.menu_accounts));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setMultiChoiceItems(listAccount.toArray(new CharSequence[0]), selection, this);
+		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// Do nothing
+			}
+		});
+
+		// Show dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+		try {
+			Account account = AccountManager.get(getApplicationContext()).getAccounts()[which];
+			String sha1 = Util.sha1(account.name + account.type);
+			PrivacyManager.setSetting(null, this, String.format("%s.%s", mPackageName, sha1),
+					Boolean.toString(isChecked));
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			Toast toast = Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG);
+			toast.show();
 		}
 	}
 

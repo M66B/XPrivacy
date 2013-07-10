@@ -5,7 +5,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.security.KeyFactory;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
@@ -178,6 +181,17 @@ public class Util {
 		verifier.initVerify(publicKey);
 		verifier.update(data);
 		return verifier.verify(signature);
+	}
+
+	public static String sha1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		MessageDigest digest = MessageDigest.getInstance("SHA-1");
+		byte[] bytes = text.getBytes("UTF-8");
+		digest.update(bytes, 0, bytes.length);
+		bytes = digest.digest();
+		StringBuilder sb = new StringBuilder();
+		for (byte b : bytes)
+			sb.append(String.format("%02X", b));
+		return sb.toString();
 	}
 
 	public static Context getXContext(Context context) throws Throwable {

@@ -396,14 +396,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(getString(R.string.app_wrongandroid));
 			alertDialog.setIcon(getThemed(R.attr.icon_launcher));
-			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
-					xposedIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy#installation"));
-					startActivity(xposedIntent);
-				}
-			});
+			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
+							xposedIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy#installation"));
+							startActivity(xposedIntent);
+						}
+					});
 			alertDialog.show();
 		}
 
@@ -417,14 +418,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(msg);
 			alertDialog.setIcon(getThemed(R.attr.icon_launcher));
-			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
-					xposedIntent.setData(Uri.parse("http://forum.xda-developers.com/showthread.php?t=1574401"));
-					startActivity(xposedIntent);
-				}
-			});
+			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
+							xposedIntent.setData(Uri.parse("http://forum.xda-developers.com/showthread.php?t=1574401"));
+							startActivity(xposedIntent);
+						}
+					});
 			alertDialog.show();
 		}
 
@@ -437,16 +439,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			alertDialog.setTitle(getString(R.string.app_name));
 			alertDialog.setMessage(msg);
 			alertDialog.setIcon(getThemed(R.attr.icon_launcher));
-			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Intent xInstallerIntent = getPackageManager().getLaunchIntentForPackage(
-							"de.robv.android.xposed.installer");
-					xInstallerIntent.putExtra("opentab", 1);
-					if (xInstallerIntent != null)
-						startActivity(xInstallerIntent);
-				}
-			});
+			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Intent xInstallerIntent = getPackageManager().getLaunchIntentForPackage(
+									"de.robv.android.xposed.installer");
+							xInstallerIntent.putExtra("opentab", 1);
+							if (xInstallerIntent != null)
+								startActivity(xInstallerIntent);
+						}
+					});
 			alertDialog.show();
 		}
 
@@ -900,18 +903,20 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		alertDialog.setTitle(getString(R.string.app_name));
 		alertDialog.setMessage(msg);
 		alertDialog.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				sendClassInfo(clazz);
-			}
-		});
-		alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
+		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						sendClassInfo(clazz);
+					}
+				});
+		alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(android.R.string.cancel),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
 		alertDialog.show();
 	}
 

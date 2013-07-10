@@ -323,6 +323,7 @@ Permissions
 
 XPrivacy asks for the following Android permissions:
 
+* Accounts: to select accounts to allow for applications
 * Boot: to check if XPrivacy is enabled
 * Internet: to check for updates (only manual from the menu)
 * Storage: to export settings to the SD card (only [pro version](http://www.faircode.eu/xprivacy/))
