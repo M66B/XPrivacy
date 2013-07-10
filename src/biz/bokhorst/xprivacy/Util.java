@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
@@ -185,16 +184,8 @@ public class Util {
 	}
 
 	public static String sha1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		// Get salt
-		String salt = PrivacyManager.getSetting(null, null, PrivacyManager.cSettingSalt, null, true);
-		if (salt == null) {
-			salt = Build.SERIAL;
-			if (salt == null)
-				salt = "";
-			PrivacyManager.setSetting(null, null, PrivacyManager.cSettingSalt, salt);
-		}
-
 		// SHA1
+		String salt = PrivacyManager.getSetting(null, null, PrivacyManager.cSettingSalt, "", true);
 		MessageDigest digest = MessageDigest.getInstance("SHA-1");
 		byte[] bytes = (text + salt).getBytes("UTF-8");
 		digest.update(bytes, 0, bytes.length);
