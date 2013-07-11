@@ -284,7 +284,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// E-mail provider
 		else if (lpparam.packageName.equals("com.android.email"))
-			hook(new XContentProvider(PrivacyManager.cEMail, new String[] { "ACCESS_PROVIDER" }, "EMailProvider"),
+			hook(new XContentProvider(PrivacyManager.cEMail,
+					new String[] { "com.android.email.permission.ACCESS_PROVIDER" }, "EMailProvider"),
 					lpparam.classLoader, "com.android.email.provider.EmailProvider");
 
 		// Google services provider

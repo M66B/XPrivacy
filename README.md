@@ -496,6 +496,8 @@ Changelog
 **Version 1.5** (in development)
 
 * Some styling
+* Fixed checking for E-mail permission
+* Updated Slovak translation
 * Updated Turkish translation
 
 **Version 1.4**

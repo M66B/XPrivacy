@@ -857,6 +857,9 @@ public class PrivacyManager {
 							return true;
 						} else if (rPermission.toLowerCase().contains(permission.toLowerCase()))
 							return true;
+						else if (permission.contains("."))
+							if (pm.checkPermission(permission, packageName) == PackageManager.PERMISSION_GRANTED)
+								return true;
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 			return false;
