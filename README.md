@@ -480,6 +480,11 @@ Exporting settings on one device and importing settings onto another device will
 but this requires the [pro version](http://www.faircode.eu/xprivacy/).
 If you want to backup the exported settings, they are in the folder *.xprivacy* on the SD card.
 
+**(24) Can you make possible to randomize data?***
+
+Everything is possible, but some application crash when feeded with random data
+and it is not always possible to randomize things (like IMEI or MAC addresses).
+
 Support
 -------
 
