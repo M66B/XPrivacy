@@ -441,7 +441,11 @@ Please note that in many cases pressing *back*, only moves the application to th
 
 It cannot always, since it works deep within Android,
 and therefore it is IMHO not a good idea to ask for restrictions when it could,
-because this will probably only result into confusion.
+because this will probably result into confusion only.
+
+There is a lot of privacy sensitive data processed within Android,
+especially if there are a lot of applications installed.
+It would slow down your device considerably if XPrivacy would notify data usage.
 
 Newly installed applications are by default fully restricted.
 Restricting an application should not result into any force closes (crashes),
@@ -468,7 +472,7 @@ See [here](http://forum.xda-developers.com/showthread.php?t=1726238).
 
 **(23) Where can I find the settings of XPrivacy?**
 
-The settings of XPrivacy are stored as private application data,
+The restriction settings of XPrivacy are stored as private application data,
 because the settings of XPrivacy should be considered as privacy sensitive data too.
 It is possible to backup the application and the data, but you can restore it onto the same device only.
 This is because Android assigns different UID's to the same applications on different devices.
@@ -498,6 +502,7 @@ Changelog
 * Some styling
 * More generic matching of system properties
 * Fixed checking for E-mail permission
+* Updated Simplified Chinese translation
 * Updated Slovak translation
 * Updated Turkish translation
 
