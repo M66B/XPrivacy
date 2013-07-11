@@ -62,7 +62,7 @@ XPrivacy will also display if an application has internet access,
 indicating that the application poses a risk of sharing the data it obtains with an external server.
 This is just a guideline, since an application could access the internet through other applications too.
 If an application has requested Android permissions to access data in a data category,
-this will be displayed with a green tick icon,
+this will be displayed with a key icon,
 but this will only be shown when looking at an individual application,
 since checking permissions for all applications is quite slow.
 
@@ -294,7 +294,7 @@ or try restriction the category *Contacts* for the Contacts application
 **Applying some restrictions require restarting applications and/or your device**
 
 If an application requested Android permissions for a data category,
-the category will be marked with a check mark icon.
+the category will be marked with a key icon.
 If an application used/tried to use data, the data category will be marked with a warning triangle icon.
 If an application has internet permissions to access a world globe icon will be shown.
 These icons are just a guideline, because an application can access privacy sensitive data without Android permissions,
@@ -495,6 +495,7 @@ Changelog
 
 **Version 1.5** (in development)
 
+* Some styling
 * Updated Turkish translation
 
 **Version 1.4**
