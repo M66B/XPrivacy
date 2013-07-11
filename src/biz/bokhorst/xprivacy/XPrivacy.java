@@ -158,8 +158,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"android.telephony.SmsManager");
 
 		// System properties
-		String[] props = new String[] { "ro.gsm.imei", "net.hostname", "ro.serialno", "ro.boot.serialno",
-				"ro.boot.wifimacaddr", "ro.boot.btmacaddr" };
+		String[] props = new String[] { "%imei", "%hostname", "%serialno", "%macaddr" };
 		String[] getters = new String[] { "get", "getBoolean", "getInt", "getLong" };
 		for (String prop : props)
 			for (String getter : getters)

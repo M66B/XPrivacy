@@ -713,11 +713,11 @@ public class PrivacyManager {
 
 	public static Object getDefacedProp(String name) {
 		// Serial number
-		if (name.equals("SERIAL") || name.equals("ro.serialno") || name.equals("ro.boot.serialno"))
+		if (name.equals("SERIAL") || name.equals("%serialno") || name.equals("%hostname"))
 			return cDeface;
 
 		// MAC addresses
-		if (name.equals("MAC") || name.equals("ro.boot.btmacaddr") || name.equals("ro.boot.wifimacaddr")) {
+		if (name.equals("MAC") || name.equals("%macaddr")) {
 			String mac = getSetting(null, null, cSettingMac, "DE:FA:CE:DE:FA:CE", true);
 			StringBuilder sb = new StringBuilder(mac.replace(":", ""));
 			while (sb.length() != 12)
@@ -730,7 +730,7 @@ public class PrivacyManager {
 		}
 
 		// IMEI
-		if (name.equals("getDeviceId") || name.equals("ro.gsm.imei"))
+		if (name.equals("getDeviceId") || name.equals("%imei"))
 			return getSetting(null, null, cSettingImei, cDeface, true);
 
 		// Phone
@@ -807,7 +807,7 @@ public class PrivacyManager {
 		if (name.equals("Bytes3"))
 			return new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
 
-		// XSystemProperties: "net.hostname"
+		// Fallback
 		return cDeface;
 	}
 
