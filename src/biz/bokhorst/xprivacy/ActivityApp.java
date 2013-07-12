@@ -155,6 +155,12 @@ public class ActivityApp extends Activity implements DialogInterface.OnMultiChoi
 	}
 
 	@Override
+	protected void onStop() {
+		finish();
+		super.onStop();
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.app, menu);
