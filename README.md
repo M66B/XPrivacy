@@ -508,6 +508,7 @@ Changelog
 * More generic matching of system properties
 * Fixed checking for E-mail permission
 * Updated Hungarian translation
+* Update Norwegian translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
 * Updated Turkish translation
