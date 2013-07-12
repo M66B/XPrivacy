@@ -8,7 +8,6 @@
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013</string>
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
-    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#restrictions</string>
     <string name="menu_settings">Instillinger</string>
     <string name="menu_update">Sjekk for oppdatering</string>
     <string name="menu_report">Rapport en feil</string>
@@ -16,7 +15,6 @@
     <string name="menu_import">Importere</string>
     <string name="menu_theme">Bytt tema</string>
     <string name="menu_pro">Pro versjon</string>
-    <string name="menu_flattr" translatable="false">Flattr</string>
     <string name="menu_about">Om</string>
     <string name="menu_all">Alle</string>
     <string name="menu_app_launch">Kjør</string>
@@ -36,14 +34,12 @@
     <string name="restrict_calling">Ringe (telefon, SMS, MMS)</string>
     <string name="restrict_contacts">Kontakter</string>
     <string name="restrict_dictionary">Ordbok (bruker)</string>
-    <string name="restrict_email" translatable="false">E-mail</string>
     <string name="restrict_identification">Identifikasjon (apparat)</string>
     <string name="restrict_internet">Internett</string>
     <string name="restrict_location">Posisjon (fin/grov)</string>
     <string name="restrict_media">Medier (lyd, foto, video)</string>
     <string name="restrict_messages">Meldinger (SMS, MMS)</string>
     <string name="restrict_network">Nettverk (adresser)</string>
-    <string name="restrict_nfc" translatable="false">NFC</string>
     <string name="restrict_phone">Telefon (ID, nummere, oppringninger)</string>
     <string name="restrict_storage">Minne (medier, SD kort)</string>
     <string name="restrict_shell">Shell (kommandoer, superbruker)</string>
@@ -53,14 +49,9 @@
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>
     <string name="settings_mac">MAC adresse</string>
-    <string name="settings_imei" translatable="false">IMEI</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_gsfid" translatable="false">GSF ID</string>
-    <string name="settings_mcc" translatable="false">MCC</string>
-    <string name="settings_mnc" translatable="false">MNC</string>
     <string name="settings_country">Land</string>
-    <string name="settings_iccid" translatable="false">ICC ID</string>
     <string name="settings_subscriber">Abonnent ID</string>
     <string name="settings_fpermission">Velg etter tillatelse</string>
     <string name="settings_expert">Ekspert modus</string>
