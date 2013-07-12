@@ -280,11 +280,21 @@ If there is an update the browser will download it.
 Usage
 -----
 
-1. Start XPrivacy
-2. Select a data category at the top, for example *Accounts*
-3. Restrict data of the selected data category for an application by ticking a check box
-4. Tap on the application icon to see the restrictions for all categories for the application
-5. Tap on the application icon to start the application to test (after previous step)
+The application starts in the main view, where at the top a data category can be selected.
+By ticking one or more check boxes in the list below, the selected data category can be restricted for the chosen applications.
+The default category is 'all', meaning that all data categories will be restricted.
+The main view functions as a batch editor.
+
+Tapping on an application icon shows the detailed view, where all the data categories for the selected application can be managed.
+This view will also appear by tapping on the notification that appears after updating or installing an application.
+By default all data categories will be restricted for new installed applications to prevent leaking privacy sensitive data from the beginning.
+
+Data categories exist to make it easier to manage restrictions.
+After enabling expert mode from the settings menu in the main view,
+the data categories in the detailed view can be drilled down to individual functions.
+If the category is restricted, individual functions can be allowed by clearing the function check boxes.
+
+Enabling expert mode does also enable a few more data categories, which can be useful, but can also let some applications crash.
 
 To see it in action: try restricting the category *Identification* for
 [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
@@ -301,17 +311,17 @@ These icons are just a guideline, because an application can access privacy sens
 for example the serial number of your device
 and because is not possible to monitor data usage in each and every situation,
 for example not for access to the internet or the external storage.
-An application could access the internet through another (sister) application.
+Be aware that an application could access the internet through another (sister) application.
 
-Enabling internet or storage restriction means blocking access to the internet
+Enabling the internet or storage restriction (expert mode only) means blocking access to the internet
 or to the external storage (typically the SD card).
 This may result in error messages and even in forced closes of the application.
 
 Filtering:
 
-* Tap the grayed triangle to filter applications that used the data
+* Tap the grayed triangle to filter applications that used the data in the selected data category
 * Type in the edit box to filter applications by name (tap the cross to clear)
-* Tick the check box to filter applications with restrictions
+* Tick the check box to filter applications with the selected data category restricted
 
 Expert mode:
 
