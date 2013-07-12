@@ -220,15 +220,17 @@ public class ActivityApp extends Activity implements DialogInterface.OnMultiChoi
 		// Get toggle
 		boolean restricted = false;
 		for (String restrictionName : listRestriction)
-			if (PrivacyManager.getRestricted(null, this, mAppInfo.getUid(), restrictionName, null, false, false)) {
-				restricted = true;
-				break;
-			}
+			if (PrivacyManager.getSettingBool(null, this, String.format("Template.%s", restrictionName), true, false))
+				if (PrivacyManager.getRestricted(null, this, mAppInfo.getUid(), restrictionName, null, false, false)) {
+					restricted = true;
+					break;
+				}
 
 		// Do toggle
 		restricted = !restricted;
 		for (String restrictionName : listRestriction)
-			PrivacyManager.setRestricted(null, this, mAppInfo.getUid(), restrictionName, null, restricted);
+			if (PrivacyManager.getSettingBool(null, this, String.format("Template.%s", restrictionName), true, false))
+				PrivacyManager.setRestricted(null, this, mAppInfo.getUid(), restrictionName, null, restricted);
 
 		// Refresh display
 		if (mPrivacyListAdapter != null)

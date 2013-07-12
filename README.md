@@ -506,6 +506,7 @@ Changelog
 * More generic matching of system properties
 * Move categories internet, storage and system to expert mode ([issue](https://github.com/M66B/XPrivacy/issues/213), [issue](https://github.com/M66B/XPrivacy/issues/214))
 * Setting to filter system applications ([issue](https://github.com/M66B/XPrivacy/issues/215))
+* Option to set templates for new applications / all menu ([issue](https://github.com/M66B/XPrivacy/issues/17))
 * Fixed checking for E-mail permission
 * Fixed restricting recording in some situations ([issue](https://github.com/M66B/XPrivacy/issues/209))
 * Updated Hungarian translation

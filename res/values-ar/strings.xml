@@ -9,6 +9,7 @@
     <string name="app_copyright">حقوق الطبع \u00A9 2013 ب M. Bokhorst (M66B)</string>
     <string name="app_info">لمزيد من المعلومات: https://github.com/M66B/XPrivacy/</string>
     <string name="menu_settings">الإعدادات</string>
+    <string name="menu_template">Template</string>
     <string name="menu_update">فحص التحديثات</string>
     <string name="menu_report">التبليغ عن مشكلة</string>
     <string name="menu_export">تصدير</string>

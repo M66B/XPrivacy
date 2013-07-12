@@ -9,6 +9,7 @@
     <string name="app_copyright">Copyright \u00A9 2013 M. Bokhorst (M66B)</string>
     <string name="app_info">Πληροφορίες: https://github.com/M66B/XPrivacy/</string>
     <string name="menu_settings">Ρυθμίσεις</string>
+    <string name="menu_template">Template</string>
     <string name="menu_update">Έλεγχος για ενημερώσεις</string>
     <string name="menu_report">Αναφορά σφάλματος</string>
     <string name="menu_export">Εξαγωγή</string>

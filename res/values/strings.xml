@@ -11,6 +11,7 @@
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
     <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#restrictions</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_template">Template</string>
     <string name="menu_update">Check for update</string>
     <string name="menu_report">Report issue</string>
     <string name="menu_export">Export</string>

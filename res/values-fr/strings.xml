@@ -9,6 +9,7 @@
     <string name="app_copyright">Droits d\'auteur: M. Bokhorst (M66B) \u00A9 2013 </string>
     <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
     <string name="menu_settings">Paramètres</string>
+    <string name="menu_template">Template</string>
     <string name="menu_update">Vérifier les mises à jour</string>
     <string name="menu_report">Signaler un problème</string>
     <string name="menu_export">Exporter</string>

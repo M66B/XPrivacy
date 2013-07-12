@@ -44,7 +44,9 @@ public class PackageChange extends BroadcastReceiver {
 					// Default deny new user apps
 					if (!system && !replacing)
 						for (String restrictionName : PrivacyManager.getRestrictions())
-							PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
+							if (PrivacyManager.getSettingBool(null, context,
+									String.format("Template.%s", restrictionName), true, false))
+								PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
 
 					// Build result intent
 					Intent resultIntent = new Intent(context, ActivityApp.class);
