@@ -508,6 +508,7 @@ Changelog
 * More generic matching of system properties
 * Move categories internet, storage and system to expert mode
 * Fixed checking for E-mail permission
+* Fixed restricting recording in some situations ([issue](https://github.com/M66B/XPrivacy/issues/209))
 * Updated Hungarian translation
 * Update Norwegian translation
 * Updated Simplified Chinese translation

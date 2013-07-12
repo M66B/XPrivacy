@@ -66,10 +66,12 @@ public abstract class XHook {
 	}
 
 	protected void notifyUser(Context context, String message) throws Throwable {
-		String format = Util.getXString(context, R.string.msg_restricted);
-		String text = String.format(format, message);
-		Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
-		toast.show();
+		if (context != null) {
+			String format = Util.getXString(context, R.string.msg_restricted);
+			String text = String.format(format, message);
+			Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+			toast.show();
+		}
 	}
 
 	protected void info(String message) {
