@@ -22,6 +22,7 @@
     <string name="menu_app_settings">Nastavenia</string>
     <string name="menu_app_store">Obchod Play</string>
     <string name="menu_accounts">Vybrať účty na povolenie</string>
+    <string name="menu_contacts">Select contacts to allow</string>
     <string name="msg_noupdate">Nie je k dispozícii žiadna aktualizácia</string>
     <string name="msg_restricted" formatted="false">%s obmedzené pomocou XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>

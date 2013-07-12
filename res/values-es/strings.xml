@@ -22,6 +22,7 @@
     <string name="menu_app_settings">Configuración</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Select accounts to allow</string>
+    <string name="menu_contacts">Select contacts to allow</string>
     <string name="msg_noupdate">No hay actualizaciones disponibles</string>
     <string name="msg_restricted">%s restringido por XPrivacy</string>
     <string name="msg_licensed">Con licencia para: %s</string>

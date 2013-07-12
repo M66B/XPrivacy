@@ -90,8 +90,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActivityMain extends Activity implements OnItemSelectedListener, CompoundButton.OnCheckedChangeListener,
-		DialogInterface.OnMultiChoiceClickListener {
+public class ActivityMain extends Activity implements OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
 	private int mThemeId;
 	private Spinner spRestriction = null;
@@ -798,7 +797,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionTemplate() {
 		// Get restriction categories
-		List<String> listRestriction = PrivacyManager.getRestrictions();
+		final List<String> listRestriction = PrivacyManager.getRestrictions();
 		CharSequence[] options = new CharSequence[listRestriction.size()];
 		boolean[] selection = new boolean[listRestriction.size()];
 		for (int i = 0; i < listRestriction.size(); i++) {
@@ -811,7 +810,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(getString(R.string.menu_template));
 		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setMultiChoiceItems(options, selection, this);
+		alertDialogBuilder.setMultiChoiceItems(options, selection, new DialogInterface.OnMultiChoiceClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+				PrivacyManager.setSetting(null, ActivityMain.this,
+						String.format("Template.%s", listRestriction.get(whichButton)), Boolean.toString(isChecked));
+			}
+		});
 		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -822,13 +826,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Show dialog
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
-	}
-
-	@Override
-	public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-		List<String> listRestriction = PrivacyManager.getRestrictions();
-		PrivacyManager.setSetting(null, this, String.format("Template.%s", listRestriction.get(which)),
-				Boolean.toString(isChecked));
 	}
 
 	private void optionCheckUpdate() {

@@ -22,6 +22,7 @@
     <string name="menu_app_settings">Settings</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Select accounts to allow</string>
+    <string name="menu_contacts">Select contacts to allow</string>
     <string name="msg_noupdate">לא קיימים עדכונים</string>
     <string name="msg_restricted" formatted="false">%s מוגבל על ידי XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>

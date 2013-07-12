@@ -16,5 +16,8 @@
     <item
         android:id="@+id/menu_accounts"
         android:title="@string/menu_accounts"/>
+    <item
+        android:id="@+id/menu_contacts"
+        android:title="@string/menu_contacts"/>
 
 </menu>

@@ -3,8 +3,10 @@ package biz.bokhorst.xprivacy;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -15,10 +17,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.TypedValue;
@@ -37,7 +42,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActivityApp extends Activity implements DialogInterface.OnMultiChoiceClickListener {
+public class ActivityApp extends Activity {
 
 	private int mThemeId;
 	private String mPackageName;
@@ -182,7 +187,10 @@ public class ActivityApp extends Activity implements DialogInterface.OnMultiChoi
 		// Accounts
 		boolean accountsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
 				PrivacyManager.cAccounts, null, false, false);
+		boolean contactsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
+				PrivacyManager.cContacts, null, false, false);
 		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
+		menu.findItem(R.id.menu_contacts).setEnabled(contactsRestricted);
 
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -214,6 +222,9 @@ public class ActivityApp extends Activity implements DialogInterface.OnMultiChoi
 			return true;
 		case R.id.menu_accounts:
 			optionAccounts();
+			return true;
+		case R.id.menu_contacts:
+			optionContacts();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -247,12 +258,12 @@ public class ActivityApp extends Activity implements DialogInterface.OnMultiChoi
 		// Get accounts
 		List<CharSequence> listAccount = new ArrayList<CharSequence>();
 		AccountManager accountManager = AccountManager.get(getApplicationContext());
-		Account[] account = accountManager.getAccounts();
-		boolean[] selection = new boolean[account.length];
-		for (int i = 0; i < account.length; i++)
+		final Account[] accounts = accountManager.getAccounts();
+		boolean[] selection = new boolean[accounts.length];
+		for (int i = 0; i < accounts.length; i++)
 			try {
-				listAccount.add(String.format("%s (%s)", account[i].name, account[i].type));
-				String sha1 = Util.sha1(account[i].name + account[i].type);
+				listAccount.add(String.format("%s (%s)", accounts[i].name, accounts[i].type));
+				String sha1 = Util.sha1(accounts[i].name + accounts[i].type);
 				selection[i] = PrivacyManager.getSettingBool(null, this, String.format("%s.%s", mPackageName, sha1),
 						false, false);
 			} catch (Throwable ex) {
@@ -263,7 +274,21 @@ public class ActivityApp extends Activity implements DialogInterface.OnMultiChoi
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(getString(R.string.menu_accounts));
 		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setMultiChoiceItems(listAccount.toArray(new CharSequence[0]), selection, this);
+		alertDialogBuilder.setMultiChoiceItems(listAccount.toArray(new CharSequence[0]), selection,
+				new DialogInterface.OnMultiChoiceClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+						try {
+							Account account = accounts[whichButton];
+							String sha1 = Util.sha1(account.name + account.type);
+							PrivacyManager.setSetting(null, ActivityApp.this,
+									String.format("%s.%s", mPackageName, sha1), Boolean.toString(isChecked));
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+							Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
+							toast.show();
+						}
+					}
+				});
 		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -276,18 +301,53 @@ public class ActivityApp extends Activity implements DialogInterface.OnMultiChoi
 		alertDialog.show();
 	}
 
-	@Override
-	public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-		try {
-			Account account = AccountManager.get(getApplicationContext()).getAccounts()[which];
-			String sha1 = Util.sha1(account.name + account.type);
-			PrivacyManager.setSetting(null, this, String.format("%s.%s", mPackageName, sha1),
-					Boolean.toString(isChecked));
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			Toast toast = Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG);
-			toast.show();
+	private void optionContacts() {
+		Map<Integer, String> mapContact = new LinkedHashMap<Integer, String>();
+		Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null,
+				Phone.DISPLAY_NAME + " ASC");
+		while (cursor.moveToNext()) {
+			int iId = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+			if (iId >= 0) {
+				int id = Integer.parseInt(cursor.getString(iId));
+				String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
+				mapContact.put(id, contact);
+			}
 		}
+		cursor.close();
+
+		List<CharSequence> listContact = new ArrayList<CharSequence>();
+		final int[] ids = new int[mapContact.size()];
+		boolean[] selection = new boolean[mapContact.size()];
+		int i = 0;
+		for (Integer id : mapContact.keySet()) {
+			listContact.add(mapContact.get(id));
+			ids[i] = id;
+			selection[i++] = PrivacyManager.getSettingBool(null, this,
+					String.format("Contact.%s.%d", mPackageName, id), false, false);
+		}
+
+		// Build dialog
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle(getString(R.string.menu_contacts));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setMultiChoiceItems(listContact.toArray(new CharSequence[0]), selection,
+				new DialogInterface.OnMultiChoiceClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+						PrivacyManager.setSetting(null, ActivityApp.this,
+								String.format("Contact.%s.%d", mPackageName, ids[whichButton]),
+								Boolean.toString(isChecked));
+					}
+				});
+		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// Do nothing
+			}
+		});
+
+		// Show dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 	@Override

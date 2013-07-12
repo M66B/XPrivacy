@@ -10,6 +10,8 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
+import android.provider.ContactsContract;
+import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
@@ -59,18 +61,61 @@ public class XContentProvider extends XHook {
 			Cursor cursor = (Cursor) param.getResult();
 			if (cursor != null) {
 				if (isRestricted(param, mProviderName)) {
-
-					// Google services provider: block only android_id
 					if (uri.toString().toLowerCase().startsWith("content://com.google.android.gsf.gservices")) {
+						// Google services provider: block only android_id
 						List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
 						if (Util.containsIgnoreCase(selectionArgs, "android_id")) {
 							MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
 							gsfCursor.addRow(new Object[] { "android_id", PrivacyManager.getDefacedProp("GSF_ID") });
 							param.setResult(gsfCursor);
 						}
+					} else if (uri.toString().toLowerCase()
+							.startsWith(ContactsContract.Contacts.CONTENT_URI.toString())) {
+						// Contacts provider: allow selected contacts
+						ContentProvider contentProvider = (ContentProvider) param.thisObject;
+						Context context = contentProvider.getContext();
+						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+						while (cursor.moveToNext()) {
+							int iId = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+							if (iId >= 0)
+								try {
+									int id = Integer.parseInt(cursor.getString(iId));
+									if (PrivacyManager.getSettingBool(this, context,
+											String.format("Contact.%s.%d", context.getPackageName(), id), false, true)) {
+										Object[] columns = new Object[cursor.getColumnCount()];
+										for (int i = 0; i < cursor.getColumnCount(); i++)
+											switch (cursor.getType(i)) {
+											case Cursor.FIELD_TYPE_NULL:
+												columns[i] = null;
+												break;
+											case Cursor.FIELD_TYPE_INTEGER:
+												columns[i] = cursor.getInt(i);
+												break;
+											case Cursor.FIELD_TYPE_FLOAT:
+												columns[i] = cursor.getFloat(i);
+												break;
+											case Cursor.FIELD_TYPE_STRING:
+												columns[i] = cursor.getString(i);
+												break;
+											case Cursor.FIELD_TYPE_BLOB:
+												columns[i] = cursor.getBlob(i);
+												break;
+											default:
+												Util.log(this, Log.WARN,
+														"Unknown cursor data type=" + cursor.getType(i));
+											}
+										result.addRow(columns);
+									}
+								} catch (Throwable ex) {
+									Util.bug(this, ex);
+								}
+						}
+						param.setResult(result);
 					} else
 						// Return empty cursor
 						param.setResult(new MatrixCursor(cursor.getColumnNames()));
+
+					cursor.close();
 				}
 			}
 		}

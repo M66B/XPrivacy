@@ -518,6 +518,7 @@ Changelog
 * Setting to filter system applications ([issue](https://github.com/M66B/XPrivacy/issues/215))
 * Option to set a template for new applications / all menu ([issue](https://github.com/M66B/XPrivacy/issues/17))
 * New colored icon set, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
+* Menu to select allowed contacts for an application ([issue](https://github.com/M66B/XPrivacy/issues/41))
 * Fixed checking for E-mail permission
 * Fixed restricting recording in some situations ([issue](https://github.com/M66B/XPrivacy/issues/209))
 * Fixed navigation of application detailed view ([issue](https://github.com/M66B/XPrivacy/issues/205))
