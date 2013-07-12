@@ -20,13 +20,13 @@
     <string name="menu_app_launch">Indítás</string>
     <string name="menu_app_settings">Beállítások</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Select accounts to allow</string>
+    <string name="menu_accounts">Válassza ki az engedélyezendő fiókokat</string>
     <string name="msg_noupdate">Nincs elérhető frissítés</string>
     <string name="msg_restricted" formatted="false">%s korlátozva az XPrivacy által</string>
     <string name="msg_licensed" formatted="false">Licensz tulajdonos: %s</string>
     <string name="msg_loading">Töltés</string>
-    <string name="msg_edit">Click the application icon to edit all restrictions</string>
-    <string name="msg_sure">Are you sure?</string>
+    <string name="msg_edit">Kattintson az alkalmazás ikonra az összes korlátozás módosításához</string>
+    <string name="msg_sure">Biztos benne?</string>
     <string name="msg_done">Kész</string>
     <string name="restrict_accounts">Fiókok (Google, Facebook, stb.)</string>
     <string name="restrict_browser">Böngésző (könyvjelzők / előzmények)</string>
