@@ -55,6 +55,7 @@
     <string name="settings_country">国</string>
     <string name="settings_subscriber">契約者固有ID</string>
     <string name="settings_fpermission">権限でフィルタ</string>
+    <string name="settings_fsystem">Filter system applications</string>
     <string name="settings_expert">上級者向けモード</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>

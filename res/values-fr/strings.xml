@@ -55,6 +55,7 @@
     <string name="settings_country">Pays</string>
     <string name="settings_subscriber">ID Abonné</string>
     <string name="settings_fpermission">Filtrer par permissions</string>
+    <string name="settings_fsystem">Filter system applications</string>
     <string name="settings_expert">Mode expert</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>

@@ -657,15 +657,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etIccId = (EditText) dlgSettings.findViewById(R.id.etIccId);
 		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
 		final CheckBox cbFPermission = (CheckBox) dlgSettings.findViewById(R.id.cbFPermission);
+		final CheckBox cbFSystem = (CheckBox) dlgSettings.findViewById(R.id.cbFSystem);
 		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
 		final boolean fPermission = PrivacyManager.getSettingBool(null, ActivityMain.this,
 				PrivacyManager.cSettingFPermission, true, false);
-
-		final boolean expert = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingExpert,
-				false, false);
+		final boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
+				true, false);
 
 		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "", false));
 		etLon.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude, "", false));
@@ -682,7 +682,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etSubscriber.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, "",
 				false));
 		cbFPermission.setChecked(fPermission);
-		cbExpert.setChecked(expert);
+		cbFSystem.setChecked(fSystem);
+		cbExpert.setChecked(PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingExpert,
+				false, false));
 
 		// Handle search
 		etSearch.setEnabled(Geocoder.isPresent());
@@ -766,12 +768,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
 						Boolean.toString(cbFPermission.isChecked()));
 
+				// Set filter by system
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
+						Boolean.toString(cbFSystem.isChecked()));
+
 				// Set expert mode
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingExpert,
 						Boolean.toString(cbExpert.isChecked()));
 
 				// Refresh if needed
-				if (fPermission != cbFPermission.isChecked() || expert != cbExpert.isChecked()) {
+				if (fPermission != cbFPermission.isChecked() || fSystem != cbFSystem.isChecked()) {
 					AppListTask appListTask = new AppListTask();
 					appListTask.execute();
 				}

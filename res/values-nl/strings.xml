@@ -55,6 +55,7 @@
     <string name="settings_country">Land</string>
     <string name="settings_subscriber">Abonnee ID</string>
     <string name="settings_fpermission">Filter op rechten</string>
+    <string name="settings_fsystem">Filter systeem applicaties</string>
     <string name="settings_expert">Expert modus</string>
     <string name="help_application">Applicatie</string>
     <string name="help_internet">heeft internet rechten</string>

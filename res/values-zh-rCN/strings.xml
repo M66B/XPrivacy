@@ -55,6 +55,7 @@
     <string name="settings_country">国家</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">按权限筛选</string>
+    <string name="settings_fsystem">Filter system applications</string>
     <string name="settings_expert">专家模式</string>
     <string name="help_application">应用</string>
     <string name="help_internet">表示联网的权限</string>

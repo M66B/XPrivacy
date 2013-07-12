@@ -55,6 +55,7 @@
     <string name="settings_country">Ország</string>
     <string name="settings_subscriber">Előfizető azonosító</string>
     <string name="settings_fpermission">Szűrés engedély szerint</string>
+    <string name="settings_fsystem">Filter system applications</string>
     <string name="settings_expert">Szakértői mód</string>
     <string name="help_application">Alkalmazás</string>
     <string name="help_internet">Internet engedély</string>

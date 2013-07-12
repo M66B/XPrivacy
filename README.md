@@ -367,10 +367,8 @@ To export/import settings you will need the [pro version](http://www.faircode.eu
 
 **(7) What is expert mode?**
 
-In expert mode you will be able to restrict restrict system applications, including Android itself.
-**Be careful!** This can result in force closes and boot loops.
-Furthermore you will be able to make exceptions for individual functions within a restriction category.
-And finally you will get update notification for system applications (including Google apps).
+In expert mode some more restriction categories will be available
+and you will be able to make exceptions for individual functions within each restriction category.
 
 **(8) Will you block the iptables command or force online state?**
 
@@ -507,6 +505,7 @@ Changelog
 * Some styling
 * More generic matching of system properties
 * Move categories internet, storage and system to expert mode ([issue](https://github.com/M66B/XPrivacy/issues/213), [issue](https://github.com/M66B/XPrivacy/issues/214))
+* Setting to filter system applications ([issue](https://github.com/M66B/XPrivacy/issues/215))
 * Fixed checking for E-mail permission
 * Fixed restricting recording in some situations ([issue](https://github.com/M66B/XPrivacy/issues/209))
 * Updated Hungarian translation
@@ -901,7 +900,7 @@ Current translations:
 * Hungarian (hu)
 * Italian (it)
 * Japanese (ja)
-* Norwegian (no)
+* Norwegian (nb-rNO, nn-rNO, no-rNO)
 * Polish (pl)
 * Romanian (ro)
 * Rusian (ru)

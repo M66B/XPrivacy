@@ -55,6 +55,7 @@
     <string name="settings_country">Country</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
+    <string name="settings_fsystem">Filter system applications</string>
     <string name="settings_expert">מצב מתקדם</string>
     <string name="help_application">אפליקציה</string>
     <string name="help_internet">יש הרשאות אינטרנט</string>

@@ -55,6 +55,7 @@
     <string name="settings_country">Krajina</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovať podľa povolenia</string>
+    <string name="settings_fsystem">Filter system applications</string>
     <string name="settings_expert">Režim experta</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové oprávnenie</string>

@@ -55,6 +55,7 @@
     <string name="settings_country">Ülke</string>
     <string name="settings_subscriber">Sim Numarası (IMSI)</string>
     <string name="settings_fpermission">İzne göre filtre et</string>
+    <string name="settings_fsystem">Filter system applications</string>
     <string name="settings_expert">Uzman modu</string>
     <string name="help_application">Uygulama</string>
     <string name="help_internet">internet izni var</string>

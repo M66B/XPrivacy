@@ -65,7 +65,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
 		// Get references
 		PackageManager pm = context.getPackageManager();
-		boolean expert = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingExpert, false, false);
+		boolean fSystem = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingFSystem, true, false);
 
 		// Get app list
 		SparseArray<ApplicationInfoEx> mapApp = new SparseArray<ApplicationInfoEx>();
@@ -78,7 +78,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			int enabled = pm.getApplicationEnabledSetting(xAppInfo.getPackageName());
 			if (enabled == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT
 					|| enabled == PackageManager.COMPONENT_ENABLED_STATE_ENABLED)
-				if (xAppInfo.getIsSystem() ? expert : true) {
+				if (fSystem ? !xAppInfo.getIsSystem() : true) {
 					ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
 					if (yAppInfo == null) {
 						mapApp.put(xAppInfo.getUid(), xAppInfo);

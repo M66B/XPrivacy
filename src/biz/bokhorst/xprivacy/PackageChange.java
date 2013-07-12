@@ -23,7 +23,7 @@ public class PackageChange extends BroadcastReceiver {
 			String packageName = inputUri.getSchemeSpecificPart();
 			int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 			boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
-			boolean expert = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingExpert, false, false);
+			boolean fSystem = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingFSystem, true, false);
 			NotificationManager notificationManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -40,7 +40,7 @@ public class PackageChange extends BroadcastReceiver {
 					return;
 				}
 
-				if (expert ? true : !system) {
+				if (fSystem ? !system : true) {
 					// Default deny new user apps
 					if (!system && !replacing)
 						for (String restrictionName : PrivacyManager.getRestrictions())
