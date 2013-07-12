@@ -42,6 +42,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -1183,8 +1184,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			notificationBuilder.setWhen(System.currentTimeMillis());
 			if (ongoing)
 				notificationBuilder.setOngoing(true);
-			else
+			else {
+				// Build result intent
+				Intent resultIntent = new Intent(ActivityMain.this, ActivityMain.class);
+				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+				// Build pending intent
+				PendingIntent pendingIntent = PendingIntent.getActivity(ActivityMain.this, NOTIFY_ID, resultIntent,
+						PendingIntent.FLAG_UPDATE_CURRENT);
+
 				notificationBuilder.setAutoCancel(true);
+				notificationBuilder.setContentIntent(pendingIntent);
+			}
 			Notification notification = notificationBuilder.build();
 
 			NotificationManager notificationManager = (NotificationManager) ActivityMain.this
@@ -1310,8 +1321,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			notificationBuilder.setWhen(System.currentTimeMillis());
 			if (ongoing)
 				notificationBuilder.setOngoing(true);
-			else
+			else {
+				// Build result intent
+				Intent resultIntent = new Intent(ActivityMain.this, ActivityMain.class);
+				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+				// Build pending intent
+				PendingIntent pendingIntent = PendingIntent.getActivity(ActivityMain.this, NOTIFY_ID, resultIntent,
+						PendingIntent.FLAG_UPDATE_CURRENT);
+
 				notificationBuilder.setAutoCancel(true);
+				notificationBuilder.setContentIntent(pendingIntent);
+			}
 			Notification notification = notificationBuilder.build();
 
 			NotificationManager notificationManager = (NotificationManager) ActivityMain.this

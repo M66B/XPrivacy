@@ -510,7 +510,8 @@ Changelog
 * New colored icon set, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
 * Fixed checking for E-mail permission
 * Fixed restricting recording in some situations ([issue](https://github.com/M66B/XPrivacy/issues/209))
-* Fixed navigation of application detailed view ([issue]())
+* Fixed navigation of application detailed view ([issue](https://github.com/M66B/XPrivacy/issues/205))
+* Fixed clearing export/import done notification
 * Updated Hungarian translation
 * Update Norwegian translation
 * Updated Simplified Chinese translation
