@@ -52,7 +52,7 @@ public class PrivacyManager {
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
 			cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cNfc,
-			cPhone, cStorage, cShell, cSystem, cView };
+			cPhone, cShell, cStorage, cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
