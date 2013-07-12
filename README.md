@@ -506,7 +506,8 @@ Changelog
 * More generic matching of system properties
 * Move categories internet, storage and system to expert mode ([issue](https://github.com/M66B/XPrivacy/issues/213), [issue](https://github.com/M66B/XPrivacy/issues/214))
 * Setting to filter system applications ([issue](https://github.com/M66B/XPrivacy/issues/215))
-* Option to set templates for new applications / all menu ([issue](https://github.com/M66B/XPrivacy/issues/17))
+* Option to set a template for new applications / all menu ([issue](https://github.com/M66B/XPrivacy/issues/17))
+* New colored icon set, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
 * Fixed checking for E-mail permission
 * Fixed restricting recording in some situations ([issue](https://github.com/M66B/XPrivacy/issues/209))
 * Updated Hungarian translation
