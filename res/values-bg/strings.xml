@@ -45,6 +45,7 @@
     <string name="restrict_shell">Терминал (команди, суперпотребител)</string>
     <string name="restrict_system">Система (инсталирани приложения)</string>
     <string name="restrict_view">Преглед (браузър)</string>
+    <string name="title_category">Category:</string>
     <string name="title_restrict">Отбележи за ограничаване:</string>
     <string name="settings_lat">Геогр. ширина</string>
     <string name="settings_lon">Геогр. дължина</string>

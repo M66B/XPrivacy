@@ -45,6 +45,7 @@
     <string name="restrict_shell">Shell (命令, 超级用户)</string>
     <string name="restrict_system">系统 (已安装的应用)</string>
     <string name="restrict_view">查看 (浏览器)</string>
+    <string name="title_category">Category:</string>
     <string name="title_restrict">勾选表示限制:</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>

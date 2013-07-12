@@ -45,6 +45,7 @@
     <string name="restrict_shell">Shell (kommandoer, superbruker)</string>
     <string name="restrict_system">System (installerte apper)</string>
     <string name="restrict_view">Betrakte (nettleser)</string>
+    <string name="title_category">Category:</string>
     <string name="title_restrict">Marker for å blokke:</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>

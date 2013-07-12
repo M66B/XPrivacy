@@ -45,6 +45,7 @@
     <string name="restrict_shell">команды shell (вкл. суперпользователя)</string>
     <string name="restrict_system">Система (установленные приложения)</string>
     <string name="restrict_view">Просмотр (браузер)</string>
+    <string name="title_category">Category:</string>
     <string name="title_restrict">Отметьте приложения:</string>
     <string name="settings_lat">Широта</string>
     <string name="settings_lon">Долгота</string>

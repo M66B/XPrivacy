@@ -45,6 +45,7 @@
     <string name="restrict_shell">Terminal (comandos, superusuario)</string>
     <string name="restrict_system">Sistema (aplicaciones instaladas)</string>
     <string name="restrict_view">Ver (navegador)</string>
+    <string name="title_category">Category:</string>
     <string name="title_restrict">Selecciona para restringir:</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>

@@ -45,6 +45,7 @@
     <string name="restrict_shell">Interfata (Shell) (comenzi, superuser)</string>
     <string name="restrict_system">Sistem (aplicatii instalate)</string>
     <string name="restrict_view">Acces browser</string>
+    <string name="title_category">Category:</string>
     <string name="title_restrict">Bifeaza pentru a restrictiona:</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>

@@ -45,6 +45,7 @@
     <string name="restrict_shell">سطر الأوامر (الأوامر,المستخدم الجذر)</string>
     <string name="restrict_system">النظام (البرامج المنزلة)</string>
     <string name="restrict_view">تصفح (المتصفح)</string>
+    <string name="title_category">Category:</string>
     <string name="title_restrict">إختر للتقيد:</string>
     <string name="settings_expert">الوضع المتقدم</string>
     <string name="settings_lat">خط العرض</string>

@@ -45,6 +45,7 @@
     <string name="restrict_shell">Parancssor (parancsok, rendszergazda)</string>
     <string name="restrict_system">Rendszer (telepített alkalmazások)</string>
     <string name="restrict_view">Megtekintés (böngésző)</string>
+    <string name="title_category">Category:</string>
     <string name="title_restrict">Jelölje be a korlátozáshoz:</string>
     <string name="settings_lat">Szélesség</string>
     <string name="settings_lon">Hosszúság</string>
