@@ -506,6 +506,7 @@ Changelog
 
 * Some styling
 * More generic matching of system properties
+* Move categories internet, storage and system to expert mode
 * Fixed checking for E-mail permission
 * Updated Hungarian translation
 * Update Norwegian translation

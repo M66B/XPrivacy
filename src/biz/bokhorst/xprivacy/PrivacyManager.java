@@ -322,7 +322,14 @@ public class PrivacyManager {
 	}
 
 	public static List<String> getRestrictions() {
-		return new ArrayList<String>(Arrays.asList(cRestrictionNames));
+		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
+		if (!PrivacyManager.getSettingBool(null, null, PrivacyManager.cSettingExpert, false, false)) {
+			listRestriction.remove(cInternet);
+			listRestriction.remove(cStorage);
+			listRestriction.remove(cSystem);
+		}
+
+		return listRestriction;
 	}
 
 	public static List<String> getMethodNames(String restrictionName) {
