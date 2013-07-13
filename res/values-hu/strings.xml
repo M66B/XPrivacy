@@ -1,6 +1,5 @@
 <resources>
 
-    <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Az Xposed keretrendszer %d+ nincs telepítve</string>
     <string name="app_notenabled">Az XPrivacy nincs engedélyezve az Xposed telepítőben</string>
     <string name="app_wrongandroid">Csak Android 4.0, 4.1 és 4.2 verziókon teszteltve</string>

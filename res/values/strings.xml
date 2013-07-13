@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Translators: do not include texts with translatable="false" -->
-    <string name="app_name">XPrivacy</string>
+    <string name="app_name" translatable="false">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed framework version %d+ is not installed</string>
     <string name="app_notenabled">XPrivacy is not enabled in the Xposed installer</string>
     <string name="app_wrongandroid">Only tested with Android version 4.0, 4.1 and 4.2</string>

@@ -1,6 +1,5 @@
 <resources>
 
-    <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">لم يتم تثبيت إطار xposed نسخة %d+</string>
     <string name="app_notenabled">لم يتم تفعيل XPrivacy</string>
     <string name="app_wrongandroid">تم إختباره مع أندرويد آيسكريم وجلي بين فقط</string>

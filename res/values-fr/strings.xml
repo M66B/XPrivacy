@@ -1,6 +1,5 @@
 <resources>
 
-    <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">La version %d+ du cadre d\'applications Xposed n\'est pas installée</string>
     <string name="app_notenabled">XPrivacy n\'est pas activé dans l\'installateur Xposed</string>
     <string name="app_wrongandroid">Testé sous Android version 4.0, 4.1 et 4.2</string>

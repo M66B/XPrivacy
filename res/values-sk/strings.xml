@@ -1,6 +1,5 @@
 <resources>
 
-    <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
     <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed</string>
     <string name="app_wrongandroid">Testované len s Android verziou 4.0, 4.1 a 4.2</string>

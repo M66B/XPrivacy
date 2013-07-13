@@ -1,6 +1,5 @@
 <resources>
 
-    <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed framework version %d+ er ikke installeret</string>
     <string name="app_notenabled">XPrivacy er ikke aktiveret i XPosed Installer</string>
     <string name="app_wrongandroid">Er kun tested i Android 4.0, 4.1 og 4.2</string>

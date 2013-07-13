@@ -1,6 +1,5 @@
 <resources>
 
-    <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed 框架版本 %d+ 未安装</string>
     <string name="app_notenabled">XPrivacy 没有在 Xposed 程序中开启</string>
     <string name="app_wrongandroid">仅在 Android 4.0, 4.1 和 4.2 版本上测试</string>

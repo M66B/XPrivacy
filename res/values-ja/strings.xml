@@ -1,6 +1,5 @@
 <resources>
 
-    <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed framework バージョン %d+ がインストールされていません</string>
     <string name="app_notenabled">XPrivacyがXposed installerで有効になっていません</string>
     <string name="app_wrongandroid">Androidバージョン4.0, 4.1と4.2でのみ動作を確認しています。</string>

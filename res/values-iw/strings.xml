@@ -1,6 +1,5 @@
 <resources>
 
-    <string name="app_name">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed framework  לא מותקן</string>
     <string name="app_notenabled">XPrivacy לא מאופשר באפליקציה הראשית</string>
     <string name="app_wrongandroid">Only tested with Android version 4.0, 4.1 and 4.2</string>
