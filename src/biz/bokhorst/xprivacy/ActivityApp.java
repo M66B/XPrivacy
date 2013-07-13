@@ -45,9 +45,11 @@ import android.widget.Toast;
 public class ActivityApp extends Activity {
 
 	private int mThemeId;
+	private boolean mNotified;
 	private ApplicationInfoEx mAppInfo;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 
+	public static final String cNotified = "notified";
 	public static final String cPackageName = "PackageName";
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,8 +62,11 @@ public class ActivityApp extends Activity {
 		// Set layout
 		setContentView(R.layout.restrictionlist);
 
-		// Get app info
+		// Get arguments
 		Bundle extras = getIntent().getExtras();
+		mNotified = (extras.containsKey(cNotified) ? extras.getBoolean(cNotified) : false);
+
+		// Get app info
 		mAppInfo = new ApplicationInfoEx(this, extras.getString(cPackageName));
 		if (!mAppInfo.getIsInstalled()) {
 			finish();
@@ -157,7 +162,8 @@ public class ActivityApp extends Activity {
 
 	@Override
 	protected void onStop() {
-		finish();
+		if (mNotified)
+			finish();
 		super.onStop();
 	}
 
