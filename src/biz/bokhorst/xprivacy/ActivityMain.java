@@ -399,19 +399,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-			alertDialog.setTitle(getString(R.string.app_name));
-			alertDialog.setMessage(getString(R.string.app_wrongandroid));
-			alertDialog.setIcon(getThemed(R.attr.icon_launcher));
-			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
-							xposedIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy#installation"));
-							startActivity(xposedIntent);
-						}
-					});
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.app_name));
+			alertDialogBuilder.setMessage(getString(R.string.app_wrongandroid));
+			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
+					xposedIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy#installation"));
+					startActivity(xposedIntent);
+				}
+			});
+			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
 		}
 
@@ -421,19 +421,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			String msg = String.format(getString(R.string.app_notxposed), PrivacyManager.cXposedMinVersion);
 			Util.log(null, Log.WARN, msg);
 
-			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-			alertDialog.setTitle(getString(R.string.app_name));
-			alertDialog.setMessage(msg);
-			alertDialog.setIcon(getThemed(R.attr.icon_launcher));
-			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
-							xposedIntent.setData(Uri.parse("http://forum.xda-developers.com/showthread.php?t=1574401"));
-							startActivity(xposedIntent);
-						}
-					});
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.app_name));
+			alertDialogBuilder.setMessage(msg);
+			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
+					xposedIntent.setData(Uri.parse("http://forum.xda-developers.com/showthread.php?t=1574401"));
+					startActivity(xposedIntent);
+				}
+			});
+			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
 		}
 
@@ -442,21 +442,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			String msg = getString(R.string.app_notenabled);
 			Util.log(null, Log.WARN, msg);
 
-			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-			alertDialog.setTitle(getString(R.string.app_name));
-			alertDialog.setMessage(msg);
-			alertDialog.setIcon(getThemed(R.attr.icon_launcher));
-			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							Intent xInstallerIntent = getPackageManager().getLaunchIntentForPackage(
-									"de.robv.android.xposed.installer");
-							xInstallerIntent.putExtra("opentab", 1);
-							if (xInstallerIntent != null)
-								startActivity(xInstallerIntent);
-						}
-					});
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.app_name));
+			alertDialogBuilder.setMessage(msg);
+			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent xInstallerIntent = getPackageManager().getLaunchIntentForPackage(
+							"de.robv.android.xposed.installer");
+					xInstallerIntent.putExtra("opentab", 1);
+					if (xInstallerIntent != null)
+						startActivity(xInstallerIntent);
+				}
+			});
+			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
 		}
 
@@ -584,56 +584,55 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionAll() {
-		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-		alertDialog.setTitle(getString(R.string.app_name));
-		alertDialog.setMessage(getString(R.string.msg_sure));
-		alertDialog.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						if (mAppAdapter != null) {
-							// Check if some restricted
-							boolean someRestricted = false;
-							for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
-								ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
-								if (mAppAdapter.getRestrictionName() == null) {
-									for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-											xAppInfo.getUid()))
-										if (restricted) {
-											someRestricted = true;
-											break;
-										}
-								} else if (PrivacyManager.getRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-										mAppAdapter.getRestrictionName(), null, false, false))
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle(getString(R.string.app_name));
+		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if (mAppAdapter != null) {
+					// Check if some restricted
+					boolean someRestricted = false;
+					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
+						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
+						if (mAppAdapter.getRestrictionName() == null) {
+							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
+									xAppInfo.getUid()))
+								if (restricted) {
 									someRestricted = true;
-								if (someRestricted)
 									break;
-							}
-
-							// Invert selection
-							for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
-								ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
-								if (mAppAdapter.getRestrictionName() == null) {
-									for (String restrictionName : PrivacyManager.getRestrictions())
-										PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-												restrictionName, null, !someRestricted);
-								} else
-									PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-											mAppAdapter.getRestrictionName(), null, !someRestricted);
-							}
-
-							// Refresh
-							mAppAdapter.notifyDataSetChanged();
-						}
+								}
+						} else if (PrivacyManager.getRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+								mAppAdapter.getRestrictionName(), null, false, false))
+							someRestricted = true;
+						if (someRestricted)
+							break;
 					}
-				});
-		alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(android.R.string.cancel),
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
+
+					// Invert selection
+					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
+						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
+						if (mAppAdapter.getRestrictionName() == null) {
+							for (String restrictionName : PrivacyManager.getRestrictions())
+								PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+										restrictionName, null, !someRestricted);
+						} else
+							PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+									mAppAdapter.getRestrictionName(), null, !someRestricted);
 					}
-				});
+
+					// Refresh
+					mAppAdapter.notifyDataSetChanged();
+				}
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 	}
 
@@ -999,24 +998,23 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		String msg = String.format("Incompatible %s", clazz.getName());
 		Util.log(null, Log.WARN, msg);
 
-		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-		alertDialog.setTitle(getString(R.string.app_name));
-		alertDialog.setMessage(msg);
-		alertDialog.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						sendClassInfo(clazz);
-					}
-				});
-		alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(android.R.string.cancel),
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle(getString(R.string.app_name));
+		alertDialogBuilder.setMessage(msg);
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				sendClassInfo(clazz);
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 	}
 
