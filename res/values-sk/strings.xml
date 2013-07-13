@@ -8,7 +8,7 @@
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="app_info">Informácie: https://github.com/M66B/XPrivacy/</string>
     <string name="menu_settings">Nastavenia</string>
-    <string name="menu_template">Template</string>
+    <string name="menu_template">Šablóna</string>
     <string name="menu_update">Aktualizovať</string>
     <string name="menu_report">Nahlásiť problém</string>
     <string name="menu_export">Exportovať</string>
@@ -21,7 +21,7 @@
     <string name="menu_app_settings">Nastavenia</string>
     <string name="menu_app_store">Obchod Play</string>
     <string name="menu_accounts">Vybrať účty na povolenie</string>
-    <string name="menu_contacts">Select contacts to allow</string>
+    <string name="menu_contacts">Vybrať kontakty na povolenie</string>
     <string name="msg_noupdate">Nie je k dispozícii žiadna aktualizácia</string>
     <string name="msg_restricted" formatted="false">%s obmedzené pomocou XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
@@ -46,7 +46,7 @@
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
-    <string name="title_category">Category:</string>
+    <string name="title_category">Kategória:</string>
     <string name="title_restrict">Zaškrtnite pre obmedzenie:</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
@@ -56,7 +56,7 @@
     <string name="settings_country">Krajina</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovať podľa povolenia</string>
-    <string name="settings_fsystem">Filter system applications</string>
+    <string name="settings_fsystem">Filtrivať systémové aplikácie</string>
     <string name="settings_expert">Režim experta</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové oprávnenie</string>
