@@ -139,11 +139,18 @@ public class ActivityApp extends Activity {
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
 		tvPackageName.setText(String.format("%s %d", mAppInfo.getPackageName(), mAppInfo.getUid()));
 
+		// Get applicable restrictions
+		boolean fPermission = PrivacyManager
+				.getSettingBool(null, this, PrivacyManager.cSettingFPermission, true, false);
+		List<String> listRestriction = new ArrayList<String>();
+		for (String restrictionName : PrivacyManager.getRestrictions())
+			if (fPermission ? PrivacyManager.hasPermission(this, mAppInfo.getPackageName(), restrictionName) : true)
+				listRestriction.add(restrictionName);
+
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
-		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo,
-				PrivacyManager.getRestrictions());
+		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, listRestriction);
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 
 		// Up navigation
