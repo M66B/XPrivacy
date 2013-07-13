@@ -7,9 +7,9 @@
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
     <string name="app_copyright">版权所有 \u00A9 2013 M. Bokhorst (M66B)</string>
-    <string name="app_info">信息: https://github.com/M66B/XPrivacy/</string>
+    <string name="app_info">详情: https://github.com/M66B/XPrivacy/</string>
     <string name="menu_settings">设置</string>
-    <string name="menu_template">Template</string>
+    <string name="menu_template">规则模板</string>
     <string name="menu_update">检查更新</string>
     <string name="menu_report">报告问题</string>
     <string name="menu_export">导出配置</string>
@@ -17,12 +17,12 @@
     <string name="menu_theme">切换主题</string>
     <string name="menu_pro">专业版</string>
     <string name="menu_about">关于</string>
-    <string name="menu_all">全部</string>
+    <string name="menu_all">全选</string>
     <string name="menu_app_launch">启动</string>
     <string name="menu_app_settings">设置</string>
     <string name="menu_app_store">Play 商店</string>
     <string name="menu_accounts">选择允许的帐号</string>
-    <string name="menu_contacts">Select contacts to allow</string>
+    <string name="menu_contacts">选择允许的联系人</string>
     <string name="msg_noupdate">没有新版本</string>
     <string name="msg_restricted" formatted="false">%s 被 XPrivacy 限制</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
@@ -47,7 +47,7 @@
     <string name="restrict_shell">Shell (命令, 超级用户)</string>
     <string name="restrict_system">系统 (已安装的应用)</string>
     <string name="restrict_view">查看 (浏览器)</string>
-    <string name="title_category">Category:</string>
+    <string name="title_category">类目:</string>
     <string name="title_restrict">勾选表示限制:</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
@@ -57,7 +57,7 @@
     <string name="settings_country">国家</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">按权限筛选</string>
-    <string name="settings_fsystem">Filter system applications</string>
+    <string name="settings_fsystem">筛选系统应用</string>
     <string name="settings_expert">专家模式</string>
     <string name="help_application">应用</string>
     <string name="help_internet">表示联网的权限</string>
