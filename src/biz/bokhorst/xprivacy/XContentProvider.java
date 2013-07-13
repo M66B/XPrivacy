@@ -65,80 +65,84 @@ public class XContentProvider extends XHook {
 		Util.log(this, Log.INFO, "uri=" + uri);
 		String sUri = (uri == null ? null : uri.toString().toLowerCase());
 		if (sUri != null && (mUriStart == null || sUri.startsWith(mUriStart))) {
-
 			Cursor cursor = (Cursor) param.getResult();
-			if (cursor != null && isRestricted(param, mProviderName))
-				try {
-
-					if (sUri.startsWith("content://com.google.android.gsf.gservices")) {
-						// Google services provider: block only android_id
-						List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
-						if (Util.containsIgnoreCase(selectionArgs, "android_id")) {
+			if (cursor != null)
+				if (sUri.startsWith("content://com.google.android.gsf.gservices")) {
+					// Google services provider: block only android_id
+					List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
+					if (Util.containsIgnoreCase(selectionArgs, "android_id"))
+						if (isRestricted(param, mProviderName)) {
 							MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
 							gsfCursor.addRow(new Object[] { "android_id", PrivacyManager.getDefacedProp("GSF_ID") });
 							gsfCursor.respond(cursor.getExtras());
 							param.setResult(gsfCursor);
+							cursor.close();
 						}
 
-					} else if (sUri.startsWith(ContactsContract.Contacts.CONTENT_URI.toString())) {
-						// Contacts provider: allow selected contacts
+				} else if (sUri.startsWith(ContactsContract.Contacts.CONTENT_URI.toString())
+						&& !sUri.startsWith("content://com.android.contacts/profile")) {
+					// Contacts provider: allow selected contacts
+					if (isRestricted(param, mProviderName)) {
 						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 						while (cursor.moveToNext()) {
-							// Find contact ID column
-							int iId = -1;
-							if (sUri.startsWith("content://com.android.contacts/contacts"))
-								iId = cursor.getColumnIndex("_id");
-							else
-								iId = cursor.getColumnIndex("contact_id");
+							// Get contact ID
+							int id = -1;
+							if (sUri.startsWith("content://com.android.contacts/contacts")
+									|| sUri.startsWith("content://com.android.contacts/phone_lookup"))
+								id = cursor.getInt(cursor.getColumnIndex("_id"));
+							else if (sUri.startsWith("content://com.android.contacts/data")
+									|| sUri.startsWith("content://com.android.contacts/raw_contacts"))
+								id = cursor.getInt(cursor.getColumnIndex("contact_id"));
 
 							// Copy row
-							if (iId >= 0)
-								try {
-									int id = Integer.parseInt(cursor.getString(iId));
-									if (PrivacyManager.getSettingBool(this, null,
-											String.format("Contact.%d.%d", Binder.getCallingUid(), id), false, true)) {
-										Object[] columns = new Object[cursor.getColumnCount()];
-										for (int i = 0; i < cursor.getColumnCount(); i++)
-											switch (cursor.getType(i)) {
-											case Cursor.FIELD_TYPE_NULL:
-												columns[i] = null;
-												break;
-											case Cursor.FIELD_TYPE_INTEGER:
-												columns[i] = cursor.getInt(i);
-												break;
-											case Cursor.FIELD_TYPE_FLOAT:
-												columns[i] = cursor.getFloat(i);
-												break;
-											case Cursor.FIELD_TYPE_STRING:
-												columns[i] = cursor.getString(i);
-												break;
-											case Cursor.FIELD_TYPE_BLOB:
-												columns[i] = cursor.getBlob(i);
-												break;
-											default:
-												Util.log(this, Log.WARN,
-														"Unknown cursor data type=" + cursor.getType(i));
-											}
-										result.addRow(columns);
-									}
-								} catch (Throwable ex) {
-									Util.bug(this, ex);
+							try {
+								if (id < 0
+										|| PrivacyManager
+												.getSettingBool(this, null,
+														String.format("Contact.%d.%d", Binder.getCallingUid(), id),
+														false, true)) {
+									if (id < 0)
+										Util.log(this, Log.WARN, "Contact ID not found uri=" + sUri);
+									Object[] columns = new Object[cursor.getColumnCount()];
+									for (int i = 0; i < cursor.getColumnCount(); i++)
+										switch (cursor.getType(i)) {
+										case Cursor.FIELD_TYPE_NULL:
+											columns[i] = null;
+											break;
+										case Cursor.FIELD_TYPE_INTEGER:
+											columns[i] = cursor.getInt(i);
+											break;
+										case Cursor.FIELD_TYPE_FLOAT:
+											columns[i] = cursor.getFloat(i);
+											break;
+										case Cursor.FIELD_TYPE_STRING:
+											columns[i] = cursor.getString(i);
+											break;
+										case Cursor.FIELD_TYPE_BLOB:
+											columns[i] = cursor.getBlob(i);
+											break;
+										default:
+											Util.log(this, Log.WARN, "Unknown cursor data type=" + cursor.getType(i));
+										}
+									result.addRow(columns);
 								}
-							else
-								Util.log(this, Log.WARN, "Contact ID not found uri=" + sUri);
+							} catch (Throwable ex) {
+								Util.bug(this, ex);
+							}
 						}
 						result.respond(cursor.getExtras());
 						param.setResult(result);
+						cursor.close();
+					}
 
-					} else {
+				} else {
+					if (isRestricted(param, mProviderName)) {
 						// Return empty cursor
 						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 						result.respond(cursor.getExtras());
 						param.setResult(result);
+						cursor.close();
 					}
-
-				} finally {
-					cursor.close();
 				}
 		}
 	}
