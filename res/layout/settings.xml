@@ -159,7 +159,7 @@
                 <EditText
                     android:id="@+id/etIccId"
                     android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="19" />
+                    android:maxLength="20" />
             </TableRow>
 
             <TableRow>
