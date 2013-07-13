@@ -26,6 +26,12 @@ public class XContentProvider extends XHook {
 		mUriStart = null;
 	}
 
+	public XContentProvider(String restrictionName, String[] permissions, String providerName, String uriStart) {
+		super("query", restrictionName, permissions, providerName);
+		mProviderName = providerName;
+		mUriStart = uriStart;
+	}
+
 	// @formatter:off
 
 	// public abstract Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
@@ -56,13 +62,15 @@ public class XContentProvider extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		// Check uri
 		Uri uri = (Uri) param.args[0];
-		if (mUriStart == null || (uri != null && uri.toString().toLowerCase().startsWith(mUriStart))) {
+		Util.log(this, Log.INFO, "uri=" + uri);
+		String sUri = (uri == null ? null : uri.toString().toLowerCase());
+		if (sUri != null && (mUriStart == null || sUri.startsWith(mUriStart))) {
 
 			Cursor cursor = (Cursor) param.getResult();
 			if (cursor != null && isRestricted(param, mProviderName))
 				try {
 
-					if (uri.toString().toLowerCase().startsWith("content://com.google.android.gsf.gservices")) {
+					if (sUri.startsWith("content://com.google.android.gsf.gservices")) {
 						// Google services provider: block only android_id
 						List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
 						if (Util.containsIgnoreCase(selectionArgs, "android_id")) {
@@ -72,12 +80,18 @@ public class XContentProvider extends XHook {
 							param.setResult(gsfCursor);
 						}
 
-					} else if (uri.toString().toLowerCase()
-							.startsWith(ContactsContract.Contacts.CONTENT_URI.toString())) {
+					} else if (sUri.startsWith(ContactsContract.Contacts.CONTENT_URI.toString())) {
 						// Contacts provider: allow selected contacts
 						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 						while (cursor.moveToNext()) {
-							int iId = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+							// Find contact ID column
+							int iId = -1;
+							if (sUri.startsWith("content://com.android.contacts/contacts"))
+								iId = cursor.getColumnIndex("_id");
+							else
+								iId = cursor.getColumnIndex("contact_id");
+
+							// Copy row
 							if (iId >= 0)
 								try {
 									int id = Integer.parseInt(cursor.getString(iId));
@@ -110,9 +124,12 @@ public class XContentProvider extends XHook {
 								} catch (Throwable ex) {
 									Util.bug(this, ex);
 								}
+							else
+								Util.log(this, Log.WARN, "Contact ID not found uri=" + sUri);
 						}
 						result.respond(cursor.getExtras());
 						param.setResult(result);
+
 					} else {
 						// Return empty cursor
 						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());

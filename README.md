@@ -526,6 +526,7 @@ Changelog
 * Fixed clearing export/import done notification
 * Added Danish translation
 * Updated Hungarian translation
+* Updated Japanese translation
 * Update Norwegian translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
