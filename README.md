@@ -134,6 +134,10 @@ For easy usage, data is restricted by category:
 	* prevent data messages from being sent
 * Contacts
 	* return an empty contact list
+		* content://com.android.contacts/data
+		* content://com.android.contacts/raw_contacts
+		* content://com.android.contacts/phone_lookup
+		* content://com.android.contacts/profile
 * Dictionary
 	* return an empty user dictionary
 * E-mail
@@ -517,7 +521,7 @@ Changelog
 * Move categories internet, storage and system to expert mode ([issue](https://github.com/M66B/XPrivacy/issues/213), [issue](https://github.com/M66B/XPrivacy/issues/214))
 * Setting to filter system applications ([issue](https://github.com/M66B/XPrivacy/issues/215))
 * Option to set a template for new applications / all menu ([issue](https://github.com/M66B/XPrivacy/issues/17))
-* New colored icon set, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
+* New colored icon set, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642) ([issue](https://github.com/M66B/XPrivacy/issues/206))
 * Menu to select allowed contacts for an application ([issue](https://github.com/M66B/XPrivacy/issues/41))
 * Increase length of ICCID to 20 digits ([issue](https://github.com/M66B/XPrivacy/issues/222))
 * Fixed checking for E-mail permission
