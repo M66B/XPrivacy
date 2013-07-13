@@ -514,7 +514,11 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 1.5** (in development)
+**Version 1.6** (in development)
+
+* Fix registering property names
+
+**Version 1.5**
 
 * User interface improvements
 * Performance improvements

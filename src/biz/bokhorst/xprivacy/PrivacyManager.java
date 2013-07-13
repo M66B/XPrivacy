@@ -225,8 +225,7 @@ public class PrivacyManager {
 			mMethods.get(cCalling).add(sms);
 
 		// System properties
-		String[] props = new String[] { "ro.gsm.imei", "net.hostname", "ro.serialno", "ro.boot.serialno",
-				"ro.boot.wifimacaddr", "ro.boot.btmacaddr" };
+		String[] props = new String[] { "%imei", "%hostname", "%serialno", "%macaddr" };
 		for (String prop : props)
 			mMethods.get(cIdentification).add(prop);
 
