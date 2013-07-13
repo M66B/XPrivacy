@@ -225,6 +225,7 @@ For easy usage, data is restricted by category:
 	* return an empty list of running tasks
 	* return an empty list of widgets
 	* return an empty list of applications (provider)
+	* throw FileNotFoundException for /proc
 * View
 	* prevent links from opening in the browser
 	* you will be notified if an application tries to open a link
@@ -516,7 +517,8 @@ Changelog
 
 **Version 1.6** (in development)
 
-* Fix registering property names
+* Restrict access to /proc ([issue](https://github.com/M66B/XPrivacy/issues/227))
+* Fixed registering property names
 
 **Version 1.5**
 

@@ -272,6 +272,7 @@ public class PrivacyManager {
 
 		// Applications provider
 		mMethods.get(cSystem).add("ApplicationsProvider");
+		mMethods.get(cSystem).add("/proc");
 
 		// Browser provider
 		mMethods.get(cBrowser).add("BrowserProvider");
