@@ -414,18 +414,20 @@ public class PrivacyManager {
 							// Can happen if memory low
 							Util.log(hook, Log.WARN, "cursor is null");
 							Util.logStack(null);
-						} else {
-							// Get restriction
-							if (cursor.moveToNext()) {
-								restricted = Boolean.parseBoolean(cursor.getString(cursor
-										.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
-								fallback = false;
-							} else {
-								Util.log(hook, Log.WARN, "cursor is empty");
-								Util.logStack(null);
+						} else
+							try {
+								// Get restriction
+								if (cursor.moveToNext()) {
+									restricted = Boolean.parseBoolean(cursor.getString(cursor
+											.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
+									fallback = false;
+								} else {
+									Util.log(hook, Log.WARN, "cursor is empty");
+									Util.logStack(null);
+								}
+							} finally {
+								cursor.close();
 							}
-							cursor.close();
-						}
 
 						// Send usage data
 						UsageData data = null;
@@ -543,12 +545,14 @@ public class PrivacyManager {
 		if (contentResolver != null) {
 			Cursor cursor = contentResolver.query(PrivacyProvider.URI_RESTRICTION, null, null,
 					new String[] { Integer.toString(uid), Boolean.toString(false), null }, null);
-			if (cursor != null) {
-				while (cursor.moveToNext())
-					listRestricted.add(Boolean.parseBoolean(cursor.getString(cursor
-							.getColumnIndex(PrivacyProvider.COL_RESTRICTED))));
-				cursor.close();
-			}
+			if (cursor != null)
+				try {
+					while (cursor.moveToNext())
+						listRestricted.add(Boolean.parseBoolean(cursor.getString(cursor
+								.getColumnIndex(PrivacyProvider.COL_RESTRICTED))));
+				} finally {
+					cursor.close();
+				}
 		}
 		return listRestricted;
 	}
@@ -564,16 +568,21 @@ public class PrivacyManager {
 		List<RestrictionDesc> result = new ArrayList<RestrictionDesc>();
 		Cursor rCursor = context.getContentResolver().query(PrivacyProvider.URI_RESTRICTION, null, null,
 				new String[] { Integer.toString(0), Boolean.toString(false) }, null);
-		while (rCursor.moveToNext()) {
-			RestrictionDesc restriction = new RestrictionDesc();
-			restriction.uid = rCursor.getInt(rCursor.getColumnIndex(PrivacyProvider.COL_UID));
-			restriction.restricted = Boolean.parseBoolean(rCursor.getString(rCursor
-					.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
-			restriction.restrictionName = rCursor.getString(rCursor.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
-			restriction.methodName = rCursor.getString(rCursor.getColumnIndex(PrivacyProvider.COL_METHOD));
-			result.add(restriction);
-		}
-		rCursor.close();
+		if (rCursor != null)
+			try {
+				while (rCursor.moveToNext()) {
+					RestrictionDesc restriction = new RestrictionDesc();
+					restriction.uid = rCursor.getInt(rCursor.getColumnIndex(PrivacyProvider.COL_UID));
+					restriction.restricted = Boolean.parseBoolean(rCursor.getString(rCursor
+							.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
+					restriction.restrictionName = rCursor.getString(rCursor
+							.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
+					restriction.methodName = rCursor.getString(rCursor.getColumnIndex(PrivacyProvider.COL_METHOD));
+					result.add(restriction);
+				}
+			} finally {
+				rCursor.close();
+			}
 		return result;
 	}
 
@@ -590,12 +599,16 @@ public class PrivacyManager {
 		ContentResolver cr = context.getContentResolver();
 		Cursor cursor = cr.query(PrivacyProvider.URI_USAGE, null, restrictionName, new String[] {
 				Integer.toString(uid), methodName }, null);
-		while (cursor.moveToNext()) {
-			long usage = cursor.getLong(cursor.getColumnIndex(PrivacyProvider.COL_USED));
-			if (usage > lastUsage)
-				lastUsage = usage;
-		}
-		cursor.close();
+		if (cursor != null)
+			try {
+				while (cursor.moveToNext()) {
+					long usage = cursor.getLong(cursor.getColumnIndex(PrivacyProvider.COL_USED));
+					if (usage > lastUsage)
+						lastUsage = usage;
+				}
+			} finally {
+				cursor.close();
+			}
 		boolean used = (lastUsage != 0);
 		logRestriction(null, context, uid, "used", restrictionName, methodName, used, false, 0);
 		return lastUsage;
@@ -650,15 +663,18 @@ public class PrivacyManager {
 						// Can happen if memory low
 						Util.log(hook, Log.WARN, "cursor is null");
 						Util.logStack(null);
-					} else {
-						if (cursor.moveToNext()) {
-							value = cursor.getString(cursor.getColumnIndex(PrivacyProvider.COL_VALUE));
-							fallback = false;
-						} else {
-							Util.log(hook, Log.WARN, "cursor is empty");
+					} else
+						try {
+							if (cursor.moveToNext()) {
+								value = cursor.getString(cursor.getColumnIndex(PrivacyProvider.COL_VALUE));
+								fallback = false;
+							} else {
+								Util.log(hook, Log.WARN, "cursor is empty");
+							}
+
+						} finally {
+							cursor.close();
 						}
-						cursor.close();
-					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(hook, ex);
@@ -702,13 +718,17 @@ public class PrivacyManager {
 	public static Map<String, String> getSettings(Context context) {
 		Map<String, String> result = new HashMap<String, String>();
 		Cursor sCursor = context.getContentResolver().query(PrivacyProvider.URI_SETTING, null, null, null, null);
-		while (sCursor.moveToNext()) {
-			// Get setting
-			String setting = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_SETTING));
-			String value = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_VALUE));
-			result.put(setting, value);
-		}
-		sCursor.close();
+		if (sCursor != null)
+			try {
+				while (sCursor.moveToNext()) {
+					// Get setting
+					String setting = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_SETTING));
+					String value = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_VALUE));
+					result.put(setting, value);
+				}
+			} finally {
+				sCursor.close();
+			}
 		return result;
 	}
 

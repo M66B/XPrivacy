@@ -302,15 +302,19 @@ public class ActivityApp extends Activity {
 		Map<Integer, String> mapContact = new LinkedHashMap<Integer, String>();
 		Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null,
 				Phone.DISPLAY_NAME);
-		while (cursor.moveToNext()) {
-			int iId = cursor.getColumnIndex(ContactsContract.Contacts._ID);
-			if (iId >= 0) {
-				int id = Integer.parseInt(cursor.getString(iId));
-				String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
-				mapContact.put(id, contact);
+		if (cursor != null)
+			try {
+				while (cursor.moveToNext()) {
+					int iId = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+					if (iId >= 0) {
+						int id = Integer.parseInt(cursor.getString(iId));
+						String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
+						mapContact.put(id, contact);
+					}
+				}
+			} finally {
+				cursor.close();
 			}
-		}
-		cursor.close();
 
 		List<CharSequence> listContact = new ArrayList<CharSequence>();
 		final int[] ids = new int[mapContact.size()];

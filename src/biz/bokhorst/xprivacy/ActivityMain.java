@@ -1093,62 +1093,66 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			try {
 				// Serialize
 				FileOutputStream fos = new FileOutputStream(mFile);
-				XmlSerializer serializer = Xml.newSerializer();
-				serializer.setOutput(fos, "UTF-8");
-				serializer.startDocument(null, Boolean.valueOf(true));
-				serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
-				serializer.startTag(null, "XPrivacy");
+				try {
+					XmlSerializer serializer = Xml.newSerializer();
+					serializer.setOutput(fos, "UTF-8");
+					serializer.startDocument(null, Boolean.valueOf(true));
+					serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+					serializer.startTag(null, "XPrivacy");
 
-				// Process settings
-				publishProgress(getString(R.string.menu_settings));
+					// Process settings
+					publishProgress(getString(R.string.menu_settings));
 
-				Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityMain.this);
-				for (String setting : mapSetting.keySet())
-					if (setting.startsWith("Account.") || setting.startsWith("Contact.")) {
-						// TODO: translate uid to package name
-					} else {
-						// Serialize setting
-						String value = mapSetting.get(setting);
-						serializer.startTag(null, "Setting");
-						serializer.attribute(null, "Name", setting);
-						serializer.attribute(null, "Value", value);
-						serializer.endTag(null, "Setting");
-					}
-
-				// Process restrictions
-				List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager.getRestricted(ActivityMain.this);
-				Map<String, List<PrivacyManager.RestrictionDesc>> mapRestriction = new HashMap<String, List<PrivacyManager.RestrictionDesc>>();
-				for (PrivacyManager.RestrictionDesc restriction : listRestriction) {
-					String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
-					if (packages == null)
-						Util.log(null, Log.WARN, "No packages for uid=" + restriction.uid);
-					else
-						for (String packageName : packages) {
-							if (!mapRestriction.containsKey(packageName))
-								mapRestriction.put(packageName, new ArrayList<PrivacyManager.RestrictionDesc>());
-							mapRestriction.get(packageName).add(restriction);
+					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityMain.this);
+					for (String setting : mapSetting.keySet())
+						if (setting.startsWith("Account.") || setting.startsWith("Contact.")) {
+							// TODO: translate uid to package name
+						} else {
+							// Serialize setting
+							String value = mapSetting.get(setting);
+							serializer.startTag(null, "Setting");
+							serializer.attribute(null, "Name", setting);
+							serializer.attribute(null, "Value", value);
+							serializer.endTag(null, "Setting");
 						}
-				}
 
-				// Process result
-				for (String packageName : mapRestriction.keySet()) {
-					publishProgress(packageName);
-					for (PrivacyManager.RestrictionDesc restrictionDesc : mapRestriction.get(packageName)) {
-						serializer.startTag(null, "Package");
-						serializer.attribute(null, "Name", packageName);
-						serializer.attribute(null, "Restriction", restrictionDesc.restrictionName);
-						if (restrictionDesc.methodName != null)
-							serializer.attribute(null, "Method", restrictionDesc.methodName);
-						serializer.attribute(null, "Restricted", Boolean.toString(restrictionDesc.restricted));
-						serializer.endTag(null, "Package");
+					// Process restrictions
+					List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager
+							.getRestricted(ActivityMain.this);
+					Map<String, List<PrivacyManager.RestrictionDesc>> mapRestriction = new HashMap<String, List<PrivacyManager.RestrictionDesc>>();
+					for (PrivacyManager.RestrictionDesc restriction : listRestriction) {
+						String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
+						if (packages == null)
+							Util.log(null, Log.WARN, "No packages for uid=" + restriction.uid);
+						else
+							for (String packageName : packages) {
+								if (!mapRestriction.containsKey(packageName))
+									mapRestriction.put(packageName, new ArrayList<PrivacyManager.RestrictionDesc>());
+								mapRestriction.get(packageName).add(restriction);
+							}
 					}
-				}
 
-				// End serialization
-				serializer.endTag(null, "XPrivacy");
-				serializer.endDocument();
-				serializer.flush();
-				fos.close();
+					// Process result
+					for (String packageName : mapRestriction.keySet()) {
+						publishProgress(packageName);
+						for (PrivacyManager.RestrictionDesc restrictionDesc : mapRestriction.get(packageName)) {
+							serializer.startTag(null, "Package");
+							serializer.attribute(null, "Name", packageName);
+							serializer.attribute(null, "Restriction", restrictionDesc.restrictionName);
+							if (restrictionDesc.methodName != null)
+								serializer.attribute(null, "Method", restrictionDesc.methodName);
+							serializer.attribute(null, "Restricted", Boolean.toString(restrictionDesc.restricted));
+							serializer.endTag(null, "Package");
+						}
+					}
+
+					// End serialization
+					serializer.endTag(null, "XPrivacy");
+					serializer.endDocument();
+					serializer.flush();
+				} finally {
+					fos.close();
+				}
 
 				// Display message
 				return getString(R.string.msg_done);
