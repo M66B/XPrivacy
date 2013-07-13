@@ -1103,14 +1103,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				publishProgress(getString(R.string.menu_settings));
 
 				Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityMain.this);
-				for (String setting : mapSetting.keySet()) {
-					// Serialize setting
-					String value = mapSetting.get(setting);
-					serializer.startTag(null, "Setting");
-					serializer.attribute(null, "Name", setting);
-					serializer.attribute(null, "Value", value);
-					serializer.endTag(null, "Setting");
-				}
+				for (String setting : mapSetting.keySet())
+					if (setting.startsWith("Account.") || setting.startsWith("Contact.")) {
+						// TODO: translate uid to package name
+					} else {
+						// Serialize setting
+						String value = mapSetting.get(setting);
+						serializer.startTag(null, "Setting");
+						serializer.attribute(null, "Name", setting);
+						serializer.attribute(null, "Value", value);
+						serializer.endTag(null, "Setting");
+					}
 
 				// Process restrictions
 				List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager.getRestricted(ActivityMain.this);

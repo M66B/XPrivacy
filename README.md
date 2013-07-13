@@ -298,8 +298,7 @@ Enabling expert mode does also enable a few more data categories, which can be u
 
 To see it in action: try restricting the category *Identification* for
 [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
-or try restriction the category *Contacts* for the Contacts application
-(the Contacts application will continue to show a spinner, which is actually a bug in the Contacts application).
+or try restriction the category *Contacts* for the Contacts application.
 
 **Applying some restrictions require restarting applications and/or your device**
 
@@ -336,6 +335,7 @@ Permissions
 XPrivacy asks for the following Android permissions:
 
 * Accounts: to select accounts to allow for applications
+* Contacts: to select contacts to allow for applications
 * Boot: to check if XPrivacy is enabled
 * Internet: to check for updates (only manual from the menu)
 * Storage: to export settings to the SD card (only [pro version](http://www.faircode.eu/xprivacy/))
@@ -782,7 +782,7 @@ Changelog
 	* ro.boot.wifimacaddr
 	* ro.boot.btmacaddr
 	* Let me know if there more should be restricted
-* Fixed location battery drain bug ([issue](https://github.com/M66B/XPrivacy/issues/38))
+* Fixed location battery drain ([issue](https://github.com/M66B/XPrivacy/issues/38))
 
 **Version 0.23**
 
@@ -805,7 +805,7 @@ Changelog
 **Version 0.20**
 
 * Consider XPrivacy as system app (for expert mode)
-* Fixed category browser ([bug](https://github.com/M66B/XPrivacy/issues/30), [fix](https://github.com/M66B/XPrivacy/pull/28))
+* Fixed category browser ([issue](https://github.com/M66B/XPrivacy/issues/30), [fix](https://github.com/M66B/XPrivacy/pull/28))
 * Notify when new application installed ([feature request](https://github.com/M66B/XPrivacy/issues/10))
 * Notify when new system application is installed in expert mode (default allow)
 

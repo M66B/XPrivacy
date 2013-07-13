@@ -8,6 +8,9 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteCursorDriver;
+import android.database.sqlite.SQLiteQuery;
 import android.net.Uri;
 import android.os.Binder;
 import android.provider.ContactsContract;
@@ -56,19 +59,22 @@ public class XContentProvider extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		// Check uri
 		Uri uri = (Uri) param.args[0];
-		if (mUriStart == null || uri.toString().startsWith(mUriStart)) {
+		if (mUriStart == null || (uri != null && uri.toString().toLowerCase().startsWith(mUriStart))) {
 
 			Cursor cursor = (Cursor) param.getResult();
-			if (cursor != null) {
-				if (isRestricted(param, mProviderName)) {
+			if (cursor != null && isRestricted(param, mProviderName))
+				try {
+
 					if (uri.toString().toLowerCase().startsWith("content://com.google.android.gsf.gservices")) {
 						// Google services provider: block only android_id
 						List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
 						if (Util.containsIgnoreCase(selectionArgs, "android_id")) {
 							MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
 							gsfCursor.addRow(new Object[] { "android_id", PrivacyManager.getDefacedProp("GSF_ID") });
+							gsfCursor.respond(cursor.getExtras());
 							param.setResult(gsfCursor);
 						}
+
 					} else if (uri.toString().toLowerCase()
 							.startsWith(ContactsContract.Contacts.CONTENT_URI.toString())) {
 						// Contacts provider: allow selected contacts
@@ -108,15 +114,18 @@ public class XContentProvider extends XHook {
 									Util.bug(this, ex);
 								}
 						}
+						result.respond(cursor.getExtras());
 						param.setResult(result);
 					} else {
 						// Return empty cursor
-						param.setResult(new MatrixCursor(cursor.getColumnNames()));
+						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+						result.respond(cursor.getExtras());
+						param.setResult(result);
 					}
 
+				} finally {
 					cursor.close();
 				}
-			}
 		}
 	}
 
