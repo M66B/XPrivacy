@@ -101,6 +101,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// Salt should be the same when exporting/importing
+		String salt = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingSalt, null, false);
+		if (salt == null) {
+			salt = Build.SERIAL;
+			if (salt == null)
+				salt = "";
+			PrivacyManager.setSetting(null, this, PrivacyManager.cSettingSalt, salt);
+		}
+
 		// Set theme
 		String themeName = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, "", false);
 		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);

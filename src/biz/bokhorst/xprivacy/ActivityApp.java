@@ -20,7 +20,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -71,15 +70,6 @@ public class ActivityApp extends Activity {
 		if (!mAppInfo.getIsInstalled()) {
 			finish();
 			return;
-		}
-
-		// Salt should be the same when exporting/importing
-		String salt = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingSalt, null, false);
-		if (salt == null) {
-			salt = Build.SERIAL;
-			if (salt == null)
-				salt = "";
-			PrivacyManager.setSetting(null, this, PrivacyManager.cSettingSalt, salt);
 		}
 
 		// Handle info click
