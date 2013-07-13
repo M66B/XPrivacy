@@ -72,16 +72,14 @@ public class XContentProvider extends XHook {
 					} else if (uri.toString().toLowerCase()
 							.startsWith(ContactsContract.Contacts.CONTENT_URI.toString())) {
 						// Contacts provider: allow selected contacts
-						ContentProvider contentProvider = (ContentProvider) param.thisObject;
-						Context context = contentProvider.getContext();
 						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 						while (cursor.moveToNext()) {
 							int iId = cursor.getColumnIndex(ContactsContract.Contacts._ID);
 							if (iId >= 0)
 								try {
 									int id = Integer.parseInt(cursor.getString(iId));
-									if (PrivacyManager.getSettingBool(this, context,
-											String.format("Contact.%s.%d", context.getPackageName(), id), false, true)) {
+									if (PrivacyManager.getSettingBool(this, null,
+											String.format("Contact.%d.%d", Binder.getCallingUid(), id), false, true)) {
 										Object[] columns = new Object[cursor.getColumnCount()];
 										for (int i = 0; i < cursor.getColumnCount(); i++)
 											switch (cursor.getType(i)) {
@@ -111,9 +109,10 @@ public class XContentProvider extends XHook {
 								}
 						}
 						param.setResult(result);
-					} else
+					} else {
 						// Return empty cursor
 						param.setResult(new MatrixCursor(cursor.getColumnNames()));
+					}
 
 					cursor.close();
 				}

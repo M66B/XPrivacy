@@ -45,7 +45,6 @@ import android.widget.Toast;
 public class ActivityApp extends Activity {
 
 	private int mThemeId;
-	private String mPackageName;
 	private ApplicationInfoEx mAppInfo;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 
@@ -61,12 +60,9 @@ public class ActivityApp extends Activity {
 		// Set layout
 		setContentView(R.layout.restrictionlist);
 
-		// Get package name
-		Bundle extras = getIntent().getExtras();
-		mPackageName = extras.getString(cPackageName);
-
 		// Get app info
-		mAppInfo = new ApplicationInfoEx(this, mPackageName);
+		Bundle extras = getIntent().getExtras();
+		mAppInfo = new ApplicationInfoEx(this, extras.getString(cPackageName));
 		if (!mAppInfo.getIsInstalled()) {
 			finish();
 			return;
@@ -127,7 +123,7 @@ public class ActivityApp extends Activity {
 		imgIcon.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intentApp = getPackageManager().getLaunchIntentForPackage(mPackageName);
+				Intent intentApp = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
 				if (intentApp != null) {
 					intentApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					view.getContext().startActivity(intentApp);
@@ -137,7 +133,7 @@ public class ActivityApp extends Activity {
 
 		// Check if internet access
 		ImageView imgInternet = (ImageView) findViewById(R.id.imgAppEntryInternet);
-		if (!PrivacyManager.hasInternet(this, mPackageName))
+		if (!PrivacyManager.hasInternet(this, mAppInfo.getPackageName()))
 			imgInternet.setVisibility(View.INVISIBLE);
 
 		// Display version
@@ -146,7 +142,7 @@ public class ActivityApp extends Activity {
 
 		// Display package name / uid
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
-		tvPackageName.setText(String.format("%s %d", mPackageName, mAppInfo.getUid()));
+		tvPackageName.setText(String.format("%s %d", mAppInfo.getPackageName(), mAppInfo.getUid()));
 
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
@@ -264,8 +260,8 @@ public class ActivityApp extends Activity {
 			try {
 				listAccount.add(String.format("%s (%s)", accounts[i].name, accounts[i].type));
 				String sha1 = Util.sha1(accounts[i].name + accounts[i].type);
-				selection[i] = PrivacyManager.getSettingBool(null, this, String.format("%s.%s", mPackageName, sha1),
-						false, false);
+				selection[i] = PrivacyManager.getSettingBool(null, this,
+						String.format("Account.%d.%s", mAppInfo.getUid(), sha1), false, false);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
@@ -281,7 +277,8 @@ public class ActivityApp extends Activity {
 							Account account = accounts[whichButton];
 							String sha1 = Util.sha1(account.name + account.type);
 							PrivacyManager.setSetting(null, ActivityApp.this,
-									String.format("%s.%s", mPackageName, sha1), Boolean.toString(isChecked));
+									String.format("Account.%d.%s", mAppInfo.getUid(), sha1),
+									Boolean.toString(isChecked));
 						} catch (Throwable ex) {
 							Util.bug(null, ex);
 							Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
@@ -304,7 +301,7 @@ public class ActivityApp extends Activity {
 	private void optionContacts() {
 		Map<Integer, String> mapContact = new LinkedHashMap<Integer, String>();
 		Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null,
-				Phone.DISPLAY_NAME + " ASC");
+				Phone.DISPLAY_NAME);
 		while (cursor.moveToNext()) {
 			int iId = cursor.getColumnIndex(ContactsContract.Contacts._ID);
 			if (iId >= 0) {
@@ -323,7 +320,7 @@ public class ActivityApp extends Activity {
 			listContact.add(mapContact.get(id));
 			ids[i] = id;
 			selection[i++] = PrivacyManager.getSettingBool(null, this,
-					String.format("Contact.%s.%d", mPackageName, id), false, false);
+					String.format("Contact.%d.%d", mAppInfo.getUid(), id), false, false);
 		}
 
 		// Build dialog
@@ -334,7 +331,7 @@ public class ActivityApp extends Activity {
 				new DialogInterface.OnMultiChoiceClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 						PrivacyManager.setSetting(null, ActivityApp.this,
-								String.format("Contact.%s.%d", mPackageName, ids[whichButton]),
+								String.format("Contact.%d.%d", mAppInfo.getUid(), ids[whichButton]),
 								Boolean.toString(isChecked));
 					}
 				});

@@ -54,7 +54,8 @@ public class XAccountManager extends XHook {
 			if (param.args[0] != null)
 				if (isRestricted(param)) {
 					OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
-					XOnAccountsUpdateListener xlistener = new XOnAccountsUpdateListener(listener, getContext(param));
+					XOnAccountsUpdateListener xlistener = new XOnAccountsUpdateListener(listener,
+							Binder.getCallingUid());
 					synchronized (mListener) {
 						mListener.put(listener, xlistener);
 						Util.log(this, Log.INFO, "Added count=" + mListener.size());
@@ -85,26 +86,28 @@ public class XAccountManager extends XHook {
 		String methodName = param.method.getName();
 		if (!methodName.equals("addOnAccountsUpdatedListener") && !methodName.equals("removeOnAccountsUpdatedListener"))
 			if (param.getResult() != null)
-				if (isRestricted(param))
+				if (isRestricted(param)) {
+					int uid = Binder.getCallingUid();
 					if (methodName.equals("blockingGetAuthToken")) {
 						Account account = (Account) param.args[0];
-						if (!isAccountAllowed(account, getContext(param)))
+						if (!isAccountAllowed(account, uid))
 							param.setResult(null);
 					} else if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType")) {
 						Account[] accounts = (Account[]) param.getResult();
-						param.setResult(filterAccounts(accounts, getContext(param)));
+						param.setResult(filterAccounts(accounts, uid));
 					} else if (methodName.equals("getAccountsByTypeAndFeatures")) {
 						AccountManagerFuture<Account[]> future = (AccountManagerFuture<Account[]>) param.getResult();
-						param.setResult(new XFutureAccount(future, getContext(param)));
+						param.setResult(new XFutureAccount(future, uid));
 					} else if (methodName.equals("getAuthToken") || methodName.equals("getAuthTokenByFeatures")) {
 						AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
-						param.setResult(new XFutureBundle(future, getContext(param)));
+						param.setResult(new XFutureBundle(future, uid));
 					} else if (methodName.equals("hasFeatures")) {
 						Account account = (Account) param.args[0];
-						if (!isAccountAllowed(account, getContext(param)))
+						if (!isAccountAllowed(account, uid))
 							param.setResult(new XFutureBoolean());
 					} else
 						Util.log(this, Log.WARN, "Unknown method=" + methodName);
+				}
 	}
 
 	@Override
@@ -124,25 +127,22 @@ public class XAccountManager extends XHook {
 		}
 	}
 
-	private Account[] filterAccounts(Account[] original, Context context) {
+	private Account[] filterAccounts(Account[] original, int uid) {
 		List<Account> listAccount = new ArrayList<Account>();
 		for (Account account : original)
-			if (isAccountAllowed(account, context))
+			if (isAccountAllowed(account, uid))
 				listAccount.add(account);
 		return listAccount.toArray(new Account[0]);
 	}
 
-	private boolean isAccountAllowed(Account account, Context context) {
-		return isAccountAllowed(account.name, account.type, context);
+	private boolean isAccountAllowed(Account account, int uid) {
+		return isAccountAllowed(account.name, account.type, uid);
 	}
 
-	private boolean isAccountAllowed(String accountName, String accountType, Context context) {
-		if (context == null)
-			return false;
+	private boolean isAccountAllowed(String accountName, String accountType, int uid) {
 		try {
 			String sha1 = Util.sha1(accountName + accountType);
-			if (PrivacyManager.getSettingBool(this, context, String.format("%s.%s", context.getPackageName(), sha1),
-					false, true))
+			if (PrivacyManager.getSettingBool(this, null, String.format("Account.%d.%s", uid, sha1), false, true))
 				return true;
 		} catch (Throwable ex) {
 			Util.bug(this, ex);
@@ -152,11 +152,11 @@ public class XAccountManager extends XHook {
 
 	private class XFutureAccount implements AccountManagerFuture<Account[]> {
 		private AccountManagerFuture<Account[]> mFuture;
-		private Context mContext;
+		private int mUid;
 
-		public XFutureAccount(AccountManagerFuture<Account[]> future, Context context) {
+		public XFutureAccount(AccountManagerFuture<Account[]> future, int uid) {
 			mFuture = future;
-			mContext = context;
+			mUid = uid;
 		}
 
 		@Override
@@ -166,13 +166,13 @@ public class XAccountManager extends XHook {
 
 		@Override
 		public Account[] getResult() throws OperationCanceledException, IOException, AuthenticatorException {
-			return XAccountManager.this.filterAccounts(mFuture.getResult(), mContext);
+			return XAccountManager.this.filterAccounts(mFuture.getResult(), mUid);
 		}
 
 		@Override
 		public Account[] getResult(long timeout, TimeUnit unit) throws OperationCanceledException, IOException,
 				AuthenticatorException {
-			return XAccountManager.this.filterAccounts(mFuture.getResult(timeout, unit), mContext);
+			return XAccountManager.this.filterAccounts(mFuture.getResult(timeout, unit), mUid);
 		}
 
 		@Override
@@ -218,11 +218,11 @@ public class XAccountManager extends XHook {
 	private class XFutureBundle implements AccountManagerFuture<Bundle> {
 
 		private AccountManagerFuture<Bundle> mFuture;
-		private Context mContext;
+		private int mUid;
 
-		public XFutureBundle(AccountManagerFuture<Bundle> future, Context context) {
+		public XFutureBundle(AccountManagerFuture<Bundle> future, int uid) {
 			mFuture = future;
-			mContext = context;
+			mUid = uid;
 		}
 
 		@Override
@@ -235,7 +235,7 @@ public class XAccountManager extends XHook {
 			Bundle bundle = mFuture.getResult();
 			String accountName = bundle.getString(AccountManager.KEY_ACCOUNT_NAME);
 			String accountType = bundle.getString(AccountManager.KEY_ACCOUNT_TYPE);
-			if (XAccountManager.this.isAccountAllowed(accountName, accountType, mContext))
+			if (XAccountManager.this.isAccountAllowed(accountName, accountType, mUid))
 				return bundle;
 			else
 				throw new OperationCanceledException();
@@ -247,7 +247,7 @@ public class XAccountManager extends XHook {
 			Bundle bundle = mFuture.getResult(timeout, unit);
 			String accountName = bundle.getString(AccountManager.KEY_ACCOUNT_NAME);
 			String accountType = bundle.getString(AccountManager.KEY_ACCOUNT_TYPE);
-			if (XAccountManager.this.isAccountAllowed(accountName, accountType, mContext))
+			if (XAccountManager.this.isAccountAllowed(accountName, accountType, mUid))
 				return bundle;
 			else
 				throw new OperationCanceledException();
@@ -266,16 +266,16 @@ public class XAccountManager extends XHook {
 
 	private class XOnAccountsUpdateListener implements OnAccountsUpdateListener {
 		private OnAccountsUpdateListener mListener;
-		private Context mContext;
+		private int mUid;
 
-		public XOnAccountsUpdateListener(OnAccountsUpdateListener listener, Context context) {
+		public XOnAccountsUpdateListener(OnAccountsUpdateListener listener, int uid) {
 			mListener = listener;
-			mContext = context;
+			mUid = uid;
 		}
 
 		@Override
 		public void onAccountsUpdated(Account[] accounts) {
-			mListener.onAccountsUpdated(XAccountManager.this.filterAccounts(accounts, mContext));
+			mListener.onAccountsUpdated(XAccountManager.this.filterAccounts(accounts, mUid));
 		}
 	}
 }
