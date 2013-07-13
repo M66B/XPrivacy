@@ -523,6 +523,7 @@ Changelog
 * Fixed restricting recording in some situations ([issue](https://github.com/M66B/XPrivacy/issues/209))
 * Fixed navigation of application detailed view ([issue](https://github.com/M66B/XPrivacy/issues/205))
 * Fixed clearing export/import done notification
+* Added Danish translation
 * Updated Hungarian translation
 * Update Norwegian translation
 * Updated Simplified Chinese translation
@@ -906,6 +907,7 @@ Current translations:
 
 * Bulgarian (bg)
 * Czech (cs)
+* Danish (da)
 * Dutch/Flemish (nl)
 * English
 * French (fr)
