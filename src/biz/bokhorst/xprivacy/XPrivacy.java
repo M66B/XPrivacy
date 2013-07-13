@@ -272,12 +272,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Contacts provider
 		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
-			String[] uris = new String[] { "content://com.android.contacts/contacts",
-					"content://com.android.contacts/data", "content://com.android.contacts/raw_contacts",
-					"content://com.android.contacts/phone_lookup", "content://com.android.contacts/profile" };
+			String[] uris = new String[] { "contacts/contacts", "contacts/data", "contacts/raw_contacts",
+					"contacts/phone_lookup", "contacts/profile" };
 			for (String uri : uris)
 				hook(new XContentProvider(PrivacyManager.cContacts, new String[] { "READ_CONTACTS" },
-						"ContactsProvider2", uri), lpparam.classLoader,
+						"ContactsProvider2", "content://com.android." + uri), lpparam.classLoader,
 						"com.android.providers.contacts.ContactsProvider2");
 
 			hook(new XContentProvider(PrivacyManager.cPhone, new String[] { "READ_CALL_LOG" }, "CallLogProvider"),

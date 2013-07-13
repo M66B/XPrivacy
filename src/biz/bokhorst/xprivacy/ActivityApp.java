@@ -299,28 +299,25 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionContacts() {
-		Map<Integer, String> mapContact = new LinkedHashMap<Integer, String>();
-		Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null,
-				Phone.DISPLAY_NAME);
+		Map<Long, String> mapContact = new LinkedHashMap<Long, String>();
+		Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
+				new String[] { ContactsContract.Contacts._ID, Phone.DISPLAY_NAME }, null, null, Phone.DISPLAY_NAME);
 		if (cursor != null)
 			try {
 				while (cursor.moveToNext()) {
-					int iId = cursor.getColumnIndex(ContactsContract.Contacts._ID);
-					if (iId >= 0) {
-						int id = Integer.parseInt(cursor.getString(iId));
-						String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
-						mapContact.put(id, contact);
-					}
+					long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+					String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
+					mapContact.put(id, contact);
 				}
 			} finally {
 				cursor.close();
 			}
 
 		List<CharSequence> listContact = new ArrayList<CharSequence>();
-		final int[] ids = new int[mapContact.size()];
+		final long[] ids = new long[mapContact.size()];
 		boolean[] selection = new boolean[mapContact.size()];
 		int i = 0;
-		for (Integer id : mapContact.keySet()) {
+		for (Long id : mapContact.keySet()) {
 			listContact.add(mapContact.get(id));
 			ids[i] = id;
 			selection[i++] = PrivacyManager.getSettingBool(null, this,

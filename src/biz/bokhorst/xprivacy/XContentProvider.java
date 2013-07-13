@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -27,7 +26,7 @@ public class XContentProvider extends XHook {
 	}
 
 	public XContentProvider(String restrictionName, String[] permissions, String providerName, String uriStart) {
-		super("query", restrictionName, permissions, providerName);
+		super("query", restrictionName, permissions, uriStart.replace("content://com.android.", ""));
 		mProviderName = providerName;
 		mUriStart = uriStart;
 	}
@@ -62,7 +61,6 @@ public class XContentProvider extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		// Check uri
 		Uri uri = (Uri) param.args[0];
-		Util.log(this, Log.INFO, "uri=" + uri);
 		String sUri = (uri == null ? null : uri.toString().toLowerCase());
 		if (sUri != null && (mUriStart == null || sUri.startsWith(mUriStart))) {
 			Cursor cursor = (Cursor) param.getResult();
@@ -79,30 +77,31 @@ public class XContentProvider extends XHook {
 							cursor.close();
 						}
 
-				} else if (sUri.startsWith(ContactsContract.Contacts.CONTENT_URI.toString())
+				} else if (sUri.startsWith("content://com.android.contacts")
 						&& !sUri.startsWith("content://com.android.contacts/profile")) {
 					// Contacts provider: allow selected contacts
 					if (isRestricted(param, mProviderName)) {
 						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 						while (cursor.moveToNext()) {
 							// Get contact ID
-							int id = -1;
+							long id;
+							int iid = -1;
 							if (sUri.startsWith("content://com.android.contacts/contacts")
 									|| sUri.startsWith("content://com.android.contacts/phone_lookup"))
-								id = cursor.getInt(cursor.getColumnIndex("_id"));
+								iid = cursor.getColumnIndex("_id");
 							else if (sUri.startsWith("content://com.android.contacts/data")
 									|| sUri.startsWith("content://com.android.contacts/raw_contacts"))
-								id = cursor.getInt(cursor.getColumnIndex("contact_id"));
+								iid = cursor.getColumnIndex("contact_id");
+							id = (iid < 0 ? -1 : cursor.getLong(iid));
 
 							// Copy row
 							try {
-								if (id < 0
-										|| PrivacyManager
+								if (id >= 0
+										&& PrivacyManager
 												.getSettingBool(this, null,
 														String.format("Contact.%d.%d", Binder.getCallingUid(), id),
 														false, true)) {
-									if (id < 0)
-										Util.log(this, Log.WARN, "Contact ID not found uri=" + sUri);
+
 									Object[] columns = new Object[cursor.getColumnCount()];
 									for (int i = 0; i < cursor.getColumnCount(); i++)
 										switch (cursor.getType(i)) {

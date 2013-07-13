@@ -282,7 +282,10 @@ public class PrivacyManager {
 		mMethods.get(cCalendar).add("CalendarProvider2");
 
 		// Contacts provider
-		mMethods.get(cContacts).add("ContactsProvider2");
+		String[] uris = new String[] { "contacts/contacts", "contacts/data", "contacts/raw_contacts",
+				"contacts/phone_lookup", "contacts/profile" };
+		for (String uri : uris)
+			mMethods.get(cContacts).add(uri);
 		mMethods.get(cPhone).add("CallLogProvider");
 		mMethods.get(cMessages).add("VoicemailContentProvider");
 
