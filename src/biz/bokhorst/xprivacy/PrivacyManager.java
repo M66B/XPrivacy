@@ -164,11 +164,11 @@ public class PrivacyManager {
 			mMethods.get(cSystem).add(am);
 
 		// Audio record
-		mMethods.get(PrivacyManager.cMedia).add("startRecording");
+		mMethods.get(cMedia).add("startRecording");
 
 		// Bluetooth adapter
-		mMethods.get(PrivacyManager.cNetwork).add("getAddress");
-		mMethods.get(PrivacyManager.cNetwork).add("getBondedDevices");
+		mMethods.get(cNetwork).add("getAddress");
+		mMethods.get(cNetwork).add("getBondedDevices");
 
 		// Camera
 		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
@@ -177,10 +177,11 @@ public class PrivacyManager {
 			mMethods.get(cMedia).add(cam);
 
 		// Environment
-		mMethods.get(PrivacyManager.cStorage).add("getExternalStorageState");
+		mMethods.get(cStorage).add("getExternalStorageState");
 
 		// Identification
-		mMethods.get(PrivacyManager.cIdentification).add("SERIAL");
+		mMethods.get(cIdentification).add("SERIAL");
+		mMethods.get(cIdentification).add("/proc");
 
 		// Location manager
 		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
@@ -272,7 +273,6 @@ public class PrivacyManager {
 
 		// Applications provider
 		mMethods.get(cSystem).add("ApplicationsProvider");
-		mMethods.get(cSystem).add("/proc");
 
 		// Browser provider
 		mMethods.get(cBrowser).add("BrowserProvider");
@@ -327,7 +327,7 @@ public class PrivacyManager {
 
 	public static List<String> getRestrictions() {
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
-		if (!PrivacyManager.getSettingBool(null, null, PrivacyManager.cSettingExpert, false, false)) {
+		if (!getSettingBool(null, null, cSettingExpert, false, false)) {
 			listRestriction.remove(cInternet);
 			listRestriction.remove(cStorage);
 			listRestriction.remove(cSystem);
@@ -402,7 +402,7 @@ public class PrivacyManager {
 			// Check if restricted
 			boolean fallback = true;
 			boolean restricted = false;
-			if (context != null && uid != PrivacyManager.cUidAndroid)
+			if (context != null && uid != cUidAndroid)
 				try {
 					// Get content resolver
 					ContentResolver contentResolver = context.getContentResolver();
@@ -467,7 +467,7 @@ public class PrivacyManager {
 			// Use fallback
 			if (fallback) {
 				// Queue usage data
-				if (usage && uid != PrivacyManager.cUidAndroid) {
+				if (usage && uid != cUidAndroid) {
 					UsageData usageData = new UsageData(uid, restrictionName, methodName);
 					synchronized (mUsageQueue) {
 						if (mUsageQueue.containsKey(usageData))
@@ -618,7 +618,7 @@ public class PrivacyManager {
 	}
 
 	public static void deleteUsageData(Context context, int uid) {
-		for (String restrictionName : PrivacyManager.getRestrictions())
+		for (String restrictionName : getRestrictions())
 			context.getContentResolver().delete(PrivacyProvider.URI_USAGE, restrictionName,
 					new String[] { Integer.toString(uid) });
 		Util.log(null, Log.INFO, "Deleted usage uid=" + uid);
@@ -628,8 +628,8 @@ public class PrivacyManager {
 
 	public static boolean getSettingBool(XHook hook, Context context, String settingName, boolean defaultValue,
 			boolean useCache) {
-		return Boolean.parseBoolean(PrivacyManager.getSetting(hook, context, settingName, Boolean
-				.toString(defaultValue).toString(), useCache));
+		return Boolean.parseBoolean(getSetting(hook, context, settingName, Boolean.toString(defaultValue).toString(),
+				useCache));
 	}
 
 	public static String getSetting(XHook hook, Context context, String settingName, String defaultValue,
@@ -843,8 +843,8 @@ public class PrivacyManager {
 	}
 
 	public static Location getDefacedLocation(Location location) {
-		String sLat = getSetting(null, null, PrivacyManager.cSettingLatitude, "", true);
-		String sLon = getSetting(null, null, PrivacyManager.cSettingLongitude, "", true);
+		String sLat = getSetting(null, null, cSettingLatitude, "", true);
+		String sLon = getSetting(null, null, cSettingLongitude, "", true);
 		if (sLat.equals("") || sLon.equals("")) {
 			// Christmas Island
 			location.setLatitude(-10.5);

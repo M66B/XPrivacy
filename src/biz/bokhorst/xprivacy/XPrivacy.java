@@ -102,7 +102,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XEnvironment("getExternalStorageState", PrivacyManager.cStorage, null), "android.os.Environment");
 
 		// IO bridge
-		hook(new XIoBridge("open", PrivacyManager.cSystem, new String[] {}, "/proc"), "libcore.io.IoBridge");
+		hook(new XIoBridge("open", PrivacyManager.cIdentification, new String[] {}, "/proc"), "libcore.io.IoBridge");
 
 		// Location manager
 		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
