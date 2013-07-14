@@ -511,7 +511,7 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 1.6** (in development)
+**Version 1.6**
 
 * Restrict access to /proc ([issue](https://github.com/M66B/XPrivacy/issues/227))
 * New internet icon, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
