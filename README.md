@@ -523,6 +523,7 @@ Changelog
 * Added Swedish translation
 * Updated French translation
 * Updated Polish translation
+* Updated Simplified Chinese translation
 
 **Version 1.5**
 
