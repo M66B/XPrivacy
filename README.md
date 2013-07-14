@@ -511,6 +511,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**version 1.7** (in development)
+
+* Updated Polish translation
+
 **Version 1.6**
 
 * Restrict access to /proc ([issue](https://github.com/M66B/XPrivacy/issues/227))
