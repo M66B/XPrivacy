@@ -56,6 +56,7 @@ public class PrivacyManager {
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
+	public final static boolean cExperimental = false;
 
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";

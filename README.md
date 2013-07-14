@@ -490,8 +490,9 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**version 1.7** (in development)
+**version 1.6.1**
 
+* Reverted "Restrict access to /proc"
 * Integrate clear icon into application name filter
 * Updated Polish translation
 
