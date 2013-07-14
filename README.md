@@ -519,6 +519,7 @@ Changelog
 
 * Restrict access to /proc ([issue](https://github.com/M66B/XPrivacy/issues/227))
 * New internet icon, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
+* Replace expert mode by color coding, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642) for the colors
 * Fixed registering property names
 * Added Swedish translation
 * Updated French translation

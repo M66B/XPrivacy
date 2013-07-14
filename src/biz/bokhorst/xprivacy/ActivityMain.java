@@ -50,7 +50,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -369,8 +368,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			String restrictionName = (pos == 0 ? null : PrivacyManager.getRestrictions().get(pos - 1));
 			if (PrivacyManager.isDangerous(restrictionName, null))
 				spRestriction.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
-			else
-				spRestriction.setBackgroundColor(Color.TRANSPARENT);
+			else {
+				TypedArray array = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorBackground, });
+				spRestriction.setBackgroundColor(array.getColor(0, 0));
+			}
 			mAppAdapter.setRestrictionName(restrictionName);
 			applyFilter();
 		}
