@@ -24,15 +24,14 @@ Index
 Description
 -----------
 
-XPrivacy can prevent applications (including associated background services and content providers)
-from leaking privacy sensitive data.
+XPrivacy can prevent applications from leaking privacy sensitive data.
 XPrivacy can restrict the categories of data an application can access.
 This is done by feeding an application with no or fake data.
 There are several data categories which can be restricted, for example *contacts* or *location*.
 For example, if you restrict access to contacts for an application,
-this will result in sending an empty contact list to the application, when it requests access to your contacts.
+this will result in sending an empty contact list to the application.
 Similarly, restricting an application's access to your location
-will result in a random or set location being sent to the application.
+will result in a set location being sent to the application.
 
 XPrivacy doesn't revoke (i.e. block) permissions from an application,
 which means that most applications will continue to work as before and won't force close.
@@ -52,28 +51,25 @@ Shortly after installing a new application,
 XPrivacy will ask which data categories you want the new application to have access to.
 XPrivacy comes with an application browser,
 which allows you to quickly enable or disable applications' access to a particular data category
-(i.e. to view and control all access to the camera, for example).
+for example to view your calendar.
 It is also possible to edit all data categories for one application.
 
 To help you identify potential data leaks,
 XPrivacy will monitor attempts made by all applications to access sensitive data.
 XPrivacy will display a warning triangle icon as soon as data of a data category has been used.
+If an application has requested Android permissions to access data in a data category,
+this will be displayed with a key icon.
 XPrivacy will also display if an application has internet access,
 indicating that the application poses a risk of sharing the data it obtains with an external server.
-This is just a guideline, since an application could access the internet through other applications too.
-If an application has requested Android permissions to access data in a data category,
-this will be displayed with a key icon,
-but this will only be shown when looking at an individual application,
-since checking permissions for all applications is quite slow.
 
 XPrivacy is built using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401).
-XPrivacy taps into a number of selected functions of Android through the Xposed framework.
+XPrivacy taps into a vast number of carefully selected functions of Android through the Xposed framework.
 Depending on the function, XPrivacy conditionally skips execution of the original function
 (for example when an application tries to set a proximity alert)
-or alters the result of the original function (for example to return empty calendar data).
+or alters the result of the original function (for example to return an empty message list).
 
 XPrivacy has been tested with CyanogenMod 10 and 10.1 (Android 4.1 and 4.2),
-and will most likely work with any Android version 4.0, 4.1 or 4.2 variant, including stock ROMs.
+and is reported to work with any Android version 4.0, 4.1 or 4.2 variant, including stock ROMs.
 Root access is needed to install the Xposed framework.
 Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xposed binary,
 which is provided as download for both Android version 4.0, 4.1 and 4.2.
@@ -520,6 +516,7 @@ Changelog
 * Restrict access to /proc ([issue](https://github.com/M66B/XPrivacy/issues/227))
 * New internet icon, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
 * Replace expert mode by color coding, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642) for the colors
+* Always allow drilling down in the application details view
 * Fixed registering property names
 * Added Swedish translation
 * Updated French translation
