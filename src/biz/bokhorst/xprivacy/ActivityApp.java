@@ -361,12 +361,10 @@ public class ActivityApp extends Activity {
 	private class RestrictionAdapter extends BaseExpandableListAdapter {
 		private ApplicationInfoEx mAppInfo;
 		private List<String> mRestrictions;
-		private boolean mExpert;
 
 		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, List<String> restrictions) {
 			mAppInfo = appInfo;
 			mRestrictions = restrictions;
-			mExpert = PrivacyManager.getSettingBool(null, null, PrivacyManager.cSettingExpert, false, false);
 		}
 
 		@Override
@@ -399,11 +397,8 @@ public class ActivityApp extends Activity {
 					: R.attr.icon_expander_minimized));
 
 			// Disable indicator for empty groups
-			if (mExpert) {
-				if (getChildrenCount(groupPosition) == 0)
-					imgIndicator.setVisibility(View.INVISIBLE);
-			} else
-				imgIndicator.setVisibility(View.GONE);
+			if (getChildrenCount(groupPosition) == 0)
+				imgIndicator.setVisibility(View.INVISIBLE);
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
@@ -466,7 +461,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return (mExpert ? PrivacyManager.getMethodNames((String) getGroup(groupPosition)).size() : 0);
+			return PrivacyManager.getMethodNames((String) getGroup(groupPosition)).size();
 		}
 
 		@Override
