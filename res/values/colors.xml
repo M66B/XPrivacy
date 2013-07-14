@@ -3,4 +3,7 @@
 
     <color name="color_system_light">#DFDFDF</color>
     <color name="color_system_dark">#696969</color>
-</resources>
+    <color name="color_dangerous_light">#FF6600</color>
+    <color name="color_dangerous_dark">#FF6600</color>
+
+</resources>

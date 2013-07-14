@@ -56,7 +56,6 @@
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
     <string name="settings_fsystem">Filter system applications</string>
-    <string name="settings_expert">Расширенный режим</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>

@@ -56,7 +56,6 @@
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">隐藏无关权限</string>
     <string name="settings_fsystem">隐藏系统应用</string>
-    <string name="settings_expert">启用专家模式</string>
     <string name="help_application">应用</string>
     <string name="help_internet">表示联网的权限</string>
     <string name="help_granted">表示授予的权限</string>

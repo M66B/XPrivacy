@@ -56,7 +56,6 @@
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filter by permission</string>
     <string name="settings_fsystem">Filter system applications</string>
-    <string name="settings_expert">Modo experto</string>
     <string name="help_application">Aplicación</string>
     <string name="help_internet">tiene permisos para Internet</string>
     <string name="help_granted">tiene permisos por Android</string>

@@ -56,7 +56,6 @@
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovať podľa povolenia</string>
     <string name="settings_fsystem">Filtrivať systémové aplikácie</string>
-    <string name="settings_expert">Režim experta</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové oprávnenie</string>
     <string name="help_granted">má Android povolenie</string>

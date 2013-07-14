@@ -56,7 +56,6 @@
     <string name="settings_subscriber">Abonnent-ID</string>
     <string name="settings_fpermission">Filtrera efter behörighet</string>
     <string name="settings_fsystem">Filtrera systemappar</string>
-    <string name="settings_expert">Expertläge</string>
     <string name="help_application">Applikation</string>
     <string name="help_internet">har internetbehörighet</string>
     <string name="help_granted">har Android-behörighet</string>

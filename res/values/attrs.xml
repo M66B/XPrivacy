@@ -13,5 +13,6 @@
     <attr name="icon_clear" format="reference" />
     <attr name="icon_clear_grayed" format="reference" />
     <attr name="color_system" format="reference" />
+    <attr name="color_dangerous" format="reference" />
 
 </resources>

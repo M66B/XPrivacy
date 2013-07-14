@@ -392,6 +392,13 @@ public class ActivityApp extends Activity {
 			ImageView imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.ctvName);
 
+			// Get entry
+			final String restrictionName = (String) getGroup(groupPosition);
+
+			// Set background color
+			if (PrivacyManager.isDangerous(restrictionName, null))
+				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+
 			// Indicator state
 			imgIndicator.setImageResource(getThemed(isExpanded ? R.attr.icon_expander_maximized
 					: R.attr.icon_expander_minimized));
@@ -399,9 +406,6 @@ public class ActivityApp extends Activity {
 			// Disable indicator for empty groups
 			if (getChildrenCount(groupPosition) == 0)
 				imgIndicator.setVisibility(View.INVISIBLE);
-
-			// Get entry
-			final String restrictionName = (String) getGroup(groupPosition);
 
 			// Display if used
 			if (PrivacyManager.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0)

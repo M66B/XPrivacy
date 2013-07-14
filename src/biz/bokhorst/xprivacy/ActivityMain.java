@@ -49,6 +49,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -127,7 +129,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		listLocalizedRestriction.add(0, getString(R.string.menu_all));
 
 		// Build spinner adapter
-		ArrayAdapter<String> spAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
 		spAdapter.addAll(listLocalizedRestriction);
 
 		// Handle info
@@ -359,10 +361,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
+	// Spinner
+
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 		if (mAppAdapter != null) {
 			String restrictionName = (pos == 0 ? null : PrivacyManager.getRestrictions().get(pos - 1));
+			if (PrivacyManager.isDangerous(restrictionName, null))
+				spRestriction.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+			else
+				spRestriction.setBackgroundColor(Color.TRANSPARENT);
 			mAppAdapter.setRestrictionName(restrictionName);
 			applyFilter();
 		}
@@ -371,10 +379,44 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
 		if (mAppAdapter != null) {
+			spRestriction.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 			mAppAdapter.setRestrictionName(null);
 			applyFilter();
 		}
 	}
+
+	private class SpinnerAdapter extends ArrayAdapter<String> {
+
+		public SpinnerAdapter(Context context, int textViewResourceId) {
+			super(context, textViewResourceId);
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View row = super.getView(position, convertView, parent);
+			row.setBackgroundColor(getBackgroundColor(position));
+			return row;
+		}
+
+		@Override
+		public View getDropDownView(int position, View convertView, ViewGroup parent) {
+			View row = super.getDropDownView(position, convertView, parent);
+			row.setBackgroundColor(getBackgroundColor(position));
+			return row;
+		}
+
+		private int getBackgroundColor(int position) {
+			String restrictionName = (position == 0 ? null : PrivacyManager.getRestrictions().get(position - 1));
+			if (PrivacyManager.isDangerous(restrictionName, null))
+				return getResources().getColor(getThemed(R.attr.color_dangerous));
+			else {
+				TypedArray array = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorBackground, });
+				return array.getColor(0, 0);
+			}
+		}
+	}
+
+	// Filtering
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -667,7 +709,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
 		final CheckBox cbFPermission = (CheckBox) dlgSettings.findViewById(R.id.cbFPermission);
 		final CheckBox cbFSystem = (CheckBox) dlgSettings.findViewById(R.id.cbFSystem);
-		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
@@ -692,8 +733,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				false));
 		cbFPermission.setChecked(fPermission);
 		cbFSystem.setChecked(fSystem);
-		cbExpert.setChecked(PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingExpert,
-				false, false));
 
 		// Handle search
 		etSearch.setEnabled(Geocoder.isPresent());
@@ -780,10 +819,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				// Set filter by system
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
 						Boolean.toString(cbFSystem.isChecked()));
-
-				// Set expert mode
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingExpert,
-						Boolean.toString(cbExpert.isChecked()));
 
 				// Refresh if needed
 				if (fPermission != cbFPermission.isChecked() || fSystem != cbFSystem.isChecked()) {

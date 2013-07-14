@@ -71,7 +71,6 @@ public class PrivacyManager {
 	public final static String cSettingSubscriber = "Subscriber";
 	public final static String cSettingFPermission = "FPermission";
 	public final static String cSettingFSystem = "FSystem";
-	public final static String cSettingExpert = "Expert";
 	public final static String cSettingTheme = "Theme";
 	public final static String cSettingSalt = "Salt";
 
@@ -326,14 +325,12 @@ public class PrivacyManager {
 	}
 
 	public static List<String> getRestrictions() {
-		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
-		if (!getSettingBool(null, null, cSettingExpert, false, false)) {
-			listRestriction.remove(cInternet);
-			listRestriction.remove(cStorage);
-			listRestriction.remove(cSystem);
-		}
+		return new ArrayList<String>(Arrays.asList(cRestrictionNames));
+	}
 
-		return listRestriction;
+	public static boolean isDangerous(String restrictionName, String methodName) {
+		return restrictionName == null || restrictionName.equals(cInternet) || restrictionName.equals(cStorage)
+				|| restrictionName.equals(cSystem);
 	}
 
 	public static List<String> getMethodNames(String restrictionName) {

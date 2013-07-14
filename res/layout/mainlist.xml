@@ -36,7 +36,8 @@
             android:id="@+id/spRestriction"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="?attr/color_dangerous" />
 
         <ImageView
             android:id="@+id/ivHelp"
