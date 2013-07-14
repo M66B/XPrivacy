@@ -376,22 +376,6 @@ but you can only restore onto the same device.
 Exporting/importing settings will work across devices.
 To export/import settings you will need the [pro version](http://www.faircode.eu/xprivacy/).
 
-**(7) What is expert mode?**
-
-In expert mode some more restriction categories will be available
-and you will be able to make exceptions for individual functions within each restriction category.
-
-**(8) Will you block the iptables command or force online state?**
-
-No, this is too far from the goal of XPrivacy.
-
-**(9) Will you make it possible to enter fake data?**
-
-Maybe in a later stage.
-For now I like to keep things as simple as possible for maximum stability.
-Since version 0.21 you can enter a fake location.
-Since version 0.30 you can enter a fake MAC address.
-
 **(10) Which functions are exactly restricted?**
 
 Many, see [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
@@ -402,13 +386,8 @@ See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51
 
 **(12) How safe is XPrivacy?**
 
-Great care has been taken to develop XPrivacy, nevertheless data could leak, although this is rare.
-So far no critical bugs have been reported.
-
-**(13) Why is XPrivacy not in the Play store?**
-
-Google will probably remove XPrivacy from the Play store eventually,
-since it will be able to block advertisements (for example by revoking internet permissions).
+Great care has been taken to develop XPrivacy, nevertheless data could leak and applications can crash,
+although this is fortunately rare. So far no critical bugs have been reported.
 
 **(14) I get 'Incompatible ...' !**
 
@@ -479,7 +458,7 @@ Try disabling your popup blocker or download using another computer.
 
 See [here](http://forum.xda-developers.com/showthread.php?t=1726238).
 
-**(23) Where can I find the settings of XPrivacy?**
+**(23) Where are the settings of XPrivacy stored?**
 
 The restriction settings of XPrivacy are stored as private application data,
 because the settings of XPrivacy should be considered as privacy sensitive data too.
@@ -491,7 +470,7 @@ If you want to backup the exported settings, they are in the folder *.xprivacy* 
 
 **(24) Can you make possible to randomize data?***
 
-Everything is possible, but some application crash when feeded with random data
+Everything is possible, but some applications crash when feeded with random data
 and it is not always possible to randomize things (like IMEI or MAC addresses).
 
 Support
