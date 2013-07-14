@@ -59,7 +59,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		}
 		mSystem = ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
 		mSystem = mSystem || appInfo.packageName.equals(ApplicationInfoEx.class.getPackage().getName());
-		mSystem = mSystem || appInfo.packageName.equals("de.robv.android.xposed.installer");
 	}
 
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
