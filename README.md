@@ -518,6 +518,7 @@ Changelog
 **Version 1.6** (in development)
 
 * Restrict access to /proc ([issue](https://github.com/M66B/XPrivacy/issues/227))
+* New internet icon, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
 * Fixed registering property names
 * Updated French translation
 
