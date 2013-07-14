@@ -6,7 +6,6 @@
     <string name="app_version" formatted="false">Version XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Version du cadre d\'application Xposed : %d</string>
     <string name="app_copyright">Droits d\'auteur: M. Bokhorst (M66B) \u00A9 2013 </string>
-    <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
     <string name="menu_settings">Paramètres</string>
     <string name="menu_template">Template</string>
     <string name="menu_update">Vérifier les mises à jour</string>

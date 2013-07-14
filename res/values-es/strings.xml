@@ -6,7 +6,6 @@
     <string name="app_version" formatted="false">Versión de XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Versión del framework Xposed: %d</string>
     <string name="app_copyright">Copyright © 2013 por M. Bokhorst (M66B)</string>
-    <string name="app_info">Info: https://github.com/M66B/XPrivacy/</string>
     <string name="menu_settings">Configuración</string>
     <string name="menu_template">Template</string>
     <string name="menu_update">Buscar actualizaciones</string>

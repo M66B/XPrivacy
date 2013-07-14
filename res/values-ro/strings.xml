@@ -6,7 +6,6 @@
     <string name="app_version" formatted="false">versiunea XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">versiunea Xposed framework: %d</string>
     <string name="app_copyright">Drepturi de autor rezervate \u00A9 2013 M. Bokhorst (M66B)</string>
-    <string name="app_info">Informatii suplimentare: https://github.com/M66B/XPrivacy/</string>
     <string name="menu_settings">Setari</string>
     <string name="menu_template">Template</string>
     <string name="menu_update">Cauta update</string>

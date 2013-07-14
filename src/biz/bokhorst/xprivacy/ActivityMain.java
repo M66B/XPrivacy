@@ -347,9 +347,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			case R.id.menu_pro:
 				optionPro();
 				return true;
-			case R.id.menu_flattr:
-				optionFlattr();
-				return true;
 			case R.id.menu_about:
 				optionAbout();
 				return true;
@@ -849,12 +846,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private void optionPro() {
 		// Redirect to pro page
 		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
-		startActivity(browserIntent);
-	}
-
-	private void optionFlattr() {
-		// Redirect to Flattr page
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://flattr.com/thing/1491121/XPrivacy-XDA"));
 		startActivity(browserIntent);
 	}
 

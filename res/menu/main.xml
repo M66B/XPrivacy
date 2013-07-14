@@ -29,9 +29,6 @@
         android:id="@+id/menu_pro"
         android:title="@string/menu_pro"/>
     <item
-        android:id="@+id/menu_flattr"
-        android:title="@string/menu_flattr"/>
-    <item
         android:id="@+id/menu_about"
         android:title="@string/menu_about"/>
 
