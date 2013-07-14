@@ -26,12 +26,20 @@
             android:src="?attr/icon_used" />
 
         <ImageView
-            android:id="@+id/imgInternet"
+            android:id="@+id/imgGranted"
             android:layout_width="24dip"
             android:layout_height="24dip"
-            android:contentDescription="@string/help_internet"
-            android:src="?attr/icon_internet" />
+            android:contentDescription="@string/help_granted"
+            android:src="?attr/icon_granted" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgInternet"
+        android:layout_width="24dip"
+        android:layout_height="24dip"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/help_internet"
+        android:src="?attr/icon_internet" />
 
     <CheckedTextView
         android:id="@+id/ctvName"

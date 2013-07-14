@@ -408,15 +408,15 @@ public class ActivityApp extends Activity {
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
 
-			// Display if restriction granted
-			if (!PrivacyManager.hasPermission(row.getContext(), mAppInfo.getPackageName(), restrictionName))
-				imgGranted.setVisibility(View.INVISIBLE);
-
 			// Display if used
 			if (PrivacyManager.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0)
 				ctvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
 			else
 				imgUsed.setVisibility(View.INVISIBLE);
+
+			// Check if permission
+			if (!PrivacyManager.hasPermission(row.getContext(), mAppInfo.getPackageName(), restrictionName))
+				imgGranted.setVisibility(View.INVISIBLE);
 
 			// Handle info
 			imgInfo.setOnClickListener(new View.OnClickListener() {

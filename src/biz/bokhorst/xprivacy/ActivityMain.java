@@ -1360,10 +1360,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			spRestriction.setEnabled(false);
 
 			// Reset filters
-			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-			cbFilter.setEnabled(false);
-			cbFilter.setChecked(false);
-
 			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
 			imgUsed.setEnabled(false);
 			imgUsed.setImageDrawable(getResources().getDrawable(getThemed(R.attr.icon_used_grayed)));
@@ -1372,6 +1368,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setEnabled(false);
 			etFilter.setText("");
+
+			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+			cbFilter.setEnabled(false);
+			cbFilter.setChecked(false);
 
 			// Show progress dialog
 			ListView lvApp = (ListView) findViewById(R.id.lvApp);
@@ -1399,14 +1399,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 
 			// Enable filters
-			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-			cbFilter.setEnabled(true);
-
 			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
 			imgUsed.setEnabled(true);
 
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setEnabled(true);
+
+			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+			cbFilter.setEnabled(true);
 
 			// Enable spinner
 			Spinner spRestriction = (Spinner) findViewById(R.id.spRestriction);
@@ -1536,8 +1536,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.mainentry, parent, false);
 			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
-			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
+			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
+			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
 			final CheckedTextView ctvApp = (CheckedTextView) row.findViewById(R.id.ctvName);
 
 			// Get entry
@@ -1564,6 +1565,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Set title
 			ctvApp.setText(xAppInfo.toString());
 
+			// Check if used
+			boolean used = (PrivacyManager.getUsed(row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
+			ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
+			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
+
+			// Check if permission
+			if (mRestrictionName != null)
+				if (!PrivacyManager.hasPermission(row.getContext(), xAppInfo.getPackageName(), mRestrictionName))
+					imgGranted.setVisibility(View.INVISIBLE);
+
 			// Check if internet access
 			imgInternet.setVisibility(xAppInfo.hasInternet() ? View.VISIBLE : View.INVISIBLE);
 
@@ -1575,11 +1586,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				listRestriction = new ArrayList<String>();
 				listRestriction.add(mRestrictionName);
 			}
-
-			// Check if used
-			boolean used = (PrivacyManager.getUsed(row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
-			ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
-			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 
 			// Get all/some restricted
 			boolean allRestricted = true;
