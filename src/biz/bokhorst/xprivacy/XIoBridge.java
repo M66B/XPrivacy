@@ -20,7 +20,7 @@ public class XIoBridge extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		String fileName = (String) param.args[0];
 		if (fileName != null && fileName.startsWith(mFileName))
-			if (isRestricted(null))
+			if (isRestricted(param))
 				param.setResult(new FileNotFoundException());
 	}
 
