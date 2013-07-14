@@ -480,10 +480,10 @@ If you encounter any bug or data leakage please [report an issue](https://github
 preferably including a [logcat](http://developer.android.com/tools/help/logcat.html)
 (use [pastebin](http://pastebin.com/) or a similar service).
 
+*Before submitting any issue please ensure you are running the latest version of XPrivacy.*
+
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues),
 but check if there doesn´t already exist a similar request.
-
-*Before submitting any issue please ensure you are running the latest version of XPrivacy.*
 
 If you have any question or suggestion, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
@@ -892,6 +892,8 @@ if the associated content provider chooses to do so.
 
 The *Per App Settings Module* revokes permissions like LBE Privacy Guard does.
 This modules offers a lot of other, intersting features.
+
+XPrivacy can restrict more data than any of the above solutions.
 
 Contributing
 ------------
