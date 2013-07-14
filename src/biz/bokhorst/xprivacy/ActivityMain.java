@@ -905,10 +905,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		else
 			tvLicensed.setText(String.format(getString(R.string.msg_licensed), licensed));
 
-		// Show external storage folder
-		TextView tvStorage = (TextView) dlgAbout.findViewById(R.id.tvStorage);
-		tvStorage.setText(Environment.getExternalStorageDirectory().toString());
-
 		dlgAbout.setCancelable(true);
 		dlgAbout.show();
 	}
