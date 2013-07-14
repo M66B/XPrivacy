@@ -79,24 +79,30 @@
             android:paddingLeft="2dip"
             android:src="?attr/icon_used_grayed" />
 
-        <EditText
-            android:id="@+id/etFilter"
+        <RelativeLayout
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="6dip"
-            android:layout_weight="1"
-            android:hint="@string/help_application"
-            android:inputType="textNoSuggestions"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:layout_weight="1" >
 
-        <ImageView
-            android:id="@+id/imgClear"
-            android:layout_width="24dip"
-            android:layout_height="24dip"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/help_application"
-            android:src="?attr/icon_clear_grayed" />
+            <EditText
+                android:id="@+id/etFilter"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="6dip"
+                android:hint="@string/help_application"
+                android:inputType="textNoSuggestions"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <ImageView
+                android:id="@+id/imgClear"
+                android:layout_width="24dip"
+                android:layout_height="24dip"
+                android:layout_alignRight="@id/etFilter"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/help_application"
+                android:src="?attr/icon_clear_grayed" />
+        </RelativeLayout>
 
         <CheckBox
             android:id="@+id/cbFilter"

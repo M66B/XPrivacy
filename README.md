@@ -492,6 +492,7 @@ Changelog
 
 **version 1.7** (in development)
 
+* Integrate clear icon into application name filter
 * Updated Polish translation
 
 **Version 1.6**
