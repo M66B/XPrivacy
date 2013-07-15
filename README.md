@@ -493,6 +493,8 @@ Changelog
 
 **Version 1.7** (in development)
 
+* Restrict access to /proc (fixed)
+* Updated Catalan translation
 * Updated Simplified Chinese translation
 * Updated Slovak trabnslation
 
