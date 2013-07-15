@@ -22,11 +22,16 @@ public class XIoBridge extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (param.args.length > 0) {
 			String fileName = (String) param.args[0];
-			if (fileName != null && fileName.startsWith(mFileName) && !fileName.equals("/proc/self/cmdline")) {
+			if (fileName != null && fileName.startsWith(mFileName)) {
+
 				// Backward compatibility
 				if (mFileName.equals("/proc"))
 					if (PrivacyManager.getSetting(this, null, PrivacyManager.cSettingVersion, null, true) == null)
 						return;
+
+				// Facebook
+				if (mFileName.equals("/proc") && fileName.equals("/proc/self/cmdline"))
+					return;
 
 				// Check if restricted
 				if (isRestricted(param, mFileName)) {
