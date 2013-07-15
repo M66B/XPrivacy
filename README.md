@@ -81,7 +81,7 @@ Donate a few dollars for the [pro version](http://www.faircode.eu/xprivacy/)
 
 or
 
-buy [the pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) in Google Play
+buy [the pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) from Google play
 
 or
 
@@ -245,7 +245,8 @@ It seems like a lot of steps, but it is done in no time:
 	* Be sure to install the latest **version 2.1.4**
 	* Download and copy the Xposed disabler to your SD card to disable Xposed in case of troubles
 	* [MIUI](http://en.miui.com/) is not supported by Xposed
-1. Install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
+1. Install XPrivacy from the [Google play](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy)
+	* Alternatively download from [here](http://goo.im/devs/M66B/xprivacy)
 	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
 1. Enable XPrivacy from the Xposed installer
 1. Reboot into recovery
@@ -730,7 +731,7 @@ Changelog
 **Version 0.31**
 
 * Show storage folder in about
-* Support for XPrivacy Pro from Google Play
+* Support for XPrivacy Pro from Google play
 * Fixed Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/50))
 
 **Version 0.30**
