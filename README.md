@@ -489,6 +489,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 1.7** (in development)
+
+* Updated German translation
+
 **Version 1.6.6**
 
 * Reverted "Restrict access to /proc" (again)
