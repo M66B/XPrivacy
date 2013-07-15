@@ -491,9 +491,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 1.6.4** (in development)
+**Version 1.6.4**
 
 * User interface improvements
+* Stability improvements
 * Restrict access to /proc (fixed)
 * Updated Catalan translation
 * Updated Simplified Chinese translation
