@@ -2,8 +2,6 @@ package biz.bokhorst.xprivacy;
 
 import java.io.FileNotFoundException;
 
-import android.os.Process;
-
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XIoBridge extends XHook {
@@ -20,11 +18,18 @@ public class XIoBridge extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (param.args.length > 0 && Process.myUid() != PrivacyManager.cUidAndroid) {
+		if (param.args.length > 0) {
 			String fileName = (String) param.args[0];
-			if (fileName != null && fileName.startsWith(mFileName))
+			if (fileName != null && fileName.startsWith(mFileName)) {
+				// Backward compatibility
+				if (mFileName.equals("/proc"))
+					if (PrivacyManager.getSetting(this, null, PrivacyManager.cSettingVersion, null, true) == null)
+						return;
+
+				// Check if restricted
 				if (isRestricted(param))
 					param.setResult(new FileNotFoundException());
+			}
 		}
 	}
 

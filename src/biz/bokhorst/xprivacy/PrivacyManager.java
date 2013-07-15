@@ -17,6 +17,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -56,7 +57,6 @@ public class PrivacyManager {
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
-	public final static boolean cExperimental = false;
 
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
@@ -74,6 +74,7 @@ public class PrivacyManager {
 	public final static String cSettingFSystem = "FSystem";
 	public final static String cSettingTheme = "Theme";
 	public final static String cSettingSalt = "Salt";
+	public final static String cSettingVersion = "Version";
 
 	private final static String cDeface = "DEFACE";
 
@@ -546,6 +547,20 @@ public class PrivacyManager {
 		// Identification: do not restrict Google services provider by default
 		if (restricted && restrictionName.equals(cIdentification) && methodName == null)
 			setRestricted(hook, context, uid, restrictionName, "GservicesProvider", false);
+
+		// Identification: default allow /proc for system apps
+		if (restricted && restrictionName.equals(cIdentification) && methodName == null)
+			try {
+				PackageManager pm = context.getPackageManager();
+				for (String packageName : pm.getPackagesForUid(uid)) {
+					PackageInfo pInfo = pm.getPackageInfo(packageName, 0);
+					if ((pInfo.applicationInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0)
+						PrivacyManager
+								.setRestricted(null, context, uid, PrivacyManager.cIdentification, "/proc", false);
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 
 		// Shell: do not restrict load/loadLibrary by default
 		if (restricted && restrictionName.equals(cShell) && methodName == null) {

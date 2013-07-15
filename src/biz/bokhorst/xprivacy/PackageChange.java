@@ -77,6 +77,7 @@ public class PackageChange extends BroadcastReceiver {
 					notificationManager.notify(pInfo.applicationInfo.uid, notification);
 				}
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
+				// Notify reboot required
 				if (packageName.equals(context.getPackageName())) {
 					// Build notification
 					NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
@@ -90,6 +91,30 @@ public class PackageChange extends BroadcastReceiver {
 					// Notify
 					notificationManager.notify(0, notification);
 				}
+
+				// Upgrade
+				try {
+					// Get stored version
+					PackageManager pm = context.getPackageManager();
+					Version sVersion = new Version(PrivacyManager.getSetting(null, context,
+							PrivacyManager.cSettingVersion, "0.0", false));
+
+					// Version 0.0
+					if (sVersion.compareTo(new Version("0.0")) == 0) {
+						// Disable Identification/proc for system apps
+						for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
+							if ((aInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0)
+								PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cIdentification,
+										"/proc", false);
+					}
+
+					// Update stored version
+					PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
+					PrivacyManager.setSetting(null, context, PrivacyManager.cSettingVersion, pInfo.versionName);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 				// Package removed
 				notificationManager.cancel(uid);
