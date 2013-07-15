@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_notxposed" formatted="false">La versió %d+ d\'Xposed framework no està instal·lada</string>
-    <string name="app_notenabled">XPrivacy no està habilitat a l'instal·lador d'Xposed</string>
+    <string name="app_notenabled">XPrivacy no està habilitat a l\'instal·lador d\'Xposed</string>
     <string name="app_wrongandroid">Només ha sigut provat amb les versions 4.0, 4.1 i 4.2 d\'Android</string>
     <string name="app_version" formatted="false">Versió d\'XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Versió d\'Xposed framework: %d</string>
