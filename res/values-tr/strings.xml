@@ -60,7 +60,6 @@
     <string name="help_internet">internet izni var</string>
     <string name="help_granted">Android izni var</string>
     <string name="help_used">bu izni kullandı</string>
-    <string name="help_system">is system application</string>
-    <string name="help_dangerous">is dangerous category</string>
+    <string name="help_dangerous">is dangerous</string>
     
 </resources>

@@ -60,7 +60,6 @@
     <string name="help_internet">表示联网的权限</string>
     <string name="help_granted">表示授予的权限</string>
     <string name="help_used">表示使用的数据</string>
-    <string name="help_system">is system application</string>
-    <string name="help_dangerous">is dangerous category</string>
+    <string name="help_dangerous">is dangerous</string>
     
 </resources>

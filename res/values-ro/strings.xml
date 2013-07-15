@@ -60,7 +60,6 @@
     <string name="help_internet">are permisiune Internet</string>
     <string name="help_granted">are permisiune Android</string>
     <string name="help_used">a utilizat aceste date</string>
-    <string name="help_system">is system application</string>
-    <string name="help_dangerous">is dangerous category</string>
+    <string name="help_dangerous">is dangerous</string>
     
 </resources>

@@ -1591,7 +1591,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Set background color
 			if (xAppInfo.getIsSystem())
-				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_system)));
+				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 
 			// Set icon
 			imgIcon.setImageDrawable(xAppInfo.getDrawable());

@@ -60,7 +60,6 @@
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>
     <string name="help_used">данные уже использовались</string>
-    <string name="help_system">is system application</string>
-    <string name="help_dangerous">is dangerous category</string>
+    <string name="help_dangerous">is dangerous</string>
     
 </resources>

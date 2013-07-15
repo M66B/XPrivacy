@@ -13,7 +13,6 @@
         <item name="icon_launcher">@drawable/ic_launcher_holo_dark</item>
         <item name="icon_clear">@drawable/cross_holo_dark</item>
         <item name="icon_clear_grayed">@drawable/cross_grayed_out_holo_dark</item>
-        <item name="color_system">@color/color_system_dark</item>
         <item name="color_dangerous">@color/color_dangerous_dark</item>
     </style>
 
@@ -30,7 +29,6 @@
         <item name="icon_launcher">@drawable/ic_launcher_holo_light</item>
         <item name="icon_clear">@drawable/cross_holo_light</item>
         <item name="icon_clear_grayed">@drawable/cross_grayed_out_holo_light</item>
-        <item name="color_system">@color/color_system_light</item>
         <item name="color_dangerous">@color/color_dangerous_light</item>
     </style>
 

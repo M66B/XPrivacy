@@ -107,7 +107,7 @@ public class ActivityApp extends Activity {
 		// Background color
 		if (mAppInfo.getIsSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
-			llInfo.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_system)));
+			llInfo.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 		}
 
 		// Display app icon
