@@ -28,7 +28,7 @@
     <string name="msg_edit">Prem la icona de l\'aplicació per a editar tots els permisos</string>
     <string name="msg_sure">Esteu segur?</string>
     <string name="msg_done">Fet</string>
-    <string name="msg_reboot">Reboot required</string>
+    <string name="msg_reboot">Cal reiniciar</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc.)</string>
     <string name="restrict_browser">Navegador (marcadors/historial)</string>
     <string name="restrict_calendar">Calendari</string>
@@ -61,6 +61,6 @@
     <string name="help_internet">té permís d\'Internet</string>
     <string name="help_granted">té permisos d\'Android</string>
     <string name="help_used">ha utilitzat aquesta informació</string>
-    <string name="help_dangerous">is dangerous</string>
+    <string name="help_dangerous">és perillós</string>
 
 </resources>
