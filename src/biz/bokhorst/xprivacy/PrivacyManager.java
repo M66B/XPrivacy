@@ -76,7 +76,7 @@ public class PrivacyManager {
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
 
-	public final static boolean cExperimental = false;
+	public final static boolean cExperimental = true;
 
 	private final static String cDeface = "DEFACE";
 	private final static int cCacheTimeoutMs = 15 * 1000;

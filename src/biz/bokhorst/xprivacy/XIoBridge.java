@@ -2,6 +2,7 @@ package biz.bokhorst.xprivacy;
 
 import java.io.FileNotFoundException;
 
+import android.os.Binder;
 import android.os.Process;
 import android.util.Log;
 
@@ -29,7 +30,7 @@ public class XIoBridge extends XHook {
 				// /proc
 				if (mFileName.equals("/proc")) {
 					// Android
-					if (Process.myUid() == PrivacyManager.cUidAndroid)
+					if (Process.myUid() == PrivacyManager.cUidAndroid || Binder.getCallingUid() == 0)
 						return;
 
 					// Facebook
