@@ -493,6 +493,7 @@ Changelog
 **version 1.6.3** (in development)
 
 * Fixed toggling all in main view
+* Add Catalan translation
 
 **version 1.6.2**
 
@@ -920,6 +921,7 @@ Translations:
 Current translations:
 
 * Bulgarian (bg)
+* Catalan (ca)
 * Czech (cs)
 * Danish (da)
 * Dutch/Flemish (nl)
