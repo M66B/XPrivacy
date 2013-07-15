@@ -281,24 +281,6 @@ public class PrivacyProvider extends ContentProvider {
 			}
 
 			return rows;
-		} else if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length == 1) {
-			// Get arguments
-			String restrictionName = where;
-			int uid = Integer.parseInt(selectionArgs[0]);
-
-			// Delete audit trail
-			int rows = 0;
-			String prefix = getUsagePref(uid, restrictionName);
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-			SharedPreferences.Editor editor = prefs.edit();
-			for (String pref : prefs.getAll().keySet())
-				if (pref.startsWith(prefix)) {
-					rows++;
-					editor.remove(pref);
-					Util.log(null, Log.INFO, "Removed audit=" + pref);
-				}
-			editor.apply();
-			return rows;
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING && selectionArgs == null) {
 			int rows = 0;
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);

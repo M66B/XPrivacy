@@ -627,13 +627,6 @@ public class PrivacyManager {
 		return lastUsage;
 	}
 
-	public static void deleteUsageData(Context context, int uid) {
-		for (String restrictionName : getRestrictions(true))
-			context.getContentResolver().delete(PrivacyProvider.URI_USAGE, restrictionName,
-					new String[] { Integer.toString(uid) });
-		Util.log(null, Log.INFO, "Deleted usage uid=" + uid);
-	}
-
 	// Settings
 
 	public static boolean getSettingBool(XHook hook, Context context, String settingName, boolean defaultValue,

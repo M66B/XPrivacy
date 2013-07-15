@@ -79,13 +79,6 @@ public class PackageChange extends BroadcastReceiver {
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 				// Package removed
 				notificationManager.cancel(uid);
-
-				// Remove existing restrictions
-				for (String restrictionName : PrivacyManager.getRestrictions(true))
-					PrivacyManager.setRestricted(null, context, uid, restrictionName, null, false);
-
-				// Remove usage data
-				PrivacyManager.deleteUsageData(context, uid);
 			}
 		}
 	}

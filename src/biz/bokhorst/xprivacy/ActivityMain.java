@@ -1540,7 +1540,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					if (fRestricted)
 						if (mRestrictionName == null) {
 							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-									xAppInfo.getUid(), true))
+									xAppInfo.getUid(), false))
 								if (restricted) {
 									someRestricted = true;
 									break;
