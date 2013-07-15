@@ -7,7 +7,7 @@
     <string name="app_xversion" formatted="false">Xposed Framework Version: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="menu_settings">Einstellungen</string>
-    <string name="menu_template">Template</string>
+    <string name="menu_template">Template (Vorlage)</string>
     <string name="menu_update">Nach Updates suchen</string>
     <string name="menu_report">Problem melden</string>
     <string name="menu_export">Export der Einst.</string>
@@ -19,16 +19,16 @@
     <string name="menu_app_launch">Starten</string>
     <string name="menu_app_settings">Einstellungen</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Select accounts to allow</string>
-    <string name="menu_contacts">Select contacts to allow</string>
+    <string name="menu_accounts">Wähle Konten zum Erlauben</string>
+    <string name="menu_contacts">Wähle Kontakte zum Erlauben</string>
     <string name="msg_noupdate">Neuste Version bereits installiert</string>
     <string name="msg_restricted" formatted="false">%s beschränkt durch XPrivacy</string>
     <string name="msg_licensed" formatted="false">Lizensiert für: %s</string>
-    <string name="msg_loading">Loading</string>
-    <string name="msg_edit">Click the application icon to edit all restrictions</string>
-    <string name="msg_sure">Are you sure?</string>
+    <string name="msg_loading">Lade...</string>
+    <string name="msg_edit">Berühre das App-Icon, um alle Berechtigungen zu bearbeiten</string>
+    <string name="msg_sure">Bist du sicher?</string>
     <string name="msg_done">Fertig</string>
-    <string name="msg_reboot">Reboot required</string>
+    <string name="msg_reboot">Telefon-Neustart erforderlich</string>
     <string name="restrict_accounts">Konten (Google, Facebook, etc.)</string>
     <string name="restrict_browser">Browser (Lesezeichen/Verlauf)</string>
     <string name="restrict_calendar">Kalender</string>
@@ -46,21 +46,21 @@
     <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
-    <string name="title_category">Category:</string>
+    <string name="title_category">Kategorie:</string>
     <string name="title_restrict">Markieren zum Einschränken:</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
     <string name="settings_mac">MAC Adresse</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_country">Country</string>
+    <string name="settings_country">Land</string>
     <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Filter by permission</string>
-    <string name="settings_fsystem">Filter system applications</string>
+    <string name="settings_fpermission">Nach Android Berechtigungen filtern</string>
+    <string name="settings_fsystem">System Apps ausblenden</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet Berechtigung</string>
     <string name="help_granted">hat Android Berechtigung</string>
     <string name="help_used">hat diese Daten benutzt</string>
-    <string name="help_dangerous">is dangerous</string>
+    <string name="help_dangerous">Beschränkung bedenklich (App-Absturz)</string>
     
 </resources>
