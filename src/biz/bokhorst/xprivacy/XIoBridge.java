@@ -2,6 +2,7 @@ package biz.bokhorst.xprivacy;
 
 import java.io.FileNotFoundException;
 
+import android.os.Process;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -25,14 +26,21 @@ public class XIoBridge extends XHook {
 			if (fileName != null && fileName.startsWith(mFileName)) {
 				Util.log(this, Log.INFO, "File name=" + fileName);
 
-				// Backward compatibility
-				if (mFileName.equals("/proc"))
+				// /proc
+				if (mFileName.equals("/proc")) {
+					// Android
+					if (Process.myUid() == PrivacyManager.cUidAndroid)
+						return;
+
+					// Facebook
+					if (fileName.equals("/proc/self/cmdline"))
+						return;
+
+					// Backward compatibility
 					if (PrivacyManager.getSetting(this, null, PrivacyManager.cSettingVersion, null, true) == null)
 						return;
 
-				// Facebook
-				if (mFileName.equals("/proc") && fileName.equals("/proc/self/cmdline"))
-					return;
+				}
 
 				// Check if restricted
 				if (isRestricted(param, mFileName))
