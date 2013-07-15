@@ -7,7 +7,7 @@
     <string name="app_xversion" formatted="false">Version du cadre d\'application Xposed : %d</string>
     <string name="app_copyright">Droits d\'auteur: M. Bokhorst (M66B) \u00A9 2013 </string>
     <string name="menu_settings">Paramètres</string>
-    <string name="menu_template">Template</string>
+    <string name="menu_template">Modèle</string>
     <string name="menu_update">Vérifier les mises à jour</string>
     <string name="menu_report">Signaler un problème</string>
     <string name="menu_export">Exporter</string>
@@ -24,11 +24,11 @@
     <string name="msg_noupdate">Pas de mise à jour disponible</string>
     <string name="msg_restricted" formatted="false">%s restreint par XPrivacy</string>
     <string name="msg_licensed" formatted="false">Autorisé à: %s</string>
-    <string name="msg_loading">Loading</string>
+    <string name="msg_loading">Chargement</string>
     <string name="msg_edit">Cliquer sur l\'icône de l\'application pour éditer les restrictions</string>
-    <string name="msg_sure">Etes-vous certain ?</string>
+    <string name="msg_sure">Êtes-vous certain ?</string>
     <string name="msg_done">Effectué</string>
-    <string name="msg_reboot">Reboot required</string>
+    <string name="msg_reboot">Redémarrage requis</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc)</string>
     <string name="restrict_browser">Navigateur (marque-pages/historique)</string>
     <string name="restrict_calendar">Calendrier</string>
@@ -50,7 +50,7 @@
     <string name="title_restrict">Vérifier les restrictions:</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
-    <string name="settings_mac">adresse MAC</string>
+    <string name="settings_mac">Adresse MAC</string>
     <string name="settings_phone">Numéro de téléphone</string>
     <string name="settings_id">ID Android</string>
     <string name="settings_country">Pays</string>
@@ -61,6 +61,6 @@
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>
     <string name="help_used">a utilisé ces données</string>
-    <string name="help_dangerous">is dangerous</string>
+    <string name="help_dangerous">est dangereux</string>
     
 </resources>
