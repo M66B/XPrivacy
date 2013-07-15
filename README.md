@@ -493,6 +493,7 @@ Changelog
 
 * Restrict access to /proc (fixed again)
 * Updated German translation
+* Updated Japanese translation
 
 **Version 1.6.6**
 
