@@ -491,18 +491,23 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**version 1.6.3**
+**Version 1.7** (in development)
+
+* Updated Simplified Chinese translation
+* Updated Slovak trabnslation
+
+**Version 1.6.3**
 
 * Fixed toggling all in main view
 * Add Catalan translation
 
-**version 1.6.2**
+**Version 1.6.2**
 
 * Do not apply dangerous restriction categories to new applications / all
 * Add legend for colors in help
 * Fixed filtering after switching theme
 
-**version 1.6.1**
+**Version 1.6.1**
 
 * Reverted "Restrict access to /proc"
 * Integrate clear icon into application name filter
