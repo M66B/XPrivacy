@@ -60,5 +60,7 @@
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>
     <string name="help_used">はそのデータを使用しています</string>
-
+    <string name="help_system">is system application</string>
+    <string name="help_dangerous">is dangerous category</string>
+    
 </resources>

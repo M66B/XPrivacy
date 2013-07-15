@@ -60,5 +60,7 @@
     <string name="help_internet">har internet tilladelse</string>
     <string name="help_granted">har Android tilladelse</string>
     <string name="help_used">har benyttet denne data type</string>
-
+    <string name="help_system">is system application</string>
+    <string name="help_dangerous">is dangerous category</string>
+    
 </resources>

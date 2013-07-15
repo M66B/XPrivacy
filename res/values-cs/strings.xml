@@ -60,5 +60,7 @@
     <string name="help_internet">má oprávnění k Internetu</string>
     <string name="help_granted">má Android oprávnění</string>
     <string name="help_used">přistupovala k těmto datům</string>
-
+    <string name="help_system">is system application</string>
+    <string name="help_dangerous">is dangerous category</string>
+    
 </resources>

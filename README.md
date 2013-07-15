@@ -493,6 +493,7 @@ Changelog
 **version 1.6.2** (in development)
 
 * Do not apply dangerous restriction categories to new applications / all
+* Add legend for colors in help
 * Fixed filtering after switching theme
 
 **version 1.6.1**

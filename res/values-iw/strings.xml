@@ -60,5 +60,7 @@
     <string name="help_internet">יש הרשאות אינטרנט</string>
     <string name="help_granted">יש הרשאות אנדרואיד</string>
     <string name="help_used">כבר שומש מידע זה</string>
-
+    <string name="help_system">is system application</string>
+    <string name="help_dangerous">is dangerous category</string>
+    
 </resources>

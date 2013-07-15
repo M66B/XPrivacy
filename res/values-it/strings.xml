@@ -60,5 +60,7 @@
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>
     <string name="help_used">ha usato questi dati</string>
-
+    <string name="help_system">is system application</string>
+    <string name="help_dangerous">is dangerous category</string>
+    
 </resources>

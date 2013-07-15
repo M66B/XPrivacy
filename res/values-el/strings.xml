@@ -60,5 +60,7 @@
     <string name="help_internet">έχει άδεια internet</string>
     <string name="help_granted">έχει άδεια Android</string>
     <string name="help_used">έχει χρησιμοποιήσει αυτά τα δεδομένα</string>
-
+    <string name="help_system">is system application</string>
+    <string name="help_dangerous">is dangerous category</string>
+    
 </resources>

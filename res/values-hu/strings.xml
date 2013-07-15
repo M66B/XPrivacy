@@ -60,5 +60,7 @@
     <string name="help_internet">Internet engedély</string>
     <string name="help_granted">Android engedély</string>
     <string name="help_used">Használta ezt az adatot</string>
-
+    <string name="help_system">is system application</string>
+    <string name="help_dangerous">is dangerous category</string>
+    
 </resources>
