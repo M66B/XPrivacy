@@ -30,7 +30,7 @@ public class XIoBridge extends XHook {
 				// /proc
 				if (mFileName.equals("/proc")) {
 					// Android
-					if (Process.myUid() == PrivacyManager.cUidAndroid || Binder.getCallingUid() == 0)
+					if (Process.myUid() == PrivacyManager.cUidAndroid || Binder.getCallingUid() <= 0)
 						return;
 
 					// Facebook
