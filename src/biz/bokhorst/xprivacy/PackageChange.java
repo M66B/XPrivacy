@@ -43,7 +43,7 @@ public class PackageChange extends BroadcastReceiver {
 				if (fSystem ? !system : true) {
 					// Default deny new user apps
 					if (!system && !replacing)
-						for (String restrictionName : PrivacyManager.getRestrictions())
+						for (String restrictionName : PrivacyManager.getRestrictions(false))
 							if (PrivacyManager.getSettingBool(null, context,
 									String.format("Template.%s", restrictionName), true, false))
 								PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
@@ -81,7 +81,7 @@ public class PackageChange extends BroadcastReceiver {
 				notificationManager.cancel(uid);
 
 				// Remove existing restrictions
-				for (String restrictionName : PrivacyManager.getRestrictions())
+				for (String restrictionName : PrivacyManager.getRestrictions(true))
 					PrivacyManager.setRestricted(null, context, uid, restrictionName, null, false);
 
 				// Remove usage data

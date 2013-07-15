@@ -143,7 +143,7 @@ public class ActivityApp extends Activity {
 		boolean fPermission = PrivacyManager
 				.getSettingBool(null, this, PrivacyManager.cSettingFPermission, true, false);
 		List<String> listRestriction = new ArrayList<String>();
-		for (String restrictionName : PrivacyManager.getRestrictions())
+		for (String restrictionName : PrivacyManager.getRestrictions(true))
 			if (fPermission ? PrivacyManager.hasPermission(this, mAppInfo.getPackageName(), restrictionName) : true)
 				listRestriction.add(restrictionName);
 
@@ -231,7 +231,7 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionAll() {
-		List<String> listRestriction = PrivacyManager.getRestrictions();
+		List<String> listRestriction = PrivacyManager.getRestrictions(false);
 
 		// Get toggle
 		boolean restricted = false;

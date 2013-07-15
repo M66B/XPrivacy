@@ -325,13 +325,18 @@ public class PrivacyManager {
 			Util.log(null, Log.WARN, "Missing method " + methodName);
 	}
 
-	public static List<String> getRestrictions() {
-		return new ArrayList<String>(Arrays.asList(cRestrictionNames));
+	public static List<String> getRestrictions(boolean dangerous) {
+		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
+		if (!dangerous)
+			for (String restrictionName : cRestrictionNames)
+				if (isDangerous(restrictionName, null))
+					listRestriction.remove(restrictionName);
+		return listRestriction;
 	}
 
 	public static boolean isDangerous(String restrictionName, String methodName) {
-		return restrictionName == null || restrictionName.equals(cInternet) || restrictionName.equals(cStorage)
-				|| restrictionName.equals(cSystem);
+		return (restrictionName != null && (restrictionName.equals(cInternet) || restrictionName.equals(cStorage) || restrictionName
+				.equals(cSystem)));
 	}
 
 	public static List<String> getMethodNames(String restrictionName) {
@@ -616,7 +621,7 @@ public class PrivacyManager {
 	}
 
 	public static void deleteUsageData(Context context, int uid) {
-		for (String restrictionName : getRestrictions())
+		for (String restrictionName : getRestrictions(true))
 			context.getContentResolver().delete(PrivacyProvider.URI_USAGE, restrictionName,
 					new String[] { Integer.toString(uid) });
 		Util.log(null, Log.INFO, "Deleted usage uid=" + uid);

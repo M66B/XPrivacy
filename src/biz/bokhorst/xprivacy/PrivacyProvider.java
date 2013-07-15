@@ -89,7 +89,7 @@ public class PrivacyProvider extends ContentProvider {
 			// Build restriction list
 			List<String> listRestrictionName;
 			if (restrictionName == null)
-				listRestrictionName = PrivacyManager.getRestrictions();
+				listRestrictionName = PrivacyManager.getRestrictions(true);
 			else {
 				listRestrictionName = new ArrayList<String>();
 				listRestrictionName.add(restrictionName);
@@ -146,7 +146,7 @@ public class PrivacyProvider extends ContentProvider {
 			// Return usage
 			List<String> listRestriction;
 			if (selection == null)
-				listRestriction = PrivacyManager.getRestrictions();
+				listRestriction = PrivacyManager.getRestrictions(true);
 			else {
 				listRestriction = new ArrayList<String>();
 				listRestriction.add(selection);
@@ -265,7 +265,7 @@ public class PrivacyProvider extends ContentProvider {
 			// Method restrictions
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
 			SharedPreferences.Editor editor = prefs.edit();
-			for (String restrictionName : PrivacyManager.getRestrictions()) {
+			for (String restrictionName : PrivacyManager.getRestrictions(true)) {
 				for (String methodName : PrivacyManager.getMethodNames(restrictionName)) {
 					rows++;
 					editor.remove(getExceptionPref(uid, restrictionName, methodName));
@@ -275,7 +275,7 @@ public class PrivacyProvider extends ContentProvider {
 			setPrefFileReadable(PREF_RESTRICTION);
 
 			// Group restrictions
-			for (String restrictionName : PrivacyManager.getRestrictions()) {
+			for (String restrictionName : PrivacyManager.getRestrictions(true)) {
 				rows++;
 				updateRestriction(uid, restrictionName, null, true);
 			}

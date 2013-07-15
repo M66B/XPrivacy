@@ -121,7 +121,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		// Get localized restriction name
-		List<String> listRestriction = PrivacyManager.getRestrictions();
+		List<String> listRestriction = PrivacyManager.getRestrictions(true);
 		List<String> listLocalizedRestriction = new ArrayList<String>();
 		for (String restrictionName : listRestriction)
 			listLocalizedRestriction.add(PrivacyManager.getLocalizedName(this, restrictionName));
@@ -138,7 +138,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			public void onClick(View view) {
 				int position = spRestriction.getSelectedItemPosition();
 				if (position != AdapterView.INVALID_POSITION) {
-					String title = (position == 0 ? "XPrivacy" : PrivacyManager.getRestrictions().get(position - 1));
+					String title = (position == 0 ? "XPrivacy" : PrivacyManager.getRestrictions(true).get(position - 1));
 					String url = String.format("http://wiki.faircode.eu/index.php?title=%s", title);
 					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 					infoIntent.setData(Uri.parse(url));
@@ -385,7 +385,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void selectRestriction(int pos) {
 		if (mAppAdapter != null) {
-			String restrictionName = (pos == 0 ? null : PrivacyManager.getRestrictions().get(pos - 1));
+			String restrictionName = (pos == 0 ? null : PrivacyManager.getRestrictions(true).get(pos - 1));
 			if (PrivacyManager.isDangerous(restrictionName, null))
 				spRestriction.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 			else {
@@ -418,7 +418,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		private int getBackgroundColor(int position) {
-			String restrictionName = (position == 0 ? null : PrivacyManager.getRestrictions().get(position - 1));
+			String restrictionName = (position == 0 ? null : PrivacyManager.getRestrictions(true).get(position - 1));
 			if (PrivacyManager.isDangerous(restrictionName, null))
 				return getResources().getColor(getThemed(R.attr.color_dangerous));
 			else {
@@ -674,7 +674,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
 						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
 						if (mAppAdapter.getRestrictionName() == null) {
-							for (String restrictionName : PrivacyManager.getRestrictions())
+							for (String restrictionName : PrivacyManager.getRestrictions(false))
 								PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
 										restrictionName, null, !someRestricted);
 						} else
@@ -849,7 +849,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionTemplate() {
 		// Get restriction categories
-		final List<String> listRestriction = PrivacyManager.getRestrictions();
+		final List<String> listRestriction = PrivacyManager.getRestrictions(false);
 		CharSequence[] options = new CharSequence[listRestriction.size()];
 		boolean[] selection = new boolean[listRestriction.size()];
 		for (int i = 0; i < listRestriction.size(); i++) {
@@ -1626,7 +1626,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Get restrictions
 			final List<String> listRestriction;
 			if (mRestrictionName == null)
-				listRestriction = PrivacyManager.getRestrictions();
+				listRestriction = PrivacyManager.getRestrictions(true);
 			else {
 				listRestriction = new ArrayList<String>();
 				listRestriction.add(mRestrictionName);
