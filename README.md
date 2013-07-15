@@ -489,6 +489,13 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 1.6.6**
+
+* Reverted "Restrict access to /proc" (again)
+* Updated Arabic translation
+* Update French translation
+* Updated Polish translation
+
 **Version 1.6.5**
 
 * Explicitly allow /proc for Android

@@ -76,8 +76,9 @@ public class PrivacyManager {
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
 
-	private final static String cDeface = "DEFACE";
+	public final static boolean cExperimental = false;
 
+	private final static String cDeface = "DEFACE";
 	private final static int cCacheTimeoutMs = 15 * 1000;
 
 	private static Map<String, List<String>> mPermissions = new LinkedHashMap<String, List<String>>();
