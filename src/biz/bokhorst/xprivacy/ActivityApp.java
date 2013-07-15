@@ -485,6 +485,10 @@ public class ActivityApp extends Activity {
 			final String methodName = (String) getChild(groupPosition, childPosition);
 			long lastUsage = PrivacyManager.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, methodName);
 
+			// Set background color
+			if (PrivacyManager.isDangerous(restrictionName, methodName))
+				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+
 			// Display method name
 			if (lastUsage == 0)
 				ctvMethodName.setText(methodName);

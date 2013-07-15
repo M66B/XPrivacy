@@ -335,8 +335,17 @@ public class PrivacyManager {
 	}
 
 	public static boolean isDangerous(String restrictionName, String methodName) {
-		return (restrictionName != null && (restrictionName.equals(cInternet) || restrictionName.equals(cStorage) || restrictionName
-				.equals(cSystem)));
+		if (restrictionName == null)
+			return false;
+		if (restrictionName.equals(cInternet) || restrictionName.equals(cStorage) || restrictionName.equals(cSystem))
+			return true;
+		if (methodName == null)
+			return false;
+		if (restrictionName.equals(cIdentification) && methodName.equals("GservicesProvider"))
+			return true;
+		if (restrictionName.equals(cShell) && (methodName.equals("load") || methodName.equals("loadLibrary")))
+			return true;
+		return false;
 	}
 
 	public static List<String> getMethodNames(String restrictionName) {
