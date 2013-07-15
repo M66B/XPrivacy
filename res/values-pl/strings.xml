@@ -28,7 +28,7 @@
     <string name="msg_edit">Kliknij na ikonę aplikacji aby zmodyfikować poszczególne ograniczenia</string>
     <string name="msg_sure">Czy jesteś pewny/a?</string>
     <string name="msg_done">Gotowe</string>
-    <string name="msg_reboot">Reboot required</string>
+    <string name="msg_reboot">Wymagany restart</string>
     <string name="restrict_accounts">Konta (Google, Facebook, etc)</string>
     <string name="restrict_browser">Przeglądarka (zakładki/historia)</string>
     <string name="restrict_calendar">Kalendarz</string>
@@ -61,6 +61,6 @@
     <string name="help_internet">wymaga dostępu do internetu</string>
     <string name="help_granted">wymaga dostępu do tych uprawnień Androida</string>
     <string name="help_used">użyła dostępu do danych</string>
-    <string name="help_dangerous">is dangerous</string>
+    <string name="help_dangerous">jest niebezpieczne</string>
     
 </resources>
