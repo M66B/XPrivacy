@@ -55,11 +55,11 @@
     <string name="settings_country">Krajina</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovať podľa povolenia</string>
-    <string name="settings_fsystem">Filtrivať systémové aplikácie</string>
+    <string name="settings_fsystem">Filtrovať systémové aplikácie</string>
     <string name="help_application">Aplikácia</string>
-    <string name="help_internet">má internetové oprávnenie</string>
+    <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>
     <string name="help_used">používala tieto dáta</string>
-    <string name="help_dangerous">is dangerous</string>
+    <string name="help_dangerous">je nebezpečná</string>
     
 </resources>
