@@ -28,7 +28,7 @@
     <string name="msg_edit">アプリアイコンをタップすると全ての権限の制限を設定できます</string>
     <string name="msg_sure">続行しますか?</string>
     <string name="msg_done">完了</string>
-    <string name="msg_reboot">Reboot required</string>
+    <string name="msg_reboot">再起動してください</string>
     <string name="restrict_accounts">アカウント (Google, Facebookなど)</string>
     <string name="restrict_browser">ブラウザ (お気に入り/履歴)</string>
     <string name="restrict_calendar">カレンダー</string>
@@ -61,6 +61,6 @@
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>
     <string name="help_used">はそのデータを使用しています</string>
-    <string name="help_dangerous">is dangerous</string>
+    <string name="help_dangerous">は危険です</string>
     
 </resources>
