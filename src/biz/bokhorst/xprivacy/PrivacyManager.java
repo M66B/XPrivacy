@@ -546,23 +546,11 @@ public class PrivacyManager {
 		// Result
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
 
-		// Identification: do not restrict Google services provider by default
-		if (restricted && restrictionName.equals(cIdentification) && methodName == null)
+		// Identification: do not restrict /proc and GS provider by default
+		if (restricted && restrictionName.equals(cIdentification) && methodName == null) {
 			setRestricted(hook, context, uid, restrictionName, "GservicesProvider", false);
-
-		// Identification: default allow /proc for system apps
-		if (restricted && restrictionName.equals(cIdentification) && methodName == null)
-			try {
-				PackageManager pm = context.getPackageManager();
-				for (String packageName : pm.getPackagesForUid(uid)) {
-					PackageInfo pInfo = pm.getPackageInfo(packageName, 0);
-					if ((pInfo.applicationInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0)
-						PrivacyManager
-								.setRestricted(null, context, uid, PrivacyManager.cIdentification, "/proc", false);
-				}
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
+			PrivacyManager.setRestricted(null, context, uid, PrivacyManager.cIdentification, "/proc", false);
+		}
 
 		// Shell: do not restrict load/loadLibrary by default
 		if (restricted && restrictionName.equals(cShell) && methodName == null) {

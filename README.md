@@ -290,11 +290,8 @@ This view will also appear by tapping on the notification that appears after upd
 By default all data categories will be restricted for new installed applications to prevent leaking privacy sensitive data from the beginning.
 
 Data categories exist to make it easier to manage restrictions.
-After enabling expert mode from the settings menu in the main view,
-the data categories in the detailed view can be drilled down to individual functions.
+The data categories in the detailed view can be drilled down to individual functions.
 If the category is restricted, individual functions can be allowed by clearing the function check boxes.
-
-Enabling expert mode does also enable a few more data categories, which can be useful, but can also let some applications crash.
 
 To see it in action: try restricting the category *Identification* for
 [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
@@ -312,7 +309,7 @@ and because is not possible to monitor data usage in each and every situation,
 for example not for access to the internet or the external storage.
 Be aware that an application could access the internet through another (sister) application.
 
-Enabling the internet or storage restriction (expert mode only) means blocking access to the internet
+Enabling the internet or storage restriction means blocking access to the internet
 or to the external storage (typically the SD card).
 This may result in error messages and even in forced closes of the application.
 
@@ -322,9 +319,9 @@ Filtering:
 * Type in the edit box to filter applications by name (tap the cross to clear)
 * Tick the check box to filter applications with the selected data category restricted
 
-Expert mode:
+Exceptions:
 
-* *GservicesProvider* in the category *Identification* needs to be set manually
+* */proc* and *GservicesProvider* in the category *Identification* needs to be set manually
 * *load* and *loadLibrary* in the category *Shell* need to be set manually
 
 **Using XPrivacy is entirely at your own risk**
@@ -413,10 +410,7 @@ The right order for ROM updates is:
 
 **(16) Can I restrict an application with root access?**
 
-Yes, you can, but the application could circumvent anything, since root access means it can do anything it likes.
-Nevertheless the application was probably not built to circumvent anything this way.
-Version 0.26 will allow you to restrict shell access for any application in expert mode,
-which effectively means revoking root access.
+Yes, you can by restricting shell access.
 
 **(17) Will restrictions be applied immediately?**
 
