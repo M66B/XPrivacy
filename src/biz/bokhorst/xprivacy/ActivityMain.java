@@ -386,12 +386,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private void selectRestriction(int pos) {
 		if (mAppAdapter != null) {
 			String restrictionName = (pos == 0 ? null : PrivacyManager.getRestrictions(true).get(pos - 1));
-			if (PrivacyManager.isDangerous(restrictionName, null))
-				spRestriction.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
-			else {
-				TypedArray array = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorBackground, });
-				spRestriction.setBackgroundColor(array.getColor(0, 0));
-			}
 			mAppAdapter.setRestrictionName(restrictionName);
 			applyFilter();
 		}
