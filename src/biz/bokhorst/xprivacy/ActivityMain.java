@@ -178,6 +178,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Setup used filter
 		final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
+		if (savedInstanceState != null && savedInstanceState.containsKey("Used")) {
+			mUsed = savedInstanceState.getBoolean("Used");
+			imgUsed.setImageDrawable(getResources().getDrawable(
+					getThemed(mUsed ? R.attr.icon_used : R.attr.icon_used_grayed)));
+		}
 		imgUsed.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -230,6 +235,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Licensing
 		checkLicense();
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putBoolean("Used", mUsed);
+		super.onSaveInstanceState(outState);
 	}
 
 	private static final int LICENSED = 0x0100;
@@ -364,6 +375,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+		selectRestriction(pos);
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+		selectRestriction(0);
+	}
+
+	private void selectRestriction(int pos) {
 		if (mAppAdapter != null) {
 			String restrictionName = (pos == 0 ? null : PrivacyManager.getRestrictions().get(pos - 1));
 			if (PrivacyManager.isDangerous(restrictionName, null))
@@ -373,15 +393,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				spRestriction.setBackgroundColor(array.getColor(0, 0));
 			}
 			mAppAdapter.setRestrictionName(restrictionName);
-			applyFilter();
-		}
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> parent) {
-		if (mAppAdapter != null) {
-			spRestriction.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
-			mAppAdapter.setRestrictionName(null);
 			applyFilter();
 		}
 	}
@@ -1392,22 +1403,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			super.onPreExecute();
 
 			// Reset spinner
-			spRestriction.setSelection(0);
 			spRestriction.setEnabled(false);
 
 			// Reset filters
 			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
 			imgUsed.setEnabled(false);
-			imgUsed.setImageDrawable(getResources().getDrawable(getThemed(R.attr.icon_used_grayed)));
-			mUsed = false;
 
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setEnabled(false);
-			etFilter.setText("");
 
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 			cbFilter.setEnabled(false);
-			cbFilter.setChecked(false);
 
 			// Show progress dialog
 			ListView lvApp = (ListView) findViewById(R.id.lvApp);
@@ -1447,6 +1453,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Enable spinner
 			Spinner spRestriction = (Spinner) findViewById(R.id.spRestriction);
 			spRestriction.setEnabled(true);
+
+			// Restore state
+			ActivityMain.this.selectRestriction(spRestriction.getSelectedItemPosition());
 		}
 	}
 
