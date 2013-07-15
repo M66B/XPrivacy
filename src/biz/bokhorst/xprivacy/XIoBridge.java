@@ -2,7 +2,6 @@ package biz.bokhorst.xprivacy;
 
 import java.io.FileNotFoundException;
 
-import android.os.Binder;
 import android.os.Process;
 import android.util.Log;
 
