@@ -103,9 +103,8 @@ public class PackageChange extends BroadcastReceiver {
 					if (sVersion.compareTo(new Version("0.0")) == 0) {
 						// Disable Identification/proc for system apps
 						for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
-							if ((aInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0)
-								PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cIdentification,
-										"/proc", false);
+							PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cIdentification,
+									"/proc", false);
 					}
 
 					// Update stored version

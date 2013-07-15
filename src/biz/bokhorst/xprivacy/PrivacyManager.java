@@ -76,7 +76,7 @@ public class PrivacyManager {
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
 
-	public final static boolean cExperimental = true;
+	public final static boolean cExperimental = false;
 
 	private final static String cDeface = "DEFACE";
 	private final static int cCacheTimeoutMs = 15 * 1000;
@@ -343,7 +343,8 @@ public class PrivacyManager {
 			return true;
 		if (methodName == null)
 			return false;
-		if (restrictionName.equals(cIdentification) && methodName.equals("GservicesProvider"))
+		if (restrictionName.equals(cIdentification)
+				&& (methodName.equals("GservicesProvider") || methodName.equals("/proc")))
 			return true;
 		if (restrictionName.equals(cShell) && (methodName.equals("load") || methodName.equals("loadLibrary")))
 			return true;
