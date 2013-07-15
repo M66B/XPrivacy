@@ -93,7 +93,6 @@ public class ActivityApp extends Activity {
 		ivHelp.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
 				Dialog dialog = new Dialog(ActivityApp.this);
 				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 				dialog.setTitle(getString(R.string.help_application));

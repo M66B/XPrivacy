@@ -1217,7 +1217,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		private void notify(String text, boolean ongoing) {
 			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityMain.this);
-			notificationBuilder.setSmallIcon(getThemed(R.attr.icon_launcher));
+			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 			notificationBuilder.setContentTitle(getString(R.string.menu_export));
 			notificationBuilder.setContentText(text);
 			notificationBuilder.setWhen(System.currentTimeMillis());
@@ -1354,7 +1354,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		private void notify(String text, boolean ongoing) {
 			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityMain.this);
-			notificationBuilder.setSmallIcon(getThemed(R.attr.icon_launcher));
+			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 			notificationBuilder.setContentTitle(getString(R.string.menu_import));
 			notificationBuilder.setContentText(text);
 			notificationBuilder.setWhen(System.currentTimeMillis());

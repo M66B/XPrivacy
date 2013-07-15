@@ -492,6 +492,7 @@ Changelog
 **Version 1.6.7** (in development)
 
 * Restrict access to /proc (fixed again)
+* Fix notification icons
 * Updated German translation
 * Updated Japanese translation
 
