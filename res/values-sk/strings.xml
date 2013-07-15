@@ -28,6 +28,7 @@
     <string name="msg_edit">Kliknite na ikonu aplikácie pre úpravu všetkých obmedzení</string>
     <string name="msg_sure">Ste si istý?</string>
     <string name="msg_done">Hotovo</string>
+    <string name="msg_reboot">Reboot required</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atď.)</string>
     <string name="restrict_browser">Prehliadač (záložky/história)</string>
     <string name="restrict_calendar">Kalendár</string>

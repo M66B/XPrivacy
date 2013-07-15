@@ -28,6 +28,7 @@
     <string name="msg_edit">Klik på program ikonet for at redigere restriktioner</string>
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Færdig</string>
+    <string name="msg_reboot">Reboot required</string>
     <string name="restrict_accounts">Konti (Google, Facebook, etc)</string>
     <string name="restrict_browser">Browser (Bogmærker/Historie)</string>
     <string name="restrict_calendar">Kalendar</string>

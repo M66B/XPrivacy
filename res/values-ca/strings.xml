@@ -28,6 +28,7 @@
     <string name="msg_edit">Prem la icona de l\'aplicació per a editar tots els permisos</string>
     <string name="msg_sure">Esteu segur?</string>
     <string name="msg_done">Fet</string>
+    <string name="msg_reboot">Reboot required</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc.)</string>
     <string name="restrict_browser">Navegador (marcadors/historial)</string>
     <string name="restrict_calendar">Calendari</string>

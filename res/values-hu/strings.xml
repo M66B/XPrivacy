@@ -28,6 +28,7 @@
     <string name="msg_edit">Kattintson az alkalmazás ikonra az összes korlátozás módosításához</string>
     <string name="msg_sure">Biztos benne?</string>
     <string name="msg_done">Kész</string>
+    <string name="msg_reboot">Reboot required</string>
     <string name="restrict_accounts">Fiókok (Google, Facebook, stb.)</string>
     <string name="restrict_browser">Böngésző (könyvjelzők / előzmények)</string>
     <string name="restrict_calendar">Naptár</string>

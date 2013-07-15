@@ -35,7 +35,7 @@ public class BootReceiver extends BroadcastReceiver {
 			// Display notification
 			NotificationManager notificationManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.notify(3, notification);
+			notificationManager.notify(0, notification);
 		}
 	}
 }

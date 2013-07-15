@@ -28,6 +28,7 @@
     <string name="msg_edit">Klikk på app ikonet for å bearbeide alle restriksjoner</string>
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Ferdig</string>
+    <string name="msg_reboot">Reboot required</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
     <string name="restrict_calendar">Kalender</string>

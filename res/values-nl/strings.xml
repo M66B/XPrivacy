@@ -28,6 +28,7 @@
     <string name="msg_edit">Klik op het applicatie pictogram om alle beperkingen te wijzigen</string>
     <string name="msg_sure">Zeker weten?</string>
     <string name="msg_done">Done</string>
+    <string name="msg_reboot">Herstart nodig</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
     <string name="restrict_browser">Browser (bladwijzers/geschiedenis)</string>
     <string name="restrict_calendar">Kalender</string>

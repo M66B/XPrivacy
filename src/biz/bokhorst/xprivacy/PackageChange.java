@@ -76,6 +76,20 @@ public class PackageChange extends BroadcastReceiver {
 					// Notify
 					notificationManager.notify(pInfo.applicationInfo.uid, notification);
 				}
+			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
+				if (packageName.equals(context.getPackageName())) {
+					// Build notification
+					NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+					notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+					notificationBuilder.setContentTitle(context.getString(R.string.app_name));
+					notificationBuilder.setContentText(context.getString(R.string.msg_reboot));
+					notificationBuilder.setWhen(System.currentTimeMillis());
+					notificationBuilder.setAutoCancel(true);
+					Notification notification = notificationBuilder.build();
+
+					// Notify
+					notificationManager.notify(0, notification);
+				}
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 				// Package removed
 				notificationManager.cancel(uid);

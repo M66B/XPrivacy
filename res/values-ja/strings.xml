@@ -28,6 +28,7 @@
     <string name="msg_edit">アプリアイコンをタップすると全ての権限の制限を設定できます</string>
     <string name="msg_sure">続行しますか?</string>
     <string name="msg_done">完了</string>
+    <string name="msg_reboot">Reboot required</string>
     <string name="restrict_accounts">アカウント (Google, Facebookなど)</string>
     <string name="restrict_browser">ブラウザ (お気に入り/履歴)</string>
     <string name="restrict_calendar">カレンダー</string>

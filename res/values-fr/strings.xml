@@ -28,6 +28,7 @@
     <string name="msg_edit">Cliquer sur l\'icône de l\'application pour éditer les restrictions</string>
     <string name="msg_sure">Etes-vous certain ?</string>
     <string name="msg_done">Effectué</string>
+    <string name="msg_reboot">Reboot required</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc)</string>
     <string name="restrict_browser">Navigateur (marque-pages/historique)</string>
     <string name="restrict_calendar">Calendrier</string>

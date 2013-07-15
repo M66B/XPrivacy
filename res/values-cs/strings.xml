@@ -28,6 +28,7 @@
     <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_sure">Are you sure?</string>
     <string name="msg_done">Hotovo</string>
+    <string name="msg_reboot">Reboot required</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atd.)</string>
     <string name="restrict_browser">Prohlížeč (záložky/historie)</string>
     <string name="restrict_calendar">Kalendář</string>

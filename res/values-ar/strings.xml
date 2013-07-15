@@ -28,6 +28,7 @@
     <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_sure">Are you sure?</string>
     <string name="msg_done">إنتهى</string>
+    <string name="msg_reboot">Reboot required</string>
     <string name="restrict_accounts">الحسابات (قوقل , فيسبوك , الخ)</string>
     <string name="restrict_browser">المتصفح (العلامات,السجل)</string>
     <string name="restrict_calendar">التقويم</string>

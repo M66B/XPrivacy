@@ -28,6 +28,7 @@
     <string name="msg_edit">Tüm izinleri düzenlemek için uygulamanın simgesine dokun</string>
     <string name="msg_sure">Emin misin?</string>
     <string name="msg_done">Bitti</string>
+    <string name="msg_reboot">Reboot required</string>
     <string name="restrict_accounts">Hesaplar (Google, Facebook, vb)</string>
     <string name="restrict_browser">Tarayıcı (yer imleri/geçmiş)</string>
     <string name="restrict_calendar">Takvim</string>
