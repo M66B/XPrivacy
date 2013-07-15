@@ -490,7 +490,11 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**version 1.6.2** (in development)
+**version 1.6.3** (in development)
+
+* Fixed toggling all in main view
+
+**version 1.6.2**
 
 * Do not apply dangerous restriction categories to new applications / all
 * Add legend for colors in help

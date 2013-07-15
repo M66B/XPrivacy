@@ -658,7 +658,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
 						if (mAppAdapter.getRestrictionName() == null) {
 							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-									xAppInfo.getUid()))
+									xAppInfo.getUid(), false))
 								if (restricted) {
 									someRestricted = true;
 									break;
@@ -1540,7 +1540,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					if (fRestricted)
 						if (mRestrictionName == null) {
 							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-									xAppInfo.getUid()))
+									xAppInfo.getUid(), true))
 								if (restricted) {
 									someRestricted = true;
 									break;
@@ -1626,7 +1626,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Get restrictions
 			final List<String> listRestriction;
 			if (mRestrictionName == null)
-				listRestriction = PrivacyManager.getRestrictions(true);
+				listRestriction = PrivacyManager.getRestrictions(false);
 			else {
 				listRestriction = new ArrayList<String>();
 				listRestriction.add(mRestrictionName);
@@ -1636,7 +1636,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			boolean allRestricted = true;
 			boolean someRestricted = false;
 			if (mRestrictionName == null)
-				for (boolean restricted : PrivacyManager.getRestricted(row.getContext(), xAppInfo.getUid())) {
+				for (boolean restricted : PrivacyManager.getRestricted(row.getContext(), xAppInfo.getUid(), false)) {
 					allRestricted = allRestricted && restricted;
 					someRestricted = someRestricted || restricted;
 				}
@@ -1657,17 +1657,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				public void onClick(View view) {
 					// Get all/some restricted
 					boolean allRestricted = true;
-					boolean someRestricted = false;
 					if (mRestrictionName == null)
-						for (boolean restricted : PrivacyManager.getRestricted(view.getContext(), xAppInfo.getUid())) {
+						for (boolean restricted : PrivacyManager.getRestricted(view.getContext(), xAppInfo.getUid(),
+								false))
 							allRestricted = allRestricted && restricted;
-							someRestricted = someRestricted || restricted;
-						}
 					else {
 						boolean restricted = PrivacyManager.getRestricted(null, view.getContext(), xAppInfo.getUid(),
 								mRestrictionName, null, false, false);
 						allRestricted = restricted;
-						someRestricted = restricted;
 					}
 
 					// Process click

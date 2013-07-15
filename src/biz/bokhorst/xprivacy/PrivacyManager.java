@@ -545,7 +545,7 @@ public class PrivacyManager {
 		}
 	}
 
-	public static List<Boolean> getRestricted(Context context, int uid) {
+	public static List<Boolean> getRestricted(Context context, int uid, boolean dangerous) {
 		List<Boolean> listRestricted = new ArrayList<Boolean>();
 		ContentResolver contentResolver = context.getContentResolver();
 		if (contentResolver != null) {
@@ -553,9 +553,16 @@ public class PrivacyManager {
 					new String[] { Integer.toString(uid), Boolean.toString(false), null }, null);
 			if (cursor != null)
 				try {
-					while (cursor.moveToNext())
+					while (cursor.moveToNext()) {
+						if (!dangerous) {
+							String restrictionName = cursor.getString(cursor
+									.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
+							if (PrivacyManager.isDangerous(restrictionName, null))
+								continue;
+						}
 						listRestricted.add(Boolean.parseBoolean(cursor.getString(cursor
 								.getColumnIndex(PrivacyProvider.COL_RESTRICTED))));
+					}
 				} finally {
 					cursor.close();
 				}
