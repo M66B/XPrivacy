@@ -25,7 +25,7 @@ public class XIoBridge extends XHook {
 		if (param.args.length > 0) {
 			String fileName = (String) param.args[0];
 			if (fileName != null && fileName.startsWith(mFileName)) {
-				Util.log(this, Log.INFO, "File name=" + fileName);
+				Util.log(this, Log.INFO, "File name=" + fileName + " uid=" + Process.myUid());
 
 				// /proc
 				if (mFileName.equals("/proc")) {
