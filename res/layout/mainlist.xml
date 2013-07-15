@@ -80,6 +80,11 @@
             android:paddingLeft="2dip"
             android:src="?attr/icon_used_grayed" />
 
+        <View
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:layout_gravity="center_vertical" />
+
         <RelativeLayout
             android:layout_width="0dip"
             android:layout_height="wrap_content"
