@@ -57,7 +57,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			mInstalled = false;
 			Util.bug(null, ex);
 		}
-		mSystem = ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
+		mSystem = ((appInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
 		mSystem = mSystem || appInfo.packageName.equals(ApplicationInfoEx.class.getPackage().getName());
 	}
 
