@@ -33,7 +33,7 @@ public class XActivityThread extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
 		if (methodName.equals("handleReceiver")) {
-			if (param.args[0] != null) {
+			if (param.args.length > 0 && param.args[0] != null) {
 				// Get intent
 				Intent intent = null;
 				try {

@@ -33,7 +33,7 @@ public class XRuntime extends XHook {
 		if (methodName.equals("exec")) {
 			// Get programs
 			String[] progs = null;
-			if (param.args[0] != null)
+			if (param.args.length > 0 && param.args[0] != null)
 				if (String.class.isAssignableFrom(param.args[0].getClass()))
 					progs = new String[] { (String) param.args[0] };
 				else

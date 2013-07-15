@@ -51,7 +51,7 @@ public class XAccountManager extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
 		if (methodName.equals("addOnAccountsUpdatedListener")) {
-			if (param.args[0] != null)
+			if (param.args.length > 0 && param.args[0] != null)
 				if (isRestricted(param)) {
 					OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
 					XOnAccountsUpdateListener xlistener = new XOnAccountsUpdateListener(listener,
@@ -63,8 +63,7 @@ public class XAccountManager extends XHook {
 					param.args[0] = xlistener;
 				}
 		} else if (methodName.equals("removeOnAccountsUpdatedListener")) {
-
-			if (param.args[0] != null)
+			if (param.args.length > 0 && param.args[0] != null)
 				if (isRestricted(param)) {
 					synchronized (mListener) {
 						OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
@@ -89,9 +88,11 @@ public class XAccountManager extends XHook {
 				if (isRestricted(param)) {
 					int uid = Binder.getCallingUid();
 					if (methodName.equals("blockingGetAuthToken")) {
-						Account account = (Account) param.args[0];
-						if (!isAccountAllowed(account, uid))
-							param.setResult(null);
+						if (param.args.length > 0 && param.args[0] != null) {
+							Account account = (Account) param.args[0];
+							if (!isAccountAllowed(account, uid))
+								param.setResult(null);
+						}
 					} else if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType")) {
 						Account[] accounts = (Account[]) param.getResult();
 						param.setResult(filterAccounts(accounts, uid));
@@ -102,9 +103,11 @@ public class XAccountManager extends XHook {
 						AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
 						param.setResult(new XFutureBundle(future, uid));
 					} else if (methodName.equals("hasFeatures")) {
-						Account account = (Account) param.args[0];
-						if (!isAccountAllowed(account, uid))
-							param.setResult(new XFutureBoolean());
+						if (param.args.length > 0 && param.args[0] != null) {
+							Account account = (Account) param.args[0];
+							if (!isAccountAllowed(account, uid))
+								param.setResult(new XFutureBoolean());
+						}
 					} else
 						Util.log(this, Log.WARN, "Unknown method=" + methodName);
 				}

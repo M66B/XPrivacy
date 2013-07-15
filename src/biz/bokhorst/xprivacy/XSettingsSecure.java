@@ -32,7 +32,7 @@ public class XSettingsSecure extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (param.getResult() != null) {
-			String name = (String) param.args[1];
+			String name = (param.args.length > 1 ? (String) param.args[1] : null);
 			if (Settings.Secure.ANDROID_ID.equals(name))
 				if (isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedProp("ANDROID_ID"));
@@ -41,13 +41,15 @@ public class XSettingsSecure extends XHook {
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		ContentResolver contentResolver = (ContentResolver) param.args[0];
 		Context context = null;
-		try {
-			Field fieldContext = findField(ContentResolver.class, "mContext");
-			context = (Context) fieldContext.get(contentResolver);
-		} catch (Throwable ex) {
-			Util.bug(this, ex);
+		if (param.args.length > 0) {
+			ContentResolver contentResolver = (ContentResolver) param.args[0];
+			try {
+				Field fieldContext = findField(ContentResolver.class, "mContext");
+				context = (Context) fieldContext.get(contentResolver);
+			} catch (Throwable ex) {
+				Util.bug(this, ex);
+			}
 		}
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);

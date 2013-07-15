@@ -55,31 +55,33 @@ public class XTelephonyManager extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
 		if (methodName.equals("listen")) {
-			PhoneStateListener listener = (PhoneStateListener) param.args[0];
-			int event = (Integer) param.args[1];
-			if (listener != null)
-				if (isRestricted(param)) {
-					if (event == PhoneStateListener.LISTEN_NONE) {
-						// Remove
-						synchronized (mListener) {
-							XPhoneStateListener xlistener = mListener.get(listener);
-							if (xlistener == null)
-								Util.log(this, Log.WARN, "Not found count=" + mListener.size());
-							else {
-								param.args[0] = xlistener;
-								mListener.remove(listener);
+			if (param.args.length > 1) {
+				PhoneStateListener listener = (PhoneStateListener) param.args[0];
+				int event = (Integer) param.args[1];
+				if (listener != null)
+					if (isRestricted(param)) {
+						if (event == PhoneStateListener.LISTEN_NONE) {
+							// Remove
+							synchronized (mListener) {
+								XPhoneStateListener xlistener = mListener.get(listener);
+								if (xlistener == null)
+									Util.log(this, Log.WARN, "Not found count=" + mListener.size());
+								else {
+									param.args[0] = xlistener;
+									mListener.remove(listener);
+								}
 							}
+						} else {
+							// Replace
+							XPhoneStateListener xListener = new XPhoneStateListener(listener);
+							synchronized (mListener) {
+								mListener.put(listener, xListener);
+								Util.log(this, Log.INFO, "Added count=" + mListener.size());
+							}
+							param.args[0] = xListener;
 						}
-					} else {
-						// Replace
-						XPhoneStateListener xListener = new XPhoneStateListener(listener);
-						synchronized (mListener) {
-							mListener.put(listener, xListener);
-							Util.log(this, Log.INFO, "Added count=" + mListener.size());
-						}
-						param.args[0] = xListener;
 					}
-				}
+			}
 		} else if (methodName.equals("disableLocationUpdates") || methodName.equals("enableLocationUpdates"))
 			if (isRestricted(param))
 				param.setResult(null);

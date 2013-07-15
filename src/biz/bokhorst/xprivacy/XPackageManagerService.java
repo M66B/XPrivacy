@@ -44,13 +44,15 @@ public class XPackageManagerService extends XHook {
 		try {
 			// ICS: public int getPackageUid(String packageName)
 			// public int getPackageUid(String packageName, int userId)
-			String packageName = (String) param.args[0];
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-				Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class, int.class);
-				uid = (Integer) method.invoke(param.thisObject, packageName, 0);
-			} else {
-				Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class);
-				uid = (Integer) method.invoke(param.thisObject, packageName);
+			if (param.args.length > 0) {
+				String packageName = (String) param.args[0];
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+					Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class, int.class);
+					uid = (Integer) method.invoke(param.thisObject, packageName, 0);
+				} else {
+					Method method = param.thisObject.getClass().getMethod("getPackageUid", String.class);
+					uid = (Integer) method.invoke(param.thisObject, packageName);
+				}
 			}
 		} catch (Throwable ex) {
 			Util.bug(this, ex);

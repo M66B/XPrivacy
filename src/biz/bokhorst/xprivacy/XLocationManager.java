@@ -88,7 +88,8 @@ public class XLocationManager extends XHook {
 	}
 
 	private void replaceLocationListener(MethodHookParam param, int arg) throws Throwable {
-		if (param.args[arg] != null && LocationListener.class.isAssignableFrom(param.args[arg].getClass())) {
+		if (param.args.length > arg && param.args[arg] != null
+				&& LocationListener.class.isAssignableFrom(param.args[arg].getClass())) {
 			if (!(param.args[arg] instanceof XLocationListener)) {
 				LocationListener listener = (LocationListener) param.args[arg];
 				if (listener != null) {
@@ -105,7 +106,8 @@ public class XLocationManager extends XHook {
 	}
 
 	private void removeLocationListener(MethodHookParam param) {
-		if (param.args[0] != null && LocationListener.class.isAssignableFrom(param.args[0].getClass())) {
+		if (param.args.length > 0 && param.args[0] != null
+				&& LocationListener.class.isAssignableFrom(param.args[0].getClass())) {
 			LocationListener listener = (LocationListener) param.args[0];
 			synchronized (mListener) {
 				XLocationListener xlistener = mListener.get(listener);

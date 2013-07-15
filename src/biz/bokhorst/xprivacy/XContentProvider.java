@@ -60,22 +60,25 @@ public class XContentProvider extends XHook {
 	@SuppressLint("DefaultLocale")
 	protected void after(MethodHookParam param) throws Throwable {
 		// Check uri
-		Uri uri = (Uri) param.args[0];
+		Uri uri = (param.args.length > 0 ? (Uri) param.args[0] : null);
 		String sUri = (uri == null ? null : uri.toString().toLowerCase());
 		if (sUri != null && (mUriStart == null || sUri.startsWith(mUriStart))) {
 			Cursor cursor = (Cursor) param.getResult();
 			if (cursor != null)
 				if (sUri.startsWith("content://com.google.android.gsf.gservices")) {
 					// Google services provider: block only android_id
-					List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
-					if (Util.containsIgnoreCase(selectionArgs, "android_id"))
-						if (isRestricted(param, mProviderName)) {
-							MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
-							gsfCursor.addRow(new Object[] { "android_id", PrivacyManager.getDefacedProp("GSF_ID") });
-							gsfCursor.respond(cursor.getExtras());
-							param.setResult(gsfCursor);
-							cursor.close();
-						}
+					if (param.args.length > 3) {
+						List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
+						if (Util.containsIgnoreCase(selectionArgs, "android_id"))
+							if (isRestricted(param, mProviderName)) {
+								MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
+								gsfCursor
+										.addRow(new Object[] { "android_id", PrivacyManager.getDefacedProp("GSF_ID") });
+								gsfCursor.respond(cursor.getExtras());
+								param.setResult(gsfCursor);
+								cursor.close();
+							}
+					}
 
 				} else if (sUri.startsWith("content://com.android.contacts")
 						&& !sUri.startsWith("content://com.android.contacts/profile")) {
