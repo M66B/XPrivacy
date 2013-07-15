@@ -490,7 +490,7 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**version 1.6.3** (in development)
+**version 1.6.3**
 
 * Fixed toggling all in main view
 * Add Catalan translation
