@@ -490,6 +490,7 @@ Changelog
 * Restrict package messages ([issue](https://github.com/M66B/XPrivacy/issues/256))
 * Higher resolution launcher icons ([source](http://openiconlibrary.sourceforge.net/gallery2/?./Icons/mimetypes/tango-style/application-pgp-signature.png))
 * Fix notification icons
+* Updated French translation
 * Updated German translation
 * Updated Japanese translation
 * Updated Swedish translation
