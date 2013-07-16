@@ -462,10 +462,24 @@ Exporting settings on one device and importing settings onto another device will
 but this requires the [pro version](http://www.faircode.eu/xprivacy/).
 If you want to backup the exported settings, they are in the folder *.xprivacy* on the SD card.
 
-**(24) Can you make possible to randomize data?***
+**(24) Can you make possible to randomize data?**
 
 Everything is possible, but some applications crash when feeded with random data
 and it is not always possible to randomize things (like IMEI or MAC addresses).
+
+**(25) Why doesn't undoing a data category restriction disable the function exceptions too?**
+
+If you accidentally undo a data category restriction all the function exception would be lost.
+The function exceptions only apply when the data category is restricted.
+
+**(26) What is isolated storage?**
+
+When you enable isolated storage the root folder of the external storage (mostly an SD card),
+will be moved to */<sdcard>/.xprivacy/<uid>/* for the selected application.
+This means that the application cannot access any other data on the external storage anymore.
+Before you ask: replacing the uid by the package or application name is not possible,
+because these are not available at the low level isolated storage works.
+The application list displays the uid for each application.
 
 Support
 -------
@@ -486,6 +500,7 @@ Changelog
 
 **Version 1.6.7** (in development)
 
+* Isolated external storage (see question 26 of the FAQ above)
 * Restrict access to /proc (fixed again)
 * Restrict package messages ([issue](https://github.com/M66B/XPrivacy/issues/256))
 * Higher resolution launcher icons ([source](http://openiconlibrary.sourceforge.net/gallery2/?./Icons/mimetypes/tango-style/application-pgp-signature.png))
