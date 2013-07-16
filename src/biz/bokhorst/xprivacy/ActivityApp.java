@@ -407,9 +407,7 @@ public class ActivityApp extends Activity {
 				imgIndicator.setVisibility(View.INVISIBLE);
 
 			// Display if used
-			if (PrivacyManager.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0)
-				ctvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
-			else
+			if (PrivacyManager.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, null) == 0)
 				imgUsed.setVisibility(View.INVISIBLE);
 
 			// Check if permission

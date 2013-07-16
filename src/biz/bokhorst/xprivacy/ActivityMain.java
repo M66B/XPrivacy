@@ -50,7 +50,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -1606,7 +1605,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Check if used
 			boolean used = (PrivacyManager.getUsed(row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
-			ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 
 			// Check if permission

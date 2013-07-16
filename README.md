@@ -501,6 +501,7 @@ Changelog
 **Version 1.6.7** (in development)
 
 * Isolated external storage (see question 26 of the FAQ above)
+* Display uid in application list
 * Restrict access to /proc (fixed again)
 * Restrict package messages ([issue](https://github.com/M66B/XPrivacy/issues/256))
 * Higher resolution launcher icons ([source](http://openiconlibrary.sourceforge.net/gallery2/?./Icons/mimetypes/tango-style/application-pgp-signature.png))
