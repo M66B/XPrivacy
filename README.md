@@ -507,6 +507,7 @@ Changelog
 * Restrict *addGeofence* and *getLastLocation* (hidden function)
 * Restrict *getWifiApConfiguration* (hidden function), thanks @[vipere](https://github.com/vipere)
 * Fixed notification icons
+* Fixed leaking SSID on Android 4.2+
 * Higher resolution launcher icons ([source](http://openiconlibrary.sourceforge.net/gallery2/?./Icons/mimetypes/tango-style/application-pgp-signature.png))
 * Updated Catalan translation
 * Updated French translation
