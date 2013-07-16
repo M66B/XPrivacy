@@ -45,11 +45,11 @@ public class XLocationManager extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
-		if (!methodName.equals("getLastKnownLocation"))
+		if (!(methodName.equals("getLastLocation") || methodName.equals("getLastKnownLocation")))
 			if (isRestricted(param))
 				if (methodName.equals("addNmeaListener"))
 					param.setResult(false);
-				else if (methodName.equals("addProximityAlert"))
+				else if (methodName.equals("addGeofence") || methodName.equals("addProximityAlert"))
 					param.setResult(null);
 				else if (methodName.equals("removeUpdates"))
 					removeLocationListener(param);
@@ -65,7 +65,8 @@ public class XLocationManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.method.getName().equals("getLastKnownLocation")) {
+		String methodName = param.method.getName();
+		if (methodName.equals("getLastLocation") || methodName.equals("getLastKnownLocation")) {
 			Location location = (Location) param.getResult();
 			if (location != null)
 				if (isRestricted(param))

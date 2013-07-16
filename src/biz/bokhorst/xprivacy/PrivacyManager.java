@@ -194,8 +194,9 @@ public class PrivacyManager {
 		mMethods.get(cIsolation).add(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator);
 
 		// Location manager
-		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "removeUpdates",
-				"requestLocationUpdates", "requestSingleUpdate", "sendExtraCommand" };
+		String[] locs = new String[] { "addGeofence", "addNmeaListener", "addProximityAlert", "getLastLocation",
+				"getLastKnownLocation", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",
+				"sendExtraCommand" };
 		for (String loc : locs)
 			mMethods.get(cLocation).add(loc);
 

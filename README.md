@@ -150,6 +150,7 @@ For easy usage, data is restricted by category:
 	* return a random or set location
 	* return empty cell location
 	* return an empty list of (neighboring) cell info
+	* prevents geofences from being set
 	* prevents proximity alerts from being set
 	* prevents sending NMEA data to an application
 	* prevent phone state from being sent to an application
@@ -500,11 +501,12 @@ Changelog
 
 **Version 1.6.7** (in development)
 
-* Isolated external storage (see question 26 of the FAQ above)
+* Isolated external storage (experimental, see question 26 of the FAQ above)
 * Restrict access to /proc (fixed again)
-* Restrict package messages ([issue](https://github.com/M66B/XPrivacy/issues/256))
+* Restrict package change notifications ([issue](https://github.com/M66B/XPrivacy/issues/256))
+* Restrict *addGeofence* and *getLastLocation* (hidden function)
+* Fixed notification icons
 * Higher resolution launcher icons ([source](http://openiconlibrary.sourceforge.net/gallery2/?./Icons/mimetypes/tango-style/application-pgp-signature.png))
-* Fix notification icons
 * Updated Catalan translation
 * Updated French translation
 * Updated German translation
