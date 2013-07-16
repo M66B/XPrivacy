@@ -214,6 +214,16 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cNfc, new String[] { "NFC" },
 				NfcAdapter.ACTION_TECH_DISCOVERED), "android.app.ActivityThread", false);
 
+		// Package changes
+		hook(new XActivityThread("handleReceiver", PrivacyManager.cSystem, new String[] {}, Intent.ACTION_PACKAGE_ADDED),
+				"android.app.ActivityThread", false);
+		hook(new XActivityThread("handleReceiver", PrivacyManager.cSystem, new String[] {},
+				Intent.ACTION_PACKAGE_REPLACED), "android.app.ActivityThread", false);
+		hook(new XActivityThread("handleReceiver", PrivacyManager.cSystem, new String[] {},
+				Intent.ACTION_PACKAGE_RESTARTED), "android.app.ActivityThread", false);
+		hook(new XActivityThread("handleReceiver", PrivacyManager.cSystem, new String[] {},
+				Intent.ACTION_PACKAGE_REMOVED), "android.app.ActivityThread", false);
+
 		String[] startActivities = new String[] { "startActivities", "startActivity", "startActivityForResult",
 				"startActivityFromChild", "startActivityFromFragment", "startActivityIfNeeded" };
 

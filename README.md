@@ -486,6 +486,7 @@ Changelog
 **Version 1.6.7** (in development)
 
 * Restrict access to /proc (fixed again)
+* Restrict package messages ([issue](https://github.com/M66B/XPrivacy/issues/256))
 * Fix notification icons
 * Updated German translation
 * Updated Japanese translation
