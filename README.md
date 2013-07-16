@@ -493,6 +493,7 @@ Changelog
 * Updated French translation
 * Updated German translation
 * Updated Japanese translation
+* Updated Simplified Chinese translation
 * Updated Swedish translation
 
 **Version 1.6.6**
