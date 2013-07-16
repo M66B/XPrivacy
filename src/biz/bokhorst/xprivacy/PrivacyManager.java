@@ -255,7 +255,8 @@ public class PrivacyManager {
 			mMethods.get(cPhone).add(phone);
 
 		// Wi-Fi manager
-		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults" };
+		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults",
+				"getWifiApConfiguration" };
 		for (String wifi : wifis)
 			mMethods.get(cNetwork).add(wifi);
 		mMethods.get(cLocation).add("getScanResults");

@@ -22,6 +22,7 @@ public class XWifiManager extends XHook {
 	// public WifiInfo getConnectionInfo()
 	// public DhcpInfo getDhcpInfo()
 	// public List<ScanResult> getScanResults()
+	// public WifiConfiguration getWifiApConfiguration()
 	// frameworks/base/wifi/java/android/net/wifi/WifiManager.java
 
 	@Override
@@ -32,6 +33,9 @@ public class XWifiManager extends XHook {
 		} else if (param.method.getName().equals("getScanResults")) {
 			if (isRestricted(param))
 				param.setResult(new ArrayList<ScanResult>());
+		} else if (param.method.getName().equals("getWifiApConfiguration")) {
+			if (isRestricted(param))
+				param.setResult(null);
 		}
 	}
 
