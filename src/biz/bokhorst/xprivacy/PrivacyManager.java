@@ -270,6 +270,12 @@ public class PrivacyManager {
 		mMethods.get(cNfc).add(NfcAdapter.ACTION_TAG_DISCOVERED);
 		mMethods.get(cNfc).add(NfcAdapter.ACTION_TECH_DISCOVERED);
 
+		// Intent receive: package changes
+		mMethods.get(cSystem).add(Intent.ACTION_PACKAGE_ADDED);
+		mMethods.get(cSystem).add(Intent.ACTION_PACKAGE_REPLACED);
+		mMethods.get(cSystem).add(Intent.ACTION_PACKAGE_RESTARTED);
+		mMethods.get(cSystem).add(Intent.ACTION_PACKAGE_REMOVED);
+
 		// Intent send: browser
 		mMethods.get(cView).add(Intent.ACTION_VIEW);
 
