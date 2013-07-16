@@ -7,7 +7,7 @@
     <string name="app_xversion" formatted="false">Xposed keretrendszer verzió: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 M. Bokhorst (M66B)</string>
     <string name="menu_settings">Beállítások</string>
-    <string name="menu_template">Template</string>
+    <string name="menu_template">Sablon</string>
     <string name="menu_update">Frissítés keresése</string>
     <string name="menu_report">Probléma bejelentése</string>
     <string name="menu_export">Exportálás</string>
@@ -20,7 +20,7 @@
     <string name="menu_app_settings">Beállítások</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Válassza ki az engedélyezendő fiókokat</string>
-    <string name="menu_contacts">Select contacts to allow</string>
+    <string name="menu_contacts">Válassza ki az engedélyezendő névjegyeket</string>
     <string name="msg_noupdate">Nincs elérhető frissítés</string>
     <string name="msg_restricted" formatted="false">%s korlátozva az XPrivacy által</string>
     <string name="msg_licensed" formatted="false">Licensz tulajdonos: %s</string>
@@ -28,7 +28,7 @@
     <string name="msg_edit">Kattintson az alkalmazás ikonra az összes korlátozás módosításához</string>
     <string name="msg_sure">Biztos benne?</string>
     <string name="msg_done">Kész</string>
-    <string name="msg_reboot">Reboot required</string>
+    <string name="msg_reboot">Újraindítás szükséges</string>
     <string name="restrict_accounts">Fiókok (Google, Facebook, stb.)</string>
     <string name="restrict_browser">Böngésző (könyvjelzők / előzmények)</string>
     <string name="restrict_calendar">Naptár</string>
@@ -37,7 +37,7 @@
     <string name="restrict_dictionary">Szótár (felhasználó)</string>
     <string name="restrict_identification">Azonosító (eszköz)</string>
     <string name="restrict_internet">Internet</string>
-    <string name="restrict_isolation">Isolated storage</string>
+    <string name="restrict_isolation">Elkülönített tárhely</string>
     <string name="restrict_location">Hely (pontos / hozzávetőleges)</string>
     <string name="restrict_media">Média (hang, fotó, videó)</string>
     <string name="restrict_messages">Üzenetek (SMS, MMS)</string>
@@ -47,7 +47,7 @@
     <string name="restrict_shell">Parancssor (parancsok, rendszergazda)</string>
     <string name="restrict_system">Rendszer (telepített alkalmazások)</string>
     <string name="restrict_view">Megtekintés (böngésző)</string>
-    <string name="title_category">Category:</string>
+    <string name="title_category">Kategória:</string>
     <string name="title_restrict">Jelölje be a korlátozáshoz:</string>
     <string name="settings_lat">Szélesség</string>
     <string name="settings_lon">Hosszúság</string>
@@ -57,11 +57,11 @@
     <string name="settings_country">Ország</string>
     <string name="settings_subscriber">Előfizető azonosító</string>
     <string name="settings_fpermission">Szűrés engedély szerint</string>
-    <string name="settings_fsystem">Filter system applications</string>
+    <string name="settings_fsystem">Rendszer alkalmazások szűrése</string>
     <string name="help_application">Alkalmazás</string>
     <string name="help_internet">Internet engedély</string>
     <string name="help_granted">Android engedély</string>
     <string name="help_used">Használta ezt az adatot</string>
-    <string name="help_dangerous">is dangerous</string>
+    <string name="help_dangerous">Veszélyes</string>
     
 </resources>
