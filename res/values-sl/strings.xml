@@ -7,7 +7,7 @@
     <string name="app_xversion" formatted="false">Xposed framework različica: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="menu_settings">Nastavitve</string>
-    <string name="menu_template">Template</string>
+    <string name="menu_template">Predloga</string>
     <string name="menu_update">Preveri posodobitve</string>
     <string name="menu_report">Javi napako</string>
     <string name="menu_export">Izvozi</string>
@@ -19,16 +19,16 @@
     <string name="menu_app_launch">Zaženi</string>
     <string name="menu_app_settings">Nastavitve</string>
     <string name="menu_app_store">Trgovina Play</string>
-    <string name="menu_accounts">Select accounts to allow</string>
-    <string name="menu_contacts">Select contacts to allow</string>
+    <string name="menu_accounts">Izberi dovoljene račune</string>
+    <string name="menu_contacts">Izberi dovoljene stike</string>
     <string name="msg_noupdate">Na voljo ni posodobitev</string>
     <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencirano na: %s</string>
     <string name="msg_loading">Nalagam</string>
-    <string name="msg_edit">Click the application icon to edit all restrictions</string>
-    <string name="msg_sure">Are you sure?</string>
+    <string name="msg_edit">Za spreminjanje pravic klikni na ikono programa</string>
+    <string name="msg_sure">Ste prepričani?</string>
     <string name="msg_done">Dokončano</string>
-    <string name="msg_reboot">Reboot required</string>
+    <string name="msg_reboot">Zahtevan ponovni zagon</string>
     <string name="restrict_accounts">Računi (Google, Facebook, itd)</string>
     <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>
     <string name="restrict_calendar">Koledar</string>
@@ -37,7 +37,7 @@
     <string name="restrict_dictionary">Slovar (uporabnik)</string>
     <string name="restrict_identification">Identifikacija (naprava)</string>
     <string name="restrict_internet">Internet</string>
-    <string name="restrict_isolation">Isolated storage</string>
+    <string name="restrict_isolation">Izoliran pomnilnik</string>
     <string name="restrict_location">Lokacija (približna/natančna)</string>
     <string name="restrict_media">Medij (zvok, slike, video)</string>
     <string name="restrict_messages">Sporočila (SMS, MMS)</string>
@@ -47,7 +47,7 @@
     <string name="restrict_shell">Lupina (ukazi, superuser)</string>
     <string name="restrict_system">Sistem (nameščeni programi)</string>
     <string name="restrict_view">Pogled (brskalnik)</string>
-    <string name="title_category">Category:</string>
+    <string name="title_category">Kategorija:</string>
     <string name="title_restrict">Označi za omejitev pravic:</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
@@ -57,11 +57,11 @@
     <string name="settings_country">Država</string>
     <string name="settings_subscriber">ID naročnika</string>
     <string name="settings_fpermission">Filtriraj po pravicah</string>
-    <string name="settings_fsystem">Filter system applications</string>
+    <string name="settings_fsystem">Filtriraj sistemske programe</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>
     <string name="help_used">je uporabljal te podatke</string>
-    <string name="help_dangerous">is dangerous</string>
+    <string name="help_dangerous">je nevaren</string>
     
 </resources>
