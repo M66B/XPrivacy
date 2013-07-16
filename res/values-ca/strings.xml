@@ -37,6 +37,7 @@
     <string name="restrict_dictionary">Diccionari (usuari)</string>
     <string name="restrict_identification">Identificació (dispositiu)</string>
     <string name="restrict_internet">Internet</string>
+    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Ubicació (precisa/aproximada)</string>
     <string name="restrict_media">Mitjans (àudio, imatges, vídeos)</string>
     <string name="restrict_messages">Missatges (SMS, MMS)</string>

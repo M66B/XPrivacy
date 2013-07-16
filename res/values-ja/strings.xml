@@ -37,6 +37,7 @@
     <string name="restrict_dictionary">辞書 (ユーザー)</string>
     <string name="restrict_identification">ID (端末)</string>
     <string name="restrict_internet">インターネット</string>
+    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">位置情報 (高/低精度)</string>
     <string name="restrict_media">メディア (音楽, 写真, 動画)</string>
     <string name="restrict_messages">メッセージ (SMS, MMS)</string>

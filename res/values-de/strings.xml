@@ -37,6 +37,7 @@
     <string name="restrict_dictionary">Wörterbuch (Benutzer)</string>
     <string name="restrict_identification">Identifikation (Gerät)</string>
     <string name="restrict_internet">Internet</string>
+    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Ort (genau/ungenau)</string>
     <string name="restrict_media">Medien (Audio, Fotos, Videos)</string>
     <string name="restrict_messages">Nachrichten (SMS, MMS)</string>

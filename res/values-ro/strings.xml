@@ -37,6 +37,7 @@
     <string name="restrict_dictionary">Dictionary (user)</string>
     <string name="restrict_identification">Date de identificare (dispozitivul propriu)</string>
     <string name="restrict_internet">Internet</string>
+    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Locatie (fina/in mare)</string>
     <string name="restrict_media">Media (audio, foto, video)</string>
     <string name="restrict_messages">Mesaje (SMS, MMS)</string>

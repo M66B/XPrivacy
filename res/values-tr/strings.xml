@@ -37,6 +37,7 @@
     <string name="restrict_dictionary">Sözlük (kullıcı)</string>
     <string name="restrict_identification">Kimlik (cihaz)</string>
     <string name="restrict_internet">İnternet</string>
+    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Konum (hassas/yaklaşık)</string>
     <string name="restrict_media">Medya (ses, fotoğraf, video)</string>
     <string name="restrict_messages">Mesajlar (SMS, MMS)</string>

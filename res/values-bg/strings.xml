@@ -37,6 +37,7 @@
     <string name="restrict_dictionary">Dictionary (user)</string>
     <string name="restrict_identification">Идентификация (устройство, Wi-Fi)</string>
     <string name="restrict_internet">Интернет</string>
+    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Местоположение (точно/приблизително)</string>
     <string name="restrict_media">Медия (аудио, снимки, клипове)</string>
     <string name="restrict_messages">Съобщения (SMS, MMS)</string>

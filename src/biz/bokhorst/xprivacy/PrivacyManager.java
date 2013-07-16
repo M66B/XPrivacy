@@ -39,6 +39,7 @@ public class PrivacyManager {
 	public static final String cEMail = "email";
 	public static final String cIdentification = "identification";
 	public static final String cInternet = "internet";
+	public static final String cIsolation = "isolation";
 	public static final String cLocation = "location";
 	public static final String cMedia = "media";
 	public static final String cMessages = "messages";
@@ -51,7 +52,7 @@ public class PrivacyManager {
 	public static final String cView = "view";
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
-			cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cNfc,
+			cContacts, cDictionary, cEMail, cIdentification, cInternet, cIsolation, cLocation, cMedia, cMessages, cNetwork, cNfc,
 			cPhone, cShell, cStorage, cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;

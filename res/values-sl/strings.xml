@@ -37,6 +37,7 @@
     <string name="restrict_dictionary">Slovar (uporabnik)</string>
     <string name="restrict_identification">Identifikacija (naprava)</string>
     <string name="restrict_internet">Internet</string>
+    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Lokacija (približna/natančna)</string>
     <string name="restrict_media">Medij (zvok, slike, video)</string>
     <string name="restrict_messages">Sporočila (SMS, MMS)</string>
