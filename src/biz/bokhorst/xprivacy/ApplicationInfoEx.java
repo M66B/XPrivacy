@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -129,10 +128,9 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return mInstalled;
 	}
 
-	@SuppressLint("DefaultLocale")
 	@Override
 	public String toString() {
-		return String.format("%d %s", mUid, TextUtils.join(", ", mListApplicationName));
+		return String.format("%s", TextUtils.join(", ", mListApplicationName));
 	}
 
 	@Override
