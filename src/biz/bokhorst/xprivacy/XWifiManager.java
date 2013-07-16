@@ -87,8 +87,10 @@ public class XWifiManager extends XHook {
 							try {
 								Field fieldWifiSsid = findField(WifiInfo.class, "mWifiSsid");
 								Object mWifiSsid = fieldWifiSsid.get(wInfo);
-								Field octets = findField(mWifiSsid.getClass(), "octets");
-								octets.set(mWifiSsid, PrivacyManager.getDefacedProp("WifiSsid.octets"));
+								if (mWifiSsid != null) {
+									Field octets = findField(mWifiSsid.getClass(), "octets");
+									octets.set(mWifiSsid, PrivacyManager.getDefacedProp("WifiSsid.octets"));
+								}
 							} catch (Throwable exex) {
 								Util.bug(this, exex);
 							}
