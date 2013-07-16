@@ -22,7 +22,18 @@ public class XFile extends XHook {
 	// public File(String path)
 	// public File(String dirPath, String name)
 	// public File(URI uri)
+	// public String getAbsolutePath()
+	// public String getCanonicalPath()
+	// public String getParent()
+	// public String getPath()
+	// public String[] list()
+	// public String[] list(FilenameFilter filter)
+	// public String toString()
 	// libcore/luni/src/main/java/java/io/File.java
+
+	// System.getProperty("user.dir")
+	// private static String join(String prefix, String suffix)
+	// public boolean isAbsolute()
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
