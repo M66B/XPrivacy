@@ -220,6 +220,7 @@ For easy usage, data is restricted by category:
 	* return an empty list of running tasks
 	* return an empty list of widgets
 	* return an empty list of applications (provider)
+	* prevent package add, replace, restart and remove notifications
 * View
 	* prevent links from opening in the browser
 	* you will be notified if an application tries to open a link
@@ -490,6 +491,7 @@ Changelog
 * Fix notification icons
 * Updated German translation
 * Updated Japanese translation
+* Updated Swedish translation
 
 **Version 1.6.6**
 
