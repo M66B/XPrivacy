@@ -103,13 +103,15 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// This is to fake "unmounted", no permission required
 		hook(new XEnvironment("getExternalStorageState", PrivacyManager.cStorage, null), "android.os.Environment");
 
+		// File
+		hook(new XFile(null, PrivacyManager.cIsolation, new String[] { "READ_EXTERNAL_STORAGE",
+				"WRITE_EXTERNAL_STORAGE" }, File.separator + "sdcard"), "java.io.File");
+		hook(new XFile(null, PrivacyManager.cIsolation, new String[] { "READ_EXTERNAL_STORAGE",
+				"WRITE_EXTERNAL_STORAGE" }, Environment.getExternalStorageDirectory().getAbsolutePath()),
+				"java.io.File");
+
 		// IO bridge
 		hook(new XIoBridge("open", PrivacyManager.cIdentification, new String[] {}, "/proc"), "libcore.io.IoBridge");
-		hook(new XIoBridge("open", PrivacyManager.cIsolation, new String[] { "READ_EXTERNAL_STORAGE",
-				"WRITE_EXTERNAL_STORAGE" }, File.separator + "sdcard" + File.separator), "libcore.io.IoBridge");
-		hook(new XIoBridge("open", PrivacyManager.cIsolation, new String[] { "READ_EXTERNAL_STORAGE",
-				"WRITE_EXTERNAL_STORAGE" }, Environment.getExternalStorageDirectory().getAbsolutePath()
-				+ File.separator), "libcore.io.IoBridge");
 
 		// Location manager
 		String[] locs = new String[] { "addGeofence", "addNmeaListener", "addProximityAlert", "getLastLocation",

@@ -1,6 +1,9 @@
 package biz.bokhorst.xprivacy;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
+
 import android.os.Environment;
+
 import biz.bokhorst.xprivacy.XHook;
 
 public class XEnvironment extends XHook {

@@ -1,10 +1,7 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 
-import android.os.Binder;
-import android.os.Environment;
 import android.os.Process;
 import android.util.Log;
 
@@ -47,12 +44,7 @@ public class XIoBridge extends XHook {
 
 				// Check if restricted
 				if (isRestricted(param, mFileName))
-					if (getRestrictionName().equals(PrivacyManager.cIsolation))
-						param.args[0] = fileName.replace(mFileName,
-								Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-										+ ".xprivacy" + File.separator + Binder.getCallingUid() + File.separator);
-					else
-						param.setResult(new FileNotFoundException());
+					param.setResult(new FileNotFoundException());
 			}
 		}
 	}
