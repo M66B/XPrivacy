@@ -44,7 +44,7 @@ public class XIoBridge extends XHook {
 
 				// Check if restricted
 				if (isRestricted(param, mFileName))
-					param.setResult(new FileNotFoundException());
+					param.setThrowable(new FileNotFoundException());
 			}
 		}
 	}
