@@ -18,6 +18,7 @@ Index
 * [Support](https://github.com/M66B/XPrivacy#support)
 * [Changelog](https://github.com/M66B/XPrivacy#changelog)
 * [Similar solutions](https://github.com/M66B/XPrivacy#similar-solutions)
+* [News](https://github.com/M66B/news)
 * [Contributing](https://github.com/M66B/XPrivacy#contributing)
 * [License](https://github.com/M66B/XPrivacy#license)
 
@@ -953,6 +954,13 @@ The *Per App Settings Module* revokes permissions like LBE Privacy Guard does.
 This modules offers a lot of other, intersting features.
 
 XPrivacy can restrict more data than any of the above solutions.
+
+News
+----
+
+* [XPrivacy Gives You Massive Control Over What Your Installed Apps Are Allowed To Do](http://www.androidpolice.com/2013/06/23/xprivacy-gives-you-massive-control-over-what-your-installed-apps-are-allowed-to-do/)
+* [Manage Individual App Permissions with XPrivacy](http://www.xda-developers.com/android/manage-individual-app-permissions-with-xprivacy/)
+* [Protect Your Privacy with XPrivacy – XDA Developer TV](http://www.xda-developers.com/android/protect-your-privacy-with-xprivacy-xda-developer-tv/)
 
 Contributing
 ------------
