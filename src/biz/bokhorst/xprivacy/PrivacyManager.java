@@ -577,7 +577,7 @@ public class PrivacyManager {
 		}
 
 		if (restricted && restrictionName.equals(cIsolation) && methodName == null) {
-			File folder = new File(XFile.getIsolateStorage());
+			File folder = new File(XFile.getIsolatedStorage(uid));
 			folder.mkdir();
 		}
 	}

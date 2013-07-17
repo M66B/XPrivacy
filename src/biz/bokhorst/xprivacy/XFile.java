@@ -56,7 +56,7 @@ public class XFile extends XHook {
 				path = getAbsolutePath(path);
 				Util.log(this, Log.INFO, "path=" + path + " uid=" + Process.myUid());
 				if (path.startsWith(mPath)) {
-					String isolatedStorage = getIsolateStorage();
+					String isolatedStorage = getIsolatedStorage(Binder.getCallingUid());
 					if (!path.startsWith(isolatedStorage)) {
 						if (isRestricted(param, mPath))
 							if (param.args[0].getClass().equals(String.class))
@@ -74,10 +74,19 @@ public class XFile extends XHook {
 		if (Process.myUid() <= 0 || Process.myUid() == PrivacyManager.cUidAndroid)
 			return;
 
-		if (!param.method.getName().equals("java.io.File")) {
+		String methodName = param.method.getName();
+		if (!methodName.equals("java.io.File")) {
+			if (methodName.equals("getParent")) {
+				String path = (String) param.getResult();
+				if (path.equals(getIsolatedStorage(0))) {
+					param.setResult(File.separator + "sdcard");
+					return;
+				}
+			}
+
 			Object result = param.getResult();
 			if (result != null) {
-				String isolatedStorage = getIsolateStorage();
+				String isolatedStorage = getIsolatedStorage(Binder.getCallingUid());
 				if (result.getClass().equals(String.class)) {
 					String name = (String) result;
 					if (name.startsWith(isolatedStorage))
@@ -101,11 +110,11 @@ public class XFile extends XHook {
 
 	// Derived from Environment.java
 
-	public static String getIsolateStorage() {
+	public static String getIsolatedStorage(int uid) {
 		String rawExternalStorage = System.getenv("EXTERNAL_STORAGE");
 		if (TextUtils.isEmpty(rawExternalStorage))
 			rawExternalStorage = "/storage/sdcard0";
-		return rawExternalStorage + File.separator + ".xprivacy" + File.separator + Binder.getCallingUid();
+		return rawExternalStorage + File.separator + ".xprivacy" + (uid == 0 ? "" : File.separator + uid);
 	}
 
 	// Copied from File.java
