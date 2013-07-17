@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Build;
-import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
@@ -68,22 +67,14 @@ public class XPackageManagerService extends XHook {
 			// Build list of modified gids
 			List<Integer> listGids = new ArrayList<Integer>();
 			for (int i = 0; i < gids.length; i++) {
-				Util.log(this, Log.INFO, "gid=" + gids[i] + " restriction=" + mRestrictionName + " action=" + mAction
-						+ " uid=" + uid);
 				if (gids[i] == media_rw) {
-					if (mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("media"))
-						Util.log(this, Log.INFO, "Deny media_rw uid=" + uid);
-					else
+					if (!(mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("media")))
 						listGids.add(gids[i]);
 				} else if (gids[i] == sdcard_r || gids[i] == sdcard_rw) {
-					if (mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("sdcard"))
-						Util.log(this, Log.INFO, "Deny sdcard_r/sdcard_rw uid=" + uid);
-					else
+					if (!(mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("sdcard")))
 						listGids.add(gids[i]);
 				} else if (gids[i] == inet || gids[i] == inet_raw) {
-					if (mRestrictionName.equals(PrivacyManager.cInternet))
-						Util.log(this, Log.INFO, "Deny inet/inet_raw uid=" + uid);
-					else
+					if (!(mRestrictionName.equals(PrivacyManager.cInternet)))
 						listGids.add(gids[i]);
 				} else
 					listGids.add(gids[i]);
