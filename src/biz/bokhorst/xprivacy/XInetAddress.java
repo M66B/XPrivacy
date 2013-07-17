@@ -26,6 +26,7 @@ public class XInetAddress extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		Object result = param.getResult();
 		if (result != null) {
+			// Get addresses
 			InetAddress[] addresses;
 			if (result.getClass().equals(InetAddress.class))
 				addresses = new InetAddress[] { (InetAddress) result };
@@ -34,12 +35,17 @@ public class XInetAddress extends XHook {
 			else
 				addresses = new InetAddress[0];
 
+			// Check to restrict
+			boolean restrict = false;
 			for (InetAddress address : addresses)
-				if (!address.isLoopbackAddress())
-					if (isRestricted(param)) {
-						param.setThrowable(new UnknownHostException("Unable to resolve host"));
-						break;
-					}
+				if (!address.isLoopbackAddress()) {
+					restrict = true;
+					break;
+				}
+
+			// Restrict
+			if (restrict && isRestricted(param))
+				param.setThrowable(new UnknownHostException("Unable to resolve host"));
 		}
 	}
 }
