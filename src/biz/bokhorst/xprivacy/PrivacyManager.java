@@ -193,10 +193,7 @@ public class PrivacyManager {
 		mMethods.get(cIdentification).add("/proc");
 
 		// Location client
-		String[] clocs = new String[] { "addGeofences", "getLastLocation", "removeLocationUpdates",
-				"requestLocationUpdates" };
-		for (String cloc : clocs)
-			mMethods.get(cLocation).add(cloc);
+		mMethods.get(cLocation).add("connect");
 
 		// Location manager
 		String[] locs = new String[] { "addGeofence", "addNmeaListener", "addProximityAlert", "getLastLocation",

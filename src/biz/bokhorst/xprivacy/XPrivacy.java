@@ -343,14 +343,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Location client
 		Class<?> hookClass = findClass("com.google.android.gms.location.LocationClient", lpparam.classLoader);
-		if (hookClass != null) {
-			String[] clocs = new String[] { "addGeofences", "getLastLocation", "removeLocationUpdates",
-					"requestLocationUpdates" };
-			for (String cloc : clocs)
-				hook(new XLocationClient(cloc, PrivacyManager.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
-						"ACCESS_FINE_LOCATION" }), lpparam.classLoader,
-						"com.google.android.gms.location.LocationClient");
-		}
+		if (hookClass != null)
+			hook(new XLocationClient("connect", PrivacyManager.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
+					"ACCESS_FINE_LOCATION" }), lpparam.classLoader, "com.google.android.gms.location.LocationClient");
 	}
 
 	private void hook(final XHook hook, String className) {
