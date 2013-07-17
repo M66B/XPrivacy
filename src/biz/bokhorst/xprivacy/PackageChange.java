@@ -99,12 +99,20 @@ public class PackageChange extends BroadcastReceiver {
 					Version sVersion = new Version(PrivacyManager.getSetting(null, context,
 							PrivacyManager.cSettingVersion, "0.0", false));
 
-					// Version 0.0
+					// Version 1.7
 					if (sVersion.compareTo(new Version("1.7")) < 0) {
-						// Disable Identification/proc for system apps
+						// Disable identification/proc
 						for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
 							PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cIdentification,
 									"/proc", false);
+					}
+
+					// Version 1.7.1
+					if (sVersion.compareTo(new Version("1.7.1")) < 0) {
+						// Disable location/connect
+						for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
+							PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cLocation, "connect",
+									false);
 					}
 
 					// Update stored version

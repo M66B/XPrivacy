@@ -369,7 +369,7 @@ public class PrivacyManager {
 		if (restrictionName.equals(cIdentification)
 				&& (methodName.equals("GservicesProvider") || methodName.equals("/proc")))
 			return true;
-		if (restrictionName.equals(cLocation) && methodName.equals("getScanResults"))
+		if (restrictionName.equals(cLocation) && (methodName.equals("connect") || methodName.equals("getScanResults")))
 			return true;
 		if (restrictionName.equals(cShell) && (methodName.equals("load") || methodName.equals("loadLibrary")))
 			return true;
@@ -576,8 +576,10 @@ public class PrivacyManager {
 		}
 
 		// Location: do not restrict getScanResults by default
-		if (restricted && restrictionName.equals(cLocation) && methodName == null)
+		if (restricted && restrictionName.equals(cLocation) && methodName == null) {
+			setRestricted(hook, context, uid, restrictionName, "connect", false);
 			setRestricted(hook, context, uid, restrictionName, "getScanResults", false);
+		}
 
 		// Shell: do not restrict load/loadLibrary by default
 		if (restricted && restrictionName.equals(cShell) && methodName == null) {
