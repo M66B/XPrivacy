@@ -324,6 +324,7 @@ Filtering:
 Exceptions:
 
 * */proc* and *GservicesProvider* in the category *Identification* needs to be set manually
+* *getScanResults* in the category *Location* needs to be set manually
 * *load* and *loadLibrary* in the category *Shell* need to be set manually
 
 **Using XPrivacy is entirely at your own risk**
@@ -496,9 +497,10 @@ Changelog
 * Restrict package change notifications ([issue](https://github.com/M66B/XPrivacy/issues/256))
 * Restrict *addGeofence* and *getLastLocation* (hidden function)
 * Restrict *getWifiApConfiguration* (hidden function), thanks @[vipere](https://github.com/vipere)
+* Location/getScanResults is dangerous
+* Higher resolution launcher icons ([source](http://openiconlibrary.sourceforge.net/gallery2/?./Icons/mimetypes/tango-style/application-pgp-signature.png))
 * Fixed notification icons
 * Fixed leaking SSID on Android 4.2+
-* Higher resolution launcher icons ([source](http://openiconlibrary.sourceforge.net/gallery2/?./Icons/mimetypes/tango-style/application-pgp-signature.png))
 * Updated Catalan translation
 * Updated French translation
 * Updated German translation
