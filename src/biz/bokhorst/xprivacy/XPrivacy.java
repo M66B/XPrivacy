@@ -110,6 +110,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// IO bridge
 		hook(new XIoBridge("open", PrivacyManager.cIdentification, new String[] {}, "/proc"), "libcore.io.IoBridge");
 
+		// Location client
+		String[] clocs = new String[] { "addGeofences", "getLastLocation", "removeLocationUpdates",
+				"requestLocationUpdates" };
+		for (String cloc : clocs)
+			hook(new XLocationClient(cloc, PrivacyManager.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
+					"ACCESS_FINE_LOCATION" }), "com.google.android.gms.location.LocationClient");
+
 		// Location manager
 		String[] locs = new String[] { "addGeofence", "addNmeaListener", "addProximityAlert", "getLastLocation",
 				"getLastKnownLocation", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",

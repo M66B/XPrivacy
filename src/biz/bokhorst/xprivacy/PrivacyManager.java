@@ -192,12 +192,19 @@ public class PrivacyManager {
 		// IoBridge
 		mMethods.get(cIdentification).add("/proc");
 
+		// Location client
+		String[] clocs = new String[] { "addGeofences", "getLastLocation", "removeLocationUpdates",
+				"requestLocationUpdates" };
+		for (String cloc : clocs)
+			mMethods.get(cLocation).add(cloc);
+
 		// Location manager
 		String[] locs = new String[] { "addGeofence", "addNmeaListener", "addProximityAlert", "getLastLocation",
 				"getLastKnownLocation", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",
 				"sendExtraCommand" };
 		for (String loc : locs)
-			mMethods.get(cLocation).add(loc);
+			if (!mMethods.get(cLocation).contains(loc))
+				mMethods.get(cLocation).add(loc);
 
 		// Media recorder
 		mMethods.get(cMedia).add("setOutputFile");

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -13,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
+@SuppressLint("DefaultLocale")
 public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private Drawable mDrawable;
 	private List<String> mListApplicationName;
@@ -130,11 +132,16 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	@Override
 	public String toString() {
-		return String.format("%s", TextUtils.join(", ", mListApplicationName));
+		return getApplicationNames();
+		// return String.format("%d %s", mUid, getApplicationNames());
 	}
 
 	@Override
 	public int compareTo(ApplicationInfoEx other) {
-		return toString().compareToIgnoreCase(other.toString());
+		return getApplicationNames().compareToIgnoreCase(other.getApplicationNames());
+	}
+
+	private String getApplicationNames() {
+		return TextUtils.join(", ", mListApplicationName);
 	}
 }
