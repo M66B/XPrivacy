@@ -76,6 +76,14 @@ public class XActivityThread extends XHook {
 								finish(param);
 								param.setResult(null);
 							}
+						} else if (action.equals(Intent.ACTION_PACKAGE_ADDED)
+								|| action.equals(Intent.ACTION_PACKAGE_REPLACED)
+								|| action.equals(Intent.ACTION_PACKAGE_RESTARTED)
+								|| action.equals(Intent.ACTION_PACKAGE_REMOVED)) {
+							if (isRestricted(param, mActionName)) {
+								finish(param);
+								param.setResult(null);
+							}
 						} else
 							Util.log(this, Log.WARN, "Unhandled action=" + mActionName);
 					}
