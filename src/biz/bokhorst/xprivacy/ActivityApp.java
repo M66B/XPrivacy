@@ -454,7 +454,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public Object getChild(int groupPosition, int childPosition) {
-			return PrivacyManager.getMethodNames((String) getGroup(groupPosition)).get(childPosition);
+			return PrivacyManager.getMethods((String) getGroup(groupPosition)).get(childPosition);
 		}
 
 		@Override
@@ -464,7 +464,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return PrivacyManager.getMethodNames((String) getGroup(groupPosition)).size();
+			return PrivacyManager.getMethods((String) getGroup(groupPosition)).size();
 		}
 
 		@Override

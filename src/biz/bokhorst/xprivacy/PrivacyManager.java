@@ -6,6 +6,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -367,16 +368,14 @@ public class PrivacyManager {
 		return false;
 	}
 
-	public static List<String> getMethodNames(String restrictionName) {
-		return mMethods.get(restrictionName);
-	}
-
 	public static List<String> getPermissions(String restrictionName) {
 		return mPermissions.get(restrictionName);
 	}
 
 	public static List<String> getMethods(String restrictionName) {
-		return mMethods.get(restrictionName);
+		List<String> listMethod = new ArrayList<String>(mMethods.get(restrictionName));
+		Collections.sort(listMethod);
+		return listMethod;
 	}
 
 	public static String getLocalizedName(Context context, String restrictionName) {

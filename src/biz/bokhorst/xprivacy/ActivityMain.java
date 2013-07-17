@@ -514,22 +514,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			alertDialog.show();
 		}
 
-		// Activity manager
+		// Check activity manager
 		if (!checkField(getSystemService(Context.ACTIVITY_SERVICE), "mContext", Context.class))
 			reportClass(getSystemService(Context.ACTIVITY_SERVICE).getClass());
-
-		// Activity thread: ReceiverData
-		try {
-			Class<?> clazz = Class.forName("android.app.ActivityThread$ReceiverData");
-			if (!checkField(clazz, "intent"))
-				reportClass(clazz);
-		} catch (Throwable ex) {
-			try {
-				reportClass(Class.forName("android.app.ActivityThread"));
-			} catch (Throwable exex) {
-				sendSupportInfo(exex.toString());
-			}
-		}
 
 		// Check activity thread
 		try {
@@ -541,6 +528,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		} catch (Throwable ex) {
 			sendSupportInfo(ex.toString());
+		}
+
+		// Check activity thread receiver data
+		try {
+			Class<?> clazz = Class.forName("android.app.ActivityThread$ReceiverData");
+			if (!checkField(clazz, "intent"))
+				reportClass(clazz);
+		} catch (Throwable ex) {
+			try {
+				reportClass(Class.forName("android.app.ActivityThread"));
+			} catch (Throwable exex) {
+				sendSupportInfo(exex.toString());
+			}
 		}
 
 		// Check content resolver
@@ -622,7 +622,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					return true;
 			}
 		} catch (Throwable ex) {
-			Util.bug(null, ex);
 		}
 		return false;
 	}
@@ -632,7 +631,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			clazz.getDeclaredField(fieldName);
 			return true;
 		} catch (Throwable ex) {
-			Util.bug(null, ex);
 			return false;
 		}
 	}

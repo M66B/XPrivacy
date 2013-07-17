@@ -104,7 +104,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// InetAddress
 		String[] addrs = new String[] { "getAllByName", "getByAddress", "getByName" };
 		for (String addr : addrs)
-			hook(new XInetAddress(addr, PrivacyManager.cInternet, new String[] {}, null), "java.net.InetAddress");
+			hook(new XInetAddress(addr, PrivacyManager.cInternet, new String[] { "INTERNET" }, null),
+					"java.net.InetAddress");
 
 		// IO bridge
 		hook(new XIoBridge("open", PrivacyManager.cIdentification, new String[] {}, "/proc"), "libcore.io.IoBridge");

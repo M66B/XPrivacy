@@ -37,7 +37,7 @@ public class XInetAddress extends XHook {
 			for (InetAddress address : addresses)
 				if (!address.isLoopbackAddress())
 					if (isRestricted(param)) {
-						param.setThrowable(new UnknownHostException("Unable to resolve host!"));
+						param.setThrowable(new UnknownHostException("Unable to resolve host"));
 						break;
 					}
 		}
