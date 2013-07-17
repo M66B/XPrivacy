@@ -498,7 +498,7 @@ Changelog
 * Restrict *addGeofence* and *getLastLocation* (hidden function)
 * Restrict *getWifiApConfiguration* (hidden function), thanks @[vipere](https://github.com/vipere)
 * Restrict DNS in category *Internet*, thanks @[sorgelig](https://github.com/sorgelig) ([issue](https://github.com/M66B/XPrivacy/issues/132))
-* Marked *location*/*getScanResults* as dangerous
+* Marked *location/getScanResults* as dangerous
 * Higher resolution launcher icons ([source](http://openiconlibrary.sourceforge.net/gallery2/?./Icons/mimetypes/tango-style/application-pgp-signature.png))
 * Sort function names
 * Fixed leaking SSID on Android 4.2+
