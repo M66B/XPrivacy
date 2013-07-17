@@ -37,7 +37,6 @@
     <string name="restrict_dictionary">Ordbog (Bruger Difineret)</string>
     <string name="restrict_identification">Identifikation (Enhed)</string>
     <string name="restrict_internet">Internet</string>
-    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Plasering (Fin/Grov)</string>
     <string name="restrict_media">Medie (Audio, Photo, Video)</string>
     <string name="restrict_messages">Beskeder (SMS, MMS)</string>

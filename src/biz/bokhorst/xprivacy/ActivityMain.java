@@ -531,7 +531,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		}
 
-		// Activity thread: unscheduleGcIdler
+		// Check activity thread
 		try {
 			Class<?> clazz = Class.forName("android.app.ActivityThread");
 			try {

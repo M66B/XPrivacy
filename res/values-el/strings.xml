@@ -37,7 +37,6 @@
     <string name="restrict_dictionary">Dictionary (user)</string>
     <string name="restrict_identification">Ταυτότητα (συσκευή)</string>
     <string name="restrict_internet">Internet</string>
-    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Τοποθεσία (ακριβής/μερική)</string>
     <string name="restrict_media">Πολυμέσα (ήχοι, φωτογραφίες, βίντεο)</string>
     <string name="restrict_messages">Μηνύματα (SMS, MMS)</string>

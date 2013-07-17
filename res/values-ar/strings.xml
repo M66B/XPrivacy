@@ -37,7 +37,6 @@
     <string name="restrict_dictionary">القاموس (المستخدم)</string>
     <string name="restrict_identification">الهوية (الجهاز)</string>
     <string name="restrict_internet">الإنترنت</string>
-    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">تحديد الموقع (ناعم,خشن)</string>
     <string name="restrict_media">الميديا (صوت,صورة,فيديو) </string>
     <string name="restrict_messages">الرسائل (النصية , الوسائط)</string>

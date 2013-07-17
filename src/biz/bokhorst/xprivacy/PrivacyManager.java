@@ -1,7 +1,6 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.lang.reflect.Field;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -24,7 +23,6 @@ import android.database.Cursor;
 import android.location.Location;
 import android.nfc.NfcAdapter;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -41,7 +39,6 @@ public class PrivacyManager {
 	public static final String cEMail = "email";
 	public static final String cIdentification = "identification";
 	public static final String cInternet = "internet";
-	public static final String cIsolation = "isolation";
 	public static final String cLocation = "location";
 	public static final String cMedia = "media";
 	public static final String cMessages = "messages";
@@ -54,8 +51,8 @@ public class PrivacyManager {
 	public static final String cView = "view";
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
-			cContacts, cDictionary, cEMail, cIdentification, cInternet, cIsolation, cLocation, cMedia, cMessages,
-			cNetwork, cNfc, cPhone, cShell, cStorage, cSystem, cView };
+			cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cNfc,
+			cPhone, cShell, cStorage, cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
@@ -115,8 +112,6 @@ public class PrivacyManager {
 		mPermissions.get(cIdentification).add("READ_GSERVICES");
 		mPermissions.get(cIdentification).add("");
 		mPermissions.get(cInternet).add("INTERNET");
-		mPermissions.get(cIsolation).add("READ_EXTERNAL_STORAGE");
-		mPermissions.get(cIsolation).add("WRITE_EXTERNAL_STORAGE");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_FINE_LOCATION");
 		mPermissions.get(cLocation).add("ACCESS_COARSE_UPDATES");
@@ -187,10 +182,6 @@ public class PrivacyManager {
 
 		// Environment
 		mMethods.get(cStorage).add("getExternalStorageState");
-
-		// File
-		mMethods.get(cIsolation).add(File.separator + "sdcard");
-		mMethods.get(cIsolation).add(Environment.getExternalStorageDirectory().getAbsolutePath());
 
 		// IoBridge
 		mMethods.get(cIdentification).add("/proc");
@@ -574,11 +565,6 @@ public class PrivacyManager {
 		if (restricted && restrictionName.equals(cShell) && methodName == null) {
 			setRestricted(hook, context, uid, restrictionName, "load", false);
 			setRestricted(hook, context, uid, restrictionName, "loadLibrary", false);
-		}
-
-		if (restricted && restrictionName.equals(cIsolation) && methodName == null) {
-			File folder = new File(XFile.getIsolatedStorage(uid));
-			folder.mkdir();
 		}
 	}
 

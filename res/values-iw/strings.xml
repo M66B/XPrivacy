@@ -37,7 +37,6 @@
     <string name="restrict_dictionary">Dictionary (user)</string>
     <string name="restrict_identification">מספר זיהוי של המכשיר</string>
     <string name="restrict_internet">Internet</string>
-    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">מיקום</string>
     <string name="restrict_media">מדיה ( קול, תמונות ווידאו)</string>
     <string name="restrict_messages">הודעות (סמס,הודעת מולטימדיה)</string>

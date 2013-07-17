@@ -37,7 +37,6 @@
     <string name="restrict_dictionary">Ordlista (användare)</string>
     <string name="restrict_identification">Identifikation (enhet)</string>
     <string name="restrict_internet">Internet</string>
-    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Position (exakt/ungefärlig)</string>
     <string name="restrict_media">Media (ljud, foto, video)</string>
     <string name="restrict_messages">Meddelanden (SMS, MMS)</string>

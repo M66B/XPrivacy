@@ -37,7 +37,6 @@
     <string name="restrict_dictionary">词典 (用户)</string>
     <string name="restrict_identification">识别码 (设备)</string>
     <string name="restrict_internet">互联网</string>
-    <string name="restrict_isolation">独立存储</string>
     <string name="restrict_location">位置 (精细/粗略)</string>
     <string name="restrict_media">媒体 (声音, 图片, 视频)</string>
     <string name="restrict_messages">信息 (短信, 彩信)</string>

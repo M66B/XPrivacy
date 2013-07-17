@@ -37,7 +37,6 @@
     <string name="restrict_dictionary">Slovník (užívateľ)</string>
     <string name="restrict_identification">Identifikácia (zariadenie)</string>
     <string name="restrict_internet">Internet</string>
-    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Poloha (presná/približná)</string>
     <string name="restrict_media">Médiá (hudba, fotky, videá)</string>
     <string name="restrict_messages">Správy (SMS, MMS)</string>

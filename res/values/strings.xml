@@ -43,7 +43,6 @@
     <string name="restrict_email" translatable="false">E-mail</string>
     <string name="restrict_identification">Identification (device)</string>
     <string name="restrict_internet">Internet</string>
-    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Location (fine/coarse)</string>
     <string name="restrict_media">Media (audio, photo, video)</string>
     <string name="restrict_messages">Messages (SMS, MMS)</string>

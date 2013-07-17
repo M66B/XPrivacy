@@ -37,7 +37,6 @@
     <string name="restrict_dictionary">Szótár (felhasználó)</string>
     <string name="restrict_identification">Azonosító (eszköz)</string>
     <string name="restrict_internet">Internet</string>
-    <string name="restrict_isolation">Elkülönített tárhely</string>
     <string name="restrict_location">Hely (pontos / hozzávetőleges)</string>
     <string name="restrict_media">Média (hang, fotó, videó)</string>
     <string name="restrict_messages">Üzenetek (SMS, MMS)</string>

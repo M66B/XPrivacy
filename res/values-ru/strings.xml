@@ -37,7 +37,6 @@
     <string name="restrict_dictionary">Пользовательский словарь</string>
     <string name="restrict_identification">Идентификатор устройства</string>
     <string name="restrict_internet">Интернет</string>
-    <string name="restrict_isolation">Isolated storage</string>
     <string name="restrict_location">Местоположение (точное/приблизительное)</string>
     <string name="restrict_media">Медиа (аудио, фото, видео)</string>
     <string name="restrict_messages">Сообщения (SMS, MMS)</string>
