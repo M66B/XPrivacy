@@ -101,6 +101,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// This is to fake "unmounted", no permission required
 		hook(new XEnvironment("getExternalStorageState", PrivacyManager.cStorage, null), "android.os.Environment");
 
+		// InetAddress
+		String[] addrs = new String[] { "getAllByName", "getByAddress", "getByName" };
+		for (String addr : addrs)
+			hook(new XInetAddress(addr, PrivacyManager.cInternet, new String[] {}, null), "java.net.InetAddress");
+
 		// IO bridge
 		hook(new XIoBridge("open", PrivacyManager.cIdentification, new String[] {}, "/proc"), "libcore.io.IoBridge");
 

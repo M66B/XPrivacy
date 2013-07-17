@@ -497,6 +497,7 @@ Changelog
 * Restrict package change notifications ([issue](https://github.com/M66B/XPrivacy/issues/256))
 * Restrict *addGeofence* and *getLastLocation* (hidden function)
 * Restrict *getWifiApConfiguration* (hidden function), thanks @[vipere](https://github.com/vipere)
+* Restrict DNS in category *Internet*, thanks @[sorgelig](https://github.com/sorgelig)
 * Location/getScanResults is dangerous
 * Higher resolution launcher icons ([source](http://openiconlibrary.sourceforge.net/gallery2/?./Icons/mimetypes/tango-style/application-pgp-signature.png))
 * Fixed notification icons

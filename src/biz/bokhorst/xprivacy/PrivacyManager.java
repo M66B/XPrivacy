@@ -183,6 +183,11 @@ public class PrivacyManager {
 		// Environment
 		mMethods.get(cStorage).add("getExternalStorageState");
 
+		// InetAddress
+		String[] addrs = new String[] { "getAllByName", "getByAddress", "getByName" };
+		for (String addr : addrs)
+			mMethods.get(cInternet).add(addr);
+
 		// IoBridge
 		mMethods.get(cIdentification).add("/proc");
 
