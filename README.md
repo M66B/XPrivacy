@@ -18,7 +18,7 @@ Index
 * [Support](https://github.com/M66B/XPrivacy#support)
 * [Changelog](https://github.com/M66B/XPrivacy#changelog)
 * [Similar solutions](https://github.com/M66B/XPrivacy#similar-solutions)
-* [News](https://github.com/M66B/news)
+* [News](https://github.com/M66B/XPrivacy#news)
 * [Contributing](https://github.com/M66B/XPrivacy#contributing)
 * [License](https://github.com/M66B/XPrivacy#license)
 
