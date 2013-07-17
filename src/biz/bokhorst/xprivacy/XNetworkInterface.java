@@ -22,9 +22,16 @@ public class XNetworkInterface extends XHook {
 		super(methodName, restrictionName, permissions, null);
 	}
 
-	// public byte[] getHardwareAddress()
-	// public Enumeration<InetAddress> getInetAddresses()
-	// public List<InterfaceAddress> getInterfaceAddresses()
+	// Network:
+	// - public byte[] getHardwareAddress()
+	// - public Enumeration<InetAddress> getInetAddresses()
+	// - public List<InterfaceAddress> getInterfaceAddresses()
+
+	// Internet:
+	// - public static NetworkInterface getByInetAddress(InetAddress address)
+	// - public static NetworkInterface getByName(String interfaceName)
+	// - public static Enumeration<NetworkInterface> getNetworkInterfaces()
+
 	// libcore/luni/src/main/java/java/net/NetworkInterface.java
 
 	// libcore/luni/src/main/java/java/net/InetAddress.java
@@ -33,53 +40,56 @@ public class XNetworkInterface extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		// Do nothing
+		if (getRestrictionName().equals(PrivacyManager.cInternet))
+			if (isRestricted(param))
+				param.setResult(null);
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResult() != null) {
-			String methodName = param.method.getName();
-			NetworkInterface ni = (NetworkInterface) param.thisObject;
-			if (!ni.isLoopback())
-				if (isRestricted(param))
-					if (methodName.equals("getHardwareAddress")) {
-						String mac = (String) PrivacyManager.getDefacedProp("MAC");
-						long lMac = Long.parseLong(mac.replace(":", ""), 16);
-						byte[] address = ByteBuffer.allocate(8).putLong(lMac).array();
-						param.setResult(address);
-					} else if (methodName.equals("getInetAddresses")) {
-						@SuppressWarnings("unchecked")
-						Enumeration<InetAddress> addresses = (Enumeration<InetAddress>) param.getResult();
-						List<InetAddress> listAddress = new ArrayList<InetAddress>();
-						for (InetAddress address : Collections.list(addresses))
-							if (address.isAnyLocalAddress() || address.isLoopbackAddress())
-								listAddress.add(address);
-							else
-								listAddress.add((InetAddress) PrivacyManager.getDefacedProp("InetAddress"));
-						param.setResult(Collections.enumeration(listAddress));
-					} else if (methodName.equals("getInterfaceAddresses")) {
-						@SuppressWarnings("unchecked")
-						List<InterfaceAddress> listAddress = (List<InterfaceAddress>) param.getResult();
-						for (InterfaceAddress address : listAddress) {
-							// address
-							try {
-								Field fieldAddress = findField(InterfaceAddress.class, "address");
-								fieldAddress.set(address, PrivacyManager.getDefacedProp("InetAddress"));
-							} catch (Throwable ex) {
-								Util.bug(this, ex);
-							}
+		if (param.getResult() != null)
+			if (getRestrictionName().equals(PrivacyManager.cNetwork)) {
+				String methodName = param.method.getName();
+				NetworkInterface ni = (NetworkInterface) param.thisObject;
+				if (!ni.isLoopback())
+					if (isRestricted(param))
+						if (methodName.equals("getHardwareAddress")) {
+							String mac = (String) PrivacyManager.getDefacedProp("MAC");
+							long lMac = Long.parseLong(mac.replace(":", ""), 16);
+							byte[] address = ByteBuffer.allocate(8).putLong(lMac).array();
+							param.setResult(address);
+						} else if (methodName.equals("getInetAddresses")) {
+							@SuppressWarnings("unchecked")
+							Enumeration<InetAddress> addresses = (Enumeration<InetAddress>) param.getResult();
+							List<InetAddress> listAddress = new ArrayList<InetAddress>();
+							for (InetAddress address : Collections.list(addresses))
+								if (address.isAnyLocalAddress() || address.isLoopbackAddress())
+									listAddress.add(address);
+								else
+									listAddress.add((InetAddress) PrivacyManager.getDefacedProp("InetAddress"));
+							param.setResult(Collections.enumeration(listAddress));
+						} else if (methodName.equals("getInterfaceAddresses")) {
+							@SuppressWarnings("unchecked")
+							List<InterfaceAddress> listAddress = (List<InterfaceAddress>) param.getResult();
+							for (InterfaceAddress address : listAddress) {
+								// address
+								try {
+									Field fieldAddress = findField(InterfaceAddress.class, "address");
+									fieldAddress.set(address, PrivacyManager.getDefacedProp("InetAddress"));
+								} catch (Throwable ex) {
+									Util.bug(this, ex);
+								}
 
-							// broadcastAddress
-							try {
-								Field fieldBroadcastAddress = findField(InterfaceAddress.class, "broadcastAddress");
-								fieldBroadcastAddress.set(address, PrivacyManager.getDefacedProp("InetAddress"));
-							} catch (Throwable ex) {
-								Util.bug(this, ex);
+								// broadcastAddress
+								try {
+									Field fieldBroadcastAddress = findField(InterfaceAddress.class, "broadcastAddress");
+									fieldBroadcastAddress.set(address, PrivacyManager.getDefacedProp("InetAddress"));
+								} catch (Throwable ex) {
+									Util.bug(this, ex);
+								}
 							}
-						}
-					} else
-						Util.log(this, Log.WARN, "Unknown method=" + methodName);
-		}
+						} else
+							Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			}
 	}
 }

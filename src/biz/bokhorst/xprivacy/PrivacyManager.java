@@ -212,6 +212,10 @@ public class PrivacyManager {
 		for (String net : nets)
 			mMethods.get(cNetwork).add(net);
 
+		String[] inets = new String[] { "getByInetAddress", "getByName", "getNetworkInterfaces" };
+		for (String inet : inets)
+			mMethods.get(cInternet).add(inet);
+
 		// Package manager service
 		mMethods.get(cInternet).add("inet");
 		mMethods.get(cStorage).add("media");

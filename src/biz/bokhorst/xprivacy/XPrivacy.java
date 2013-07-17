@@ -135,6 +135,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hook(new XNetworkInterface(net, PrivacyManager.cNetwork, new String[] { "ACCESS_NETWORK_STATE" }),
 					"java.net.NetworkInterface");
 
+		String[] inets = new String[] { "getByInetAddress", "getByName", "getNetworkInterfaces" };
+		for (String inet : inets)
+			hook(new XNetworkInterface(inet, PrivacyManager.cInternet, new String[] { "INTERNET" }),
+					"java.net.NetworkInterface");
+
 		// Package manager service
 		hook(new XPackageManagerService("getPackageGids", PrivacyManager.cInternet, new String[] { "INTERNET" }, "inet"),
 				"com.android.server.pm.PackageManagerService");
