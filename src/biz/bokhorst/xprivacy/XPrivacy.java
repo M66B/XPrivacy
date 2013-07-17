@@ -110,13 +110,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// IO bridge
 		hook(new XIoBridge("open", PrivacyManager.cIdentification, new String[] {}, "/proc"), "libcore.io.IoBridge");
 
-		// Location client
-		String[] clocs = new String[] { "addGeofences", "getLastLocation", "removeLocationUpdates",
-				"requestLocationUpdates" };
-		for (String cloc : clocs)
-			hook(new XLocationClient(cloc, PrivacyManager.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
-					"ACCESS_FINE_LOCATION" }), "com.google.android.gms.location.LocationClient");
-
 		// Location manager
 		String[] locs = new String[] { "addGeofence", "addNmeaListener", "addProximityAlert", "getLastLocation",
 				"getLastKnownLocation", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",
@@ -347,6 +340,17 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hook(new XContentProvider(PrivacyManager.cDictionary, new String[] { "READ_USER_DICTIONARY" },
 					"UserDictionary"), lpparam.classLoader,
 					"com.android.providers.userdictionary.UserDictionaryProvider");
+
+		// Location client
+		Class<?> hookClass = findClass("com.google.android.gms.location.LocationClient", lpparam.classLoader);
+		if (hookClass != null) {
+			String[] clocs = new String[] { "addGeofences", "getLastLocation", "removeLocationUpdates",
+					"requestLocationUpdates" };
+			for (String cloc : clocs)
+				hook(new XLocationClient(cloc, PrivacyManager.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
+						"ACCESS_FINE_LOCATION" }), lpparam.classLoader,
+						"com.google.android.gms.location.LocationClient");
+		}
 	}
 
 	private void hook(final XHook hook, String className) {
