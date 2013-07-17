@@ -190,8 +190,8 @@ public class PrivacyManager {
 
 		// IoBridge
 		mMethods.get(cIdentification).add("/proc");
-		mMethods.get(cIsolation).add(File.separator + "sdcard");
-		mMethods.get(cIsolation).add(Environment.getExternalStorageDirectory().getAbsolutePath());
+		mMethods.get(cIsolation).add(File.separator + "sdcard" + File.separator);
+		mMethods.get(cIsolation).add(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator);
 
 		// Location manager
 		String[] locs = new String[] { "addGeofence", "addNmeaListener", "addProximityAlert", "getLastLocation",

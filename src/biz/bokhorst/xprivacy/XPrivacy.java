@@ -105,10 +105,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// File
 		hook(new XFile(null, PrivacyManager.cIsolation, new String[] { "READ_EXTERNAL_STORAGE",
-				"WRITE_EXTERNAL_STORAGE" }, File.separator + "sdcard"), "java.io.File");
+				"WRITE_EXTERNAL_STORAGE" }, File.separator + "sdcard" + File.separator), "java.io.File");
 		hook(new XFile(null, PrivacyManager.cIsolation, new String[] { "READ_EXTERNAL_STORAGE",
-				"WRITE_EXTERNAL_STORAGE" }, Environment.getExternalStorageDirectory().getAbsolutePath()),
-				"java.io.File");
+				"WRITE_EXTERNAL_STORAGE" }, Environment.getExternalStorageDirectory().getAbsolutePath()
+				+ File.separator), "java.io.File");
 
 		// IO bridge
 		hook(new XIoBridge("open", PrivacyManager.cIdentification, new String[] {}, "/proc"), "libcore.io.IoBridge");

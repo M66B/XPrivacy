@@ -53,16 +53,20 @@ public class XFile extends XHook {
 				path = (String) param.args[0];
 		}
 
-		if (path != null && path.startsWith(mPath)) {
-			String isolated = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-					+ ".xprivacy" + File.separator + Binder.getCallingUid();
-			if (!path.startsWith(isolated)) {
-				Util.log(this, Log.INFO, "path=" + path + " uid=" + Process.myUid());
-				if (isRestricted(param, mPath))
-					if (param.args[0].getClass().equals(String.class))
-						param.args[0] = path.replace(mPath, isolated);
-					else if (param.args[0].getClass().equals(File.class))
-						param.args[0] = new File(path.replace(mPath, isolated));
+		if (path != null) {
+			if (!path.endsWith(File.separator))
+				path = path + File.separator;
+			if (path.startsWith(mPath)) {
+				String isolated = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
+						+ ".xprivacy" + File.separator + Binder.getCallingUid();
+				if (!path.startsWith(isolated)) {
+					Util.log(this, Log.INFO, "path=" + path + " uid=" + Process.myUid());
+					if (isRestricted(param, mPath))
+						if (param.args[0].getClass().equals(String.class))
+							param.args[0] = path.replace(mPath, isolated);
+						else if (param.args[0].getClass().equals(File.class))
+							param.args[0] = new File(path.replace(mPath, isolated));
+				}
 			}
 		}
 	}
