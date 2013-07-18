@@ -47,7 +47,7 @@
     <string name="restrict_system">Système (applis installées)</string>
     <string name="restrict_view">Vue (navigateur)</string>
     <string name="title_category">Categorie:</string>
-    <string name="title_restrict">Vérifier les restrictions:</string>
+    <string name="title_restrict">Cocher pour restreindre:</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
     <string name="settings_mac">Adresse MAC</string>
