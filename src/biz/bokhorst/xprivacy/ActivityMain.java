@@ -413,7 +413,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		private int getBackgroundColor(int position) {
 			String restrictionName = (position == 0 ? null : PrivacyManager.getRestrictions(true).get(position - 1));
-			if (PrivacyManager.isDangerous(restrictionName, null))
+			if (PrivacyManager.isDangerousRestriction(restrictionName))
 				return getResources().getColor(getThemed(R.attr.color_dangerous));
 			else {
 				TypedArray array = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorBackground, });

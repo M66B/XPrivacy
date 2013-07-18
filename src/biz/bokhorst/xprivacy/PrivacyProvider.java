@@ -118,7 +118,7 @@ public class PrivacyProvider extends ContentProvider {
 						for (String eMethodName : PrivacyManager.getMethods(eRestrictionName)) {
 							boolean allowed = prefs.getBoolean(getExceptionPref(eUid, eRestrictionName, eMethodName),
 									false);
-							if (allowed)
+							if (allowed || PrivacyManager.isDangerousMethod(eRestrictionName, eMethodName))
 								cursor.addRow(new Object[] { eUid, eRestrictionName, eMethodName, !allowed });
 						}
 					}

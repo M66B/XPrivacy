@@ -395,7 +395,7 @@ public class ActivityApp extends Activity {
 			final String restrictionName = (String) getGroup(groupPosition);
 
 			// Set background color
-			if (PrivacyManager.isDangerous(restrictionName, null))
+			if (PrivacyManager.isDangerousRestriction(restrictionName))
 				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 
 			// Indicator state
@@ -485,7 +485,7 @@ public class ActivityApp extends Activity {
 			long lastUsage = PrivacyManager.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, methodName);
 
 			// Set background color
-			if (PrivacyManager.isDangerous(restrictionName, methodName))
+			if (PrivacyManager.isDangerousMethod(restrictionName, methodName))
 				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 
 			// Display method name

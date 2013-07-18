@@ -354,18 +354,20 @@ public class PrivacyManager {
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
 		if (!dangerous)
 			for (String restrictionName : cRestrictionNames)
-				if (isDangerous(restrictionName, null))
+				if (isDangerousRestriction(restrictionName))
 					listRestriction.remove(restrictionName);
 		return listRestriction;
 	}
 
-	public static boolean isDangerous(String restrictionName, String methodName) {
+	public static boolean isDangerousRestriction(String restrictionName) {
 		if (restrictionName == null)
 			return false;
 		if (restrictionName.equals(cInternet) || restrictionName.equals(cStorage) || restrictionName.equals(cSystem))
 			return true;
-		if (methodName == null)
-			return false;
+		return false;
+	}
+
+	public static boolean isDangerousMethod(String restrictionName, String methodName) {
 		if (restrictionName.equals(cIdentification)
 				&& (methodName.equals("GservicesProvider") || methodName.equals("/proc")))
 			return true;
@@ -569,21 +571,11 @@ public class PrivacyManager {
 		// Result
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
 
-		// Identification: do not restrict /proc and GS provider by default
-		if (restricted && restrictionName.equals(cIdentification) && methodName == null) {
-			setRestricted(hook, context, uid, restrictionName, "GservicesProvider", false);
-			PrivacyManager.setRestricted(null, context, uid, PrivacyManager.cIdentification, "/proc", false);
-		}
-
-		// Location: do not restrict getScanResults by default
-		if (restricted && restrictionName.equals(cLocation) && methodName == null)
-			setRestricted(hook, context, uid, restrictionName, "getScanResults", false);
-
-		// Shell: do not restrict load/loadLibrary by default
-		if (restricted && restrictionName.equals(cShell) && methodName == null) {
-			setRestricted(hook, context, uid, restrictionName, "load", false);
-			setRestricted(hook, context, uid, restrictionName, "loadLibrary", false);
-		}
+		// Set default exceptions for methods
+		if (restricted)
+			for (String dMethodName : getMethods(restrictionName))
+				if (isDangerousMethod(restrictionName, dMethodName))
+					PrivacyManager.setRestricted(null, context, uid, restrictionName, dMethodName, false);
 	}
 
 	public static List<Boolean> getRestricted(Context context, int uid, boolean dangerous) {
@@ -598,7 +590,7 @@ public class PrivacyManager {
 						if (!dangerous) {
 							String restrictionName = cursor.getString(cursor
 									.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
-							if (PrivacyManager.isDangerous(restrictionName, null))
+							if (PrivacyManager.isDangerousRestriction(restrictionName))
 								continue;
 						}
 						listRestricted.add(Boolean.parseBoolean(cursor.getString(cursor

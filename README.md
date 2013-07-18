@@ -495,6 +495,7 @@ Changelog
 **Version 1.8** (in development)
 
 * Better hide internet connectivity, thanks @[sorgelig](https://github.com/sorgelig)
+* Fixed exporting dangerous functions ([issue](https://github.com/M66B/XPrivacy/issues/283))
 * Added Portuguese translation
 * Updated Czech translation
 * Updated Hebrew translation
