@@ -577,7 +577,7 @@ public class PrivacyManager {
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
 
 		// Set default exceptions for methods
-		if (restricted)
+		if (restricted && methodName == null)
 			for (String dMethodName : getMethods(restrictionName))
 				if (isDangerousMethod(restrictionName, dMethodName))
 					PrivacyManager.setRestricted(null, context, uid, restrictionName, dMethodName, false);
