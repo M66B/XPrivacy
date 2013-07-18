@@ -1,0 +1,66 @@
+<resources>
+
+    <string name="app_notxposed" formatted="false">Xposed framework version %d+ is not installed</string>
+    <string name="app_notenabled">O XPrivacy não está ativado no Xposed installer</string>
+    <string name="app_wrongandroid">Testado apenas no Android 4.0, 4.1 e 4.2</string>
+    <string name="app_version" formatted="false">XPrivacy version: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
+    <string name="app_copyright">Direitos de autor \u00A9 2013 por M. Bokhorst (M66B)</string>
+    <string name="menu_settings">Definições</string>
+    <string name="menu_template">Padrão</string>
+    <string name="menu_update">Procurar atualizações</string>
+    <string name="menu_report">Reportar problemas</string>
+    <string name="menu_export">Exportar</string>
+    <string name="menu_import">Importar</string>
+    <string name="menu_theme">Mudar o tema</string>
+    <string name="menu_pro">Versão Pro</string>
+    <string name="menu_about">Sobre</string>
+    <string name="menu_all">Tudo</string>
+    <string name="menu_app_launch">Iniciar</string>
+    <string name="menu_app_settings">Definições</string>
+    <string name="menu_app_store">Play Store</string>
+    <string name="menu_accounts">Selecione contas a autorizar</string>
+    <string name="menu_contacts">Selecione contactos a autorizar</string>
+    <string name="msg_noupdate">Não há atualizações disponíveis</string>
+    <string name="msg_restricted" formatted="false">%s restricted by XPrivacy</string>
+    <string name="msg_licensed" formatted="false">Licensed to: %s</string>
+    <string name="msg_loading">A carregar</string>
+    <string name="msg_edit">Clique no ícone da aplicação para editar todas as restrições</string>
+    <string name="msg_sure">Tem a certeza?</string>
+    <string name="msg_done">Concluído</string>
+    <string name="msg_reboot">É necessário reiniciar</string>
+    <string name="restrict_accounts">Contas (Google, Facebook, etc)</string>
+    <string name="restrict_browser">Navegador (bookmarks/history)</string>
+    <string name="restrict_calendar">Calendário</string>
+    <string name="restrict_calling">Chamada (phone, SMS, MMS)</string>
+    <string name="restrict_contacts">Contactos</string>
+    <string name="restrict_dictionary">Dicionário (usuário)</string>
+    <string name="restrict_identification">Identificação (dispositivo)</string>
+    <string name="restrict_internet">Internet</string>
+    <string name="restrict_location">Localização (boa/vulgar)</string>
+    <string name="restrict_media">Média (áudio, foto, vídeo)</string>
+    <string name="restrict_messages">Mensagem (SMS, MMS)</string>
+    <string name="restrict_network">Rede (endereços)</string>
+    <string name="restrict_phone">Telefone (identidade, números, chamadas)</string>
+    <string name="restrict_storage">Armazenamento (média, cartão de memória)</string>
+    <string name="restrict_shell">Shell (linha de comandos, superuser)</string>
+    <string name="restrict_system">Sistema (aplicações instaladas)</string>
+    <string name="restrict_view">Ver (navegador)</string>
+    <string name="title_category">Categoria:</string>
+    <string name="title_restrict">Clique para restringir:</string>
+    <string name="settings_lat">Latitude</string>
+    <string name="settings_lon">Longitude</string>
+    <string name="settings_mac">endereço MAC</string>
+    <string name="settings_phone">Número de telefone</string>
+    <string name="settings_id">Identidade do Android</string>
+    <string name="settings_country">País</string>
+    <string name="settings_subscriber">Identidade do subscritor</string>
+    <string name="settings_fpermission">Filtrar por permissão</string>
+    <string name="settings_fsystem">Filtrar aplicações do sistema</string>
+    <string name="help_application">Aplicação</string>
+    <string name="help_internet">Tem permissão da internet</string>
+    <string name="help_granted">Tem permissão do Android</string>
+    <string name="help_used">Tem usado estes dados</string>
+    <string name="help_dangerous">É perigoso</string>
+
+</resources>

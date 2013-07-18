@@ -495,6 +495,7 @@ Changelog
 **Version 1.8** (in development)
 
 * Better hide internet connectivity, thanks @[sorgelig](https://github.com/sorgelig)
+* Added Portuguese translation
 * Updated Czech translation
 * Updated Hebrew translation
 * Updated Greek translation
@@ -992,6 +993,7 @@ Current translations:
 * Japanese (ja)
 * Norwegian (nb-rNO, nn-rNO, no-rNO)
 * Polish (pl)
+* Portuguese (pt)
 * Romanian (ro)
 * Rusian (ru)
 * Simplified Chinese (zh-rCN)
