@@ -74,5 +74,6 @@
     <string name="help_granted">has Android permission</string>
     <string name="help_used">has used this data</string>
     <string name="help_dangerous">is dangerous</string>
+    <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
 
 </resources>

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -99,7 +100,7 @@ public class Util {
 
 				// Verify license
 				boolean licensed = verifyData(bEmail, bSignature, getPublicKey(context));
-				if (licensed)
+				if (licensed && validFingerPrint(context))
 					Util.log(null, Log.INFO, "Licensing: ok for " + name + " (" + email + ")");
 				else
 					Util.log(null, Log.ERROR, "Licensing: invalid for " + name + " (" + email + ")");
@@ -122,7 +123,7 @@ public class Util {
 			PackageInfo pi = pm.getPackageInfo(proPackageName, 0);
 			Version vPro = new Version(pi.versionName);
 			if (pm.checkSignatures(context.getPackageName(), proPackageName) == PackageManager.SIGNATURE_MATCH
-					&& vPro.compareTo(new Version("1.4")) >= 0) {
+					&& vPro.compareTo(new Version("1.4")) >= 0 && validFingerPrint(context)) {
 				Util.log(null, Log.INFO, "Licensing: enabler installed");
 				return true;
 			}
@@ -194,6 +195,32 @@ public class Util {
 		for (byte b : bytes)
 			sb.append(String.format("%02X", b));
 		return sb.toString();
+	}
+
+	@SuppressLint("DefaultLocale")
+	public static boolean validFingerPrint(Context context) {
+		try {
+			PackageManager pm = context.getPackageManager();
+			String packageName = context.getPackageName();
+			PackageInfo packageInfo = pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
+			byte[] cert = packageInfo.signatures[0].toByteArray();
+			MessageDigest digest = MessageDigest.getInstance("SHA1");
+			byte[] bytes = digest.digest(cert);
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < bytes.length; ++i)
+				sb.append((Integer.toHexString((bytes[i] & 0xFF) | 0x100)).substring(1, 3).toLowerCase());
+			String calculated = sb.toString();
+			String expected = context.getString(R.string.fingerprint);
+			boolean valid = calculated.equals(expected);
+			if (valid)
+				log(null, Log.INFO, "Valid fingerprint");
+			else
+				log(null, Log.ERROR, "Invalid fingerprint calculate=" + calculated + " expected=" + expected);
+			return valid;
+		} catch (Throwable ex) {
+			bug(null, ex);
+			return false;
+		}
 	}
 
 	public static Context getXContext(Context context) throws Throwable {
