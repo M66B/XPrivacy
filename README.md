@@ -498,6 +498,7 @@ Changelog
 * Updated Czech translation
 * Updated Hebrew translation
 * Updated Greek translation
+* Updated Spanish translation
 
 **Version 1.7**
 

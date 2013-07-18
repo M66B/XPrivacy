@@ -7,7 +7,7 @@
     <string name="app_xversion" formatted="false">Versión del framework Xposed: %d</string>
     <string name="app_copyright">Copyright © 2013 por M. Bokhorst (M66B)</string>
     <string name="menu_settings">Configuración</string>
-    <string name="menu_template">Template</string>
+    <string name="menu_template">Plantilla</string>
     <string name="menu_update">Buscar actualizaciones</string>
     <string name="menu_report">Reportar problema</string>
     <string name="menu_export">Exportar</string>
@@ -19,25 +19,25 @@
     <string name="menu_app_launch">Ejecutar</string>
     <string name="menu_app_settings">Configuración</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Select accounts to allow</string>
-    <string name="menu_contacts">Select contacts to allow</string>
+    <string name="menu_accounts">Seleccione las cuentas permitidas</string>
+    <string name="menu_contacts">Seleccione los contactos permitidos</string>
     <string name="msg_noupdate">No hay actualizaciones disponibles</string>
     <string name="msg_restricted">%s restringido por XPrivacy</string>
     <string name="msg_licensed">Con licencia para: %s</string>
-    <string name="msg_loading">Loading</string>
-    <string name="msg_edit">Click the application icon to edit all restrictions</string>
-    <string name="msg_sure">Are you sure?</string>
+    <string name="msg_loading">Cargando</string>
+    <string name="msg_edit">Tocar el icono de la aplicación para editar los permisos</string>
+    <string name="msg_sure">¿Estas seguro?</string>
     <string name="msg_done">Completado</string>
-    <string name="msg_reboot">Reboot required</string>
+    <string name="msg_reboot">Reinicio requerido</string>
     <string name="restrict_accounts">Cuentas (Google, Facebook, etc)</string>
     <string name="restrict_browser">Navegador (marcadores/historial)</string>
     <string name="restrict_calendar">Calendario</string>
     <string name="restrict_calling">Llamadas (teléfono, SMS, MMS)</string>
     <string name="restrict_contacts">Contactos</string>
-    <string name="restrict_dictionary">Dictionary (user)</string>
+    <string name="restrict_dictionary">Diccionario (usuario)</string>
     <string name="restrict_identification">Identificación (dispositivo)</string>
     <string name="restrict_internet">Internet</string>
-    <string name="restrict_location">Ubicacíon (fina/gruesa)</string>
+    <string name="restrict_location">Ubicación (fina/gruesa)</string>
     <string name="restrict_media">Medios (audio, foto, video)</string>
     <string name="restrict_messages">Mensajes (SMS, MMS)</string>
     <string name="restrict_network">Red (direcciones)</string>
@@ -46,21 +46,21 @@
     <string name="restrict_shell">Terminal (comandos, superusuario)</string>
     <string name="restrict_system">Sistema (aplicaciones instaladas)</string>
     <string name="restrict_view">Ver (navegador)</string>
-    <string name="title_category">Category:</string>
+    <string name="title_category">Categoría:</string>
     <string name="title_restrict">Selecciona para restringir:</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
     <string name="settings_mac">Dirección MAC</string>
-    <string name="settings_phone">Phone number</string>
+    <string name="settings_phone">Numero de Teléfono</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_country">Country</string>
+    <string name="settings_country">País</string>
     <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Filter by permission</string>
-    <string name="settings_fsystem">Filter system applications</string>
+    <string name="settings_fpermission">Ocultar aplicaciones restringidas</string>
+    <string name="settings_fsystem">Ocultar aplicaciones del sistema</string>
     <string name="help_application">Aplicación</string>
-    <string name="help_internet">tiene permisos para Internet</string>
-    <string name="help_granted">tiene permisos por Android</string>
-    <string name="help_used">ha usado estos datos</string>
-    <string name="help_dangerous">is dangerous</string>
-    
+    <string name="help_internet">Tiene permisos para Internet</string>
+    <string name="help_granted">Tiene permisos por Android</string>
+    <string name="help_used">Ha usado estos datos</string>
+    <string name="help_dangerous">Es peligroso</string>
+
 </resources>
