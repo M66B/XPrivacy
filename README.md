@@ -496,6 +496,7 @@ Changelog
 
 * Better hide internet connectivity, thanks @[sorgelig](https://github.com/sorgelig)
 * Fixed exporting dangerous functions ([issue](https://github.com/M66B/XPrivacy/issues/283))
+* Location through Google Play services restricted (function *connect*) ([issue](https://github.com/M66B/XPrivacy/issues/233))
 * Added Portuguese translation
 * Updated Czech translation
 * Updated Hebrew translation
