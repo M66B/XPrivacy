@@ -100,8 +100,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Connectivity manager
 		// This is to fake "offline", no permission required
 		String[] connmgrs = new String[] { "getActiveNetworkInfo", "getAllNetworkInfo", "getNetworkInfo" };
-			for (String connmgr : connmgrs)
-				hook(new XConnectivityManager(connmgr, PrivacyManager.cInternet, null), "android.net.ConnectivityManager");
+		for (String connmgr : connmgrs)
+			hook(new XConnectivityManager(connmgr, PrivacyManager.cInternet, null), "android.net.ConnectivityManager");
 
 		// Environment
 		// This is to fake "unmounted", no permission required
@@ -348,10 +348,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					"com.android.providers.userdictionary.UserDictionaryProvider");
 
 		// Location client
-		Class<?> hookClass = findClass("com.google.android.gms.location.LocationClient", lpparam.classLoader);
-		if (hookClass != null)
+		try {
+			Class.forName("com.google.android.gms.location.LocationClient", false, lpparam.classLoader);
 			hook(new XLocationClient("connect", PrivacyManager.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
 					"ACCESS_FINE_LOCATION" }), lpparam.classLoader, "com.google.android.gms.location.LocationClient");
+		} catch (Throwable ex) {
+		}
 	}
 
 	private void hook(final XHook hook, String className) {

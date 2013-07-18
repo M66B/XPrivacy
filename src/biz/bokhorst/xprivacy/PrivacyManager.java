@@ -183,8 +183,8 @@ public class PrivacyManager {
 
 		// Connectivity manager
 		String[] connmgrs = new String[] { "getActiveNetworkInfo", "getAllNetworkInfo", "getNetworkInfo" };
-			for (String connmgr : connmgrs)
-				mMethods.get(cInternet).add(connmgr);
+		for (String connmgr : connmgrs)
+			mMethods.get(cInternet).add(connmgr);
 
 		// Environment
 		mMethods.get(cStorage).add("getExternalStorageState");
