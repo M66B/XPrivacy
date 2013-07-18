@@ -822,8 +822,8 @@ public class PrivacyManager {
 		if (name.equals("getIsimImpu"))
 			return null;
 
-		if (name.equals("getNetworkCountryIso")) // MCC: test network
-			return getSetting(null, null, cSettingMcc, "001", true);
+		if (name.equals("getNetworkCountryIso")) // ISO country code
+			return getSetting(null, null, cSettingCountry, "XX", true);
 		if (name.equals("getNetworkOperator")) // MCC+MNC: test network
 			return getSetting(null, null, cSettingMcc, "001", true) + getSetting(null, null, cSettingMnc, "01", true);
 		if (name.equals("getNetworkOperatorName"))

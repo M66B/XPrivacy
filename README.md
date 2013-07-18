@@ -492,9 +492,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 1.8** (in development)
+**Version 1.7.3**
 
 * Updated Spanish translation
+* Fixed YouTube crash ([issue](https://github.com/M66B/XPrivacy/issues/297))
 
 **Version 1.7.2**
 
