@@ -505,9 +505,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				public void onClick(DialogInterface dialog, int which) {
 					Intent xInstallerIntent = getPackageManager().getLaunchIntentForPackage(
 							"de.robv.android.xposed.installer");
-					xInstallerIntent.putExtra("opentab", 1);
-					if (xInstallerIntent != null)
+					if (xInstallerIntent != null) {
+						xInstallerIntent.putExtra("opentab", 1);
 						startActivity(xInstallerIntent);
+					}
 				}
 			});
 			AlertDialog alertDialog = alertDialogBuilder.create();
