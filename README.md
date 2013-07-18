@@ -496,6 +496,7 @@ Changelog
 
 * Better hide internet connectivity, thanks @[sorgelig](https://github.com/sorgelig)
 * Updated Czech translation
+* Updated Hebrew translation
 * Updated Greek translation
 
 **Version 1.7**

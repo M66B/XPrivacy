@@ -1,66 +1,66 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed framework  לא מותקן</string>
-    <string name="app_notenabled">XPrivacy לא מאופשר באפליקציה הראשית</string>
-    <string name="app_wrongandroid">Only tested with Android version 4.0, 4.1 and 4.2</string>
+    <string name="app_notxposed" formatted="false">Xposed מסגרת גרסה &amp;d+ אינו מותקן</string>
+    <string name="app_notenabled">XPrivacy אינו מאופשר במתקין Xposed</string>
+    <string name="app_wrongandroid">נבדק רק עם אנדרואיד גרסה 4.0, 4.1 ו 4.2</string>
     <string name="app_version" formatted="false">XPrivacy גירסא: %s (%d)</string>
-    <string name="app_xversion" formatted="false">Xposed framework גירסא: %d</string>
-    <string name="app_copyright">זכויות יוצרים \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_xversion" formatted="false">גרסת מסגרת Xposed: %d</string>
+    <string name="app_copyright">כל הזכויות שמורות \ u00A9 2013 על ידי מ \'Bokhorst (M66B)</string>
     <string name="menu_settings">הגדרות</string>
-    <string name="menu_template">Template</string>
+    <string name="menu_template">תבנית ברירת מחדל</string>
     <string name="menu_update">בדוק עדכונים</string>
-    <string name="menu_report">דווח על תקלה</string>
+    <string name="menu_report">דווח תקלה</string>
     <string name="menu_export">ייצא</string>
     <string name="menu_import">ייבא</string>
-    <string name="menu_theme">Switch theme</string>
-    <string name="menu_pro">גירסא מקצועית</string>
+    <string name="menu_theme">שינוי צבעי רקע</string>
+    <string name="menu_pro">גירסת Pro</string>
     <string name="menu_about">אודות</string>
-    <string name="menu_all">All</string>
-    <string name="menu_app_launch">Launch</string>
-    <string name="menu_app_settings">Settings</string>
-    <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Select accounts to allow</string>
-    <string name="menu_contacts">Select contacts to allow</string>
-    <string name="msg_noupdate">לא קיימים עדכונים</string>
+    <string name="menu_all">בחר הכול</string>
+    <string name="menu_app_launch">הפעל</string>
+    <string name="menu_app_settings">הגדרות</string>
+    <string name="menu_app_store">חנות Google Play</string>
+    <string name="menu_accounts">בחר חשבונות לאפשר</string>
+    <string name="menu_contacts">בחר אנשי קשר לאפשר</string>
+    <string name="msg_noupdate">אין עדכונים</string>
     <string name="msg_restricted" formatted="false">%s מוגבל על ידי XPrivacy</string>
-    <string name="msg_licensed" formatted="false">Licensed to: %s</string>
-    <string name="msg_loading">Loading</string>
-    <string name="msg_edit">Click the application icon to edit all restrictions</string>
-    <string name="msg_sure">Are you sure?</string>
-    <string name="msg_done">Done</string>
-    <string name="msg_reboot">Reboot required</string>
-    <string name="restrict_accounts">חשבונות (גוגל, פייסבוק וכו)</string>
-    <string name="restrict_browser">דפדן(מועדפים\היסטוריה)</string>
+    <string name="msg_licensed" formatted="false">יישום מורשה ל: %s</string>
+    <string name="msg_loading">טוען</string>
+    <string name="msg_edit">לחץ על סמל היישום כדי לערוך את כל ההגבלות</string>
+    <string name="msg_sure">אתה בטוח?</string>
+    <string name="msg_done">בוצע</string>
+    <string name="msg_reboot">נדרש אתחול מחדש</string>
+    <string name="restrict_accounts">חשבונות (גוגל, פייסבוק, וכו\')</string>
+    <string name="restrict_browser">דפדפן (מועדפים / היסטוריה)</string>
     <string name="restrict_calendar">יומן</string>
-    <string name="restrict_calling">חיוג ( טלפון, סמס, הודעת מולטימדיה)</string>
-    <string name="restrict_contacts">אנשי קשר</string>
-    <string name="restrict_dictionary">Dictionary (user)</string>
-    <string name="restrict_identification">מספר זיהוי של המכשיר</string>
-    <string name="restrict_internet">Internet</string>
-    <string name="restrict_location">מיקום</string>
-    <string name="restrict_media">מדיה ( קול, תמונות ווידאו)</string>
-    <string name="restrict_messages">הודעות (סמס,הודעת מולטימדיה)</string>
+    <string name="restrict_calling">שיחות (טלפון, SMS, MMS)</string>
+    <string name="restrict_contacts">אנשי \'שר</string>
+    <string name="restrict_dictionary">מילון (משתמש)</string>
+    <string name="restrict_identification">זיהוי (מכשיר)</string>
+    <string name="restrict_internet">אינטרנט</string>
+    <string name="restrict_location">מיקום (fine/coarse)</string>
+    <string name="restrict_media">מדיה (אודיו, תמונות, וידאו)</string>
+    <string name="restrict_messages">הודעות (SMS, MMS)</string>
     <string name="restrict_network">רשת (כתובות)</string>
-    <string name="restrict_phone">טלפון(מזהה, מספרים, שיחות)</string>
-    <string name="restrict_storage">Storage (media, SD card)</string>
+    <string name="restrict_phone">טלפון (זיהוי, מספרים, שיחות)</string>
+    <string name="restrict_storage">אחסון (מדיה, כרטיס SD)</string>
     <string name="restrict_shell">Shell (commands, superuser)</string>
-    <string name="restrict_system">מערכת(אפליקציות מוגבלות)</string>
-    <string name="restrict_view">גישה לממשק משתמש</string>
-    <string name="title_category">Category:</string>
-    <string name="title_restrict">סמן כדי להגביל</string>
-    <string name="settings_lat">Latitude</string>
-    <string name="settings_lon">Longitude</string>
-    <string name="settings_mac">MAC address</string>
-    <string name="settings_phone">Phone number</string>
-    <string name="settings_id">Android ID</string>
-    <string name="settings_country">Country</string>
-    <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Filter by permission</string>
-    <string name="settings_fsystem">Filter system applications</string>
-    <string name="help_application">אפליקציה</string>
-    <string name="help_internet">יש הרשאות אינטרנט</string>
-    <string name="help_granted">יש הרשאות אנדרואיד</string>
-    <string name="help_used">כבר שומש מידע זה</string>
-    <string name="help_dangerous">is dangerous</string>
-    
+    <string name="restrict_system">מערכת (יישומים מותקנים)</string>
+    <string name="restrict_view">גישה (דפדפן)</string>
+    <string name="title_category">קטגוריה:</string>
+    <string name="title_restrict">בחר להגביל:</string>
+    <string name="settings_lat">קו אורך</string>
+    <string name="settings_lon">קו רוחב</string>
+    <string name="settings_mac">כתובת MAC</string>
+    <string name="settings_phone">מספר טלפון</string>
+    <string name="settings_id">אנדרואיד ID</string>
+    <string name="settings_country">מדינה</string>
+    <string name="settings_subscriber">מנוי ID</string>
+    <string name="settings_fpermission">סינון לפי הרשאות</string>
+    <string name="settings_fsystem">סנן יישומי מערכת</string>
+    <string name="help_application">יישום</string>
+    <string name="help_internet">כולל הרשאות גישה לאינטרנט</string>
+    <string name="help_granted">כולל הרשאות גישה לאנדרואיד</string>
+    <string name="help_used">קיבל גישה להרשאה זו</string>
+    <string name="help_dangerous">מסוכן</string>
+
 </resources>
