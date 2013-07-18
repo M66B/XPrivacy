@@ -7,7 +7,7 @@
     <string name="app_xversion" formatted="false">Verze Xposed frameworku: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="menu_settings">Nastavení</string>
-    <string name="menu_template">Template</string>
+    <string name="menu_template">Šablona</string>
     <string name="menu_update">Zkontrolovat aktualizace</string>
     <string name="menu_report">Nahlásit problém</string>
     <string name="menu_export">Export</string>
@@ -19,16 +19,16 @@
     <string name="menu_app_launch">Spustit</string>
     <string name="menu_app_settings">Nastavení</string>
     <string name="menu_app_store">Obchod Play</string>
-    <string name="menu_accounts">Select accounts to allow</string>
-    <string name="menu_contacts">Select contacts to allow</string>
+    <string name="menu_accounts">Povolené účty aplikace</string>
+    <string name="menu_contacts">Povolené kontakty aplikace</string>
     <string name="msg_noupdate">Není k dispozici žádná aktualizace</string>
     <string name="msg_restricted" formatted="false">XPrivacy omezilo %s</string>
     <string name="msg_licensed" formatted="false">Licencováno na: %s</string>
     <string name="msg_loading">Probíhá načítání</string>
-    <string name="msg_edit">Click the application icon to edit all restrictions</string>
-    <string name="msg_sure">Are you sure?</string>
+    <string name="msg_edit">Pro úpravu jednotlivých oprávnění aplikace klikněte na její ikonu</string>
+    <string name="msg_sure">Jste si jistý?</string>
     <string name="msg_done">Hotovo</string>
-    <string name="msg_reboot">Reboot required</string>
+    <string name="msg_reboot">Vyžadován restart</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atd.)</string>
     <string name="restrict_browser">Prohlížeč (záložky/historie)</string>
     <string name="restrict_calendar">Kalendář</string>
@@ -46,7 +46,7 @@
     <string name="restrict_shell">Konzole (příkazy, superuser)</string>
     <string name="restrict_system">Systém (nainstalované aplikace)</string>
     <string name="restrict_view">Zobrazení (v prohlížeči)</string>
-    <string name="title_category">Category:</string>
+    <string name="title_category">Kategorie:</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
     <string name="settings_lat">Zeměpisná šířka</string>
     <string name="settings_lon">Zeměpisná délka</string>
@@ -54,13 +54,13 @@
     <string name="settings_phone">Telefonní číslo</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Země</string>
-    <string name="settings_subscriber">Subscriber ID (IMSI)</string>
+    <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovat dle oprávnění</string>
-    <string name="settings_fsystem">Filter system applications</string>
+    <string name="settings_fsystem">Nezobrazovat systémové aplikace</string>
     <string name="help_application">Aplikace</string>
     <string name="help_internet">má oprávnění k Internetu</string>
     <string name="help_granted">má Android oprávnění</string>
     <string name="help_used">přistupovala k těmto datům</string>
-    <string name="help_dangerous">is dangerous</string>
+    <string name="help_dangerous">je nebezpečná</string>
     
 </resources>
