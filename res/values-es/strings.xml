@@ -55,7 +55,7 @@
     <string name="settings_id">Android ID</string>
     <string name="settings_country">País</string>
     <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Ocultar aplicaciones restringidas</string>
+    <string name="settings_fpermission">Ocultar permisos no utilizados</string>
     <string name="settings_fsystem">Ocultar aplicaciones del sistema</string>
     <string name="help_application">Aplicación</string>
     <string name="help_internet">Tiene permisos para Internet</string>
