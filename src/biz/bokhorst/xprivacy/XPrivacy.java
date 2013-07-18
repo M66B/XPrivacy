@@ -97,6 +97,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		for (String cam : cams)
 			hook(new XCamera(cam, PrivacyManager.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
+		// Connectivity manager
+		// This is to fake "offline", no permission required
+		String[] connmgrs = new String[] { "getActiveNetworkInfo", "getAllNetworkInfo", "getNetworkInfo" };
+			for (String connmgr : connmgrs)
+				hook(new XConnectivityManager(connmgr, PrivacyManager.cInternet, null), "android.net.ConnectivityManager");
+
 		// Environment
 		// This is to fake "unmounted", no permission required
 		hook(new XEnvironment("getExternalStorageState", PrivacyManager.cStorage, null), "android.os.Environment");
