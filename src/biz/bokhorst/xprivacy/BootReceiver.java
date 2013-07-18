@@ -16,7 +16,8 @@ public class BootReceiver extends BroadcastReceiver {
 			// Create Xposed installer intent
 			Intent xInstallerIntent = context.getPackageManager().getLaunchIntentForPackage(
 					"de.robv.android.xposed.installer");
-			xInstallerIntent.putExtra("opentab", 1);
+			if (xInstallerIntent != null)
+				xInstallerIntent.putExtra("opentab", 1);
 
 			PendingIntent pi = (xInstallerIntent == null ? null : PendingIntent.getActivity(context, 0,
 					xInstallerIntent, PendingIntent.FLAG_UPDATE_CURRENT));
