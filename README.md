@@ -495,6 +495,7 @@ Changelog
 **Version 1.8** (in development)
 
 * Better hide internet connectivity, thanks @[sorgelig](https://github.com/sorgelig)
+* Updated Czech translation
 * Updated Greek translation
 
 **Version 1.7**
