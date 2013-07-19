@@ -239,7 +239,9 @@ Installation
 
 It seems like a lot of steps, but it is done in no time:
 
-1. Requirement: Android 4.0+ (ICS) or 4.1+ (JellyBean), check with *System Settings* > *About phone* > *Android version*
+1. Requirements:
+	* Android 4.0+ (ICS) or 4.1+ (JellyBean), check with *System Settings* > *About phone* > *Android version*
+	* Custom recovery ([CWM](http://forum.xda-developers.com/wiki/ClockworkMod_Recovery), [TWRP](http://teamw.in/project/twrp2), no stock recovery)
 1. **Make a backup**
 1. If not done already: root your device; the procedure depends on the brand and model of your device
 1. Enable *System settings* > *Security* > *Unknown sources*
