@@ -142,7 +142,7 @@ For easy usage, data is restricted by category:
 	* return a fake device serial number
 	* return a fake host name
 	* return a fake Google services framework ID
-	* throw FileNotFoundException for /proc
+	* return file not found for folder /proc
 * Internet
 	* revoke access to the internet
 	* return fake disconnected state
@@ -159,6 +159,7 @@ For easy usage, data is restricted by category:
 		* Cell location changed
 	* prevent sending extra commands (aGPS data)
 	* return an empty list of Wi-Fi scan results
+	* prevents connecting to Google Play services 
 * Media
 	* prevent recording audio (including from the microphone)
 	* prevent taking pictures
@@ -231,6 +232,7 @@ Limitations
 -----------
 
 * Android can be restricted, but there will be no usage data available (warning triangles)
+* /proc cannot be restricted for Android
 
 Installation
 ------------
