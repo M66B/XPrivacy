@@ -500,6 +500,7 @@ Changelog
 
 * Rebuild application list on package change ([issue](https://github.com/M66B/XPrivacy/issues/226))
 * Fake offline location providers (not enabled by default) ([issue](https://github.com/M66B/XPrivacy/issues/266))
+* Use existing settings when installing an application again ([issue](https://github.com/M66B/XPrivacy/issues/295))
 * Added Serbian translation
 * Updated Dutch translation
 * Updated French translation

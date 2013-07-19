@@ -101,6 +101,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private boolean mUsed = false;
 	private boolean mPro = false;
 
+	private BroadcastReceiver mPackageChangeReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			ActivityMain.this.recreate();
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -238,12 +245,32 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Licensing
 		checkLicense();
 
+		// Listen for package add/remove
+		IntentFilter iff = new IntentFilter();
+		iff.addAction(Intent.ACTION_PACKAGE_ADDED);
+		iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
+		iff.addDataScheme("package");
+		registerReceiver(mPackageChangeReceiver, iff);
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putBoolean("Used", mUsed);
 		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (mAppAdapter != null)
+			mAppAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mPackageChangeReceiver != null)
+			unregisterReceiver(mPackageChangeReceiver);
 	}
 
 	private static final int LICENSED = 0x0100;
@@ -442,33 +469,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mAppAdapter.getFilter().filter(filter);
 		}
 	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (mAppAdapter != null)
-			mAppAdapter.notifyDataSetChanged();
-
-		// Listen for package add/remove
-		IntentFilter iff = new IntentFilter();
-		iff.addAction(Intent.ACTION_PACKAGE_ADDED);
-		iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
-		iff.addDataScheme("package");
-		registerReceiver(mBroadcastReceiver, iff);
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		unregisterReceiver(mBroadcastReceiver);
-	}
-
-	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			ActivityMain.this.recreate();
-		}
-	};
 
 	private void checkRequirements() {
 		// Check Android version

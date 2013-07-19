@@ -227,7 +227,7 @@ public class Util {
 	public static boolean isDebug(Context context) {
 		return ((context.getApplicationContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
 	}
-	
+
 	public static Context getXContext(Context context) throws Throwable {
 		String xPackageName = Util.class.getPackage().getName();
 		return context.createPackageContext(xPackageName, 0);
