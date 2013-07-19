@@ -502,6 +502,7 @@ Changelog
 * Added Serbian translation
 * Updated Dutch translation
 * Updated French translation
+* Updated Portuguese translation
 * Updated Slovenian translation
 
 **Version 1.7.3**

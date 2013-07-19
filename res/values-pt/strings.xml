@@ -7,7 +7,7 @@
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
     <string name="app_copyright">Direitos de autor \u00A9 2013 por M. Bokhorst (M66B)</string>
     <string name="menu_settings">Definições</string>
-    <string name="menu_template">Padrão</string>
+    <string name="menu_template">Modelo</string>
     <string name="menu_update">Procurar atualizações</string>
     <string name="menu_report">Reportar problemas</string>
     <string name="menu_export">Exportar</string>
@@ -30,9 +30,9 @@
     <string name="msg_done">Concluído</string>
     <string name="msg_reboot">É necessário reiniciar</string>
     <string name="restrict_accounts">Contas (Google, Facebook, etc)</string>
-    <string name="restrict_browser">Navegador (bookmarks/history)</string>
+    <string name="restrict_browser">Navegador (favoritos/histórico)</string>
     <string name="restrict_calendar">Calendário</string>
-    <string name="restrict_calling">Chamada (phone, SMS, MMS)</string>
+    <string name="restrict_calling">Chamada (telefone, SMS, MMS)</string>
     <string name="restrict_contacts">Contactos</string>
     <string name="restrict_dictionary">Dicionário (usuário)</string>
     <string name="restrict_identification">Identificação (dispositivo)</string>
