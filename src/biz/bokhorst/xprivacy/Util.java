@@ -124,7 +124,7 @@ public class Util {
 			PackageInfo pi = pm.getPackageInfo(proPackageName, 0);
 			Version vPro = new Version(pi.versionName);
 			if (pm.checkSignatures(context.getPackageName(), proPackageName) == PackageManager.SIGNATURE_MATCH
-					&& vPro.compareTo(new Version("1.4")) >= 0 && validFingerPrint(context)) {
+					&& vPro.compareTo(new Version("1.7")) >= 0 && validFingerPrint(context)) {
 				Util.log(null, Log.INFO, "Licensing: enabler installed");
 				return true;
 			}
