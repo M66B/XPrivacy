@@ -495,6 +495,7 @@ Changelog
 **Version 1.8** (in development)
 
 * Added Serbian translation
+* Updated Dutch translation
 
 **Version 1.7.3**
 
