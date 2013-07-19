@@ -101,7 +101,7 @@ public class Util {
 
 				// Verify license
 				boolean licensed = verifyData(bEmail, bSignature, getPublicKey(context));
-				if (licensed && validFingerPrint(context))
+				if (licensed && (isDebug(context) || validFingerPrint(context)))
 					Util.log(null, Log.INFO, "Licensing: ok for " + name + " (" + email + ")");
 				else
 					Util.log(null, Log.ERROR, "Licensing: invalid for " + name + " (" + email + ")");
