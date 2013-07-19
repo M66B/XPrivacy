@@ -75,6 +75,13 @@ public class PackageChange extends BroadcastReceiver {
 
 					// Notify
 					notificationManager.notify(pInfo.applicationInfo.uid, notification);
+
+					// Restart main activity
+					if (LifecycleHandler.isActive()) {
+						Intent mainIntent = new Intent(context, ActivityMain.class);
+						mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+						context.startActivity(mainIntent);
+					}
 				}
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
 				// Notify reboot required
@@ -117,6 +124,13 @@ public class PackageChange extends BroadcastReceiver {
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 				// Package removed
 				notificationManager.cancel(uid);
+
+				// Restart main activity
+				if (LifecycleHandler.isActive()) {
+					Intent mainIntent = new Intent(context, ActivityMain.class);
+					mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+					context.startActivity(mainIntent);
+				}
 			}
 		}
 	}
