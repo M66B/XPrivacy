@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -26,6 +27,9 @@ public class XLocationManager extends XHook {
 	// public boolean addNmeaListener(GpsStatus.NmeaListener listener)
 	// public void addProximityAlert(double latitude, double longitude, float radius, long expiration, PendingIntent intent)
 	// public Location getLastKnownLocation(String provider)
+	// public List<String> getProviders(boolean enabledOnly)
+	// public List<String> getProviders(Criteria criteria, boolean enabledOnly)
+	// public boolean isProviderEnabled(String provider)
 	// public void removeUpdates(LocationListener listener)
 	// public void removeUpdates(PendingIntent intent)
 	// public void requestLocationUpdates(String provider, long minTime, float minDistance, LocationListener listener)
@@ -39,6 +43,7 @@ public class XLocationManager extends XHook {
 	// public void requestSingleUpdate(Criteria criteria, PendingIntent intent)
 	// public boolean sendExtraCommand(String provider, String command, Bundle extras)
 	// frameworks/base/location/java/android/location/LocationManager.java
+	// http://developer.android.com/reference/android/location/LocationManager.html
 
 	// @formatter:on
 
@@ -47,11 +52,17 @@ public class XLocationManager extends XHook {
 		String methodName = param.method.getName();
 		if (!(methodName.equals("getLastLocation") || methodName.equals("getLastKnownLocation")))
 			if (isRestricted(param))
-				if (methodName.equals("addNmeaListener"))
+				if (methodName.equals("addNmeaListener") || methodName.equals("isProviderEnabled"))
 					param.setResult(false);
 				else if (methodName.equals("addGeofence") || methodName.equals("addProximityAlert"))
 					param.setResult(null);
-				else if (methodName.equals("removeUpdates"))
+				else if (methodName.equals("getProviders")) {
+					if (param.args.length > 0) {
+						boolean enabledOnly = (Boolean) param.args[param.args.length - 1];
+						if (enabledOnly)
+							param.setResult(new ArrayList<String>());
+					}
+				} else if (methodName.equals("removeUpdates"))
 					removeLocationListener(param);
 				else if (methodName.equals("requestLocationUpdates"))
 					replaceLocationListener(param, 3);

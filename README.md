@@ -499,6 +499,7 @@ Changelog
 **Version 1.8** (in development)
 
 * Rebuild application list on package change ([issue](https://github.com/M66B/XPrivacy/issues/226))
+* Fake offline location providers (not enabled by default) ([issue](https://github.com/M66B/XPrivacy/issues/266))
 * Added Serbian translation
 * Updated Dutch translation
 * Updated French translation

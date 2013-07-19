@@ -118,8 +118,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Location manager
 		String[] locs = new String[] { "addGeofence", "addNmeaListener", "addProximityAlert", "getLastLocation",
-				"getLastKnownLocation", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",
-				"sendExtraCommand" };
+				"getLastKnownLocation", "getProviders", "isProviderEnabled", "removeUpdates", "requestLocationUpdates",
+				"requestSingleUpdate", "sendExtraCommand" };
 		for (String loc : locs)
 			hook(new XLocationManager(loc, PrivacyManager.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
 					"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");

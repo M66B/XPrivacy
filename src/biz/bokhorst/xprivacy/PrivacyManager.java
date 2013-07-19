@@ -202,8 +202,8 @@ public class PrivacyManager {
 
 		// Location manager
 		String[] locs = new String[] { "addGeofence", "addNmeaListener", "addProximityAlert", "getLastLocation",
-				"getLastKnownLocation", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",
-				"sendExtraCommand" };
+				"getLastKnownLocation", "getProviders", "isProviderEnabled", "removeUpdates", "requestLocationUpdates",
+				"requestSingleUpdate", "sendExtraCommand" };
 		for (String loc : locs)
 			if (!mMethods.get(cLocation).contains(loc))
 				mMethods.get(cLocation).add(loc);
@@ -376,7 +376,9 @@ public class PrivacyManager {
 		if (restrictionName.equals(cIdentification)
 				&& (methodName.equals("GservicesProvider") || methodName.equals("/proc")))
 			return true;
-		if (restrictionName.equals(cLocation) && methodName.equals("getScanResults"))
+		if (restrictionName.equals(cLocation)
+				&& (methodName.equals("getProviders") || methodName.equals("isProviderEnabled") || methodName
+						.equals("getScanResults")))
 			return true;
 		if (restrictionName.equals(cShell) && (methodName.equals("load") || methodName.equals("loadLibrary")))
 			return true;
