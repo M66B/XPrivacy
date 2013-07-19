@@ -453,6 +453,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		IntentFilter iff = new IntentFilter();
 		iff.addAction(Intent.ACTION_PACKAGE_ADDED);
 		iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
+		iff.addDataScheme("package");
 		registerReceiver(mBroadcastReceiver, iff);
 	}
 

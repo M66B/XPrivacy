@@ -73,21 +73,24 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		List<ApplicationInfoEx> listApp = new ArrayList<ApplicationInfoEx>();
 		List<ApplicationInfo> listAppInfo = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		dialog.setMax(listAppInfo.size());
-		for (int app = 0; app < listAppInfo.size(); app++) {
-			dialog.setProgress(app + 1);
-			ApplicationInfoEx xAppInfo = new ApplicationInfoEx(context, listAppInfo.get(app));
-			int enabled = pm.getApplicationEnabledSetting(xAppInfo.getPackageName());
-			if (enabled == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT
-					|| enabled == PackageManager.COMPONENT_ENABLED_STATE_ENABLED)
-				if (fSystem ? !xAppInfo.getIsSystem() : true) {
-					ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
-					if (yAppInfo == null) {
-						mapApp.put(xAppInfo.getUid(), xAppInfo);
-						listApp.add(xAppInfo);
-					} else
-						yAppInfo.AddApplicationName(getApplicationName(listAppInfo.get(app), pm));
-				}
-		}
+		for (int app = 0; app < listAppInfo.size(); app++)
+			try {
+				dialog.setProgress(app + 1);
+				ApplicationInfoEx xAppInfo = new ApplicationInfoEx(context, listAppInfo.get(app));
+				int enabled = pm.getApplicationEnabledSetting(xAppInfo.getPackageName());
+				if (enabled == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT
+						|| enabled == PackageManager.COMPONENT_ENABLED_STATE_ENABLED)
+					if (fSystem ? !xAppInfo.getIsSystem() : true) {
+						ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
+						if (yAppInfo == null) {
+							mapApp.put(xAppInfo.getUid(), xAppInfo);
+							listApp.add(xAppInfo);
+						} else
+							yAppInfo.AddApplicationName(getApplicationName(listAppInfo.get(app), pm));
+					}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 
 		// Sort result
 		Collections.sort(listApp);
