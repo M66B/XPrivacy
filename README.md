@@ -492,6 +492,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 1.8** (in development)
+
+* Added Serbian translation
+
 **Version 1.7.3**
 
 * Updated Spanish translation
@@ -1003,6 +1007,7 @@ Current translations:
 * Portuguese (pt)
 * Romanian (ro)
 * Rusian (ru)
+* Serbian (sr)
 * Simplified Chinese (zh-rCN)
 * Slovak (sk)
 * Slovenian (sl)
