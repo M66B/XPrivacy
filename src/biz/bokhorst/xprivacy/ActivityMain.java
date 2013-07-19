@@ -44,9 +44,11 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.TypedArray;
@@ -235,6 +237,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Licensing
 		checkLicense();
+
 	}
 
 	@Override
@@ -445,7 +448,26 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		super.onResume();
 		if (mAppAdapter != null)
 			mAppAdapter.notifyDataSetChanged();
+
+		// Listen for package add/remove
+		IntentFilter iff = new IntentFilter();
+		iff.addAction(Intent.ACTION_PACKAGE_ADDED);
+		iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
+		registerReceiver(mBroadcastReceiver, iff);
 	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		unregisterReceiver(mBroadcastReceiver);
+	}
+
+	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			ActivityMain.this.recreate();
+		}
+	};
 
 	private void checkRequirements() {
 		// Check Android version
