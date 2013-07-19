@@ -499,6 +499,7 @@ Changelog
 * Rebuild application list on package change ([issue](https://github.com/M66B/XPrivacy/issues/226))
 * Added Serbian translation
 * Updated Dutch translation
+* Updated Slovenian translation
 
 **Version 1.7.3**
 

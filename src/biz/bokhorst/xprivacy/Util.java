@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -223,6 +224,10 @@ public class Util {
 		}
 	}
 
+	public static boolean isDebug(Context context) {
+		return ((context.getApplicationContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
+	}
+	
 	public static Context getXContext(Context context) throws Throwable {
 		String xPackageName = Util.class.getPackage().getName();
 		return context.createPackageContext(xPackageName, 0);
