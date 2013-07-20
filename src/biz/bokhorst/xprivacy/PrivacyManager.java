@@ -373,15 +373,26 @@ public class PrivacyManager {
 	}
 
 	public static boolean isDangerousMethod(String restrictionName, String methodName) {
+		// Identification
 		if (restrictionName.equals(cIdentification)
 				&& (methodName.equals("GservicesProvider") || methodName.equals("/proc")))
 			return true;
+
+		// Internet
+		if (restrictionName.equals(cInternet)
+				&& (methodName.equals("getActiveNetworkInfo") || methodName.equals("getNetworkInfo")))
+			return true;
+
+		// Location
 		if (restrictionName.equals(cLocation)
 				&& (methodName.equals("getProviders") || methodName.equals("isProviderEnabled") || methodName
 						.equals("getScanResults")))
 			return true;
+
+		// Shell
 		if (restrictionName.equals(cShell) && (methodName.equals("load") || methodName.equals("loadLibrary")))
 			return true;
+
 		return false;
 	}
 

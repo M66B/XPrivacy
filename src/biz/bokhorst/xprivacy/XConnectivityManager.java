@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import android.net.NetworkInfo;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XConnectivityManager extends XHook {
@@ -17,7 +18,10 @@ public class XConnectivityManager extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		if (isRestricted(param))
-			param.setResult(null);
+			if (param.method.getName().equals("getAllNetworkInfo"))
+				param.setResult(new NetworkInfo[0]);
+			else
+				param.setResult(null);
 	}
 
 	@Override
