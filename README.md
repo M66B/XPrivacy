@@ -496,6 +496,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 1.8** (in development)
+
+* Updated Italian translation
+
 **Version 1.7.4**
 
 * Rebuild application list on package change ([issue](https://github.com/M66B/XPrivacy/issues/226))

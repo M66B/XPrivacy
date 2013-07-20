@@ -19,16 +19,16 @@
     <string name="menu_app_launch">Lancia</string>
     <string name="menu_app_settings">Impostazioni</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Select accounts to allow</string>
-    <string name="menu_contacts">Select contacts to allow</string>
+    <string name="menu_accounts">Seleziona account consentiti</string>
+    <string name="menu_contacts">Seleziona contatti consentiti</string>
     <string name="msg_noupdate">Nessun aggiornamento disponibile</string>
     <string name="msg_restricted" formatted="false">%s limitato da XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licenziato a: %s</string>
     <string name="msg_loading">Caricamento in corso</string>
-    <string name="msg_edit">Click the application icon to edit all restrictions</string>
-    <string name="msg_sure">Are you sure?</string>
+    <string name="msg_edit">Clicca l\'icona dell\'applicazione per modificare tutte le restrizioni</string>
+    <string name="msg_sure">Sei sicuro?</string>
     <string name="msg_done">Fatto</string>
-    <string name="msg_reboot">Reboot required</string>
+    <string name="msg_reboot">Riavvio richiesto</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
     <string name="restrict_browser">Browser (bookmarks/history)</string>
     <string name="restrict_calendar">Calendario</string>
@@ -44,9 +44,9 @@
     <string name="restrict_phone">Telefono (ID, numeri, chiamate)</string>
     <string name="restrict_storage">Memoria (media, scheda SD)</string>
     <string name="restrict_shell">Shell (comandi, superuser)</string>
-    <string name="restrict_system">System (applicazioni installate)</string>
+    <string name="restrict_system">Sistema (applicazioni installate)</string>
     <string name="restrict_view">Visualizzazione (browser)</string>
-    <string name="title_category">Category:</string>
+    <string name="title_category">Categoria:</string>
     <string name="title_restrict">Spunta per limitare:</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
@@ -55,12 +55,12 @@
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Nazione</string>
     <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Filter by permission</string>
-    <string name="settings_fsystem">Filter system applications</string>
+    <string name="settings_fpermission">Filtra per permessi</string>
+    <string name="settings_fsystem">Filtra applicazioni di sistema</string>
     <string name="help_application">Applicazione</string>
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>
     <string name="help_used">ha usato questi dati</string>
-    <string name="help_dangerous">is dangerous</string>
-    
+    <string name="help_dangerous">è pericoloso</string>
+
 </resources>
