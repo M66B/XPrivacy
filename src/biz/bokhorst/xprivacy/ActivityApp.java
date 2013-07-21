@@ -477,6 +477,7 @@ public class ActivityApp extends Activity {
 				ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.restrictionchild, parent, false);
+			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 			final CheckedTextView ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
 
 			// Get entry
@@ -502,7 +503,9 @@ public class ActivityApp extends Activity {
 			ctvMethodName.setEnabled(parentRestricted);
 
 			// Display if used
-			if (lastUsage != 0)
+			if (lastUsage == 0)
+				imgUsed.setVisibility(View.INVISIBLE);
+			else
 				ctvMethodName.setTypeface(null, Typeface.BOLD_ITALIC);
 
 			// Display restriction

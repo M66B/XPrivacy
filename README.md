@@ -499,6 +499,7 @@ Changelog
 **Version 1.7.7** (in development)
 
 * Restrict [Google auth](https://developer.android.com/reference/com/google/android/gms/auth/GoogleAuthUtil.html)
+* Show orange triangles for function usage
 * Updated Simplified Chinese translation
 * Updated Slovak translation
 

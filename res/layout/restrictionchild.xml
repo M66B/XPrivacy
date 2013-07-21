@@ -3,9 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingLeft="72dip" >
+    android:paddingLeft="24dip" >
 
-    <!-- 24 + 6 + 24 + 6 = 48 + 12 = 72 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="6dip" >
+
+        <ImageView
+            android:id="@+id/imgUsed"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/help_used"
+            android:src="?attr/icon_used" />
+    </LinearLayout>
 
     <CheckedTextView
         android:id="@+id/ctvMethodName"
