@@ -1,8 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,7 +11,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.text.TextUtils;
 
 public class PackageChange extends BroadcastReceiver {
 
@@ -56,13 +52,11 @@ public class PackageChange extends BroadcastReceiver {
 							}
 
 						// Restrict if no previous restrictions
-						if (!someRestricted) {
+						if (!someRestricted)
 							for (String restrictionName : PrivacyManager.getRestrictions(false))
 								if (PrivacyManager.getSettingBool(null, context,
 										String.format("Template.%s", restrictionName), true, false))
 									PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
-							updateKnownUids(context);
-						}
 					}
 
 					// Build result intent
@@ -135,10 +129,6 @@ public class PackageChange extends BroadcastReceiver {
 						}
 					}
 
-					// Version 1.7.7+
-					if (sVersion.compareTo(new Version("1.7.7")) < 0)
-						updateKnownUids(context);
-
 					// Update stored version
 					PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
 					PrivacyManager.setSetting(null, context, PrivacyManager.cSettingVersion, pInfo.versionName);
@@ -151,14 +141,5 @@ public class PackageChange extends BroadcastReceiver {
 				notificationManager.cancel(uid);
 			}
 		}
-	}
-
-	private void updateKnownUids(Context context) {
-		// Register known uid's
-		List<String> listUid = new ArrayList<String>();
-		for (ApplicationInfo aInfo : context.getPackageManager().getInstalledApplications(0))
-			listUid.add(Integer.toString(aInfo.uid));
-		PrivacyManager.setSetting(null, context, PrivacyManager.cSettingKnownUids, TextUtils.join(",", listUid));
-
 	}
 }
