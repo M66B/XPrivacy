@@ -508,6 +508,7 @@ Changelog
 
 * Restrict [Google auth](https://developer.android.com/reference/com/google/android/gms/auth/GoogleAuthUtil.html)
 * Show orange triangles for function usage
+* Updated German translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
 
