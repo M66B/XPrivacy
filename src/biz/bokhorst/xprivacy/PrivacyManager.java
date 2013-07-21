@@ -192,7 +192,7 @@ public class PrivacyManager {
 
 		// Google auth
 		mMethods.get(cAccounts).add("getTokenGoogle");
-		mMethods.get(cAccounts).add("getTokenWithNotification");
+		mMethods.get(cAccounts).add("getTokenWithNotificationGoogle");
 
 		// InetAddress
 		String[] addrs = new String[] { "getAllByName", "getByAddress", "getByName" };
