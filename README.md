@@ -479,6 +479,14 @@ and it is not always possible to randomize things (like IMEI or MAC addresses).
 If you accidentally undo a data category restriction all the function exception would be lost.
 The function exceptions only apply when the data category is restricted.
 
+**(26) How can I export/import my settings?**
+
+For this you need the [pro version](http://www.faircode.eu/xprivacy/).
+Exported settings are stored in the folder *.xprivacy* in the file *XPrivacy.xml*.
+You can copy this file to the same place to a second device.
+When importing, settings are only applied to applications that exist on the second device and have exported settings.
+This also applies to system apps.
+
 Support
 -------
 
