@@ -498,7 +498,7 @@ Changelog
 
 **Version 1.7.5**
 
-* Show disabled application when not filtering system application
+* Show disabled applications when not filtering system applications
 * Marked *getActiveNetworkInfo* and *getNetworkInfo* as dangerous
 * Updated Italian translation
 
