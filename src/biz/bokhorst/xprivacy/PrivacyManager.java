@@ -190,6 +190,10 @@ public class PrivacyManager {
 		// Environment
 		mMethods.get(cStorage).add("getExternalStorageState");
 
+		// Google auth
+		mMethods.get(cAccounts).add("getTokenGoogle");
+		mMethods.get(cAccounts).add("getTokenWithNotification");
+
 		// InetAddress
 		String[] addrs = new String[] { "getAllByName", "getByAddress", "getByName" };
 		for (String addr : addrs)

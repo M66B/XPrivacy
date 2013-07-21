@@ -496,6 +496,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 1.7.7** (in development)
+
+* Restrict [Google auth](https://developer.android.com/reference/com/google/android/gms/auth/GoogleAuthUtil.html)
+
 **Version 1.7.6**
 
 * Added disclaimer on first run
