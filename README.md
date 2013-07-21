@@ -483,7 +483,7 @@ The function exceptions only apply when the data category is restricted.
 
 For this you need the [pro version](http://www.faircode.eu/xprivacy/).
 Exported settings are stored in the folder *.xprivacy* in the file *XPrivacy.xml*.
-You can copy this file to the same place to a second device.
+You can copy this file to the same place on a second device.
 When importing, settings are only applied to applications that exist on the second device and have exported settings.
 This also applies to system apps.
 
