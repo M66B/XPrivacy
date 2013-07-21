@@ -77,17 +77,17 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			try {
 				dialog.setProgress(app + 1);
 				ApplicationInfoEx xAppInfo = new ApplicationInfoEx(context, listAppInfo.get(app));
-				int enabled = pm.getApplicationEnabledSetting(xAppInfo.getPackageName());
-				if (enabled == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT
-						|| enabled == PackageManager.COMPONENT_ENABLED_STATE_ENABLED)
-					if (fSystem ? !xAppInfo.getIsSystem() : true) {
-						ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
-						if (yAppInfo == null) {
-							mapApp.put(xAppInfo.getUid(), xAppInfo);
-							listApp.add(xAppInfo);
-						} else
-							yAppInfo.AddApplicationName(getApplicationName(listAppInfo.get(app), pm));
-					}
+				int setting = pm.getApplicationEnabledSetting(xAppInfo.getPackageName());
+				boolean enabled = (setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
+				enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+				if (fSystem ? enabled && !xAppInfo.getIsSystem() : true) {
+					ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
+					if (yAppInfo == null) {
+						mapApp.put(xAppInfo.getUid(), xAppInfo);
+						listApp.add(xAppInfo);
+					} else
+						yAppInfo.AddApplicationName(getApplicationName(listAppInfo.get(app), pm));
+				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}

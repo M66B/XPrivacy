@@ -496,8 +496,9 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 1.7.5** (in development)
+**Version 1.7.5**
 
+* Show disabled application when not filtering system application
 * Marked *getActiveNetworkInfo* and *getNetworkInfo* as dangerous
 * Updated Italian translation
 
