@@ -499,6 +499,7 @@ Changelog
 **Version 1.7.7** (in development)
 
 * Restrict [Google auth](https://developer.android.com/reference/com/google/android/gms/auth/GoogleAuthUtil.html)
+* Updated Simplified Chinese translation
 
 **Version 1.7.6**
 
