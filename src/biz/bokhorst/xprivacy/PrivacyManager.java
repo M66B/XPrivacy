@@ -221,7 +221,7 @@ public class PrivacyManager {
 		for (String net : nets)
 			mMethods.get(cNetwork).add(net);
 
-		String[] inets = new String[] { "getByInetAddress", "getByName", "getNetworkInterfaces" };
+		String[] inets = new String[] { "getByInetAddress", /* "getByName", */"getNetworkInterfaces" };
 		for (String inet : inets)
 			mMethods.get(cInternet).add(inet);
 

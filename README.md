@@ -496,6 +496,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 1.7.6** (in development)
+
+* Remove duplicate *getByName* in category *internet*
+
 **Version 1.7.5**
 
 * Show disabled applications when not filtering system applications
