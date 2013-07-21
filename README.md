@@ -500,6 +500,7 @@ Changelog
 
 * Restrict [Google auth](https://developer.android.com/reference/com/google/android/gms/auth/GoogleAuthUtil.html)
 * Updated Simplified Chinese translation
+* Updated Slovak translation
 
 **Version 1.7.6**
 
