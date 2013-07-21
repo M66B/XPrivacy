@@ -29,9 +29,9 @@
     <string name="msg_sure">你确定吗?</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">设备需要重启</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
+    <string name="msg_first"><b>XPrivacy的开发和测试工作已经非常全面和细致,
+但仍然不可能保证它能完美兼容所有设备及应用.
+\n\n使用者完全自担风险.</b>\n\n另请参阅许可:</string>
     <string name="restrict_accounts">账户 (Google, Facebook等)</string>
     <string name="restrict_browser">浏览器 (书签/历史)</string>
     <string name="restrict_calendar">日历</string>
