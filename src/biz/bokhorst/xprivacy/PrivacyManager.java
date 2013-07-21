@@ -514,6 +514,7 @@ public class PrivacyManager {
 									values.put(PrivacyProvider.COL_UID, data.getUid());
 									values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
 									values.put(PrivacyProvider.COL_METHOD, data.getMethodName());
+									values.put(PrivacyProvider.COL_RESTRICTED, data.getRestricted());
 									values.put(PrivacyProvider.COL_USED, data.getTimeStamp());
 									if (contentResolver.update(PrivacyProvider.URI_USAGE, values, null, null) <= 0)
 										Util.log(hook, Log.INFO, "Error updating usage data=" + data);
@@ -531,7 +532,7 @@ public class PrivacyManager {
 			if (fallback) {
 				// Queue usage data
 				if (usage && uid != cUidAndroid) {
-					UsageData usageData = new UsageData(uid, restrictionName, methodName);
+					UsageData usageData = new UsageData(uid, restrictionName, methodName, restricted);
 					synchronized (mUsageQueue) {
 						if (mUsageQueue.containsKey(usageData))
 							mUsageQueue.remove(usageData);
@@ -999,13 +1000,15 @@ public class PrivacyManager {
 		private Integer mUid;
 		private String mRestriction;
 		private String mMethodName;
+		private boolean mRestricted;
 		private long mTimeStamp;
 		private int mHash;
 
-		public UsageData(int uid, String restrictionName, String methodName) {
+		public UsageData(int uid, String restrictionName, String methodName, boolean restricted) {
 			mUid = uid;
 			mRestriction = restrictionName;
 			mMethodName = methodName;
+			mRestricted = restricted;
 			mTimeStamp = new Date().getTime();
 
 			mHash = mUid.hashCode();
@@ -1025,6 +1028,10 @@ public class PrivacyManager {
 
 		public String getMethodName() {
 			return mMethodName;
+		}
+
+		public boolean getRestricted() {
+			return mRestricted;
 		}
 
 		public long getTimeStamp() {
