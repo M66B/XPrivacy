@@ -29,6 +29,9 @@
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Ferdig</string>
     <string name="msg_reboot">Reboot required</string>
+    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
+however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
+\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
     <string name="restrict_calendar">Kalender</string>

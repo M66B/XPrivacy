@@ -251,6 +251,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
 		iff.addDataScheme("package");
 		registerReceiver(mPackageChangeReceiver, iff);
+
+		// First run
+		if (PrivacyManager.getSettingBool(null, this, PrivacyManager.cSettingFirstRun, true, false)) {
+			optionAbout();
+			PrivacyManager.setSetting(null, this, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
+		}
 	}
 
 	@Override

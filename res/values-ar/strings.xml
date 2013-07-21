@@ -29,6 +29,9 @@
     <string name="msg_sure">هل أنت متأكد ؟</string>
     <string name="msg_done">إنتهى</string>
     <string name="msg_reboot">يحتاج إعادة تشغيل</string>
+    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
+however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
+\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
     <string name="restrict_accounts">الحسابات (قوقل , فيسبوك , الخ)</string>
     <string name="restrict_browser">المتصفح (العلامات,السجل)</string>
     <string name="restrict_calendar">التقويم</string>
