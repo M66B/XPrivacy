@@ -162,17 +162,14 @@ public class PrivacyProvider extends ContentProvider {
 			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_RESTRICTED,
 					COL_USED });
 			for (String restrictionName : listRestriction)
-				if (methodName == null) {
+				if (methodName == null)
 					cursor.addRow(new Object[] { uid, restrictionName, null,
+							prefs.getBoolean(getRestrictedPref(uid, restrictionName), false),
 							prefs.getLong(getUsagePref(uid, restrictionName), 0) });
-					cursor.addRow(new Object[] { uid, restrictionName, null,
-							prefs.getBoolean(getRestrictedPref(uid, restrictionName), false) });
-				} else {
+				else
 					cursor.addRow(new Object[] { uid, restrictionName, methodName,
+							prefs.getBoolean(getRestrictedPref(uid, restrictionName, methodName), false),
 							prefs.getLong(getUsagePref(uid, restrictionName, methodName), 0) });
-					cursor.addRow(new Object[] { uid, restrictionName, methodName,
-							prefs.getBoolean(getRestrictedPref(uid, restrictionName, methodName), false) });
-				}
 
 			return cursor;
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING && selectionArgs == null) {
