@@ -29,9 +29,9 @@
     <string name="msg_sure">Ste si istý?</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadovaný reštart</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
+    <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy
+a nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
+\n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atď.)</string>
     <string name="restrict_browser">Prehliadač (záložky/história)</string>
     <string name="restrict_calendar">Kalendár</string>
