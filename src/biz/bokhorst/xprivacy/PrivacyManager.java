@@ -76,6 +76,7 @@ public class PrivacyManager {
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
 	public final static String cSettingFirstRun = "FirstRun";
+	public final static String cSettingKnownUids = "KnownUids";
 
 	public final static boolean cExperimental = false;
 
