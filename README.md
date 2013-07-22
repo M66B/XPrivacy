@@ -512,6 +512,7 @@ Changelog
 * Display icon for frozen (not enabled) applications, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642) for the icon
 * Added Lithuanian translation
 * Updated Catalan translation
+* Updated French translation
 * Updated German translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
