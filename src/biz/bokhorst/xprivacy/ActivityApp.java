@@ -111,7 +111,7 @@ public class ActivityApp extends Activity {
 		}
 
 		// Display app icon
-		ImageView imgIcon = (ImageView) findViewById(R.id.imgAppEntryIcon);
+		ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
 		imgIcon.setImageDrawable(mAppInfo.getDrawable());
 
 		// Handle icon click
@@ -127,10 +127,17 @@ public class ActivityApp extends Activity {
 		});
 
 		// Check if internet access
-		ImageView imgInternet = (ImageView) findViewById(R.id.imgAppEntryInternet);
-		if (!PrivacyManager.hasInternet(this, mAppInfo.getPackageName()))
+		if (!mAppInfo.hasInternet()) {
+			ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
 			imgInternet.setVisibility(View.INVISIBLE);
+		}
 
+		// Check if frozen
+		if (!mAppInfo.isFrozen()) {
+			ImageView imgFrozen = (ImageView) findViewById(R.id.imgFrozen);
+			imgFrozen.setVisibility(View.INVISIBLE);
+		}
+		
 		// Display version
 		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
 		tvVersion.setText(mAppInfo.getVersion());

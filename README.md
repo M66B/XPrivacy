@@ -509,6 +509,7 @@ Changelog
 * Restrict [Google auth](https://developer.android.com/reference/com/google/android/gms/auth/GoogleAuthUtil.html)
 * Show orange triangles for function usage
 * Fetch accounts/contacts in the background
+* Display icon for frozen (not enabled) applications, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642) for the icon
 * Added Lithuanian translation
 * Updated German translation
 * Updated Simplified Chinese translation

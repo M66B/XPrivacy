@@ -20,6 +20,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private List<String> mListApplicationName;
 	private String mPackageName;
 	private boolean mHasInternet;
+	private boolean mIsFrozen;
 	private int mUid;
 	private String mVersion;
 	private boolean mSystem;
@@ -50,6 +51,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		mPackageName = appInfo.packageName;
 		mHasInternet = PrivacyManager.hasInternet(context, appInfo.packageName);
 		mUid = appInfo.uid;
+
+		// Get version
 		try {
 			mVersion = pm.getPackageInfo(appInfo.packageName, 0).versionName;
 			mInstalled = true;
@@ -59,8 +62,16 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			mInstalled = false;
 			Util.bug(null, ex);
 		}
+
+		// Get if system application
 		mSystem = ((appInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
 		mSystem = mSystem || appInfo.packageName.equals(ApplicationInfoEx.class.getPackage().getName());
+
+		// Get if frozen (not enabled)
+		int setting = pm.getApplicationEnabledSetting(appInfo.packageName);
+		boolean enabled = (setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
+		enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+		mIsFrozen = !enabled;
 	}
 
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
@@ -77,10 +88,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			try {
 				dialog.setProgress(app + 1);
 				ApplicationInfoEx xAppInfo = new ApplicationInfoEx(context, listAppInfo.get(app));
-				int setting = pm.getApplicationEnabledSetting(xAppInfo.getPackageName());
-				boolean enabled = (setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
-				enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
-				if (fSystem ? enabled && !xAppInfo.getIsSystem() : true) {
+				if (fSystem ? !xAppInfo.isFrozen() && !xAppInfo.getIsSystem() : true) {
 					ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
 					if (yAppInfo == null) {
 						mapApp.put(xAppInfo.getUid(), xAppInfo);
@@ -115,6 +123,10 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	public boolean hasInternet() {
 		return mHasInternet;
+	}
+
+	public boolean isFrozen() {
+		return mIsFrozen;
 	}
 
 	public int getUid() {
