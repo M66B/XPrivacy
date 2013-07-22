@@ -7,7 +7,7 @@
     <string name="app_xversion" formatted="false">Xposed framework バージョン: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="menu_settings">設定</string>
-    <string name="menu_template">テンプレ</string>
+    <string name="menu_template">カテゴリ</string>
     <string name="menu_update">更新を確認</string>
     <string name="menu_report">問題を報告</string>
     <string name="menu_export">エクスポート</string>
@@ -29,9 +29,9 @@
     <string name="msg_sure">続行しますか?</string>
     <string name="msg_done">完了</string>
     <string name="msg_reboot">再起動してください</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
+    <string name="msg_first"><b>XPrivacyは細心の注意を払って開発･テストしていますが、
+どの端末、どのアプリでも動作するという保証はありません。
+\n\n自己責任でお使いください。</b>\n\nライセンスの詳細はこちら:</string>
     <string name="restrict_accounts">アカウント (Google, Facebookなど)</string>
     <string name="restrict_browser">ブラウザ (お気に入り/履歴)</string>
     <string name="restrict_calendar">カレンダー</string>
