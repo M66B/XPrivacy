@@ -22,6 +22,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Process;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
@@ -137,7 +138,7 @@ public class ActivityApp extends Activity {
 			ImageView imgFrozen = (ImageView) findViewById(R.id.imgFrozen);
 			imgFrozen.setVisibility(View.INVISIBLE);
 		}
-		
+
 		// Display version
 		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
 		tvVersion.setText(mAppInfo.getVersion());
@@ -462,6 +463,9 @@ public class ActivityApp extends Activity {
 
 		@Override
 		protected Object doInBackground(Object... params) {
+			// Elevate priority
+			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
+
 			// Get accounts
 			mListAccount = new ArrayList<CharSequence>();
 			AccountManager accountManager = AccountManager.get(getApplicationContext());
@@ -523,6 +527,9 @@ public class ActivityApp extends Activity {
 
 		@Override
 		protected Object doInBackground(Object... params) {
+			// Elevate priority
+			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
+
 			// Map contacts
 			Map<Long, String> mapContact = new LinkedHashMap<Long, String>();
 			Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,

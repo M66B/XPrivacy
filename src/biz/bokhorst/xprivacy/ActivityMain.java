@@ -1416,7 +1416,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		@Override
 		protected List<ApplicationInfoEx> doInBackground(String... params) {
 			mRestrictionName = null;
+
+			// Elevate priority
 			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
+
+			// Delegate
 			return ApplicationInfoEx.getXApplicationList(ActivityMain.this, mProgressDialog);
 		}
 
