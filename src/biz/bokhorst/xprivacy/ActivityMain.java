@@ -1606,7 +1606,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
-			ImageView imgFrozen = (ImageView) findViewById(R.id.imgFrozen);
+			ImageView imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
 			final CheckedTextView ctvApp = (CheckedTextView) row.findViewById(R.id.ctvName);
 
 			// Get entry
