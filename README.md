@@ -510,11 +510,11 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Version 1.7.7** (in development)
+**Version 1.7.7**
 
 * Restrict [Google auth](https://developer.android.com/reference/com/google/android/gms/auth/GoogleAuthUtil.html)
-* Show orange triangles for function usage
 * Fetch accounts/contacts in the background
+* Show orange triangles for function usage
 * Display icon for frozen (not enabled) applications, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642) for the icon
 * Added Lithuanian translation
 * Updated Catalan translation
