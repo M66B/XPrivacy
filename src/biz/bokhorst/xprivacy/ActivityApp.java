@@ -20,6 +20,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -253,101 +254,13 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionAccounts() {
-		// Get accounts
-		List<CharSequence> listAccount = new ArrayList<CharSequence>();
-		AccountManager accountManager = AccountManager.get(getApplicationContext());
-		final Account[] accounts = accountManager.getAccounts();
-		boolean[] selection = new boolean[accounts.length];
-		for (int i = 0; i < accounts.length; i++)
-			try {
-				listAccount.add(String.format("%s (%s)", accounts[i].name, accounts[i].type));
-				String sha1 = Util.sha1(accounts[i].name + accounts[i].type);
-				selection[i] = PrivacyManager.getSettingBool(null, this,
-						String.format("Account.%d.%s", mAppInfo.getUid(), sha1), false, false);
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
-
-		// Build dialog
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(R.string.menu_accounts));
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setMultiChoiceItems(listAccount.toArray(new CharSequence[0]), selection,
-				new DialogInterface.OnMultiChoiceClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-						try {
-							Account account = accounts[whichButton];
-							String sha1 = Util.sha1(account.name + account.type);
-							PrivacyManager.setSetting(null, ActivityApp.this,
-									String.format("Account.%d.%s", mAppInfo.getUid(), sha1),
-									Boolean.toString(isChecked));
-						} catch (Throwable ex) {
-							Util.bug(null, ex);
-							Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
-							toast.show();
-						}
-					}
-				});
-		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// Do nothing
-			}
-		});
-
-		// Show dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+		AccountsTask accountsTask = new AccountsTask();
+		accountsTask.execute();
 	}
 
 	private void optionContacts() {
-		Map<Long, String> mapContact = new LinkedHashMap<Long, String>();
-		Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
-				new String[] { ContactsContract.Contacts._ID, Phone.DISPLAY_NAME }, null, null, Phone.DISPLAY_NAME);
-		if (cursor != null)
-			try {
-				while (cursor.moveToNext()) {
-					long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-					String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
-					mapContact.put(id, contact);
-				}
-			} finally {
-				cursor.close();
-			}
-
-		List<CharSequence> listContact = new ArrayList<CharSequence>();
-		final long[] ids = new long[mapContact.size()];
-		boolean[] selection = new boolean[mapContact.size()];
-		int i = 0;
-		for (Long id : mapContact.keySet()) {
-			listContact.add(mapContact.get(id));
-			ids[i] = id;
-			selection[i++] = PrivacyManager.getSettingBool(null, this,
-					String.format("Contact.%d.%d", mAppInfo.getUid(), id), false, false);
-		}
-
-		// Build dialog
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(R.string.menu_contacts));
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setMultiChoiceItems(listContact.toArray(new CharSequence[0]), selection,
-				new DialogInterface.OnMultiChoiceClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-						PrivacyManager.setSetting(null, ActivityApp.this,
-								String.format("Contact.%d.%d", mAppInfo.getUid(), ids[whichButton]),
-								Boolean.toString(isChecked));
-					}
-				});
-		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// Do nothing
-			}
-		});
-
-		// Show dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+		ContactsTask contactsTask = new ContactsTask();
+		contactsTask.execute();
 	}
 
 	@Override
@@ -532,6 +445,132 @@ public class ActivityApp extends Activity {
 		@Override
 		public boolean hasStableIds() {
 			return true;
+		}
+	}
+
+	private class AccountsTask extends AsyncTask<Object, Object, Object> {
+		private List<CharSequence> mListAccount;
+		private Account[] mAccounts;
+		private boolean[] mSelection;
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			// Get accounts
+			mListAccount = new ArrayList<CharSequence>();
+			AccountManager accountManager = AccountManager.get(getApplicationContext());
+			mAccounts = accountManager.getAccounts();
+			mSelection = new boolean[mAccounts.length];
+			for (int i = 0; i < mAccounts.length; i++)
+				try {
+					mListAccount.add(String.format("%s (%s)", mAccounts[i].name, mAccounts[i].type));
+					String sha1 = Util.sha1(mAccounts[i].name + mAccounts[i].type);
+					mSelection[i] = PrivacyManager.getSettingBool(null, ActivityApp.this,
+							String.format("Account.%d.%s", mAppInfo.getUid(), sha1), false, false);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			// Build dialog
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+			alertDialogBuilder.setTitle(getString(R.string.menu_accounts));
+			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setMultiChoiceItems(mListAccount.toArray(new CharSequence[0]), mSelection,
+					new DialogInterface.OnMultiChoiceClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+							try {
+								Account account = mAccounts[whichButton];
+								String sha1 = Util.sha1(account.name + account.type);
+								PrivacyManager.setSetting(null, ActivityApp.this,
+										String.format("Account.%d.%s", mAppInfo.getUid(), sha1),
+										Boolean.toString(isChecked));
+							} catch (Throwable ex) {
+								Util.bug(null, ex);
+								Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
+								toast.show();
+							}
+						}
+					});
+			alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+				}
+			});
+
+			// Show dialog
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+
+			super.onPostExecute(result);
+		}
+	}
+
+	private class ContactsTask extends AsyncTask<Object, Object, Object> {
+		private List<CharSequence> mListContact;
+		private long[] mIds;
+		private boolean[] mSelection;
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			// Map contacts
+			Map<Long, String> mapContact = new LinkedHashMap<Long, String>();
+			Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
+					new String[] { ContactsContract.Contacts._ID, Phone.DISPLAY_NAME }, null, null, Phone.DISPLAY_NAME);
+			if (cursor != null)
+				try {
+					while (cursor.moveToNext()) {
+						long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+						String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
+						mapContact.put(id, contact);
+					}
+				} finally {
+					cursor.close();
+				}
+
+			// Build dialog data
+			mListContact = new ArrayList<CharSequence>();
+			mIds = new long[mapContact.size()];
+			mSelection = new boolean[mapContact.size()];
+			int i = 0;
+			for (Long id : mapContact.keySet()) {
+				mListContact.add(mapContact.get(id));
+				mIds[i] = id;
+				mSelection[i++] = PrivacyManager.getSettingBool(null, ActivityApp.this,
+						String.format("Contact.%d.%d", mAppInfo.getUid(), id), false, false);
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			// Build dialog
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+			alertDialogBuilder.setTitle(getString(R.string.menu_contacts));
+			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setMultiChoiceItems(mListContact.toArray(new CharSequence[0]), mSelection,
+					new DialogInterface.OnMultiChoiceClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+							PrivacyManager.setSetting(null, ActivityApp.this,
+									String.format("Contact.%d.%d", mAppInfo.getUid(), mIds[whichButton]),
+									Boolean.toString(isChecked));
+						}
+					});
+			alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+				}
+			});
+
+			// Show dialog
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+
+			super.onPostExecute(result);
 		}
 	}
 
