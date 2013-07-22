@@ -513,6 +513,7 @@ Changelog
 
 **Next version**
 
+* Performance improvement
 * Added Vietnamese translation
 * Updated Polish translation
 * Updated Turkish translation

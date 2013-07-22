@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.nfc.NfcAdapter;
 import android.os.Build;
+import android.os.Process;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -420,7 +421,7 @@ public class PrivacyManager {
 	// Restrictions
 
 	@SuppressLint("DefaultLocale")
-	public static boolean getRestricted(XHook hook, Context context, int uid, String restrictionName,
+	public static boolean getRestricted(final XHook hook, final Context context, int uid, String restrictionName,
 			String methodName, boolean usage, boolean useCache) {
 		try {
 			long start = System.currentTimeMillis();
@@ -495,34 +496,40 @@ public class PrivacyManager {
 								cursor.close();
 							}
 
-						// Send usage data
-						UsageData data = null;
-						do {
-							int size = 0;
-							synchronized (mUsageQueue) {
-								if (mUsageQueue.size() > 0) {
-									data = mUsageQueue.keySet().iterator().next();
-									mUsageQueue.remove(data);
-									size = mUsageQueue.size();
-								} else
-									data = null;
+						// Send usage data async
+						new Thread(new Runnable() {
+							public void run() {
+								Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+								UsageData data = null;
+								do {
+									int size = 0;
+									synchronized (mUsageQueue) {
+										if (mUsageQueue.size() > 0) {
+											data = mUsageQueue.keySet().iterator().next();
+											mUsageQueue.remove(data);
+											size = mUsageQueue.size();
+										} else
+											data = null;
+									}
+									if (data != null) {
+										try {
+											Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
+											ContentValues values = new ContentValues();
+											values.put(PrivacyProvider.COL_UID, data.getUid());
+											values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
+											values.put(PrivacyProvider.COL_METHOD, data.getMethodName());
+											values.put(PrivacyProvider.COL_RESTRICTED, data.getRestricted());
+											values.put(PrivacyProvider.COL_USED, data.getTimeStamp());
+											if (context.getContentResolver().update(PrivacyProvider.URI_USAGE, values,
+													null, null) <= 0)
+												Util.log(hook, Log.INFO, "Error updating usage data=" + data);
+										} catch (Throwable ex) {
+											Util.bug(hook, ex);
+										}
+									}
+								} while (data != null);
 							}
-							if (data != null) {
-								try {
-									Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
-									ContentValues values = new ContentValues();
-									values.put(PrivacyProvider.COL_UID, data.getUid());
-									values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
-									values.put(PrivacyProvider.COL_METHOD, data.getMethodName());
-									values.put(PrivacyProvider.COL_RESTRICTED, data.getRestricted());
-									values.put(PrivacyProvider.COL_USED, data.getTimeStamp());
-									if (contentResolver.update(PrivacyProvider.URI_USAGE, values, null, null) <= 0)
-										Util.log(hook, Log.INFO, "Error updating usage data=" + data);
-								} catch (Throwable ex) {
-									Util.bug(hook, ex);
-								}
-							}
-						} while (data != null);
+						}).start();
 					}
 				} catch (Throwable ex) {
 					Util.bug(hook, ex);

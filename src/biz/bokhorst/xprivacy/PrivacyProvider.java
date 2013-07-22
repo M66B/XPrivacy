@@ -219,7 +219,7 @@ public class PrivacyProvider extends ContentProvider {
 
 			return 1; // rows
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE) {
-			// Word readable
+			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
 
 			// Get arguments
 			int uid = values.getAsInteger(COL_UID);
