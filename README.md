@@ -232,7 +232,8 @@ Limitations
 -----------
 
 * Android can be restricted, but there will be no usage data available (warning triangles)
-* /proc cannot be restricted for Android
+* /proc cannot be restricted for Android (serial number, MAC address, etc)
+* Phone number cannot be restricted for the standard phone application
 
 Installation
 ------------
