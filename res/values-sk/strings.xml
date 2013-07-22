@@ -64,6 +64,7 @@ a nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>
     <string name="help_used">používala tieto dáta</string>
+    <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">je nebezpečná</string>
     
 </resources>

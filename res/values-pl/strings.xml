@@ -64,6 +64,7 @@
     <string name="help_internet">wymaga dostępu do internetu</string>
     <string name="help_granted">wymaga dostępu do tych uprawnień Androida</string>
     <string name="help_used">użyła dostępu do danych</string>
+    <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">jest niebezpieczne</string>
     
 </resources>

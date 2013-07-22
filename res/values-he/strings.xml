@@ -64,6 +64,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">כולל הרשאות גישה לאינטרנט</string>
     <string name="help_granted">כולל הרשאות גישה לאנדרואיד</string>
     <string name="help_used">קיבל גישה להרשאה זו</string>
+    <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">מסוכן</string>
 
 </resources>

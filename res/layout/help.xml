@@ -21,6 +21,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableLeft="?attr/icon_granted"
+        android:drawablePadding="6dip"
+        android:gravity="center_vertical"
+        android:text="@string/help_granted"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textIsSelectable="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:drawableLeft="?attr/icon_internet"
         android:drawablePadding="6dip"
         android:gravity="center_vertical"
@@ -31,10 +41,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="?attr/icon_granted"
+        android:drawableLeft="?attr/icon_frozen"
         android:drawablePadding="6dip"
         android:gravity="center_vertical"
-        android:text="@string/help_granted"
+        android:text="@string/help_frozen"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textIsSelectable="false" />
 

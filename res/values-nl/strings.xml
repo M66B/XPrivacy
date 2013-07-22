@@ -64,6 +64,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="help_internet">heeft internet rechten</string>
     <string name="help_granted">heeft Android rechten</string>
     <string name="help_used">heeft deze data gebruikt</string>
+    <string name="help_frozen">is uitgezet</string>
     <string name="help_dangerous">is gevaarlijk</string>
 
 </resources>

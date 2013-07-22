@@ -64,6 +64,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>
     <string name="help_used">ha usato questi dati</string>
+    <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">è pericoloso</string>
 
 </resources>

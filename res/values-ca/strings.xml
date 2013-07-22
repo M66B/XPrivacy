@@ -62,6 +62,7 @@
     <string name="help_internet">té permís d\'Internet</string>
     <string name="help_granted">té permisos d\'Android</string>
     <string name="help_used">ha utilitzat aquesta informació</string>
+    <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">és perillós</string>
 
 </resources>

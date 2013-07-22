@@ -64,6 +64,7 @@
     <string name="help_internet">Interneto leidimai</string>
     <string name="help_granted">Android leidimai</string>
     <string name="help_used">Privačių duomenų leidimai</string>
+    <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">Pavojingi</string>
 
 </resources>

@@ -64,6 +64,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>
     <string name="help_used">je uporabljal te podatke</string>
+    <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">je nevaren</string>
     
 </resources>

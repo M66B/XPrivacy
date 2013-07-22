@@ -64,6 +64,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">има разрешение за интернет</string>
     <string name="help_granted">има разрешение в Android</string>
     <string name="help_used">използвало е тези данни</string>
+    <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">is dangerous</string>
     
 </resources>

@@ -64,6 +64,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">har internet tilladelse</string>
     <string name="help_granted">har Android tilladelse</string>
     <string name="help_used">har benyttet denne data type</string>
+    <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">is dangerous</string>
     
 </resources>

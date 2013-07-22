@@ -64,6 +64,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">má oprávnění k Internetu</string>
     <string name="help_granted">má Android oprávnění</string>
     <string name="help_used">přistupovala k těmto datům</string>
+    <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">je nebezpečná</string>
     
 </resources>
