@@ -514,6 +514,7 @@ Changelog
 * Updated Catalan translation
 * Updated French translation
 * Updated German translation
+* Updated Japanese Translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
 
