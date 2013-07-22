@@ -1,0 +1,68 @@
+<resources>
+
+    <string name="app_notxposed" formatted="false">Xposed framework phiên bản %d+ chưa được cài đặt</string>
+    <string name="app_notenabled">XPrivacy chưa được kích hoạt trong Xposed installer</string>
+    <string name="app_wrongandroid">Chỉ được kiểm tra trên Android phiên bản 4.0, 4.1 và 4.2</string>
+    <string name="app_version" formatted="false">XPrivacy phiên bản: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed framework phiên bản: %d</string>
+    <string name="app_copyright">Bản quyền \u00A9 2013 bởi M. Bokhorst (M66B)</string>
+    <string name="menu_settings">Tùy chỉnh</string>
+    <string name="menu_template">Mẫu</string>
+    <string name="menu_update">Kiểm tra phiên bản mới</string>
+    <string name="menu_report">Báo cáo lỗi</string>
+    <string name="menu_export">Xuất</string>
+    <string name="menu_import">Nhập</string>
+    <string name="menu_theme">Đổi giao diện</string>
+    <string name="menu_pro">Phiên bản Pro</string>
+    <string name="menu_about">Về XPrivacy</string>
+    <string name="menu_all">Tất cả</string>
+    <string name="menu_app_launch">Chạy</string>
+    <string name="menu_app_settings">Tùy chỉnh</string>
+    <string name="menu_app_store">Play Store</string>
+    <string name="menu_accounts">Chọn một tài khoản</string>
+    <string name="menu_contacts">Chọn một danh bạ</string>
+    <string name="msg_noupdate">Không có phiên bản mới</string>
+    <string name="msg_restricted" formatted="false">%s hạn chế bởi XPrivacy</string>
+    <string name="msg_licensed" formatted="false">Bản quyền: %s</string>
+    <string name="msg_loading">Đang tải</string>
+    <string name="msg_edit">Chọn biểu tượng của ứng dụng để thiết lập tất cả hạn chế</string>
+    <string name="msg_sure">Bạn có chắc chắn?</string>
+    <string name="msg_done">Xong</string>
+    <string name="msg_reboot">Yêu cầu khởi động lại máy</string>
+    <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ chạy hoàn toàn ổn định và mượt mà trên tất cả thiết bị cũng như tất cả ứng dụng.
+\n\nBạn sẽ chịu trách nhiệm về những rủi ro (nếu có).</b>\n\nXem thêm về bản quyền:</string>
+    <string name="restrict_accounts">Tài khoản (Google, Facebook, .v.v.)</string>
+    <string name="restrict_browser">Trình duyệt (bookmarks/history)</string>
+    <string name="restrict_calendar">Lịch</string>
+    <string name="restrict_calling">Cuộc gọi (phone, SMS, MMS)</string>
+    <string name="restrict_contacts">Danh bạ</string>
+    <string name="restrict_dictionary">Từ điển (người dùng)</string>
+    <string name="restrict_identification">Định danh (thiết bị)</string>
+    <string name="restrict_internet">Internet</string>
+    <string name="restrict_location">Vị trí (fine/coarse)</string>
+    <string name="restrict_media">Media (nhạc, phim, ảnh)</string>
+    <string name="restrict_messages">Tin nhắn (SMS, MMS)</string>
+    <string name="restrict_network">Mạng (địa chỉ mạng)</string>
+    <string name="restrict_phone">Điện thoại (ID, số liên lạc, cuộc gọi)</string>
+    <string name="restrict_storage">Lưu trữ (media, thẻ nhớ)</string>
+    <string name="restrict_shell">Shell (câu lệnh, superuser)</string>
+    <string name="restrict_system">Hệ thống (các ứng dụng)</string>
+    <string name="restrict_view">Mở trình duyệt</string>
+    <string name="title_category">Danh mục:</string>
+    <string name="title_restrict">Chọn để hạn chế:</string>
+    <string name="settings_lat">Vĩ độ</string>
+    <string name="settings_lon">Kinh độ</string>
+    <string name="settings_mac">địa chỉ MAC</string>
+    <string name="settings_phone">Số điện thoại</string>
+    <string name="settings_id">Android ID</string>
+    <string name="settings_country">Nước</string>
+    <string name="settings_subscriber">ID người đăng kí</string>
+    <string name="settings_fpermission">Lọc theo quyền</string>
+    <string name="settings_fsystem">Lọc theo ứng dụng hệ thống</string>
+    <string name="help_application">Ứng dụng</string>
+    <string name="help_internet">có quyền truy cập mạng</string>
+    <string name="help_granted">có các quyền của Hệ điều hành</string>
+    <string name="help_used">đã sử dụng dữ liệu</string>
+    <string name="help_dangerous">nguy hiểm</string>
+
+</resources>

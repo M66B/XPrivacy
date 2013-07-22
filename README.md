@@ -510,6 +510,12 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Next version**
+
+* Added Vietnamese translation
+* Updated Polish translation
+* Updated Turkish translation
+
 **Version 1.7.7**
 
 * Restrict [Google auth](https://developer.android.com/reference/com/google/android/gms/auth/GoogleAuthUtil.html)
@@ -528,7 +534,7 @@ Changelog
 **Version 1.7.6**
 
 * Added disclaimer on first run
-* Remove duplicate *getByName* in category *internet*
+* Removed duplicate *getByName* in category *internet*
 
 **Version 1.7.5**
 
@@ -1066,6 +1072,7 @@ Current translations:
 * Spanish (es)
 * Swedish (sv)
 * Turkish (tr)
+* Vietnamese (vi)
 
 Restrict new data:
 
