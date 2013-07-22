@@ -117,12 +117,18 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XIoBridge("open", PrivacyManager.cIdentification, new String[] {}, "/proc"), "libcore.io.IoBridge");
 
 		// Location manager
-		String[] locs = new String[] { "addGeofence", "addNmeaListener", "addProximityAlert", "getLastLocation",
-				"getLastKnownLocation", "getProviders", "isProviderEnabled", "removeUpdates", "requestLocationUpdates",
-				"requestSingleUpdate", "sendExtraCommand" };
+		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "getProviders",
+				"isProviderEnabled", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",
+				"sendExtraCommand" };
 		for (String loc : locs)
 			hook(new XLocationManager(loc, PrivacyManager.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
 					"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
+		if (Build.VERSION.SDK_INT >= 17) {
+			hook(new XLocationManager("addGeofence", PrivacyManager.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
+					"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
+			hook(new XLocationManager("getLastLocation", PrivacyManager.cLocation, new String[] {
+					"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
+		}
 
 		// Media recorder
 		hook(new XMediaRecorder("setOutputFile", PrivacyManager.cMedia, new String[] { "RECORD_AUDIO", "RECORD_VIDEO" }),
@@ -191,14 +197,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				new String[] { "CONTROL_LOCATION_UPDATES", }), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("enableLocationUpdates", PrivacyManager.cLocation,
 				new String[] { "CONTROL_LOCATION_UPDATES", }), "android.telephony.TelephonyManager");
-
-		if (Build.VERSION.SDK_INT >= 17)
-			hook(new XTelephonyManager("getAllCellInfo", PrivacyManager.cLocation,
-					new String[] { "ACCESS_COARSE_UPDATES", }), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getCellLocation", PrivacyManager.cLocation, new String[] {
 				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getNeighboringCellInfo", PrivacyManager.cLocation,
 				new String[] { "ACCESS_COARSE_UPDATES" }), "android.telephony.TelephonyManager");
+		if (Build.VERSION.SDK_INT >= 17)
+			hook(new XTelephonyManager("getAllCellInfo", PrivacyManager.cLocation,
+					new String[] { "ACCESS_COARSE_UPDATES", }), "android.telephony.TelephonyManager");
 
 		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
 				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getNetworkCountryIso", "getNetworkOperator",

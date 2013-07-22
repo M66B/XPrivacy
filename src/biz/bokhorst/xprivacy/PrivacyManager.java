@@ -207,12 +207,16 @@ public class PrivacyManager {
 		mMethods.get(cLocation).add("connect");
 
 		// Location manager
-		String[] locs = new String[] { "addGeofence", "addNmeaListener", "addProximityAlert", "getLastLocation",
-				"getLastKnownLocation", "getProviders", "isProviderEnabled", "removeUpdates", "requestLocationUpdates",
-				"requestSingleUpdate", "sendExtraCommand" };
+		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "getProviders",
+				"isProviderEnabled", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",
+				"sendExtraCommand" };
 		for (String loc : locs)
 			if (!mMethods.get(cLocation).contains(loc))
 				mMethods.get(cLocation).add(loc);
+		if (Build.VERSION.SDK_INT >= 17) {
+			mMethods.get(cLocation).add("addGeofence");
+			mMethods.get(cLocation).add("getLastLocation");
+		}
 
 		// Media recorder
 		mMethods.get(cMedia).add("setOutputFile");
@@ -260,10 +264,12 @@ public class PrivacyManager {
 			mMethods.get(cIdentification).add(prop);
 
 		// Telephony
-		String[] tlocs = new String[] { "disableLocationUpdates", "enableLocationUpdates", "getAllCellInfo",
-				"getCellLocation", "getNeighboringCellInfo" };
+		String[] tlocs = new String[] { "disableLocationUpdates", "enableLocationUpdates", "getCellLocation",
+				"getNeighboringCellInfo" };
 		for (String tloc : tlocs)
 			mMethods.get(cLocation).add(tloc);
+		if (Build.VERSION.SDK_INT >= 17)
+			mMethods.get(cLocation).add("getAllCellInfo");
 
 		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
 				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getNetworkCountryIso", "getNetworkOperator",
