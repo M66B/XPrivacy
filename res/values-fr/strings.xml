@@ -29,8 +29,8 @@
     <string name="msg_sure">Êtes-vous certain ?</string>
     <string name="msg_done">Effectué</string>
     <string name="msg_reboot">Redémarrage requis</string>
-    <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy, toutefois
-il est impossible de garantir un fonctionnement parfaitement sur chaque appareil et pour chaque application.
+    <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
+il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
 \n\nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence:</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc)</string>
     <string name="restrict_browser">Navigateur (marque-pages/historique)</string>
@@ -49,7 +49,7 @@ il est impossible de garantir un fonctionnement parfaitement sur chaque appareil
     <string name="restrict_shell">Shell (commandes, root)</string>
     <string name="restrict_system">Système (applis installées)</string>
     <string name="restrict_view">Vue (navigateur)</string>
-    <string name="title_category">Categorie:</string>
+    <string name="title_category">Catégorie:</string>
     <string name="title_restrict">Cocher pour restreindre:</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
