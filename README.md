@@ -508,6 +508,7 @@ Changelog
 
 * Restrict [Google auth](https://developer.android.com/reference/com/google/android/gms/auth/GoogleAuthUtil.html)
 * Show orange triangles for function usage
+* Added Lithuanian translation
 * Updated German translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
@@ -1040,6 +1041,7 @@ Current translations:
 * Hungarian (hu)
 * Italian (it)
 * Japanese (ja)
+* Lithuanian (lt)
 * Norwegian (nb-rNO, nn-rNO, no-rNO)
 * Polish (pl)
 * Portuguese (pt)

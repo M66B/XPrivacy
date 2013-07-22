@@ -1,0 +1,69 @@
+<resources>
+
+    <string name="app_notxposed" formatted="false">Xposed sistemos versija %d+ neįdiegta</string>
+    <string name="app_notenabled">XPrivacy neaktyvuota Xposed sistemoje</string>
+    <string name="app_wrongandroid">Testuota tik Android versijose 4.0, 4.1 ir 4.2</string>
+    <string name="app_version" formatted="false">XPrivacy versija: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed sistemos versija: %d</string>
+    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="menu_settings">Parametrai</string>
+    <string name="menu_template">Ruošiniai</string>
+    <string name="menu_update">Tikrinti atnaujinimus</string>
+    <string name="menu_report">Pranesti problemą</string>
+    <string name="menu_export">Exportuoti</string>
+    <string name="menu_import">Importuoti</string>
+    <string name="menu_theme">Keisti temą</string>
+    <string name="menu_pro">Pro versija</string>
+    <string name="menu_about">Apie</string>
+    <string name="menu_all">Visos</string>
+    <string name="menu_app_launch">Paleisti</string>
+    <string name="menu_app_settings">Parametrai</string>
+    <string name="menu_app_store">Play Store</string>
+    <string name="menu_accounts">Leisti pažymetas paskyras</string>
+    <string name="menu_contacts">Leisti pažymetus kontaktus</string>
+    <string name="msg_noupdate">Atnaujinimas negalimas</string>
+    <string name="msg_restricted" formatted="false">%s apribota XPrivacy</string>
+    <string name="msg_licensed" formatted="false">licencija: %s</string>
+    <string name="msg_loading">Palaukite</string>
+    <string name="msg_edit">Spustelėkite programos piktogramą redaguoti visus apribojimus</string>
+    <string name="msg_sure">Esi tikras?</string>
+    <string name="msg_done">Atlikta</string>
+    <string name="msg_reboot">Privaloma perkrauti</string>
+    <string name="msg_first"><b>Puiku kad sutikote išbandyti XPrivacy,
+-Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
+-\n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>
+    <string name="restrict_accounts">Paskyra (Google, Facebook, kita)</string>
+    <string name="restrict_browser">Naršyklė (žymės/istorija)</string>
+    <string name="restrict_calendar">Kalendorius</string>
+    <string name="restrict_calling">Skambinimas (telefonas, SMS, MMS)</string>
+    <string name="restrict_contacts">Kontaktai</string>
+    <string name="restrict_dictionary">Žodymas (vartotojo)</string>
+    <string name="restrict_identification">Identifikacija (prietaiso)</string>
+    <string name="restrict_internet">Internetas</string>
+    <string name="restrict_location">Vieta (tiksli/apytiklė)</string>
+    <string name="restrict_media">Media (muzika, nuotraukos, vaizdai)</string>
+    <string name="restrict_messages">Pranešimai (SMS, MMS)</string>
+    <string name="restrict_network">Tinklas (adresai)</string>
+    <string name="restrict_phone">Telefonas (ID, numeris, skambučiai)</string>
+    <string name="restrict_storage">Atmintis (media, SD kortelė)</string>
+    <string name="restrict_shell">Vykdymas (komandos, superuser)</string>
+    <string name="restrict_system">Sistema (įdiegtos programos)</string>
+    <string name="restrict_view">Peržiura (Naršyklė)</string>
+    <string name="title_category">Kategorija:</string>
+    <string name="title_restrict">Žiūrėti apribojimus:</string>
+    <string name="settings_lat">Platuma</string>
+    <string name="settings_lon">Ilguma</string>
+    <string name="settings_mac">MAC</string>
+    <string name="settings_phone">Telefono numeris</string>
+    <string name="settings_id">Android ID</string>
+    <string name="settings_country">Šalis</string>
+    <string name="settings_subscriber">Abonentas ID</string>
+    <string name="settings_fpermission">Filtruoti pagal leidimus</string>
+    <string name="settings_fsystem">Nerodyti sistemos programų</string>
+    <string name="help_application">Programa</string>
+    <string name="help_internet">Interneto leidimai</string>
+    <string name="help_granted">Android leidimai</string>
+    <string name="help_used">Privačių duomenų leidimai</string>
+    <string name="help_dangerous">Pavojingi</string>
+
+</resources>
