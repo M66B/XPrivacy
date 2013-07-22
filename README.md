@@ -487,6 +487,12 @@ You can copy this file to the same place on a second device.
 When importing, settings are only applied to applications that exist on the second device and have exported settings.
 This also applies to system apps.
 
+**(27) How can I filter restriction categories by Android permissions?**
+
+The default is to show only restriction categories for which an application has Android permissions.
+This can be changed using the settings.
+Some restriction categories don't require Android permissions, however.
+
 Support
 -------
 
