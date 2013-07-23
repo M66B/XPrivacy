@@ -511,10 +511,15 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Next version**
+**Version 1.7.8**
 
-* Performance improvement
+**BETA!**
+
+* Performance improvements
 * Filter on internet permission
+* Transparent spinner background ([issue](https://github.com/M66B/XPrivacy/issues/323))
+* Attempt to fix select contacts crash (reported on XDA)
+* Display uid's (as discussed on XDA)
 * Added Vietnamese translation
 * Updated Catalan translation
 * Updated French translation

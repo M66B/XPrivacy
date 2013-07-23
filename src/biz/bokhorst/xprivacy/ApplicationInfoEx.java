@@ -147,8 +147,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	@Override
 	public String toString() {
-		return getApplicationNames();
-		// return String.format("%d %s", mUid, getApplicationNames());
+		return String.format("%d %s", mUid, getApplicationNames());
 	}
 
 	@Override

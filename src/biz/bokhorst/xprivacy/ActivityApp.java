@@ -539,6 +539,8 @@ public class ActivityApp extends Activity {
 					while (cursor.moveToNext()) {
 						long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 						String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
+						if (contact == null)
+							contact = "-";
 						mapContact.put(id, contact);
 					}
 				} finally {
