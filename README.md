@@ -514,6 +514,7 @@ Changelog
 **Next version**
 
 * Performance improvement
+* Filter on internet permission
 * Added Vietnamese translation
 * Updated Catalan translation
 * Updated French translation
