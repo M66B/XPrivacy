@@ -51,7 +51,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -470,12 +470,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			String restrictionName = (position == 0 ? null : PrivacyManager.getRestrictions(true).get(position - 1));
 			if (PrivacyManager.isDangerousRestriction(restrictionName))
 				return getResources().getColor(getThemed(R.attr.color_dangerous));
-			else {
-				TypedArray tArray = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorBackground });
-				int color = tArray.getColor(0, 0);
-				tArray.recycle();
-				return color;
-			}
+			else
+				return Color.TRANSPARENT;
 		}
 	}
 
@@ -492,7 +488,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (mAppAdapter != null) {
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-			String filter = String.format("%b\n%b\n%s\n%b", mUsed, mInternet, etFilter.getText().toString(), cbFilter.isChecked());
+			String filter = String.format("%b\n%b\n%s\n%b", mUsed, mInternet, etFilter.getText().toString(),
+					cbFilter.isChecked());
 			mAppAdapter.getFilter().filter(filter);
 		}
 	}
@@ -1587,7 +1584,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					boolean internet = false;
 					if (fInternet)
 						internet = xAppInfo.hasInternet();
-					
+
 					// Get contains
 					boolean contains = false;
 					if (!fName.equals(""))
