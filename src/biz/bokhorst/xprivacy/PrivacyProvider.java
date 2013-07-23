@@ -125,11 +125,11 @@ public class PrivacyProvider extends ContentProvider {
 				}
 			} else {
 				// Process restrictions
-				boolean allowed = true;
+				boolean allowed = false;
 				for (String eRestrictionName : listRestrictionName) {
 					boolean rAllowed = getAllowed(uid, eRestrictionName, methodName, prefs);
-					cursor.addRow(new Object[] { uid, eRestrictionName, null, Boolean.toString(!rAllowed) });
-					allowed = allowed && rAllowed;
+					cursor.addRow(new Object[] { uid, eRestrictionName, methodName, Boolean.toString(!rAllowed) });
+					allowed = allowed || rAllowed;
 				}
 				final boolean restricted = !allowed;
 
