@@ -76,10 +76,10 @@ public class PrivacyProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		if (sUriMatcher.match(uri) == TYPE_RESTRICTION && selectionArgs != null && selectionArgs.length >= 2) {
 			// Get arguments
-			String restrictionName = selection;
-			int uid = Integer.parseInt(selectionArgs[0]);
+			final String restrictionName = selection;
+			final int uid = Integer.parseInt(selectionArgs[0]);
 			boolean usage = Boolean.parseBoolean(selectionArgs[1]);
-			String methodName = (selectionArgs.length >= 3 ? selectionArgs[2] : null);
+			final String methodName = (selectionArgs.length >= 3 ? selectionArgs[2] : null);
 
 			@SuppressWarnings("resource")
 			MatrixCursor cursor = new MatrixCursor(
@@ -125,26 +125,31 @@ public class PrivacyProvider extends ContentProvider {
 				}
 			} else {
 				// Process restrictions
-				boolean restricted = false;
+				boolean allowed = true;
 				for (String eRestrictionName : listRestrictionName) {
-					boolean allowed = getAllowed(uid, eRestrictionName, methodName, prefs);
-					restricted = restricted || !allowed;
-					cursor.addRow(new Object[] { uid, eRestrictionName, null, Boolean.toString(!allowed) });
+					boolean rAllowed = getAllowed(uid, eRestrictionName, methodName, prefs);
+					cursor.addRow(new Object[] { uid, eRestrictionName, null, Boolean.toString(!rAllowed) });
+					allowed = allowed && rAllowed;
 				}
+				final boolean restricted = !allowed;
 
 				// Update usage time
-				if (usage && restrictionName != null) {
-					long timeStamp = new Date().getTime();
-					SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-					SharedPreferences.Editor editor = uprefs.edit();
-					editor.putLong(getUsagePref(uid, restrictionName), timeStamp);
-					editor.putBoolean(getRestrictedPref(uid, restrictionName), restricted);
-					if (methodName != null) {
-						editor.putLong(getUsagePref(uid, restrictionName, methodName), timeStamp);
-						editor.putBoolean(getRestrictedPref(uid, restrictionName, methodName), restricted);
-					}
-					editor.apply();
-				}
+				if (usage && restrictionName != null)
+					new Thread(new Runnable() {
+						public void run() {
+							long timeStamp = new Date().getTime();
+							SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE,
+									Context.MODE_PRIVATE);
+							SharedPreferences.Editor editor = uprefs.edit();
+							editor.putLong(getUsagePref(uid, restrictionName), timeStamp);
+							editor.putBoolean(getRestrictedPref(uid, restrictionName), restricted);
+							if (methodName != null) {
+								editor.putLong(getUsagePref(uid, restrictionName, methodName), timeStamp);
+								editor.putBoolean(getRestrictedPref(uid, restrictionName, methodName), restricted);
+							}
+							editor.apply();
+						}
+					}).start();
 			}
 			return cursor;
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length >= 1) {
