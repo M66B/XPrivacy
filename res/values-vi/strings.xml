@@ -63,7 +63,7 @@
     <string name="help_internet">có quyền truy cập mạng</string>
     <string name="help_granted">có các quyền của Hệ điều hành</string>
     <string name="help_used">đã sử dụng dữ liệu</string>
-    <string name="help_frozen">is disabled</string>
+    <string name="help_frozen">đã được tắt</string>
     <string name="help_dangerous">nguy hiểm</string>
 
 </resources>
