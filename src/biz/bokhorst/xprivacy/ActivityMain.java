@@ -452,8 +452,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			if (PrivacyManager.isDangerousRestriction(restrictionName))
 				return getResources().getColor(getThemed(R.attr.color_dangerous));
 			else {
-				TypedArray array = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorBackground, });
-				return array.getColor(0, 0);
+				TypedArray tArray = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorBackground });
+				int color = tArray.getColor(0, 0);
+				tArray.recycle();
+				return color;
 			}
 		}
 	}
