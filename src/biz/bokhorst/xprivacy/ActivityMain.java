@@ -99,6 +99,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 	private boolean mUsed = false;
+	private boolean mInternet = false;
 	private boolean mPro = false;
 
 	private BroadcastReceiver mPackageChangeReceiver = new BroadcastReceiver() {
@@ -202,6 +203,23 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		});
 
+		// Setup internet filter
+		final ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
+		if (savedInstanceState != null && savedInstanceState.containsKey("Internet")) {
+			mInternet = savedInstanceState.getBoolean("Internet");
+			imgInternet.setImageDrawable(getResources().getDrawable(
+					getThemed(mInternet ? R.attr.icon_internet : R.attr.icon_internet_grayed)));
+		}
+		imgInternet.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mInternet = !mInternet;
+				imgInternet.setImageDrawable(getResources().getDrawable(
+						getThemed(mInternet ? R.attr.icon_internet : R.attr.icon_internet_grayed)));
+				applyFilter();
+			}
+		});
+
 		// Setup name filter
 		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
 		etFilter.addTextChangedListener(new TextWatcher() {
@@ -262,6 +280,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putBoolean("Used", mUsed);
+		outState.putBoolean("Internet", mInternet);
 		super.onSaveInstanceState(outState);
 	}
 
@@ -452,8 +471,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			if (PrivacyManager.isDangerousRestriction(restrictionName))
 				return getResources().getColor(getThemed(R.attr.color_dangerous));
 			else {
-				TypedArray array = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorBackground, });
-				return array.getColor(0, 0);
+				TypedArray tArray = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorBackground });
+				int color = tArray.getColor(0, 0);
+				tArray.recycle();
+				return color;
 			}
 		}
 	}
@@ -471,7 +492,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (mAppAdapter != null) {
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-			String filter = String.format("%b\n%s\n%b", mUsed, etFilter.getText().toString(), cbFilter.isChecked());
+			String filter = String.format("%b\n%b\n%s\n%b", mUsed, mInternet, etFilter.getText().toString(), cbFilter.isChecked());
 			mAppAdapter.getFilter().filter(filter);
 		}
 	}
@@ -1435,6 +1456,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
 			imgUsed.setEnabled(false);
 
+			final ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
+			imgInternet.setEnabled(false);
+
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setEnabled(false);
 
@@ -1469,6 +1493,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Enable filters
 			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
 			imgUsed.setEnabled(true);
+
+			final ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
+			imgInternet.setEnabled(true);
 
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setEnabled(true);
@@ -1544,8 +1571,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				// Get arguments
 				String[] components = ((String) constraint).split("\\n");
 				boolean fUsed = Boolean.parseBoolean(components[0]);
-				String fName = components[1];
-				boolean fRestricted = Boolean.parseBoolean(components[2]);
+				boolean fInternet = Boolean.parseBoolean(components[1]);
+				String fName = components[2];
+				boolean fRestricted = Boolean.parseBoolean(components[3]);
 
 				// Match applications
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
@@ -1556,6 +1584,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						used = (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(), mRestrictionName,
 								null) != 0);
 
+					boolean internet = false;
+					if (fInternet)
+						internet = xAppInfo.hasInternet();
+					
 					// Get contains
 					boolean contains = false;
 					if (!fName.equals(""))
@@ -1576,7 +1608,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 									xAppInfo.getUid(), mRestrictionName, null, false, false);
 
 					// Match application
-					if ((fUsed ? used : true) && (fName.equals("") ? true : contains)
+					if ((fUsed ? used : true) && (fInternet ? internet : true) && (fName.equals("") ? true : contains)
 							&& (fRestricted ? someRestricted : true))
 						lstApp.add(xAppInfo);
 				}

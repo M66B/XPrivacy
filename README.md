@@ -515,6 +515,9 @@ Changelog
 
 * Performance improvement
 * Added Vietnamese translation
+* Updated Catalan translation
+* Updated French translation
+* Updated Lithuanian translation
 * Updated Polish translation
 * Updated Turkish translation
 

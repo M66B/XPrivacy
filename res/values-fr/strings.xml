@@ -64,7 +64,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>
     <string name="help_used">a utilisé ces données</string>
-    <string name="help_frozen">is disabled</string>
+    <string name="help_frozen">est désactivé</string>
     <string name="help_dangerous">est dangereuse</string>
     
 </resources>

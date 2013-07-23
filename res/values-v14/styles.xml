@@ -6,6 +6,7 @@
         <item name="icon_help">@drawable/help_holo_dark</item>
         <item name="icon_info">@drawable/info_holo_dark</item>
         <item name="icon_internet">@drawable/internet_holo_dark</item>
+        <item name="icon_internet_grayed">@drawable/internet_grayed_holo_dark</item>
         <item name="icon_used_grayed">@drawable/used_grayed_holo_dark</item>
         <item name="icon_used">@drawable/used_holo_dark</item>
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_dark</item>
@@ -23,6 +24,7 @@
         <item name="icon_help">@drawable/help_holo_light</item>
         <item name="icon_info">@drawable/info_holo_light</item>
         <item name="icon_internet">@drawable/internet_holo_light</item>
+        <item name="icon_internet_grayed">@drawable/internet_grayed_holo_light</item>
         <item name="icon_used_grayed">@drawable/used_grayed_holo_light</item>
         <item name="icon_used">@drawable/used_holo_light</item>
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_light</item>
