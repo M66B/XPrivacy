@@ -73,17 +73,20 @@
 
         <ImageView
             android:id="@+id/imgUsed"
-            android:layout_width="32dip"
-            android:layout_height="32dip"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/help_used"
-            android:paddingLeft="2dip"
-            android:src="?attr/icon_used_grayed" />
-
-        <View
             android:layout_width="24dip"
             android:layout_height="24dip"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6dip"
+            android:contentDescription="@string/help_used"
+            android:src="?attr/icon_used_grayed" />
+
+        <ImageView
+            android:id="@+id/imgInternet"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/help_internet"
+            android:src="?attr/icon_internet_grayed" />
 
         <RelativeLayout
             android:layout_width="0dip"
