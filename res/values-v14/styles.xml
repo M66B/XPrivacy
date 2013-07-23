@@ -3,12 +3,15 @@
     <style name="CustomTheme" parent="android:Theme.Holo">
         <item name="icon_edit">@drawable/edit_query_holo_dark</item>
         <item name="icon_granted">@drawable/granted_holo_dark</item>
+        <item name="icon_granted_grayed">@drawable/granted_grayed_holo_dark</item>
         <item name="icon_help">@drawable/help_holo_dark</item>
         <item name="icon_info">@drawable/info_holo_dark</item>
         <item name="icon_internet">@drawable/internet_holo_dark</item>
         <item name="icon_internet_grayed">@drawable/internet_grayed_holo_dark</item>
-        <item name="icon_used_grayed">@drawable/used_grayed_holo_dark</item>
         <item name="icon_used">@drawable/used_holo_dark</item>
+        <item name="icon_used_grayed">@drawable/used_grayed_holo_dark</item>
+        <item name="icon_system">@drawable/system_holo_dark</item>
+        <item name="icon_system_grayed">@drawable/system_grayed_holo_dark</item>
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_dark</item>
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_dark</item>
         <item name="icon_launcher">@drawable/ic_launcher_holo_dark</item>
@@ -21,12 +24,15 @@
     <style name="CustomTheme.Light" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="icon_edit">@drawable/edit_query_holo_light</item>
         <item name="icon_granted">@drawable/granted_holo_light</item>
+        <item name="icon_granted_grayed">@drawable/granted_grayed_holo_light</item>
         <item name="icon_help">@drawable/help_holo_light</item>
         <item name="icon_info">@drawable/info_holo_light</item>
         <item name="icon_internet">@drawable/internet_holo_light</item>
         <item name="icon_internet_grayed">@drawable/internet_grayed_holo_light</item>
-        <item name="icon_used_grayed">@drawable/used_grayed_holo_light</item>
         <item name="icon_used">@drawable/used_holo_light</item>
+        <item name="icon_used_grayed">@drawable/used_grayed_holo_light</item>
+        <item name="icon_system">@drawable/system_holo_light</item>
+        <item name="icon_system_grayed">@drawable/system_grayed_holo_light</item>
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_light</item>
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_light</item>
         <item name="icon_launcher">@drawable/ic_launcher_holo_light</item>
