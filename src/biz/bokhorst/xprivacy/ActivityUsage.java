@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +42,22 @@ public class ActivityUsage extends Activity {
 		// Start task to get usage data
 		UsageTask usageTask = new UsageTask();
 		usageTask.execute();
+
+		// Listen for clicks
+		ListView lvUsage = (ListView) findViewById(R.id.lvUsage);
+		lvUsage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
+				PrivacyManager.UsageData usageData = mUsageAdapter.getItem(position);
+				String[] packageName = getPackageManager().getPackagesForUid(usageData.getUid());
+				if (packageName != null && packageName.length > 0) {
+					Intent intent = new Intent(ActivityUsage.this, ActivityApp.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					intent.putExtra(ActivityApp.cPackageName, packageName[0]);
+					startActivity(intent);
+				}
+			}
+		});
 
 		// Up navigation
 		getActionBar().setDisplayHomeAsUpEnabled(true);

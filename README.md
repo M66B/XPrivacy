@@ -519,13 +519,19 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Version 1.7.10**
+
+**BETA!**
+
+* Open application settings when clicking in the data usage view
+
 **Version 1.7.9**
 
 **BETA!**
 
 * Performance improvements
 * Consider no Android permissions required as having Android permissions for a category
-* Usage data view
+* Added data usage view for debugging purposes
 * Updated Norwegian translation
 * Updated Slovak translation
 
