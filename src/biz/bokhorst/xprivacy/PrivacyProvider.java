@@ -71,7 +71,6 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		if (sUriMatcher.match(uri) == TYPE_RESTRICTION && selectionArgs != null && selectionArgs.length >= 2) {
@@ -81,77 +80,7 @@ public class PrivacyProvider extends ContentProvider {
 			boolean usage = Boolean.parseBoolean(selectionArgs[1]);
 			final String methodName = (selectionArgs.length >= 3 ? selectionArgs[2] : null);
 
-			@SuppressWarnings("resource")
-			MatrixCursor cursor = new MatrixCursor(
-					new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_RESTRICTED });
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
-
-			// Build restriction list
-			List<String> listRestrictionName;
-			if (restrictionName == null)
-				listRestrictionName = PrivacyManager.getRestrictions(true);
-			else {
-				listRestrictionName = new ArrayList<String>();
-				listRestrictionName.add(restrictionName);
-			}
-
-			if (uid == 0) {
-				// Process restrictions
-				for (String eRestrictionName : listRestrictionName) {
-					// Get data
-					String restrictions = prefs.getString(getRestrictionPref(eRestrictionName), "*");
-					List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
-					boolean defaultAllowed = listRestriction.get(0).equals("*");
-					if (defaultAllowed)
-						listRestriction.remove(0);
-					else
-						throw new IllegalArgumentException();
-
-					// Process data
-					for (String sUid : listRestriction) {
-						int eUid = Integer.parseInt(sUid);
-
-						// Category
-						cursor.addRow(new Object[] { eUid, eRestrictionName, null, true });
-
-						// Exceptions
-						for (String eMethodName : PrivacyManager.getMethods(eRestrictionName)) {
-							boolean allowed = prefs.getBoolean(getExceptionPref(eUid, eRestrictionName, eMethodName),
-									false);
-							if (allowed || PrivacyManager.isDangerousMethod(eRestrictionName, eMethodName))
-								cursor.addRow(new Object[] { eUid, eRestrictionName, eMethodName, !allowed });
-						}
-					}
-				}
-			} else {
-				// Process restrictions
-				boolean allowed = false;
-				for (String eRestrictionName : listRestrictionName) {
-					boolean rAllowed = getAllowed(uid, eRestrictionName, methodName, prefs);
-					cursor.addRow(new Object[] { uid, eRestrictionName, methodName, Boolean.toString(!rAllowed) });
-					allowed = allowed || rAllowed;
-				}
-				final boolean restricted = !allowed;
-
-				// Update usage time
-				if (usage && restrictionName != null)
-					new Thread(new Runnable() {
-						public void run() {
-							long timeStamp = new Date().getTime();
-							SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE,
-									Context.MODE_PRIVATE);
-							SharedPreferences.Editor editor = uprefs.edit();
-							editor.putLong(getUsagePref(uid, restrictionName), timeStamp);
-							editor.putBoolean(getRestrictedPref(uid, restrictionName), restricted);
-							if (methodName != null) {
-								editor.putLong(getUsagePref(uid, restrictionName, methodName), timeStamp);
-								editor.putBoolean(getRestrictedPref(uid, restrictionName, methodName), restricted);
-							}
-							editor.apply();
-						}
-					}).start();
-			}
-			return cursor;
+			return queryRestrictions(uid, restrictionName, methodName, usage);
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length >= 1) {
 			// Return usage
 			List<String> listRestriction;
@@ -163,38 +92,119 @@ public class PrivacyProvider extends ContentProvider {
 			}
 			int uid = Integer.parseInt(selectionArgs[0]);
 			String methodName = (selectionArgs.length >= 2 ? selectionArgs[1] : null);
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-			MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_RESTRICTED,
-					COL_USED });
-			for (String restrictionName : listRestriction)
-				if (methodName == null)
-					cursor.addRow(new Object[] { uid, restrictionName, null,
-							prefs.getBoolean(getRestrictedPref(uid, restrictionName), false),
-							prefs.getLong(getUsagePref(uid, restrictionName), 0) });
-				else
-					cursor.addRow(new Object[] { uid, restrictionName, methodName,
-							prefs.getBoolean(getRestrictedPref(uid, restrictionName, methodName), false),
-							prefs.getLong(getUsagePref(uid, restrictionName, methodName), 0) });
 
-			return cursor;
-		} else if (sUriMatcher.match(uri) == TYPE_SETTING && selectionArgs == null) {
-			// Return setting
-			String settingName = selection;
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
-			MatrixCursor cursor = new MatrixCursor(new String[] { COL_SETTING, COL_VALUE });
-			if (settingName == null)
-				for (String settingKey : prefs.getAll().keySet())
-					try {
-						cursor.addRow(new Object[] { getSettingName(settingKey), prefs.getString(settingKey, null) });
-					} catch (Throwable ex) {
-						// Legacy boolean
-					}
-			else
-				cursor.addRow(new Object[] { settingName, prefs.getString(getSettingPref(settingName), null) });
-			return cursor;
-		}
+			return queryUsage(uid, listRestriction, methodName);
+		} else if (sUriMatcher.match(uri) == TYPE_SETTING && selectionArgs == null)
+			return querySettings(selection);
 
 		throw new IllegalArgumentException(uri.toString());
+	}
+
+	@SuppressWarnings({ "deprecation", "resource" })
+	@SuppressLint("WorldReadableFiles")
+	private Cursor queryRestrictions(final int uid, final String restrictionName, final String methodName, boolean usage) {
+		MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_RESTRICTED });
+		SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
+
+		// Build restriction list
+		List<String> listRestrictionName;
+		if (restrictionName == null)
+			listRestrictionName = PrivacyManager.getRestrictions(true);
+		else {
+			listRestrictionName = new ArrayList<String>();
+			listRestrictionName.add(restrictionName);
+		}
+
+		if (uid == 0) {
+			// Process restrictions
+			for (String eRestrictionName : listRestrictionName) {
+				// Get data
+				String restrictions = prefs.getString(getRestrictionPref(eRestrictionName), "*");
+				List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
+				boolean defaultAllowed = listRestriction.get(0).equals("*");
+				if (defaultAllowed)
+					listRestriction.remove(0);
+				else
+					throw new IllegalArgumentException();
+
+				// Process data
+				for (String sUid : listRestriction) {
+					int eUid = Integer.parseInt(sUid);
+
+					// Category
+					cursor.addRow(new Object[] { eUid, eRestrictionName, null, true });
+
+					// Exceptions
+					for (String eMethodName : PrivacyManager.getMethods(eRestrictionName)) {
+						boolean allowed = prefs
+								.getBoolean(getExceptionPref(eUid, eRestrictionName, eMethodName), false);
+						if (allowed || PrivacyManager.isDangerousMethod(eRestrictionName, eMethodName))
+							cursor.addRow(new Object[] { eUid, eRestrictionName, eMethodName, !allowed });
+					}
+				}
+			}
+		} else {
+			// Process restrictions
+			boolean allowed = false;
+			for (String eRestrictionName : listRestrictionName) {
+				boolean rAllowed = getAllowed(uid, eRestrictionName, methodName, prefs);
+				cursor.addRow(new Object[] { uid, eRestrictionName, methodName, Boolean.toString(!rAllowed) });
+				allowed = allowed || rAllowed;
+			}
+			final boolean restricted = !allowed;
+
+			// Update usage time
+			if (usage && restrictionName != null)
+				new Thread(new Runnable() {
+					public void run() {
+						long timeStamp = new Date().getTime();
+						SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
+						SharedPreferences.Editor editor = uprefs.edit();
+						editor.putLong(getUsagePref(uid, restrictionName), timeStamp);
+						editor.putBoolean(getRestrictedPref(uid, restrictionName), restricted);
+						if (methodName != null) {
+							editor.putLong(getUsagePref(uid, restrictionName, methodName), timeStamp);
+							editor.putBoolean(getRestrictedPref(uid, restrictionName, methodName), restricted);
+						}
+						editor.apply();
+					}
+				}).start();
+		}
+		return cursor;
+	}
+
+	private Cursor queryUsage(int uid, List<String> listRestriction, String methodName) {
+		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
+		MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_RESTRICTED,
+				COL_USED });
+		for (String restrictionName : listRestriction)
+			if (methodName == null)
+				cursor.addRow(new Object[] { uid, restrictionName, null,
+						prefs.getBoolean(getRestrictedPref(uid, restrictionName), false),
+						prefs.getLong(getUsagePref(uid, restrictionName), 0) });
+			else
+				cursor.addRow(new Object[] { uid, restrictionName, methodName,
+						prefs.getBoolean(getRestrictedPref(uid, restrictionName, methodName), false),
+						prefs.getLong(getUsagePref(uid, restrictionName, methodName), 0) });
+
+		return cursor;
+	}
+
+	@SuppressWarnings("deprecation")
+	@SuppressLint("WorldReadableFiles")
+	private Cursor querySettings(String settingName) {
+		SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
+		MatrixCursor cursor = new MatrixCursor(new String[] { COL_SETTING, COL_VALUE });
+		if (settingName == null)
+			for (String settingKey : prefs.getAll().keySet())
+				try {
+					cursor.addRow(new Object[] { getSettingName(settingKey), prefs.getString(settingKey, null) });
+				} catch (Throwable ex) {
+					// Legacy boolean
+				}
+		else
+			cursor.addRow(new Object[] { settingName, prefs.getString(getSettingPref(settingName), null) });
+		return cursor;
 	}
 
 	@Override
