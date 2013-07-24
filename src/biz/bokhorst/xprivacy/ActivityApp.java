@@ -143,9 +143,9 @@ public class ActivityApp extends Activity {
 		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
 		tvVersion.setText(mAppInfo.getVersion());
 
-		// Display package name / uid
+		// Display package name
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
-		tvPackageName.setText(String.format("%s %d", mAppInfo.getPackageName(), mAppInfo.getUid()));
+		tvPackageName.setText(mAppInfo.getPackageName());
 
 		// Get applicable restrictions
 		boolean fPermission = PrivacyManager
