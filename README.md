@@ -511,6 +511,10 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
+**Next version**
+
+* Updated Norwegian translation
+
 **Version 1.7.8**
 
 **BETA!**
