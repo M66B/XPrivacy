@@ -1575,17 +1575,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				// Match applications
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListAppSelected) {
-					// Get used
+					// Get if used
 					boolean used = false;
 					if (fUsed)
 						used = (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(), mRestrictionName,
 								null) != 0);
 
+					// Get if internet
 					boolean internet = false;
 					if (fInternet)
 						internet = xAppInfo.hasInternet();
 
-					// Get contains
+					// Get if name contains
 					boolean contains = false;
 					if (!fName.equals(""))
 						contains = (xAppInfo.toString().toLowerCase().contains(((String) fName).toLowerCase()));

@@ -521,7 +521,10 @@ Changelog
 
 **Next version**
 
+* Performance improvements
+* Consider no permissions required as having permissions
 * Updated Norwegian translation
+* Updated Slovak translation
 
 **Version 1.7.8**
 

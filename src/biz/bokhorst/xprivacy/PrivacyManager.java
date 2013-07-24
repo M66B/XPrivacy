@@ -954,8 +954,8 @@ public class PrivacyManager {
 	@SuppressLint("DefaultLocale")
 	public static boolean hasPermission(Context context, String packageName, String restrictionName) {
 		try {
-			List<String> listPermission = mPermissions.get(restrictionName);
-			if (listPermission.size() == 0)
+			List<String> listPermission = getPermissions(restrictionName);
+			if (listPermission.size() == 0 || listPermission.contains(""))
 				return true;
 			PackageManager pm = context.getPackageManager();
 			PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
