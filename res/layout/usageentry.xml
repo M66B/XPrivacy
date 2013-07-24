@@ -26,11 +26,12 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
-    <TextView
-        android:id="@+id/tvRestricted"
-        android:layout_width="40dip"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="false" />
+    <ImageView
+        android:id="@+id/imgRestricted"
+        android:layout_width="12dip"
+        android:layout_height="12dip"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/help_used"
+        android:src="@android:drawable/btn_star" />
 
 </LinearLayout>

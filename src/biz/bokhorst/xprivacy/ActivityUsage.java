@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -14,17 +15,21 @@ import android.os.Process;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class ActivityUsage extends Activity {
-
 	private int mThemeId;
+	private boolean mAll = true;
 	private UsageAdapter mUsageAdapter;
 
 	@Override
@@ -64,6 +69,13 @@ public class ActivityUsage extends Activity {
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.usage, menu);
+		return true;
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
@@ -73,6 +85,11 @@ public class ActivityUsage extends Activity {
 					TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
 				else
 					NavUtils.navigateUpTo(this, upIntent);
+			return true;
+		case R.id.menu_all:
+			mAll = !mAll;
+			if (mUsageAdapter != null)
+				mUsageAdapter.getFilter().filter(Boolean.toString(mAll));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -104,8 +121,55 @@ public class ActivityUsage extends Activity {
 	}
 
 	private class UsageAdapter extends ArrayAdapter<PrivacyManager.UsageData> {
+		private List<PrivacyManager.UsageData> mListUsageData;
+
 		public UsageAdapter(Context context, int textViewResourceId, List<PrivacyManager.UsageData> objects) {
 			super(context, textViewResourceId, objects);
+			mListUsageData = objects;
+		}
+
+		@Override
+		public Filter getFilter() {
+			return new UsageFilter();
+		}
+
+		private class UsageFilter extends Filter {
+			public UsageFilter() {
+			}
+
+			@Override
+			protected FilterResults performFiltering(CharSequence constraint) {
+				FilterResults results = new FilterResults();
+
+				// Get argument
+				boolean all = Boolean.parseBoolean((String) constraint);
+
+				// Match applications
+				List<PrivacyManager.UsageData> lstResult = new ArrayList<PrivacyManager.UsageData>();
+				for (PrivacyManager.UsageData usageData : UsageAdapter.this.mListUsageData) {
+					if (all ? true : usageData.getRestricted())
+						lstResult.add(usageData);
+				}
+
+				synchronized (this) {
+					results.values = lstResult;
+					results.count = lstResult.size();
+				}
+
+				return results;
+			}
+
+			@Override
+			@SuppressWarnings("unchecked")
+			protected void publishResults(CharSequence constraint, FilterResults results) {
+				clear();
+				if (results.values == null)
+					notifyDataSetInvalidated();
+				else {
+					addAll((ArrayList<PrivacyManager.UsageData>) results.values);
+					notifyDataSetChanged();
+				}
+			}
 		}
 
 		@Override
@@ -116,7 +180,7 @@ public class ActivityUsage extends Activity {
 			TextView tvTime = (TextView) row.findViewById(R.id.tvTime);
 			TextView tvApp = (TextView) row.findViewById(R.id.tvApp);
 			TextView tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
-			TextView tvRestricted = (TextView) row.findViewById(R.id.tvRestricted);
+			ImageView imgRestricted = (ImageView) row.findViewById(R.id.imgRestricted);
 
 			// Get data
 			PrivacyManager.UsageData usageData = getItem(position);
@@ -127,7 +191,7 @@ public class ActivityUsage extends Activity {
 			tvTime.setText(format.format(date));
 			tvApp.setText(Integer.toString(usageData.getUid()));
 			tvRestriction.setText(String.format("%s/%s", usageData.getRestrictionName(), usageData.getMethodName()));
-			tvRestricted.setText(Boolean.toString(usageData.getRestricted()));
+			imgRestricted.setVisibility(usageData.getRestricted() ? View.VISIBLE : View.INVISIBLE);
 
 			return row;
 		}
