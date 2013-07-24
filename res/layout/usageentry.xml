@@ -11,6 +11,14 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
+    <ImageView
+        android:id="@+id/imgRestricted"
+        android:layout_width="16dip"
+        android:layout_height="16dip"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/help_used"
+        android:src="@drawable/btn_check_buttonless_on" />
+
     <TextView
         android:id="@+id/tvApp"
         android:layout_width="50dip"
@@ -25,13 +33,5 @@
         android:layout_weight="1"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
-
-    <ImageView
-        android:id="@+id/imgRestricted"
-        android:layout_width="12dip"
-        android:layout_height="12dip"
-        android:layout_gravity="center_vertical"
-        android:contentDescription="@string/help_used"
-        android:src="@android:drawable/btn_star" />
 
 </LinearLayout>

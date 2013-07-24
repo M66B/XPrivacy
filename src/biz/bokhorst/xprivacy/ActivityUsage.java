@@ -125,7 +125,8 @@ public class ActivityUsage extends Activity {
 
 		public UsageAdapter(Context context, int textViewResourceId, List<PrivacyManager.UsageData> objects) {
 			super(context, textViewResourceId, objects);
-			mListUsageData = objects;
+			mListUsageData = new ArrayList<PrivacyManager.UsageData>();
+			mListUsageData.addAll(objects);
 		}
 
 		@Override
