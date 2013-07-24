@@ -494,6 +494,12 @@ The default is to show only restriction categories for which an application has 
 This can be changed using the settings.
 Some restriction categories don't require Android permissions, however.
 
+**(28) I have restricted locations but my GPS status icon still appears**
+
+That is correct, XPrivacy only replaces the real location by a fake location.
+It even uses the real location to randomize the fake location.
+The idea is that everything should appear as normal as possible to an application.
+
 Support
 -------
 
