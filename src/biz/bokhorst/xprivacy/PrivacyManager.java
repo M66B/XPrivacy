@@ -703,6 +703,29 @@ public class PrivacyManager {
 		return lastUsage;
 	}
 
+	public static List<UsageData> getUsed(Context context) {
+		List<UsageData> listUsage = new ArrayList<UsageData>();
+		ContentResolver cr = context.getContentResolver();
+		Cursor cursor = cr.query(PrivacyProvider.URI_USAGE, null, null, new String[] { "0", null }, null);
+		if (cursor != null)
+			try {
+				while (cursor.moveToNext()) {
+					int uid = cursor.getInt(cursor.getColumnIndex(PrivacyProvider.COL_UID));
+					String restrictionName = cursor.getString(cursor.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
+					String methodName = cursor.getString(cursor.getColumnIndex(PrivacyProvider.COL_METHOD));
+					boolean restricted = Boolean.parseBoolean(cursor.getString(cursor
+							.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
+					long used = cursor.getLong(cursor.getColumnIndex(PrivacyProvider.COL_USED));
+					UsageData usageData = new UsageData(uid, restrictionName, methodName, restricted, used);
+					listUsage.add(usageData);
+				}
+			} finally {
+				cursor.close();
+			}
+		Collections.sort(listUsage);
+		return listUsage;
+	}
+
 	// Settings
 
 	public static boolean getSettingBool(XHook hook, Context context, String settingName, boolean defaultValue,
@@ -1015,7 +1038,7 @@ public class PrivacyManager {
 		}
 	}
 
-	private static class UsageData {
+	public static class UsageData implements Comparable<UsageData> {
 		private Integer mUid;
 		private String mRestriction;
 		private String mMethodName;
@@ -1024,11 +1047,19 @@ public class PrivacyManager {
 		private int mHash;
 
 		public UsageData(int uid, String restrictionName, String methodName, boolean restricted) {
+			initialize(uid, restrictionName, methodName, restricted, new Date().getTime());
+		}
+
+		public UsageData(int uid, String restrictionName, String methodName, boolean restricted, long used) {
+			initialize(uid, restrictionName, methodName, restricted, used);
+		}
+
+		private void initialize(int uid, String restrictionName, String methodName, boolean restricted, long used) {
 			mUid = uid;
 			mRestriction = restrictionName;
 			mMethodName = methodName;
 			mRestricted = restricted;
-			mTimeStamp = new Date().getTime();
+			mTimeStamp = used;
 
 			mHash = mUid.hashCode();
 			if (mRestriction != null)
@@ -1077,6 +1108,16 @@ public class PrivacyManager {
 		@SuppressLint("DefaultLocale")
 		public String toString() {
 			return String.format("%d/%s/%s", mUid, mRestriction, mMethodName);
+		}
+
+		@Override
+		public int compareTo(UsageData another) {
+			if (mTimeStamp < another.mTimeStamp)
+				return -1;
+			else if (mTimeStamp > another.mTimeStamp)
+				return 1;
+			else
+				return 0;
 		}
 	}
 }

@@ -177,16 +177,30 @@ public class PrivacyProvider extends ContentProvider {
 		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
 		MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_RESTRICTED,
 				COL_USED });
-		for (String restrictionName : listRestriction)
-			if (methodName == null)
-				cursor.addRow(new Object[] { uid, restrictionName, null,
-						prefs.getBoolean(getRestrictedPref(uid, restrictionName), false),
-						prefs.getLong(getUsagePref(uid, restrictionName), 0) });
-			else
-				cursor.addRow(new Object[] { uid, restrictionName, methodName,
-						prefs.getBoolean(getRestrictedPref(uid, restrictionName, methodName), false),
-						prefs.getLong(getUsagePref(uid, restrictionName, methodName), 0) });
-
+		if (uid == 0) {
+			for (String prefName : prefs.getAll().keySet())
+				if (prefName.startsWith(COL_USED)) {
+					String[] prefParts = prefName.split("\\.");
+					if (prefParts.length == 4) {
+						int rUid = Integer.parseInt(prefParts[1]);
+						String rRestrictionName = prefParts[2];
+						String rMethodName = prefParts[3];
+						cursor.addRow(new Object[] { rUid, rRestrictionName, rMethodName,
+								prefs.getBoolean(getRestrictedPref(rUid, rRestrictionName, rMethodName), false),
+								prefs.getLong(getUsagePref(rUid, rRestrictionName, rMethodName), 0) });
+					}
+				}
+		} else {
+			for (String restrictionName : listRestriction)
+				if (methodName == null)
+					cursor.addRow(new Object[] { uid, restrictionName, null,
+							prefs.getBoolean(getRestrictedPref(uid, restrictionName), false),
+							prefs.getLong(getUsagePref(uid, restrictionName), 0) });
+				else
+					cursor.addRow(new Object[] { uid, restrictionName, methodName,
+							prefs.getBoolean(getRestrictedPref(uid, restrictionName, methodName), false),
+							prefs.getLong(getUsagePref(uid, restrictionName, methodName), 0) });
+		}
 		return cursor;
 	}
 

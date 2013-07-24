@@ -415,7 +415,7 @@ public class ActivityApp extends Activity {
 				ctvMethodName.setText(methodName);
 			else {
 				Date date = new Date(lastUsage);
-				SimpleDateFormat format = new SimpleDateFormat("dd/HH:mm", Locale.US);
+				SimpleDateFormat format = new SimpleDateFormat("dd/HH:mm", Locale.ROOT);
 				ctvMethodName.setText(String.format("%s %s", methodName, format.format(date)));
 			}
 

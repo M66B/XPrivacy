@@ -42,7 +42,13 @@
         </activity>
         <activity
             android:name=".ActivityApp"
-            android:exported="true"
+            android:parentActivityName=".ActivityMain" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="biz.bokhorst.xprivacy.ActivityMain" />
+        </activity>
+        <activity
+            android:name=".ActivityUsage"
             android:parentActivityName=".ActivityMain" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
