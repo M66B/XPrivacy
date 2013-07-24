@@ -504,10 +504,12 @@ Support
 -------
 
 If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues),
-preferably including a [logcat](http://developer.android.com/tools/help/logcat.html)
+including a [logcat](http://developer.android.com/tools/help/logcat.html)
 (use [pastebin](http://pastebin.com/) or a similar service).
 
-*Before submitting any issue please ensure you are running the latest version of XPrivacy.*
+**Before submitting any issue please ensure you are running the latest version of XPrivacy.**
+
+**Before submitting any issue please [read this](http://forum.xda-developers.com/showpost.php?p=43892381&postcount=1703).**
 
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues),
 but check if there doesn´t already exist a similar request.
