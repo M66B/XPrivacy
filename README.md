@@ -1123,6 +1123,14 @@ Restrict new data:
 * Write a before and/or after method to restrict the data
 * Do a [pull request](https://help.github.com/articles/using-pull-requests) if you want to contribute
 
+Using Eclipse:
+
+* Clone the GitHub project to a temporary location
+* Import the GitHub project into Eclipse, copy the files
+* Close Eclipse and copy the project from the temporary location over the imported project
+	* Make sure you copy all hidden files
+* Add the Xposed library to the build path as described [here](https://github.com/rovo89/XposedBridge/wiki/Development-tutorial#making-the-project-an-xposed-module)
+
 Contributors do not have to donate for the [pro version](http://www.faircode.eu/xprivacy/).
 
 License
