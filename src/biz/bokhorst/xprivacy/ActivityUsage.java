@@ -8,7 +8,9 @@ import java.util.Locale;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.LayoutInflater;
@@ -36,11 +38,9 @@ public class ActivityUsage extends Activity {
 		// Set layout
 		setContentView(R.layout.usagelist);
 
-		// Provide content
-		ListView lvUsage = (ListView) findViewById(R.id.lvUsage);
-		List<PrivacyManager.UsageData> listUsageData = PrivacyManager.getUsed(this);
-		mUsageAdapter = new UsageAdapter(this, R.layout.usageentry, listUsageData);
-		lvUsage.setAdapter(mUsageAdapter);
+		// Start task to get usage data
+		UsageTask usageTask = new UsageTask();
+		usageTask.execute();
 
 		// Up navigation
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,6 +69,23 @@ public class ActivityUsage extends Activity {
 			mUsageAdapter.notifyDataSetChanged();
 	}
 
+	private class UsageTask extends AsyncTask<Object, Object, List<PrivacyManager.UsageData>> {
+		@Override
+		protected List<PrivacyManager.UsageData> doInBackground(Object... arg0) {
+			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
+			return PrivacyManager.getUsed(ActivityUsage.this);
+		}
+
+		@Override
+		protected void onPostExecute(List<PrivacyManager.UsageData> listUsageData) {
+			super.onPostExecute(listUsageData);
+
+			mUsageAdapter = new UsageAdapter(ActivityUsage.this, R.layout.usageentry, listUsageData);
+			ListView lvUsage = (ListView) findViewById(R.id.lvUsage);
+			lvUsage.setAdapter(mUsageAdapter);
+		}
+	}
+
 	private class UsageAdapter extends ArrayAdapter<PrivacyManager.UsageData> {
 		public UsageAdapter(Context context, int textViewResourceId, List<PrivacyManager.UsageData> objects) {
 			super(context, textViewResourceId, objects);
@@ -82,7 +99,6 @@ public class ActivityUsage extends Activity {
 			TextView tvTime = (TextView) row.findViewById(R.id.tvTime);
 			TextView tvApp = (TextView) row.findViewById(R.id.tvApp);
 			TextView tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
-			TextView tvMethod = (TextView) row.findViewById(R.id.tvMethod);
 			TextView tvRestricted = (TextView) row.findViewById(R.id.tvRestricted);
 
 			// Get data
@@ -90,11 +106,10 @@ public class ActivityUsage extends Activity {
 
 			// Build entry
 			Date date = new Date(usageData.getTimeStamp());
-			SimpleDateFormat format = new SimpleDateFormat("dd HH:mm:ss", Locale.ROOT);
+			SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ROOT);
 			tvTime.setText(format.format(date));
 			tvApp.setText(Integer.toString(usageData.getUid()));
-			tvRestriction.setText(usageData.getRestrictionName());
-			tvMethod.setText(usageData.getMethodName());
+			tvRestriction.setText(String.format("%s/%s", usageData.getRestrictionName(), usageData.getMethodName()));
 			tvRestricted.setText(Boolean.toString(usageData.getRestricted()));
 
 			return row;

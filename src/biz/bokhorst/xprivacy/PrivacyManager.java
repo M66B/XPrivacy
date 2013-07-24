@@ -1113,9 +1113,9 @@ public class PrivacyManager {
 		@Override
 		public int compareTo(UsageData another) {
 			if (mTimeStamp < another.mTimeStamp)
-				return -1;
-			else if (mTimeStamp > another.mTimeStamp)
 				return 1;
+			else if (mTimeStamp > another.mTimeStamp)
+				return -1;
 			else
 				return 0;
 		}

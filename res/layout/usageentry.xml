@@ -6,35 +6,29 @@
 
     <TextView
         android:id="@+id/tvTime"
-        android:layout_width="wrap_content"
+        android:layout_width="60dip"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
     <TextView
         android:id="@+id/tvApp"
-        android:layout_width="wrap_content"
+        android:layout_width="50dip"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
     <TextView
         android:id="@+id/tvRestriction"
-        android:layout_width="wrap_content"
+        android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="false" />
-
-    <TextView
-        android:id="@+id/tvMethod"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
     <TextView
         android:id="@+id/tvRestricted"
-        android:layout_width="wrap_content"
+        android:layout_width="40dip"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />

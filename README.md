@@ -519,10 +519,13 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Next version**
+**Version 1.7.9**
+
+**BETA!**
 
 * Performance improvements
-* Consider no permissions required as having permissions
+* Consider no Android permissions required as having Android permissions for a category
+* Usage data view
 * Updated Norwegian translation
 * Updated Slovak translation
 

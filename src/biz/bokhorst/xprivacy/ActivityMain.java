@@ -92,7 +92,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityMain extends Activity implements OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
-
 	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
@@ -448,7 +447,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private class SpinnerAdapter extends ArrayAdapter<String> {
-
 		public SpinnerAdapter(Context context, int textViewResourceId) {
 			super(context, textViewResourceId);
 		}
@@ -1001,7 +999,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		return new File(fileName);
 	}
 
-	private String fetchJson(String... uri) {
+	private String fetchUpdateJson(String... uri) {
 		try {
 			// Request downloads
 			HttpClient httpclient = new DefaultHttpClient();
@@ -1025,7 +1023,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
-	private void processJson(String json) {
+	private void processUpdateJson(String json) {
 		try {
 			// Parse result
 			String version = null;
@@ -1156,17 +1154,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private class UpdateTask extends AsyncTask<String, String, String> {
-
 		@Override
 		protected String doInBackground(String... uri) {
-			return fetchJson(uri);
+			return fetchUpdateJson(uri);
 		}
 
 		@Override
 		protected void onPostExecute(String json) {
 			super.onPostExecute(json);
 			if (json != null)
-				processJson(json);
+				processUpdateJson(json);
 		}
 	}
 
@@ -1296,7 +1293,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private class ImportTask extends AsyncTask<File, String, String> {
-
 		private File mFile;
 		private final static int NOTIFY_ID = 2;
 
@@ -1433,7 +1429,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private class AppListTask extends AsyncTask<String, Integer, List<ApplicationInfoEx>> {
-
 		private String mRestrictionName;
 		private ProgressDialog mProgressDialog;
 
@@ -1517,7 +1512,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@SuppressLint("DefaultLocale")
 	private class AppListAdapter extends ArrayAdapter<ApplicationInfoEx> {
-
 		private Context mContext;
 		private List<ApplicationInfoEx> mListAppAll;
 		private List<ApplicationInfoEx> mListAppSelected;
