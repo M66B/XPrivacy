@@ -7,7 +7,7 @@
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013</string>
     <string name="menu_settings">Instillinger</string>
-    <string name="menu_template">Template</string>
+    <string name="menu_template">Skjema</string>
     <string name="menu_update">Sjekk for oppdatering</string>
     <string name="menu_report">Rapport en feil</string>
     <string name="menu_export">Eksportere</string>
@@ -19,26 +19,24 @@
     <string name="menu_app_launch">Kjør</string>
     <string name="menu_app_settings">Instillinger</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Ingen oppdatering finnes</string>
-    <string name="menu_contacts">Select contacts to allow</string>
-    <string name="msg_noupdate">No update available</string>
+    <string name="menu_accounts">Velg konto som skal tillates</string>
+    <string name="menu_contacts">Velg kontakter som skal tillates</string>
+    <string name="msg_noupdate">Ingen oppdatering finnes</string>
     <string name="msg_restricted" formatted="false">%s blokkert av XPrivacy</string>
     <string name="msg_licensed" formatted="false">Lisensert til: %s</string>
     <string name="msg_loading">Lader</string>
     <string name="msg_edit">Klikk på app ikonet for å bearbeide alle restriksjoner</string>
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Ferdig</string>
-    <string name="msg_reboot">Reboot required</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
+    <string name="msg_reboot">Reboot nødvendig</string>
+    <string name="msg_first"><b>XPrivacy er utviklet og testet med stor omsorg, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Ringe (telefon, SMS, MMS)</string>
     <string name="restrict_contacts">Kontakter</string>
     <string name="restrict_dictionary">Ordbok (bruker)</string>
-    <string name="restrict_identification">Identifikasjon (apparat)</string>
+    <string name="restrict_identification">Identifikasjon (enhet)</string>
     <string name="restrict_internet">Internett</string>
     <string name="restrict_location">Posisjon (fin/grov)</string>
     <string name="restrict_media">Medier (lyd, foto, video)</string>
@@ -49,7 +47,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_shell">Shell (kommandoer, superbruker)</string>
     <string name="restrict_system">System (installerte apper)</string>
     <string name="restrict_view">Betrakte (nettleser)</string>
-    <string name="title_category">Category:</string>
+    <string name="title_category">Kategori:</string>
     <string name="title_restrict">Marker for å blokke:</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>
@@ -59,12 +57,11 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_country">Land</string>
     <string name="settings_subscriber">Abonnent ID</string>
     <string name="settings_fpermission">Velg etter tillatelse</string>
-    <string name="settings_fsystem">Filter system applications</string>
+    <string name="settings_fsystem">Filtrer system applikasjoner</string>
     <string name="help_application">Applikasjon</string>
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>
     <string name="help_used">nytta denne typen av data</string>
-    <string name="help_frozen">is disabled</string>
-    <string name="help_dangerous">is dangerous</string>
-    
+    <string name="help_dangerous">er farlig</string>
+
 </resources>
