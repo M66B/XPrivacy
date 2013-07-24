@@ -503,39 +503,45 @@ public class PrivacyManager {
 							}
 
 						// Send usage data async
-						new Thread(new Runnable() {
-							public void run() {
-								Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-								UsageData data = null;
-								do {
-									int size = 0;
-									synchronized (mUsageQueue) {
-										if (mUsageQueue.size() > 0) {
-											data = mUsageQueue.keySet().iterator().next();
-											mUsageQueue.remove(data);
-											size = mUsageQueue.size();
-										} else
-											data = null;
-									}
-									if (data != null) {
-										try {
-											Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
-											ContentValues values = new ContentValues();
-											values.put(PrivacyProvider.COL_UID, data.getUid());
-											values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
-											values.put(PrivacyProvider.COL_METHOD, data.getMethodName());
-											values.put(PrivacyProvider.COL_RESTRICTED, data.getRestricted());
-											values.put(PrivacyProvider.COL_USED, data.getTimeStamp());
-											if (context.getContentResolver().update(PrivacyProvider.URI_USAGE, values,
-													null, null) <= 0)
-												Util.log(hook, Log.INFO, "Error updating usage data=" + data);
-										} catch (Throwable ex) {
-											Util.bug(hook, ex);
+						int qSize = 0;
+						synchronized (mUsageQueue) {
+							qSize = mUsageQueue.size();
+						}
+						if (qSize > 0) {
+							new Thread(new Runnable() {
+								public void run() {
+									Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+									UsageData data = null;
+									do {
+										int size = 0;
+										synchronized (mUsageQueue) {
+											if (mUsageQueue.size() > 0) {
+												data = mUsageQueue.keySet().iterator().next();
+												mUsageQueue.remove(data);
+												size = mUsageQueue.size();
+											} else
+												data = null;
 										}
-									}
-								} while (data != null);
-							}
-						}).start();
+										if (data != null) {
+											try {
+												Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
+												ContentValues values = new ContentValues();
+												values.put(PrivacyProvider.COL_UID, data.getUid());
+												values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
+												values.put(PrivacyProvider.COL_METHOD, data.getMethodName());
+												values.put(PrivacyProvider.COL_RESTRICTED, data.getRestricted());
+												values.put(PrivacyProvider.COL_USED, data.getTimeStamp());
+												if (context.getContentResolver().update(PrivacyProvider.URI_USAGE,
+														values, null, null) <= 0)
+													Util.log(hook, Log.INFO, "Error updating usage data=" + data);
+											} catch (Throwable ex) {
+												Util.bug(hook, ex);
+											}
+										}
+									} while (data != null);
+								}
+							}).start();
+						}
 					}
 				} catch (Throwable ex) {
 					Util.bug(hook, ex);
