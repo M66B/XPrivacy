@@ -526,6 +526,7 @@ Changelog
 * Menu to refresh usage data
 * Less memory usage during import ([issue](https://github.com/M66B/XPrivacy/issues/329))
 * Export file name with date / import with file chooser ([issue](https://github.com/M66B/XPrivacy/issues/327))
+* Share exported file ([issue](https://github.com/M66B/XPrivacy/issues/337))
 * Performance improvements
 * Updated German translation
 * Updated Japanese translation

@@ -1265,6 +1265,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					fos.close();
 				}
 
+				// Send share intent
+				Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+				intent.setType("text/xml");
+				intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + mFile));
+				startActivity(Intent.createChooser(intent, getString(R.string.app_name)));
+
 				// Display message
 				return getString(R.string.msg_done);
 			} catch (Throwable ex) {
