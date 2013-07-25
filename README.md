@@ -526,6 +526,7 @@ Changelog
 * Less memory usage during import ([issue](https://github.com/M66B/XPrivacy/issues/329))
 * Export file name with data / import with file chooser ([issue](https://github.com/M66B/XPrivacy/issues/327))
 * Updated Japanese translation
+* Updated Lithuanian translation
 
 **Version 1.7.10**
 
