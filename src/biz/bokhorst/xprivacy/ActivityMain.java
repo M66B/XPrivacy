@@ -10,9 +10,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.InterfaceAddress;
 import java.security.InvalidParameterException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.xml.parsers.SAXParserFactory;
@@ -96,6 +99,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private boolean mUsed = false;
 	private boolean mInternet = false;
 	private boolean mPro = false;
+
+	private static final int ACTIVITY_LICENSE = 0;
+	private static final int ACTIVITY_IMPORT = 1;
 
 	private BroadcastReceiver mPackageChangeReceiver = new BroadcastReceiver() {
 		@Override
@@ -308,7 +314,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					int uid = getPackageManager().getApplicationInfo("biz.bokhorst.xprivacy.pro", 0).uid;
 					PrivacyManager.deleteRestrictions(this, uid);
 					Util.log(null, Log.INFO, "Licensing: check");
-					startActivityForResult(new Intent("biz.bokhorst.xprivacy.pro.CHECK"), 0);
+					startActivityForResult(new Intent("biz.bokhorst.xprivacy.pro.CHECK"), ACTIVITY_LICENSE);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
@@ -321,40 +327,51 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (data != null) {
-			int code = data.getIntExtra("Code", -1);
-			int reason = data.getIntExtra("Reason", -1);
 
-			String sReason;
-			if (reason == LICENSED)
-				sReason = "LICENSED";
-			else if (reason == NOT_LICENSED)
-				sReason = "NOT_LICENSED";
-			else if (reason == RETRY)
-				sReason = "RETRY";
-			else if (reason == ERROR_CONTACTING_SERVER)
-				sReason = "ERROR_CONTACTING_SERVER";
-			else if (reason == ERROR_INVALID_PACKAGE_NAME)
-				sReason = "ERROR_INVALID_PACKAGE_NAME";
-			else if (reason == ERROR_NON_MATCHING_UID)
-				sReason = "ERROR_NON_MATCHING_UID";
-			else
-				sReason = Integer.toString(reason);
+		if (requestCode == ACTIVITY_LICENSE) {
+			// Result for license check
+			if (data != null) {
+				int code = data.getIntExtra("Code", -1);
+				int reason = data.getIntExtra("Reason", -1);
 
-			Util.log(null, Log.INFO, "Licensing: code=" + code + " reason=" + sReason);
+				String sReason;
+				if (reason == LICENSED)
+					sReason = "LICENSED";
+				else if (reason == NOT_LICENSED)
+					sReason = "NOT_LICENSED";
+				else if (reason == RETRY)
+					sReason = "RETRY";
+				else if (reason == ERROR_CONTACTING_SERVER)
+					sReason = "ERROR_CONTACTING_SERVER";
+				else if (reason == ERROR_INVALID_PACKAGE_NAME)
+					sReason = "ERROR_INVALID_PACKAGE_NAME";
+				else if (reason == ERROR_NON_MATCHING_UID)
+					sReason = "ERROR_NON_MATCHING_UID";
+				else
+					sReason = Integer.toString(reason);
 
-			if (code > 0) {
-				mPro = true;
-				invalidateOptionsMenu();
-				Toast toast = Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG);
-				toast.show();
-			} else if (reason == RETRY) {
-				new Handler().postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						checkLicense();
-					}
-				}, 60 * 1000);
+				Util.log(null, Log.INFO, "Licensing: code=" + code + " reason=" + sReason);
+
+				if (code > 0) {
+					mPro = true;
+					invalidateOptionsMenu();
+					Toast toast = Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG);
+					toast.show();
+				} else if (reason == RETRY) {
+					new Handler().postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							checkLicense();
+						}
+					}, 60 * 1000);
+				}
+			}
+		} else if (requestCode == ACTIVITY_IMPORT) {
+			// Result for import file choice
+			if (data != null) {
+				String fileName = data.getData().getPath();
+				ImportTask importTask = new ImportTask();
+				importTask.execute(new File(fileName));
 			}
 		}
 	}
@@ -939,13 +956,22 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionExport() {
+		boolean multiple = Util.isIntentAvailable(ActivityMain.this, Intent.ACTION_GET_CONTENT);
 		ExportTask exportTask = new ExportTask();
-		exportTask.execute(getExportFile());
+		exportTask.execute(getExportFile(multiple));
 	}
 
 	private void optionImport() {
-		ImportTask importTask = new ImportTask();
-		importTask.execute(getExportFile());
+		if (Util.isIntentAvailable(ActivityMain.this, Intent.ACTION_GET_CONTENT)) {
+			Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+			Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/.xprivacy/");
+			chooseFile.setDataAndType(uri, "text/xml");
+			Intent intent = Intent.createChooser(chooseFile, getString(R.string.app_name));
+			startActivityForResult(intent, ACTIVITY_IMPORT);
+		} else {
+			ImportTask importTask = new ImportTask();
+			importTask.execute(getExportFile(false));
+		}
 	}
 
 	private void optionSwitchTheme() {
@@ -989,12 +1015,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dlgAbout.show();
 	}
 
-	private File getExportFile() {
+	private File getExportFile(boolean multiple) {
 		File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
 				+ ".xprivacy");
 		folder.mkdir();
-		String fileName = folder + File.separator + "XPrivacy.xml";
-		return new File(fileName);
+		String fileName;
+		if (multiple) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm", Locale.ROOT);
+			fileName = String.format("XPrivacy_%s.xml", format.format(new Date()));
+		} else
+			fileName = "XPrivacy.xml";
+		return new File(folder + File.separator + fileName);
 	}
 
 	private String fetchUpdateJson(String... uri) {
@@ -1243,12 +1274,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		@Override
-		protected void onPreExecute() {
-			notify(getExportFile().getAbsolutePath(), true);
-			super.onPreExecute();
-		}
-
-		@Override
 		protected void onProgressUpdate(String... values) {
 			notify(values[0], true);
 			super.onProgressUpdate(values);
@@ -1340,12 +1365,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				Util.bug(null, ex);
 				return ex.toString();
 			}
-		}
-
-		@Override
-		protected void onPreExecute() {
-			notify(getExportFile().getAbsolutePath(), true);
-			super.onPreExecute();
 		}
 
 		@Override

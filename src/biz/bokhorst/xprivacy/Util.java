@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -248,5 +249,11 @@ public class Util {
 			if (string.equalsIgnoreCase(value))
 				return true;
 		return false;
+	}
+
+	public static boolean isIntentAvailable(Context context, String action) {
+		PackageManager packageManager = context.getPackageManager();
+		Intent intent = new Intent(action);
+		return (packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0);
 	}
 }
