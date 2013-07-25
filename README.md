@@ -532,6 +532,8 @@ Changelog
 
 **Next release**
 
+* Disable Android version warning for version 4.3
+* Updated telephony function permissions ([issue](http://forum.xda-developers.com/showpost.php?p=43949917&postcount=1820))
 * Updated Vietnamese translation
 
 **Version 1.7.13**
