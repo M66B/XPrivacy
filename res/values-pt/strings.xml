@@ -7,6 +7,7 @@
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
     <string name="app_copyright">Direitos de autor \u00A9 2013 por M. Bokhorst (M66B)</string>
     <string name="menu_usage">Usage</string>
+    <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">Definições</string>
     <string name="menu_template">Modelo</string>
     <string name="menu_update">Procurar atualizações</string>

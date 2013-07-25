@@ -7,6 +7,7 @@
     <string name="app_xversion" formatted="false">Xposed framework バージョン: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">履歴</string>
+    <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">設定</string>
     <string name="menu_template">カテゴリ</string>
     <string name="menu_update">更新を確認</string>

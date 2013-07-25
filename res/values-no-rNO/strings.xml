@@ -7,6 +7,7 @@
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013</string>
     <string name="menu_usage">Usage</string>
+    <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">Instillinger</string>
     <string name="menu_template">Skjema</string>
     <string name="menu_update">Sjekk for oppdatering</string>

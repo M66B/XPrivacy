@@ -7,6 +7,7 @@
     <string name="app_xversion" formatted="false">Xposed framework phiên bản: %d</string>
     <string name="app_copyright">Bản quyền \u00A9 2013 bởi M. Bokhorst (M66B)</string>
     <string name="menu_usage">Usage</string>
+    <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">Tùy chỉnh</string>
     <string name="menu_template">Mẫu</string>
     <string name="menu_update">Kiểm tra phiên bản mới</string>

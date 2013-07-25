@@ -91,6 +91,10 @@ public class ActivityUsage extends Activity {
 			if (mUsageAdapter != null)
 				mUsageAdapter.getFilter().filter(Boolean.toString(mAll));
 			return true;
+		case R.id.menu_refresh:
+			UsageTask usageTask = new UsageTask();
+			usageTask.execute();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -117,6 +121,7 @@ public class ActivityUsage extends Activity {
 			mUsageAdapter = new UsageAdapter(ActivityUsage.this, R.layout.usageentry, listUsageData);
 			ListView lvUsage = (ListView) findViewById(R.id.lvUsage);
 			lvUsage.setAdapter(mUsageAdapter);
+			mUsageAdapter.getFilter().filter(Boolean.toString(mAll));
 		}
 	}
 

@@ -523,10 +523,13 @@ Changelog
 
 * Filter usage data by restricted or not (menu)
 * Display icon if restricted in usage data view
+* Menu to refresh usage data
 * Less memory usage during import ([issue](https://github.com/M66B/XPrivacy/issues/329))
 * Export file name with date / import with file chooser ([issue](https://github.com/M66B/XPrivacy/issues/327))
+* Updated German translation
 * Updated Japanese translation
 * Updated Lithuanian translation
+* Updated Simplified Chinese translation
 
 **Version 1.7.10**
 
