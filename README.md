@@ -523,6 +523,7 @@ Changelog
 
 * Filter usage data by restricted or not (menu)
 * Display icon if restricted in usage data view
+* Less memory usage during import ([issue](https://github.com/M66B/XPrivacy/issues/329))
 * Updated Japanese translation
 
 **Version 1.7.10**
