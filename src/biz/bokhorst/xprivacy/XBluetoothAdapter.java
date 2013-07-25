@@ -18,6 +18,7 @@ public class XBluetoothAdapter extends XHook {
 	// public String getAddress()
 	// public Set<BluetoothDevice> getBondedDevices()
 	// frameworks/base/core/java/android/bluetooth/BluetoothAdapter.java
+	// http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

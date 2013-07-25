@@ -16,6 +16,7 @@ public class XInetAddress extends XHook {
 	// public static InetAddress getByAddress(String hostName, byte[] ipAddress)
 	// public static InetAddress getByName(String host)
 	// libcore/luni/src/main/java/java/net/InetAddress.java
+	// http://developer.android.com/reference/java/net/InetAddress.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

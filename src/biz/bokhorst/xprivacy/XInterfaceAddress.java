@@ -13,6 +13,7 @@ public class XInterfaceAddress extends XHook {
 	// public InetAddress getAddress()
 	// public InetAddress getBroadcast()
 	// libcore/luni/src/main/java/java/net/InterfaceAddress.java
+	// http://developer.android.com/reference/java/net/InterfaceAddress.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

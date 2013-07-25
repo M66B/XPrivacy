@@ -16,6 +16,7 @@ public class XCamera extends XHook {
 	// public final void takePicture(ShutterCallback shutter, PictureCallback raw, PictureCallback jpeg)
 	// public final void takePicture(ShutterCallback shutter, PictureCallback raw, PictureCallback postview, PictureCallback jpeg)
 	// frameworks/base/core/java/android/hardware/Camera.java
+	// http://developer.android.com/reference/android/hardware/Camera.html
 
 	// @formatter:on
 

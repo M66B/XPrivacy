@@ -21,6 +21,7 @@ public class XSettingsSecure extends XHook {
 	// public synchronized static String getString(ContentResolver resolver, String name)
 	// frameworks/base/core/java/android/provider/Settings.java
 	// frameworks/base/core/java/android/content/ContentResolver.java
+	// http://developer.android.com/reference/android/provider/Settings.Secure.html
 
 	// @formatter:on
 

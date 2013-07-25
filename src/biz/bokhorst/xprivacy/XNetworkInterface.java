@@ -33,6 +33,7 @@ public class XNetworkInterface extends XHook {
 	// - public static Enumeration<NetworkInterface> getNetworkInterfaces()
 
 	// libcore/luni/src/main/java/java/net/NetworkInterface.java
+	// http://developer.android.com/reference/java/net/NetworkInterface.html
 
 	// libcore/luni/src/main/java/java/net/InetAddress.java
 	// libcore/luni/src/main/java/java/net/Inet4Address.java

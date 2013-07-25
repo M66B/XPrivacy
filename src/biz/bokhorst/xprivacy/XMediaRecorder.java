@@ -11,6 +11,7 @@ public class XMediaRecorder extends XHook {
 	// public void setOutputFile(FileDescriptor fd)
 	// public void setOutputFile(String path)
 	// frameworks/base/media/java/android/media/MediaRecorder.java
+	// http://developer.android.com/reference/android/media/MediaRecorder.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

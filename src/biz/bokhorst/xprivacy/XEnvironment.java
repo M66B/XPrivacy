@@ -14,6 +14,7 @@ public class XEnvironment extends XHook {
 
 	// public static String getExternalStorageState()
 	// frameworks/base/core/java/android/os/Environment.java
+	// http://developer.android.com/reference/android/os/Environment.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

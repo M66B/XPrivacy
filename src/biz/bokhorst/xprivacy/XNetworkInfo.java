@@ -15,6 +15,7 @@ public class XNetworkInfo extends XHook {
 	// public boolean isConnected()
 	// public boolean isConnectedOrConnecting()
 	// frameworks/base/core/java/android/net/NetworkInfo.java
+	// http://developer.android.com/reference/android/net/NetworkInfo.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

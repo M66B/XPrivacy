@@ -26,6 +26,7 @@ public class XRuntime extends XHook {
 	// void load(String filename, ClassLoader loader)
 	// void loadLibrary(String libraryName, ClassLoader loader)
 	// libcore/luni/src/main/java/java/lang/Runtime.java
+	// http://developer.android.com/reference/java/lang/Runtime.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

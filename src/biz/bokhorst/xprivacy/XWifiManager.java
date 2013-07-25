@@ -12,6 +12,7 @@ import android.net.wifi.WifiInfo;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
 
+@SuppressWarnings("deprecation")
 public class XWifiManager extends XHook {
 
 	public XWifiManager(String methodName, String restrictionName, String[] permissions) {
@@ -24,6 +25,7 @@ public class XWifiManager extends XHook {
 	// public List<ScanResult> getScanResults()
 	// public WifiConfiguration getWifiApConfiguration()
 	// frameworks/base/wifi/java/android/net/wifi/WifiManager.java
+	// http://developer.android.com/reference/android/net/wifi/WifiManager.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

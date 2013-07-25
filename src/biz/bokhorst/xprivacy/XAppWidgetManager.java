@@ -14,6 +14,7 @@ public class XAppWidgetManager extends XHook {
 
 	// public List<AppWidgetProviderInfo> getInstalledProviders()
 	// frameworks/base/core/java/android/appwidget/AppWidgetManager.java
+	// http://developer.android.com/reference/android/appwidget/AppWidgetManager.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

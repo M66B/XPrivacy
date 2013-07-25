@@ -22,6 +22,7 @@ public class XActivityManager extends XHook {
 	// public List<RunningServiceInfo> getRunningServices(int maxNum)
 	// public List<RunningTaskInfo> getRunningTasks(int maxNum)
 	// frameworks/base/core/java/android/app/ActivityManager.java
+	// http://developer.android.com/reference/android/app/ActivityManager.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

@@ -11,6 +11,7 @@ public class XAudioRecord extends XHook {
 	// public void startRecording()
 	// public void startRecording(MediaSyncEvent syncEvent)
 	// frameworks/base/media/java/android/media/AudioRecord.java
+	// http://developer.android.com/reference/android/media/AudioRecord.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
