@@ -207,6 +207,7 @@ For easy usage, data is restricted by category:
 		* Message waiting indication
 		* Service state changed (service/no service)
 		* Signal level changed
+	* return an empty group identifier level 1
 * Storage
 	* revoke permission to the [media storage](http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/)
 	* revoke permission to the external storage (SD card)
