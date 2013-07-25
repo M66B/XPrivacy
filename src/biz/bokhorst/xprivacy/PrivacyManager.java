@@ -136,6 +136,7 @@ public class PrivacyManager {
 		mPermissions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
 		mPermissions.get(cPhone).add("READ_CALL_LOG");
 		mPermissions.get(cPhone).add("WRITE_APN_SETTINGS");
+		mPermissions.get(cPhone).add("");
 		mPermissions.get(cShell).add("");
 		mPermissions.get(cStorage).add("READ_EXTERNAL_STORAGE");
 		mPermissions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");

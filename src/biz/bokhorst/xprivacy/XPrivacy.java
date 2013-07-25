@@ -209,12 +209,19 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					new String[] { "ACCESS_COARSE_UPDATES", }), "android.telephony.TelephonyManager");
 
 		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
-				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getNetworkCountryIso", "getNetworkOperator",
-				"getNetworkOperatorName", "getSimCountryIso", "getSimOperator", "getSimOperatorName",
-				"getSimSerialNumber", "getSubscriberId", "getVoiceMailAlphaTag", "getVoiceMailNumber", "listen" };
+				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getSimSerialNumber", "getSubscriberId",
+				"getVoiceMailAlphaTag", "getVoiceMailNumber", "listen" };
 		for (String phone : phones)
 			hook(new XTelephonyManager(phone, PrivacyManager.cPhone, new String[] { "READ_PHONE_STATE" }),
 					"android.telephony.TelephonyManager");
+
+		// No permissions required
+		String[] phones1 = new String[] { "getNetworkCountryIso", "getNetworkOperator", "getNetworkOperatorName",
+				"getSimCountryIso", "getSimOperator", "getSimOperatorName" };
+		for (String phone1 : phones1)
+			hook(new XTelephonyManager(phone1, PrivacyManager.cPhone, new String[] {}),
+					"android.telephony.TelephonyManager");
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
 			hook(new XTelephonyManager("getGroupIdLevel1", PrivacyManager.cPhone, new String[] { "READ_PHONE_STATE", }),
 					"android.telephony.TelephonyManager");
