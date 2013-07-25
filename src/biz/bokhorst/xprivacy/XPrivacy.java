@@ -216,8 +216,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hook(new XTelephonyManager(phone, PrivacyManager.cPhone, new String[] { "READ_PHONE_STATE" }),
 					"android.telephony.TelephonyManager");
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-			hook(new XTelephonyManager("getGroupIdLevel1", PrivacyManager.cPhone,
-					new String[] { "READ_PHONE_STATE", }), "android.telephony.TelephonyManager");
+			hook(new XTelephonyManager("getGroupIdLevel1", PrivacyManager.cPhone, new String[] { "READ_PHONE_STATE", }),
+					"android.telephony.TelephonyManager");
 
 		// Wi-Fi manager
 		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults",

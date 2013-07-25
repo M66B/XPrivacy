@@ -519,7 +519,9 @@ If you have any question or suggestion, you can leave a message in the [XDA XPri
 Changelog
 ---------
 
-**Next version**
+**Version 1.7.13**
+
+**BETA!**
 
 * Filter usage data by restricted or not (menu)
 * Display icon if restricted in usage data view

@@ -50,6 +50,8 @@ public class XContentProvider extends XHook {
 	// packages/providers/TelephonyProvider/src/com/android/providers/telephony/MmsSmsProvider.java
 	// packages/providers/TelephonyProvider/src/com/android/providers/telephony/TelephonyProvider.java
 
+	// frameworks/base/core/java/android/provider/ContactsContract.java
+
 	// @formatter:on
 
 	@Override
