@@ -20,6 +20,7 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -34,6 +35,12 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -1189,9 +1196,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityMain.this);
 					for (String setting : mapSetting.keySet())
-						if (setting.startsWith("Account.") || setting.startsWith("Contact.")) {
-							// TODO: translate uid to package name
-						} else {
+						if (!setting.startsWith("Account.") && !setting.startsWith("Contact.")) {
 							// Serialize setting
 							String value = mapSetting.get(setting);
 							serializer.startTag(null, "Setting");
@@ -1300,54 +1305,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		protected String doInBackground(File... params) {
 			mFile = params[0];
 			try {
-				// Read XML
-				FileInputStream fis = new FileInputStream(mFile);
-				InputStreamReader isr = new InputStreamReader(fis);
-				char[] inputBuffer = new char[fis.available()];
-				isr.read(inputBuffer);
-				String xml = new String(inputBuffer);
-				isr.close();
-				fis.close();
-
-				// Prepare XML document
-				InputStream is = new ByteArrayInputStream(xml.getBytes("UTF-8"));
-				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-				DocumentBuilder db = dbf.newDocumentBuilder();
-				Document dom = db.parse(is);
-				dom.getDocumentElement().normalize();
-
-				// Process settings
-				publishProgress(getString(R.string.menu_settings));
-				PrivacyManager.deleteSettings(ActivityMain.this);
-				NodeList sItems = dom.getElementsByTagName("Setting");
-				for (int i = 0; i < sItems.getLength(); i++) {
-					// Process package restriction
-					Node entry = sItems.item(i);
-					NamedNodeMap attrs = entry.getAttributes();
-					String setting = attrs.getNamedItem("Name").getNodeValue();
-					String value = attrs.getNamedItem("Value").getNodeValue();
-					PrivacyManager.setSetting(null, ActivityMain.this, setting, value);
-				}
-
-				// Process restrictions
-				Map<String, Map<String, List<String>>> mapPackage = new HashMap<String, Map<String, List<String>>>();
-				NodeList rItems = dom.getElementsByTagName("Package");
-				for (int i = 0; i < rItems.getLength(); i++) {
-					// Process package restriction
-					Node entry = rItems.item(i);
-					NamedNodeMap attrs = entry.getAttributes();
-					String packageName = attrs.getNamedItem("Name").getNodeValue();
-					String restrictionName = attrs.getNamedItem("Restriction").getNodeValue();
-					String methodName = (attrs.getNamedItem("Method") == null ? null : attrs.getNamedItem("Method")
-							.getNodeValue());
-
-					// Map package restriction
-					if (!mapPackage.containsKey(packageName))
-						mapPackage.put(packageName, new HashMap<String, List<String>>());
-					if (!mapPackage.get(packageName).containsKey(restrictionName))
-						mapPackage.get(packageName).put(restrictionName, new ArrayList<String>());
-					if (methodName != null)
-						mapPackage.get(packageName).get(restrictionName).add(methodName);
+				// Parse XML
+				FileInputStream fis = null;
+				Map<String, Map<String, List<String>>> mapPackage;
+				try {
+					fis = new FileInputStream(mFile);
+					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
+					ImportHandler importHandler = new ImportHandler();
+					xmlReader.setContentHandler(importHandler);
+					xmlReader.parse(new InputSource(fis));
+					mapPackage = importHandler.getPackageMap();
+				} finally {
+					if (fis != null)
+						fis.close();
 				}
 
 				// Process result
@@ -1425,6 +1395,37 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			NotificationManager notificationManager = (NotificationManager) ActivityMain.this
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.notify(NOTIFY_ID, notification);
+		}
+	}
+
+	private class ImportHandler extends DefaultHandler {
+		private Map<String, Map<String, List<String>>> mMapPackage = new HashMap<String, Map<String, List<String>>>();
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			if (qName.equals("Setting")) {
+				// Setting
+				String name = attributes.getValue("Name");
+				String value = attributes.getValue("Value");
+				PrivacyManager.setSetting(null, ActivityMain.this, name, value);
+			} else if (qName.equals("Package")) {
+				// Restriction
+				String packageName = attributes.getValue("Name");
+				String restrictionName = attributes.getValue("Restriction");
+				String methodName = attributes.getValue("Method");
+
+				// Map package restriction
+				if (!mMapPackage.containsKey(packageName))
+					mMapPackage.put(packageName, new HashMap<String, List<String>>());
+				if (!mMapPackage.get(packageName).containsKey(restrictionName))
+					mMapPackage.get(packageName).put(restrictionName, new ArrayList<String>());
+				if (methodName != null)
+					mMapPackage.get(packageName).get(restrictionName).add(methodName);
+			}
+		}
+
+		public Map<String, Map<String, List<String>>> getPackageMap() {
+			return mMapPackage;
 		}
 	}
 
