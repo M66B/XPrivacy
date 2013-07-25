@@ -61,6 +61,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"android.accounts.AccountManager");
 		hook(new XAccountManager("removeOnAccountsUpdatedListener", PrivacyManager.cAccounts,
 				new String[] { "GET_ACCOUNTS" }), "android.accounts.AccountManager");
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+			hook(new XAccountManager("getAccountsByTypeForPackage", PrivacyManager.cAccounts,
+					new String[] { "GET_ACCOUNTS" }), "android.accounts.AccountManager");
 
 		// Activity manager
 		String[] acts = new String[] { "getRecentTasks", "getRunningAppProcesses", "getRunningServices",

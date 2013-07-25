@@ -528,8 +528,9 @@ Changelog
 * Export file name with date / import with file chooser ([issue](https://github.com/M66B/XPrivacy/issues/327))
 * Share exported file ([issue](https://github.com/M66B/XPrivacy/issues/337))
 * Updated target SDK version to 18 (Android 4.3)
-* 4.3: restrict [getGroupIdLevel1](http://developer.android.com/reference/android/telephony/TelephonyManager.html#getGroupIdLevel1())
-* 4.3: restrict [ACTION_RESPOND_VIA_MESSAGE](http://developer.android.com/reference/android/telephony/TelephonyManager.html#ACTION_RESPOND_VIA_MESSAGE)
+* 4.3: restrict [getGroupIdLevel1](http://developer.android.com/reference/android/telephony/TelephonyManager.html)
+* 4.3: restrict [ACTION_RESPOND_VIA_MESSAGE](http://developer.android.com/reference/android/telephony/TelephonyManager.html)
+* 4.3: restrict [getAccountsByTypeForPackage](http://developer.android.com/reference/android/accounts/AccountManager.html)
 * Performance improvements
 * Updated German translation
 * Updated Japanese translation

@@ -152,6 +152,8 @@ public class PrivacyManager {
 				"hasFeatures", "removeOnAccountsUpdatedListener" };
 		for (String acc : accs)
 			mMethods.get(cAccounts).add(acc);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+			mMethods.get(cAccounts).add("getAccountsByTypeForPackage");
 
 		// Activity manager
 		String[] acts = new String[] { "getRecentTasks", "getRunningAppProcesses", "getRunningServices",

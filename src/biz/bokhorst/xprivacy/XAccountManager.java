@@ -36,6 +36,7 @@ public class XAccountManager extends XHook {
 	// public String blockingGetAuthToken(Account account, String authTokenType, boolean notifyAuthFailure)
 	// public Account[] getAccounts()
 	// public Account[] getAccountsByType(String type)
+	// public Account[] getAccountsByTypeForPackage(String type, String packageName)
 	// public AccountManagerFuture<Account[]> getAccountsByTypeAndFeatures(final String type, final String[] features, AccountManagerCallback<Account[]> callback, Handler handler)
 	// public AccountManagerFuture<Bundle> getAuthToken(final Account account, final String authTokenType, final Bundle options, final Activity activity, AccountManagerCallback<Bundle> callback, Handler handler)
 	// public AccountManagerFuture<Bundle> getAuthToken(final Account account, final String authTokenType, final boolean notifyAuthFailure, AccountManagerCallback<Bundle> callback, Handler handler)
@@ -94,7 +95,8 @@ public class XAccountManager extends XHook {
 							if (!isAccountAllowed(account, uid))
 								param.setResult(null);
 						}
-					} else if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType")) {
+					} else if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType")
+							|| methodName.equals("getAccountsByTypeForPackage")) {
 						Account[] accounts = (Account[]) param.getResult();
 						param.setResult(filterAccounts(accounts, uid));
 					} else if (methodName.equals("getAccountsByTypeAndFeatures")) {
