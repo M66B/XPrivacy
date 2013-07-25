@@ -31,6 +31,7 @@ public class XTelephonyManager extends XHook {
 	// public List<CellInfo> getAllCellInfo()
 	// public CellLocation getCellLocation()
 	// public String getDeviceId()
+	// public String getGroupIdLevel1()
 	// public String getIsimDomain()
 	// public String getIsimImpi()
 	// public String[] getIsimImpu()
@@ -50,6 +51,7 @@ public class XTelephonyManager extends XHook {
 	// public String getVoiceMailNumber()
 	// public void listen(PhoneStateListener listener, int events)
 	// frameworks/base/telephony/java/android/telephony/TelephonyManager.java
+	// http://developer.android.com/reference/android/telephony/TelephonyManager.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

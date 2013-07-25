@@ -215,7 +215,7 @@ public class PrivacyManager {
 		for (String loc : locs)
 			if (!mMethods.get(cLocation).contains(loc))
 				mMethods.get(cLocation).add(loc);
-		if (Build.VERSION.SDK_INT >= 17) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 			mMethods.get(cLocation).add("addGeofence");
 			mMethods.get(cLocation).add("getLastLocation");
 		}
@@ -270,9 +270,9 @@ public class PrivacyManager {
 				"getNeighboringCellInfo" };
 		for (String tloc : tlocs)
 			mMethods.get(cLocation).add(tloc);
-		if (Build.VERSION.SDK_INT >= 17)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
 			mMethods.get(cLocation).add("getAllCellInfo");
-		if (Build.VERSION.SDK_INT >= 18)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
 			mMethods.get(cLocation).add("getGroupIdLevel1");
 
 		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
@@ -293,7 +293,7 @@ public class PrivacyManager {
 		// Intent receive: calling
 		mMethods.get(cPhone).add(Intent.ACTION_NEW_OUTGOING_CALL);
 		mMethods.get(cPhone).add(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
-		if (Build.VERSION.SDK_INT >= 18)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
 			mMethods.get(cCalling).add(TelephonyManager.ACTION_RESPOND_VIA_MESSAGE);
 
 		// Intent receive: NFC
@@ -315,7 +315,7 @@ public class PrivacyManager {
 
 		// Intent send: media
 		mMethods.get(cMedia).add(MediaStore.ACTION_IMAGE_CAPTURE);
-		if (Build.VERSION.SDK_INT >= 17)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
 			mMethods.get(cMedia).add(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
 		mMethods.get(cMedia).add(MediaStore.ACTION_VIDEO_CAPTURE);
 
@@ -882,6 +882,8 @@ public class PrivacyManager {
 			return getSetting(null, null, cSettingId, cDeface, true);
 
 		// Telephony manager
+		if (name.equals("getGroupIdLevel1"))
+			return null;
 		if (name.equals("getIsimDomain"))
 			return null;
 		if (name.equals("getIsimImpi"))

@@ -44,6 +44,7 @@ public class XAccountManager extends XHook {
 	// public AccountManagerFuture<Boolean> hasFeatures(final Account account, final String[] features, AccountManagerCallback<Boolean> callback, Handler handler)
 	// public void removeOnAccountsUpdatedListener(OnAccountsUpdateListener listener)
 	// frameworks/base/core/java/android/accounts/AccountManager.java
+	// http://developer.android.com/reference/android/accounts/AccountManager.html
 
 	// @formatter:on
 

@@ -123,7 +123,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		for (String loc : locs)
 			hook(new XLocationManager(loc, PrivacyManager.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
 					"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
-		if (Build.VERSION.SDK_INT >= 17) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 			hook(new XLocationManager("addGeofence", PrivacyManager.cLocation, new String[] { "ACCESS_COARSE_LOCATION",
 					"ACCESS_FINE_LOCATION" }), "android.location.LocationManager");
 			hook(new XLocationManager("getLastLocation", PrivacyManager.cLocation, new String[] {
@@ -201,12 +201,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				"ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION" }), "android.telephony.TelephonyManager");
 		hook(new XTelephonyManager("getNeighboringCellInfo", PrivacyManager.cLocation,
 				new String[] { "ACCESS_COARSE_UPDATES" }), "android.telephony.TelephonyManager");
-		if (Build.VERSION.SDK_INT >= 17)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
 			hook(new XTelephonyManager("getAllCellInfo", PrivacyManager.cLocation,
 					new String[] { "ACCESS_COARSE_UPDATES", }), "android.telephony.TelephonyManager");
-		if (Build.VERSION.SDK_INT >= 18)
-			hook(new XTelephonyManager("getGroupIdLevel1", PrivacyManager.cLocation,
-					new String[] { "READ_PHONE_STATE", }), "android.telephony.TelephonyManager");
 
 		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
 				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getNetworkCountryIso", "getNetworkOperator",
@@ -215,6 +212,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		for (String phone : phones)
 			hook(new XTelephonyManager(phone, PrivacyManager.cPhone, new String[] { "READ_PHONE_STATE" }),
 					"android.telephony.TelephonyManager");
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+			hook(new XTelephonyManager("getGroupIdLevel1", PrivacyManager.cPhone,
+					new String[] { "READ_PHONE_STATE", }), "android.telephony.TelephonyManager");
 
 		// Wi-Fi manager
 		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults",
@@ -232,7 +232,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				Intent.ACTION_NEW_OUTGOING_CALL), "android.app.ActivityThread", false);
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cPhone, new String[] { "READ_PHONE_STATE" },
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ActivityThread", false);
-		if (Build.VERSION.SDK_INT >= 18)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
 			hook(new XActivityThread("handleReceiver", PrivacyManager.cCalling,
 					new String[] { "SEND_RESPOND_VIA_MESSAGE" }, TelephonyManager.ACTION_RESPOND_VIA_MESSAGE),
 					"android.app.ActivityThread", false);
@@ -271,7 +271,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Intent send: media
 		hook(new XActivity("startActivityForResult", PrivacyManager.cMedia, new String[] { "CAMERA" },
 				MediaStore.ACTION_IMAGE_CAPTURE), "android.app.Activity");
-		if (Build.VERSION.SDK_INT >= 17)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
 			hook(new XActivity("startActivityForResult", PrivacyManager.cMedia, new String[] { "CAMERA" },
 					MediaStore.ACTION_IMAGE_CAPTURE_SECURE), "android.app.Activity");
 		hook(new XActivity("startActivityForResult", PrivacyManager.cMedia, new String[] { "CAMERA" },
