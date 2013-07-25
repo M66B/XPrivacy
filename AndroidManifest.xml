@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
-    android:versionCode="105"
-    android:versionName="1.7.13" >
+    android:versionCode="106"
+    android:versionName="1.7.14" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -18,6 +18,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:theme="@style/CustomTheme.Light" >
         <meta-data
             android:name="xposedmodule"
