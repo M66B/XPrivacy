@@ -6,6 +6,7 @@ import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.Set;
 
+import android.annotation.SuppressLint;
 import android.app.AndroidAppHelper;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
@@ -31,6 +32,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// @formatter:on
 
+	@SuppressLint("InlinedApi")
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		// Log load
 		Util.log(null, Log.INFO, String.format("load %s", startupParam.modulePath));
@@ -202,6 +204,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		if (Build.VERSION.SDK_INT >= 17)
 			hook(new XTelephonyManager("getAllCellInfo", PrivacyManager.cLocation,
 					new String[] { "ACCESS_COARSE_UPDATES", }), "android.telephony.TelephonyManager");
+		if (Build.VERSION.SDK_INT >= 18)
+			hook(new XTelephonyManager("getGroupIdLevel1", PrivacyManager.cLocation,
+					new String[] { "READ_PHONE_STATE", }), "android.telephony.TelephonyManager");
 
 		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
 				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getNetworkCountryIso", "getNetworkOperator",
@@ -227,6 +232,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				Intent.ACTION_NEW_OUTGOING_CALL), "android.app.ActivityThread", false);
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cPhone, new String[] { "READ_PHONE_STATE" },
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED), "android.app.ActivityThread", false);
+		if (Build.VERSION.SDK_INT >= 18)
+			hook(new XActivityThread("handleReceiver", PrivacyManager.cCalling,
+					new String[] { "SEND_RESPOND_VIA_MESSAGE" }, TelephonyManager.ACTION_RESPOND_VIA_MESSAGE),
+					"android.app.ActivityThread", false);
 
 		// Intent receive: NFC
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cNfc, new String[] { "NFC" },
@@ -264,7 +273,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				MediaStore.ACTION_IMAGE_CAPTURE), "android.app.Activity");
 		if (Build.VERSION.SDK_INT >= 17)
 			hook(new XActivity("startActivityForResult", PrivacyManager.cMedia, new String[] { "CAMERA" },
-					"android.media.action.IMAGE_CAPTURE_SECURE"), "android.app.Activity");
+					MediaStore.ACTION_IMAGE_CAPTURE_SECURE), "android.app.Activity");
 		hook(new XActivity("startActivityForResult", PrivacyManager.cMedia, new String[] { "CAMERA" },
 				MediaStore.ACTION_VIDEO_CAPTURE), "android.app.Activity");
 	}

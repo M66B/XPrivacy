@@ -29,6 +29,7 @@ import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+@SuppressLint("InlinedApi")
 public class PrivacyManager {
 
 	// This should correspond with restrict_<name> in strings.xml
@@ -109,6 +110,7 @@ public class PrivacyManager {
 		mPermissions.get(cCalendar).add("READ_CALENDAR");
 		mPermissions.get(cCalling).add("SEND_SMS");
 		mPermissions.get(cCalling).add("CALL_PHONE");
+		mPermissions.get(cCalling).add("SEND_RESPOND_VIA_MESSAGE");
 		mPermissions.get(cContacts).add("READ_CONTACTS");
 		mPermissions.get(cDictionary).add("READ_USER_DICTIONARY");
 		mPermissions.get(cEMail).add("ACCESS_PROVIDER");
@@ -270,6 +272,8 @@ public class PrivacyManager {
 			mMethods.get(cLocation).add(tloc);
 		if (Build.VERSION.SDK_INT >= 17)
 			mMethods.get(cLocation).add("getAllCellInfo");
+		if (Build.VERSION.SDK_INT >= 18)
+			mMethods.get(cLocation).add("getGroupIdLevel1");
 
 		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
 				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getNetworkCountryIso", "getNetworkOperator",
@@ -289,6 +293,8 @@ public class PrivacyManager {
 		// Intent receive: calling
 		mMethods.get(cPhone).add(Intent.ACTION_NEW_OUTGOING_CALL);
 		mMethods.get(cPhone).add(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
+		if (Build.VERSION.SDK_INT >= 18)
+			mMethods.get(cCalling).add(TelephonyManager.ACTION_RESPOND_VIA_MESSAGE);
 
 		// Intent receive: NFC
 		mMethods.get(cNfc).add(NfcAdapter.ACTION_NDEF_DISCOVERED);
@@ -310,7 +316,7 @@ public class PrivacyManager {
 		// Intent send: media
 		mMethods.get(cMedia).add(MediaStore.ACTION_IMAGE_CAPTURE);
 		if (Build.VERSION.SDK_INT >= 17)
-			mMethods.get(cMedia).add("android.media.action.IMAGE_CAPTURE_SECURE");
+			mMethods.get(cMedia).add(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
 		mMethods.get(cMedia).add(MediaStore.ACTION_VIDEO_CAPTURE);
 
 		// Applications provider
