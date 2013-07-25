@@ -521,8 +521,9 @@ Changelog
 
 **Next version**
 
-* Filter usage data by restricted
-* Display icon for restricted usage data
+* Filter usage data by restricted or not (menu)
+* Display icon if restricted in usage data view
+* Updated Japanese translation
 
 **Version 1.7.10**
 
