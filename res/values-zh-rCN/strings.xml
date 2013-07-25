@@ -6,7 +6,7 @@
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
     <string name="app_copyright">版权所有 \u00A9 2013 M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Usage</string>
+    <string name="menu_usage">日志</string>
     <string name="menu_settings">设置</string>
     <string name="menu_template">默认模板</string>
     <string name="menu_update">检查更新</string>
