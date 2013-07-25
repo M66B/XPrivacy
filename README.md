@@ -73,7 +73,7 @@ XPrivacy has been tested with CyanogenMod 10 and 10.1 (Android 4.1 and 4.2),
 and is reported to work with any Android version 4.0, 4.1 or 4.2 variant, including stock ROMs.
 Root access is needed to install the Xposed framework.
 Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xposed binary,
-which is provided as download for both Android version 4.0, 4.1 and 4.2.
+which is provided as download for both Android version 4.0, 4.1, 4.2 and 4.3.
 
 
 **XPrivacy was a lot of work, so please support this project**
@@ -103,7 +103,7 @@ Features
 
 * Simple to use
 * No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
-* For any (stock) variant of Android version 4.0, 4.1 or 4.2 (ICS, JellyBean)
+* For any (stock) variant of Android version 4.0, 4.1, 4.2 or 4.3 (ICS, JellyBean)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
 * Free and open source
@@ -261,6 +261,7 @@ It seems like a lot of steps, but it is done in no time:
 	* Android ICS 4.0.x / CM9: Xposed_fix_4.0.zip
 	* Android JB 4.1.x / CM10: Xposed_fix_4.1.zip
 	* Android JB 4.2.x / CM10.1: Xposed_fix_4.2.zip
+	* Android JB 4.3.x / CM10.2: Xposed_fix_4.3.zip
 	* **This fix is only for Xposed version 2.1.4**
 	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
 1. Reboot
