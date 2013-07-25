@@ -501,6 +501,15 @@ That is correct, XPrivacy only replaces the real location by a fake location.
 It even uses the real location to randomize the fake location.
 The idea is that everything should appear as normal as possible to an application.
 
+**(29) How about multi-user support?**
+
+The XPrivacy engine works deep within Android and has no information about users.
+Each application is identified by a *uid* and all restictions are based on this unique identifier.
+Each user has his own set of applications.
+Each user can manage the restrictions for the applications available to him/her.
+If Android uses the same uid for an application that two users share,
+both users can manage the restrictions for this application.
+
 Support
 -------
 
