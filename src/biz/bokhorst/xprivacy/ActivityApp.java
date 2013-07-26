@@ -532,13 +532,12 @@ public class ActivityApp extends Activity {
 
 			// Map contacts
 			Map<Long, String> mapContact = new LinkedHashMap<Long, String>();
-			Cursor cursor = getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI,
-					new String[] { ContactsContract.RawContacts._ID, Phone.DISPLAY_NAME }, null, null,
-					Phone.DISPLAY_NAME);
+			Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
+					new String[] { ContactsContract.Contacts._ID, Phone.DISPLAY_NAME }, null, null, Phone.DISPLAY_NAME);
 			if (cursor != null)
 				try {
 					while (cursor.moveToNext()) {
-						long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.RawContacts._ID));
+						long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 						String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
 						if (contact == null)
 							contact = "-";
@@ -554,10 +553,10 @@ public class ActivityApp extends Activity {
 			mSelection = new boolean[mapContact.size()];
 			int i = 0;
 			for (Long id : mapContact.keySet()) {
-				mListContact.add(String.format("%s (%d)", mapContact.get(id), id));
+				mListContact.add(mapContact.get(id));
 				mIds[i] = id;
 				mSelection[i++] = PrivacyManager.getSettingBool(null, ActivityApp.this,
-						String.format("RawContact.%d.%d", mAppInfo.getUid(), id), false, false);
+						String.format("Contact.%d.%d", mAppInfo.getUid(), id), false, false);
 			}
 			return null;
 		}
@@ -572,7 +571,7 @@ public class ActivityApp extends Activity {
 					new DialogInterface.OnMultiChoiceClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 							PrivacyManager.setSetting(null, ActivityApp.this,
-									String.format("RawContact.%d.%d", mAppInfo.getUid(), mIds[whichButton]),
+									String.format("Contact.%d.%d", mAppInfo.getUid(), mIds[whichButton]),
 									Boolean.toString(isChecked));
 						}
 					});
