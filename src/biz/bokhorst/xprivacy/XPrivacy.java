@@ -8,6 +8,7 @@ import java.util.Set;
 
 import android.annotation.SuppressLint;
 import android.app.AndroidAppHelper;
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.os.Process;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -411,6 +413,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						hook.before(param);
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
+						report(ex);
 						throw ex;
 					}
 				}
@@ -423,6 +426,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						hook.after(param);
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
+						report(ex);
 						throw ex;
 					}
 				}
@@ -467,6 +471,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
+		}
+	}
+
+	private void report(Throwable ex) {
+		Context context = AndroidAppHelper.currentApplication();
+		if (context != null) {
+			Toast toast = Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG);
+			toast.show();
 		}
 	}
 }
