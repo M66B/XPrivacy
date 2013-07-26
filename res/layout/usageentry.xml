@@ -17,7 +17,7 @@
         android:layout_height="16dip"
         android:layout_gravity="center_vertical"
         android:contentDescription="@string/help_used"
-        android:src="@drawable/btn_check_buttonless_on" />
+        android:src="@drawable/presence_busy" />
 
     <TextView
         android:id="@+id/tvApp"

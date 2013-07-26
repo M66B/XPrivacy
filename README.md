@@ -532,6 +532,7 @@ Changelog
 
 **Next release**
 
+* Performance improvements (the usage data will be reset because of this, but **not** the restrictions)
 * Disable Android version warning for version 4.3
 * Updated telephony function permissions ([issue](http://forum.xda-developers.com/showpost.php?p=43949917&postcount=1820))
 * Updated German translation
