@@ -533,8 +533,8 @@ Changelog
 How to get beta releases:
 
 * Through the Play store
-	* Become a member of [this community](https://plus.google.com/u/0/communities/111030382795741607349)
-	* Become a beta tester [here](https://play.google.com/apps/testing/biz.bokhorst.xprivacy)
+	1. Become a member of [this community](https://plus.google.com/u/0/communities/111030382795741607349)
+	1. Become a beta tester [here](https://play.google.com/apps/testing/biz.bokhorst.xprivacy)
 * Download from [Dev-Host](http://d-h.st/users/M66B/?fld_id=19078#files)
 
 **Next release**
