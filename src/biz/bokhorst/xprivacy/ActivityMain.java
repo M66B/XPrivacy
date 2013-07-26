@@ -1221,7 +1221,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityMain.this);
 					for (String setting : mapSetting.keySet())
-						if (!setting.startsWith("Account.") && !setting.startsWith("Contact.")) {
+						if (!setting.startsWith("Account.") && !setting.startsWith("Contact.")
+								&& !setting.startsWith("RawContact.")) {
 							// Serialize setting
 							String value = mapSetting.get(setting);
 							serializer.startTag(null, "Setting");

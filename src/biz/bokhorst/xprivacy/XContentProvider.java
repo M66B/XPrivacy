@@ -87,27 +87,46 @@ public class XContentProvider extends XHook {
 						&& !sUri.startsWith("content://com.android.contacts/profile")) {
 					// Contacts provider: allow selected contacts
 					if (isRestricted(param, mProviderName)) {
+						// Get contact ID index
+						int iid = -1;
+						if (sUri.startsWith("content://com.android.contacts/contacts"))
+							iid = cursor.getColumnIndex("_id");
+						else if (sUri.startsWith("content://com.android.contacts/data"))
+							iid = cursor.getColumnIndex("contact_id");
+						else if (sUri.startsWith("content://com.android.contacts/phone_lookup"))
+							iid = cursor.getColumnIndex("_id");
+						else if (sUri.startsWith("content://com.android.contacts/raw_contacts"))
+							iid = cursor.getColumnIndex("contact_id");
+
+						// Get raw contact ID index
+						int irawid = -1;
+						if (sUri.startsWith("content://com.android.contacts/contacts"))
+							irawid = cursor.getColumnIndex("name_raw_contact_id");
+						else if (sUri.startsWith("content://com.android.contacts/data"))
+							irawid = cursor.getColumnIndex("raw_contact_id");
+						else if (sUri.startsWith("content://com.android.contacts/phone_lookup"))
+							irawid = cursor.getColumnIndex("name_raw_contact_id");
+						else if (sUri.startsWith("content://com.android.contacts/raw_contacts"))
+							irawid = cursor.getColumnIndex("_id");
+
 						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 						while (cursor.moveToNext()) {
 							// Get contact ID
-							long id;
-							int iid = -1;
-							if (sUri.startsWith("content://com.android.contacts/contacts")
-									|| sUri.startsWith("content://com.android.contacts/phone_lookup"))
-								iid = cursor.getColumnIndex("_id");
-							else if (sUri.startsWith("content://com.android.contacts/data")
-									|| sUri.startsWith("content://com.android.contacts/raw_contacts"))
-								iid = cursor.getColumnIndex("contact_id");
-							id = (iid < 0 ? -1 : cursor.getLong(iid));
+							long id = (iid < 0 ? -1 : cursor.getLong(iid));
+							long rawid = (irawid < 0 ? -1 : cursor.getLong(irawid));
 
-							// Copy row
-							try {
-								if (id >= 0
-										&& PrivacyManager
-												.getSettingBool(this, null,
-														String.format("Contact.%d.%d", Binder.getCallingUid(), id),
-														false, true)) {
+							// Check if can be copied
+							boolean copy = false;
+							if (id >= 0)
+								copy = PrivacyManager.getSettingBool(this, null,
+										String.format("Contact.%d.%d", Binder.getCallingUid(), id), false, true);
+							if (!copy && rawid >= 0)
+								copy = PrivacyManager.getSettingBool(this, null,
+										String.format("RawContact.%d.%d", Binder.getCallingUid(), rawid), false, true);
 
+							// Conditionally copy row
+							if (copy)
+								try {
 									Object[] columns = new Object[cursor.getColumnCount()];
 									for (int i = 0; i < cursor.getColumnCount(); i++)
 										switch (cursor.getType(i)) {
@@ -130,10 +149,9 @@ public class XContentProvider extends XHook {
 											Util.log(this, Log.WARN, "Unknown cursor data type=" + cursor.getType(i));
 										}
 									result.addRow(columns);
+								} catch (Throwable ex) {
+									Util.bug(this, ex);
 								}
-							} catch (Throwable ex) {
-								Util.bug(this, ex);
-							}
 						}
 						result.respond(cursor.getExtras());
 						param.setResult(result);

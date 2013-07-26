@@ -570,9 +570,25 @@ public class ActivityApp extends Activity {
 			alertDialogBuilder.setMultiChoiceItems(mListContact.toArray(new CharSequence[0]), mSelection,
 					new DialogInterface.OnMultiChoiceClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+							// Contact
 							PrivacyManager.setSetting(null, ActivityApp.this,
 									String.format("Contact.%d.%d", mAppInfo.getUid(), mIds[whichButton]),
 									Boolean.toString(isChecked));
+
+							// Raw contacts
+							Cursor cursor = getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI,
+									new String[] { ContactsContract.RawContacts._ID },
+									ContactsContract.RawContacts.CONTACT_ID + "=?",
+									new String[] { String.valueOf(mIds[whichButton]) }, null);
+							try {
+								while (cursor.moveToNext()) {
+									PrivacyManager.setSetting(null, ActivityApp.this,
+											String.format("RawContact.%d.%d", mAppInfo.getUid(), cursor.getLong(0)),
+											Boolean.toString(isChecked));
+								}
+							} finally {
+								cursor.close();
+							}
 						}
 					});
 			alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {

@@ -541,6 +541,10 @@ How to get beta releases:
 
 * ...
 
+**Version 1.7.17 BETA!**
+
+* Contacts: also check for raw contacts ([issue](https://github.com/M66B/XPrivacy/issues/361))
+
 **Version 1.7.16 BETA!**
 
 * Run provider in separate process to solve heap problems
