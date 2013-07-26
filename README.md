@@ -539,7 +539,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Run provider in separate process to solve heap problems
 
 **Version 1.7.15**
 
