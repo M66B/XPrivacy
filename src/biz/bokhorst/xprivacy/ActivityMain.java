@@ -1206,6 +1206,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mFile = params[0];
 			try {
 				// Serialize
+				Util.log(null, Log.INFO, "Exporting " + mFile);
 				FileOutputStream fos = new FileOutputStream(mFile);
 				try {
 					XmlSerializer serializer = Xml.newSerializer();
@@ -1216,6 +1217,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					// Process settings
 					publishProgress(getString(R.string.menu_settings));
+					Util.log(null, Log.INFO, "Exporting settings");
 
 					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityMain.this);
 					for (String setting : mapSetting.keySet())
@@ -1247,6 +1249,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Process result
 					for (String packageName : mapRestriction.keySet()) {
 						publishProgress(packageName);
+						Util.log(null, Log.INFO, "Exporting " + packageName);
 						for (PrivacyManager.RestrictionDesc restrictionDesc : mapRestriction.get(packageName)) {
 							serializer.startTag(null, "Package");
 							serializer.attribute(null, "Name", packageName);
@@ -1273,6 +1276,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				startActivity(Intent.createChooser(intent, getString(R.string.app_name)));
 
 				// Display message
+				Util.log(null, Log.INFO, "Exporting finished");
 				return getString(R.string.msg_done);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -1329,6 +1333,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mFile = params[0];
 			try {
 				// Parse XML
+				Util.log(null, Log.INFO, "Importing " + mFile);
 				FileInputStream fis = null;
 				Map<String, Map<String, List<String>>> mapPackage;
 				try {
@@ -1347,6 +1352,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				for (String packageName : mapPackage.keySet()) {
 					try {
 						publishProgress(packageName);
+						Util.log(null, Log.INFO, "Importing " + packageName);
 
 						// Get uid
 						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
@@ -1367,6 +1373,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 
 				// Display message
+				Util.log(null, Log.INFO, "Importing finished");
 				return getString(R.string.msg_done);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);

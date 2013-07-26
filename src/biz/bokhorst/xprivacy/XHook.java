@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import android.annotation.SuppressLint;
 import android.app.AndroidAppHelper;
 import android.content.Context;
 import android.os.Binder;
@@ -61,10 +62,12 @@ public abstract class XHook {
 		notifyUser(AndroidAppHelper.currentApplication(), message);
 	}
 
+	@SuppressLint("DefaultLocale")
 	protected void notifyUser(Context context, String message) throws Throwable {
 		if (context != null) {
 			String format = Util.getXString(context, R.string.msg_restricted);
 			String text = String.format(format, message);
+			text = String.format("%s uid=%d", text, Binder.getCallingUid());
 			Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
 			toast.show();
 		}
