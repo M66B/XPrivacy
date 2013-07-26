@@ -14,6 +14,8 @@ import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Environment;
@@ -221,6 +223,48 @@ public class PrivacyProvider extends ContentProvider {
 		editor.remove(prefName);
 		editor.putString(prefName, prefValue);
 		editor.apply();
+	}
+
+	private class DatabaseHelper extends SQLiteOpenHelper {
+
+		public static final String TABLE_USAGE = "Usage";
+		public static final String COLUMN_ID = "_id";
+		public static final String COLUMN_UID = "uid";
+		public static final String COLUMN_RESTRICTION = "restriction";
+		public static final String COLUMN_METHOD = "method";
+		public static final String COLUMN_RESTRICTED = "restricted";
+		public static final String COLUMN_TIME = "time";
+
+		private static final String DATABASE_NAME = "xprivacy.db";
+		private static final int DATABASE_VERSION = 1;
+
+		// @formatter:off
+
+		private static final String DATABASE_CREATE = "create table " + TABLE_USAGE + "(" +
+				COLUMN_ID + " integer primary key autoincrement, " +
+				COLUMN_UID + " integer not null, " +
+				COLUMN_RESTRICTION + " text not null, " +
+				COLUMN_METHOD + " text not null, " +
+				COLUMN_RESTRICTED + " text not null, " +
+				COLUMN_TIME + " integer not null" +
+				");";
+
+		// @formatter:on
+
+		public DatabaseHelper(Context context) {
+			super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		}
+
+		@Override
+		public void onCreate(SQLiteDatabase database) {
+			database.execSQL(DATABASE_CREATE);
+		}
+
+		@Override
+		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_USAGE);
+			onCreate(db);
+		}
 	}
 
 	private void convertUsage(Context context) {
