@@ -14,8 +14,6 @@ import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Environment;
@@ -60,7 +58,6 @@ public class PrivacyProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
-		convertUsage(getContext());
 		return true;
 	}
 
@@ -172,125 +169,40 @@ public class PrivacyProvider extends ContentProvider {
 		MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_RESTRICTED,
 				COL_USED });
 		if (uid == 0) {
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-			for (String prefName : prefs.getAll().keySet())
-				if (prefName.startsWith(COL_USED)) {
-					String[] prefParts = prefName.split("\\.");
-					if (prefParts.length >= 4) {
+			// All
+			for (String restrictionName : PrivacyManager.getRestrictions(true)) {
+				SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
+						Context.MODE_PRIVATE);
+				for (String prefName : prefs.getAll().keySet())
+					if (prefName.startsWith(COL_USED)) {
+						String[] prefParts = prefName.split("\\.");
 						int rUid = Integer.parseInt(prefParts[1]);
-						String rRestrictionName = prefParts[2];
-						String rMethodName = prefParts[3];
-						Object[] usage = getUsage(rUid, rRestrictionName, rMethodName);
-						if (usage != null)
-							cursor.addRow(usage);
+						String rMethodName = prefParts[2];
+						getUsage(rUid, restrictionName, rMethodName, cursor);
 					}
-				}
+			}
 		} else {
+			// Selected restrictions/methods
 			for (String restrictionName : listRestriction)
 				if (methodName == null)
-					for (String rMethodName : PrivacyManager.getMethods(restrictionName)) {
-						Object[] usage = getUsage(uid, restrictionName, rMethodName);
-						if (usage != null)
-							cursor.addRow(usage);
-					}
-				else {
-					Object[] usage = getUsage(uid, restrictionName, methodName);
-					if (usage != null)
-						cursor.addRow(usage);
-				}
+					for (String rMethodName : PrivacyManager.getMethods(restrictionName))
+						getUsage(uid, restrictionName, rMethodName, cursor);
+				else
+					getUsage(uid, restrictionName, methodName, cursor);
 		}
 		return cursor;
 	}
 
-	private Object[] getUsage(int rUid, String rRestrictionName, String rMethodName) {
-		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-		String values = prefs.getString(getUsagePref(rUid, rRestrictionName, rMethodName), null);
+	private void getUsage(int uid, String restrictionName, String methodName, MatrixCursor cursor) {
+		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
+				Context.MODE_PRIVATE);
+		String values = prefs.getString(getUsagePref(uid, methodName), null);
 		if (values != null) {
 			String[] value = values.split(":");
-			long timeStamp = (value.length > 0 ? Long.parseLong(value[0]) : 0);
-			boolean restricted = (value.length > 1 ? Boolean.parseBoolean(value[1]) : false);
-			return new Object[] { rUid, rRestrictionName, rMethodName, restricted, timeStamp };
+			long timeStamp = Long.parseLong(value[0]);
+			boolean restricted = Boolean.parseBoolean(value[1]);
+			cursor.addRow(new Object[] { uid, restrictionName, methodName, restricted, timeStamp });
 		}
-		return null;
-	}
-
-	private void updateUsage(final int uid, final String restrictionName, final String methodName,
-			final boolean restricted, long timeStamp) {
-		SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = uprefs.edit();
-		String prefName = getUsagePref(uid, restrictionName, methodName);
-		String prefValue = String.format("%d:%b", timeStamp, restricted);
-		editor.remove(prefName);
-		editor.putString(prefName, prefValue);
-		editor.apply();
-	}
-
-	private class DatabaseHelper extends SQLiteOpenHelper {
-
-		public static final String TABLE_USAGE = "Usage";
-		public static final String COLUMN_ID = "_id";
-		public static final String COLUMN_UID = "uid";
-		public static final String COLUMN_RESTRICTION = "restriction";
-		public static final String COLUMN_METHOD = "method";
-		public static final String COLUMN_RESTRICTED = "restricted";
-		public static final String COLUMN_TIME = "time";
-
-		private static final String DATABASE_NAME = "xprivacy.db";
-		private static final int DATABASE_VERSION = 1;
-
-		// @formatter:off
-
-		private static final String DATABASE_CREATE = "create table " + TABLE_USAGE + "(" +
-				COLUMN_ID + " integer primary key autoincrement, " +
-				COLUMN_UID + " integer not null, " +
-				COLUMN_RESTRICTION + " text not null, " +
-				COLUMN_METHOD + " text not null, " +
-				COLUMN_RESTRICTED + " text not null, " +
-				COLUMN_TIME + " integer not null" +
-				");";
-
-		// @formatter:on
-
-		public DatabaseHelper(Context context) {
-			super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		}
-
-		@Override
-		public void onCreate(SQLiteDatabase database) {
-			database.execSQL(DATABASE_CREATE);
-		}
-
-		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			db.execSQL("DROP TABLE IF EXISTS " + TABLE_USAGE);
-			onCreate(db);
-		}
-	}
-
-	private void convertUsage(Context context) {
-		SharedPreferences prefs = context.getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
-		for (String prefName : prefs.getAll().keySet())
-			if (prefName.startsWith(COL_USED)) {
-				String[] prefParts = prefName.split("\\.");
-				if (prefParts.length < 4)
-					editor.remove(prefName);
-				else if (prefParts.length >= 4) {
-					try {
-						long timeStamp = prefs.getLong(prefName, 0);
-						boolean restricted = prefs.getBoolean(prefName.replace(COL_USED, COL_RESTRICTED), false);
-						editor.remove(prefName);
-						editor.remove(prefName.replace(COL_USED, COL_RESTRICTED));
-						String prefValue = String.format("%d:%b", timeStamp, restricted);
-						editor.putString(prefName, prefValue);
-					} catch (Throwable ex) {
-					}
-				}
-			}
-		for (String prefName : prefs.getAll().keySet())
-			if (prefName.startsWith(COL_RESTRICTED))
-				editor.remove(prefName);
-		editor.apply();
 	}
 
 	private Cursor querySettings(String settingName) {
@@ -368,6 +280,18 @@ public class PrivacyProvider extends ContentProvider {
 		}
 
 		throw new IllegalArgumentException(uri.toString());
+	}
+
+	private void updateUsage(final int uid, final String restrictionName, final String methodName,
+			final boolean restricted, long timeStamp) {
+		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
+				Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		String prefName = getUsagePref(uid, methodName);
+		String prefValue = String.format("%d:%b", timeStamp, restricted);
+		editor.remove(prefName);
+		editor.putString(prefName, prefValue);
+		editor.apply();
 	}
 
 	@Override
@@ -510,8 +434,8 @@ public class PrivacyProvider extends ContentProvider {
 		return String.format("%s.%d.%s.%s", COL_METHOD, uid, restrictionName, methodName);
 	}
 
-	private static String getUsagePref(int uid, String restrictionName, String methodName) {
-		return String.format("%s.%d.%s.%s", COL_USED, uid, restrictionName, methodName);
+	private static String getUsagePref(int uid, String methodName) {
+		return String.format("%s.%d.%s", COL_USED, uid, methodName);
 	}
 
 	private static String getSettingPref(String settingName) {
