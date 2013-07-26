@@ -159,13 +159,7 @@ public class PrivacyProvider extends ContentProvider {
 				new Thread(new Runnable() {
 					public void run() {
 						long timeStamp = new Date().getTime();
-						SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-						SharedPreferences.Editor editor = uprefs.edit();
-						String prefName = getUsagePref(uid, restrictionName, methodName);
-						String prefValue = String.format("%d:%b", timeStamp, restricted);
-						editor.remove(prefName);
-						editor.putString(prefName, prefValue);
-						editor.apply();
+						updateUsage(uid, restrictionName, methodName, restricted, timeStamp);
 					}
 				}).start();
 		}
@@ -173,10 +167,10 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	private Cursor queryUsage(int uid, List<String> listRestriction, String methodName) {
-		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
 		MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_RESTRICTED,
 				COL_USED });
 		if (uid == 0) {
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
 			for (String prefName : prefs.getAll().keySet())
 				if (prefName.startsWith(COL_USED)) {
 					String[] prefParts = prefName.split("\\.");
@@ -184,29 +178,49 @@ public class PrivacyProvider extends ContentProvider {
 						int rUid = Integer.parseInt(prefParts[1]);
 						String rRestrictionName = prefParts[2];
 						String rMethodName = prefParts[3];
-						getUsage(prefs, cursor, rUid, rRestrictionName, rMethodName);
+						Object[] usage = getUsage(rUid, rRestrictionName, rMethodName);
+						if (usage != null)
+							cursor.addRow(usage);
 					}
 				}
 		} else {
 			for (String restrictionName : listRestriction)
 				if (methodName == null)
-					for (String rMethodName : PrivacyManager.getMethods(restrictionName))
-						getUsage(prefs, cursor, uid, restrictionName, rMethodName);
-				else
-					getUsage(prefs, cursor, uid, restrictionName, methodName);
+					for (String rMethodName : PrivacyManager.getMethods(restrictionName)) {
+						Object[] usage = getUsage(uid, restrictionName, rMethodName);
+						if (usage != null)
+							cursor.addRow(usage);
+					}
+				else {
+					Object[] usage = getUsage(uid, restrictionName, methodName);
+					if (usage != null)
+						cursor.addRow(usage);
+				}
 		}
 		return cursor;
 	}
 
-	private void getUsage(SharedPreferences prefs, MatrixCursor cursor, int rUid, String rRestrictionName,
-			String rMethodName) {
+	private Object[] getUsage(int rUid, String rRestrictionName, String rMethodName) {
+		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
 		String values = prefs.getString(getUsagePref(rUid, rRestrictionName, rMethodName), null);
 		if (values != null) {
 			String[] value = values.split(":");
 			long timeStamp = (value.length > 0 ? Long.parseLong(value[0]) : 0);
 			boolean restricted = (value.length > 1 ? Boolean.parseBoolean(value[1]) : false);
-			cursor.addRow(new Object[] { rUid, rRestrictionName, rMethodName, restricted, timeStamp });
+			return new Object[] { rUid, rRestrictionName, rMethodName, restricted, timeStamp };
 		}
+		return null;
+	}
+
+	private void updateUsage(final int uid, final String restrictionName, final String methodName,
+			final boolean restricted, long timeStamp) {
+		SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = uprefs.edit();
+		String prefName = getUsagePref(uid, restrictionName, methodName);
+		String prefValue = String.format("%d:%b", timeStamp, restricted);
+		editor.remove(prefName);
+		editor.putString(prefName, prefValue);
+		editor.apply();
 	}
 
 	private void convertUsage(Context context) {
@@ -288,15 +302,8 @@ public class PrivacyProvider extends ContentProvider {
 			Util.log(null, Log.INFO, String.format("Update usage data %d/%s/%s", uid, restrictionName, methodName));
 
 			// Update usage data
-			if (methodName != null) {
-				SharedPreferences uprefs = getContext().getSharedPreferences(PREF_USAGE, Context.MODE_PRIVATE);
-				SharedPreferences.Editor editor = uprefs.edit();
-				String prefName = getUsagePref(uid, restrictionName, methodName);
-				String prefValue = String.format("%d:%b", timeStamp, restricted);
-				editor.remove(prefName);
-				editor.putString(prefName, prefValue);
-				editor.apply();
-			}
+			if (methodName != null)
+				updateUsage(uid, restrictionName, methodName, restricted, timeStamp);
 
 			return 1;
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING) {
