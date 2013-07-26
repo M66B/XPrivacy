@@ -66,6 +66,7 @@ public class XContentProvider extends XHook {
 		Uri uri = (param.args.length > 0 ? (Uri) param.args[0] : null);
 		String sUri = (uri == null ? null : uri.toString().toLowerCase());
 		if (sUri != null && (mUriStart == null || sUri.startsWith(mUriStart))) {
+			Util.log(this, Log.INFO, "uri=" + sUri);
 			Cursor cursor = (Cursor) param.getResult();
 			if (cursor != null)
 				if (sUri.startsWith("content://com.google.android.gsf.gservices")) {
@@ -88,25 +89,25 @@ public class XContentProvider extends XHook {
 					// Contacts provider: allow selected contacts
 					if (isRestricted(param, mProviderName)) {
 						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+						boolean first = true;
 						while (cursor.moveToNext()) {
 							// Get contact ID
 							long id;
 							int iid = -1;
-							if (sUri.startsWith("content://com.android.contacts/contacts")
-									|| sUri.startsWith("content://com.android.contacts/phone_lookup"))
+							if (sUri.startsWith("content://com.android.contacts/contacts"))
+								iid = cursor.getColumnIndex("name_raw_contact_id");
+							else if (sUri.startsWith("content://com.android.contacts/data"))
+								iid = cursor.getColumnIndex("raw_contact_id");
+							else if (sUri.startsWith("content://com.android.contacts/raw_contacts"))
 								iid = cursor.getColumnIndex("_id");
-							else if (sUri.startsWith("content://com.android.contacts/data")
-									|| sUri.startsWith("content://com.android.contacts/raw_contacts"))
-								iid = cursor.getColumnIndex("contact_id");
 							id = (iid < 0 ? -1 : cursor.getLong(iid));
 
 							// Copy row
 							try {
 								if (id >= 0
-										&& PrivacyManager
-												.getSettingBool(this, null,
-														String.format("Contact.%d.%d", Binder.getCallingUid(), id),
-														false, true)) {
+										&& PrivacyManager.getSettingBool(this, null,
+												String.format("RawContact.%d.%d", Binder.getCallingUid(), id), false,
+												true)) {
 
 									Object[] columns = new Object[cursor.getColumnCount()];
 									for (int i = 0; i < cursor.getColumnCount(); i++)
@@ -130,10 +131,16 @@ public class XContentProvider extends XHook {
 											Util.log(this, Log.WARN, "Unknown cursor data type=" + cursor.getType(i));
 										}
 									result.addRow(columns);
-								}
+								} else if (first)
+									Util.log(this, Log.WARN, "No ID uri=" + sUri);
 							} catch (Throwable ex) {
 								Util.bug(this, ex);
 							}
+
+							if (first)
+								for (int i = 0; i < cursor.getColumnCount(); i++)
+									Util.log(this, Log.WARN, "column=" + cursor.getColumnName(i));
+							first = false;
 						}
 						result.respond(cursor.getExtras());
 						param.setResult(result);
