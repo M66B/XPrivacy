@@ -539,15 +539,13 @@ How to get beta releases:
 
 **Next release**
 
-**Version 1.7.16**
+* ...
 
-**BETA!**
+**Version 1.7.16 BETA!**
 
 * Run provider in separate process to solve heap problems
 
-**Version 1.7.15**
-
-**BETA!**
+**Version 1.7.15 BETA!**
 
 * Performance improvements (the usage data will be reset because of this, but **not** the restrictions)
 * Disable Android version warning for version 4.3
@@ -557,15 +555,11 @@ How to get beta releases:
 * Updated Russian translation
 * Updated Vietnamese translation
 
-**Version 1.7.14**
-
-**BETA!**
+**Version 1.7.14 BETA!**
 
 * Request large heap
 
-**Version 1.7.13**
-
-**BETA!**
+**Version 1.7.13 BETA!**
 
 * Filter usage data by restricted or not (menu)
 * Display icon if restricted in usage data view
@@ -583,15 +577,11 @@ How to get beta releases:
 * Updated Lithuanian translation
 * Updated Simplified Chinese translation
 
-**Version 1.7.10**
-
-**BETA!**
+**Version 1.7.10 BETA!**
 
 * Open application settings when clicking in the data usage view
 
-**Version 1.7.9**
-
-**BETA!**
+**Version 1.7.9 BETA!**
 
 * Performance improvements
 * Consider no Android permissions required as having Android permissions for a category
@@ -599,9 +589,7 @@ How to get beta releases:
 * Updated Norwegian translation
 * Updated Slovak translation
 
-**Version 1.7.8**
-
-**BETA!**
+**Version 1.7.8 BETA!**
 
 * Performance improvements
 * Filter on internet permission
