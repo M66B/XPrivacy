@@ -539,6 +539,10 @@ How to get beta releases:
 
 **Next release**
 
+**Version 1.7.16**
+
+**BETA!**
+
 * Run provider in separate process to solve heap problems
 
 **Version 1.7.15**
