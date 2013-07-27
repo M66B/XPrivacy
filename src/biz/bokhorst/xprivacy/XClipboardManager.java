@@ -36,12 +36,14 @@ public class XClipboardManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (isRestricted(param)) {
-			String methodName = param.method.getName();
-			if (methodName.equals("hasPrimaryClip") || methodName.equals("hasText"))
+		String methodName = param.method.getName();
+		if (methodName.equals("hasPrimaryClip") || methodName.equals("hasText")) {
+			if (isRestricted(param))
 				param.setResult(false);
-			else
-				param.setResult(null);
+		} else {
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(null);
 		}
 	}
 
