@@ -50,38 +50,39 @@ public class XLocationManager extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
-		if (!(methodName.equals("getLastLocation") || methodName.equals("getLastKnownLocation")))
+		if (methodName.equals("addGeofence") || methodName.equals("addNmeaListener")
+				|| methodName.equals("addProximityAlert")) {
 			if (isRestricted(param))
-				if (methodName.equals("addNmeaListener") || methodName.equals("isProviderEnabled"))
-					param.setResult(false);
-				else if (methodName.equals("addGeofence") || methodName.equals("addProximityAlert"))
-					param.setResult(null);
-				else if (methodName.equals("getProviders")) {
-					if (param.args.length > 0) {
-						boolean enabledOnly = (Boolean) param.args[param.args.length - 1];
-						if (enabledOnly)
-							param.setResult(new ArrayList<String>());
-					}
-				} else if (methodName.equals("removeUpdates"))
-					removeLocationListener(param);
-				else if (methodName.equals("requestLocationUpdates"))
-					replaceLocationListener(param, 3);
-				else if (methodName.equals("requestSingleUpdate"))
-					replaceLocationListener(param, 1);
-				else if (methodName.equals("sendExtraCommand"))
-					param.setResult(false);
-				else
-					Util.log(this, Log.WARN, "Unknown method=" + methodName);
+				param.setResult(null);
+		} else if (methodName.equals("removeUpdates")) {
+			if (isRestricted(param))
+				removeLocationListener(param);
+		} else if (methodName.equals("requestLocationUpdates")) {
+			if (isRestricted(param))
+				replaceLocationListener(param, 3);
+		} else if (methodName.equals("requestSingleUpdate")) {
+			if (isRestricted(param))
+				replaceLocationListener(param, 1);
+		}
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
-		if (methodName.equals("getLastLocation") || methodName.equals("getLastKnownLocation")) {
+		if (methodName.equals("isProviderEnabled")) {
+			if (isRestricted(param))
+				param.setResult(false);
+		} else if (methodName.equals("getLastLocation") || methodName.equals("getLastKnownLocation")) {
 			Location location = (Location) param.getResult();
 			if (location != null)
 				if (isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedLocation(location));
+		} else if (methodName.equals("getProviders")) {
+			if (isRestricted(param))
+				param.setResult(new ArrayList<String>());
+		} else if (methodName.equals("sendExtraCommand")) {
+			if (isRestricted(param))
+				param.setResult(false);
 		}
 	}
 
