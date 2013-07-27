@@ -606,6 +606,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		}
 
+		// Check clipboard manager
+		if (!checkField(getSystemService(Context.CLIPBOARD_SERVICE), "mContext", Context.class))
+			reportClass(getSystemService(Context.CLIPBOARD_SERVICE).getClass());
+
 		// Check content resolver
 		if (!checkField(getContentResolver(), "mContext", Context.class))
 			reportClass(getContentResolver().getClass());
