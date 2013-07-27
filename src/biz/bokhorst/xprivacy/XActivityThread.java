@@ -19,12 +19,12 @@ public class XActivityThread extends XHook {
 	private String mActionName;
 
 	public XActivityThread(String methodName, String restrictionName, String[] permissions, String actionName) {
-		super(methodName, restrictionName, permissions, actionName);
+		super(restrictionName, methodName, permissions, actionName);
 		mActionName = actionName;
 	}
 
 	public XActivityThread(String methodName, String restrictionName, String[] permissions, String actionName, int sdk) {
-		super(methodName, restrictionName, permissions, actionName, sdk);
+		super(restrictionName, methodName, permissions, actionName, sdk);
 		mActionName = actionName;
 	}
 

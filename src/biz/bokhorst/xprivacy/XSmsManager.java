@@ -10,7 +10,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XSmsManager extends XHook {
 
 	public XSmsManager(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions, null);
+		super(restrictionName, methodName, permissions, null);
 	}
 
 	// @formatter:off

@@ -23,11 +23,11 @@ public class XTelephonyManager extends XHook {
 	private static final Map<PhoneStateListener, XPhoneStateListener> mListener = new WeakHashMap<PhoneStateListener, XPhoneStateListener>();
 
 	public XTelephonyManager(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions, null);
+		super(restrictionName, methodName, permissions, null);
 	}
 
 	public XTelephonyManager(String methodName, String restrictionName, String[] permissions, int sdk) {
-		super(methodName, restrictionName, permissions, null, sdk);
+		super(restrictionName, methodName, permissions, null, sdk);
 	}
 
 	// public void disableLocationUpdates()

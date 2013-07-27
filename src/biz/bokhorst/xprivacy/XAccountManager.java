@@ -27,11 +27,11 @@ public class XAccountManager extends XHook {
 	private static final Map<OnAccountsUpdateListener, XOnAccountsUpdateListener> mListener = new WeakHashMap<OnAccountsUpdateListener, XOnAccountsUpdateListener>();
 
 	public XAccountManager(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions, null);
+		super(restrictionName, methodName, permissions, null);
 	}
 
 	public XAccountManager(String methodName, String restrictionName, String[] permissions, int sdk) {
-		super(methodName, restrictionName, permissions, null, sdk);
+		super(restrictionName, methodName, permissions, null, sdk);
 	}
 
 	// @formatter:off

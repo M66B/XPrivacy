@@ -13,7 +13,7 @@ public class XProcessBuilder extends XHook {
 	private String mCommand;
 
 	public XProcessBuilder(String methodName, String restrictionName, String[] permissions, String command) {
-		super(methodName, restrictionName, permissions, command);
+		super(restrictionName, methodName, permissions, command);
 		mCommand = command;
 	}
 

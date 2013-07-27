@@ -1,6 +1,10 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.lang.reflect.Field;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -13,6 +17,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
+
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -24,10 +36,12 @@ import android.database.Cursor;
 import android.location.Location;
 import android.nfc.NfcAdapter;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Process;
 import android.provider.MediaStore;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 @SuppressLint("InlinedApi")
@@ -313,7 +327,8 @@ public class PrivacyManager {
 		mMethods.get(cNfc).add(NfcAdapter.ACTION_TECH_DISCOVERED);
 
 		// Intent receive: notifications
-		mMethods.get(cSystem).add(NotificationListenerService.SERVICE_INTERFACE);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+			mMethods.get(cSystem).add(NotificationListenerService.SERVICE_INTERFACE);
 
 		// Intent receive: package changes
 		mMethods.get(cSystem).add(Intent.ACTION_PACKAGE_ADDED);
@@ -365,13 +380,72 @@ public class PrivacyManager {
 
 		// User dictionary
 		mMethods.get(cDictionary).add("UserDictionary");
+
+		Util.log(null, Log.INFO, "Scanning meta");
+		try {
+			File file = new File(Environment.getDataDirectory() + "/data/biz.bokhorst.xprivacy/hooks.xml");
+			FileInputStream fis = null;
+			try {
+				fis = new FileInputStream(file);
+				XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
+				MetaHandler metaHandler = new MetaHandler();
+				xmlReader.setContentHandler(metaHandler);
+				xmlReader.parse(new InputSource(fis));
+			} finally {
+				if (fis != null)
+					fis.close();
+			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+		Util.log(null, Log.INFO, "Scanning meta done");
+	}
+
+	private static class MetaHandler extends DefaultHandler {
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			if (qName.equals("Hook")) {
+				String restrictionName = attributes.getValue("restriction");
+				String methodName = attributes.getValue("method");
+				String permissions = attributes.getValue("permissions");
+				// String sdk = attributes.getValue("sdk");
+
+				if (restrictionName != null && !mPermissions.containsKey(restrictionName))
+					Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
+
+				if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
+					Util.log(null, Log.WARN, "Missing method " + methodName);
+
+				for (String permission : permissions.split(","))
+					if (!mPermissions.get(restrictionName).contains(permission))
+						Util.log(null, Log.WARN, "Missing no permission restriction=" + restrictionName);
+			} else
+				Util.log(null, Log.WARN, "Unknown element=" + qName);
+		}
 	}
 
 	// Data
 
-	public static void registerMethod(String methodName, String restrictionName, String[] permissions) {
+	public static void registerMethod(String restrictionName, String methodName, String[] permissions, int sdk) {
+		if (cExperimental)
+			try {
+				synchronized (mPermissions) {
+					File logFile = new File("/data/local/tmp/xprivacy.xml");
+					BufferedWriter fw = new BufferedWriter(new FileWriter(logFile, true));
+					fw.write(String.format("<Hook restriction=\"%s\" method=\"%s\" permissions=\"%s\" sdk=\"%d\" />",
+							restrictionName, methodName, TextUtils.join(",", permissions), sdk));
+					fw.newLine();
+					fw.close();
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+
 		if (restrictionName != null && !mPermissions.containsKey(restrictionName))
 			Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
+
+		if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
+			Util.log(null, Log.WARN, "Missing method " + methodName);
 
 		if (permissions != null) {
 			if (permissions.length == 0)
@@ -382,9 +456,6 @@ public class PrivacyManager {
 				if (!mPermissions.get(restrictionName).contains(permission))
 					Util.log(null, Log.WARN, "Missing permission " + permission);
 		}
-
-		if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
-			Util.log(null, Log.WARN, "Missing method " + methodName);
 	}
 
 	public static List<String> getRestrictions(boolean dangerous) {

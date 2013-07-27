@@ -10,7 +10,7 @@ import biz.bokhorst.xprivacy.XHook;
 public class XEnvironment extends XHook {
 
 	public XEnvironment(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions, null);
+		super(restrictionName, methodName, permissions, null);
 	}
 
 	// public static String getExternalStorageState()

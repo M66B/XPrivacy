@@ -8,7 +8,7 @@ public class XSystemProperties extends XHook {
 	private String mPropertyName;
 
 	public XSystemProperties(String methodName, String restrictionName, String[] permissions, String propertyName) {
-		super(methodName, restrictionName, permissions, propertyName);
+		super(restrictionName, methodName, permissions, propertyName);
 		mPropertyName = propertyName;
 	}
 

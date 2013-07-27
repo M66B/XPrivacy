@@ -12,37 +12,37 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public abstract class XHook {
 
-	private String mMethodName;
 	private String mRestrictionName;
+	private String mMethodName;
 	private String mSpecifier;
 	private int mSdk;
 
-	public XHook(String methodName, String restrictionName, String[] permissions, String specifier) {
-		mMethodName = methodName;
+	public XHook(String restrictionName, String methodName, String[] permissions, String specifier) {
 		mRestrictionName = restrictionName;
+		mMethodName = methodName;
 		mSpecifier = specifier;
 		mSdk = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
 		if (restrictionName != null)
-			PrivacyManager.registerMethod(getSpecifier(), restrictionName, permissions);
+			PrivacyManager.registerMethod(restrictionName, getSpecifier(), permissions, mSdk);
 	}
 
-	public XHook(String methodName, String restrictionName, String[] permissions, String specifier, int sdk) {
-		mMethodName = methodName;
+	public XHook(String restrictionName, String methodName, String[] permissions, String specifier, int sdk) {
 		mRestrictionName = restrictionName;
+		mMethodName = methodName;
 		mSpecifier = specifier;
 		mSdk = sdk;
 
 		if (restrictionName != null)
-			PrivacyManager.registerMethod(getSpecifier(), restrictionName, permissions);
-	}
-
-	public String getMethodName() {
-		return mMethodName;
+			PrivacyManager.registerMethod(restrictionName, getSpecifier(), permissions, sdk);
 	}
 
 	public String getRestrictionName() {
 		return mRestrictionName;
+	}
+
+	public String getMethodName() {
+		return mMethodName;
 	}
 
 	private String getSpecifier() {

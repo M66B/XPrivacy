@@ -1,6 +1,9 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -58,6 +61,22 @@ public class PrivacyProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
+		try {
+			File out = new File(Environment.getDataDirectory() + "/data/biz.bokhorst.xprivacy/hooks.xml");
+			Util.log(null, Log.INFO, "hooks=" + out.getAbsolutePath());
+			InputStream is = getContext().getAssets().open("hooks.xml");
+			OutputStream os = new FileOutputStream(out.getAbsolutePath());
+			byte[] buffer = new byte[1024];
+			int read;
+			while ((read = is.read(buffer)) != -1)
+				os.write(buffer, 0, read);
+			is.close();
+			os.flush();
+			os.close();
+			out.setReadable(true, false);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
 		return true;
 	}
 

@@ -11,7 +11,7 @@ public class XIoBridge extends XHook {
 	private String mFileName;
 
 	public XIoBridge(String methodName, String restrictionName, String[] permissions, String fileName) {
-		super(methodName, restrictionName, permissions, fileName);
+		super(restrictionName, methodName, permissions, fileName);
 		mFileName = fileName;
 	}
 

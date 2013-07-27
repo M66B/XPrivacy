@@ -20,13 +20,13 @@ public class XContentProvider extends XHook {
 	private String mUriStart;
 
 	public XContentProvider(String restrictionName, String[] permissions, String providerName) {
-		super("query", restrictionName, permissions, providerName);
+		super(restrictionName, "query", permissions, providerName);
 		mProviderName = providerName;
 		mUriStart = null;
 	}
 
 	public XContentProvider(String restrictionName, String[] permissions, String providerName, String uriStart) {
-		super("query", restrictionName, permissions, uriStart.replace("content://com.android.", ""));
+		super(restrictionName, "query", permissions, uriStart.replace("content://com.android.", ""));
 		mProviderName = providerName;
 		mUriStart = uriStart;
 	}

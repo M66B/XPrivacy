@@ -6,7 +6,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XLocationClient extends XHook {
 
 	public XLocationClient(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions, null);
+		super(restrictionName, methodName, permissions, null);
 	}
 
 	// void connect()

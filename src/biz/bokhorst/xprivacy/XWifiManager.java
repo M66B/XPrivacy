@@ -17,7 +17,7 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 public class XWifiManager extends XHook {
 
 	public XWifiManager(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions, null);
+		super(restrictionName, methodName, permissions, null);
 	}
 
 	// public List<WifiConfiguration> getConfiguredNetworks()

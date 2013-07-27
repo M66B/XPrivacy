@@ -1,0 +1,173 @@
+<Meta>
+    <Hook restriction="accounts" method="addOnAccountsUpdatedListener" permissions="GET_ACCOUNTS" sdk="14" />
+    <Hook restriction="accounts" method="blockingGetAuthToken" permissions="USE_CREDENTIALS" sdk="14" />
+    <Hook restriction="accounts" method="getAccounts" permissions="GET_ACCOUNTS" sdk="14" />
+    <Hook restriction="accounts" method="getAccountsByType" permissions="GET_ACCOUNTS" sdk="14" />
+    <Hook restriction="accounts" method="getAccountsByTypeAndFeatures" permissions="GET_ACCOUNTS" sdk="14" />
+    <Hook restriction="accounts" method="getAuthToken" permissions="USE_CREDENTIALS" sdk="14" />
+    <Hook restriction="accounts" method="getAuthTokenByFeatures" permissions="MANAGE_ACCOUNTS" sdk="14" />
+    <Hook restriction="accounts" method="hasFeatures" permissions="GET_ACCOUNTS" sdk="14" />
+    <Hook restriction="accounts" method="removeOnAccountsUpdatedListener" permissions="GET_ACCOUNTS" sdk="14" />
+    <Hook restriction="accounts" method="getAccountsByTypeForPackage" permissions="GET_ACCOUNTS" sdk="18" />
+    <Hook restriction="accounts" method="getTokenGoogle" permissions="GET_ACCOUNTS" sdk="14" />
+    <Hook restriction="accounts" method="getTokenWithNotificationGoogle" permissions="GET_ACCOUNTS" sdk="14" />
+
+    <Hook restriction="browser" method="BrowserProvider" permissions="READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH" sdk="14" />
+    <Hook restriction="browser" method="BrowserProvider2" permissions="READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH" sdk="14" />
+
+    <Hook restriction="calendar" method="CalendarProvider2" permissions="READ_CALENDAR" sdk="14" />
+
+    <Hook restriction="calling" method="sendDataMessage" permissions="SEND_SMS" sdk="14" />
+    <Hook restriction="calling" method="sendMultipartTextMessage" permissions="SEND_SMS" sdk="14" />
+    <Hook restriction="calling" method="sendTextMessage" permissions="SEND_SMS" sdk="14" />
+    <Hook restriction="calling" method="android.intent.action.RESPOND_VIA_MESSAGE" permissions="SEND_RESPOND_VIA_MESSAGE" sdk="18" />
+    <Hook restriction="calling" method="android.intent.action.CALL" permissions="CALL_PHONE" sdk="14" />
+
+    <Hook restriction="contacts" method="contacts/contacts" permissions="READ_CONTACTS" sdk="14" />
+    <Hook restriction="contacts" method="contacts/data" permissions="READ_CONTACTS" sdk="14" />
+    <Hook restriction="contacts" method="contacts/raw_contacts" permissions="READ_CONTACTS" sdk="14" />
+    <Hook restriction="contacts" method="contacts/phone_lookup" permissions="READ_CONTACTS" sdk="14" />
+    <Hook restriction="contacts" method="contacts/profile" permissions="READ_CONTACTS" sdk="14" />
+
+    <Hook restriction="dictionary" method="UserDictionary" permissions="READ_USER_DICTIONARY" sdk="14" />
+
+    <Hook restriction="email" method="EMailProvider" permissions="com.android.email.permission.ACCESS_PROVIDER" sdk="14" />
+
+    <Hook restriction="identification" method="/proc" permissions="" sdk="14" />
+    <Hook restriction="identification" method="getString" permissions="" sdk="14" />
+    <Hook restriction="identification" method="%imei" permissions="" sdk="14" />
+    <Hook restriction="identification" method="%hostname" permissions="" sdk="14" />
+    <Hook restriction="identification" method="%serialno" permissions="" sdk="14" />
+    <Hook restriction="identification" method="%macaddr" permissions="" sdk="14" />
+    <Hook restriction="identification" method="GservicesProvider" permissions="READ_GSERVICES" sdk="14" />
+    <Hook restriction="identification" method="SERIAL" permissions="" sdk="14" />
+
+    <Hook restriction="internet" method="getAllByName" permissions="INTERNET" sdk="14" />
+    <Hook restriction="internet" method="getByAddress" permissions="INTERNET" sdk="14" />
+    <Hook restriction="internet" method="getByName" permissions="INTERNET" sdk="14" />
+    <Hook restriction="internet" method="getByInetAddress" permissions="INTERNET" sdk="14" />
+    <Hook restriction="internet" method="getByName" permissions="INTERNET" sdk="14" />
+    <Hook restriction="internet" method="getNetworkInterfaces" permissions="INTERNET" sdk="14" />
+    <Hook restriction="internet" method="inet" permissions="INTERNET" sdk="14" />
+    <Hook restriction="internet" method="getActiveNetworkInfo" permissions="" sdk="14" />
+    <Hook restriction="internet" method="getAllNetworkInfo" permissions="" sdk="14" />
+    <Hook restriction="internet" method="getNetworkInfo" permissions="" sdk="14" />
+    <Hook restriction="internet" method="getDetailedState" permissions="" sdk="14" />
+    <Hook restriction="internet" method="getState" permissions="" sdk="14" />
+    <Hook restriction="internet" method="isConnected" permissions="" sdk="14" />
+    <Hook restriction="internet" method="isConnectedOrConnecting" permissions="" sdk="14" />
+    <Hook restriction="internet" method="getConnectionInfo" permissions="" sdk="14" />
+
+    <Hook restriction="location" method="addNmeaListener" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="addProximityAlert" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="getLastKnownLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="getProviders" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="isProviderEnabled" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="removeUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="requestLocationUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="requestSingleUpdate" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="sendExtraCommand" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="addGeofence" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="17" />
+    <Hook restriction="location" method="getLastLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="17" />
+    <Hook restriction="location" method="disableLocationUpdates" permissions="CONTROL_LOCATION_UPDATES" sdk="14" />
+    <Hook restriction="location" method="enableLocationUpdates" permissions="CONTROL_LOCATION_UPDATES" sdk="14" />
+    <Hook restriction="location" method="getCellLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="getNeighboringCellInfo" permissions="ACCESS_COARSE_UPDATES" sdk="14" />
+    <Hook restriction="location" method="getAllCellInfo" permissions="ACCESS_COARSE_UPDATES" sdk="17" />
+    <Hook restriction="location" method="getScanResults" permissions="ACCESS_WIFI_STATE" sdk="14" />
+    <Hook restriction="location" method="connect" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+
+    <Hook restriction="media" method="startRecording" permissions="RECORD_AUDIO" sdk="14" />
+    <Hook restriction="media" method="setPreviewCallback" permissions="CAMERA" sdk="14" />
+    <Hook restriction="media" method="setPreviewCallbackWithBuffer" permissions="CAMERA" sdk="14" />
+    <Hook restriction="media" method="setOneShotPreviewCallback" permissions="CAMERA" sdk="14" />
+    <Hook restriction="media" method="takePicture" permissions="CAMERA" sdk="14" />
+    <Hook restriction="media" method="setOutputFile" permissions="RECORD_AUDIO,RECORD_VIDEO" sdk="14" />
+    <Hook restriction="media" method="android.media.action.IMAGE_CAPTURE" permissions="CAMERA" sdk="14" />
+    <Hook restriction="media" method="android.media.action.IMAGE_CAPTURE_SECURE" permissions="CAMERA" sdk="17" />
+    <Hook restriction="media" method="android.media.action.VIDEO_CAPTURE" permissions="CAMERA" sdk="14" />
+
+    <Hook restriction="messages" method="getAllMessagesFromIcc" permissions="RECEIVE_SMS" sdk="14" />
+    <Hook restriction="messages" method="SmsProvider" permissions="READ_SMS" sdk="14" />
+    <Hook restriction="messages" method="MmsProvider" permissions="READ_SMS" sdk="14" />
+    <Hook restriction="messages" method="MmsSmsProvider" permissions="READ_SMS" sdk="14" />
+    <Hook restriction="messages" method="VoicemailContentProvider" permissions="READ_WRITE_ALL_VOICEMAIL" sdk="14" />
+
+    <Hook restriction="network" method="getAddress" permissions="BLUETOOTH" sdk="14" />
+    <Hook restriction="network" method="getBondedDevices" permissions="BLUETOOTH" sdk="14" />
+    <Hook restriction="network" method="getHardwareAddress" permissions="ACCESS_NETWORK_STATE" sdk="14" />
+    <Hook restriction="network" method="getInetAddresses" permissions="ACCESS_NETWORK_STATE" sdk="14" />
+    <Hook restriction="network" method="getInterfaceAddresses" permissions="ACCESS_NETWORK_STATE" sdk="14" />
+    <Hook restriction="network" method="getConfiguredNetworks" permissions="ACCESS_WIFI_STATE" sdk="14" />
+    <Hook restriction="network" method="getConnectionInfo" permissions="ACCESS_WIFI_STATE" sdk="14" />
+    <Hook restriction="network" method="getDhcpInfo" permissions="ACCESS_WIFI_STATE" sdk="14" />
+    <Hook restriction="network" method="getScanResults" permissions="ACCESS_WIFI_STATE" sdk="14" />
+    <Hook restriction="network" method="getWifiApConfiguration" permissions="ACCESS_WIFI_STATE" sdk="14" />
+
+    <Hook restriction="nfc" method="android.nfc.action.NDEF_DISCOVERED" permissions="NFC" sdk="14" />
+    <Hook restriction="nfc" method="android.nfc.action.TAG_DISCOVERED" permissions="NFC" sdk="14" />
+    <Hook restriction="nfc" method="android.nfc.action.TECH_DISCOVERED" permissions="NFC" sdk="14" />
+
+    <Hook restriction="phone" method="getDeviceId" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getIsimDomain" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getIsimImpi" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getIsimImpu" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getLine1AlphaTag" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getLine1Number" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getMsisdn" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getSimSerialNumber" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getSubscriberId" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getVoiceMailAlphaTag" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getVoiceMailNumber" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="listen" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getNetworkCountryIso" permissions="" sdk="14" />
+    <Hook restriction="phone" method="getNetworkOperator" permissions="" sdk="14" />
+    <Hook restriction="phone" method="getNetworkOperatorName" permissions="" sdk="14" />
+    <Hook restriction="phone" method="getSimCountryIso" permissions="" sdk="14" />
+    <Hook restriction="phone" method="getSimOperator" permissions="" sdk="14" />
+    <Hook restriction="phone" method="getSimOperatorName" permissions="" sdk="14" />
+    <Hook restriction="phone" method="getGroupIdLevel1" permissions="READ_PHONE_STATE" sdk="18" />
+    <Hook restriction="phone" method="android.intent.action.NEW_OUTGOING_CALL" permissions="PROCESS_OUTGOING_CALLS" sdk="14" />
+    <Hook restriction="phone" method="android.intent.action.PHONE_STATE" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="TelephonyProvider" permissions="WRITE_APN_SETTINGS" sdk="14" />
+    <Hook restriction="phone" method="CallLogProvider" permissions="READ_CALL_LOG" sdk="14" />
+
+    <Hook restriction="shell" method="sh" permissions="" sdk="14" />
+    <Hook restriction="shell" method="su" permissions="" sdk="14" />
+    <Hook restriction="shell" method="exec" permissions="" sdk="14" />
+    <Hook restriction="shell" method="load" permissions="" sdk="14" />
+    <Hook restriction="shell" method="loadLibrary" permissions="" sdk="14" />
+    <Hook restriction="shell" method="start" permissions="" sdk="14" />
+
+    <Hook restriction="storage" method="media" permissions="WRITE_MEDIA_STORAGE" sdk="14" />
+    <Hook restriction="storage" method="sdcard" permissions="READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE" sdk="14" />
+    <Hook restriction="storage" method="getExternalStorageState" permissions="" sdk="14" />
+
+    <Hook restriction="system" method="getRecentTasks" permissions="GET_TASKS" sdk="14" />
+    <Hook restriction="system" method="getRunningAppProcesses" permissions="GET_TASKS" sdk="14" />
+    <Hook restriction="system" method="getRunningServices" permissions="GET_TASKS" sdk="14" />
+    <Hook restriction="system" method="getRunningTasks" permissions="GET_TASKS" sdk="14" />
+    <Hook restriction="system" method="getInstalledProviders" permissions="" sdk="14" />
+    <Hook restriction="system" method="getInstalledApplications" permissions="" sdk="14" />
+    <Hook restriction="system" method="getInstalledPackages" permissions="" sdk="14" />
+    <Hook restriction="system" method="getPreferredPackages" permissions="" sdk="14" />
+    <Hook restriction="system" method="queryBroadcastReceivers" permissions="" sdk="14" />
+    <Hook restriction="system" method="queryContentProviders" permissions="" sdk="14" />
+    <Hook restriction="system" method="queryIntentActivities" permissions="" sdk="14" />
+    <Hook restriction="system" method="queryIntentActivityOptions" permissions="" sdk="14" />
+    <Hook restriction="system" method="queryIntentServices" permissions="" sdk="14" />
+    <Hook restriction="system" method="addPrimaryClipChangedListener" permissions="" sdk="14" />
+    <Hook restriction="system" method="getPrimaryClip" permissions="" sdk="14" />
+    <Hook restriction="system" method="getPrimaryClipDescription" permissions="" sdk="14" />
+    <Hook restriction="system" method="getText" permissions="" sdk="14" />
+    <Hook restriction="system" method="hasPrimaryClip" permissions="" sdk="14" />
+    <Hook restriction="system" method="hasText" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.service.notification.NotificationListenerService" permissions="BIND_NOTIFICATION_LISTENER_SERVICE" sdk="18" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_ADDED" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_REPLACED" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_RESTARTED" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_REMOVED" permissions="" sdk="14" />
+    <Hook restriction="system" method="ApplicationsProvider" permissions="" sdk="14" />
+
+    <Hook restriction="view" method="android.intent.action.VIEW" permissions="" sdk="14" />
+</Meta>

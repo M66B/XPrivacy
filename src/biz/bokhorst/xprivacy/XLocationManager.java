@@ -19,11 +19,11 @@ public class XLocationManager extends XHook {
 	private static final Map<LocationListener, XLocationListener> mListener = new WeakHashMap<LocationListener, XLocationListener>();
 
 	public XLocationManager(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions, null);
+		super(restrictionName, methodName, permissions, null);
 	}
 
 	public XLocationManager(String methodName, String restrictionName, String[] permissions, int sdk) {
-		super(methodName, restrictionName, permissions, null, sdk);
+		super(restrictionName, methodName, permissions, null, sdk);
 	}
 
 	// @formatter:off

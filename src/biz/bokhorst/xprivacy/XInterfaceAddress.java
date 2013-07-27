@@ -7,7 +7,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XInterfaceAddress extends XHook {
 
 	public XInterfaceAddress(String methodName, String restrictionName, String[] permissions) {
-		super(methodName, restrictionName, permissions, null);
+		super(restrictionName, methodName, permissions, null);
 	}
 
 	// public InetAddress getAddress()
