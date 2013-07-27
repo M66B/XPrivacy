@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -69,9 +70,19 @@ public class XActivityThread extends XHook {
 												(String) PrivacyManager.getDefacedProp("PhoneNumber"));
 								}
 							}
+						} else if (action.equals(TelephonyManager.ACTION_RESPOND_VIA_MESSAGE)) {
+							if (isRestricted(param, mActionName)) {
+								finish(param);
+								param.setResult(null);
+							}
 						} else if (action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED)
 								|| action.equals(NfcAdapter.ACTION_TAG_DISCOVERED)
 								|| action.equals(NfcAdapter.ACTION_TECH_DISCOVERED)) {
+							if (isRestricted(param, mActionName)) {
+								finish(param);
+								param.setResult(null);
+							}
+						} else if (action.equals(NotificationListenerService.SERVICE_INTERFACE)) {
 							if (isRestricted(param, mActionName)) {
 								finish(param);
 								param.setResult(null);
