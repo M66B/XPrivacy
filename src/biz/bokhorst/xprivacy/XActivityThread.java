@@ -23,6 +23,11 @@ public class XActivityThread extends XHook {
 		mActionName = actionName;
 	}
 
+	public XActivityThread(String methodName, String restrictionName, String[] permissions, String actionName, int sdk) {
+		super(methodName, restrictionName, permissions, actionName, sdk);
+		mActionName = actionName;
+	}
+
 	// @formatter:off
 
 	// private void handleReceiver(ReceiverData data)

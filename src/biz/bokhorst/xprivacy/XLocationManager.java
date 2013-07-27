@@ -22,6 +22,10 @@ public class XLocationManager extends XHook {
 		super(methodName, restrictionName, permissions, null);
 	}
 
+	public XLocationManager(String methodName, String restrictionName, String[] permissions, int sdk) {
+		super(methodName, restrictionName, permissions, null, sdk);
+	}
+
 	// @formatter:off
 
 	// public boolean addNmeaListener(GpsStatus.NmeaListener listener)

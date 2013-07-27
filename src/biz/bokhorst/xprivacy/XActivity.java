@@ -11,6 +11,16 @@ public class XActivity extends XHook {
 
 	private String mActionName;
 
+	public XActivity(String methodName, String restrictionName, String[] permissions, String actionName) {
+		super(methodName, restrictionName, permissions, actionName);
+		mActionName = actionName;
+	}
+
+	public XActivity(String methodName, String restrictionName, String[] permissions, String actionName, int sdk) {
+		super(methodName, restrictionName, permissions, actionName, sdk);
+		mActionName = actionName;
+	}
+
 	// @formatter:off
 
 	// public void startActivities(Intent[] intents)
@@ -28,11 +38,6 @@ public class XActivity extends XHook {
 	// frameworks/base/core/java/android/app/Activity.java
 
 	// @formatter:on
-
-	public XActivity(String methodName, String restrictionName, String[] permissions, String actionName) {
-		super(methodName, restrictionName, permissions, actionName);
-		mActionName = actionName;
-	}
 
 	@Override
 	@SuppressLint("DefaultLocale")

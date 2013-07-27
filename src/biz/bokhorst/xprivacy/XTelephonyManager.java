@@ -26,6 +26,10 @@ public class XTelephonyManager extends XHook {
 		super(methodName, restrictionName, permissions, null);
 	}
 
+	public XTelephonyManager(String methodName, String restrictionName, String[] permissions, int sdk) {
+		super(methodName, restrictionName, permissions, null, sdk);
+	}
+
 	// public void disableLocationUpdates()
 	// public void enableLocationUpdates()
 	// public List<CellInfo> getAllCellInfo()

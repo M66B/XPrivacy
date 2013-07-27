@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AndroidAppHelper;
 import android.content.Context;
 import android.os.Binder;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,11 +15,23 @@ public abstract class XHook {
 	private String mMethodName;
 	private String mRestrictionName;
 	private String mSpecifier;
+	private int mSdk;
 
 	public XHook(String methodName, String restrictionName, String[] permissions, String specifier) {
 		mMethodName = methodName;
 		mRestrictionName = restrictionName;
 		mSpecifier = specifier;
+		mSdk = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+
+		if (restrictionName != null)
+			PrivacyManager.registerMethod(getSpecifier(), restrictionName, permissions);
+	}
+
+	public XHook(String methodName, String restrictionName, String[] permissions, String specifier, int sdk) {
+		mMethodName = methodName;
+		mRestrictionName = restrictionName;
+		mSpecifier = specifier;
+		mSdk = sdk;
 
 		if (restrictionName != null)
 			PrivacyManager.registerMethod(getSpecifier(), restrictionName, permissions);
@@ -34,6 +47,10 @@ public abstract class XHook {
 
 	private String getSpecifier() {
 		return (mSpecifier == null ? mMethodName : mSpecifier);
+	}
+
+	public int getSdk() {
+		return mSdk;
 	}
 
 	abstract protected void before(MethodHookParam param) throws Throwable;

@@ -30,6 +30,10 @@ public class XAccountManager extends XHook {
 		super(methodName, restrictionName, permissions, null);
 	}
 
+	public XAccountManager(String methodName, String restrictionName, String[] permissions, int sdk) {
+		super(methodName, restrictionName, permissions, null, sdk);
+	}
+
 	// @formatter:off
 
 	// public void addOnAccountsUpdatedListener(final OnAccountsUpdateListener listener, Handler handler, boolean updateImmediately)
