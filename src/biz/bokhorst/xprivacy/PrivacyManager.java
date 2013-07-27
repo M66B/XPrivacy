@@ -27,18 +27,13 @@ import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
-import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
-import android.provider.MediaStore;
-import android.service.notification.NotificationListenerService;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 
 @SuppressLint("InlinedApi")

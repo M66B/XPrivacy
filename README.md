@@ -543,6 +543,10 @@ How to get beta releases:
 
 * ...
 
+**Version 1.7.20 BETA!**
+
+* Restructered meta data (restriction/function definitions)
+
 **Version 1.7.19 BETA!**
 
 * Restrict [BluetoothDevice](http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html)
