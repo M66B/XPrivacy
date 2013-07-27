@@ -1136,7 +1136,8 @@ This modules offers a lot of other, intersting features.
 
 Android 4.3+ Permission Manager is like CyanogenMod Incognito Mode.
 
-XPrivacy can restrict more data than any of the above solutions.
+XPrivacy can restrict more data than any of the above solutions,
+including closed source applications and libraries, like Google Play services.
 
 News
 ----
