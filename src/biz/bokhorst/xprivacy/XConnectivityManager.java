@@ -17,15 +17,16 @@ public class XConnectivityManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (isRestricted(param))
-			if (param.method.getName().equals("getAllNetworkInfo"))
-				param.setResult(new NetworkInfo[0]);
-			else
-				param.setResult(null);
+		// Do nothing
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Do nothing
+		if (param.getResult() != null)
+			if (isRestricted(param))
+				if (param.method.getName().equals("getAllNetworkInfo"))
+					param.setResult(new NetworkInfo[0]);
+				else
+					param.setResult(null);
 	}
 }
