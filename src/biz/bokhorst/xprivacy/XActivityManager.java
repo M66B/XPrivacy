@@ -31,19 +31,20 @@ public class XActivityManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (isRestricted(param)) {
-			String methodName = param.method.getName();
-			if (methodName.equals("getRecentTasks"))
-				param.setResult(new ArrayList<ActivityManager.RecentTaskInfo>());
-			else if (methodName.equals("getRunningAppProcesses"))
-				param.setResult(new ArrayList<ActivityManager.RunningAppProcessInfo>());
-			else if (methodName.equals("getRunningServices"))
-				param.setResult(new ArrayList<ActivityManager.RunningServiceInfo>());
-			else if (methodName.equals("getRunningTasks"))
-				param.setResult(new ArrayList<ActivityManager.RunningTaskInfo>());
-			else
-				Util.log(this, Log.WARN, "Unknown method=" + methodName);
-		}
+		if (param.getResult() != null)
+			if (isRestricted(param)) {
+				String methodName = param.method.getName();
+				if (methodName.equals("getRecentTasks"))
+					param.setResult(new ArrayList<ActivityManager.RecentTaskInfo>());
+				else if (methodName.equals("getRunningAppProcesses"))
+					param.setResult(new ArrayList<ActivityManager.RunningAppProcessInfo>());
+				else if (methodName.equals("getRunningServices"))
+					param.setResult(new ArrayList<ActivityManager.RunningServiceInfo>());
+				else if (methodName.equals("getRunningTasks"))
+					param.setResult(new ArrayList<ActivityManager.RunningTaskInfo>());
+				else
+					Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			}
 	}
 
 	@Override

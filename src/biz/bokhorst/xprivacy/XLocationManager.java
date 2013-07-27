@@ -78,8 +78,9 @@ public class XLocationManager extends XHook {
 				if (isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedLocation(location));
 		} else if (methodName.equals("getProviders")) {
-			if (isRestricted(param))
-				param.setResult(new ArrayList<String>());
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(new ArrayList<String>());
 		} else if (methodName.equals("sendExtraCommand")) {
 			if (isRestricted(param))
 				param.setResult(false);

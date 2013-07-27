@@ -18,12 +18,13 @@ public class XEnvironment extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (isRestricted(param))
-			param.setResult(Environment.MEDIA_UNMOUNTED);
+		// Do nothing
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Do nothing
+		if (param.getResult() != null)
+			if (isRestricted(param))
+				param.setResult(Environment.MEDIA_UNMOUNTED);
 	}
 }

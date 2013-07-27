@@ -25,29 +25,24 @@ public class XWifiManager extends XHook {
 	// public List<ScanResult> getScanResults()
 	// public WifiConfiguration getWifiApConfiguration()
 	// frameworks/base/wifi/java/android/net/wifi/WifiManager.java
+	// frameworks/base/wifi/java/android/net/wifi/WifiInfo.java
+	// frameworks/base/core/java/android/net/DhcpInfo.java
 	// http://developer.android.com/reference/android/net/wifi/WifiManager.html
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (param.method.getName().equals("getConfiguredNetworks")) {
-			if (isRestricted(param))
-				param.setResult(new ArrayList<WifiConfiguration>());
-		} else if (param.method.getName().equals("getScanResults")) {
-			if (isRestricted(param))
-				param.setResult(new ArrayList<ScanResult>());
-		} else if (param.method.getName().equals("getWifiApConfiguration")) {
-			if (isRestricted(param))
-				param.setResult(null);
-		}
+		// Do nothing
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.method.getName().equals("getConnectionInfo")) {
-			// frameworks/base/wifi/java/android/net/wifi/WifiInfo.java
-			WifiInfo wInfo = (WifiInfo) param.getResult();
-			if (wInfo != null)
-				if (isRestricted(param))
+		if (param.getResult() != null)
+			if (isRestricted(param)) {
+				String methodName = param.method.getName();
+				if (methodName.equals("getConfiguredNetworks"))
+					param.setResult(new ArrayList<WifiConfiguration>());
+				else if (methodName.equals("getConnectionInfo")) {
+					WifiInfo wInfo = (WifiInfo) param.getResult();
 					if (getRestrictionName().equals(PrivacyManager.cInternet)) {
 						// Supplicant state
 						try {
@@ -98,17 +93,17 @@ public class XWifiManager extends XHook {
 							}
 						}
 					}
-		} else if (param.method.getName().equals("getDhcpInfo")) {
-			// frameworks/base/core/java/android/net/DhcpInfo.java
-			DhcpInfo dInfo = (DhcpInfo) param.getResult();
-			if (dInfo != null)
-				if (isRestricted(param)) {
+				} else if (param.method.getName().equals("getDhcpInfo")) {
+					DhcpInfo dInfo = (DhcpInfo) param.getResult();
 					dInfo.ipAddress = (Integer) PrivacyManager.getDefacedProp("IPInt");
 					dInfo.gateway = (Integer) PrivacyManager.getDefacedProp("IPInt");
 					dInfo.dns1 = (Integer) PrivacyManager.getDefacedProp("IPInt");
 					dInfo.dns2 = (Integer) PrivacyManager.getDefacedProp("IPInt");
 					dInfo.serverAddress = (Integer) PrivacyManager.getDefacedProp("IPInt");
-				}
-		}
+				} else if (methodName.equals("getScanResults"))
+					param.setResult(new ArrayList<ScanResult>());
+				else if (methodName.equals("getWifiApConfiguration"))
+					param.setResult(null);
+			}
 	}
 }

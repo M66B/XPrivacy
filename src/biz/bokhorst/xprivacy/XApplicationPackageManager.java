@@ -42,20 +42,21 @@ public class XApplicationPackageManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (isRestricted(param)) {
-			String methodName = param.method.getName();
-			if (methodName.equals("getInstalledApplications"))
-				param.setResult(new ArrayList<ApplicationInfo>());
-			else if (methodName.equals("getInstalledPackages") || methodName.equals("getPreferredPackages"))
-				param.setResult(new ArrayList<PackageInfo>());
-			else if (methodName.equals("queryBroadcastReceivers") || methodName.equals("queryIntentActivities")
-					|| methodName.equals("queryIntentActivityOptions") || methodName.equals("queryIntentServices"))
-				param.setResult(new ArrayList<ResolveInfo>());
-			else if (methodName.equals("queryContentProviders"))
-				param.setResult(new ArrayList<ProviderInfo>());
-			else
-				Util.log(this, Log.WARN, "Unknown method=" + methodName);
-		}
+		if (param.getResult() != null)
+			if (isRestricted(param)) {
+				String methodName = param.method.getName();
+				if (methodName.equals("getInstalledApplications"))
+					param.setResult(new ArrayList<ApplicationInfo>());
+				else if (methodName.equals("getInstalledPackages") || methodName.equals("getPreferredPackages"))
+					param.setResult(new ArrayList<PackageInfo>());
+				else if (methodName.equals("queryBroadcastReceivers") || methodName.equals("queryIntentActivities")
+						|| methodName.equals("queryIntentActivityOptions") || methodName.equals("queryIntentServices"))
+					param.setResult(new ArrayList<ResolveInfo>());
+				else if (methodName.equals("queryContentProviders"))
+					param.setResult(new ArrayList<ProviderInfo>());
+				else
+					Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			}
 	}
 
 	@Override

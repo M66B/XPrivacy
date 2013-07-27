@@ -22,15 +22,15 @@ public class XNetworkInterface extends XHook {
 		super(methodName, restrictionName, permissions, null);
 	}
 
-	// Network:
-	// - public byte[] getHardwareAddress()
-	// - public Enumeration<InetAddress> getInetAddresses()
-	// - public List<InterfaceAddress> getInterfaceAddresses()
-
 	// Internet:
 	// - public static NetworkInterface getByInetAddress(InetAddress address)
 	// - public static NetworkInterface getByName(String interfaceName)
 	// - public static Enumeration<NetworkInterface> getNetworkInterfaces()
+
+	// Network:
+	// - public byte[] getHardwareAddress()
+	// - public Enumeration<InetAddress> getInetAddresses()
+	// - public List<InterfaceAddress> getInterfaceAddresses()
 
 	// libcore/luni/src/main/java/java/net/NetworkInterface.java
 	// http://developer.android.com/reference/java/net/NetworkInterface.html
@@ -41,15 +41,18 @@ public class XNetworkInterface extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (getRestrictionName().equals(PrivacyManager.cInternet))
-			if (isRestricted(param))
-				param.setResult(null);
+		// Do nothing
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (param.getResult() != null)
-			if (getRestrictionName().equals(PrivacyManager.cNetwork)) {
+			if (getRestrictionName().equals(PrivacyManager.cInternet)) {
+				// Internet: fake offline
+				if (isRestricted(param))
+					param.setResult(null);
+			} else if (getRestrictionName().equals(PrivacyManager.cNetwork)) {
+				// Network
 				String methodName = param.method.getName();
 				NetworkInterface ni = (NetworkInterface) param.thisObject;
 				if (!ni.isLoopback())
