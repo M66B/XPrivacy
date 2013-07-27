@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 
 import android.appwidget.AppWidgetProviderInfo;
+import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
@@ -23,8 +24,11 @@ public class XAppWidgetManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResult() != null)
-			if (isRestricted(param))
+		String methodName = param.method.getName();
+		if (methodName.equals("getInstalledProviders")) {
+			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<AppWidgetProviderInfo>());
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 }

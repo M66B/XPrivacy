@@ -84,35 +84,42 @@ public class XAccountManager extends XHook {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResult() != null)
-			if (isRestricted(param)) {
-				int uid = Binder.getCallingUid();
-				String methodName = param.method.getName();
-				if (methodName.equals("blockingGetAuthToken")) {
+		String methodName = param.method.getName();
+		if (!methodName.equals("addOnAccountsUpdatedListener") && !methodName.equals("removeOnAccountsUpdatedListener")) {
+			int uid = Binder.getCallingUid();
+			if (methodName.equals("blockingGetAuthToken")) {
+				if (param.getResult() != null && isRestricted(param))
 					if (param.args.length > 0 && param.args[0] != null) {
 						Account account = (Account) param.args[0];
 						if (!isAccountAllowed(account, uid))
 							param.setResult(null);
 					}
-				} else if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType")
-						|| methodName.equals("getAccountsByTypeForPackage")) {
+			} else if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType")
+					|| methodName.equals("getAccountsByTypeForPackage")) {
+				if (param.getResult() != null && isRestricted(param)) {
 					Account[] accounts = (Account[]) param.getResult();
 					param.setResult(filterAccounts(accounts, uid));
-				} else if (methodName.equals("getAccountsByTypeAndFeatures")) {
+				}
+			} else if (methodName.equals("getAccountsByTypeAndFeatures")) {
+				if (param.getResult() != null && isRestricted(param)) {
 					AccountManagerFuture<Account[]> future = (AccountManagerFuture<Account[]>) param.getResult();
 					param.setResult(new XFutureAccount(future, uid));
-				} else if (methodName.equals("getAuthToken") || methodName.equals("getAuthTokenByFeatures")) {
+				}
+			} else if (methodName.equals("getAuthToken") || methodName.equals("getAuthTokenByFeatures")) {
+				if (param.getResult() != null && isRestricted(param)) {
 					AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
 					param.setResult(new XFutureBundle(future, uid));
-				} else if (methodName.equals("hasFeatures")) {
+				}
+			} else if (methodName.equals("hasFeatures")) {
+				if (param.getResult() != null && isRestricted(param))
 					if (param.args.length > 0 && param.args[0] != null) {
 						Account account = (Account) param.args[0];
 						if (!isAccountAllowed(account, uid))
 							param.setResult(new XFutureBoolean());
 					}
-				} else
-					Util.log(this, Log.WARN, "Unknown method=" + methodName);
-			}
+			} else
+				Util.log(this, Log.WARN, "Unknown method=" + methodName);
+		}
 	}
 
 	@Override

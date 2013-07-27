@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import android.util.Log;
 import biz.bokhorst.xprivacy.XHook;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -21,8 +22,11 @@ public class XBluetoothDevice extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResult() != null)
-			if (isRestricted(param))
+		String methodName = param.method.getName();
+		if (methodName.equals("getAddress")) {
+			if (param.getResult() != null && isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedProp("MAC"));
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 }

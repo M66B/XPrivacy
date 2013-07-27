@@ -24,16 +24,18 @@ public class XNetworkInfo extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (isRestricted(param)) {
-			String methodName = param.method.getName();
-			if (methodName.equals("getDetailedState"))
+		String methodName = param.method.getName();
+		if (methodName.equals("getDetailedState")) {
+			if (param.getResult() != null && isRestricted(param))
 				param.setResult(NetworkInfo.DetailedState.DISCONNECTED);
-			else if (methodName.equals("getState"))
+		} else if (methodName.equals("getState")) {
+			if (param.getResult() != null && isRestricted(param))
 				param.setResult(NetworkInfo.State.DISCONNECTED);
-			else if (methodName.equals("isConnected") || methodName.equals("isConnectedOrConnecting"))
+		} else if (methodName.equals("isConnected") || methodName.equals("isConnectedOrConnecting")) {
+			if (isRestricted(param))
 				param.setResult(false);
-			else
-				Util.log(this, Log.WARN, "Unknown method=" + methodName);
-		}
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+
 	}
 }

@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import android.net.NetworkInfo;
+import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XConnectivityManager extends XHook {
@@ -22,11 +23,14 @@ public class XConnectivityManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResult() != null)
-			if (isRestricted(param))
-				if (param.method.getName().equals("getAllNetworkInfo"))
-					param.setResult(new NetworkInfo[0]);
-				else
-					param.setResult(null);
+		String methodName = param.method.getName();
+		if (methodName.equals("getActiveNetworkInfo") || methodName.equals("getNetworkInfo")) {
+			if (param.getResult() != null && isRestricted(param))
+				param.setResult(null);
+		} else if (methodName.equals("getAllNetworkInfo")) {
+			if (param.getResult() != null && isRestricted(param))
+				param.setResult(new NetworkInfo[0]);
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 }

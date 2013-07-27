@@ -32,12 +32,10 @@ public class XSettingsSecure extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResult() != null) {
-			String name = (param.args.length > 1 ? (String) param.args[1] : null);
-			if (Settings.Secure.ANDROID_ID.equals(name))
-				if (isRestricted(param))
-					param.setResult(PrivacyManager.getDefacedProp("ANDROID_ID"));
-		}
+		String name = (param.args.length > 1 ? (String) param.args[1] : null);
+		if (Settings.Secure.ANDROID_ID.equals(name))
+			if (param.getResult() != null && isRestricted(param))
+				param.setResult(PrivacyManager.getDefacedProp("ANDROID_ID"));
 	}
 
 	@Override

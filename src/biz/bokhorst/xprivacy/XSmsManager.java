@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
@@ -26,15 +27,20 @@ public class XSmsManager extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
-		if (!methodName.equals("getAllMessagesFromIcc"))
+		if (methodName.equals("sendDataMessage") || methodName.equals("sendMultipartTextMessage") || methodName.equals("sendTextMessage"))
 			if (isRestricted(param))
 				param.setResult(null);
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResult() != null)
-			if (isRestricted(param))
-				param.setResult(new ArrayList<SmsMessage>());
+		String methodName = param.method.getName();
+		if (!methodName.equals("sendDataMessage") && !methodName.equals("sendMultipartTextMessage")
+				&& !methodName.equals("sendTextMessage"))
+			if (methodName.equals("getAllMessagesFromIcc")) {
+				if (param.getResult() != null && isRestricted(param))
+					param.setResult(new ArrayList<SmsMessage>());
+			} else
+				Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 }

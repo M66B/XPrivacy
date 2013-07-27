@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XAudioRecord extends XHook {
@@ -15,10 +16,14 @@ public class XAudioRecord extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (isRestricted(param)) {
-			param.setResult(null);
-			notifyUser(this.getClass().getSimpleName());
-		}
+		String methodName = param.method.getName();
+		if (methodName.equals("startRecording")) {
+			if (isRestricted(param)) {
+				param.setResult(null);
+				notifyUser(this.getClass().getSimpleName());
+			}
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 
 	@Override

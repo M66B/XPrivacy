@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 
 import android.content.Context;
 import android.os.Binder;
+import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XClipboardManager extends XHook {
@@ -37,14 +38,16 @@ public class XClipboardManager extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
-		if (methodName.equals("hasPrimaryClip") || methodName.equals("hasText")) {
-			if (isRestricted(param))
-				param.setResult(false);
-		} else {
-			if (param.getResult() != null)
-				if (isRestricted(param))
+		if (!methodName.equals("addPrimaryClipChangedListener"))
+			if (methodName.equals("getPrimaryClip") || methodName.equals("getPrimaryClipDescription")
+					|| methodName.equals("getText")) {
+				if (param.getResult() != null && isRestricted(param))
 					param.setResult(null);
-		}
+			} else if (methodName.equals("hasPrimaryClip") || methodName.equals("hasText")) {
+				if (isRestricted(param))
+					param.setResult(false);
+			} else
+				Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 
 	@Override

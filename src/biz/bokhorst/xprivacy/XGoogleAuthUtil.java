@@ -2,6 +2,8 @@ package biz.bokhorst.xprivacy;
 
 import java.io.IOException;
 
+import android.util.Log;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XGoogleAuthUtil extends XHook {
@@ -28,8 +30,11 @@ public class XGoogleAuthUtil extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResult() != null)
-			if (isRestricted(param))
+		String methodName = param.method.getName();
+		if (methodName.equals("getToken") || methodName.equals("getTokenWithNotification")) {
+			if (param.getResult() != null && isRestricted(param))
 				param.setThrowable(new IOException());
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 }

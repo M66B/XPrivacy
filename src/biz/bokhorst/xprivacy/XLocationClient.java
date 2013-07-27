@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XLocationClient extends XHook {
@@ -13,8 +14,12 @@ public class XLocationClient extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (isRestricted(param))
-			param.setResult(null);
+		String methodName = param.method.getName();
+		if (methodName.equals("connect")) {
+			if (isRestricted(param))
+				param.setResult(null);
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 
 	@Override

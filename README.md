@@ -545,6 +545,7 @@ How to get beta releases:
 * Restrict [ClipboardManager](http://developer.android.com/reference/android/content/ClipboardManager.html) (category *System*) ([issue](https://github.com/M66B/XPrivacy/issues/359))
 * 4.3: restrict [NotificationListenerService](http://developer.android.com/reference/android/service/notification/NotificationListenerService.html) (category *System*) ([issue](https://github.com/M66B/XPrivacy/issues/360))
 * Better fake offline state location providers
+* Performance and compatibility improvements
 
 **Version 1.7.18 BETA!**
 

@@ -29,14 +29,13 @@ public class XSystemProperties extends XHook {
 		String key = (param.args.length > 0 ? (String) param.args[0] : null);
 		if (key != null)
 			if (mPropertyName.startsWith("%") ? key.contains(mPropertyName.substring(1)) : key.equals(mPropertyName))
-				if (isRestricted(param, mPropertyName))
-					if (param.method.getName().equals("get"))
+				if (param.method.getName().equals("get")) {
+					if (param.getResult() != null && isRestricted(param, mPropertyName))
 						param.setResult(PrivacyManager.getDefacedProp(mPropertyName));
-					else if (param.args.length > 1)
+				} else if (param.args.length > 1) {
+					if (isRestricted(param, mPropertyName))
 						param.setResult(param.args[1]);
-					else {
-						Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
-						param.setResult(null);
-					}
+				} else
+					Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 }

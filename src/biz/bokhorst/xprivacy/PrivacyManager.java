@@ -114,7 +114,7 @@ public class PrivacyManager {
 		mPermissions.get(cCalling).add("SEND_RESPOND_VIA_MESSAGE");
 		mPermissions.get(cContacts).add("READ_CONTACTS");
 		mPermissions.get(cDictionary).add("READ_USER_DICTIONARY");
-		mPermissions.get(cEMail).add("ACCESS_PROVIDER");
+		mPermissions.get(cEMail).add("com.android.email.permission.ACCESS_PROVIDER");
 		mPermissions.get(cIdentification).add("READ_GSERVICES");
 		mPermissions.get(cIdentification).add("");
 		mPermissions.get(cInternet).add("INTERNET");
@@ -964,6 +964,7 @@ public class PrivacyManager {
 			return new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
 
 		// Fallback
+		Util.log(null, Log.WARN, "Fallback value name=" + name);
 		return cDeface;
 	}
 

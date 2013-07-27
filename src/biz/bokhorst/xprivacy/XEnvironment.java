@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 import android.os.Environment;
+import android.util.Log;
 
 import biz.bokhorst.xprivacy.XHook;
 
@@ -23,8 +24,11 @@ public class XEnvironment extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResult() != null)
-			if (isRestricted(param))
+		String methodName = param.method.getName();
+		if (methodName.equals("getExternalStorageState")) {
+			if (param.getResult() != null && isRestricted(param))
 				param.setResult(Environment.MEDIA_UNMOUNTED);
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 }

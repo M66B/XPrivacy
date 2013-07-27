@@ -91,18 +91,23 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (param.getResult() != null)
-			if (isRestricted(param)) {
-				String methodName = param.method.getName();
-				if (methodName.equals("getAllCellInfo"))
+		String methodName = param.method.getName();
+		if (!methodName.equals("listen") && !methodName.equals("disableLocationUpdates")
+				&& !methodName.equals("enableLocationUpdates"))
+			if (methodName.equals("getAllCellInfo")) {
+				if (param.getResult() != null && isRestricted(param))
 					param.setResult(new ArrayList<CellInfo>());
-				else if (methodName.equals("getCellLocation"))
+			} else if (methodName.equals("getCellLocation")) {
+				if (param.getResult() != null && isRestricted(param))
 					param.setResult(CellLocation.getEmpty());
-				else if (methodName.equals("getIsimImpu"))
+			} else if (methodName.equals("getIsimImpu")) {
+				if (param.getResult() != null && isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedProp(methodName));
-				else if (methodName.equals("getNeighboringCellInfo"))
+			} else if (methodName.equals("getNeighboringCellInfo")) {
+				if (param.getResult() != null && isRestricted(param))
 					param.setResult(new ArrayList<NeighboringCellInfo>());
-				else
+			} else {
+				if (param.getResult() != null && isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedProp(methodName));
 			}
 	}
