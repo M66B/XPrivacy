@@ -16,7 +16,6 @@ import android.util.SparseArray;
 
 @SuppressLint("DefaultLocale")
 public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
-	private Drawable mDrawable;
 	private List<String> mListApplicationName;
 	private String mPackageName;
 	private boolean mHasInternet;
@@ -45,7 +44,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	private void Initialize(Context context, ApplicationInfo appInfo) {
 		PackageManager pm = context.getPackageManager();
-		mDrawable = appInfo.loadIcon(pm);
 		mListApplicationName = new ArrayList<String>();
 		mListApplicationName.add(getApplicationName(appInfo, pm));
 		mPackageName = appInfo.packageName;
@@ -117,8 +115,14 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return mPackageName;
 	}
 
-	public Drawable getDrawable() {
-		return mDrawable;
+	public Drawable getDrawable(Context context) {
+		try {
+			PackageManager pm = context.getPackageManager();
+			return context.getPackageManager().getApplicationInfo(mPackageName, 0).loadIcon(pm);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return null;
+		}
 	}
 
 	public boolean hasInternet() {

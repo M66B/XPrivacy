@@ -1675,7 +1675,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 
 			// Set icon
-			imgIcon.setImageDrawable(xAppInfo.getDrawable());
+			imgIcon.setImageDrawable(xAppInfo.getDrawable(row.getContext()));
 
 			// Handle details click
 			imgIcon.setOnClickListener(new View.OnClickListener() {

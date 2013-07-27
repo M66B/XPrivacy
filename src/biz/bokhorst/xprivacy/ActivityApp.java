@@ -113,7 +113,7 @@ public class ActivityApp extends Activity {
 
 		// Display app icon
 		ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
-		imgIcon.setImageDrawable(mAppInfo.getDrawable());
+		imgIcon.setImageDrawable(mAppInfo.getDrawable(this));
 
 		// Handle icon click
 		imgIcon.setOnClickListener(new View.OnClickListener() {
