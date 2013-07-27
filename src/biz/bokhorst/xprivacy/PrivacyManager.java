@@ -1,10 +1,8 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.lang.reflect.Field;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -41,7 +39,6 @@ import android.os.Process;
 import android.provider.MediaStore;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Log;
 
 @SuppressLint("InlinedApi")
@@ -381,9 +378,9 @@ public class PrivacyManager {
 		// User dictionary
 		mMethods.get(cDictionary).add("UserDictionary");
 
-		Util.log(null, Log.INFO, "Scanning meta");
+		// Scan meta data
 		try {
-			File file = new File(Environment.getDataDirectory() + "/data/biz.bokhorst.xprivacy/hooks.xml");
+			File file = new File(Environment.getDataDirectory() + "/data/biz.bokhorst.xprivacy/meta.xml");
 			FileInputStream fis = null;
 			try {
 				fis = new FileInputStream(file);
@@ -398,27 +395,31 @@ public class PrivacyManager {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
-		Util.log(null, Log.INFO, "Scanning meta done");
 	}
 
 	private static class MetaHandler extends DefaultHandler {
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			if (qName.equals("Hook")) {
+			if (qName.equals("Meta"))
+				;
+			else if (qName.equals("Hook")) {
 				String restrictionName = attributes.getValue("restriction");
 				String methodName = attributes.getValue("method");
 				String permissions = attributes.getValue("permissions");
-				// String sdk = attributes.getValue("sdk");
+				int sdk = Integer.parseInt(attributes.getValue("sdk"));
 
-				if (restrictionName != null && !mPermissions.containsKey(restrictionName))
-					Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
+				if (Build.VERSION.SDK_INT >= sdk) {
+					if (restrictionName != null && !mPermissions.containsKey(restrictionName))
+						Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
 
-				if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
-					Util.log(null, Log.WARN, "Missing method " + methodName);
+					if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
+						Util.log(null, Log.WARN, "Missing method " + methodName);
 
-				for (String permission : permissions.split(","))
-					if (!mPermissions.get(restrictionName).contains(permission))
-						Util.log(null, Log.WARN, "Missing no permission restriction=" + restrictionName);
+					if (permissions != null)
+						for (String permission : permissions.split(","))
+							if (!mPermissions.get(restrictionName).contains(permission))
+								Util.log(null, Log.WARN, "Missing no permission restriction=" + restrictionName);
+				}
 			} else
 				Util.log(null, Log.WARN, "Unknown element=" + qName);
 		}
@@ -427,34 +428,22 @@ public class PrivacyManager {
 	// Data
 
 	public static void registerMethod(String restrictionName, String methodName, String[] permissions, int sdk) {
-		if (cExperimental)
-			try {
-				synchronized (mPermissions) {
-					File logFile = new File("/data/local/tmp/xprivacy.xml");
-					BufferedWriter fw = new BufferedWriter(new FileWriter(logFile, true));
-					fw.write(String.format("<Hook restriction=\"%s\" method=\"%s\" permissions=\"%s\" sdk=\"%d\" />",
-							restrictionName, methodName, TextUtils.join(",", permissions), sdk));
-					fw.newLine();
-					fw.close();
-				}
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
+		if (Build.VERSION.SDK_INT >= sdk) {
+			if (restrictionName != null && !mPermissions.containsKey(restrictionName))
+				Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
+
+			if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
+				Util.log(null, Log.WARN, "Missing method " + methodName);
+
+			if (permissions != null) {
+				if (permissions.length == 0)
+					if (!mPermissions.get(restrictionName).contains(""))
+						Util.log(null, Log.WARN, "Missing no permission restriction=" + restrictionName);
+
+				for (String permission : permissions)
+					if (!mPermissions.get(restrictionName).contains(permission))
+						Util.log(null, Log.WARN, "Missing permission " + permission);
 			}
-
-		if (restrictionName != null && !mPermissions.containsKey(restrictionName))
-			Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
-
-		if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
-			Util.log(null, Log.WARN, "Missing method " + methodName);
-
-		if (permissions != null) {
-			if (permissions.length == 0)
-				if (!mPermissions.get(restrictionName).contains(""))
-					Util.log(null, Log.WARN, "Missing no permission restriction=" + restrictionName);
-
-			for (String permission : permissions)
-				if (!mPermissions.get(restrictionName).contains(permission))
-					Util.log(null, Log.WARN, "Missing permission " + permission);
 		}
 	}
 

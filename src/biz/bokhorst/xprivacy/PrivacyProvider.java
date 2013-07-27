@@ -62,9 +62,8 @@ public class PrivacyProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		try {
-			File out = new File(Environment.getDataDirectory() + "/data/biz.bokhorst.xprivacy/hooks.xml");
-			Util.log(null, Log.INFO, "hooks=" + out.getAbsolutePath());
-			InputStream is = getContext().getAssets().open("hooks.xml");
+			File out = new File(Environment.getDataDirectory() + "/data/biz.bokhorst.xprivacy/meta.xml");
+			InputStream is = getContext().getAssets().open("meta.xml");
 			OutputStream os = new FileOutputStream(out.getAbsolutePath());
 			byte[] buffer = new byte[1024];
 			int read;
