@@ -103,281 +103,6 @@ public class PrivacyManager {
 	private static Map<UsageData, UsageData> mUsageQueue = new LinkedHashMap<UsageData, UsageData>();
 
 	static {
-		// This is a workaround, the idea was to use registerMethod
-		// Static data is not shared across VM's
-		// If you know a better solution, please let me know
-
-		// Restrictions
-		for (String restrictionName : cRestrictionNames) {
-			mPermissions.put(restrictionName, new ArrayList<String>());
-			mMethods.put(restrictionName, new ArrayList<String>());
-		}
-
-		// Permissions
-		mPermissions.get(cAccounts).add("GET_ACCOUNTS");
-		mPermissions.get(cAccounts).add("USE_CREDENTIALS");
-		mPermissions.get(cAccounts).add("MANAGE_ACCOUNTS");
-		mPermissions.get(cBrowser).add("READ_HISTORY_BOOKMARKS");
-		mPermissions.get(cBrowser).add("GLOBAL_SEARCH");
-		mPermissions.get(cCalendar).add("READ_CALENDAR");
-		mPermissions.get(cCalling).add("SEND_SMS");
-		mPermissions.get(cCalling).add("CALL_PHONE");
-		mPermissions.get(cCalling).add("SEND_RESPOND_VIA_MESSAGE");
-		mPermissions.get(cContacts).add("READ_CONTACTS");
-		mPermissions.get(cDictionary).add("READ_USER_DICTIONARY");
-		mPermissions.get(cEMail).add("com.android.email.permission.ACCESS_PROVIDER");
-		mPermissions.get(cIdentification).add("READ_GSERVICES");
-		mPermissions.get(cIdentification).add("");
-		mPermissions.get(cInternet).add("INTERNET");
-		mPermissions.get(cLocation).add("ACCESS_COARSE_LOCATION");
-		mPermissions.get(cLocation).add("ACCESS_FINE_LOCATION");
-		mPermissions.get(cLocation).add("ACCESS_COARSE_UPDATES");
-		mPermissions.get(cLocation).add("CONTROL_LOCATION_UPDATES");
-		mPermissions.get(cLocation).add("ACCESS_WIFI_STATE");
-		mPermissions.get(cMedia).add("CAMERA");
-		mPermissions.get(cMedia).add("RECORD_AUDIO");
-		mPermissions.get(cMedia).add("RECORD_VIDEO");
-		mPermissions.get(cMessages).add("READ_WRITE_ALL_VOICEMAIL");
-		mPermissions.get(cMessages).add("READ_SMS");
-		mPermissions.get(cMessages).add("RECEIVE_SMS");
-		mPermissions.get(cNetwork).add("ACCESS_NETWORK_STATE");
-		mPermissions.get(cNetwork).add("ACCESS_WIFI_STATE");
-		mPermissions.get(cNetwork).add("BLUETOOTH");
-		mPermissions.get(cNfc).add("NFC");
-		mPermissions.get(cPhone).add("READ_PHONE_STATE");
-		mPermissions.get(cPhone).add("PROCESS_OUTGOING_CALLS");
-		mPermissions.get(cPhone).add("READ_CALL_LOG");
-		mPermissions.get(cPhone).add("WRITE_APN_SETTINGS");
-		mPermissions.get(cPhone).add("");
-		mPermissions.get(cShell).add("");
-		mPermissions.get(cStorage).add("READ_EXTERNAL_STORAGE");
-		mPermissions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
-		mPermissions.get(cStorage).add("WRITE_MEDIA_STORAGE");
-		mPermissions.get(cSystem).add("GET_TASKS");
-		mPermissions.get(cSystem).add("BIND_NOTIFICATION_LISTENER_SERVICE");
-		mPermissions.get(cSystem).add("");
-		mPermissions.get(cView).add("");
-
-		// Methods
-
-		// Account manager
-		String[] accs = new String[] { "addOnAccountsUpdatedListener", "blockingGetAuthToken", "getAccounts",
-				"getAccountsByType", "getAccountsByTypeAndFeatures", "getAuthToken", "getAuthTokenByFeatures",
-				"hasFeatures", "removeOnAccountsUpdatedListener" };
-		for (String acc : accs)
-			mMethods.get(cAccounts).add(acc);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-			mMethods.get(cAccounts).add("getAccountsByTypeForPackage");
-
-		// Activity manager
-		String[] acts = new String[] { "getRecentTasks", "getRunningAppProcesses", "getRunningServices",
-				"getRunningTasks" };
-		for (String act : acts)
-			mMethods.get(cSystem).add(act);
-
-		// App widget manager
-		mMethods.get(cSystem).add("getInstalledProviders");
-
-		// Application package manager
-		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getPreferredPackages",
-				"queryBroadcastReceivers", "queryContentProviders", "queryIntentActivities",
-				"queryIntentActivityOptions", "queryIntentServices" };
-		for (String am : ams)
-			mMethods.get(cSystem).add(am);
-
-		// Audio record
-		mMethods.get(cMedia).add("startRecording");
-
-		// Bluetooth adapter
-		mMethods.get(cNetwork).add("getAddress");
-		mMethods.get(cNetwork).add("getBondedDevices");
-
-		// Build serial
-		mMethods.get(cIdentification).add("SERIAL");
-
-		// Camera
-		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
-				"setOneShotPreviewCallback", "takePicture" };
-		for (String cam : cams)
-			mMethods.get(cMedia).add(cam);
-
-		// Clipboard manager
-		String[] clips = new String[] { "addPrimaryClipChangedListener", "getPrimaryClip", "getPrimaryClipDescription",
-				"getText", "hasPrimaryClip", "hasText" };
-		for (String clip : clips)
-			mMethods.get(cSystem).add(clip);
-
-		// Connectivity manager
-		String[] connmgrs = new String[] { "getActiveNetworkInfo", "getAllNetworkInfo", "getNetworkInfo" };
-		for (String connmgr : connmgrs)
-			mMethods.get(cInternet).add(connmgr);
-
-		// Environment
-		mMethods.get(cStorage).add("getExternalStorageState");
-
-		// Google auth
-		mMethods.get(cAccounts).add("getTokenGoogle");
-		mMethods.get(cAccounts).add("getTokenWithNotificationGoogle");
-
-		// InetAddress
-		String[] addrs = new String[] { "getAllByName", "getByAddress", "getByName" };
-		for (String addr : addrs)
-			mMethods.get(cInternet).add(addr);
-
-		// IoBridge
-		mMethods.get(cIdentification).add("/proc");
-
-		// Location client
-		mMethods.get(cLocation).add("connect");
-
-		// Location manager
-		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "getProviders",
-				"isProviderEnabled", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",
-				"sendExtraCommand" };
-		for (String loc : locs)
-			if (!mMethods.get(cLocation).contains(loc))
-				mMethods.get(cLocation).add(loc);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			mMethods.get(cLocation).add("addGeofence");
-			mMethods.get(cLocation).add("getLastLocation");
-		}
-
-		// Media recorder
-		mMethods.get(cMedia).add("setOutputFile");
-
-		// Network info
-		String[] ninfos = new String[] { "getDetailedState", "getState", "isConnected", "isConnectedOrConnecting" };
-		for (String ninfo : ninfos)
-			mMethods.get(cInternet).add(ninfo);
-
-		// Network interface
-		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };
-		for (String net : nets)
-			mMethods.get(cNetwork).add(net);
-
-		String[] inets = new String[] { "getByInetAddress", /* "getByName", */"getNetworkInterfaces" };
-		for (String inet : inets)
-			mMethods.get(cInternet).add(inet);
-
-		// Package manager service
-		mMethods.get(cInternet).add("inet");
-		mMethods.get(cStorage).add("media");
-		mMethods.get(cStorage).add("sdcard");
-
-		// Runtime
-		mMethods.get(cShell).add("sh");
-		mMethods.get(cShell).add("su");
-		mMethods.get(cShell).add("exec");
-		mMethods.get(cShell).add("load");
-		mMethods.get(cShell).add("loadLibrary");
-		mMethods.get(cShell).add("start");
-
-		// Settings secure
-		mMethods.get(cIdentification).add("getString");
-
-		// SMS manager
-		mMethods.get(cMessages).add("getAllMessagesFromIcc");
-
-		String[] smses = new String[] { "sendDataMessage", "sendMultipartTextMessage", "sendTextMessage" };
-		for (String sms : smses)
-			mMethods.get(cCalling).add(sms);
-
-		// System properties
-		String[] props = new String[] { "%imei", "%hostname", "%serialno", "%macaddr" };
-		for (String prop : props)
-			mMethods.get(cIdentification).add(prop);
-
-		// Telephony
-		String[] tlocs = new String[] { "disableLocationUpdates", "enableLocationUpdates", "getCellLocation",
-				"getNeighboringCellInfo" };
-		for (String tloc : tlocs)
-			mMethods.get(cLocation).add(tloc);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-			mMethods.get(cLocation).add("getAllCellInfo");
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-			mMethods.get(cLocation).add("getGroupIdLevel1");
-
-		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
-				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getNetworkCountryIso", "getNetworkOperator",
-				"getNetworkOperatorName", "getSimCountryIso", "getSimOperator", "getSimOperatorName",
-				"getSimSerialNumber", "getSubscriberId", "getVoiceMailAlphaTag", "getVoiceMailNumber", "listen" };
-		for (String phone : phones)
-			mMethods.get(cPhone).add(phone);
-
-		// Wi-Fi manager
-		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults",
-				"getWifiApConfiguration" };
-		for (String wifi : wifis)
-			mMethods.get(cNetwork).add(wifi);
-		mMethods.get(cLocation).add("getScanResults");
-		mMethods.get(cInternet).add("getConnectionInfo");
-
-		// Intent receive: calling
-		mMethods.get(cPhone).add(Intent.ACTION_NEW_OUTGOING_CALL);
-		mMethods.get(cPhone).add(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-			mMethods.get(cCalling).add(TelephonyManager.ACTION_RESPOND_VIA_MESSAGE);
-
-		// Intent receive: NFC
-		mMethods.get(cNfc).add(NfcAdapter.ACTION_NDEF_DISCOVERED);
-		mMethods.get(cNfc).add(NfcAdapter.ACTION_TAG_DISCOVERED);
-		mMethods.get(cNfc).add(NfcAdapter.ACTION_TECH_DISCOVERED);
-
-		// Intent receive: notifications
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-			mMethods.get(cSystem).add(NotificationListenerService.SERVICE_INTERFACE);
-
-		// Intent receive: package changes
-		mMethods.get(cSystem).add(Intent.ACTION_PACKAGE_ADDED);
-		mMethods.get(cSystem).add(Intent.ACTION_PACKAGE_REPLACED);
-		mMethods.get(cSystem).add(Intent.ACTION_PACKAGE_RESTARTED);
-		mMethods.get(cSystem).add(Intent.ACTION_PACKAGE_REMOVED);
-
-		// Intent send: browser
-		mMethods.get(cView).add(Intent.ACTION_VIEW);
-
-		// Intent send: call
-		mMethods.get(cCalling).add(Intent.ACTION_CALL);
-
-		// Intent send: media
-		mMethods.get(cMedia).add(MediaStore.ACTION_IMAGE_CAPTURE);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-			mMethods.get(cMedia).add(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
-		mMethods.get(cMedia).add(MediaStore.ACTION_VIDEO_CAPTURE);
-
-		// Applications provider
-		mMethods.get(cSystem).add("ApplicationsProvider");
-
-		// Browser provider
-		mMethods.get(cBrowser).add("BrowserProvider");
-		mMethods.get(cBrowser).add("BrowserProvider2");
-
-		// Calendar provider
-		mMethods.get(cCalendar).add("CalendarProvider2");
-
-		// Contacts provider
-		String[] uris = new String[] { "contacts/contacts", "contacts/data", "contacts/raw_contacts",
-				"contacts/phone_lookup", "contacts/profile" };
-		for (String uri : uris)
-			mMethods.get(cContacts).add(uri);
-		mMethods.get(cPhone).add("CallLogProvider");
-		mMethods.get(cMessages).add("VoicemailContentProvider");
-
-		// E-mail provider
-		mMethods.get(cEMail).add("EMailProvider");
-
-		// Google services provider
-		mMethods.get(cIdentification).add("GservicesProvider");
-
-		// Telephony providers
-		mMethods.get(cMessages).add("SmsProvider");
-		mMethods.get(cMessages).add("MmsProvider");
-		mMethods.get(cMessages).add("MmsSmsProvider");
-		mMethods.get(cPhone).add("TelephonyProvider");
-
-		// User dictionary
-		mMethods.get(cDictionary).add("UserDictionary");
-
 		// Scan meta data
 		try {
 			String packageName = PrivacyManager.class.getPackage().getName();
@@ -406,22 +131,26 @@ public class PrivacyManager {
 			if (qName.equals("Meta"))
 				;
 			else if (qName.equals("Hook")) {
+				// Get meta data
 				String restrictionName = attributes.getValue("restriction");
 				String methodName = attributes.getValue("method");
 				String permissions = attributes.getValue("permissions");
 				int sdk = Integer.parseInt(attributes.getValue("sdk"));
 
+				// Add meta data
 				if (Build.VERSION.SDK_INT >= sdk) {
-					if (restrictionName != null && !mPermissions.containsKey(restrictionName))
-						Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
+					if (!mMethods.containsKey(restrictionName))
+						mMethods.put(restrictionName, new ArrayList<String>());
+					if (!mPermissions.containsKey(restrictionName))
+						mPermissions.put(restrictionName, new ArrayList<String>());
 
-					if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
-						Util.log(null, Log.WARN, "Missing method " + methodName);
+					if (!mMethods.get(restrictionName).contains(methodName))
+						mMethods.get(restrictionName).add(methodName);
 
 					if (permissions != null)
 						for (String permission : permissions.split(","))
 							if (!mPermissions.get(restrictionName).contains(permission))
-								Util.log(null, Log.WARN, "Missing no permission restriction=" + restrictionName);
+								mPermissions.get(restrictionName).add(permission);
 				}
 			} else
 				Util.log(null, Log.WARN, "Unknown element=" + qName);
