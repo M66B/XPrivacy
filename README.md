@@ -541,7 +541,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Updated Portuguese translation
 
 **Version 1.7.20 BETA!**
 
