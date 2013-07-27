@@ -380,10 +380,13 @@ public class PrivacyManager {
 
 		// Scan meta data
 		try {
-			File file = new File(Environment.getDataDirectory() + "/data/biz.bokhorst.xprivacy/meta.xml");
+			String packageName = PrivacyManager.class.getPackage().getName();
+			File in = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName
+					+ File.separator + "meta.xml");
+			Util.log(null, Log.INFO, "Reading meta=" + in.getAbsolutePath());
 			FileInputStream fis = null;
 			try {
-				fis = new FileInputStream(file);
+				fis = new FileInputStream(in);
 				XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
 				MetaHandler metaHandler = new MetaHandler();
 				xmlReader.setContentHandler(metaHandler);
