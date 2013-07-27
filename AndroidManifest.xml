@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
-    android:versionCode="109"
-    android:versionName="1.7.17" >
+    android:versionCode="110"
+    android:versionName="1.7.18" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -78,7 +78,6 @@
             android:excludeFromRecents="true"
             android:exported="true"
             android:multiprocess="true"
-            android:process=":provider"
             android:syncable="false" >
         </provider>
     </application>

@@ -30,7 +30,10 @@ import android.widget.TextView;
 public class ActivityUsage extends Activity {
 	private int mThemeId;
 	private boolean mAll = true;
+	private int mUid;
 	private UsageAdapter mUsageAdapter;
+
+	public static final String cUid = "Uid";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,10 @@ public class ActivityUsage extends Activity {
 
 		// Set layout
 		setContentView(R.layout.usagelist);
+
+		// Get uid
+		Bundle extras = getIntent().getExtras();
+		mUid = (extras == null ? 0 : extras.getInt(cUid, 0));
 
 		// Start task to get usage data
 		UsageTask usageTask = new UsageTask();
@@ -111,7 +118,7 @@ public class ActivityUsage extends Activity {
 		@Override
 		protected List<PrivacyManager.UsageData> doInBackground(Object... arg0) {
 			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
-			return PrivacyManager.getUsed(ActivityUsage.this);
+			return PrivacyManager.getUsed(ActivityUsage.this, mUid);
 		}
 
 		@Override

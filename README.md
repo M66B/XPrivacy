@@ -541,6 +541,11 @@ How to get beta releases:
 
 * ...
 
+**Version 1.7.18 BETA!**
+
+* Option to show usage data from the application details view
+* Fix usage data ([issue](https://github.com/M66B/XPrivacy/issues/364), [issue](https://github.com/M66B/XPrivacy/issues/365))
+
 **Version 1.7.17 BETA!**
 
 * Contacts: also check for raw contacts ([issue](https://github.com/M66B/XPrivacy/issues/361))

@@ -255,7 +255,8 @@ public class PrivacyProvider extends ContentProvider {
 			if (values.containsKey(PrivacyProvider.COL_RESTRICTED))
 				restricted = values.getAsBoolean(PrivacyProvider.COL_RESTRICTED);
 			long timeStamp = values.getAsLong(PrivacyProvider.COL_USED);
-			Util.log(null, Log.INFO, String.format("Update usage data %d/%s/%s", uid, restrictionName, methodName));
+			Util.log(null, Log.INFO,
+					String.format("Update usage data %d/%s/%s=%b", uid, restrictionName, methodName, restricted));
 
 			// Update usage data
 			if (methodName != null)

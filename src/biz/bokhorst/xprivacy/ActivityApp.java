@@ -216,6 +216,9 @@ public class ActivityApp extends Activity {
 		case R.id.menu_all:
 			optionAll();
 			return true;
+		case R.id.menu_usage:
+			optionUsage();
+			return true;
 		case R.id.menu_app_launch:
 			Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
 			startActivity(LaunchIntent);
@@ -259,6 +262,12 @@ public class ActivityApp extends Activity {
 		// Refresh display
 		if (mPrivacyListAdapter != null)
 			mPrivacyListAdapter.notifyDataSetChanged();
+	}
+
+	private void optionUsage() {
+		Intent intent = new Intent(this, ActivityUsage.class);
+		intent.putExtra(ActivityUsage.cUid, mAppInfo.getUid());
+		startActivity(intent);
 	}
 
 	private void optionAccounts() {

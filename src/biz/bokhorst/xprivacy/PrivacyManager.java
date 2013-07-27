@@ -558,6 +558,9 @@ public class PrivacyManager {
 
 			// Use fallback
 			if (fallback) {
+				// Fallback
+				restricted = PrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
+
 				// Queue usage data
 				if (usage && uid != cUidAndroid) {
 					UsageData usageData = new UsageData(uid, restrictionName, methodName, restricted);
@@ -568,9 +571,6 @@ public class PrivacyManager {
 						Util.log(hook, Log.INFO, "Queue usage data=" + usageData + " size=" + mUsageQueue.size());
 					}
 				}
-
-				// Fallback
-				restricted = PrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
 			}
 
 			// Add to cache
@@ -712,20 +712,21 @@ public class PrivacyManager {
 		return lastUsage;
 	}
 
-	public static List<UsageData> getUsed(Context context) {
+	public static List<UsageData> getUsed(Context context, int uid) {
 		List<UsageData> listUsage = new ArrayList<UsageData>();
 		ContentResolver cr = context.getContentResolver();
-		Cursor cursor = cr.query(PrivacyProvider.URI_USAGE, null, null, new String[] { "0", null }, null);
+		Cursor cursor = cr.query(PrivacyProvider.URI_USAGE, null, null, new String[] { Integer.toString(uid), null },
+				null);
 		if (cursor != null)
 			try {
 				while (cursor.moveToNext()) {
-					int uid = cursor.getInt(cursor.getColumnIndex(PrivacyProvider.COL_UID));
+					int rUid = cursor.getInt(cursor.getColumnIndex(PrivacyProvider.COL_UID));
 					String restrictionName = cursor.getString(cursor.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
 					String methodName = cursor.getString(cursor.getColumnIndex(PrivacyProvider.COL_METHOD));
 					boolean restricted = Boolean.parseBoolean(cursor.getString(cursor
 							.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
 					long used = cursor.getLong(cursor.getColumnIndex(PrivacyProvider.COL_USED));
-					UsageData usageData = new UsageData(uid, restrictionName, methodName, restricted, used);
+					UsageData usageData = new UsageData(rUid, restrictionName, methodName, restricted, used);
 					listUsage.add(usageData);
 				}
 			} finally {
@@ -1118,7 +1119,7 @@ public class PrivacyManager {
 		@Override
 		@SuppressLint("DefaultLocale")
 		public String toString() {
-			return String.format("%d/%s/%s", mUid, mRestriction, mMethodName);
+			return String.format("%d/%s/%s=%b", mUid, mRestriction, mMethodName, mRestricted);
 		}
 
 		@Override
