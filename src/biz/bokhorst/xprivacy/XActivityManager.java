@@ -26,6 +26,11 @@ public class XActivityManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
+		// Do nothing
+	}
+
+	@Override
+	protected void after(MethodHookParam param) throws Throwable {
 		if (isRestricted(param)) {
 			String methodName = param.method.getName();
 			if (methodName.equals("getRecentTasks"))
@@ -39,11 +44,6 @@ public class XActivityManager extends XHook {
 			else
 				Util.log(this, Log.WARN, "Unknown method=" + methodName);
 		}
-	}
-
-	@Override
-	protected void after(MethodHookParam param) throws Throwable {
-		// Do nothing
 	}
 
 	@Override
