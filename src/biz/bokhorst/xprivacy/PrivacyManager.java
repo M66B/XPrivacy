@@ -981,7 +981,6 @@ public class PrivacyManager {
 	}
 
 	public static boolean hasInternet(Context context, String packageName) {
-		// TODO: check if internet permission restricted
 		PackageManager pm = context.getPackageManager();
 		return (pm.checkPermission("android.permission.INTERNET", packageName) == PackageManager.PERMISSION_GRANTED);
 	}

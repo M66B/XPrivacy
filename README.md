@@ -539,7 +539,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Restrict [BluetoothDevice](http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html)
 
 **Version 1.7.18 BETA!**
 

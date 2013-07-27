@@ -96,6 +96,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook(new XBluetoothAdapter("getBondedDevices", PrivacyManager.cNetwork, new String[] { "BLUETOOTH" }),
 				"android.bluetooth.BluetoothAdapter");
 
+		// Bluetooth device
+		hook(new XBluetoothDevice("getAddress", PrivacyManager.cNetwork, new String[] { "BLUETOOTH" }),
+				"android.bluetooth.BluetoothDevice");
+
 		// Camera
 		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
 				"setOneShotPreviewCallback", "takePicture" };

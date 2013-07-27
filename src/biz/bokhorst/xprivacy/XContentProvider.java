@@ -37,9 +37,7 @@ public class XContentProvider extends XHook {
 	// public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder, CancellationSignal cancellationSignal)
 	// frameworks/base/core/java/android/content/ContentProvider.java
 	// http://developer.android.com/reference/android/content/ContentProvider.html
-	
-	// TODO: frameworks/base/core/java/android/provider/Telephony.java
-	
+
 	// packages/apps/Browser/src/com/android/browser/provider/BrowserProvider2.java
 	// packages/providers/CalendarProvider/src/com/android/providers/calendar/CalendarProvider2.java
 	// packages/providers/ContactsProvider/src/com/android/providers/contacts/ContactsProvider2.java
