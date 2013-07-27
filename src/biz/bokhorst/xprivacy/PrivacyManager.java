@@ -190,6 +190,12 @@ public class PrivacyManager {
 		for (String cam : cams)
 			mMethods.get(cMedia).add(cam);
 
+		// Clipboard manager
+		String[] clips = new String[] { "addPrimaryClipChangedListener", "getPrimaryClip", "getPrimaryClipDescription",
+				"getText", "hasPrimaryClip", "hasText" };
+		for (String clip : clips)
+			mMethods.get(cSystem).add(clip);
+
 		// Connectivity manager
 		String[] connmgrs = new String[] { "getActiveNetworkInfo", "getAllNetworkInfo", "getNetworkInfo" };
 		for (String connmgr : connmgrs)

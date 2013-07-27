@@ -175,7 +175,7 @@ For easy usage, data is restricted by category:
 	* return fake BSSID/SSID
 	* return an empty list of Wi-Fi scan results
 	* return an empty list of configured Wi-Fi networks
-	* return an empty list of bluetooth devices
+	* return an empty list of bluetooth adapters/devices
 * NFC
 	* prevent receiving NDEF discovered
 	* prevent receiving TAG discovered
@@ -224,7 +224,9 @@ For easy usage, data is restricted by category:
 	* return an empty list of running tasks
 	* return an empty list of widgets
 	* return an empty list of applications (provider)
+	* return an empty clipboard
 	* prevent package add, replace, restart and remove notifications
+	* prevent statusbar notifications
 * View
 	* prevent links from opening in the browser
 	* you will be notified if an application tries to open a link
@@ -540,12 +542,14 @@ How to get beta releases:
 **Next release**
 
 * Restrict [BluetoothDevice](http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html)
-* 4.3: restrict [NotificationListenerService](http://developer.android.com/reference/android/service/notification/NotificationListenerService.html) (category *System*)
+* Restrict [ClipboardManager](http://developer.android.com/reference/android/content/ClipboardManager.html) (category *System*) ([issue](https://github.com/M66B/XPrivacy/issues/359))
+* 4.3: restrict [NotificationListenerService](http://developer.android.com/reference/android/service/notification/NotificationListenerService.html) (category *System*) ([issue](https://github.com/M66B/XPrivacy/issues/360))
 
 **Version 1.7.18 BETA!**
 
 * Option to show usage data from the application details view
 * Fix usage data ([issue](https://github.com/M66B/XPrivacy/issues/364), [issue](https://github.com/M66B/XPrivacy/issues/365))
+* Revert 1.7.16 change
 
 **Version 1.7.17 BETA!**
 

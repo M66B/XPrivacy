@@ -107,6 +107,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		for (String cam : cams)
 			hook(new XCamera(cam, PrivacyManager.cMedia, new String[] { "CAMERA" }), "android.hardware.Camera");
 
+		// Clipboard manager
+		String[] clips = new String[] { "addPrimaryClipChangedListener", "getPrimaryClip", "getPrimaryClipDescription",
+				"getText", "hasPrimaryClip", "hasText" };
+		for (String clip : clips)
+			hook(new XClipboardManager(clip, PrivacyManager.cSystem, new String[] { "" }),
+					"android.content.ClipboardManager");
+
 		// Connectivity manager
 		// This is to fake "offline", no permission required
 		String[] connmgrs = new String[] { "getActiveNetworkInfo", "getAllNetworkInfo", "getNetworkInfo" };
