@@ -91,21 +91,20 @@ public class XTelephonyManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (!methodName.equals("listen") && !methodName.equals("disableLocationUpdates")
-				&& !methodName.equals("enableLocationUpdates"))
-			if (param.getResult() != null)
-				if (isRestricted(param))
-					if (methodName.equals("getAllCellInfo"))
-						param.setResult(new ArrayList<CellInfo>());
-					else if (methodName.equals("getCellLocation"))
-						param.setResult(CellLocation.getEmpty());
-					else if (methodName.equals("getIsimImpu"))
-						param.setResult(PrivacyManager.getDefacedProp(methodName));
-					else if (methodName.equals("getNeighboringCellInfo"))
-						param.setResult(new ArrayList<NeighboringCellInfo>());
-					else
-						param.setResult(PrivacyManager.getDefacedProp(methodName));
+		if (param.getResult() != null)
+			if (isRestricted(param)) {
+				String methodName = param.method.getName();
+				if (methodName.equals("getAllCellInfo"))
+					param.setResult(new ArrayList<CellInfo>());
+				else if (methodName.equals("getCellLocation"))
+					param.setResult(CellLocation.getEmpty());
+				else if (methodName.equals("getIsimImpu"))
+					param.setResult(PrivacyManager.getDefacedProp(methodName));
+				else if (methodName.equals("getNeighboringCellInfo"))
+					param.setResult(new ArrayList<NeighboringCellInfo>());
+				else
+					param.setResult(PrivacyManager.getDefacedProp(methodName));
+			}
 	}
 
 	@Override

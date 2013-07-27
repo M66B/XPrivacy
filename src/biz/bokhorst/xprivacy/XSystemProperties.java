@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSystemProperties extends XHook {
@@ -33,7 +34,9 @@ public class XSystemProperties extends XHook {
 						param.setResult(PrivacyManager.getDefacedProp(mPropertyName));
 					else if (param.args.length > 1)
 						param.setResult(param.args[1]);
-					else
+					else {
+						Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 						param.setResult(null);
+					}
 	}
 }

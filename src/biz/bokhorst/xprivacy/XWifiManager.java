@@ -8,6 +8,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
+import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
@@ -104,6 +105,8 @@ public class XWifiManager extends XHook {
 					param.setResult(new ArrayList<ScanResult>());
 				else if (methodName.equals("getWifiApConfiguration"))
 					param.setResult(null);
+				else
+					Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 			}
 	}
 }

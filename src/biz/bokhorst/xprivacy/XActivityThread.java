@@ -104,6 +104,11 @@ public class XActivityThread extends XHook {
 			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 
+	@Override
+	protected void after(MethodHookParam param) throws Throwable {
+		// Do nothing
+	}
+
 	private void finish(MethodHookParam param) {
 		// unscheduleGcIdler
 		try {
@@ -120,10 +125,5 @@ public class XActivityThread extends XHook {
 		} catch (Throwable ex) {
 			Util.bug(this, ex);
 		}
-	}
-
-	@Override
-	protected void after(MethodHookParam param) throws Throwable {
-		// Do nothing
 	}
 }

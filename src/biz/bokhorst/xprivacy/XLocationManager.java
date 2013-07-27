@@ -84,7 +84,8 @@ public class XLocationManager extends XHook {
 		} else if (methodName.equals("sendExtraCommand")) {
 			if (isRestricted(param))
 				param.setResult(false);
-		}
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
 
 	@Override
