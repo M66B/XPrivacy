@@ -14,6 +14,7 @@ import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Process;
 import android.provider.MediaStore;
+import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -260,6 +261,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				NfcAdapter.ACTION_TAG_DISCOVERED), "android.app.ActivityThread", false);
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cNfc, new String[] { "NFC" },
 				NfcAdapter.ACTION_TECH_DISCOVERED), "android.app.ActivityThread", false);
+
+		// Intent receive: notifications
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+			hook(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+					new String[] { "BIND_NOTIFICATION_LISTENER_SERVICE" },
+					NotificationListenerService.SERVICE_INTERFACE), "android.app.ActivityThread", false);
 
 		// Intent receive: package changes
 		hook(new XActivityThread("handleReceiver", PrivacyManager.cSystem, new String[] {}, Intent.ACTION_PACKAGE_ADDED),

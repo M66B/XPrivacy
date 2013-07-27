@@ -540,6 +540,7 @@ How to get beta releases:
 **Next release**
 
 * Restrict [BluetoothDevice](http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html)
+* 4.3: restrict [NotificationListenerService](http://developer.android.com/reference/android/service/notification/NotificationListenerService.html) (category *System*)
 
 **Version 1.7.18 BETA!**
 

@@ -26,6 +26,7 @@ import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Process;
 import android.provider.MediaStore;
+import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -142,6 +143,7 @@ public class PrivacyManager {
 		mPermissions.get(cStorage).add("WRITE_EXTERNAL_STORAGE");
 		mPermissions.get(cStorage).add("WRITE_MEDIA_STORAGE");
 		mPermissions.get(cSystem).add("GET_TASKS");
+		mPermissions.get(cSystem).add("BIND_NOTIFICATION_LISTENER_SERVICE");
 		mPermissions.get(cSystem).add("");
 		mPermissions.get(cView).add("");
 
@@ -303,6 +305,9 @@ public class PrivacyManager {
 		mMethods.get(cNfc).add(NfcAdapter.ACTION_NDEF_DISCOVERED);
 		mMethods.get(cNfc).add(NfcAdapter.ACTION_TAG_DISCOVERED);
 		mMethods.get(cNfc).add(NfcAdapter.ACTION_TECH_DISCOVERED);
+
+		// Intent receive: notifications
+		mMethods.get(cSystem).add(NotificationListenerService.SERVICE_INTERFACE);
 
 		// Intent receive: package changes
 		mMethods.get(cSystem).add(Intent.ACTION_PACKAGE_ADDED);
