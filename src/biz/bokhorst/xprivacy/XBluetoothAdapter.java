@@ -12,9 +12,11 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XBluetoothAdapter extends XHook {
+	private Methods mMethod;
 
-	private XBluetoothAdapter(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XBluetoothAdapter(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -26,10 +28,14 @@ public class XBluetoothAdapter extends XHook {
 	// frameworks/base/core/java/android/bluetooth/BluetoothAdapter.java
 	// http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html
 
+	private enum Methods {
+		getAddress, getBondedDevices
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XBluetoothAdapter("getAddress", PrivacyManager.cNetwork));
-		listHook.add(new XBluetoothAdapter("getBondedDevices", PrivacyManager.cNetwork));
+		listHook.add(new XBluetoothAdapter(Methods.getAddress, PrivacyManager.cNetwork));
+		listHook.add(new XBluetoothAdapter(Methods.getBondedDevices, PrivacyManager.cNetwork));
 		return listHook;
 	}
 
@@ -40,14 +46,13 @@ public class XBluetoothAdapter extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("getAddress")) {
+		if (mMethod == Methods.getAddress) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedProp("MAC"));
-		} else if (methodName.equals("getBondedDevices")) {
+		} else if (mMethod == Methods.getBondedDevices) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new HashSet<BluetoothDevice>());
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 }
