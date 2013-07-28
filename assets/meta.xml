@@ -46,7 +46,6 @@
     <Hook restriction="internet" method="getByAddress" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getByName" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getByInetAddress" permissions="INTERNET" sdk="14" />
-    <Hook restriction="internet" method="getByName" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getNetworkInterfaces" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="inet" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getActiveNetworkInfo" dangerous="true" sdk="14" />
