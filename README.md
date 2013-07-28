@@ -545,7 +545,7 @@ How to get beta releases:
 
 **Version 1.7.20 BETA!**
 
-* Restructered meta data (restriction/function definitions)
+* Restructured meta data (restriction/function definitions)
 
 **Version 1.7.19 BETA!**
 

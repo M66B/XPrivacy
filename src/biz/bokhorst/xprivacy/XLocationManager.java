@@ -18,12 +18,16 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 public class XLocationManager extends XHook {
 	private static final Map<LocationListener, XLocationListener> mListener = new WeakHashMap<LocationListener, XLocationListener>();
 
-	public XLocationManager(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XLocationManager(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
 	}
 
-	public XLocationManager(String methodName, String restrictionName, String[] permissions, int sdk) {
-		super(restrictionName, methodName, permissions, null, sdk);
+	public XLocationManager(String methodName, String restrictionName, int sdk) {
+		super(restrictionName, methodName, null, sdk);
+	}
+
+	public String getClassName() {
+		return "android.location.LocationManager";
 	}
 
 	// @formatter:off

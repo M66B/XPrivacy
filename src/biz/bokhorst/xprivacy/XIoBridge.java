@@ -10,9 +10,13 @@ public class XIoBridge extends XHook {
 
 	private String mFileName;
 
-	public XIoBridge(String methodName, String restrictionName, String[] permissions, String fileName) {
-		super(restrictionName, methodName, permissions, fileName);
+	public XIoBridge(String methodName, String restrictionName, String fileName) {
+		super(restrictionName, methodName, fileName);
 		mFileName = fileName;
+	}
+
+	public String getClassName() {
+		return "libcore.io.IoBridge";
 	}
 
 	// public static FileDescriptor open(String path, int flags)

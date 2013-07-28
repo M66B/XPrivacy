@@ -5,8 +5,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XUtilHook extends XHook {
 
-	public XUtilHook(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XUtilHook(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return Util.class.getName();
 	}
 
 	// isXposedEnabled

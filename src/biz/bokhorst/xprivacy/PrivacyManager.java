@@ -154,23 +154,13 @@ public class PrivacyManager {
 
 	// Data
 
-	public static void registerMethod(String restrictionName, String methodName, String[] permissions, int sdk) {
+	public static void registerMethod(String restrictionName, String methodName, int sdk) {
 		if (Build.VERSION.SDK_INT >= sdk) {
 			if (restrictionName != null && !mPermissions.containsKey(restrictionName))
 				Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
 
 			if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
 				Util.log(null, Log.WARN, "Missing method " + methodName);
-
-			if (permissions != null) {
-				if (permissions.length == 0)
-					if (!mPermissions.get(restrictionName).contains(""))
-						Util.log(null, Log.WARN, "Missing no permission restriction=" + restrictionName);
-
-				for (String permission : permissions)
-					if (!mPermissions.get(restrictionName).contains(permission))
-						Util.log(null, Log.WARN, "Missing permission " + permission);
-			}
 		}
 	}
 

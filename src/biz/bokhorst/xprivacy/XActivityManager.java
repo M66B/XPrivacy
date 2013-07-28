@@ -13,8 +13,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivityManager extends XHook {
 
-	public XActivityManager(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XActivityManager(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.app.ActivityManager";
 	}
 
 	// public List<RecentTaskInfo> getRecentTasks(int maxNum, int flags)

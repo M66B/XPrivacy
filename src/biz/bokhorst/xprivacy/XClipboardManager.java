@@ -11,8 +11,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XClipboardManager extends XHook {
 
-	public XClipboardManager(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XClipboardManager(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.content.ClipboardManager";
 	}
 
 	// @formatter:off

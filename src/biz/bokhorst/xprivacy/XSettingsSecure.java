@@ -13,7 +13,11 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XSettingsSecure extends XHook {
 
 	public XSettingsSecure(String methodName, String restrictionName) {
-		super(restrictionName, methodName, new String[] {}, null);
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.provider.Settings.Secure";
 	}
 
 	// @formatter:off

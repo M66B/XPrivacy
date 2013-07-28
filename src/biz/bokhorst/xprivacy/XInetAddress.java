@@ -7,8 +7,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XInetAddress extends XHook {
 
-	public XInetAddress(String methodName, String restrictionName, String[] permissions, String specifier) {
-		super(restrictionName, methodName, permissions, null);
+	public XInetAddress(String methodName, String restrictionName, String specifier) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "java.net.InetAddress";
 	}
 
 	// public static InetAddress[] getAllByName(String host)

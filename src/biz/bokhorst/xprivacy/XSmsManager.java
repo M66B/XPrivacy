@@ -9,8 +9,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSmsManager extends XHook {
 
-	public XSmsManager(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XSmsManager(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.telephony.SmsManager";
 	}
 
 	// @formatter:off
@@ -27,7 +31,8 @@ public class XSmsManager extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
-		if (methodName.equals("sendDataMessage") || methodName.equals("sendMultipartTextMessage") || methodName.equals("sendTextMessage"))
+		if (methodName.equals("sendDataMessage") || methodName.equals("sendMultipartTextMessage")
+				|| methodName.equals("sendTextMessage"))
 			if (isRestricted(param))
 				param.setResult(null);
 	}

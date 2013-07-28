@@ -17,8 +17,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XApplicationPackageManager extends XHook {
 
-	public XApplicationPackageManager(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XApplicationPackageManager(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.app.ApplicationPackageManager";
 	}
 
 	// @formatter:off

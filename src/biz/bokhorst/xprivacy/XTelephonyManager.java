@@ -22,12 +22,16 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 public class XTelephonyManager extends XHook {
 	private static final Map<PhoneStateListener, XPhoneStateListener> mListener = new WeakHashMap<PhoneStateListener, XPhoneStateListener>();
 
-	public XTelephonyManager(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XTelephonyManager(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
 	}
 
-	public XTelephonyManager(String methodName, String restrictionName, String[] permissions, int sdk) {
-		super(restrictionName, methodName, permissions, null, sdk);
+	public XTelephonyManager(String methodName, String restrictionName, int sdk) {
+		super(restrictionName, methodName, null, sdk);
+	}
+
+	public String getClassName() {
+		return "android.telephony.TelephonyManager";
 	}
 
 	// public void disableLocationUpdates()

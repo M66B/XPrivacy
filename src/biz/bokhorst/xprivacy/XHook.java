@@ -17,25 +17,31 @@ public abstract class XHook {
 	private String mSpecifier;
 	private int mSdk;
 
-	public XHook(String restrictionName, String methodName, String[] permissions, String specifier) {
+	public XHook(String restrictionName, String methodName, String specifier) {
 		mRestrictionName = restrictionName;
 		mMethodName = methodName;
 		mSpecifier = specifier;
 		mSdk = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
 		if (restrictionName != null)
-			PrivacyManager.registerMethod(restrictionName, getSpecifier(), permissions, mSdk);
+			PrivacyManager.registerMethod(restrictionName, getSpecifier(), mSdk);
 	}
 
-	public XHook(String restrictionName, String methodName, String[] permissions, String specifier, int sdk) {
+	public XHook(String restrictionName, String methodName, String specifier, int sdk) {
 		mRestrictionName = restrictionName;
 		mMethodName = methodName;
 		mSpecifier = specifier;
 		mSdk = sdk;
 
 		if (restrictionName != null)
-			PrivacyManager.registerMethod(restrictionName, getSpecifier(), permissions, sdk);
+			PrivacyManager.registerMethod(restrictionName, getSpecifier(), sdk);
 	}
+
+	public boolean isVisible() {
+		return true;
+	}
+
+	abstract public String getClassName();
 
 	public String getRestrictionName() {
 		return mRestrictionName;

@@ -5,8 +5,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XLocationClient extends XHook {
 
-	public XLocationClient(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XLocationClient(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "com.google.android.gms.location.LocationClient";
 	}
 
 	// void connect()

@@ -7,9 +7,13 @@ public class XSystemProperties extends XHook {
 
 	private String mPropertyName;
 
-	public XSystemProperties(String methodName, String restrictionName, String[] permissions, String propertyName) {
-		super(restrictionName, methodName, permissions, propertyName);
+	public XSystemProperties(String methodName, String restrictionName, String propertyName) {
+		super(restrictionName, methodName, propertyName);
 		mPropertyName = propertyName;
+	}
+
+	public String getClassName() {
+		return "android.os.SystemProperties";
 	}
 
 	// public static String get(String key)

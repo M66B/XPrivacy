@@ -18,14 +18,23 @@ public class XActivityThread extends XHook {
 
 	private String mActionName;
 
-	public XActivityThread(String methodName, String restrictionName, String[] permissions, String actionName) {
-		super(restrictionName, methodName, permissions, actionName);
+	public XActivityThread(String methodName, String restrictionName, String actionName) {
+		super(restrictionName, methodName, actionName);
 		mActionName = actionName;
 	}
 
-	public XActivityThread(String methodName, String restrictionName, String[] permissions, String actionName, int sdk) {
-		super(restrictionName, methodName, permissions, actionName, sdk);
+	public XActivityThread(String methodName, String restrictionName, String actionName, int sdk) {
+		super(restrictionName, methodName, actionName, sdk);
 		mActionName = actionName;
+	}
+
+	public String getClassName() {
+		return "android.app.ActivityThread";
+	}
+
+	@Override
+	public boolean isVisible() {
+		return false;
 	}
 
 	// @formatter:off

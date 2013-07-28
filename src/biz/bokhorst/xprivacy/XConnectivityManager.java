@@ -6,8 +6,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XConnectivityManager extends XHook {
 
-	public XConnectivityManager(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XConnectivityManager(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.net.ConnectivityManager";
 	}
 
 	// public NetworkInfo getActiveNetworkInfo()

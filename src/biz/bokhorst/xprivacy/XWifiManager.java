@@ -16,8 +16,12 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 @SuppressWarnings("deprecation")
 public class XWifiManager extends XHook {
 
-	public XWifiManager(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XWifiManager(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.net.wifi.WifiManager";
 	}
 
 	// public List<WifiConfiguration> getConfiguredNetworks()

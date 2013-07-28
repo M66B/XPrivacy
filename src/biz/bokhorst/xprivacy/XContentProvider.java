@@ -16,19 +16,27 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XContentProvider extends XHook {
 
+	private String mClassName;
 	private String mProviderName;
 	private String mUriStart;
 
-	public XContentProvider(String restrictionName, String[] permissions, String providerName) {
-		super(restrictionName, "query", permissions, providerName);
+	public XContentProvider(String restrictionName, String providerName, String className) {
+		super(restrictionName, "query", providerName);
+		mClassName = className;
 		mProviderName = providerName;
 		mUriStart = null;
 	}
 
-	public XContentProvider(String restrictionName, String[] permissions, String providerName, String uriStart) {
-		super(restrictionName, "query", permissions, uriStart.replace("content://com.android.", ""));
+	public XContentProvider(String restrictionName, String providerName, String className,
+			String uriStart) {
+		super(restrictionName, "query", uriStart.replace("content://com.android.", ""));
+		mClassName = className;
 		mProviderName = providerName;
 		mUriStart = uriStart;
+	}
+
+	public String getClassName() {
+		return mClassName;
 	}
 
 	// @formatter:off

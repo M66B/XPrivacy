@@ -12,9 +12,18 @@ public class XRuntime extends XHook {
 
 	private String mCommand;
 
-	public XRuntime(String methodName, String restrictionName, String[] permissions, String command) {
-		super(restrictionName, methodName, permissions, command);
+	public XRuntime(String methodName, String restrictionName, String command) {
+		super(restrictionName, methodName, command);
 		mCommand = command;
+	}
+
+	public String getClassName() {
+		return "java.lang.Runtime";
+	}
+
+	@Override
+	public boolean isVisible() {
+		return !(getMethodName().equals("load") || getMethodName().equals("loadLibrary"));
 	}
 
 	// public Process exec(String[] progArray)

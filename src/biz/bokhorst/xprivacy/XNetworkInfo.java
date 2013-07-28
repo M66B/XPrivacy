@@ -6,8 +6,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XNetworkInfo extends XHook {
 
-	public XNetworkInfo(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XNetworkInfo(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.net.NetworkInfo";
 	}
 
 	// public DetailedState getDetailedState()

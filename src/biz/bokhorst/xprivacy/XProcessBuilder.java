@@ -12,9 +12,13 @@ public class XProcessBuilder extends XHook {
 
 	private String mCommand;
 
-	public XProcessBuilder(String methodName, String restrictionName, String[] permissions, String command) {
-		super(restrictionName, methodName, permissions, command);
+	public XProcessBuilder(String methodName, String restrictionName, String command) {
+		super(restrictionName, methodName, command);
 		mCommand = command;
+	}
+
+	public String getClassName() {
+		return "java.lang.ProcessBuilder";
 	}
 
 	// public Process start()

@@ -8,8 +8,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XGoogleAuthUtil extends XHook {
 
-	public XGoogleAuthUtil(String methodName, String restrictionName, String[] permissions, String specifier) {
-		super(restrictionName, methodName, permissions, specifier);
+	public XGoogleAuthUtil(String methodName, String restrictionName, String specifier) {
+		super(restrictionName, methodName, specifier);
+	}
+
+	public String getClassName() {
+		return "com.google.android.gms.auth.GoogleAuthUtil";
 	}
 
 	// @formatter:off

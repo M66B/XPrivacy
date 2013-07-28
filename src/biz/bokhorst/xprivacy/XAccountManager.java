@@ -26,12 +26,16 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XAccountManager extends XHook {
 	private static final Map<OnAccountsUpdateListener, XOnAccountsUpdateListener> mListener = new WeakHashMap<OnAccountsUpdateListener, XOnAccountsUpdateListener>();
 
-	public XAccountManager(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XAccountManager(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
 	}
 
-	public XAccountManager(String methodName, String restrictionName, String[] permissions, int sdk) {
-		super(restrictionName, methodName, permissions, null, sdk);
+	public XAccountManager(String methodName, String restrictionName, int sdk) {
+		super(restrictionName, methodName, null, sdk);
+	}
+
+	public String getClassName() {
+		return "android.accounts.AccountManager";
 	}
 
 	// @formatter:off

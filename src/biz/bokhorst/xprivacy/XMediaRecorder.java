@@ -5,8 +5,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XMediaRecorder extends XHook {
 
-	public XMediaRecorder(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XMediaRecorder(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.media.MediaRecorder";
 	}
 
 	// public void setOutputFile(FileDescriptor fd)

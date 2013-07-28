@@ -11,14 +11,18 @@ public class XActivity extends XHook {
 
 	private String mActionName;
 
-	public XActivity(String methodName, String restrictionName, String[] permissions, String actionName) {
-		super(restrictionName, methodName, permissions, actionName);
+	public XActivity(String methodName, String restrictionName, String actionName) {
+		super(restrictionName, methodName, actionName);
 		mActionName = actionName;
 	}
 
-	public XActivity(String methodName, String restrictionName, String[] permissions, String actionName, int sdk) {
-		super(restrictionName, methodName, permissions, actionName, sdk);
+	public XActivity(String methodName, String restrictionName, String actionName, int sdk) {
+		super(restrictionName, methodName, actionName, sdk);
 		mActionName = actionName;
+	}
+
+	public String getClassName() {
+		return "android.app.Activity";
 	}
 
 	// @formatter:off

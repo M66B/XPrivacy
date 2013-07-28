@@ -13,10 +13,14 @@ public class XPackageManagerService extends XHook {
 	private String mRestrictionName;
 	private String mAction;
 
-	public XPackageManagerService(String methodName, String restrictionName, String[] permissions, String action) {
-		super(restrictionName, methodName, permissions, action);
+	public XPackageManagerService(String methodName, String restrictionName, String action) {
+		super(restrictionName, methodName, action);
 		mRestrictionName = restrictionName;
 		mAction = action;
+	}
+
+	public String getClassName() {
+		return "com.android.server.pm.PackageManagerService";
 	}
 
 	// public int[] getPackageGids(String packageName)

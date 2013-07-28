@@ -11,8 +11,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XBluetoothAdapter extends XHook {
 
-	public XBluetoothAdapter(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XBluetoothAdapter(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.bluetooth.BluetoothAdapter";
 	}
 
 	// public String getAddress()

@@ -5,8 +5,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XAudioRecord extends XHook {
 
-	public XAudioRecord(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XAudioRecord(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.media.AudioRecord";
 	}
 
 	// public void startRecording()

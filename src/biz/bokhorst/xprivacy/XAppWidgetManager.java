@@ -9,8 +9,12 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XAppWidgetManager extends XHook {
 
-	public XAppWidgetManager(String methodName, String restrictionName, String[] permissions) {
-		super(restrictionName, methodName, permissions, null);
+	public XAppWidgetManager(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
+	}
+
+	public String getClassName() {
+		return "android.appwidget.AppWidgetManager";
 	}
 
 	// public List<AppWidgetProviderInfo> getInstalledProviders()
