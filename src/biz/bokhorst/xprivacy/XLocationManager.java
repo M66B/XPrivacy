@@ -18,31 +18,21 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XLocationManager extends XHook {
+	private Methods mMethod;
 	private static final Map<LocationListener, XLocationListener> mListener = new WeakHashMap<LocationListener, XLocationListener>();
 
-	private XLocationManager(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XLocationManager(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
-	private XLocationManager(String methodName, String restrictionName, int sdk) {
-		super(restrictionName, methodName, null, sdk);
+	private XLocationManager(Methods method, String restrictionName, int sdk) {
+		super(restrictionName, method.name(), null, sdk);
+		mMethod = method;
 	}
 
 	public String getClassName() {
 		return "android.location.LocationManager";
-	}
-
-	public static List<XHook> getInstances() {
-		List<XHook> listHook = new ArrayList<XHook>();
-		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "getProviders",
-				"isProviderEnabled", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",
-				"sendExtraCommand" };
-		for (String loc : locs)
-			listHook.add(new XLocationManager(loc, PrivacyManager.cLocation));
-		listHook.add(new XLocationManager("addGeofence", PrivacyManager.cLocation, Build.VERSION_CODES.JELLY_BEAN_MR1));
-		listHook.add(new XLocationManager("getLastLocation", PrivacyManager.cLocation,
-				Build.VERSION_CODES.JELLY_BEAN_MR1));
-		return listHook;
 	}
 
 	// @formatter:off
@@ -70,20 +60,35 @@ public class XLocationManager extends XHook {
 
 	// @formatter:on
 
+	private enum Methods {
+		addNmeaListener, addProximityAlert, getLastKnownLocation, getProviders, isProviderEnabled, removeUpdates, requestLocationUpdates, requestSingleUpdate, sendExtraCommand, addGeofence, getLastLocation
+	};
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		for (Methods loc : Methods.values())
+			if (loc != Methods.addGeofence && loc != Methods.getLastLocation)
+				listHook.add(new XLocationManager(loc, PrivacyManager.cLocation));
+		listHook.add(new XLocationManager(Methods.addGeofence, PrivacyManager.cLocation,
+				Build.VERSION_CODES.JELLY_BEAN_MR1));
+		listHook.add(new XLocationManager(Methods.getLastLocation, PrivacyManager.cLocation,
+				Build.VERSION_CODES.JELLY_BEAN_MR1));
+		return listHook;
+	}
+
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("addGeofence") || methodName.equals("addNmeaListener")
-				|| methodName.equals("addProximityAlert")) {
+		if (mMethod == Methods.addGeofence || mMethod == Methods.addNmeaListener
+				|| mMethod == Methods.addProximityAlert) {
 			if (isRestricted(param))
 				param.setResult(null);
-		} else if (methodName.equals("removeUpdates")) {
+		} else if (mMethod == Methods.removeUpdates) {
 			if (isRestricted(param))
 				removeLocationListener(param);
-		} else if (methodName.equals("requestLocationUpdates")) {
+		} else if (mMethod == Methods.requestLocationUpdates) {
 			if (isRestricted(param))
 				replaceLocationListener(param, 3);
-		} else if (methodName.equals("requestSingleUpdate")) {
+		} else if (mMethod == Methods.requestSingleUpdate) {
 			if (isRestricted(param))
 				replaceLocationListener(param, 1);
 		}
@@ -91,26 +96,25 @@ public class XLocationManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (!methodName.equals("addGeofence") && !methodName.equals("addNmeaListener")
-				&& !methodName.equals("addProximityAlert") && !methodName.equals("removeUpdates")
-				&& !methodName.equals("requestLocationUpdates") && !methodName.equals("requestSingleUpdate"))
-			if (methodName.equals("isProviderEnabled")) {
+		if (mMethod != Methods.addGeofence && mMethod != Methods.addNmeaListener
+				&& mMethod != Methods.addProximityAlert && mMethod != Methods.removeUpdates
+				&& mMethod != Methods.requestLocationUpdates && mMethod != Methods.requestSingleUpdate)
+			if (mMethod == Methods.isProviderEnabled) {
 				if (isRestricted(param))
 					param.setResult(false);
-			} else if (methodName.equals("getLastLocation") || methodName.equals("getLastKnownLocation")) {
+			} else if (mMethod == Methods.getLastLocation || mMethod == Methods.getLastKnownLocation) {
 				Location location = (Location) param.getResult();
 				if (location != null)
 					if (isRestricted(param))
 						param.setResult(PrivacyManager.getDefacedLocation(location));
-			} else if (methodName.equals("getProviders")) {
+			} else if (mMethod == Methods.getProviders) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(new ArrayList<String>());
-			} else if (methodName.equals("sendExtraCommand")) {
+			} else if (mMethod == Methods.sendExtraCommand) {
 				if (isRestricted(param))
 					param.setResult(false);
 			} else
-				Util.log(this, Log.WARN, "Unknown method=" + methodName);
+				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override
