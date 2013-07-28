@@ -86,7 +86,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			try {
 				dialog.setProgress(app + 1);
 				ApplicationInfoEx xAppInfo = new ApplicationInfoEx(context, listAppInfo.get(app));
-				if (fSystem ? !xAppInfo.isFrozen() && !xAppInfo.getIsSystem() : true) {
+				if (fSystem ? !(xAppInfo.isFrozen() || xAppInfo.getIsSystem()) : true) {
 					ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
 					if (yAppInfo == null) {
 						mapApp.put(xAppInfo.getUid(), xAppInfo);

@@ -1573,7 +1573,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				for (ApplicationInfoEx appInfo : mListAppAll)
 					if (mRestrictionName == null)
 						mListAppSelected.add(appInfo);
-					else if (PrivacyManager.hasPermission(mContext, appInfo.getPackageName(), mRestrictionName))
+					else if (PrivacyManager.hasPermission(mContext, appInfo.getPackageName(), mRestrictionName)
+							|| PrivacyManager.getUsed(mContext, appInfo.getUid(), mRestrictionName, null) > 0)
 						mListAppSelected.add(appInfo);
 			} else
 				mListAppSelected.addAll(mListAppAll);

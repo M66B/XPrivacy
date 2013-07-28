@@ -154,7 +154,8 @@ public class ActivityApp extends Activity {
 				.getSettingBool(null, this, PrivacyManager.cSettingFPermission, true, false);
 		List<String> listRestriction = new ArrayList<String>();
 		for (String restrictionName : PrivacyManager.getRestrictions(true))
-			if (fPermission ? PrivacyManager.hasPermission(this, mAppInfo.getPackageName(), restrictionName) : true)
+			if (fPermission ? PrivacyManager.hasPermission(this, mAppInfo.getPackageName(), restrictionName)
+					|| PrivacyManager.getUsed(this, mAppInfo.getUid(), restrictionName, null) > 0 : true)
 				listRestriction.add(restrictionName);
 
 		// Fill privacy list view adapter
