@@ -181,6 +181,15 @@ public class XTelephonyManager extends XHook {
 				Util.bug(this, ex);
 			}
 
+		// Duos
+		if (context == null)
+			try {
+				Field fieldContext = findField(param.thisObject.getClass(), "sContextDuos");
+				context = (Context) fieldContext.get(param.thisObject);
+			} catch (Throwable ex) {
+				Util.bug(this, ex);
+			}
+
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
 	}
