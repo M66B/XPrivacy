@@ -8,9 +8,12 @@ import java.util.List;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XInetAddress extends XHook {
+	@SuppressWarnings("unused")
+	private Methods mMethod;
 
-	private XInetAddress(String methodName, String restrictionName, String specifier) {
-		super(restrictionName, methodName, null);
+	private XInetAddress(Methods method, String restrictionName, String specifier) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -24,10 +27,13 @@ public class XInetAddress extends XHook {
 	// libcore/luni/src/main/java/java/net/InetAddress.java
 	// http://developer.android.com/reference/java/net/InetAddress.html
 
+	private enum Methods {
+		getAllByName, getByAddress, getByName
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		String[] addrs = new String[] { "getAllByName", "getByAddress", "getByName" };
-		for (String addr : addrs)
+		for (Methods addr : Methods.values())
 			listHook.add(new XInetAddress(addr, PrivacyManager.cInternet, null));
 		return listHook;
 	}
