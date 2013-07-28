@@ -6,8 +6,8 @@
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Verzia Xposed: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Usage</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_usage">Využitie</string>
+    <string name="menu_refresh">Obnoviť</string>
     <string name="menu_settings">Nastavenia</string>
     <string name="menu_template">Šablóna</string>
     <string name="menu_update">Aktualizovať</string>
