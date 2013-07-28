@@ -33,13 +33,13 @@
 
     <Hook restriction="email" method="EMailProvider" permissions="com.android.email.permission.ACCESS_PROVIDER" sdk="14" />
 
-    <Hook restriction="identification" method="/proc" permissions="" sdk="14" />
+    <Hook restriction="identification" method="/proc" dangerous="true" permissions="" sdk="14" />
     <Hook restriction="identification" method="getString" permissions="" sdk="14" />
     <Hook restriction="identification" method="%imei" permissions="" sdk="14" />
     <Hook restriction="identification" method="%hostname" permissions="" sdk="14" />
     <Hook restriction="identification" method="%serialno" permissions="" sdk="14" />
     <Hook restriction="identification" method="%macaddr" permissions="" sdk="14" />
-    <Hook restriction="identification" method="GservicesProvider" permissions="READ_GSERVICES" sdk="14" />
+    <Hook restriction="identification" method="GservicesProvider" dangerous="true" permissions="READ_GSERVICES" sdk="14" />
     <Hook restriction="identification" method="SERIAL" permissions="" sdk="14" />
 
     <Hook restriction="internet" method="getAllByName" permissions="INTERNET" sdk="14" />
@@ -49,9 +49,9 @@
     <Hook restriction="internet" method="getByName" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getNetworkInterfaces" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="inet" permissions="INTERNET" sdk="14" />
-    <Hook restriction="internet" method="getActiveNetworkInfo" sdk="14" />
+    <Hook restriction="internet" method="getActiveNetworkInfo" dangerous="true" sdk="14" />
     <Hook restriction="internet" method="getAllNetworkInfo" sdk="14" />
-    <Hook restriction="internet" method="getNetworkInfo" sdk="14" />
+    <Hook restriction="internet" method="getNetworkInfo" dangerous="true" sdk="14" />
     <Hook restriction="internet" method="getDetailedState" sdk="14" />
     <Hook restriction="internet" method="getState" sdk="14" />
     <Hook restriction="internet" method="isConnected" sdk="14" />
@@ -61,8 +61,8 @@
     <Hook restriction="location" method="addNmeaListener" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
     <Hook restriction="location" method="addProximityAlert" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
     <Hook restriction="location" method="getLastKnownLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
-    <Hook restriction="location" method="getProviders" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
-    <Hook restriction="location" method="isProviderEnabled" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="getProviders" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="isProviderEnabled" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
     <Hook restriction="location" method="removeUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
     <Hook restriction="location" method="requestLocationUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
     <Hook restriction="location" method="requestSingleUpdate" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
@@ -74,7 +74,7 @@
     <Hook restriction="location" method="getCellLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
     <Hook restriction="location" method="getNeighboringCellInfo" permissions="ACCESS_COARSE_UPDATES" sdk="14" />
     <Hook restriction="location" method="getAllCellInfo" permissions="ACCESS_COARSE_UPDATES" sdk="17" />
-    <Hook restriction="location" method="getScanResults" permissions="ACCESS_WIFI_STATE" sdk="14" />
+    <Hook restriction="location" method="getScanResults" dangerous="true" permissions="ACCESS_WIFI_STATE" sdk="14" />
     <Hook restriction="location" method="connect" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
 
     <Hook restriction="media" method="startRecording" permissions="RECORD_AUDIO" sdk="14" />
@@ -135,8 +135,8 @@
     <Hook restriction="shell" method="sh" permissions="" sdk="14" />
     <Hook restriction="shell" method="su" permissions="" sdk="14" />
     <Hook restriction="shell" method="exec" permissions="" sdk="14" />
-    <Hook restriction="shell" method="load" permissions="" sdk="14" />
-    <Hook restriction="shell" method="loadLibrary" permissions="" sdk="14" />
+    <Hook restriction="shell" method="load" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="shell" method="loadLibrary" dangerous="true" permissions="" sdk="14" />
     <Hook restriction="shell" method="start" permissions="" sdk="14" />
 
     <Hook restriction="storage" method="media" permissions="WRITE_MEDIA_STORAGE" sdk="14" />

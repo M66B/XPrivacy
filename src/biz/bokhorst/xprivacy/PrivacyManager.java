@@ -127,13 +127,15 @@ public class PrivacyManager {
 				// Get meta data
 				String restrictionName = attributes.getValue("restriction");
 				String methodName = attributes.getValue("method");
+				String dangerous = attributes.getValue("dangerous");
 				String permissions = attributes.getValue("permissions");
 				int sdk = Integer.parseInt(attributes.getValue("sdk"));
 
 				// Add meta data
 				if (Build.VERSION.SDK_INT >= sdk) {
+					boolean danger = (dangerous == null ? false : Boolean.parseBoolean(dangerous));
 					String[] permission = (permissions == null ? null : permissions.split(","));
-					MethodDescription md = new MethodDescription(methodName, permission, sdk);
+					MethodDescription md = new MethodDescription(methodName, danger, permission, sdk);
 
 					if (!mMethod.containsKey(restrictionName))
 						mMethod.put(restrictionName, new ArrayList<MethodDescription>());
@@ -174,27 +176,10 @@ public class PrivacyManager {
 	}
 
 	public static boolean isDangerousMethod(String restrictionName, String methodName) {
-		// Identification
-		if (restrictionName.equals(cIdentification)
-				&& (methodName.equals("GservicesProvider") || methodName.equals("/proc")))
-			return true;
-
-		// Internet
-		if (restrictionName.equals(cInternet)
-				&& (methodName.equals("getActiveNetworkInfo") || methodName.equals("getNetworkInfo")))
-			return true;
-
-		// Location
-		if (restrictionName.equals(cLocation)
-				&& (methodName.equals("getProviders") || methodName.equals("isProviderEnabled") || methodName
-						.equals("getScanResults")))
-			return true;
-
-		// Shell
-		if (restrictionName.equals(cShell) && (methodName.equals("load") || methodName.equals("loadLibrary")))
-			return true;
-
-		return false;
+		MethodDescription md = new MethodDescription(methodName);
+		int pos = mMethod.get(restrictionName).indexOf(md);
+		md = mMethod.get(restrictionName).get(pos);
+		return md.getDangerous();
 	}
 
 	public static String getLocalizedName(Context context, String restrictionName) {
@@ -846,6 +831,7 @@ public class PrivacyManager {
 
 	public static class MethodDescription implements Comparable<MethodDescription> {
 		private String mMethodName;
+		private boolean mDangerous;
 		private String[] mPermissions;
 		private int mSdk;
 
@@ -853,14 +839,19 @@ public class PrivacyManager {
 			mMethodName = methodName;
 		}
 
-		public MethodDescription(String methodName, String[] permissions, int sdk) {
+		public MethodDescription(String methodName, boolean dangerous, String[] permissions, int sdk) {
 			mMethodName = methodName;
+			mDangerous = dangerous;
 			mPermissions = permissions;
 			mSdk = sdk;
 		}
 
 		public String getMethodName() {
 			return mMethodName;
+		}
+
+		public boolean getDangerous() {
+			return mDangerous;
 		}
 
 		public String[] getPermissions() {
