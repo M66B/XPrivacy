@@ -12,9 +12,11 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XClipboardManager extends XHook {
+	private Methods mMethod;
 
-	private XClipboardManager(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XClipboardManager(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -34,35 +36,36 @@ public class XClipboardManager extends XHook {
 
 	// @formatter:on
 
+	private enum Methods {
+		addPrimaryClipChangedListener, getPrimaryClip, getPrimaryClipDescription, getText, hasPrimaryClip, hasText
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		String[] clips = new String[] { "addPrimaryClipChangedListener", "getPrimaryClip", "getPrimaryClipDescription",
-				"getText", "hasPrimaryClip", "hasText" };
-		for (String clip : clips)
+		for (Methods clip : Methods.values())
 			listHook.add(new XClipboardManager(clip, PrivacyManager.cSystem));
 		return listHook;
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (param.method.getName().equals("addPrimaryClipChangedListener"))
+		if (mMethod == Methods.addPrimaryClipChangedListener)
 			if (isRestricted(param))
 				param.setResult(null);
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (!methodName.equals("addPrimaryClipChangedListener"))
-			if (methodName.equals("getPrimaryClip") || methodName.equals("getPrimaryClipDescription")
-					|| methodName.equals("getText")) {
+		if (mMethod != Methods.addPrimaryClipChangedListener)
+			if (mMethod == Methods.getPrimaryClip || mMethod == Methods.getPrimaryClipDescription
+					|| mMethod == Methods.getText) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(null);
-			} else if (methodName.equals("hasPrimaryClip") || methodName.equals("hasText")) {
+			} else if (mMethod == Methods.hasPrimaryClip || mMethod == Methods.hasText) {
 				if (isRestricted(param))
 					param.setResult(false);
 			} else
-				Util.log(this, Log.WARN, "Unknown method=" + methodName);
+				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override
