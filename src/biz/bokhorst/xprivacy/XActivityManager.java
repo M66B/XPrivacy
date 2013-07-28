@@ -13,9 +13,11 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivityManager extends XHook {
+	private Methods mMethod;
 
-	private XActivityManager(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XActivityManager(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -29,11 +31,13 @@ public class XActivityManager extends XHook {
 	// frameworks/base/core/java/android/app/ActivityManager.java
 	// http://developer.android.com/reference/android/app/ActivityManager.html
 
+	private enum Methods {
+		getRecentTasks, getRunningAppProcesses, getRunningServices, getRunningTasks
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		String[] acts = new String[] { "getRecentTasks", "getRunningAppProcesses", "getRunningServices",
-				"getRunningTasks" };
-		for (String act : acts)
+		for (Methods act : Methods.values())
 			listHook.add(new XActivityManager(act, PrivacyManager.cSystem));
 		return listHook;
 	}
@@ -45,21 +49,20 @@ public class XActivityManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("getRecentTasks")) {
+		if (mMethod == Methods.getRecentTasks) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ActivityManager.RecentTaskInfo>());
-		} else if (methodName.equals("getRunningAppProcesses")) {
+		} else if (mMethod == Methods.getRunningAppProcesses) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ActivityManager.RunningAppProcessInfo>());
-		} else if (methodName.equals("getRunningServices")) {
+		} else if (mMethod == Methods.getRunningServices) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ActivityManager.RunningServiceInfo>());
-		} else if (methodName.equals("getRunningTasks")) {
+		} else if (mMethod == Methods.getRunningTasks) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ActivityManager.RunningTaskInfo>());
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override
