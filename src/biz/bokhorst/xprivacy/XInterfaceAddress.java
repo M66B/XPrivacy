@@ -6,7 +6,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XInterfaceAddress extends XHook {
 
-	public XInterfaceAddress(String methodName, String restrictionName) {
+	private XInterfaceAddress(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 

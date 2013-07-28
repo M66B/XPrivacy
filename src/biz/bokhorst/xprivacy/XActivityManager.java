@@ -4,6 +4,7 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -13,7 +14,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivityManager extends XHook {
 
-	public XActivityManager(String methodName, String restrictionName) {
+	private XActivityManager(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -27,6 +28,15 @@ public class XActivityManager extends XHook {
 	// public List<RunningTaskInfo> getRunningTasks(int maxNum)
 	// frameworks/base/core/java/android/app/ActivityManager.java
 	// http://developer.android.com/reference/android/app/ActivityManager.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		String[] acts = new String[] { "getRecentTasks", "getRunningAppProcesses", "getRunningServices",
+				"getRunningTasks" };
+		for (String act : acts)
+			listHook.add(new XActivityManager(act, PrivacyManager.cSystem));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

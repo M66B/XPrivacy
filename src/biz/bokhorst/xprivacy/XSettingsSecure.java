@@ -3,6 +3,8 @@ package biz.bokhorst.xprivacy;
 import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -12,7 +14,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSettingsSecure extends XHook {
 
-	public XSettingsSecure(String methodName, String restrictionName) {
+	private XSettingsSecure(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -28,6 +30,12 @@ public class XSettingsSecure extends XHook {
 	// http://developer.android.com/reference/android/provider/Settings.Secure.html
 
 	// @formatter:on
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XSettingsSecure("getString", PrivacyManager.cIdentification));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

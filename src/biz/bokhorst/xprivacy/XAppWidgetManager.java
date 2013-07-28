@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.appwidget.AppWidgetProviderInfo;
 import android.util.Log;
@@ -9,7 +10,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XAppWidgetManager extends XHook {
 
-	public XAppWidgetManager(String methodName, String restrictionName) {
+	private XAppWidgetManager(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -20,6 +21,12 @@ public class XAppWidgetManager extends XHook {
 	// public List<AppWidgetProviderInfo> getInstalledProviders()
 	// frameworks/base/core/java/android/appwidget/AppWidgetManager.java
 	// http://developer.android.com/reference/android/appwidget/AppWidgetManager.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XAppWidgetManager("getInstalledProviders", PrivacyManager.cSystem));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

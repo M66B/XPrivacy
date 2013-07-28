@@ -13,7 +13,7 @@ public class XPackageManagerService extends XHook {
 	private String mRestrictionName;
 	private String mAction;
 
-	public XPackageManagerService(String methodName, String restrictionName, String action) {
+	private XPackageManagerService(String methodName, String restrictionName, String action) {
 		super(restrictionName, methodName, action);
 		mRestrictionName = restrictionName;
 		mAction = action;
@@ -25,6 +25,14 @@ public class XPackageManagerService extends XHook {
 
 	// public int[] getPackageGids(String packageName)
 	// frameworks/base/services/java/com/android/server/pm/PackageManagerService.java
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XPackageManagerService("getPackageGids", PrivacyManager.cInternet, "inet"));
+		listHook.add(new XPackageManagerService("getPackageGids", PrivacyManager.cStorage, "media"));
+		listHook.add(new XPackageManagerService("getPackageGids", PrivacyManager.cStorage, "sdcard"));
+		return listHook;
+	}
 
 	final static int sdcard_r = 1028; // 4.1+
 	final static int sdcard_rw = 1015; // 4.0+

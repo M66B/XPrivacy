@@ -1,5 +1,8 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
@@ -7,7 +10,7 @@ public class XSystemProperties extends XHook {
 
 	private String mPropertyName;
 
-	public XSystemProperties(String methodName, String restrictionName, String propertyName) {
+	private XSystemProperties(String methodName, String restrictionName, String propertyName) {
 		super(restrictionName, methodName, propertyName);
 		mPropertyName = propertyName;
 	}
@@ -22,6 +25,16 @@ public class XSystemProperties extends XHook {
 	// public static int getInt(String key, int def)
 	// public static long getLong(String key, long def)
 	// frameworks/base/core/java/android/os/SystemProperties.java
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		String[] props = new String[] { "%imei", "%hostname", "%serialno", "%macaddr" };
+		String[] getters = new String[] { "get", "getBoolean", "getInt", "getLong" };
+		for (String prop : props)
+			for (String getter : getters)
+				listHook.add(new XSystemProperties(getter, PrivacyManager.cIdentification, prop));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

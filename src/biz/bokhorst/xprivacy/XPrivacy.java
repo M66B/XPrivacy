@@ -4,18 +4,14 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import android.annotation.SuppressLint;
 import android.app.AndroidAppHelper;
 import android.content.Context;
-import android.content.Intent;
-import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Process;
-import android.provider.MediaStore;
-import android.service.notification.NotificationListenerService;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -46,205 +42,88 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		PrivacyProvider.setPrefFileReadable(PrivacyProvider.PREF_SETTINGS);
 
 		// Account manager
-		hook(new XAccountManager("addOnAccountsUpdatedListener", PrivacyManager.cAccounts));
-		hook(new XAccountManager("blockingGetAuthToken", PrivacyManager.cAccounts));
-		hook(new XAccountManager("getAccounts", PrivacyManager.cAccounts));
-		hook(new XAccountManager("getAccountsByType", PrivacyManager.cAccounts));
-		hook(new XAccountManager("getAccountsByTypeAndFeatures", PrivacyManager.cAccounts));
-		hook(new XAccountManager("getAuthToken", PrivacyManager.cAccounts));
-		hook(new XAccountManager("getAuthTokenByFeatures", PrivacyManager.cAccounts));
-		hook(new XAccountManager("hasFeatures", PrivacyManager.cAccounts));
-		hook(new XAccountManager("removeOnAccountsUpdatedListener", PrivacyManager.cAccounts));
-
-		hook(new XAccountManager("getAccountsByTypeForPackage", PrivacyManager.cAccounts,
-				Build.VERSION_CODES.JELLY_BEAN_MR2));
+		hookAll(XAccountManager.getInstances());
 
 		// Activity manager
-		String[] acts = new String[] { "getRecentTasks", "getRunningAppProcesses", "getRunningServices",
-				"getRunningTasks" };
-		for (String act : acts)
-			hook(new XActivityManager(act, PrivacyManager.cSystem));
+		hookAll(XActivityManager.getInstances());
 
 		// App widget manager
-		hook(new XAppWidgetManager("getInstalledProviders", PrivacyManager.cSystem));
+		hookAll(XAppWidgetManager.getInstances());
 
 		// Application package manager
-		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getPreferredPackages",
-				"queryBroadcastReceivers", "queryContentProviders", "queryIntentActivities",
-				"queryIntentActivityOptions", "queryIntentServices" };
-		for (String am : ams)
-			hook(new XApplicationPackageManager(am, PrivacyManager.cSystem));
+		hookAll(XApplicationPackageManager.getInstances());
 
 		// Audio record
-		hook(new XAudioRecord("startRecording", PrivacyManager.cMedia));
+		hookAll(XAudioRecord.getInstances());
 
 		// Bluetooth adapter
-		hook(new XBluetoothAdapter("getAddress", PrivacyManager.cNetwork));
-		hook(new XBluetoothAdapter("getBondedDevices", PrivacyManager.cNetwork));
+		hookAll(XBluetoothAdapter.getInstances());
 
 		// Bluetooth device
-		hook(new XBluetoothDevice("getAddress", PrivacyManager.cNetwork));
+		hookAll(XBluetoothDevice.getInstances());
 
 		// Camera
-		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
-				"setOneShotPreviewCallback", "takePicture" };
-		for (String cam : cams)
-			hook(new XCamera(cam, PrivacyManager.cMedia));
+		hookAll(XCamera.getInstances());
 
 		// Clipboard manager
-		String[] clips = new String[] { "addPrimaryClipChangedListener", "getPrimaryClip", "getPrimaryClipDescription",
-				"getText", "hasPrimaryClip", "hasText" };
-		for (String clip : clips)
-			hook(new XClipboardManager(clip, PrivacyManager.cSystem));
+		hookAll(XClipboardManager.getInstances());
 
 		// Connectivity manager
 		// This is to fake "offline", no permission required
-		String[] connmgrs = new String[] { "getActiveNetworkInfo", "getAllNetworkInfo", "getNetworkInfo" };
-		for (String connmgr : connmgrs)
-			hook(new XConnectivityManager(connmgr, PrivacyManager.cInternet));
+		hookAll(XConnectivityManager.getInstances());
 
 		// Environment
 		// This is to fake "unmounted", no permission required
-		hook(new XEnvironment("getExternalStorageState", PrivacyManager.cStorage));
+		hookAll(XEnvironment.getInstances());
 
 		// InetAddress
-		String[] addrs = new String[] { "getAllByName", "getByAddress", "getByName" };
-		for (String addr : addrs)
-			hook(new XInetAddress(addr, PrivacyManager.cInternet, null));
+		hookAll(XInetAddress.getInstances());
 
 		// IO bridge
-		hook(new XIoBridge("open", PrivacyManager.cIdentification, "/proc"));
+		hookAll(XIoBridge.getInstances());
 
 		// Location manager
-		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "getProviders",
-				"isProviderEnabled", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",
-				"sendExtraCommand" };
-		for (String loc : locs)
-			hook(new XLocationManager(loc, PrivacyManager.cLocation));
-
-		hook(new XLocationManager("addGeofence", PrivacyManager.cLocation, Build.VERSION_CODES.JELLY_BEAN_MR1));
-		hook(new XLocationManager("getLastLocation", PrivacyManager.cLocation, Build.VERSION_CODES.JELLY_BEAN_MR1));
+		hookAll(XLocationManager.getInstances());
 
 		// Media recorder
-		hook(new XMediaRecorder("setOutputFile", PrivacyManager.cMedia));
+		hookAll(XMediaRecorder.getInstances());
 
 		// Network info
 		// This is to fake "offline", no permission required
-		String[] ninfos = new String[] { "getDetailedState", "getState", "isConnected", "isConnectedOrConnecting" };
-		for (String ninfo : ninfos)
-			hook(new XNetworkInfo(ninfo, PrivacyManager.cInternet));
+		hookAll(XNetworkInfo.getInstances());
 
 		// Network interface
-		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };
-		for (String net : nets)
-			hook(new XNetworkInterface(net, PrivacyManager.cNetwork));
-
-		String[] inets = new String[] { "getByInetAddress", "getByName", "getNetworkInterfaces" };
-		for (String inet : inets)
-			hook(new XNetworkInterface(inet, PrivacyManager.cInternet));
+		hookAll(XNetworkInterface.getInstances());
 
 		// Package manager service
-		hook(new XPackageManagerService("getPackageGids", PrivacyManager.cInternet, "inet"));
-		hook(new XPackageManagerService("getPackageGids", PrivacyManager.cStorage, "media"));
-		hook(new XPackageManagerService("getPackageGids", PrivacyManager.cStorage, "sdcard"));
+		hookAll(XPackageManagerService.getInstances());
 
 		// Process builder
-		hook(new XProcessBuilder("start", PrivacyManager.cShell, "sh"));
-		hook(new XProcessBuilder("start", PrivacyManager.cShell, "su"));
-		hook(new XProcessBuilder("start", PrivacyManager.cShell, null));
+		hookAll(XProcessBuilder.getInstances());
 
 		// Runtime
-		hook(new XRuntime("exec", PrivacyManager.cShell, "sh"));
-		hook(new XRuntime("exec", PrivacyManager.cShell, "su"));
-		hook(new XRuntime("exec", PrivacyManager.cShell, null));
-		hook(new XRuntime("load", PrivacyManager.cShell, null));
-		hook(new XRuntime("loadLibrary", PrivacyManager.cShell, null));
+		hookAll(XRuntime.getInstances());
 
 		// Settings secure
-		hook(new XSettingsSecure("getString", PrivacyManager.cIdentification));
+		hookAll(XSettingsSecure.getInstances());
 
 		// SMS manager
-		hook(new XSmsManager("getAllMessagesFromIcc", PrivacyManager.cMessages));
-		String[] smses = new String[] { "sendDataMessage", "sendMultipartTextMessage", "sendTextMessage" };
-		for (String sms : smses)
-			hook(new XSmsManager(sms, PrivacyManager.cCalling));
+		hookAll(XSmsManager.getInstances());
 
 		// System properties
-		String[] props = new String[] { "%imei", "%hostname", "%serialno", "%macaddr" };
-		String[] getters = new String[] { "get", "getBoolean", "getInt", "getLong" };
-		for (String prop : props)
-			for (String getter : getters)
-				hook(new XSystemProperties(getter, PrivacyManager.cIdentification, prop));
+		hookAll(XSystemProperties.getInstances());
 
 		// Telephony
-		hook(new XTelephonyManager("disableLocationUpdates", PrivacyManager.cLocation));
-		hook(new XTelephonyManager("enableLocationUpdates", PrivacyManager.cLocation));
-		hook(new XTelephonyManager("getCellLocation", PrivacyManager.cLocation));
-		hook(new XTelephonyManager("getNeighboringCellInfo", PrivacyManager.cLocation));
-
-		hook(new XTelephonyManager("getAllCellInfo", PrivacyManager.cLocation, Build.VERSION_CODES.JELLY_BEAN_MR1));
-
-		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
-				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getSimSerialNumber", "getSubscriberId",
-				"getVoiceMailAlphaTag", "getVoiceMailNumber", "listen" };
-		for (String phone : phones)
-			hook(new XTelephonyManager(phone, PrivacyManager.cPhone));
-
-		// No permissions required
-		String[] phones1 = new String[] { "getNetworkCountryIso", "getNetworkOperator", "getNetworkOperatorName",
-				"getSimCountryIso", "getSimOperator", "getSimOperatorName" };
-		for (String phone1 : phones1)
-			hook(new XTelephonyManager(phone1, PrivacyManager.cPhone));
-
-		hook(new XTelephonyManager("getGroupIdLevel1", PrivacyManager.cPhone, Build.VERSION_CODES.JELLY_BEAN_MR2));
+		hookAll(XTelephonyManager.getInstances());
 
 		// Wi-Fi manager
-		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults",
-				"getWifiApConfiguration" };
-		for (String wifi : wifis)
-			hook(new XWifiManager(wifi, PrivacyManager.cNetwork));
-		hook(new XWifiManager("getScanResults", PrivacyManager.cLocation));
-		// This is to fake "offline", no permission required
-		hook(new XWifiManager("getConnectionInfo", PrivacyManager.cInternet));
+		hookAll(XWifiManager.getInstances());
 
-		// Intent receive: calling
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cPhone, Intent.ACTION_NEW_OUTGOING_CALL));
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cPhone, TelephonyManager.ACTION_PHONE_STATE_CHANGED));
+		// Intent receive
+		hookAll(XActivityThread.getInstances());
 
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cCalling,
-				TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, Build.VERSION_CODES.JELLY_BEAN_MR2));
-
-		// Intent receive: NFC
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_NDEF_DISCOVERED));
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TAG_DISCOVERED));
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TECH_DISCOVERED));
-
-		// Intent receive: notifications
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
-				NotificationListenerService.SERVICE_INTERFACE, Build.VERSION_CODES.JELLY_BEAN_MR2));
-
-		// Intent receive: package changes
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_ADDED));
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REPLACED));
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_RESTARTED));
-		hook(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REMOVED));
-
-		String[] startActivities = new String[] { "startActivities", "startActivity", "startActivityForResult",
-				"startActivityFromChild", "startActivityFromFragment", "startActivityIfNeeded" };
-
-		// Intent send: browser
-		for (String activity : startActivities)
-			hook(new XActivity(activity, PrivacyManager.cView, Intent.ACTION_VIEW));
-
-		// Intent send: call
-		for (String activity : startActivities)
-			hook(new XActivity(activity, PrivacyManager.cCalling, Intent.ACTION_CALL));
-
-		// Intent send: media
-		hook(new XActivity("startActivityForResult", PrivacyManager.cMedia, MediaStore.ACTION_IMAGE_CAPTURE));
-		hook(new XActivity("startActivityForResult", PrivacyManager.cMedia, MediaStore.ACTION_IMAGE_CAPTURE_SECURE,
-				Build.VERSION_CODES.JELLY_BEAN_MR1));
-		hook(new XActivity("startActivityForResult", PrivacyManager.cMedia, MediaStore.ACTION_VIDEO_CAPTURE));
+		// Intent send
+		hookAll(XActivity.getInstances());
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
@@ -254,7 +133,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
 		if (lpparam.packageName.equals(self)) {
-			hook(new XUtilHook("isXposedEnabled", null), lpparam.classLoader);
+			hookAll(XUtilHook.getInstances(), lpparam.classLoader);
 			return;
 		}
 
@@ -263,84 +142,35 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				false))
 			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", PrivacyManager.getDefacedProp("SERIAL"));
 
-		// Applications provider
-		if (lpparam.packageName.equals("com.android.providers.applications"))
-			hook(new XContentProvider(PrivacyManager.cSystem, "ApplicationsProvider",
-					"com.android.providers.applications.ApplicationsProvider"), lpparam.classLoader);
-
-		// Browser provider
-		else if (lpparam.packageName.equals("com.android.browser")) {
-			hook(new XContentProvider(PrivacyManager.cBrowser, "BrowserProvider",
-					"com.android.browser.provider.BrowserProvider"), lpparam.classLoader);
-			hook(new XContentProvider(PrivacyManager.cBrowser, "BrowserProvider2",
-					"com.android.browser.provider.BrowserProvider2"), lpparam.classLoader);
-		}
-
-		// Calendar provider
-		else if (lpparam.packageName.equals("com.android.providers.calendar"))
-			hook(new XContentProvider(PrivacyManager.cCalendar, "CalendarProvider2",
-					"com.android.providers.calendar.CalendarProvider2"), lpparam.classLoader);
-
-		// Contacts provider
-		else if (lpparam.packageName.equals("com.android.providers.contacts")) {
-			String[] uris = new String[] { "contacts/contacts", "contacts/data", "contacts/raw_contacts",
-					"contacts/phone_lookup", "contacts/profile" };
-			for (String uri : uris)
-				hook(new XContentProvider(PrivacyManager.cContacts, "ContactsProvider2",
-						"com.android.providers.contacts.ContactsProvider2", "content://com.android." + uri),
-						lpparam.classLoader);
-
-			hook(new XContentProvider(PrivacyManager.cPhone, "CallLogProvider",
-					"com.android.providers.contacts.CallLogProvider"), lpparam.classLoader);
-			hook(new XContentProvider(PrivacyManager.cMessages, "VoicemailContentProvider",
-					"com.android.providers.contacts.VoicemailContentProvider"), lpparam.classLoader);
-		}
-
-		// E-mail provider
-		else if (lpparam.packageName.equals("com.android.email"))
-			hook(new XContentProvider(PrivacyManager.cEMail, "EMailProvider",
-					"com.android.email.provider.EmailProvider"), lpparam.classLoader);
-
-		// Google services provider
-		else if (lpparam.packageName.equals("com.google.android.gsf"))
-			hook(new XContentProvider(PrivacyManager.cIdentification, "GservicesProvider",
-					"com.google.android.gsf.gservices.GservicesProvider"), lpparam.classLoader);
-
-		// Telephony providers
-		else if (lpparam.packageName.equals("com.android.providers.telephony")) {
-			hook(new XContentProvider(PrivacyManager.cMessages, "SmsProvider",
-					"com.android.providers.telephony.SmsProvider"), lpparam.classLoader);
-			hook(new XContentProvider(PrivacyManager.cMessages, "MmsProvider",
-					"com.android.providers.telephony.MmsProvider"), lpparam.classLoader);
-			hook(new XContentProvider(PrivacyManager.cMessages, "MmsSmsProvider",
-					"com.android.providers.telephony.MmsSmsProvider"), lpparam.classLoader);
-			hook(new XContentProvider(PrivacyManager.cPhone, "TelephonyProvider",
-					"com.android.providers.telephony.TelephonyProvider"), lpparam.classLoader);
-		}
-
-		// User dictionary
-		else if (lpparam.packageName.equals("com.android.providers.userdictionary"))
-			hook(new XContentProvider(PrivacyManager.cDictionary, "UserDictionary",
-					"com.android.providers.userdictionary.UserDictionaryProvider"), lpparam.classLoader);
+		// Providers
+		hookAll(XContentProvider.getInstances(lpparam.packageName), lpparam.classLoader);
 
 		// Google auth
 		try {
 			Class.forName("com.google.android.gms.auth.GoogleAuthUtil", false, lpparam.classLoader);
-			hook(new XGoogleAuthUtil("getToken", PrivacyManager.cAccounts, "getTokenGoogle"), lpparam.classLoader);
-			hook(new XGoogleAuthUtil("getTokenWithNotification", PrivacyManager.cAccounts,
-					"getTokenWithNotificationGoogle"), lpparam.classLoader);
+			hookAll(XGoogleAuthUtil.getInstances(), lpparam.classLoader);
 		} catch (Throwable ex) {
 		}
 
 		// Location client
 		try {
 			Class.forName("com.google.android.gms.location.LocationClient", false, lpparam.classLoader);
-			hook(new XLocationClient("connect", PrivacyManager.cLocation), lpparam.classLoader);
+			hookAll(XLocationClient.getInstances(), lpparam.classLoader);
 		} catch (Throwable ex) {
 		}
 	}
 
-	private void hook(final XHook hook) {
+	private void hookAll(List<XHook> listHook) {
+		for (XHook hook : listHook)
+			hook(hook);
+	}
+
+	private void hookAll(List<XHook> listHook, ClassLoader classLoader) {
+		for (XHook hook : listHook)
+			hook(hook, classLoader);
+	}
+
+	private void hook(XHook hook) {
 		hook(hook, null);
 	}
 

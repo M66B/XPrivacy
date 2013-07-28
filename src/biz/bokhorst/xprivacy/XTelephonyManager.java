@@ -8,6 +8,7 @@ import java.util.WeakHashMap;
 
 import android.content.Context;
 import android.os.Binder;
+import android.os.Build;
 import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.PhoneStateListener;
@@ -22,11 +23,11 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 public class XTelephonyManager extends XHook {
 	private static final Map<PhoneStateListener, XPhoneStateListener> mListener = new WeakHashMap<PhoneStateListener, XPhoneStateListener>();
 
-	public XTelephonyManager(String methodName, String restrictionName) {
+	private XTelephonyManager(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
-	public XTelephonyManager(String methodName, String restrictionName, int sdk) {
+	private XTelephonyManager(String methodName, String restrictionName, int sdk) {
 		super(restrictionName, methodName, null, sdk);
 	}
 
@@ -60,6 +61,29 @@ public class XTelephonyManager extends XHook {
 	// public void listen(PhoneStateListener listener, int events)
 	// frameworks/base/telephony/java/android/telephony/TelephonyManager.java
 	// http://developer.android.com/reference/android/telephony/TelephonyManager.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XTelephonyManager("disableLocationUpdates", PrivacyManager.cLocation));
+		listHook.add(new XTelephonyManager("enableLocationUpdates", PrivacyManager.cLocation));
+		listHook.add(new XTelephonyManager("getCellLocation", PrivacyManager.cLocation));
+		listHook.add(new XTelephonyManager("getNeighboringCellInfo", PrivacyManager.cLocation));
+		listHook.add(new XTelephonyManager("getAllCellInfo", PrivacyManager.cLocation,
+				Build.VERSION_CODES.JELLY_BEAN_MR1));
+		String[] phones = new String[] { "getDeviceId", "getIsimDomain", "getIsimImpi", "getIsimImpu",
+				"getLine1AlphaTag", "getLine1Number", "getMsisdn", "getSimSerialNumber", "getSubscriberId",
+				"getVoiceMailAlphaTag", "getVoiceMailNumber", "listen" };
+		for (String phone : phones)
+			listHook.add(new XTelephonyManager(phone, PrivacyManager.cPhone));
+		// No permissions required
+		String[] phones1 = new String[] { "getNetworkCountryIso", "getNetworkOperator", "getNetworkOperatorName",
+				"getSimCountryIso", "getSimOperator", "getSimOperatorName" };
+		for (String phone1 : phones1)
+			listHook.add(new XTelephonyManager(phone1, PrivacyManager.cPhone));
+		listHook.add(new XTelephonyManager("getGroupIdLevel1", PrivacyManager.cPhone,
+				Build.VERSION_CODES.JELLY_BEAN_MR2));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

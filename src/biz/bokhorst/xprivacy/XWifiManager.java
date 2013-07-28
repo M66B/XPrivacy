@@ -2,6 +2,7 @@ package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.net.DhcpInfo;
 import android.net.wifi.ScanResult;
@@ -16,7 +17,7 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 @SuppressWarnings("deprecation")
 public class XWifiManager extends XHook {
 
-	public XWifiManager(String methodName, String restrictionName) {
+	private XWifiManager(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -33,6 +34,18 @@ public class XWifiManager extends XHook {
 	// frameworks/base/wifi/java/android/net/wifi/WifiInfo.java
 	// frameworks/base/core/java/android/net/DhcpInfo.java
 	// http://developer.android.com/reference/android/net/wifi/WifiManager.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults",
+				"getWifiApConfiguration" };
+		for (String wifi : wifis)
+			listHook.add(new XWifiManager(wifi, PrivacyManager.cNetwork));
+		listHook.add(new XWifiManager("getScanResults", PrivacyManager.cLocation));
+		// This is to fake "offline", no permission required
+		listHook.add(new XWifiManager("getConnectionInfo", PrivacyManager.cInternet));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

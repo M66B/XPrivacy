@@ -1,11 +1,14 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XMediaRecorder extends XHook {
 
-	public XMediaRecorder(String methodName, String restrictionName) {
+	private XMediaRecorder(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -17,6 +20,12 @@ public class XMediaRecorder extends XHook {
 	// public void setOutputFile(String path)
 	// frameworks/base/media/java/android/media/MediaRecorder.java
 	// http://developer.android.com/reference/android/media/MediaRecorder.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XMediaRecorder("setOutputFile", PrivacyManager.cMedia));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

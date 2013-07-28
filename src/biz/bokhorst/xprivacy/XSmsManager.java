@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.telephony.SmsMessage;
 import android.util.Log;
@@ -9,7 +10,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSmsManager extends XHook {
 
-	public XSmsManager(String methodName, String restrictionName) {
+	private XSmsManager(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -27,6 +28,15 @@ public class XSmsManager extends XHook {
 	// http://developer.android.com/reference/android/telephony/gsm/SmsManager.html
 
 	// @formatter:on
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XSmsManager("getAllMessagesFromIcc", PrivacyManager.cMessages));
+		String[] smses = new String[] { "sendDataMessage", "sendMultipartTextMessage", "sendTextMessage" };
+		for (String sms : smses)
+			listHook.add(new XSmsManager(sms, PrivacyManager.cCalling));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

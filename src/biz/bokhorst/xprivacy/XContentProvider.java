@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,15 +21,14 @@ public class XContentProvider extends XHook {
 	private String mProviderName;
 	private String mUriStart;
 
-	public XContentProvider(String restrictionName, String providerName, String className) {
+	private XContentProvider(String restrictionName, String providerName, String className) {
 		super(restrictionName, "query", providerName);
 		mClassName = className;
 		mProviderName = providerName;
 		mUriStart = null;
 	}
 
-	public XContentProvider(String restrictionName, String providerName, String className,
-			String uriStart) {
+	private XContentProvider(String restrictionName, String providerName, String className, String uriStart) {
 		super(restrictionName, "query", uriStart.replace("content://com.android.", ""));
 		mClassName = className;
 		mProviderName = providerName;
@@ -59,6 +59,71 @@ public class XContentProvider extends XHook {
 	// frameworks/base/core/java/android/provider/ContactsContract.java
 
 	// @formatter:on
+
+	public static List<XHook> getInstances(String packageName) {
+		List<XHook> listHook = new ArrayList<XHook>();
+
+		// Applications provider
+		if (packageName.equals("com.android.providers.applications"))
+			listHook.add(new XContentProvider(PrivacyManager.cSystem, "ApplicationsProvider",
+					"com.android.providers.applications.ApplicationsProvider"));
+
+		// Browser provider
+		else if (packageName.equals("com.android.browser")) {
+			listHook.add(new XContentProvider(PrivacyManager.cBrowser, "BrowserProvider",
+					"com.android.browser.provider.BrowserProvider"));
+			listHook.add(new XContentProvider(PrivacyManager.cBrowser, "BrowserProvider2",
+					"com.android.browser.provider.BrowserProvider2"));
+		}
+
+		// Calendar provider
+		else if (packageName.equals("com.android.providers.calendar"))
+			listHook.add(new XContentProvider(PrivacyManager.cCalendar, "CalendarProvider2",
+					"com.android.providers.calendar.CalendarProvider2"));
+
+		// Contacts provider
+		else if (packageName.equals("com.android.providers.contacts")) {
+			String[] uris = new String[] { "contacts/contacts", "contacts/data", "contacts/raw_contacts",
+					"contacts/phone_lookup", "contacts/profile" };
+			for (String uri : uris)
+				listHook.add(new XContentProvider(PrivacyManager.cContacts, "ContactsProvider2",
+						"com.android.providers.contacts.ContactsProvider2", "content://com.android." + uri));
+
+			listHook.add(new XContentProvider(PrivacyManager.cPhone, "CallLogProvider",
+					"com.android.providers.contacts.CallLogProvider"));
+			listHook.add(new XContentProvider(PrivacyManager.cMessages, "VoicemailContentProvider",
+					"com.android.providers.contacts.VoicemailContentProvider"));
+		}
+
+		// E-mail provider
+		else if (packageName.equals("com.android.email"))
+			listHook.add(new XContentProvider(PrivacyManager.cEMail, "EMailProvider",
+					"com.android.email.provider.EmailProvider"));
+
+		// Google services provider
+		else if (packageName.equals("com.google.android.gsf"))
+			listHook.add(new XContentProvider(PrivacyManager.cIdentification, "GservicesProvider",
+					"com.google.android.gsf.gservices.GservicesProvider"));
+
+		// Telephony providers
+		else if (packageName.equals("com.android.providers.telephony")) {
+			listHook.add(new XContentProvider(PrivacyManager.cMessages, "SmsProvider",
+					"com.android.providers.telephony.SmsProvider"));
+			listHook.add(new XContentProvider(PrivacyManager.cMessages, "MmsProvider",
+					"com.android.providers.telephony.MmsProvider"));
+			listHook.add(new XContentProvider(PrivacyManager.cMessages, "MmsSmsProvider",
+					"com.android.providers.telephony.MmsSmsProvider"));
+			listHook.add(new XContentProvider(PrivacyManager.cPhone, "TelephonyProvider",
+					"com.android.providers.telephony.TelephonyProvider"));
+		}
+
+		// User dictionary
+		else if (packageName.equals("com.android.providers.userdictionary"))
+			listHook.add(new XContentProvider(PrivacyManager.cDictionary, "UserDictionary",
+					"com.android.providers.userdictionary.UserDictionaryProvider"));
+
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

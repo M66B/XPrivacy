@@ -4,10 +4,14 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
@@ -18,12 +22,12 @@ public class XActivityThread extends XHook {
 
 	private String mActionName;
 
-	public XActivityThread(String methodName, String restrictionName, String actionName) {
+	private XActivityThread(String methodName, String restrictionName, String actionName) {
 		super(restrictionName, methodName, actionName);
 		mActionName = actionName;
 	}
 
-	public XActivityThread(String methodName, String restrictionName, String actionName, int sdk) {
+	private XActivityThread(String methodName, String restrictionName, String actionName, int sdk) {
 		super(restrictionName, methodName, actionName, sdk);
 		mActionName = actionName;
 	}
@@ -43,6 +47,36 @@ public class XActivityThread extends XHook {
 	// frameworks/base/core/java/android/app/ActivityThread.java
 
 	// @formatter:on
+
+	@SuppressLint("InlinedApi")
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+
+		// Intent receive: calling
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cPhone, Intent.ACTION_NEW_OUTGOING_CALL));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cPhone,
+				TelephonyManager.ACTION_PHONE_STATE_CHANGED));
+
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cCalling,
+				TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, Build.VERSION_CODES.JELLY_BEAN_MR2));
+
+		// Intent receive: NFC
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_NDEF_DISCOVERED));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TAG_DISCOVERED));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TECH_DISCOVERED));
+
+		// Intent receive: notifications
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+				NotificationListenerService.SERVICE_INTERFACE, Build.VERSION_CODES.JELLY_BEAN_MR2));
+
+		// Intent receive: package changes
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_ADDED));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REPLACED));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_RESTARTED));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REMOVED));
+
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

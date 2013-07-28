@@ -3,6 +3,8 @@ package biz.bokhorst.xprivacy;
 import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.os.Binder;
@@ -11,7 +13,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XClipboardManager extends XHook {
 
-	public XClipboardManager(String methodName, String restrictionName) {
+	private XClipboardManager(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -31,6 +33,15 @@ public class XClipboardManager extends XHook {
 	// http://developer.android.com/reference/android/content/ClipboardManager.html
 
 	// @formatter:on
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		String[] clips = new String[] { "addPrimaryClipChangedListener", "getPrimaryClip", "getPrimaryClipDescription",
+				"getText", "hasPrimaryClip", "hasText" };
+		for (String clip : clips)
+			listHook.add(new XClipboardManager(clip, PrivacyManager.cSystem));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

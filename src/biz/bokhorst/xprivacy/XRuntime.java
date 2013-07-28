@@ -1,6 +1,9 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Process;
 
 import android.text.TextUtils;
@@ -12,7 +15,7 @@ public class XRuntime extends XHook {
 
 	private String mCommand;
 
-	public XRuntime(String methodName, String restrictionName, String command) {
+	private XRuntime(String methodName, String restrictionName, String command) {
 		super(restrictionName, methodName, command);
 		mCommand = command;
 	}
@@ -36,6 +39,16 @@ public class XRuntime extends XHook {
 	// void loadLibrary(String libraryName, ClassLoader loader)
 	// libcore/luni/src/main/java/java/lang/Runtime.java
 	// http://developer.android.com/reference/java/lang/Runtime.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XRuntime("exec", PrivacyManager.cShell, "sh"));
+		listHook.add(new XRuntime("exec", PrivacyManager.cShell, "su"));
+		listHook.add(new XRuntime("exec", PrivacyManager.cShell, null));
+		listHook.add(new XRuntime("load", PrivacyManager.cShell, null));
+		listHook.add(new XRuntime("loadLibrary", PrivacyManager.cShell, null));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

@@ -18,6 +18,7 @@ import android.accounts.OnAccountsUpdateListener;
 import android.accounts.OperationCanceledException;
 import android.content.Context;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -26,11 +27,11 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XAccountManager extends XHook {
 	private static final Map<OnAccountsUpdateListener, XOnAccountsUpdateListener> mListener = new WeakHashMap<OnAccountsUpdateListener, XOnAccountsUpdateListener>();
 
-	public XAccountManager(String methodName, String restrictionName) {
+	private XAccountManager(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
-	public XAccountManager(String methodName, String restrictionName, int sdk) {
+	private XAccountManager(String methodName, String restrictionName, int sdk) {
 		super(restrictionName, methodName, null, sdk);
 	}
 
@@ -56,6 +57,22 @@ public class XAccountManager extends XHook {
 	// http://developer.android.com/reference/android/accounts/AccountManager.html
 
 	// @formatter:on
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XAccountManager("addOnAccountsUpdatedListener", PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager("blockingGetAuthToken", PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager("getAccounts", PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager("getAccountsByType", PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager("getAccountsByTypeAndFeatures", PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager("getAuthToken", PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager("getAuthTokenByFeatures", PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager("hasFeatures", PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager("removeOnAccountsUpdatedListener", PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager("getAccountsByTypeForPackage", PrivacyManager.cAccounts,
+				Build.VERSION_CODES.JELLY_BEAN_MR2));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

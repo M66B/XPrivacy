@@ -2,12 +2,14 @@ package biz.bokhorst.xprivacy;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XInetAddress extends XHook {
 
-	public XInetAddress(String methodName, String restrictionName, String specifier) {
+	private XInetAddress(String methodName, String restrictionName, String specifier) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -21,6 +23,14 @@ public class XInetAddress extends XHook {
 	// public static InetAddress getByName(String host)
 	// libcore/luni/src/main/java/java/net/InetAddress.java
 	// http://developer.android.com/reference/java/net/InetAddress.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		String[] addrs = new String[] { "getAllByName", "getByAddress", "getByName" };
+		for (String addr : addrs)
+			listHook.add(new XInetAddress(addr, PrivacyManager.cInternet, null));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

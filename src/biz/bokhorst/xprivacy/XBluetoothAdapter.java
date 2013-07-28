@@ -2,7 +2,9 @@ package biz.bokhorst.xprivacy;
 
 import biz.bokhorst.xprivacy.XHook;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import android.bluetooth.BluetoothDevice;
 import android.util.Log;
@@ -11,7 +13,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XBluetoothAdapter extends XHook {
 
-	public XBluetoothAdapter(String methodName, String restrictionName) {
+	private XBluetoothAdapter(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -23,6 +25,13 @@ public class XBluetoothAdapter extends XHook {
 	// public Set<BluetoothDevice> getBondedDevices()
 	// frameworks/base/core/java/android/bluetooth/BluetoothAdapter.java
 	// http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XBluetoothAdapter("getAddress", PrivacyManager.cNetwork));
+		listHook.add(new XBluetoothAdapter("getBondedDevices", PrivacyManager.cNetwork));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

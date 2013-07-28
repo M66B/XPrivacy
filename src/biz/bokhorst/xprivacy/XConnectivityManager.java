@@ -1,12 +1,15 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.net.NetworkInfo;
 import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XConnectivityManager extends XHook {
 
-	public XConnectivityManager(String methodName, String restrictionName) {
+	private XConnectivityManager(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -19,6 +22,14 @@ public class XConnectivityManager extends XHook {
 	// public NetworkInfo getNetworkInfo(int networkType)
 	// frameworks/base/core/java/android/net/ConnectivityManager.java
 	// http://developer.android.com/reference/android/net/ConnectivityManager.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		String[] connmgrs = new String[] { "getActiveNetworkInfo", "getAllNetworkInfo", "getNetworkInfo" };
+		for (String connmgr : connmgrs)
+			listHook.add(new XConnectivityManager(connmgr, PrivacyManager.cInternet));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

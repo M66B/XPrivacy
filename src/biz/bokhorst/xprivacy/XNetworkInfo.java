@@ -1,12 +1,15 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.net.NetworkInfo;
 import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XNetworkInfo extends XHook {
 
-	public XNetworkInfo(String methodName, String restrictionName) {
+	private XNetworkInfo(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -20,6 +23,14 @@ public class XNetworkInfo extends XHook {
 	// public boolean isConnectedOrConnecting()
 	// frameworks/base/core/java/android/net/NetworkInfo.java
 	// http://developer.android.com/reference/android/net/NetworkInfo.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		String[] ninfos = new String[] { "getDetailedState", "getState", "isConnected", "isConnectedOrConnecting" };
+		for (String ninfo : ninfos)
+			listHook.add(new XNetworkInfo(ninfo, PrivacyManager.cInternet));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

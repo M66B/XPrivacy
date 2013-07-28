@@ -4,6 +4,7 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Binder;
 import android.util.Log;
@@ -17,7 +18,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XApplicationPackageManager extends XHook {
 
-	public XApplicationPackageManager(String methodName, String restrictionName) {
+	private XApplicationPackageManager(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -38,6 +39,16 @@ public class XApplicationPackageManager extends XHook {
 	// frameworks/base/core/java/android/app/ApplicationPackageManager.java
 	
 	// @formatter:on
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getPreferredPackages",
+				"queryBroadcastReceivers", "queryContentProviders", "queryIntentActivities",
+				"queryIntentActivityOptions", "queryIntentServices" };
+		for (String am : ams)
+			listHook.add(new XApplicationPackageManager(am, PrivacyManager.cSystem));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.text.TextUtils;
@@ -12,7 +13,7 @@ public class XProcessBuilder extends XHook {
 
 	private String mCommand;
 
-	public XProcessBuilder(String methodName, String restrictionName, String command) {
+	private XProcessBuilder(String methodName, String restrictionName, String command) {
 		super(restrictionName, methodName, command);
 		mCommand = command;
 	}
@@ -24,6 +25,14 @@ public class XProcessBuilder extends XHook {
 	// public Process start()
 	// libcore/luni/src/main/java/java/lang/ProcessBuilder.java
 	// http://developer.android.com/reference/java/lang/ProcessBuilder.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XProcessBuilder("start", PrivacyManager.cShell, "sh"));
+		listHook.add(new XProcessBuilder("start", PrivacyManager.cShell, "su"));
+		listHook.add(new XProcessBuilder("start", PrivacyManager.cShell, null));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

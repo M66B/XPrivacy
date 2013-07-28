@@ -1,11 +1,14 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XCamera extends XHook {
 
-	public XCamera(String methodName, String restrictionName) {
+	private XCamera(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -24,6 +27,15 @@ public class XCamera extends XHook {
 	// http://developer.android.com/reference/android/hardware/Camera.html
 
 	// @formatter:on
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
+				"setOneShotPreviewCallback", "takePicture" };
+		for (String cam : cams)
+			listHook.add(new XCamera(cam, PrivacyManager.cMedia));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

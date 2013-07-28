@@ -1,5 +1,8 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 import android.os.Environment;
@@ -9,7 +12,7 @@ import biz.bokhorst.xprivacy.XHook;
 
 public class XEnvironment extends XHook {
 
-	public XEnvironment(String methodName, String restrictionName) {
+	private XEnvironment(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -20,6 +23,12 @@ public class XEnvironment extends XHook {
 	// public static String getExternalStorageState()
 	// frameworks/base/core/java/android/os/Environment.java
 	// http://developer.android.com/reference/android/os/Environment.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XEnvironment("getExternalStorageState", PrivacyManager.cStorage));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

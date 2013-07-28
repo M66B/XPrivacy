@@ -1,6 +1,8 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Process;
 
@@ -10,7 +12,7 @@ public class XIoBridge extends XHook {
 
 	private String mFileName;
 
-	public XIoBridge(String methodName, String restrictionName, String fileName) {
+	private XIoBridge(String methodName, String restrictionName, String fileName) {
 		super(restrictionName, methodName, fileName);
 		mFileName = fileName;
 	}
@@ -21,6 +23,12 @@ public class XIoBridge extends XHook {
 
 	// public static FileDescriptor open(String path, int flags)
 	// libcore/luni/src/main/java/libcore/io/IoBridge.java
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XIoBridge("open", PrivacyManager.cIdentification, "/proc"));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

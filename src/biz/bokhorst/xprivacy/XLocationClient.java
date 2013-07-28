@@ -1,5 +1,8 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
@@ -15,6 +18,12 @@ public class XLocationClient extends XHook {
 
 	// void connect()
 	// https://developer.android.com/reference/com/google/android/gms/location/LocationClient.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XLocationClient("connect", PrivacyManager.cLocation));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

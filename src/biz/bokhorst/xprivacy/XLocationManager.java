@@ -2,12 +2,14 @@ package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
 import android.content.Context;
 import android.location.Location;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.location.LocationListener;
@@ -18,16 +20,29 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 public class XLocationManager extends XHook {
 	private static final Map<LocationListener, XLocationListener> mListener = new WeakHashMap<LocationListener, XLocationListener>();
 
-	public XLocationManager(String methodName, String restrictionName) {
+	private XLocationManager(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
-	public XLocationManager(String methodName, String restrictionName, int sdk) {
+	private XLocationManager(String methodName, String restrictionName, int sdk) {
 		super(restrictionName, methodName, null, sdk);
 	}
 
 	public String getClassName() {
 		return "android.location.LocationManager";
+	}
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		String[] locs = new String[] { "addNmeaListener", "addProximityAlert", "getLastKnownLocation", "getProviders",
+				"isProviderEnabled", "removeUpdates", "requestLocationUpdates", "requestSingleUpdate",
+				"sendExtraCommand" };
+		for (String loc : locs)
+			listHook.add(new XLocationManager(loc, PrivacyManager.cLocation));
+		listHook.add(new XLocationManager("addGeofence", PrivacyManager.cLocation, Build.VERSION_CODES.JELLY_BEAN_MR1));
+		listHook.add(new XLocationManager("getLastLocation", PrivacyManager.cLocation,
+				Build.VERSION_CODES.JELLY_BEAN_MR1));
+		return listHook;
 	}
 
 	// @formatter:off

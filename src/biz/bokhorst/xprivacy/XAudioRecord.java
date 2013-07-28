@@ -1,11 +1,14 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XAudioRecord extends XHook {
 
-	public XAudioRecord(String methodName, String restrictionName) {
+	private XAudioRecord(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -17,6 +20,12 @@ public class XAudioRecord extends XHook {
 	// public void startRecording(MediaSyncEvent syncEvent)
 	// frameworks/base/media/java/android/media/AudioRecord.java
 	// http://developer.android.com/reference/android/media/AudioRecord.html
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XAudioRecord("startRecording", PrivacyManager.cMedia));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {

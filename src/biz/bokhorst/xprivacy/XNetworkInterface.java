@@ -18,7 +18,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XNetworkInterface extends XHook {
 
-	public XNetworkInterface(String methodName, String restrictionName) {
+	private XNetworkInterface(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
 	}
 
@@ -42,6 +42,17 @@ public class XNetworkInterface extends XHook {
 	// libcore/luni/src/main/java/java/net/InetAddress.java
 	// libcore/luni/src/main/java/java/net/Inet4Address.java
 	// libcore/luni/src/main/java/java/net/InterfaceAddress.java
+
+	public static List<XHook> getInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };
+		for (String net : nets)
+			listHook.add(new XNetworkInterface(net, PrivacyManager.cNetwork));
+		String[] inets = new String[] { "getByInetAddress", "getByName", "getNetworkInterfaces" };
+		for (String inet : inets)
+			listHook.add(new XNetworkInterface(inet, PrivacyManager.cInternet));
+		return listHook;
+	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
