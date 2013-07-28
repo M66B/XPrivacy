@@ -541,7 +541,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Updated Catalan translation
 
 **Version 1.7.22 BETA!**
 
