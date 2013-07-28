@@ -17,9 +17,11 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XNetworkInterface extends XHook {
+	private Methods mMethod;
 
-	private XNetworkInterface(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XNetworkInterface(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -43,14 +45,18 @@ public class XNetworkInterface extends XHook {
 	// libcore/luni/src/main/java/java/net/Inet4Address.java
 	// libcore/luni/src/main/java/java/net/InterfaceAddress.java
 
+	private enum Methods {
+		getByInetAddress, getByName, getNetworkInterfaces, getHardwareAddress, getInetAddresses, getInterfaceAddresses
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		String[] inets = new String[] { "getByInetAddress", "getByName", "getNetworkInterfaces" };
-		for (String inet : inets)
-			listHook.add(new XNetworkInterface(inet, PrivacyManager.cInternet));
-		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };
-		for (String net : nets)
-			listHook.add(new XNetworkInterface(net, PrivacyManager.cNetwork));
+		listHook.add(new XNetworkInterface(Methods.getByInetAddress, PrivacyManager.cInternet));
+		listHook.add(new XNetworkInterface(Methods.getByName, PrivacyManager.cInternet));
+		listHook.add(new XNetworkInterface(Methods.getNetworkInterfaces, PrivacyManager.cInternet));
+		listHook.add(new XNetworkInterface(Methods.getHardwareAddress, PrivacyManager.cNetwork));
+		listHook.add(new XNetworkInterface(Methods.getInetAddresses, PrivacyManager.cNetwork));
+		listHook.add(new XNetworkInterface(Methods.getInterfaceAddresses, PrivacyManager.cNetwork));
 		return listHook;
 	}
 
@@ -61,26 +67,25 @@ public class XNetworkInterface extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
 		if (getRestrictionName().equals(PrivacyManager.cInternet)) {
 			// Internet: fake offline state
-			if (methodName.equals("getByInetAddress") || methodName.equals("getByName")
-					|| methodName.equals("getNetworkInterfaces")) {
+			if (mMethod == Methods.getByInetAddress || mMethod == Methods.getByName
+					|| mMethod == Methods.getNetworkInterfaces) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(null);
 			} else
-				Util.log(this, Log.WARN, "Unknown method=" + methodName);
+				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 		} else if (getRestrictionName().equals(PrivacyManager.cNetwork)) {
 			// Network
 			NetworkInterface ni = (NetworkInterface) param.thisObject;
 			if (!ni.isLoopback())
 				if (param.getResult() != null && isRestricted(param))
-					if (methodName.equals("getHardwareAddress")) {
+					if (mMethod == Methods.getHardwareAddress) {
 						String mac = (String) PrivacyManager.getDefacedProp("MAC");
 						long lMac = Long.parseLong(mac.replace(":", ""), 16);
 						byte[] address = ByteBuffer.allocate(8).putLong(lMac).array();
 						param.setResult(address);
-					} else if (methodName.equals("getInetAddresses")) {
+					} else if (mMethod == Methods.getInetAddresses) {
 						@SuppressWarnings("unchecked")
 						Enumeration<InetAddress> addresses = (Enumeration<InetAddress>) param.getResult();
 						List<InetAddress> listAddress = new ArrayList<InetAddress>();
@@ -90,7 +95,7 @@ public class XNetworkInterface extends XHook {
 							else
 								listAddress.add((InetAddress) PrivacyManager.getDefacedProp("InetAddress"));
 						param.setResult(Collections.enumeration(listAddress));
-					} else if (methodName.equals("getInterfaceAddresses")) {
+					} else if (mMethod == Methods.getInterfaceAddresses) {
 						@SuppressWarnings("unchecked")
 						List<InterfaceAddress> listAddress = (List<InterfaceAddress>) param.getResult();
 						for (InterfaceAddress address : listAddress) {
@@ -111,7 +116,7 @@ public class XNetworkInterface extends XHook {
 							}
 						}
 					} else
-						Util.log(this, Log.WARN, "Unknown method=" + methodName);
+						Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 		}
 	}
 }
