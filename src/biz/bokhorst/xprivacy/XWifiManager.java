@@ -16,9 +16,11 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 @SuppressWarnings("deprecation")
 public class XWifiManager extends XHook {
+	private Methods mMethod;
 
-	private XWifiManager(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XWifiManager(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -35,15 +37,19 @@ public class XWifiManager extends XHook {
 	// frameworks/base/core/java/android/net/DhcpInfo.java
 	// http://developer.android.com/reference/android/net/wifi/WifiManager.html
 
+	private enum Methods {
+		getConfiguredNetworks, getConnectionInfo, getDhcpInfo, getScanResults, getWifiApConfiguration
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		String[] wifis = new String[] { "getConfiguredNetworks", "getConnectionInfo", "getDhcpInfo", "getScanResults",
-				"getWifiApConfiguration" };
-		for (String wifi : wifis)
+		for (Methods wifi : Methods.values())
 			listHook.add(new XWifiManager(wifi, PrivacyManager.cNetwork));
-		listHook.add(new XWifiManager("getScanResults", PrivacyManager.cLocation));
+
+		listHook.add(new XWifiManager(Methods.getScanResults, PrivacyManager.cLocation));
+
 		// This is to fake "offline", no permission required
-		listHook.add(new XWifiManager("getConnectionInfo", PrivacyManager.cInternet));
+		listHook.add(new XWifiManager(Methods.getConnectionInfo, PrivacyManager.cInternet));
 		return listHook;
 	}
 
@@ -54,11 +60,10 @@ public class XWifiManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("getConfiguredNetworks")) {
+		if (mMethod == Methods.getConfiguredNetworks) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<WifiConfiguration>());
-		} else if (methodName.equals("getConnectionInfo")) {
+		} else if (mMethod == Methods.getConnectionInfo) {
 			if (param.getResult() != null && isRestricted(param)) {
 				WifiInfo wInfo = (WifiInfo) param.getResult();
 				if (getRestrictionName().equals(PrivacyManager.cInternet)) {
@@ -112,7 +117,7 @@ public class XWifiManager extends XHook {
 					}
 				}
 			}
-		} else if (param.method.getName().equals("getDhcpInfo")) {
+		} else if (mMethod == Methods.getDhcpInfo) {
 			if (param.getResult() != null && isRestricted(param)) {
 				DhcpInfo dInfo = (DhcpInfo) param.getResult();
 				dInfo.ipAddress = (Integer) PrivacyManager.getDefacedProp("IPInt");
@@ -121,10 +126,10 @@ public class XWifiManager extends XHook {
 				dInfo.dns2 = (Integer) PrivacyManager.getDefacedProp("IPInt");
 				dInfo.serverAddress = (Integer) PrivacyManager.getDefacedProp("IPInt");
 			}
-		} else if (methodName.equals("getScanResults")) {
+		} else if (mMethod == Methods.getScanResults) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ScanResult>());
-		} else if (methodName.equals("getWifiApConfiguration")) {
+		} else if (mMethod == Methods.getWifiApConfiguration) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(null);
 		} else
