@@ -69,11 +69,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XClipboardManager.getInstances());
 
 		// Connectivity manager
-		// This is to fake "offline", no permission required
 		hookAll(XConnectivityManager.getInstances());
 
 		// Environment
-		// This is to fake "unmounted", no permission required
 		hookAll(XEnvironment.getInstances());
 
 		// InetAddress
@@ -89,7 +87,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XMediaRecorder.getInstances());
 
 		// Network info
-		// This is to fake "offline", no permission required
 		hookAll(XNetworkInfo.getInstances());
 
 		// Network interface
