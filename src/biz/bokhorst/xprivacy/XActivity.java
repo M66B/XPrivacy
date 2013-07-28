@@ -13,16 +13,18 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivity extends XHook {
-
+	private Methods mMethod;
 	private String mActionName;
 
-	private XActivity(String methodName, String restrictionName, String actionName) {
-		super(restrictionName, methodName, actionName);
+	private XActivity(Methods method, String restrictionName, String actionName) {
+		super(restrictionName, method.name(), actionName);
+		mMethod = method;
 		mActionName = actionName;
 	}
 
-	private XActivity(String methodName, String restrictionName, String actionName, int sdk) {
-		super(restrictionName, methodName, actionName, sdk);
+	private XActivity(Methods method, String restrictionName, String actionName, int sdk) {
+		super(restrictionName, method.name(), actionName, sdk);
+		mMethod = method;
 		mActionName = actionName;
 	}
 
@@ -48,25 +50,29 @@ public class XActivity extends XHook {
 
 	// @formatter:on
 
+	private enum Methods {
+		startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded
+	};
+
 	@SuppressLint("InlinedApi")
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		String[] startActivities = new String[] { "startActivities", "startActivity", "startActivityForResult",
-				"startActivityFromChild", "startActivityFromFragment", "startActivityIfNeeded" };
 
 		// Intent send: browser
-		for (String activity : startActivities)
+		for (Methods activity : Methods.values())
 			listHook.add(new XActivity(activity, PrivacyManager.cView, Intent.ACTION_VIEW));
 
 		// Intent send: call
-		for (String activity : startActivities)
+		for (Methods activity : Methods.values())
 			listHook.add(new XActivity(activity, PrivacyManager.cCalling, Intent.ACTION_CALL));
 
 		// Intent send: media
-		listHook.add(new XActivity("startActivityForResult", PrivacyManager.cMedia, MediaStore.ACTION_IMAGE_CAPTURE));
-		listHook.add(new XActivity("startActivityForResult", PrivacyManager.cMedia,
-				MediaStore.ACTION_IMAGE_CAPTURE_SECURE, Build.VERSION_CODES.JELLY_BEAN_MR1));
-		listHook.add(new XActivity("startActivityForResult", PrivacyManager.cMedia, MediaStore.ACTION_VIDEO_CAPTURE));
+		for (Methods activity : Methods.values()) {
+			listHook.add(new XActivity(activity, PrivacyManager.cMedia, MediaStore.ACTION_IMAGE_CAPTURE));
+			listHook.add(new XActivity(activity, PrivacyManager.cMedia, MediaStore.ACTION_IMAGE_CAPTURE_SECURE,
+					Build.VERSION_CODES.JELLY_BEAN_MR1));
+			listHook.add(new XActivity(activity, PrivacyManager.cMedia, MediaStore.ACTION_VIDEO_CAPTURE));
+		}
 
 		return listHook;
 	}
@@ -76,19 +82,18 @@ public class XActivity extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		// Get intent(s)
 		Intent[] intents = null;
-		String methodName = param.method.getName();
-		if (methodName.equals("startActivity") || methodName.equals("startActivityForResult")
-				|| methodName.equals("startActivityIfNeeded")) {
+		if (mMethod == Methods.startActivity || mMethod == Methods.startActivityForResult
+				|| mMethod == Methods.startActivityIfNeeded) {
 			if (param.args.length > 0 && param.args[0] != null)
 				intents = new Intent[] { (Intent) param.args[0] };
-		} else if (methodName.equals("startActivityFromChild") || methodName.equals("startActivityFromFragment")) {
+		} else if (mMethod == Methods.startActivityFromChild || mMethod == Methods.startActivityFromFragment) {
 			if (param.args.length > 1 && param.args[1] != null)
 				intents = new Intent[] { (Intent) param.args[1] };
-		} else if (methodName.equals("startActivities")) {
+		} else if (mMethod == Methods.startActivities) {
 			if (param.args.length > 0 && param.args[0] != null)
 				intents = (Intent[]) param.args[0];
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 
 		// Process intent(s)
 		if (intents != null)
@@ -110,7 +115,7 @@ public class XActivity extends XHook {
 						restricted = isRestricted(param, mActionName);
 
 					if (restricted) {
-						if (methodName.equals("startActivityIfNeeded"))
+						if (mMethod == Methods.startActivityIfNeeded)
 							param.setResult(true);
 						else
 							param.setResult(null);
