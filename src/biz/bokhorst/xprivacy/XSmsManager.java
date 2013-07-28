@@ -9,9 +9,11 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSmsManager extends XHook {
+	private Methods mMethod;
 
-	private XSmsManager(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XSmsManager(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -29,33 +31,35 @@ public class XSmsManager extends XHook {
 
 	// @formatter:on
 
+	private enum Methods {
+		getAllMessagesFromIcc, sendDataMessage, sendMultipartTextMessage, sendTextMessage
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XSmsManager("getAllMessagesFromIcc", PrivacyManager.cMessages));
-		String[] smses = new String[] { "sendDataMessage", "sendMultipartTextMessage", "sendTextMessage" };
-		for (String sms : smses)
-			listHook.add(new XSmsManager(sms, PrivacyManager.cCalling));
+		listHook.add(new XSmsManager(Methods.getAllMessagesFromIcc, PrivacyManager.cMessages));
+		listHook.add(new XSmsManager(Methods.sendDataMessage, PrivacyManager.cCalling));
+		listHook.add(new XSmsManager(Methods.sendMultipartTextMessage, PrivacyManager.cCalling));
+		listHook.add(new XSmsManager(Methods.sendTextMessage, PrivacyManager.cCalling));
 		return listHook;
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("sendDataMessage") || methodName.equals("sendMultipartTextMessage")
-				|| methodName.equals("sendTextMessage"))
+		if (mMethod == Methods.sendDataMessage || mMethod == Methods.sendMultipartTextMessage
+				|| mMethod == Methods.sendTextMessage)
 			if (isRestricted(param))
 				param.setResult(null);
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (!methodName.equals("sendDataMessage") && !methodName.equals("sendMultipartTextMessage")
-				&& !methodName.equals("sendTextMessage"))
-			if (methodName.equals("getAllMessagesFromIcc")) {
+		if (mMethod != Methods.sendDataMessage && mMethod != Methods.sendMultipartTextMessage
+				&& mMethod != Methods.sendTextMessage)
+			if (mMethod == Methods.getAllMessagesFromIcc) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(new ArrayList<SmsMessage>());
 			} else
-				Util.log(this, Log.WARN, "Unknown method=" + methodName);
+				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 }
