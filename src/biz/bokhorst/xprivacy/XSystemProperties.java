@@ -7,11 +7,12 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSystemProperties extends XHook {
-
+	private Methods mMethod;
 	private String mPropertyName;
 
-	private XSystemProperties(String methodName, String restrictionName, String propertyName) {
-		super(restrictionName, methodName, propertyName);
+	private XSystemProperties(Methods method, String restrictionName, String propertyName) {
+		super(restrictionName, method.name(), propertyName);
+		mMethod = method;
 		mPropertyName = propertyName;
 	}
 
@@ -26,12 +27,15 @@ public class XSystemProperties extends XHook {
 	// public static long getLong(String key, long def)
 	// frameworks/base/core/java/android/os/SystemProperties.java
 
+	private enum Methods {
+		get, getBoolean, getInt, getLong
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		String[] props = new String[] { "%imei", "%hostname", "%serialno", "%macaddr" };
-		String[] getters = new String[] { "get", "getBoolean", "getInt", "getLong" };
 		for (String prop : props)
-			for (String getter : getters)
+			for (Methods getter : Methods.values())
 				listHook.add(new XSystemProperties(getter, PrivacyManager.cIdentification, prop));
 		return listHook;
 	}
@@ -46,7 +50,7 @@ public class XSystemProperties extends XHook {
 		String key = (param.args.length > 0 ? (String) param.args[0] : null);
 		if (key != null)
 			if (mPropertyName.startsWith("%") ? key.contains(mPropertyName.substring(1)) : key.equals(mPropertyName))
-				if (param.method.getName().equals("get")) {
+				if (mMethod == Methods.get) {
 					if (param.getResult() != null && isRestricted(param, mPropertyName))
 						param.setResult(PrivacyManager.getDefacedProp(mPropertyName));
 				} else if (param.args.length > 1) {
