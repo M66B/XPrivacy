@@ -25,14 +25,17 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XAccountManager extends XHook {
+	private Methods mMethod;
 	private static final Map<OnAccountsUpdateListener, XOnAccountsUpdateListener> mListener = new WeakHashMap<OnAccountsUpdateListener, XOnAccountsUpdateListener>();
 
-	private XAccountManager(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XAccountManager(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
-	private XAccountManager(String methodName, String restrictionName, int sdk) {
-		super(restrictionName, methodName, null, sdk);
+	private XAccountManager(Methods method, String restrictionName, int sdk) {
+		super(restrictionName, method.name(), null, sdk);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -58,26 +61,29 @@ public class XAccountManager extends XHook {
 
 	// @formatter:on
 
+	private enum Methods {
+		addOnAccountsUpdatedListener, blockingGetAuthToken, getAccounts, getAccountsByType, getAccountsByTypeForPackage, getAccountsByTypeAndFeatures, getAuthToken, getAuthTokenByFeatures, hasFeatures, removeOnAccountsUpdatedListener
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XAccountManager("addOnAccountsUpdatedListener", PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager("blockingGetAuthToken", PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager("getAccounts", PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager("getAccountsByType", PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager("getAccountsByTypeForPackage", PrivacyManager.cAccounts,
+		listHook.add(new XAccountManager(Methods.addOnAccountsUpdatedListener, PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager(Methods.blockingGetAuthToken, PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager(Methods.getAccounts, PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager(Methods.getAccountsByType, PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager(Methods.getAccountsByTypeForPackage, PrivacyManager.cAccounts,
 				Build.VERSION_CODES.JELLY_BEAN_MR2));
-		listHook.add(new XAccountManager("getAccountsByTypeAndFeatures", PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager("getAuthToken", PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager("getAuthTokenByFeatures", PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager("hasFeatures", PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager("removeOnAccountsUpdatedListener", PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager(Methods.getAccountsByTypeAndFeatures, PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager(Methods.getAuthToken, PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager(Methods.getAuthTokenByFeatures, PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager(Methods.hasFeatures, PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, PrivacyManager.cAccounts));
 		return listHook;
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("addOnAccountsUpdatedListener")) {
+		if (mMethod == Methods.addOnAccountsUpdatedListener) {
 			if (param.args.length > 0 && param.args[0] != null)
 				if (isRestricted(param)) {
 					OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
@@ -89,7 +95,7 @@ public class XAccountManager extends XHook {
 					}
 					param.args[0] = xlistener;
 				}
-		} else if (methodName.equals("removeOnAccountsUpdatedListener")) {
+		} else if (mMethod == Methods.removeOnAccountsUpdatedListener) {
 			if (param.args.length > 0 && param.args[0] != null)
 				if (isRestricted(param)) {
 					synchronized (mListener) {
@@ -109,33 +115,32 @@ public class XAccountManager extends XHook {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (!methodName.equals("addOnAccountsUpdatedListener") && !methodName.equals("removeOnAccountsUpdatedListener")) {
+		if (mMethod != Methods.addOnAccountsUpdatedListener && mMethod != Methods.removeOnAccountsUpdatedListener) {
 			int uid = Binder.getCallingUid();
-			if (methodName.equals("blockingGetAuthToken")) {
+			if (mMethod == Methods.blockingGetAuthToken) {
 				if (param.getResult() != null && isRestricted(param))
 					if (param.args.length > 0 && param.args[0] != null) {
 						Account account = (Account) param.args[0];
 						if (!isAccountAllowed(account, uid))
 							param.setResult(null);
 					}
-			} else if (methodName.equals("getAccounts") || methodName.equals("getAccountsByType")
-					|| methodName.equals("getAccountsByTypeForPackage")) {
+			} else if (mMethod == Methods.getAccounts || mMethod == Methods.getAccountsByType
+					|| mMethod == Methods.getAccountsByTypeForPackage) {
 				if (param.getResult() != null && isRestricted(param)) {
 					Account[] accounts = (Account[]) param.getResult();
 					param.setResult(filterAccounts(accounts, uid));
 				}
-			} else if (methodName.equals("getAccountsByTypeAndFeatures")) {
+			} else if (mMethod == Methods.getAccountsByTypeAndFeatures) {
 				if (param.getResult() != null && isRestricted(param)) {
 					AccountManagerFuture<Account[]> future = (AccountManagerFuture<Account[]>) param.getResult();
 					param.setResult(new XFutureAccount(future, uid));
 				}
-			} else if (methodName.equals("getAuthToken") || methodName.equals("getAuthTokenByFeatures")) {
+			} else if (mMethod == Methods.getAuthToken || mMethod == Methods.getAuthTokenByFeatures) {
 				if (param.getResult() != null && isRestricted(param)) {
 					AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
 					param.setResult(new XFutureBundle(future, uid));
 				}
-			} else if (methodName.equals("hasFeatures")) {
+			} else if (mMethod == Methods.hasFeatures) {
 				if (param.getResult() != null && isRestricted(param))
 					if (param.args.length > 0 && param.args[0] != null) {
 						Account account = (Account) param.args[0];
@@ -143,7 +148,7 @@ public class XAccountManager extends XHook {
 							param.setResult(new XFutureBoolean());
 					}
 			} else
-				Util.log(this, Log.WARN, "Unknown method=" + methodName);
+				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 		}
 	}
 
