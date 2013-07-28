@@ -192,15 +192,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 				@Override
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-					// Throw any exception
-					param.getResultOrThrowable();
-					try {
-						hook.after(param);
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-						report(ex);
-						throw ex;
-					}
+					if (!param.hasThrowable())
+						try {
+							hook.after(param);
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+							report(ex);
+							throw ex;
+						}
 				}
 			};
 
