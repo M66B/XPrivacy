@@ -17,9 +17,11 @@ import android.content.pm.ResolveInfo;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XApplicationPackageManager extends XHook {
+	private Methods mMethod;
 
-	private XApplicationPackageManager(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XApplicationPackageManager(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -40,12 +42,13 @@ public class XApplicationPackageManager extends XHook {
 	
 	// @formatter:on
 
+	private enum Methods {
+		getInstalledApplications, getInstalledPackages, getPreferredPackages, queryBroadcastReceivers, queryContentProviders, queryIntentActivities, queryIntentActivityOptions, queryIntentServices
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		String[] ams = new String[] { "getInstalledApplications", "getInstalledPackages", "getPreferredPackages",
-				"queryBroadcastReceivers", "queryContentProviders", "queryIntentActivities",
-				"queryIntentActivityOptions", "queryIntentServices" };
-		for (String am : ams)
+		for (Methods am : Methods.values())
 			listHook.add(new XApplicationPackageManager(am, PrivacyManager.cSystem));
 		return listHook;
 	}
@@ -57,22 +60,21 @@ public class XApplicationPackageManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("getInstalledApplications")) {
+		if (mMethod == Methods.getInstalledApplications) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ApplicationInfo>());
-		} else if (methodName.equals("getInstalledPackages") || methodName.equals("getPreferredPackages")) {
+		} else if (mMethod == Methods.getInstalledPackages || mMethod == Methods.getPreferredPackages) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<PackageInfo>());
-		} else if (methodName.equals("queryBroadcastReceivers") || methodName.equals("queryIntentActivities")
-				|| methodName.equals("queryIntentActivityOptions") || methodName.equals("queryIntentServices")) {
+		} else if (mMethod == Methods.queryBroadcastReceivers || mMethod == Methods.queryIntentActivities
+				|| mMethod == Methods.queryIntentActivityOptions || mMethod == Methods.queryIntentServices) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ResolveInfo>());
-		} else if (methodName.equals("queryContentProviders")) {
+		} else if (mMethod == Methods.queryContentProviders) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ProviderInfo>());
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override
