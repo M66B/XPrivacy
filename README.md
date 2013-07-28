@@ -542,6 +542,7 @@ How to get beta releases:
 **Next release**
 
 * Always show categories with data usage (even without permssions)
+* Updated Slovak translation
 
 **Version 1.7.21 BETA!**
 
