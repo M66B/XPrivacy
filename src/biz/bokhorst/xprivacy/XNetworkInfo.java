@@ -8,9 +8,11 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XNetworkInfo extends XHook {
+	private Methods mMethod;
 
-	private XNetworkInfo(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XNetworkInfo(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -24,10 +26,13 @@ public class XNetworkInfo extends XHook {
 	// frameworks/base/core/java/android/net/NetworkInfo.java
 	// http://developer.android.com/reference/android/net/NetworkInfo.html
 
+	private enum Methods {
+		getDetailedState, getState, isConnected, isConnectedOrConnecting
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		String[] ninfos = new String[] { "getDetailedState", "getState", "isConnected", "isConnectedOrConnecting" };
-		for (String ninfo : ninfos)
+		for (Methods ninfo : Methods.values())
 			listHook.add(new XNetworkInfo(ninfo, PrivacyManager.cInternet));
 		return listHook;
 	}
@@ -39,18 +44,16 @@ public class XNetworkInfo extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("getDetailedState")) {
+		if (mMethod == Methods.getDetailedState) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(NetworkInfo.DetailedState.DISCONNECTED);
-		} else if (methodName.equals("getState")) {
+		} else if (mMethod == Methods.getState) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(NetworkInfo.State.DISCONNECTED);
-		} else if (methodName.equals("isConnected") || methodName.equals("isConnectedOrConnecting")) {
+		} else if (mMethod == Methods.isConnected || mMethod == Methods.isConnectedOrConnecting) {
 			if (isRestricted(param))
 				param.setResult(false);
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
-
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 }
