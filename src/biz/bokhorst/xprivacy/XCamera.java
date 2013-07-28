@@ -7,9 +7,11 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XCamera extends XHook {
+	private Methods mMethod;
 
-	private XCamera(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XCamera(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -28,26 +30,27 @@ public class XCamera extends XHook {
 
 	// @formatter:on
 
+	private enum Methods {
+		setPreviewCallback, setPreviewCallbackWithBuffer, setOneShotPreviewCallback, takePicture
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		String[] cams = new String[] { "setPreviewCallback", "setPreviewCallbackWithBuffer",
-				"setOneShotPreviewCallback", "takePicture" };
-		for (String cam : cams)
+		for (Methods cam : Methods.values())
 			listHook.add(new XCamera(cam, PrivacyManager.cMedia));
 		return listHook;
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("setPreviewCallback") || methodName.equals("setPreviewCallbackWithBuffer")
-				|| methodName.equals("setOneShotPreviewCallback") || methodName.equals("takePicture")) {
+		if (mMethod == Methods.setPreviewCallback || mMethod == Methods.setPreviewCallbackWithBuffer
+				|| mMethod == Methods.setOneShotPreviewCallback || mMethod == Methods.takePicture) {
 			if (isRestricted(param)) {
 				param.setResult(null);
 				notifyUser(this.getClass().getSimpleName());
 			}
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override
