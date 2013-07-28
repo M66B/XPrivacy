@@ -9,9 +9,11 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XGoogleAuthUtil extends XHook {
+	private Methods mMethod;
 
-	private XGoogleAuthUtil(String methodName, String restrictionName, String specifier) {
-		super(restrictionName, methodName, specifier);
+	private XGoogleAuthUtil(Methods method, String restrictionName, String specifier) {
+		super(restrictionName, method.name(), specifier);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -29,10 +31,14 @@ public class XGoogleAuthUtil extends XHook {
 
 	// @formatter:on
 
+	private enum Methods {
+		getToken, getTokenWithNotification
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XGoogleAuthUtil("getToken", PrivacyManager.cAccounts, "getTokenGoogle"));
-		listHook.add(new XGoogleAuthUtil("getTokenWithNotification", PrivacyManager.cAccounts,
+		listHook.add(new XGoogleAuthUtil(Methods.getToken, PrivacyManager.cAccounts, "getTokenGoogle"));
+		listHook.add(new XGoogleAuthUtil(Methods.getTokenWithNotification, PrivacyManager.cAccounts,
 				"getTokenWithNotificationGoogle"));
 		return listHook;
 	}
@@ -44,11 +50,10 @@ public class XGoogleAuthUtil extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("getToken") || methodName.equals("getTokenWithNotification")) {
+		if (mMethod == Methods.getToken || mMethod == Methods.getTokenWithNotification) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setThrowable(new IOException());
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 }
