@@ -541,7 +541,12 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.7.22 BETA!**
+
 * Always show categories with data usage (even without permssions)
+* Performance improvements (enum hooks)
 * Updated Slovak translation
 
 **Version 1.7.21 BETA!**
