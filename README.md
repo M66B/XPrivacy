@@ -541,6 +541,11 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.7.21 BETA!**
+
+* Show permissions for indivudual functions
 * Updated Portuguese translation
 
 **Version 1.7.20 BETA!**
