@@ -156,11 +156,11 @@ public class PrivacyProvider extends ContentProvider {
 					cursor.addRow(new Object[] { eUid, eRestrictionName, null, true });
 
 					// Exceptions
-					for (String eMethodName : PrivacyManager.getMethods(eRestrictionName)) {
-						boolean allowed = prefs
-								.getBoolean(getExceptionPref(eUid, eRestrictionName, eMethodName), false);
-						if (allowed || PrivacyManager.isDangerousMethod(eRestrictionName, eMethodName))
-							cursor.addRow(new Object[] { eUid, eRestrictionName, eMethodName, !allowed });
+					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
+						boolean allowed = prefs.getBoolean(
+								getExceptionPref(eUid, eRestrictionName, md.getMethodName()), false);
+						if (allowed || PrivacyManager.isDangerousMethod(eRestrictionName, md.getMethodName()))
+							cursor.addRow(new Object[] { eUid, eRestrictionName, md.getMethodName(), !allowed });
 					}
 				}
 			}
@@ -206,8 +206,8 @@ public class PrivacyProvider extends ContentProvider {
 			// Selected restrictions/methods
 			for (String restrictionName : listRestriction)
 				if (methodName == null)
-					for (String rMethodName : PrivacyManager.getMethods(restrictionName))
-						getUsage(uid, restrictionName, rMethodName, cursor);
+					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName))
+						getUsage(uid, restrictionName, md.getMethodName(), cursor);
 				else
 					getUsage(uid, restrictionName, methodName, cursor);
 		}
@@ -331,9 +331,9 @@ public class PrivacyProvider extends ContentProvider {
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
 			SharedPreferences.Editor editor = prefs.edit();
 			for (String restrictionName : PrivacyManager.getRestrictions(true)) {
-				for (String methodName : PrivacyManager.getMethods(restrictionName)) {
+				for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
 					rows++;
-					editor.remove(getExceptionPref(uid, restrictionName, methodName));
+					editor.remove(getExceptionPref(uid, restrictionName, md.getMethodName()));
 				}
 			}
 			editor.apply();

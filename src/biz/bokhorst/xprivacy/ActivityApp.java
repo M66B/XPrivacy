@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import biz.bokhorst.xprivacy.PrivacyManager.MethodDescription;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -408,24 +410,26 @@ public class ActivityApp extends Activity {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View row = inflater.inflate(R.layout.restrictionchild, parent, false);
 			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
+			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 			final CheckedTextView ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
-			final String methodName = (String) getChild(groupPosition, childPosition);
-			long lastUsage = PrivacyManager.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, methodName);
+			final MethodDescription md = (MethodDescription) getChild(groupPosition, childPosition);
+			long lastUsage = PrivacyManager.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName,
+					md.getMethodName());
 
 			// Set background color
-			if (PrivacyManager.isDangerousMethod(restrictionName, methodName))
+			if (PrivacyManager.isDangerousMethod(restrictionName, md.getMethodName()))
 				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 
 			// Display method name
 			if (lastUsage == 0)
-				ctvMethodName.setText(methodName);
+				ctvMethodName.setText(md.getMethodName());
 			else {
 				Date date = new Date(lastUsage);
 				SimpleDateFormat format = new SimpleDateFormat("dd/HH:mm", Locale.ROOT);
-				ctvMethodName.setText(String.format("%s %s", methodName, format.format(date)));
+				ctvMethodName.setText(String.format("%s %s", md.getMethodName(), format.format(date)));
 			}
 
 			boolean parentRestricted = PrivacyManager.getRestricted(null, row.getContext(), mAppInfo.getUid(),
@@ -438,9 +442,13 @@ public class ActivityApp extends Activity {
 			else
 				ctvMethodName.setTypeface(null, Typeface.BOLD_ITALIC);
 
+			// Display if permissions
+			if (!PrivacyManager.hasPermission(row.getContext(), mAppInfo.getPackageName(), md))
+				imgGranted.setVisibility(View.INVISIBLE);
+
 			// Display restriction
 			boolean restricted = PrivacyManager.getRestricted(null, row.getContext(), mAppInfo.getUid(),
-					restrictionName, methodName, false, false);
+					restrictionName, md.getMethodName(), false, false);
 			ctvMethodName.setChecked(restricted);
 
 			// Listen for restriction changes
@@ -448,11 +456,11 @@ public class ActivityApp extends Activity {
 				@Override
 				public void onClick(View view) {
 					boolean restricted = PrivacyManager.getRestricted(null, view.getContext(), mAppInfo.getUid(),
-							restrictionName, methodName, false, false);
+							restrictionName, md.getMethodName(), false, false);
 					restricted = !restricted;
 					ctvMethodName.setChecked(restricted);
 					PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName,
-							methodName, restricted);
+							md.getMethodName(), restricted);
 				}
 			});
 

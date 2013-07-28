@@ -19,6 +19,13 @@
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/help_used"
             android:src="?attr/icon_used" />
+
+        <ImageView
+            android:id="@+id/imgGranted"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:contentDescription="@string/help_granted"
+            android:src="?attr/icon_granted" />
     </LinearLayout>
 
     <CheckedTextView

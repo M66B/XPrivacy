@@ -45,12 +45,12 @@ public class XNetworkInterface extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };
-		for (String net : nets)
-			listHook.add(new XNetworkInterface(net, PrivacyManager.cNetwork));
 		String[] inets = new String[] { "getByInetAddress", "getByName", "getNetworkInterfaces" };
 		for (String inet : inets)
 			listHook.add(new XNetworkInterface(inet, PrivacyManager.cInternet));
+		String[] nets = new String[] { "getHardwareAddress", "getInetAddresses", "getInterfaceAddresses" };
+		for (String net : nets)
+			listHook.add(new XNetworkInterface(net, PrivacyManager.cNetwork));
 		return listHook;
 	}
 

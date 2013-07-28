@@ -36,7 +36,6 @@ import android.os.Environment;
 import android.os.Process;
 import android.util.Log;
 
-@SuppressLint("InlinedApi")
 public class PrivacyManager {
 
 	// This should correspond with restrict_<name> in strings.xml
@@ -91,8 +90,7 @@ public class PrivacyManager {
 	private final static String cDeface = "DEFACE";
 	private final static int cCacheTimeoutMs = 15 * 1000;
 
-	private static Map<String, List<String>> mPermissions = new LinkedHashMap<String, List<String>>();
-	private static Map<String, List<String>> mMethods = new LinkedHashMap<String, List<String>>();
+	private static Map<String, List<MethodDescription>> mMethod = new LinkedHashMap<String, List<MethodDescription>>();
 	private static Map<String, CRestriction> mRestrictionCache = new HashMap<String, CRestriction>();
 	private static Map<String, CSetting> mSettingsCache = new HashMap<String, CSetting>();
 	private static Map<UsageData, UsageData> mUsageQueue = new LinkedHashMap<UsageData, UsageData>();
@@ -134,18 +132,14 @@ public class PrivacyManager {
 
 				// Add meta data
 				if (Build.VERSION.SDK_INT >= sdk) {
-					if (!mMethods.containsKey(restrictionName))
-						mMethods.put(restrictionName, new ArrayList<String>());
-					if (!mPermissions.containsKey(restrictionName))
-						mPermissions.put(restrictionName, new ArrayList<String>());
+					String[] permission = (permissions == null ? null : permissions.split(","));
+					MethodDescription md = new MethodDescription(methodName, permission, sdk);
 
-					if (!mMethods.get(restrictionName).contains(methodName))
-						mMethods.get(restrictionName).add(methodName);
+					if (!mMethod.containsKey(restrictionName))
+						mMethod.put(restrictionName, new ArrayList<MethodDescription>());
 
-					if (permissions != null)
-						for (String permission : permissions.split(","))
-							if (!mPermissions.get(restrictionName).contains(permission))
-								mPermissions.get(restrictionName).add(permission);
+					if (!mMethod.get(restrictionName).contains(methodName))
+						mMethod.get(restrictionName).add(md);
 				}
 			} else
 				Util.log(null, Log.WARN, "Unknown element=" + qName);
@@ -156,10 +150,8 @@ public class PrivacyManager {
 
 	public static void registerMethod(String restrictionName, String methodName, int sdk) {
 		if (Build.VERSION.SDK_INT >= sdk) {
-			if (restrictionName != null && !mPermissions.containsKey(restrictionName))
-				Util.log(null, Log.WARN, "Missing restriction " + restrictionName);
-
-			if (!mMethods.containsKey(restrictionName) || !mMethods.get(restrictionName).contains(methodName))
+			if (!mMethod.containsKey(restrictionName)
+					|| !mMethod.get(restrictionName).contains(new MethodDescription(methodName)))
 				Util.log(null, Log.WARN, "Missing method " + methodName);
 		}
 	}
@@ -205,20 +197,26 @@ public class PrivacyManager {
 		return false;
 	}
 
-	public static List<String> getPermissions(String restrictionName) {
-		return mPermissions.get(restrictionName);
-	}
-
-	public static List<String> getMethods(String restrictionName) {
-		List<String> listMethod = new ArrayList<String>(mMethods.get(restrictionName));
-		Collections.sort(listMethod);
-		return listMethod;
-	}
-
 	public static String getLocalizedName(Context context, String restrictionName) {
 		String packageName = PrivacyManager.class.getPackage().getName();
 		int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
 		return (stringId == 0 ? null : context.getString(stringId));
+	}
+
+	public static List<MethodDescription> getMethods(String restrictionName) {
+		List<MethodDescription> listMethod = new ArrayList<MethodDescription>(mMethod.get(restrictionName));
+		Collections.sort(listMethod);
+		return listMethod;
+	}
+
+	public static List<String> getPermissions(String restrictionName) {
+		List<String> listPermission = new ArrayList<String>();
+		for (MethodDescription md : getMethods(restrictionName))
+			if (md.getPermissions() != null)
+				for (String permission : md.getPermissions())
+					if (!listPermission.contains(permission))
+						listPermission.add(permission);
+		return listPermission;
 	}
 
 	// Restrictions
@@ -413,9 +411,9 @@ public class PrivacyManager {
 
 		// Set default exceptions for methods
 		if (restricted && methodName == null)
-			for (String dMethodName : getMethods(restrictionName))
-				if (isDangerousMethod(restrictionName, dMethodName))
-					PrivacyManager.setRestricted(null, context, uid, restrictionName, dMethodName, false);
+			for (MethodDescription md : getMethods(restrictionName))
+				if (isDangerousMethod(restrictionName, md.getMethodName()))
+					PrivacyManager.setRestricted(null, context, uid, restrictionName, md.getMethodName(), false);
 	}
 
 	public static List<Boolean> getRestricted(Context context, int uid, boolean dangerous) {
@@ -774,11 +772,19 @@ public class PrivacyManager {
 		return (pm.checkPermission("android.permission.INTERNET", packageName) == PackageManager.PERMISSION_GRANTED);
 	}
 
-	@SuppressLint("DefaultLocale")
 	public static boolean hasPermission(Context context, String packageName, String restrictionName) {
+		return hasPermission(context, packageName, getPermissions(restrictionName));
+	}
+
+	public static boolean hasPermission(Context context, String packageName, MethodDescription md) {
+		List<String> listPermission = (md.getPermissions() == null ? null : Arrays.asList(md.getPermissions()));
+		return hasPermission(context, packageName, listPermission);
+	}
+
+	@SuppressLint("DefaultLocale")
+	private static boolean hasPermission(Context context, String packageName, List<String> listPermission) {
 		try {
-			List<String> listPermission = getPermissions(restrictionName);
-			if (listPermission.size() == 0 || listPermission.contains(""))
+			if (listPermission == null || listPermission.size() == 0 || listPermission.contains(""))
 				return true;
 			PackageManager pm = context.getPackageManager();
 			PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
@@ -835,6 +841,50 @@ public class PrivacyManager {
 
 		public String getSettingsValue() {
 			return mValue;
+		}
+	}
+
+	public static class MethodDescription implements Comparable<MethodDescription> {
+		private String mMethodName;
+		private String[] mPermissions;
+		private int mSdk;
+
+		public MethodDescription(String methodName) {
+			mMethodName = methodName;
+		}
+
+		public MethodDescription(String methodName, String[] permissions, int sdk) {
+			mMethodName = methodName;
+			mPermissions = permissions;
+			mSdk = sdk;
+		}
+
+		public String getMethodName() {
+			return mMethodName;
+		}
+
+		public String[] getPermissions() {
+			return mPermissions;
+		}
+
+		public int getSdk() {
+			return mSdk;
+		}
+
+		@Override
+		public int hashCode() {
+			return mMethodName.hashCode();
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			MethodDescription other = (MethodDescription) obj;
+			return mMethodName.equals(other.mMethodName);
+		}
+
+		@Override
+		public int compareTo(MethodDescription another) {
+			return mMethodName.compareTo(another.mMethodName);
 		}
 	}
 

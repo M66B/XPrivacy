@@ -64,13 +64,13 @@ public class XAccountManager extends XHook {
 		listHook.add(new XAccountManager("blockingGetAuthToken", PrivacyManager.cAccounts));
 		listHook.add(new XAccountManager("getAccounts", PrivacyManager.cAccounts));
 		listHook.add(new XAccountManager("getAccountsByType", PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager("getAccountsByTypeForPackage", PrivacyManager.cAccounts,
+				Build.VERSION_CODES.JELLY_BEAN_MR2));
 		listHook.add(new XAccountManager("getAccountsByTypeAndFeatures", PrivacyManager.cAccounts));
 		listHook.add(new XAccountManager("getAuthToken", PrivacyManager.cAccounts));
 		listHook.add(new XAccountManager("getAuthTokenByFeatures", PrivacyManager.cAccounts));
 		listHook.add(new XAccountManager("hasFeatures", PrivacyManager.cAccounts));
 		listHook.add(new XAccountManager("removeOnAccountsUpdatedListener", PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager("getAccountsByTypeForPackage", PrivacyManager.cAccounts,
-				Build.VERSION_CODES.JELLY_BEAN_MR2));
 		return listHook;
 	}
 
