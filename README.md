@@ -546,6 +546,7 @@ How to get beta releases:
 **Version 1.7.21 BETA!**
 
 * Show permissions for indivudual functions
+* Restructured method hooking
 * Updated Portuguese translation
 
 **Version 1.7.20 BETA!**
