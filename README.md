@@ -542,7 +542,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Updated Bulgarian translation
 
 **Version 1.7.24 BETA!**
 
