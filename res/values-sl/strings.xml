@@ -2,12 +2,12 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework različice %d+ ni nameščen</string>
     <string name="app_notenabled">XPrivacy ni omogočen v Xposed installer</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_wrongandroid">Samo za Android različice 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy različica: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework različica: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Usage</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_usage">Uporaba</string>
+    <string name="menu_refresh">Osveži</string>
     <string name="menu_settings">Nastavitve</string>
     <string name="menu_template">Predloga</string>
     <string name="menu_update">Preveri posodobitve</string>
@@ -31,9 +31,9 @@
     <string name="msg_sure">Ste prepričani?</string>
     <string name="msg_done">Dokončano</string>
     <string name="msg_reboot">Zahtevan ponovni zagon</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
+    <string name="msg_first"><b>Za razvoj in preizkušanje programa XPrivacy je bilo vloženo veliko truda, vendar pa
+    je nemogoče zagotoviti brezhibno delovanje na vsaki napravi in za vsak program.\n\nUporaba programa je na lastno
+    odgovornost</b>\n\nPreberite si tudi licenco:</string>
     <string name="restrict_accounts">Računi (Google, Facebook, itd)</string>
     <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>
     <string name="restrict_calendar">Koledar</string>
@@ -66,7 +66,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>
     <string name="help_used">je uporabljal te podatke</string>
-    <string name="help_frozen">is disabled</string>
+    <string name="help_frozen">je onemogočen</string>
     <string name="help_dangerous">je nevaren</string>
 
 </resources>
