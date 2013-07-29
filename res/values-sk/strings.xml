@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
     <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_wrongandroid">Len pre Android 4.0+</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Verzia Xposed: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
@@ -31,8 +31,8 @@
     <string name="msg_sure">Ste si istý?</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadovaný reštart</string>
-    <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy
-a nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
+    <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
+avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atď.)</string>
     <string name="restrict_browser">Prehliadač (záložky/história)</string>
