@@ -254,6 +254,7 @@ It seems like a lot of steps, but it is done in no time:
 	* Be sure to install the latest **version 2.1.4**
 	* Download and copy the Xposed disabler to your SD card to disable Xposed in case of troubles
 	* [MIUI](http://en.miui.com/) is not supported by Xposed
+	* Unofficial Android 4.3 support, [see here](http://forum.xda-developers.com/showpost.php?p=44013064&postcount=2308)
 1. Install XPrivacy from the [Google play](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy)
 	* Alternatively download from [here](http://goo.im/devs/M66B/xprivacy)
 	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
@@ -541,6 +542,11 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.7.24 BETA!**
+
+* Fixed for Android 4.3 ([issue](https://github.com/M66B/XPrivacy/issues/372))
 * Updated French translation
 * Updated Japanese Translation
 * Updated Simplified Chinese translation

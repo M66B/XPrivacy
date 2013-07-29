@@ -168,7 +168,9 @@ public class XTelephonyManager extends XHook {
 		try {
 			Field fieldContext = findField(param.thisObject.getClass(), "sContext");
 			context = (Context) fieldContext.get(param.thisObject);
+		} catch (NoSuchFieldError ex) {
 		} catch (Throwable ex) {
+			Util.bug(this, ex);
 		}
 
 		// MultiSimTelephonyManager
@@ -176,7 +178,9 @@ public class XTelephonyManager extends XHook {
 			try {
 				Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 				context = (Context) fieldContext.get(param.thisObject);
+			} catch (NoSuchFieldError ex) {
 			} catch (Throwable ex) {
+				Util.bug(this, ex);
 			}
 
 		// Duos
