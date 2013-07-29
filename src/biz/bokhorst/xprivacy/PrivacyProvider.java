@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.annotation.SuppressLint;
 import android.content.ContentProvider;
@@ -51,6 +53,8 @@ public class PrivacyProvider extends ContentProvider {
 	private static final int TYPE_RESTRICTION = 1;
 	private static final int TYPE_USAGE = 2;
 	private static final int TYPE_SETTING = 3;
+
+	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -174,14 +178,15 @@ public class PrivacyProvider extends ContentProvider {
 			}
 			final boolean restricted = !allowed;
 
-			// Update usage time
-			if (usage && restrictionName != null && methodName != null)
-				new Thread(new Runnable() {
+			// Update usage data
+			if (usage && restrictionName != null && methodName != null) {
+				mExecutor.execute(new Runnable() {
 					public void run() {
 						long timeStamp = new Date().getTime();
 						updateUsage(uid, restrictionName, methodName, restricted, timeStamp);
 					}
-				}).start();
+				});
+			}
 		}
 		return cursor;
 	}

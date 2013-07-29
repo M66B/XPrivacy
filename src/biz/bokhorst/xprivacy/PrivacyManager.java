@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.xml.parsers.SAXParserFactory;
 
@@ -89,6 +91,8 @@ public class PrivacyManager {
 
 	private final static String cDeface = "DEFACE";
 	private final static int cCacheTimeoutMs = 15 * 1000;
+
+	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 	private static Map<String, List<MethodDescription>> mMethod = new LinkedHashMap<String, List<MethodDescription>>();
 	private static Map<String, CRestriction> mRestrictionCache = new HashMap<String, CRestriction>();
@@ -288,7 +292,7 @@ public class PrivacyManager {
 							qSize = mUsageQueue.size();
 						}
 						if (qSize > 0) {
-							new Thread(new Runnable() {
+							mExecutor.execute(new Runnable() {
 								public void run() {
 									Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
 									UsageData data = null;
@@ -320,7 +324,7 @@ public class PrivacyManager {
 										}
 									} while (data != null);
 								}
-							}).start();
+							});
 						}
 					}
 				} catch (Throwable ex) {
