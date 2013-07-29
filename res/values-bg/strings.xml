@@ -2,14 +2,14 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework версия %d+ не е инсталирана</string>
     <string name="app_notenabled">XPrivacy не е включено в инсталатора на Xposed</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_wrongandroid">Приложението е само за Android 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy версия: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework версия: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Usage</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_usage">Използване</string>
+    <string name="menu_refresh">Опресняване</string>
     <string name="menu_settings">Настройки</string>
-    <string name="menu_template">Template</string>
+    <string name="menu_template">Шаблони</string>
     <string name="menu_update">Проверка за обновление</string>
     <string name="menu_report">Съобщаване за проблем</string>
     <string name="menu_export">Експортиране</string>
@@ -18,36 +18,36 @@
     <string name="menu_pro">Професионална версия</string>
     <string name="menu_about">Относно</string>
     <string name="menu_all">Всички</string>
-    <string name="menu_app_launch">Launch</string>
-    <string name="menu_app_settings">Settings</string>
-    <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Select accounts to allow</string>
-    <string name="menu_contacts">Select contacts to allow</string>
+    <string name="menu_app_launch">Пусни</string>
+    <string name="menu_app_settings">Настройки</string>
+    <string name="menu_app_store">Google Play магазин</string>
+    <string name="menu_accounts">Изберете сметки с позволение</string>
+    <string name="menu_contacts">Изберете контакти с позволение</string>
     <string name="msg_noupdate">Няма налично обновление</string>
     <string name="msg_restricted" formatted="false">%s е ограничен от XPrivacy</string>
     <string name="msg_licensed" formatted="false">Лицензирано на: %s</string>
-    <string name="msg_loading">Loading</string>
-    <string name="msg_edit">Click the application icon to edit all restrictions</string>
-    <string name="msg_sure">Are you sure?</string>
-    <string name="msg_done">Done</string>
-    <string name="msg_reboot">Reboot required</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
+    <string name="msg_loading">Зареждане</string>
+    <string name="msg_edit">Цъкнете иконата на приложението за редактиране на всички забрани</string>
+    <string name="msg_sure">Сигурни ли сте?</string>
+    <string name="msg_done">Готово</string>
+    <string name="msg_reboot">Нужно е рестартиране</string>
+    <string name="msg_first"><b>XPrivacy е разработен и тестван с голямо внимание,
+но е невъзможно да се гарантира безпроблемна работа на всякакви устройства при всякакви приложения.
+\n\nИзползвате го на свой собствен риск.</b>\n\nВижте и лиценза:</string>
     <string name="restrict_accounts">Сметки (Google, Facebook и т.н.)</string>
     <string name="restrict_browser">Браузър (отметки/история)</string>
     <string name="restrict_calendar">Календар</string>
-    <string name="restrict_calling">Обаждания, SMS, MMS)</string>
+    <string name="restrict_calling">Обаждания, SMS, MMS</string>
     <string name="restrict_contacts">Контакти</string>
-    <string name="restrict_dictionary">Dictionary (user)</string>
-    <string name="restrict_identification">Идентификация (устройство, Wi-Fi)</string>
+    <string name="restrict_dictionary">Речник на потребителя</string>
+    <string name="restrict_identification">Идентификация (устройство)</string>
     <string name="restrict_internet">Интернет</string>
     <string name="restrict_location">Местоположение (точно/приблизително)</string>
     <string name="restrict_media">Медия (аудио, снимки, клипове)</string>
     <string name="restrict_messages">Съобщения (SMS, MMS)</string>
     <string name="restrict_network">Мрежа (адреси)</string>
     <string name="restrict_phone">Телефон (ID, номера, обаждания)</string>
-    <string name="restrict_storage">Storage (media, SD card)</string>
+    <string name="restrict_storage">Съхранение (носители, SD карта)</string>
     <string name="restrict_shell">Терминал (команди, суперпотребител)</string>
     <string name="restrict_system">Система (инсталирани приложения)</string>
     <string name="restrict_view">Преглед (браузър)</string>
@@ -56,17 +56,17 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_lat">Геогр. ширина</string>
     <string name="settings_lon">Геогр. дължина</string>
     <string name="settings_mac">MAC адрес</string>
-    <string name="settings_phone">Phone number</string>
+    <string name="settings_phone">Телефонен номер</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_country">Country</string>
-    <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Filter by permission</string>
-    <string name="settings_fsystem">Filter system applications</string>
+    <string name="settings_country">Държава</string>
+    <string name="settings_subscriber">Абонатно ID</string>
+    <string name="settings_fpermission">Филтриране по разрешения</string>
+    <string name="settings_fsystem">Филтриране на системни приложения</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">има разрешение за интернет</string>
     <string name="help_granted">има разрешение в Android</string>
     <string name="help_used">използвало е тези данни</string>
-    <string name="help_frozen">is disabled</string>
-    <string name="help_dangerous">is dangerous</string>
+    <string name="help_frozen">е деактивирано</string>
+    <string name="help_dangerous">е опасно</string>
 
 </resources>
