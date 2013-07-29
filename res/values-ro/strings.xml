@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework versiunea %d+ nu este instalata</string>
     <string name="app_notenabled">XPrivacy nu este bifat in Xposed installer</string>
-    <string name="app_wrongandroid">A fost testat doar pe Android 4.0, 4.1 si 4.2</string>
+    <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">versiunea XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">versiunea Xposed framework: %d</string>
     <string name="app_copyright">Drepturi de autor rezervate \u00A9 2013 M. Bokhorst (M66B)</string>
@@ -68,5 +68,5 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_used">a utilizat aceste date</string>
     <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">is dangerous</string>
-    
+
 </resources>

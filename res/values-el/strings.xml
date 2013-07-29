@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Δεν έχει εγκατασταθεί η έκδοση %d+ του Xposed framework</string>
     <string name="app_notenabled">Το XPrivacy δεν είναι ενεργοποιημένο στο Xposed installer</string>
-    <string name="app_wrongandroid">Δοκιμασμένο μόνο σε έκδόσεις Android 4.0, 4.1 και 4.2</string>
+    <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">Έκδοση XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Έκδοση Xposed framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 M. Bokhorst (M66B)</string>

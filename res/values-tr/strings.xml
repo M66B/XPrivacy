@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework versiyon %d+ yüklü değil.</string>
     <string name="app_notenabled">XPrivacy, Xposed yükleyicisinden etkinleştirilmedi.</string>
-    <string name="app_wrongandroid">Sadece Android versiyon 4.0, 4.1 ve 4.2 ile test edilmiştir.</string>
+    <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy versiyon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
     <string name="app_copyright">Telif hakkı \u00A9 2013, M. Bokhorst (M66B)</string>
@@ -67,5 +67,5 @@
     <string name="help_used">bu izni kullandı</string>
     <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">tehlikeli izin</string>
-    
+
 </resources>

@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework верзија %d+ није инсталирана</string>
     <string name="app_notenabled">XPrivacy није омогућен у Xposed инсталатору</string>
-    <string name="app_wrongandroid">Тестирано само са Андроидом 4.0, 4.1 и 4.2</string>
+    <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy верзија: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework верзија: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>

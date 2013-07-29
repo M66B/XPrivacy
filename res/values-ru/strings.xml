@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Не установлен Xposed framework версии %d+</string>
     <string name="app_notenabled">Модуль XPrivacy не активирован в Xposed installer</string>
-    <string name="app_wrongandroid">Работа проверялась только на Android версий 4.0, 4.1 и 4.2</string>
+    <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">Версия XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Версия Xposed framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
@@ -68,5 +68,5 @@
     <string name="help_used">данные уже использовались</string>
     <string name="help_frozen">отключено</string>
     <string name="help_dangerous">изменение разрешений опасно</string>
-    
+
 </resources>

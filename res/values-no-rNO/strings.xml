@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework versjon %d+ er ikke installert</string>
     <string name="app_notenabled">XPrivacy er ikke frigitt i Xposed installern</string>
-    <string name="app_wrongandroid">Bare testet med Android versjon 4.0, 4.1 og 4.2</string>
+    <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013</string>

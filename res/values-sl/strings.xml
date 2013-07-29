@@ -1,8 +1,8 @@
 <resources>
 
-    <string name="app_wrongandroid">Testirano samo na Androidu različice 4.0, 4.1 in 4.2</string>
     <string name="app_notxposed" formatted="false">Xposed framework različice %d+ ni nameščen</string>
     <string name="app_notenabled">XPrivacy ni omogočen v Xposed installer</string>
+    <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy različica: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework različica: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
@@ -68,5 +68,5 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_used">je uporabljal te podatke</string>
     <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">je nevaren</string>
-    
+
 </resources>

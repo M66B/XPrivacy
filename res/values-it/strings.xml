@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework versione %d+ non è installato</string>
     <string name="app_notenabled">XPrivacy non è abilitato nell\'installer di Xposed framework</string>
-    <string name="app_wrongandroid">Testato solamente con Android versione 4.0, 4.1 and 4.2</string>
+    <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">Versione di XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Versione di Xposed framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>

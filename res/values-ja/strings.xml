@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework バージョン %d+ がインストールされていません</string>
     <string name="app_notenabled">XPrivacyがXposed installerで有効になっていません</string>
-    <string name="app_wrongandroid">Androidバージョン4.0, 4.1と4.2でのみ動作を確認しています。</string>
+    <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy バージョン: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework バージョン: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
@@ -68,5 +68,5 @@
     <string name="help_used">はそのデータを使用しています</string>
     <string name="help_frozen">は無効になっています</string>
     <string name="help_dangerous">は危険です</string>
-    
+
 </resources>

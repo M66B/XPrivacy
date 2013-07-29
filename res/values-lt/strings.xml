@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Xposed sistemos versija %d+ neįdiegta</string>
     <string name="app_notenabled">XPrivacy neaktyvuota Xposed sistemoje</string>
-    <string name="app_wrongandroid">Testuota tik Android versijose 4.0, 4.1 ir 4.2</string>
+    <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy versija: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed sistemos versija: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
