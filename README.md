@@ -541,6 +541,9 @@ How to get beta releases:
 
 **Next release**
 
+**Version 1.7.23 BETA!**
+
+* Run privacy provider in separate process
 * Updated Catalan translation
 
 **Version 1.7.22 BETA!**
