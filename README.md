@@ -544,6 +544,7 @@ How to get beta releases:
 * Updated French translation
 * Updated Japanese Translation
 * Updated Simplified Chinese translation
+* Updated Slovenian translation
 
 **Version 1.7.23 BETA!**
 
