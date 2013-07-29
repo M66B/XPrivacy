@@ -312,7 +312,7 @@ public class PrivacyProvider extends ContentProvider {
 	private void updateUsage(final int uid, final String restrictionName, final String methodName,
 			final boolean restricted, long timeStamp) {
 		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
-				Context.MODE_PRIVATE);
+				Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
 		SharedPreferences.Editor editor = prefs.edit();
 		String prefName = getUsagePref(uid, methodName);
 		String prefValue = String.format("%d:%b", timeStamp, restricted);
