@@ -2,12 +2,12 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework バージョン %d+ がインストールされていません</string>
     <string name="app_notenabled">XPrivacyがXposed installerで有効になっていません</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_wrongandroid">Androidバージョン 4.0以降でのみ動作します</string>
     <string name="app_version" formatted="false">XPrivacy バージョン: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework バージョン: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">履歴</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_refresh">再読み込み</string>
     <string name="menu_settings">設定</string>
     <string name="menu_template">カテゴリ</string>
     <string name="menu_update">更新を確認</string>
