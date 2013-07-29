@@ -541,6 +541,8 @@ How to get beta releases:
 
 **Next release**
 
+* Updated Simplified Chinese translation
+
 **Version 1.7.23 BETA!**
 
 * Run privacy provider in separate process
