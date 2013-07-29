@@ -1547,6 +1547,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private List<ApplicationInfoEx> mListAppAll;
 		private List<ApplicationInfoEx> mListAppSelected;
 		private String mRestrictionName;
+		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
@@ -1661,30 +1662,162 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		}
 
+		private class ViewHolder {
+			private View row;
+			public int position;
+			public ImageView imgIcon;
+			public ImageView imgUsed;
+			public ImageView imgGranted;
+			public ImageView imgInternet;
+			public ImageView imgFrozen;
+			public CheckedTextView ctvApp;
+
+			public ViewHolder(View theRow, int thePosition) {
+				row = theRow;
+				position = thePosition;
+				imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
+				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
+				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
+				imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
+				imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
+				ctvApp = (CheckedTextView) row.findViewById(R.id.ctvName);
+			}
+		}
+
+		private class HolderTask extends AsyncTask<Object, Object, Object> {
+			private int position;
+			private ViewHolder holder;
+
+			ApplicationInfoEx xAppInfo = null;
+			boolean used;
+			boolean granted = true;
+			List<String> listRestriction;
+			boolean allRestricted = true;
+			boolean someRestricted = false;
+
+			public HolderTask(int thePosition, ViewHolder theHolder) {
+				position = thePosition;
+				holder = theHolder;
+			}
+
+			@Override
+			protected Object doInBackground(Object... params) {
+				// Get info
+				if (holder.position == position) {
+					xAppInfo = getItem(holder.position);
+
+					// Get if used
+					used = (PrivacyManager.getUsed(holder.row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
+
+					// Get if granted
+					if (mRestrictionName != null)
+						if (!PrivacyManager.hasPermission(holder.row.getContext(), xAppInfo.getPackageName(),
+								mRestrictionName))
+							granted = false;
+
+					// Get restrictions
+					if (mRestrictionName == null)
+						listRestriction = PrivacyManager.getRestrictions(false);
+					else {
+						listRestriction = new ArrayList<String>();
+						listRestriction.add(mRestrictionName);
+					}
+
+					// Get all/some restricted
+					if (mRestrictionName == null)
+						for (boolean restricted : PrivacyManager.getRestricted(holder.row.getContext(),
+								xAppInfo.getUid(), false)) {
+							allRestricted = allRestricted && restricted;
+							someRestricted = someRestricted || restricted;
+						}
+					else {
+						boolean restricted = PrivacyManager.getRestricted(null, holder.row.getContext(),
+								xAppInfo.getUid(), mRestrictionName, null, false, false);
+						allRestricted = restricted;
+						someRestricted = restricted;
+					}
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Object result) {
+				if (holder.position == position && xAppInfo != null) {
+					// Check if used
+					holder.ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
+					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
+
+					// Check if permission
+					holder.imgGranted.setVisibility(granted ? View.VISIBLE : View.INVISIBLE);
+
+					// Check if internet access
+					holder.imgInternet.setVisibility(xAppInfo.hasInternet() ? View.VISIBLE : View.INVISIBLE);
+
+					// Check if frozen
+					holder.imgFrozen.setVisibility(xAppInfo.isFrozen() ? View.VISIBLE : View.INVISIBLE);
+
+					// Display restriction
+					holder.ctvApp.setChecked(allRestricted);
+					holder.ctvApp.setEnabled(mRestrictionName == null && someRestricted ? allRestricted : true);
+
+					// Listen for restriction changes
+					holder.ctvApp.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							// Get all/some restricted
+							boolean allRestricted = true;
+							if (mRestrictionName == null)
+								for (boolean restricted : PrivacyManager.getRestricted(view.getContext(),
+										xAppInfo.getUid(), false))
+									allRestricted = allRestricted && restricted;
+							else {
+								boolean restricted = PrivacyManager.getRestricted(null, view.getContext(),
+										xAppInfo.getUid(), mRestrictionName, null, false, false);
+								allRestricted = restricted;
+							}
+
+							// Process click
+							allRestricted = !allRestricted;
+							for (String restrictionName : listRestriction)
+								PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
+										restrictionName, null, allRestricted);
+							holder.ctvApp.setChecked(allRestricted);
+						}
+					});
+
+					// Refresh
+					holder.row.refreshDrawableState();
+				}
+			}
+		}
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// Get layout
-			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.mainentry, parent, false);
-			ImageView imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
-			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
-			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
-			ImageView imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
-			ImageView imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
-			final CheckedTextView ctvApp = (CheckedTextView) row.findViewById(R.id.ctvName);
+			ViewHolder holder;
+			if (convertView == null) {
+				convertView = mInflater.inflate(R.layout.mainentry, null);
+				holder = new ViewHolder(convertView, position);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+				holder.position = position;
+			}
 
-			// Get entry
-			final ApplicationInfoEx xAppInfo = getItem(position);
+			// Get info
+			final ApplicationInfoEx xAppInfo = getItem(holder.position);
 
 			// Set background color
 			if (xAppInfo.getIsSystem())
-				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+			else
+				holder.row.setBackgroundColor(Color.TRANSPARENT);
 
 			// Set icon
-			imgIcon.setImageDrawable(xAppInfo.getDrawable(row.getContext()));
+			holder.imgIcon.setImageDrawable(xAppInfo.getDrawable(holder.row.getContext()));
+			holder.imgIcon.setVisibility(View.VISIBLE);
 
 			// Handle details click
-			imgIcon.setOnClickListener(new View.OnClickListener() {
+			holder.imgIcon.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					Intent intentSettings = new Intent(view.getContext(), ActivityApp.class);
@@ -1695,80 +1828,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			});
 
 			// Set title
-			ctvApp.setText(xAppInfo.toString());
+			holder.ctvApp.setText(xAppInfo.toString());
+			holder.ctvApp.setTypeface(null, Typeface.NORMAL);
 
-			// Check if used
-			boolean used = (PrivacyManager.getUsed(row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
-			ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
-			imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
+			holder.imgUsed.setVisibility(View.INVISIBLE);
+			holder.imgGranted.setVisibility(View.INVISIBLE);
+			holder.imgInternet.setVisibility(View.INVISIBLE);
+			holder.imgFrozen.setVisibility(View.INVISIBLE);
+			holder.ctvApp.setChecked(false);
+			holder.ctvApp.setEnabled(false);
+			holder.ctvApp.setClickable(false);
 
-			// Check if permission
-			if (mRestrictionName != null)
-				if (!PrivacyManager.hasPermission(row.getContext(), xAppInfo.getPackageName(), mRestrictionName))
-					imgGranted.setVisibility(View.INVISIBLE);
+			// Async
+			new HolderTask(position, holder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Object) null);
 
-			// Check if internet access
-			imgInternet.setVisibility(xAppInfo.hasInternet() ? View.VISIBLE : View.INVISIBLE);
-
-			// Check if frozen
-			imgFrozen.setVisibility(xAppInfo.isFrozen() ? View.VISIBLE : View.INVISIBLE);
-
-			// Get restrictions
-			final List<String> listRestriction;
-			if (mRestrictionName == null)
-				listRestriction = PrivacyManager.getRestrictions(false);
-			else {
-				listRestriction = new ArrayList<String>();
-				listRestriction.add(mRestrictionName);
-			}
-
-			// Get all/some restricted
-			boolean allRestricted = true;
-			boolean someRestricted = false;
-			if (mRestrictionName == null)
-				for (boolean restricted : PrivacyManager.getRestricted(row.getContext(), xAppInfo.getUid(), false)) {
-					allRestricted = allRestricted && restricted;
-					someRestricted = someRestricted || restricted;
-				}
-			else {
-				boolean restricted = PrivacyManager.getRestricted(null, row.getContext(), xAppInfo.getUid(),
-						mRestrictionName, null, false, false);
-				allRestricted = restricted;
-				someRestricted = restricted;
-			}
-
-			// Display restriction
-			ctvApp.setChecked(allRestricted);
-			ctvApp.setEnabled(mRestrictionName == null && someRestricted ? allRestricted : true);
-
-			// Listen for restriction changes
-			ctvApp.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					// Get all/some restricted
-					boolean allRestricted = true;
-					if (mRestrictionName == null)
-						for (boolean restricted : PrivacyManager.getRestricted(view.getContext(), xAppInfo.getUid(),
-								false))
-							allRestricted = allRestricted && restricted;
-					else {
-						boolean restricted = PrivacyManager.getRestricted(null, view.getContext(), xAppInfo.getUid(),
-								mRestrictionName, null, false, false);
-						allRestricted = restricted;
-					}
-
-					// Process click
-					allRestricted = !allRestricted;
-					for (String restrictionName : listRestriction)
-						PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(), restrictionName, null,
-								allRestricted);
-					ctvApp.setChecked(allRestricted);
-				}
-			});
-
-			// Refresh
-			row.refreshDrawableState();
-			return row;
+			return convertView;
 		}
 	}
 

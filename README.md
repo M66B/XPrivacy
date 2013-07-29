@@ -544,6 +544,8 @@ How to get beta releases:
 
 **Next release**
 
+* Faster application list by fetching data asynchronous
+* Reduce memory usage by limiting number of usage data updates
 * Updated Bulgarian translation
 
 **Version 1.7.24 BETA!**
