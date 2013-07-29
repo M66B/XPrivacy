@@ -235,7 +235,7 @@ Limitations
 -----------
 
 * Android can be restricted, but there will be no usage data available (warning triangles)
-* /proc cannot be restricted for Android (serial number, MAC address, etc)
+* /proc and system properties cannot be restricted for Android (serial number, MAC address, etc)
 * Phone number cannot be restricted for the standard phone application
 
 Installation
@@ -286,6 +286,8 @@ Upgrading
 * Download the new version
 * Install the new version over the previous version
 * Reboot your device
+
+When following this procedure your data will not leak, because the Xposed part of XPrivacy keeps running.
 
 You can check for updates using the options menu.
 If there is an update the browser will download it.
