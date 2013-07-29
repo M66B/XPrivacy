@@ -6,12 +6,14 @@
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013</string>
+    <string name="menu_usage">Bruk</string>
+    <string name="menu_refresh">Oppdater</string>
     <string name="menu_settings">Instillinger</string>
     <string name="menu_template">Skjema</string>
     <string name="menu_update">Sjekk for oppdatering</string>
     <string name="menu_report">Rapport en feil</string>
-    <string name="menu_export">Eksportere</string>
-    <string name="menu_import">Importere</string>
+    <string name="menu_export">Eksport</string>
+    <string name="menu_import">Import</string>
     <string name="menu_theme">Bytt tema</string>
     <string name="menu_pro">Pro versjon</string>
     <string name="menu_about">Om</string>
@@ -29,7 +31,9 @@
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Ferdig</string>
     <string name="msg_reboot">Reboot nødvendig</string>
-    <string name="msg_first"><b>XPrivacy er utviklet og testet med stor omsorg, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
+    <string name="msg_first"><b>XPrivacy er utviklet og testet med stor omsorg, men det er umulig å garantere at Appen fun
+gerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen ri
+siko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
     <string name="restrict_calendar">Kalender</string>
@@ -62,6 +66,7 @@
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>
     <string name="help_used">nytta denne typen av data</string>
+    <string name="help_frozen">er deaktivert</string>
     <string name="help_dangerous">er farlig</string>
 
 </resources>
