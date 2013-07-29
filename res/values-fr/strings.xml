@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">La version %d+ de l\'environnement Xposed n\'est pas installée</string>
     <string name="app_notenabled">XPrivacy n\'est pas activé dans l\'installateur Xposed</string>
-    <string name="app_wrongandroid">Testé sous Android version 4.0, 4.1 et 4.2</string>
+    <string name="app_wrongandroid">Uniquement pour Android 4.0 et ultérieur</string>
     <string name="app_version" formatted="false">Version XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Version de l\'environnement Xposed : %d</string>
     <string name="app_copyright">Droits d\'auteur: M. Bokhorst (M66B) \u00A9 2013 </string>
@@ -68,5 +68,5 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_used">a utilisé ces données</string>
     <string name="help_frozen">est désactivée</string>
     <string name="help_dangerous">est dangereuse</string>
-    
+
 </resources>
