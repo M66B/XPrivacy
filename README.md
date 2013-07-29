@@ -548,8 +548,8 @@ How to get beta releases:
 
 **Version 1.7.25 BETA!**
 
-* Faster application list by fetching data asynchronous
-* Reduce memory usage by limiting number of usage data updates
+* Faster application list by fetching data asynchronous and using [these tricks](http://developer.android.com/training/improving-layouts/smooth-scrolling.html)
+* Reduce memory usage by limiting number of parallel usage data updates
 * Updated Bulgarian translation
 * Updated Catalan translation
 * Updated Slovak translation
