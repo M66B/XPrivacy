@@ -78,6 +78,7 @@
             android:excludeFromRecents="true"
             android:exported="true"
             android:multiprocess="true"
+            android:process=":provider"
             android:syncable="false" >
         </provider>
     </application>
