@@ -81,12 +81,12 @@ public abstract class XHook {
 		return PrivacyManager.getRestricted(this, context, uid, mRestrictionName, methodName, usage, true);
 	}
 
-	protected void notifyUser(String message) throws Throwable {
+	protected static void notifyUser(String message) throws Throwable {
 		notifyUser(AndroidAppHelper.currentApplication(), message);
 	}
 
 	@SuppressLint("DefaultLocale")
-	protected void notifyUser(Context context, String message) throws Throwable {
+	protected static void notifyUser(Context context, String message) throws Throwable {
 		if (context != null) {
 			String format = Util.getXString(context, R.string.msg_restricted);
 			String text = String.format(format, message);

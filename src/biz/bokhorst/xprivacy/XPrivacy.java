@@ -157,21 +157,21 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 	}
 
-	private void hookAll(List<XHook> listHook) {
+	private static void hookAll(List<XHook> listHook) {
 		for (XHook hook : listHook)
 			hook(hook);
 	}
 
-	private void hookAll(List<XHook> listHook, ClassLoader classLoader) {
+	private static void hookAll(List<XHook> listHook, ClassLoader classLoader) {
 		for (XHook hook : listHook)
 			hook(hook, classLoader);
 	}
 
-	private void hook(XHook hook) {
+	private static void hook(XHook hook) {
 		hook(hook, null);
 	}
 
-	private void hook(final XHook hook, ClassLoader classLoader) {
+	private static void hook(final XHook hook, ClassLoader classLoader) {
 		// Check SDK version
 		if (Build.VERSION.SDK_INT < hook.getSdk())
 			return;
@@ -248,7 +248,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 	}
 
-	private void report(Throwable ex) {
+	private static void report(Throwable ex) {
 		Context context = AndroidAppHelper.currentApplication();
 		if (context != null) {
 			Toast toast = Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG);
