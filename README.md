@@ -548,6 +548,7 @@ How to get beta releases:
 **Next release**
 
 * Moved restricting statusbar notifications and C2DM to new category *Notifications*
+* Updated German translation
 
 **Version 1.7.26 BETA!**
 
