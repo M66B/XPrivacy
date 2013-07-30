@@ -544,13 +544,18 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.7.26 BETA!**
+
 * Performance improvements
+	* Caching of fallback restrictions
+	* Usage private executors with normal priority for async tasks
 * Faster application details view by fetching data asynchronous
 * Faster usage view by applying the holder pattern
-* Usage private executors with normal priority for async tasks
 * Revert "Run privacy provider in separate process" ([issue](https://github.com/M66B/XPrivacy/issues/384))
-* Moved clipboard restrictions for *System to new *Clipboard* category
-* Add restrictions to the *System* category:
+* Moved clipboard restrictions for *System to new *Clipboard* category ([issue](https://github.com/M66B/XPrivacy/issues/386))
+* Add restrictions to the *System* category: ([issue](https://github.com/M66B/XPrivacy/issues/373), [issue](https://github.com/M66B/XPrivacy/issues/387))
 	* android.intent.action.PACKAGE_CHANGED
 	* android.intent.action.PACKAGE_DATA_CLEARED
 	* android.intent.action.PACKAGE_FIRST_LAUNCH
@@ -561,6 +566,7 @@ How to get beta releases:
 	* android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE
 	* com.google.android.c2dm.intent.REGISTRATION
 	* com.google.android.c2dm.intent.RECEIVE
+* New setting for serial number ([issue](https://github.com/M66B/XPrivacy/issues/388))
 * Updated Lithuanian translation
 * Updated Vietnamese translation
 
