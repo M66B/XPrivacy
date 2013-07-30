@@ -547,7 +547,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Updated Slovenian translation
 
 **Version 1.7.27 BETA!**
 
