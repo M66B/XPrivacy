@@ -389,6 +389,7 @@ public class PrivacyProvider extends ContentProvider {
 		synchronized (mPrefsExRestriction) {
 			long now = new Date().getTime();
 			if (mPrefsExRestrictionLoaded + PrivacyManager.cCacheTimeoutMs < now) {
+				Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + Binder.getCallingUid());
 				mPrefsExRestriction.reload();
 				mPrefsExRestrictionLoaded = now;
 			}
@@ -400,6 +401,7 @@ public class PrivacyProvider extends ContentProvider {
 		synchronized (mPrefsExSettings) {
 			long now = new Date().getTime();
 			if (mPrefsExSettingsLoaded + PrivacyManager.cCacheTimeoutMs < now) {
+				Util.log(null, Log.INFO, "Reload fallback settings uid=" + Binder.getCallingUid());
 				mPrefsExSettings.reload();
 				mPrefsExSettingsLoaded = now;
 			}

@@ -134,6 +134,7 @@ public class ActivityUsage extends Activity {
 
 	private class UsageAdapter extends ArrayAdapter<PrivacyManager.UsageData> {
 		private List<PrivacyManager.UsageData> mListUsageData;
+		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		public UsageAdapter(Context context, int textViewResourceId, List<PrivacyManager.UsageData> objects) {
 			super(context, textViewResourceId, objects);
@@ -185,15 +186,29 @@ public class ActivityUsage extends Activity {
 			}
 		}
 
+		private class ViewHolder {
+			private TextView tvTime;
+			private ImageView imgRestricted;
+			private TextView tvApp;
+			private TextView tvRestriction;
+
+			public ViewHolder(View row) {
+				tvTime = (TextView) row.findViewById(R.id.tvTime);
+				imgRestricted = (ImageView) row.findViewById(R.id.imgRestricted);
+				tvApp = (TextView) row.findViewById(R.id.tvApp);
+				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
+			}
+		}
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// Get layout
-			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.usageentry, parent, false);
-			TextView tvTime = (TextView) row.findViewById(R.id.tvTime);
-			TextView tvApp = (TextView) row.findViewById(R.id.tvApp);
-			TextView tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
-			ImageView imgRestricted = (ImageView) row.findViewById(R.id.imgRestricted);
+			ViewHolder holder;
+			if (convertView == null) {
+				convertView = mInflater.inflate(R.layout.usageentry, null);
+				holder = new ViewHolder(convertView);
+				convertView.setTag(holder);
+			} else
+				holder = (ViewHolder) convertView.getTag();
 
 			// Get data
 			PrivacyManager.UsageData usageData = getItem(position);
@@ -201,12 +216,13 @@ public class ActivityUsage extends Activity {
 			// Build entry
 			Date date = new Date(usageData.getTimeStamp());
 			SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ROOT);
-			tvTime.setText(format.format(date));
-			tvApp.setText(Integer.toString(usageData.getUid()));
-			tvRestriction.setText(String.format("%s/%s", usageData.getRestrictionName(), usageData.getMethodName()));
-			imgRestricted.setVisibility(usageData.getRestricted() ? View.VISIBLE : View.INVISIBLE);
+			holder.tvTime.setText(format.format(date));
+			holder.imgRestricted.setVisibility(usageData.getRestricted() ? View.VISIBLE : View.INVISIBLE);
+			holder.tvApp.setText(Integer.toString(usageData.getUid()));
+			holder.tvRestriction.setText(String.format("%s/%s", usageData.getRestrictionName(),
+					usageData.getMethodName()));
 
-			return row;
+			return convertView;
 		}
 	}
 }
