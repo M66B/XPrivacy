@@ -559,6 +559,8 @@ How to get beta releases:
 	* android.intent.action.PACKAGE_VERIFIED
 	* android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE
 	* android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE
+	* com.google.android.c2dm.intent.REGISTRATION
+	* com.google.android.c2dm.intent.RECEIVE
 * Updated Lithuanian translation
 * Updated Vietnamese translation
 

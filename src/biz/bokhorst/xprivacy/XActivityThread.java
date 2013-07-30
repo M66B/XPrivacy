@@ -79,11 +79,20 @@ public class XActivityThread extends XHook {
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_DATA_CLEARED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_FIRST_LAUNCH));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_FULLY_REMOVED));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_NEEDS_VERIFICATION));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+				Intent.ACTION_PACKAGE_NEEDS_VERIFICATION));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_VERIFIED));
 
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+				Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+				Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE));
+
+		// Intent receive: C2DM
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+				"com.google.android.c2dm.intent.REGISTRATION"));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+				"com.google.android.c2dm.intent.RECEIVE"));
 
 		return listHook;
 	}
