@@ -157,7 +157,19 @@ public class XActivityThread extends XHook {
 						} else if (action.equals(Intent.ACTION_PACKAGE_ADDED)
 								|| action.equals(Intent.ACTION_PACKAGE_REPLACED)
 								|| action.equals(Intent.ACTION_PACKAGE_RESTARTED)
-								|| action.equals(Intent.ACTION_PACKAGE_REMOVED)) {
+								|| action.equals(Intent.ACTION_PACKAGE_REMOVED)
+								|| action.equals(Intent.ACTION_PACKAGE_CHANGED)
+								|| action.equals(Intent.ACTION_PACKAGE_DATA_CLEARED)
+								|| action.equals(Intent.ACTION_PACKAGE_FIRST_LAUNCH)
+								|| action.equals(Intent.ACTION_PACKAGE_FULLY_REMOVED)
+								|| action.equals(Intent.ACTION_PACKAGE_NEEDS_VERIFICATION)
+								|| action.equals(Intent.ACTION_PACKAGE_VERIFIED)) {
+							if (isRestricted(param, mActionName)) {
+								finish(param);
+								param.setResult(null);
+							}
+						} else if (action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE)
+								|| action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE)) {
 							if (isRestricted(param, mActionName)) {
 								finish(param);
 								param.setResult(null);

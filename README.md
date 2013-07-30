@@ -554,7 +554,7 @@ How to get beta releases:
 * Faster application details view by fetching data asynchronous
 * Faster usage view by applying the holder pattern
 * Revert "Run privacy provider in separate process" ([issue](https://github.com/M66B/XPrivacy/issues/384))
-* Moved clipboard restrictions for *System to new *Clipboard* category ([issue](https://github.com/M66B/XPrivacy/issues/386))
+* Moved clipboard restrictions for *System* to new *Clipboard* category ([issue](https://github.com/M66B/XPrivacy/issues/359))
 * Add restrictions to the *System* category: ([issue](https://github.com/M66B/XPrivacy/issues/373), [issue](https://github.com/M66B/XPrivacy/issues/387))
 	* android.intent.action.PACKAGE_CHANGED
 	* android.intent.action.PACKAGE_DATA_CLEARED
