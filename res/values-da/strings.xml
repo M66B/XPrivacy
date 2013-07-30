@@ -54,6 +54,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">View (Browser)</string>
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Afkryds for at begrænse:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Højdegrad</string>
     <string name="settings_lon">Længdegrad</string>
     <string name="settings_mac">MAC adresse</string>

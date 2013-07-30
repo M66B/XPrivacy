@@ -54,6 +54,7 @@
     <string name="restrict_view">Преглед (браузър)</string>
     <string name="title_category">Category:</string>
     <string name="title_restrict">Отбележи за ограничаване:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Геогр. ширина</string>
     <string name="settings_lon">Геогр. дължина</string>
     <string name="settings_mac">MAC адрес</string>

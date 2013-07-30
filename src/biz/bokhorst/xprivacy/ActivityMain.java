@@ -784,6 +784,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 
 		// Reference controls
+		final EditText etSerial = (EditText) dlgSettings.findViewById(R.id.etSerial);
 		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
 		final EditText etLon = (EditText) dlgSettings.findViewById(R.id.etLon);
 		final EditText etSearch = (EditText) dlgSettings.findViewById(R.id.etSearch);
@@ -808,6 +809,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
 				true, false);
 
+		etSerial.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSerial, "", false));
 		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "", false));
 		etLon.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude, "", false));
 		etMac.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMac, "", false));
@@ -864,6 +866,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				// Serial#
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingSerial, etSerial.getText()
+						.toString());
+
 				// Set location
 				try {
 					float lat = Float.parseFloat(etLat.getText().toString().replace(',', '.'));

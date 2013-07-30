@@ -54,6 +54,7 @@
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
     <string name="title_category">Kategorie:</string>
     <string name="title_restrict">Markieren zum Einschränken:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
     <string name="settings_mac">MAC Adresse</string>

@@ -53,6 +53,7 @@
     <string name="restrict_view">Mở trình duyệt</string>
     <string name="title_category">Danh mục:</string>
     <string name="title_restrict">Chọn để hạn chế:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>
     <string name="settings_mac">địa chỉ MAC</string>

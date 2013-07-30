@@ -53,6 +53,7 @@
     <string name="restrict_view">Göster (tarayıcı)</string>
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Engellemek için işaretle:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Enlem</string>
     <string name="settings_lon">Boylam</string>
     <string name="settings_mac">MAC adresi</string>

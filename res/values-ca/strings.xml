@@ -52,6 +52,7 @@
     <string name="restrict_view">Vista (navegador)</string>
     <string name="title_category">Categoria:</string>
     <string name="title_restrict">Activa per a restringir:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
     <string name="settings_mac">Adreça MAC</string>

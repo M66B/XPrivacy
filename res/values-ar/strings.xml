@@ -54,6 +54,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">تصفح (المتصفح)</string>
     <string name="title_category">الفئة:</string>
     <string name="title_restrict">إختر للتقيد:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
     <string name="settings_mac">عنوان الماك</string>

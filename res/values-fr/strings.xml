@@ -54,6 +54,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_view">Vue (navigateur)</string>
     <string name="title_category">Catégorie:</string>
     <string name="title_restrict">Cocher pour restreindre:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
     <string name="settings_mac">Adresse MAC</string>

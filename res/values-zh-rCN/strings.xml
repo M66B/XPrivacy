@@ -54,6 +54,7 @@
     <string name="restrict_view">查看 (浏览器)</string>
     <string name="title_category">类目:</string>
     <string name="title_restrict">勾选表示限制:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
     <string name="settings_mac">MAC 地址</string>

@@ -54,6 +54,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_view">Peržiūra (Naršyklė)</string>
     <string name="title_category">Kategorija:</string>
     <string name="title_restrict">Žiūrėti apribojimus:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
     <string name="settings_mac">MAC</string>

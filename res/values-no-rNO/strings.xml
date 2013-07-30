@@ -52,6 +52,7 @@
     <string name="restrict_view">Betrakte (nettleser)</string>
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Marker for å blokke:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>
     <string name="settings_mac">MAC adresse</string>

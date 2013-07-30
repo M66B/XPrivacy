@@ -54,6 +54,7 @@
     <string name="restrict_view">Widok (przeglądarka)</string>
     <string name="title_category">Kategoria:</string>
     <string name="title_restrict">Zaznacz aby zablokować:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>
     <string name="settings_mac">Adres MAC</string>

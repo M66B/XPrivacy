@@ -54,6 +54,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">גישה (דפדפן)</string>
     <string name="title_category">קטגוריה:</string>
     <string name="title_restrict">בחר להגביל:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">קו אורך</string>
     <string name="settings_lon">קו רוחב</string>
     <string name="settings_mac">כתובת MAC</string>

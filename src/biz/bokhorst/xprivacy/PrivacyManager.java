@@ -69,6 +69,7 @@ public class PrivacyManager {
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
 
+	public final static String cSettingSerial = "Serial";
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
 	public final static String cSettingMac = "Mac";
@@ -633,6 +634,10 @@ public class PrivacyManager {
 	public static Object getDefacedProp(String name) {
 		// Serial number
 		if (name.equals("SERIAL") || name.equals("%serialno") || name.equals("%hostname"))
+			return getSetting(null, null, cSettingSerial, cDeface, true);
+
+		// Host name
+		if (name.equals("%hostname"))
 			return cDeface;
 
 		// MAC addresses

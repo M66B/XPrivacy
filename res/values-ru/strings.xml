@@ -54,6 +54,7 @@
     <string name="restrict_view">Просмотр (браузер)</string>
     <string name="title_category">Категория:</string>
     <string name="title_restrict">Отметьте приложения:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Широта</string>
     <string name="settings_lon">Долгота</string>
     <string name="settings_mac">MAC-адрес</string>

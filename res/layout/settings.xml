@@ -20,6 +20,17 @@
             <TableRow>
 
                 <TextView
+                    android:text="@string/settings_serial"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etSerial"
+                    android:inputType="textNoSuggestions" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
                     android:text="@string/settings_lat"
                     android:textIsSelectable="false" />
 

@@ -54,6 +54,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">Поглед (браузер)</string>
     <string name="title_category">Категорија:</string>
     <string name="title_restrict">Означи да забраниш:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Ширина</string>
     <string name="settings_lon">Дужина</string>
     <string name="settings_mac">МЕК адреса</string>

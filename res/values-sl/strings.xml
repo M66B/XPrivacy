@@ -54,6 +54,7 @@
     <string name="restrict_view">Pogled (brskalnik)</string>
     <string name="title_category">Kategorija:</string>
     <string name="title_restrict">Označi za omejitev pravic:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
     <string name="settings_mac">MAC naslov</string>
