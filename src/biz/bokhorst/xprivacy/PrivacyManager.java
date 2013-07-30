@@ -90,7 +90,7 @@ public class PrivacyManager {
 	public final static boolean cExperimental = false;
 
 	private final static String cDeface = "DEFACE";
-	private final static int cCacheTimeoutMs = 15 * 1000;
+	public final static int cCacheTimeoutMs = 15 * 1000;
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
