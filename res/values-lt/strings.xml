@@ -47,6 +47,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_media">Media (muzika, nuotraukos, vaizdai)</string>
     <string name="restrict_messages">Pranešimai (SMS, MMS)</string>
     <string name="restrict_network">Tinklas (adresai)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefonas (ID, numeris, skambučiai)</string>
     <string name="restrict_storage">Atmintis (media, SD kortelė)</string>
     <string name="restrict_shell">Vykdymas (komandos, superuser)</string>

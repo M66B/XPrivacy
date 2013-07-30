@@ -47,6 +47,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Medie (Audio, Photo, Video)</string>
     <string name="restrict_messages">Beskeder (SMS, MMS)</string>
     <string name="restrict_network">Netværk (Adresser)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefon (ID, Numre, Opkald)</string>
     <string name="restrict_storage">Opbevaring (Medier, SD-Kort)</string>
     <string name="restrict_shell">Shell (Kommandoer, Administrator)</string>

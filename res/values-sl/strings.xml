@@ -47,6 +47,7 @@
     <string name="restrict_media">Medij (zvok, slike, video)</string>
     <string name="restrict_messages">Sporočila (SMS, MMS)</string>
     <string name="restrict_network">Omrežje (naslovi)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefon (ID, številke, klici)</string>
     <string name="restrict_storage">Pomnilnik (medij, SD kartica)</string>
     <string name="restrict_shell">Lupina (ukazi, superuser)</string>

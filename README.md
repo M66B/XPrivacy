@@ -127,6 +127,8 @@ For easy usage, data is restricted by category:
 	* prevent SMS messages from being sent
 	* prevent MMS messages from being sent
 	* prevent data messages from being sent
+* Clipboard
+	* prevent paste from clipboard (both manual and from an application)
 * Contacts
 	* return an empty contact list
 		* content://com.android.contacts/data
@@ -180,6 +182,9 @@ For easy usage, data is restricted by category:
 	* prevent receiving NDEF discovered
 	* prevent receiving TAG discovered
 	* prevent receiving TECH discovered
+* Notifications
+	* prevent receiving statusbar notifications (Android 4.3+)
+	* prevent [C2DM](https://developers.google.com/android/c2dm/) messages
 * Phone:
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID (IMSI for a GSM phone)
@@ -224,9 +229,7 @@ For easy usage, data is restricted by category:
 	* return an empty list of running tasks
 	* return an empty list of widgets
 	* return an empty list of applications (provider)
-	* return an empty clipboard
 	* prevent package add, replace, restart and remove notifications
-	* prevent statusbar notifications
 * View
 	* prevent links from opening in the browser
 	* you will be notified if an application tries to open a link
@@ -544,7 +547,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Moved restricting statusbar notifications and C2DM to new category *Notifications*
 
 **Version 1.7.26 BETA!**
 

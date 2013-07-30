@@ -60,13 +60,19 @@ public class XActivityThread extends XHook {
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cCalling,
 				TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, Build.VERSION_CODES.JELLY_BEAN_MR2));
 
+		// Intent receive: C2DM
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,
+				"com.google.android.c2dm.intent.REGISTRATION"));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,
+				"com.google.android.c2dm.intent.RECEIVE"));
+
 		// Intent receive: NFC
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_NDEF_DISCOVERED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TAG_DISCOVERED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TECH_DISCOVERED));
 
 		// Intent receive: notifications
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,
 				NotificationListenerService.SERVICE_INTERFACE, Build.VERSION_CODES.JELLY_BEAN_MR2));
 
 		// Intent receive: package changes
@@ -87,12 +93,6 @@ public class XActivityThread extends XHook {
 				Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
 				Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE));
-
-		// Intent receive: C2DM
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
-				"com.google.android.c2dm.intent.REGISTRATION"));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
-				"com.google.android.c2dm.intent.RECEIVE"));
 
 		return listHook;
 	}

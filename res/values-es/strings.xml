@@ -47,6 +47,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Medios (audio, foto, video)</string>
     <string name="restrict_messages">Mensajes (SMS, MMS)</string>
     <string name="restrict_network">Red (direcciones)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Teléfono (ID, números, llamadas)</string>
     <string name="restrict_storage">Almacenamiento (media, tarjeta SD)</string>
     <string name="restrict_shell">Terminal (comandos, superusuario)</string>

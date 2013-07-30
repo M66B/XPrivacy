@@ -46,6 +46,7 @@
     <string name="restrict_media">Medya (ses, fotoğraf, video)</string>
     <string name="restrict_messages">Mesajlar (SMS, MMS)</string>
     <string name="restrict_network">Ağ (adresler)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefon (Kimlik, numaralar, aramalar)</string>
     <string name="restrict_storage">Depolama (medya, SD kart)</string>
     <string name="restrict_shell">Kabuk (komutlar, superuser)</string>

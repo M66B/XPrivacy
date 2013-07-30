@@ -47,6 +47,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">الميديا (صوت,صورة,فيديو) </string>
     <string name="restrict_messages">الرسائل (النصية , الوسائط)</string>
     <string name="restrict_network">الشبكة (العناوين)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">الهاتف (المعرف,الأرقام,المكالمات)</string>
     <string name="restrict_storage">التخزين (الميديا’الذاكرة الخارجية)</string>
     <string name="restrict_shell">سطر الأوامر (الأوامر,المستخدم الجذر)</string>

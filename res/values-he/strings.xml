@@ -47,6 +47,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">מדיה (אודיו, תמונות, וידאו)</string>
     <string name="restrict_messages">הודעות (SMS, MMS)</string>
     <string name="restrict_network">רשת (כתובות)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">טלפון (זיהוי, מספרים, שיחות)</string>
     <string name="restrict_storage">אחסון (מדיה, כרטיס SD)</string>
     <string name="restrict_shell">Shell (commands, superuser)</string>

@@ -47,6 +47,7 @@
     <string name="restrict_media">媒体 (声音, 图片, 视频)</string>
     <string name="restrict_messages">信息 (短信, 彩信)</string>
     <string name="restrict_network">网络 (地址)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">手机 (ID, 电话号码, 通话)</string>
     <string name="restrict_storage">存储 (媒体, SD 卡)</string>
     <string name="restrict_shell">Shell (命令, 超级用户)</string>

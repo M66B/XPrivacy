@@ -47,6 +47,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_media">Media (audio, foto, video)</string>
     <string name="restrict_messages">Berichten (SMS, MMS)</string>
     <string name="restrict_network">Netwerk (adressen)</string>
+    <string name="restrict_notifications">Notificaties</string>
     <string name="restrict_phone">Telefoon (ID, nummers, oproepen)</string>
     <string name="restrict_storage">Opslag (media, SD card)</string>
     <string name="restrict_shell">Shell (opdrachten, superuser)</string>

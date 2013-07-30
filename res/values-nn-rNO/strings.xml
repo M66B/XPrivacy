@@ -45,6 +45,7 @@
     <string name="restrict_media">Medier (lyd, foto, video)</string>
     <string name="restrict_messages">Meldinger (SMS, MMS)</string>
     <string name="restrict_network">Nettverk (adresser)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefon (ID, nummere, oppringninger)</string>
     <string name="restrict_storage">Minne (medier, SD kort)</string>
     <string name="restrict_shell">Shell (kommandoer, superbruker)</string>

@@ -46,6 +46,7 @@
     <string name="restrict_media">Media (nhạc, phim, ảnh)</string>
     <string name="restrict_messages">Tin nhắn (SMS, MMS)</string>
     <string name="restrict_network">Mạng (địa chỉ mạng)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Điện thoại (ID, số liên lạc, cuộc gọi)</string>
     <string name="restrict_storage">Lưu trữ (media, thẻ nhớ)</string>
     <string name="restrict_shell">Shell (câu lệnh, superuser)</string>

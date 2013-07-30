@@ -47,6 +47,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Πολυμέσα (ήχοι, φωτογραφίες, βίντεο)</string>
     <string name="restrict_messages">Μηνύματα (SMS, MMS)</string>
     <string name="restrict_network">Δίκτυο (διευθύνσεις)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Τηλέφωνο (στοιχεία, αριθμοί, κλήσεις)</string>
     <string name="restrict_storage">Αποθ. χώρος (πολυμέσα, κάρτα SD)</string>
     <string name="restrict_shell">Shell (εντολές, superuser)</string>

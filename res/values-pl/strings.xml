@@ -47,6 +47,7 @@
     <string name="restrict_media">Media (audio, foto, wideo)</string>
     <string name="restrict_messages">Wiadomości (SMS, MMS)</string>
     <string name="restrict_network">Sieć (adresy)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefon (ID, numery, połączenia)</string>
     <string name="restrict_storage">Storage (media, karta SD)</string>
     <string name="restrict_shell">Powłoka (polecenia, superuser)</string>

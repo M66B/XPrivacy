@@ -47,6 +47,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_media">Médiá (hudba, fotky, videá)</string>
     <string name="restrict_messages">Správy (SMS, MMS)</string>
     <string name="restrict_network">Sieť (adresy)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefón (ID, čísla, hovory)</string>
     <string name="restrict_storage">Úložisko (médiá, SD karta)</string>
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>

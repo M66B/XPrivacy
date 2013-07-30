@@ -47,6 +47,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Média (hudba, fotky, videa)</string>
     <string name="restrict_messages">Zprávy (SMS, MMS)</string>
     <string name="restrict_network">Síť (adresace)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefon (ID, čísla, hovory)</string>
     <string name="restrict_storage">Úložiště (média, SD karta)</string>
     <string name="restrict_shell">Konzole (příkazy, superuser)</string>

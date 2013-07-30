@@ -47,6 +47,7 @@
     <string name="restrict_media">Медиа (аудио, фото, видео)</string>
     <string name="restrict_messages">Сообщения (SMS, MMS)</string>
     <string name="restrict_network">Сеть (адреса)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Телефон (ID, номера, журнал вызовов)</string>
     <string name="restrict_storage">Хранилище (медиа, карта памяти)</string>
     <string name="restrict_shell">Команды shell (вкл. суперпользователя)</string>
