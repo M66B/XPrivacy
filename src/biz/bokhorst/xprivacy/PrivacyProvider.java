@@ -198,7 +198,7 @@ public class PrivacyProvider extends ContentProvider {
 			// All
 			for (String restrictionName : PrivacyManager.getRestrictions(true)) {
 				SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
-						Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+						Context.MODE_PRIVATE);
 				for (String prefName : prefs.getAll().keySet())
 					if (prefName.startsWith(COL_USED)) {
 						String[] prefParts = prefName.split("\\.");
@@ -221,7 +221,7 @@ public class PrivacyProvider extends ContentProvider {
 
 	private void getUsage(int uid, String restrictionName, String methodName, MatrixCursor cursor) {
 		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
-				Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+				Context.MODE_PRIVATE);
 		String values = prefs.getString(getUsagePref(uid, methodName), null);
 		if (values != null) {
 			String[] value = values.split(":");
@@ -312,7 +312,7 @@ public class PrivacyProvider extends ContentProvider {
 	private void updateUsage(final int uid, final String restrictionName, final String methodName,
 			final boolean restricted, long timeStamp) {
 		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
-				Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+				Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
 		String prefName = getUsagePref(uid, methodName);
 		String prefValue = String.format("%d:%b", timeStamp, restricted);

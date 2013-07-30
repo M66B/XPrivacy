@@ -544,6 +544,7 @@ How to get beta releases:
 
 **Next release**
 
+* Revert "Run privacy provider in separate process" ([issue](https://github.com/M66B/XPrivacy/issues/384))
 * Updated Vietnamese translation
 
 **Version 1.7.25 BETA!**
