@@ -1720,7 +1720,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			protected Object doInBackground(Object... params) {
 				if (holder.position == position) {
 					// Get info
-					xAppInfo = getItem(holder.position);
+					try {
+						xAppInfo = getItem(holder.position);
+					} catch (IndexOutOfBoundsException ex) {
+						// Can happen when filtering
+						return null;
+					}
 
 					// Get if used
 					used = (PrivacyManager.getUsed(holder.row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
