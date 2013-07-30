@@ -337,10 +337,10 @@ public class ActivityApp extends Activity {
 		private class GroupHolderTask extends AsyncTask<Object, Object, Object> {
 			private int position;
 			private GroupViewHolder holder;
-			String restrictionName;
-			boolean used;
-			boolean permission;
-			boolean restricted;
+			private String restrictionName;
+			private boolean used;
+			private boolean permission;
+			private boolean restricted;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder) {
 				position = thePosition;
@@ -349,8 +349,8 @@ public class ActivityApp extends Activity {
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				// Get info
 				if (holder.position == position) {
+					// Get info
 					restrictionName = (String) getGroup(position);
 					used = (PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
@@ -364,6 +364,7 @@ public class ActivityApp extends Activity {
 			@Override
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && restrictionName != null) {
+					// Set data
 					holder.ctvRestriction.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
@@ -379,7 +380,7 @@ public class ActivityApp extends Activity {
 							holder.ctvRestriction.setChecked(restricted);
 							PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName,
 									null, restricted);
-							notifyDataSetChanged();
+							notifyDataSetChanged(); // Needed to update childs
 						}
 					});
 				}
@@ -442,7 +443,7 @@ public class ActivityApp extends Activity {
 			holder.ctvRestriction.setChecked(false);
 			holder.ctvRestriction.setClickable(false);
 
-			// Async
+			// Async update
 			new GroupHolderTask(groupPosition, holder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Object) null);
 
 			return convertView;
@@ -476,7 +477,7 @@ public class ActivityApp extends Activity {
 			public ImageView imgGranted;
 			public CheckedTextView ctvMethodName;
 
-			public ChildViewHolder(View theRow, int gPosition, int cPosition) {
+			private ChildViewHolder(View theRow, int gPosition, int cPosition) {
 				row = theRow;
 				groupPosition = gPosition;
 				childPosition = cPosition;
@@ -505,8 +506,8 @@ public class ActivityApp extends Activity {
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				// Get info
 				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition) {
+					// Get info
 					restrictionName = (String) getGroup(groupPosition);
 					md = (PrivacyManager.MethodDescription) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName,
@@ -524,6 +525,7 @@ public class ActivityApp extends Activity {
 			protected void onPostExecute(Object result) {
 				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition
 						&& restrictionName != null && md != null) {
+					// Set data
 					if (lastUsage > 0) {
 						Date date = new Date(lastUsage);
 						SimpleDateFormat format = new SimpleDateFormat("dd/HH:mm", Locale.ROOT);
@@ -591,7 +593,7 @@ public class ActivityApp extends Activity {
 			holder.ctvMethodName.setChecked(false);
 			holder.ctvMethodName.setClickable(false);
 
-			// Async
+			// Async update
 			new ChildHolderTask(groupPosition, childPosition, holder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
 					(Object) null);
 

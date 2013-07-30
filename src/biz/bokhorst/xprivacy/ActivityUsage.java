@@ -187,10 +187,10 @@ public class ActivityUsage extends Activity {
 		}
 
 		private class ViewHolder {
-			private TextView tvTime;
-			private ImageView imgRestricted;
-			private TextView tvApp;
-			private TextView tvRestriction;
+			public TextView tvTime;
+			public ImageView imgRestricted;
+			public TextView tvApp;
+			public TextView tvRestriction;
 
 			public ViewHolder(View row) {
 				tvTime = (TextView) row.findViewById(R.id.tvTime);

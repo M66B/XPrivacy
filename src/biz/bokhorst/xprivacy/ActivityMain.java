@@ -1687,13 +1687,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private class HolderTask extends AsyncTask<Object, Object, Object> {
 			private int position;
 			private ViewHolder holder;
-
-			ApplicationInfoEx xAppInfo = null;
-			boolean used;
-			boolean granted = true;
-			List<String> listRestriction;
-			boolean allRestricted = true;
-			boolean someRestricted = false;
+			private ApplicationInfoEx xAppInfo = null;
+			private boolean used;
+			private boolean granted = true;
+			private List<String> listRestriction;
+			private boolean allRestricted = true;
+			private boolean someRestricted = false;
 
 			public HolderTask(int thePosition, ViewHolder theHolder) {
 				position = thePosition;
@@ -1702,8 +1701,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				// Get info
 				if (holder.position == position) {
+					// Get info
 					xAppInfo = getItem(holder.position);
 
 					// Get if used
@@ -1784,9 +1783,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							holder.ctvApp.setChecked(allRestricted);
 						}
 					});
-
-					// Refresh
-					holder.row.refreshDrawableState();
 				}
 			}
 		}
@@ -1827,10 +1823,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 			});
 
-			// Set title
+			// Set data
 			holder.ctvApp.setText(xAppInfo.toString());
 			holder.ctvApp.setTypeface(null, Typeface.NORMAL);
-
 			holder.imgUsed.setVisibility(View.INVISIBLE);
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 			holder.imgInternet.setVisibility(View.INVISIBLE);
@@ -1839,7 +1834,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			holder.ctvApp.setEnabled(false);
 			holder.ctvApp.setClickable(false);
 
-			// Async
+			// Async update
 			new HolderTask(position, holder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Object) null);
 
 			return convertView;
