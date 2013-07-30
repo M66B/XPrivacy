@@ -357,16 +357,16 @@ public class ActivityApp extends Activity {
 			private boolean permission;
 			private boolean restricted;
 
-			public GroupHolderTask(int thePosition, GroupViewHolder theHolder) {
+			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
 				holder = theHolder;
+				restrictionName = theRestrictionName;
 			}
 
 			@Override
 			protected Object doInBackground(Object... params) {
 				if (holder.position == position) {
 					// Get info
-					restrictionName = (String) getGroup(position);
 					used = (PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
 							restrictionName);
@@ -459,7 +459,7 @@ public class ActivityApp extends Activity {
 			holder.ctvRestriction.setClickable(false);
 
 			// Async update
-			new GroupHolderTask(groupPosition, holder).executeOnExecutor(mExecutor, (Object) null);
+			new GroupHolderTask(groupPosition, holder, restrictionName).executeOnExecutor(mExecutor, (Object) null);
 
 			return convertView;
 		}
@@ -513,17 +513,17 @@ public class ActivityApp extends Activity {
 			private boolean permission;
 			private boolean restricted;
 
-			public ChildHolderTask(int gPosition, int cPosition, ChildViewHolder theHolder) {
+			public ChildHolderTask(int gPosition, int cPosition, ChildViewHolder theHolder, String theRestrictionName) {
 				groupPosition = gPosition;
 				childPosition = cPosition;
 				holder = theHolder;
+				restrictionName = theRestrictionName;
 			}
 
 			@Override
 			protected Object doInBackground(Object... params) {
 				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition) {
 					// Get info
-					restrictionName = (String) getGroup(groupPosition);
 					md = (PrivacyManager.MethodDescription) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName,
 							md.getMethodName());
@@ -609,7 +609,8 @@ public class ActivityApp extends Activity {
 			holder.ctvMethodName.setClickable(false);
 
 			// Async update
-			new ChildHolderTask(groupPosition, childPosition, holder).executeOnExecutor(mExecutor, (Object) null);
+			new ChildHolderTask(groupPosition, childPosition, holder, restrictionName).executeOnExecutor(mExecutor,
+					(Object) null);
 
 			return convertView;
 		}
