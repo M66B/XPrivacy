@@ -38,6 +38,7 @@
     <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>
     <string name="restrict_calendar">Koledar</string>
     <string name="restrict_calling">Klicanje (telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Stiki</string>
     <string name="restrict_dictionary">Slovar (uporabnik)</string>
     <string name="restrict_identification">Identifikacija (naprava)</string>

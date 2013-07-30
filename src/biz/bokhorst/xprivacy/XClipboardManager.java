@@ -43,7 +43,7 @@ public class XClipboardManager extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods clip : Methods.values())
-			listHook.add(new XClipboardManager(clip, PrivacyManager.cSystem));
+			listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard));
 		return listHook;
 	}
 

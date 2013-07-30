@@ -38,6 +38,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">Browser (Bogmærker/Historie)</string>
     <string name="restrict_calendar">Kalendar</string>
     <string name="restrict_calling">Komunikation (Telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Contacts</string>
     <string name="restrict_dictionary">Ordbog (Bruger Difineret)</string>
     <string name="restrict_identification">Identifikation (Enhed)</string>

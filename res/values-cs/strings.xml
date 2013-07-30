@@ -38,6 +38,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">Prohlížeč (záložky/historie)</string>
     <string name="restrict_calendar">Kalendář</string>
     <string name="restrict_calling">Volání (telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Kontakty</string>
     <string name="restrict_dictionary">Slovník (uživatele)</string>
     <string name="restrict_identification">Identifikace (zařízení)</string>

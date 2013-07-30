@@ -36,6 +36,7 @@
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Ringe (telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Kontakter</string>
     <string name="restrict_dictionary">Ordbok (bruker)</string>
     <string name="restrict_identification">Identifikasjon (enhet)</string>

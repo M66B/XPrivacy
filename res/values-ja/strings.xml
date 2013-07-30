@@ -38,6 +38,7 @@
     <string name="restrict_browser">ブラウザ (お気に入り/履歴)</string>
     <string name="restrict_calendar">カレンダー</string>
     <string name="restrict_calling">通話 (電話, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">電話帳</string>
     <string name="restrict_dictionary">辞書 (ユーザー)</string>
     <string name="restrict_identification">ID (端末)</string>

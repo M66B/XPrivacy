@@ -45,6 +45,7 @@ public class PrivacyManager {
 	public static final String cBrowser = "browser";
 	public static final String cCalendar = "calendar";
 	public static final String cCalling = "calling";
+	public static final String cClipboard = "clipboard";
 	public static final String cContacts = "contacts";
 	public static final String cDictionary = "dictionary";
 	public static final String cEMail = "email";
@@ -62,8 +63,8 @@ public class PrivacyManager {
 	public static final String cView = "view";
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
-			cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cNfc,
-			cPhone, cShell, cStorage, cSystem, cView };
+			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
+			cNetwork, cNfc, cPhone, cShell, cStorage, cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;

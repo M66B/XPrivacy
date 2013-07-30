@@ -38,6 +38,7 @@
     <string name="restrict_browser">Браузър (отметки/история)</string>
     <string name="restrict_calendar">Календар</string>
     <string name="restrict_calling">Обаждания, SMS, MMS</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Контакти</string>
     <string name="restrict_dictionary">Речник на потребителя</string>
     <string name="restrict_identification">Идентификация (устройство)</string>

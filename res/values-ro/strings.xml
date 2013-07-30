@@ -38,6 +38,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">Browser (semne de carte/istorie)</string>
     <string name="restrict_calendar">Calendar</string>
     <string name="restrict_calling">Conversatii (apeluri, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Contacte</string>
     <string name="restrict_dictionary">Dictionary (user)</string>
     <string name="restrict_identification">Date de identificare (dispozitivul propriu)</string>

@@ -38,6 +38,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_browser">Navigateur (marque-pages/historique)</string>
     <string name="restrict_calendar">Calendrier</string>
     <string name="restrict_calling">Appels (Téléphone, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Contacts</string>
     <string name="restrict_dictionary">Dictionnaire (utilisateur)</string>
     <string name="restrict_identification">Identification (Matériel)</string>

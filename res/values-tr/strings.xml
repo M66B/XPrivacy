@@ -37,6 +37,7 @@
     <string name="restrict_browser">Tarayıcı (yer imleri/geçmiş)</string>
     <string name="restrict_calendar">Takvim</string>
     <string name="restrict_calling">Arama (telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Kişiler</string>
     <string name="restrict_dictionary">Sözlük (kullıcı)</string>
     <string name="restrict_identification">Kimlik (cihaz)</string>

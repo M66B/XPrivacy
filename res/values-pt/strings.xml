@@ -37,6 +37,7 @@
     <string name="restrict_browser">Navegador (favoritos/histórico)</string>
     <string name="restrict_calendar">Calendário</string>
     <string name="restrict_calling">Chamada (telefone, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Contactos</string>
     <string name="restrict_dictionary">Dicionário (usuário)</string>
     <string name="restrict_identification">Identificação (dispositivo)</string>

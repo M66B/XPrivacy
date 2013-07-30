@@ -38,6 +38,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">المتصفح (العلامات,السجل)</string>
     <string name="restrict_calendar">التقويم</string>
     <string name="restrict_calling">المكالمات (الهاتف,الرسائل النصية,رسائل الوسائط)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">الأسماء</string>
     <string name="restrict_dictionary">القاموس (المستخدم)</string>
     <string name="restrict_identification">الهوية (الجهاز)</string>

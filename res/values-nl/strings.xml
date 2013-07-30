@@ -38,6 +38,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_browser">Browser (favorieten/geschiedenis)</string>
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Oproepen (bellen, SMS, MMS)</string>
+    <string name="restrict_clipboard">Prikbord</string>
     <string name="restrict_contacts">Contacten</string>
     <string name="restrict_dictionary">Woordenboek (gebruiker)</string>
     <string name="restrict_identification">Identificatie (apparaat)</string>

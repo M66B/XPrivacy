@@ -549,6 +549,7 @@ How to get beta releases:
 * Faster usage view by applying the holder pattern
 * Usage private executors with normal priority for async tasks
 * Revert "Run privacy provider in separate process" ([issue](https://github.com/M66B/XPrivacy/issues/384))
+* Moved clipboard restrictions for *System to new *Clipboard* category
 * Updated Lithuanian translation
 * Updated Vietnamese translation
 

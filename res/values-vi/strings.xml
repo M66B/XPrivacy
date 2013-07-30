@@ -37,6 +37,7 @@
     <string name="restrict_browser">Trình duyệt (bookmarks/history)</string>
     <string name="restrict_calendar">Lịch</string>
     <string name="restrict_calling">Cuộc gọi (phone, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Danh bạ</string>
     <string name="restrict_dictionary">Từ điển (người dùng)</string>
     <string name="restrict_identification">Định danh (thiết bị)</string>

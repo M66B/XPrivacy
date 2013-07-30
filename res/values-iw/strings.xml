@@ -38,6 +38,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">דפדפן (מועדפים / היסטוריה)</string>
     <string name="restrict_calendar">יומן</string>
     <string name="restrict_calling">שיחות (טלפון, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">אנשי קשר</string>
     <string name="restrict_dictionary">מילון (משתמש)</string>
     <string name="restrict_identification">זיהוי (מכשיר)</string>
