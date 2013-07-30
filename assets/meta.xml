@@ -167,6 +167,16 @@
     <Hook restriction="system" method="android.intent.action.PACKAGE_REPLACED" permissions="" sdk="14" />
     <Hook restriction="system" method="android.intent.action.PACKAGE_RESTARTED" permissions="" sdk="14" />
     <Hook restriction="system" method="android.intent.action.PACKAGE_REMOVED" permissions="" sdk="14" />
+
+    <Hook restriction="system" method="android.intent.action.PACKAGE_CHANGED" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_DATA_CLEARED" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_FIRST_LAUNCH" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_FULLY_REMOVED" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_NEEDS_VERIFICATION" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_VERIFIED" permissions="" sdk="14" />
+
+    <Hook restriction="system" method="android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE" permissions="" sdk="14" />
     <Hook restriction="system" method="ApplicationsProvider" permissions="" sdk="14" />
 
     <Hook restriction="view" method="android.intent.action.VIEW" permissions="" sdk="14" />

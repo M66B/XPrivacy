@@ -550,6 +550,15 @@ How to get beta releases:
 * Usage private executors with normal priority for async tasks
 * Revert "Run privacy provider in separate process" ([issue](https://github.com/M66B/XPrivacy/issues/384))
 * Moved clipboard restrictions for *System to new *Clipboard* category
+* Add restrictions to the *System* category:
+	* android.intent.action.PACKAGE_CHANGED
+	* android.intent.action.PACKAGE_DATA_CLEARED
+	* android.intent.action.PACKAGE_FIRST_LAUNCH
+	* android.intent.action.PACKAGE_FULLY_REMOVED
+	* android.intent.action.PACKAGE_NEEDS_VERIFICATION
+	* android.intent.action.PACKAGE_VERIFIED
+	* android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE
+	* android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE
 * Updated Lithuanian translation
 * Updated Vietnamese translation
 

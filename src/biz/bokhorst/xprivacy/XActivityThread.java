@@ -75,6 +75,16 @@ public class XActivityThread extends XHook {
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_RESTARTED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REMOVED));
 
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_CHANGED));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_DATA_CLEARED));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_FIRST_LAUNCH));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_FULLY_REMOVED));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_NEEDS_VERIFICATION));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_VERIFIED));
+
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE));
+
 		return listHook;
 	}
 
