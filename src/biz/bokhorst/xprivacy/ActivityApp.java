@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import biz.bokhorst.xprivacy.PrivacyManager.MethodDescription;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -20,6 +18,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -293,6 +292,7 @@ public class ActivityApp extends Activity {
 	private class RestrictionAdapter extends BaseExpandableListAdapter {
 		private ApplicationInfoEx mAppInfo;
 		private List<String> mRestrictions;
+		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, List<String> restrictions) {
 			mAppInfo = appInfo;
@@ -314,43 +314,118 @@ public class ActivityApp extends Activity {
 			return groupPosition;
 		}
 
+		private class GroupViewHolder {
+			private View row;
+			private int position;
+			public ImageView imgIndicator;
+			public ImageView imgUsed;
+			public ImageView imgGranted;
+			public ImageView imgInfo;
+			public CheckedTextView ctvRestriction;
+
+			public GroupViewHolder(View theRow, int thePosition) {
+				row = theRow;
+				position = thePosition;
+				imgIndicator = (ImageView) row.findViewById(R.id.imgIndicator);
+				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
+				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
+				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
+				ctvRestriction = (CheckedTextView) row.findViewById(R.id.ctvName);
+			}
+		}
+
+		private class GroupHolderTask extends AsyncTask<Object, Object, Object> {
+			private int position;
+			private GroupViewHolder holder;
+			String restrictionName;
+			boolean used;
+			boolean permission;
+			boolean restricted;
+
+			public GroupHolderTask(int thePosition, GroupViewHolder theHolder) {
+				position = thePosition;
+				holder = theHolder;
+			}
+
+			@Override
+			protected Object doInBackground(Object... params) {
+				// Get info
+				if (holder.position == position) {
+					restrictionName = (String) getGroup(position);
+					used = (PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0);
+					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
+							restrictionName);
+					restricted = PrivacyManager.getRestricted(null, holder.row.getContext(), mAppInfo.getUid(),
+							restrictionName, null, false, false);
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Object result) {
+				if (holder.position == position && restrictionName != null) {
+					holder.ctvRestriction.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
+					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
+					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
+					holder.ctvRestriction.setChecked(restricted);
+
+					// Listen for restriction changes
+					holder.ctvRestriction.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							boolean restricted = PrivacyManager.getRestricted(null, view.getContext(),
+									mAppInfo.getUid(), restrictionName, null, false, false);
+							restricted = !restricted;
+							holder.ctvRestriction.setChecked(restricted);
+							PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName,
+									null, restricted);
+							notifyDataSetChanged();
+						}
+					});
+				}
+			}
+		}
+
 		@Override
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.restrictionentry, parent, false);
-			ImageView imgIndicator = (ImageView) row.findViewById(R.id.imgIndicator);
-			ImageView imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
-			ImageView imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
-			ImageView imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
-			final CheckedTextView ctvRestriction = (CheckedTextView) row.findViewById(R.id.ctvName);
+			GroupViewHolder holder;
+			if (convertView == null) {
+				convertView = mInflater.inflate(R.layout.restrictionentry, null);
+				holder = new GroupViewHolder(convertView, groupPosition);
+				convertView.setTag(holder);
+			} else {
+				holder = (GroupViewHolder) convertView.getTag();
+				holder.position = groupPosition;
+			}
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
 
 			// Set background color
 			if (PrivacyManager.isDangerousRestriction(restrictionName))
-				row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+			else
+				holder.row.setBackgroundColor(Color.TRANSPARENT);
 
 			// Indicator state
-			imgIndicator.setImageResource(getThemed(isExpanded ? R.attr.icon_expander_maximized
+			holder.imgIndicator.setImageResource(getThemed(isExpanded ? R.attr.icon_expander_maximized
 					: R.attr.icon_expander_minimized));
 
 			// Disable indicator for empty groups
 			if (getChildrenCount(groupPosition) == 0)
-				imgIndicator.setVisibility(View.INVISIBLE);
+				holder.imgIndicator.setVisibility(View.INVISIBLE);
+			else
+				holder.imgIndicator.setVisibility(View.VISIBLE);
 
 			// Display if used
-			if (PrivacyManager.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0)
-				ctvRestriction.setTypeface(null, Typeface.BOLD_ITALIC);
-			else
-				imgUsed.setVisibility(View.INVISIBLE);
+			holder.ctvRestriction.setTypeface(null, Typeface.NORMAL);
+			holder.imgUsed.setVisibility(View.INVISIBLE);
 
 			// Check if permission
-			if (!PrivacyManager.hasPermission(row.getContext(), mAppInfo.getPackageName(), restrictionName))
-				imgGranted.setVisibility(View.INVISIBLE);
+			holder.imgGranted.setVisibility(View.INVISIBLE);
 
 			// Handle info
-			imgInfo.setOnClickListener(new View.OnClickListener() {
+			holder.imgInfo.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
@@ -361,28 +436,16 @@ public class ActivityApp extends Activity {
 			});
 
 			// Display localized name
-			ctvRestriction.setText(PrivacyManager.getLocalizedName(row.getContext(), restrictionName));
+			holder.ctvRestriction.setText(PrivacyManager.getLocalizedName(holder.row.getContext(), restrictionName));
 
 			// Display restriction
-			boolean restricted = PrivacyManager.getRestricted(null, row.getContext(), mAppInfo.getUid(),
-					restrictionName, null, false, false);
-			ctvRestriction.setChecked(restricted);
+			holder.ctvRestriction.setChecked(false);
+			holder.ctvRestriction.setClickable(false);
 
-			// Listen for restriction changes
-			ctvRestriction.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					boolean restricted = PrivacyManager.getRestricted(null, view.getContext(), mAppInfo.getUid(),
-							restrictionName, null, false, false);
-					restricted = !restricted;
-					ctvRestriction.setChecked(restricted);
-					PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName, null,
-							restricted);
-					notifyDataSetChanged();
-				}
-			});
+			// Async
+			new GroupHolderTask(groupPosition, holder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Object) null);
 
-			return row;
+			return convertView;
 		}
 
 		@Override
@@ -416,7 +479,8 @@ public class ActivityApp extends Activity {
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
-			final MethodDescription md = (MethodDescription) getChild(groupPosition, childPosition);
+			final PrivacyManager.MethodDescription md = (PrivacyManager.MethodDescription) getChild(groupPosition,
+					childPosition);
 			long lastUsage = PrivacyManager.getUsed(row.getContext(), mAppInfo.getUid(), restrictionName,
 					md.getMethodName());
 

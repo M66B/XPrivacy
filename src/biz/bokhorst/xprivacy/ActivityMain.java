@@ -1664,7 +1664,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		private class ViewHolder {
 			private View row;
-			public int position;
+			private int position;
 			public ImageView imgIcon;
 			public ImageView imgUsed;
 			public ImageView imgGranted;
