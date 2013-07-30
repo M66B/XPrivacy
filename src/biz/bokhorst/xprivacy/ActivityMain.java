@@ -1711,22 +1711,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			private boolean allRestricted = true;
 			private boolean someRestricted = false;
 
-			public HolderTask(int thePosition, ViewHolder theHolder) {
+			public HolderTask(int thePosition, ViewHolder theHolder, ApplicationInfoEx theAppInfo) {
 				position = thePosition;
 				holder = theHolder;
+				xAppInfo = theAppInfo;
 			}
 
 			@Override
 			protected Object doInBackground(Object... params) {
 				if (holder.position == position) {
-					// Get info
-					try {
-						xAppInfo = getItem(holder.position);
-					} catch (IndexOutOfBoundsException ex) {
-						// Can happen when filtering
-						return null;
-					}
-
 					// Get if used
 					used = (PrivacyManager.getUsed(holder.row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
 
@@ -1857,7 +1850,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			holder.ctvApp.setClickable(false);
 
 			// Async update
-			new HolderTask(position, holder).executeOnExecutor(mExecutor, (Object) null);
+			new HolderTask(position, holder, xAppInfo).executeOnExecutor(mExecutor, (Object) null);
 
 			return convertView;
 		}
