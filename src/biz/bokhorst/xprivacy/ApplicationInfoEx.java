@@ -24,6 +24,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private String mVersion;
 	private boolean mSystem;
 	private boolean mInstalled;
+	private Drawable mIcon;
 
 	public ApplicationInfoEx(Context context, String packageName) {
 		// Get app info
@@ -70,6 +71,13 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		boolean enabled = (setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
 		enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
 		mIsFrozen = !enabled;
+
+		// Get icon
+		try {
+			mIcon = pm.getApplicationInfo(mPackageName, 0).loadIcon(pm);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
 	}
 
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
@@ -115,14 +123,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return mPackageName;
 	}
 
-	public Drawable getDrawable(Context context) {
-		try {
-			PackageManager pm = context.getPackageManager();
-			return context.getPackageManager().getApplicationInfo(mPackageName, 0).loadIcon(pm);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			return null;
-		}
+	public Drawable getIcon() {
+		return mIcon;
 	}
 
 	public boolean hasInternet() {

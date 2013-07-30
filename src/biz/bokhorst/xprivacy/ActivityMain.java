@@ -1826,7 +1826,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
 
 			// Set icon
-			holder.imgIcon.setImageDrawable(xAppInfo.getDrawable(holder.row.getContext()));
+			holder.imgIcon.setImageDrawable(xAppInfo.getIcon());
 			holder.imgIcon.setVisibility(View.VISIBLE);
 
 			// Handle details click

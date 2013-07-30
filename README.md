@@ -547,6 +547,11 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.7.27 BETA!**
+
+* Pre-load application icons again
 * Moved restricting statusbar notifications and C2DM to new category *Notifications*
 * Updated German translation
 
