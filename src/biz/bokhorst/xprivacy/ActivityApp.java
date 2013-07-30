@@ -7,6 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -53,6 +56,18 @@ public class ActivityApp extends Activity {
 
 	public static final String cNotified = "notified";
 	public static final String cPackageName = "PackageName";
+
+	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
+			new PriorityThreadFactor());
+
+	private static class PriorityThreadFactor implements ThreadFactory {
+		@Override
+		public Thread newThread(Runnable r) {
+			Thread t = new Thread(r);
+			t.setPriority(Thread.NORM_PRIORITY);
+			return t;
+		}
+	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -274,12 +289,12 @@ public class ActivityApp extends Activity {
 
 	private void optionAccounts() {
 		AccountsTask accountsTask = new AccountsTask();
-		accountsTask.execute();
+		accountsTask.executeOnExecutor(mExecutor, (Object) null);
 	}
 
 	private void optionContacts() {
 		ContactsTask contactsTask = new ContactsTask();
-		contactsTask.execute();
+		contactsTask.executeOnExecutor(mExecutor, (Object) null);
 	}
 
 	@Override
@@ -444,7 +459,7 @@ public class ActivityApp extends Activity {
 			holder.ctvRestriction.setClickable(false);
 
 			// Async update
-			new GroupHolderTask(groupPosition, holder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Object) null);
+			new GroupHolderTask(groupPosition, holder).executeOnExecutor(mExecutor, (Object) null);
 
 			return convertView;
 		}
@@ -594,8 +609,7 @@ public class ActivityApp extends Activity {
 			holder.ctvMethodName.setClickable(false);
 
 			// Async update
-			new ChildHolderTask(groupPosition, childPosition, holder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
-					(Object) null);
+			new ChildHolderTask(groupPosition, childPosition, holder).executeOnExecutor(mExecutor, (Object) null);
 
 			return convertView;
 		}

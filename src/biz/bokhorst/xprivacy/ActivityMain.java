@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import javax.xml.parsers.SAXParserFactory;
 
@@ -62,7 +65,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Process;
 import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -102,6 +104,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int ACTIVITY_IMPORT = 1;
+
+	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
+			new PriorityThreadFactor());
+
+	private static class PriorityThreadFactor implements ThreadFactory {
+		@Override
+		public Thread newThread(Runnable r) {
+			Thread t = new Thread(r);
+			t.setPriority(Thread.NORM_PRIORITY);
+			return t;
+		}
+	}
 
 	private BroadcastReceiver mPackageChangeReceiver = new BroadcastReceiver() {
 		@Override
@@ -256,7 +270,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Start task to get app list
 		AppListTask appListTask = new AppListTask();
-		appListTask.execute();
+		appListTask.executeOnExecutor(mExecutor, (Object) null);
 
 		// Check environment
 		checkRequirements();
@@ -371,7 +385,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			if (data != null) {
 				String fileName = data.getData().getPath();
 				ImportTask importTask = new ImportTask();
-				importTask.execute(new File(fileName));
+				importTask.executeOnExecutor(mExecutor, new File(fileName));
 			}
 		}
 	}
@@ -900,7 +914,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				// Refresh if needed
 				if (fPermission != cbFPermission.isChecked() || fSystem != cbFSystem.isChecked()) {
 					AppListTask appListTask = new AppListTask();
-					appListTask.execute();
+					appListTask.executeOnExecutor(mExecutor, (Object) null);
 				}
 
 				// Done
@@ -946,7 +960,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionCheckUpdate() {
-		new UpdateTask().execute("http://goo.im/json2&path=/devs/M66B/xprivacy");
+		new UpdateTask().executeOnExecutor(mExecutor, "http://goo.im/json2&path=/devs/M66B/xprivacy");
 	}
 
 	private void optionReportIssue() {
@@ -964,7 +978,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private void optionExport() {
 		boolean multiple = Util.isIntentAvailable(ActivityMain.this, Intent.ACTION_GET_CONTENT);
 		ExportTask exportTask = new ExportTask();
-		exportTask.execute(getExportFile(multiple));
+		exportTask.executeOnExecutor(mExecutor, getExportFile(multiple));
 	}
 
 	private void optionImport() {
@@ -976,7 +990,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			startActivityForResult(intent, ACTIVITY_IMPORT);
 		} else {
 			ImportTask importTask = new ImportTask();
-			importTask.execute(getExportFile(false));
+			importTask.executeOnExecutor(mExecutor, getExportFile(false));
 		}
 	}
 
@@ -1459,16 +1473,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
-	private class AppListTask extends AsyncTask<String, Integer, List<ApplicationInfoEx>> {
+	private class AppListTask extends AsyncTask<Object, Integer, List<ApplicationInfoEx>> {
 		private String mRestrictionName;
 		private ProgressDialog mProgressDialog;
 
 		@Override
-		protected List<ApplicationInfoEx> doInBackground(String... params) {
+		protected List<ApplicationInfoEx> doInBackground(Object... params) {
 			mRestrictionName = null;
-
-			// Elevate priority
-			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
 
 			// Delegate
 			return ApplicationInfoEx.getXApplicationList(ActivityMain.this, mProgressDialog);
@@ -1835,7 +1846,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			holder.ctvApp.setClickable(false);
 
 			// Async update
-			new HolderTask(position, holder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Object) null);
+			new HolderTask(position, holder).executeOnExecutor(mExecutor, (Object) null);
 
 			return convertView;
 		}

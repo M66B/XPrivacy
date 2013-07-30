@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import android.app.Activity;
 import android.content.Context;
@@ -35,6 +38,18 @@ public class ActivityUsage extends Activity {
 
 	public static final String cUid = "Uid";
 
+	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
+			new PriorityThreadFactor());
+
+	private static class PriorityThreadFactor implements ThreadFactory {
+		@Override
+		public Thread newThread(Runnable r) {
+			Thread t = new Thread(r);
+			t.setPriority(Thread.NORM_PRIORITY);
+			return t;
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,7 +68,7 @@ public class ActivityUsage extends Activity {
 
 		// Start task to get usage data
 		UsageTask usageTask = new UsageTask();
-		usageTask.execute();
+		usageTask.executeOnExecutor(mExecutor, (Object) null);
 
 		// Listen for clicks
 		ListView lvUsage = (ListView) findViewById(R.id.lvUsage);
@@ -100,7 +115,7 @@ public class ActivityUsage extends Activity {
 			return true;
 		case R.id.menu_refresh:
 			UsageTask usageTask = new UsageTask();
-			usageTask.execute();
+			usageTask.executeOnExecutor(mExecutor, (Object) null);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

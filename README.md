@@ -547,6 +547,7 @@ How to get beta releases:
 * Performance improvements
 * Faster application details view by fetching data asynchronous
 * Faster usage view by applying the holder pattern
+* Usage private executors with normal priority for async tasks
 * Revert "Run privacy provider in separate process" ([issue](https://github.com/M66B/XPrivacy/issues/384))
 * Updated Vietnamese translation
 
