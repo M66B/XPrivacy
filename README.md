@@ -555,7 +555,9 @@ How to get beta releases:
 
 **Next release**
 
+* Updated French translation
 * Updated Japanese Translation
+* Updated Norwegian translation
 
 **Version 1.7.28 BETA!**
 
