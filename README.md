@@ -556,6 +556,7 @@ How to get beta releases:
 **Next release**
 
 * Fixed crash while filtering ([issue](https://github.com/M66B/XPrivacy/issues/402))
+* Updated Simplified Chinese translation
 * Updated Slovenian translation
 
 **Version 1.7.27 BETA!**
