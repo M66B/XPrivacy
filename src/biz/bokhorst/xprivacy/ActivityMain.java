@@ -1245,16 +1245,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					Util.log(null, Log.INFO, "Exporting settings");
 
 					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityMain.this);
-					for (String setting : mapSetting.keySet())
-						if (!setting.startsWith("Account.") && !setting.startsWith("Contact.")
-								&& !setting.startsWith("RawContact.")) {
-							// Serialize setting
-							String value = mapSetting.get(setting);
-							serializer.startTag(null, "Setting");
-							serializer.attribute(null, "Name", setting);
-							serializer.attribute(null, "Value", value);
-							serializer.endTag(null, "Setting");
+					for (String setting : mapSetting.keySet()) {
+						if (setting.startsWith("Account.") || setting.startsWith("Contact.")
+								|| setting.startsWith("RawContact.")) {
+							setting += "." + Build.SERIAL;
 						}
+						// Serialize setting
+						String value = mapSetting.get(setting);
+						serializer.startTag(null, "Setting");
+						serializer.attribute(null, "Name", setting);
+						serializer.attribute(null, "Value", value);
+						serializer.endTag(null, "Setting");
+					}
 
 					// Process restrictions
 					List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager
@@ -1455,9 +1457,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			if (qName.equals("Setting")) {
 				// Setting
-				String name = attributes.getValue("Name");
+				String setting = attributes.getValue("Name");
 				String value = attributes.getValue("Value");
-				PrivacyManager.setSetting(null, ActivityMain.this, name, value);
+
+				if (setting.startsWith("Account.") || setting.startsWith("Contact.")
+						|| setting.startsWith("RawContact."))
+					if (setting.endsWith("." + Build.SERIAL))
+						setting = setting.replace("." + Build.SERIAL, "");
+					else
+						return;
+
+				PrivacyManager.setSetting(null, ActivityMain.this, setting, value);
 			} else if (qName.equals("Package")) {
 				// Restriction
 				String packageName = attributes.getValue("Name");
