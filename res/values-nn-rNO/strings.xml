@@ -31,13 +31,12 @@
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Ferdig</string>
     <string name="msg_reboot">Reboot nødvendig</string>
-    <string name="msg_first"><b>XPrivacy er utviklet og testet med stor omsorg, men det er umulig å garantere at Appen fun
-gerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen ri
-siko.</b>\n\nSe også lisensen:</string>
+    <string name="msg_first"><b>XPrivacy er utviklet og testet med stor omsorg, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Ringe (telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Utklippstavle</string>
     <string name="restrict_contacts">Kontakter</string>
     <string name="restrict_dictionary">Ordbok (bruker)</string>
     <string name="restrict_identification">Identifikasjon (enhet)</string>
@@ -46,6 +45,7 @@ siko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_media">Medier (lyd, foto, video)</string>
     <string name="restrict_messages">Meldinger (SMS, MMS)</string>
     <string name="restrict_network">Nettverk (adresser)</string>
+    <string name="restrict_notifications">Varslinger</string>
     <string name="restrict_phone">Telefon (ID, nummere, oppringninger)</string>
     <string name="restrict_storage">Minne (medier, SD kort)</string>
     <string name="restrict_shell">Shell (kommandoer, superbruker)</string>
@@ -53,6 +53,7 @@ siko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_view">Betrakte (nettleser)</string>
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Marker for å blokke:</string>
+    <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>
     <string name="settings_mac">MAC adresse</string>
