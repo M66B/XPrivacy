@@ -38,7 +38,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_browser">Navigateur (marque-pages/historique)</string>
     <string name="restrict_calendar">Calendrier</string>
     <string name="restrict_calling">Appels (Téléphone, SMS, MMS)</string>
-    <string name="restrict_clipboard">Clipboard</string>
+    <string name="restrict_clipboard">Presse-papiers</string>
     <string name="restrict_contacts">Contacts</string>
     <string name="restrict_dictionary">Dictionnaire (utilisateur)</string>
     <string name="restrict_identification">Identification (Matériel)</string>
@@ -55,7 +55,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_view">Vue (navigateur)</string>
     <string name="title_category">Catégorie:</string>
     <string name="title_restrict">Cocher pour restreindre:</string>
-    <string name="settings_serial">Serial#</string>
+    <string name="settings_serial">Numéro de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
     <string name="settings_mac">Adresse MAC</string>
