@@ -555,6 +555,10 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.7.28 BETA!**
+
 * Export/import selected accounts/contacts *for the same device only*
 * Fixed crash while filtering ([issue](https://github.com/M66B/XPrivacy/issues/402))
 * Updated Simplified Chinese translation
