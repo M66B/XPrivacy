@@ -65,6 +65,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.Settings.Secure;
 import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -1228,10 +1229,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		@Override
 		protected String doInBackground(File... params) {
-			mFile = params[0];
 			try {
 				// Serialize
+				mFile = params[0];
 				Util.log(null, Log.INFO, "Exporting " + mFile);
+
 				FileOutputStream fos = new FileOutputStream(mFile);
 				try {
 					XmlSerializer serializer = Xml.newSerializer();
@@ -1244,14 +1246,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					publishProgress(getString(R.string.menu_settings));
 					Util.log(null, Log.INFO, "Exporting settings");
 
+					String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityMain.this);
 					for (String setting : mapSetting.keySet()) {
+						String value = mapSetting.get(setting);
+
+						// Bound accounts/contacts to same device
 						if (setting.startsWith("Account.") || setting.startsWith("Contact.")
 								|| setting.startsWith("RawContact.")) {
-							setting += "." + Build.SERIAL;
+							setting += "." + android_id;
 						}
+
 						// Serialize setting
-						String value = mapSetting.get(setting);
 						serializer.startTag(null, "Setting");
 						serializer.attribute(null, "Name", setting);
 						serializer.attribute(null, "Value", value);
@@ -1358,8 +1364,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		@Override
 		protected String doInBackground(File... params) {
-			mFile = params[0];
 			try {
+				mFile = params[0];
+
 				// Parse XML
 				Util.log(null, Log.INFO, "Importing " + mFile);
 				FileInputStream fis = null;
@@ -1452,6 +1459,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private class ImportHandler extends DefaultHandler {
 		private Map<String, Map<String, List<String>>> mMapPackage = new HashMap<String, Map<String, List<String>>>();
+		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -1460,10 +1468,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				String setting = attributes.getValue("Name");
 				String value = attributes.getValue("Value");
 
+				// Import accounts/contacts only for same device
 				if (setting.startsWith("Account.") || setting.startsWith("Contact.")
 						|| setting.startsWith("RawContact."))
-					if (setting.endsWith("." + Build.SERIAL))
-						setting = setting.replace("." + Build.SERIAL, "");
+					if (setting.endsWith("." + android_id))
+						setting = setting.replace("." + android_id, "");
 					else
 						return;
 
