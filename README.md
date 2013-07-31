@@ -519,6 +519,14 @@ Each user can manage the restrictions for the applications available to him/her.
 If Android uses the same uid for an application that two users share,
 both users can manage the restrictions for this application.
 
+**(30) Why is the location search in the settings disabled?**
+
+Because some Google components are not installed.
+
+**(31) Do I still need root after installing Xposed?**
+
+No.
+
 Support
 -------
 
