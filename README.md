@@ -555,7 +555,7 @@ How to get beta releases:
 
 **Next release**
 
-* Go to method restriction from application usage view
+* Go to method restriction from application usage view ([issue](https://github.com/M66B/XPrivacy/issues/409))
 * Updated French translation
 * Updated Japanese Translation
 * Updated Norwegian translation
