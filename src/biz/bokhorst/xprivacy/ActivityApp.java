@@ -54,8 +54,10 @@ public class ActivityApp extends Activity {
 	private ApplicationInfoEx mAppInfo;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 
-	public static final String cNotified = "notified";
+	public static final String cNotified = "Notified";
 	public static final String cPackageName = "PackageName";
+	public static final String cRestrictionName = "RestrictionName";
+	public static final String cMethodName = "MethodName";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactor());
@@ -82,6 +84,8 @@ public class ActivityApp extends Activity {
 		// Get arguments
 		Bundle extras = getIntent().getExtras();
 		mNotified = (extras.containsKey(cNotified) ? extras.getBoolean(cNotified) : false);
+		String restrictionName = (extras.containsKey(cRestrictionName) ? extras.getString(cRestrictionName) : null);
+		String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
 
 		// Get app info
 		mAppInfo = new ApplicationInfoEx(this, extras.getString(cPackageName));
@@ -167,16 +171,23 @@ public class ActivityApp extends Activity {
 		boolean fPermission = PrivacyManager
 				.getSettingBool(null, this, PrivacyManager.cSettingFPermission, true, false);
 		List<String> listRestriction = new ArrayList<String>();
-		for (String restrictionName : PrivacyManager.getRestrictions(true))
-			if (fPermission ? PrivacyManager.hasPermission(this, mAppInfo.getPackageName(), restrictionName)
-					|| PrivacyManager.getUsed(this, mAppInfo.getUid(), restrictionName, null) > 0 : true)
-				listRestriction.add(restrictionName);
+		for (String rRestrictionName : PrivacyManager.getRestrictions(true))
+			if (fPermission ? PrivacyManager.hasPermission(this, mAppInfo.getPackageName(), rRestrictionName)
+					|| PrivacyManager.getUsed(this, mAppInfo.getUid(), rRestrictionName, null) > 0 : true)
+				listRestriction.add(rRestrictionName);
 
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
 		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, listRestriction);
 		lvRestriction.setAdapter(mPrivacyListAdapter);
+		if (restrictionName != null && methodName != null) {
+			int groupPosition = PrivacyManager.getRestrictions(true).indexOf(restrictionName);
+			int childPosition = PrivacyManager.getMethods(restrictionName).indexOf(
+					new PrivacyManager.MethodDescription(methodName));
+			lvRestriction.expandGroup(groupPosition);
+			lvRestriction.setSelectedChild(groupPosition, childPosition, true);
+		}
 
 		// Up navigation
 		getActionBar().setDisplayHomeAsUpEnabled(true);

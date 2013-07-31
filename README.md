@@ -555,6 +555,7 @@ How to get beta releases:
 
 **Next release**
 
+* Go to method restriction from application usage view
 * Updated French translation
 * Updated Japanese Translation
 * Updated Norwegian translation

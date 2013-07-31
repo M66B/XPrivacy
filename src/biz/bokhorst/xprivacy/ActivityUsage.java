@@ -81,6 +81,8 @@ public class ActivityUsage extends Activity {
 					Intent intent = new Intent(ActivityUsage.this, ActivityApp.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					intent.putExtra(ActivityApp.cPackageName, packageName[0]);
+					intent.putExtra(ActivityApp.cRestrictionName, usageData.getRestrictionName());
+					intent.putExtra(ActivityApp.cMethodName, usageData.getMethodName());
 					startActivity(intent);
 				}
 			}
