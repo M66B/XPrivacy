@@ -9,12 +9,12 @@
     <string name="menu_usage">Aktivitätslog</string>
     <string name="menu_refresh">Aktualisieren</string>
     <string name="menu_settings">Einstellungen</string>
-    <string name="menu_template">Regel-Vorlage</string>
-    <string name="menu_update">Update suchen</string>
+    <string name="menu_template">Template (Vorlage)</string>
+    <string name="menu_update">Nach Updates suchen</string>
     <string name="menu_report">Problem melden</string>
     <string name="menu_export">Export der Einst.</string>
     <string name="menu_import">Import der Einst.</string>
-    <string name="menu_theme">Design wechseln</string>
+    <string name="menu_theme">Theme wechseln</string>
     <string name="menu_pro">Pro-Version</string>
     <string name="menu_about">Über XPrivacy</string>
     <string name="menu_all">Alles</string>
@@ -32,12 +32,12 @@
     <string name="msg_done">Fertig</string>
     <string name="msg_reboot">Geräte-Neustart erforderlich</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet, dennoch ist unmöglich zu gewährleisten,
-\ndass es auf wirklich JEDEM einzelnem Gerät und für JEDE einzelne App einwandfrei funktioniert.
-\n\nVerwenden Sie XPrivacy ausschließlich auf eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>
+\ndass es einwandfrei auf wirklich JEDEM einzelnem Gerät und für JEDE einzelne App funktioniert.
+\n\nVerwenden Sie XPrivacy ausschließlich auf Ihr eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>
     <string name="restrict_accounts">Konten (Google, Facebook, etc.)</string>
     <string name="restrict_browser">Browser (Lesezeichen/Verlauf)</string>
     <string name="restrict_calendar">Kalender</string>
-    <string name="restrict_calling">Kommunikation (Anrufe, SMS, MMS)</string>
+    <string name="restrict_calling">Kommunizieren (Anrufe, SMS, MMS)</string>
     <string name="restrict_clipboard">Zwischenablage</string>
     <string name="restrict_contacts">Kontakte</string>
     <string name="restrict_dictionary">Wörterbuch (Benutzer)</string>
