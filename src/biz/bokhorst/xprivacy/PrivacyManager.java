@@ -762,17 +762,20 @@ public class PrivacyManager {
 		return location;
 	}
 
+	@SuppressLint("DefaultLocale")
 	public static Object getRandomProp(String name) {
+		Random r = new Random();
 		if (name.equals("MAC") || name.equals("%macaddr")) {
-			Random r = new Random();
-			String digits = "0123456789ABCDEF";
 			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < 12; i++) {
-				if (i != 0 && i % 2 == 0)
+			for (int i = 0; i < 6; i++) {
+				if (i != 0)
 					sb.append(':');
-				sb.append(digits.charAt(r.nextInt(digits.length())));
+				int v = r.nextInt(256);
+				if (i == 0)
+					v = v | 2; // locally administered
+				sb.append(Integer.toHexString(0x100 | v).substring(1));
 			}
-			return sb.toString();
+			return sb.toString().toUpperCase();
 		}
 		return "";
 	}
