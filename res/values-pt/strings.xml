@@ -31,6 +31,8 @@
     <string name="msg_sure">Tem a certeza?</string>
     <string name="msg_done">Concluído</string>
     <string name="msg_reboot">É necessário reiniciar</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>A aplicação XPrivacy foi desenvolvida e testada com todo o cuidado, porém é impossível garantir que irá funcionar sem problemas em todos os dispositivos e com todas as aplicações.
 \n\nO uso desta aplicação é inteiramente por sua conta e risco.</b>\n\nVer também a licença:</string>
     <string name="restrict_accounts">Contas (Google, Facebook, etc)</string>

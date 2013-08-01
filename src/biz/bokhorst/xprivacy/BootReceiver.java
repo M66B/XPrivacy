@@ -11,7 +11,14 @@ import android.support.v4.app.NotificationCompat;
 public class BootReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent bootIntent) {
-		// Check if enabled
+		// Randomize
+		boolean random = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingRandom, true, false);
+		if (random) {
+			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")
+					.toString());
+		}
+
+		// Check if Xposed enabled
 		if (!Util.isXposedEnabled()) {
 			// Create Xposed installer intent
 			Intent xInstallerIntent = context.getPackageManager().getLaunchIntentForPackage(

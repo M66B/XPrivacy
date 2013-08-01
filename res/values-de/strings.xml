@@ -31,6 +31,8 @@
     <string name="msg_sure">Sind Sie sicher?</string>
     <string name="msg_done">Fertig</string>
     <string name="msg_reboot">Geräte-Neustart erforderlich</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet, dennoch ist unmöglich zu gewährleisten,
 \ndass es einwandfrei auf wirklich JEDEM einzelnem Gerät und für JEDE einzelne App funktioniert.
 \n\nVerwenden Sie XPrivacy ausschließlich auf Ihr eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>

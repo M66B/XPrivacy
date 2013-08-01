@@ -31,6 +31,8 @@
     <string name="msg_sure">Сигурни ли сте?</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Нужно е рестартиране</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>XPrivacy е разработен и тестван с голямо внимание,
 но е невъзможно да се гарантира безпроблемна работа на всякакви устройства при всякакви приложения.
 \n\nИзползвате го на свой собствен риск.</b>\n\nВижте и лиценза:</string>

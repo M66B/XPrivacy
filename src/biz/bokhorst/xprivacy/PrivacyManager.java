@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -89,6 +90,7 @@ public class PrivacyManager {
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
 	public final static String cSettingFirstRun = "FirstRun";
+	public final static String cSettingRandom = "Random@boot";
 
 	public final static boolean cExperimental = false;
 
@@ -758,6 +760,21 @@ public class PrivacyManager {
 			location.setLongitude(Float.parseFloat(sLon) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
 		}
 		return location;
+	}
+
+	public static Object getRandomProp(String name) {
+		if (name.equals("MAC") || name.equals("%macaddr")) {
+			Random r = new Random();
+			String digits = "0123456789ABCDEF";
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < 12; i++) {
+				if (i != 0 && i % 2 == 0)
+					sb.append(':');
+				sb.append(digits.charAt(r.nextInt(digits.length())));
+			}
+			return sb.toString();
+		}
+		return "";
 	}
 
 	// Helper methods

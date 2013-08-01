@@ -30,7 +30,9 @@
     <string name="msg_edit">Klik op het applicatie pictogram om alle beperkingen te wijzigen</string>
     <string name="msg_sure">Zeker weten?</string>
     <string name="msg_done">Gereed</string>
-    <string name="msg_reboot">Opnieuw opstarten noodzakelijk</string>
+    <string name="msg_reboot">Herstart apparaat vereist</string>
+    <string name="msg_random">Willekeurig</string>
+    <string name="msg_random_boot">Willekeurig na herstart</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
 \n\nGebruik is geheel op eigen risico.</b>\n\nZie ook de licentie:</string>

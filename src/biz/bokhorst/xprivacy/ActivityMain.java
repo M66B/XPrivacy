@@ -1,18 +1,14 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.InterfaceAddress;
 import java.security.InvalidParameterException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -798,11 +794,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etCountry = (EditText) dlgSettings.findViewById(R.id.etCountry);
 		final EditText etIccId = (EditText) dlgSettings.findViewById(R.id.etIccId);
 		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
+		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
+		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
 		final CheckBox cbFPermission = (CheckBox) dlgSettings.findViewById(R.id.cbFPermission);
 		final CheckBox cbFSystem = (CheckBox) dlgSettings.findViewById(R.id.cbFSystem);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
+		final boolean random = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingRandom,
+				false, false);
 		final boolean fPermission = PrivacyManager.getSettingBool(null, ActivityMain.this,
 				PrivacyManager.cSettingFPermission, true, false);
 		final boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
@@ -823,6 +823,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etIccId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingIccId, "", false));
 		etSubscriber.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, "",
 				false));
+		cbRandom.setChecked(random);
 		cbFPermission.setChecked(fPermission);
 		cbFSystem.setChecked(fSystem);
 
@@ -861,7 +862,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		});
 
-		// Wait for OK
+		// Handle randomize
+		btnRandom.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				etMac.setText(PrivacyManager.getRandomProp("MAC").toString());
+			}
+		});
+
+		// Handle OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -907,6 +916,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						.toString());
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, etSubscriber
 						.getText().toString());
+
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingRandom,
+						Boolean.toString(cbRandom.isChecked()));
 
 				// Set filter by permission
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,

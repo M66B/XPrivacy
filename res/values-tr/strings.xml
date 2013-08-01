@@ -31,6 +31,8 @@
     <string name="msg_sure">Emin misin?</string>
     <string name="msg_done">Bitti</string>
     <string name="msg_reboot">Yeniden başlatma gerekli</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Xprivacy titizlikle geliştirilmiş ve test edilmiştir, ancak her cihazda veya her uygulamada kusursuz çalışacağını garantilemek imkansızdır.
 \n\nKullanım riski tamamen size aittir.</b>\n\nAyrıca lisansa bakınız:</string>
     <string name="restrict_accounts">Hesaplar (Google, Facebook, vb)</string>

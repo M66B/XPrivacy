@@ -187,6 +187,26 @@
 
             <TableRow>
 
+                <Button
+                    android:id="@+id/btnRandom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:text="@string/msg_random" />
+            </TableRow>
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/cbRandom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:text="@string/msg_random_boot" />
+            </TableRow>
+
+            <TableRow>
+
                 <CheckBox
                     android:id="@+id/cbFPermission"
                     android:layout_width="match_parent"

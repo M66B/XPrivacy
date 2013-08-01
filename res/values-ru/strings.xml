@@ -31,6 +31,8 @@
     <string name="msg_sure">Вы уверены?</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Требуется перезагрузка</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Большое внимание было уделено разработке и тестированию XPrivacy, 
 однако нельзя гарантировать, что оно будет работать безупречно на всех устройствах и со всеми приложениями.
 \n\nИспользуйте исключительно на свой страх и риск.</b>\n\nСм. также лицензию:</string>

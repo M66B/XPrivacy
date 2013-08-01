@@ -556,6 +556,8 @@ How to get beta releases:
 **Next release**
 
 * Intent for import/export ([issue](https://github.com/M66B/XPrivacy/issues/421))
+* Randomization of: ([issue](https://github.com/M66B/XPrivacy/issues/418))
+	* MAC address
 
 **Version 1.7.29 BETA!**
 

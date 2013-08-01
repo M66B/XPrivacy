@@ -31,6 +31,8 @@
     <string name="msg_sure">Sei sicuro?</string>
     <string name="msg_done">Fatto</string>
     <string name="msg_reboot">Riavvio richiesto</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
