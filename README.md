@@ -188,7 +188,7 @@ For easy usage, data is restricted by category:
 * Phone:
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID (IMSI for a GSM phone)
-	* return a fake phone device ID (IMEI)
+	* return a fake phone device ID (IMEI): 000000000000000
 	* return a empty ISIM/ISIM domain
 	* return a empty IMPI/IMPU
 	* return a fake MSISDN
@@ -560,6 +560,7 @@ How to get beta releases:
 	* GSF ID
 	* Location
 	* Serial#
+* Added hints to settings ([issue](https://github.com/M66B/XPrivacy/issues/422))
 * Updated Portuguese translation
 * Updated Swedish translation
 

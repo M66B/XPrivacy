@@ -25,6 +25,7 @@
 
                 <EditText
                     android:id="@+id/etSerial"
+                    android:hint="DEFACE"
                     android:inputType="textNoSuggestions" />
             </TableRow>
 
@@ -36,6 +37,7 @@
 
                 <EditText
                     android:id="@+id/etLat"
+                    android:hint="-10.5"
                     android:inputType="numberDecimal|numberSigned" />
             </TableRow>
 
@@ -47,6 +49,7 @@
 
                 <EditText
                     android:id="@+id/etLon"
+                    android:hint="105.667"
                     android:inputType="numberDecimal|numberSigned" />
             </TableRow>
 
@@ -73,6 +76,7 @@
                 <EditText
                     android:id="@+id/etMac"
                     android:digits="0123456789ABCDEF:"
+                    android:hint="DE:FA:CE:DE:FA:CE"
                     android:inputType="textCapCharacters|textNoSuggestions"
                     android:maxLength="18" />
             </TableRow>
@@ -85,6 +89,7 @@
 
                 <EditText
                     android:id="@+id/etImei"
+                    android:hint="000000000000000"
                     android:inputType="numberDecimal|textNoSuggestions"
                     android:maxLength="16" />
             </TableRow>
@@ -97,6 +102,7 @@
 
                 <EditText
                     android:id="@+id/etPhone"
+                    android:hint="DEFACE"
                     android:inputType="textNoSuggestions|phone" />
             </TableRow>
 
@@ -109,6 +115,7 @@
                 <EditText
                     android:id="@+id/etId"
                     android:digits="0123456789ABCDEF"
+                    android:hint="DEFACE"
                     android:inputType="textCapCharacters|textNoSuggestions" />
             </TableRow>
 
@@ -121,6 +128,7 @@
                 <EditText
                     android:id="@+id/etGsfId"
                     android:digits="0123456789ABCDEF"
+                    android:hint="DEFACE"
                     android:inputType="textCapCharacters|textNoSuggestions" />
             </TableRow>
 
@@ -132,6 +140,7 @@
 
                 <EditText
                     android:id="@+id/etMcc"
+                    android:hint="001"
                     android:inputType="numberDecimal|textNoSuggestions"
                     android:maxLength="3" />
             </TableRow>
@@ -144,6 +153,7 @@
 
                 <EditText
                     android:id="@+id/etMnc"
+                    android:hint="01"
                     android:inputType="numberDecimal|textNoSuggestions"
                     android:maxLength="3" />
             </TableRow>
@@ -157,6 +167,7 @@
                 <EditText
                     android:id="@+id/etCountry"
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:hint="XX"
                     android:inputType="textCapCharacters|textNoSuggestions"
                     android:maxLength="2" />
             </TableRow>

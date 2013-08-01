@@ -663,7 +663,7 @@ public class PrivacyManager {
 
 		// IMEI
 		if (name.equals("getDeviceId") || name.equals("%imei"))
-			return getSetting(null, null, cSettingImei, cDeface, true);
+			return getSetting(null, null, cSettingImei, "000000000000000", true);
 
 		// Phone
 		if (name.equals("PhoneNumber") || name.equals("getLine1AlphaTag") || name.equals("getLine1Number")
