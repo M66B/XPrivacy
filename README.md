@@ -560,6 +560,7 @@ How to get beta releases:
 	* GSF ID
 	* Serial#
 * Updated Portuguese translation
+* Updated Swedish translation
 
 **Version 1.7.30 BETA!**
 
