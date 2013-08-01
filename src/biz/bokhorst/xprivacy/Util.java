@@ -28,6 +28,7 @@ import android.util.Base64;
 import android.util.Log;
 
 public class Util {
+	private static boolean mPro = false;
 
 	public static void log(XHook hook, int priority, String msg) {
 		if (priority != Log.DEBUG)
@@ -75,8 +76,16 @@ public class Util {
 		return false;
 	}
 
+	public static void setPro(boolean enabled) {
+		mPro = enabled;
+	}
+
 	public static String hasProLicense(Context context) {
 		try {
+			// Pro enabled
+			if (mPro)
+				return "";
+
 			// Get license file name
 			String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
 			String fileName = folder + File.separator + "XPrivacy_license.txt";

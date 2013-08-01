@@ -555,7 +555,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Intent for import/export ([issue](https://github.com/M66B/XPrivacy/issues/421))
 
 **Version 1.7.29 BETA!**
 

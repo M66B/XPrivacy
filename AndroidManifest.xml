@@ -55,6 +55,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="biz.bokhorst.xprivacy.ActivityMain" />
         </activity>
+        <activity
+            android:name=".ActivityShare"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            <intent-filter>
+                <action android:name="biz.bokhorst.xprivacy.action.IMPORT" />
+                <action android:name="biz.bokhorst.xprivacy.action.EXPORT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <receiver android:name=".BootReceiver" >
             <intent-filter>
@@ -68,6 +78,11 @@
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
                 <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".BootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
