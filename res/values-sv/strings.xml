@@ -31,8 +31,8 @@
     <string name="msg_sure">Är du säker?</string>
     <string name="msg_done">Klar</string>
     <string name="msg_reboot">Omstart krävs</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_random">Slumpa</string>
+    <string name="msg_random_boot">Slumpa efter uppstart</string>
     <string name="msg_first"><b>XPrivacy utvecklas och testas med stor omsorg.
 Det är emellertid omöjligt att garantera att appen fungerar på alla enheter och appar.
 \n\nAnvänding sker helt på egen risk.</b>\n\nSe också licensen:</string>
