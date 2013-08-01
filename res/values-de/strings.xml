@@ -2,42 +2,42 @@
 
     <string name="app_notxposed" formatted="false">Xposed Framework Version %d+ ist nicht installiert</string>
     <string name="app_notenabled">XPrivacy ist im Xposed Installer nicht aktiviert</string>
-    <string name="app_wrongandroid">Nur für Android Version 4.0+</string>
+    <string name="app_wrongandroid">Nur für Android-Version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy Version: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed Framework Version: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Aktivitätslog</string>
     <string name="menu_refresh">Aktualisieren</string>
     <string name="menu_settings">Einstellungen</string>
-    <string name="menu_template">Template (Vorlage)</string>
-    <string name="menu_update">Nach Updates suchen</string>
+    <string name="menu_template">Regel-Vorlage</string>
+    <string name="menu_update">Update suchen</string>
     <string name="menu_report">Problem melden</string>
     <string name="menu_export">Export der Einst.</string>
     <string name="menu_import">Import der Einst.</string>
-    <string name="menu_theme">Theme wechseln</string>
-    <string name="menu_pro">Pro Version</string>
-    <string name="menu_about">Über</string>
+    <string name="menu_theme">Design wechseln</string>
+    <string name="menu_pro">Pro-Version</string>
+    <string name="menu_about">Über XPrivacy</string>
     <string name="menu_all">Alles</string>
-    <string name="menu_app_launch">Starten</string>
-    <string name="menu_app_settings">Einstellungen</string>
+    <string name="menu_app_launch">Starte App</string>
+    <string name="menu_app_settings">Zeige App-Info</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Wähle Konten zum Erlauben</string>
     <string name="menu_contacts">Wähle Kontakte zum Erlauben</string>
-    <string name="msg_noupdate">Neuste Version bereits installiert</string>
+    <string name="msg_noupdate">Neueste Version bereits installiert</string>
     <string name="msg_restricted" formatted="false">%s beschränkt durch XPrivacy</string>
     <string name="msg_licensed" formatted="false">Lizensiert für: %s</string>
     <string name="msg_loading">Lade...</string>
     <string name="msg_edit">Berühre das App-Icon, um alle Berechtigungen zu bearbeiten</string>
-    <string name="msg_sure">Bist du sicher?</string>
+    <string name="msg_sure">Sind Sie sicher?</string>
     <string name="msg_done">Fertig</string>
-    <string name="msg_reboot">Telefon-Neustart erforderlich</string>
+    <string name="msg_reboot">Geräte-Neustart erforderlich</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet, dennoch ist unmöglich zu gewährleisten,
-\ndass es einwandfrei auf wirklich JEDEM einzelnem Gerät und für JEDE einzelne App funktioniert.
-\n\nVerwenden Sie XPrivacy ausschließlich auf Ihr eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>
+\ndass es auf wirklich JEDEM einzelnem Gerät und für JEDE einzelne App einwandfrei funktioniert.
+\n\nVerwenden Sie XPrivacy ausschließlich auf eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>
     <string name="restrict_accounts">Konten (Google, Facebook, etc.)</string>
     <string name="restrict_browser">Browser (Lesezeichen/Verlauf)</string>
     <string name="restrict_calendar">Kalender</string>
-    <string name="restrict_calling">Kommunizieren (Anrufe, SMS, MMS)</string>
+    <string name="restrict_calling">Kommunikation (Anrufe, SMS, MMS)</string>
     <string name="restrict_clipboard">Zwischenablage</string>
     <string name="restrict_contacts">Kontakte</string>
     <string name="restrict_dictionary">Wörterbuch (Benutzer)</string>
@@ -47,7 +47,7 @@
     <string name="restrict_media">Medien (Audio, Fotos, Videos)</string>
     <string name="restrict_messages">Nachrichten (SMS, MMS)</string>
     <string name="restrict_network">Netzwerk (-Adressen)</string>
-    <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_notifications">Benachrichtigungen</string>
     <string name="restrict_phone">Telefon (ID, Nummern, Anrufe)</string>
     <string name="restrict_storage">Speicher (-Medien, SD Karte)</string>
     <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
@@ -58,18 +58,18 @@
     <string name="settings_serial">Serien-Nr.</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
-    <string name="settings_mac">MAC Adresse</string>
+    <string name="settings_mac">MAC-Adresse</string>
     <string name="settings_phone">Telefonnummer</string>
-    <string name="settings_id">Android ID</string>
+    <string name="settings_id">Android-ID</string>
     <string name="settings_country">Land</string>
-    <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_fpermission">Nach Android Berechtigungen filtern</string>
-    <string name="settings_fsystem">System Apps ausblenden</string>
+    <string name="settings_subscriber">Subscriber-ID</string>
+    <string name="settings_fpermission">Nach Android-Berechtigungen filtern</string>
+    <string name="settings_fsystem">System-Apps ausblenden</string>
     <string name="help_application">App</string>
-    <string name="help_internet">hat Internet Berechtigung</string>
-    <string name="help_granted">hat Android Berechtigung</string>
+    <string name="help_internet">hat Internet-Berechtigung</string>
+    <string name="help_granted">hat Android-Berechtigung</string>
     <string name="help_used">hat diese Daten benutzt</string>
     <string name="help_frozen">ist deaktiviert</string>
-    <string name="help_dangerous">Beschränkung bedenklich (App-Absturz)</string>
+    <string name="help_dangerous">Einschränkung bedenklich (App-Absturz)</string>
 
 </resources>
