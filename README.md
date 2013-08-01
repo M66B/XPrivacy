@@ -559,6 +559,7 @@ How to get beta releases:
 	* Android ID
 	* GSF ID
 	* Serial#
+* Updated Portuguese translation
 
 **Version 1.7.30 BETA!**
 
