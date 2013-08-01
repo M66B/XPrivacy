@@ -555,6 +555,11 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.7.30 BETA!**
+
+* Fix for Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/424))
 * Intent for import/export ([issue](https://github.com/M66B/XPrivacy/issues/421))
 * Randomization of: ([issue](https://github.com/M66B/XPrivacy/issues/418))
 	* MAC address

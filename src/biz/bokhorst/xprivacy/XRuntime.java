@@ -27,7 +27,7 @@ public class XRuntime extends XHook {
 
 	@Override
 	public boolean isVisible() {
-		return !(mMethod.equals("load") || mMethod.equals("loadLibrary"));
+		return !(mMethod == Methods.load || mMethod == Methods.loadLibrary);
 	}
 
 	// public Process exec(String[] progArray)
@@ -57,6 +57,7 @@ public class XRuntime extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
+		Util.log(this, Log.INFO, "method=" + mMethod.name());
 		if (mMethod == Methods.exec) {
 			// Get programs
 			String[] progs = null;
