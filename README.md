@@ -555,6 +555,10 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.7.29 BETA!**
+
 * Go to method restriction from application usage view ([issue](https://github.com/M66B/XPrivacy/issues/409))
 * Fixed usage data for contacts ([issue](https://github.com/M66B/XPrivacy/issues/395))
 * Fixed navigation to application in wiki ([issue](https://github.com/M66B/XPrivacy/issues/394))
