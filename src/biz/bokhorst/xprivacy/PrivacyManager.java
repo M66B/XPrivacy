@@ -789,10 +789,8 @@ public class PrivacyManager {
 				if (i != 0)
 					sb.append(':');
 				int v = r.nextInt(256);
-				if (i == 0) {
-					v = v | 2; // locally administered
-					v = v & 0xFE; // no multicast
-				}
+				if (i == 0)
+					v = v & 0xFC; // unicast, globally unique
 				sb.append(Integer.toHexString(0x100 | v).substring(1));
 			}
 			return sb.toString().toUpperCase();
