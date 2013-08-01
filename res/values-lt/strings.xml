@@ -40,7 +40,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_browser">Naršyklė (žymės/istorija)</string>
     <string name="restrict_calendar">Kalendorius</string>
     <string name="restrict_calling">Skambučiai (telefonas, SMS, MMS)</string>
-    <string name="restrict_Iškarpinė">Vaizdai</string>
+    <string name="restrict_clipboard">Vaizdai</string>
     <string name="restrict_contacts">Kontaktai</string>
     <string name="restrict_dictionary">Žodynas (vartotojo)</string>
     <string name="restrict_identification">Identifikacija (prietaiso)</string>
