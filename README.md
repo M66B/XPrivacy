@@ -558,6 +558,7 @@ How to get beta releases:
 * Go to method restriction from application usage view ([issue](https://github.com/M66B/XPrivacy/issues/409))
 * Updated Czech translation
 * Updated French translation
+* Updated German translation
 * Updated Japanese Translation
 * Updated Norwegian translation
 * Updated Russian translation
