@@ -119,6 +119,10 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		mListApplicationName.add(Name);
 	}
 
+	public String getFirstApplicatioName() {
+		return (mListApplicationName.size() > 0 ? mListApplicationName.get(0) : null);
+	}
+
 	public String getPackageName() {
 		return mPackageName;
 	}

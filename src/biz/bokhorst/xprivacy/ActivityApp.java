@@ -101,7 +101,7 @@ public class ActivityApp extends Activity {
 			public void onClick(View view) {
 				Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 				infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s",
-						mAppInfo.toString())));
+						mAppInfo.getFirstApplicatioName())));
 				startActivity(infoIntent);
 			}
 		});

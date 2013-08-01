@@ -557,6 +557,8 @@ How to get beta releases:
 
 * Go to method restriction from application usage view ([issue](https://github.com/M66B/XPrivacy/issues/409))
 * Fixed usage data for contacts ([issue](https://github.com/M66B/XPrivacy/issues/395))
+* Fixed navigation to application in wiki ([issue](https://github.com/M66B/XPrivacy/issues/394))
+* Better detection of sh / su command
 * Updated Czech translation
 * Updated French translation
 * Updated German translation
