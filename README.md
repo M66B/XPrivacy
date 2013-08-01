@@ -559,10 +559,14 @@ How to get beta releases:
 
 **Version 1.7.30 BETA!**
 
-* Fix for Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/424))
+* Fixed Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/424))
+* Fixed navigate from usage view crash ([issue](https://github.com/M66B/XPrivacy/issues/426))
 * Intent for import/export ([issue](https://github.com/M66B/XPrivacy/issues/421))
 * Randomization of: ([issue](https://github.com/M66B/XPrivacy/issues/418))
 	* MAC address
+* Updated French translation
+* Updated German translation
+* Updated Lithuanian translation
 
 **Version 1.7.29 BETA!**
 

@@ -170,6 +170,8 @@ public class ActivityApp extends Activity {
 		// Get applicable restrictions
 		boolean fPermission = PrivacyManager
 				.getSettingBool(null, this, PrivacyManager.cSettingFPermission, true, false);
+		if (restrictionName != null && methodName != null)
+			fPermission = false;
 		List<String> listRestriction = new ArrayList<String>();
 		for (String rRestrictionName : PrivacyManager.getRestrictions(true))
 			if (fPermission ? PrivacyManager.hasPermission(this, mAppInfo.getPackageName(), rRestrictionName)
