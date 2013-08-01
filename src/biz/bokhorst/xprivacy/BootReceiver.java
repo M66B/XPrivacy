@@ -14,6 +14,10 @@ public class BootReceiver extends BroadcastReceiver {
 		// Randomize
 		boolean random = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingRandom, true, false);
 		if (random) {
+			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingLatitude,
+					PrivacyManager.getRandomProp("LAT"));
+			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingLongitude,
+					PrivacyManager.getRandomProp("LON"));
 			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingSerial,
 					PrivacyManager.getRandomProp("SERIAL"));
 			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC"));

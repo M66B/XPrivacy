@@ -866,6 +866,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		btnRandom.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				etLat.setText(PrivacyManager.getRandomProp("LAT"));
+				etLon.setText(PrivacyManager.getRandomProp("LON"));
 				etSerial.setText(PrivacyManager.getRandomProp("SERIAL"));
 				etMac.setText(PrivacyManager.getRandomProp("MAC"));
 				etId.setText(PrivacyManager.getRandomProp("ANDROID_ID"));

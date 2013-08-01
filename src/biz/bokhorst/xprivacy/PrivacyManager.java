@@ -766,6 +766,18 @@ public class PrivacyManager {
 	public static String getRandomProp(String name) {
 		Random r = new Random();
 
+		if (name.equals("LAT")) {
+			double d = r.nextDouble() * 180 - 90;
+			d = Math.rint(d * 1e7) / 1e7;
+			return Double.toString(d);
+		}
+
+		if (name.equals("LON")) {
+			double d = r.nextDouble() * 360 - 180;
+			d = Math.rint(d * 1e7) / 1e7;
+			return Double.toString(d);
+		}
+
 		if (name.equals("SERIAL")) {
 			long v = r.nextLong();
 			return Long.toHexString(v).toUpperCase();
