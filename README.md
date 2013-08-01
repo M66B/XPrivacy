@@ -555,7 +555,10 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Randomization of: ([issue](https://github.com/M66B/XPrivacy/issues/418))
+	* Android ID
+	* GSF ID
+	* Serial#
 
 **Version 1.7.30 BETA!**
 

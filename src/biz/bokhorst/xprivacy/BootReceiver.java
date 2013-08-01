@@ -14,8 +14,13 @@ public class BootReceiver extends BroadcastReceiver {
 		// Randomize
 		boolean random = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingRandom, true, false);
 		if (random) {
-			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")
-					.toString());
+			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingSerial,
+					PrivacyManager.getRandomProp("SERIAL"));
+			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC"));
+			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingId,
+					PrivacyManager.getRandomProp("ANDROID_ID"));
+			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingGsfId,
+					PrivacyManager.getRandomProp("GSF_ID"));
 		}
 
 		// Check if Xposed enabled

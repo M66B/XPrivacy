@@ -641,7 +641,7 @@ public class PrivacyManager {
 
 	public static Object getDefacedProp(String name) {
 		// Serial number
-		if (name.equals("SERIAL") || name.equals("%serialno") || name.equals("%hostname"))
+		if (name.equals("SERIAL") || name.equals("%serialno"))
 			return getSetting(null, null, cSettingSerial, cDeface, true);
 
 		// Host name
@@ -763,9 +763,15 @@ public class PrivacyManager {
 	}
 
 	@SuppressLint("DefaultLocale")
-	public static Object getRandomProp(String name) {
+	public static String getRandomProp(String name) {
 		Random r = new Random();
-		if (name.equals("MAC") || name.equals("%macaddr")) {
+
+		if (name.equals("SERIAL")) {
+			long v = r.nextLong();
+			return Long.toHexString(v).toUpperCase();
+		}
+
+		if (name.equals("MAC")) {
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < 6; i++) {
 				if (i != 0)
@@ -777,6 +783,17 @@ public class PrivacyManager {
 			}
 			return sb.toString().toUpperCase();
 		}
+
+		if (name.equals("ANDROID_ID")) {
+			long v = r.nextLong();
+			return Long.toHexString(v).toUpperCase();
+		}
+
+		if (name.equals("GSF_ID")) {
+			long v = r.nextLong();
+			return Long.toHexString(v).toUpperCase();
+		}
+
 		return "";
 	}
 
