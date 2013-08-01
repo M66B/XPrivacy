@@ -196,7 +196,11 @@ public class PrivacyManager {
 	}
 
 	public static List<MethodDescription> getMethods(String restrictionName) {
-		List<MethodDescription> listMethod = new ArrayList<MethodDescription>(mMethod.get(restrictionName));
+		List<MethodDescription> listMethod = new ArrayList<MethodDescription>();
+		List<MethodDescription> listMethodOrig = mMethod.get(restrictionName);
+		if (listMethodOrig != null)
+			listMethod.addAll(listMethodOrig);
+		// null can happen when upgrading
 		Collections.sort(listMethod);
 		return listMethod;
 	}
