@@ -31,8 +31,8 @@
     <string name="msg_sure">Esate tikri?</string>
     <string name="msg_done">Atlikta</string>
     <string name="msg_reboot">Privaloma perkrauti prietaisą!</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_random">Atsitiktinis</string>
+    <string name="msg_random_boot">Atsitiktinis po startavimo</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
 \n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>
@@ -40,7 +40,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_browser">Naršyklė (žymės/istorija)</string>
     <string name="restrict_calendar">Kalendorius</string>
     <string name="restrict_calling">Skambučiai (telefonas, SMS, MMS)</string>
-    <string name="restrict_clipboard">Clipboard</string>
+    <string name="restrict_Iškarpinė">Vaizdai</string>
     <string name="restrict_contacts">Kontaktai</string>
     <string name="restrict_dictionary">Žodynas (vartotojo)</string>
     <string name="restrict_identification">Identifikacija (prietaiso)</string>
@@ -49,7 +49,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_media">Media (muzika, nuotraukos, vaizdai)</string>
     <string name="restrict_messages">Pranešimai (SMS, MMS)</string>
     <string name="restrict_network">Tinklas (adresai)</string>
-    <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_notifications">Pranešimai</string>
     <string name="restrict_phone">Telefonas (ID, numeris, skambučiai)</string>
     <string name="restrict_storage">Atmintis (media, SD kortelė)</string>
     <string name="restrict_shell">Vykdymas (komandos, superuser)</string>
