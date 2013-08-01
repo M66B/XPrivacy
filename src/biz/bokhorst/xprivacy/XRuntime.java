@@ -27,7 +27,7 @@ public class XRuntime extends XHook {
 
 	@Override
 	public boolean isVisible() {
-		return !(getMethodName().equals("load") || getMethodName().equals("loadLibrary"));
+		return !(mMethod.equals("load") || mMethod.equals("loadLibrary"));
 	}
 
 	// public Process exec(String[] progArray)
@@ -69,9 +69,10 @@ public class XRuntime extends XHook {
 			// Check programs
 			if (progs != null) {
 				String command = TextUtils.join(" ", progs);
-				if ((mCommand == null && !command.contains("sh ") && !command.contains("su "))
-						|| (mCommand != null && command.contains(mCommand + " ")))
-					if (isRestricted(param, mCommand == null ? getMethodName() : mCommand))
+				if (mCommand == null ? !(command.startsWith("sh") || command.startsWith("su")
+						|| command.contains("sh ") || command.contains("su ")) : command.startsWith(mCommand)
+						|| command.contains(mCommand + " "))
+					if (isRestricted(param))
 						param.setThrowable(new IOException());
 			}
 		} else if (mMethod == Methods.load || mMethod == Methods.loadLibrary) {

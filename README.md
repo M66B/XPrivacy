@@ -193,7 +193,7 @@ For easy usage, data is restricted by category:
 	* return a empty IMPI/IMPU
 	* return a fake MSISDN
 	* return fake mobile network info
-		* Country: 001 (test network)
+		* Country: XX
 		* Operator: 00101 (test network)
 		* Operator name: fake
 	* return fake SIM info
@@ -556,6 +556,7 @@ How to get beta releases:
 **Next release**
 
 * Go to method restriction from application usage view ([issue](https://github.com/M66B/XPrivacy/issues/409))
+* Fixed usage data for contacts ([issue](https://github.com/M66B/XPrivacy/issues/395))
 * Updated Czech translation
 * Updated French translation
 * Updated German translation

@@ -64,7 +64,7 @@ public abstract class XHook {
 	abstract protected void after(MethodHookParam param) throws Throwable;
 
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		return isRestricted(param, mMethodName);
+		return isRestricted(param, getSpecifier());
 	}
 
 	protected boolean isRestricted(MethodHookParam param, String methodName) throws Throwable {
@@ -74,7 +74,7 @@ public abstract class XHook {
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) throws Throwable {
-		return PrivacyManager.getRestricted(this, context, uid, mRestrictionName, mMethodName, usage, true);
+		return PrivacyManager.getRestricted(this, context, uid, mRestrictionName, getSpecifier(), usage, true);
 	}
 
 	protected boolean getRestricted(Context context, int uid, String methodName, boolean usage) throws Throwable {
