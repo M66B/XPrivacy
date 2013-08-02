@@ -564,6 +564,7 @@ How to get beta releases:
 	* Phone number
 	* Serial#
 * Added hints to settings ([issue](https://github.com/M66B/XPrivacy/issues/422))
+* Updated Japanese Translation
 * Updated Polish translation
 * Updated Portuguese translation
 * Updated Swedish translation
