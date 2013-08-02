@@ -31,6 +31,8 @@
     <string name="msg_sure">Biztos benne?</string>
     <string name="msg_done">Kész</string>
     <string name="msg_reboot">Újraindítás szükséges</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
@@ -38,6 +40,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">Böngésző (könyvjelzők / előzmények)</string>
     <string name="restrict_calendar">Naptár</string>
     <string name="restrict_calling">Hívás (telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Névjegyzék</string>
     <string name="restrict_dictionary">Szótár (felhasználó)</string>
     <string name="restrict_identification">Azonosító (eszköz)</string>
@@ -46,6 +49,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Média (hang, fotó, videó)</string>
     <string name="restrict_messages">Üzenetek (SMS, MMS)</string>
     <string name="restrict_network">Hálózat (címek)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefon (ID, számok, hívások)</string>
     <string name="restrict_storage">Tárhely (média, SD kártya)</string>
     <string name="restrict_shell">Parancssor (parancsok, rendszergazda)</string>
@@ -53,6 +57,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">Megtekintés (böngésző)</string>
     <string name="title_category">Kategória:</string>
     <string name="title_restrict">Jelölje be a korlátozáshoz:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Szélesség</string>
     <string name="settings_lon">Hosszúság</string>
     <string name="settings_mac">MAC-cím</string>

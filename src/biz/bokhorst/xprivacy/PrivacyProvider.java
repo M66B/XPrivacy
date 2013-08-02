@@ -198,7 +198,7 @@ public class PrivacyProvider extends ContentProvider {
 			// All
 			for (String restrictionName : PrivacyManager.getRestrictions(true)) {
 				SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
-						Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+						Context.MODE_PRIVATE);
 				for (String prefName : prefs.getAll().keySet())
 					if (prefName.startsWith(COL_USED)) {
 						String[] prefParts = prefName.split("\\.");
@@ -221,7 +221,7 @@ public class PrivacyProvider extends ContentProvider {
 
 	private void getUsage(int uid, String restrictionName, String methodName, MatrixCursor cursor) {
 		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
-				Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+				Context.MODE_PRIVATE);
 		String values = prefs.getString(getUsagePref(uid, methodName), null);
 		if (values != null) {
 			String[] value = values.split(":");
@@ -312,7 +312,7 @@ public class PrivacyProvider extends ContentProvider {
 	private void updateUsage(final int uid, final String restrictionName, final String methodName,
 			final boolean restricted, long timeStamp) {
 		SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
-				Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+				Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
 		String prefName = getUsagePref(uid, methodName);
 		String prefValue = String.format("%d:%b", timeStamp, restricted);
@@ -378,16 +378,35 @@ public class PrivacyProvider extends ContentProvider {
 	// - there is no context (Java threads)
 	// - the content provider cannot be queried (PackageManagerService)
 
+	private static long mPrefsExRestrictionLoaded = 0;
+	private static long mPrefsExSettingsLoaded = 0;
+	private static SharedPreferencesEx mPrefsExRestriction = new SharedPreferencesEx(new File(
+			getPrefFileName(PREF_RESTRICTION)));
+	private static SharedPreferencesEx mPrefsExSettings = new SharedPreferencesEx(new File(
+			getPrefFileName(PREF_SETTINGS)));
+
 	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName, String methodName) {
-		// Get restrictions
-		SharedPreferencesEx xprefs = new SharedPreferencesEx(new File(getPrefFileName(PREF_RESTRICTION)));
-		return !getAllowed(uid, restrictionName, methodName, xprefs);
+		synchronized (mPrefsExRestriction) {
+			long now = new Date().getTime();
+			if (mPrefsExRestrictionLoaded + PrivacyManager.cCacheTimeoutMs < now) {
+				Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + Binder.getCallingUid());
+				mPrefsExRestriction.reload();
+				mPrefsExRestrictionLoaded = now;
+			}
+		}
+		return !getAllowed(uid, restrictionName, methodName, mPrefsExRestriction);
 	}
 
 	public static String getSettingFallback(String settingName, String defaultValue) {
-		// Get restrictions
-		SharedPreferencesEx xprefs = new SharedPreferencesEx(new File(getPrefFileName(PREF_SETTINGS)));
-		return xprefs.getString(getSettingPref(settingName), defaultValue);
+		synchronized (mPrefsExSettings) {
+			long now = new Date().getTime();
+			if (mPrefsExSettingsLoaded + PrivacyManager.cCacheTimeoutMs < now) {
+				Util.log(null, Log.INFO, "Reload fallback settings uid=" + Binder.getCallingUid());
+				mPrefsExSettings.reload();
+				mPrefsExSettingsLoaded = now;
+			}
+		}
+		return mPrefsExSettings.getString(getSettingPref(settingName), defaultValue);
 	}
 
 	// Private helper methods

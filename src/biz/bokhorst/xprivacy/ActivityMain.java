@@ -1,24 +1,17 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.InterfaceAddress;
 import java.security.InvalidParameterException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.xml.parsers.SAXParserFactory;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -28,21 +21,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.xmlpull.v1.XmlSerializer;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -50,7 +33,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
@@ -62,13 +44,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Process;
-import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
-import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -98,10 +77,23 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private AppListAdapter mAppAdapter = null;
 	private boolean mUsed = false;
 	private boolean mInternet = false;
-	private boolean mPro = false;
 
 	private static final int ACTIVITY_LICENSE = 0;
-	private static final int ACTIVITY_IMPORT = 1;
+	private static final int ACTIVITY_EXPORT = 1;
+	private static final int ACTIVITY_IMPORT = 2;
+	private static final int ACTIVITY_IMPORT_SELECT = 3;
+
+	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
+			new PriorityThreadFactor());
+
+	private static class PriorityThreadFactor implements ThreadFactory {
+		@Override
+		public Thread newThread(Runnable r) {
+			Thread t = new Thread(r);
+			t.setPriority(Thread.NORM_PRIORITY);
+			return t;
+		}
+	}
 
 	private BroadcastReceiver mPackageChangeReceiver = new BroadcastReceiver() {
 		@Override
@@ -256,7 +248,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Start task to get app list
 		AppListTask appListTask = new AppListTask();
-		appListTask.execute();
+		appListTask.executeOnExecutor(mExecutor, (Object) null);
 
 		// Check environment
 		checkRequirements();
@@ -353,11 +345,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				Util.log(null, Log.INFO, "Licensing: code=" + code + " reason=" + sReason);
 
 				if (code > 0) {
-					mPro = true;
+					Util.setPro(true);
 					invalidateOptionsMenu();
 					Toast toast = Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG);
 					toast.show();
 				} else if (reason == RETRY) {
+					Util.setPro(false);
 					new Handler().postDelayed(new Runnable() {
 						@Override
 						public void run() {
@@ -366,13 +359,29 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					}, 60 * 1000);
 				}
 			}
-		} else if (requestCode == ACTIVITY_IMPORT) {
-			// Result for import file choice
-			if (data != null) {
-				String fileName = data.getData().getPath();
-				ImportTask importTask = new ImportTask();
-				importTask.execute(new File(fileName));
+		} else if (requestCode == ACTIVITY_EXPORT) {
+			// Exported: send share intent
+			if (data != null && data.hasExtra(ActivityShare.cFileName)) {
+				Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+				intent.setType("text/xml");
+				intent.putExtra(Intent.EXTRA_STREAM,
+						Uri.parse("file://" + data.getStringExtra(ActivityShare.cFileName)));
+				startActivity(Intent.createChooser(intent, getString(R.string.app_name)));
 			}
+		} else if (requestCode == ACTIVITY_IMPORT) {
+			// Imported: recreate UI
+			ActivityMain.this.recreate();
+		} else if (requestCode == ACTIVITY_IMPORT_SELECT) {
+			// Result for import file choice
+			if (data != null)
+				try {
+					String fileName = data.getData().getPath();
+					Intent intent = new Intent("biz.bokhorst.xprivacy.action.IMPORT");
+					intent.putExtra(ActivityShare.cFileName, fileName);
+					startActivityForResult(intent, ACTIVITY_IMPORT);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
 		}
 	}
 
@@ -385,7 +394,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		boolean pro = (mPro || Util.hasProLicense(this) != null);
+		boolean pro = (Util.hasProLicense(this) != null);
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
 		menu.findItem(R.id.menu_export).setEnabled(pro && mounted);
@@ -770,6 +779,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 
 		// Reference controls
+		final EditText etSerial = (EditText) dlgSettings.findViewById(R.id.etSerial);
 		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
 		final EditText etLon = (EditText) dlgSettings.findViewById(R.id.etLon);
 		final EditText etSearch = (EditText) dlgSettings.findViewById(R.id.etSearch);
@@ -784,16 +794,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etCountry = (EditText) dlgSettings.findViewById(R.id.etCountry);
 		final EditText etIccId = (EditText) dlgSettings.findViewById(R.id.etIccId);
 		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
+		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
+		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
 		final CheckBox cbFPermission = (CheckBox) dlgSettings.findViewById(R.id.cbFPermission);
 		final CheckBox cbFSystem = (CheckBox) dlgSettings.findViewById(R.id.cbFSystem);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
+		final boolean random = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingRandom,
+				false, false);
 		final boolean fPermission = PrivacyManager.getSettingBool(null, ActivityMain.this,
 				PrivacyManager.cSettingFPermission, true, false);
 		final boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
 				true, false);
 
+		etSerial.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSerial, "", false));
 		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "", false));
 		etLon.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude, "", false));
 		etMac.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMac, "", false));
@@ -808,6 +823,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etIccId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingIccId, "", false));
 		etSubscriber.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, "",
 				false));
+		cbRandom.setChecked(random);
 		cbFPermission.setChecked(fPermission);
 		cbFSystem.setChecked(fSystem);
 
@@ -846,10 +862,27 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		});
 
-		// Wait for OK
+		// Handle randomize
+		btnRandom.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				etLat.setText(PrivacyManager.getRandomProp("LAT"));
+				etLon.setText(PrivacyManager.getRandomProp("LON"));
+				etSerial.setText(PrivacyManager.getRandomProp("SERIAL"));
+				etMac.setText(PrivacyManager.getRandomProp("MAC"));
+				etId.setText(PrivacyManager.getRandomProp("ANDROID_ID"));
+				etGsfId.setText(PrivacyManager.getRandomProp("GSF_ID"));
+			}
+		});
+
+		// Handle OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				// Serial#
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingSerial, etSerial.getText()
+						.toString());
+
 				// Set location
 				try {
 					float lat = Float.parseFloat(etLat.getText().toString().replace(',', '.'));
@@ -889,6 +922,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, etSubscriber
 						.getText().toString());
 
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingRandom,
+						Boolean.toString(cbRandom.isChecked()));
+
 				// Set filter by permission
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
 						Boolean.toString(cbFPermission.isChecked()));
@@ -900,7 +936,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				// Refresh if needed
 				if (fPermission != cbFPermission.isChecked() || fSystem != cbFSystem.isChecked()) {
 					AppListTask appListTask = new AppListTask();
-					appListTask.execute();
+					appListTask.executeOnExecutor(mExecutor, (Object) null);
 				}
 
 				// Done
@@ -946,7 +982,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionCheckUpdate() {
-		new UpdateTask().execute("http://goo.im/json2&path=/devs/M66B/xprivacy");
+		new UpdateTask().executeOnExecutor(mExecutor, "http://goo.im/json2&path=/devs/M66B/xprivacy");
 	}
 
 	private void optionReportIssue() {
@@ -963,8 +999,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionExport() {
 		boolean multiple = Util.isIntentAvailable(ActivityMain.this, Intent.ACTION_GET_CONTENT);
-		ExportTask exportTask = new ExportTask();
-		exportTask.execute(getExportFile(multiple));
+		Intent intent = new Intent("biz.bokhorst.xprivacy.action.EXPORT");
+		intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(multiple));
+		startActivityForResult(intent, ACTIVITY_EXPORT);
 	}
 
 	private void optionImport() {
@@ -973,10 +1010,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/.xprivacy/");
 			chooseFile.setDataAndType(uri, "text/xml");
 			Intent intent = Intent.createChooser(chooseFile, getString(R.string.app_name));
-			startActivityForResult(intent, ACTIVITY_IMPORT);
+			startActivityForResult(intent, ACTIVITY_IMPORT_SELECT);
 		} else {
-			ImportTask importTask = new ImportTask();
-			importTask.execute(getExportFile(false));
+			Intent intent = new Intent("biz.bokhorst.xprivacy.action.IMPORT");
+			intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(false));
+			startActivityForResult(intent, ACTIVITY_IMPORT);
 		}
 	}
 
@@ -1019,19 +1057,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		dlgAbout.setCancelable(true);
 		dlgAbout.show();
-	}
-
-	private File getExportFile(boolean multiple) {
-		File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-				+ ".xprivacy");
-		folder.mkdir();
-		String fileName;
-		if (multiple) {
-			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm", Locale.ROOT);
-			fileName = String.format("XPrivacy_%s.xml", format.format(new Date()));
-		} else
-			fileName = "XPrivacy.xml";
-		return new File(folder + File.separator + fileName);
 	}
 
 	private String fetchUpdateJson(String... uri) {
@@ -1202,273 +1227,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
-	private class ExportTask extends AsyncTask<File, String, String> {
-		private File mFile;
-		private final static int NOTIFY_ID = 1;
-
-		@Override
-		protected String doInBackground(File... params) {
-			mFile = params[0];
-			try {
-				// Serialize
-				Util.log(null, Log.INFO, "Exporting " + mFile);
-				FileOutputStream fos = new FileOutputStream(mFile);
-				try {
-					XmlSerializer serializer = Xml.newSerializer();
-					serializer.setOutput(fos, "UTF-8");
-					serializer.startDocument(null, Boolean.valueOf(true));
-					serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
-					serializer.startTag(null, "XPrivacy");
-
-					// Process settings
-					publishProgress(getString(R.string.menu_settings));
-					Util.log(null, Log.INFO, "Exporting settings");
-
-					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityMain.this);
-					for (String setting : mapSetting.keySet())
-						if (!setting.startsWith("Account.") && !setting.startsWith("Contact.")
-								&& !setting.startsWith("RawContact.")) {
-							// Serialize setting
-							String value = mapSetting.get(setting);
-							serializer.startTag(null, "Setting");
-							serializer.attribute(null, "Name", setting);
-							serializer.attribute(null, "Value", value);
-							serializer.endTag(null, "Setting");
-						}
-
-					// Process restrictions
-					List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager
-							.getRestricted(ActivityMain.this);
-					Map<String, List<PrivacyManager.RestrictionDesc>> mapRestriction = new HashMap<String, List<PrivacyManager.RestrictionDesc>>();
-					for (PrivacyManager.RestrictionDesc restriction : listRestriction) {
-						String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
-						if (packages == null)
-							Util.log(null, Log.WARN, "No packages for uid=" + restriction.uid);
-						else
-							for (String packageName : packages) {
-								if (!mapRestriction.containsKey(packageName))
-									mapRestriction.put(packageName, new ArrayList<PrivacyManager.RestrictionDesc>());
-								mapRestriction.get(packageName).add(restriction);
-							}
-					}
-
-					// Process result
-					for (String packageName : mapRestriction.keySet()) {
-						publishProgress(packageName);
-						Util.log(null, Log.INFO, "Exporting " + packageName);
-						for (PrivacyManager.RestrictionDesc restrictionDesc : mapRestriction.get(packageName)) {
-							serializer.startTag(null, "Package");
-							serializer.attribute(null, "Name", packageName);
-							serializer.attribute(null, "Restriction", restrictionDesc.restrictionName);
-							if (restrictionDesc.methodName != null)
-								serializer.attribute(null, "Method", restrictionDesc.methodName);
-							serializer.attribute(null, "Restricted", Boolean.toString(restrictionDesc.restricted));
-							serializer.endTag(null, "Package");
-						}
-					}
-
-					// End serialization
-					serializer.endTag(null, "XPrivacy");
-					serializer.endDocument();
-					serializer.flush();
-				} finally {
-					fos.close();
-				}
-
-				// Send share intent
-				Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-				intent.setType("text/xml");
-				intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + mFile));
-				startActivity(Intent.createChooser(intent, getString(R.string.app_name)));
-
-				// Display message
-				Util.log(null, Log.INFO, "Exporting finished");
-				return getString(R.string.msg_done);
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				return ex.toString();
-			}
-		}
-
-		@Override
-		protected void onProgressUpdate(String... values) {
-			notify(values[0], true);
-			super.onProgressUpdate(values);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			notify(result, false);
-			super.onPostExecute(result);
-		}
-
-		private void notify(String text, boolean ongoing) {
-			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityMain.this);
-			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-			notificationBuilder.setContentTitle(getString(R.string.menu_export));
-			notificationBuilder.setContentText(text);
-			notificationBuilder.setWhen(System.currentTimeMillis());
-			if (ongoing)
-				notificationBuilder.setOngoing(true);
-			else {
-				// Build result intent
-				Intent resultIntent = new Intent(ActivityMain.this, ActivityMain.class);
-				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-				// Build pending intent
-				PendingIntent pendingIntent = PendingIntent.getActivity(ActivityMain.this, NOTIFY_ID, resultIntent,
-						PendingIntent.FLAG_UPDATE_CURRENT);
-
-				notificationBuilder.setAutoCancel(true);
-				notificationBuilder.setContentIntent(pendingIntent);
-			}
-			Notification notification = notificationBuilder.build();
-
-			NotificationManager notificationManager = (NotificationManager) ActivityMain.this
-					.getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.notify(NOTIFY_ID, notification);
-		}
-	}
-
-	private class ImportTask extends AsyncTask<File, String, String> {
-		private File mFile;
-		private final static int NOTIFY_ID = 2;
-
-		@Override
-		protected String doInBackground(File... params) {
-			mFile = params[0];
-			try {
-				// Parse XML
-				Util.log(null, Log.INFO, "Importing " + mFile);
-				FileInputStream fis = null;
-				Map<String, Map<String, List<String>>> mapPackage;
-				try {
-					fis = new FileInputStream(mFile);
-					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
-					ImportHandler importHandler = new ImportHandler();
-					xmlReader.setContentHandler(importHandler);
-					xmlReader.parse(new InputSource(fis));
-					mapPackage = importHandler.getPackageMap();
-				} finally {
-					if (fis != null)
-						fis.close();
-				}
-
-				// Process result
-				for (String packageName : mapPackage.keySet()) {
-					try {
-						publishProgress(packageName);
-						Util.log(null, Log.INFO, "Importing " + packageName);
-
-						// Get uid
-						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
-
-						// Reset existing restrictions
-						PrivacyManager.deleteRestrictions(ActivityMain.this, uid);
-
-						// Set imported restrictions
-						for (String restrictionName : mapPackage.get(packageName).keySet()) {
-							PrivacyManager.setRestricted(null, ActivityMain.this, uid, restrictionName, null, true);
-							for (String methodName : mapPackage.get(packageName).get(restrictionName))
-								PrivacyManager.setRestricted(null, ActivityMain.this, uid, restrictionName, methodName,
-										false);
-						}
-					} catch (NameNotFoundException ex) {
-						Util.log(null, Log.WARN, "Not found package=" + packageName);
-					}
-				}
-
-				// Display message
-				Util.log(null, Log.INFO, "Importing finished");
-				return getString(R.string.msg_done);
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				return ex.toString();
-			}
-		}
-
-		@Override
-		protected void onProgressUpdate(String... values) {
-			notify(values[0], true);
-			super.onProgressUpdate(values);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			notify(result, false);
-			ActivityMain.this.recreate();
-			super.onPostExecute(result);
-		}
-
-		private void notify(String text, boolean ongoing) {
-			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityMain.this);
-			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-			notificationBuilder.setContentTitle(getString(R.string.menu_import));
-			notificationBuilder.setContentText(text);
-			notificationBuilder.setWhen(System.currentTimeMillis());
-			if (ongoing)
-				notificationBuilder.setOngoing(true);
-			else {
-				// Build result intent
-				Intent resultIntent = new Intent(ActivityMain.this, ActivityMain.class);
-				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-				// Build pending intent
-				PendingIntent pendingIntent = PendingIntent.getActivity(ActivityMain.this, NOTIFY_ID, resultIntent,
-						PendingIntent.FLAG_UPDATE_CURRENT);
-
-				notificationBuilder.setAutoCancel(true);
-				notificationBuilder.setContentIntent(pendingIntent);
-			}
-			Notification notification = notificationBuilder.build();
-
-			NotificationManager notificationManager = (NotificationManager) ActivityMain.this
-					.getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.notify(NOTIFY_ID, notification);
-		}
-	}
-
-	private class ImportHandler extends DefaultHandler {
-		private Map<String, Map<String, List<String>>> mMapPackage = new HashMap<String, Map<String, List<String>>>();
-
-		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			if (qName.equals("Setting")) {
-				// Setting
-				String name = attributes.getValue("Name");
-				String value = attributes.getValue("Value");
-				PrivacyManager.setSetting(null, ActivityMain.this, name, value);
-			} else if (qName.equals("Package")) {
-				// Restriction
-				String packageName = attributes.getValue("Name");
-				String restrictionName = attributes.getValue("Restriction");
-				String methodName = attributes.getValue("Method");
-
-				// Map package restriction
-				if (!mMapPackage.containsKey(packageName))
-					mMapPackage.put(packageName, new HashMap<String, List<String>>());
-				if (!mMapPackage.get(packageName).containsKey(restrictionName))
-					mMapPackage.get(packageName).put(restrictionName, new ArrayList<String>());
-				if (methodName != null)
-					mMapPackage.get(packageName).get(restrictionName).add(methodName);
-			}
-		}
-
-		public Map<String, Map<String, List<String>>> getPackageMap() {
-			return mMapPackage;
-		}
-	}
-
-	private class AppListTask extends AsyncTask<String, Integer, List<ApplicationInfoEx>> {
+	private class AppListTask extends AsyncTask<Object, Integer, List<ApplicationInfoEx>> {
 		private String mRestrictionName;
 		private ProgressDialog mProgressDialog;
 
 		@Override
-		protected List<ApplicationInfoEx> doInBackground(String... params) {
+		protected List<ApplicationInfoEx> doInBackground(Object... params) {
 			mRestrictionName = null;
-
-			// Elevate priority
-			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
 
 			// Delegate
 			return ApplicationInfoEx.getXApplicationList(ActivityMain.this, mProgressDialog);
@@ -1687,25 +1452,22 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private class HolderTask extends AsyncTask<Object, Object, Object> {
 			private int position;
 			private ViewHolder holder;
+			private ApplicationInfoEx xAppInfo = null;
+			private boolean used;
+			private boolean granted = true;
+			private List<String> listRestriction;
+			private boolean allRestricted = true;
+			private boolean someRestricted = false;
 
-			ApplicationInfoEx xAppInfo = null;
-			boolean used;
-			boolean granted = true;
-			List<String> listRestriction;
-			boolean allRestricted = true;
-			boolean someRestricted = false;
-
-			public HolderTask(int thePosition, ViewHolder theHolder) {
+			public HolderTask(int thePosition, ViewHolder theHolder, ApplicationInfoEx theAppInfo) {
 				position = thePosition;
 				holder = theHolder;
+				xAppInfo = theAppInfo;
 			}
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				// Get info
 				if (holder.position == position) {
-					xAppInfo = getItem(holder.position);
-
 					// Get if used
 					used = (PrivacyManager.getUsed(holder.row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
 
@@ -1784,9 +1546,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							holder.ctvApp.setChecked(allRestricted);
 						}
 					});
-
-					// Refresh
-					holder.row.refreshDrawableState();
 				}
 			}
 		}
@@ -1813,7 +1572,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
 
 			// Set icon
-			holder.imgIcon.setImageDrawable(xAppInfo.getDrawable(holder.row.getContext()));
+			holder.imgIcon.setImageDrawable(xAppInfo.getIcon());
 			holder.imgIcon.setVisibility(View.VISIBLE);
 
 			// Handle details click
@@ -1827,10 +1586,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 			});
 
-			// Set title
+			// Set data
 			holder.ctvApp.setText(xAppInfo.toString());
 			holder.ctvApp.setTypeface(null, Typeface.NORMAL);
-
 			holder.imgUsed.setVisibility(View.INVISIBLE);
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 			holder.imgInternet.setVisibility(View.INVISIBLE);
@@ -1839,8 +1597,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			holder.ctvApp.setEnabled(false);
 			holder.ctvApp.setClickable(false);
 
-			// Async
-			new HolderTask(position, holder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Object) null);
+			// Async update
+			new HolderTask(position, holder, xAppInfo).executeOnExecutor(mExecutor, (Object) null);
 
 			return convertView;
 		}

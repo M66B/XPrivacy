@@ -31,6 +31,8 @@
     <string name="msg_sure">Сигурни ли сте?</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Нужно е рестартиране</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>XPrivacy е разработен и тестван с голямо внимание,
 но е невъзможно да се гарантира безпроблемна работа на всякакви устройства при всякакви приложения.
 \n\nИзползвате го на свой собствен риск.</b>\n\nВижте и лиценза:</string>
@@ -38,6 +40,7 @@
     <string name="restrict_browser">Браузър (отметки/история)</string>
     <string name="restrict_calendar">Календар</string>
     <string name="restrict_calling">Обаждания, SMS, MMS</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Контакти</string>
     <string name="restrict_dictionary">Речник на потребителя</string>
     <string name="restrict_identification">Идентификация (устройство)</string>
@@ -46,6 +49,7 @@
     <string name="restrict_media">Медия (аудио, снимки, клипове)</string>
     <string name="restrict_messages">Съобщения (SMS, MMS)</string>
     <string name="restrict_network">Мрежа (адреси)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Телефон (ID, номера, обаждания)</string>
     <string name="restrict_storage">Съхранение (носители, SD карта)</string>
     <string name="restrict_shell">Терминал (команди, суперпотребител)</string>
@@ -53,6 +57,7 @@
     <string name="restrict_view">Преглед (браузър)</string>
     <string name="title_category">Category:</string>
     <string name="title_restrict">Отбележи за ограничаване:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Геогр. ширина</string>
     <string name="settings_lon">Геогр. дължина</string>
     <string name="settings_mac">MAC адрес</string>

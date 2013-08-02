@@ -20,11 +20,24 @@
             <TableRow>
 
                 <TextView
+                    android:text="@string/settings_serial"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etSerial"
+                    android:hint="DEFACE"
+                    android:inputType="textNoSuggestions" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
                     android:text="@string/settings_lat"
                     android:textIsSelectable="false" />
 
                 <EditText
                     android:id="@+id/etLat"
+                    android:hint="-10.5"
                     android:inputType="numberDecimal|numberSigned" />
             </TableRow>
 
@@ -36,6 +49,7 @@
 
                 <EditText
                     android:id="@+id/etLon"
+                    android:hint="105.667"
                     android:inputType="numberDecimal|numberSigned" />
             </TableRow>
 
@@ -62,6 +76,7 @@
                 <EditText
                     android:id="@+id/etMac"
                     android:digits="0123456789ABCDEF:"
+                    android:hint="DE:FA:CE:DE:FA:CE"
                     android:inputType="textCapCharacters|textNoSuggestions"
                     android:maxLength="18" />
             </TableRow>
@@ -74,6 +89,7 @@
 
                 <EditText
                     android:id="@+id/etImei"
+                    android:hint="000000000000000"
                     android:inputType="numberDecimal|textNoSuggestions"
                     android:maxLength="16" />
             </TableRow>
@@ -86,6 +102,7 @@
 
                 <EditText
                     android:id="@+id/etPhone"
+                    android:hint="DEFACE"
                     android:inputType="textNoSuggestions|phone" />
             </TableRow>
 
@@ -98,6 +115,7 @@
                 <EditText
                     android:id="@+id/etId"
                     android:digits="0123456789ABCDEF"
+                    android:hint="DEFACE"
                     android:inputType="textCapCharacters|textNoSuggestions" />
             </TableRow>
 
@@ -110,6 +128,7 @@
                 <EditText
                     android:id="@+id/etGsfId"
                     android:digits="0123456789ABCDEF"
+                    android:hint="DEFACE"
                     android:inputType="textCapCharacters|textNoSuggestions" />
             </TableRow>
 
@@ -121,6 +140,7 @@
 
                 <EditText
                     android:id="@+id/etMcc"
+                    android:hint="001"
                     android:inputType="numberDecimal|textNoSuggestions"
                     android:maxLength="3" />
             </TableRow>
@@ -133,6 +153,7 @@
 
                 <EditText
                     android:id="@+id/etMnc"
+                    android:hint="01"
                     android:inputType="numberDecimal|textNoSuggestions"
                     android:maxLength="3" />
             </TableRow>
@@ -146,6 +167,7 @@
                 <EditText
                     android:id="@+id/etCountry"
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:hint="XX"
                     android:inputType="textCapCharacters|textNoSuggestions"
                     android:maxLength="2" />
             </TableRow>
@@ -176,6 +198,26 @@
 
             <TableRow>
 
+                <Button
+                    android:id="@+id/btnRandom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:text="@string/msg_random" />
+            </TableRow>
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/cbRandom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:text="@string/msg_random_boot" />
+            </TableRow>
+
+            <TableRow>
+
                 <CheckBox
                     android:id="@+id/cbFPermission"
                     android:layout_width="match_parent"
@@ -197,7 +239,7 @@
 
         <Button
             android:id="@+id/btnOk"
-            android:layout_width="100dip"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@android:string/ok" />

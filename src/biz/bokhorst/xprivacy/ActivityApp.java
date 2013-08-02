@@ -7,6 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -51,8 +54,22 @@ public class ActivityApp extends Activity {
 	private ApplicationInfoEx mAppInfo;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 
-	public static final String cNotified = "notified";
+	public static final String cNotified = "Notified";
 	public static final String cPackageName = "PackageName";
+	public static final String cRestrictionName = "RestrictionName";
+	public static final String cMethodName = "MethodName";
+
+	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
+			new PriorityThreadFactor());
+
+	private static class PriorityThreadFactor implements ThreadFactory {
+		@Override
+		public Thread newThread(Runnable r) {
+			Thread t = new Thread(r);
+			t.setPriority(Thread.NORM_PRIORITY);
+			return t;
+		}
+	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,6 +84,8 @@ public class ActivityApp extends Activity {
 		// Get arguments
 		Bundle extras = getIntent().getExtras();
 		mNotified = (extras.containsKey(cNotified) ? extras.getBoolean(cNotified) : false);
+		String restrictionName = (extras.containsKey(cRestrictionName) ? extras.getString(cRestrictionName) : null);
+		String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
 
 		// Get app info
 		mAppInfo = new ApplicationInfoEx(this, extras.getString(cPackageName));
@@ -82,7 +101,7 @@ public class ActivityApp extends Activity {
 			public void onClick(View view) {
 				Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 				infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s",
-						mAppInfo.toString())));
+						mAppInfo.getFirstApplicatioName())));
 				startActivity(infoIntent);
 			}
 		});
@@ -114,7 +133,7 @@ public class ActivityApp extends Activity {
 
 		// Display app icon
 		ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
-		imgIcon.setImageDrawable(mAppInfo.getDrawable(this));
+		imgIcon.setImageDrawable(mAppInfo.getIcon());
 
 		// Handle icon click
 		imgIcon.setOnClickListener(new View.OnClickListener() {
@@ -151,17 +170,26 @@ public class ActivityApp extends Activity {
 		// Get applicable restrictions
 		boolean fPermission = PrivacyManager
 				.getSettingBool(null, this, PrivacyManager.cSettingFPermission, true, false);
+		if (restrictionName != null && methodName != null)
+			fPermission = false;
 		List<String> listRestriction = new ArrayList<String>();
-		for (String restrictionName : PrivacyManager.getRestrictions(true))
-			if (fPermission ? PrivacyManager.hasPermission(this, mAppInfo.getPackageName(), restrictionName)
-					|| PrivacyManager.getUsed(this, mAppInfo.getUid(), restrictionName, null) > 0 : true)
-				listRestriction.add(restrictionName);
+		for (String rRestrictionName : PrivacyManager.getRestrictions(true))
+			if (fPermission ? PrivacyManager.hasPermission(this, mAppInfo.getPackageName(), rRestrictionName)
+					|| PrivacyManager.getUsed(this, mAppInfo.getUid(), rRestrictionName, null) > 0 : true)
+				listRestriction.add(rRestrictionName);
 
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
 		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, listRestriction);
 		lvRestriction.setAdapter(mPrivacyListAdapter);
+		if (restrictionName != null && methodName != null) {
+			int groupPosition = PrivacyManager.getRestrictions(true).indexOf(restrictionName);
+			int childPosition = PrivacyManager.getMethods(restrictionName).indexOf(
+					new PrivacyManager.MethodDescription(methodName));
+			lvRestriction.expandGroup(groupPosition);
+			lvRestriction.setSelectedChild(groupPosition, childPosition, true);
+		}
 
 		// Up navigation
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -274,12 +302,12 @@ public class ActivityApp extends Activity {
 
 	private void optionAccounts() {
 		AccountsTask accountsTask = new AccountsTask();
-		accountsTask.execute();
+		accountsTask.executeOnExecutor(mExecutor, (Object) null);
 	}
 
 	private void optionContacts() {
 		ContactsTask contactsTask = new ContactsTask();
-		contactsTask.execute();
+		contactsTask.executeOnExecutor(mExecutor, (Object) null);
 	}
 
 	@Override
@@ -337,21 +365,21 @@ public class ActivityApp extends Activity {
 		private class GroupHolderTask extends AsyncTask<Object, Object, Object> {
 			private int position;
 			private GroupViewHolder holder;
-			String restrictionName;
-			boolean used;
-			boolean permission;
-			boolean restricted;
+			private String restrictionName;
+			private boolean used;
+			private boolean permission;
+			private boolean restricted;
 
-			public GroupHolderTask(int thePosition, GroupViewHolder theHolder) {
+			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
 				holder = theHolder;
+				restrictionName = theRestrictionName;
 			}
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				// Get info
 				if (holder.position == position) {
-					restrictionName = (String) getGroup(position);
+					// Get info
 					used = (PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
 							restrictionName);
@@ -364,6 +392,7 @@ public class ActivityApp extends Activity {
 			@Override
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && restrictionName != null) {
+					// Set data
 					holder.ctvRestriction.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
@@ -379,7 +408,7 @@ public class ActivityApp extends Activity {
 							holder.ctvRestriction.setChecked(restricted);
 							PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName,
 									null, restricted);
-							notifyDataSetChanged();
+							notifyDataSetChanged(); // Needed to update childs
 						}
 					});
 				}
@@ -442,8 +471,8 @@ public class ActivityApp extends Activity {
 			holder.ctvRestriction.setChecked(false);
 			holder.ctvRestriction.setClickable(false);
 
-			// Async
-			new GroupHolderTask(groupPosition, holder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Object) null);
+			// Async update
+			new GroupHolderTask(groupPosition, holder, restrictionName).executeOnExecutor(mExecutor, (Object) null);
 
 			return convertView;
 		}
@@ -476,7 +505,7 @@ public class ActivityApp extends Activity {
 			public ImageView imgGranted;
 			public CheckedTextView ctvMethodName;
 
-			public ChildViewHolder(View theRow, int gPosition, int cPosition) {
+			private ChildViewHolder(View theRow, int gPosition, int cPosition) {
 				row = theRow;
 				groupPosition = gPosition;
 				childPosition = cPosition;
@@ -497,17 +526,17 @@ public class ActivityApp extends Activity {
 			private boolean permission;
 			private boolean restricted;
 
-			public ChildHolderTask(int gPosition, int cPosition, ChildViewHolder theHolder) {
+			public ChildHolderTask(int gPosition, int cPosition, ChildViewHolder theHolder, String theRestrictionName) {
 				groupPosition = gPosition;
 				childPosition = cPosition;
 				holder = theHolder;
+				restrictionName = theRestrictionName;
 			}
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				// Get info
 				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition) {
-					restrictionName = (String) getGroup(groupPosition);
+					// Get info
 					md = (PrivacyManager.MethodDescription) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName,
 							md.getMethodName());
@@ -524,6 +553,7 @@ public class ActivityApp extends Activity {
 			protected void onPostExecute(Object result) {
 				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition
 						&& restrictionName != null && md != null) {
+					// Set data
 					if (lastUsage > 0) {
 						Date date = new Date(lastUsage);
 						SimpleDateFormat format = new SimpleDateFormat("dd/HH:mm", Locale.ROOT);
@@ -591,8 +621,8 @@ public class ActivityApp extends Activity {
 			holder.ctvMethodName.setChecked(false);
 			holder.ctvMethodName.setClickable(false);
 
-			// Async
-			new ChildHolderTask(groupPosition, childPosition, holder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+			// Async update
+			new ChildHolderTask(groupPosition, childPosition, holder, restrictionName).executeOnExecutor(mExecutor,
 					(Object) null);
 
 			return convertView;

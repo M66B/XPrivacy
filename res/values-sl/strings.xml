@@ -31,6 +31,8 @@
     <string name="msg_sure">Ste prepričani?</string>
     <string name="msg_done">Dokončano</string>
     <string name="msg_reboot">Zahtevan ponovni zagon</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Za razvoj in preizkušanje programa XPrivacy je bilo vloženo veliko truda, vendar pa
     je nemogoče zagotoviti brezhibno delovanje na vsaki napravi in za vsak program.\n\nUporaba programa je na lastno
     odgovornost</b>\n\nPreberite si tudi licenco:</string>
@@ -38,6 +40,7 @@
     <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>
     <string name="restrict_calendar">Koledar</string>
     <string name="restrict_calling">Klicanje (telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Odložišče</string>
     <string name="restrict_contacts">Stiki</string>
     <string name="restrict_dictionary">Slovar (uporabnik)</string>
     <string name="restrict_identification">Identifikacija (naprava)</string>
@@ -46,6 +49,7 @@
     <string name="restrict_media">Medij (zvok, slike, video)</string>
     <string name="restrict_messages">Sporočila (SMS, MMS)</string>
     <string name="restrict_network">Omrežje (naslovi)</string>
+    <string name="restrict_notifications">Obvestila</string>
     <string name="restrict_phone">Telefon (ID, številke, klici)</string>
     <string name="restrict_storage">Pomnilnik (medij, SD kartica)</string>
     <string name="restrict_shell">Lupina (ukazi, superuser)</string>
@@ -53,6 +57,7 @@
     <string name="restrict_view">Pogled (brskalnik)</string>
     <string name="title_category">Kategorija:</string>
     <string name="title_restrict">Označi za omejitev pravic:</string>
+    <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
     <string name="settings_mac">MAC naslov</string>

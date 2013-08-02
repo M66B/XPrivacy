@@ -1,4 +1,4 @@
-<resources>
+﻿<resources>
 
     <string name="app_notxposed" formatted="false">Xposed framework version %d+ är inte installerad</string>
     <string name="app_notenabled">XPrivacy är inte aktiverad i Xposed Installer</string>
@@ -6,8 +6,8 @@
     <string name="app_version" formatted="false">XPrivacy version: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Usage</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_usage">Användning</string>
+    <string name="menu_refresh">Uppdatera</string>
     <string name="menu_settings">Inställningar</string>
     <string name="menu_template">Mall</string>
     <string name="menu_update">Sök efter uppdateringar</string>
@@ -31,13 +31,16 @@
     <string name="msg_sure">Är du säker?</string>
     <string name="msg_done">Klar</string>
     <string name="msg_reboot">Omstart krävs</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
+    <string name="msg_random">Slumpa</string>
+    <string name="msg_random_boot">Slumpa efter uppstart</string>
+    <string name="msg_first"><b>XPrivacy utvecklas och testas med stor omsorg.
+Det är emellertid omöjligt att garantera att appen fungerar på alla enheter och appar.
+\n\nAnvänding sker helt på egen risk.</b>\n\nSe också licensen:</string>
     <string name="restrict_accounts">Konton (Google, Facebook, m.fl.)</string>
     <string name="restrict_browser">Webbläsare (bokmärken/historik)</string>
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Ringa (telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Urklipp</string>
     <string name="restrict_contacts">Kontakter</string>
     <string name="restrict_dictionary">Ordlista (användare)</string>
     <string name="restrict_identification">Identifikation (enhet)</string>
@@ -46,6 +49,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Media (ljud, foto, video)</string>
     <string name="restrict_messages">Meddelanden (SMS, MMS)</string>
     <string name="restrict_network">Nätverk (adresser)</string>
+    <string name="restrict_notifications">Notifikationer</string>
     <string name="restrict_phone">Telefon (ID, nummer, samtal)</string>
     <string name="restrict_storage">Lagring (media, SD-kort)</string>
     <string name="restrict_shell">Shell (kommandon, superuser)</string>
@@ -53,6 +57,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">View (webbläsare)</string>
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Markera för att blockera:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
     <string name="settings_mac">MAC-adress</string>
@@ -66,7 +71,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">har internetbehörighet</string>
     <string name="help_granted">har Android-behörighet</string>
     <string name="help_used">har använt denna data</string>
-    <string name="help_frozen">is disabled</string>
+    <string name="help_frozen">is inaktiverad</string>
     <string name="help_dangerous">är farlig</string>
 
 </resources>

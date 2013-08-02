@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,6 +46,7 @@ public class PrivacyManager {
 	public static final String cBrowser = "browser";
 	public static final String cCalendar = "calendar";
 	public static final String cCalling = "calling";
+	public static final String cClipboard = "clipboard";
 	public static final String cContacts = "contacts";
 	public static final String cDictionary = "dictionary";
 	public static final String cEMail = "email";
@@ -55,6 +57,7 @@ public class PrivacyManager {
 	public static final String cMessages = "messages";
 	public static final String cNetwork = "network";
 	public static final String cNfc = "nfc";
+	public static final String cNotifications = "notifications";
 	public static final String cPhone = "phone";
 	public static final String cStorage = "storage";
 	public static final String cShell = "shell";
@@ -62,12 +65,13 @@ public class PrivacyManager {
 	public static final String cView = "view";
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
-			cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages, cNetwork, cNfc,
-			cPhone, cShell, cStorage, cSystem, cView };
+			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
+			cNetwork, cNfc, cNotifications, cPhone, cShell, cStorage, cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cUidAndroid = 1000;
 
+	public final static String cSettingSerial = "Serial";
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
 	public final static String cSettingMac = "Mac";
@@ -86,11 +90,12 @@ public class PrivacyManager {
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
 	public final static String cSettingFirstRun = "FirstRun";
+	public final static String cSettingRandom = "Random@boot";
 
 	public final static boolean cExperimental = false;
 
 	private final static String cDeface = "DEFACE";
-	private final static int cCacheTimeoutMs = 15 * 1000;
+	public final static int cCacheTimeoutMs = 15 * 1000;
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -193,7 +198,11 @@ public class PrivacyManager {
 	}
 
 	public static List<MethodDescription> getMethods(String restrictionName) {
-		List<MethodDescription> listMethod = new ArrayList<MethodDescription>(mMethod.get(restrictionName));
+		List<MethodDescription> listMethod = new ArrayList<MethodDescription>();
+		List<MethodDescription> listMethodOrig = mMethod.get(restrictionName);
+		if (listMethodOrig != null)
+			listMethod.addAll(listMethodOrig);
+		// null can happen when upgrading
 		Collections.sort(listMethod);
 		return listMethod;
 	}
@@ -234,7 +243,8 @@ public class PrivacyManager {
 				if (methodName == null || methodName.equals("")) {
 					Util.log(hook, Log.WARN, "method empty");
 					Util.logStack(hook);
-				}
+				} else if (getMethods(restrictionName).indexOf(new MethodDescription(methodName)) < 0)
+					Util.log(hook, Log.WARN, "unknown method=" + methodName);
 
 			// Check cache
 			String keyCache = String.format("%d.%s.%s", uid, restrictionName, methodName);
@@ -631,7 +641,11 @@ public class PrivacyManager {
 
 	public static Object getDefacedProp(String name) {
 		// Serial number
-		if (name.equals("SERIAL") || name.equals("%serialno") || name.equals("%hostname"))
+		if (name.equals("SERIAL") || name.equals("%serialno"))
+			return getSetting(null, null, cSettingSerial, cDeface, true);
+
+		// Host name
+		if (name.equals("%hostname"))
 			return cDeface;
 
 		// MAC addresses
@@ -649,7 +663,7 @@ public class PrivacyManager {
 
 		// IMEI
 		if (name.equals("getDeviceId") || name.equals("%imei"))
-			return getSetting(null, null, cSettingImei, cDeface, true);
+			return getSetting(null, null, cSettingImei, "000000000000000", true);
 
 		// Phone
 		if (name.equals("PhoneNumber") || name.equals("getLine1AlphaTag") || name.equals("getLine1Number")
@@ -746,6 +760,53 @@ public class PrivacyManager {
 			location.setLongitude(Float.parseFloat(sLon) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
 		}
 		return location;
+	}
+
+	@SuppressLint("DefaultLocale")
+	public static String getRandomProp(String name) {
+		Random r = new Random();
+
+		if (name.equals("LAT")) {
+			double d = r.nextDouble() * 180 - 90;
+			d = Math.rint(d * 1e7) / 1e7;
+			return Double.toString(d);
+		}
+
+		if (name.equals("LON")) {
+			double d = r.nextDouble() * 360 - 180;
+			d = Math.rint(d * 1e7) / 1e7;
+			return Double.toString(d);
+		}
+
+		if (name.equals("SERIAL")) {
+			long v = r.nextLong();
+			return Long.toHexString(v).toUpperCase();
+		}
+
+		if (name.equals("MAC")) {
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < 6; i++) {
+				if (i != 0)
+					sb.append(':');
+				int v = r.nextInt(256);
+				if (i == 0)
+					v = v & 0xFC; // unicast, globally unique
+				sb.append(Integer.toHexString(0x100 | v).substring(1));
+			}
+			return sb.toString().toUpperCase();
+		}
+
+		if (name.equals("ANDROID_ID")) {
+			long v = r.nextLong();
+			return Long.toHexString(v).toUpperCase();
+		}
+
+		if (name.equals("GSF_ID")) {
+			long v = r.nextLong();
+			return Long.toHexString(v).toUpperCase();
+		}
+
+		return "";
 	}
 
 	// Helper methods

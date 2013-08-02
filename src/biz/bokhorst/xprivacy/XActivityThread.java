@@ -60,13 +60,19 @@ public class XActivityThread extends XHook {
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cCalling,
 				TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, Build.VERSION_CODES.JELLY_BEAN_MR2));
 
+		// Intent receive: C2DM
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,
+				"com.google.android.c2dm.intent.REGISTRATION"));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,
+				"com.google.android.c2dm.intent.RECEIVE"));
+
 		// Intent receive: NFC
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_NDEF_DISCOVERED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TAG_DISCOVERED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TECH_DISCOVERED));
 
 		// Intent receive: notifications
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,
 				NotificationListenerService.SERVICE_INTERFACE, Build.VERSION_CODES.JELLY_BEAN_MR2));
 
 		// Intent receive: package changes
@@ -74,6 +80,19 @@ public class XActivityThread extends XHook {
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REPLACED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_RESTARTED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REMOVED));
+
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_CHANGED));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_DATA_CLEARED));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_FIRST_LAUNCH));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_FULLY_REMOVED));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+				Intent.ACTION_PACKAGE_NEEDS_VERIFICATION));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_VERIFIED));
+
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+				Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+				Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE));
 
 		return listHook;
 	}
@@ -138,7 +157,19 @@ public class XActivityThread extends XHook {
 						} else if (action.equals(Intent.ACTION_PACKAGE_ADDED)
 								|| action.equals(Intent.ACTION_PACKAGE_REPLACED)
 								|| action.equals(Intent.ACTION_PACKAGE_RESTARTED)
-								|| action.equals(Intent.ACTION_PACKAGE_REMOVED)) {
+								|| action.equals(Intent.ACTION_PACKAGE_REMOVED)
+								|| action.equals(Intent.ACTION_PACKAGE_CHANGED)
+								|| action.equals(Intent.ACTION_PACKAGE_DATA_CLEARED)
+								|| action.equals(Intent.ACTION_PACKAGE_FIRST_LAUNCH)
+								|| action.equals(Intent.ACTION_PACKAGE_FULLY_REMOVED)
+								|| action.equals(Intent.ACTION_PACKAGE_NEEDS_VERIFICATION)
+								|| action.equals(Intent.ACTION_PACKAGE_VERIFIED)) {
+							if (isRestricted(param, mActionName)) {
+								finish(param);
+								param.setResult(null);
+							}
+						} else if (action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE)
+								|| action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE)) {
 							if (isRestricted(param, mActionName)) {
 								finish(param);
 								param.setResult(null);

@@ -31,6 +31,8 @@
     <string name="msg_sure">אתה בטוח?</string>
     <string name="msg_done">בוצע</string>
     <string name="msg_reboot">נדרש אתחול מחדש</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
@@ -38,6 +40,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">דפדפן (מועדפים / היסטוריה)</string>
     <string name="restrict_calendar">יומן</string>
     <string name="restrict_calling">שיחות (טלפון, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">אנשי קשר</string>
     <string name="restrict_dictionary">מילון (משתמש)</string>
     <string name="restrict_identification">זיהוי (מכשיר)</string>
@@ -46,6 +49,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">מדיה (אודיו, תמונות, וידאו)</string>
     <string name="restrict_messages">הודעות (SMS, MMS)</string>
     <string name="restrict_network">רשת (כתובות)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">טלפון (זיהוי, מספרים, שיחות)</string>
     <string name="restrict_storage">אחסון (מדיה, כרטיס SD)</string>
     <string name="restrict_shell">Shell (commands, superuser)</string>
@@ -53,6 +57,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">גישה (דפדפן)</string>
     <string name="title_category">קטגוריה:</string>
     <string name="title_restrict">בחר להגביל:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">קו אורך</string>
     <string name="settings_lon">קו רוחב</string>
     <string name="settings_mac">כתובת MAC</string>

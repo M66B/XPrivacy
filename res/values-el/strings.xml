@@ -31,6 +31,8 @@
     <string name="msg_sure">Είστε σίγουρος;</string>
     <string name="msg_done">Τέλος</string>
     <string name="msg_reboot">Απαιτείται επανεκκίνηση</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
@@ -38,6 +40,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">Browser (σελιδοδείκτες/ιστορικό)</string>
     <string name="restrict_calendar">Ημερολόγιο</string>
     <string name="restrict_calling">Κλήσεις (τηλέφωνο, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Επαφές</string>
     <string name="restrict_dictionary">Λεξικό (χρήστη)</string>
     <string name="restrict_identification">Ταυτότητα (συσκευή)</string>
@@ -46,6 +49,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Πολυμέσα (ήχοι, φωτογραφίες, βίντεο)</string>
     <string name="restrict_messages">Μηνύματα (SMS, MMS)</string>
     <string name="restrict_network">Δίκτυο (διευθύνσεις)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Τηλέφωνο (στοιχεία, αριθμοί, κλήσεις)</string>
     <string name="restrict_storage">Αποθ. χώρος (πολυμέσα, κάρτα SD)</string>
     <string name="restrict_shell">Shell (εντολές, superuser)</string>
@@ -53,6 +57,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">Εμφάνιση (browser)</string>
     <string name="title_category">Κατηγορία:</string>
     <string name="title_restrict">Επιλέξτε για περιορισμό:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Γεωγρ. πλάτος</string>
     <string name="settings_lon">Γεωγρ. μήκος</string>
     <string name="settings_mac">Διεύθυνση MAC</string>

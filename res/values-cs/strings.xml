@@ -2,12 +2,12 @@
 
     <string name="app_notxposed" formatted="false">Není nainstalován Xposed framework verze %d+</string>
     <string name="app_notenabled">Není povolen modul XPrivacy v Xposed installeru</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_wrongandroid">Pouze pro Android verze 4.0+</string>
     <string name="app_version" formatted="false">Verze XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Verze Xposed frameworku: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Usage</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_usage">Využití</string>
+    <string name="menu_refresh">Obnovit</string>
     <string name="menu_settings">Nastavení</string>
     <string name="menu_template">Šablona</string>
     <string name="menu_update">Zkontrolovat aktualizace</string>
@@ -31,13 +31,16 @@
     <string name="msg_sure">Jste si jistý?</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadován restart</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_first"><b>Vývoj a testování aplikace XPrivacy probíhaly s maximální možnou péčí,
+nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a se všemi aplikacemi.
+\n\nPoužívejte pouze na vlastní riziko.</b>\n\nLicence aplikace:</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atd.)</string>
     <string name="restrict_browser">Prohlížeč (záložky/historie)</string>
     <string name="restrict_calendar">Kalendář</string>
     <string name="restrict_calling">Volání (telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Schránka</string>
     <string name="restrict_contacts">Kontakty</string>
     <string name="restrict_dictionary">Slovník (uživatele)</string>
     <string name="restrict_identification">Identifikace (zařízení)</string>
@@ -46,6 +49,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Média (hudba, fotky, videa)</string>
     <string name="restrict_messages">Zprávy (SMS, MMS)</string>
     <string name="restrict_network">Síť (adresace)</string>
+    <string name="restrict_notifications">Upozornění</string>
     <string name="restrict_phone">Telefon (ID, čísla, hovory)</string>
     <string name="restrict_storage">Úložiště (média, SD karta)</string>
     <string name="restrict_shell">Konzole (příkazy, superuser)</string>
@@ -53,6 +57,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">Zobrazení (v prohlížeči)</string>
     <string name="title_category">Kategorie:</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
+    <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zeměpisná šířka</string>
     <string name="settings_lon">Zeměpisná délka</string>
     <string name="settings_mac">MAC adresa</string>
@@ -66,7 +71,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">má oprávnění k Internetu</string>
     <string name="help_granted">má Android oprávnění</string>
     <string name="help_used">přistupovala k těmto datům</string>
-    <string name="help_frozen">is disabled</string>
+    <string name="help_frozen">je zakázaná</string>
     <string name="help_dangerous">je nebezpečná</string>
 
 </resources>

@@ -34,7 +34,9 @@
     <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_sure">Are you sure?</string>
     <string name="msg_done">Done</string>
-    <string name="msg_reboot">Reboot required</string>
+    <string name="msg_reboot">Device restart required</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
@@ -42,6 +44,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">Browser (bookmarks/history)</string>
     <string name="restrict_calendar">Calendar</string>
     <string name="restrict_calling">Calling (phone, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Contacts</string>
     <string name="restrict_dictionary">Dictionary (user)</string>
     <string name="restrict_email" translatable="false">E-mail</string>
@@ -52,6 +55,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_messages">Messages (SMS, MMS)</string>
     <string name="restrict_network">Network (addresses)</string>
     <string name="restrict_nfc" translatable="false">NFC</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Phone (ID, numbers, calls)</string>
     <string name="restrict_storage">Storage (media, SD card)</string>
     <string name="restrict_shell">Shell (commands, superuser)</string>
@@ -59,6 +63,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">View (browser)</string>
     <string name="title_category">Category:</string>
     <string name="title_restrict">Check to restrict:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
     <string name="settings_mac">MAC address</string>

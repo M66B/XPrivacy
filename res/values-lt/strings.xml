@@ -2,12 +2,12 @@
 
     <string name="app_notxposed" formatted="false">Xposed sistemos versija %d+ neįdiegta</string>
     <string name="app_notenabled">XPrivacy neaktyvuota Xposed sistemoje</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_wrongandroid">Tik nuo Android 4.0+ versijos</string>
     <string name="app_version" formatted="false">XPrivacy versija: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed sistemos versija: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Naudojimas</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_refresh">Atnaujinti</string>
     <string name="menu_settings">Parametrai</string>
     <string name="menu_template">Ruošiniai</string>
     <string name="menu_update">Tikrinti atnaujinimus</string>
@@ -31,6 +31,8 @@
     <string name="msg_sure">Esate tikri?</string>
     <string name="msg_done">Atlikta</string>
     <string name="msg_reboot">Privaloma perkrauti prietaisą!</string>
+    <string name="msg_random">Atsitiktinis</string>
+    <string name="msg_random_boot">Atsitiktinis po startavimo</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
 \n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>
@@ -38,6 +40,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_browser">Naršyklė (žymės/istorija)</string>
     <string name="restrict_calendar">Kalendorius</string>
     <string name="restrict_calling">Skambučiai (telefonas, SMS, MMS)</string>
+    <string name="restrict_clipboard">Vaizdai</string>
     <string name="restrict_contacts">Kontaktai</string>
     <string name="restrict_dictionary">Žodynas (vartotojo)</string>
     <string name="restrict_identification">Identifikacija (prietaiso)</string>
@@ -46,6 +49,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_media">Media (muzika, nuotraukos, vaizdai)</string>
     <string name="restrict_messages">Pranešimai (SMS, MMS)</string>
     <string name="restrict_network">Tinklas (adresai)</string>
+    <string name="restrict_notifications">Pranešimai</string>
     <string name="restrict_phone">Telefonas (ID, numeris, skambučiai)</string>
     <string name="restrict_storage">Atmintis (media, SD kortelė)</string>
     <string name="restrict_shell">Vykdymas (komandos, superuser)</string>
@@ -53,6 +57,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_view">Peržiūra (Naršyklė)</string>
     <string name="title_category">Kategorija:</string>
     <string name="title_restrict">Žiūrėti apribojimus:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
     <string name="settings_mac">MAC</string>

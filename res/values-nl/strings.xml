@@ -30,7 +30,9 @@
     <string name="msg_edit">Klik op het applicatie pictogram om alle beperkingen te wijzigen</string>
     <string name="msg_sure">Zeker weten?</string>
     <string name="msg_done">Gereed</string>
-    <string name="msg_reboot">Opnieuw opstarten noodzakelijk</string>
+    <string name="msg_reboot">Herstart apparaat vereist</string>
+    <string name="msg_random">Willekeurig</string>
+    <string name="msg_random_boot">Willekeurig na herstart</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
 \n\nGebruik is geheel op eigen risico.</b>\n\nZie ook de licentie:</string>
@@ -38,6 +40,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_browser">Browser (favorieten/geschiedenis)</string>
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Oproepen (bellen, SMS, MMS)</string>
+    <string name="restrict_clipboard">Prikbord</string>
     <string name="restrict_contacts">Contacten</string>
     <string name="restrict_dictionary">Woordenboek (gebruiker)</string>
     <string name="restrict_identification">Identificatie (apparaat)</string>
@@ -46,6 +49,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_media">Media (audio, foto, video)</string>
     <string name="restrict_messages">Berichten (SMS, MMS)</string>
     <string name="restrict_network">Netwerk (adressen)</string>
+    <string name="restrict_notifications">Notificaties</string>
     <string name="restrict_phone">Telefoon (ID, nummers, oproepen)</string>
     <string name="restrict_storage">Opslag (media, SD card)</string>
     <string name="restrict_shell">Shell (opdrachten, superuser)</string>
@@ -53,6 +57,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_view">Tonen (browser)</string>
     <string name="title_category">Categorie:</string>
     <string name="title_restrict">Vink aan om te beperken:</string>
+    <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>
     <string name="settings_mac">MAC adres</string>

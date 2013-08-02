@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import android.app.Activity;
 import android.content.Context;
@@ -35,6 +38,18 @@ public class ActivityUsage extends Activity {
 
 	public static final String cUid = "Uid";
 
+	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
+			new PriorityThreadFactor());
+
+	private static class PriorityThreadFactor implements ThreadFactory {
+		@Override
+		public Thread newThread(Runnable r) {
+			Thread t = new Thread(r);
+			t.setPriority(Thread.NORM_PRIORITY);
+			return t;
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,7 +68,7 @@ public class ActivityUsage extends Activity {
 
 		// Start task to get usage data
 		UsageTask usageTask = new UsageTask();
-		usageTask.execute();
+		usageTask.executeOnExecutor(mExecutor, (Object) null);
 
 		// Listen for clicks
 		ListView lvUsage = (ListView) findViewById(R.id.lvUsage);
@@ -66,6 +81,8 @@ public class ActivityUsage extends Activity {
 					Intent intent = new Intent(ActivityUsage.this, ActivityApp.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					intent.putExtra(ActivityApp.cPackageName, packageName[0]);
+					intent.putExtra(ActivityApp.cRestrictionName, usageData.getRestrictionName());
+					intent.putExtra(ActivityApp.cMethodName, usageData.getMethodName());
 					startActivity(intent);
 				}
 			}
@@ -100,7 +117,7 @@ public class ActivityUsage extends Activity {
 			return true;
 		case R.id.menu_refresh:
 			UsageTask usageTask = new UsageTask();
-			usageTask.execute();
+			usageTask.executeOnExecutor(mExecutor, (Object) null);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -134,6 +151,7 @@ public class ActivityUsage extends Activity {
 
 	private class UsageAdapter extends ArrayAdapter<PrivacyManager.UsageData> {
 		private List<PrivacyManager.UsageData> mListUsageData;
+		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		public UsageAdapter(Context context, int textViewResourceId, List<PrivacyManager.UsageData> objects) {
 			super(context, textViewResourceId, objects);
@@ -185,15 +203,29 @@ public class ActivityUsage extends Activity {
 			}
 		}
 
+		private class ViewHolder {
+			public TextView tvTime;
+			public ImageView imgRestricted;
+			public TextView tvApp;
+			public TextView tvRestriction;
+
+			public ViewHolder(View row) {
+				tvTime = (TextView) row.findViewById(R.id.tvTime);
+				imgRestricted = (ImageView) row.findViewById(R.id.imgRestricted);
+				tvApp = (TextView) row.findViewById(R.id.tvApp);
+				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
+			}
+		}
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// Get layout
-			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View row = inflater.inflate(R.layout.usageentry, parent, false);
-			TextView tvTime = (TextView) row.findViewById(R.id.tvTime);
-			TextView tvApp = (TextView) row.findViewById(R.id.tvApp);
-			TextView tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
-			ImageView imgRestricted = (ImageView) row.findViewById(R.id.imgRestricted);
+			ViewHolder holder;
+			if (convertView == null) {
+				convertView = mInflater.inflate(R.layout.usageentry, null);
+				holder = new ViewHolder(convertView);
+				convertView.setTag(holder);
+			} else
+				holder = (ViewHolder) convertView.getTag();
 
 			// Get data
 			PrivacyManager.UsageData usageData = getItem(position);
@@ -201,12 +233,13 @@ public class ActivityUsage extends Activity {
 			// Build entry
 			Date date = new Date(usageData.getTimeStamp());
 			SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ROOT);
-			tvTime.setText(format.format(date));
-			tvApp.setText(Integer.toString(usageData.getUid()));
-			tvRestriction.setText(String.format("%s/%s", usageData.getRestrictionName(), usageData.getMethodName()));
-			imgRestricted.setVisibility(usageData.getRestricted() ? View.VISIBLE : View.INVISIBLE);
+			holder.tvTime.setText(format.format(date));
+			holder.imgRestricted.setVisibility(usageData.getRestricted() ? View.VISIBLE : View.INVISIBLE);
+			holder.tvApp.setText(Integer.toString(usageData.getUid()));
+			holder.tvRestriction.setText(String.format("%s/%s", usageData.getRestrictionName(),
+					usageData.getMethodName()));
 
-			return row;
+			return convertView;
 		}
 	}
 }

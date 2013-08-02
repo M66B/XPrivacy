@@ -31,6 +31,8 @@
     <string name="msg_sure">هل أنت متأكد ؟</string>
     <string name="msg_done">إنتهى</string>
     <string name="msg_reboot">يحتاج إعادة تشغيل</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
@@ -38,6 +40,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">المتصفح (العلامات,السجل)</string>
     <string name="restrict_calendar">التقويم</string>
     <string name="restrict_calling">المكالمات (الهاتف,الرسائل النصية,رسائل الوسائط)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">الأسماء</string>
     <string name="restrict_dictionary">القاموس (المستخدم)</string>
     <string name="restrict_identification">الهوية (الجهاز)</string>
@@ -46,6 +49,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">الميديا (صوت,صورة,فيديو) </string>
     <string name="restrict_messages">الرسائل (النصية , الوسائط)</string>
     <string name="restrict_network">الشبكة (العناوين)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">الهاتف (المعرف,الأرقام,المكالمات)</string>
     <string name="restrict_storage">التخزين (الميديا’الذاكرة الخارجية)</string>
     <string name="restrict_shell">سطر الأوامر (الأوامر,المستخدم الجذر)</string>
@@ -53,6 +57,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">تصفح (المتصفح)</string>
     <string name="title_category">الفئة:</string>
     <string name="title_restrict">إختر للتقيد:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
     <string name="settings_mac">عنوان الماك</string>

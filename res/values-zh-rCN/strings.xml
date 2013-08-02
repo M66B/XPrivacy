@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_notxposed" formatted="false">Xposed 框架版本 %d+ 未安装</string>
-    <string name="app_notenabled">XPrivacy 没有在 Xposed 程序中开启</string>
+    <string name="app_notenabled">XPrivacy 没有在 Xposed 程序中启用</string>
     <string name="app_wrongandroid">仅支持安卓 4.0 以上的版本</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
@@ -31,6 +31,8 @@
     <string name="msg_sure">你确定吗?</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">设备需要重启</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>XPrivacy的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用.
 \n\n使用者完全自担风险.</b>\n\n另请参阅许可:</string>
@@ -38,6 +40,7 @@
     <string name="restrict_browser">浏览器 (书签/历史)</string>
     <string name="restrict_calendar">日历</string>
     <string name="restrict_calling">通话 (语音, 短信, 彩信)</string>
+    <string name="restrict_clipboard">剪贴板</string>
     <string name="restrict_contacts">联系人</string>
     <string name="restrict_dictionary">词典 (用户)</string>
     <string name="restrict_identification">识别码 (设备)</string>
@@ -46,6 +49,7 @@
     <string name="restrict_media">媒体 (声音, 图片, 视频)</string>
     <string name="restrict_messages">信息 (短信, 彩信)</string>
     <string name="restrict_network">网络 (地址)</string>
+    <string name="restrict_notifications">通知</string>
     <string name="restrict_phone">手机 (ID, 电话号码, 通话)</string>
     <string name="restrict_storage">存储 (媒体, SD 卡)</string>
     <string name="restrict_shell">Shell (命令, 超级用户)</string>
@@ -53,6 +57,7 @@
     <string name="restrict_view">查看 (浏览器)</string>
     <string name="title_category">类目:</string>
     <string name="title_restrict">勾选表示限制:</string>
+    <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
     <string name="settings_mac">MAC 地址</string>

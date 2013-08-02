@@ -28,6 +28,7 @@ import android.util.Base64;
 import android.util.Log;
 
 public class Util {
+	private static boolean mPro = false;
 
 	public static void log(XHook hook, int priority, String msg) {
 		if (priority != Log.DEBUG)
@@ -75,8 +76,16 @@ public class Util {
 		return false;
 	}
 
+	public static void setPro(boolean enabled) {
+		mPro = enabled;
+	}
+
 	public static String hasProLicense(Context context) {
 		try {
+			// Pro enabled
+			if (mPro)
+				return "";
+
 			// Get license file name
 			String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
 			String fileName = folder + File.separator + "XPrivacy_license.txt";
@@ -125,7 +134,7 @@ public class Util {
 			PackageInfo pi = pm.getPackageInfo(proPackageName, 0);
 			Version vPro = new Version(pi.versionName);
 			if (pm.checkSignatures(context.getPackageName(), proPackageName) == PackageManager.SIGNATURE_MATCH
-					&& vPro.compareTo(new Version("1.7")) >= 0 && validFingerPrint(context)) {
+					&& vPro.compareTo(new Version("1.10")) >= 0 && validFingerPrint(context)) {
 				Util.log(null, Log.INFO, "Licensing: enabler installed");
 				return true;
 			}

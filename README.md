@@ -127,6 +127,8 @@ For easy usage, data is restricted by category:
 	* prevent SMS messages from being sent
 	* prevent MMS messages from being sent
 	* prevent data messages from being sent
+* Clipboard
+	* prevent paste from clipboard (both manual and from an application)
 * Contacts
 	* return an empty contact list
 		* content://com.android.contacts/data
@@ -180,15 +182,18 @@ For easy usage, data is restricted by category:
 	* prevent receiving NDEF discovered
 	* prevent receiving TAG discovered
 	* prevent receiving TECH discovered
+* Notifications
+	* prevent receiving statusbar notifications (Android 4.3+)
+	* prevent [C2DM](https://developers.google.com/android/c2dm/) messages
 * Phone:
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID (IMSI for a GSM phone)
-	* return a fake phone device ID (IMEI)
+	* return a fake phone device ID (IMEI): 000000000000000
 	* return a empty ISIM/ISIM domain
 	* return a empty IMPI/IMPU
 	* return a fake MSISDN
 	* return fake mobile network info
-		* Country: 001 (test network)
+		* Country: XX
 		* Operator: 00101 (test network)
 		* Operator name: fake
 	* return fake SIM info
@@ -224,9 +229,7 @@ For easy usage, data is restricted by category:
 	* return an empty list of running tasks
 	* return an empty list of widgets
 	* return an empty list of applications (provider)
-	* return an empty clipboard
 	* prevent package add, replace, restart and remove notifications
-	* prevent statusbar notifications
 * View
 	* prevent links from opening in the browser
 	* you will be notified if an application tries to open a link
@@ -516,6 +519,14 @@ Each user can manage the restrictions for the applications available to him/her.
 If Android uses the same uid for an application that two users share,
 both users can manage the restrictions for this application.
 
+**(30) Why is the location search in the settings disabled?**
+
+Because some Google components are not installed.
+
+**(31) Do I still need root after installing Xposed?**
+
+No.
+
 Support
 -------
 
@@ -544,6 +555,76 @@ How to get beta releases:
 
 **Next release**
 
+* Randomization of: ([issue](https://github.com/M66B/XPrivacy/issues/418))
+	* Android ID
+	* GSF ID
+	* Location
+	* Serial#
+* Added hints to settings ([issue](https://github.com/M66B/XPrivacy/issues/422))
+* Updated Portuguese translation
+* Updated Swedish translation
+
+**Version 1.7.30 BETA!**
+
+* Fixed Skype crash ([issue](https://github.com/M66B/XPrivacy/issues/424))
+* Fixed navigate from usage view crash ([issue](https://github.com/M66B/XPrivacy/issues/426))
+* Intent for import/export ([issue](https://github.com/M66B/XPrivacy/issues/421))
+* Randomization of: ([issue](https://github.com/M66B/XPrivacy/issues/418))
+	* MAC address
+* Updated French translation
+* Updated German translation
+* Updated Lithuanian translation
+
+**Version 1.7.29 BETA!**
+
+* Go to method restriction from application usage view ([issue](https://github.com/M66B/XPrivacy/issues/409))
+* Fixed usage data for contacts ([issue](https://github.com/M66B/XPrivacy/issues/395))
+* Fixed navigation to application in wiki ([issue](https://github.com/M66B/XPrivacy/issues/394))
+* Better detection of sh / su command
+* Updated Czech translation
+* Updated French translation
+* Updated German translation
+* Updated Japanese Translation
+* Updated Norwegian translation
+* Updated Russian translation
+* Updated Slovak translation
+* Updated Swedish translation
+
+**Version 1.7.28 BETA!**
+
+* Export/import selected accounts/contacts *for the same device only* ([pro version](http://www.faircode.eu/xprivacy/) only)
+* Fixed crash while filtering ([issue](https://github.com/M66B/XPrivacy/issues/402))
+* Updated Simplified Chinese translation
+* Updated Slovenian translation
+
+**Version 1.7.27 BETA!**
+
+* Pre-load application icons again
+* Moved restricting statusbar notifications and C2DM to new category *Notifications*
+* Updated German translation
+
+**Version 1.7.26 BETA!**
+
+* Performance improvements
+	* Caching of fallback restrictions
+	* Usage private executors with normal priority for async tasks
+* Faster application details view by fetching data asynchronous
+* Faster usage view by applying the holder pattern
+* Revert "Run privacy provider in separate process" ([issue](https://github.com/M66B/XPrivacy/issues/384))
+* Moved clipboard restrictions for *System* to new *Clipboard* category ([issue](https://github.com/M66B/XPrivacy/issues/359))
+* Add restrictions to the *System* category: ([issue](https://github.com/M66B/XPrivacy/issues/373), [issue](https://github.com/M66B/XPrivacy/issues/387))
+	* android.intent.action.PACKAGE_CHANGED
+	* android.intent.action.PACKAGE_DATA_CLEARED
+	* android.intent.action.PACKAGE_FIRST_LAUNCH
+	* android.intent.action.PACKAGE_FULLY_REMOVED
+	* android.intent.action.PACKAGE_NEEDS_VERIFICATION
+	* android.intent.action.PACKAGE_VERIFIED
+	* android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE
+	* android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE
+	* com.google.android.c2dm.intent.REGISTRATION
+	* com.google.android.c2dm.intent.RECEIVE
+* New setting for serial number ([issue](https://github.com/M66B/XPrivacy/issues/388))
+* Updated Lithuanian translation
 * Updated Vietnamese translation
 
 **Version 1.7.25 BETA!**

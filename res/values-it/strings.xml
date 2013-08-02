@@ -31,6 +31,8 @@
     <string name="msg_sure">Sei sicuro?</string>
     <string name="msg_done">Fatto</string>
     <string name="msg_reboot">Riavvio richiesto</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
@@ -38,6 +40,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">Browser (bookmarks/history)</string>
     <string name="restrict_calendar">Calendario</string>
     <string name="restrict_calling">Chiamate (Telefono, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Contatti</string>
     <string name="restrict_dictionary">Dizionario (utente)</string>
     <string name="restrict_identification">Identificazione (dispositivo)</string>
@@ -46,6 +49,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Media (audio, foto, video)</string>
     <string name="restrict_messages">Messaggi (SMS, MMS)</string>
     <string name="restrict_network">Rete (indirizzi)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefono (ID, numeri, chiamate)</string>
     <string name="restrict_storage">Memoria (media, scheda SD)</string>
     <string name="restrict_shell">Shell (comandi, superuser)</string>
@@ -53,6 +57,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">Visualizzazione (browser)</string>
     <string name="title_category">Categoria:</string>
     <string name="title_restrict">Spunta per limitare:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
     <string name="settings_mac">Indirizzo MAC</string>

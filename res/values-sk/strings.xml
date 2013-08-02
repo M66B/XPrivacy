@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Len pre Android 4.0+</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Verzia Xposed: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Autorské práva \u00A9 2013 od M. Bokhorst (M66B)</string>
     <string name="menu_usage">Využitie</string>
     <string name="menu_refresh">Obnoviť</string>
     <string name="menu_settings">Nastavenia</string>
@@ -31,6 +31,8 @@
     <string name="msg_sure">Ste si istý?</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadovaný reštart</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>
@@ -38,6 +40,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_browser">Prehliadač (záložky/história)</string>
     <string name="restrict_calendar">Kalendár</string>
     <string name="restrict_calling">Volanie (telefón, SMS, MMS)</string>
+    <string name="restrict_clipboard">Schránka</string>
     <string name="restrict_contacts">Kontakty</string>
     <string name="restrict_dictionary">Slovník (užívateľ)</string>
     <string name="restrict_identification">Identifikácia (zariadenie)</string>
@@ -46,6 +49,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_media">Médiá (hudba, fotky, videá)</string>
     <string name="restrict_messages">Správy (SMS, MMS)</string>
     <string name="restrict_network">Sieť (adresy)</string>
+    <string name="restrict_notifications">Oznámenia</string>
     <string name="restrict_phone">Telefón (ID, čísla, hovory)</string>
     <string name="restrict_storage">Úložisko (médiá, SD karta)</string>
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
@@ -53,6 +57,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
     <string name="title_category">Kategória:</string>
     <string name="title_restrict">Zaškrtnite pre obmedzenie:</string>
+    <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
     <string name="settings_mac">MAC adresa</string>

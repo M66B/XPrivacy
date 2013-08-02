@@ -18,20 +18,17 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XContentProvider extends XHook {
 
 	private String mClassName;
-	private String mProviderName;
 	private String mUriStart;
 
 	private XContentProvider(String restrictionName, String providerName, String className) {
 		super(restrictionName, "query", providerName);
 		mClassName = className;
-		mProviderName = providerName;
 		mUriStart = null;
 	}
 
 	private XContentProvider(String restrictionName, String providerName, String className, String uriStart) {
 		super(restrictionName, "query", uriStart.replace("content://com.android.", ""));
 		mClassName = className;
-		mProviderName = providerName;
 		mUriStart = uriStart;
 	}
 
@@ -144,7 +141,7 @@ public class XContentProvider extends XHook {
 					if (param.args.length > 3) {
 						List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
 						if (Util.containsIgnoreCase(selectionArgs, "android_id"))
-							if (isRestricted(param, mProviderName)) {
+							if (isRestricted(param)) {
 								MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
 								gsfCursor
 										.addRow(new Object[] { "android_id", PrivacyManager.getDefacedProp("GSF_ID") });
@@ -157,7 +154,7 @@ public class XContentProvider extends XHook {
 				} else if (sUri.startsWith("content://com.android.contacts")
 						&& !sUri.startsWith("content://com.android.contacts/profile")) {
 					// Contacts provider: allow selected contacts
-					if (isRestricted(param, mProviderName)) {
+					if (isRestricted(param)) {
 						// Get contact ID index
 						int iid = -1;
 						if (sUri.startsWith("content://com.android.contacts/contacts"))
@@ -230,7 +227,7 @@ public class XContentProvider extends XHook {
 					}
 
 				} else {
-					if (isRestricted(param, mProviderName)) {
+					if (isRestricted(param)) {
 						// Return empty cursor
 						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 						result.respond(cursor.getExtras());

@@ -31,6 +31,8 @@
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Færdig</string>
     <string name="msg_reboot">Reboot required</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
@@ -38,6 +40,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">Browser (Bogmærker/Historie)</string>
     <string name="restrict_calendar">Kalendar</string>
     <string name="restrict_calling">Komunikation (Telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Contacts</string>
     <string name="restrict_dictionary">Ordbog (Bruger Difineret)</string>
     <string name="restrict_identification">Identifikation (Enhed)</string>
@@ -46,6 +49,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Medie (Audio, Photo, Video)</string>
     <string name="restrict_messages">Beskeder (SMS, MMS)</string>
     <string name="restrict_network">Netværk (Adresser)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefon (ID, Numre, Opkald)</string>
     <string name="restrict_storage">Opbevaring (Medier, SD-Kort)</string>
     <string name="restrict_shell">Shell (Kommandoer, Administrator)</string>
@@ -53,6 +57,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">View (Browser)</string>
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Afkryds for at begrænse:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Højdegrad</string>
     <string name="settings_lon">Længdegrad</string>
     <string name="settings_mac">MAC adresse</string>

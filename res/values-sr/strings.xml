@@ -31,6 +31,8 @@
     <string name="msg_sure">Да ли сте сигурни?</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Потребан ребут</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
@@ -38,6 +40,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">Браузер (букмаркови/историја)</string>
     <string name="restrict_calendar">Календар</string>
     <string name="restrict_calling">Позиви (телефон, СМС, ММС)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Контакти</string>
     <string name="restrict_dictionary">Речник (кориснички)</string>
     <string name="restrict_identification">Идентификација (уређај)</string>
@@ -46,6 +49,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Медија (аудио, фото, видео)</string>
     <string name="restrict_messages">Поруке (СМС, ММС)</string>
     <string name="restrict_network">Мрежа (адресе)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Телефон (ИД, бројеви, позиви)</string>
     <string name="restrict_storage">Уложни простор (медија, СД карта)</string>
     <string name="restrict_shell">Шел (команде, суперкорисник)</string>
@@ -53,6 +57,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">Поглед (браузер)</string>
     <string name="title_category">Категорија:</string>
     <string name="title_restrict">Означи да забраниш:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Ширина</string>
     <string name="settings_lon">Дужина</string>
     <string name="settings_mac">МЕК адреса</string>

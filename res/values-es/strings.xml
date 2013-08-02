@@ -31,6 +31,8 @@
     <string name="msg_sure">¿Estas seguro?</string>
     <string name="msg_done">Completado</string>
     <string name="msg_reboot">Reinicio requerido</string>
+    <string name="msg_random">Randomize</string>
+    <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
@@ -38,6 +40,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_browser">Navegador (marcadores/historial)</string>
     <string name="restrict_calendar">Calendario</string>
     <string name="restrict_calling">Llamadas (teléfono, SMS, MMS)</string>
+    <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Contactos</string>
     <string name="restrict_dictionary">Diccionario (usuario)</string>
     <string name="restrict_identification">Identificación (dispositivo)</string>
@@ -46,6 +49,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Medios (audio, foto, video)</string>
     <string name="restrict_messages">Mensajes (SMS, MMS)</string>
     <string name="restrict_network">Red (direcciones)</string>
+    <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Teléfono (ID, números, llamadas)</string>
     <string name="restrict_storage">Almacenamiento (media, tarjeta SD)</string>
     <string name="restrict_shell">Terminal (comandos, superusuario)</string>
@@ -53,6 +57,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">Ver (navegador)</string>
     <string name="title_category">Categoría:</string>
     <string name="title_restrict">Selecciona para restringir:</string>
+    <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
     <string name="settings_mac">Dirección MAC</string>
