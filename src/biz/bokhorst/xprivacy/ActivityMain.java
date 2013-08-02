@@ -870,8 +870,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				etLon.setText(PrivacyManager.getRandomProp("LON"));
 				etSerial.setText(PrivacyManager.getRandomProp("SERIAL"));
 				etMac.setText(PrivacyManager.getRandomProp("MAC"));
+				etPhone.setText(PrivacyManager.getRandomProp("PHONE"));
+				etImei.setText(PrivacyManager.getRandomProp("IMEI"));
 				etId.setText(PrivacyManager.getRandomProp("ANDROID_ID"));
 				etGsfId.setText(PrivacyManager.getRandomProp("GSF_ID"));
+				etCountry.setText(PrivacyManager.getRandomProp("ISO3166"));
 			}
 		});
 

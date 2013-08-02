@@ -557,8 +557,11 @@ How to get beta releases:
 
 * Randomization of: ([issue](https://github.com/M66B/XPrivacy/issues/418))
 	* Android ID
+	* Country
 	* GSF ID
+	* IMEI
 	* Location
+	* Phone number
 	* Serial#
 * Added hints to settings ([issue](https://github.com/M66B/XPrivacy/issues/422))
 * Updated Portuguese translation

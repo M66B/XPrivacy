@@ -796,6 +796,42 @@ public class PrivacyManager {
 			return sb.toString().toUpperCase();
 		}
 
+		if (name.equals("PHONE")) {
+			String phone = "0";
+			for (int i = 1; i < 10; i++)
+				phone += Character.forDigit(r.nextInt(10), 10);
+			return phone;
+		}
+
+		// IMEI
+		if (name.equals("IMEI")) {
+			// http://en.wikipedia.org/wiki/Reporting_Body_Identifier
+			String[] rbi = new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "30", "33",
+					"35", "44", "45", "49", "50", "51", "52", "53", "54", "86", "91", "98", "99" };
+
+			String imei = rbi[r.nextInt(rbi.length)];
+			while (imei.length() < 14)
+				imei += Character.forDigit(r.nextInt(10), 10);
+
+			// Luhn algorithm
+			int sum = 0;
+			boolean alternate = false;
+			for (int i = imei.length() - 1; i >= 0; i--) {
+				int n = Integer.parseInt(imei.substring(i, i + 1));
+				if (alternate) {
+					n *= 2;
+					if (n > 9) {
+						n = (n % 10) + 1;
+					}
+				}
+				sum += n;
+				alternate = !alternate;
+			}
+
+			imei += Character.forDigit(sum % 10, 10);
+			return imei;
+		}
+
 		if (name.equals("ANDROID_ID")) {
 			long v = r.nextLong();
 			return Long.toHexString(v).toUpperCase();
@@ -804,6 +840,29 @@ public class PrivacyManager {
 		if (name.equals("GSF_ID")) {
 			long v = r.nextLong();
 			return Long.toHexString(v).toUpperCase();
+		}
+
+		if (name.equals("MCC")) {
+			// 001
+		}
+
+		if (name.equals("MNC")) {
+			// 01
+		}
+
+		if (name.equals("ISO3166")) {
+			String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			String country = Character.toString(letters.charAt(r.nextInt(letters.length())))
+					+ Character.toString(letters.charAt(r.nextInt(letters.length())));
+			return country;
+		}
+
+		if (name.equals("ICCID")) {
+			// Empty
+		}
+
+		if (name.equals("IMSI")) {
+			// Empty
 		}
 
 		return "";

@@ -21,10 +21,15 @@ public class BootReceiver extends BroadcastReceiver {
 			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingSerial,
 					PrivacyManager.getRandomProp("SERIAL"));
 			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC"));
+			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingPhone,
+					PrivacyManager.getRandomProp("PHONE"));
+			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI"));
 			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingId,
 					PrivacyManager.getRandomProp("ANDROID_ID"));
 			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingGsfId,
 					PrivacyManager.getRandomProp("GSF_ID"));
+			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingCountry,
+					PrivacyManager.getRandomProp("ISO3166"));
 		}
 
 		// Check if Xposed enabled
