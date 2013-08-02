@@ -814,21 +814,19 @@ public class PrivacyManager {
 				imei += Character.forDigit(r.nextInt(10), 10);
 
 			// Luhn algorithm
+			// http://en.wikipedia.org/wiki/Luhn_algorithm
 			int sum = 0;
-			boolean alternate = false;
 			for (int i = imei.length() - 1; i >= 0; i--) {
-				int n = Integer.parseInt(imei.substring(i, i + 1));
-				if (alternate) {
+				int n = Character.digit(imei.charAt(i), 10);
+				if (i % 2 == 0) {
 					n *= 2;
-					if (n > 9) {
-						n = (n % 10) + 1;
-					}
+					if (n > 9)
+						n -= 9;
 				}
 				sum += n;
-				alternate = !alternate;
 			}
 
-			imei += Character.forDigit(sum % 10, 10);
+			imei += Character.forDigit((sum * 9) % 10, 10);
 			return imei;
 		}
 
