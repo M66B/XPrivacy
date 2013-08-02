@@ -31,8 +31,8 @@
     <string name="msg_sure">Bạn có chắc chắn?</string>
     <string name="msg_done">Xong</string>
     <string name="msg_reboot">Yêu cầu khởi động lại máy</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_random">Tạo chuỗi ngẫu nhiên</string>
+    <string name="msg_random_boot">Tự động tạo chuỗi ngẫu nhiên mỗi lần khởi động máy</string>
     <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ chạy hoàn toàn ổn định và mượt mà trên tất cả thiết bị cũng như tất cả ứng dụng.
 \n\nBạn sẽ chịu trách nhiệm về những rủi ro (nếu có).</b>\n\nXem thêm về bản quyền:</string>
     <string name="restrict_accounts">Tài khoản (Google, Facebook, .v.v.)</string>
@@ -48,7 +48,7 @@
     <string name="restrict_media">Media (nhạc, phim, ảnh)</string>
     <string name="restrict_messages">Tin nhắn (SMS, MMS)</string>
     <string name="restrict_network">Mạng (địa chỉ mạng)</string>
-    <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_notifications">Thông báo</string>
     <string name="restrict_phone">Điện thoại (ID, số liên lạc, cuộc gọi)</string>
     <string name="restrict_storage">Lưu trữ (media, thẻ nhớ)</string>
     <string name="restrict_shell">Shell (câu lệnh, superuser)</string>
