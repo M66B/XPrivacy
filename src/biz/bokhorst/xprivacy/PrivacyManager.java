@@ -808,25 +808,10 @@ public class PrivacyManager {
 			// http://en.wikipedia.org/wiki/Reporting_Body_Identifier
 			String[] rbi = new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "30", "33",
 					"35", "44", "45", "49", "50", "51", "52", "53", "54", "86", "91", "98", "99" };
-
 			String imei = rbi[r.nextInt(rbi.length)];
 			while (imei.length() < 14)
 				imei += Character.forDigit(r.nextInt(10), 10);
-
-			// Luhn algorithm
-			// http://en.wikipedia.org/wiki/Luhn_algorithm
-			int sum = 0;
-			for (int i = imei.length() - 1; i >= 0; i--) {
-				int n = Character.digit(imei.charAt(i), 10);
-				if (i % 2 == 0) {
-					n *= 2;
-					if (n > 9)
-						n -= 9;
-				}
-				sum += n;
-			}
-
-			imei += Character.forDigit((sum * 9) % 10, 10);
+			imei += getLuhnDigit(imei);
 			return imei;
 		}
 
@@ -840,12 +825,8 @@ public class PrivacyManager {
 			return Long.toHexString(v).toUpperCase();
 		}
 
-		if (name.equals("MCC")) {
-			// 001
-		}
-
-		if (name.equals("MNC")) {
-			// 01
+		if (name.equals("MCC+MNC")) {
+			// 001+01
 		}
 
 		if (name.equals("ISO3166")) {
@@ -864,6 +845,21 @@ public class PrivacyManager {
 		}
 
 		return "";
+	}
+
+	private static char getLuhnDigit(String x) {
+		// http://en.wikipedia.org/wiki/Luhn_algorithm
+		int sum = 0;
+		for (int i = 0; i < x.length(); i++) {
+			int n = Character.digit(x.charAt(x.length() - 1 - i), 10);
+			if (i % 2 == 0) {
+				n *= 2;
+				if (n > 9)
+					n -= 9; // n = (n % 10) + 1;
+			}
+			sum += n;
+		}
+		return Character.forDigit((sum * 9) % 10, 10);
 	}
 
 	// Helper methods
