@@ -81,6 +81,8 @@ public final class SharedPreferencesEx implements SharedPreferences {
 				Log.w(TAG, "getSharedPreferences", e);
 			} catch (IOException e) {
 				Log.w(TAG, "getSharedPreferences", e);
+			} catch (Throwable ex) {
+				Log.w(TAG, "getSharedPreferences", ex);
 			} finally {
 				if (str != null) {
 					try {
