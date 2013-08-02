@@ -566,6 +566,7 @@ How to get beta releases:
 * Added hints to settings ([issue](https://github.com/M66B/XPrivacy/issues/422))
 * Updated Portuguese translation
 * Updated Swedish translation
+* Updated Vietnamese translation
 
 **Version 1.7.30 BETA!**
 
