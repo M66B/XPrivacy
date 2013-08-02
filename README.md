@@ -555,6 +555,10 @@ How to get beta releases:
 
 **Next release**
 
+* Updated Hungarian translation
+
+**Version 1.8**
+
 * Randomization of: ([issue](https://github.com/M66B/XPrivacy/issues/418))
 	* Android ID
 	* Country
