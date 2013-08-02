@@ -31,8 +31,8 @@
     <string name="msg_sure">你确定吗?</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">设备需要重启</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_random">生成随机数值</string>
+    <string name="msg_random_boot">重启生成随机数值</string>
     <string name="msg_first"><b>XPrivacy的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用.
 \n\n使用者完全自担风险.</b>\n\n另请参阅许可:</string>
