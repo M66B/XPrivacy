@@ -567,6 +567,7 @@ How to get beta releases:
 * Updated Polish translation
 * Updated Portuguese translation
 * Updated Swedish translation
+* Updated Simplified Chinese translation
 * Updated Vietnamese translation
 
 **Version 1.7.30 BETA!**
