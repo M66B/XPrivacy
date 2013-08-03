@@ -5,12 +5,9 @@ package biz.bokhorst.xprivacy;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.SharedPreferences;
 import android.os.Environment;
@@ -24,8 +21,8 @@ import com.android.internal.util.XmlUtils;
  * with all ROMs.
  */
 public final class SharedPreferencesEx implements SharedPreferences {
-	private static final String TAG = "ReadOnlySharedPreferences";
 	private final File mFile;
+	private final File mBackupFile;
 	private Map<String, Object> mMap;
 	private boolean mLoaded = false;
 	private long mLastModified;
@@ -33,6 +30,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 
 	public SharedPreferencesEx(File prefFile) {
 		mFile = prefFile;
+		mBackupFile = makeBackupFile(prefFile);
 		startLoadFromDisk();
 	}
 
@@ -41,8 +39,9 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	}
 
 	public SharedPreferencesEx(String packageName, String prefFileName) {
-		mFile = new File(Environment.getDataDirectory(), "data/" + packageName + "/shared_prefs/" + prefFileName
-				+ ".xml");
+		mFile = new File(Environment.getDataDirectory(), "data" + File.pathSeparator + packageName + File.pathSeparator
+				+ "shared_prefs" + File.pathSeparator + prefFileName + ".xml");
+		mBackupFile = makeBackupFile(mFile);
 		startLoadFromDisk();
 	}
 
@@ -50,7 +49,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 		synchronized (this) {
 			mLoaded = false;
 		}
-		new Thread("XSharedPreferences-load") {
+		new Thread("SharedPreferencesEx-load") {
 			@Override
 			public void run() {
 				synchronized (SharedPreferencesEx.this) {
@@ -65,6 +64,15 @@ public final class SharedPreferencesEx implements SharedPreferences {
 		if (mLoaded) {
 			return;
 		}
+		if (mBackupFile.exists()) {
+			mFile.delete();
+			mBackupFile.renameTo(mFile);
+		}
+
+		// Debugging
+		if (mFile.exists() && !mFile.canRead()) {
+			Util.log(null, Log.WARN, "Attempt to read preferences file " + mFile + " without permission");
+		}
 
 		Map map = null;
 		long lastModified = 0;
@@ -76,20 +84,16 @@ public final class SharedPreferencesEx implements SharedPreferences {
 			try {
 				str = new BufferedInputStream(new FileInputStream(mFile), 16 * 1024);
 				map = XmlUtils.readMapXml(str);
-				str.close();
-			} catch (XmlPullParserException e) {
-				Log.w(TAG, "getSharedPreferences", e);
-			} catch (IOException e) {
-				Log.w(TAG, "getSharedPreferences", e);
 			} catch (Throwable ex) {
-				Log.w(TAG, "getSharedPreferences", ex);
+				Util.bug(null, ex);
 			} finally {
 				if (str != null) {
 					try {
 						str.close();
 					} catch (RuntimeException rethrown) {
 						throw rethrown;
-					} catch (Exception ignored) {
+					} catch (Throwable ignored) {
+						Util.bug(null, ignored);
 					}
 				}
 			}
@@ -103,6 +107,10 @@ public final class SharedPreferencesEx implements SharedPreferences {
 			mMap = new HashMap<String, Object>();
 		}
 		notifyAll();
+	}
+
+	private static File makeBackupFile(File prefsFile) {
+		return new File(prefsFile.getPath() + ".bak");
 	}
 
 	/**
