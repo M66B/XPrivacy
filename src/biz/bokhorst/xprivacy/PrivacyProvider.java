@@ -17,13 +17,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.UriMatcher;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.Process;
-import android.text.TextUtils;
 import android.util.Log;
 
 @SuppressWarnings("deprecation")
@@ -66,6 +67,7 @@ public class PrivacyProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		try {
+			// Copy meta data
 			String packageName = PrivacyManager.class.getPackage().getName();
 			File out = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName
 					+ File.separator + "meta.xml");
@@ -80,6 +82,33 @@ public class PrivacyProvider extends ContentProvider {
 			os.flush();
 			os.close();
 			out.setReadable(true, false);
+
+			// Convert settings
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
+			for (String key : prefs.getAll().keySet()) {
+				String[] component = key.split("\\.");
+				if (key.startsWith(COL_RESTRICTED)) {
+					String restrictionName = component[1];
+					String value = prefs.getString(key, null);
+					List<String> listRestriction = new ArrayList<String>(Arrays.asList(value.split(",")));
+					listRestriction.remove(0);
+					for (String uid : listRestriction)
+						updateRestriction(Integer.parseInt(uid), restrictionName, null, false);
+				} else if (key.startsWith(COL_METHOD)) {
+					int uid = Integer.parseInt(component[1]);
+					String restrictionName = component[2];
+					String methodName = component[3];
+					boolean value = prefs.getBoolean(key, false);
+					updateRestriction(uid, restrictionName, methodName, value);
+				} else
+					Util.log(null, Log.WARN, "Unknown key=" + key);
+			}
+
+			// Backup old preferences
+			File from = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
+					+ packageName + File.separator + "shared_prefs" + File.separator
+					+ "biz.bokhorst.xprivacy.provider.settings.xml");
+			from.renameTo(new File(from.getAbsoluteFile() + ".orig"));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -127,9 +156,7 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	private Cursor queryRestrictions(final int uid, final String restrictionName, final String methodName, boolean usage) {
-		@SuppressWarnings("resource")
 		MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_RESTRICTED });
-		SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
 
 		// Build restriction list
 		List<String> listRestrictionName;
@@ -141,38 +168,35 @@ public class PrivacyProvider extends ContentProvider {
 		}
 
 		if (uid == 0) {
-			// Process restrictions
-			for (String eRestrictionName : listRestrictionName) {
-				// Get data
-				String restrictions = prefs.getString(getRestrictionPref(eRestrictionName), "*");
-				List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
-				boolean defaultAllowed = listRestriction.get(0).equals("*");
-				if (defaultAllowed)
-					listRestriction.remove(0);
-				else
-					throw new IllegalArgumentException();
+			// Process applications
+			PackageManager pm = getContext().getPackageManager();
+			for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA)) {
+				SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION + "." + appInfo.uid,
+						Context.MODE_WORLD_READABLE);
 
-				// Process data
-				for (String sUid : listRestriction) {
-					int eUid = Integer.parseInt(sUid);
-
+				// Process restrictions
+				for (String eRestrictionName : listRestrictionName) {
 					// Category
-					cursor.addRow(new Object[] { eUid, eRestrictionName, null, true });
+					if (prefs.getBoolean(getRestrictionPref(restrictionName), false))
+						cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, null, true });
 
 					// Exceptions
 					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
-						boolean allowed = prefs.getBoolean(
-								getExceptionPref(eUid, eRestrictionName, md.getMethodName()), false);
+						boolean allowed = prefs.getBoolean(getExceptionPref(eRestrictionName, md.getMethodName()),
+								false);
 						if (allowed || PrivacyManager.isDangerousMethod(eRestrictionName, md.getMethodName()))
-							cursor.addRow(new Object[] { eUid, eRestrictionName, md.getMethodName(), !allowed });
+							cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getMethodName(), !allowed });
 					}
 				}
 			}
 		} else {
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION + "." + uid,
+					Context.MODE_WORLD_READABLE);
+
 			// Process restrictions
 			boolean allowed = false;
 			for (String eRestrictionName : listRestrictionName) {
-				boolean rAllowed = getAllowed(uid, eRestrictionName, methodName, prefs);
+				boolean rAllowed = getAllowed(eRestrictionName, methodName, prefs);
 				cursor.addRow(new Object[] { uid, eRestrictionName, methodName, Boolean.toString(!rAllowed) });
 				allowed = allowed || rAllowed;
 			}
@@ -264,10 +288,8 @@ public class PrivacyProvider extends ContentProvider {
 			String restrictionName = selection;
 			int uid = values.getAsInteger(COL_UID);
 			String methodName = values.getAsString(COL_METHOD);
-			boolean allowed = !Boolean.parseBoolean(values.getAsString(COL_RESTRICTED));
-
-			// Update
-			updateRestriction(uid, restrictionName, methodName, allowed);
+			boolean restricted = Boolean.parseBoolean(values.getAsString(COL_RESTRICTED));
+			updateRestriction(uid, restrictionName, methodName, !restricted);
 
 			return 1; // rows
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE) {
@@ -333,16 +355,17 @@ public class PrivacyProvider extends ContentProvider {
 			int uid = Integer.parseInt(selectionArgs[0]);
 
 			// Method restrictions
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION + "." + uid,
+					Context.MODE_WORLD_READABLE);
 			SharedPreferences.Editor editor = prefs.edit();
 			for (String restrictionName : PrivacyManager.getRestrictions(true)) {
 				for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
 					rows++;
-					editor.remove(getExceptionPref(uid, restrictionName, md.getMethodName()));
+					editor.remove(getExceptionPref(restrictionName, md.getMethodName()));
 				}
 			}
 			editor.apply();
-			setPrefFileReadable(PREF_RESTRICTION);
+			setPrefFileReadable(PREF_RESTRICTION, uid);
 
 			// Group restrictions
 			for (String restrictionName : PrivacyManager.getRestrictions(true)) {
@@ -370,8 +393,12 @@ public class PrivacyProvider extends ContentProvider {
 
 	// Public helper methods
 
-	public static void setPrefFileReadable(String preference) {
+	private static void setPrefFileReadable(String preference) {
 		new File(getPrefFileName(preference)).setReadable(true, false);
+	}
+
+	private static void setPrefFileReadable(String preference, int uid) {
+		new File(getPrefFileName(preference, uid)).setReadable(true, false);
 	}
 
 	// The following methods are used as fallback, when:
@@ -380,12 +407,15 @@ public class PrivacyProvider extends ContentProvider {
 
 	private static long mPrefsExRestrictionLoaded = 0;
 	private static long mPrefsExSettingsLoaded = 0;
-	private static SharedPreferencesEx mPrefsExRestriction = new SharedPreferencesEx(new File(
-			getPrefFileName(PREF_RESTRICTION)));
+	private static SharedPreferencesEx mPrefsExRestriction;
 	private static SharedPreferencesEx mPrefsExSettings = new SharedPreferencesEx(new File(
 			getPrefFileName(PREF_SETTINGS)));
 
 	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName, String methodName) {
+		if (mPrefsExRestriction == null)
+			mPrefsExRestriction = new SharedPreferencesEx(new File(getPrefFileName(PREF_RESTRICTION,
+					Binder.getCallingUid())));
+
 		synchronized (mPrefsExRestriction) {
 			long now = new Date().getTime();
 			if (mPrefsExRestrictionLoaded + PrivacyManager.cCacheTimeoutMs < now) {
@@ -394,7 +424,7 @@ public class PrivacyProvider extends ContentProvider {
 				mPrefsExRestrictionLoaded = now;
 			}
 		}
-		return !getAllowed(uid, restrictionName, methodName, mPrefsExRestriction);
+		return !getAllowed(restrictionName, methodName, mPrefsExRestriction);
 	}
 
 	public static String getSettingFallback(String settingName, String defaultValue) {
@@ -416,68 +446,48 @@ public class PrivacyProvider extends ContentProvider {
 			throw new SecurityException();
 	}
 
-	private static boolean getAllowed(int uid, String restrictionName, String methodName, SharedPreferences prefs) {
-		// Get restrictions
-		String restrictions = prefs.getString(getRestrictionPref(restrictionName), "*");
-
-		// Decode restrictions
-		List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
-		boolean defaultAllowed = listRestriction.get(0).equals("*");
-
-		// Check if restricted
-		boolean allowed = !listRestriction.contains(Integer.toString(uid));
-		if (!defaultAllowed)
-			allowed = !allowed;
+	private static boolean getAllowed(String restrictionName, String methodName, SharedPreferences prefs) {
+		boolean allowed = !prefs.getBoolean(getRestrictionPref(restrictionName), false);
 
 		// Check for exception
 		if (!allowed && methodName != null)
-			if (prefs.getBoolean(getExceptionPref(uid, restrictionName, methodName), false))
+			if (prefs.getBoolean(getExceptionPref(restrictionName, methodName), false))
 				allowed = true;
 
 		return allowed;
 	}
 
 	private void updateRestriction(int uid, String restrictionName, String methodName, boolean allowed) {
-		// Get restrictions
-		SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
-		String restrictions = prefs.getString(getRestrictionPref(restrictionName), "*");
-
-		// Decode restrictions
-		List<String> listRestriction = new ArrayList<String>(Arrays.asList(restrictions.split(",")));
-		boolean defaultAllowed = listRestriction.get(0).equals("*");
-
-		// Allow or deny
-		String sUid = Integer.toString(uid);
-		if (defaultAllowed ? allowed : !allowed)
-			listRestriction.remove(sUid);
-		if (defaultAllowed ? !allowed : allowed)
-			if (!listRestriction.contains(sUid))
-				listRestriction.add(sUid);
-
-		// Encode restrictions
-		restrictions = TextUtils.join(",", listRestriction.toArray(new String[0]));
-
 		// Update restriction
+		SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION + "." + uid,
+				Context.MODE_WORLD_READABLE);
 		SharedPreferences.Editor editor = prefs.edit();
 		if (methodName == null || !allowed)
-			editor.putString(getRestrictionPref(restrictionName), restrictions);
+			editor.putBoolean(getRestrictionPref(restrictionName), !allowed);
 		if (methodName != null)
-			editor.putBoolean(getExceptionPref(uid, restrictionName, methodName), allowed);
+			editor.putBoolean(getExceptionPref(restrictionName, methodName), allowed);
 		editor.apply();
-		setPrefFileReadable(PREF_RESTRICTION);
+		setPrefFileReadable(PREF_RESTRICTION, uid);
 	}
 
 	private static String getPrefFileName(String preference) {
 		String packageName = PrivacyManager.class.getPackage().getName();
-		return Environment.getDataDirectory() + "/data/" + packageName + "/shared_prefs/" + preference + ".xml";
+		return Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName + File.separator
+				+ "shared_prefs" + File.separator + preference + ".xml";
+	}
+
+	private static String getPrefFileName(String preference, int uid) {
+		String packageName = PrivacyManager.class.getPackage().getName();
+		return Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName + File.separator
+				+ "shared_prefs" + File.separator + preference + "." + uid + ".xml";
 	}
 
 	private static String getRestrictionPref(String restrictionName) {
 		return String.format("%s.%s", COL_RESTRICTED, restrictionName);
 	}
 
-	private static String getExceptionPref(int uid, String restrictionName, String methodName) {
-		return String.format("%s.%d.%s.%s", COL_METHOD, uid, restrictionName, methodName);
+	private static String getExceptionPref(String restrictionName, String methodName) {
+		return String.format("%s.%s.%s", COL_METHOD, restrictionName, methodName);
 	}
 
 	private static String getUsagePref(int uid, String methodName) {

@@ -36,11 +36,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Log load
 		Util.log(null, Log.INFO, String.format("load %s", startupParam.modulePath));
 
-		// Set preferences readable
-		// For compatibility with older versions
-		PrivacyProvider.setPrefFileReadable(PrivacyProvider.PREF_RESTRICTION);
-		PrivacyProvider.setPrefFileReadable(PrivacyProvider.PREF_SETTINGS);
-
 		// Account manager
 		hookAll(XAccountManager.getInstances());
 
