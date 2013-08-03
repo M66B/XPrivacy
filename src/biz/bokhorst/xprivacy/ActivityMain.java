@@ -2,10 +2,6 @@ package biz.bokhorst.xprivacy;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.InterfaceAddress;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +34,6 @@ import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
-import android.net.wifi.WifiInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -251,7 +246,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		appListTask.executeOnExecutor(mExecutor, (Object) null);
 
 		// Check environment
-		checkRequirements();
+		Requirements.check(this);
 
 		// Licensing
 		checkLicense();
@@ -514,201 +509,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			String filter = String.format("%b\n%b\n%s\n%b", mUsed, mInternet, etFilter.getText().toString(),
 					cbFilter.isChecked());
 			mAppAdapter.getFilter().filter(filter);
-		}
-	}
-
-	private void checkRequirements() {
-		// Check Android version
-		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH
-				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
-				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
-				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR1
-				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR2) {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.app_name));
-			alertDialogBuilder.setMessage(getString(R.string.app_wrongandroid));
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
-					xposedIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy#installation"));
-					startActivity(xposedIntent);
-				}
-			});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
-		}
-
-		// Check Xposed version
-		int xVersion = Util.getXposedVersion();
-		if (xVersion < PrivacyManager.cXposedMinVersion) {
-			String msg = String.format(getString(R.string.app_notxposed), PrivacyManager.cXposedMinVersion);
-			Util.log(null, Log.WARN, msg);
-
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.app_name));
-			alertDialogBuilder.setMessage(msg);
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
-					xposedIntent.setData(Uri.parse("http://forum.xda-developers.com/showthread.php?t=1574401"));
-					startActivity(xposedIntent);
-				}
-			});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
-		}
-
-		// Check if XPrivacy is enabled
-		if (!Util.isXposedEnabled()) {
-			String msg = getString(R.string.app_notenabled);
-			Util.log(null, Log.WARN, msg);
-
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.app_name));
-			alertDialogBuilder.setMessage(msg);
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Intent xInstallerIntent = getPackageManager().getLaunchIntentForPackage(
-							"de.robv.android.xposed.installer");
-					if (xInstallerIntent != null) {
-						xInstallerIntent.putExtra("opentab", 1);
-						startActivity(xInstallerIntent);
-					}
-				}
-			});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
-		}
-
-		// Check activity manager
-		if (!checkField(getSystemService(Context.ACTIVITY_SERVICE), "mContext", Context.class))
-			reportClass(getSystemService(Context.ACTIVITY_SERVICE).getClass());
-
-		// Check activity thread
-		try {
-			Class<?> clazz = Class.forName("android.app.ActivityThread");
-			try {
-				clazz.getDeclaredMethod("unscheduleGcIdler");
-			} catch (NoSuchMethodException ex) {
-				reportClass(clazz);
-			}
-		} catch (Throwable ex) {
-			sendSupportInfo(ex.toString());
-		}
-
-		// Check activity thread receiver data
-		try {
-			Class<?> clazz = Class.forName("android.app.ActivityThread$ReceiverData");
-			if (!checkField(clazz, "intent"))
-				reportClass(clazz);
-		} catch (Throwable ex) {
-			try {
-				reportClass(Class.forName("android.app.ActivityThread"));
-			} catch (Throwable exex) {
-				sendSupportInfo(exex.toString());
-			}
-		}
-
-		// Check clipboard manager
-		if (!checkField(getSystemService(Context.CLIPBOARD_SERVICE), "mContext", Context.class))
-			reportClass(getSystemService(Context.CLIPBOARD_SERVICE).getClass());
-
-		// Check content resolver
-		if (!checkField(getContentResolver(), "mContext", Context.class))
-			reportClass(getContentResolver().getClass());
-
-		// Check interface address
-		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
-				|| PrivacyManager.getDefacedProp("InetAddress") == null)
-			reportClass(InterfaceAddress.class);
-
-		// Check package manager
-		if (!checkField(getPackageManager(), "mContext", Context.class))
-			reportClass(getPackageManager().getClass());
-
-		// Check package manager service
-		try {
-			Class<?> clazz = Class.forName("com.android.server.pm.PackageManagerService");
-			try {
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-					clazz.getDeclaredMethod("getPackageUid", String.class, int.class);
-				else
-					clazz.getDeclaredMethod("getPackageUid", String.class);
-			} catch (NoSuchMethodException ex) {
-				reportClass(clazz);
-			}
-		} catch (Throwable ex) {
-			sendSupportInfo(ex.toString());
-		}
-
-		// Check runtime
-		try {
-			Runtime.class.getDeclaredMethod("load", String.class, ClassLoader.class);
-			Runtime.class.getDeclaredMethod("loadLibrary", String.class, ClassLoader.class);
-		} catch (NoSuchMethodException ex) {
-			reportClass(Runtime.class);
-		}
-
-		// Check telephony manager
-		if (!checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class)
-				&& !checkField(getSystemService(Context.TELEPHONY_SERVICE), "mContext", Context.class)
-				&& !checkField(getSystemService(Context.TELEPHONY_SERVICE), "sContextDuos", Context.class))
-			reportClass(getSystemService(Context.TELEPHONY_SERVICE).getClass());
-
-		// Check wifi info
-		if (!checkField(WifiInfo.class, "mSupplicantState") || !checkField(WifiInfo.class, "mBSSID")
-				|| !checkField(WifiInfo.class, "mIpAddress") || !checkField(WifiInfo.class, "mMacAddress")
-				|| !(checkField(WifiInfo.class, "mSSID") || checkField(WifiInfo.class, "mWifiSsid")))
-			reportClass(WifiInfo.class);
-
-		// Check mWifiSsid.octets
-		if (checkField(WifiInfo.class, "mWifiSsid"))
-			try {
-				Class<?> clazz = Class.forName("android.net.wifi.WifiSsid");
-				if (!checkField(clazz, "octets"))
-					reportClass(clazz);
-			} catch (Throwable ex) {
-				sendSupportInfo(ex.toString());
-			}
-	}
-
-	private boolean checkField(Object obj, String fieldName, Class<?> expectedClass) {
-		try {
-			// Find field
-			Field field = null;
-			Class<?> superClass = (obj == null ? null : obj.getClass());
-			while (superClass != null)
-				try {
-					field = superClass.getDeclaredField(fieldName);
-					field.setAccessible(true);
-					break;
-				} catch (Throwable ex) {
-					superClass = superClass.getSuperclass();
-				}
-
-			// Check field
-			if (field != null) {
-				Object value = field.get(obj);
-				if (value != null && expectedClass.isAssignableFrom(value.getClass()))
-					return true;
-			}
-		} catch (Throwable ex) {
-		}
-		return false;
-	}
-
-	private boolean checkField(Class<?> clazz, String fieldName) {
-		try {
-			clazz.getDeclaredField(fieldName);
-			return true;
-		} catch (Throwable ex) {
-			return false;
 		}
 	}
 
@@ -1140,78 +940,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		} catch (Throwable ex) {
 			Toast toast = Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG);
 			toast.show();
-			Util.bug(null, ex);
-		}
-	}
-
-	private void reportClass(final Class<?> clazz) {
-		String msg = String.format("Incompatible %s", clazz.getName());
-		Util.log(null, Log.WARN, msg);
-
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(R.string.app_name));
-		alertDialogBuilder.setMessage(msg);
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				sendClassInfo(clazz);
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
-	}
-
-	private void sendClassInfo(Class<?> clazz) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(clazz.getName());
-		sb.append("\r\n");
-		sb.append("\r\n");
-		for (Constructor<?> constructor : clazz.getConstructors()) {
-			sb.append(constructor.toString());
-			sb.append("\r\n");
-		}
-		sb.append("\r\n");
-		for (Method method : clazz.getDeclaredMethods()) {
-			sb.append(method.toString());
-			sb.append("\r\n");
-		}
-		sb.append("\r\n");
-		for (Field field : clazz.getDeclaredFields()) {
-			sb.append(field.toString());
-			sb.append("\r\n");
-		}
-		sb.append("\r\n");
-		sendSupportInfo(sb.toString());
-	}
-
-	private void sendSupportInfo(String text) {
-		String xversion = null;
-		try {
-			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-			xversion = pInfo.versionName;
-		} catch (Throwable ex) {
-		}
-
-		StringBuilder sb = new StringBuilder(text);
-		sb.insert(0, String.format("Android SDK %d\r\n", Build.VERSION.SDK_INT));
-		sb.insert(0, String.format("XPrivacy %s\r\n", xversion));
-		sb.append("\r\n");
-
-		Intent sendEmail = new Intent(Intent.ACTION_SEND);
-		sendEmail.setType("message/rfc822");
-		sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
-		sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy support info");
-		sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
-		try {
-			startActivity(sendEmail);
-		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
 	}
