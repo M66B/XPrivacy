@@ -31,14 +31,14 @@
     <string name="msg_sure">Esteu segur?</string>
     <string name="msg_done">Fet</string>
     <string name="msg_reboot">Cal reiniciar</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_random">Genera aleatòriament</string>
+    <string name="msg_random_boot">Genera aleatòriament després d\'arrencar</string>
     <string name="msg_first"><b>S\'ha tingut molta cura desenvolupant i provant XPrivacy, però és impossible garantir que funcionarà perfectament a tots els dispositius i per a totes les aplicacions.\n\nUtilitzeu-lo sota el vostre propi risc.</b>\n\nVegeu també la llicència:</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc.)</string>
     <string name="restrict_browser">Navegador (marcadors/historial)</string>
     <string name="restrict_calendar">Calendari</string>
     <string name="restrict_calling">Trucades (telèfon, SMS, MMS)</string>
-    <string name="restrict_clipboard">Clipboard</string>
+    <string name="restrict_clipboard">Porta-retalls</string>
     <string name="restrict_contacts">Contactes</string>
     <string name="restrict_dictionary">Diccionari (usuari)</string>
     <string name="restrict_identification">Identificació (dispositiu)</string>
@@ -47,7 +47,7 @@
     <string name="restrict_media">Mitjans (àudio, imatges, vídeos)</string>
     <string name="restrict_messages">Missatges (SMS, MMS)</string>
     <string name="restrict_network">Xarxa (adreces)</string>
-    <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_notifications">Notificacions</string>
     <string name="restrict_phone">Telèfon (ID, números, trucades)</string>
     <string name="restrict_storage">Emmagatzematge (mitjans, targeta SD)</string>
     <string name="restrict_shell">Intèrpret d\'ordres (ordres, superusuari)</string>
@@ -55,7 +55,7 @@
     <string name="restrict_view">Vista (navegador)</string>
     <string name="title_category">Categoria:</string>
     <string name="title_restrict">Activa per a restringir:</string>
-    <string name="settings_serial">Serial#</string>
+    <string name="settings_serial">Número de sèrie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
     <string name="settings_mac">Adreça MAC</string>
