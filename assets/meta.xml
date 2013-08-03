@@ -133,6 +133,8 @@
     <Hook restriction="phone" method="getNetworkCountryIso" permissions="" sdk="14" />
     <Hook restriction="phone" method="getNetworkOperator" permissions="" sdk="14" />
     <Hook restriction="phone" method="getNetworkOperatorName" permissions="" sdk="14" />
+    <Hook restriction="phone" method="getNetworkType" permissions="" sdk="14" />
+    <Hook restriction="phone" method="getPhoneType" permissions="" sdk="14" />
     <Hook restriction="phone" method="getSimCountryIso" permissions="" sdk="14" />
     <Hook restriction="phone" method="getSimOperator" permissions="" sdk="14" />
     <Hook restriction="phone" method="getSimOperatorName" permissions="" sdk="14" />

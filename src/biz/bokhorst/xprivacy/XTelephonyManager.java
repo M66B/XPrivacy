@@ -15,6 +15,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.CellInfo;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -54,6 +55,8 @@ public class XTelephonyManager extends XHook {
 	// public String getNetworkCountryIso()
 	// public String getNetworkOperator()
 	// public String getNetworkOperatorName()
+	// public int getNetworkType()
+	// public int getPhoneType()
 	// public String getSimCountryIso()
 	// public String getSimOperator()
 	// public String getSimOperatorName()
@@ -66,7 +69,7 @@ public class XTelephonyManager extends XHook {
 	// http://developer.android.com/reference/android/telephony/TelephonyManager.html
 
 	private enum Methods {
-		disableLocationUpdates, enableLocationUpdates, getAllCellInfo, getCellLocation, getDeviceId, getGroupIdLevel1, getIsimDomain, getIsimImpi, getIsimImpu, getLine1AlphaTag, getLine1Number, getMsisdn, getNeighboringCellInfo, getNetworkCountryIso, getNetworkOperator, getNetworkOperatorName, getSimCountryIso, getSimOperator, getSimOperatorName, getSimSerialNumber, getSubscriberId, getVoiceMailAlphaTag, getVoiceMailNumber, listen
+		disableLocationUpdates, enableLocationUpdates, getAllCellInfo, getCellLocation, getDeviceId, getGroupIdLevel1, getIsimDomain, getIsimImpi, getIsimImpu, getLine1AlphaTag, getLine1Number, getMsisdn, getNeighboringCellInfo, getNetworkCountryIso, getNetworkOperator, getNetworkOperatorName, getNetworkType, getPhoneType, getSimCountryIso, getSimOperator, getSimOperatorName, getSimSerialNumber, getSubscriberId, getVoiceMailAlphaTag, getVoiceMailNumber, listen
 	};
 
 	public static List<XHook> getInstances() {
@@ -92,6 +95,8 @@ public class XTelephonyManager extends XHook {
 		listHook.add(new XTelephonyManager(Methods.getNetworkCountryIso, PrivacyManager.cPhone));
 		listHook.add(new XTelephonyManager(Methods.getNetworkOperator, PrivacyManager.cPhone));
 		listHook.add(new XTelephonyManager(Methods.getNetworkOperatorName, PrivacyManager.cPhone));
+		listHook.add(new XTelephonyManager(Methods.getNetworkType, PrivacyManager.cPhone));
+		listHook.add(new XTelephonyManager(Methods.getPhoneType, PrivacyManager.cPhone));
 		listHook.add(new XTelephonyManager(Methods.getSimCountryIso, PrivacyManager.cPhone));
 		listHook.add(new XTelephonyManager(Methods.getSimOperator, PrivacyManager.cPhone));
 		listHook.add(new XTelephonyManager(Methods.getSimOperatorName, PrivacyManager.cPhone));
@@ -154,6 +159,12 @@ public class XTelephonyManager extends XHook {
 			} else if (mMethod == Methods.getNeighboringCellInfo) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(new ArrayList<NeighboringCellInfo>());
+			} else if (mMethod == Methods.getNetworkType) {
+				if (isRestricted(param))
+					param.setResult(TelephonyManager.NETWORK_TYPE_UNKNOWN);
+			} else if (mMethod == Methods.getPhoneType) {
+				if (isRestricted(param))
+					param.setResult(TelephonyManager.PHONE_TYPE_GSM); // IMEI
 			} else {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedProp(mMethod.name()));

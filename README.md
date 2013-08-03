@@ -555,6 +555,7 @@ How to get beta releases:
 
 **Next release**
 
+* Restrict *getNetworkType* and *getPhoneType* ([issue](https://github.com/M66B/XPrivacy/issues/441))
 * Updated Norwegian translation
 
 **Version 1.8.2 BETA!**
