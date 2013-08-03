@@ -555,11 +555,12 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Redesigned restriction storage (less resource usage)
 
 **Version 1.8.1**
 
 * Workaround for crash while importing in some situations / some devices
+* Updated source code borrowed from Android
 * Updated Hungarian translation
 
 **Version 1.8**
