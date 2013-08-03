@@ -39,9 +39,9 @@ public class ActivityUsage extends Activity {
 	public static final String cUid = "Uid";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
-			new PriorityThreadFactor());
+			new PriorityThreadFactory());
 
-	private static class PriorityThreadFactor implements ThreadFactory {
+	private static class PriorityThreadFactory implements ThreadFactory {
 		@Override
 		public Thread newThread(Runnable r) {
 			Thread t = new Thread(r);
