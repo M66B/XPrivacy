@@ -822,17 +822,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private class UpdateTask extends AsyncTask<String, String, String> {
 		@Override
 		protected String doInBackground(String... uri) {
-			return fetchUpdateJson(uri);
+			return fetchJson(uri);
 		}
 
 		@Override
 		protected void onPostExecute(String json) {
 			super.onPostExecute(json);
 			if (json != null)
-				processUpdateJson(json);
+				processJson(json);
 		}
 
-		private String fetchUpdateJson(String... uri) {
+		private String fetchJson(String... uri) {
 			try {
 				// Request downloads
 				HttpClient httpclient = new DefaultHttpClient();
@@ -856,7 +856,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		}
 
-		private void processUpdateJson(String json) {
+		private void processJson(String json) {
 			try {
 				// Parse result
 				String version = null;
