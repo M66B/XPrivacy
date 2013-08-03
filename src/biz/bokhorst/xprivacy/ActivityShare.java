@@ -76,18 +76,7 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	public static String getFileName(boolean multiple) {
-		File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-				+ ".xprivacy");
-		folder.mkdir();
-		String fileName;
-		if (multiple) {
-			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm", Locale.ROOT);
-			fileName = String.format("XPrivacy_%s.xml", format.format(new Date()));
-		} else
-			fileName = "XPrivacy.xml";
-		return new File(folder + File.separator + fileName).getAbsolutePath();
-	}
+	// Tasks
 
 	private class ExportTask extends AsyncTask<File, String, String> {
 		private File mFile;
@@ -363,6 +352,21 @@ public class ActivityShare extends Activity {
 		public Map<String, Map<String, List<String>>> getPackageMap() {
 			return mMapPackage;
 		}
+	}
+
+	// Helper methods
+
+	public static String getFileName(boolean multiple) {
+		File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
+				+ ".xprivacy");
+		folder.mkdir();
+		String fileName;
+		if (multiple) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm", Locale.ROOT);
+			fileName = String.format("XPrivacy_%s.xml", format.format(new Date()));
+		} else
+			fileName = "XPrivacy.xml";
+		return new File(folder + File.separator + fileName).getAbsolutePath();
 	}
 
 }

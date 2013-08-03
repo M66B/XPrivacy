@@ -78,6 +78,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int ACTIVITY_IMPORT = 2;
 	private static final int ACTIVITY_IMPORT_SELECT = 3;
 
+	private static final int LICENSED = 0x0100;
+	private static final int NOT_LICENSED = 0x0231;
+	private static final int RETRY = 0x0123;
+
+	private static final int ERROR_CONTACTING_SERVER = 0x101;
+	private static final int ERROR_INVALID_PACKAGE_NAME = 0x102;
+	private static final int ERROR_NON_MATCHING_UID = 0x103;
+
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactor());
 
@@ -286,31 +294,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			unregisterReceiver(mPackageChangeReceiver);
 	}
 
-	private static final int LICENSED = 0x0100;
-	private static final int NOT_LICENSED = 0x0231;
-	private static final int RETRY = 0x0123;
-
-	private static final int ERROR_CONTACTING_SERVER = 0x101;
-	private static final int ERROR_INVALID_PACKAGE_NAME = 0x102;
-	private static final int ERROR_NON_MATCHING_UID = 0x103;
-
-	private void checkLicense() {
-		if (Util.hasProLicense(this) == null) {
-			if (Util.isProInstalled(this))
-				try {
-					int uid = getPackageManager().getApplicationInfo("biz.bokhorst.xprivacy.pro", 0).uid;
-					PrivacyManager.deleteRestrictions(this, uid);
-					Util.log(null, Log.INFO, "Licensing: check");
-					startActivityForResult(new Intent("biz.bokhorst.xprivacy.pro.CHECK"), ACTIVITY_LICENSE);
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
-		} else {
-			Toast toast = Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG);
-			toast.show();
-		}
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -445,7 +428,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
-	// Spinner
+	// Filtering
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -465,36 +448,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
-	private class SpinnerAdapter extends ArrayAdapter<String> {
-		public SpinnerAdapter(Context context, int textViewResourceId) {
-			super(context, textViewResourceId);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View row = super.getView(position, convertView, parent);
-			row.setBackgroundColor(getBackgroundColor(position));
-			return row;
-		}
-
-		@Override
-		public View getDropDownView(int position, View convertView, ViewGroup parent) {
-			View row = super.getDropDownView(position, convertView, parent);
-			row.setBackgroundColor(getBackgroundColor(position));
-			return row;
-		}
-
-		private int getBackgroundColor(int position) {
-			String restrictionName = (position == 0 ? null : PrivacyManager.getRestrictions(true).get(position - 1));
-			if (PrivacyManager.isDangerousRestriction(restrictionName))
-				return getResources().getColor(getThemed(R.attr.color_dangerous));
-			else
-				return Color.TRANSPARENT;
-		}
-	}
-
-	// Filtering
-
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
@@ -511,6 +464,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mAppAdapter.getFilter().filter(filter);
 		}
 	}
+
+	// Options
 
 	private void optionAll() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -794,12 +749,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		startActivity(browserIntent);
 	}
 
-	private void optionPro() {
-		// Redirect to pro page
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
-		startActivity(browserIntent);
-	}
-
 	private void optionExport() {
 		boolean multiple = Util.isIntentAvailable(ActivityMain.this, Intent.ACTION_GET_CONTENT);
 		Intent intent = new Intent("biz.bokhorst.xprivacy.action.EXPORT");
@@ -826,6 +775,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		themeName = (themeName.equals("Dark") ? "Light" : "Dark");
 		PrivacyManager.setSetting(null, this, PrivacyManager.cSettingTheme, themeName);
 		this.recreate();
+	}
+
+	private void optionPro() {
+		// Redirect to pro page
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
+		startActivity(browserIntent);
 	}
 
 	private void optionAbout() {
@@ -862,87 +817,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dlgAbout.show();
 	}
 
-	private String fetchUpdateJson(String... uri) {
-		try {
-			// Request downloads
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpResponse response = httpclient.execute(new HttpGet(uri[0]));
-			StatusLine statusLine = response.getStatusLine();
-
-			if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-				// Succeeded
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				response.getEntity().writeTo(out);
-				out.close();
-				return out.toString("ISO-8859-1");
-			} else {
-				// Failed
-				response.getEntity().getContent().close();
-				throw new IOException(statusLine.getReasonPhrase());
-			}
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			return ex.toString();
-		}
-	}
-
-	private void processUpdateJson(String json) {
-		try {
-			// Parse result
-			String version = null;
-			String url = null;
-			if (json != null)
-				if (json.startsWith("{")) {
-					long newest = 0;
-					String prefix = "XPrivacy_";
-					JSONObject jRoot = new JSONObject(json);
-					JSONArray jArray = jRoot.getJSONArray("list");
-					for (int i = 0; jArray != null && i < jArray.length(); i++) {
-						// File
-						JSONObject jEntry = jArray.getJSONObject(i);
-						String filename = jEntry.getString("filename");
-						if (filename.startsWith(prefix)) {
-							// Check if newer
-							long modified = jEntry.getLong("modified");
-							if (modified > newest) {
-								newest = modified;
-								version = filename.substring(prefix.length()).replace(".apk", "");
-								url = "http://goo.im" + jEntry.getString("path");
-							}
-						}
-					}
-				} else {
-					Toast toast = Toast.makeText(ActivityMain.this, json, Toast.LENGTH_LONG);
-					toast.show();
-				}
-
-			if (url == null || version == null) {
-				// Assume no update
-				String msg = getString(R.string.msg_noupdate);
-				Toast toast = Toast.makeText(ActivityMain.this, msg, Toast.LENGTH_LONG);
-				toast.show();
-			} else {
-				// Compare versions
-				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-				Version ourVersion = new Version(pInfo.versionName);
-				Version latestVersion = new Version(version);
-				if (ourVersion.compareTo(latestVersion) < 0) {
-					// Update available
-					Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-					startActivity(browserIntent);
-				} else {
-					// No update available
-					String msg = getString(R.string.msg_noupdate);
-					Toast toast = Toast.makeText(ActivityMain.this, msg, Toast.LENGTH_LONG);
-					toast.show();
-				}
-			}
-		} catch (Throwable ex) {
-			Toast toast = Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG);
-			toast.show();
-			Util.bug(null, ex);
-		}
-	}
+	// Tasks
 
 	private class UpdateTask extends AsyncTask<String, String, String> {
 		@Override
@@ -955,6 +830,88 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			super.onPostExecute(json);
 			if (json != null)
 				processUpdateJson(json);
+		}
+
+		private String fetchUpdateJson(String... uri) {
+			try {
+				// Request downloads
+				HttpClient httpclient = new DefaultHttpClient();
+				HttpResponse response = httpclient.execute(new HttpGet(uri[0]));
+				StatusLine statusLine = response.getStatusLine();
+
+				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+					// Succeeded
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					response.getEntity().writeTo(out);
+					out.close();
+					return out.toString("ISO-8859-1");
+				} else {
+					// Failed
+					response.getEntity().getContent().close();
+					throw new IOException(statusLine.getReasonPhrase());
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return ex.toString();
+			}
+		}
+
+		private void processUpdateJson(String json) {
+			try {
+				// Parse result
+				String version = null;
+				String url = null;
+				if (json != null)
+					if (json.startsWith("{")) {
+						long newest = 0;
+						String prefix = "XPrivacy_";
+						JSONObject jRoot = new JSONObject(json);
+						JSONArray jArray = jRoot.getJSONArray("list");
+						for (int i = 0; jArray != null && i < jArray.length(); i++) {
+							// File
+							JSONObject jEntry = jArray.getJSONObject(i);
+							String filename = jEntry.getString("filename");
+							if (filename.startsWith(prefix)) {
+								// Check if newer
+								long modified = jEntry.getLong("modified");
+								if (modified > newest) {
+									newest = modified;
+									version = filename.substring(prefix.length()).replace(".apk", "");
+									url = "http://goo.im" + jEntry.getString("path");
+								}
+							}
+						}
+					} else {
+						Toast toast = Toast.makeText(ActivityMain.this, json, Toast.LENGTH_LONG);
+						toast.show();
+					}
+
+				if (url == null || version == null) {
+					// Assume no update
+					String msg = getString(R.string.msg_noupdate);
+					Toast toast = Toast.makeText(ActivityMain.this, msg, Toast.LENGTH_LONG);
+					toast.show();
+				} else {
+					// Compare versions
+					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+					Version ourVersion = new Version(pInfo.versionName);
+					Version latestVersion = new Version(version);
+					if (ourVersion.compareTo(latestVersion) < 0) {
+						// Update available
+						Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+						startActivity(browserIntent);
+					} else {
+						// No update available
+						String msg = getString(R.string.msg_noupdate);
+						Toast toast = Toast.makeText(ActivityMain.this, msg, Toast.LENGTH_LONG);
+						toast.show();
+					}
+				}
+			} catch (Throwable ex) {
+				Toast toast = Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG);
+				toast.show();
+				Util.bug(null, ex);
+			}
 		}
 	}
 
@@ -1034,6 +991,36 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Restore state
 			ActivityMain.this.selectRestriction(spRestriction.getSelectedItemPosition());
+		}
+	}
+
+	// Adapters
+
+	private class SpinnerAdapter extends ArrayAdapter<String> {
+		public SpinnerAdapter(Context context, int textViewResourceId) {
+			super(context, textViewResourceId);
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View row = super.getView(position, convertView, parent);
+			row.setBackgroundColor(getBackgroundColor(position));
+			return row;
+		}
+
+		@Override
+		public View getDropDownView(int position, View convertView, ViewGroup parent) {
+			View row = super.getDropDownView(position, convertView, parent);
+			row.setBackgroundColor(getBackgroundColor(position));
+			return row;
+		}
+
+		private int getBackgroundColor(int position) {
+			String restrictionName = (position == 0 ? null : PrivacyManager.getRestrictions(true).get(position - 1));
+			if (PrivacyManager.isDangerousRestriction(restrictionName))
+				return getResources().getColor(getThemed(R.attr.color_dangerous));
+			else
+				return Color.TRANSPARENT;
 		}
 	}
 
@@ -1335,7 +1322,26 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
-	public int getThemed(int attr) {
+	// Helper methods
+
+	private void checkLicense() {
+		if (Util.hasProLicense(this) == null) {
+			if (Util.isProInstalled(this))
+				try {
+					int uid = getPackageManager().getApplicationInfo("biz.bokhorst.xprivacy.pro", 0).uid;
+					PrivacyManager.deleteRestrictions(this, uid);
+					Util.log(null, Log.INFO, "Licensing: check");
+					startActivityForResult(new Intent("biz.bokhorst.xprivacy.pro.CHECK"), ACTIVITY_LICENSE);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+		} else {
+			Toast toast = Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG);
+			toast.show();
+		}
+	}
+
+	private int getThemed(int attr) {
 		TypedValue typedvalueattr = new TypedValue();
 		getTheme().resolveAttribute(attr, typedvalueattr, true);
 		return typedvalueattr.resourceId;

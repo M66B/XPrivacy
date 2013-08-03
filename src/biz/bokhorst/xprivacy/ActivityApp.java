@@ -196,6 +196,13 @@ public class ActivityApp extends Activity {
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		if (mPrivacyListAdapter != null)
+			mPrivacyListAdapter.notifyDataSetChanged();
+	}
+
+	@Override
 	protected void onStop() {
 		if (mNotified)
 			finish();
@@ -271,6 +278,8 @@ public class ActivityApp extends Activity {
 		}
 	}
 
+	// Options
+
 	private void optionAll() {
 		List<String> listRestriction = PrivacyManager.getRestrictions(false);
 
@@ -310,12 +319,159 @@ public class ActivityApp extends Activity {
 		contactsTask.executeOnExecutor(mExecutor, (Object) null);
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (mPrivacyListAdapter != null)
-			mPrivacyListAdapter.notifyDataSetChanged();
+	// Tasks
+
+	private class AccountsTask extends AsyncTask<Object, Object, Object> {
+		private List<CharSequence> mListAccount;
+		private Account[] mAccounts;
+		private boolean[] mSelection;
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			// Elevate priority
+			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
+
+			// Get accounts
+			mListAccount = new ArrayList<CharSequence>();
+			AccountManager accountManager = AccountManager.get(getApplicationContext());
+			mAccounts = accountManager.getAccounts();
+			mSelection = new boolean[mAccounts.length];
+			for (int i = 0; i < mAccounts.length; i++)
+				try {
+					mListAccount.add(String.format("%s (%s)", mAccounts[i].name, mAccounts[i].type));
+					String sha1 = Util.sha1(mAccounts[i].name + mAccounts[i].type);
+					mSelection[i] = PrivacyManager.getSettingBool(null, ActivityApp.this,
+							String.format("Account.%d.%s", mAppInfo.getUid(), sha1), false, false);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			// Build dialog
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+			alertDialogBuilder.setTitle(getString(R.string.menu_accounts));
+			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setMultiChoiceItems(mListAccount.toArray(new CharSequence[0]), mSelection,
+					new DialogInterface.OnMultiChoiceClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+							try {
+								Account account = mAccounts[whichButton];
+								String sha1 = Util.sha1(account.name + account.type);
+								PrivacyManager.setSetting(null, ActivityApp.this,
+										String.format("Account.%d.%s", mAppInfo.getUid(), sha1),
+										Boolean.toString(isChecked));
+							} catch (Throwable ex) {
+								Util.bug(null, ex);
+								Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
+								toast.show();
+							}
+						}
+					});
+			alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+				}
+			});
+
+			// Show dialog
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+
+			super.onPostExecute(result);
+		}
 	}
+
+	private class ContactsTask extends AsyncTask<Object, Object, Object> {
+		private List<CharSequence> mListContact;
+		private long[] mIds;
+		private boolean[] mSelection;
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			// Elevate priority
+			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
+
+			// Map contacts
+			Map<Long, String> mapContact = new LinkedHashMap<Long, String>();
+			Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
+					new String[] { ContactsContract.Contacts._ID, Phone.DISPLAY_NAME }, null, null, Phone.DISPLAY_NAME);
+			if (cursor != null)
+				try {
+					while (cursor.moveToNext()) {
+						long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+						String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
+						if (contact == null)
+							contact = "-";
+						mapContact.put(id, contact);
+					}
+				} finally {
+					cursor.close();
+				}
+
+			// Build dialog data
+			mListContact = new ArrayList<CharSequence>();
+			mIds = new long[mapContact.size()];
+			mSelection = new boolean[mapContact.size()];
+			int i = 0;
+			for (Long id : mapContact.keySet()) {
+				mListContact.add(mapContact.get(id));
+				mIds[i] = id;
+				mSelection[i++] = PrivacyManager.getSettingBool(null, ActivityApp.this,
+						String.format("Contact.%d.%d", mAppInfo.getUid(), id), false, false);
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			// Build dialog
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+			alertDialogBuilder.setTitle(getString(R.string.menu_contacts));
+			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setMultiChoiceItems(mListContact.toArray(new CharSequence[0]), mSelection,
+					new DialogInterface.OnMultiChoiceClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+							// Contact
+							PrivacyManager.setSetting(null, ActivityApp.this,
+									String.format("Contact.%d.%d", mAppInfo.getUid(), mIds[whichButton]),
+									Boolean.toString(isChecked));
+
+							// Raw contacts
+							Cursor cursor = getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI,
+									new String[] { ContactsContract.RawContacts._ID },
+									ContactsContract.RawContacts.CONTACT_ID + "=?",
+									new String[] { String.valueOf(mIds[whichButton]) }, null);
+							try {
+								while (cursor.moveToNext()) {
+									PrivacyManager.setSetting(null, ActivityApp.this,
+											String.format("RawContact.%d.%d", mAppInfo.getUid(), cursor.getLong(0)),
+											Boolean.toString(isChecked));
+								}
+							} finally {
+								cursor.close();
+							}
+						}
+					});
+			alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+				}
+			});
+
+			// Show dialog
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+
+			super.onPostExecute(result);
+		}
+	}
+
+	// Adapters
 
 	private class RestrictionAdapter extends BaseExpandableListAdapter {
 		private ApplicationInfoEx mAppInfo;
@@ -634,157 +790,9 @@ public class ActivityApp extends Activity {
 		}
 	}
 
-	private class AccountsTask extends AsyncTask<Object, Object, Object> {
-		private List<CharSequence> mListAccount;
-		private Account[] mAccounts;
-		private boolean[] mSelection;
+	// Helper methods
 
-		@Override
-		protected Object doInBackground(Object... params) {
-			// Elevate priority
-			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
-
-			// Get accounts
-			mListAccount = new ArrayList<CharSequence>();
-			AccountManager accountManager = AccountManager.get(getApplicationContext());
-			mAccounts = accountManager.getAccounts();
-			mSelection = new boolean[mAccounts.length];
-			for (int i = 0; i < mAccounts.length; i++)
-				try {
-					mListAccount.add(String.format("%s (%s)", mAccounts[i].name, mAccounts[i].type));
-					String sha1 = Util.sha1(mAccounts[i].name + mAccounts[i].type);
-					mSelection[i] = PrivacyManager.getSettingBool(null, ActivityApp.this,
-							String.format("Account.%d.%s", mAppInfo.getUid(), sha1), false, false);
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Object result) {
-			// Build dialog
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-			alertDialogBuilder.setTitle(getString(R.string.menu_accounts));
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-			alertDialogBuilder.setMultiChoiceItems(mListAccount.toArray(new CharSequence[0]), mSelection,
-					new DialogInterface.OnMultiChoiceClickListener() {
-						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-							try {
-								Account account = mAccounts[whichButton];
-								String sha1 = Util.sha1(account.name + account.type);
-								PrivacyManager.setSetting(null, ActivityApp.this,
-										String.format("Account.%d.%s", mAppInfo.getUid(), sha1),
-										Boolean.toString(isChecked));
-							} catch (Throwable ex) {
-								Util.bug(null, ex);
-								Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
-								toast.show();
-							}
-						}
-					});
-			alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// Do nothing
-				}
-			});
-
-			// Show dialog
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
-
-			super.onPostExecute(result);
-		}
-	}
-
-	private class ContactsTask extends AsyncTask<Object, Object, Object> {
-		private List<CharSequence> mListContact;
-		private long[] mIds;
-		private boolean[] mSelection;
-
-		@Override
-		protected Object doInBackground(Object... params) {
-			// Elevate priority
-			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
-
-			// Map contacts
-			Map<Long, String> mapContact = new LinkedHashMap<Long, String>();
-			Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
-					new String[] { ContactsContract.Contacts._ID, Phone.DISPLAY_NAME }, null, null, Phone.DISPLAY_NAME);
-			if (cursor != null)
-				try {
-					while (cursor.moveToNext()) {
-						long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-						String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
-						if (contact == null)
-							contact = "-";
-						mapContact.put(id, contact);
-					}
-				} finally {
-					cursor.close();
-				}
-
-			// Build dialog data
-			mListContact = new ArrayList<CharSequence>();
-			mIds = new long[mapContact.size()];
-			mSelection = new boolean[mapContact.size()];
-			int i = 0;
-			for (Long id : mapContact.keySet()) {
-				mListContact.add(mapContact.get(id));
-				mIds[i] = id;
-				mSelection[i++] = PrivacyManager.getSettingBool(null, ActivityApp.this,
-						String.format("Contact.%d.%d", mAppInfo.getUid(), id), false, false);
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Object result) {
-			// Build dialog
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-			alertDialogBuilder.setTitle(getString(R.string.menu_contacts));
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-			alertDialogBuilder.setMultiChoiceItems(mListContact.toArray(new CharSequence[0]), mSelection,
-					new DialogInterface.OnMultiChoiceClickListener() {
-						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-							// Contact
-							PrivacyManager.setSetting(null, ActivityApp.this,
-									String.format("Contact.%d.%d", mAppInfo.getUid(), mIds[whichButton]),
-									Boolean.toString(isChecked));
-
-							// Raw contacts
-							Cursor cursor = getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI,
-									new String[] { ContactsContract.RawContacts._ID },
-									ContactsContract.RawContacts.CONTACT_ID + "=?",
-									new String[] { String.valueOf(mIds[whichButton]) }, null);
-							try {
-								while (cursor.moveToNext()) {
-									PrivacyManager.setSetting(null, ActivityApp.this,
-											String.format("RawContact.%d.%d", mAppInfo.getUid(), cursor.getLong(0)),
-											Boolean.toString(isChecked));
-								}
-							} finally {
-								cursor.close();
-							}
-						}
-					});
-			alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// Do nothing
-				}
-			});
-
-			// Show dialog
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
-
-			super.onPostExecute(result);
-		}
-	}
-
-	public int getThemed(int attr) {
+	private int getThemed(int attr) {
 		TypedValue typedvalueattr = new TypedValue();
 		getTheme().resolveAttribute(attr, typedvalueattr, true);
 		return typedvalueattr.resourceId;

@@ -93,6 +93,13 @@ public class ActivityUsage extends Activity {
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		if (mUsageAdapter != null)
+			mUsageAdapter.notifyDataSetChanged();
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.usage, menu);
@@ -124,12 +131,7 @@ public class ActivityUsage extends Activity {
 		}
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (mUsageAdapter != null)
-			mUsageAdapter.notifyDataSetChanged();
-	}
+	// Tasks
 
 	private class UsageTask extends AsyncTask<Object, Object, List<PrivacyManager.UsageData>> {
 		@Override
@@ -148,6 +150,8 @@ public class ActivityUsage extends Activity {
 			mUsageAdapter.getFilter().filter(Boolean.toString(mAll));
 		}
 	}
+
+	// Adapters
 
 	private class UsageAdapter extends ArrayAdapter<PrivacyManager.UsageData> {
 		private List<PrivacyManager.UsageData> mListUsageData;
