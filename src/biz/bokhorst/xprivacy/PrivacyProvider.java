@@ -89,10 +89,11 @@ public class PrivacyProvider extends ContentProvider {
 			out.setReadable(true, false);
 
 			// Convert restrictions
-			File from = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
+			File source = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
 					+ packageName + File.separator + "shared_prefs" + File.separator
 					+ "biz.bokhorst.xprivacy.provider.xml");
-			if (from.exists()) {
+			File backup = new File(source.getAbsoluteFile() + ".orig");
+			if (source.exists() && !backup.exists()) {
 				Util.log(null, Log.INFO, "Converting restrictions");
 				SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION,
 						Context.MODE_WORLD_READABLE);
@@ -116,11 +117,8 @@ public class PrivacyProvider extends ContentProvider {
 				}
 
 				// Backup old file
-				File to = new File(from.getAbsoluteFile() + ".orig");
-				if (!to.exists()) {
-					Util.log(null, Log.INFO, "Backup " + to.getAbsolutePath());
-					from.renameTo(to);
-				}
+				Util.log(null, Log.INFO, "Backup name=" + backup.getAbsolutePath());
+				source.renameTo(backup);
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
