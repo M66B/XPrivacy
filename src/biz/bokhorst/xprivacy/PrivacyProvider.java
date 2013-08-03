@@ -72,7 +72,7 @@ public class PrivacyProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		try {
-			// Copy meta data
+			// Write meta data
 			String packageName = PrivacyManager.class.getPackage().getName();
 			File out = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName
 					+ File.separator + "meta.xml");
@@ -91,8 +91,9 @@ public class PrivacyProvider extends ContentProvider {
 			// Convert restrictions
 			File from = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
 					+ packageName + File.separator + "shared_prefs" + File.separator
-					+ "biz.bokhorst.xprivacy.provider.settings.xml");
+					+ "biz.bokhorst.xprivacy.provider.xml");
 			if (from.exists()) {
+				Util.log(null, Log.INFO, "Converting restrictions");
 				SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION,
 						Context.MODE_WORLD_READABLE);
 				for (String key : prefs.getAll().keySet()) {
@@ -116,8 +117,10 @@ public class PrivacyProvider extends ContentProvider {
 
 				// Backup old file
 				File to = new File(from.getAbsoluteFile() + ".orig");
-				if (!to.exists())
+				if (!to.exists()) {
+					Util.log(null, Log.INFO, "Backup " + to.getAbsolutePath());
 					from.renameTo(to);
+				}
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);

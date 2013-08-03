@@ -555,7 +555,12 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.8.2 BETA!**
+
 * Redesigned restriction storage (less resource usage)
+* Updated Catalan translation
 
 **Version 1.8.1**
 
