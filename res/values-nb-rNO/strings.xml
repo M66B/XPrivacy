@@ -11,7 +11,7 @@
     <string name="menu_settings">Innstillinger</string>
     <string name="menu_template">Skjema</string>
     <string name="menu_update">Sjekk for oppdatering</string>
-    <string name="menu_report">Rapport en feil</string>
+    <string name="menu_report">Rapporter en feil</string>
     <string name="menu_export">Eksporter</string>
     <string name="menu_import">Importer</string>
     <string name="menu_theme">Bytt tema</string>
@@ -30,10 +30,10 @@
     <string name="msg_edit">Klikk på app ikonet for å bearbeide alle restriksjoner</string>
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Ferdig</string>
-    <string name="msg_reboot">Reboot nødvendig</string>
+    <string name="msg_reboot">Omstart nødvendig</string>
     <string name="msg_random">Randomize</string>
     <string name="msg_random_boot">Randomize after boot</string>
-    <string name="msg_first"><b>XPrivacy er utviklet og testet med stor omsorg, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
+    <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
     <string name="restrict_calendar">Kalender</string>
