@@ -16,6 +16,7 @@
 
 package com.android.internal.util;
 
+import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -24,6 +25,7 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ProtocolException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,11 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import android.util.Xml;
-
 /** {@hide} */
-public class XmlUtils
-{
+public class XmlUtils {
 
     public static void skipCurrentTag(XmlPullParser parser)
             throws XmlPullParserException, IOException {
@@ -123,18 +122,15 @@ public class XmlUtils
         return Integer.parseInt(nm.substring(index), base) * sign;
     }
 
-    public static final int
-    convertValueToUnsignedInt(String value, int defaultValue)
-    {
-        if (null == value)
+    public static int convertValueToUnsignedInt(String value, int defaultValue) {
+        if (null == value) {
             return defaultValue;
+        }
 
         return parseUnsignedIntAttribute(value);
     }
 
-    public static final int
-    parseUnsignedIntAttribute(CharSequence charSeq)
-    {
+    public static int parseUnsignedIntAttribute(CharSequence charSeq) {
         String  value = charSeq.toString();
 
         long    bits;
@@ -800,16 +796,8 @@ public class XmlUtils
             }
             throw new XmlPullParserException(
                 "Unexpected end of document in <string>");
-        } else if (tagName.equals("int")) {
-            res = Integer.parseInt(parser.getAttributeValue(null, "value"));
-        } else if (tagName.equals("long")) {
-            res = Long.valueOf(parser.getAttributeValue(null, "value"));
-        } else if (tagName.equals("float")) {
-            res = new Float(parser.getAttributeValue(null, "value"));
-        } else if (tagName.equals("double")) {
-            res = new Double(parser.getAttributeValue(null, "value"));
-        } else if (tagName.equals("boolean")) {
-            res = Boolean.valueOf(parser.getAttributeValue(null, "value"));
+        } else if ((res = readThisPrimitiveValueXml(parser, tagName)) != null) {
+            // all work already done by readThisPrimitiveValueXml
         } else if (tagName.equals("int-array")) {
             parser.next();
             res = readThisIntArrayXml(parser, "int-array", name);
@@ -862,6 +850,31 @@ public class XmlUtils
             "Unexpected end of document in <" + tagName + ">");
     }
 
+    private static final Object readThisPrimitiveValueXml(XmlPullParser parser, String tagName)
+    throws XmlPullParserException, java.io.IOException
+    {
+        try {
+            if (tagName.equals("int")) {
+                return Integer.parseInt(parser.getAttributeValue(null, "value"));
+            } else if (tagName.equals("long")) {
+                return Long.valueOf(parser.getAttributeValue(null, "value"));
+            } else if (tagName.equals("float")) {
+                return new Float(parser.getAttributeValue(null, "value"));
+            } else if (tagName.equals("double")) {
+                return new Double(parser.getAttributeValue(null, "value"));
+            } else if (tagName.equals("boolean")) {
+                return Boolean.valueOf(parser.getAttributeValue(null, "value"));
+            } else {
+                return null;
+            }
+        } catch (NullPointerException e) {
+            throw new XmlPullParserException("Need value attribute in <" + tagName + ">");
+        } catch (NumberFormatException e) {
+            throw new XmlPullParserException(
+                    "Not a number in value attribute in <" + tagName + ">");
+        }
+    }
+
     public static final void beginDocument(XmlPullParser parser, String firstElementName) throws XmlPullParserException, IOException
     {
         int type;
@@ -902,5 +915,43 @@ public class XmlUtils
                 return true;
             }
         }
+    }
+
+    public static int readIntAttribute(XmlPullParser in, String name) throws IOException {
+        final String value = in.getAttributeValue(null, name);
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new ProtocolException("problem parsing " + name + "=" + value + " as int");
+        }
+    }
+
+    public static void writeIntAttribute(XmlSerializer out, String name, int value)
+            throws IOException {
+        out.attribute(null, name, Integer.toString(value));
+    }
+
+    public static long readLongAttribute(XmlPullParser in, String name) throws IOException {
+        final String value = in.getAttributeValue(null, name);
+        try {
+            return Long.parseLong(value);
+        } catch (NumberFormatException e) {
+            throw new ProtocolException("problem parsing " + name + "=" + value + " as long");
+        }
+    }
+
+    public static void writeLongAttribute(XmlSerializer out, String name, long value)
+            throws IOException {
+        out.attribute(null, name, Long.toString(value));
+    }
+
+    public static boolean readBooleanAttribute(XmlPullParser in, String name) {
+        final String value = in.getAttributeValue(null, name);
+        return Boolean.parseBoolean(value);
+    }
+
+    public static void writeBooleanAttribute(XmlSerializer out, String name, boolean value)
+            throws IOException {
+        out.attribute(null, name, Boolean.toString(value));
     }
 }

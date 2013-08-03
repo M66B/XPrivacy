@@ -555,6 +555,11 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.8.1**
+
+* Workaround for crash while importing in some situations / some devices
 * Updated Hungarian translation
 
 **Version 1.8**
@@ -1277,7 +1282,7 @@ News
 * [Manage Individual App Permissions with XPrivacy](http://www.xda-developers.com/android/manage-individual-app-permissions-with-xprivacy/) (June 20, 2013)
 * [XPrivacy Gives You Massive Control Over What Your Installed Apps Are Allowed To Do](http://www.androidpolice.com/2013/06/23/xprivacy-gives-you-massive-control-over-what-your-installed-apps-are-allowed-to-do/) (June 23, 2013)
 * [Protect Your Privacy with XPrivacy - XDA Developer TV](http://www.xda-developers.com/android/protect-your-privacy-with-xprivacy-xda-developer-tv/) (July 17, 2013)
-* [XPrivacy Android – Schutz gegen Datensammler](http://www.kuketz-blog.de/xprivacy-android-schutz-gegen-datensammler/) (August 1, 2013)
+* [XPrivacy Android ï¿½ Schutz gegen Datensammler](http://www.kuketz-blog.de/xprivacy-android-schutz-gegen-datensammler/) (August 1, 2013)
 
 Contributing
 ------------
