@@ -1,8 +1,8 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed framework versjon %d+ er ikke installert</string>
-    <string name="app_notenabled">XPrivacy er ikke frigitt i Xposed installern</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_notxposed" formatted="false">Xposed rammeverk versjon %d+ er ikke installert</string>
+    <string name="app_notenabled">XPrivacy er ikke frigitt i Xposed installasjon</string>
+    <string name="app_wrongandroid">Kun for Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013</string>
@@ -32,8 +32,8 @@
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Ferdig</string>
     <string name="msg_reboot">Omstart nødvendig</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_random">Tilfeldige verdier</string>
+    <string name="msg_random_boot">Tilfeldige verdier etter omstart</string>
     <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
