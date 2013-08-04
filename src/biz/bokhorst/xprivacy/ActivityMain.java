@@ -15,6 +15,9 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -835,7 +838,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private String fetchJson(String... uri) {
 			try {
 				// Request downloads
-				HttpClient httpclient = new DefaultHttpClient();
+				int TIMEOUT_MILLISEC = 30000; // = 30 seconds
+				HttpParams httpParams = new BasicHttpParams();
+				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpClient httpclient = new DefaultHttpClient(httpParams);
 				HttpResponse response = httpclient.execute(new HttpGet(uri[0]));
 				StatusLine statusLine = response.getStatusLine();
 

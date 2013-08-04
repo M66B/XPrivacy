@@ -1,5 +1,7 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,11 +13,27 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,11 +44,12 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Process;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -256,6 +275,9 @@ public class ActivityApp extends Activity {
 		case R.id.menu_usage:
 			optionUsage();
 			return true;
+		case R.id.menu_submit:
+			optionSubmit();
+			return true;
 		case R.id.menu_app_launch:
 			Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
 			startActivity(LaunchIntent);
@@ -309,6 +331,11 @@ public class ActivityApp extends Activity {
 		startActivity(intent);
 	}
 
+	private void optionSubmit() {
+		SubmitTask submitTask = new SubmitTask();
+		submitTask.executeOnExecutor(mExecutor, mAppInfo);
+	}
+
 	private void optionAccounts() {
 		AccountsTask accountsTask = new AccountsTask();
 		accountsTask.executeOnExecutor(mExecutor, (Object) null);
@@ -328,9 +355,6 @@ public class ActivityApp extends Activity {
 
 		@Override
 		protected Object doInBackground(Object... params) {
-			// Elevate priority
-			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
-
 			// Get accounts
 			mListAccount = new ArrayList<CharSequence>();
 			AccountManager accountManager = AccountManager.get(getApplicationContext());
@@ -392,9 +416,6 @@ public class ActivityApp extends Activity {
 
 		@Override
 		protected Object doInBackground(Object... params) {
-			// Elevate priority
-			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
-
 			// Map contacts
 			Map<Long, String> mapContact = new LinkedHashMap<Long, String>();
 			Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
@@ -466,6 +487,81 @@ public class ActivityApp extends Activity {
 			// Show dialog
 			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
+
+			super.onPostExecute(result);
+		}
+	}
+
+	private class SubmitTask extends AsyncTask<ApplicationInfoEx, Object, Object> {
+		private final static int NOTIFY_ID = 5;
+
+		@Override
+		protected Object doInBackground(ApplicationInfoEx... params) {
+			try {
+				// Encode restrictions
+				JSONArray jRestriction = new JSONArray();
+				List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager.getRestricted(ActivityApp.this);
+				for (PrivacyManager.RestrictionDesc rd : listRestriction)
+					if (rd.uid == params[0].getUid()) {
+						JSONObject jEntry = new JSONObject();
+						jEntry.put("name", rd.restrictionName);
+						jEntry.putOpt("method", rd.methodName);
+						jEntry.put("restricted", rd.restricted);
+						jRestriction.put(jEntry);
+					}
+
+				// Encode package
+				JSONObject jRoot = new JSONObject();
+				jRoot.put("protocol_version", 1);
+				jRoot.put("package_name", params[0].getPackageName());
+				jRoot.put("package_version", params[0].getVersion());
+				jRoot.put("package_restrictions", jRestriction);
+				Util.log(null, Log.INFO, "submit=" + jRoot.toString());
+
+				// Submit
+				int TIMEOUT_MILLISEC = 30000; // = 30 seconds
+				HttpParams httpParams = new BasicHttpParams();
+				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpClient httpclient = new DefaultHttpClient(httpParams);
+
+				HttpPost httpost = new HttpPost("http://updates.faircode.eu/xprivacy?format=json");
+				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+				httpost.setHeader("Accept", "application/json");
+				httpost.setHeader("Content-type", "application/json");
+				HttpResponse response = httpclient.execute(httpost);
+				StatusLine statusLine = response.getStatusLine();
+
+				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+					// Succeeded
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					response.getEntity().writeTo(out);
+					out.close();
+					Util.log(null, Log.INFO, "response=" + out.toString("UTF-8"));
+					return new JSONObject(out.toString("UTF-8"));
+				} else {
+					// Failed
+					response.getEntity().getContent().close();
+					throw new IOException(statusLine.getReasonPhrase());
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return null;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityApp.this);
+			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+			notificationBuilder.setContentTitle(getString(R.string.menu_submit));
+			notificationBuilder.setContentText(mAppInfo.getFirstApplicatioName());
+			notificationBuilder.setWhen(System.currentTimeMillis());
+			notificationBuilder.setAutoCancel(true);
+			Notification notification = notificationBuilder.build();
+			NotificationManager notificationManager = (NotificationManager) ActivityApp.this
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.notify(NOTIFY_ID, notification);
 
 			super.onPostExecute(result);
 		}
