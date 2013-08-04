@@ -6,19 +6,19 @@
     <string name="app_version" formatted="false">XPrivacy versija: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed sistemos versija: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Naudojimas</string>
+    <string name="menu_usage">Leidimų naudojimas</string>
     <string name="menu_refresh">Atnaujinti</string>
-    <string name="menu_settings">Parametrai</string>
+    <string name="menu_settings">XPrivacy parametrai</string>
     <string name="menu_template">Ruošiniai</string>
     <string name="menu_update">Tikrinti atnaujinimus</string>
-    <string name="menu_report">Pranešti problemą</string>
-    <string name="menu_export">Exportuoti</string>
-    <string name="menu_import">Importuoti</string>
+    <string name="menu_report">Pranešti apie problemą</string>
+    <string name="menu_export">Exportuoti parametrus</string>
+    <string name="menu_import">Importuoti parametrus</string>
     <string name="menu_theme">Keisti temą</string>
-    <string name="menu_pro">Pro versija</string>
-    <string name="menu_about">Apie</string>
-    <string name="menu_all">Visos</string>
-    <string name="menu_app_launch">Paleisti</string>
+    <string name="menu_pro">Pro versija aktyvi</string>
+    <string name="menu_about">Apie XPrivacy</string>
+    <string name="menu_all">Visi leidimai</string>
+    <string name="menu_app_launch">Paleisti programą</string>
     <string name="menu_app_settings">Programos informacija</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Leisti pažymėtas paskyras</string>
@@ -31,8 +31,8 @@
     <string name="msg_sure">Esate tikri?</string>
     <string name="msg_done">Atlikta</string>
     <string name="msg_reboot">Privaloma perkrauti prietaisą!</string>
-    <string name="msg_random">Atsitiktinis</string>
-    <string name="msg_random_boot">Atsitiktinis po startavimo</string>
+    <string name="msg_random">Atsitiktiniai duomenys</string>
+    <string name="msg_random_boot">Atsitiktiniai duomenys po perkrovimo</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
 \n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>
@@ -40,7 +40,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_browser">Naršyklė (žymės/istorija)</string>
     <string name="restrict_calendar">Kalendorius</string>
     <string name="restrict_calling">Skambučiai (telefonas, SMS, MMS)</string>
-    <string name="restrict_clipboard">Vaizdai</string>
+    <string name="restrict_clipboard">Iškarpinė</string>
     <string name="restrict_contacts">Kontaktai</string>
     <string name="restrict_dictionary">Žodynas (vartotojo)</string>
     <string name="restrict_identification">Identifikacija (prietaiso)</string>
@@ -49,14 +49,14 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_media">Media (muzika, nuotraukos, vaizdai)</string>
     <string name="restrict_messages">Pranešimai (SMS, MMS)</string>
     <string name="restrict_network">Tinklas (adresai)</string>
-    <string name="restrict_notifications">Pranešimai</string>
+    <string name="restrict_notifications">Įspėjimai</string>
     <string name="restrict_phone">Telefonas (ID, numeris, skambučiai)</string>
     <string name="restrict_storage">Atmintis (media, SD kortelė)</string>
     <string name="restrict_shell">Vykdymas (komandos, superuser)</string>
     <string name="restrict_system">Sistema (įdiegtos programos)</string>
     <string name="restrict_view">Peržiūra (Naršyklė)</string>
     <string name="title_category">Kategorija:</string>
-    <string name="title_restrict">Žiūrėti apribojimus:</string>
+    <string name="title_restrict">Žiūrėti leidimus:</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
@@ -65,13 +65,13 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Šalis</string>
     <string name="settings_subscriber">Abonento ID</string>
-    <string name="settings_fpermission">Filtruoti pagal leidimus</string>
+    <string name="settings_fpermission">Tik naudojami leidimai</string>
     <string name="settings_fsystem">Nerodyti sistemos programų</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
     <string name="help_granted">Android leidimai</string>
     <string name="help_used">Privačių duomenų leidimai</string>
     <string name="help_frozen">Išjungtų programų leidimai</string>
-    <string name="help_dangerous">Pavojingi</string>
+    <string name="help_dangerous">Pavojingi leidimai</string>
 
 </resources>
