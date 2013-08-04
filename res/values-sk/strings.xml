@@ -1,10 +1,10 @@
 <resources>
 
     <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
-    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed</string>
+    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed installeri</string>
     <string name="app_wrongandroid">Len pre Android 4.0+</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
-    <string name="app_xversion" formatted="false">Verzia Xposed: %d</string>
+    <string name="app_xversion" formatted="false">Verzia Xposed frameworku: %d</string>
     <string name="app_copyright">Autorské práva \u00A9 2013 od M. Bokhorst (M66B)</string>
     <string name="menu_usage">Využitie</string>
     <string name="menu_refresh">Obnoviť</string>
@@ -14,8 +14,8 @@
     <string name="menu_report">Nahlásiť problém</string>
     <string name="menu_export">Exportovať</string>
     <string name="menu_import">Importovať</string>
+    <string name="menu_theme">Zmeniť tému</string>
     <string name="menu_submit">Submit restrictions</string>
-    <string name="menu_theme">Prepnúť tému</string>
     <string name="menu_pro">Pro verzia</string>
     <string name="menu_about">O aplikácii</string>
     <string name="menu_all">Všetko</string>
@@ -31,9 +31,9 @@
     <string name="msg_edit">Kliknite na ikonu aplikácie pre úpravu všetkých obmedzení</string>
     <string name="msg_sure">Ste si istý?</string>
     <string name="msg_done">Hotovo</string>
-    <string name="msg_reboot">Vyžadovaný reštart</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_reboot">Vyžadovaný reštart zariadenia</string>
+    <string name="msg_random">Náhodné hodnoty</string>
+    <string name="msg_random_boot">Náhodné hodnoty pri štarte zariadenia</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>
