@@ -553,10 +553,11 @@ How to get beta releases:
 	1. Become a beta tester [here](https://play.google.com/apps/testing/biz.bokhorst.xprivacy)
 * Download from [Dev-Host](http://d-h.st/users/M66B/?fld_id=19078#files)
 
-**Next release**
+**Version 1.8.3**
 
 * Restrict *getNetworkType* and *getPhoneType* ([issue](https://github.com/M66B/XPrivacy/issues/441))
 * Updated Norwegian translation
+* Updated Russian translation
 
 **Version 1.8.2 BETA!**
 
@@ -1347,6 +1348,12 @@ Using Eclipse:
 * Close Eclipse and copy the project from the temporary location over the imported project
 	* Make sure you copy all hidden files
 * Add the Xposed library to the build path as described [here](https://github.com/rovo89/XposedBridge/wiki/Development-tutorial#making-the-project-an-xposed-module)
+
+Testing:
+
+* [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
+* [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
+* [SIM Card](https://play.google.com/store/apps/details?id=com.gsmdev.simcard)
 
 Contributors do not have to donate for the [pro version](http://www.faircode.eu/xprivacy/).
 

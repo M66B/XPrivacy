@@ -118,7 +118,7 @@ public class PrivacyProvider extends ContentProvider {
 
 				// Backup old file
 				Util.log(null, Log.INFO, "Backup name=" + backup.getAbsolutePath());
-				source.renameTo(backup);
+				Util.copy(source, backup);
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
