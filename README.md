@@ -553,6 +553,11 @@ How to get beta releases:
 	1. Become a beta tester [here](https://play.google.com/apps/testing/biz.bokhorst.xprivacy)
 * Download from [Dev-Host](http://d-h.st/users/M66B/?fld_id=19078#files)
 
+**Next release**
+
+* Updated Lithuanian translation
+* Updated Slovak translation
+
 **Version 1.8.3**
 
 * Restrict *getNetworkType* and *getPhoneType* ([issue](https://github.com/M66B/XPrivacy/issues/441))

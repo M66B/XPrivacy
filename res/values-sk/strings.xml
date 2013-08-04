@@ -14,6 +14,7 @@
     <string name="menu_report">Nahlásiť problém</string>
     <string name="menu_export">Exportovať</string>
     <string name="menu_import">Importovať</string>
+    <string name="menu_submit">Submit restrictions</string>
     <string name="menu_theme">Prepnúť tému</string>
     <string name="menu_pro">Pro verzia</string>
     <string name="menu_about">O aplikácii</string>
