@@ -555,6 +555,12 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.8.4 ALPHA!**
+
+* Restrict serial number for Android again
+* Usage data for Android
 * Updated Japanese translation
 * Updated Lithuanian translation
 * Updated Slovak translation
