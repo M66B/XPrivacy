@@ -266,7 +266,7 @@ public class PrivacyManager {
 			// Check if restricted
 			boolean fallback = true;
 			boolean restricted = false;
-			if (context != null && uid != cUidAndroid)
+			if (context != null)
 				try {
 					// Get content resolver
 					ContentResolver contentResolver = context.getContentResolver();
