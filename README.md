@@ -555,7 +555,8 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Updated French translation
+* Updated Polish translation
 
 **Version 1.8.4 ALPHA!**
 
