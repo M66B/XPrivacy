@@ -555,6 +555,7 @@ How to get beta releases:
 
 **Next release**
 
+* Updated Japanese translation
 * Updated Lithuanian translation
 * Updated Slovak translation
 
