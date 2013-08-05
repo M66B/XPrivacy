@@ -177,6 +177,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					try {
+						if (Process.myUid() <= 0)
+							return;
 						hook.before(param);
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
@@ -189,6 +191,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					if (!param.hasThrowable())
 						try {
+							if (Process.myUid() <= 0)
+								return;
 							hook.after(param);
 						} catch (Throwable ex) {
 							Util.bug(null, ex);

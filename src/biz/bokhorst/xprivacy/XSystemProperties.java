@@ -49,9 +49,6 @@ public class XSystemProperties extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (Process.myUid() <= 0 || Process.myUid() == PrivacyManager.cUidAndroid)
-			return;
-
 		String key = (param.args.length > 0 ? (String) param.args[0] : null);
 		if (key != null)
 			if (mPropertyName.startsWith("%") ? key.contains(mPropertyName.substring(1)) : key.equals(mPropertyName))

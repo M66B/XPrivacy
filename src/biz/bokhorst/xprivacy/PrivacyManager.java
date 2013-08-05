@@ -347,7 +347,7 @@ public class PrivacyManager {
 				restricted = PrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
 
 				// Queue usage data
-				if (usage && uid != cUidAndroid) {
+				if (usage) {
 					UsageData usageData = new UsageData(uid, restrictionName, methodName, restricted);
 					synchronized (mUsageQueue) {
 						if (mUsageQueue.containsKey(usageData))
