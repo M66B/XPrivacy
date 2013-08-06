@@ -14,7 +14,6 @@
     <string name="menu_report">Pranešti apie problemą</string>
     <string name="menu_export">Exportuoti parametrus</string>
     <string name="menu_import">Importuoti parametrus</string>
-    <string name="menu_submit">Submit restrictions</string>
     <string name="menu_theme">Keisti temą</string>
     <string name="menu_pro">Pro versija aktyvi</string>
     <string name="menu_about">Apie XPrivacy</string>
