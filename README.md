@@ -384,6 +384,8 @@ like *requestLocationUpdates* of [LocationManager](http://developer.android.com/
 
 *Manage apps* > *XPrivacy* > *Clear data*
 
+Reboot.
+
 **(6) Can I backup XPrivacy and settings?**
 
 Yes, you can, for example with [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup),
@@ -537,9 +539,6 @@ including a [logcat](http://developer.android.com/tools/help/logcat.html)
 **Before submitting any issue please ensure you are running the latest version of XPrivacy.**
 
 **Before submitting any issue please [read this](http://forum.xda-developers.com/showpost.php?p=43892381&postcount=1703).**
-
-If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues),
-but check if there doesn´t already exist a similar request.
 
 If you have any question or suggestion, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
