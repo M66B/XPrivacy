@@ -187,13 +187,13 @@ public class PrivacyProvider extends ContentProvider {
 
 				// Process restrictions
 				for (String eRestrictionName : listRestrictionName)
-					if (!getAllowed(eRestrictionName, null, prefs)) {
+					if (getRestricted(eRestrictionName, null, prefs)) {
 						// Category
 						cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, null, true });
 
 						// Exceptions
 						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName))
-							if (getAllowed(eRestrictionName, md.getMethodName(), prefs)
+							if (!getRestricted(eRestrictionName, md.getMethodName(), prefs)
 									|| PrivacyManager.isDangerousMethod(eRestrictionName, md.getMethodName()))
 								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getMethodName(), false });
 					}
@@ -203,20 +203,20 @@ public class PrivacyProvider extends ContentProvider {
 					Context.MODE_WORLD_READABLE);
 
 			// Process restrictions
-			boolean allowed = false;
+			boolean restricted = false;
 			for (String eRestrictionName : listRestrictionName) {
-				boolean rAllowed = getAllowed(eRestrictionName, methodName, prefs);
-				cursor.addRow(new Object[] { uid, eRestrictionName, methodName, Boolean.toString(!rAllowed) });
-				allowed = allowed || rAllowed;
+				boolean eRestricted = getRestricted(eRestrictionName, methodName, prefs);
+				cursor.addRow(new Object[] { uid, eRestrictionName, methodName, Boolean.toString(eRestricted) });
+				restricted = restricted || eRestricted;
 			}
-			final boolean restricted = !allowed;
 
 			// Update usage data
 			if (usage && restrictionName != null && methodName != null) {
+				final boolean isRestricted = restricted;
 				mExecutor.execute(new Runnable() {
 					public void run() {
 						long timeStamp = new Date().getTime();
-						updateUsage(uid, restrictionName, methodName, restricted, timeStamp);
+						updateUsage(uid, restrictionName, methodName, isRestricted, timeStamp);
 					}
 				});
 			}
@@ -225,16 +225,16 @@ public class PrivacyProvider extends ContentProvider {
 		return cursor;
 	}
 
-	private static boolean getAllowed(String restrictionName, String methodName, SharedPreferences prefs) {
+	private static boolean getRestricted(String restrictionName, String methodName, SharedPreferences prefs) {
 		// Check for restriction
-		boolean allowed = !prefs.getBoolean(getRestrictionPref(restrictionName), false);
+		boolean restricted = prefs.getBoolean(getRestrictionPref(restrictionName), false);
 
 		// Check for exception
-		if (!allowed && methodName != null)
+		if (restricted && methodName != null)
 			if (prefs.getBoolean(getExceptionPref(restrictionName, methodName), false))
-				allowed = true;
+				restricted = false;
 
-		return allowed;
+		return restricted;
 	}
 
 	private Cursor queryUsage(int uid, List<String> listRestriction, String methodName) {
@@ -455,7 +455,7 @@ public class PrivacyProvider extends ContentProvider {
 				}
 			}
 
-			return !getAllowed(restrictionName, methodName, mFallbackRestrictions);
+			return getRestricted(restrictionName, methodName, mFallbackRestrictions);
 		} catch (Throwable ex) {
 			Util.bug(hook, ex);
 			return false;
