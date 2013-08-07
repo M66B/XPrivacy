@@ -554,6 +554,11 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.8.5 BETA!**
+
+* Disabled usage data for Android (results in slow/hanging Android start)
 * Updated French translation
 * Updated Polish translation
 
