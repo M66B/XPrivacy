@@ -437,21 +437,23 @@ public class PrivacyProvider extends ContentProvider {
 
 	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName, String methodName) {
 		try {
-			// Initial load
-			if (mFallbackRestrictions == null || mFallbackRestrictionsUid != uid)
-				mFallbackRestrictions = new SharedPreferencesEx(new File(getPrefFileName(PREF_RESTRICTION, uid)));
+			long now = new Date().getTime();
 
-			// Get update
-			synchronized (mFallbackRestrictions) {
-				long now = new Date().getTime();
-				if (mFallbackRestrictionsTime + PrivacyManager.cCacheTimeoutMs < now) {
-					Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + uid);
-					mFallbackRestrictions.reload();
-					if (mFallbackRestrictionsUid != 0 && mFallbackRestrictionsUid != uid)
-						Util.log(null, Log.WARN, "Reload fallback restrictions uid=" + uid + "/"
-								+ mFallbackRestrictionsUid);
-					mFallbackRestrictionsUid = uid;
-					mFallbackRestrictionsTime = now;
+			if (mFallbackRestrictions == null || mFallbackRestrictionsUid != uid) {
+				// Initial load
+				Util.log(null, Log.INFO, "Load fallback restrictions uid=" + uid);
+				mFallbackRestrictions = new SharedPreferencesEx(new File(getPrefFileName(PREF_RESTRICTION, uid)));
+				mFallbackRestrictionsUid = uid;
+				mFallbackRestrictionsTime = now;
+			} else {
+				// Check update
+				synchronized (mFallbackRestrictions) {
+					if (mFallbackRestrictionsTime + PrivacyManager.cCacheTimeoutMs < now) {
+						Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + uid);
+						mFallbackRestrictions.reload();
+						mFallbackRestrictionsUid = uid;
+						mFallbackRestrictionsTime = now;
+					}
 				}
 			}
 
