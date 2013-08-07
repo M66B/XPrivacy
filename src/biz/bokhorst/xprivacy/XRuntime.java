@@ -57,7 +57,6 @@ public class XRuntime extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		Util.log(this, Log.INFO, "method=" + mMethod.name());
 		if (mMethod == Methods.exec) {
 			// Get programs
 			String[] progs = null;
