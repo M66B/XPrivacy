@@ -339,6 +339,7 @@ public class PrivacyManager {
 					}
 				} catch (IllegalArgumentException ex) {
 					// Attempt to launch content provider before system ready
+					Util.log(hook, Log.INFO, "System not ready, using fall back");
 				} catch (Throwable ex) {
 					Util.bug(hook, ex);
 				}
