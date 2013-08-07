@@ -337,6 +337,8 @@ public class PrivacyManager {
 							});
 						}
 					}
+				} catch (IllegalArgumentException ex) {
+					// Attempt to launch content provider before system ready
 				} catch (Throwable ex) {
 					Util.bug(hook, ex);
 				}
