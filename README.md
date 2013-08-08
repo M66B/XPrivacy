@@ -554,7 +554,10 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+**Version 1.8.6 BETA!**
+
+* Always lock fallback restriction loading
+* Limit help icon size
 
 **Version 1.8.5 BETA!**
 
