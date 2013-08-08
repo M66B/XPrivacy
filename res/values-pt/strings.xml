@@ -64,6 +64,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_phone">Número de telefone</string>
     <string name="settings_id">Identidade do Android</string>
     <string name="settings_country">País</string>
+    <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Identidade do subscritor</string>
     <string name="settings_fpermission">Filtrar por permissão</string>
     <string name="settings_fsystem">Filtrar aplicações do sistema</string>

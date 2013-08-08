@@ -64,6 +64,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="settings_phone">Telefonszám</string>
     <string name="settings_id">Android azonosító</string>
     <string name="settings_country">Ország</string>
+    <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Előfizető azonosító</string>
     <string name="settings_fpermission">Szűrés engedély szerint</string>
     <string name="settings_fsystem">Rendszer alkalmazások szűrése</string>

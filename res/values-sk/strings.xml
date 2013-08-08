@@ -64,6 +64,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_phone">Telefónne číslo</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Krajina</string>
+    <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovať podľa povolenia</string>
     <string name="settings_fsystem">Filtrovať systémové aplikácie</string>

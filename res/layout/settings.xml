@@ -175,6 +175,18 @@
             <TableRow>
 
                 <TextView
+                    android:text="@string/settings_operator"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etOperator"
+                    android:hint="DEFACED"
+                    android:inputType="text|textNoSuggestions" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
                     android:text="@string/settings_iccid"
                     android:textIsSelectable="false" />
 

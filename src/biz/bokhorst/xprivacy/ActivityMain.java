@@ -550,6 +550,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etMcc = (EditText) dlgSettings.findViewById(R.id.etMcc);
 		final EditText etMnc = (EditText) dlgSettings.findViewById(R.id.etMnc);
 		final EditText etCountry = (EditText) dlgSettings.findViewById(R.id.etCountry);
+		final EditText etOperator = (EditText) dlgSettings.findViewById(R.id.etOperator);
 		final EditText etIccId = (EditText) dlgSettings.findViewById(R.id.etIccId);
 		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
@@ -578,6 +579,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etMnc.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMnc, "", false));
 		etCountry
 				.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingCountry, "", false));
+		etOperator.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingOperator, "",
+				false));
 		etIccId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingIccId, "", false));
 		etSubscriber.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, "",
 				false));
@@ -678,6 +681,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						.toString());
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingCountry, etCountry.getText()
 						.toString());
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingOperator, etOperator
+						.getText().toString());
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingIccId, etIccId.getText()
 						.toString());
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, etSubscriber

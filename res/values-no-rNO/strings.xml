@@ -62,6 +62,7 @@
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Land</string>
+    <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Abonnent ID</string>
     <string name="settings_fpermission">Velg etter tillatelse</string>
     <string name="settings_fsystem">Filtrer system applikasjoner</string>

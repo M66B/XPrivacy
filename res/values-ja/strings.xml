@@ -64,6 +64,7 @@
     <string name="settings_phone">電話番号</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">国</string>
+    <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">契約者固有ID</string>
     <string name="settings_fpermission">権限でフィルタ</string>
     <string name="settings_fsystem">システムアプリをフィルタ</string>

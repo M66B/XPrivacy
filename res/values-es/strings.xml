@@ -64,6 +64,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_phone">Numero de Teléfono</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">País</string>
+    <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Ocultar permisos no utilizados</string>
     <string name="settings_fsystem">Ocultar aplicaciones del sistema</string>

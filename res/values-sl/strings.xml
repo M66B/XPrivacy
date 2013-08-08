@@ -64,6 +64,7 @@
     <string name="settings_phone">Telefonska številka</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Država</string>
+    <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">ID naročnika</string>
     <string name="settings_fpermission">Filtriraj po pravicah</string>
     <string name="settings_fsystem">Filtriraj sistemske programe</string>

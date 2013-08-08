@@ -556,6 +556,7 @@ How to get beta releases:
 
 * Enable Android usage data 60 seconds after boot
 * Filter usage data for the last 24 hours
+* Option to set network/SIM operator name
 
 **Version 1.8.6 BETA!**
 

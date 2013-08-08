@@ -63,6 +63,7 @@
     <string name="settings_phone">Số điện thoại</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Nước</string>
+    <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">ID người đăng kí</string>
     <string name="settings_fpermission">Lọc theo quyền</string>
     <string name="settings_fsystem">Lọc theo ứng dụng hệ thống</string>

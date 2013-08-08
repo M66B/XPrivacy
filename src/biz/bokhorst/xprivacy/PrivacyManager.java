@@ -83,6 +83,7 @@ public class PrivacyManager {
 	public final static String cSettingMcc = "MCC";
 	public final static String cSettingMnc = "MNC";
 	public final static String cSettingCountry = "Country";
+	public final static String cSettingOperator = "Operator";
 	public final static String cSettingIccId = "ICC_ID";
 	public final static String cSettingSubscriber = "Subscriber";
 	public final static String cSettingFPermission = "FPermission";
@@ -695,14 +696,14 @@ public class PrivacyManager {
 		if (name.equals("getNetworkOperator")) // MCC+MNC: test network
 			return getSetting(null, null, cSettingMcc, "001", true) + getSetting(null, null, cSettingMnc, "01", true);
 		if (name.equals("getNetworkOperatorName"))
-			return cDeface;
+			return getSetting(null, null, cSettingOperator, cDeface, true);
 
 		if (name.equals("getSimCountryIso")) // ISO country code
 			return getSetting(null, null, cSettingCountry, "XX", true);
-		if (name.equals("getSimOperator"))
-			return cDeface;
-		if (name.equals("getSimOperatorName")) // MCC+MNC: test network
+		if (name.equals("getSimOperator")) // MCC+MNC: test network
 			return getSetting(null, null, cSettingMcc, "001", true) + getSetting(null, null, cSettingMnc, "01", true);
+		if (name.equals("getSimOperatorName"))
+			return getSetting(null, null, cSettingOperator, cDeface, true);
 		if (name.equals("getSimSerialNumber"))
 			return getSetting(null, null, cSettingIccId, null, true);
 
