@@ -54,6 +54,7 @@ public class PrivacyProvider extends ContentProvider {
 	private static final int TYPE_USAGE = 2;
 	private static final int TYPE_SETTING = 3;
 
+	private static Object mFallbackLock = new Object();
 	private static int mFallbackRestrictionsUid = 0;
 	private static long mFallbackRestrictionsTime = 0;
 	private static long mFallbackSettingsTime = 0;
@@ -438,25 +439,21 @@ public class PrivacyProvider extends ContentProvider {
 	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName, String methodName) {
 		try {
 			long now = new Date().getTime();
-
-			if (mFallbackRestrictions == null || mFallbackRestrictionsUid != uid) {
-				// Initial load
-				Util.log(null, Log.INFO, "Load fallback restrictions uid=" + uid);
-				mFallbackRestrictions = new SharedPreferencesEx(new File(getPrefFileName(PREF_RESTRICTION, uid)));
-				mFallbackRestrictionsUid = uid;
-				mFallbackRestrictionsTime = now;
-			} else {
-				// Check update
-				synchronized (mFallbackRestrictions) {
-					if (mFallbackRestrictionsTime + PrivacyManager.cCacheTimeoutMs < now) {
-						Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + uid);
-						mFallbackRestrictions.reload();
-						mFallbackRestrictionsUid = uid;
-						mFallbackRestrictionsTime = now;
-					}
+			synchronized (mFallbackLock) {
+				if (mFallbackRestrictions == null || mFallbackRestrictionsUid != uid) {
+					// Initial load
+					Util.log(null, Log.INFO, "Load fallback restrictions uid=" + uid + "/" + mFallbackRestrictionsUid);
+					mFallbackRestrictions = new SharedPreferencesEx(new File(getPrefFileName(PREF_RESTRICTION, uid)));
+					mFallbackRestrictionsUid = uid;
+					mFallbackRestrictionsTime = now;
+				} else if (mFallbackRestrictionsTime + PrivacyManager.cCacheTimeoutMs < now) {
+					// Check update
+					Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + uid);
+					mFallbackRestrictions.reload();
+					mFallbackRestrictionsUid = uid;
+					mFallbackRestrictionsTime = now;
 				}
 			}
-
 			return getRestricted(restrictionName, methodName, mFallbackRestrictions);
 		} catch (Throwable ex) {
 			Util.bug(hook, ex);

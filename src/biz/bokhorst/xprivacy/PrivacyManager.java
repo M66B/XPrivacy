@@ -870,7 +870,8 @@ public class PrivacyManager {
 	private static void logRestriction(XHook hook, Context context, int uid, String prefix, String restrictionName,
 			String methodName, boolean restricted, boolean cached, long ms) {
 		Util.log(hook, Log.INFO, String.format("%s %d/%s %s=%b%s%s", prefix, uid, methodName, restrictionName,
-				restricted, (cached ? " *" : (context == null ? " #" : "")), (ms > 1 ? " " + ms + " ms" : "")));
+				restricted, (cached ? " *" : (context == null || uid == cUidAndroid ? " #" : "")), (ms > 1 ? " " + ms
+						+ " ms" : "")));
 	}
 
 	public static boolean hasInternet(Context context, String packageName) {
