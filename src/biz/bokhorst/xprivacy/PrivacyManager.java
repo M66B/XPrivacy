@@ -37,6 +37,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
+import android.os.SystemClock;
 import android.util.Log;
 
 public class PrivacyManager {
@@ -220,7 +221,7 @@ public class PrivacyManager {
 	// Restrictions
 
 	@SuppressLint("DefaultLocale")
-	public static boolean getRestricted(final XHook hook, final Context context, int uid, String restrictionName,
+	public static boolean getRestricted(final XHook hook, Context context, int uid, String restrictionName,
 			String methodName, boolean usage, boolean useCache) {
 		try {
 			long start = System.currentTimeMillis();
@@ -263,10 +264,14 @@ public class PrivacyManager {
 					}
 				}
 
+			// Do not use Android context right after boot
+			if (uid == cUidAndroid && SystemClock.elapsedRealtime() < 60 * 1000)
+				context = null;
+
 			// Check if restricted
 			boolean fallback = true;
 			boolean restricted = false;
-			if (context != null && uid != cUidAndroid)
+			if (context != null)
 				try {
 					// Get content resolver
 					ContentResolver contentResolver = context.getContentResolver();
@@ -302,6 +307,7 @@ public class PrivacyManager {
 							qSize = mUsageQueue.size();
 						}
 						if (qSize > 0) {
+							final Context fContext = context;
 							mExecutor.execute(new Runnable() {
 								public void run() {
 									Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
@@ -325,7 +331,7 @@ public class PrivacyManager {
 												values.put(PrivacyProvider.COL_METHOD, data.getMethodName());
 												values.put(PrivacyProvider.COL_RESTRICTED, data.getRestricted());
 												values.put(PrivacyProvider.COL_USED, data.getTimeStamp());
-												if (context.getContentResolver().update(PrivacyProvider.URI_USAGE,
+												if (fContext.getContentResolver().update(PrivacyProvider.URI_USAGE,
 														values, null, null) <= 0)
 													Util.log(hook, Log.INFO, "Error updating usage data=" + data);
 											} catch (Throwable ex) {
@@ -337,9 +343,6 @@ public class PrivacyManager {
 							});
 						}
 					}
-				} catch (IllegalArgumentException ex) {
-					// Attempt to launch content provider before system ready
-					Util.log(hook, Log.INFO, "System not ready, using fall back");
 				} catch (Throwable ex) {
 					Util.bug(hook, ex);
 				}
@@ -870,8 +873,7 @@ public class PrivacyManager {
 	private static void logRestriction(XHook hook, Context context, int uid, String prefix, String restrictionName,
 			String methodName, boolean restricted, boolean cached, long ms) {
 		Util.log(hook, Log.INFO, String.format("%s %d/%s %s=%b%s%s", prefix, uid, methodName, restrictionName,
-				restricted, (cached ? " *" : (context == null || uid == cUidAndroid ? " #" : "")), (ms > 1 ? " " + ms
-						+ " ms" : "")));
+				restricted, (cached ? " *" : (context == null ? " #" : "")), (ms > 1 ? " " + ms + " ms" : "")));
 	}
 
 	public static boolean hasInternet(Context context, String packageName) {

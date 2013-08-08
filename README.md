@@ -554,6 +554,8 @@ How to get beta releases:
 
 **Next release**
 
+* Enable Android usage data 60 seconds after boot
+
 **Version 1.8.6 BETA!**
 
 * Always lock fallback restriction loading
