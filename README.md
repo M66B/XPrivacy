@@ -237,8 +237,7 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
-* Android can be restricted, but there will be no usage data available (warning triangles)
-* /proc and system properties cannot be restricted for Android (serial number, MAC address, etc)
+* /proc and system properties cannot be restricted for Android (serial number, IMEI, MAC address, etc)
 * Phone number cannot be restricted for the standard phone application
 
 Installation
