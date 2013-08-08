@@ -553,7 +553,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Updated French translation
 
 **Version 1.8.7 BETA!**
 
