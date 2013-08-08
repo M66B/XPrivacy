@@ -554,6 +554,7 @@ How to get beta releases:
 **Next release**
 
 * Updated French translation
+* Updated Lithuanian translation
 
 **Version 1.8.7 BETA!**
 
