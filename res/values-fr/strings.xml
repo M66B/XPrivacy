@@ -64,7 +64,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_phone">Numéro de téléphone</string>
     <string name="settings_id">ID Android</string>
     <string name="settings_country">Pays</string>
-    <string name="settings_operator">Operator</string>
+    <string name="settings_operator">Opérateur</string>
     <string name="settings_subscriber">ID Abonné</string>
     <string name="settings_fpermission">Filtrer par permissions</string>
     <string name="settings_fsystem">Filtrer les applications systèmes</string>
