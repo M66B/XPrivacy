@@ -556,7 +556,7 @@ How to get beta releases:
 
 * ...
 
-*Version 1.8.7 BETA!**
+**Version 1.8.7 BETA!**
 
 * Enable Android usage data 60 seconds after boot
 * Filter usage data for the last 24 hours
