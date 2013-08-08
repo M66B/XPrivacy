@@ -14,7 +14,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Process;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.LayoutInflater;
@@ -136,8 +135,12 @@ public class ActivityUsage extends Activity {
 	private class UsageTask extends AsyncTask<Object, Object, List<PrivacyManager.UsageData>> {
 		@Override
 		protected List<PrivacyManager.UsageData> doInBackground(Object... arg0) {
-			Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
-			return PrivacyManager.getUsed(ActivityUsage.this, mUid);
+			long minTime = new Date().getTime() - 1000 * 60 * 60 * 24;
+			List<PrivacyManager.UsageData> listUsageData = new ArrayList<PrivacyManager.UsageData>();
+			for (PrivacyManager.UsageData usageData : PrivacyManager.getUsed(ActivityUsage.this, mUid))
+				if (usageData.getTimeStamp() > minTime)
+					listUsageData.add(usageData);
+			return listUsageData;
 		}
 
 		@Override
