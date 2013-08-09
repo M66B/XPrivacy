@@ -549,8 +549,15 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.8.8 BETA!**
+
+* Fixed a bug in location restriction (*addNmeaListener* returned wrong value)
 * Updated French translation
+* Updated German translation
 * Updated Lithuanian translation
+* Updated Simplified Chinese translation
 
 **Version 1.8.7 BETA!**
 
