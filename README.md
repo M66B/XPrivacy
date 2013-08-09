@@ -567,7 +567,8 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Updated Arabic translation
+* Updated German translation
 
 **Version 1.8.8 BETA!**
 
