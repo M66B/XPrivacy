@@ -421,11 +421,19 @@ or when the XPrivacy is not enabled in Xposed.
 
 The right order for ROM updates is:
 
-* Flash ROM
-* Flash Google apps, when required
-* Reboot
-* Enable Xposed
-* Reboot, flash fix
+1. Export XPrivacy settings
+1. Reboot to recovery
+1. Flash ROM
+1. Flash Google apps (when desired)
+1. Flash Xposed fix (assuming Xposed was installed before)
+1. Reboot to Android
+1. Clear XPrivacy data
+1. Import XPrivacy settings
+
+If you skip the XPrivacy import/clear/export steps some system applications can have the wrong restrictions,
+because the uid's of these applications might have been changed.
+
+For export/importing XPrivacy data you need [pro version](http://www.faircode.eu/xprivacy/).
 
 **(16) Can I restrict an application with root access?**
 
