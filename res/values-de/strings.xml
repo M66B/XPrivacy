@@ -25,7 +25,7 @@
     <string name="menu_contacts">Wähle Kontakte zum Erlauben</string>
     <string name="msg_noupdate">Neueste Version bereits installiert</string>
     <string name="msg_restricted" formatted="false">%s beschränkt durch XPrivacy</string>
-    <string name="msg_licensed" formatted="false">Lizensiert für: %s</string>
+    <string name="msg_licensed" formatted="false">Lizenziert für: %s</string>
     <string name="msg_loading">Lade...</string>
     <string name="msg_edit">Berühre das App-Icon, um alle Berechtigungen zu bearbeiten</string>
     <string name="msg_sure">Sind Sie sicher?</string>
@@ -34,7 +34,7 @@
     <string name="msg_random">Zufallswerte erzeugen</string>
     <string name="msg_random_boot">Zufallswerte nach dem Booten erzeugen</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet, dennoch ist unmöglich zu gewährleisten,
-\ndass es einwandfrei auf wirklich JEDEM einzelnem Gerät und für JEDE einzelne App funktioniert.
+\ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
 \n\nVerwenden Sie XPrivacy ausschließlich auf Ihr eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>
     <string name="restrict_accounts">Konten (Google, Facebook, etc.)</string>
     <string name="restrict_browser">Browser (Lesezeichen/Verlauf)</string>
