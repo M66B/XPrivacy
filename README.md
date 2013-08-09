@@ -239,6 +239,7 @@ Limitations
 
 * /proc and system properties cannot be restricted for Android (serial number, IMEI, MAC address, etc)
 * Phone number cannot be restricted for the standard phone application
+* Internet and storage can only be restricted for applications/providers/services started by the Android package manager
 
 Installation
 ------------
