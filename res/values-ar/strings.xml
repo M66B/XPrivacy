@@ -2,12 +2,12 @@
 
     <string name="app_notxposed" formatted="false">لم يتم تثبيت إطار xposed نسخة %d+</string>
     <string name="app_notenabled">لم يتم تفعيل XPrivacy</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_wrongandroid">فقط لأندرويد نسخة 4.0+</string>
     <string name="app_version" formatted="false">نسخة XPrivacy : %s (%d)</string>
     <string name="app_xversion" formatted="false">إطار  Xposed نسخة : %d</string>
     <string name="app_copyright">حقوق الطبع \u00A9 2013 ب M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Usage</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_usage">الإستخدام</string>
+    <string name="menu_refresh">إنعاش</string>
     <string name="menu_settings">الإعدادات</string>
     <string name="menu_template">القالب</string>
     <string name="menu_update">فحص التحديثات</string>
@@ -31,16 +31,16 @@
     <string name="msg_sure">هل أنت متأكد ؟</string>
     <string name="msg_done">إنتهى</string>
     <string name="msg_reboot">يحتاج إعادة تشغيل</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
+    <string name="msg_random">عشوائي</string>
+    <string name="msg_random_boot">عشوائي بعد الإقلاع</string>
+    <string name="msg_first"><b>بُذلت عناية كبيرة لتطوير وإختبار XPrivacy,
+ومع ذلك فإنه من المستحيل أن نضمن أنه سوف يعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
+\n\nالإستخدام على مسئوليتك الخاصة.</b>\n\nراجع أيضاً الترخيص:</string>
     <string name="restrict_accounts">الحسابات (قوقل , فيسبوك , الخ)</string>
     <string name="restrict_browser">المتصفح (العلامات,السجل)</string>
     <string name="restrict_calendar">التقويم</string>
     <string name="restrict_calling">المكالمات (الهاتف,الرسائل النصية,رسائل الوسائط)</string>
-    <string name="restrict_clipboard">Clipboard</string>
+    <string name="restrict_clipboard">الحافظة</string>
     <string name="restrict_contacts">الأسماء</string>
     <string name="restrict_dictionary">القاموس (المستخدم)</string>
     <string name="restrict_identification">الهوية (الجهاز)</string>
@@ -49,7 +49,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">الميديا (صوت,صورة,فيديو) </string>
     <string name="restrict_messages">الرسائل (النصية , الوسائط)</string>
     <string name="restrict_network">الشبكة (العناوين)</string>
-    <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_notifications">الإشعارات</string>
     <string name="restrict_phone">الهاتف (المعرف,الأرقام,المكالمات)</string>
     <string name="restrict_storage">التخزين (الميديا’الذاكرة الخارجية)</string>
     <string name="restrict_shell">سطر الأوامر (الأوامر,المستخدم الجذر)</string>
@@ -57,14 +57,14 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">تصفح (المتصفح)</string>
     <string name="title_category">الفئة:</string>
     <string name="title_restrict">إختر للتقيد:</string>
-    <string name="settings_serial">Serial#</string>
+    <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
     <string name="settings_mac">عنوان الماك</string>
     <string name="settings_phone">رقم الهاتف</string>
     <string name="settings_id">هوية اندرويد</string>
     <string name="settings_country">الدولة</string>
-    <string name="settings_operator">Operator</string>
+	<string name="settings_operator">المُشغل</string> 
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">تصفية بواسطة الأُذونات</string>
     <string name="settings_fsystem">فلترة برامج النظام</string>
@@ -72,7 +72,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">لديه صلاحية الوصول للإنترنت</string>
     <string name="help_granted">لديه صلاحية أندرويد</string>
     <string name="help_used">يستخدم هذه البيانات</string>
-    <string name="help_frozen">is disabled</string>
+    <string name="help_frozen">مُعطل</string>
     <string name="help_dangerous">خطير</string>
 
 </resources>
