@@ -423,13 +423,18 @@ or when the XPrivacy is not enabled in Xposed.
 The right order for ROM updates is:
 
 1. Export XPrivacy settings
+1. Enable flight mode
 1. Reboot to recovery
 1. Flash ROM
-1. Flash Google apps (when desired)
-1. Flash Xposed fix (assuming Xposed was installed before)
+1. Flash Google apps (optional)
+1. Flash Xposed fix
 1. Reboot to Android
+1. Restore the android ID (when needed; with for example [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup))
 1. Clear XPrivacy data
 1. Import XPrivacy settings
+1. Disable fligh mode
+
+(this assumes no data wipe and Xposed and XPrivacy installed before updating the ROM)
 
 If you skip the XPrivacy import/clear/export steps some system applications can have the wrong restrictions,
 because the uid's of these applications might have been changed.
@@ -506,6 +511,10 @@ Exported settings are stored in the folder *.xprivacy* in the file *XPrivacy.xml
 You can copy this file to the same place on a second device.
 When importing, settings are only applied to applications that exist on the second device and have exported settings.
 This also applies to system apps.
+
+Note that allowed accounts and allowed contacts (not the accounts and contacts itself)
+can only be imported when the android ID is the same.
+See question 15 about what to do when updating your ROM.
 
 **(27) How can I filter restriction categories by Android permissions?**
 
