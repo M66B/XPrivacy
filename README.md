@@ -553,7 +553,7 @@ How to get beta releases:
 
 **Version 1.8.8 BETA!**
 
-* Fixed a bug in location restriction (*addNmeaListener* returned wrong value)
+* Fixed a bug in location restriction ([issue](https://github.com/M66B/XPrivacy/issues/477))
 * Updated French translation
 * Updated German translation
 * Updated Lithuanian translation
