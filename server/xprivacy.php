@@ -93,14 +93,14 @@
 				<h1>XPrivacy</h1>
 <?php		} else { ?>
 				<h1><?php echo htmlentities($application_name, ENT_COMPAT, 'UTF-8'); ?></h1>
-				<a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($package_name); ?>" target="_blank">
-				<?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></a>
+				<p><a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($package_name); ?>" target="_blank">
+				<?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></a></p>
 <?php		} ?>
 			</div>
 
 			<div class="container">
 <?php		if (!empty($package_name)) { ?>
-				<a href="#" id="details">Show details</a>
+				<p><a href="#" id="details">Show details</a></p>
 <?php		} ?>
 				<table class="table table-striped table-condensed">
 					<thead>
@@ -109,7 +109,7 @@
 							<th>Application</th>
 							<th>Package</th>
 							<th>Version</th>
-							<th style="text-align: center;">Count</th>
+							<th style="text-align: center;">Submits</th>
 							<th>Last update (UTC)</th>
 <?php					} else { ?>
 							<th>Restriction</th>
