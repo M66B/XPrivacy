@@ -121,7 +121,7 @@ public class ActivityApp extends Activity {
 			public void onClick(View view) {
 				Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 				infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s",
-						mAppInfo.getFirstApplicatioName())));
+						mAppInfo.getFirstApplicationName())));
 				startActivity(infoIntent);
 			}
 		});
@@ -541,6 +541,7 @@ public class ActivityApp extends Activity {
 				jRoot.put("protocol_version", 1);
 				jRoot.put("android_id", android_id);
 				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
+				jRoot.put("application_name", params[0].getFirstApplicationName());
 				jRoot.put("package_name", params[0].getPackageName());
 				jRoot.put("package_version", params[0].getVersion());
 				jRoot.put("settings", jSettings);
@@ -583,9 +584,17 @@ public class ActivityApp extends Activity {
 			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityApp.this);
 			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 			notificationBuilder.setContentTitle(getString(R.string.menu_submit));
-			if (result.getClass().equals(JSONObject.class))
-				notificationBuilder.setContentText(mAppInfo.getFirstApplicatioName());
-			else
+			if (result.getClass().equals(JSONObject.class)) {
+				JSONObject status = (JSONObject) result;
+				try {
+					if (status.getBoolean("ok"))
+						notificationBuilder.setContentText(mAppInfo.getFirstApplicationName());
+					else
+						notificationBuilder.setContentText(status.getString("error"));
+				} catch (Throwable ex) {
+					notificationBuilder.setContentText(ex.toString());
+				}
+			} else
 				notificationBuilder.setContentText(result.toString());
 			notificationBuilder.setWhen(System.currentTimeMillis());
 			notificationBuilder.setAutoCancel(true);

@@ -20,11 +20,15 @@
 		// Store/update data
 		$ok = true;
 		foreach ($data->settings as $restriction) {
+			if (empty($restriction->application_name))
+				$restriction->application_name = '';
 			if (empty($restriction->method))
 				$restriction->method = '';
-			$sql = "INSERT INTO xprivacy (android_id, android_sdk, package_name, package_version, restriction, method, restricted, used) VALUES ";
+			$sql = "INSERT INTO xprivacy (android_id, android_sdk, application_name, package_name, package_version,";
+			$sql .= " restriction, method, restricted, used) VALUES ";
 			$sql .= "('" . $db->real_escape_string($data->android_id) . "'";
 			$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
+			$sql .= ",'" . $db->real_escape_string($data->application_name) . "'";
 			$sql .= ",'" . $db->real_escape_string($data->package_name) . "'";
 			$sql .= ",'" . $db->real_escape_string($data->package_version) . "'";
 			$sql .= ",'" . $db->real_escape_string($restriction->restriction) . "'";
@@ -32,7 +36,8 @@
 			$sql .= "," . ($restriction->restricted ? 1 : 0);
 			$sql .= "," . $db->real_escape_string($restriction->used) . ")";
 			$sql .= " ON DUPLICATE KEY UPDATE";
-			$sql .= " restricted=VALUES(restricted)";
+			$sql .= " application_name=VALUES(application_name)";
+			$sql .= ", restricted=VALUES(restricted)";
 			$sql .= ", used=VALUES(used)";
 			$sql .= ", modified=CURRENT_TIMESTAMP()";
 			if (!$db->query($sql)) {
@@ -85,6 +90,7 @@
 						<thead>
 							<tr>
 								<th>SDK</th>
+								<th>Application</th>
 								<th>Package</th>
 								<th>Version</th>
 								<th>Count</th>
@@ -96,7 +102,7 @@
 	require_once('xprivacy.inc.php');
 	$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 	if (!$db->connect_errno) {
-		$sql = "SELECT android_sdk, package_name, package_version,";
+		$sql = "SELECT android_sdk, application_name, package_name, package_version,";
 		$sql .= " COUNT(DISTINCT android_id) AS count,";
 		$sql .= " MAX(modified) AS modified";
 		$sql .= " FROM xprivacy";
@@ -107,6 +113,7 @@
 			while (($row = $result->fetch_object())) {
 				echo '<tr>';
 				echo '<td>' . $row->android_sdk . '</td>';
+				echo '<td>' . $row->application_name . '</td>';
 				echo '<td>' . $row->package_name . '</td>';
 				echo '<td>' . $row->package_version . '</td>';
 				echo '<td>' . $row->count . '</td>';

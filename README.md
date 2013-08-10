@@ -569,6 +569,10 @@ How to get beta releases:
 
 * ...
 
+**Version 1.8.10 BETA!**
+
+* Submit application name
+
 **Version 1.8.9 BETA!**
 
 * Submit data to central server (only in application details view) **Experimental!**
