@@ -93,6 +93,7 @@
 <?php		} else { ?>
 				<h1><?php echo $application_name; ?></h1>
 				<span><?php echo $package_name; ?></span>
+				<a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($application_name); ?>">Wiki</a>
 <?php		} ?>
 				</div>
 					<table class="table table-striped table-condensed">
@@ -107,8 +108,7 @@
 <?php						} else { ?>
 								<th>Restriction</th>
 								<th>Method</th>
-								<th style="text-align: center;">Restricted</th>
-								<th style="text-align: center;">Not restricted</th>
+								<th style="text-align: center;">Restricted<br />Yes/No</th>
 								<th style="text-align: center;">Used</th>
 <?php						} ?>
 							</tr>
@@ -158,8 +158,7 @@
 						echo '<tr>';
 					echo '<td>' . ($row->method ? '' : htmlentities($row->restriction)) . '</td>';
 					echo '<td>' . htmlentities($row->method) . '</td>';
-					echo '<td style="text-align: center;">' . $row->restricted . '</td>';
-					echo '<td style="text-align: center;">' . $row->not_restricted . '</td>';
+					echo '<td style="text-align: center;">' . $row->restricted . ' / ' . $row->not_restricted . '</td>';
 					echo '<td style="text-align: center;">' . ($row->used ? 'Yes' : '') . '</td></tr>';
 				}
 				$result->close();
