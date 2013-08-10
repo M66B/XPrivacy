@@ -93,8 +93,8 @@
 				<h1>XPrivacy</h1>
 <?php		} else { ?>
 				<h1><?php echo htmlentities($application_name, ENT_COMPAT, 'UTF-8'); ?></h1>
-				<span><?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></span>
-				<a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($application_name); ?>">wiki</a>
+				<a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($package_name); ?>" target="_blank">
+				<?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></a>
 <?php		} ?>
 			</div>
 
@@ -121,6 +121,7 @@
 					</thead>
 					<tbody>
 <?php
+	$count = 0;
 	require_once('xprivacy.inc.php');
 	$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 	if (!$db->connect_errno) {
@@ -134,6 +135,7 @@
 			$result = $db->query($sql);
 			if ($result) {
 				while (($row = $result->fetch_object())) {
+					$count++;
 					echo '<tr>';
 					echo '<td>' . htmlentities($row->application_name, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td><a href="?application_name=' . urlencode($row->application_name);
@@ -160,6 +162,7 @@
 			$result = $db->query($sql);
 			if ($result) {
 				while (($row = $result->fetch_object())) {
+					$count++;
 					echo '<tr style="';
 					if ($row->used)
 						echo 'font-weight: bold;';
@@ -187,6 +190,7 @@
 ?>
 					</tbody>
 				</table>
+				<p class="text-muted"><?php echo $count; ?> rows</p>
 			</div>
 
 			<div class="container">
