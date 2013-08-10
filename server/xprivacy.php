@@ -64,6 +64,9 @@
 		<meta name="description" content="XPrivacy">
 		<meta name="author" content="M66B">
 		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<style type="text/css">
+			th, tr, td { padding: 0px !important; }
+		</style>
 	</head>
 	<body>
 		<div class="container">
@@ -85,17 +88,30 @@
 			</div>
 
 			<div class="page-header">
+<?php		if (empty($package_name)) { ?>
 				<h1>XPrivacy</h1>
+<?php		} else { ?>
+				<h1><?php echo $application_name; ?></h1>
+				<span><?php echo $package_name; ?></span>
+<?php		} ?>
 				</div>
-					<table class="table">
+					<table class="table table-striped table-condensed">
 						<thead>
 							<tr>
+<?php						if (empty($package_name)) { ?>
 								<th>SDK</th>
 								<th>Application</th>
 								<th>Package</th>
 								<th>Version</th>
-								<th>Count</th>
+								<th style="text-align: center;">Count</th>
 								<th>Date</th>
+<?php						} else { ?>
+								<th>Restriction</th>
+								<th>Method</th>
+								<th style="text-align: center;">Restricted</th>
+								<th style="text-align: center;">Not restricted</th>
+								<th style="text-align: center;">Used</th>
+<?php						} ?>
 							</tr>
 						</thead>
 						<tbody>
@@ -103,24 +119,55 @@
 	require_once('xprivacy.inc.php');
 	$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 	if (!$db->connect_errno) {
-		$sql = "SELECT android_sdk, application_name, package_name, package_version,";
-		$sql .= " COUNT(DISTINCT android_id) AS count,";
-		$sql .= " MAX(modified) AS modified";
-		$sql .= " FROM xprivacy";
-		$sql .= " GROUP BY android_sdk, package_name, package_version";
-		$sql .= " ORDER BY application_name";
-		$result = $db->query($sql);
-		if ($result) {
-			while (($row = $result->fetch_object())) {
-				echo '<tr>';
-				echo '<td>' . $row->android_sdk . '</td>';
-				echo '<td>' . htmlentities($row->application_name) . '</td>';
-				echo '<td>' . htmlentities($row->package_name) . '</td>';
-				echo '<td>' . htmlentities($row->package_version) . '</td>';
-				echo '<td>' . $row->count . '</td>';
-				echo '<td>' . $row->modified . '</td></tr>';
+		if (empty($package_name)) {
+			$sql = "SELECT android_sdk, application_name, package_name, package_version,";
+			$sql .= " COUNT(DISTINCT android_id) AS count,";
+			$sql .= " MAX(modified) AS modified";
+			$sql .= " FROM xprivacy";
+			$sql .= " GROUP BY android_sdk, package_name, package_version";
+			$sql .= " ORDER BY application_name";
+			$result = $db->query($sql);
+			if ($result) {
+				while (($row = $result->fetch_object())) {
+					echo '<tr>';
+					echo '<td>' . $row->android_sdk . '</td>';
+					echo '<td>' . htmlentities($row->application_name) . '</td>';
+					echo '<td><a href="?application_name=' . urlencode($row->application_name);
+					echo '&package_name=' . urlencode($row->package_name) . '">';
+					echo htmlentities($row->package_name) . '</a></td>';
+					echo '<td>' . htmlentities($row->package_version) . '</td>';
+					echo '<td style="text-align: center;">' . $row->count . '</td>';
+					echo '<td>' . $row->modified . '</td>';
+					echo '</tr>';
+				}
+				$result->close();
 			}
-			$result->close();
+		} else {
+			$sql = "SELECT restriction, method, restricted,";
+			$sql .= " SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted,";
+			$sql .= " SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted,";
+			$sql .= " MAX(used) AS used";
+			$sql .= " FROM xprivacy";
+			$sql .= " GROUP BY package_name, restriction, method";
+			$sql .= " HAVING package_name = '" . $db->real_escape_string($package_name) . "'";
+			$sql .= " ORDER BY restriction, method";
+			$result = $db->query($sql);
+			if ($result) {
+				while (($row = $result->fetch_object())) {
+					if ($row->used)
+						echo '<tr style="font-weight: bold;">';
+					else
+						echo '<tr>';
+					echo '<td>' . ($row->method ? '' : htmlentities($row->restriction)) . '</td>';
+					echo '<td>' . htmlentities($row->method) . '</td>';
+					echo '<td style="text-align: center;">' . $row->restricted . '</td>';
+					echo '<td style="text-align: center;">' . $row->not_restricted . '</td>';
+					echo '<td style="text-align: center;">' . ($row->used ? 'Yes' : '') . '</td></tr>';
+				}
+				$result->close();
+			}
+			else
+				echo $db->error;
 		}
 		$db->close();
 	}
@@ -136,5 +183,20 @@
 
 		<script src="http://code.jquery.com/jquery.js"></script>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+		<!-- Piwik -->
+		<script type="text/javascript">
+		  var _paq = _paq || [];
+		  _paq.push(["trackPageView"]);
+		  _paq.push(["enableLinkTracking"]);
+
+		  (function() {
+			var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.bokhorst.biz/";
+			_paq.push(["setTrackerUrl", u+"piwik.php"]);
+			_paq.push(["setSiteId", "15"]);
+			var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+			g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+		  })();
+		</script>
+		<!-- End Piwik Code -->
 	</body>
 </html>
