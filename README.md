@@ -569,6 +569,7 @@ How to get beta releases:
 
 * Updated Arabic translation
 * Updated German translation
+* Updated Japanese Translation
 
 **Version 1.8.8 BETA!**
 
