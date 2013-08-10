@@ -101,22 +101,20 @@
 <?php		} ?>
 			</div>
 
-			<div class="container">
-<?php		if (!empty($package_name)) { ?>
+			<div class="container" style="padding-left: 5px; padding-right: 5px;">
 				<p><a href="#" id="details">Show details</a></p>
-<?php		} ?>
 				<table class="table table-striped table-condensed">
 					<thead>
 						<tr>
 <?php					if (empty($package_name)) { ?>
 							<th>Application</th>
 							<th>Package</th>
-							<th>Version</th>
+							<th style="display: none;" class="details">Version</th>
 							<th style="text-align: center;">Votes</th>
-							<th>Last update (UTC)</th>
+							<th style="display: none;" class="details">Last update (UTC)</th>
 <?php					} else { ?>
 							<th>Restriction</th>
-							<th style="display: none;" class="method">Method</th>
+							<th style="display: none;" class="details">Method</th>
 							<th style="text-align: center;">Votes (yes/no)</th>
 							<th style="text-align: center;">Used</th>
 <?php					} ?>
@@ -144,9 +142,9 @@
 					echo '<td><a href="?application_name=' . urlencode($row->application_name);
 					echo '&amp;package_name=' . urlencode($row->package_name) . '">';
 					echo htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</a></td>';
-					echo '<td>' . htmlentities($row->package_version, ENT_COMPAT, 'UTF-8') . '</td>';
+					echo '<td style="display: none;" class="details">' . htmlentities($row->package_version, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="text-align: center;">' . $row->count . '</td>';
-					echo '<td>' . $row->modified . '</td>';
+					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
 					echo '</tr>' . PHP_EOL;
 				}
 				$result->close();
@@ -173,12 +171,12 @@
 						echo 'display: none;';
 					echo '"';
 					if (!empty($row->method))
-						echo ' class="method"';
+						echo ' class="details"';
 					echo '>';
 					echo '<td>' . ($row->method ? '' :
 					'<a href="http://wiki.faircode.eu/index.php?title=' . urlencode($row->restriction) . '" target="_blank">' .
 					htmlentities($row->restriction, ENT_COMPAT, 'UTF-8') . '</a>') . '</td>';
-					echo '<td style="display: none;" class="method">' . htmlentities($row->method, ENT_COMPAT, 'UTF-8') . '</td>';
+					echo '<td style="display: none;" class="details">' . htmlentities($row->method, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="text-align: center;">';
 					echo ($row->restricted < $row->not_restricted) ? '<span class="text-muted">' . $row->restricted . '</span>' : $row->restricted;
 					echo ' / ';
@@ -210,7 +208,7 @@
 		<script>
 			jQuery(document).ready(function($) {
 			  $('#details').click(function() {
-				  $('.method').toggle();
+				  $('.details').toggle();
 			  });
 			});
 		</script>
