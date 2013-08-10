@@ -99,7 +99,6 @@
 						<thead>
 							<tr>
 <?php						if (empty($package_name)) { ?>
-								<th>SDK</th>
 								<th>Application</th>
 								<th>Package</th>
 								<th>Version</th>
@@ -120,17 +119,16 @@
 	$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 	if (!$db->connect_errno) {
 		if (empty($package_name)) {
-			$sql = "SELECT android_sdk, application_name, package_name, package_version,";
+			$sql = "SELECT application_name, package_name, package_version,";
 			$sql .= " COUNT(DISTINCT android_id) AS count,";
 			$sql .= " MAX(modified) AS modified";
 			$sql .= " FROM xprivacy";
-			$sql .= " GROUP BY android_sdk, package_name, package_version";
+			$sql .= " GROUP BY package_name, package_version";
 			$sql .= " ORDER BY application_name";
 			$result = $db->query($sql);
 			if ($result) {
 				while (($row = $result->fetch_object())) {
 					echo '<tr>';
-					echo '<td>' . $row->android_sdk . '</td>';
 					echo '<td>' . htmlentities($row->application_name) . '</td>';
 					echo '<td><a href="?application_name=' . urlencode($row->application_name);
 					echo '&package_name=' . urlencode($row->package_name) . '">';
