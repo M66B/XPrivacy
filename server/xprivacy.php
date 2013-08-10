@@ -114,7 +114,7 @@
 <?php					} else { ?>
 							<th>Restriction</th>
 							<th style="display: none;" class="method">Method</th>
-							<th style="text-align: center;">Restricted<br />yes/no</th>
+							<th style="text-align: center;">Votes (yes/no)</th>
 							<th style="text-align: center;">Used</th>
 <?php					} ?>
 						</tr>
