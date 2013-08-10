@@ -42,6 +42,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -498,23 +499,40 @@ public class ActivityApp extends Activity {
 		protected Object doInBackground(ApplicationInfoEx... params) {
 			try {
 				// Encode restrictions
-				JSONArray jRestriction = new JSONArray();
-				List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager.getRestricted(ActivityApp.this);
-				for (PrivacyManager.RestrictionDesc rd : listRestriction)
-					if (rd.uid == params[0].getUid()) {
-						JSONObject jEntry = new JSONObject();
-						jEntry.put("name", rd.restrictionName);
-						jEntry.putOpt("method", rd.methodName);
-						jEntry.put("restricted", rd.restricted);
-						jRestriction.put(jEntry);
+				int uid = params[0].getUid();
+				JSONArray jSettings = new JSONArray();
+				for (String restrictionName : PrivacyManager.getRestrictions(true)) {
+					boolean restricted = PrivacyManager.getRestricted(null, ActivityApp.this, uid, restrictionName,
+							null, false, false);
+					// Category
+					long used = PrivacyManager.getUsed(ActivityApp.this, uid, restrictionName, null);
+					JSONObject jRestriction = new JSONObject();
+					jRestriction.put("restriction", restrictionName);
+					jRestriction.put("restricted", restricted);
+					jRestriction.put("used", used);
+					jSettings.put(jRestriction);
+
+					// Methods
+					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
+						boolean mRestricted = PrivacyManager.getRestricted(null, ActivityApp.this, uid,
+								restrictionName, md.getMethodName(), false, false);
+						long mUsed = PrivacyManager.getUsed(ActivityApp.this, uid, restrictionName, md.getMethodName());
+						JSONObject jMethod = new JSONObject();
+						jMethod.put("restriction", restrictionName);
+						jMethod.put("method", md.getMethodName());
+						jMethod.put("restricted", mRestricted);
+						jRestriction.put("used", mUsed);
+						jSettings.put(jMethod);
 					}
+				}
 
 				// Encode package
 				JSONObject jRoot = new JSONObject();
 				jRoot.put("protocol_version", 1);
+				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 				jRoot.put("package_name", params[0].getPackageName());
 				jRoot.put("package_version", params[0].getVersion());
-				jRoot.put("package_restrictions", jRestriction);
+				jRoot.put("settings", jSettings);
 				Util.log(null, Log.INFO, "submit=" + jRoot.toString());
 
 				// Submit
@@ -545,7 +563,7 @@ public class ActivityApp extends Activity {
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return null;
+				return ex;
 			}
 		}
 
@@ -554,7 +572,10 @@ public class ActivityApp extends Activity {
 			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityApp.this);
 			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 			notificationBuilder.setContentTitle(getString(R.string.menu_submit));
-			notificationBuilder.setContentText(mAppInfo.getFirstApplicatioName());
+			if (result.getClass().equals(JSONObject.class))
+				notificationBuilder.setContentText(mAppInfo.getFirstApplicatioName());
+			else
+				notificationBuilder.setContentText(result.toString());
 			notificationBuilder.setWhen(System.currentTimeMillis());
 			notificationBuilder.setAutoCancel(true);
 			Notification notification = notificationBuilder.build();

@@ -10,7 +10,7 @@
     <item
         android:id="@+id/menu_submit"
         android:title="@string/menu_submit"
-        android:visible="false"/>
+        android:visible="true"/>
     <item
         android:id="@+id/menu_app_launch"
         android:title="@string/menu_app_launch"/>
