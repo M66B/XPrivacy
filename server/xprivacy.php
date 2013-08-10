@@ -93,8 +93,11 @@
 				<h1>XPrivacy</h1>
 <?php		} else { ?>
 				<h1><?php echo htmlentities($application_name, ENT_COMPAT, 'UTF-8'); ?></h1>
-				<p><a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($package_name); ?>" target="_blank">
-				<?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></a></p>
+				<p>
+					<?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?>
+					<a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($package_name); ?>" target="_blank">wiki</a>
+					<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
+				</p>
 <?php		} ?>
 			</div>
 
