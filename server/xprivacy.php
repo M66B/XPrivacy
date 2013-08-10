@@ -52,6 +52,7 @@
 		// Close database
 		$db->close();
 
+		// Done
 		exit();
 	}
 ?>
@@ -107,15 +108,15 @@
 		$sql .= " MAX(modified) AS modified";
 		$sql .= " FROM xprivacy";
 		$sql .= " GROUP BY android_sdk, package_name, package_version";
-		$sql .= " ORDER BY package_name";
+		$sql .= " ORDER BY application_name";
 		$result = $db->query($sql);
 		if ($result) {
 			while (($row = $result->fetch_object())) {
 				echo '<tr>';
 				echo '<td>' . $row->android_sdk . '</td>';
-				echo '<td>' . $row->application_name . '</td>';
-				echo '<td>' . $row->package_name . '</td>';
-				echo '<td>' . $row->package_version . '</td>';
+				echo '<td>' . htmlentities($row->application_name) . '</td>';
+				echo '<td>' . htmlentities($row->package_name) . '</td>';
+				echo '<td>' . htmlentities($row->package_version) . '</td>';
 				echo '<td>' . $row->count . '</td>';
 				echo '<td>' . $row->modified . '</td></tr>';
 			}
