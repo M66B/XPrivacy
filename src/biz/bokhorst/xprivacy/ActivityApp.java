@@ -120,8 +120,9 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(View view) {
 				Intent infoIntent = new Intent(Intent.ACTION_VIEW);
-				infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s",
-						mAppInfo.getFirstApplicationName())));
+				infoIntent.setData(Uri.parse(String.format(
+						"http://updates.faircode.eu/xprivacy?application_name=%s&package_name=%s",
+						mAppInfo.getFirstApplicationName(), mAppInfo.getPackageName())));
 				startActivity(infoIntent);
 			}
 		});
@@ -333,8 +334,24 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionSubmit() {
-		SubmitTask submitTask = new SubmitTask();
-		submitTask.executeOnExecutor(mExecutor, mAppInfo);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle(getString(R.string.app_name));
+		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				SubmitTask submitTask = new SubmitTask();
+				submitTask.executeOnExecutor(mExecutor, mAppInfo);
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 	private void optionAccounts() {
@@ -498,9 +515,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			NotificationManager notificationManager = (NotificationManager) ActivityApp.this
-					.getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.cancel(NOTIFY_ID);
+			notify(null);
 		}
 
 		@Override
@@ -581,18 +596,27 @@ public class ActivityApp extends Activity {
 
 		@Override
 		protected void onPostExecute(Object result) {
+			notify(result);
+			super.onPostExecute(result);
+		}
+
+		private void notify(Object result) {
 			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityApp.this);
 			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 			notificationBuilder.setContentTitle(getString(R.string.menu_submit));
-			if (result.getClass().equals(JSONObject.class)) {
+			if (result == null) {
+				notificationBuilder.setContentText(mAppInfo.getFirstApplicationName());
+			} else if (result.getClass().equals(JSONObject.class)) {
 				JSONObject status = (JSONObject) result;
 				try {
 					if (status.getBoolean("ok"))
-						notificationBuilder.setContentText(mAppInfo.getFirstApplicationName());
+						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getFirstApplicationName(),
+								getString(R.string.msg_done)));
 					else
-						notificationBuilder.setContentText(status.getString("error"));
+						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getFirstApplicationName(),
+								status.getString("error")));
 				} catch (Throwable ex) {
-					notificationBuilder.setContentText(ex.toString());
+					notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getFirstApplicationName(), ex));
 				}
 			} else
 				notificationBuilder.setContentText(result.toString());
@@ -602,8 +626,6 @@ public class ActivityApp extends Activity {
 			NotificationManager notificationManager = (NotificationManager) ActivityApp.this
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.notify(NOTIFY_ID, notification);
-
-			super.onPostExecute(result);
 		}
 	}
 

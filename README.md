@@ -569,6 +569,12 @@ How to get beta releases:
 
 * ...
 
+**Version 1.8.11 BETA!**
+
+* Link application info to submitted restrictions
+* Ask if sure when submitting restriction data
+* Notify on start of submit
+
 **Version 1.8.10 BETA!**
 
 * Submit application name

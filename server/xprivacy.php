@@ -103,7 +103,7 @@
 								<th>Package</th>
 								<th>Version</th>
 								<th style="text-align: center;">Count</th>
-								<th>Date</th>
+								<th>Last update (UTC)</th>
 <?php						} else { ?>
 								<th>Restriction</th>
 								<th>Method</th>
