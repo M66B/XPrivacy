@@ -497,6 +497,13 @@ public class ActivityApp extends Activity {
 		private final static int NOTIFY_ID = 5;
 
 		@Override
+		protected void onPreExecute() {
+			NotificationManager notificationManager = (NotificationManager) ActivityApp.this
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.cancel(NOTIFY_ID);
+		}
+
+		@Override
 		protected Object doInBackground(ApplicationInfoEx... params) {
 			try {
 				// Encode restrictions
