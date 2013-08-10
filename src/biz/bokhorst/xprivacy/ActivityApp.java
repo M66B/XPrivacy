@@ -522,7 +522,7 @@ public class ActivityApp extends Activity {
 						jMethod.put("restriction", restrictionName);
 						jMethod.put("method", md.getMethodName());
 						jMethod.put("restricted", mRestricted);
-						jRestriction.put("used", mUsed);
+						jMethod.put("used", mUsed);
 						jSettings.put(jMethod);
 					}
 				}
