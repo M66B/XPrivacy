@@ -14,6 +14,7 @@
     <string name="menu_report">Informa d\'un problema</string>
     <string name="menu_export">Exporta</string>
     <string name="menu_import">Importa</string>
+    <string name="menu_submit">Submit restrictions</string>
     <string name="menu_theme">Canvia tema</string>
     <string name="menu_pro">Versió Pro</string>
     <string name="menu_about">Quant a</string>

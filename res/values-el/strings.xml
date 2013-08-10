@@ -14,6 +14,7 @@
     <string name="menu_report">Αναφορά σφάλματος</string>
     <string name="menu_export">Εξαγωγή</string>
     <string name="menu_import">Εισαγωγή</string>
+    <string name="menu_submit">Submit restrictions</string>
     <string name="menu_theme">Αλλαγή θέματος</string>
     <string name="menu_pro">Έκδοση Pro</string>
     <string name="menu_about">Σχετικά</string>

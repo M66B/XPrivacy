@@ -14,6 +14,7 @@
     <string name="menu_report">Signaler un problème</string>
     <string name="menu_export">Exporter</string>
     <string name="menu_import">Importer</string>
+    <string name="menu_submit">Envoyer ses restrictions</string>
     <string name="menu_theme">Changer de thème</string>
     <string name="menu_pro">Version pro</string>
     <string name="menu_about">À propos</string>
