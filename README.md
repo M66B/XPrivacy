@@ -567,6 +567,11 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.8.9 BETA!**
+
+* Submit data to central server (only in application details view) **Experimental!**
 * Updated Arabic translation
 * Updated German translation
 * Updated Japanese Translation
