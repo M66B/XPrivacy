@@ -13,6 +13,7 @@ import android.provider.Settings;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSettingsSecure extends XHook {
+	private static int mXPrivacyUid = 0;
 
 	private XSettingsSecure(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
@@ -32,6 +33,7 @@ public class XSettingsSecure extends XHook {
 	// @formatter:on
 
 	public static List<XHook> getInstances() {
+		mXPrivacyUid = Binder.getCallingUid();
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XSettingsSecure("getString", PrivacyManager.cIdentification));
 		return listHook;
@@ -63,6 +65,6 @@ public class XSettingsSecure extends XHook {
 			}
 		}
 		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
+		return (uid == mXPrivacyUid ? false : getRestricted(context, uid, true));
 	}
 }
