@@ -176,7 +176,11 @@
 					'<a href="http://wiki.faircode.eu/index.php?title=' . urlencode($row->restriction) . '" target="_blank">' .
 					htmlentities($row->restriction, ENT_COMPAT, 'UTF-8') . '</a>') . '</td>';
 					echo '<td style="display: none;" class="method">' . htmlentities($row->method, ENT_COMPAT, 'UTF-8') . '</td>';
-					echo '<td style="text-align: center;">' . $row->restricted . ' / ' . $row->not_restricted . '</td>';
+					echo '<td style="text-align: center;">';
+					echo ($row->restricted < $row->not_restricted) ? '<span class="text-muted">' . $row->restricted . '</span>' : $row->restricted;
+					echo ' / ';
+					echo ($row->restricted > $row->not_restricted) ? '<span class="text-muted">' . $row->not_restricted . '</span>' : $row->not_restricted;
+					echo '</td>';
 					echo '<td style="text-align: center;">' . ($row->used ? 'Yes' : '') . '</td>';
 					echo '</tr>' . PHP_EOL;
 				}
