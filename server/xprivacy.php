@@ -109,7 +109,7 @@
 							<th>Application</th>
 							<th>Package</th>
 							<th>Version</th>
-							<th style="text-align: center;">Submits</th>
+							<th style="text-align: center;">Votes</th>
 							<th>Last update (UTC)</th>
 <?php					} else { ?>
 							<th>Restriction</th>
