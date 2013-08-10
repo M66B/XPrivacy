@@ -94,7 +94,7 @@
 <?php		} else { ?>
 				<h1><?php echo htmlentities($application_name, ENT_COMPAT, 'UTF-8'); ?></h1>
 				<span><?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></span>
-				<a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($application_name); ?>">Wiki</a>
+				<a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($application_name); ?>">wiki</a>
 <?php		} ?>
 			</div>
 
@@ -169,7 +169,9 @@
 					if (!empty($row->method))
 						echo ' class="method"';
 					echo '>';
-					echo '<td>' . ($row->method ? '' : htmlentities($row->restriction, ENT_COMPAT, 'UTF-8')) . '</td>';
+					echo '<td>' . ($row->method ? '' :
+					'<a href="http://wiki.faircode.eu/index.php?title=' . urlencode($row->restriction) . '" target="_blank">' .
+					htmlentities($row->restriction, ENT_COMPAT, 'UTF-8') . '</a>') . '</td>';
 					echo '<td style="display: none;" class="method">' . htmlentities($row->method, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="text-align: center;">' . $row->restricted . ' / ' . $row->not_restricted . '</td>';
 					echo '<td style="text-align: center;">' . ($row->used ? 'Yes' : '') . '</td>';
