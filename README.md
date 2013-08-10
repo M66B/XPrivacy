@@ -567,6 +567,7 @@ How to get beta releases:
 
 **Next release**
 
+* Enable Android usage data 120 seconds after boot
 * Updated German translation
 
 **Version 1.8.11 BETA!**

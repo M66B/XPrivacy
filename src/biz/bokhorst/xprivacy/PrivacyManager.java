@@ -70,7 +70,8 @@ public class PrivacyManager {
 			cNetwork, cNfc, cNotifications, cPhone, cShell, cStorage, cSystem, cView };
 
 	public final static int cXposedMinVersion = 34;
-	public final static int cUidAndroid = 1000;
+	public final static int cAndroidUid = 1000;
+	public final static int cAndroidUsageSec = 120;
 
 	public final static String cSettingSerial = "Serial";
 	public final static String cSettingLatitude = "Latitude";
@@ -266,7 +267,7 @@ public class PrivacyManager {
 				}
 
 			// Do not use Android context right after boot
-			if (uid == cUidAndroid && SystemClock.elapsedRealtime() < 60 * 1000)
+			if (uid == cAndroidUid && SystemClock.elapsedRealtime() < cAndroidUsageSec * 1000)
 				context = null;
 
 			// Check if restricted

@@ -38,7 +38,7 @@ public class XIoBridge extends XHook {
 				// /proc
 				if (mFileName.equals("/proc")) {
 					// Zygote, Android
-					if (Process.myUid() <= 0 || Process.myUid() == PrivacyManager.cUidAndroid)
+					if (Process.myUid() <= 0 || Process.myUid() == PrivacyManager.cAndroidUid)
 						return;
 
 					// Facebook
