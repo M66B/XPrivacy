@@ -46,6 +46,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.Settings.Secure;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -526,9 +527,12 @@ public class ActivityApp extends Activity {
 					}
 				}
 
+				String android_id = Secure.getString(ActivityApp.this.getContentResolver(), Secure.ANDROID_ID);
+
 				// Encode package
 				JSONObject jRoot = new JSONObject();
 				jRoot.put("protocol_version", 1);
+				jRoot.put("android_id", android_id);
 				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 				jRoot.put("package_name", params[0].getPackageName());
 				jRoot.put("package_version", params[0].getVersion());
