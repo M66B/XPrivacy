@@ -15,11 +15,11 @@
     <string name="menu_export">Exportovať</string>
     <string name="menu_import">Importovať</string>
     <string name="menu_theme">Zmeniť tému</string>
-    <string name="menu_submit">Submit restrictions</string>
+    <string name="menu_submit">Odoslať obmedzenia</string>
     <string name="menu_pro">Pro verzia</string>
     <string name="menu_about">O aplikácii</string>
     <string name="menu_all">Všetko</string>
-    <string name="menu_clear">Clear</string>
+    <string name="menu_clear">Vyčistiť</string>
     <string name="menu_app_launch">Spustiť</string>
     <string name="menu_app_settings">Nastavenia</string>
     <string name="menu_app_store">Obchod Play</string>
@@ -66,7 +66,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_phone">Telefónne číslo</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Krajina</string>
-    <string name="settings_operator">Operator</string>
+    <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovať podľa povolenia</string>
     <string name="settings_fsystem">Filtrovať systémové aplikácie</string>
