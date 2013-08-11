@@ -36,6 +36,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -574,18 +575,19 @@ public class ActivityApp extends Activity {
 					}
 				}
 
+				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 				String android_id = Secure.getString(ActivityApp.this.getContentResolver(), Secure.ANDROID_ID);
 
 				// Encode package
 				JSONObject jRoot = new JSONObject();
-				jRoot.put("protocol_version", 1);
+				jRoot.put("protocol_version", 2);
 				jRoot.put("android_id", android_id);
 				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
+				jRoot.put("xprivacy_version", pInfo.versionCode);
 				jRoot.put("application_name", params[0].getFirstApplicationName());
 				jRoot.put("package_name", params[0].getPackageName());
 				jRoot.put("package_version", params[0].getVersion());
 				jRoot.put("settings", jSettings);
-				Util.log(null, Log.INFO, "submit=" + jRoot.toString());
 
 				// Submit
 				int TIMEOUT_MILLISEC = 30000; // = 30 seconds
@@ -606,7 +608,6 @@ public class ActivityApp extends Activity {
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
 					response.getEntity().writeTo(out);
 					out.close();
-					Util.log(null, Log.INFO, "response=" + out.toString("UTF-8"));
 					return new JSONObject(out.toString("UTF-8"));
 				} else {
 					// Failed
