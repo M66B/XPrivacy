@@ -19,6 +19,7 @@
     <string name="menu_pro">Proバージョン</string>
     <string name="menu_about">アプリ情報</string>
     <string name="menu_all">全て</string>
+    <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">アプリを起動</string>
     <string name="menu_app_settings">設定</string>
     <string name="menu_app_store">Playストア</string>

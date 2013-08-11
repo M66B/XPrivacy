@@ -19,6 +19,7 @@
     <string name="menu_pro">Pro-Version</string>
     <string name="menu_about">Über XPrivacy</string>
     <string name="menu_all">Alles</string>
+    <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Starte App</string>
     <string name="menu_app_settings">Zeige App-Info</string>
     <string name="menu_app_store">Play Store</string>

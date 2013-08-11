@@ -19,6 +19,7 @@
     <string name="menu_pro">专业版</string>
     <string name="menu_about">关于</string>
     <string name="menu_all">全部</string>
+    <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">启动</string>
     <string name="menu_app_settings">设置</string>
     <string name="menu_app_store">Play 商店</string>

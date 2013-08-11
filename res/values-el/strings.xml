@@ -19,6 +19,7 @@
     <string name="menu_pro">Έκδοση Pro</string>
     <string name="menu_about">Σχετικά</string>
     <string name="menu_all">Όλα</string>
+    <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Εκκίνηση</string>
     <string name="menu_app_settings">Ρυθμίσεις</string>
     <string name="menu_app_store">Play Store</string>

@@ -19,6 +19,7 @@
     <string name="menu_pro">Version pro</string>
     <string name="menu_about">À propos</string>
     <string name="menu_all">Tous</string>
+    <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Lancer</string>
     <string name="menu_app_settings">Paramètres</string>
     <string name="menu_app_store">Play Store</string>

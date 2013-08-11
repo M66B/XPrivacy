@@ -19,6 +19,7 @@
     <string name="menu_pro">Versão Pro</string>
     <string name="menu_about">Sobre</string>
     <string name="menu_all">Tudo</string>
+    <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Iniciar</string>
     <string name="menu_app_settings">Definições</string>
     <string name="menu_app_store">Play Store</string>

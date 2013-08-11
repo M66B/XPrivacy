@@ -19,6 +19,7 @@
     <string name="menu_pro">Pro-version</string>
     <string name="menu_about">Om</string>
     <string name="menu_all">Alla</string>
+    <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Starta</string>
     <string name="menu_app_settings">Inställningar</string>
     <string name="menu_app_store">Play Butik</string>

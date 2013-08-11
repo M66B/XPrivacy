@@ -19,6 +19,7 @@
     <string name="menu_pro">Versione Pro</string>
     <string name="menu_about">Riguardo a</string>
     <string name="menu_all">Tutto</string>
+    <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Lancia</string>
     <string name="menu_app_settings">Impostazioni</string>
     <string name="menu_app_store">Play Store</string>

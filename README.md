@@ -567,6 +567,7 @@ How to get beta releases:
 
 **Next release**
 
+* Menu to clear all application restrictions
 * Enable Android usage data 120 seconds after boot
 * Updated German translation
 

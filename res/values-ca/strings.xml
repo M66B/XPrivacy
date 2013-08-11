@@ -19,6 +19,7 @@
     <string name="menu_pro">Versió Pro</string>
     <string name="menu_about">Quant a</string>
     <string name="menu_all">Totes</string>
+    <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Executa</string>
     <string name="menu_app_settings">Configuració</string>
     <string name="menu_app_store">Play Store</string>

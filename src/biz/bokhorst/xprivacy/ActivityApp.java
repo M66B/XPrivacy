@@ -274,6 +274,9 @@ public class ActivityApp extends Activity {
 		case R.id.menu_all:
 			optionAll();
 			return true;
+		case R.id.menu_clear:
+			optionClear();
+			return true;
 		case R.id.menu_usage:
 			optionUsage();
 			return true;
@@ -281,15 +284,13 @@ public class ActivityApp extends Activity {
 			optionSubmit();
 			return true;
 		case R.id.menu_app_launch:
-			Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
-			startActivity(LaunchIntent);
+			optionLaunch();
 			return true;
 		case R.id.menu_app_settings:
-			startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-					Uri.parse("package:" + mAppInfo.getPackageName())));
+			optionSettings();
 			return true;
 		case R.id.menu_app_store:
-			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + mAppInfo.getPackageName())));
+			optionStore();
 			return true;
 		case R.id.menu_accounts:
 			optionAccounts();
@@ -327,6 +328,10 @@ public class ActivityApp extends Activity {
 			mPrivacyListAdapter.notifyDataSetChanged();
 	}
 
+	private void optionClear() {
+		PrivacyManager.deleteRestrictions(this, mAppInfo.getUid());
+	}
+
 	private void optionUsage() {
 		Intent intent = new Intent(this, ActivityUsage.class);
 		intent.putExtra(ActivityUsage.cUid, mAppInfo.getUid());
@@ -357,6 +362,23 @@ public class ActivityApp extends Activity {
 	private void optionAccounts() {
 		AccountsTask accountsTask = new AccountsTask();
 		accountsTask.executeOnExecutor(mExecutor, (Object) null);
+	}
+
+	private void optionLaunch() {
+		Intent intentLaunch = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
+		startActivity(intentLaunch);
+	}
+
+	private void optionSettings() {
+		Intent intentSettings = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+				Uri.parse("package:" + mAppInfo.getPackageName()));
+		startActivity(intentSettings);
+	}
+
+	private void optionStore() {
+		Intent intentStore = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
+				+ mAppInfo.getPackageName()));
+		startActivity(intentStore);
 	}
 
 	private void optionContacts() {
