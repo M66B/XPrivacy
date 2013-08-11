@@ -572,8 +572,10 @@ How to get beta releases:
 * Updated French translation
 * Updated German translation
 * Updated Lithuanian translation
+* Updated Polish translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
+* Updated Swedish translation
 
 **Version 1.8.12 BETA!**
 
