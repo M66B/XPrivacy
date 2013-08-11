@@ -66,6 +66,7 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<style type="text/css">
+			body { padding-left: 5px; padding-right: 5px; }
 			th, tr, td { padding: 0px !important; }
 		</style>
 	</head>
@@ -103,7 +104,7 @@
 <?php		} ?>
 			</div>
 
-			<div class="container" style="padding-left: 5px; padding-right: 5px;">
+			<div class="container">
 				<p><a href="#" id="details">Show details</a></p>
 				<table class="table table-striped table-condensed">
 					<thead>
@@ -111,7 +112,7 @@
 <?php					if (empty($package_name)) { ?>
 							<th>Application</th>
 							<th>Package</th>
-							<th style="display: none;" class="details">Version</th>
+							<th>Version</th>
 							<th style="text-align: center;">Votes</th>
 							<th style="display: none;" class="details">Last update (UTC)</th>
 <?php					} else { ?>
@@ -144,7 +145,7 @@
 					echo '<td><a href="?application_name=' . urlencode($row->application_name);
 					echo '&amp;package_name=' . urlencode($row->package_name) . '">';
 					echo htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</a></td>';
-					echo '<td style="display: none;" class="details">' . htmlentities($row->package_version, ENT_COMPAT, 'UTF-8') . '</td>';
+					echo '<td>' . htmlentities($row->package_version, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="text-align: center;">' . $row->count . '</td>';
 					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
 					echo '</tr>' . PHP_EOL;
@@ -211,6 +212,7 @@
 			jQuery(document).ready(function($) {
 			  $('#details').click(function() {
 				  $('.details').toggle();
+				  return false;
 			  });
 			});
 		</script>
