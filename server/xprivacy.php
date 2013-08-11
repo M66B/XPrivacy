@@ -20,14 +20,13 @@
 		// Store/update data
 		$ok = true;
 		foreach ($data->settings as $restriction) {
-			if (empty($restriction->application_name))
-				$restriction->application_name = '';
 			if (empty($restriction->method))
 				$restriction->method = '';
-			$sql = "INSERT INTO xprivacy (android_id, android_sdk, application_name, package_name, package_version,";
+			$sql = "INSERT INTO xprivacy (android_id, android_sdk, xprivacy_version, application_name, package_name, package_version,";
 			$sql .= " restriction, method, restricted, used) VALUES ";
 			$sql .= "('" . $db->real_escape_string($data->android_id) . "'";
 			$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
+			$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : $db->real_escape_string($data->xprivacy_version)) . "";
 			$sql .= ",'" . $db->real_escape_string($data->application_name) . "'";
 			$sql .= ",'" . $db->real_escape_string($data->package_name) . "'";
 			$sql .= ",'" . $db->real_escape_string($data->package_version) . "'";
@@ -36,7 +35,8 @@
 			$sql .= "," . ($restriction->restricted ? 1 : 0);
 			$sql .= "," . $db->real_escape_string($restriction->used) . ")";
 			$sql .= " ON DUPLICATE KEY UPDATE";
-			$sql .= " application_name=VALUES(application_name)";
+			$sql .= " xprivacy_version=VALUES(xprivacy_version)";
+			$sql .= ", application_name=VALUES(application_name)";
 			$sql .= ", restricted=VALUES(restricted)";
 			$sql .= ", used=VALUES(used)";
 			$sql .= ", modified=CURRENT_TIMESTAMP()";
@@ -141,10 +141,12 @@
 				while (($row = $result->fetch_object())) {
 					$count++;
 					echo '<tr>';
-					echo '<td>' . htmlentities($row->application_name, ENT_COMPAT, 'UTF-8') . '</td>';
+
 					echo '<td><a href="?application_name=' . urlencode($row->application_name);
 					echo '&amp;package_name=' . urlencode($row->package_name) . '">';
-					echo htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</a></td>';
+					echo htmlentities($row->application_name, ENT_COMPAT, 'UTF-8') . '</a></td>';
+
+					echo '<td>' . htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td>' . htmlentities($row->package_version, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="text-align: center;">' . $row->count . '</td>';
 					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
