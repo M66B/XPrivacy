@@ -110,16 +110,16 @@
 					<thead>
 						<tr>
 <?php					if (empty($package_name)) { ?>
+							<th style="text-align: center;">Votes</th>
 							<th>Application</th>
 							<th>Package</th>
 							<th>Version</th>
-							<th style="text-align: center;">Votes</th>
 							<th style="display: none;" class="details">Last update (UTC)</th>
 <?php					} else { ?>
+							<th style="text-align: center;">Votes<br />yes/no</th>
+							<th style="display: none; text-align: center;" class="details">Used</th>
 							<th>Restriction</th>
 							<th style="display: none;" class="details">Method</th>
-							<th style="text-align: center;">Votes (yes/no)</th>
-							<th style="text-align: center;">Used</th>
 <?php					} ?>
 						</tr>
 					</thead>
@@ -143,6 +143,7 @@
 					$count++;
 					$votes += $row->count;
 					echo '<tr>';
+					echo '<td style="text-align: center;">' . $row->count . '</td>';
 
 					echo '<td><a href="?application_name=' . urlencode($row->application_name);
 					echo '&amp;package_name=' . urlencode($row->package_name) . '">';
@@ -150,7 +151,6 @@
 
 					echo '<td>' . htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td>' . htmlentities($row->package_version, ENT_COMPAT, 'UTF-8') . '</td>';
-					echo '<td style="text-align: center;">' . $row->count . '</td>';
 					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
 					echo '</tr>' . PHP_EOL;
 				}
@@ -181,16 +181,20 @@
 					if (!empty($row->method))
 						echo ' class="details"';
 					echo '>';
-					echo '<td>' . ($row->method ? '' :
-					'<a href="http://wiki.faircode.eu/index.php?title=' . urlencode($row->restriction) . '" target="_blank">' .
-					htmlentities($row->restriction, ENT_COMPAT, 'UTF-8') . '</a>') . '</td>';
-					echo '<td style="display: none;" class="details">' . htmlentities($row->method, ENT_COMPAT, 'UTF-8') . '</td>';
+
 					echo '<td style="text-align: center;">';
 					echo ($row->restricted < $row->not_restricted) ? '<span class="text-muted">' . $row->restricted . '</span>' : $row->restricted;
 					echo ' / ';
 					echo ($row->restricted > $row->not_restricted) ? '<span class="text-muted">' . $row->not_restricted . '</span>' : $row->not_restricted;
 					echo '</td>';
-					echo '<td style="text-align: center;">' . ($row->used ? 'Yes' : '') . '</td>';
+
+					echo '<td style="display: none; text-align: center;" class="details">' . ($row->used ? 'Yes' : '') . '</td>';
+
+					echo '<td>' . ($row->method ? '' :
+					'<a href="http://wiki.faircode.eu/index.php?title=' . urlencode($row->restriction) . '" target="_blank">' .
+					htmlentities($row->restriction, ENT_COMPAT, 'UTF-8') . '</a>') . '</td>';
+
+					echo '<td style="display: none;" class="details">' . htmlentities($row->method, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '</tr>' . PHP_EOL;
 				}
 				$result->close();
