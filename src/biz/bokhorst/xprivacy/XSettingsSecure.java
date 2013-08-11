@@ -62,6 +62,8 @@ public class XSettingsSecure extends XHook {
 				Util.bug(this, ex);
 			}
 		}
+		if (context != null && context.getPackageName().equals(this.getClass().getPackage().getName()))
+			return false;
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
 	}
