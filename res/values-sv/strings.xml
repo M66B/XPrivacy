@@ -14,12 +14,12 @@
     <string name="menu_report">Rapportera problem</string>
     <string name="menu_export">Exportera</string>
     <string name="menu_import">Importera</string>
-    <string name="menu_submit">Submit restrictions</string>
+    <string name="menu_submit">Skicka restriktioner</string>
     <string name="menu_theme">Byt tema</string>
     <string name="menu_pro">Pro-version</string>
     <string name="menu_about">Om</string>
     <string name="menu_all">Alla</string>
-    <string name="menu_clear">Clear</string>
+    <string name="menu_clear">Rensa</string>
     <string name="menu_app_launch">Starta</string>
     <string name="menu_app_settings">Inställningar</string>
     <string name="menu_app_store">Play Butik</string>
@@ -66,7 +66,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android-ID</string>
     <string name="settings_country">Land</string>
-    <string name="settings_operator">Operator</string>
+    <string name="settings_operator">Operatör</string>
     <string name="settings_subscriber">Abonnent-ID</string>
     <string name="settings_fpermission">Filtrera efter behörighet</string>
     <string name="settings_fsystem">Filtrera systemappar</string>
