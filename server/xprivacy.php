@@ -126,6 +126,7 @@
 					<tbody>
 <?php
 	$count = 0;
+	$votes = 0;
 	require_once('xprivacy.inc.php');
 	$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 	if (!$db->connect_errno) {
@@ -140,6 +141,7 @@
 			if ($result) {
 				while (($row = $result->fetch_object())) {
 					$count++;
+					$votes += $row->count;
 					echo '<tr>';
 
 					echo '<td><a href="?application_name=' . urlencode($row->application_name);
@@ -169,6 +171,7 @@
 			if ($result) {
 				while (($row = $result->fetch_object())) {
 					$count++;
+					$votes += $row->restricted + $row->not_restricted;
 					echo '<tr style="';
 					if ($row->used)
 						echo 'font-weight: bold;';
@@ -200,7 +203,7 @@
 ?>
 					</tbody>
 				</table>
-				<p class="text-muted"><?php echo $count; ?> rows</p>
+				<p class="text-muted"><?php echo $count; ?> rows, <?php echo $votes; ?> votes</p>
 			</div>
 
 			<div class="container">
