@@ -568,6 +568,7 @@ How to get beta releases:
 **Next release**
 
 * Updated Lithuanian translation
+* Updated Slovak translation
 
 **Version 1.8.12 BETA!**
 
