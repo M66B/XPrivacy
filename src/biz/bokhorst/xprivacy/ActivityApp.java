@@ -559,8 +559,9 @@ public class ActivityApp extends Activity {
 
 					// Methods
 					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
-						boolean mRestricted = PrivacyManager.getRestricted(null, ActivityApp.this, uid,
-								restrictionName, md.getMethodName(), false, false);
+						boolean mRestricted = restricted
+								&& PrivacyManager.getRestricted(null, ActivityApp.this, uid, restrictionName,
+										md.getMethodName(), false, false);
 						long mUsed = PrivacyManager.getUsed(ActivityApp.this, uid, restrictionName, md.getMethodName());
 						JSONObject jMethod = new JSONObject();
 						jMethod.put("restriction", restrictionName);
