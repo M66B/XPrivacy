@@ -568,8 +568,10 @@ How to get beta releases:
 **Next release**
 
 * Delete restriction when deleting app
+* Updated Arabic translation
 * Updated French translation
 * Updated Lithuanian translation
+* Updated Simplified Chinese translation
 * Updated Slovak translation
 
 **Version 1.8.12 BETA!**
