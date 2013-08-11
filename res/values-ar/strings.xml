@@ -14,12 +14,12 @@
     <string name="menu_report">التبليغ عن مشكلة</string>
     <string name="menu_export">تصدير</string>
     <string name="menu_import">إستيراد</string>
-    <string name="menu_submit">Submit restrictions</string>
+    <string name="menu_submit">إرسال القيود</string>
     <string name="menu_theme">تبديل الوضع</string>
     <string name="menu_pro">النسخة الكاملة</string>
     <string name="menu_about">عن التطبيق</string>
     <string name="menu_all">تحديد الكل</string>
-    <string name="menu_clear">Clear</string>
+    <string name="menu_clear">إلغاء التحديد</string>
     <string name="menu_app_launch">تشغيل التطبيق</string>
     <string name="menu_app_settings">إعدادات التطبيق</string>
     <string name="menu_app_store">متجر قوقل</string>
@@ -36,7 +36,7 @@
     <string name="msg_random">عشوائي</string>
     <string name="msg_random_boot">عشوائي بعد الإقلاع</string>
     <string name="msg_first"><b>بُذلت عناية كبيرة لتطوير وإختبار XPrivacy,
-ومع ذلك فإنه من المستحيل أن نضمن أنه سوف يعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
+ومع ذلك فإنه من المستحيل ضمان أنه سيعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
 \n\nالإستخدام على مسئوليتك الخاصة.</b>\n\nراجع أيضاً الترخيص:</string>
     <string name="restrict_accounts">الحسابات (قوقل , فيسبوك , الخ)</string>
     <string name="restrict_browser">المتصفح (العلامات,السجل)</string>
