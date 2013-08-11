@@ -141,6 +141,7 @@ public class PackageChange extends BroadcastReceiver {
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 				// Package removed
 				notificationManager.cancel(uid);
+				PrivacyManager.deleteRestrictions(context, uid);
 			}
 		}
 	}

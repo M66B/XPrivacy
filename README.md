@@ -567,6 +567,7 @@ How to get beta releases:
 
 **Next release**
 
+* Delete restriction when deleting app
 * Updated French translation
 * Updated Lithuanian translation
 * Updated Slovak translation
