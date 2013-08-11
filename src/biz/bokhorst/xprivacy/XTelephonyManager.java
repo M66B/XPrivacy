@@ -57,6 +57,7 @@ public class XTelephonyManager extends XHook {
 	// public String getNetworkOperatorName()
 	// public int getNetworkType()
 	// public int getPhoneType()
+	// public static int getPhoneType(int networkMode)
 	// public String getSimCountryIso()
 	// public String getSimOperator()
 	// public String getSimOperatorName()
@@ -175,21 +176,12 @@ public class XTelephonyManager extends XHook {
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
 		Context context = null;
 
-		// TelephonyManager
-		boolean found = false;
-		try {
-			Field fieldContext = findField(param.thisObject.getClass(), "sContext");
-			context = (Context) fieldContext.get(param.thisObject);
-			found = true;
-		} catch (NoSuchFieldError ex) {
-		} catch (Throwable ex) {
-			Util.bug(this, ex);
-		}
-
-		// MultiSimTelephonyManager
-		if (!found)
+		// No context for static methods
+		if (param.thisObject != null) {
+			// TelephonyManager
+			boolean found = false;
 			try {
-				Field fieldContext = findField(param.thisObject.getClass(), "mContext");
+				Field fieldContext = findField(param.thisObject.getClass(), "sContext");
 				context = (Context) fieldContext.get(param.thisObject);
 				found = true;
 			} catch (NoSuchFieldError ex) {
@@ -197,15 +189,27 @@ public class XTelephonyManager extends XHook {
 				Util.bug(this, ex);
 			}
 
-		// Duos
-		if (!found)
-			try {
-				Field fieldContext = findField(param.thisObject.getClass(), "sContextDuos");
-				context = (Context) fieldContext.get(param.thisObject);
-				found = true;
-			} catch (Throwable ex) {
-				Util.bug(this, ex);
-			}
+			// MultiSimTelephonyManager
+			if (!found)
+				try {
+					Field fieldContext = findField(param.thisObject.getClass(), "mContext");
+					context = (Context) fieldContext.get(param.thisObject);
+					found = true;
+				} catch (NoSuchFieldError ex) {
+				} catch (Throwable ex) {
+					Util.bug(this, ex);
+				}
+
+			// Duos
+			if (!found)
+				try {
+					Field fieldContext = findField(param.thisObject.getClass(), "sContextDuos");
+					context = (Context) fieldContext.get(param.thisObject);
+					found = true;
+				} catch (Throwable ex) {
+					Util.bug(this, ex);
+				}
+		}
 
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
