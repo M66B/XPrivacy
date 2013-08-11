@@ -568,8 +568,9 @@ How to get beta releases:
 **Next release**
 
 * Menu to clear all application restrictions
-* Enable Android usage data 120 seconds after boot
+* Wait 60 seconds after system ready before sending Android usage data
 * Updated German translation
+* Updated Lithuanian translation
 
 **Version 1.8.11 BETA!**
 

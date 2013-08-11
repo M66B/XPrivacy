@@ -37,7 +37,6 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
-import android.os.SystemClock;
 import android.util.Log;
 
 public class PrivacyManager {
@@ -71,7 +70,6 @@ public class PrivacyManager {
 
 	public final static int cXposedMinVersion = 34;
 	public final static int cAndroidUid = 1000;
-	public final static int cAndroidUsageSec = 120;
 
 	public final static String cSettingSerial = "Serial";
 	public final static String cSettingLatitude = "Latitude";
@@ -266,8 +264,8 @@ public class PrivacyManager {
 					}
 				}
 
-			// Do not use Android context right after boot
-			if (uid == cAndroidUid && SystemClock.elapsedRealtime() < cAndroidUsageSec * 1000)
+			// Do not use context before system ready
+			if (!XActivityManagerService.isSystemReady())
 				context = null;
 
 			// Check if restricted
