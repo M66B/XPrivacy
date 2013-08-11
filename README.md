@@ -570,6 +570,7 @@ How to get beta releases:
 * Delete restriction when deleting app
 * Updated Arabic translation
 * Updated French translation
+* Updated German translation
 * Updated Lithuanian translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
