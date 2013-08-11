@@ -567,8 +567,12 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.8.12 BETA!**
+
 * Menu to clear all application restrictions
-* Wait 60 seconds after system ready before sending Android usage data
+* Wait 60 seconds after system ready before sending Android usage data ([issue](https://github.com/M66B/XPrivacy/issues/483))
 * Updated German translation
 * Updated Lithuanian translation
 
