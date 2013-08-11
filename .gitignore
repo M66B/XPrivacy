@@ -16,5 +16,5 @@ gen/
 local.properties
 
 # Eclipse project files
-.classpath
+#.classpath
 .project
