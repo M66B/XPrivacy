@@ -567,7 +567,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Updated Lithuanian translation
 
 **Version 1.8.12 BETA!**
 

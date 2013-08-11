@@ -142,12 +142,13 @@
 				while (($row = $result->fetch_object())) {
 					$count++;
 					$votes += $row->count;
+					$name = (empty($row->application_name) ? '???' : $row->application_name);
 					echo '<tr>';
 					echo '<td style="text-align: center;">' . $row->count . '</td>';
 
-					echo '<td><a href="?application_name=' . urlencode($row->application_name);
+					echo '<td><a href="?application_name=' . urlencode($name);
 					echo '&amp;package_name=' . urlencode($row->package_name) . '">';
-					echo htmlentities($row->application_name, ENT_COMPAT, 'UTF-8') . '</a></td>';
+					echo htmlentities($name, ENT_COMPAT, 'UTF-8') . '</a></td>';
 
 					echo '<td>' . htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td>' . htmlentities($row->package_version, ENT_COMPAT, 'UTF-8') . '</td>';
