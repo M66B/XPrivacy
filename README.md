@@ -573,6 +573,7 @@ How to get beta releases:
 * Updated German translation
 * Updated Lithuanian translation
 * Updated Polish translation
+* Updated Portuguese translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
 * Updated Swedish translation
