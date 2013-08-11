@@ -106,7 +106,7 @@
 
 			<div class="container">
 				<p><a href="#" id="details">Show details</a></p>
-				<table class="table table-striped table-condensed">
+				<table class="table table-hover table-condensed">
 					<thead>
 						<tr>
 <?php					if (empty($package_name)) { ?>
