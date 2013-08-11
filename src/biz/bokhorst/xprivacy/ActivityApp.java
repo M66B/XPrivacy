@@ -330,6 +330,8 @@ public class ActivityApp extends Activity {
 
 	private void optionClear() {
 		PrivacyManager.deleteRestrictions(this, mAppInfo.getUid());
+		if (mPrivacyListAdapter != null)
+			mPrivacyListAdapter.notifyDataSetChanged();
 	}
 
 	private void optionUsage() {
