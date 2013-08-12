@@ -567,6 +567,7 @@ How to get beta releases:
 
 **Next release**
 
+* Updated Catalan translation
 * Updated Lithuanian translation
 * Updated Japanese translation
 * Updated Russian translation
