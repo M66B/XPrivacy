@@ -14,12 +14,12 @@
     <string name="menu_report">Informa d\'un problema</string>
     <string name="menu_export">Exporta</string>
     <string name="menu_import">Importa</string>
-    <string name="menu_submit">Submit restrictions</string>
+    <string name="menu_submit">Envia restriccions</string>
     <string name="menu_theme">Canvia tema</string>
     <string name="menu_pro">Versió Pro</string>
     <string name="menu_about">Quant a</string>
     <string name="menu_all">Totes</string>
-    <string name="menu_clear">Clear</string>
+    <string name="menu_clear">Neteja</string>
     <string name="menu_app_launch">Executa</string>
     <string name="menu_app_settings">Configuració</string>
     <string name="menu_app_store">Play Store</string>
@@ -64,7 +64,7 @@
     <string name="settings_phone">Número de telèfon</string>
     <string name="settings_id">ID d\'Android</string>
     <string name="settings_country">País</string>
-    <string name="settings_operator">Operator</string>
+    <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">ID de subscriptor</string>
     <string name="settings_fpermission">Filta per permís</string>
     <string name="settings_fsystem">Filtra aplicacions de sistema</string>
