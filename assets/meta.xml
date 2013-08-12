@@ -40,12 +40,12 @@
 
     <Hook restriction="email" method="EMailProvider" permissions="com.android.email.permission.ACCESS_PROVIDER" sdk="14" />
 
+    <Hook restriction="identification" method="%hostname" permissions="" sdk="14" />
+    <Hook restriction="identification" method="%imei" permissions="" sdk="14" />
+    <Hook restriction="identification" method="%macaddr" permissions="" sdk="14" />
+    <Hook restriction="identification" method="%serialno" permissions="" sdk="14" />
     <Hook restriction="identification" method="/proc" dangerous="true" permissions="" sdk="14" />
     <Hook restriction="identification" method="getString" permissions="" sdk="14" />
-    <Hook restriction="identification" method="%imei" permissions="" sdk="14" />
-    <Hook restriction="identification" method="%hostname" permissions="" sdk="14" />
-    <Hook restriction="identification" method="%serialno" permissions="" sdk="14" />
-    <Hook restriction="identification" method="%macaddr" permissions="" sdk="14" />
     <Hook restriction="identification" method="GservicesProvider" dangerous="true" permissions="READ_GSERVICES" sdk="14" />
     <Hook restriction="identification" method="SERIAL" permissions="" sdk="14" />
 
