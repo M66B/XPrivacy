@@ -567,7 +567,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Updated Japanese Translation
 
 **Version 1.8.13 RC!**
 
