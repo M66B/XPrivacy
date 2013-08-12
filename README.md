@@ -568,7 +568,8 @@ How to get beta releases:
 **Next release**
 
 * Updated Lithuanian translation
-* Updated Japanese Translation
+* Updated Japanese translation
+* Updated Russian translation
 
 **Version 1.8.13 RC!**
 
