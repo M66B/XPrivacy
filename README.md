@@ -567,8 +567,13 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.8.13 RC!**
+
 * Delete restriction when deleting app
 * Fixed exception logging of TelephonyManager
+* Wait 500 ms between sending usage data
 * Updated Arabic translation
 * Updated French translation
 * Updated German translation
@@ -579,7 +584,7 @@ How to get beta releases:
 * Updated Slovak translation
 * Updated Swedish translation
 
-**Version 1.8.12 BETA!**
+**Version 1.8.12 RC!**
 
 * Menu to clear all application restrictions
 * Wait 60 seconds after system ready before sending Android usage data ([issue](https://github.com/M66B/XPrivacy/issues/483))

@@ -334,6 +334,7 @@ public class PrivacyManager {
 												if (fContext.getContentResolver().update(PrivacyProvider.URI_USAGE,
 														values, null, null) <= 0)
 													Util.log(hook, Log.INFO, "Error updating usage data=" + data);
+												Thread.sleep(500);
 											} catch (Throwable ex) {
 												Util.bug(hook, ex);
 											}
