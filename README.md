@@ -568,6 +568,7 @@ How to get beta releases:
 **Next release**
 
 * Delete restriction when deleting app
+* Fixed exception logging of TelephonyManager
 * Updated Arabic translation
 * Updated French translation
 * Updated German translation
