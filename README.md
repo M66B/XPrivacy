@@ -571,7 +571,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Suppress warning in location manager
 
 **Version 1.9**
 

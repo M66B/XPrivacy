@@ -128,7 +128,6 @@ public class XLocationManager extends XHook {
 			context = (Context) fieldContext.get(param.thisObject);
 		} catch (Throwable ex) {
 			// Not all location managers do have a context
-			Util.bug(this, ex);
 		}
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
