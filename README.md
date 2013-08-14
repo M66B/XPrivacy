@@ -545,6 +545,10 @@ Because some Google components are not installed.
 
 No.
 
+**(32) Why is XPrivacy not available in the Play store anymore?**
+
+Read [here](http://forum.xda-developers.com/showpost.php?p=44427089&postcount=2433) why.
+
 Support
 -------
 
