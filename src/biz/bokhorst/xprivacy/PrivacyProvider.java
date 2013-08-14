@@ -407,12 +407,9 @@ public class PrivacyProvider extends ContentProvider {
 		SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION + "." + uid,
 				Context.MODE_WORLD_READABLE);
 		SharedPreferences.Editor editor = prefs.edit();
-		for (String restrictionName : PrivacyManager.getRestrictions(true)) {
-			for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
-				rows++;
-				editor.remove(getExceptionPref(restrictionName, md.getMethodName()));
-			}
-			editor.remove(getRestrictionPref(restrictionName));
+		for (String pref : prefs.getAll().keySet()) {
+			Util.log(null, Log.INFO, "Removed restriction=" + pref + " uid=" + uid);
+			editor.remove(pref);
 			rows++;
 		}
 		editor.apply();
@@ -430,7 +427,8 @@ public class PrivacyProvider extends ContentProvider {
 			SharedPreferences.Editor editor = prefs.edit();
 			for (String pref : prefs.getAll().keySet()) {
 				String[] component = pref.split("\\.");
-				if (component.length >= 2 && component[1] == sUid) {
+				if (component.length >= 2 && component[1].equals(sUid)) {
+					Util.log(null, Log.INFO, "Removed usage=" + pref + " uid=" + uid);
 					editor.remove(pref);
 					rows++;
 				}

@@ -24,9 +24,9 @@ public class PackageChange extends BroadcastReceiver {
 			int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 			boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
 			boolean fSystem = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingFSystem, true, false);
+
 			NotificationManager notificationManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
-
 			if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
 				// Package added
 				boolean system = false;
@@ -137,7 +137,6 @@ public class PackageChange extends BroadcastReceiver {
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
-
 			} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 				// Package removed
 				notificationManager.cancel(uid);
