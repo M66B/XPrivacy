@@ -572,6 +572,7 @@ How to get beta releases:
 **Next release**
 
 * Suppress warning in location manager
+* Updated Turkish translation
 
 **Version 1.9**
 
