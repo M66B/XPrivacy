@@ -127,9 +127,19 @@
 <?php
 	$count = 0;
 	$votes = 0;
+	$users = 0;
 	require_once('xprivacy.inc.php');
 	$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 	if (!$db->connect_errno) {
+
+		$sql = "SELECT COUNT(DISTINCT android_id) AS users FROM xprivacy";
+		$result = $db->query($sql);
+		if ($result) {
+			if (($row = $result->fetch_object()))
+				$users = $row->users;
+			$result->close();
+		}
+
 		if (empty($package_name)) {
 			$sql = "SELECT application_name, package_name, package_version,";
 			$sql .= " COUNT(DISTINCT android_id) AS count";
@@ -208,7 +218,7 @@
 ?>
 					</tbody>
 				</table>
-				<p class="text-muted"><?php echo $count; ?> rows, <?php echo $votes; ?> votes</p>
+				<p class="text-muted"><?php echo $count; ?> rows, <?php echo $votes; ?> votes, <?php echo $users; ?> users</p>
 			</div>
 
 			<div class="container">
