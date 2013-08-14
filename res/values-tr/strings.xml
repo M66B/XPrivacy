@@ -2,24 +2,24 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework versiyon %d+ yüklü değil.</string>
     <string name="app_notenabled">XPrivacy, Xposed yükleyicisinden etkinleştirilmedi.</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_wrongandroid">Sadece Android 4.0 ve üstünde kullanılabilir.</string>
     <string name="app_version" formatted="false">XPrivacy versiyon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
     <string name="app_copyright">Telif hakkı \u00A9 2013, M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Usage</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_usage">Kullanım</string>
+    <string name="menu_refresh">Yenile</string>
     <string name="menu_settings">Ayarlar</string>
     <string name="menu_template">Şablon</string>
     <string name="menu_update">Güncelleştirme Ara</string>
     <string name="menu_report">Problem Bildir</string>
     <string name="menu_export">Ayarları dışa aktar</string>
     <string name="menu_import">Ayarları içe aktar</string>
-    <string name="menu_submit">Submit restrictions</string>
+    <string name="menu_submit">Engellemeleri bildir</string>
     <string name="menu_theme">Temayı değiştir</string>
     <string name="menu_pro">Pro versiyon</string>
     <string name="menu_about">Hakkında</string>
     <string name="menu_all">Tümü</string>
-    <string name="menu_clear">Clear</string>
+    <string name="menu_clear">Temizle</string>
     <string name="menu_app_launch">Çalıştır</string>
     <string name="menu_app_settings">Ayarlar</string>
     <string name="menu_app_store">Play Store</string>
@@ -33,15 +33,15 @@
     <string name="msg_sure">Emin misin?</string>
     <string name="msg_done">Bitti</string>
     <string name="msg_reboot">Yeniden başlatma gerekli</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_random">Rasgele Oluştur</string>
+    <string name="msg_random_boot">Cihaz yeniden başlatılınca tekrar rasgele oluştur</string>
     <string name="msg_first"><b>Xprivacy titizlikle geliştirilmiş ve test edilmiştir, ancak her cihazda veya her uygulamada kusursuz çalışacağını garantilemek imkansızdır.
 \n\nKullanım riski tamamen size aittir.</b>\n\nAyrıca lisansa bakınız:</string>
     <string name="restrict_accounts">Hesaplar (Google, Facebook, vb)</string>
     <string name="restrict_browser">Tarayıcı (yer imleri/geçmiş)</string>
     <string name="restrict_calendar">Takvim</string>
     <string name="restrict_calling">Arama (telefon, SMS, MMS)</string>
-    <string name="restrict_clipboard">Clipboard</string>
+    <string name="restrict_clipboard">Pano</string>
     <string name="restrict_contacts">Kişiler</string>
     <string name="restrict_dictionary">Sözlük (kullıcı)</string>
     <string name="restrict_identification">Kimlik (cihaz)</string>
@@ -58,7 +58,7 @@
     <string name="restrict_view">Göster (tarayıcı)</string>
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Engellemek için işaretle:</string>
-    <string name="settings_serial">Serial#</string>
+    <string name="settings_serial">Seri no</string>
     <string name="settings_lat">Enlem</string>
     <string name="settings_lon">Boylam</string>
     <string name="settings_mac">MAC adresi</string>
@@ -73,7 +73,7 @@
     <string name="help_internet">internet izni var</string>
     <string name="help_granted">Android izni var</string>
     <string name="help_used">bu izni kullandı</string>
-    <string name="help_frozen">is disabled</string>
+    <string name="help_frozen">uygulama devredışı</string>
     <string name="help_dangerous">tehlikeli izin</string>
 
 </resources>
