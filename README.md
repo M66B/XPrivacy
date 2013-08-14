@@ -567,6 +567,7 @@ How to get beta releases:
 
 **Next release**
 
+* Delete usage data when removing application
 * Updated Catalan translation
 * Updated Lithuanian translation
 * Updated Japanese translation
@@ -574,7 +575,7 @@ How to get beta releases:
 
 **Version 1.8.13 RC!**
 
-* Delete restriction when deleting app
+* Delete restrictions when removing application
 * Fixed exception logging of TelephonyManager
 * Wait 500 ms between sending usage data
 * Updated Arabic translation

@@ -392,6 +392,9 @@ public class PrivacyProvider extends ContentProvider {
 		if (sUriMatcher.match(uri) == TYPE_RESTRICTION) {
 			int uid = Integer.parseInt(selectionArgs[0]);
 			return deleteRestrictions(uid);
+		} else if (sUriMatcher.match(uri) == TYPE_USAGE) {
+			int uid = Integer.parseInt(selectionArgs[0]);
+			return deleteUsage(uid);
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING && selectionArgs == null) {
 			return deleteSettings();
 		}
@@ -414,6 +417,26 @@ public class PrivacyProvider extends ContentProvider {
 		}
 		editor.apply();
 		setPrefFileReadable(PREF_RESTRICTION, uid);
+
+		return rows;
+	}
+
+	private int deleteUsage(int uid) {
+		int rows = 0;
+		String sUid = Integer.toString(uid);
+		for (String restrictionName : PrivacyManager.getRestrictions(true)) {
+			SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
+					Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = prefs.edit();
+			for (String pref : prefs.getAll().keySet()) {
+				String[] component = pref.split("\\.");
+				if (component.length >= 2 && component[1] == sUid) {
+					editor.remove(pref);
+					rows++;
+				}
+			}
+			editor.apply();
+		}
 
 		return rows;
 	}

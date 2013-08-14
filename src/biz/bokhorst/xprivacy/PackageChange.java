@@ -142,6 +142,7 @@ public class PackageChange extends BroadcastReceiver {
 				// Package removed
 				notificationManager.cancel(uid);
 				PrivacyManager.deleteRestrictions(context, uid);
+				PrivacyManager.deleteUsage(context, uid);
 			}
 		}
 	}
