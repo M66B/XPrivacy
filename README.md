@@ -567,6 +567,10 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.9**
+
 * Delete usage data when removing application
 * Updated Catalan translation
 * Updated Lithuanian translation
