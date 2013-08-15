@@ -740,10 +740,12 @@ public class ActivityApp extends Activity {
 							JSONObject entry = settings.getJSONObject(i);
 							String restrictionName = entry.getString("restriction");
 							String methodName = entry.has("method") ? entry.getString("method") : null;
-							int restricted = entry.getInt("restricted");
-							int not_restricted = entry.getInt("not_restricted");
-							PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(), restrictionName,
-									methodName, restricted > not_restricted);
+							int voted_restricted = entry.getInt("restricted");
+							int voted_not_restricted = entry.getInt("not_restricted");
+							boolean restricted = (voted_restricted > voted_not_restricted);
+							if (methodName == null || restricted)
+								PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(),
+										restrictionName, methodName, restricted);
 							if (mPrivacyListAdapter != null)
 								mPrivacyListAdapter.notifyDataSetChanged();
 						}

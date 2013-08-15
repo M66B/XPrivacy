@@ -571,6 +571,9 @@ How to get beta releases:
 
 **Next release**
 
+**Version 1.9.2 BETA!**
+
+* Fix fetching function exceptions ([issue](https://github.com/M66B/XPrivacy/issues/515))
 * Updated Czech translation
 * Updated French translation
 * Updated German translation
