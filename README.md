@@ -83,6 +83,7 @@ Donate a few dollars for the [pro version](http://www.faircode.eu/xprivacy/)
 or
 
 buy [the pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) from Google play
+(*note that you cannot fetch [crowd sourced restrictions](http://updates.faircode.eu/xprivacy) with the pro enabler, only with the pro license*)
 
 or
 
