@@ -108,7 +108,6 @@
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textIsSelectable="false" />
-
         </LinearLayout>
     </LinearLayout>
 
