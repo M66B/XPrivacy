@@ -134,12 +134,13 @@
 				<h1>XPrivacy</h1>
 <?php		} else { ?>
 				<h1><?php echo htmlentities($application_name, ENT_COMPAT, 'UTF-8'); ?></h1>
+				<span style="font-size: smaller;"><?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></span>
 				<p>
 					<a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($package_name); ?>" target="_blank">Wiki</a>
 					-
 					<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
-					<br />
-					<span style="font-size: smaller;"><?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></span>
+					-
+					<a href="/xprivacy">Back</a>
 				</p>
 <?php		} ?>
 			</div>
@@ -156,7 +157,7 @@
 							<th style="display: none;" class="details">Versions</th>
 							<th style="display: none;" class="details">Last update (UTC)</th>
 <?php					} else { ?>
-							<th style="text-align: center;">Votes<br />yes/no</th>
+							<th style="text-align: center;">Votes<br />deny/allow</th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
 							<th>Restriction</th>
 							<th style="display: none;" class="details">Method</th>
