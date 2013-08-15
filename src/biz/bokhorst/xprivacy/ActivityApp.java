@@ -249,10 +249,6 @@ public class ActivityApp extends Activity {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// Fetch
-		boolean pro = (Util.getLicense() != null);
-		menu.findItem(R.id.menu_fetch).setVisible(pro);
-
 		// Accounts
 		boolean accountsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
 				PrivacyManager.cAccounts, null, false, false);
@@ -369,8 +365,15 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionFetch() {
-		FetchTask fetchTask = new FetchTask();
-		fetchTask.executeOnExecutor(mExecutor, mAppInfo);
+		if (Util.getLicense() == null) {
+			// Redirect to pro page
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
+			startActivity(browserIntent);
+		} else {
+			// Initiate fetch
+			FetchTask fetchTask = new FetchTask();
+			fetchTask.executeOnExecutor(mExecutor, mAppInfo);
+		}
 	}
 
 	private void optionAccounts() {
