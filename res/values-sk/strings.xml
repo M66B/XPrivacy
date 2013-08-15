@@ -16,7 +16,7 @@
     <string name="menu_import">Importovať</string>
     <string name="menu_theme">Zmeniť tému</string>
     <string name="menu_submit">Odoslať obmedzenia</string>
-    <string name="menu_fetch">Fetch restrictions</string>
+    <string name="menu_fetch">Stiahnuť obmedzenia</string>
     <string name="menu_pro">Pro verzia</string>
     <string name="menu_about">O aplikácii</string>
     <string name="menu_all">Všetko</string>
@@ -29,7 +29,7 @@
     <string name="msg_noupdate">Nie je k dispozícii žiadna aktualizácia</string>
     <string name="msg_restricted" formatted="false">%s obmedzené pomocou XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
-    <string name="msg_loading">Načítavanie</string>
+    <string name="msg_loading">Prebieha načítavanie</string>
     <string name="msg_edit">Kliknite na ikonu aplikácie pre úpravu všetkých obmedzení</string>
     <string name="msg_sure">Ste si istý?</string>
     <string name="msg_done">Hotovo</string>
