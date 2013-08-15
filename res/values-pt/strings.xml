@@ -15,7 +15,7 @@
     <string name="menu_export">Exportar</string>
     <string name="menu_import">Importar</string>
     <string name="menu_submit">Enviar restrições</string>
-    <string name="menu_fetch">Fetch restrictions</string>
+    <string name="menu_fetch">Procurar restrições</string>
     <string name="menu_theme">Mudar o tema</string>
     <string name="menu_pro">Versão Pro</string>
     <string name="menu_about">Sobre</string>

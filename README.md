@@ -575,6 +575,7 @@ How to get beta releases:
 * Updated French translation
 * Updated German translation
 * Updated Polish translation
+* Updated Portuguese translation
 * Updated Slovak translation
 * Updated Turkish translation
 
