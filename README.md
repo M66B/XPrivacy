@@ -571,15 +571,16 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Updated Czech translation
+* Updated Turkish translation
 
-**Version 1.9.1**
+**Version 1.9.1 BETA!**
 
 * Fetch crowd sourced restrictions (experimental)
 * Suppress warning in location manager
 * Updated Turkish translation
 
-**Version 1.9**
+**Version 1.9 stable**
 
 * Delete usage data when removing application
 * Updated Catalan translation

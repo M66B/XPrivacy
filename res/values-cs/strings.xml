@@ -14,13 +14,13 @@
     <string name="menu_report">Nahlásit problém</string>
     <string name="menu_export">Export</string>
     <string name="menu_import">Import</string>
-    <string name="menu_submit">Submit restrictions</string>
+    <string name="menu_submit">Odeslat omezení</string>
     <string name="menu_fetch">Fetch restrictions</string>
     <string name="menu_theme">Změnit téma</string>
     <string name="menu_pro">Pro verze</string>
     <string name="menu_about">O aplikaci</string>
     <string name="menu_all">Vše</string>
-    <string name="menu_clear">Clear</string>
+    <string name="menu_clear">Vyčistit</string>
     <string name="menu_app_launch">Spustit</string>
     <string name="menu_app_settings">Nastavení</string>
     <string name="menu_app_store">Obchod Play</string>
@@ -34,8 +34,8 @@
     <string name="msg_sure">Jste si jistý?</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadován restart</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_random">Náhodné hodnoty</string>
+    <string name="msg_random_boot">Generovat náhodné hodnoty při spuštění zařízení</string>
     <string name="msg_first"><b>Vývoj a testování aplikace XPrivacy probíhaly s maximální možnou péčí,
 nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a se všemi aplikacemi.
 \n\nPoužívejte pouze na vlastní riziko.</b>\n\nLicence aplikace:</string>
@@ -67,7 +67,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_phone">Telefonní číslo</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Země</string>
-    <string name="settings_operator">Operator</string>
+    <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovat dle oprávnění</string>
     <string name="settings_fsystem">Nezobrazovat systémové aplikace</string>
