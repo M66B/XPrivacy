@@ -573,6 +573,7 @@ How to get beta releases:
 
 * Updated Czech translation
 * Updated French translation
+* Updated German translation
 * Updated Slovak translation
 * Updated Turkish translation
 
