@@ -571,6 +571,11 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.9.1**
+
+* Fetch crowd sourced restrictions (experimental)
 * Suppress warning in location manager
 * Updated Turkish translation
 
