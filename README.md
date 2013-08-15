@@ -80,12 +80,13 @@ which is provided as download for both Android version 4.0, 4.1, 4.2 and 4.3.
 
 Donate a few dollars for the [pro version](http://www.faircode.eu/xprivacy/)
 
-or
+OR
 
 buy [the pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) from Google play
-(*note that you cannot fetch [crowd sourced restrictions](http://updates.faircode.eu/xprivacy) with the pro enabler, only with the pro license*)
 
-or
+(note that you cannot fetch [crowd sourced restrictions](http://updates.faircode.eu/xprivacy) with the pro enabler, only with the pro license)
+
+OR
 
 [![Flattr](http://api.flattr.com/button/flattr-badge-large.png "Flattr This!")](http://flattr.com/thing/1491130/ "The ultimate, yet easy to use, privacy manager")
 
