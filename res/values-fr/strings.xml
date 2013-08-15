@@ -22,7 +22,7 @@
     <string name="menu_all">Tous</string>
     <string name="menu_clear">Tout effacer</string>
     <string name="menu_app_launch">Lancer</string>
-    <string name="menu_app_settings">Paramètres</string>
+    <string name="menu_app_settings">Infos sur l\'application</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Choisir les comptes à autoriser</string>
     <string name="menu_contacts">Choisir les contacts à autoriser</string>
@@ -70,7 +70,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_operator">Opérateur</string>
     <string name="settings_subscriber">ID Abonné</string>
     <string name="settings_fpermission">Filtrer par permissions</string>
-    <string name="settings_fsystem">Filtrer les applications systèmes</string>
+    <string name="settings_fsystem">Masquer les applications système</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>
