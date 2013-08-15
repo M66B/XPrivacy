@@ -15,6 +15,7 @@
     <string name="menu_export">导出配置</string>
     <string name="menu_import">导入配置</string>
     <string name="menu_submit">共享规则</string>
+    <string name="menu_fetch">Fetch restrictions</string>
     <string name="menu_theme">切换主题</string>
     <string name="menu_pro">专业版</string>
     <string name="menu_about">关于</string>

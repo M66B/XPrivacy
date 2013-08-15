@@ -3,6 +3,7 @@
 	parse_str($_SERVER['QUERY_STRING']);
 	if (!empty($format) && $format == 'json') {
 		// Get data
+		$ok = true;
 		$body = file_get_contents('php://input');
 		$data = json_decode($body);
 
@@ -17,37 +18,76 @@
 			exit();
 		}
 
-		// Store/update data
-		$ok = true;
-		foreach ($data->settings as $restriction) {
-			if (empty($restriction->method))
-				$restriction->method = '';
-			$sql = "INSERT INTO xprivacy (android_id, android_sdk, xprivacy_version, application_name, package_name, package_version,";
-			$sql .= " restriction, method, restricted, used) VALUES ";
-			$sql .= "('" . $db->real_escape_string($data->android_id) . "'";
-			$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
-			$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : $db->real_escape_string($data->xprivacy_version)) . "";
-			$sql .= ",'" . $db->real_escape_string($data->application_name) . "'";
-			$sql .= ",'" . $db->real_escape_string($data->package_name) . "'";
-			$sql .= ",'" . $db->real_escape_string($data->package_version) . "'";
-			$sql .= ",'" . $db->real_escape_string($restriction->restriction) . "'";
-			$sql .= ",'" . $db->real_escape_string($restriction->method) . "'";
-			$sql .= "," . ($restriction->restricted ? 1 : 0);
-			$sql .= "," . $db->real_escape_string($restriction->used) . ")";
-			$sql .= " ON DUPLICATE KEY UPDATE";
-			$sql .= " xprivacy_version=VALUES(xprivacy_version)";
-			$sql .= ", application_name=VALUES(application_name)";
-			$sql .= ", restricted=VALUES(restricted)";
-			$sql .= ", used=VALUES(used)";
-			$sql .= ", modified=CURRENT_TIMESTAMP()";
-			if (!$db->query($sql)) {
-				$ok = false;
-				break;
+		// Store/update settings
+		if (empty($action) || $action == 'submit') {
+			foreach ($data->settings as $restriction) {
+				if (empty($restriction->method))
+					$restriction->method = '';
+				$sql = "INSERT INTO xprivacy (android_id, android_sdk, xprivacy_version, application_name, package_name, package_version,";
+				$sql .= " restriction, method, restricted, used) VALUES ";
+				$sql .= "('" . $db->real_escape_string($data->android_id) . "'";
+				$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
+				$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : $db->real_escape_string($data->xprivacy_version)) . "";
+				$sql .= ",'" . $db->real_escape_string($data->application_name) . "'";
+				$sql .= ",'" . $db->real_escape_string($data->package_name) . "'";
+				$sql .= ",'" . $db->real_escape_string($data->package_version) . "'";
+				$sql .= ",'" . $db->real_escape_string($restriction->restriction) . "'";
+				$sql .= ",'" . $db->real_escape_string($restriction->method) . "'";
+				$sql .= "," . ($restriction->restricted ? 1 : 0);
+				$sql .= "," . $db->real_escape_string($restriction->used) . ")";
+				$sql .= " ON DUPLICATE KEY UPDATE";
+				$sql .= " xprivacy_version=VALUES(xprivacy_version)";
+				$sql .= ", application_name=VALUES(application_name)";
+				$sql .= ", restricted=VALUES(restricted)";
+				$sql .= ", used=VALUES(used)";
+				$sql .= ", modified=CURRENT_TIMESTAMP()";
+				if (!$db->query($sql)) {
+					$ok = false;
+					break;
+				}
 			}
+
+			// Send reponse
+			echo json_encode(array('ok' => $ok, 'error' => $db->error));
 		}
 
-		// Send reponse
-		echo json_encode(array('ok' => $ok, 'error' => $db->error));
+		// Fetch settings
+		else if (!empty($action) && $action == 'fetch') {
+			// Check credentials
+			$signature = '';
+			if (openssl_sign($data->email, $signature, $private_key, OPENSSL_ALGO_SHA1))
+				$signature = bin2hex($signature);
+
+			if (empty($signature) || $signature != $data->signature)
+				echo json_encode(array('ok' => $ok, 'error' => 'Not authorized'));
+			else {
+				$settings = Array();
+				$sql = "SELECT restriction, method, restricted";
+				$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
+				$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
+				$sql .= " FROM xprivacy";
+				$sql .= " WHERE package_name = '" . $db->real_escape_string($data->package_name) . "'";
+				$sql .= " GROUP BY restriction, method";
+				$result = $db->query($sql);
+				if ($result) {
+					while (($row = $result->fetch_object())) {
+						$entry = Array();
+						$entry['restriction'] = $row->restriction;
+						if (!empty($row->method))
+							$entry['method'] = $row->method;
+						$entry['restricted'] = $row->restricted;
+						$entry['not_restricted'] = $row->not_restricted;
+						$settings[] = (object) $entry;
+					}
+					$result->close();
+
+				} else
+					$ok = false;
+
+				// Send reponse
+				echo json_encode(array('ok' => $ok, 'error' => $db->error, 'settings' => $settings));
+			}
+		}
 
 		// Close database
 		$db->close();
@@ -177,8 +217,8 @@
 			$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
 			$sql .= ", MAX(used) AS used";
 			$sql .= " FROM xprivacy";
-			$sql .= " GROUP BY package_name, restriction, method";
-			$sql .= " HAVING package_name = '" . $db->real_escape_string($package_name) . "'";
+			$sql .= " WHERE package_name = '" . $db->real_escape_string($package_name) . "'";
+			$sql .= " GROUP BY restriction, method";
 			$sql .= " ORDER BY restriction, method";
 			$result = $db->query($sql);
 			if ($result) {

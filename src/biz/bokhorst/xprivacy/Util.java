@@ -89,44 +89,61 @@ public class Util {
 			if (mPro)
 				return "";
 
-			// Get license file name
-			String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
-			String fileName = folder + File.separator + "XPrivacy_license.txt";
-			File licenseFile = new File(fileName);
-			if (!licenseFile.exists()) {
-				fileName = folder + File.separator + ".xprivacy" + File.separator + "XPrivacy_license.txt";
-				licenseFile = new File(fileName);
+			// Get license
+			String[] license = getLicense();
+			if (license == null)
+				return null;
+			String name = license[0];
+			String email = license[1];
+			String signature = license[2];
+
+			// Get bytes
+			byte[] bEmail = email.getBytes("UTF-8");
+			byte[] bSignature = hex2bytes(signature);
+			if (bEmail.length == 0 || bSignature.length == 0) {
+				Util.log(null, Log.ERROR, "Licensing: invalid file");
+				return null;
 			}
-			if (licenseFile.exists()) {
-				// Read license
+
+			// Verify license
+			boolean licensed = verifyData(bEmail, bSignature, getPublicKey(context));
+			if (licensed && (isDebug(context) || validFingerPrint(context)))
+				Util.log(null, Log.INFO, "Licensing: ok for " + name);
+			else
+				Util.log(null, Log.ERROR, "Licensing: invalid for " + name);
+
+			// Return result
+			if (licensed)
+				return name;
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+		return null;
+	}
+
+	public static String[] getLicense() {
+		// Get license file name
+		String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
+		String fileName = folder + File.separator + "XPrivacy_license.txt";
+		File licenseFile = new File(fileName);
+		if (!licenseFile.exists()) {
+			fileName = folder + File.separator + ".xprivacy" + File.separator + "XPrivacy_license.txt";
+			licenseFile = new File(fileName);
+		}
+		if (licenseFile.exists()) {
+			// Read license
+			try {
 				IniFile iniFile = new IniFile(licenseFile);
 				String name = iniFile.get("name", "");
 				String email = iniFile.get("email", "");
 				String signature = iniFile.get("signature", "");
-
-				// Get bytes
-				byte[] bEmail = email.getBytes("UTF-8");
-				byte[] bSignature = hex2bytes(signature);
-				if (bEmail.length == 0 || bSignature.length == 0) {
-					Util.log(null, Log.ERROR, "Licensing: invalid file");
-					return null;
-				}
-
-				// Verify license
-				boolean licensed = verifyData(bEmail, bSignature, getPublicKey(context));
-				if (licensed && (isDebug(context) || validFingerPrint(context)))
-					Util.log(null, Log.INFO, "Licensing: ok for " + name);
-				else
-					Util.log(null, Log.ERROR, "Licensing: invalid for " + name);
-
-				// Return result
-				if (licensed)
-					return name;
-			} else
-				Util.log(null, Log.INFO, "Licensing: no license folder=" + Environment.getExternalStorageDirectory());
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
+				return new String[] { name, email, signature };
+			} catch (Throwable ex) {
+				bug(null, ex);
+				return null;
+			}
+		} else
+			Util.log(null, Log.INFO, "Licensing: no license folder=" + Environment.getExternalStorageDirectory());
 		return null;
 	}
 

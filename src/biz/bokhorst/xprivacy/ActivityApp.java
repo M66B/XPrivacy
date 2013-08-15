@@ -249,6 +249,10 @@ public class ActivityApp extends Activity {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
+		// Fetch
+		boolean pro = (Util.getLicense() != null);
+		menu.findItem(R.id.menu_fetch).setVisible(pro);
+
 		// Accounts
 		boolean accountsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
 				PrivacyManager.cAccounts, null, false, false);
@@ -282,6 +286,9 @@ public class ActivityApp extends Activity {
 			return true;
 		case R.id.menu_submit:
 			optionSubmit();
+			return true;
+		case R.id.menu_fetch:
+			optionFetch();
 			return true;
 		case R.id.menu_app_launch:
 			optionLaunch();
@@ -359,6 +366,11 @@ public class ActivityApp extends Activity {
 		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
+	}
+
+	private void optionFetch() {
+		FetchTask fetchTask = new FetchTask();
+		fetchTask.executeOnExecutor(mExecutor, mAppInfo);
 	}
 
 	private void optionAccounts() {
@@ -574,12 +586,13 @@ public class ActivityApp extends Activity {
 					}
 				}
 
+				// Get data
 				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 				String android_id = Secure.getString(ActivityApp.this.getContentResolver(), Secure.ANDROID_ID);
 
 				// Encode package
 				JSONObject jRoot = new JSONObject();
-				jRoot.put("protocol_version", 2);
+				jRoot.put("protocol_version", 3);
 				jRoot.put("android_id", android_id);
 				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 				jRoot.put("xprivacy_version", pInfo.versionCode);
@@ -589,13 +602,13 @@ public class ActivityApp extends Activity {
 				jRoot.put("settings", jSettings);
 
 				// Submit
-				int TIMEOUT_MILLISEC = 30000; // = 30 seconds
+				int TIMEOUT_MILLISEC = 45000; // 45 seconds
 				HttpParams httpParams = new BasicHttpParams();
 				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
 				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 				HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-				HttpPost httpost = new HttpPost("http://updates.faircode.eu/xprivacy?format=json");
+				HttpPost httpost = new HttpPost("http://updates.faircode.eu/xprivacy?format=json&action=submit");
 				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 				httpost.setHeader("Accept", "application/json");
 				httpost.setHeader("Content-type", "application/json");
@@ -651,6 +664,96 @@ public class ActivityApp extends Activity {
 			NotificationManager notificationManager = (NotificationManager) ActivityApp.this
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.notify(NOTIFY_ID, notification);
+		}
+	}
+
+	private class FetchTask extends AsyncTask<ApplicationInfoEx, Object, Object> {
+		private ApplicationInfoEx mAppInfo;
+
+		@Override
+		protected Object doInBackground(ApplicationInfoEx... params) {
+			try {
+				// Get data
+				mAppInfo = params[0];
+				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				String android_id = Secure.getString(ActivityApp.this.getContentResolver(), Secure.ANDROID_ID);
+				String[] license = Util.getLicense();
+
+				// Encode package
+				JSONObject jRoot = new JSONObject();
+				jRoot.put("protocol_version", 3);
+				jRoot.put("android_id", android_id);
+				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
+				jRoot.put("xprivacy_version", pInfo.versionCode);
+				jRoot.put("application_name", mAppInfo.getFirstApplicationName());
+				jRoot.put("package_name", mAppInfo.getPackageName());
+				jRoot.put("package_version", mAppInfo.getVersion());
+				jRoot.put("email", license[1]);
+				jRoot.put("signature", license[2]);
+
+				// Fetch
+				int TIMEOUT_MILLISEC = 45000; // 45 seconds
+				HttpParams httpParams = new BasicHttpParams();
+				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpClient httpclient = new DefaultHttpClient(httpParams);
+
+				HttpPost httpost = new HttpPost("http://updates.faircode.eu/xprivacy.php?format=json&action=fetch");
+				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+				httpost.setHeader("Accept", "application/json");
+				httpost.setHeader("Content-type", "application/json");
+				HttpResponse response = httpclient.execute(httpost);
+				StatusLine statusLine = response.getStatusLine();
+
+				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+					// Succeeded
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					response.getEntity().writeTo(out);
+					out.close();
+					return new JSONObject(out.toString("UTF-8"));
+				} else {
+					// Failed
+					response.getEntity().getContent().close();
+					throw new IOException(statusLine.getReasonPhrase());
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return ex;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			try {
+				if (result.getClass().equals(JSONObject.class)) {
+					JSONObject status = (JSONObject) result;
+					if (status.getBoolean("ok")) {
+						// Delete existing restrictions
+						PrivacyManager.deleteRestrictions(ActivityApp.this, mAppInfo.getUid());
+
+						// Set fetched restrictions
+						JSONArray settings = status.getJSONArray("settings");
+						for (int i = 0; i < settings.length(); i++) {
+							JSONObject entry = settings.getJSONObject(i);
+							String restrictionName = entry.getString("restriction");
+							String methodName = entry.has("method") ? entry.getString("method") : null;
+							int restricted = entry.getInt("restricted");
+							int not_restricted = entry.getInt("not_restricted");
+							PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(), restrictionName,
+									methodName, restricted > not_restricted);
+							if (mPrivacyListAdapter != null)
+								mPrivacyListAdapter.notifyDataSetChanged();
+						}
+					} else
+						throw new Exception(status.getString("error"));
+				} else
+					throw (Throwable) result;
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
+				toast.show();
+			}
+			super.onPostExecute(result);
 		}
 	}
 

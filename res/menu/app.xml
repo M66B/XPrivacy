@@ -15,6 +15,10 @@
         android:title="@string/menu_submit"
         android:visible="true"/>
     <item
+        android:id="@+id/menu_fetch"
+        android:title="@string/menu_fetch"
+        android:visible="true"/>
+    <item
         android:id="@+id/menu_app_launch"
         android:title="@string/menu_app_launch"/>
     <item

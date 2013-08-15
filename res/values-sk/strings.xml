@@ -16,6 +16,7 @@
     <string name="menu_import">Importovať</string>
     <string name="menu_theme">Zmeniť tému</string>
     <string name="menu_submit">Odoslať obmedzenia</string>
+    <string name="menu_fetch">Fetch restrictions</string>
     <string name="menu_pro">Pro verzia</string>
     <string name="menu_about">O aplikácii</string>
     <string name="menu_all">Všetko</string>

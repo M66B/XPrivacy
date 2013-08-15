@@ -15,6 +15,7 @@
     <string name="menu_export">تصدير</string>
     <string name="menu_import">إستيراد</string>
     <string name="menu_submit">إرسال القيود</string>
+    <string name="menu_fetch">Fetch restrictions</string>
     <string name="menu_theme">تبديل الوضع</string>
     <string name="menu_pro">النسخة الكاملة</string>
     <string name="menu_about">عن التطبيق</string>
