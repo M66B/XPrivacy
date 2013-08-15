@@ -79,6 +79,8 @@ public class ActivityApp extends Activity {
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
 
+	public static final String BASE_URL = "http://updates.faircode.eu/xprivacy";
+
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
 
@@ -120,8 +122,7 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(View view) {
 				Intent infoIntent = new Intent(Intent.ACTION_VIEW);
-				infoIntent.setData(Uri.parse(String.format(
-						"http://updates.faircode.eu/xprivacy?application_name=%s&package_name=%s",
+				infoIntent.setData(Uri.parse(String.format(BASE_URL + "?application_name=%s&package_name=%s",
 						mAppInfo.getFirstApplicationName(), mAppInfo.getPackageName())));
 				startActivity(infoIntent);
 			}
@@ -611,7 +612,7 @@ public class ActivityApp extends Activity {
 				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 				HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-				HttpPost httpost = new HttpPost("http://updates.faircode.eu/xprivacy?format=json&action=submit");
+				HttpPost httpost = new HttpPost(BASE_URL + "?format=json&action=submit");
 				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 				httpost.setHeader("Accept", "application/json");
 				httpost.setHeader("Content-type", "application/json");
@@ -701,7 +702,7 @@ public class ActivityApp extends Activity {
 				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 				HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-				HttpPost httpost = new HttpPost("http://updates.faircode.eu/xprivacy.php?format=json&action=fetch");
+				HttpPost httpost = new HttpPost(BASE_URL + "?format=json&action=fetch");
 				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 				httpost.setHeader("Accept", "application/json");
 				httpost.setHeader("Content-type", "application/json");

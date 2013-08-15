@@ -20,12 +20,14 @@
 
 		// Store/update settings
 		if (empty($action) || $action == 'submit') {
+			if ($data->protocol_version <= 3)
+				$data->android_id = md5($data->android_id);
 			foreach ($data->settings as $restriction) {
 				if (empty($restriction->method))
 					$restriction->method = '';
-				$sql = "INSERT INTO xprivacy (android_id, android_sdk, xprivacy_version, application_name, package_name, package_version,";
+				$sql = "INSERT INTO xprivacy (android_id_md5, android_sdk, xprivacy_version, application_name, package_name, package_version,";
 				$sql .= " restriction, method, restricted, used) VALUES ";
-				$sql .= "('" . $db->real_escape_string($data->android_id) . "'";
+				$sql .= "('" . $data->android_id . "'";
 				$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
 				$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : $db->real_escape_string($data->xprivacy_version)) . "";
 				$sql .= ",'" . $db->real_escape_string($data->application_name) . "'";
