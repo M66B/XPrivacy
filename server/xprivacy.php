@@ -167,21 +167,10 @@
 <?php
 	$count = 0;
 	$votes = 0;
-	$users = 0;
 	require_once('xprivacy.inc.php');
 	$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 	if (!$db->connect_errno) {
 		if (empty($package_name)) {
-			$sql = "SELECT COUNT(DISTINCT android_id) AS users";
-			$sql .= " FROM xprivacy";
-			$sql .= " WHERE method = ''";
-			$result = $db->query($sql);
-			if ($result) {
-				if (($row = $result->fetch_object()))
-					$users = $row->users;
-				$result->close();
-			}
-
 			$sql = "SELECT application_name, package_name, package_version,";
 			$sql .= " COUNT(DISTINCT android_id) AS count";
 			$sql .= ", MAX(modified) AS modified";
@@ -254,6 +243,32 @@
 			}
 			else
 				echo $db->error;
+		}
+
+		// Number of users
+		$users = 0;
+		if (empty($package_name)) {
+			$sql = "SELECT COUNT(DISTINCT android_id) AS users";
+			$sql .= " FROM xprivacy";
+			$sql .= " WHERE method = ''";
+			$result = $db->query($sql);
+			if ($result) {
+				if (($row = $result->fetch_object()))
+					$users = $row->users;
+				$result->close();
+			}
+		}
+		else {
+			$sql = "SELECT COUNT(DISTINCT android_id) AS users";
+			$sql .= " FROM xprivacy";
+			$sql .= " WHERE method = ''";
+			$sql .= " AND package_name = '" . $db->real_escape_string($package_name) . "'";
+			$result = $db->query($sql);
+			if ($result) {
+				if (($row = $result->fetch_object()))
+					$users = $row->users;
+				$result->close();
+			}
 		}
 		$db->close();
 	}
