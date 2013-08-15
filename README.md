@@ -572,6 +572,7 @@ How to get beta releases:
 **Next release**
 
 * Updated Czech translation
+* Updated French translation
 * Updated Turkish translation
 
 **Version 1.9.1 BETA!**
