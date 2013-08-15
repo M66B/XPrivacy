@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 15, 2013 at 09:00 PM
+-- Generation Time: Aug 15, 2013 at 09:12 PM
 -- Server version: 5.5.31-1~dotdeb.0
 -- PHP Version: 5.3.27-1~dotdeb.0
 
@@ -28,7 +28,6 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `xprivacy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `android_id` text NOT NULL,
   `android_id_md5` text NOT NULL,
   `android_sdk` int(11) NOT NULL,
   `xprivacy_version` int(11) DEFAULT NULL,
@@ -41,8 +40,8 @@ CREATE TABLE IF NOT EXISTS `xprivacy` (
   `used` bigint(13) NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `restriction` (`android_id`(40),`android_id_md5`(40),`android_sdk`,`package_name`(60),`package_version`(40),`restriction`(40),`method`(40))
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=133676 ;
+  UNIQUE KEY `restriction` (`android_id_md5`(40),`android_sdk`,`package_name`(60),`package_version`(40),`restriction`(40),`method`(40))
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=134028 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
