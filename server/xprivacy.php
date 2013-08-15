@@ -153,7 +153,7 @@
 							<th style="text-align: center;">Votes</th>
 							<th>Application</th>
 							<th>Package</th>
-							<th>Version</th>
+							<th style="display: none;" class="details">Versions</th>
 							<th style="display: none;" class="details">Last update (UTC)</th>
 <?php					} else { ?>
 							<th style="text-align: center;">Votes<br />yes/no</th>
@@ -171,12 +171,13 @@
 	$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 	if (!$db->connect_errno) {
 		if (empty($package_name)) {
-			$sql = "SELECT application_name, package_name, package_version,";
+			$sql = "SELECT application_name, package_name,";
 			$sql .= " COUNT(DISTINCT android_id) AS count";
+			$sql .= ", COUNT(DISTINCT package_version) AS versions";
 			$sql .= ", MAX(modified) AS modified";
 			$sql .= " FROM xprivacy";
 			$sql .= " WHERE method = ''";
-			$sql .= " GROUP BY package_name, package_version";
+			$sql .= " GROUP BY package_name";
 			$sql .= " ORDER BY application_name";
 			$result = $db->query($sql);
 			if ($result) {
@@ -192,7 +193,7 @@
 					echo htmlentities($name, ENT_COMPAT, 'UTF-8') . '</a></td>';
 
 					echo '<td>' . htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</td>';
-					echo '<td>' . htmlentities($row->package_version, ENT_COMPAT, 'UTF-8') . '</td>';
+					echo '<td style="display: none; text-align: center;" class="details">' . htmlentities($row->versions, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
 					echo '</tr>' . PHP_EOL;
 				}
