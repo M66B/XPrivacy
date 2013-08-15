@@ -175,7 +175,7 @@
 	if (!$db->connect_errno) {
 		if (empty($package_name)) {
 			$sql = "SELECT application_name, package_name,";
-			$sql .= " COUNT(DISTINCT android_id) AS count";
+			$sql .= " COUNT(DISTINCT android_id_md5) AS count";
 			$sql .= ", COUNT(DISTINCT package_version) AS versions";
 			$sql .= ", MAX(modified) AS modified";
 			$sql .= " FROM xprivacy";
@@ -252,7 +252,7 @@
 		// Number of users
 		$users = 0;
 		if (empty($package_name)) {
-			$sql = "SELECT COUNT(DISTINCT android_id) AS users";
+			$sql = "SELECT COUNT(DISTINCT android_id_md5) AS users";
 			$sql .= " FROM xprivacy";
 			$sql .= " WHERE method = ''";
 			$result = $db->query($sql);
@@ -263,7 +263,7 @@
 			}
 		}
 		else {
-			$sql = "SELECT COUNT(DISTINCT android_id) AS users";
+			$sql = "SELECT COUNT(DISTINCT android_id_md5) AS users";
 			$sql .= " FROM xprivacy";
 			$sql .= " WHERE method = ''";
 			$sql .= " AND package_name = '" . $db->real_escape_string($package_name) . "'";
