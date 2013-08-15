@@ -58,37 +58,31 @@
         android:layout_marginTop="6dip"
         android:orientation="horizontal" >
 
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="?android:attr/listPreferredItemHeightSmall"
+            android:layout_height="?android:attr/listPreferredItemHeightSmall"
+            android:contentDescription="@string/help_application" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
 
             <ImageView
-                android:id="@+id/imgIcon"
-                android:layout_width="?android:attr/listPreferredItemHeightSmall"
-                android:layout_height="?android:attr/listPreferredItemHeightSmall"
-                android:contentDescription="@string/help_application" />
+                android:id="@+id/imgInternet"
+                android:layout_width="24dip"
+                android:layout_height="24dip"
+                android:contentDescription="@string/help_internet"
+                android:src="?attr/icon_internet" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/imgInternet"
-                    android:layout_width="24dip"
-                    android:layout_height="24dip"
-                    android:contentDescription="@string/help_internet"
-                    android:src="?attr/icon_internet" />
-
-                <ImageView
-                    android:id="@+id/imgFrozen"
-                    android:layout_width="24dip"
-                    android:layout_height="24dip"
-                    android:contentDescription="@string/help_application"
-                    android:src="?attr/icon_frozen" />
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/imgFrozen"
+                android:layout_width="24dip"
+                android:layout_height="24dip"
+                android:contentDescription="@string/help_application"
+                android:src="?attr/icon_frozen" />
         </LinearLayout>
 
         <!-- Version / package name -->
@@ -114,6 +108,7 @@
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textIsSelectable="false" />
+
         </LinearLayout>
     </LinearLayout>
 
