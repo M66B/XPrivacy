@@ -573,6 +573,8 @@ How to get beta releases:
 
 **Next release**
 
+* Submit MD5 of android ID for more privacy
+
 **Version 1.9.2 BETA!**
 
 * Fix fetching function exceptions ([issue](https://github.com/M66B/XPrivacy/issues/515))

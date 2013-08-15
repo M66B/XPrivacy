@@ -596,8 +596,8 @@ public class ActivityApp extends Activity {
 
 				// Encode package
 				JSONObject jRoot = new JSONObject();
-				jRoot.put("protocol_version", 3);
-				jRoot.put("android_id", android_id);
+				jRoot.put("protocol_version", 4);
+				jRoot.put("android_id", Util.md5(android_id));
 				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 				jRoot.put("xprivacy_version", pInfo.versionCode);
 				jRoot.put("application_name", params[0].getFirstApplicationName());

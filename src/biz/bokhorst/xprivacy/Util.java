@@ -228,6 +228,14 @@ public class Util {
 		return sb.toString();
 	}
 
+	public static String md5(String string) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		byte[] bytes = MessageDigest.getInstance("MD5").digest(string.getBytes("UTF-8"));
+		StringBuilder sb = new StringBuilder();
+		for (byte b : bytes)
+			sb.append(String.format("%02X", b));
+		return sb.toString();
+	}
+
 	@SuppressLint("DefaultLocale")
 	public static boolean validFingerPrint(Context context) {
 		try {
