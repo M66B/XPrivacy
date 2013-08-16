@@ -4,7 +4,7 @@
         <item name="icon_edit">@drawable/edit_query_holo_dark</item>
         <item name="icon_granted">@drawable/granted_holo_dark</item>
         <item name="icon_granted_grayed">@drawable/granted_grayed_holo_dark</item>
-        <item name="icon_help">@drawable/help_holo_dark</item>
+        <item name="icon_help">@android:drawable/ic_menu_help</item>
         <item name="icon_info">@drawable/info_holo_dark</item>
         <item name="icon_internet">@drawable/internet_holo_dark</item>
         <item name="icon_internet_grayed">@drawable/internet_grayed_holo_dark</item>
@@ -25,7 +25,7 @@
         <item name="icon_edit">@drawable/edit_query_holo_light</item>
         <item name="icon_granted">@drawable/granted_holo_light</item>
         <item name="icon_granted_grayed">@drawable/granted_grayed_holo_light</item>
-        <item name="icon_help">@drawable/help_holo_light</item>
+        <item name="icon_help">@android:drawable/ic_menu_help</item>
         <item name="icon_info">@drawable/info_holo_light</item>
         <item name="icon_internet">@drawable/internet_holo_light</item>
         <item name="icon_internet_grayed">@drawable/internet_grayed_holo_light</item>

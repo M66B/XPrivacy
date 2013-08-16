@@ -161,21 +161,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		spRestriction.setAdapter(spAdapter);
 		spRestriction.setOnItemSelectedListener(this);
 
-		// Handle help
-		ImageView ivHelp = (ImageView) findViewById(R.id.ivHelp);
-		ivHelp.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Dialog dialog = new Dialog(ActivityMain.this);
-				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-				dialog.setTitle(getString(R.string.help_application));
-				dialog.setContentView(R.layout.help);
-				dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
-				dialog.setCancelable(true);
-				dialog.show();
-			}
-		});
-
 		ImageView imgEdit = (ImageView) findViewById(R.id.imgEdit);
 		imgEdit.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -389,6 +374,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	public boolean onOptionsItemSelected(MenuItem item) {
 		try {
 			switch (item.getItemId()) {
+			case R.id.menu_help:
+				optionHelp();
+				return true;
 			case R.id.menu_all:
 				optionAll();
 				return true;
@@ -823,6 +811,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		dlgAbout.setCancelable(true);
 		dlgAbout.show();
+	}
+	
+	private void optionHelp() {
+		// Show help
+		Dialog dialog = new Dialog(ActivityMain.this);
+		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+		dialog.setTitle(getString(R.string.help_application));
+		dialog.setContentView(R.layout.help);
+		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+		dialog.setCancelable(true);
+		dialog.show();
 	}
 
 	// Tasks

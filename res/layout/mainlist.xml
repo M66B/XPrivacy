@@ -39,14 +39,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1" />
-
-        <ImageView
-            android:id="@+id/ivHelp"
-            android:layout_width="32dip"
-            android:layout_height="32dip"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/help_application"
-            android:src="?attr/icon_help" />
     </LinearLayout>
 
     <!-- Filtering -->

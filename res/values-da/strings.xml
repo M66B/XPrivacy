@@ -19,6 +19,7 @@
     <string name="menu_theme">Skift Tema</string>
     <string name="menu_pro">Pro version</string>
     <string name="menu_about">Om</string>
+    <string name="menu_help">Help</string>
     <string name="menu_all">Alle</string>
     <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Start</string>

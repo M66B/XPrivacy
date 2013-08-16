@@ -19,6 +19,7 @@
     <string name="menu_theme">Cambiar tema</string>
     <string name="menu_pro">Versión Pro</string>
     <string name="menu_about">Acerca de</string>
+    <string name="menu_help">Help</string>
     <string name="menu_all">Todas</string>
     <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Ejecutar</string>
