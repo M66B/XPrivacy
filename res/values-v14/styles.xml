@@ -1,7 +1,6 @@
 <resources>
 
     <style name="CustomTheme" parent="android:Theme.Holo">
-        <item name="icon_edit">@drawable/edit_query_holo_dark</item>
         <item name="icon_granted">@drawable/granted_holo_dark</item>
         <item name="icon_granted_grayed">@drawable/granted_grayed_holo_dark</item>
         <item name="icon_help">@android:drawable/ic_menu_help</item>
@@ -22,7 +21,6 @@
     </style>
 
     <style name="CustomTheme.Light" parent="android:Theme.Holo.Light.DarkActionBar">
-        <item name="icon_edit">@drawable/edit_query_holo_light</item>
         <item name="icon_granted">@drawable/granted_holo_light</item>
         <item name="icon_granted_grayed">@drawable/granted_grayed_holo_light</item>
         <item name="icon_help">@android:drawable/ic_menu_help</item>

@@ -161,15 +161,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		spRestriction.setAdapter(spAdapter);
 		spRestriction.setOnItemSelectedListener(this);
 
-		ImageView imgEdit = (ImageView) findViewById(R.id.imgEdit);
-		imgEdit.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Toast toast = Toast.makeText(ActivityMain.this, getString(R.string.msg_edit), Toast.LENGTH_LONG);
-				toast.show();
-			}
-		});
-
 		// Setup used filter
 		final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
 		if (savedInstanceState != null && savedInstanceState.containsKey("Used")) {
@@ -818,7 +809,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		Dialog dialog = new Dialog(ActivityMain.this);
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dialog.setTitle(getString(R.string.help_application));
-		dialog.setContentView(R.layout.help);
+		dialog.setContentView(R.layout.helpmain);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		dialog.setCancelable(true);
 		dialog.show();

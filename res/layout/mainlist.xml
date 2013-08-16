@@ -48,21 +48,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <RelativeLayout
-            android:layout_width="?android:attr/listPreferredItemHeightSmall"
-            android:layout_height="24dip"
-            android:layout_gravity="center_vertical"
-            android:paddingLeft="6dip" >
-
-            <ImageView
-                android:id="@+id/imgEdit"
-                android:layout_width="24dip"
-                android:layout_height="24dip"
-                android:layout_centerInParent="true"
-                android:contentDescription="@string/help_application"
-                android:src="?attr/icon_edit" />
-        </RelativeLayout>
-
         <ImageView
             android:id="@+id/imgUsed"
             android:layout_width="24dip"
