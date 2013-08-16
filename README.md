@@ -574,6 +574,7 @@ How to get beta releases:
 **Next release**
 
 * Submit MD5 of android ID for more privacy
+* Updated Simplified Chinese translation
 
 **Version 1.9.2 BETA!**
 
