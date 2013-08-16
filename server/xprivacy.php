@@ -1,5 +1,6 @@
 <?php
 	// Check if submit
+	$starttime = microtime(true);
 	parse_str($_SERVER['QUERY_STRING']);
 	if (!empty($format) && $format == 'json') {
 		// Get data
@@ -279,7 +280,7 @@
 ?>
 					</tbody>
 				</table>
-				<p class="text-muted"><?php echo $count; ?> rows, <?php echo $votes; ?> votes, <?php echo $users; ?> users</p>
+				<p class="text-muted"><?php echo $count; ?> rows, <?php echo $votes; ?> votes, <?php echo $users; ?> users, <?php echo round(microtime(true) - $starttime, 3); ?> sec</p>
 			</div>
 
 			<div class="container">
