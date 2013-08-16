@@ -574,6 +574,7 @@ How to get beta releases:
 **Next release**
 
 * Submit MD5 of android ID for more privacy
+* Layout/menu/text improvements, thanks @tonymanou
 * Updated English translation
 * Updated Simplified Chinese translation
 
