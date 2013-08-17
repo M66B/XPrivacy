@@ -290,21 +290,23 @@
 		}
 
 		// Get number of records
-		$sql = "SELECT COUNT(*) AS count";
-		$sql .= ", MIN(modified) AS first";
-		$sql .= ", MAX(modified) AS last";
-		$sql .= " FROM xprivacy";
-		$result = $db->query($sql);
-		if ($result) {
-			if (($row = $result->fetch_object())) {
-				$records = $row->count;
-				$first = $row->first;
-				$last = $row->last;
+		if (empty($package_name)) {
+			$sql = "SELECT COUNT(*) AS count";
+			$sql .= ", MIN(modified) AS first";
+			$sql .= ", MAX(modified) AS last";
+			$sql .= " FROM xprivacy";
+			$result = $db->query($sql);
+			if ($result) {
+				if (($row = $result->fetch_object())) {
+					$records = $row->count;
+					$first = $row->first;
+					$last = $row->last;
+				}
+				$result->close();
 			}
-			$result->close();
+			else
+				echo $db->error;
 		}
-		else
-			echo $db->error;
 
 		// Close database connection
 		$db->close();
@@ -313,10 +315,21 @@
 					</tbody>
 				</table>
 				<p class="text-muted">
-					<?php echo $records; ?> records, <?php echo $count; ?> rows, <?php echo $votes; ?> votes, <?php echo $users; ?> users, <?php echo round(microtime(true) - $starttime, 3); ?> sec
 <?php
-				if (empty($package_name))
+				$elapse = round(microtime(true) - $starttime, 3);
+				if (empty($package_name)) {
+					$appvote = round($votes / $count, 2);
+					$uservote = round($votes / $users, 2);
+					echo $records . ' records';
+					echo ', ' . $count . ' applications';
+					echo ', ' . $votes . ' votes';
+					echo ', ' . $appvote . ' votes/application';
+					echo ', ' . $users . ' users';
+					echo ', ' . $uservote . ' votes/user';
+					echo ', ' . $elapse . ' seconds';
 					echo '<br />First entry: ' . $first . ' last update: ' . $last . ' UTC';
+				} else
+					echo $count . ' restrictions, ' . $votes . ' votes, ' . $users . ' users, ' . $elapse . ' seconds';
 ?>
 				</p>
 			</div>
