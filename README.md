@@ -334,9 +334,13 @@ This may result in error messages and even in forced closes of the application.
 
 Filtering:
 
-* Tap the grayed triangle to filter applications that used the data in the selected data category
+* Tap the grayed triangle icon to filter applications that used the data in the selected data category
+* Tap the grayed globe icon to filter applications that have internet permission
 * Type in the edit box to filter applications by name (tap the cross to clear)
 * Tick the check box to filter applications with the selected data category restricted
+
+Applications are by default filtered by having Android permissions and being not system applications.
+These filters can be disabled in the settings.
 
 Exceptions:
 
