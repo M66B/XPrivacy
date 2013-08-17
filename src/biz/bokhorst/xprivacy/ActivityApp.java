@@ -51,6 +51,7 @@ import android.provider.Settings.Secure;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -732,24 +733,27 @@ public class ActivityApp extends Activity {
 				if (result.getClass().equals(JSONObject.class)) {
 					JSONObject status = (JSONObject) result;
 					if (status.getBoolean("ok")) {
-						// Delete existing restrictions
-						PrivacyManager.deleteRestrictions(ActivityApp.this, mAppInfo.getUid());
-
-						// Set fetched restrictions
 						JSONArray settings = status.getJSONArray("settings");
-						for (int i = 0; i < settings.length(); i++) {
-							JSONObject entry = settings.getJSONObject(i);
-							String restrictionName = entry.getString("restriction");
-							String methodName = entry.has("method") ? entry.getString("method") : null;
-							int voted_restricted = entry.getInt("restricted");
-							int voted_not_restricted = entry.getInt("not_restricted");
-							boolean restricted = (voted_restricted > voted_not_restricted);
-							if (methodName == null || restricted)
-								PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(),
-										restrictionName, methodName, restricted);
-							if (mPrivacyListAdapter != null)
-								mPrivacyListAdapter.notifyDataSetChanged();
-						}
+						if (settings.length() > 0) {
+							// Delete existing restrictions
+							PrivacyManager.deleteRestrictions(ActivityApp.this, mAppInfo.getUid());
+
+							// Set fetched restrictions
+							for (int i = 0; i < settings.length(); i++) {
+								JSONObject entry = settings.getJSONObject(i);
+								String restrictionName = entry.getString("restriction");
+								String methodName = entry.has("method") ? entry.getString("method") : null;
+								int voted_restricted = entry.getInt("restricted");
+								int voted_not_restricted = entry.getInt("not_restricted");
+								boolean restricted = (voted_restricted > voted_not_restricted);
+								if (methodName == null || restricted)
+									PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(),
+											restrictionName, methodName, restricted);
+								if (mPrivacyListAdapter != null)
+									mPrivacyListAdapter.notifyDataSetChanged();
+							}
+						} else
+							Util.log(null, Log.INFO, "No restrictions available");
 					} else
 						throw new Exception(status.getString("error"));
 				} else

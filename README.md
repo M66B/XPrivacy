@@ -580,6 +580,7 @@ How to get beta releases:
 
 * Submit MD5 of android ID for more privacy
 * Layout/menu/text improvements, thanks @tonymanou
+* Do not clear existing restrictions when no restrictions fetched
 * Updated English translation
 * Updated Simplified Chinese translation
 
