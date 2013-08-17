@@ -162,7 +162,7 @@
 							<th>Package</th>
 							<th style="display: none;" class="details">Versions</th>
 							<th style="display: none;" class="details">Last update (UTC)</th>
-							<th style="display: none;" class="details">Updates</th>
+							<th style="display: none; text-align: center;" class="details">Max. updates</th>
 <?php					} else { ?>
 							<th style="text-align: center;">Votes<br />deny/allow</th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
@@ -212,7 +212,7 @@
 					echo '<td>' . htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="display: none; text-align: center;" class="details">' . htmlentities($row->versions, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
-					echo '<td style="display: none;" class="details">' . $row->updates . '</td>';
+					echo '<td style="display: none; text-align: center;" class="details">' . $row->updates . '</td>';
 					echo '</tr>' . PHP_EOL;
 				}
 				$result->close();
