@@ -90,6 +90,7 @@
 					// Update number of fetches
 					$sql = "UPDATE xprivacy";
 					$sql .= " SET fetches=fetches+1";
+					$sql .= ", accessed=CURRENT_TIMESTAMP()";
 					$sql .= " WHERE package_name = '" . $db->real_escape_string($data->package_name) . "'";
 					$db->query($sql);
 				} else
@@ -167,6 +168,7 @@
 							<th>Package</th>
 							<th style="display: none;" class="details">Versions</th>
 							<th style="display: none;" class="details">Last update (UTC)</th>
+							<th style="display: none;" class="details">Last access (UTC)</th>
 							<th style="display: none; text-align: center;" class="details">Max. updates</th>
 							<th style="display: none; text-align: center;" class="details">Fetches</th>
 <?php					} else { ?>
@@ -174,7 +176,8 @@
 							<th style="display: none; text-align: center;" class="details">Used</th>
 							<th>Restriction</th>
 							<th style="display: none;" class="details">Method</th>
-							<th style="display: none;" class="details">Modified</th>
+							<th style="display: none;" class="details">Last update (UTC)</th>
+							<th style="display: none;" class="details">Last access (UTC)</th>
 							<th style="display: none; text-align: center;" class="details">Updates</th>
 							<th style="display: none; text-align: center;" class="details">Fetches</th>
 <?php					} ?>
@@ -200,6 +203,7 @@
 			$sql .= " COUNT(DISTINCT android_id_md5) AS count";
 			$sql .= ", COUNT(DISTINCT package_version) AS versions";
 			$sql .= ", MAX(modified) AS modified";
+			$sql .= ", MAX(accessed) AS accessed";
 			$sql .= ", MAX(updates) AS updates";
 			$sql .= ", MAX(fetches) AS fetches";
 			$sql .= " FROM xprivacy";
@@ -222,6 +226,7 @@
 					echo '<td>' . htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="display: none; text-align: center;" class="details">' . htmlentities($row->versions, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
+					echo '<td style="display: none;" class="details">' . $row->accessed . '</td>';
 					echo '<td style="display: none; text-align: center;" class="details">' . ($row->updates > 1 ? $row->updates : '-'). '</td>';
 					echo '<td style="display: none; text-align: center;" class="details">' . ($row->fetches > 0 ? $row->fetches : '-') . '</td>';
 					echo '</tr>' . PHP_EOL;
@@ -237,8 +242,9 @@
 			$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
 			$sql .= ", MAX(used) AS used";
 			$sql .= ", MAX(modified) AS modified";
+			$sql .= ", MAX(accessed) AS accessed";
 			$sql .= ", SUM(updates) AS updates";
-			$sql .= ", SUM(fetches) AS fetches";
+			$sql .= ", MAX(fetches) AS fetches";
 			$sql .= " FROM xprivacy";
 			$sql .= " WHERE package_name = '" . $db->real_escape_string($package_name) . "'";
 			$sql .= " GROUP BY restriction, method";
@@ -273,6 +279,7 @@
 					echo '<td style="display: none;" class="details">' . htmlentities($row->method, ENT_COMPAT, 'UTF-8') . '</td>';
 
 					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
+					echo '<td style="display: none;" class="details">' . $row->accessed . '</td>';
 					echo '<td style="display: none; text-align: center;" class="details">' . ($row->updates > 1 ? $row->updates : '-'). '</td>';
 					echo '<td style="display: none; text-align: center;" class="details">' . ($row->fetches > 0 ? $row->fetches : '-') . '</td>';
 					echo '</tr>' . PHP_EOL;
