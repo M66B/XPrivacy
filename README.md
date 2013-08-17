@@ -551,6 +551,11 @@ No.
 
 Read [here](http://forum.xda-developers.com/showpost.php?p=44427089&postcount=2433) why.
 
+**(33) What is 'template' used for?**
+
+The template is used to apply restrictions to newly installed applications
+and when you use the menu *All*.
+
 Support
 -------
 
