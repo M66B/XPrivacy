@@ -172,6 +172,8 @@
 	$count = 0;
 	$votes = 0;
 	$records = 0;
+	$first = null;
+	$last = null;
 
 	// Connect to database
 	require_once('xprivacy.inc.php');
@@ -288,11 +290,17 @@
 		}
 
 		// Get number of records
-		$sql = "SELECT COUNT(*) AS count FROM xprivacy";
+		$sql = "SELECT COUNT(*) AS count";
+		$sql .= ", MIN(modified) AS first";
+		$sql .= ", MAX(modified) AS last";
+		$sql .= " FROM xprivacy";
 		$result = $db->query($sql);
 		if ($result) {
-			if (($row = $result->fetch_object()))
+			if (($row = $result->fetch_object())) {
 				$records = $row->count;
+				$first = $row->first;
+				$last = $row->last;
+			}
 			$result->close();
 		}
 		else
@@ -304,7 +312,11 @@
 ?>
 					</tbody>
 				</table>
-				<p class="text-muted"><?php echo $records; ?> records, <?php echo $count; ?> rows, <?php echo $votes; ?> votes, <?php echo $users; ?> users, <?php echo round(microtime(true) - $starttime, 3); ?> sec</p>
+				<p class="text-muted">
+					<?php echo $records; ?> records, <?php echo $count; ?> rows, <?php echo $votes; ?> votes, <?php echo $users; ?> users, <?php echo round(microtime(true) - $starttime, 3); ?> sec
+					<br />
+					First entry: <?php echo $first; ?>, last update: <?php echo $last; ?> UTC
+				</p>
 			</div>
 
 			<div class="container">
