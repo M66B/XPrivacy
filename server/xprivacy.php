@@ -23,7 +23,7 @@
 		if (empty($action) || $action == 'submit') {
 			if ($data->protocol_version <= 3)
 				$data->android_id = md5($data->android_id);
-			if ($data->application_name)
+			if (empty($data->application_name))
 				$data->application_name = '';
 			foreach ($data->settings as $restriction) {
 				if (empty($restriction->method))
@@ -46,6 +46,7 @@
 				$sql .= ", restricted=VALUES(restricted)";
 				$sql .= ", used=VALUES(used)";
 				$sql .= ", modified=CURRENT_TIMESTAMP()";
+				$sql .= ", updates=updates+1";
 				if (!$db->query($sql)) {
 					$ok = false;
 					break;
@@ -161,6 +162,7 @@
 							<th>Package</th>
 							<th style="display: none;" class="details">Versions</th>
 							<th style="display: none;" class="details">Last update (UTC)</th>
+							<th style="display: none;" class="details">Updates</th>
 <?php					} else { ?>
 							<th style="text-align: center;">Votes<br />deny/allow</th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
@@ -189,6 +191,7 @@
 			$sql .= " COUNT(DISTINCT android_id_md5) AS count";
 			$sql .= ", COUNT(DISTINCT package_version) AS versions";
 			$sql .= ", MAX(modified) AS modified";
+			$sql .= ", MAX(updates) AS updates";
 			$sql .= " FROM xprivacy";
 			$sql .= " WHERE method = ''";
 			$sql .= " GROUP BY package_name";
@@ -209,6 +212,7 @@
 					echo '<td>' . htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="display: none; text-align: center;" class="details">' . htmlentities($row->versions, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
+					echo '<td style="display: none;" class="details">' . $row->updates . '</td>';
 					echo '</tr>' . PHP_EOL;
 				}
 				$result->close();
