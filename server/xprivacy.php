@@ -23,6 +23,8 @@
 		if (empty($action) || $action == 'submit') {
 			if ($data->protocol_version <= 3)
 				$data->android_id = md5($data->android_id);
+			if ($data->application_name)
+				$data->application_name = '';
 			foreach ($data->settings as $restriction) {
 				if (empty($restriction->method))
 					$restriction->method = '';
