@@ -314,8 +314,10 @@
 				</table>
 				<p class="text-muted">
 					<?php echo $records; ?> records, <?php echo $count; ?> rows, <?php echo $votes; ?> votes, <?php echo $users; ?> users, <?php echo round(microtime(true) - $starttime, 3); ?> sec
-					<br />
-					First entry: <?php echo $first; ?>, last update: <?php echo $last; ?> UTC
+<?php
+				if (empty($package_name))
+					echo '<br />First entry: ' . $first . ' last update: ' . $last . ' UTC';
+?>
 				</p>
 			</div>
 
