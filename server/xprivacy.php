@@ -87,6 +87,11 @@
 					}
 					$result->close();
 
+					// Update number of fetches
+					$sql = "UPDATE xprivacy";
+					$sql .= " SET fetches=fetches+1";
+					$sql .= " WHERE package_name = '" . $db->real_escape_string($data->package_name) . "'";
+					$db->query($sql);
 				} else
 					$ok = false;
 
@@ -163,6 +168,7 @@
 							<th style="display: none;" class="details">Versions</th>
 							<th style="display: none;" class="details">Last update (UTC)</th>
 							<th style="display: none; text-align: center;" class="details">Max. updates</th>
+							<th style="display: none; text-align: center;" class="details">Fetches</th>
 <?php					} else { ?>
 							<th style="text-align: center;">Votes<br />deny/allow</th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
@@ -192,6 +198,7 @@
 			$sql .= ", COUNT(DISTINCT package_version) AS versions";
 			$sql .= ", MAX(modified) AS modified";
 			$sql .= ", MAX(updates) AS updates";
+			$sql .= ", MAX(fetches) AS fetches";
 			$sql .= " FROM xprivacy";
 			$sql .= " WHERE method = ''";
 			$sql .= " GROUP BY package_name";
@@ -213,6 +220,7 @@
 					echo '<td style="display: none; text-align: center;" class="details">' . htmlentities($row->versions, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
 					echo '<td style="display: none; text-align: center;" class="details">' . $row->updates . '</td>';
+					echo '<td style="display: none; text-align: center;" class="details">' . $row->fetches . '</td>';
 					echo '</tr>' . PHP_EOL;
 				}
 				$result->close();
