@@ -171,10 +171,16 @@
 <?php
 	$count = 0;
 	$votes = 0;
+	$records = 0;
+
+	// Connect to database
 	require_once('xprivacy.inc.php');
 	$db = new mysqli($db_host, $db_user, $db_password, $db_database);
-	if (!$db->connect_errno) {
+	if ($db->connect_errno)
+		echo $db->connect_error;
+	else {
 		if (empty($package_name)) {
+			// Get application list
 			$sql = "SELECT application_name, package_name,";
 			$sql .= " COUNT(DISTINCT android_id_md5) AS count";
 			$sql .= ", COUNT(DISTINCT package_version) AS versions";
@@ -206,6 +212,7 @@
 			else
 				echo $db->error;
 		} else {
+			// Get application details
 			$sql = "SELECT restriction, method, restricted";
 			$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 			$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
@@ -250,7 +257,7 @@
 				echo $db->error;
 		}
 
-		// Number of users
+		// Get number of users
 		$users = 0;
 		if (empty($package_name)) {
 			$sql = "SELECT COUNT(DISTINCT android_id_md5) AS users";
@@ -262,6 +269,8 @@
 					$users = $row->users;
 				$result->close();
 			}
+			else
+				echo $db->error;
 		}
 		else {
 			$sql = "SELECT COUNT(DISTINCT android_id_md5) AS users";
@@ -274,13 +283,28 @@
 					$users = $row->users;
 				$result->close();
 			}
+			else
+				echo $db->error;
 		}
+
+		// Get number of records
+		$sql = "SELECT COUNT(*) AS count FROM xprivacy";
+		$result = $db->query($sql);
+		if ($result) {
+			if (($row = $result->fetch_object()))
+				$records = $row->count;
+			$result->close();
+		}
+		else
+			echo $db->error;
+
+		// Close database connection
 		$db->close();
 	}
 ?>
 					</tbody>
 				</table>
-				<p class="text-muted"><?php echo $count; ?> rows, <?php echo $votes; ?> votes, <?php echo $users; ?> users, <?php echo round(microtime(true) - $starttime, 3); ?> sec</p>
+				<p class="text-muted"><?php echo $records; ?> records, <?php echo $count; ?> rows, <?php echo $votes; ?> votes, <?php echo $users; ?> users, <?php echo round(microtime(true) - $starttime, 3); ?> sec</p>
 			</div>
 
 			<div class="container">
