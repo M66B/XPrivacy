@@ -174,6 +174,9 @@
 							<th style="display: none; text-align: center;" class="details">Used</th>
 							<th>Restriction</th>
 							<th style="display: none;" class="details">Method</th>
+							<th style="display: none;" class="details">Modified</th>
+							<th style="display: none; text-align: center;" class="details">Updates</th>
+							<th style="display: none; text-align: center;" class="details">Fetches</th>
 <?php					} ?>
 						</tr>
 					</thead>
@@ -219,8 +222,8 @@
 					echo '<td>' . htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="display: none; text-align: center;" class="details">' . htmlentities($row->versions, ENT_COMPAT, 'UTF-8') . '</td>';
 					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
-					echo '<td style="display: none; text-align: center;" class="details">' . $row->updates . '</td>';
-					echo '<td style="display: none; text-align: center;" class="details">' . $row->fetches . '</td>';
+					echo '<td style="display: none; text-align: center;" class="details">' . ($row->updates > 1 ? $row->updates : '-'). '</td>';
+					echo '<td style="display: none; text-align: center;" class="details">' . ($row->fetches > 0 ? $row->fetches : '-') . '</td>';
 					echo '</tr>' . PHP_EOL;
 				}
 				$result->close();
@@ -233,6 +236,9 @@
 			$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 			$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
 			$sql .= ", MAX(used) AS used";
+			$sql .= ", MAX(modified) AS modified";
+			$sql .= ", SUM(updates) AS updates";
+			$sql .= ", SUM(fetches) AS fetches";
 			$sql .= " FROM xprivacy";
 			$sql .= " WHERE package_name = '" . $db->real_escape_string($package_name) . "'";
 			$sql .= " GROUP BY restriction, method";
@@ -265,6 +271,10 @@
 					htmlentities($row->restriction, ENT_COMPAT, 'UTF-8') . '</a>') . '</td>';
 
 					echo '<td style="display: none;" class="details">' . htmlentities($row->method, ENT_COMPAT, 'UTF-8') . '</td>';
+
+					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
+					echo '<td style="display: none; text-align: center;" class="details">' . ($row->updates > 1 ? $row->updates : '-'). '</td>';
+					echo '<td style="display: none; text-align: center;" class="details">' . ($row->fetches > 0 ? $row->fetches : '-') . '</td>';
 					echo '</tr>' . PHP_EOL;
 				}
 				$result->close();
