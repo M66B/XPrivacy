@@ -584,7 +584,7 @@ How to get beta releases:
 
 * Submit MD5 of android ID for more privacy
 * Layout/menu/text improvements, thanks [tonymanou](https://github.com/tonymanou)
-* Do not clear existing restrictions when no restrictions fetched
+* Do not clear existing restrictions when no restrictions fetched ([issue](https://github.com/M66B/XPrivacy/issues/523))
 * Updated English translation
 * Updated Simplified Chinese translation
 
