@@ -583,7 +583,7 @@ How to get beta releases:
 **Version 1.9.3 BETA!**
 
 * Submit MD5 of android ID for more privacy
-* Layout/menu/text improvements, thanks @tonymanou
+* Layout/menu/text improvements, thanks [tonymanou](https://github.com/tonymanou)
 * Do not clear existing restrictions when no restrictions fetched
 * Updated English translation
 * Updated Simplified Chinese translation
