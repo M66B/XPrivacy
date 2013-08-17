@@ -61,6 +61,8 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_view">Vue (navigateur)</string>
     <string name="title_category">Catégorie:</string>
     <string name="title_restrict">Cocher pour restreindre:</string>
+    <!-- Do not translate 'choice' -->
+    <string name="title_filters">{0,choice,0#Pas de filtre actif|1#1 filtre actif|1&lt;{0} filtres actifs}</string>
     <string name="settings_serial">Numéro de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>

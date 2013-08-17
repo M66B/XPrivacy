@@ -61,6 +61,8 @@
     <string name="restrict_view">Widok (przeglądarka)</string>
     <string name="title_category">Kategoria:</string>
     <string name="title_restrict">Zaznacz aby zablokować:</string>
+    <!-- Do not translate 'choice' -->
+    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>

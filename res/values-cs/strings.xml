@@ -61,6 +61,8 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="restrict_view">Zobrazení (v prohlížeči)</string>
     <string name="title_category">Kategorie:</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
+    <!-- Do not translate 'choice' -->
+    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zeměpisná šířka</string>
     <string name="settings_lon">Zeměpisná délka</string>

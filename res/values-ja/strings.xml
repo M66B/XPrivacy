@@ -61,6 +61,8 @@
     <string name="restrict_view">表示 (ブラウザ)</string>
     <string name="title_category">カテゴリ:</string>
     <string name="title_restrict">チェックで制限:</string>
+    <!-- Do not translate 'choice' -->
+    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>

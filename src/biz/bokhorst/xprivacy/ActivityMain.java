@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -64,6 +65,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -75,6 +77,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private AppListAdapter mAppAdapter = null;
 	private boolean mUsed = false;
 	private boolean mInternet = false;
+	private boolean mFiltersHidden = false;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int ACTIVITY_EXPORT = 1;
@@ -227,6 +230,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Setup restriction filter
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 		cbFilter.setOnCheckedChangeListener(this);
+		
+		// Hide filters
+		toggleFiltersVisibility();
+		
+		// Handle toggle filters visibility
+		ImageView imgFilterToggle = (ImageView) findViewById(R.id.imgToggleFilters);
+		imgFilterToggle.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				toggleFiltersVisibility();
+			}
+		});
 
 		// Start task to get app list
 		AppListTask appListTask = new AppListTask();
@@ -813,6 +828,49 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		dialog.setCancelable(true);
 		dialog.show();
+	}
+	
+	private void toggleFiltersVisibility() {
+		ImageView imgFilterToggle = (ImageView) findViewById(R.id.imgToggleFilters);
+		TextView tvFilters = (TextView)findViewById(R.id.tvFilterDetail);
+		LinearLayout llCategory = (LinearLayout)findViewById(R.id.llCategory);
+		LinearLayout llFilters = (LinearLayout)findViewById(R.id.llFilters);
+
+		if (mFiltersHidden) {
+			// Change visibility
+			tvFilters.setVisibility(TextView.GONE);
+			llCategory.setVisibility(LinearLayout.VISIBLE);
+			llFilters.setVisibility(LinearLayout.VISIBLE);
+		} else {
+			int numberOfFilters = 0;
+
+			// Count number of activated filters
+			if (spRestriction.getSelectedItemPosition() > 0)
+				numberOfFilters++;
+			if (mUsed)
+				numberOfFilters++;
+			if (mInternet)
+				numberOfFilters++;
+			EditText etFilter = (EditText) findViewById(R.id.etFilter);
+			if (etFilter.getText().length() > 0)
+				numberOfFilters++;
+			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+			if (cbFilter.isChecked())
+				numberOfFilters++;
+
+			// Change text
+			String filters = getResources().getString(R.string.title_filters);
+			tvFilters.setText(MessageFormat.format(filters, numberOfFilters));
+
+			// Change visibility
+			tvFilters.setVisibility(TextView.VISIBLE);
+			llCategory.setVisibility(LinearLayout.GONE);
+			llFilters.setVisibility(LinearLayout.GONE);
+		}
+		
+		imgFilterToggle.setImageDrawable(getResources().getDrawable(
+				getThemed(mFiltersHidden ? R.attr.icon_expander_maximized : R.attr.icon_expander_minimized)));
+		mFiltersHidden = !mFiltersHidden;
 	}
 
 	// Tasks

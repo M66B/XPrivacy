@@ -61,6 +61,8 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="restrict_view">View (webbläsare)</string>
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Markera för att blockera:</string>
+    <!-- Do not translate 'choice' -->
+    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
