@@ -76,8 +76,10 @@
 			if (openssl_sign($data->email, $signature, $private_key, OPENSSL_ALGO_SHA1))
 				$signature = bin2hex($signature);
 
-			if (empty($signature) || $signature != $data->signature)
-				echo json_encode(array('ok' => $ok, 'error' => 'Not authorized'));
+			if (empty($signature) || $signature != $data->signature) {
+				error_log(date('c') . ' ' . $data->email . PHP_EOL, 3, $log_file);
+				echo json_encode(array('ok' => false, 'error' => 'Not authorized'));
+			}
 			else {
 				$settings = Array();
 				$sql = "SELECT restriction, method, restricted";
@@ -363,13 +365,12 @@
 				if (empty($package_name)) {
 					$appvote = round($votes / $count, 2);
 					$uservote = round($votes / $users, 2);
-					echo $records . ' records';
-					echo ', ' . $count . ' applications';
-					echo ', ' . $votes . ' votes';
-					echo ', ' . $appvote . ' votes/application';
-					echo ', ' . $users . ' users';
+					echo $appvote . ' votes/application';
 					echo ', ' . $uservote . ' votes/user';
-					echo ', ' . $elapse . ' seconds';
+					echo '<br />' . $records . ' records';
+					echo ', ' . $votes . ' votes';
+					echo ', ' . $count . ' applications';
+					echo ', ' . $users . ' users';
 					echo '<br />First entry: ' . $first . ' last update: ' . $last . ' UTC';
 				} else
 					echo $count . ' restrictions, ' . $votes . ' votes, ' . $users . ' users, ' . $elapse . ' seconds';
