@@ -860,6 +860,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Change text
 			String filters = getResources().getString(R.string.title_filters);
+			/* As Android has a bug with the 'zero' case in plural strings,
+			   we need to use a MessageFormat in a normal string. */
 			tvFilters.setText(MessageFormat.format(filters, numberOfFilters));
 
 			// Change visibility
