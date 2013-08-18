@@ -131,6 +131,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/cbFPermission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_fpermission"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <CheckBox
+            android:id="@+id/cbFSystem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_fsystem"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
     </LinearLayout>
 
     <!-- Title -->
