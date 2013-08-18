@@ -232,6 +232,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		cbFilter.setOnCheckedChangeListener(this);
 
 		// Hide filters
+		if (savedInstanceState != null && savedInstanceState.containsKey("Filters")) {
+			mFiltersHidden = !savedInstanceState.getBoolean("Filters");
+		}
 		toggleFiltersVisibility();
 
 		// Handle toggle filters visibility
@@ -271,6 +274,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putBoolean("Used", mUsed);
 		outState.putBoolean("Internet", mInternet);
+		outState.putBoolean("Filters", mFiltersHidden);
 		super.onSaveInstanceState(outState);
 	}
 
