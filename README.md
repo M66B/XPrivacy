@@ -582,6 +582,7 @@ How to get beta releases:
 
 **Next release**
 
+* Restrict [NfcAdapter](http://developer.android.com/reference/android/nfc/NfcAdapter.html)
 * Changed [ALL](http://en.wikipedia.org/wiki/255.255.255.255) into [ANY](http://en.wikipedia.org/wiki/0.0.0.0)
 * Updated Slovenian translation
 
