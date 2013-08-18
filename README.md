@@ -339,7 +339,7 @@ Filtering:
 * Type in the edit box to filter applications by name (tap the cross to clear)
 * Tick the check box to filter applications with the selected data category restricted
 
-Applications are by default filtered by having Android permissions and being not system applications.
+Applications are by default filtered by having Android permissions and not being system applications.
 These filters can be disabled in the settings.
 
 Exceptions:
@@ -582,6 +582,7 @@ How to get beta releases:
 
 **Next release**
 
+* Changed [ALL](http://en.wikipedia.org/wiki/255.255.255.255) into [ANY](http://en.wikipedia.org/wiki/0.0.0.0)
 * Updated Slovenian translation
 
 **Version 1.9.3 BETA!**

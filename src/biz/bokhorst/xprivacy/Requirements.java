@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.Inet4Address;
 import java.net.InterfaceAddress;
 
 import android.app.AlertDialog;
@@ -180,6 +181,13 @@ public class Requirements {
 			} catch (Throwable ex) {
 				sendSupportInfo(ex.toString(), context);
 			}
+
+		// Check Inet4Address/ANY
+		try {
+			Inet4Address.class.getDeclaredField("ANY");
+		} catch (Throwable ex) {
+			reportClass(Inet4Address.class, context);
+		}
 	}
 
 	private static boolean checkField(Object obj, String fieldName, Class<?> expectedClass) {

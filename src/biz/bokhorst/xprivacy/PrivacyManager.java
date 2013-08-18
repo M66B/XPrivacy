@@ -738,7 +738,7 @@ public class PrivacyManager {
 
 		if (name.equals("InetAddress")) {
 			try {
-				Field unspecified = Inet4Address.class.getDeclaredField("ALL");
+				Field unspecified = Inet4Address.class.getDeclaredField("ANY");
 				unspecified.setAccessible(true);
 				return (InetAddress) unspecified.get(Inet4Address.class);
 			} catch (Throwable ex) {
