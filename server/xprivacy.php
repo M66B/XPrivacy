@@ -201,6 +201,7 @@
 <?php
 	$count = 0;
 	$votes = 0;
+	$fetches = 0;
 	$records = 0;
 	$first = null;
 	$last = null;
@@ -229,6 +230,7 @@
 				while (($row = $result->fetch_object())) {
 					$count++;
 					$votes += $row->count;
+					$fetches += $row->fetches;
 					$name = (empty($row->application_name) ? '???' : $row->application_name);
 					echo '<tr>';
 					echo '<td style="text-align: center;">' . $row->count . '</td>';
@@ -364,13 +366,17 @@
 				$elapse = round(microtime(true) - $starttime, 3);
 				if (empty($package_name)) {
 					$appvote = round($votes / $count, 2);
+					$appfetch = round($fetches / $count, 2);
 					$uservote = round($votes / $users, 2);
 					echo $appvote . ' votes/application';
+					echo ', ' . $appfetch . ' fetches/application';
 					echo ', ' . $uservote . ' votes/user';
 					echo '<br />' . $records . ' records';
 					echo ', ' . $votes . ' votes';
+					echo ', ' . $fetches . ' fetches';
 					echo ', ' . $count . ' applications';
 					echo ', ' . $users . ' users';
+					echo ', ' . $elapse . ' seconds';
 					echo '<br />First entry: ' . $first . ' last update: ' . $last . ' UTC';
 				} else
 					echo $count . ' restrictions, ' . $votes . ' votes, ' . $users . ' users, ' . $elapse . ' seconds';
