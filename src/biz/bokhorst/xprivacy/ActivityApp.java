@@ -308,7 +308,7 @@ public class ActivityApp extends Activity {
 		dialog.setCancelable(true);
 		dialog.show();
 	}
-	
+
 	private void optionAll() {
 		List<String> listRestriction = PrivacyManager.getRestrictions(false);
 

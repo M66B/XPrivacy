@@ -62,7 +62,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_category">Categorie:</string>
     <string name="title_restrict">Vink aan om te beperken:</string>
     <!-- Do not translate 'choice' -->
-    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
+    <string name="title_filters">{0,choice,0#Geen filters actief|1#1 filter actief|1&lt;{0} filters actief}</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>

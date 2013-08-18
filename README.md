@@ -580,11 +580,19 @@ How to get beta releases:
 
 * Download from [Dev-Host](http://d-h.st/users/M66B/?fld_id=19078#files)
 
-**Next release**
+**Version 1.9.4 BETA!**
 
-* Restrict [NfcAdapter](http://developer.android.com/reference/android/nfc/NfcAdapter.html)
+* Restrict [NfcAdapter](http://developer.android.com/reference/android/nfc/NfcAdapter.html) ([issue](https://github.com/M66B/XPrivacy/issues/530))
 * Changed [ALL](http://en.wikipedia.org/wiki/255.255.255.255) into [ANY](http://en.wikipedia.org/wiki/0.0.0.0)
 * Updated Slovenian translation
+
+Contributed by [tonymanou](https://github.com/tonymanou):
+
+* Moved help button to the action bar
+* Moved the edit help (pen icon) into the help pop-up (only for the main activity)
+* Added scrollbars to the main help pop-up in order to avoid cut content on small screens
+* Added a frame around the filter section
+* Ability to show/hide the filter section (hidden when the application starts)
 
 **Version 1.9.3 BETA!**
 

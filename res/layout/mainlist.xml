@@ -19,12 +19,12 @@
         android:background="@drawable/application_filter_border"
         android:orientation="vertical" >
 
-    	<!-- Restriction category -->
+        <!-- Restriction category -->
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
-            
+
             <ImageView
                 android:id="@+id/imgToggleFilters"
                 android:layout_width="28dp"
@@ -32,7 +32,7 @@
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/title_category"
                 android:src="?attr/icon_expander_maximized" />
-            
+
             <LinearLayout
                 android:id="@+id/llCategory"
                 android:layout_width="match_parent"
@@ -74,7 +74,7 @@
                 android:visibility="gone" />
         </RelativeLayout>
 
-    	<!-- Filtering -->
+        <!-- Filtering -->
 
         <LinearLayout
             android:id="@+id/llFilters"
@@ -98,7 +98,7 @@
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/help_internet"
                 android:src="?attr/icon_internet_grayed" />
-    
+
             <RelativeLayout
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"

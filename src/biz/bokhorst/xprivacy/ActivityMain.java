@@ -230,10 +230,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Setup restriction filter
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 		cbFilter.setOnCheckedChangeListener(this);
-		
+
 		// Hide filters
 		toggleFiltersVisibility();
-		
+
 		// Handle toggle filters visibility
 		ImageView imgFilterToggle = (ImageView) findViewById(R.id.imgToggleFilters);
 		imgFilterToggle.setOnClickListener(new View.OnClickListener() {
@@ -818,7 +818,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dlgAbout.setCancelable(true);
 		dlgAbout.show();
 	}
-	
+
 	private void optionHelp() {
 		// Show help
 		Dialog dialog = new Dialog(ActivityMain.this);
@@ -829,12 +829,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dialog.setCancelable(true);
 		dialog.show();
 	}
-	
+
 	private void toggleFiltersVisibility() {
 		ImageView imgFilterToggle = (ImageView) findViewById(R.id.imgToggleFilters);
-		TextView tvFilters = (TextView)findViewById(R.id.tvFilterDetail);
-		LinearLayout llCategory = (LinearLayout)findViewById(R.id.llCategory);
-		LinearLayout llFilters = (LinearLayout)findViewById(R.id.llFilters);
+		TextView tvFilters = (TextView) findViewById(R.id.tvFilterDetail);
+		LinearLayout llCategory = (LinearLayout) findViewById(R.id.llCategory);
+		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
 
 		if (mFiltersHidden) {
 			// Change visibility
@@ -860,8 +860,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Change text
 			String filters = getResources().getString(R.string.title_filters);
-			/* As Android has a bug with the 'zero' case in plural strings,
-			   we need to use a MessageFormat in a normal string. */
+			/*
+			 * As Android has a bug with the 'zero' case in plural strings, we
+			 * need to use a MessageFormat in a normal string.
+			 */
 			tvFilters.setText(MessageFormat.format(filters, numberOfFilters));
 
 			// Change visibility
@@ -869,7 +871,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			llCategory.setVisibility(LinearLayout.GONE);
 			llFilters.setVisibility(LinearLayout.GONE);
 		}
-		
+
 		imgFilterToggle.setImageDrawable(getResources().getDrawable(
 				getThemed(mFiltersHidden ? R.attr.icon_expander_maximized : R.attr.icon_expander_minimized)));
 		mFiltersHidden = !mFiltersHidden;
