@@ -586,7 +586,7 @@ How to get beta releases:
 * Changed [ALL](http://en.wikipedia.org/wiki/255.255.255.255) into [ANY](http://en.wikipedia.org/wiki/0.0.0.0)
 * Updated Slovenian translation
 
-Contributed by [tonymanou](https://github.com/tonymanou):
+Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https://github.com/M66B/XPrivacy/pull/532))
 
 * Moved help button to the action bar
 * Moved the edit help (pen icon) into the help pop-up (only for the main activity)
