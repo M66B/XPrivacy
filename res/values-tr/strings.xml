@@ -19,6 +19,7 @@
     <string name="menu_theme">Temayı değiştir</string>
     <string name="menu_pro">Pro versiyon</string>
     <string name="menu_about">Hakkında</string>
+    <string name="menu_help">Help</string>
     <string name="menu_all">Tümü</string>
     <string name="menu_clear">Temizle</string>
     <string name="menu_app_launch">Çalıştır</string>
@@ -59,6 +60,8 @@
     <string name="restrict_view">Göster (tarayıcı)</string>
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Engellemek için işaretle:</string>
+    <!-- Do not translate 'choice' -->
+    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
     <string name="settings_serial">Seri no</string>
     <string name="settings_lat">Enlem</string>
     <string name="settings_lon">Boylam</string>

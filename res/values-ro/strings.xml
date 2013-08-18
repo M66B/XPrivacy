@@ -19,6 +19,7 @@
     <string name="menu_theme">Schimba tema</string>
     <string name="menu_pro">Versiunea Pro</string>
     <string name="menu_about">Despre</string>
+    <string name="menu_help">Help</string>
     <string name="menu_all">Tot</string>
     <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Launch</string>
@@ -60,6 +61,8 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">Acces browser</string>
     <string name="title_category">Category:</string>
     <string name="title_restrict">Bifeaza pentru a restrictiona:</string>
+    <!-- Do not translate 'choice' -->
+    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>

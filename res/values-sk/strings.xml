@@ -19,6 +19,7 @@
     <string name="menu_fetch">Stiahnuť obmedzenia</string>
     <string name="menu_pro">Pro verzia</string>
     <string name="menu_about">O aplikácii</string>
+    <string name="menu_help">Help</string>
     <string name="menu_all">Všetko</string>
     <string name="menu_clear">Vyčistiť</string>
     <string name="menu_app_launch">Spustiť</string>
@@ -60,6 +61,8 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
     <string name="title_category">Kategória:</string>
     <string name="title_restrict">Zaškrtnite pre obmedzenie:</string>
+    <!-- Do not translate 'choice' -->
+    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>

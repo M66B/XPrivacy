@@ -19,6 +19,7 @@
     <string name="menu_theme">Theme wechseln</string>
     <string name="menu_pro">Pro-Version</string>
     <string name="menu_about">Über XPrivacy</string>
+    <string name="menu_help">Help</string>
     <string name="menu_all">Alles</string>
     <string name="menu_clear">Löschen</string>
     <string name="menu_app_launch">Starte App</string>
@@ -60,6 +61,8 @@
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
     <string name="title_category">Kategorie:</string>
     <string name="title_restrict">Markieren zum Einschränken:</string>
+    <!-- Do not translate 'choice' -->
+    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
     <string name="settings_serial">Serien-Nr.</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>

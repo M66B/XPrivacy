@@ -19,6 +19,7 @@
     <string name="menu_theme">Đổi giao diện</string>
     <string name="menu_pro">Phiên bản Pro</string>
     <string name="menu_about">Về XPrivacy</string>
+    <string name="menu_help">Help</string>
     <string name="menu_all">Tất cả</string>
     <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Chạy</string>
@@ -59,6 +60,8 @@
     <string name="restrict_view">Mở trình duyệt</string>
     <string name="title_category">Danh mục:</string>
     <string name="title_restrict">Chọn để hạn chế:</string>
+    <!-- Do not translate 'choice' -->
+    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>

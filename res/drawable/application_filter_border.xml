@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- There is a bug in Android, so we can't use themed colors here... -->
+    <stroke android:width="2dp" android:color="@color/color_filter_border" />
+    <solid android:color="@color/color_filter_background" />
+    <padding
+        android:left="6dp"
+        android:top="6dp"
+        android:right="6dp"
+        android:bottom="6dp" />
+    <corners android:radius="6dp" />
+</shape>

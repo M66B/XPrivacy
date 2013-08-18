@@ -19,6 +19,7 @@
     <string name="menu_theme">Keisti temą</string>
     <string name="menu_pro">Pro versija aktyvi</string>
     <string name="menu_about">Apie XPrivacy</string>
+    <string name="menu_help">Help</string>
     <string name="menu_all">Visi leidimai</string>
     <string name="menu_clear">Išvalyti visus leidimus</string>
     <string name="menu_app_launch">Paleisti programą</string>
@@ -60,6 +61,8 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_view">Peržiūra (Naršyklė)</string>
     <string name="title_category">Kategorija:</string>
     <string name="title_restrict">Žiūrėti leidimus:</string>
+    <!-- Do not translate 'choice' -->
+    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>

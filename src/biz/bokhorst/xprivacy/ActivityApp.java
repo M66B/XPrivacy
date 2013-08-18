@@ -133,21 +133,6 @@ public class ActivityApp extends Activity {
 		TextView tvAppName = (TextView) findViewById(R.id.tvApp);
 		tvAppName.setText(mAppInfo.toString());
 
-		// Handle help
-		ImageView ivHelp = (ImageView) findViewById(R.id.ivHelp);
-		ivHelp.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Dialog dialog = new Dialog(ActivityApp.this);
-				dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-				dialog.setTitle(getString(R.string.help_application));
-				dialog.setContentView(R.layout.help);
-				dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
-				dialog.setCancelable(true);
-				dialog.show();
-			}
-		});
-
 		// Background color
 		if (mAppInfo.getIsSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
@@ -273,6 +258,9 @@ public class ActivityApp extends Activity {
 				else
 					NavUtils.navigateUpTo(this, upIntent);
 			return true;
+		case R.id.menu_help:
+			optionHelp();
+			return true;
 		case R.id.menu_all:
 			optionAll();
 			return true;
@@ -310,6 +298,17 @@ public class ActivityApp extends Activity {
 
 	// Options
 
+	private void optionHelp() {
+		// Show help
+		Dialog dialog = new Dialog(ActivityApp.this);
+		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+		dialog.setTitle(getString(R.string.help_application));
+		dialog.setContentView(R.layout.help);
+		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+		dialog.setCancelable(true);
+		dialog.show();
+	}
+	
 	private void optionAll() {
 		List<String> listRestriction = PrivacyManager.getRestrictions(false);
 

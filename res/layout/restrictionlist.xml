@@ -32,14 +32,6 @@
             android:paddingLeft="6dip"
             android:textIsSelectable="false"
             android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/ivHelp"
-            android:layout_width="32dip"
-            android:layout_height="32dip"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/help_application"
-            android:src="?attr/icon_help" />
     </LinearLayout>
 
     <!-- Thick divider -->
