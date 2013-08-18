@@ -377,7 +377,8 @@
 					echo ', ' . $count . ' applications';
 					echo ', ' . $users . ' users';
 					echo ', ' . $elapse . ' seconds';
-					echo '<br />First entry: ' . $first . ' last update: ' . $last . ' UTC';
+					echo '<br />First entry: ' . $first . ' UTC';
+					echo '<br />Last update: ' . $last . ' UTC';
 				} else
 					echo $count . ' restrictions, ' . $votes . ' votes, ' . $users . ' users, ' . $elapse . ' seconds';
 ?>
