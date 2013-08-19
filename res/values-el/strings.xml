@@ -61,8 +61,11 @@
     <string name="restrict_view">Εμφάνιση (browser)</string>
     <string name="title_category">Κατηγορία:</string>
     <string name="title_restrict">Επιλέξτε για περιορισμό:</string>
-    <!-- Do not translate 'choice' -->
-    <string name="title_filters">{0,choice,0#Κανένα ενεργό φίλτρο|1#1 ενεργό φίλτρο|1&lt;{0} ενεργά φίλτρα}</string>
+    <string name="title_nofilter">No active filter</string>
+    <plurals name="title_filters">
+        <item quantity="one">1 active filter</item>
+        <item quantity="other">%d actives filters</item>
+    </plurals>
     <string name="settings_serial">Σειριακός αριθμός</string>
     <string name="settings_lat">Γεωγρ. πλάτος</string>
     <string name="settings_lon">Γεωγρ. μήκος</string>
