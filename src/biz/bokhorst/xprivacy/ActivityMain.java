@@ -3,7 +3,6 @@ package biz.bokhorst.xprivacy;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidParameterException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -881,12 +880,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				numberOfFilters++;
 
 			// Change text
-			String filters = getResources().getString(R.string.title_filters);
-			/*
-			 * As Android has a bug with the 'zero' case in plural strings, we
-			 * need to use a MessageFormat in a normal string.
-			 */
-			tvFilters.setText(MessageFormat.format(filters, numberOfFilters));
+			if (numberOfFilters==0) {
+		              tvFilters.setText(getResources().getString(R.string.title_nofilter));
+			}
+			else {
+			      tvFilters.setText(getResources().getQuantityString(R.string.title_filters, numberOfFilters));
+			}
 
 			// Change visibility
 			tvFilters.setVisibility(TextView.VISIBLE);
