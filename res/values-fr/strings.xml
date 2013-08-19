@@ -64,7 +64,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_nofilter">No active filter</string>
     <plurals name="title_filters">
         <item quantity="one">1 active filter</item>
-        <item quantity="other">%d actives filters</item>
+        <item quantity="other">%d active filters</item>
     </plurals>
     <string name="settings_serial">Numéro de série</string>
     <string name="settings_lat">Latitude</string>

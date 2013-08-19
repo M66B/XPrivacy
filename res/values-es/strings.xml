@@ -64,7 +64,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_nofilter">No active filter</string>
     <plurals name="title_filters">
         <item quantity="one">1 active filter</item>
-        <item quantity="other">%d actives filters</item>
+        <item quantity="other">%d active filters</item>
     </plurals>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
