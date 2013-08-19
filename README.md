@@ -580,6 +580,23 @@ How to get beta releases:
 
 * Download from [Dev-Host](http://d-h.st/users/M66B/?fld_id=19078#files)
 
+**Next release**
+
+* ...
+
+**Version 1.9.5 BETA!**
+
+* Updated Greek translation
+* Updated Japanese translation
+
+Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https://github.com/M66B/XPrivacy/pull/534))
+
+* Fixed filter frame's hidden state that was not restored when restoring the instance state
+* Moved the filters 'hide system app' and 'filter by permission' from the settings to the filter frame
+* Bigger expand icon for filter section (asked on XDA)
+* Fixed alignment of the items in the filter section
+* Improved the design of the filter frame (asked on XDA) : the corners are less round, the background is now a gradient
+
 **Version 1.9.4 BETA!**
 
 * Restrict [NfcAdapter](http://developer.android.com/reference/android/nfc/NfcAdapter.html) ([issue](https://github.com/M66B/XPrivacy/issues/530))

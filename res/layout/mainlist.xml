@@ -147,7 +147,6 @@
             android:layout_marginLeft="2dp"
             android:text="@string/settings_fsystem"
             android:textAppearance="?android:attr/textAppearanceSmall" />
-
     </LinearLayout>
 
     <!-- Title -->

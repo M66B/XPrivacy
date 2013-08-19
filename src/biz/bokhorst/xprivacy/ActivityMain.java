@@ -249,8 +249,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		});
 
 		// Setup system filter
-		boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
-				true, false);
+		boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFSystem, true,
+				false);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 		cbFSystem.setChecked(fSystem);
 		cbFSystem.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -265,9 +265,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		});
 
 		// Hide filters
-		if (savedInstanceState != null && savedInstanceState.containsKey("Filters")) {
+		if (savedInstanceState != null && savedInstanceState.containsKey("Filters"))
 			mFiltersHidden = !savedInstanceState.getBoolean("Filters");
-		}
 		toggleFiltersVisibility();
 
 		// Handle toggle filters visibility
