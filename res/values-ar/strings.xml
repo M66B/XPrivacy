@@ -61,8 +61,11 @@
     <string name="restrict_view">تصفح (المتصفح)</string>
     <string name="title_category">الفئة:</string>
     <string name="title_restrict">إختر للتقيد:</string>
-    <!-- Do not translate 'choice' -->
-    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
+    <string name="title_nofilter">No active filter</string>
+    <plurals name="title_filters">
+        <item quantity="one">1 active filter</item>
+        <item quantity="other">%d actives filters</item>
+    </plurals>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
