@@ -27,8 +27,8 @@
 
             <ImageView
                 android:id="@+id/imgToggleFilters"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/title_category"
                 android:src="?attr/icon_expander_maximized" />
@@ -48,6 +48,13 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textIsSelectable="false" />
 
+                <Spinner
+                    android:id="@+id/spRestriction"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1" />
+
                 <ImageView
                     android:id="@+id/imgInfo"
                     android:layout_width="32dip"
@@ -55,13 +62,6 @@
                     android:layout_gravity="center_vertical"
                     android:contentDescription="@string/help_application"
                     android:src="?attr/icon_info" />
-
-                <Spinner
-                    android:id="@+id/spRestriction"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1" />
             </LinearLayout>
 
             <TextView
@@ -127,10 +127,27 @@
 
             <CheckBox
                 android:id="@+id/cbFilter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/cbFPermission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:text="@string/settings_fpermission"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <CheckBox
+            android:id="@+id/cbFSystem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:text="@string/settings_fsystem"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
     </LinearLayout>
 
     <!-- Title -->

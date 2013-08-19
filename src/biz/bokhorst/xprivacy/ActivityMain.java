@@ -62,6 +62,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -231,7 +232,42 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 		cbFilter.setOnCheckedChangeListener(this);
 
+		// Setup permission filter
+		boolean fPermission = PrivacyManager.getSettingBool(null, ActivityMain.this,
+				PrivacyManager.cSettingFPermission, true, false);
+		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
+		cbFPermission.setChecked(fPermission);
+		cbFPermission.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
+						Boolean.toString(isChecked));
+
+				AppListTask appListTask = new AppListTask();
+				appListTask.executeOnExecutor(mExecutor, (Object) null);
+			}
+		});
+
+		// Setup system filter
+		boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
+				true, false);
+		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
+		cbFSystem.setChecked(fSystem);
+		cbFSystem.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
+						Boolean.toString(isChecked));
+
+				AppListTask appListTask = new AppListTask();
+				appListTask.executeOnExecutor(mExecutor, (Object) null);
+			}
+		});
+
 		// Hide filters
+		if (savedInstanceState != null && savedInstanceState.containsKey("Filters")) {
+			mFiltersHidden = !savedInstanceState.getBoolean("Filters");
+		}
 		toggleFiltersVisibility();
 
 		// Handle toggle filters visibility
@@ -271,6 +307,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putBoolean("Used", mUsed);
 		outState.putBoolean("Internet", mInternet);
+		outState.putBoolean("Filters", mFiltersHidden);
 		super.onSaveInstanceState(outState);
 	}
 
@@ -549,17 +586,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
 		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
-		final CheckBox cbFPermission = (CheckBox) dlgSettings.findViewById(R.id.cbFPermission);
-		final CheckBox cbFSystem = (CheckBox) dlgSettings.findViewById(R.id.cbFSystem);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
 		final boolean random = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingRandom,
 				false, false);
-		final boolean fPermission = PrivacyManager.getSettingBool(null, ActivityMain.this,
-				PrivacyManager.cSettingFPermission, true, false);
-		final boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
-				true, false);
 
 		etSerial.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSerial, "", false));
 		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "", false));
@@ -579,8 +610,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etSubscriber.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, "",
 				false));
 		cbRandom.setChecked(random);
-		cbFPermission.setChecked(fPermission);
-		cbFSystem.setChecked(fSystem);
 
 		// Handle search
 		etSearch.setEnabled(Geocoder.isPresent());
@@ -684,20 +713,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingRandom,
 						Boolean.toString(cbRandom.isChecked()));
-
-				// Set filter by permission
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
-						Boolean.toString(cbFPermission.isChecked()));
-
-				// Set filter by system
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
-						Boolean.toString(cbFSystem.isChecked()));
-
-				// Refresh if needed
-				if (fPermission != cbFPermission.isChecked() || fSystem != cbFSystem.isChecked()) {
-					AppListTask appListTask = new AppListTask();
-					appListTask.executeOnExecutor(mExecutor, (Object) null);
-				}
 
 				// Done
 				dlgSettings.dismiss();
@@ -835,12 +850,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		TextView tvFilters = (TextView) findViewById(R.id.tvFilterDetail);
 		LinearLayout llCategory = (LinearLayout) findViewById(R.id.llCategory);
 		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
+		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
+		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 
 		if (mFiltersHidden) {
 			// Change visibility
 			tvFilters.setVisibility(TextView.GONE);
 			llCategory.setVisibility(LinearLayout.VISIBLE);
 			llFilters.setVisibility(LinearLayout.VISIBLE);
+			cbFPermission.setVisibility(CheckBox.VISIBLE);
+			cbFSystem.setVisibility(CheckBox.VISIBLE);
 		} else {
 			int numberOfFilters = 0;
 
@@ -857,6 +876,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 			if (cbFilter.isChecked())
 				numberOfFilters++;
+			if (cbFPermission.isChecked())
+				numberOfFilters++;
+			if (cbFSystem.isChecked())
+				numberOfFilters++;
 
 			// Change text
 			String filters = getResources().getString(R.string.title_filters);
@@ -870,6 +893,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			tvFilters.setVisibility(TextView.VISIBLE);
 			llCategory.setVisibility(LinearLayout.GONE);
 			llFilters.setVisibility(LinearLayout.GONE);
+			cbFPermission.setVisibility(CheckBox.GONE);
+			cbFSystem.setVisibility(CheckBox.GONE);
 		}
 
 		imgFilterToggle.setImageDrawable(getResources().getDrawable(

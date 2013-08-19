@@ -227,26 +227,6 @@
                     android:layout_span="2"
                     android:text="@string/msg_random_boot" />
             </TableRow>
-
-            <TableRow>
-
-                <CheckBox
-                    android:id="@+id/cbFPermission"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:text="@string/settings_fpermission" />
-            </TableRow>
-
-            <TableRow>
-
-                <CheckBox
-                    android:id="@+id/cbFSystem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:text="@string/settings_fsystem" />
-            </TableRow>
         </TableLayout>
 
         <Button
