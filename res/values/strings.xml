@@ -67,8 +67,8 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">View (browser)</string>
     <string name="title_category">Category:</string>
     <string name="title_restrict">Check to restrict:</string>
+    <string name="title_nofilter">No active filter</string>
     <plurals name="title_filters">
-        <item quantity="zero">No active filter</item>
         <item quantity="one">1 active filter</item>
         <item quantity="other">%d actives filters</item>
     </plurals>
