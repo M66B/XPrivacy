@@ -15,11 +15,11 @@
     <string name="menu_export">تصدير</string>
     <string name="menu_import">إستيراد</string>
     <string name="menu_submit">إرسال القيود</string>
-    <string name="menu_fetch">Fetch restrictions</string>
+    <string name="menu_fetch">جلب القيود</string>
     <string name="menu_theme">تبديل الوضع</string>
     <string name="menu_pro">النسخة الكاملة</string>
     <string name="menu_about">عن التطبيق</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">مساعدة</string>
     <string name="menu_all">تحديد الكل</string>
     <string name="menu_clear">إلغاء التحديد</string>
     <string name="menu_app_launch">تشغيل التطبيق</string>
