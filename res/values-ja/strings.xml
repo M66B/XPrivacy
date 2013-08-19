@@ -64,7 +64,7 @@
     <string name="title_nofilter">No active filter</string>
     <plurals name="title_filters">
         <item quantity="one">1 active filter</item>
-        <item quantity="other">%d actives filters</item>
+        <item quantity="other">%d active filters</item>
     </plurals>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>

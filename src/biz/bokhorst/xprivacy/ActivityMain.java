@@ -880,11 +880,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				numberOfFilters++;
 
 			// Change text
-			if (numberOfFilters==0) {
-		              tvFilters.setText(getResources().getString(R.string.title_nofilter));
-			}
-			else {
-			      tvFilters.setText(getResources().getQuantityString(R.string.title_filters, numberOfFilters));
+			if (numberOfFilters == 0) {
+				tvFilters.setText(getResources().getString(R.string.title_nofilter));
+			} else {
+				tvFilters.setText(getResources().getQuantityString(R.plurals.title_filters, numberOfFilters, numberOfFilters));
 			}
 
 			// Change visibility
