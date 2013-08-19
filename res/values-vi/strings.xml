@@ -60,8 +60,11 @@
     <string name="restrict_view">Mở trình duyệt</string>
     <string name="title_category">Danh mục:</string>
     <string name="title_restrict">Chọn để hạn chế:</string>
-    <!-- Do not translate 'choice' -->
-    <string name="title_filters">{0,choice,0#No active filter|1#1 active filter|1&lt;{0} actives filters}</string>
+    <string name="title_nofilter">No active filter</string>
+    <plurals name="title_filters">
+        <item quantity="one">1 active filter</item>
+        <item quantity="other">%d actives filters</item>
+    </plurals>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>
