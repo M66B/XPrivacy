@@ -582,7 +582,9 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Updated Arabic translation
+* Updated Dutch/Flemish translation
+* Updated French translation
 
 **Version 1.9.5 BETA!**
 

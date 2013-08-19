@@ -68,10 +68,12 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_category">Category:</string>
     <string name="title_restrict">Check to restrict:</string>
     <string name="title_nofilter">No active filter</string>
+
     <plurals name="title_filters">
         <item quantity="one">1 active filter</item>
         <item quantity="other">%d active filters</item>
     </plurals>
+
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
