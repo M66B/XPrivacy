@@ -61,10 +61,10 @@
     <string name="restrict_view">表示 (ブラウザ)</string>
     <string name="title_category">カテゴリ:</string>
     <string name="title_restrict">チェックで制限:</string>
-    <string name="title_nofilter">No active filter</string>
+    <string name="title_nofilter">有効なフィルタなし</string>
     <plurals name="title_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+        <item quantity="one">1個の有効なフィルタ</item>
+        <item quantity="other">%d個の有効なフィルタ</item>
     </plurals>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
