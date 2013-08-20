@@ -585,6 +585,8 @@ How to get beta releases:
 * Updated Arabic translation
 * Updated Dutch/Flemish translation
 * Updated French translation
+* Updated Japanese translation
+* Updated Simplified Chinese translation
 
 **Version 1.9.5 BETA!**
 
