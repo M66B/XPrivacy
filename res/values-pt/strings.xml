@@ -14,16 +14,16 @@
     <string name="menu_report">Reportar problemas</string>
     <string name="menu_export">Exportar</string>
     <string name="menu_import">Importar</string>
-    <string name="menu_submit">Enviar restrições</string>
-    <string name="menu_fetch">Procurar restrições</string>
+	<string name="menu_submit">Enviar restrições</string>
+	<string name="menu_fetch">Procurar restrições</string>
     <string name="menu_theme">Mudar o tema</string>
     <string name="menu_pro">Versão Pro</string>
     <string name="menu_about">Sobre</string>
-    <string name="menu_help">Help</string>
+	<string name="menu_help">Ajuda</string>
     <string name="menu_all">Tudo</string>
-    <string name="menu_clear">Limpar</string>
+	<string name="menu_clear">Limpar</string>
     <string name="menu_app_launch">Iniciar</string>
-    <string name="menu_app_settings">Definições</string>
+	<string name="menu_app_settings">Detalhes da aplicação</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Selecione contas a autorizar</string>
     <string name="menu_contacts">Selecione contactos a autorizar</string>
@@ -35,8 +35,8 @@
     <string name="msg_sure">Tem a certeza?</string>
     <string name="msg_done">Concluído</string>
     <string name="msg_reboot">É necessário reiniciar o dispositivo</string>
-    <string name="msg_random">Aleatório</string>
-    <string name="msg_random_boot">Aleatório depois de iniciar</string>
+	 <string name="msg_random">Aleatório</string>
+	 <string name="msg_random_boot">Aleatório depois de iniciar</string>
     <string name="msg_first"><b>A aplicação XPrivacy foi desenvolvida e testada com todo o cuidado, 
 porém é impossível garantir que irá funcionar sem problemas em todos os dispositivos e com todas as aplicações.
 \n\nO uso desta aplicação é inteiramente por sua conta e risco.</b>\n\nVer também a licença:</string>
@@ -44,7 +44,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="restrict_browser">Navegador (favoritos/histórico)</string>
     <string name="restrict_calendar">Calendário</string>
     <string name="restrict_calling">Chamada (telefone, SMS, MMS)</string>
-    <string name="restrict_clipboard">Área de transferência</string>
+	<string name="restrict_clipboard">Área de transferência</string>
     <string name="restrict_contacts">Contactos</string>
     <string name="restrict_dictionary">Dicionário (usuário)</string>
     <string name="restrict_identification">Identificação (dispositivo)</string>
@@ -53,7 +53,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="restrict_media">Média (áudio, foto, vídeo)</string>
     <string name="restrict_messages">Mensagens (SMS, MMS)</string>
     <string name="restrict_network">Rede (endereços)</string>
-    <string name="restrict_notifications">Notificações</string>
+	<string name="restrict_notifications">Notificações</string>
     <string name="restrict_phone">Telefone (identidade, números, chamadas)</string>
     <string name="restrict_storage">Armazenamento (média, cartão de memória)</string>
     <string name="restrict_shell">Shell (linha de comandos, superuser)</string>
@@ -61,19 +61,21 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="restrict_view">Ver (navegador)</string>
     <string name="title_category">Categoria:</string>
     <string name="title_restrict">Clique para restringir:</string>
-    <string name="title_nofilter">No active filter</string>
-    <plurals name="title_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+	<string name="title_nofilter">Nenhum filtro ativo</string>
+	
+	<plurals name="title_filters">
+        <item quantity="one">1 filtro ativo</item>
+        <item quantity="other">%d filtros ativos</item>
     </plurals>
-    <string name="settings_serial">Serial#</string>
+
+	<string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
     <string name="settings_mac">Endereço MAC</string>
     <string name="settings_phone">Número de telefone</string>
     <string name="settings_id">Identidade do Android</string>
     <string name="settings_country">País</string>
-    <string name="settings_operator">Operador</string>
+	<string name="settings_operator">Operador</string>
     <string name="settings_subscriber">Identidade do subscritor</string>
     <string name="settings_fpermission">Filtrar por permissão</string>
     <string name="settings_fsystem">Filtrar aplicações do sistema</string>
