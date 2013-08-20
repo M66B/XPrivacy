@@ -588,6 +588,7 @@ How to get beta releases:
 * Updated Japanese translation
 * Updated Portuguese translation
 * Updated Simplified Chinese translation
+* Updated Vietnamese translation
 
 **Version 1.9.5 BETA!**
 
