@@ -19,7 +19,7 @@
     <string name="menu_theme">Zmień motyw</string>
     <string name="menu_pro">Wersja Pro</string>
     <string name="menu_about">O programie</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Pomoc</string>
     <string name="menu_all">Wszystko</string>
     <string name="menu_clear">Wyczyść</string>
     <string name="menu_app_launch">Uruchom</string>
@@ -61,10 +61,10 @@
     <string name="restrict_view">Widok (przeglądarka)</string>
     <string name="title_category">Kategoria:</string>
     <string name="title_restrict">Zaznacz aby zablokować:</string>
-    <string name="title_nofilter">No active filter</string>
+    <string name="title_nofilter">Brak aktywnego filtra</string>
     <plurals name="title_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+        <item quantity="one">1 aktywny filtr</item>
+        <item quantity="other">%d aktywnych filtrów</item>
     </plurals>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
