@@ -493,9 +493,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 			ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
+			TextView tvStats = (TextView) findViewById(R.id.tvStats);
  			String filter = String.format("%b\n%b\n%s\n%b", mUsed, mInternet, etFilter.getText().toString(),
  					cbFilter.isChecked());
 			pbFilter.setVisibility(ProgressBar.VISIBLE);
+			tvStats.setVisibility(TextView.GONE);
 			mAppAdapter.getFilter().filter(filter);
 		}
 	}
@@ -1225,8 +1227,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@SuppressWarnings("unchecked")
 			protected void publishResults(CharSequence constraint, FilterResults results) {
 				clear();
+				TextView tvStats = (TextView) findViewById(R.id.tvStats);
 				ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
-				pbFilter.setVisibility(ProgressBar.GONE);
+ 				pbFilter.setVisibility(ProgressBar.GONE);
+				tvStats.setVisibility(TextView.VISIBLE);
+				tvStats.setText(results.count + "/" + AppListAdapter.this.mListAppSelected.size());
 				if (results.values == null)
 					notifyDataSetInvalidated();
 				else {

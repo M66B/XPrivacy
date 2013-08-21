@@ -164,6 +164,13 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textIsSelectable="false" />
 
+        <TextView
+            android:id="@+id/tvStats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
         <ProgressBar
             android:id="@+id/pbFilter"
             style="?android:attr/progressBarStyleSmall"
@@ -171,7 +178,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:visibility="gone" />
-
     </RelativeLayout>
 
     <!-- Thin divider -->
