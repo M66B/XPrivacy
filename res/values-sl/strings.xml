@@ -19,7 +19,7 @@
     <string name="menu_theme">Spremeni temo</string>
     <string name="menu_pro">Pro različica</string>
     <string name="menu_about">O programu</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Pomoč</string>
     <string name="menu_all">Vse</string>
     <string name="menu_clear">Počisti</string>
     <string name="menu_app_launch">Zaženi</string>
@@ -61,10 +61,10 @@
     <string name="restrict_view">Pogled (brskalnik)</string>
     <string name="title_category">Kategorija:</string>
     <string name="title_restrict">Označi za omejitev pravic:</string>
-    <string name="title_nofilter">No active filter</string>
+    <string name="title_nofilter">Ni aktivnih filtrov</string>
     <plurals name="title_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+        <item quantity="one">1 aktiven filter</item>
+        <item quantity="other">%d aktivnih filtrov</item>
     </plurals>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
