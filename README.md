@@ -590,6 +590,7 @@ How to get beta releases:
 * Updated Polish translation
 * Updated Portuguese translation
 * Updated Simplified Chinese translation
+* Updated Slovenian translation
 * Updated Turkish translation
 * Updated Vietnamese translation
 
