@@ -1,6 +1,5 @@
 <resources>
 
-    <attr name="icon_edit" format="reference" />
     <attr name="icon_granted" format="reference" />
     <attr name="icon_granted_grayed" format="reference" />
     <attr name="icon_help" format="reference" />
