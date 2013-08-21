@@ -64,6 +64,8 @@
     <string name="title_nofilter">Ni aktivnih filtrov</string>
     <plurals name="title_filters">
         <item quantity="one">1 aktiven filter</item>
+        <item quantity="two">%d aktivna filtra</item>
+        <item quantity="few">%d aktivni filtri</item>
         <item quantity="other">%d aktivnih filtrov</item>
     </plurals>
     <string name="settings_serial">Serijska št.</string>
@@ -73,7 +75,7 @@
     <string name="settings_phone">Telefonska številka</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Država</string>
-    <string name="settings_operator">Operator</string>
+    <string name="settings_operator">Operater</string>
     <string name="settings_subscriber">ID naročnika</string>
     <string name="settings_fpermission">Filtriraj po pravicah</string>
     <string name="settings_fsystem">Filtriraj sistemske programe</string>
