@@ -67,6 +67,7 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -491,8 +492,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (mAppAdapter != null) {
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-			String filter = String.format("%b\n%b\n%s\n%b", mUsed, mInternet, etFilter.getText().toString(),
-					cbFilter.isChecked());
+			ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
+ 			String filter = String.format("%b\n%b\n%s\n%b", mUsed, mInternet, etFilter.getText().toString(),
+ 					cbFilter.isChecked());
+			pbFilter.setVisibility(ProgressBar.VISIBLE);
 			mAppAdapter.getFilter().filter(filter);
 		}
 	}
@@ -1222,6 +1225,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@SuppressWarnings("unchecked")
 			protected void publishResults(CharSequence constraint, FilterResults results) {
 				clear();
+				ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
+				pbFilter.setVisibility(ProgressBar.GONE);
 				if (results.values == null)
 					notifyDataSetInvalidated();
 				else {
