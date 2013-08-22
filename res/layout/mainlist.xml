@@ -69,6 +69,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
                 android:layout_toRightOf="@id/imgToggleFilters"
                 android:ems="10"
                 android:hint="@string/help_application"
@@ -79,7 +80,7 @@
                 android:id="@+id/imgClear"
                 android:layout_width="24dip"
                 android:layout_height="24dip"
-                android:layout_alignParentRight="true"
+                android:layout_alignRight="@id/etFilter"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/help_application"
                 android:src="?attr/icon_clear_grayed" />
@@ -108,13 +109,6 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/ImageView03"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/title_restrict"
-                    android:src="?attr/icon_clear" />
-
-                <ImageView
                     android:id="@+id/ImageView04"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
@@ -141,20 +135,19 @@
                     android:layout_height="24dp"
                     android:contentDescription="@string/help_application"
                     android:src="?attr/icon_system" />
+
+                <ImageView
+                    android:id="@+id/ImageView03"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@string/title_restrict"
+                    android:src="?attr/icon_checked" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical" >
-
-                <CheckBox
-                    android:id="@+id/cbFilter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="4dp"
-                    android:text="@string/app_name"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <CheckBox
                     android:id="@+id/cbFUsed"
@@ -186,6 +179,14 @@
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
                     android:text="@string/settings_fsystem"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <CheckBox
+                    android:id="@+id/cbFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="@string/app_name"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
         </LinearLayout>

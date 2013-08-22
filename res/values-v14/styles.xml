@@ -14,6 +14,7 @@
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_dark</item>
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_dark</item>
         <item name="icon_launcher">@drawable/ic_launcher_holo_dark</item>
+        <item name="icon_checked">@drawable/check_holo_dark</item>
         <item name="icon_clear">@drawable/cross_holo_dark</item>
         <item name="icon_clear_grayed">@drawable/cross_grayed_out_holo_dark</item>
         <item name="icon_frozen">@drawable/frozen_holo_dark</item>
@@ -34,6 +35,7 @@
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_light</item>
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_light</item>
         <item name="icon_launcher">@drawable/ic_launcher_holo_light</item>
+        <item name="icon_checked">@drawable/check_holo_light</item>
         <item name="icon_clear">@drawable/cross_holo_light</item>
         <item name="icon_clear_grayed">@drawable/cross_grayed_out_holo_light</item>
         <item name="icon_frozen">@drawable/frozen_holo_light</item>

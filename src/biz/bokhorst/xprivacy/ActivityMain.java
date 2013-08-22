@@ -1025,12 +1025,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 
 			// Enable filters
-			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
-			imgUsed.setEnabled(true);
-
-			final ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
-			imgInternet.setEnabled(true);
-
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setEnabled(true);
 
