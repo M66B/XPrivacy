@@ -15,11 +15,11 @@
     <string name="menu_export">Exporta</string>
     <string name="menu_import">Importa</string>
     <string name="menu_submit">Envia restriccions</string>
-    <string name="menu_fetch">Fetch restrictions</string>
+    <string name="menu_fetch">Recull restriccions</string>
     <string name="menu_theme">Canvia tema</string>
     <string name="menu_pro">Versió Pro</string>
     <string name="menu_about">Quant a</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Ajuda</string>
     <string name="menu_all">Totes</string>
     <string name="menu_clear">Neteja</string>
     <string name="menu_app_launch">Executa</string>
@@ -59,10 +59,10 @@
     <string name="restrict_view">Vista (navegador)</string>
     <string name="title_category">Categoria:</string>
     <string name="title_restrict">Activa per a restringir:</string>
-    <string name="title_nofilter">No active filter</string>
+    <string name="title_nofilter">Cap filtre actiu</string>
     <plurals name="title_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+        <item quantity="one">1 filtre actiu</item>
+        <item quantity="other">%d filtres actius</item>
     </plurals>
     <string name="settings_serial">Número de sèrie</string>
     <string name="settings_lat">Latitud</string>
