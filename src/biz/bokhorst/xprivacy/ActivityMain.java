@@ -75,8 +75,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
-	private boolean mUsed = false;
-	private boolean mInternet = false;
 	private boolean mFiltersHidden = false;
 
 	private static final int ACTIVITY_LICENSE = 0;
@@ -259,8 +257,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		outState.putBoolean("Used", mUsed);
-		outState.putBoolean("Internet", mInternet);
 		outState.putBoolean("Filters", mFiltersHidden);
 		super.onSaveInstanceState(outState);
 	}
@@ -460,10 +456,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (mAppAdapter != null) {
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+			CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
+			CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
+			CheckBox cbSystem = (CheckBox) findViewById(R.id.cbFSystem);
 			ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
 			TextView tvStats = (TextView) findViewById(R.id.tvStats);
- 			String filter = String.format("%b\n%b\n%s\n%b", mUsed, mInternet, etFilter.getText().toString(),
- 					cbFilter.isChecked());
+			String filter = String.format("%b\n%b\n%s\n%b\n%b", cbUsed.isChecked(), cbInternet.isChecked(), etFilter
+					.getText().toString(), cbFilter.isChecked(), cbSystem.isChecked());
 			pbFilter.setVisibility(ProgressBar.VISIBLE);
 			tvStats.setVisibility(TextView.GONE);
 			mAppAdapter.getFilter().filter(filter);
@@ -822,6 +821,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		TextView tvFilters = (TextView) findViewById(R.id.tvFilterDetail);
 		EditText etFilter = (EditText) findViewById(R.id.etFilter);
 		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
+		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+		CheckBox cbFUsed = (CheckBox) findViewById(R.id.cbFUsed);
+		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 
@@ -831,21 +833,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			etFilter.setVisibility(EditText.VISIBLE);
 			imgClear.setVisibility(ImageView.VISIBLE);
 			llFilters.setVisibility(LinearLayout.VISIBLE);
-			cbFPermission.setVisibility(CheckBox.VISIBLE);
-			cbFSystem.setVisibility(CheckBox.VISIBLE);
 		} else {
 			int numberOfFilters = 0;
 
 			// Count number of activated filters
 			if (spRestriction.getSelectedItemPosition() > 0)
 				numberOfFilters++;
-			if (mUsed)
+			if (cbFUsed.isChecked())
 				numberOfFilters++;
-			if (mInternet)
+			if (cbFInternet.isChecked())
 				numberOfFilters++;
 			if (etFilter.getText().length() > 0)
 				numberOfFilters++;
-			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 			if (cbFilter.isChecked())
 				numberOfFilters++;
 			if (cbFPermission.isChecked())
@@ -865,8 +864,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			etFilter.setVisibility(EditText.GONE);
 			imgClear.setVisibility(ImageView.GONE);
 			llFilters.setVisibility(LinearLayout.GONE);
-			cbFPermission.setVisibility(CheckBox.GONE);
-			cbFSystem.setVisibility(CheckBox.GONE);
 		}
 
 		imgFilterToggle.setImageDrawable(getResources().getDrawable(
@@ -1139,6 +1136,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				boolean fInternet = Boolean.parseBoolean(components[1]);
 				String fName = components[2];
 				boolean fRestricted = Boolean.parseBoolean(components[3]);
+				boolean fSystem = Boolean.parseBoolean(components[4]);
 
 				// Match applications
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
@@ -1172,10 +1170,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						} else
 							someRestricted = PrivacyManager.getRestricted(null, getApplicationContext(),
 									xAppInfo.getUid(), mRestrictionName, null, false, false);
+					
+					// Get if system
+					boolean system = false;
+					if (fSystem)
+						system = !xAppInfo.getIsSystem();
 
 					// Match application
 					if ((fUsed ? used : true) && (fInternet ? internet : true) && (fName.equals("") ? true : contains)
-							&& (fRestricted ? someRestricted : true))
+							&& (fRestricted ? someRestricted : true) && (fSystem ? system : true))
 						lstApp.add(xAppInfo);
 				}
 
