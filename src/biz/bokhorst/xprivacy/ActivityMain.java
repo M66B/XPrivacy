@@ -850,8 +850,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void toggleFiltersVisibility() {
 		ImageView imgFilterToggle = (ImageView) findViewById(R.id.imgToggleFilters);
+		ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
 		TextView tvFilters = (TextView) findViewById(R.id.tvFilterDetail);
-		LinearLayout llCategory = (LinearLayout) findViewById(R.id.llCategory);
+		EditText etFilter = (EditText) findViewById(R.id.etFilter);
 		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
@@ -859,7 +860,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (mFiltersHidden) {
 			// Change visibility
 			tvFilters.setVisibility(TextView.GONE);
-			llCategory.setVisibility(LinearLayout.VISIBLE);
+			etFilter.setVisibility(EditText.VISIBLE);
+			imgClear.setVisibility(ImageView.VISIBLE);
 			llFilters.setVisibility(LinearLayout.VISIBLE);
 			cbFPermission.setVisibility(CheckBox.VISIBLE);
 			cbFSystem.setVisibility(CheckBox.VISIBLE);
@@ -873,7 +875,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				numberOfFilters++;
 			if (mInternet)
 				numberOfFilters++;
-			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			if (etFilter.getText().length() > 0)
 				numberOfFilters++;
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
@@ -893,7 +894,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Change visibility
 			tvFilters.setVisibility(TextView.VISIBLE);
-			llCategory.setVisibility(LinearLayout.GONE);
+			etFilter.setVisibility(EditText.GONE);
+			imgClear.setVisibility(ImageView.GONE);
 			llFilters.setVisibility(LinearLayout.GONE);
 			cbFPermission.setVisibility(CheckBox.GONE);
 			cbFSystem.setVisibility(CheckBox.GONE);
