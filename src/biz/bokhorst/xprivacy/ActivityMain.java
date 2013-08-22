@@ -61,7 +61,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -166,38 +165,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		spRestriction.setOnItemSelectedListener(this);
 
 		// Setup used filter
-		final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
-		if (savedInstanceState != null && savedInstanceState.containsKey("Used")) {
-			mUsed = savedInstanceState.getBoolean("Used");
-			imgUsed.setImageDrawable(getResources().getDrawable(
-					getThemed(mUsed ? R.attr.icon_used : R.attr.icon_used_grayed)));
-		}
-		imgUsed.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				mUsed = !mUsed;
-				imgUsed.setImageDrawable(getResources().getDrawable(
-						getThemed(mUsed ? R.attr.icon_used : R.attr.icon_used_grayed)));
-				applyFilter();
-			}
-		});
+		CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
+		cbUsed.setOnCheckedChangeListener(this);
 
 		// Setup internet filter
-		final ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
-		if (savedInstanceState != null && savedInstanceState.containsKey("Internet")) {
-			mInternet = savedInstanceState.getBoolean("Internet");
-			imgInternet.setImageDrawable(getResources().getDrawable(
-					getThemed(mInternet ? R.attr.icon_internet : R.attr.icon_internet_grayed)));
-		}
-		imgInternet.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				mInternet = !mInternet;
-				imgInternet.setImageDrawable(getResources().getDrawable(
-						getThemed(mInternet ? R.attr.icon_internet : R.attr.icon_internet_grayed)));
-				applyFilter();
-			}
-		});
+		CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
+		cbInternet.setOnCheckedChangeListener(this);
 
 		// Setup name filter
 		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
@@ -237,32 +210,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				PrivacyManager.cSettingFPermission, true, false);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		cbFPermission.setChecked(fPermission);
-		cbFPermission.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
-						Boolean.toString(isChecked));
-
-				AppListTask appListTask = new AppListTask();
-				appListTask.executeOnExecutor(mExecutor, (Object) null);
-			}
-		});
+		cbFPermission.setOnCheckedChangeListener(this);
 
 		// Setup system filter
 		boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFSystem, true,
 				false);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 		cbFSystem.setChecked(fSystem);
-		cbFSystem.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
-						Boolean.toString(isChecked));
-
-				AppListTask appListTask = new AppListTask();
-				appListTask.executeOnExecutor(mExecutor, (Object) null);
-			}
-		});
+		cbFSystem.setOnCheckedChangeListener(this);
 
 		// Hide filters
 		if (savedInstanceState != null && savedInstanceState.containsKey("Filters"))
@@ -484,8 +439,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-		if (buttonView == cbFilter)
+		CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
+		CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
+		CheckBox cbPermission = (CheckBox) findViewById(R.id.cbFPermission);
+		CheckBox cbSystem = (CheckBox) findViewById(R.id.cbFSystem);
+		if (buttonView == cbFilter || buttonView == cbUsed || buttonView == cbInternet)
 			applyFilter();
+		else if (buttonView == cbPermission) {
+			PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
+					Boolean.toString(isChecked));
+			applyFilter();
+		} else if (buttonView == cbSystem) {
+			PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
+					Boolean.toString(isChecked));
+			applyFilter();
+		}
 	}
 
 	private void applyFilter() {
@@ -1028,12 +996,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			spRestriction.setEnabled(false);
 
 			// Reset filters
-			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
-			imgUsed.setEnabled(false);
-
-			final ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
-			imgInternet.setEnabled(false);
-
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setEnabled(false);
 
