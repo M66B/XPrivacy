@@ -172,7 +172,7 @@ For easy usage, data is restricted by category:
 * Messages
 	* return an empty SMS/MMS message list
 	* return an empty list of SMS messages stored on the SIM (ICC SMS)
-	* return an empty list of voicemails
+	* return an empty list of voicemail messages
 * Network
 	* return fake IP's
 	* return fake MAC's (network, Wi-Fi, bluetooth)
@@ -206,7 +206,6 @@ For easy usage, data is restricted by category:
 	* return empty [APN](http://en.wikipedia.org/wiki/Access_Point_Name) list
 	* return no currently used APN
 	* return an empty call log
-	* return an empty list of voicemail messages
 	* prevent phone state from being sent to an application
 		* Call forwarding indication
 		* Call state changed (ringing, off-hook)
