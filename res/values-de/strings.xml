@@ -77,6 +77,9 @@
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_fpermission">Nach Android-Berechtigungen filtern</string>
     <string name="settings_fsystem">System-Apps ausblenden</string>
+    <string name="filter_used">Filter on data usage</string>
+    <string name="filter_internet">Filter on internet access</string>
+    <string name="filter_restricted">Filter on restricted</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>

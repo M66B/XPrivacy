@@ -77,6 +77,9 @@
     <string name="settings_subscriber">契約者固有ID</string>
     <string name="settings_fpermission">権限でフィルタ</string>
     <string name="settings_fsystem">システムアプリをフィルタ</string>
+    <string name="filter_used">Filter on data usage</string>
+    <string name="filter_internet">Filter on internet access</string>
+    <string name="filter_restricted">Filter on restricted</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>

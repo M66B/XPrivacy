@@ -77,6 +77,9 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_subscriber">Abonnent ID</string>
     <string name="settings_fpermission">Filtrer efter Restriktioner</string>
     <string name="settings_fsystem">Filtrer System Programmer</string>
+    <string name="filter_used">Filter on data usage</string>
+    <string name="filter_internet">Filter on internet access</string>
+    <string name="filter_restricted">Filter on restricted</string>
     <string name="help_application">Program</string>
     <string name="help_internet">har internet tilladelse</string>
     <string name="help_granted">har Android tilladelse</string>

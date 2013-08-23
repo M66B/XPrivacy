@@ -79,6 +79,9 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_subscriber">Identidade do subscritor</string>
     <string name="settings_fpermission">Filtrar por permissão</string>
     <string name="settings_fsystem">Filtrar aplicações do sistema</string>
+    <string name="filter_used">Filter on data usage</string>
+    <string name="filter_internet">Filter on internet access</string>
+    <string name="filter_restricted">Filter on restricted</string>
     <string name="help_application">Aplicação</string>
     <string name="help_internet">Tem permissão da internet</string>
     <string name="help_granted">Tem permissão do Android</string>

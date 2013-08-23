@@ -75,6 +75,9 @@
     <string name="settings_subscriber">ID de subscriptor</string>
     <string name="settings_fpermission">Filta per permís</string>
     <string name="settings_fsystem">Filtra aplicacions de sistema</string>
+    <string name="filter_used">Filter on data usage</string>
+    <string name="filter_internet">Filter on internet access</string>
+    <string name="filter_restricted">Filter on restricted</string>
     <string name="help_application">Aplicació</string>
     <string name="help_internet">té permís d\'Internet</string>
     <string name="help_granted">té permisos d\'Android</string>
