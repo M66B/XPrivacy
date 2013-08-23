@@ -837,8 +837,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			int numberOfFilters = 0;
 
 			// Count number of activated filters
-			if (spRestriction.getSelectedItemPosition() > 0)
-				numberOfFilters++;
 			if (cbFUsed.isChecked())
 				numberOfFilters++;
 			if (cbFInternet.isChecked())
