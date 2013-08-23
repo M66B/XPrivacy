@@ -583,11 +583,13 @@ How to get beta releases:
 **Next release**
 
 * Updated Arabic translation
+* Updated Catalan translation
 * Updated Dutch/Flemish translation
 * Updated French translation
 * Updated German translation
 * Updated Japanese translation
 * Updated Lithuanian translation
+* Updated Norwegian translation
 * Updated Polish translation
 * Updated Portuguese translation
 * Updated Simplified Chinese translation
