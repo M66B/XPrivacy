@@ -160,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
-                    android:text="@string/help_used"
+                    android:text="@string/filter_used"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <CheckBox
@@ -168,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
-                    android:text="@string/help_internet"
+                    android:text="@string/filter_internet"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <CheckBox
@@ -192,7 +192,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
-                    android:text="@string/app_name"
+                    android:text="@string/filter_restricted"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
         </LinearLayout>
