@@ -22,7 +22,7 @@
         android:paddingBottom="6dp"
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
-        android:paddingTop="6dp" >
+        android:paddingTop="1dp" >
 
         <!-- Restriction category -->
 
@@ -44,7 +44,7 @@
             <Spinner
                 android:id="@+id/spRestriction"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="37dp"
                 android:layout_weight="1" />
 
             <ImageView
