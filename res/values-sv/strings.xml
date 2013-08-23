@@ -15,7 +15,7 @@
     <string name="menu_export">Exportera</string>
     <string name="menu_import">Importera</string>
     <string name="menu_submit">Skicka restriktioner</string>
-    <string name="menu_fetch">Fetch restrictions</string>
+    <string name="menu_fetch">Hämta restriktioner</string>
     <string name="menu_theme">Byt tema</string>
     <string name="menu_pro">Pro-version</string>
     <string name="menu_about">Om</string>
@@ -61,10 +61,10 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="restrict_view">View (webbläsare)</string>
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Markera för att blockera:</string>
-    <string name="title_nofilter">No active filter</string>
+    <string name="title_nofilter">Inga aktiva filter</string>
     <plurals name="title_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+        <item quantity="one">1 aktivt filter</item>
+        <item quantity="other">%d aktiva filter</item>
     </plurals>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
