@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Xposed rammeverk versjon %d+ er ikke installert</string>
     <string name="app_notenabled">XPrivacy er ikke frigitt i Xposed installasjon</string>
-    <string name="app_wrongandroid">Kun for Android version 4.0+</string>
+    <string name="app_wrongandroid">Kun for Android versjon 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013</string>
@@ -15,13 +15,13 @@
     <string name="menu_export">Eksporter</string>
     <string name="menu_import">Importer</string>
     <string name="menu_submit">Angi restriksjoner</string>
-    <string name="menu_fetch">Fetch restrictions</string>
+    <string name="menu_fetch">Hent restriksjoner</string>
     <string name="menu_theme">Bytt tema</string>
     <string name="menu_pro">Pro versjon</string>
     <string name="menu_about">Om</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Hjelp</string>
     <string name="menu_all">Alle</string>
-    <string name="menu_clear">Clear</string>
+    <string name="menu_clear">Slett</string>
     <string name="menu_app_launch">Kjør</string>
     <string name="menu_app_settings">Innstillinger</string>
     <string name="menu_app_store">Play Store</string>
@@ -59,11 +59,13 @@
     <string name="restrict_view">Betrakte (nettleser)</string>
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Marker for å blokkere:</string>
-    <string name="title_nofilter">No active filter</string>
+    <string name="title_nofilter">Ingen filter aktivert</string>
+
     <plurals name="title_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+        <item quantity="one">1 filter aktivert</item>
+        <item quantity="other">%d filter aktivert</item>
     </plurals>
+
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>
