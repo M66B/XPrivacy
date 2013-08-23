@@ -15,15 +15,15 @@
     <string name="menu_export">Export</string>
     <string name="menu_import">Import</string>
     <string name="menu_submit">Odeslat omezení</string>
-    <string name="menu_fetch">Fetch restrictions</string>
+    <string name="menu_fetch">Stáhnout omezení</string>
     <string name="menu_theme">Změnit téma</string>
     <string name="menu_pro">Pro verze</string>
     <string name="menu_about">O aplikaci</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Nápověda</string>
     <string name="menu_all">Vše</string>
     <string name="menu_clear">Vyčistit</string>
     <string name="menu_app_launch">Spustit</string>
-    <string name="menu_app_settings">Nastavení</string>
+    <string name="menu_app_settings">Informace o aplikaci</string>
     <string name="menu_app_store">Obchod Play</string>
     <string name="menu_accounts">Povolené účty aplikace</string>
     <string name="menu_contacts">Povolené kontakty aplikace</string>
@@ -34,7 +34,7 @@
     <string name="msg_edit">Pro úpravu jednotlivých oprávnění aplikace klikněte na její ikonu</string>
     <string name="msg_sure">Jste si jistý?</string>
     <string name="msg_done">Hotovo</string>
-    <string name="msg_reboot">Vyžadován restart</string>
+    <string name="msg_reboot">Vyžadován restart zařízení</string>
     <string name="msg_random">Náhodné hodnoty</string>
     <string name="msg_random_boot">Generovat náhodné hodnoty při spuštění zařízení</string>
     <string name="msg_first"><b>Vývoj a testování aplikace XPrivacy probíhaly s maximální možnou péčí,
@@ -61,10 +61,11 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="restrict_view">Zobrazení (v prohlížeči)</string>
     <string name="title_category">Kategorie:</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
-    <string name="title_nofilter">No active filter</string>
+    <string name="title_nofilter">Žádný aktivní filtr</string>
     <plurals name="title_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+        <item quantity="one">1 aktivní filtr</item>
+        <item quantity="few">%d aktivní filtry</item>
+        <item quantity="other">%d aktivních filtrů</item>
     </plurals>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zeměpisná šířka</string>
