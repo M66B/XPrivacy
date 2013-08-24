@@ -72,7 +72,7 @@
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
     <string name="settings_mac">عنوان الماك</string>
-    <string name="settings_ip">IP address</string>
+    <string name="settings_ip">عنوان الايبي</string>
     <string name="settings_phone">رقم الهاتف</string>
     <string name="settings_id">هوية اندرويد</string>
     <string name="settings_country">الدولة</string>
