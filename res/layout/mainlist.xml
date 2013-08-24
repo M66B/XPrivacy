@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:background="?attr/drawable_card"
         android:orientation="vertical"
         android:paddingBottom="6dp"
@@ -203,7 +203,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/activity_vertical_margin" >
+        android:layout_marginRight="@dimen/activity_horizontal_margin" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -243,6 +243,7 @@
         android:id="@+id/lvApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/activity_horizontal_margin_list"
         android:layout_marginTop="6dip"
         android:choiceMode="multipleChoice"
         android:fastScrollEnabled="true"
