@@ -79,9 +79,9 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_subscriber">Abonnee ID</string>
     <string name="settings_fpermission">Filter op rechten</string>
     <string name="settings_fsystem">Filter systeem applicaties</string>
-    <string name="filter_used">Filter on data usage</string>
-    <string name="filter_internet">Filter on internet access</string>
-    <string name="filter_restricted">Filter on restricted</string>
+    <string name="filter_used">Filter op gegevensgebruik</string>
+    <string name="filter_internet">Filter op internet toegang</string>
+    <string name="filter_restricted">Filter op beperkingen</string>
     <string name="help_application">Applicatie</string>
     <string name="help_internet">heeft internet rechten</string>
     <string name="help_granted">heeft Android rechten</string>

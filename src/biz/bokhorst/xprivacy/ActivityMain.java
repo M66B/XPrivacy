@@ -1162,7 +1162,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						} else
 							someRestricted = PrivacyManager.getRestricted(null, getApplicationContext(),
 									xAppInfo.getUid(), mRestrictionName, null, false, false);
-					
+
 					// Get if system
 					boolean system = false;
 					if (fSystem)
@@ -1188,7 +1188,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				clear();
 				TextView tvStats = (TextView) findViewById(R.id.tvStats);
 				ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
- 				pbFilter.setVisibility(ProgressBar.GONE);
+				pbFilter.setVisibility(ProgressBar.GONE);
 				tvStats.setVisibility(TextView.VISIBLE);
 				tvStats.setText(results.count + "/" + AppListAdapter.this.mListAppSelected.size());
 				if (results.values == null)

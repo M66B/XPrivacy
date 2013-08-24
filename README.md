@@ -581,6 +581,10 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.9.6 BETA!**
+
 * Updated Arabic translation
 * Updated Catalan translation
 * Updated Czech translation
@@ -598,6 +602,17 @@ How to get beta releases:
 * Updated Swedish translation
 * Updated Turkish translation
 * Updated Vietnamese translation
+
+Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https://github.com/M66B/XPrivacy/pull/534))
+
+* Added a circular progress bar when the filter is processing
+* Added stats: apps filtered / total apps
+* Moved *category* filter outside of the collapsible filter frame
+* Changed clickable images for filters to checkboxes
+* Added new strings for the filters
+* New card-like UI theme
+
+Note for the translators: be careful! A too long string will be cut on small screens ...
 
 **Version 1.9.5 BETA!**
 
