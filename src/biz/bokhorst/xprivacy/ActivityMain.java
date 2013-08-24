@@ -555,13 +555,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etOperator = (EditText) dlgSettings.findViewById(R.id.etOperator);
 		final EditText etIccId = (EditText) dlgSettings.findViewById(R.id.etIccId);
 		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
+		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
 		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
-		final boolean random = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingRandom,
-				false, false);
+		boolean log = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingLog, false, false);
+		boolean random = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingRandom, false,
+				false);
 
 		etSerial.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSerial, "", false));
 		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "", false));
@@ -581,6 +583,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etIccId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingIccId, "", false));
 		etSubscriber.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, "",
 				false));
+		cbLog.setChecked(log);
 		cbRandom.setChecked(random);
 
 		// Handle search
@@ -685,6 +688,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, etSubscriber
 						.getText().toString());
 
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingLog,
+						Boolean.toString(cbLog.isChecked()));
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingRandom,
 						Boolean.toString(cbRandom.isChecked()));
 

@@ -80,6 +80,7 @@
     <string name="settings_subscriber">Абонатно ID</string>
     <string name="settings_fpermission">Филтриране по разрешения</string>
     <string name="settings_fsystem">Филтриране на системни приложения</string>
+    <string name="settings_log">Debug log (requires restart)</string>
     <string name="filter_used">Filter on data usage</string>
     <string name="filter_internet">Filter on internet access</string>
     <string name="filter_restricted">Filter on restricted</string>

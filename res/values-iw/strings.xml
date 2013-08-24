@@ -80,6 +80,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_subscriber">מנוי ID</string>
     <string name="settings_fpermission">סינון לפי הרשאות</string>
     <string name="settings_fsystem">סנן יישומי מערכת</string>
+    <string name="settings_log">Debug log (requires restart)</string>
     <string name="filter_used">Filter on data usage</string>
     <string name="filter_internet">Filter on internet access</string>
     <string name="filter_restricted">Filter on restricted</string>

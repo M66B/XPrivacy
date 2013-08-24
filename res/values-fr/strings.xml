@@ -80,6 +80,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_subscriber">ID Abonné</string>
     <string name="settings_fpermission">Filtrer par permissions</string>
     <string name="settings_fsystem">Masquer les applis système</string>
+    <string name="settings_log">Debug log (requires restart)</string>
     <string name="filter_used">Filtrer utilisation des données</string>
     <string name="filter_internet">Filtrer ayant accès à internet</string>
     <string name="filter_restricted">Filtrer restreintes</string>

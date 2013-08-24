@@ -80,6 +80,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="settings_subscriber">Előfizető azonosító</string>
     <string name="settings_fpermission">Szűrés engedély szerint</string>
     <string name="settings_fsystem">Rendszer alkalmazások szűrése</string>
+    <string name="settings_log">Debug log (requires restart)</string>
     <string name="filter_used">Filter on data usage</string>
     <string name="filter_internet">Filter on internet access</string>
     <string name="filter_restricted">Filter on restricted</string>

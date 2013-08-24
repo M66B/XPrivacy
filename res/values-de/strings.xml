@@ -80,6 +80,7 @@
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_fpermission">Nach Android-Berechtigungen filtern</string>
     <string name="settings_fsystem">System-Apps ausblenden</string>
+    <string name="settings_log">Debug log (requires restart)</string>
     <string name="filter_used">Filter on data usage</string>
     <string name="filter_internet">Filter on internet access</string>
     <string name="filter_restricted">Filter on restricted</string>

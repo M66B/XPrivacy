@@ -79,6 +79,7 @@
     <string name="settings_subscriber">ID người đăng kí</string>
     <string name="settings_fpermission">Lọc theo quyền</string>
     <string name="settings_fsystem">Lọc theo ứng dụng hệ thống</string>
+    <string name="settings_log">Debug log (requires restart)</string>
     <string name="filter_used">Filter on data usage</string>
     <string name="filter_internet">Filter on internet access</string>
     <string name="filter_restricted">Filter on restricted</string>

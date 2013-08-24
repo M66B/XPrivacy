@@ -588,6 +588,7 @@ How to get beta releases:
 * Restrict browser user agent string ([issue](https://github.com/M66B/XPrivacy/issues/537))
 * Fixed margins on large screens
 * Fixed restricting NFC
+* Setting to enabled/disable logging (default disabled)
 * Updated Arabic translation
 * Updated French translation
 

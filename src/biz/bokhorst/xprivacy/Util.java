@@ -27,14 +27,24 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.os.Process;
 import android.util.Base64;
 import android.util.Log;
 
 public class Util {
 	private static boolean mPro = false;
+	private static boolean mLog = true;
+	private static boolean mLogDetermined = false;
 
 	public static void log(XHook hook, int priority, String msg) {
-		if (priority != Log.DEBUG)
+		// Check if logging enabled
+		if (Process.myUid() != 0 && !mLogDetermined) {
+			mLogDetermined = true;
+			mLog = PrivacyManager.getSettingBool(null, null, PrivacyManager.cSettingLog, false, true);
+		}
+
+		// Log if enabled
+		if (mLog && priority != Log.DEBUG)
 			if (hook == null)
 				Log.println(priority, "XPrivacy", msg);
 			else

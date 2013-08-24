@@ -81,6 +81,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovat dle oprávnění</string>
     <string name="settings_fsystem">Nezobrazovat systémové aplikace</string>
+    <string name="settings_log">Debug log (requires restart)</string>
     <string name="filter_used">Filter on data usage</string>
     <string name="filter_internet">Filter on internet access</string>
     <string name="filter_restricted">Filter on restricted</string>

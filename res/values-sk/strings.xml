@@ -81,6 +81,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovať podľa povolenia</string>
     <string name="settings_fsystem">Filtrovať systémové aplikácie</string>
+    <string name="settings_log">Debug log (requires restart)</string>
     <string name="filter_used">Filter on data usage</string>
     <string name="filter_internet">Filter on internet access</string>
     <string name="filter_restricted">Filter on restricted</string>

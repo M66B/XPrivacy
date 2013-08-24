@@ -223,6 +223,16 @@
 
             <TableRow>
 
+                <CheckBox
+                    android:id="@+id/cbLog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:text="@string/settings_log" />
+            </TableRow>
+
+            <TableRow>
+
                 <Button
                     android:id="@+id/btnRandom"
                     android:layout_width="wrap_content"

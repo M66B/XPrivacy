@@ -93,6 +93,7 @@ public class PrivacyManager {
 	public final static String cSettingVersion = "Version";
 	public final static String cSettingFirstRun = "FirstRun";
 	public final static String cSettingRandom = "Random@boot";
+	public final static String cSettingLog = "Log";
 
 	public final static boolean cExperimental = false;
 
@@ -500,8 +501,6 @@ public class PrivacyManager {
 			} finally {
 				cursor.close();
 			}
-		boolean used = (lastUsage != 0);
-		logRestriction(null, context, uid, "used", restrictionName, methodName, used, false, 0);
 		return lastUsage;
 	}
 
@@ -902,11 +901,18 @@ public class PrivacyManager {
 
 	// Helper methods
 
-	private static void logRestriction(XHook hook, Context context, int uid, String prefix, String restrictionName,
-			String methodName, boolean restricted, boolean cached, long ms) {
-		Util.log(hook, Log.INFO, String.format("%s %d/%s %s=%b%s%s", prefix, uid, methodName, restrictionName,
-				restricted, (cached ? " *" : (context == null ? " #" : "")), (ms > 1 ? " " + ms + " ms" : "")));
+	// @formatter:off
+	private static void logRestriction(
+			XHook hook, Context context,
+			int uid, String prefix, String restrictionName, String methodName,
+			boolean restricted, boolean cached, long ms) {
+		Util.log(hook, Log.INFO, String.format("%s %d/%s %s=%s%s%s",
+				prefix, uid, methodName, restrictionName,
+				(restricted ? "restricted" : "not restricted"),
+				(cached ? " (cached)" : (context == null ? " (file)" : "")),
+				(ms > 1 ? " " + ms + " ms" : "")));
 	}
+	// @formatter:on
 
 	public static boolean hasInternet(Context context, String packageName) {
 		PackageManager pm = context.getPackageManager();
