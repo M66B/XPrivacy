@@ -603,7 +603,7 @@ How to get beta releases:
 * Updated Turkish translation
 * Updated Vietnamese translation
 
-Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https://github.com/M66B/XPrivacy/pull/534))
+Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https://github.com/M66B/XPrivacy/pull/566))
 
 * Added a circular progress bar when the filter is processing
 * Added stats: apps filtered / total apps
