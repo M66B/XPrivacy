@@ -72,7 +72,7 @@
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
     <string name="settings_mac">MAC-Adresse</string>
-    <string name="settings_ip">IP address</string>
+    <string name="settings_ip">IP-Adresse</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android-ID</string>
     <string name="settings_country">Land</string>
@@ -80,7 +80,7 @@
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_fpermission">Nach Android-Berechtigungen filtern</string>
     <string name="settings_fsystem">System-Apps ausblenden</string>
-    <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_log">Debug Log (erfordert Neustart)</string>
     <string name="filter_used">Nach Datennutzung filtern</string>
     <string name="filter_internet">Nach Internetzugang filtern</string>
     <string name="filter_restricted">Nach Beschränkungen filtern</string>
