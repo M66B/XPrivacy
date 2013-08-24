@@ -223,7 +223,7 @@ public class ActivityShare extends Activity {
 				// Parse XML
 				Util.log(null, Log.INFO, "Importing " + mFile);
 				FileInputStream fis = null;
-				Map<String, Map<String, List<String>>> mapPackage;
+				Map<String, Map<String, List<ImportHandler.MethodDescription>>> mapPackage;
 				try {
 					fis = new FileInputStream(mFile);
 					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
@@ -251,9 +251,9 @@ public class ActivityShare extends Activity {
 						// Set imported restrictions
 						for (String restrictionName : mapPackage.get(packageName).keySet()) {
 							PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName, null, true);
-							for (String methodName : mapPackage.get(packageName).get(restrictionName))
+							for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(restrictionName))
 								PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName,
-										methodName, false);
+										md.getMethodName(), md.isRestricted());
 						}
 					} catch (NameNotFoundException ex) {
 						Util.log(null, Log.WARN, "Not found package=" + packageName);
@@ -314,7 +314,7 @@ public class ActivityShare extends Activity {
 	}
 
 	private class ImportHandler extends DefaultHandler {
-		private Map<String, Map<String, List<String>>> mMapPackage = new HashMap<String, Map<String, List<String>>>();
+		private Map<String, Map<String, List<MethodDescription>>> mMapPackage = new HashMap<String, Map<String, List<MethodDescription>>>();
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 
 		@Override
@@ -338,19 +338,40 @@ public class ActivityShare extends Activity {
 				String packageName = attributes.getValue("Name");
 				String restrictionName = attributes.getValue("Restriction");
 				String methodName = attributes.getValue("Method");
+				boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
 
 				// Map package restriction
 				if (!mMapPackage.containsKey(packageName))
-					mMapPackage.put(packageName, new HashMap<String, List<String>>());
+					mMapPackage.put(packageName, new HashMap<String, List<MethodDescription>>());
 				if (!mMapPackage.get(packageName).containsKey(restrictionName))
-					mMapPackage.get(packageName).put(restrictionName, new ArrayList<String>());
-				if (methodName != null)
-					mMapPackage.get(packageName).get(restrictionName).add(methodName);
+					mMapPackage.get(packageName).put(restrictionName, new ArrayList<MethodDescription>());
+				if (methodName != null) {
+					MethodDescription md = new MethodDescription(methodName, restricted);
+					mMapPackage.get(packageName).get(restrictionName).add(md);
+				}
 			}
 		}
 
-		public Map<String, Map<String, List<String>>> getPackageMap() {
+		public Map<String, Map<String, List<MethodDescription>>> getPackageMap() {
 			return mMapPackage;
+		}
+
+		public class MethodDescription {
+			private String mMethodName;
+			private boolean mRestricted;
+
+			public MethodDescription(String methodName, boolean restricted) {
+				mMethodName = methodName;
+				mRestricted = restricted;
+			}
+
+			public String getMethodName() {
+				return mMethodName;
+			}
+
+			public boolean isRestricted() {
+				return mRestricted;
+			}
 		}
 	}
 

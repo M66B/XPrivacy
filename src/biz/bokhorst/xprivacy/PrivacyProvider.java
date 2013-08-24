@@ -193,10 +193,12 @@ public class PrivacyProvider extends ContentProvider {
 						cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, null, true });
 
 						// Exceptions
-						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName))
-							if (!getRestricted(eRestrictionName, md.getMethodName(), prefs)
-									|| PrivacyManager.isDangerousMethod(eRestrictionName, md.getMethodName()))
-								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getMethodName(), false });
+						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
+							boolean restricted = getRestricted(eRestrictionName, md.getMethodName(), prefs);
+							if (!restricted || PrivacyManager.isDangerousMethod(eRestrictionName, md.getMethodName()))
+								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getMethodName(),
+										restricted });
+						}
 					}
 			}
 		} else {
