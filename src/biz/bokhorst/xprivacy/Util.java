@@ -44,7 +44,7 @@ public class Util {
 		}
 
 		// Log if enabled
-		if (mLog && priority != Log.DEBUG)
+		if (priority != Log.DEBUG && (priority == Log.INFO ? mLog : true))
 			if (hook == null)
 				Log.println(priority, "XPrivacy", msg);
 			else
