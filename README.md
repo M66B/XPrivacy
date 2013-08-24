@@ -592,6 +592,7 @@ How to get beta releases:
 * Updated Arabic translation
 * Updated French translation
 * Updated German translation
+* Updated Portuguese translation
 * Updated Slovenian translation
 * Updated Vietnamese translation
 
