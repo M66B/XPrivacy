@@ -587,6 +587,7 @@ How to get beta releases:
 * Updated Dutch/Flemish translation
 * Updated French translation
 * Updated German translation
+* Updated Italian translation
 * Updated Japanese translation
 * Updated Lithuanian translation
 * Updated Norwegian translation
@@ -594,6 +595,7 @@ How to get beta releases:
 * Updated Portuguese translation
 * Updated Simplified Chinese translation
 * Updated Slovenian translation
+* Updated Swedish translation
 * Updated Turkish translation
 * Updated Vietnamese translation
 

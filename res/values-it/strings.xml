@@ -2,26 +2,26 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework versione %d+ non è installato</string>
     <string name="app_notenabled">XPrivacy non è abilitato nell\'installer di Xposed framework</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_wrongandroid">Solo per Android versione 4.0+</string>
     <string name="app_version" formatted="false">Versione di XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Versione di Xposed framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Usage</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_usage">Utilizzo</string>
+    <string name="menu_refresh">Aggiorna</string>
     <string name="menu_settings">Impostazioni</string>
     <string name="menu_template">Template</string>
     <string name="menu_update">Controlla aggiornamenti</string>
     <string name="menu_report">Segnala problema</string>
     <string name="menu_export">Esporta</string>
     <string name="menu_import">Importa</string>
-    <string name="menu_submit">Submit restrictions</string>
-    <string name="menu_fetch">Fetch restrictions</string>
+    <string name="menu_submit">Invia restrizioni</string>
+    <string name="menu_fetch">Scarica restrizioni</string>
     <string name="menu_theme">Cambia tema</string>
     <string name="menu_pro">Versione Pro</string>
     <string name="menu_about">Riguardo a</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Aiuto</string>
     <string name="menu_all">Tutto</string>
-    <string name="menu_clear">Clear</string>
+    <string name="menu_clear">Pulisci</string>
     <string name="menu_app_launch">Lancia</string>
     <string name="menu_app_settings">Impostazioni</string>
     <string name="menu_app_store">Play Store</string>
@@ -35,16 +35,16 @@
     <string name="msg_sure">Sei sicuro?</string>
     <string name="msg_done">Fatto</string>
     <string name="msg_reboot">Riavvio richiesto</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
+    <string name="msg_random">Generazione casuale</string>
+    <string name="msg_random_boot">Generazione casuale all\'avvio</string>
+    <string name="msg_first"><b>XPrivacy è stato testato e sviluppato con cura,
+        ma è impossibile garantire che funzionerà in modo impeccabile su ogni dispositivo e per ogni applicazione.
+\n\nUsalo a tuo rischio.</b>\n\nLeggi la licenza:</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
     <string name="restrict_browser">Browser (bookmarks/history)</string>
     <string name="restrict_calendar">Calendario</string>
     <string name="restrict_calling">Chiamate (Telefono, SMS, MMS)</string>
-    <string name="restrict_clipboard">Clipboard</string>
+    <string name="restrict_clipboard">Appunti</string>
     <string name="restrict_contacts">Contatti</string>
     <string name="restrict_dictionary">Dizionario (utente)</string>
     <string name="restrict_identification">Identificazione (dispositivo)</string>
@@ -53,7 +53,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_media">Media (audio, foto, video)</string>
     <string name="restrict_messages">Messaggi (SMS, MMS)</string>
     <string name="restrict_network">Rete (indirizzi)</string>
-    <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_notifications">Notifiche</string>
     <string name="restrict_phone">Telefono (ID, numeri, chiamate)</string>
     <string name="restrict_storage">Memoria (media, scheda SD)</string>
     <string name="restrict_shell">Shell (comandi, superuser)</string>
@@ -61,19 +61,21 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">Visualizzazione (browser)</string>
     <string name="title_category">Categoria:</string>
     <string name="title_restrict">Spunta per limitare:</string>
-    <string name="title_nofilter">No active filter</string>
+    <string name="title_nofilter">Nessun filtro attivo</string>
+
     <plurals name="title_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+        <item quantity="one">1 filtro attivo</item>
+        <item quantity="other">%d filtri attivi</item>
     </plurals>
-    <string name="settings_serial">Serial#</string>
+
+    <string name="settings_serial">Numero di serie#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
     <string name="settings_mac">Indirizzo MAC</string>
     <string name="settings_phone">Numero di Telefono</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Nazione</string>
-    <string name="settings_operator">Operator</string>
+    <string name="settings_operator">Operatore</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filtra per permessi</string>
     <string name="settings_fsystem">Filtra applicazioni di sistema</string>
@@ -81,7 +83,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>
     <string name="help_used">ha usato questi dati</string>
-    <string name="help_frozen">is disabled</string>
+    <string name="help_frozen">è disabilitato</string>
     <string name="help_dangerous">è pericoloso</string>
 
 </resources>
