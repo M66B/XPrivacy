@@ -593,6 +593,7 @@ How to get beta releases:
 * Updated French translation
 * Updated German translation
 * Updated Slovenian translation
+* Updated Vietnamese translation
 
 **Version 1.9.6 BETA!**
 
