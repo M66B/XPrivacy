@@ -67,6 +67,8 @@ public class XActivityThread extends XHook {
 				"com.google.android.c2dm.intent.RECEIVE"));
 
 		// Intent receive: NFC
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc,
+				NfcAdapter.ACTION_ADAPTER_STATE_CHANGED, Build.VERSION_CODES.JELLY_BEAN_MR2));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_NDEF_DISCOVERED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TAG_DISCOVERED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TECH_DISCOVERED));

@@ -181,6 +181,7 @@ For easy usage, data is restricted by category:
 	* return an empty list of configured Wi-Fi networks
 	* return an empty list of bluetooth adapters/devices
 * NFC
+	* prevent receiving NFC adapter state changes
 	* prevent receiving NDEF discovered
 	* prevent receiving TAG discovered
 	* prevent receiving TECH discovered
