@@ -22,21 +22,20 @@ public class XWebSettingsClassic extends XHook {
 		return "android.webkit.WebSettingsClassic";
 	}
 
-	// public synchronized void setUserAgentString(String ua)
+	// public synchronized String getUserAgentString()
 	// frameworks/base/core/java/android/webkit/WebSettingsClassic.java
 	// http://developer.android.com/reference/android/webkit/WebSettings.html
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XWebSettingsClassic("setUserAgentString", PrivacyManager.cView));
+		listHook.add(new XWebSettingsClassic("getUserAgentString", PrivacyManager.cView));
 		return listHook;
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (isRestricted(param) && param.args.length > 0 && param.args[0] != null
-				&& param.args[0].getClass().equals(String.class))
-			param.args[0] = cUserAgent;
+		if (isRestricted(param))
+			param.setResult(cUserAgent);
 	}
 
 	@Override

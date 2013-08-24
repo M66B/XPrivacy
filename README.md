@@ -233,7 +233,9 @@ For easy usage, data is restricted by category:
 	* prevent package add, replace, restart and remove notifications
 * View
 	* prevent links from opening in the browser
-	* you will be notified if an application tries to open a link
+		* you will be notified if an application tries to open a link
+	* return fake browser user agent string
+		* *Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9*
 
 Limitations
 -----------
