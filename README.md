@@ -585,6 +585,7 @@ How to get beta releases:
 
 * Setting for IP address ([issue](https://github.com/M66B/XPrivacy/issues/554))
 * Restrict browser user agent string ([issue](https://github.com/M66B/XPrivacy/issues/537)) (does not work for the stock browser)
+* Updated Arabic translation
 
 **Version 1.9.6 BETA!**
 
