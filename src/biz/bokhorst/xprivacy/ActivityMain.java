@@ -61,12 +61,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,8 +75,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
-	private boolean mUsed = false;
-	private boolean mInternet = false;
 	private boolean mFiltersHidden = false;
 
 	private static final int ACTIVITY_LICENSE = 0;
@@ -165,38 +163,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		spRestriction.setOnItemSelectedListener(this);
 
 		// Setup used filter
-		final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
-		if (savedInstanceState != null && savedInstanceState.containsKey("Used")) {
-			mUsed = savedInstanceState.getBoolean("Used");
-			imgUsed.setImageDrawable(getResources().getDrawable(
-					getThemed(mUsed ? R.attr.icon_used : R.attr.icon_used_grayed)));
-		}
-		imgUsed.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				mUsed = !mUsed;
-				imgUsed.setImageDrawable(getResources().getDrawable(
-						getThemed(mUsed ? R.attr.icon_used : R.attr.icon_used_grayed)));
-				applyFilter();
-			}
-		});
+		CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
+		cbUsed.setOnCheckedChangeListener(this);
 
 		// Setup internet filter
-		final ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
-		if (savedInstanceState != null && savedInstanceState.containsKey("Internet")) {
-			mInternet = savedInstanceState.getBoolean("Internet");
-			imgInternet.setImageDrawable(getResources().getDrawable(
-					getThemed(mInternet ? R.attr.icon_internet : R.attr.icon_internet_grayed)));
-		}
-		imgInternet.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				mInternet = !mInternet;
-				imgInternet.setImageDrawable(getResources().getDrawable(
-						getThemed(mInternet ? R.attr.icon_internet : R.attr.icon_internet_grayed)));
-				applyFilter();
-			}
-		});
+		CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
+		cbInternet.setOnCheckedChangeListener(this);
 
 		// Setup name filter
 		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
@@ -236,32 +208,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				PrivacyManager.cSettingFPermission, true, false);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		cbFPermission.setChecked(fPermission);
-		cbFPermission.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
-						Boolean.toString(isChecked));
-
-				AppListTask appListTask = new AppListTask();
-				appListTask.executeOnExecutor(mExecutor, (Object) null);
-			}
-		});
+		cbFPermission.setOnCheckedChangeListener(this);
 
 		// Setup system filter
 		boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFSystem, true,
 				false);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 		cbFSystem.setChecked(fSystem);
-		cbFSystem.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
-						Boolean.toString(isChecked));
-
-				AppListTask appListTask = new AppListTask();
-				appListTask.executeOnExecutor(mExecutor, (Object) null);
-			}
-		});
+		cbFSystem.setOnCheckedChangeListener(this);
 
 		// Hide filters
 		if (savedInstanceState != null && savedInstanceState.containsKey("Filters"))
@@ -303,8 +257,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		outState.putBoolean("Used", mUsed);
-		outState.putBoolean("Internet", mInternet);
 		outState.putBoolean("Filters", mFiltersHidden);
 		super.onSaveInstanceState(outState);
 	}
@@ -483,16 +435,36 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-		if (buttonView == cbFilter)
+		CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
+		CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
+		CheckBox cbPermission = (CheckBox) findViewById(R.id.cbFPermission);
+		CheckBox cbSystem = (CheckBox) findViewById(R.id.cbFSystem);
+		if (buttonView == cbFilter || buttonView == cbUsed || buttonView == cbInternet)
 			applyFilter();
+		else if (buttonView == cbPermission) {
+			PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
+					Boolean.toString(isChecked));
+			applyFilter();
+		} else if (buttonView == cbSystem) {
+			PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
+					Boolean.toString(isChecked));
+			applyFilter();
+		}
 	}
 
 	private void applyFilter() {
 		if (mAppAdapter != null) {
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
-			String filter = String.format("%b\n%b\n%s\n%b", mUsed, mInternet, etFilter.getText().toString(),
-					cbFilter.isChecked());
+			CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
+			CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
+			CheckBox cbSystem = (CheckBox) findViewById(R.id.cbFSystem);
+			ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
+			TextView tvStats = (TextView) findViewById(R.id.tvStats);
+			String filter = String.format("%b\n%b\n%s\n%b\n%b", cbUsed.isChecked(), cbInternet.isChecked(), etFilter
+					.getText().toString(), cbFilter.isChecked(), cbSystem.isChecked());
+			pbFilter.setVisibility(ProgressBar.VISIBLE);
+			tvStats.setVisibility(TextView.GONE);
 			mAppAdapter.getFilter().filter(filter);
 		}
 	}
@@ -845,33 +817,32 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void toggleFiltersVisibility() {
 		ImageView imgFilterToggle = (ImageView) findViewById(R.id.imgToggleFilters);
+		ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
 		TextView tvFilters = (TextView) findViewById(R.id.tvFilterDetail);
-		LinearLayout llCategory = (LinearLayout) findViewById(R.id.llCategory);
+		EditText etFilter = (EditText) findViewById(R.id.etFilter);
 		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
+		CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
+		CheckBox cbFUsed = (CheckBox) findViewById(R.id.cbFUsed);
+		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 
 		if (mFiltersHidden) {
 			// Change visibility
 			tvFilters.setVisibility(TextView.GONE);
-			llCategory.setVisibility(LinearLayout.VISIBLE);
+			etFilter.setVisibility(EditText.VISIBLE);
+			imgClear.setVisibility(ImageView.VISIBLE);
 			llFilters.setVisibility(LinearLayout.VISIBLE);
-			cbFPermission.setVisibility(CheckBox.VISIBLE);
-			cbFSystem.setVisibility(CheckBox.VISIBLE);
 		} else {
 			int numberOfFilters = 0;
 
 			// Count number of activated filters
-			if (spRestriction.getSelectedItemPosition() > 0)
+			if (cbFUsed.isChecked())
 				numberOfFilters++;
-			if (mUsed)
+			if (cbFInternet.isChecked())
 				numberOfFilters++;
-			if (mInternet)
-				numberOfFilters++;
-			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			if (etFilter.getText().length() > 0)
 				numberOfFilters++;
-			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 			if (cbFilter.isChecked())
 				numberOfFilters++;
 			if (cbFPermission.isChecked())
@@ -888,10 +859,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Change visibility
 			tvFilters.setVisibility(TextView.VISIBLE);
-			llCategory.setVisibility(LinearLayout.GONE);
+			etFilter.setVisibility(EditText.GONE);
+			imgClear.setVisibility(ImageView.GONE);
 			llFilters.setVisibility(LinearLayout.GONE);
-			cbFPermission.setVisibility(CheckBox.GONE);
-			cbFSystem.setVisibility(CheckBox.GONE);
 		}
 
 		imgFilterToggle.setImageDrawable(getResources().getDrawable(
@@ -1021,12 +991,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			spRestriction.setEnabled(false);
 
 			// Reset filters
-			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
-			imgUsed.setEnabled(false);
-
-			final ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
-			imgInternet.setEnabled(false);
-
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setEnabled(false);
 
@@ -1059,12 +1023,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 
 			// Enable filters
-			final ImageView imgUsed = (ImageView) findViewById(R.id.imgUsed);
-			imgUsed.setEnabled(true);
-
-			final ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
-			imgInternet.setEnabled(true);
-
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			etFilter.setEnabled(true);
 
@@ -1170,6 +1128,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				boolean fInternet = Boolean.parseBoolean(components[1]);
 				String fName = components[2];
 				boolean fRestricted = Boolean.parseBoolean(components[3]);
+				boolean fSystem = Boolean.parseBoolean(components[4]);
 
 				// Match applications
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
@@ -1203,10 +1162,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						} else
 							someRestricted = PrivacyManager.getRestricted(null, getApplicationContext(),
 									xAppInfo.getUid(), mRestrictionName, null, false, false);
+					
+					// Get if system
+					boolean system = false;
+					if (fSystem)
+						system = !xAppInfo.getIsSystem();
 
 					// Match application
 					if ((fUsed ? used : true) && (fInternet ? internet : true) && (fName.equals("") ? true : contains)
-							&& (fRestricted ? someRestricted : true))
+							&& (fRestricted ? someRestricted : true) && (fSystem ? system : true))
 						lstApp.add(xAppInfo);
 				}
 
@@ -1222,6 +1186,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@SuppressWarnings("unchecked")
 			protected void publishResults(CharSequence constraint, FilterResults results) {
 				clear();
+				TextView tvStats = (TextView) findViewById(R.id.tvStats);
+				ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
+ 				pbFilter.setVisibility(ProgressBar.GONE);
+				tvStats.setVisibility(TextView.VISIBLE);
+				tvStats.setText(results.count + "/" + AppListAdapter.this.mListAppSelected.size());
 				if (results.values == null)
 					notifyDataSetInvalidated();
 				else {

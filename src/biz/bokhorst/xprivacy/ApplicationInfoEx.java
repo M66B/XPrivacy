@@ -83,7 +83,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
 		// Get references
 		PackageManager pm = context.getPackageManager();
-		boolean fSystem = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingFSystem, true, false);
 
 		// Get app list
 		SparseArray<ApplicationInfoEx> mapApp = new SparseArray<ApplicationInfoEx>();
@@ -94,14 +93,12 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			try {
 				dialog.setProgress(app + 1);
 				ApplicationInfoEx xAppInfo = new ApplicationInfoEx(context, listAppInfo.get(app));
-				if (fSystem ? !(xAppInfo.isFrozen() || xAppInfo.getIsSystem()) : true) {
-					ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
-					if (yAppInfo == null) {
-						mapApp.put(xAppInfo.getUid(), xAppInfo);
-						listApp.add(xAppInfo);
-					} else
-						yAppInfo.AddApplicationName(getApplicationName(listAppInfo.get(app), pm));
-				}
+				ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
+				if (yAppInfo == null) {
+					mapApp.put(xAppInfo.getUid(), xAppInfo);
+					listApp.add(xAppInfo);
+				} else
+					yAppInfo.AddApplicationName(getApplicationName(listAppInfo.get(app), pm));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}

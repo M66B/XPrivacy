@@ -1,6 +1,6 @@
 <resources>
 
-    <attr name="icon_edit" format="reference" />
+    <attr name="icon_checked" format="reference" />
     <attr name="icon_granted" format="reference" />
     <attr name="icon_granted_grayed" format="reference" />
     <attr name="icon_help" format="reference" />
@@ -17,6 +17,9 @@
     <attr name="icon_clear" format="reference" />
     <attr name="icon_clear_grayed" format="reference" />
     <attr name="icon_frozen" format="reference" />
+    <attr name="drawable_background" format="reference" />
+    <attr name="drawable_divider" format="reference" />
+    <attr name="drawable_card" format="reference" />
     <attr name="color_dangerous" format="reference" />
 
 </resources>

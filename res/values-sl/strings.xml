@@ -79,6 +79,9 @@
     <string name="settings_subscriber">ID naročnika</string>
     <string name="settings_fpermission">Filtriraj po pravicah</string>
     <string name="settings_fsystem">Filtriraj sistemske programe</string>
+    <string name="filter_used">Filter on data usage</string>
+    <string name="filter_internet">Filter on internet access</string>
+    <string name="filter_restricted">Filter on restricted</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>
