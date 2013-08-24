@@ -84,6 +84,19 @@
             <TableRow>
 
                 <TextView
+                    android:text="@string/settings_ip"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etIP"
+                    android:digits="0123456789ABCDEF.:"
+                    android:hint="0.0.0.0"
+                    android:inputType="textCapCharacters|textNoSuggestions" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
                     android:text="@string/settings_imei"
                     android:textIsSelectable="false" />
 

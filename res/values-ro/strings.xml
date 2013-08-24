@@ -62,14 +62,17 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_category">Category:</string>
     <string name="title_restrict">Bifeaza pentru a restrictiona:</string>
     <string name="title_nofilter">No active filter</string>
+
     <plurals name="title_filters">
         <item quantity="one">1 active filter</item>
         <item quantity="other">%d active filters</item>
     </plurals>
+
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
     <string name="settings_mac">MAC address</string>
+    <string name="settings_ip">IP address</string>
     <string name="settings_phone">Phone number</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Country</string>

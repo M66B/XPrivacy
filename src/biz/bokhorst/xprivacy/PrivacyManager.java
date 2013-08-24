@@ -75,6 +75,7 @@ public class PrivacyManager {
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
 	public final static String cSettingMac = "Mac";
+	public final static String cSettingIP = "IP";
 	public final static String cSettingImei = "IMEI";
 	public final static String cSettingPhone = "Phone";
 	public final static String cSettingId = "ID";
@@ -737,6 +738,16 @@ public class PrivacyManager {
 		}
 
 		if (name.equals("InetAddress")) {
+			// Set address
+			String ip = getSetting(null, null, cSettingIP, null, true);
+			if (ip != null)
+				try {
+					return InetAddress.getByName(ip);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+
+			// Any address (0.0.0.0)
 			try {
 				Field unspecified = Inet4Address.class.getDeclaredField("ANY");
 				unspecified.setAccessible(true);
@@ -747,8 +758,23 @@ public class PrivacyManager {
 			}
 		}
 
-		if (name.equals("IPInt"))
-			return 127 + (0 << 8) + (0 << 16) + (1 << 24);
+		if (name.equals("IPInt")) {
+			// Set address
+			String ip = getSetting(null, null, cSettingIP, null, true);
+			if (ip != null)
+				try {
+					InetAddress inet = InetAddress.getByName(ip);
+					if (inet.getClass().equals(Inet4Address.class)) {
+						byte[] b = inet.getAddress();
+						return b[0] + (b[1] << 8) + (b[2] << 16) + (b[3] << 24);
+					}
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+
+			// Any address (0.0.0.0)
+			return 0;
+		}
 
 		if (name.equals("Bytes3"))
 			return new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };

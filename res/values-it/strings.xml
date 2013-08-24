@@ -72,6 +72,7 @@
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
     <string name="settings_mac">Indirizzo MAC</string>
+    <string name="settings_ip">IP address</string>
     <string name="settings_phone">Numero di Telefono</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Nazione</string>

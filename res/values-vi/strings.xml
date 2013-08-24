@@ -61,14 +61,17 @@
     <string name="title_category">Danh mục:</string>
     <string name="title_restrict">Chọn để hạn chế:</string>
     <string name="title_nofilter">Không lọc</string>
+
     <plurals name="title_filters">
         <item quantity="one">1 bộ lọc có hiệu lực</item>
         <item quantity="other">%d bộ lọc có hiệu lực</item>
     </plurals>
+
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>
     <string name="settings_mac">địa chỉ MAC</string>
+    <string name="settings_ip">IP address</string>
     <string name="settings_phone">Số điện thoại</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Nước</string>

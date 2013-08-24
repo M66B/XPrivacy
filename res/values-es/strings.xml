@@ -62,14 +62,17 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_category">Categoría:</string>
     <string name="title_restrict">Selecciona para restringir:</string>
     <string name="title_nofilter">No active filter</string>
+
     <plurals name="title_filters">
         <item quantity="one">1 active filter</item>
         <item quantity="other">%d active filters</item>
     </plurals>
+
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
     <string name="settings_mac">Dirección MAC</string>
+    <string name="settings_ip">IP address</string>
     <string name="settings_phone">Numero de Teléfono</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">País</string>

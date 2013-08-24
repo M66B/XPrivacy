@@ -62,14 +62,17 @@
     <string name="title_category">类目:</string>
     <string name="title_restrict">勾选表示限制:</string>
     <string name="title_nofilter">无过滤器</string>
+
     <plurals name="title_filters">
         <item quantity="one">1 过滤器</item>
         <item quantity="other">%d 过滤器</item>
     </plurals>
+
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
     <string name="settings_mac">MAC 地址</string>
+    <string name="settings_ip">IP address</string>
     <string name="settings_phone">手机号码</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">国家</string>

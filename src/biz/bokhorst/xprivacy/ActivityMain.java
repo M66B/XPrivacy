@@ -544,6 +544,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etSearch = (EditText) dlgSettings.findViewById(R.id.etSearch);
 		Button btnSearch = (Button) dlgSettings.findViewById(R.id.btnSearch);
 		final EditText etMac = (EditText) dlgSettings.findViewById(R.id.etMac);
+		final EditText etIP = (EditText) dlgSettings.findViewById(R.id.etIP);
 		final EditText etImei = (EditText) dlgSettings.findViewById(R.id.etImei);
 		final EditText etPhone = (EditText) dlgSettings.findViewById(R.id.etPhone);
 		final EditText etId = (EditText) dlgSettings.findViewById(R.id.etId);
@@ -566,6 +567,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "", false));
 		etLon.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude, "", false));
 		etMac.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMac, "", false));
+		etIP.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingIP, "", false));
 		etImei.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingImei, "", false));
 		etPhone.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingPhone, "", false));
 		etId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingId, "", false));
@@ -660,6 +662,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				// Other settings
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingMac, etMac.getText()
 						.toString());
+				PrivacyManager
+						.setSetting(null, ActivityMain.this, PrivacyManager.cSettingIP, etIP.getText().toString());
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingImei, etImei.getText()
 						.toString());
 				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingPhone, etPhone.getText()

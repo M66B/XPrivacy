@@ -61,14 +61,17 @@
     <string name="title_category">Kategori:</string>
     <string name="title_restrict">Engellemek için işaretle:</string>
     <string name="title_nofilter">Etkin filtre yok</string>
+
     <plurals name="title_filters">
         <item quantity="one">1 etkin filtre</item>
         <item quantity="other">%d etkin filtre</item>
     </plurals>
+
     <string name="settings_serial">Seri no</string>
     <string name="settings_lat">Enlem</string>
     <string name="settings_lon">Boylam</string>
     <string name="settings_mac">MAC adresi</string>
+    <string name="settings_ip">IP address</string>
     <string name="settings_phone">Telefon numarası</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Ülke</string>

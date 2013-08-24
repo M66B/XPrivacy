@@ -62,14 +62,17 @@
     <string name="title_category">Category:</string>
     <string name="title_restrict">Отбележи за ограничаване:</string>
     <string name="title_nofilter">No active filter</string>
+
     <plurals name="title_filters">
         <item quantity="one">1 active filter</item>
         <item quantity="other">%d active filters</item>
     </plurals>
+
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Геогр. ширина</string>
     <string name="settings_lon">Геогр. дължина</string>
     <string name="settings_mac">MAC адрес</string>
+    <string name="settings_ip">IP address</string>
     <string name="settings_phone">Телефонен номер</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Държава</string>

@@ -62,14 +62,17 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_category">Категорија:</string>
     <string name="title_restrict">Означи да забраниш:</string>
     <string name="title_nofilter">No active filter</string>
+
     <plurals name="title_filters">
         <item quantity="one">1 active filter</item>
         <item quantity="other">%d active filters</item>
     </plurals>
+
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Ширина</string>
     <string name="settings_lon">Дужина</string>
     <string name="settings_mac">МЕК адреса</string>
+    <string name="settings_ip">IP address</string>
     <string name="settings_phone">Број телефона</string>
     <string name="settings_id">ИД Андроида</string>
     <string name="settings_country">Земља</string>
