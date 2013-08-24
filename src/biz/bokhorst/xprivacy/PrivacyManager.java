@@ -906,9 +906,9 @@ public class PrivacyManager {
 			XHook hook, Context context,
 			int uid, String prefix, String restrictionName, String methodName,
 			boolean restricted, boolean cached, long ms) {
-		Util.log(hook, Log.INFO, String.format("%s %d/%s %s=%s%s%s",
+		Util.log(hook, Log.INFO, String.format("%s %d/%s %s=%srestricted%s%s",
 				prefix, uid, methodName, restrictionName,
-				(restricted ? "restricted" : "not restricted"),
+				(restricted ? "" : "!"),
 				(cached ? " (cached)" : (context == null ? " (file)" : "")),
 				(ms > 1 ? " " + ms + " ms" : "")));
 	}
