@@ -234,7 +234,7 @@ For easy usage, data is restricted by category:
 * View
 	* prevent links from opening in the browser
 		* you will be notified if an application tries to open a link
-	* return fake browser user agent string
+	* return fake browser user agent string (does not work for the stock browser)
 		* *Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9*
 
 Limitations
@@ -584,7 +584,7 @@ How to get beta releases:
 **Next release**
 
 * Setting for IP address ([issue](https://github.com/M66B/XPrivacy/issues/554))
-* Restrict browser user agent string ([issue](https://github.com/M66B/XPrivacy/issues/537))
+* Restrict browser user agent string ([issue](https://github.com/M66B/XPrivacy/issues/537)) (does not work for the stock browser)
 
 **Version 1.9.6 BETA!**
 
