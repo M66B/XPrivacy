@@ -584,6 +584,10 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.9.7 BETA!**
+
 * Setting for IP address ([issue](https://github.com/M66B/XPrivacy/issues/554))
 * Restrict browser user agent string ([issue](https://github.com/M66B/XPrivacy/issues/537))
 * Restrict /system/build.prop ([issue](https://github.com/M66B/XPrivacy/issues/575))
