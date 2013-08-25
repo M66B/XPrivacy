@@ -80,10 +80,10 @@
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">تصفية بواسطة الأُذونات</string>
     <string name="settings_fsystem">فلترة برامج النظام</string>
-    <string name="settings_log">Debug log (requires restart)</string>
-    <string name="filter_used">Filter on data usage</string>
-    <string name="filter_internet">Filter on internet access</string>
-    <string name="filter_restricted">Filter on restricted</string>
+    <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
+    <string name="filter_used">التصفية حسب استخدام البيانات</string>
+    <string name="filter_internet">التصفية حسب الاتصال بالإنترنت</string>
+    <string name="filter_restricted">التصفية حسب التقييد</string>
     <string name="help_application">التطبيق</string>
     <string name="help_internet">لديه صلاحية الوصول للإنترنت</string>
     <string name="help_granted">لديه صلاحية أندرويد</string>
