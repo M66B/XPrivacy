@@ -72,7 +72,7 @@
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
     <string name="settings_mac">MAC アドレス</string>
-    <string name="settings_ip">IP address</string>
+    <string name="settings_ip">IP アドレス</string>
     <string name="settings_phone">電話番号</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">国</string>
@@ -80,10 +80,10 @@
     <string name="settings_subscriber">契約者固有ID</string>
     <string name="settings_fpermission">権限でフィルタ</string>
     <string name="settings_fsystem">システムアプリをフィルタ</string>
-    <string name="settings_log">Debug log (requires restart)</string>
-    <string name="filter_used">Filter on data usage</string>
-    <string name="filter_internet">Filter on internet access</string>
-    <string name="filter_restricted">Filter on restricted</string>
+    <string name="settings_log">デバッグログ(要再起動)</string>
+    <string name="filter_used">データ使用率でフィルタ</string>
+    <string name="filter_internet">ネット接続でフィルタ</string>
+    <string name="filter_restricted">制限済みでフィルタ</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>
