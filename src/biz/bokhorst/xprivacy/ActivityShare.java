@@ -383,7 +383,7 @@ public class ActivityShare extends Activity {
 		folder.mkdir();
 		String fileName;
 		if (multiple) {
-			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmm", Locale.ROOT);
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT);
 			fileName = String.format("XPrivacy_%s.xml", format.format(new Date()));
 		} else
 			fileName = "XPrivacy.xml";

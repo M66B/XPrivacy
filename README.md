@@ -590,6 +590,7 @@ How to get beta releases:
 * Fixed restricting NFC
 * Fixed exporting dangerous function exceptions ([issue](https://github.com/M66B/XPrivacy/issues/283))
 * Setting to enabled/disable logging (default disabled)
+* Add seconds to export file name ([issue](https://github.com/M66B/XPrivacy/issues/327))
 * Added Hindi translation
 * Updated Arabic translation
 * Updated French translation
