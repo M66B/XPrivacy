@@ -584,7 +584,7 @@ How to get beta releases:
 
 **Next release**
 
-* Updated Slovenian translation
+* Updated Slovak translation
 
 **Version 1.9.7 BETA!**
 
