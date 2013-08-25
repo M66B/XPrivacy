@@ -144,7 +144,8 @@ public class XActivityThread extends XHook {
 								finish(param);
 								param.setResult(null);
 							}
-						} else if (action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED)
+						} else if (action.equals(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED)
+								|| action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED)
 								|| action.equals(NfcAdapter.ACTION_TAG_DISCOVERED)
 								|| action.equals(NfcAdapter.ACTION_TECH_DISCOVERED)) {
 							if (isRestricted(param, mActionName)) {
