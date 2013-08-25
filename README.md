@@ -592,7 +592,7 @@ How to get beta releases:
 * Restrict browser user agent string ([issue](https://github.com/M66B/XPrivacy/issues/537))
 * Restrict /system/build.prop ([issue](https://github.com/M66B/XPrivacy/issues/575))
 * Fixed margins on large screens
-* Fixed restricting NFC
+* Fixed restricting NFC ([issue](https://github.com/M66B/XPrivacy/issues/530))
 * Fixed exporting dangerous function exceptions ([issue](https://github.com/M66B/XPrivacy/issues/283))
 * Setting to enabled/disable logging (default disabled)
 * Add seconds to export file name ([issue](https://github.com/M66B/XPrivacy/issues/327))
