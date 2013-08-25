@@ -27,6 +27,7 @@ public class XIoBridge extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XIoBridge("open", PrivacyManager.cIdentification, "/proc"));
+		listHook.add(new XIoBridge("open", PrivacyManager.cIdentification, "/system/build.prop"));
 		return listHook;
 	}
 
@@ -35,13 +36,13 @@ public class XIoBridge extends XHook {
 		if (param.args.length > 0) {
 			String fileName = (String) param.args[0];
 			if (fileName != null && fileName.startsWith(mFileName)) {
+				// Zygote, Android
+				if (Process.myUid() <= 0 || Process.myUid() == PrivacyManager.cAndroidUid)
+					return;
+
 				// /proc
 				if (mFileName.equals("/proc")) {
-					// Zygote, Android
-					if (Process.myUid() <= 0 || Process.myUid() == PrivacyManager.cAndroidUid)
-						return;
-
-					// Facebook
+					// Allow command line
 					if (fileName.equals("/proc/self/cmdline"))
 						return;
 
