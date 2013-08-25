@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
-    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed installeri</string>
+    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed inštalátore</string>
     <string name="app_wrongandroid">Len pre Android 4.0+</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Verzia Xposed frameworku: %d</string>
@@ -73,7 +73,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
     <string name="settings_mac">MAC adresa</string>
-    <string name="settings_ip">IP address</string>
+    <string name="settings_ip">IP adresa</string>
     <string name="settings_phone">Telefónne číslo</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Krajina</string>
@@ -81,10 +81,10 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovať podľa povolenia</string>
     <string name="settings_fsystem">Filtrovať systémové aplikácie</string>
-    <string name="settings_log">Debug log (requires restart)</string>
-    <string name="filter_used">Filter on data usage</string>
-    <string name="filter_internet">Filter on internet access</string>
-    <string name="filter_restricted">Filter on restricted</string>
+    <string name="settings_log">Záznam na ladenie (vyžaduje reštart)</string>
+    <string name="filter_used">Filter na využitie dát</string>
+    <string name="filter_internet">Filter na prístup k internetu</string>
+    <string name="filter_restricted">Filter na obmedzené</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>
