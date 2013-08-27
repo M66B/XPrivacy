@@ -113,7 +113,7 @@ public class PackageChange extends BroadcastReceiver {
 					if (sVersion.compareTo(new Version("0.0")) != 0) {
 						// Version 1.7+
 						if (sVersion.compareTo(new Version("1.7")) < 0) {
-							// Disable identification/proc
+							// Disable identification//proc
 							for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
 								PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cIdentification,
 										"/proc", false);
@@ -128,6 +128,17 @@ public class PackageChange extends BroadcastReceiver {
 								PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cLocation,
 										"isProviderEnabled", false);
 							}
+						}
+
+						// Version 1.9.9+
+						if (sVersion.compareTo(new Version("1.9.9")) < 0) {
+							// Disable identification//system/build.prop
+							for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
+								PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cIdentification,
+										"/system/build.prop", false);
+
+							// Select user applications
+							PrivacyManager.setSetting(null, context, PrivacyManager.cSettingFSystem, "U");
 						}
 					}
 
