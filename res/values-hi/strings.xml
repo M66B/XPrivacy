@@ -79,11 +79,14 @@
     <string name="settings_operator">ऑपरेटर</string>
     <string name="settings_subscriber">ग्राहक क्रमांक</string>
     <string name="settings_fpermission">अनुमति के द्वारा फिल्टर करे</string>
-    <string name="settings_fsystem">सिस्टम application फिल्टर करे</string>
+    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (पुनरारंभ जरूरी)</string>
     <string name="filter_used">डेटा उपयोग पर फिल्टर करे</string>
     <string name="filter_internet">इन्टरनेट उपयोग पर फिल्टर करे</string>
     <string name="filter_restricted">प्रतिबंध पर फिल्टर करे</string>
+    <string name="filter_app_sys">System application</string>
+    <string name="filter_app_user">User application</string>
+    <string name="filter_app_both">All applications</string>
     <string name="help_application">Application</string>
     <string name="help_internet">इंटरनेट की अनुमति है</string>
     <string name="help_granted">Android की अनुमति है</string>

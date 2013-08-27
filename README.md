@@ -588,6 +588,14 @@ How to get beta releases:
 * Updated Lithuanian translation
 * Updated Slovak translation
 
+Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https://github.com/M66B/XPrivacy/pull/586))
+
+* Added three-states checkboxes in main activity (not in the application details yet, it's a bit more complicated)
+* Improved accessibility : clickable images are focusable with DPAD in filter frame
+* Added the ability to show apps of user/system/both (new strings to translate)
+* Added infos about the user/system/both icons in help section
+* Various fixes (bad margins on large screens, 9-patches...)
+
 **Version 1.9.7 BETA!**
 
 * Setting for IP address ([issue](https://github.com/M66B/XPrivacy/issues/554))

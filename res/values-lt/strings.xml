@@ -79,11 +79,14 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_operator">Operatorius</string>
     <string name="settings_subscriber">Abonento ID</string>
     <string name="settings_fpermission">Tik naudojami leidimai</string>
-    <string name="settings_fsystem">Nerodyti sistemos programų</string>
+    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">DEBUG žurnalas (reikia paleisti iš naujo)</string>
     <string name="filter_used">Duomenų naudojimo filtras</string>
     <string name="filter_internet">Interneto prieigos filtras</string>
     <string name="filter_restricted">Leidimų filtras</string>
+    <string name="filter_app_sys">System application</string>
+    <string name="filter_app_user">User application</string>
+    <string name="filter_app_both">All applications</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
     <string name="help_granted">Android leidimai</string>

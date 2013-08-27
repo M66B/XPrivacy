@@ -79,11 +79,14 @@
     <string name="settings_operator">运营商</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">无关权限过滤</string>
-    <string name="settings_fsystem">系统应用过滤</string>
+    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">调试日志 (需要重启)</string>
     <string name="filter_used">未用数据过滤</string>
     <string name="filter_internet">无联网权过滤</string>
     <string name="filter_restricted">未勾限制过滤</string>
+    <string name="filter_app_sys">System application</string>
+    <string name="filter_app_user">User application</string>
+    <string name="filter_app_both">All applications</string>
     <string name="help_application">应用</string>
     <string name="help_internet">表示联网的权限</string>
     <string name="help_granted">表示授予的权限</string>

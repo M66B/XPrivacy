@@ -52,7 +52,10 @@
                 android:layout_width="32dip"
                 android:layout_height="32dip"
                 android:layout_gravity="center_vertical"
+                android:background="@drawable/bg_button"
+                android:clickable="true"
                 android:contentDescription="@string/help_application"
+                android:focusable="true"
                 android:src="?attr/icon_info" />
         </LinearLayout>
 
@@ -67,7 +70,10 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerVertical="true"
+                android:background="@drawable/bg_button"
+                android:clickable="true"
                 android:contentDescription="@string/title_category"
+                android:focusable="true"
                 android:src="?attr/icon_expander_maximized" />
 
             <EditText
@@ -88,7 +94,10 @@
                 android:layout_height="24dip"
                 android:layout_alignRight="@id/etFilter"
                 android:layout_centerVertical="true"
+                android:background="@drawable/bg_button"
+                android:clickable="true"
                 android:contentDescription="@string/help_application"
+                android:focusable="true"
                 android:src="?attr/icon_clear_grayed" />
 
             <TextView
@@ -107,53 +116,20 @@
             android:id="@+id/llFilters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp" >
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:orientation="horizontal" >
 
                 <ImageView
-                    android:id="@+id/ImageView04"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:contentDescription="@string/help_used"
                     android:src="?attr/icon_used" />
-
-                <ImageView
-                    android:id="@+id/ImageView02"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/help_internet"
-                    android:src="?attr/icon_internet" />
-
-                <ImageView
-                    android:id="@+id/ImageView01"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/help_granted"
-                    android:src="?attr/icon_granted" />
-
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/help_application"
-                    android:src="?attr/icon_system" />
-
-                <ImageView
-                    android:id="@+id/ImageView03"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/title_restrict"
-                    android:src="?attr/icon_checked" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
 
                 <CheckBox
                     android:id="@+id/cbFUsed"
@@ -162,6 +138,18 @@
                     android:layout_marginLeft="4dp"
                     android:text="@string/filter_used"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@string/help_internet"
+                    android:src="?attr/icon_internet" />
 
                 <CheckBox
                     android:id="@+id/cbFInternet"
@@ -170,6 +158,17 @@
                     android:layout_marginLeft="4dp"
                     android:text="@string/filter_internet"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" >
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@string/help_granted"
+                    android:src="?attr/icon_granted" />
 
                 <CheckBox
                     android:id="@+id/cbFPermission"
@@ -178,14 +177,17 @@
                     android:layout_marginLeft="4dp"
                     android:text="@string/settings_fpermission"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/cbFSystem"
-                    android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" >
+
+                <ImageView
+                    android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginLeft="4dp"
-                    android:text="@string/settings_fsystem"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:contentDescription="@string/title_restrict"
+                    android:src="?attr/icon_checked" />
 
                 <CheckBox
                     android:id="@+id/cbFilter"
@@ -194,6 +196,67 @@
                     android:layout_marginLeft="4dp"
                     android:text="@string/filter_restricted"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llAppFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/imgAppFilter"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@string/help_application"
+                    android:src="?attr/icon_user_system" />
+
+                <CheckBox
+                    android:id="@+id/cbFSystem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="@string/settings_fapplication"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llAppFilter2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:id="@+id/imgAppAll"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_button"
+                    android:clickable="true"
+                    android:contentDescription="@string/filter_app_both"
+                    android:focusable="true"
+                    android:src="?attr/icon_user_system" />
+
+                <ImageView
+                    android:id="@+id/imgAppUser"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_button"
+                    android:clickable="true"
+                    android:contentDescription="@string/filter_app_user"
+                    android:focusable="true"
+                    android:src="?attr/icon_user" />
+
+                <ImageView
+                    android:id="@+id/imgAppSys"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_button"
+                    android:clickable="true"
+                    android:contentDescription="@string/filter_app_sys"
+                    android:focusable="true"
+                    android:src="?attr/icon_system" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

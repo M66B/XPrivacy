@@ -79,11 +79,14 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Abonnee ID</string>
     <string name="settings_fpermission">Filter op rechten</string>
-    <string name="settings_fsystem">Filter systeem applicaties</string>
+    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (herstart vereist)</string>
     <string name="filter_used">Filter op gegevensgebruik</string>
     <string name="filter_internet">Filter op internet toegang</string>
     <string name="filter_restricted">Filter op beperkingen</string>
+    <string name="filter_app_sys">Systeem applictie</string>
+    <string name="filter_app_user">Gebruiker applicatie</string>
+    <string name="filter_app_both">Alle applicaties</string>
     <string name="help_application">Applicatie</string>
     <string name="help_internet">heeft internet rechten</string>
     <string name="help_granted">heeft Android rechten</string>

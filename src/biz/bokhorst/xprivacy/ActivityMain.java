@@ -59,7 +59,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Filter;
@@ -67,6 +66,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,7 +75,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
+	private String mUserSystemOrBoth = APP_FILTER_BOTH;
 	private boolean mFiltersHidden = false;
+
+	private static final String APP_FILTER_BOTH = "B";
+	private static final String APP_FILTER_USER = "U";
+	private static final String APP_FILTER_SYS = "S";
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int ACTIVITY_EXPORT = 1;
@@ -210,12 +215,69 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		cbFPermission.setChecked(fPermission);
 		cbFPermission.setOnCheckedChangeListener(this);
 
-		// Setup system filter
-		boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFSystem, true,
-				false);
-		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
-		cbFSystem.setChecked(fSystem);
-		cbFSystem.setOnCheckedChangeListener(this);
+		// Setup user/system/both filter
+		mUserSystemOrBoth = PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
+				APP_FILTER_BOTH, false);
+		final ImageView imgUserSystemBoth = (ImageView) findViewById(R.id.imgAppFilter);
+		imgUserSystemBoth.setImageDrawable(getResources().getDrawable(
+				getThemed(mUserSystemOrBoth.equals(APP_FILTER_SYS) ? R.attr.icon_system : (mUserSystemOrBoth
+						.equals(APP_FILTER_USER) ? R.attr.icon_user : R.attr.icon_user_system))));
+		final LinearLayout llAppFilter = (LinearLayout) findViewById(R.id.llAppFilter);
+		final LinearLayout llAppFilter2 = (LinearLayout) findViewById(R.id.llAppFilter2);
+		final CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
+		cbFSystem.setChecked(!mUserSystemOrBoth.equals(APP_FILTER_BOTH));
+		cbFSystem.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				llAppFilter.setVisibility(LinearLayout.GONE);
+				llAppFilter2.setVisibility(LinearLayout.VISIBLE);
+			}
+		});
+
+		// All
+		final ImageView imgAppAll = (ImageView) findViewById(R.id.imgAppAll);
+		imgAppAll.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mUserSystemOrBoth = APP_FILTER_BOTH;
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem, mUserSystemOrBoth);
+				imgUserSystemBoth.setImageDrawable(getResources().getDrawable(getThemed(R.attr.icon_user_system)));
+				llAppFilter.setVisibility(LinearLayout.VISIBLE);
+				llAppFilter2.setVisibility(LinearLayout.GONE);
+				cbFSystem.setChecked(false);
+				applyFilter();
+			}
+		});
+
+		// System
+		final ImageView imgAppSystem = (ImageView) findViewById(R.id.imgAppSys);
+		imgAppSystem.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mUserSystemOrBoth = APP_FILTER_SYS;
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem, mUserSystemOrBoth);
+				imgUserSystemBoth.setImageDrawable(getResources().getDrawable(getThemed(R.attr.icon_system)));
+				llAppFilter.setVisibility(LinearLayout.VISIBLE);
+				llAppFilter2.setVisibility(LinearLayout.GONE);
+				cbFSystem.setChecked(true);
+				applyFilter();
+			}
+		});
+
+		// User
+		final ImageView imgAppUser = (ImageView) findViewById(R.id.imgAppUser);
+		imgAppUser.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mUserSystemOrBoth = APP_FILTER_USER;
+				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem, mUserSystemOrBoth);
+				imgUserSystemBoth.setImageDrawable(getResources().getDrawable(getThemed(R.attr.icon_user)));
+				llAppFilter.setVisibility(LinearLayout.VISIBLE);
+				llAppFilter2.setVisibility(LinearLayout.GONE);
+				cbFSystem.setChecked(true);
+				applyFilter();
+			}
+		});
 
 		// Hide filters
 		if (savedInstanceState != null && savedInstanceState.containsKey("Filters"))
@@ -438,15 +500,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
 		CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
 		CheckBox cbPermission = (CheckBox) findViewById(R.id.cbFPermission);
-		CheckBox cbSystem = (CheckBox) findViewById(R.id.cbFSystem);
 		if (buttonView == cbFilter || buttonView == cbUsed || buttonView == cbInternet)
 			applyFilter();
 		else if (buttonView == cbPermission) {
 			PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
-					Boolean.toString(isChecked));
-			applyFilter();
-		} else if (buttonView == cbSystem) {
-			PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
 					Boolean.toString(isChecked));
 			applyFilter();
 		}
@@ -458,11 +515,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			CheckBox cbFilter = (CheckBox) findViewById(R.id.cbFilter);
 			CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
 			CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
-			CheckBox cbSystem = (CheckBox) findViewById(R.id.cbFSystem);
 			ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
 			TextView tvStats = (TextView) findViewById(R.id.tvStats);
-			String filter = String.format("%b\n%b\n%s\n%b\n%b", cbUsed.isChecked(), cbInternet.isChecked(), etFilter
-					.getText().toString(), cbFilter.isChecked(), cbSystem.isChecked());
+			String filter = String.format("%b\n%b\n%s\n%b\n%s", cbUsed.isChecked(), cbInternet.isChecked(), etFilter
+					.getText().toString(), cbFilter.isChecked(), mUserSystemOrBoth);
 			pbFilter.setVisibility(ProgressBar.VISIBLE);
 			tvStats.setVisibility(TextView.GONE);
 			mAppAdapter.getFilter().filter(filter);
@@ -834,7 +890,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CheckBox cbFUsed = (CheckBox) findViewById(R.id.cbFUsed);
 		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
-		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 
 		if (mFiltersHidden) {
 			// Change visibility
@@ -856,7 +911,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				numberOfFilters++;
 			if (cbFPermission.isChecked())
 				numberOfFilters++;
-			if (cbFSystem.isChecked())
+			if (!mUserSystemOrBoth.equals(APP_FILTER_BOTH))
 				numberOfFilters++;
 
 			// Change text
@@ -1137,7 +1192,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				boolean fInternet = Boolean.parseBoolean(components[1]);
 				String fName = components[2];
 				boolean fRestricted = Boolean.parseBoolean(components[3]);
-				boolean fSystem = Boolean.parseBoolean(components[4]);
+				String fUserSystemBoth = components[4];
 
 				// Match applications
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
@@ -1172,14 +1227,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							someRestricted = PrivacyManager.getRestricted(null, getApplicationContext(),
 									xAppInfo.getUid(), mRestrictionName, null, false, false);
 
-					// Get if system
-					boolean system = false;
-					if (fSystem)
-						system = !xAppInfo.getIsSystem();
+					// Get if system or not
+					boolean userSystemBoth = false;
+					if (fUserSystemBoth.equals(APP_FILTER_SYS))
+						userSystemBoth = xAppInfo.getIsSystem();
+					else if (fUserSystemBoth.equals(APP_FILTER_USER))
+						userSystemBoth = !xAppInfo.getIsSystem();
 
 					// Match application
 					if ((fUsed ? used : true) && (fInternet ? internet : true) && (fName.equals("") ? true : contains)
-							&& (fRestricted ? someRestricted : true) && (fSystem ? system : true))
+							&& (fRestricted ? someRestricted : true)
+							&& (fUserSystemBoth.equals(APP_FILTER_BOTH) ? true : userSystemBoth))
 						lstApp.add(xAppInfo);
 				}
 
@@ -1217,7 +1275,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			public ImageView imgGranted;
 			public ImageView imgInternet;
 			public ImageView imgFrozen;
-			public CheckedTextView ctvApp;
+			public TextView tvName;
+			public ImageView imgCBName;
+			public RelativeLayout rlName;
 
 			public ViewHolder(View theRow, int thePosition) {
 				row = theRow;
@@ -1227,7 +1287,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
 				imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
-				ctvApp = (CheckedTextView) row.findViewById(R.id.ctvName);
+				tvName = (TextView) row.findViewById(R.id.tvName);
+				imgCBName = (ImageView) row.findViewById(R.id.imgCBName);
+				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
 
@@ -1288,7 +1350,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && xAppInfo != null) {
 					// Check if used
-					holder.ctvApp.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
+					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 
 					// Check if permission
@@ -1301,13 +1363,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					holder.imgFrozen.setVisibility(xAppInfo.isFrozen() ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					holder.ctvApp.setChecked(allRestricted);
-					holder.ctvApp.setEnabled(mRestrictionName == null && someRestricted ? allRestricted : true);
+					holder.imgCBName.setEnabled(mRestrictionName == null && someRestricted ? allRestricted : true);
+					holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
+							: (someRestricted ? (mRestrictionName == null ? R.drawable.checkbox_half
+									: R.drawable.checkbox_check) : android.R.color.transparent));
 
 					// Listen for restriction changes
-					holder.ctvApp.setOnClickListener(new View.OnClickListener() {
+					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
+							if (!holder.imgCBName.isEnabled())
+								return;
+
 							// Get all/some restricted
 							boolean allRestricted = true;
 							if (mRestrictionName == null)
@@ -1325,7 +1392,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							for (String restrictionName : listRestriction)
 								PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
 										restrictionName, null, allRestricted);
-							holder.ctvApp.setChecked(allRestricted);
+							holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
+									: android.R.color.transparent);
 						}
 					});
 				}
@@ -1369,15 +1437,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			});
 
 			// Set data
-			holder.ctvApp.setText(xAppInfo.toString());
-			holder.ctvApp.setTypeface(null, Typeface.NORMAL);
+			holder.tvName.setText(xAppInfo.toString());
+			holder.tvName.setTypeface(null, Typeface.NORMAL);
 			holder.imgUsed.setVisibility(View.INVISIBLE);
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
-			holder.ctvApp.setChecked(false);
-			holder.ctvApp.setEnabled(false);
-			holder.ctvApp.setClickable(false);
+			holder.imgCBName.setImageResource(android.R.color.transparent);
+			holder.imgCBName.setEnabled(false);
 
 			// Async update
 			new HolderTask(position, holder, xAppInfo).executeOnExecutor(mExecutor, (Object) null);

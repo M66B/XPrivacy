@@ -79,11 +79,14 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">Identidade do subscritor</string>
     <string name="settings_fpermission">Filtrar por permissão</string>
-    <string name="settings_fsystem">Filtrar aplicações do sistema</string>
+    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Relatório de depuração (requer reinicialização)</string>
     <string name="filter_used">Filtrar o uso de dados</string>
     <string name="filter_internet">Filtrar o acesso à Internet</string>
     <string name="filter_restricted">Filtrar restrito</string>
+    <string name="filter_app_sys">System application</string>
+    <string name="filter_app_user">User application</string>
+    <string name="filter_app_both">All applications</string>
     <string name="help_application">Aplicação</string>
     <string name="help_internet">Tem permissão da internet</string>
     <string name="help_granted">Tem permissão do Android</string>

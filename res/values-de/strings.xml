@@ -79,11 +79,14 @@
     <string name="settings_operator">Mobilfunkanbieter</string>
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_fpermission">Nach Android-Berechtigungen filtern</string>
-    <string name="settings_fsystem">System-Apps ausblenden</string>
+    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug Log (erfordert Neustart)</string>
     <string name="filter_used">Nach Datennutzung filtern</string>
     <string name="filter_internet">Nach Internetzugang filtern</string>
     <string name="filter_restricted">Nach Beschränkungen filtern</string>
+    <string name="filter_app_sys">System application</string>
+    <string name="filter_app_user">User application</string>
+    <string name="filter_app_both">All applications</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>

@@ -79,11 +79,14 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_operator">Opérateur</string>
     <string name="settings_subscriber">ID Abonné</string>
     <string name="settings_fpermission">Filtrer par permissions</string>
-    <string name="settings_fsystem">Masquer les applis système</string>
-    <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_fapplication">Filtrer par type d\'application</string>
+    <string name="settings_log">Debug log (redémarrage nécessaire)</string>
     <string name="filter_used">Filtrer utilisation des données</string>
     <string name="filter_internet">Filtrer ayant accès à internet</string>
     <string name="filter_restricted">Filtrer restreintes</string>
+    <string name="filter_app_sys">Application système</string>
+    <string name="filter_app_user">Application utilisateur</string>
+    <string name="filter_app_both">Toutes les applications</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>

@@ -2,15 +2,13 @@
 
     <style name="CustomTheme" parent="android:Theme.Holo">
         <item name="icon_granted">@drawable/granted_holo_dark</item>
-        <item name="icon_granted_grayed">@drawable/granted_grayed_holo_dark</item>
         <item name="icon_help">@android:drawable/ic_menu_help</item>
         <item name="icon_info">@drawable/info_holo_dark</item>
         <item name="icon_internet">@drawable/internet_holo_dark</item>
-        <item name="icon_internet_grayed">@drawable/internet_grayed_holo_dark</item>
         <item name="icon_used">@drawable/used_holo_dark</item>
-        <item name="icon_used_grayed">@drawable/used_grayed_holo_dark</item>
+        <item name="icon_user">@drawable/user_holo_dark</item>
         <item name="icon_system">@drawable/system_holo_dark</item>
-        <item name="icon_system_grayed">@drawable/system_grayed_holo_dark</item>
+        <item name="icon_user_system">@drawable/user_system_holo_dark</item>
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_dark</item>
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_dark</item>
         <item name="icon_launcher">@drawable/ic_launcher_holo_dark</item>
@@ -21,20 +19,19 @@
         <item name="drawable_background">@android:color/black</item>
         <item name="drawable_card">@drawable/card_dark</item>
         <item name="drawable_divider">@drawable/divider_dark</item>
+        <item name="drawable_checkbox_bg">@drawable/bg_checkbox_dark</item>
         <item name="color_dangerous">@color/color_dangerous_dark</item>
     </style>
 
     <style name="CustomTheme.Light" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="icon_granted">@drawable/granted_holo_light</item>
-        <item name="icon_granted_grayed">@drawable/granted_grayed_holo_light</item>
         <item name="icon_help">@android:drawable/ic_menu_help</item>
         <item name="icon_info">@drawable/info_holo_light</item>
         <item name="icon_internet">@drawable/internet_holo_light</item>
-        <item name="icon_internet_grayed">@drawable/internet_grayed_holo_light</item>
         <item name="icon_used">@drawable/used_holo_light</item>
-        <item name="icon_used_grayed">@drawable/used_grayed_holo_light</item>
+        <item name="icon_user">@drawable/user_holo_light</item>
         <item name="icon_system">@drawable/system_holo_light</item>
-        <item name="icon_system_grayed">@drawable/system_grayed_holo_light</item>
+        <item name="icon_user_system">@drawable/user_system_holo_light</item>
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_light</item>
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_light</item>
         <item name="icon_launcher">@drawable/ic_launcher_holo_light</item>
@@ -45,6 +42,7 @@
         <item name="drawable_background">@color/home_background_ligth</item>
         <item name="drawable_card">@drawable/card_light</item>
         <item name="drawable_divider">@drawable/divider_light</item>
+        <item name="drawable_checkbox_bg">@drawable/bg_checkbox_light</item>
         <item name="color_dangerous">@color/color_dangerous_light</item>
     </style>
 

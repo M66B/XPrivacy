@@ -79,11 +79,14 @@
     <string name="settings_operator">Operatore</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_fpermission">Filtra per permessi</string>
-    <string name="settings_fsystem">Filtra applicazioni di sistema</string>
+    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="filter_used">Filter on data usage</string>
     <string name="filter_internet">Filter on internet access</string>
     <string name="filter_restricted">Filter on restricted</string>
+    <string name="filter_app_sys">System application</string>
+    <string name="filter_app_user">User application</string>
+    <string name="filter_app_both">All applications</string>
     <string name="help_application">Applicazione</string>
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>

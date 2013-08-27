@@ -80,11 +80,14 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">Filtrovať podľa povolenia</string>
-    <string name="settings_fsystem">Filtrovať systémové aplikácie</string>
+    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Záznam na ladenie (vyžaduje reštart)</string>
     <string name="filter_used">Filter na využitie dát</string>
     <string name="filter_internet">Filter na prístup k internetu</string>
     <string name="filter_restricted">Filter na obmedzené</string>
+    <string name="filter_app_sys">System application</string>
+    <string name="filter_app_user">User application</string>
+    <string name="filter_app_both">All applications</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>

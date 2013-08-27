@@ -79,11 +79,14 @@
     <string name="settings_operator">المُشغل</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_fpermission">تصفية بواسطة الأُذونات</string>
-    <string name="settings_fsystem">فلترة برامج النظام</string>
+    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
     <string name="filter_used">التصفية حسب استخدام البيانات</string>
     <string name="filter_internet">التصفية حسب الاتصال بالإنترنت</string>
     <string name="filter_restricted">التصفية حسب التقييد</string>
+    <string name="filter_app_sys">System application</string>
+    <string name="filter_app_user">User application</string>
+    <string name="filter_app_both">All applications</string>
     <string name="help_application">التطبيق</string>
     <string name="help_internet">لديه صلاحية الوصول للإنترنت</string>
     <string name="help_granted">لديه صلاحية أندرويد</string>
