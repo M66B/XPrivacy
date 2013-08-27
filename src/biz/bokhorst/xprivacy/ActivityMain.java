@@ -1332,7 +1332,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Get all/some restricted
 					if (mRestrictionName == null)
 						for (boolean restricted : PrivacyManager.getRestricted(holder.row.getContext(),
-								xAppInfo.getUid(), false)) {
+								xAppInfo.getUid(), true)) {
 							allRestricted = allRestricted && restricted;
 							someRestricted = someRestricted || restricted;
 						}
