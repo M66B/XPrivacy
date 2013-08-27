@@ -584,7 +584,8 @@ How to get beta releases:
 
 **Next release**
 
-* Fixex half state for applications with only dangerous restricted ([pull request](https://github.com/M66B/XPrivacy/pull/593))
+* Fixed half state for applications with only dangerous restricted ([pull request](https://github.com/M66B/XPrivacy/pull/593))
+* Fixed for the empty app list on first launch ([pull request](https://github.com/M66B/XPrivacy/pull/595))
 * Updated Slovak translation
 
 **Version 1.9.8 BETA!**
@@ -598,11 +599,11 @@ How to get beta releases:
 
 Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https://github.com/M66B/XPrivacy/pull/586))
 
-* Added three-states checkboxes in main activity (not in the application details yet, it's a bit more complicated)
-* Improved accessibility : clickable images are focusable with DPAD in filter frame
+* Added three-states checkboxes in main activity
+* Improved accessibility: clickable images are focusable with DPAD in filter frame
 * Added the ability to show apps of user/system/both (new strings to translate)
 * Added infos about the user/system/both icons in help section
-* Various fixes (bad margins on large screens, 9-patches...)
+* Various fixes (bad margins on large screens, 9-patches ...)
 
 **Version 1.9.7 BETA!**
 
