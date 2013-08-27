@@ -87,7 +87,7 @@ public class PrivacyManager {
 	public final static String cSettingIccId = "ICC_ID";
 	public final static String cSettingSubscriber = "Subscriber";
 	public final static String cSettingFPermission = "FPermission";
-	public final static String cSettingFSystem = "FSystem";
+	public final static String cSettingFSystem = "FAppSystemUser";
 	public final static String cSettingTheme = "Theme";
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
