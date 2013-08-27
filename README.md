@@ -588,7 +588,10 @@ How to get beta releases:
 
 **Version 1.9.8 BETA!**
 
+* Updated Arabic translation
+* Updated Hindi translation
 * Updated Lithuanian translation
+* Updated Simplified Chinese translation
 * Updated Slovak translation
 
 Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https://github.com/M66B/XPrivacy/pull/586))
