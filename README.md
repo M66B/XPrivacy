@@ -584,7 +584,10 @@ How to get beta releases:
 
 **Next release**
 
-* Require Xposed version 35
+* ...
+
+**Version 1.9.8 BETA!**
+
 * Updated Lithuanian translation
 * Updated Slovak translation
 
