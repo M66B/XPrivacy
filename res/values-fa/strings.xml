@@ -1,0 +1,99 @@
+<resources>
+
+    <!-- Translators: do not include texts with translatable="false" -->
+
+    <string name="app_notxposed" formatted="false">فریم ورک اکس پوزد ویرایش %d+ نصب نشده است</string>
+    <string name="app_notenabled"> نرم افزار ایکس پرایویسی در نصب کننده ی اکیس پوزد فعال نشده است</string>
+    <string name="app_wrongandroid"> 4.0+ فقط برای اندروبد ورژن</string>
+    <string name="app_version" formatted="false">%s (%d):نرم افزار ایکس پرایویسی ورژن </string>
+    <string name="app_xversion" formatted="false">%d :فریم ورک ایکس پرایویسی ورژن </string>
+    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="menu_usage">کاربرد</string>
+    <string name="menu_refresh">تازه سازی</string>
+    <string name="menu_settings">تنظیمات</string>
+    <string name="menu_template">قالب</string>
+    <string name="menu_update">به روز رسانی</string>
+    <string name="menu_report">گزارش مشکلات</string>
+    <string name="menu_export">خارج کردن</string>
+    <string name="menu_import">وارد کردن</string>
+    <string name="menu_submit">ثبت محدودیت ها</string>
+    <string name="menu_fetch">واکشی محدودیت ها</string>
+    <string name="menu_theme">تغییر زمینه</string>
+    <string name="menu_pro">ورژن پرو</string>
+    <string name="menu_about">درباره ی نرم افزار</string>
+    <string name="menu_help">راهنما</string>
+    <string name="menu_all">همه</string>
+    <string name="menu_clear">پاک کردن</string>
+    <string name="menu_app_launch">دسترسی</string>
+    <string name="menu_app_settings">جزییات نرم افزار</string>
+    <string name="menu_app_store">پلی استور</string>
+    <string name="menu_accounts">حساب هایی را که اجازه می دهید انتخاب کنید</string>
+    <string name="menu_contacts">تماس هایی را که احازه می دهید انتخاب کنید</string>
+    <string name="msg_noupdate">بروزرسانی جدیدی موجود نیست</string>
+    <string name="msg_restricted" formatted="false">%s حدود شده توسط ایکس پرایویسی</string>
+    <string name="msg_licensed" formatted="false">%s مجوز به: </string>
+    <string name="msg_loading">در حال بارگذاری</string>
+    <string name="msg_edit">برای ویرایش تمامی محدودیت ها بر روی آیکون نرم افزار مورد نظر کلیک کنید</string>
+    <string name="msg_sure">آبااطمینان دارید؟</string>
+    <string name="msg_done">انحام شد</string>
+    <string name="msg_reboot">لازم است دستگاه خاموش و روشن گردد</string>
+    <string name="msg_random">رندم سازی</string>
+    <string name="msg_random_boot">رندم سازی پس از روشن شدن مجدد</string>
+    <string name="msg_first"><b>نرم افزار ایکس پرایوسی با دقت بالایی تولید و تست شده است، با این وجود تضمینی برای عملکرد صحیح
+این نرم افزار بر روی تمامی دستگاه ها و در مورد تمامی نرم افزارها وجود ندارد.
+\n\n ریسک استفاده از این نرم افزار بر عهده ی شما می باشد</b>\n\n:همچنین پروانه ی برنامه را مشاهده کنید</string>
+    <string name="restrict_accounts">حساب ها (گوگل، فیس بوک و غیره)</string>
+    <string name="restrict_browser">مرورگر (نشانک ها، سابقه)</string>
+    <string name="restrict_calendar">تقویم</string>
+    <string name="restrict_calling">تماس ها (تلفن، اس ام اس، ام ام اس)</string>
+    <string name="restrict_clipboard">کلیپ برد</string>
+    <string name="restrict_contacts">تماس ها</string>
+    <string name="restrict_dictionary">واژه نامه (کاربر)</string>
+    <string name="restrict_identification">کد شناسایی (دستگاه)</string>
+    <string name="restrict_internet">اینترنت</string>
+    <string name="restrict_location">(خوب، بد)</string>
+    <string name="restrict_media">رسانه (صوت تصویر، ویدیو، تصویر)</string>
+    <string name="restrict_messages">پیغام ها (اس ام اس، ام ام اس)</string>
+    <string name="restrict_network">شبکه (آدرسها)</string>
+    <string name="restrict_notifications">اخطارها</string>
+    <string name="restrict_phone">تلفن (شناسه، شماره، تماس ها)</string>
+    <string name="restrict_storage">مخزن (مدیا، اس دی کارت)</string>
+    <string name="restrict_shell">شل (فرامین، ابر کاربر)</string>
+    <string name="restrict_system">سیستم (نرم افزارهای نصب شده)</string>
+    <string name="restrict_view">نما (مرورگر)</string>
+    <string name="title_category">نوع:</string>
+    <string name="title_restrict">برای محدود شدن انتخاب کنید:</string>
+    <string name="title_nofilter">فیلتر فعالی وجود ندارد</string>
+
+    <plurals name="title_filters">
+        <item quantity="one">1 active filter</item>
+        <item quantity="other">%d active filters</item>
+    </plurals>
+
+    <string name="settings_serial">شماره سریال</string>
+    <string name="settings_lat">عرض جغرافیایی</string>
+    <string name="settings_lon">طول جغرافیایی</string>
+    <string name="settings_mac">آدرس مک</string>
+    <string name="settings_ip">آدرس آی پی</string>
+    <string name="settings_phone">شماره تلفن</string>
+    <string name="settings_id">شناسه اندروید</string>
+    <string name="settings_country">کشور</string>
+    <string name="settings_operator">اپراتور</string>
+    <string name="settings_subscriber">شناسه مشترک</string>
+    <string name="settings_fpermission">فیلتر بر اساس مجوزها</string>
+    <string name="settings_fapplication">Filter by application type</string>
+    <string name="settings_log">لاگ ایرادیابی (نیازمند دوباره راه اندازی می باشد)</string>
+    <string name="filter_used">فیلتر بر اساس استفاده از داده</string>
+    <string name="filter_internet">فیلتر بر اساس دسترسی به اینترنت</string>
+    <string name="filter_restricted">فیلتر بر اساس ایتم های منع شده</string>
+    <string name="filter_app_sys">System application</string>
+    <string name="filter_app_user">User application</string>
+    <string name="filter_app_both">All applications</string>
+    <string name="help_application">برنامه های کاربردی</string>
+    <string name="help_internet">مجوز استفاده از اینترنت را دارد</string>
+    <string name="help_granted">مجوز اندروید را دارد</string>
+    <string name="help_used">از این داده استفاده کرده است</string>
+    <string name="help_frozen">غیر فعال است</string>
+    <string name="help_dangerous">خطرناک است</string>
+
+</resources>
