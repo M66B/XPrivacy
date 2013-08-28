@@ -589,6 +589,7 @@ How to get beta releases:
 * Added Farsi translation
 * Updated Polish translation
 * Updated Slovak translation
+* Updated Vietnamese translation
 
 **Version 1.9.8 BETA!**
 
