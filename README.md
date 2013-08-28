@@ -587,6 +587,7 @@ How to get beta releases:
 * Fixed half state for applications with only dangerous restricted ([pull request](https://github.com/M66B/XPrivacy/pull/593))
 * Fixed for the empty app list on first launch ([pull request](https://github.com/M66B/XPrivacy/pull/595))
 * Added Farsi translation
+* Updated Polish translation
 * Updated Slovak translation
 
 **Version 1.9.8 BETA!**
