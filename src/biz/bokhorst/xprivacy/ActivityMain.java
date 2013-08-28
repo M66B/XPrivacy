@@ -505,7 +505,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		else if (buttonView == cbPermission) {
 			PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
 					Boolean.toString(isChecked));
-			applyFilter();
+			selectRestriction(spRestriction.getSelectedItemPosition());
 		}
 	}
 
