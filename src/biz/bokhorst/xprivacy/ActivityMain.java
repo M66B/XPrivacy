@@ -1392,7 +1392,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							for (String restrictionName : listRestriction)
 								PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
 										restrictionName, null, allRestricted);
-							holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
+							holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_half
 									: android.R.color.transparent);
 						}
 					});
