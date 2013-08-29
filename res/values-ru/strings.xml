@@ -65,7 +65,8 @@
 
     <plurals name="title_filters">
         <item quantity="one">1 активный фильтр</item>
-        <item quantity="other">%d активных фильтра(ов)</item>
+        <item quantity="few">%d активных фильтра</item>
+        <item quantity="other">%d активных фильтров</item>
     </plurals>
 
     <string name="settings_serial">Серийный номер</string>
