@@ -1,10 +1,10 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed framework バージョン %d+ がインストールされていません</string>
-    <string name="app_notenabled">XPrivacyがXposed installerで有効になっていません</string>
+    <string name="app_notxposed" formatted="false">Xposedフレームワーク バージョン %d+ がインストールされていません</string>
+    <string name="app_notenabled">XPrivacyがXposedインストーラで有効になっていません</string>
     <string name="app_wrongandroid">Androidバージョン 4.0以降でのみ動作します</string>
     <string name="app_version" formatted="false">XPrivacy バージョン: %s (%d)</string>
-    <string name="app_xversion" formatted="false">Xposed framework バージョン: %d</string>
+    <string name="app_xversion" formatted="false">Xposedフレームワーク バージョン: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">履歴</string>
     <string name="menu_refresh">再読み込み</string>
@@ -79,14 +79,14 @@
     <string name="settings_operator">キャリア</string>
     <string name="settings_subscriber">契約者固有ID</string>
     <string name="settings_fpermission">権限でフィルタ</string>
-    <string name="settings_fapplication">Filter by application type</string>
+    <string name="settings_fapplication">アプリタイプでフィルタ</string>
     <string name="settings_log">デバッグログ(要再起動)</string>
     <string name="filter_used">データ使用率でフィルタ</string>
     <string name="filter_internet">ネット接続でフィルタ</string>
     <string name="filter_restricted">制限済みでフィルタ</string>
-    <string name="filter_app_sys">System application</string>
-    <string name="filter_app_user">User application</string>
-    <string name="filter_app_both">All applications</string>
+    <string name="filter_app_sys">システムアプリ</string>
+    <string name="filter_app_user">ユーザーアプリ</string>
+    <string name="filter_app_both">全てのアプリ</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>
