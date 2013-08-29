@@ -589,7 +589,9 @@ How to get beta releases:
 * Fixed "has permission" filter not updating application list ([pull request](https://github.com/M66B/XPrivacy/pull/601))
 * Added Farsi translation
 * Updated Japanese translation
+* Updated Polish translation
 * Updated Slovak translation
+* Updated Vietnamese translation
 
 **Version 1.9.8 BETA!**
 

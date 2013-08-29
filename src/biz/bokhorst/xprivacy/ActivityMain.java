@@ -505,7 +505,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		else if (buttonView == cbPermission) {
 			PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
 					Boolean.toString(isChecked));
-			applyFilter();
+			selectRestriction(spRestriction.getSelectedItemPosition());
 		}
 	}
 
@@ -1392,8 +1392,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							for (String restrictionName : listRestriction)
 								PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
 										restrictionName, null, allRestricted);
-							holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
-									: android.R.color.transparent);
+							holder.imgCBName.setEnabled(!(allRestricted && mRestrictionName == null));
+							holder.imgCBName
+									.setImageResource(allRestricted ? (mRestrictionName == null ? R.drawable.checkbox_half
+											: R.drawable.checkbox_check)
+											: android.R.color.transparent);
 						}
 					});
 				}
