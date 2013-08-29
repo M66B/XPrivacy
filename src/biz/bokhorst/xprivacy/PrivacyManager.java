@@ -98,7 +98,8 @@ public class PrivacyManager {
 	public final static boolean cExperimental = false;
 
 	private final static String cDeface = "DEFACE";
-	public final static int cCacheTimeoutMs = 15 * 1000;
+	public final static int cRestrictionCacheTimeoutMs = 15 * 1000;
+	public final static int cSettingCacheTimeoutMs = 30 * 1000;
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -965,7 +966,7 @@ public class PrivacyManager {
 		}
 
 		public boolean isExpired() {
-			return (mTimestamp + cCacheTimeoutMs < new Date().getTime());
+			return (mTimestamp + cRestrictionCacheTimeoutMs < new Date().getTime());
 		}
 
 		public boolean isRestricted() {
@@ -983,7 +984,7 @@ public class PrivacyManager {
 		}
 
 		public boolean isExpired() {
-			return (mTimestamp + cCacheTimeoutMs < new Date().getTime());
+			return (mTimestamp + cSettingCacheTimeoutMs < new Date().getTime());
 		}
 
 		public String getSettingsValue() {

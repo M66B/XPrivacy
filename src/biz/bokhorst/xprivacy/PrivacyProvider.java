@@ -469,7 +469,7 @@ public class PrivacyProvider extends ContentProvider {
 					mFallbackRestrictions = new SharedPreferencesEx(new File(getPrefFileName(PREF_RESTRICTION, uid)));
 					mFallbackRestrictionsUid = uid;
 					mFallbackRestrictionsTime = now;
-				} else if (mFallbackRestrictionsTime + PrivacyManager.cCacheTimeoutMs < now) {
+				} else if (mFallbackRestrictionsTime + PrivacyManager.cRestrictionCacheTimeoutMs < now) {
 					// Check update
 					Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + uid);
 					mFallbackRestrictions.reload();
@@ -493,7 +493,7 @@ public class PrivacyProvider extends ContentProvider {
 			// Get update
 			synchronized (mFallbackSettings) {
 				long now = new Date().getTime();
-				if (mFallbackSettingsTime + PrivacyManager.cCacheTimeoutMs < now) {
+				if (mFallbackSettingsTime + PrivacyManager.cSettingCacheTimeoutMs < now) {
 					Util.log(null, Log.INFO, "Reload fallback settings uid=" + Binder.getCallingUid());
 					mFallbackSettings.reload();
 					mFallbackSettingsTime = now;
