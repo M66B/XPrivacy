@@ -584,8 +584,12 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.9.9 BETA!**
+
 * Fixed half state for applications with only dangerous restricted ([pull request](https://github.com/M66B/XPrivacy/pull/593))
-* Fixed for the empty app list on first launch ([pull request](https://github.com/M66B/XPrivacy/pull/595))
+* Fixed empty app list on first launch ([pull request](https://github.com/M66B/XPrivacy/pull/595))
 * Fixed "has permission" filter not updating application list ([pull request](https://github.com/M66B/XPrivacy/pull/601))
 * Added Farsi translation
 * Updated Japanese translation
