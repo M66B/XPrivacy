@@ -586,6 +586,7 @@ How to get beta releases:
 
 * Split restriction cache timeout (15 seconds) and settings cache timeout (30 seconds)
 * Updated Russian translation
+* Updated Turkish translation
 
 **Version 1.9.9 BETA!**
 
