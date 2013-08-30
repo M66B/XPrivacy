@@ -84,9 +84,9 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="filter_used">Duomenų naudojimo filtras</string>
     <string name="filter_internet">Interneto prieigos filtras</string>
     <string name="filter_restricted">Leidimų filtras</string>
-    <string name="filter_app_sys">System application</string>
-    <string name="filter_app_user">User application</string>
-    <string name="filter_app_both">All applications</string>
+    <string name="filter_app_sys">Sistemos programos</string>
+    <string name="filter_app_user">Vartotojo programos</string>
+    <string name="filter_app_both">Visos programos</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
     <string name="help_granted">Android leidimai</string>
