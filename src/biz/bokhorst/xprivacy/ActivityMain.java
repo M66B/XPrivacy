@@ -118,16 +118,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Salt should be the same when exporting/importing
-		String salt = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingSalt, null, false);
+		String salt = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingSalt, null, false);
 		if (salt == null) {
 			salt = Build.SERIAL;
 			if (salt == null)
 				salt = "";
-			PrivacyManager.setSetting(null, this, PrivacyManager.cSettingSalt, salt);
+			PrivacyManager.setSetting(null, this, 0, PrivacyManager.cSettingSalt, salt);
 		}
 
 		// Set theme
-		String themeName = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, "", false);
+		String themeName = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingTheme, "", false);
 		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 		setTheme(mThemeId);
 
@@ -209,14 +209,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		cbFilter.setOnCheckedChangeListener(this);
 
 		// Setup permission filter
-		boolean fPermission = PrivacyManager.getSettingBool(null, ActivityMain.this,
+		boolean fPermission = PrivacyManager.getSettingBool(null, ActivityMain.this, 0,
 				PrivacyManager.cSettingFPermission, true, false);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		cbFPermission.setChecked(fPermission);
 		cbFPermission.setOnCheckedChangeListener(this);
 
 		// Setup user/system/both filter
-		mUserSystemOrBoth = PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem,
+		mUserSystemOrBoth = PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFSystem,
 				APP_FILTER_BOTH, false);
 		final ImageView imgUserSystemBoth = (ImageView) findViewById(R.id.imgAppFilter);
 		imgUserSystemBoth.setImageDrawable(getResources().getDrawable(
@@ -240,7 +240,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			public void onClick(View view) {
 				mUserSystemOrBoth = APP_FILTER_BOTH;
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem, mUserSystemOrBoth);
+				PrivacyManager
+						.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFSystem, mUserSystemOrBoth);
 				imgUserSystemBoth.setImageDrawable(getResources().getDrawable(getThemed(R.attr.icon_user_system)));
 				llAppFilter.setVisibility(LinearLayout.VISIBLE);
 				llAppFilter2.setVisibility(LinearLayout.GONE);
@@ -255,7 +256,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			public void onClick(View view) {
 				mUserSystemOrBoth = APP_FILTER_SYS;
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem, mUserSystemOrBoth);
+				PrivacyManager
+						.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFSystem, mUserSystemOrBoth);
 				imgUserSystemBoth.setImageDrawable(getResources().getDrawable(getThemed(R.attr.icon_system)));
 				llAppFilter.setVisibility(LinearLayout.VISIBLE);
 				llAppFilter2.setVisibility(LinearLayout.GONE);
@@ -270,7 +272,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			public void onClick(View view) {
 				mUserSystemOrBoth = APP_FILTER_USER;
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFSystem, mUserSystemOrBoth);
+				PrivacyManager
+						.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFSystem, mUserSystemOrBoth);
 				imgUserSystemBoth.setImageDrawable(getResources().getDrawable(getThemed(R.attr.icon_user)));
 				llAppFilter.setVisibility(LinearLayout.VISIBLE);
 				llAppFilter2.setVisibility(LinearLayout.GONE);
@@ -311,9 +314,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		registerReceiver(mPackageChangeReceiver, iff);
 
 		// First run
-		if (PrivacyManager.getSettingBool(null, this, PrivacyManager.cSettingFirstRun, true, false)) {
+		if (PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingFirstRun, true, false)) {
 			optionAbout();
-			PrivacyManager.setSetting(null, this, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
+			PrivacyManager.setSetting(null, this, 0, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
 		}
 	}
 
@@ -503,7 +506,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (buttonView == cbFilter || buttonView == cbUsed || buttonView == cbInternet)
 			applyFilter();
 		else if (buttonView == cbPermission) {
-			PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingFPermission,
+			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFPermission,
 					Boolean.toString(isChecked));
 			selectRestriction(spRestriction.getSelectedItemPosition());
 		}
@@ -617,28 +620,31 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 
 		// Set current values
-		boolean log = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingLog, false, false);
-		boolean random = PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingRandom, false,
+		boolean log = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingLog, false,
 				false);
+		boolean random = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingRandom,
+				false, false);
 
-		etSerial.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSerial, "", false));
-		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "", false));
-		etLon.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude, "", false));
-		etMac.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMac, "", false));
-		etIP.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingIP, "", false));
-		etImei.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingImei, "", false));
-		etPhone.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingPhone, "", false));
-		etId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingId, "", false));
-		etGsfId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingGsfId, "", false));
-		etMcc.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMcc, "", false));
-		etMnc.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingMnc, "", false));
-		etCountry
-				.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingCountry, "", false));
-		etOperator.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingOperator, "",
+		etSerial.setText(PrivacyManager
+				.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSerial, "", false));
+		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLatitude, "", false));
+		etLon.setText(PrivacyManager
+				.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLongitude, "", false));
+		etMac.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMac, "", false));
+		etIP.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingIP, "", false));
+		etImei.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingImei, "", false));
+		etPhone.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingPhone, "", false));
+		etId.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingId, "", false));
+		etGsfId.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingGsfId, "", false));
+		etMcc.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMcc, "", false));
+		etMnc.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMnc, "", false));
+		etCountry.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingCountry, "",
 				false));
-		etIccId.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingIccId, "", false));
-		etSubscriber.setText(PrivacyManager.getSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, "",
+		etOperator.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingOperator, "",
 				false));
+		etIccId.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingIccId, "", false));
+		etSubscriber.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSubscriber,
+				"", false));
 		cbLog.setChecked(log);
 		cbRandom.setChecked(random);
 
@@ -698,7 +704,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			public void onClick(View view) {
 				// Serial#
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingSerial, etSerial.getText()
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSerial, etSerial.getText()
 						.toString());
 
 				// Set location
@@ -708,45 +714,45 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					if (lat < -90 || lat > 90 || lon < -180 || lon > 180)
 						throw new InvalidParameterException();
 
-					PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude,
+					PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLatitude,
 							Float.toString(lat));
-					PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude,
+					PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLongitude,
 							Float.toString(lon));
 
 				} catch (Throwable ex) {
-					PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingLatitude, "");
-					PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingLongitude, "");
+					PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLatitude, "");
+					PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLongitude, "");
 				}
 
 				// Other settings
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingMac, etMac.getText()
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMac, etMac.getText()
 						.toString());
-				PrivacyManager
-						.setSetting(null, ActivityMain.this, PrivacyManager.cSettingIP, etIP.getText().toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingImei, etImei.getText()
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingIP, etIP.getText()
 						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingPhone, etPhone.getText()
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingImei, etImei.getText()
 						.toString());
-				PrivacyManager
-						.setSetting(null, ActivityMain.this, PrivacyManager.cSettingId, etId.getText().toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingGsfId, etGsfId.getText()
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingPhone, etPhone.getText()
 						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingMcc, etMcc.getText()
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingId, etId.getText()
 						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingMnc, etMnc.getText()
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingGsfId, etGsfId.getText()
 						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingCountry, etCountry.getText()
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMcc, etMcc.getText()
 						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingOperator, etOperator
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMnc, etMnc.getText()
+						.toString());
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingCountry, etCountry
 						.getText().toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingIccId, etIccId.getText()
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingOperator, etOperator
+						.getText().toString());
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingIccId, etIccId.getText()
 						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingSubscriber, etSubscriber
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSubscriber, etSubscriber
 						.getText().toString());
 
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingLog,
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLog,
 						Boolean.toString(cbLog.isChecked()));
-				PrivacyManager.setSetting(null, ActivityMain.this, PrivacyManager.cSettingRandom,
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingRandom,
 						Boolean.toString(cbRandom.isChecked()));
 
 				// Done
@@ -765,7 +771,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		boolean[] selection = new boolean[listRestriction.size()];
 		for (int i = 0; i < listRestriction.size(); i++) {
 			options[i] = PrivacyManager.getLocalizedName(this, listRestriction.get(i));
-			selection[i] = PrivacyManager.getSettingBool(null, this,
+			selection[i] = PrivacyManager.getSettingBool(null, this, 0,
 					String.format("Template.%s", listRestriction.get(i)), true, false);
 		}
 
@@ -775,7 +781,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialogBuilder.setMultiChoiceItems(options, selection, new DialogInterface.OnMultiChoiceClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-				PrivacyManager.setSetting(null, ActivityMain.this,
+				PrivacyManager.setSetting(null, ActivityMain.this, 0,
 						String.format("Template.%s", listRestriction.get(whichButton)), Boolean.toString(isChecked));
 			}
 		});
@@ -823,9 +829,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionSwitchTheme() {
-		String themeName = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, "", false);
+		String themeName = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingTheme, "", false);
 		themeName = (themeName.equals("Dark") ? "Light" : "Dark");
-		PrivacyManager.setSetting(null, this, PrivacyManager.cSettingTheme, themeName);
+		PrivacyManager.setSetting(null, this, 0, PrivacyManager.cSettingTheme, themeName);
 		this.recreate();
 	}
 
@@ -1162,7 +1168,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		private void selectApps() {
 			mListAppSelected = new ArrayList<ApplicationInfoEx>();
-			if (PrivacyManager.getSettingBool(null, ActivityMain.this, PrivacyManager.cSettingFPermission, true, false)) {
+			if (PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingFPermission, true,
+					false)) {
 				for (ApplicationInfoEx appInfo : mListAppAll)
 					if (mRestrictionName == null)
 						mListAppSelected.add(appInfo);

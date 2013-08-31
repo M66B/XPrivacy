@@ -40,7 +40,7 @@ public class Util {
 		// Check if logging enabled
 		if (Process.myUid() != 0 && !mLogDetermined) {
 			mLogDetermined = true;
-			mLog = PrivacyManager.getSettingBool(null, null, PrivacyManager.cSettingLog, false, true);
+			mLog = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingLog, false, true);
 		}
 
 		// Log if enabled
@@ -227,7 +227,7 @@ public class Util {
 
 	public static String sha1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		// SHA1
-		String salt = PrivacyManager.getSetting(null, null, PrivacyManager.cSettingSalt, "", true);
+		String salt = PrivacyManager.getSetting(null, null, 0, PrivacyManager.cSettingSalt, "", true);
 		MessageDigest digest = MessageDigest.getInstance("SHA-1");
 		byte[] bytes = (text + salt).getBytes("UTF-8");
 		digest.update(bytes, 0, bytes.length);

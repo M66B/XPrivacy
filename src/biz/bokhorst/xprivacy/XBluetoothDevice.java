@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Binder;
 import android.util.Log;
 import biz.bokhorst.xprivacy.XHook;
 
@@ -38,7 +39,7 @@ public class XBluetoothDevice extends XHook {
 		String methodName = param.method.getName();
 		if (methodName.equals("getAddress")) {
 			if (param.getResult() != null && isRestricted(param))
-				param.setResult(PrivacyManager.getDefacedProp("MAC"));
+				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC"));
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}

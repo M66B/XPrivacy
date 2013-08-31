@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import android.bluetooth.BluetoothDevice;
+import android.os.Binder;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -48,7 +49,7 @@ public class XBluetoothAdapter extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.getAddress) {
 			if (param.getResult() != null && isRestricted(param))
-				param.setResult(PrivacyManager.getDefacedProp("MAC"));
+				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC"));
 		} else if (mMethod == Methods.getBondedDevices) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new HashSet<BluetoothDevice>());

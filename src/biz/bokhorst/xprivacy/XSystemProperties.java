@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Binder;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -53,7 +54,7 @@ public class XSystemProperties extends XHook {
 			if (mPropertyName.startsWith("%") ? key.contains(mPropertyName.substring(1)) : key.equals(mPropertyName))
 				if (mMethod == Methods.get) {
 					if (param.getResult() != null && isRestricted(param, mPropertyName))
-						param.setResult(PrivacyManager.getDefacedProp(mPropertyName));
+						param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), mPropertyName));
 				} else if (param.args.length > 1) {
 					if (isRestricted(param, mPropertyName))
 						param.setResult(param.args[1]);

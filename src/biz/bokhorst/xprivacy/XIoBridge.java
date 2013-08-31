@@ -47,7 +47,7 @@ public class XIoBridge extends XHook {
 						return;
 
 					// Backward compatibility
-					Version sVersion = new Version(PrivacyManager.getSetting(this, null,
+					Version sVersion = new Version(PrivacyManager.getSetting(this, null, 0,
 							PrivacyManager.cSettingVersion, "0.0", true));
 					if (sVersion.compareTo(new Version("1.7")) < 0)
 						return;

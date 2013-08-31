@@ -23,7 +23,8 @@ public class PackageChange extends BroadcastReceiver {
 			String packageName = inputUri.getSchemeSpecificPart();
 			int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 			boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
-			boolean fSystem = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingFSystem, true, false);
+			boolean fSystem = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingFSystem, true,
+					false);
 
 			NotificationManager notificationManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -54,7 +55,7 @@ public class PackageChange extends BroadcastReceiver {
 						// Restrict if no previous restrictions
 						if (!someRestricted)
 							for (String restrictionName : PrivacyManager.getRestrictions(false))
-								if (PrivacyManager.getSettingBool(null, context,
+								if (PrivacyManager.getSettingBool(null, context, 0,
 										String.format("Template.%s", restrictionName), true, false))
 									PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
 					}
@@ -107,7 +108,7 @@ public class PackageChange extends BroadcastReceiver {
 				try {
 					// Get stored version
 					PackageManager pm = context.getPackageManager();
-					Version sVersion = new Version(PrivacyManager.getSetting(null, context,
+					Version sVersion = new Version(PrivacyManager.getSetting(null, context, 0,
 							PrivacyManager.cSettingVersion, "0.0", false));
 
 					if (sVersion.compareTo(new Version("0.0")) != 0) {
@@ -138,13 +139,13 @@ public class PackageChange extends BroadcastReceiver {
 										"/system/build.prop", false);
 
 							// Select user applications
-							PrivacyManager.setSetting(null, context, PrivacyManager.cSettingFSystem, "U");
+							PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingFSystem, "U");
 						}
 					}
 
 					// Update stored version
 					PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
-					PrivacyManager.setSetting(null, context, PrivacyManager.cSettingVersion, pInfo.versionName);
+					PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}

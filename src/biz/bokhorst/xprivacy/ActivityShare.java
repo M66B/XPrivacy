@@ -332,7 +332,7 @@ public class ActivityShare extends Activity {
 					else
 						return;
 
-				PrivacyManager.setSetting(null, ActivityShare.this, setting, value);
+				PrivacyManager.setSetting(null, ActivityShare.this, 0, setting, value);
 			} else if (qName.equals("Package")) {
 				// Restriction
 				String packageName = attributes.getValue("Name");

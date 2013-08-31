@@ -465,16 +465,19 @@ public class PrivacyProvider extends ContentProvider {
 			synchronized (mFallbackLock) {
 				if (mFallbackRestrictions == null || mFallbackRestrictionsUid != uid) {
 					// Initial load
-					Util.log(null, Log.INFO, "Load fallback restrictions uid=" + uid + "/" + mFallbackRestrictionsUid);
 					mFallbackRestrictions = new SharedPreferencesEx(new File(getPrefFileName(PREF_RESTRICTION, uid)));
 					mFallbackRestrictionsUid = uid;
 					mFallbackRestrictionsTime = now;
+					long ms = System.currentTimeMillis() - now;
+					Util.log(null, Log.INFO, "Load fallback restrictions uid=" + uid + "/" + mFallbackRestrictionsUid
+							+ " " + ms + " ms");
 				} else if (mFallbackRestrictionsTime + PrivacyManager.cRestrictionCacheTimeoutMs < now) {
 					// Check update
-					Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + uid);
 					mFallbackRestrictions.reload();
 					mFallbackRestrictionsUid = uid;
 					mFallbackRestrictionsTime = now;
+					long ms = System.currentTimeMillis() - now;
+					Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + uid + " " + ms + " ms");
 				}
 			}
 			return getRestricted(restrictionName, methodName, mFallbackRestrictions);
@@ -486,17 +489,24 @@ public class PrivacyProvider extends ContentProvider {
 
 	public static String getSettingFallback(String settingName, String defaultValue) {
 		try {
+			long now = new Date().getTime();
+
 			// Initial load
-			if (mFallbackSettings == null)
+			if (mFallbackSettings == null) {
 				mFallbackSettings = new SharedPreferencesEx(new File(getPrefFileName(PREF_SETTINGS)));
+				mFallbackSettingsTime = now;
+				long ms = System.currentTimeMillis() - now;
+				Util.log(null, Log.INFO, "Load fallback settings uid=" + Binder.getCallingUid() + " " + ms + " ms");
+			}
 
 			// Get update
 			synchronized (mFallbackSettings) {
-				long now = new Date().getTime();
 				if (mFallbackSettingsTime + PrivacyManager.cSettingCacheTimeoutMs < now) {
-					Util.log(null, Log.INFO, "Reload fallback settings uid=" + Binder.getCallingUid());
 					mFallbackSettings.reload();
 					mFallbackSettingsTime = now;
+					long ms = System.currentTimeMillis() - now;
+					Util.log(null, Log.INFO, "Reload fallback settings uid=" + Binder.getCallingUid() + " " + ms
+							+ " ms");
 				}
 			}
 

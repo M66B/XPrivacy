@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -97,7 +98,7 @@ public class ActivityApp extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set theme
-		String themeName = PrivacyManager.getSetting(null, this, PrivacyManager.cSettingTheme, "", false);
+		String themeName = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingTheme, "", false);
 		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 		setTheme(mThemeId);
 
@@ -176,8 +177,8 @@ public class ActivityApp extends Activity {
 		tvPackageName.setText(mAppInfo.getPackageName());
 
 		// Get applicable restrictions
-		boolean fPermission = PrivacyManager
-				.getSettingBool(null, this, PrivacyManager.cSettingFPermission, true, false);
+		boolean fPermission = PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingFPermission, true,
+				false);
 		if (restrictionName != null && methodName != null)
 			fPermission = false;
 		List<String> listRestriction = new ArrayList<String>();
@@ -315,7 +316,8 @@ public class ActivityApp extends Activity {
 		// Get toggle
 		boolean restricted = false;
 		for (String restrictionName : listRestriction)
-			if (PrivacyManager.getSettingBool(null, this, String.format("Template.%s", restrictionName), true, false))
+			if (PrivacyManager
+					.getSettingBool(null, this, 0, String.format("Template.%s", restrictionName), true, false))
 				if (PrivacyManager.getRestricted(null, this, mAppInfo.getUid(), restrictionName, null, false, false)) {
 					restricted = true;
 					break;
@@ -324,7 +326,8 @@ public class ActivityApp extends Activity {
 		// Do toggle
 		restricted = !restricted;
 		for (String restrictionName : listRestriction)
-			if (PrivacyManager.getSettingBool(null, this, String.format("Template.%s", restrictionName), true, false))
+			if (PrivacyManager
+					.getSettingBool(null, this, 0, String.format("Template.%s", restrictionName), true, false))
 				PrivacyManager.setRestricted(null, this, mAppInfo.getUid(), restrictionName, null, restricted);
 
 		// Refresh display
@@ -422,7 +425,7 @@ public class ActivityApp extends Activity {
 				try {
 					mListAccount.add(String.format("%s (%s)", mAccounts[i].name, mAccounts[i].type));
 					String sha1 = Util.sha1(mAccounts[i].name + mAccounts[i].type);
-					mSelection[i] = PrivacyManager.getSettingBool(null, ActivityApp.this,
+					mSelection[i] = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 							String.format("Account.%d.%s", mAppInfo.getUid(), sha1), false, false);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
@@ -442,7 +445,7 @@ public class ActivityApp extends Activity {
 							try {
 								Account account = mAccounts[whichButton];
 								String sha1 = Util.sha1(account.name + account.type);
-								PrivacyManager.setSetting(null, ActivityApp.this,
+								PrivacyManager.setSetting(null, ActivityApp.this, 0,
 										String.format("Account.%d.%s", mAppInfo.getUid(), sha1),
 										Boolean.toString(isChecked));
 							} catch (Throwable ex) {
@@ -499,7 +502,7 @@ public class ActivityApp extends Activity {
 			for (Long id : mapContact.keySet()) {
 				mListContact.add(mapContact.get(id));
 				mIds[i] = id;
-				mSelection[i++] = PrivacyManager.getSettingBool(null, ActivityApp.this,
+				mSelection[i++] = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 						String.format("Contact.%d.%d", mAppInfo.getUid(), id), false, false);
 			}
 			return null;
@@ -515,7 +518,7 @@ public class ActivityApp extends Activity {
 					new DialogInterface.OnMultiChoiceClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 							// Contact
-							PrivacyManager.setSetting(null, ActivityApp.this,
+							PrivacyManager.setSetting(null, ActivityApp.this, 0,
 									String.format("Contact.%d.%d", mAppInfo.getUid(), mIds[whichButton]),
 									Boolean.toString(isChecked));
 
@@ -526,7 +529,7 @@ public class ActivityApp extends Activity {
 									new String[] { String.valueOf(mIds[whichButton]) }, null);
 							try {
 								while (cursor.moveToNext()) {
-									PrivacyManager.setSetting(null, ActivityApp.this,
+									PrivacyManager.setSetting(null, ActivityApp.this, 0,
 											String.format("RawContact.%d.%d", mAppInfo.getUid(), cursor.getLong(0)),
 											Boolean.toString(isChecked));
 								}
@@ -550,6 +553,7 @@ public class ActivityApp extends Activity {
 		}
 	}
 
+	@SuppressLint("DefaultLocale")
 	private class SubmitTask extends AsyncTask<ApplicationInfoEx, Object, Object> {
 		private final static int NOTIFY_ID = 5;
 

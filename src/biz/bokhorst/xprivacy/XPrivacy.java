@@ -142,7 +142,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Build SERIAL
 		if (PrivacyManager.getRestricted(null, null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", true,
 				false))
-			XposedHelpers.setStaticObjectField(Build.class, "SERIAL", PrivacyManager.getDefacedProp("SERIAL"));
+			XposedHelpers.setStaticObjectField(Build.class, "SERIAL",
+					PrivacyManager.getDefacedProp(Process.myUid(), "SERIAL"));
 
 		// Providers
 		hookAll(XContentProvider.getInstances(lpparam.packageName), lpparam.classLoader);

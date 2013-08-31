@@ -95,7 +95,7 @@ public class PrivacyManager {
 	public final static String cSettingRandom = "Random@boot";
 	public final static String cSettingLog = "Log";
 
-	public final static boolean cExperimental = false;
+	public final static String cValueRandom = "\nRandom\n";
 
 	private final static String cDeface = "DEFACE";
 	public final static int cRestrictionCacheTimeoutMs = 15 * 1000;
@@ -536,13 +536,26 @@ public class PrivacyManager {
 
 	// Settings
 
-	public static boolean getSettingBool(XHook hook, Context context, String settingName, boolean defaultValue,
-			boolean useCache) {
-		return Boolean.parseBoolean(getSetting(hook, context, settingName, Boolean.toString(defaultValue).toString(),
-				useCache));
+	public static boolean getSettingBool(XHook hook, Context context, int uid, String settingName,
+			boolean defaultValue, boolean useCache) {
+		return Boolean.parseBoolean(getSetting(hook, context, uid, settingName, Boolean.toString(defaultValue)
+				.toString(), useCache));
 	}
 
-	public static String getSetting(XHook hook, Context context, String settingName, String defaultValue,
+	public static String getSetting(XHook hook, Context context, int uid, String settingName, String defaultValue,
+			boolean useCache) {
+		if (uid == 0)
+			return getSetting(hook, context, settingName, defaultValue, useCache);
+		else {
+			String setting = getSetting(hook, context, String.format("%s.%d", settingName, uid), defaultValue, useCache);
+			if (setting == null ? setting == defaultValue : setting.equals(defaultValue))
+				return getSetting(hook, context, settingName, defaultValue, useCache);
+			else
+				return setting;
+		}
+	}
+
+	private static String getSetting(XHook hook, Context context, String settingName, String defaultValue,
 			boolean useCache) {
 		long start = System.currentTimeMillis();
 
@@ -619,13 +632,15 @@ public class PrivacyManager {
 		return value;
 	}
 
-	public static void setSetting(XHook hook, Context context, String settingName, String value) {
+	@SuppressLint("DefaultLocale")
+	public static void setSetting(XHook hook, Context context, int uid, String settingName, String value) {
 		ContentResolver contentResolver = context.getContentResolver();
 		ContentValues values = new ContentValues();
 		values.put(PrivacyProvider.COL_VALUE, value);
-		if (contentResolver.update(PrivacyProvider.URI_SETTING, values, settingName, null) <= 0)
-			Util.log(hook, Log.INFO, "Error updating setting=" + settingName);
-		Util.log(hook, Log.INFO, String.format("set setting %s=%s", settingName, value));
+		String sName = (uid == 0 ? settingName : String.format("%s.%d", settingName, uid));
+		if (contentResolver.update(PrivacyProvider.URI_SETTING, values, sName, null) <= 0)
+			Util.log(hook, Log.INFO, "Error updating setting=" + sName);
+		Util.log(hook, Log.INFO, String.format("set setting %s=%s", sName, value));
 	}
 
 	public static Map<String, String> getSettings(Context context) {
@@ -652,10 +667,12 @@ public class PrivacyManager {
 
 	// Defacing
 
-	public static Object getDefacedProp(String name) {
+	public static Object getDefacedProp(int uid, String name) {
 		// Serial number
-		if (name.equals("SERIAL") || name.equals("%serialno"))
-			return getSetting(null, null, cSettingSerial, cDeface, true);
+		if (name.equals("SERIAL") || name.equals("%serialno")) {
+			String value = getSetting(null, null, uid, cSettingSerial, cDeface, true);
+			return (cValueRandom.equals(value) ? getRandomProp("SERIAL") : value);
+		}
 
 		// Host name
 		if (name.equals("%hostname"))
@@ -663,7 +680,9 @@ public class PrivacyManager {
 
 		// MAC addresses
 		if (name.equals("MAC") || name.equals("%macaddr")) {
-			String mac = getSetting(null, null, cSettingMac, "DE:FA:CE:DE:FA:CE", true);
+			String mac = getSetting(null, null, uid, cSettingMac, "DE:FA:CE:DE:FA:CE", true);
+			if (cValueRandom.equals(mac))
+				return getRandomProp("MAC");
 			StringBuilder sb = new StringBuilder(mac.replace(":", ""));
 			while (sb.length() != 12)
 				sb.insert(0, '0');
@@ -675,17 +694,23 @@ public class PrivacyManager {
 		}
 
 		// IMEI
-		if (name.equals("getDeviceId") || name.equals("%imei"))
-			return getSetting(null, null, cSettingImei, "000000000000000", true);
+		if (name.equals("getDeviceId") || name.equals("%imei")) {
+			String value = getSetting(null, null, uid, cSettingImei, "000000000000000", true);
+			return (cValueRandom.equals(value) ? getRandomProp("IMEI") : value);
+		}
 
 		// Phone
 		if (name.equals("PhoneNumber") || name.equals("getLine1AlphaTag") || name.equals("getLine1Number")
-				|| name.equals("getMsisdn") || name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber"))
-			return getSetting(null, null, cSettingPhone, cDeface, true);
+				|| name.equals("getMsisdn") || name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber")) {
+			String value = getSetting(null, null, uid, cSettingPhone, cDeface, true);
+			return (cValueRandom.equals(value) ? getRandomProp("PHONE") : value);
+		}
 
 		// Android ID
-		if (name.equals("ANDROID_ID"))
-			return getSetting(null, null, cSettingId, cDeface, true);
+		if (name.equals("ANDROID_ID")) {
+			String value = getSetting(null, null, uid, cSettingId, cDeface, true);
+			return (cValueRandom.equals(value) ? getRandomProp("ANDROID_ID") : value);
+		}
 
 		// Telephony manager
 		if (name.equals("getGroupIdLevel1"))
@@ -697,24 +722,32 @@ public class PrivacyManager {
 		if (name.equals("getIsimImpu"))
 			return null;
 
-		if (name.equals("getNetworkCountryIso")) // ISO country code
-			return getSetting(null, null, cSettingCountry, "XX", true);
+		if (name.equals("getNetworkCountryIso")) {
+			// ISO country code
+			String value = getSetting(null, null, uid, cSettingCountry, "XX", true);
+			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
+		}
 		if (name.equals("getNetworkOperator")) // MCC+MNC: test network
-			return getSetting(null, null, cSettingMcc, "001", true) + getSetting(null, null, cSettingMnc, "01", true);
+			return getSetting(null, null, uid, cSettingMcc, "001", true)
+					+ getSetting(null, null, uid, cSettingMnc, "01", true);
 		if (name.equals("getNetworkOperatorName"))
-			return getSetting(null, null, cSettingOperator, cDeface, true);
+			return getSetting(null, null, uid, cSettingOperator, cDeface, true);
 
-		if (name.equals("getSimCountryIso")) // ISO country code
-			return getSetting(null, null, cSettingCountry, "XX", true);
+		if (name.equals("getSimCountryIso")) {
+			// ISO country code
+			String value = getSetting(null, null, uid, cSettingCountry, "XX", true);
+			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
+		}
 		if (name.equals("getSimOperator")) // MCC+MNC: test network
-			return getSetting(null, null, cSettingMcc, "001", true) + getSetting(null, null, cSettingMnc, "01", true);
+			return getSetting(null, null, uid, cSettingMcc, "001", true)
+					+ getSetting(null, null, uid, cSettingMnc, "01", true);
 		if (name.equals("getSimOperatorName"))
-			return getSetting(null, null, cSettingOperator, cDeface, true);
+			return getSetting(null, null, uid, cSettingOperator, cDeface, true);
 		if (name.equals("getSimSerialNumber"))
-			return getSetting(null, null, cSettingIccId, null, true);
+			return getSetting(null, null, uid, cSettingIccId, null, true);
 
 		if (name.equals("getSubscriberId")) // IMSI for a GSM phone
-			return getSetting(null, null, cSettingSubscriber, null, true);
+			return getSetting(null, null, uid, cSettingSubscriber, null, true);
 
 		if (name.equals("SSID"))
 			return ""; // Hidden network
@@ -730,7 +763,10 @@ public class PrivacyManager {
 		if (name.equals("GSF_ID")) {
 			long gsfid = 0xDEFACE;
 			try {
-				gsfid = Long.parseLong(getSetting(null, null, cSettingGsfId, "DEFACE", true), 16);
+				String value = getSetting(null, null, uid, cSettingGsfId, "DEFACE", true);
+				if (cValueRandom.equals(value))
+					value = getRandomProp(name);
+				gsfid = Long.parseLong(value, 16);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
@@ -739,7 +775,7 @@ public class PrivacyManager {
 
 		if (name.equals("InetAddress")) {
 			// Set address
-			String ip = getSetting(null, null, cSettingIP, null, true);
+			String ip = getSetting(null, null, uid, cSettingIP, null, true);
 			if (ip != null)
 				try {
 					return InetAddress.getByName(ip);
@@ -760,7 +796,7 @@ public class PrivacyManager {
 
 		if (name.equals("IPInt")) {
 			// Set address
-			String ip = getSetting(null, null, cSettingIP, null, true);
+			String ip = getSetting(null, null, uid, cSettingIP, null, true);
 			if (ip != null)
 				try {
 					InetAddress inet = InetAddress.getByName(ip);
@@ -784,9 +820,13 @@ public class PrivacyManager {
 		return cDeface;
 	}
 
-	public static Location getDefacedLocation(Location location) {
-		String sLat = getSetting(null, null, cSettingLatitude, "", true);
-		String sLon = getSetting(null, null, cSettingLongitude, "", true);
+	public static Location getDefacedLocation(int uid, Location location) {
+		String sLat = getSetting(null, null, uid, cSettingLatitude, "", true);
+		String sLon = getSetting(null, null, uid, cSettingLongitude, "", true);
+		if (cValueRandom.equals(sLat))
+			sLat = getRandomProp("LAT");
+		if (cValueRandom.equals(sLon))
+			sLon = getRandomProp("LON");
 		if (sLat.equals("") || sLon.equals("")) {
 			// Christmas Island
 			location.setLatitude(-10.5);
@@ -803,18 +843,6 @@ public class PrivacyManager {
 	@SuppressLint("DefaultLocale")
 	public static String getRandomProp(String name) {
 		Random r = new Random();
-
-		if (name.equals("LAT")) {
-			double d = r.nextDouble() * 180 - 90;
-			d = Math.rint(d * 1e7) / 1e7;
-			return Double.toString(d);
-		}
-
-		if (name.equals("LON")) {
-			double d = r.nextDouble() * 360 - 180;
-			d = Math.rint(d * 1e7) / 1e7;
-			return Double.toString(d);
-		}
 
 		if (name.equals("SERIAL")) {
 			long v = r.nextLong();
@@ -834,13 +862,6 @@ public class PrivacyManager {
 			return sb.toString().toUpperCase();
 		}
 
-		if (name.equals("PHONE")) {
-			String phone = "0";
-			for (int i = 1; i < 10; i++)
-				phone += Character.forDigit(r.nextInt(10), 10);
-			return phone;
-		}
-
 		// IMEI
 		if (name.equals("IMEI")) {
 			// http://en.wikipedia.org/wiki/Reporting_Body_Identifier
@@ -853,18 +874,16 @@ public class PrivacyManager {
 			return imei;
 		}
 
+		if (name.equals("PHONE")) {
+			String phone = "0";
+			for (int i = 1; i < 10; i++)
+				phone += Character.forDigit(r.nextInt(10), 10);
+			return phone;
+		}
+
 		if (name.equals("ANDROID_ID")) {
 			long v = r.nextLong();
 			return Long.toHexString(v).toUpperCase();
-		}
-
-		if (name.equals("GSF_ID")) {
-			long v = r.nextLong();
-			return Long.toHexString(v).toUpperCase();
-		}
-
-		if (name.equals("MCC+MNC")) {
-			// 001+01
 		}
 
 		if (name.equals("ISO3166")) {
@@ -874,12 +893,21 @@ public class PrivacyManager {
 			return country;
 		}
 
-		if (name.equals("ICCID")) {
-			// Empty
+		if (name.equals("GSF_ID")) {
+			long v = r.nextLong();
+			return Long.toHexString(v).toUpperCase();
 		}
 
-		if (name.equals("IMSI")) {
-			// Empty
+		if (name.equals("LAT")) {
+			double d = r.nextDouble() * 180 - 90;
+			d = Math.rint(d * 1e7) / 1e7;
+			return Double.toString(d);
+		}
+
+		if (name.equals("LON")) {
+			double d = r.nextDouble() * 360 - 180;
+			d = Math.rint(d * 1e7) / 1e7;
+			return Double.toString(d);
 		}
 
 		return "";

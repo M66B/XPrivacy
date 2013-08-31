@@ -143,8 +143,8 @@ public class XContentProvider extends XHook {
 						if (Util.containsIgnoreCase(selectionArgs, "android_id"))
 							if (isRestricted(param)) {
 								MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
-								gsfCursor
-										.addRow(new Object[] { "android_id", PrivacyManager.getDefacedProp("GSF_ID") });
+								gsfCursor.addRow(new Object[] { "android_id",
+										PrivacyManager.getDefacedProp(Binder.getCallingUid(), "GSF_ID") });
 								gsfCursor.respond(cursor.getExtras());
 								param.setResult(gsfCursor);
 								cursor.close();
@@ -186,10 +186,10 @@ public class XContentProvider extends XHook {
 							// Check if can be copied
 							boolean copy = false;
 							if (id >= 0)
-								copy = PrivacyManager.getSettingBool(this, null,
+								copy = PrivacyManager.getSettingBool(this, null, 0,
 										String.format("Contact.%d.%d", Binder.getCallingUid(), id), false, true);
 							if (!copy && rawid >= 0)
-								copy = PrivacyManager.getSettingBool(this, null,
+								copy = PrivacyManager.getSettingBool(this, null, 0,
 										String.format("RawContact.%d.%d", Binder.getCallingUid(), rawid), false, true);
 
 							// Conditionally copy row

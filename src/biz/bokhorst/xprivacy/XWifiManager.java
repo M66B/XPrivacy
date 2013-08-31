@@ -9,6 +9,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
+import android.os.Binder;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -78,7 +79,7 @@ public class XWifiManager extends XHook {
 					// BSSID
 					try {
 						Field fieldBSSID = findField(WifiInfo.class, "mBSSID");
-						fieldBSSID.set(wInfo, PrivacyManager.getDefacedProp("MAC"));
+						fieldBSSID.set(wInfo, PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC"));
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
@@ -86,7 +87,7 @@ public class XWifiManager extends XHook {
 					// IP address
 					try {
 						Field fieldIp = findField(WifiInfo.class, "mIpAddress");
-						fieldIp.set(wInfo, PrivacyManager.getDefacedProp("InetAddress"));
+						fieldIp.set(wInfo, PrivacyManager.getDefacedProp(Binder.getCallingUid(), "InetAddress"));
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
@@ -94,7 +95,7 @@ public class XWifiManager extends XHook {
 					// MAC address
 					try {
 						Field fieldMAC = findField(WifiInfo.class, "mMacAddress");
-						fieldMAC.set(wInfo, PrivacyManager.getDefacedProp("MAC"));
+						fieldMAC.set(wInfo, PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC"));
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
@@ -102,14 +103,15 @@ public class XWifiManager extends XHook {
 					// SSID
 					try {
 						Field fieldSSID = findField(WifiInfo.class, "mSSID");
-						fieldSSID.set(wInfo, PrivacyManager.getDefacedProp("SSID"));
+						fieldSSID.set(wInfo, PrivacyManager.getDefacedProp(Binder.getCallingUid(), "SSID"));
 					} catch (Throwable ex) {
 						try {
 							Field fieldWifiSsid = findField(WifiInfo.class, "mWifiSsid");
 							Object mWifiSsid = fieldWifiSsid.get(wInfo);
 							if (mWifiSsid != null) {
 								Field octets = findField(mWifiSsid.getClass(), "octets");
-								octets.set(mWifiSsid, PrivacyManager.getDefacedProp("WifiSsid.octets"));
+								octets.set(mWifiSsid,
+										PrivacyManager.getDefacedProp(Binder.getCallingUid(), "WifiSsid.octets"));
 							}
 						} catch (Throwable exex) {
 							Util.bug(this, exex);
@@ -120,11 +122,11 @@ public class XWifiManager extends XHook {
 		} else if (mMethod == Methods.getDhcpInfo) {
 			if (param.getResult() != null && isRestricted(param)) {
 				DhcpInfo dInfo = (DhcpInfo) param.getResult();
-				dInfo.ipAddress = (Integer) PrivacyManager.getDefacedProp("IPInt");
-				dInfo.gateway = (Integer) PrivacyManager.getDefacedProp("IPInt");
-				dInfo.dns1 = (Integer) PrivacyManager.getDefacedProp("IPInt");
-				dInfo.dns2 = (Integer) PrivacyManager.getDefacedProp("IPInt");
-				dInfo.serverAddress = (Integer) PrivacyManager.getDefacedProp("IPInt");
+				dInfo.ipAddress = (Integer) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "IPInt");
+				dInfo.gateway = dInfo.ipAddress;
+				dInfo.dns1 = dInfo.ipAddress;
+				dInfo.dns2 = dInfo.ipAddress;
+				dInfo.serverAddress = dInfo.ipAddress;
 			}
 		} else if (mMethod == Methods.getScanResults) {
 			if (param.getResult() != null && isRestricted(param))

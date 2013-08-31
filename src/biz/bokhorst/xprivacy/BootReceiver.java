@@ -12,23 +12,25 @@ public class BootReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent bootIntent) {
 		// Randomize
-		boolean random = PrivacyManager.getSettingBool(null, context, PrivacyManager.cSettingRandom, true, false);
+		boolean random = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingRandom, true, false);
 		if (random) {
-			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingLatitude,
+			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingLatitude,
 					PrivacyManager.getRandomProp("LAT"));
-			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingLongitude,
+			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingLongitude,
 					PrivacyManager.getRandomProp("LON"));
-			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingSerial,
+			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingSerial,
 					PrivacyManager.getRandomProp("SERIAL"));
-			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC"));
-			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingPhone,
+			PrivacyManager
+					.setSetting(null, context, 0, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC"));
+			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingPhone,
 					PrivacyManager.getRandomProp("PHONE"));
-			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI"));
-			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingId,
+			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingImei,
+					PrivacyManager.getRandomProp("IMEI"));
+			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingId,
 					PrivacyManager.getRandomProp("ANDROID_ID"));
-			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingGsfId,
+			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingGsfId,
 					PrivacyManager.getRandomProp("GSF_ID"));
-			PrivacyManager.setSetting(null, context, PrivacyManager.cSettingCountry,
+			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingCountry,
 					PrivacyManager.getRandomProp("ISO3166"));
 		}
 

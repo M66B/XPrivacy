@@ -128,7 +128,7 @@ public class Requirements {
 
 		// Check interface address
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
-				|| PrivacyManager.getDefacedProp("InetAddress") == null)
+				|| PrivacyManager.getDefacedProp(0, "InetAddress") == null)
 			reportClass(InterfaceAddress.class, context);
 
 		// Check package manager

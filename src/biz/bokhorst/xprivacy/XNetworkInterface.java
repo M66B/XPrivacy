@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+import android.os.Binder;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -81,7 +82,7 @@ public class XNetworkInterface extends XHook {
 			if (!ni.isLoopback())
 				if (param.getResult() != null && isRestricted(param))
 					if (mMethod == Methods.getHardwareAddress) {
-						String mac = (String) PrivacyManager.getDefacedProp("MAC");
+						String mac = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC");
 						long lMac = Long.parseLong(mac.replace(":", ""), 16);
 						byte[] address = ByteBuffer.allocate(8).putLong(lMac).array();
 						param.setResult(address);
@@ -93,7 +94,8 @@ public class XNetworkInterface extends XHook {
 							if (address.isAnyLocalAddress() || address.isLoopbackAddress())
 								listAddress.add(address);
 							else
-								listAddress.add((InetAddress) PrivacyManager.getDefacedProp("InetAddress"));
+								listAddress.add((InetAddress) PrivacyManager.getDefacedProp(Binder.getCallingUid(),
+										"InetAddress"));
 						param.setResult(Collections.enumeration(listAddress));
 					} else if (mMethod == Methods.getInterfaceAddresses) {
 						@SuppressWarnings("unchecked")
@@ -102,7 +104,8 @@ public class XNetworkInterface extends XHook {
 							// address
 							try {
 								Field fieldAddress = findField(InterfaceAddress.class, "address");
-								fieldAddress.set(address, PrivacyManager.getDefacedProp("InetAddress"));
+								fieldAddress.set(address,
+										PrivacyManager.getDefacedProp(Binder.getCallingUid(), "InetAddress"));
 							} catch (Throwable ex) {
 								Util.bug(this, ex);
 							}
@@ -110,7 +113,8 @@ public class XNetworkInterface extends XHook {
 							// broadcastAddress
 							try {
 								Field fieldBroadcastAddress = findField(InterfaceAddress.class, "broadcastAddress");
-								fieldBroadcastAddress.set(address, PrivacyManager.getDefacedProp("InetAddress"));
+								fieldBroadcastAddress.set(address,
+										PrivacyManager.getDefacedProp(Binder.getCallingUid(), "InetAddress"));
 							} catch (Throwable ex) {
 								Util.bug(this, ex);
 							}
