@@ -298,10 +298,9 @@ public class Util {
 		return false;
 	}
 
-	public static boolean isIntentAvailable(Context context, String action) {
+	public static boolean isIntentAvailable(Context context, Intent intent) {
 		PackageManager packageManager = context.getPackageManager();
-		Intent intent = new Intent(action);
-		return (packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0);
+		return (packageManager.queryIntentActivities(intent, PackageManager.GET_ACTIVITIES).size() > 0);
 	}
 
 	public static void copy(File src, File dst) throws IOException {

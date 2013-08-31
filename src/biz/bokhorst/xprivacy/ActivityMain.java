@@ -812,14 +812,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionExport() {
-		boolean multiple = Util.isIntentAvailable(ActivityMain.this, Intent.ACTION_GET_CONTENT);
+		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
+		file.setType("file/*");
+		boolean multiple = Util.isIntentAvailable(ActivityMain.this, file);
 		Intent intent = new Intent("biz.bokhorst.xprivacy.action.EXPORT");
 		intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(multiple));
 		startActivityForResult(intent, ACTIVITY_EXPORT);
 	}
 
 	private void optionImport() {
-		if (Util.isIntentAvailable(ActivityMain.this, Intent.ACTION_GET_CONTENT)) {
+		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
+		file.setType("file/*");
+		if (Util.isIntentAvailable(ActivityMain.this, file)) {
 			Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
 			Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/.xprivacy/");
 			chooseFile.setDataAndType(uri, "text/xml");
