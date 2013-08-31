@@ -78,6 +78,7 @@
     <string name="settings_country">الدولة</string>
     <string name="settings_operator">المُشغل</string>
     <string name="settings_subscriber">IMSI</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">تصفية بواسطة الأُذونات</string>
     <string name="settings_fapplication">تصفية بواسطة نوع التطبيق</string>
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>

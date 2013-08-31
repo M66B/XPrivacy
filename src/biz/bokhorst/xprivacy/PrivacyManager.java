@@ -86,6 +86,7 @@ public class PrivacyManager {
 	public final static String cSettingOperator = "Operator";
 	public final static String cSettingIccId = "ICC_ID";
 	public final static String cSettingSubscriber = "Subscriber";
+	public final static String cSettingUa = "UA";
 	public final static String cSettingFPermission = "FPermission";
 	public final static String cSettingFSystem = "FSystem";
 	public final static String cSettingTheme = "Theme";
@@ -814,6 +815,10 @@ public class PrivacyManager {
 
 		if (name.equals("Bytes3"))
 			return new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
+
+		if (name.equals("UA"))
+			return getSetting(null, null, uid, cSettingUa,
+					"Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9", true);
 
 		// Fallback
 		Util.log(null, Log.WARN, "Fallback value name=" + name);

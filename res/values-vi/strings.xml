@@ -77,6 +77,7 @@
     <string name="settings_country">Nước</string>
     <string name="settings_operator">Nhà mạng</string>
     <string name="settings_subscriber">ID người đăng kí</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">Lọc theo quyền</string>
     <string name="settings_fapplication">Lọc theo kiểu ứng dụng</string>
     <string name="settings_log">Lưu thông tin gỡ rối (yêu cầu khởi động lại)</string>

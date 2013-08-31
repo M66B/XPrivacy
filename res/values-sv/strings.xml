@@ -78,6 +78,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="settings_country">Land</string>
     <string name="settings_operator">Operatör</string>
     <string name="settings_subscriber">Abonnent-ID</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">Filtrera efter behörighet</string>
     <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (requires restart)</string>

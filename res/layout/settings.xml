@@ -223,6 +223,18 @@
 
             <TableRow>
 
+                <TextView
+                    android:text="@string/settings_ua"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etUa"
+                    android:hint="Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9"
+                    android:inputType="text|textNoSuggestions" />
+            </TableRow>
+
+            <TableRow>
+
                 <CheckBox
                     android:id="@+id/cbLog"
                     android:layout_width="match_parent"

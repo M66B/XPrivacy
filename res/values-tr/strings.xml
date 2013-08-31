@@ -77,6 +77,7 @@
     <string name="settings_country">Ülke</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Sim Numarası (IMSI)</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">İzne göre gizle</string>
     <string name="settings_fapplication">Uygulama tipine göre gizle</string>
     <string name="settings_log">Hata ayıklama modu (Yeniden başlatma gerekir)</string>

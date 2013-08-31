@@ -78,6 +78,7 @@
     <string name="settings_country">国</string>
     <string name="settings_operator">キャリア</string>
     <string name="settings_subscriber">契約者固有ID</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">権限でフィルタ</string>
     <string name="settings_fapplication">アプリタイプでフィルタ</string>
     <string name="settings_log">デバッグログ(要再起動)</string>

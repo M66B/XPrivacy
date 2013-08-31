@@ -78,6 +78,7 @@
     <string name="settings_country">国家</string>
     <string name="settings_operator">运营商</string>
     <string name="settings_subscriber">IMSI</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">无关权限过滤</string>
     <string name="settings_fapplication">按应用级别过滤</string>
     <string name="settings_log">调试日志 (需要重启)</string>

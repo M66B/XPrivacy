@@ -78,6 +78,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_country">Земља</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Претплатнички ИД</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">Филтрирај по дозволи</string>
     <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (requires restart)</string>

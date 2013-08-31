@@ -79,6 +79,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_country">Země</string>
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">Filtrovat dle oprávnění</string>
     <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (requires restart)</string>

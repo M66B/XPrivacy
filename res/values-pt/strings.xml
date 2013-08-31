@@ -78,6 +78,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_country">País</string>
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">Identidade do subscritor</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">Filtrar por permissão</string>
     <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Relatório de depuração (requer reinicialização)</string>

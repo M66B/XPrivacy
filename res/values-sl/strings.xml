@@ -80,6 +80,7 @@
     <string name="settings_country">Država</string>
     <string name="settings_operator">Operater</string>
     <string name="settings_subscriber">ID naročnika</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">Filtriraj po pravicah</string>
     <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (requires restart)</string>

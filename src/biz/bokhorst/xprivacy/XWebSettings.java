@@ -10,8 +10,6 @@ import android.os.Build;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XWebSettings extends XHook {
-	public final static String cUserAgent = "Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9";
-
 	private XWebSettings(String methodName, String restrictionName, int sdk) {
 		super(restrictionName, methodName, null, sdk);
 	}
@@ -33,7 +31,7 @@ public class XWebSettings extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		if (isRestricted(param))
-			param.setResult(cUserAgent);
+			param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA"));
 	}
 
 	@Override

@@ -78,6 +78,7 @@
     <string name="settings_country">Χώρα</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Αναγνωριστικό συνδρομητή</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">Φιλτράρισμα ανά άδεια</string>
     <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (requires restart)</string>

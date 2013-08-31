@@ -80,6 +80,7 @@
     <string name="settings_country">کشور</string>
     <string name="settings_operator">اپراتور</string>
     <string name="settings_subscriber">شناسه مشترک</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">فیلتر بر اساس مجوزها</string>
     <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">لاگ ایرادیابی (نیازمند دوباره راه اندازی می باشد)</string>

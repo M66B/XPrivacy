@@ -78,6 +78,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_country">Šalis</string>
     <string name="settings_operator">Operatorius</string>
     <string name="settings_subscriber">Abonento ID</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">Tik naudojami leidimai</string>
     <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">DEBUG žurnalas (reikia paleisti iš naujo)</string>

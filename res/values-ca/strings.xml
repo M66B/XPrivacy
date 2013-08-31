@@ -76,6 +76,7 @@
     <string name="settings_country">País</string>
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">ID de subscriptor</string>
+    <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">Filta per permís</string>
     <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (requires restart)</string>

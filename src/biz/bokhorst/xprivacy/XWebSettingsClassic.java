@@ -52,14 +52,14 @@ public class XWebSettingsClassic extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod.equals(Methods.setUserAgentString))
 			if (isRestricted(param) && param.args.length > 0)
-				param.args[0] = XWebSettings.cUserAgent;
+				param.args[0] = PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod.equals(Methods.getDefaultUserAgentForLocale) || mMethod.equals(Methods.getUserAgentString))
 			if (isRestricted(param))
-				param.setResult(XWebSettings.cUserAgent);
+				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA"));
 	}
 
 	@Override

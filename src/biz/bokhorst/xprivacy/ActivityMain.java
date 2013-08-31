@@ -614,6 +614,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final EditText etOperator = (EditText) dlgSettings.findViewById(R.id.etOperator);
 		final EditText etIccId = (EditText) dlgSettings.findViewById(R.id.etIccId);
 		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
+		final EditText etUa = (EditText) dlgSettings.findViewById(R.id.etUa);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
 		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
@@ -645,6 +646,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		etIccId.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingIccId, "", false));
 		etSubscriber.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSubscriber,
 				"", false));
+		etUa.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingUa, "", false));
 		cbLog.setChecked(log);
 		cbRandom.setChecked(random);
 
@@ -749,6 +751,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						.toString());
 				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSubscriber, etSubscriber
 						.getText().toString());
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingUa, etUa.getText()
+						.toString());
 
 				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLog,
 						Boolean.toString(cbLog.isChecked()));
