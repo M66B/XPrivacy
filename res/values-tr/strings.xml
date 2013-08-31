@@ -84,7 +84,7 @@
     <string name="filter_internet">İnternet izni olmayanları gizle</string>
     <string name="filter_restricted">Engellenmişleri gizle</string>
     <string name="filter_app_sys">Sistem uygulamaları</string>
-    <string name="filter_app_user">Kullanıcı uygulamaları/string>
+    <string name="filter_app_user">Kullanıcı uygulamaları</string>
     <string name="filter_app_both">Tüm uygulamalar</string>
     <string name="help_application">Uygulama</string>
     <string name="help_internet">internet izni var</string>
