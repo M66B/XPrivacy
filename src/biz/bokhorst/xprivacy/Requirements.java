@@ -81,10 +81,8 @@ public class Requirements {
 						public void onClick(DialogInterface dialog, int which) {
 							Intent xInstallerIntent = context.getPackageManager().getLaunchIntentForPackage(
 									"de.robv.android.xposed.installer");
-							if (xInstallerIntent != null) {
-								xInstallerIntent.putExtra("opentab", 1);
+							if (xInstallerIntent != null)
 								context.startActivity(xInstallerIntent);
-							}
 						}
 					});
 			AlertDialog alertDialog = alertDialogBuilder.create();
