@@ -589,6 +589,7 @@ How to get beta releases:
 * Fixed check if file manager available ([issue](https://github.com/M66B/XPrivacy/issues/327))
 * Send intent *biz.bokhorst.xprivacy.action.ACTIVE* after boot ([issue](https://github.com/M66B/XPrivacy/issues/606))
 * Setting for browser user agent ([issue](https://github.com/M66B/XPrivacy/issues/608))
+* Updated German translation
 * Updated Lithuanian translation
 * Updated Russian translation
 * Updated Turkish translation
