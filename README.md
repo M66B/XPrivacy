@@ -584,9 +584,14 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.9.10 BETA!**
+
 * Split restriction cache timeout (15 seconds) and settings cache timeout (30 seconds)
-* Fixed not handled exception ([issue](https://github.com/M66B/XPrivacy/issues/610))
-* Fixed check if file manager available ([issue](https://github.com/M66B/XPrivacy/issues/327))
+* Prepare application specific settings / true randomization ([issue](https://github.com/M66B/XPrivacy/issues/540))
+* Fixed not handled restriction ([issue](https://github.com/M66B/XPrivacy/issues/610))
+* Fixed check for file manager ([issue](https://github.com/M66B/XPrivacy/issues/327))
 * Send intent *biz.bokhorst.xprivacy.action.ACTIVE* after boot ([issue](https://github.com/M66B/XPrivacy/issues/606))
 * Setting for browser user agent ([issue](https://github.com/M66B/XPrivacy/issues/608))
 * Updated German translation
