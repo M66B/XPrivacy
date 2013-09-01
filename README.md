@@ -586,6 +586,10 @@ How to get beta releases:
 
 * ...
 
+**Version 1.9.11 BETA!**
+
+* Fixed FC at boot by reverting intent at boot
+
 **Version 1.9.10 BETA!**
 
 * Split restriction cache timeout (15 seconds) and settings cache timeout (30 seconds)
