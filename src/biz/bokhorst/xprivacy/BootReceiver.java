@@ -35,7 +35,9 @@ public class BootReceiver extends BroadcastReceiver {
 		}
 
 		// Check if Xposed enabled
-		if (!Util.isXposedEnabled()) {
+		if (Util.isXposedEnabled())
+			context.sendBroadcast(new Intent("biz.bokhorst.xprivacy.action.ACTIVE"));
+		else {
 			// Create Xposed installer intent
 			Intent xInstallerIntent = context.getPackageManager().getLaunchIntentForPackage(
 					"de.robv.android.xposed.installer");

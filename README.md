@@ -584,7 +584,7 @@ How to get beta releases:
 
 **Next release**
 
-* ...
+* Broadcast intent *biz.bokhorst.xprivacy.action.ACTIVE* after boot ([issue](https://github.com/M66B/XPrivacy/issues/606))
 
 **Version 1.9.11 BETA!**
 
