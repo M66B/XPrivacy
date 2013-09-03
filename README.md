@@ -587,6 +587,7 @@ How to get beta releases:
 * Broadcast intent *biz.bokhorst.xprivacy.action.ACTIVE* after boot ([issue](https://github.com/M66B/XPrivacy/issues/606))
 * Updated Arabic translation
 * Updated Czech translation
+* Updated Slovak translation
 * Updated Vietnamese translation
 
 **Version 1.9.11 BETA!**
