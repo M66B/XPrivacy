@@ -251,28 +251,19 @@ Installation
 It seems like a lot of steps, but it is done in no time:
 
 1. Requirements:
-	* Android 4.0+ (ICS) or 4.1+ (JellyBean), check with *System Settings* > *About phone* > *Android version*
+	* Android 4.0+ (ICS) or 4.1/4.2/4.3+ (JellyBean), check with *System Settings* > *About phone* > *Android version*
 	* Custom recovery ([CWM](http://forum.xda-developers.com/wiki/ClockworkMod_Recovery), [TWRP](http://teamw.in/project/twrp2), no stock recovery)
 1. **Make a backup**
 1. If not done already: root your device; the procedure depends on the brand and model of your device
 1. Enable *System settings* > *Security* > *Unknown sources*
 1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 	* Be sure to follow **all** installation steps
-	* Be sure to install the latest **version 2.1.4**
-	* Download and copy the Xposed disabler to your SD card to disable Xposed in case of troubles
+	* Be sure to install [the latest version](http://dl.xposed.info/latest.apk)
+	* Download and copy the *Xposed* disabler to your SD card to disable Xposed in case of troubles
 	* [MIUI](http://en.miui.com/) is not supported by Xposed
-	* Unofficial Android 4.3 support, [see here](http://forum.xda-developers.com/showpost.php?p=44013064&postcount=2308)
 1. Download and install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
 	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
 1. Enable XPrivacy from the Xposed installer
-1. Reboot into recovery
-1. Flash the Xposed fix for your Android version from [here](http://goo.im/devs/M66B/xprivacy)
-	* Android ICS 4.0.x / CM9: Xposed_fix_4.0.zip
-	* Android JB 4.1.x / CM10: Xposed_fix_4.1.zip
-	* Android JB 4.2.x / CM10.1: Xposed_fix_4.2.zip
-	* Android JB 4.3.x / CM10.2: Xposed_fix_4.3.zip
-	* **This fix is only for Xposed version 2.1.4**
-	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
 1. Reboot
 
 I do not recommend using XPrivacy in combination with any of the
