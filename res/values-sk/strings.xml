@@ -79,7 +79,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_country">Krajina</string>
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
-    <string name="settings_ua">User agent</string>
+    <string name="settings_ua">Identifikácia prehliadača</string>
     <string name="settings_fpermission">Filtrovať podľa povolenia</string>
     <string name="settings_fapplication">Filtrovať podľa typu aplikácie</string>
     <string name="settings_log">Záznam na ladenie (vyžaduje reštart)</string>
