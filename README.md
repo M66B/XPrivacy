@@ -588,6 +588,7 @@ How to get beta releases:
 * Updated Arabic translation
 * Updated Czech translation
 * Updated German translation
+* Updated Vietnamese translation
 
 **Version 1.9.11 BETA!**
 
