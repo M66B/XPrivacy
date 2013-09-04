@@ -10,7 +10,6 @@
     <string name="menu_refresh">刷新</string>
     <string name="menu_settings">设置</string>
     <string name="menu_template">默认模板</string>
-    <string name="menu_update">检查更新</string>
     <string name="menu_report">报告问题</string>
     <string name="menu_export">导出配置</string>
     <string name="menu_import">导入配置</string>

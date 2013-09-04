@@ -1,25 +1,11 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -447,9 +433,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			case R.id.menu_template:
 				optionTemplate();
 				return true;
-			case R.id.menu_update:
-				optionCheckUpdate();
-				return true;
 			case R.id.menu_report:
 				optionReportIssue();
 				return true;
@@ -801,10 +784,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		alertDialog.show();
 	}
 
-	private void optionCheckUpdate() {
-		new UpdateTask().executeOnExecutor(mExecutor, "http://goo.im/json2&path=/devs/M66B/xprivacy");
-	}
-
 	private void optionReportIssue() {
 		// Report issue
 		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/M66B/XPrivacy/issues"));
@@ -948,106 +927,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	// Tasks
-
-	private class UpdateTask extends AsyncTask<String, String, String> {
-		@Override
-		protected String doInBackground(String... uri) {
-			return fetchJson(uri);
-		}
-
-		@Override
-		protected void onPostExecute(String json) {
-			super.onPostExecute(json);
-			if (json != null)
-				processJson(json);
-		}
-
-		private String fetchJson(String... uri) {
-			try {
-				// Request downloads
-				int TIMEOUT_MILLISEC = 30000; // = 30 seconds
-				HttpParams httpParams = new BasicHttpParams();
-				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
-				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
-				HttpClient httpclient = new DefaultHttpClient(httpParams);
-				HttpResponse response = httpclient.execute(new HttpGet(uri[0]));
-				StatusLine statusLine = response.getStatusLine();
-
-				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-					// Succeeded
-					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					response.getEntity().writeTo(out);
-					out.close();
-					return out.toString("ISO-8859-1");
-				} else {
-					// Failed
-					response.getEntity().getContent().close();
-					throw new IOException(statusLine.getReasonPhrase());
-				}
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				return ex.toString();
-			}
-		}
-
-		private void processJson(String json) {
-			try {
-				// Parse result
-				String version = null;
-				String url = null;
-				if (json != null)
-					if (json.startsWith("{")) {
-						long newest = 0;
-						String prefix = "XPrivacy_";
-						JSONObject jRoot = new JSONObject(json);
-						JSONArray jArray = jRoot.getJSONArray("list");
-						for (int i = 0; jArray != null && i < jArray.length(); i++) {
-							// File
-							JSONObject jEntry = jArray.getJSONObject(i);
-							String filename = jEntry.getString("filename");
-							if (filename.startsWith(prefix)) {
-								// Check if newer
-								long modified = jEntry.getLong("modified");
-								if (modified > newest) {
-									newest = modified;
-									version = filename.substring(prefix.length()).replace(".apk", "");
-									url = "http://goo.im" + jEntry.getString("path");
-								}
-							}
-						}
-					} else {
-						Toast toast = Toast.makeText(ActivityMain.this, json, Toast.LENGTH_LONG);
-						toast.show();
-					}
-
-				if (url == null || version == null) {
-					// Assume no update
-					String msg = getString(R.string.msg_noupdate);
-					Toast toast = Toast.makeText(ActivityMain.this, msg, Toast.LENGTH_LONG);
-					toast.show();
-				} else {
-					// Compare versions
-					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-					Version ourVersion = new Version(pInfo.versionName);
-					Version latestVersion = new Version(version);
-					if (ourVersion.compareTo(latestVersion) < 0) {
-						// Update available
-						Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-						startActivity(browserIntent);
-					} else {
-						// No update available
-						String msg = getString(R.string.msg_noupdate);
-						Toast toast = Toast.makeText(ActivityMain.this, msg, Toast.LENGTH_LONG);
-						toast.show();
-					}
-				}
-			} catch (Throwable ex) {
-				Toast toast = Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG);
-				toast.show();
-				Util.bug(null, ex);
-			}
-		}
-	}
 
 	private class AppListTask extends AsyncTask<Object, Integer, List<ApplicationInfoEx>> {
 		private String mRestrictionName;

@@ -570,6 +570,7 @@ How to get beta releases:
 
 * Broadcast intent *biz.bokhorst.xprivacy.action.ACTIVE* after boot ([issue](https://github.com/M66B/XPrivacy/issues/606))
 * Compiled for Xposed version 2.2
+* Removed update menu (Xposed 2.2 will take care of updates)
 * Updated Arabic translation
 * Updated Czech translation
 * Updated Slovak translation
