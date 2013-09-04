@@ -371,12 +371,6 @@ Almost nothing.
 There are already enough guides to help you to root your device.
 Use your favorite search engine to find one.
 
-**(4) Do I really need to install the Xposed fix?**
-
-If you like to have all data restricted, yes.
-The current Xposed version cannot hook all functions with the same name having different parameters,
-like *requestLocationUpdates* of [LocationManager](http://developer.android.com/reference/android/location/LocationManager.html).
-
 **(5) How can I reset all XPrivacy settings?**
 
 *Manage apps* > *XPrivacy* > *Clear data*
