@@ -251,18 +251,17 @@ Installation
 It seems like a lot of steps, but it is done in no time:
 
 1. Requirements:
-	* Android 4.0+ (ICS) or 4.1/4.2/4.3+ (JellyBean), check with *System Settings* > *About phone* > *Android version*
+	* Android 4.0+ (ICS) or 4.1/4.2/4.3+ (JellyBean); check with *System Settings* > *About phone* > *Android version*
 	* Custom recovery ([CWM](http://forum.xda-developers.com/wiki/ClockworkMod_Recovery), [TWRP](http://teamw.in/project/twrp2), no stock recovery)
 1. **Make a backup**
 1. If not done already: root your device; the procedure depends on the brand and model of your device
 1. Enable *System settings* > *Security* > *Unknown sources*
 1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
-	* Be sure to follow **all** installation steps
 	* Be sure to install [the latest version](http://dl.xposed.info/latest.apk)
 	* Download and copy the *Xposed* disabler to your SD card to disable Xposed in case of troubles
 	* [MIUI](http://en.miui.com/) is not supported by Xposed
-1. Download and install XPrivacy from [here](http://goo.im/devs/M66B/xprivacy)
-	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
+1. Download and install XPrivacy from [here](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
+	* Alternatively download from [here](http://goo.im/devs/M66B/xprivacy) or [here](http://d-h.st/users/M66B/?fld_id=19078#files)
 1. Enable XPrivacy from the Xposed installer
 1. Reboot
 
