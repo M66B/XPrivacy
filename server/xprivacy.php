@@ -15,7 +15,7 @@
 		require_once('xprivacy.inc.php');
 		$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 		if ($db->connect_errno) {
-			echo json_encode(array('ok' => false, 'error' => $db->connect_error));
+			echo json_encode(array('ok' => false, 'error' => 'Unable to connect db'));
 			exit();
 		}
 
