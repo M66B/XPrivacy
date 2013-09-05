@@ -568,9 +568,15 @@ How to get beta releases:
 
 **Next release**
 
+* ...
+
+**Version 1.9.12 BETA!**
+
+* Fixed title randomize button
 * Broadcast intent *biz.bokhorst.xprivacy.action.ACTIVE* after boot ([issue](https://github.com/M66B/XPrivacy/issues/606))
 * Compiled for Xposed version 2.2
 * Removed update menu (Xposed 2.2 will take care of updates)
+* This is the [last release on goo.im](http://forum.xda-developers.com/showpost.php?p=45276849&postcount=3233)
 * Updated Arabic translation
 * Updated Czech translation
 * Updated Slovak translation

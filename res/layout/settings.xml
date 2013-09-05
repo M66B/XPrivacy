@@ -232,37 +232,25 @@
                     android:hint="Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9"
                     android:inputType="text|textNoSuggestions" />
             </TableRow>
-
-            <TableRow>
-
-                <CheckBox
-                    android:id="@+id/cbLog"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:text="@string/settings_log" />
-            </TableRow>
-
-            <TableRow>
-
-                <Button
-                    android:id="@+id/btnRandom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:text="@string/msg_random" />
-            </TableRow>
-
-            <TableRow>
-
-                <CheckBox
-                    android:id="@+id/cbRandom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:text="@string/msg_random_boot" />
-            </TableRow>
         </TableLayout>
+
+        <CheckBox
+            android:id="@+id/cbLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_log" />
+
+        <Button
+            android:id="@+id/btnRandom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/msg_random" />
+
+        <CheckBox
+            android:id="@+id/cbRandom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/msg_random_boot" />
 
         <Button
             android:id="@+id/btnOk"
