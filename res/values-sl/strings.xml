@@ -82,13 +82,13 @@
     <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">Filtriraj po pravicah</string>
     <string name="settings_fapplication">Filter by application type</string>
-    <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_log">Debug log (zahteva ponovni zagon)</string>
     <string name="filter_used">Filtriraj po uporabi podatkov</string>
     <string name="filter_internet">Filtriraj po uporabi interneta</string>
     <string name="filter_restricted">Filtriraj po omejitvah</string>
-    <string name="filter_app_sys">System application</string>
-    <string name="filter_app_user">User application</string>
-    <string name="filter_app_both">All applications</string>
+    <string name="filter_app_sys">Sistemski programi</string>
+    <string name="filter_app_user">Uporabniški programi</string>
+    <string name="filter_app_both">Vsi programi</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>
