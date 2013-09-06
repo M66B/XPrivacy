@@ -1,0 +1,109 @@
+<resources>
+
+    <!-- Translators: do not include texts with translatable="false" -->
+    <string name="app_name" translatable="false">XPrivacy</string>
+    <string name="app_notxposed" formatted="false">Xposed raamistik versioon %d+ ei ole installeeritud</string>
+    <string name="app_notenabled">XPrivacy ei ole aktiveeritud Xposed raamistiku installeerias/string>
+    <string name="app_wrongandroid">See rakendus on ainult android 4.0+'le </string>
+    <string name="app_version" formatted="false">XPrivacy versioon: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed raamistiku versioon: %d</string>
+    <string name="app_copyright">Autoriõigus \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#xprivacy</string>
+    <string name="app_support" translatable="false">http://forum.xda-developers.com/showthread.php?t=2320783</string>
+    <string name="menu_usage">Kasutus</string>
+    <string name="menu_refresh">Värskenda</string>
+    <string name="menu_settings">Seaded</string>
+    <string name="menu_template">Mall</string>
+    <string name="menu_report">Teavita veast</string>
+    <string name="menu_export">Ekspordi</string>
+    <string name="menu_import">Impordi</string>
+    <string name="menu_submit">Saada keelud</string>
+    <string name="menu_fetch">Lae keelud alla</string>
+    <string name="menu_theme">Vaheta teemat</string>
+    <string name="menu_pro">Pro versioon</string>
+    <string name="menu_about">Programmist</string>
+    <string name="menu_help">Abi</string>
+    <string name="menu_all">Kõik</string>
+    <string name="menu_clear">Tühjenda</string>
+    <string name="menu_app_launch">Käivita</string>
+    <string name="menu_app_settings">Rakenduse andmed</string>
+    <string name="menu_app_store">Play Pood</string>
+    <string name="menu_accounts">Vali kasutajad mida lubada</string>
+    <string name="menu_contacts">Vali kontaktid mida lubada</string>
+    <string name="msg_noupdate">Uuendusi pole</string>
+    <string name="msg_restricted" formatted="false">%s on keelatud XPrivacy poolt</string>
+    <string name="msg_licensed" formatted="false">Litsentseeritud: %s</string>
+    <string name="msg_loading">Laeb</string>
+    <string name="msg_edit">Klõpsa rakenduse ikoonile, et muuta</string>
+    <string name="msg_sure">Oled sa kindel?</string>
+    <string name="msg_done">Valmis</string>
+    <string name="msg_reboot">Seadme taaskäivitus on vajalik</string>
+    <string name="msg_random">Juhuslik</string>
+    <string name="msg_random_boot">Juhuslikusta pärast käivitamist</string>
+    <string name="msg_first"><b>Palju vaeva on nähtud Xprivacy arendamisel ja testimisel,
+kuid on võimata garanteerida, et see töötab igal seadmel ja iga rakendusega.
+\n\nKasuta ainult omal vastutusel.</b>\n\nSee also the license:</string>
+    <string name="restrict_accounts">Kasutajad (Google, Facebook, jne)</string>
+    <string name="restrict_browser">Brauser (järjehoidjad/ajalugu)</string>
+    <string name="restrict_calendar">Kalender</string>
+    <string name="restrict_calling">Helistamine (kõned, SMS, MMS)</string>
+    <string name="restrict_clipboard">Lõikelaud</string>
+    <string name="restrict_contacts">Kontaktid</string>
+    <string name="restrict_dictionary">Sõnastik (kasutaja)</string>
+    <string name="restrict_email" translatable="false">E-mail</string>
+    <string name="restrict_identification">Tuvastamine (seadme)</string>
+    <string name="restrict_internet">Internet</string>
+    <string name="restrict_location">Asukoht (täpne/umbkaudne)</string>
+    <string name="restrict_media">Meedia (helid, pildid ja videod)</string>
+    <string name="restrict_messages">Sõnumid (SMS, MMS)</string>
+    <string name="restrict_network">Võrk (aadressid)</string>
+    <string name="restrict_nfc" translatable="false">NFC</string>
+    <string name="restrict_notifications">Teated</string>
+    <string name="restrict_phone">Telefon (ID, numbrid, kõned)</string>
+    <string name="restrict_storage">Mälu (Meedia, SD kaart)</string>
+    <string name="restrict_shell">Käsurida (käsud, juurkasutaja)</string>
+    <string name="restrict_system">Süsteem (installeeritud rakendused)</string>
+    <string name="restrict_view">Vaade (brauser)</string>
+    <string name="title_category">Katekooria:</string>
+    <string name="title_restrict">Lisa linnuke, et keelata:</string>
+    <string name="title_nofilter">Ühtegi aktiivset filtrit pole</string>
+
+    <plurals name="title_filters">
+        <item quantity="one">1 aktiivne filter</item>
+        <item quantity="other">%d aktiivset filtrit</item>
+    </plurals>
+
+    <string name="settings_serial">Seeria#</string>
+    <string name="settings_lat">Laiuskraad</string>
+    <string name="settings_lon">Pikkuskraad</string>
+    <string name="settings_mac">MAC aadress</string>
+    <string name="settings_ip">IP aadress</string>
+    <string name="settings_imei" translatable="false">IMEI</string>
+    <string name="settings_phone">Telefoninumber</string>
+    <string name="settings_id">Android ID</string>
+    <string name="settings_gsfid" translatable="false">GSF ID</string>
+    <string name="settings_mcc" translatable="false">MCC</string>
+    <string name="settings_mnc" translatable="false">MNC</string>
+    <string name="settings_country">Riik</string>
+    <string name="settings_operator">Opeeraator</string>
+    <string name="settings_iccid" translatable="false">ICC ID</string>
+    <string name="settings_subscriber">Abonendi ID</string>
+    <string name="settings_ua">Kasutaja agent</string>
+    <string name="settings_fpermission">Filtreeri loa järgi</string>
+    <string name="settings_fapplication">Filtreeri rakenduse tüübi järgi</string>
+    <string name="settings_log">Silumislogi (nõuab restarti)</string>
+    <string name="filter_used">Filtreeri andmete kasutamise järgi</string>
+    <string name="filter_internet">Filtreeri interneti kasutamis ejärgi</string>
+    <string name="filter_restricted">Filtreeri keelude järgi</string>
+    <string name="filter_app_sys">Süsteemirakendus</string>
+    <string name="filter_app_user">Kasutaja rakendus</string>
+    <string name="filter_app_both">Kõik rakendused</string>
+    <string name="help_application">Rakendus</string>
+    <string name="help_internet">on interneti kasutamise luba/string>
+    <string name="help_granted">on Android luba</string>
+    <string name="help_used">on kasutanud seda andmeside tüüpi</string>
+    <string name="help_frozen">on välja lülitatud</string>
+    <string name="help_dangerous">On ohtlik</string>
+    <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
+
+</resources>
