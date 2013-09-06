@@ -571,7 +571,8 @@ How to get beta releases:
 **Next release**
 
 * Added Estonian translation
-* Updated slovenian translation
+* Updated German translation
+* Updated Slovenian translation
 
 **Version 1.9.12 BETA!**
 
