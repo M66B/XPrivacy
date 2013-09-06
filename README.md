@@ -553,11 +553,13 @@ If you encounter any bug or data leakage please [report an issue](https://github
 including a [logcat](http://developer.android.com/tools/help/logcat.html)
 (use [pastebin](http://pastebin.com/) or a similar service).
 
+If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
+
+If you have any question, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
+
 **Before submitting any issue please ensure you are running the latest version of XPrivacy.**
 
 **Before submitting any issue please [read this](http://forum.xda-developers.com/showpost.php?p=43892381&postcount=1703).**
-
-If you have any question or suggestion, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
 Changelog
 ---------
