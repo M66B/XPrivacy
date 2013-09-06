@@ -570,6 +570,7 @@ How to get beta releases:
 
 **Next release**
 
+* Added Estonian translation
 * Updated slovenian translation
 
 **Version 1.9.12 BETA!**
@@ -1569,6 +1570,7 @@ Current translations:
 * Danish (da)
 * Dutch/Flemish (nl)
 * English
+* Estonian (ee)
 * Farsi (fa)
 * French (fr)
 * German (de)
