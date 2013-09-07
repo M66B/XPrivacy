@@ -26,7 +26,8 @@
     <string name="menu_app_store">Obchod Play</string>
     <string name="menu_accounts">Povolené účty</string>
     <string name="menu_contacts">Povolené kontakty</string>
-    <string name="msg_noupdate">Nie je k dispozícii žiadna aktualizácia</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s obmedzené pomocou XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
     <string name="msg_loading">Prebieha načítavanie</string>

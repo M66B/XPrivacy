@@ -26,7 +26,8 @@
     <string name="menu_app_store">Play Маркет</string>
     <string name="menu_accounts">Выберите разрешенные учетные записи</string>
     <string name="menu_contacts">Выберите разрешенные контакты</string>
-    <string name="msg_noupdate">Обновлений нет</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s запрещено XPrivacy</string>
     <string name="msg_licensed" formatted="false">Владелец лицензии: %s</string>
     <string name="msg_loading">Загрузка</string>

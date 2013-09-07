@@ -26,7 +26,8 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">İzin verilecek hesapları seç</string>
     <string name="menu_contacts">İzin verilecek kişileri seç</string>
-    <string name="msg_noupdate">Güncelleştirme yok</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s XPrivacy tarafından engellendi</string>
     <string name="msg_licensed" formatted="false">%s adına lisanslıdır.</string>
     <string name="msg_loading">Yükleniyor</string>

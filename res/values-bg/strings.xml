@@ -26,7 +26,8 @@
     <string name="menu_app_store">Google Play магазин</string>
     <string name="menu_accounts">Изберете сметки с позволение</string>
     <string name="menu_contacts">Изберете контакти с позволение</string>
-    <string name="msg_noupdate">Няма налично обновление</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s е ограничен от XPrivacy</string>
     <string name="msg_licensed" formatted="false">Лицензирано на: %s</string>
     <string name="msg_loading">Зареждане</string>

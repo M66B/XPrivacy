@@ -72,8 +72,9 @@ public class PackageChange extends BroadcastReceiver {
 							PendingIntent.FLAG_UPDATE_CURRENT);
 
 					// Title
-					String title = String.format("%s %s", pm.getApplicationLabel(pInfo.applicationInfo),
-							pInfo.versionName);
+					String title = String.format("%s %s %s",
+							context.getString(replacing ? R.string.msg_update : R.string.msg_new),
+							pm.getApplicationLabel(pInfo.applicationInfo), pInfo.versionName);
 
 					// Build notification
 					NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);

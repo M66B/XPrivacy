@@ -26,7 +26,8 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Vælg tilladte konti</string>
     <string name="menu_contacts">Vælg tilladte kontakter</string>
-    <string name="msg_noupdate">Ingen tilgængelige opdateringer</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s begrænset af XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licenseret til: %s</string>
     <string name="msg_loading">Loader</string>

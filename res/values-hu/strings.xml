@@ -26,7 +26,8 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Válassza ki az engedélyezendő fiókokat</string>
     <string name="menu_contacts">Válassza ki az engedélyezendő névjegyeket</string>
-    <string name="msg_noupdate">Nincs elérhető frissítés</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s korlátozva az XPrivacy által</string>
     <string name="msg_licensed" formatted="false">Licensz tulajdonos: %s</string>
     <string name="msg_loading">Töltés</string>

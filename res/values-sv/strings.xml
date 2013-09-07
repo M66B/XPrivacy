@@ -26,7 +26,8 @@
     <string name="menu_app_store">Play Butik</string>
     <string name="menu_accounts">Välj tillåtna konton</string>
     <string name="menu_contacts">Välj kontakter att tillåta</string>
-    <string name="msg_noupdate">Ingen uppdatering hittades</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s blockerad av XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licensierat till: %s</string>
     <string name="msg_loading">Laddar</string>

@@ -26,7 +26,8 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">अनुमति के लिए खातों को चुने</string>
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
-    <string name="msg_noupdate">अद्यतन वर्शन उपलब्ध नहीं</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s XPrivacy के द्वारा प्रतिबंधित</string>
     <string name="msg_licensed" formatted="false">अधिकारी: %s</string>
     <string name="msg_loading">लोडिंग</string>

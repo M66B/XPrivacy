@@ -26,7 +26,8 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Chọn một tài khoản</string>
     <string name="menu_contacts">Chọn một danh bạ</string>
-    <string name="msg_noupdate">Không có phiên bản mới</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s hạn chế bởi XPrivacy</string>
     <string name="msg_licensed" formatted="false">Bản quyền: %s</string>
     <string name="msg_loading">Đang tải</string>

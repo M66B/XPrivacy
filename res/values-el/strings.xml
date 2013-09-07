@@ -26,7 +26,8 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Επιλογή επιτρεπόμενων λογαριασμών</string>
     <string name="menu_contacts">Επιλογή επιτρεπόμενων επαφών</string>
-    <string name="msg_noupdate">Δεν υπάρχουν διαθέσιμες ενημερώσεις</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s περιορίστικε από το XPrivacy</string>
     <string name="msg_licensed" formatted="false">Άδεια για: %s</string>
     <string name="msg_loading">Φόρτωση</string>

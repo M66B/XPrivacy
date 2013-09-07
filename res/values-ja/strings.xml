@@ -26,7 +26,8 @@
     <string name="menu_app_store">Playストア</string>
     <string name="menu_accounts">許可するアカウントを選択</string>
     <string name="menu_contacts">許可する電話帳を選択</string>
-    <string name="msg_noupdate">更新はありません</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s をXPrivacyが制限しました</string>
     <string name="msg_licensed" formatted="false">ライセンス先: %s</string>
     <string name="msg_loading">読み込み中</string>

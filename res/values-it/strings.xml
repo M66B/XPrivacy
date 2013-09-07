@@ -26,7 +26,8 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Seleziona account consentiti</string>
     <string name="menu_contacts">Seleziona contatti consentiti</string>
-    <string name="msg_noupdate">Nessun aggiornamento disponibile</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s limitato da XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licenziato a: %s</string>
     <string name="msg_loading">Caricamento in corso</string>

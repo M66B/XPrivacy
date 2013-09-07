@@ -26,7 +26,8 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Leisti pažymėtas paskyras</string>
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>
-    <string name="msg_noupdate">Atnaujinimas negalimas</string>
+    <string name="msg_new">New</string>
+    <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s apribota XPrivacy</string>
     <string name="msg_licensed" formatted="false">licencija: %s</string>
     <string name="msg_loading">Palaukite...</string>
