@@ -570,6 +570,7 @@ How to get beta releases:
 
 **Next release**
 
+* Auto fix file permissions ([issue](https://github.com/M66B/XPrivacy/issues/627))
 * Added Estonian translation
 * Updated German translation
 * Updated Slovenian translation

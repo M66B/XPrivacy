@@ -544,6 +544,17 @@ public class PrivacyProvider extends ContentProvider {
 		new File(getPrefFileName(preference, uid)).setReadable(true, false);
 	}
 
+	public static void fixFilePermissions() {
+		String packageName = PrivacyManager.class.getPackage().getName();
+		File list[] = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName
+				+ File.separator + "shared_prefs").listFiles();
+		if (list != null)
+			for (File file : list)
+				if (file.getName().startsWith("biz.bokhorst.xprivacy.provider.") && file.getName().endsWith(".xml")
+						&& !file.getName().contains(".usage."))
+					file.setReadable(true, false);
+	}
+
 	private static String getRestrictionPref(String restrictionName) {
 		return String.format("%s.%s", COL_RESTRICTED, restrictionName);
 	}

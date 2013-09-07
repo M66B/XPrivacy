@@ -36,6 +36,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Log load
 		Util.log(null, Log.INFO, String.format("load %s", startupParam.modulePath));
 
+		PrivacyProvider.fixFilePermissions();
+
 		// Account manager
 		hookAll(XAccountManager.getInstances());
 
