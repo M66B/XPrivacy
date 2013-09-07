@@ -571,7 +571,6 @@ Changelog
 * Attempt to fix opening wrong settings from notification
 * Support for randomize at boot per application (no GUI yet)
 * Fetch restrictions for all applications ([issue](https://github.com/M66B/XPrivacy/issues/514))
-* Assume system ready after 150 seconds (was 60 seconds) ([issue](https://github.com/M66B/XPrivacy/issues/627))
 * Added Estonian translation
 * Updated German translation
 * Updated Slovenian translation
