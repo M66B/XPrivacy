@@ -38,7 +38,7 @@
     <string name="msg_random">Juhuslik</string>
     <string name="msg_random_boot">Juhuslikusta pärast käivitamist</string>
     <string name="msg_first"><b>Palju vaeva on nähtud Xprivacy arendamisel ja testimisel,
-kuid on võimata garanteerida, et see töötab igal seadmel ja iga rakendusega.
+kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
 \n\nKasuta ainult omal vastutusel.</b>\n\nSee also the license:</string>
     <string name="restrict_accounts">Kasutajad (Google, Facebook, jne)</string>
     <string name="restrict_browser">Brauser (järjehoidjad/ajalugu)</string>
@@ -46,9 +46,9 @@ kuid on võimata garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="restrict_calling">Helistamine (kõned, SMS, MMS)</string>
     <string name="restrict_clipboard">Lõikelaud</string>
     <string name="restrict_contacts">Kontaktid</string>
-    <string name="restrict_dictionary">Sõnastik (kasutaja)</string>
+    <string name="restrict_dictionary">Kasutaja sõnastik</string>
     <string name="restrict_email">E-mail</string>
-    <string name="restrict_identification">Tuvastamine (seadme)</string>
+    <string name="restrict_identification">Seadme tuvastamine</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Asukoht (täpne/umbkaudne)</string>
     <string name="restrict_media">Meedia (helid, pildid ja videod)</string>
@@ -75,7 +75,7 @@ kuid on võimata garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="settings_mac">MAC aadress</string>
     <string name="settings_ip">IP aadress</string>
     <string name="settings_phone">Telefoninumber</string>
-    <string name="settings_id">Android ID</string>
+    <string name="settings_id">Androidi ID</string>
     <string name="settings_country">Riik</string>
     <string name="settings_operator">Opeeraator</string>
     <string name="settings_subscriber">Abonendi ID</string>
