@@ -46,6 +46,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_clipboard">Prikbord</string>
     <string name="restrict_contacts">Contacten</string>
     <string name="restrict_dictionary">Woordenboek (gebruiker)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Identificatie (apparaat)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Locatie (fijn/grof)</string>

@@ -46,6 +46,7 @@
     <string name="restrict_clipboard">剪贴板</string>
     <string name="restrict_contacts">联系人</string>
     <string name="restrict_dictionary">词典 (用户)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">识别码 (设备)</string>
     <string name="restrict_internet">互联网</string>
     <string name="restrict_location">位置 (精细/粗略)</string>

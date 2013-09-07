@@ -46,6 +46,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Contacts</string>
     <string name="restrict_dictionary">Ordbog (Bruger Difineret)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Identifikation (Enhed)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Plasering (Fin/Grov)</string>

@@ -48,6 +48,7 @@
     <string name="restrict_clipboard">کلیپ برد</string>
     <string name="restrict_contacts">تماس ها</string>
     <string name="restrict_dictionary">واژه نامه (کاربر)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">کد شناسایی (دستگاه)</string>
     <string name="restrict_internet">اینترنت</string>
     <string name="restrict_location">(خوب، بد)</string>

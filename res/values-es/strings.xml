@@ -46,6 +46,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Contactos</string>
     <string name="restrict_dictionary">Diccionario (usuario)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Identificación (dispositivo)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Ubicación (fina/gruesa)</string>

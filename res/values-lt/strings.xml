@@ -46,6 +46,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_clipboard">Iškarpinė</string>
     <string name="restrict_contacts">Kontaktai</string>
     <string name="restrict_dictionary">Žodynas (vartotojo)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Identifikacija (prietaiso)</string>
     <string name="restrict_internet">Internetas</string>
     <string name="restrict_location">Vieta (tiksli/apytikslė)</string>

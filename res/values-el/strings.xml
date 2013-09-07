@@ -46,6 +46,7 @@
     <string name="restrict_clipboard">Πρόχειρο</string>
     <string name="restrict_contacts">Επαφές</string>
     <string name="restrict_dictionary">Λεξικό (χρήστη)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Ταυτότητα (συσκευή)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Τοποθεσία (ακριβής/μερική)</string>

@@ -44,6 +44,7 @@
     <string name="restrict_clipboard">Porta-retalls</string>
     <string name="restrict_contacts">Contactes</string>
     <string name="restrict_dictionary">Diccionari (usuari)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Identificació (dispositiu)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Ubicació (precisa/aproximada)</string>

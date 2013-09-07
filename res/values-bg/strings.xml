@@ -46,6 +46,7 @@
     <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Контакти</string>
     <string name="restrict_dictionary">Речник на потребителя</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Идентификация (устройство)</string>
     <string name="restrict_internet">Интернет</string>
     <string name="restrict_location">Местоположение (точно/приблизително)</string>

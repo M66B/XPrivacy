@@ -46,6 +46,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="restrict_clipboard">Urklipp</string>
     <string name="restrict_contacts">Kontakter</string>
     <string name="restrict_dictionary">Ordlista (användare)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Identifikation (enhet)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Position (exakt/ungefärlig)</string>

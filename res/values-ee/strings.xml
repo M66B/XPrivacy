@@ -46,6 +46,7 @@ kuid on võimata garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="restrict_clipboard">Lõikelaud</string>
     <string name="restrict_contacts">Kontaktid</string>
     <string name="restrict_dictionary">Sõnastik (kasutaja)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Tuvastamine (seadme)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Asukoht (täpne/umbkaudne)</string>

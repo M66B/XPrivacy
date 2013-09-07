@@ -46,6 +46,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_clipboard">Schránka</string>
     <string name="restrict_contacts">Kontakty</string>
     <string name="restrict_dictionary">Slovník (užívateľ)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Identifikácia (zariadenie)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Poloha (presná/približná)</string>

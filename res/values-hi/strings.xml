@@ -46,6 +46,7 @@
     <string name="restrict_clipboard">क्लिपबोर्ड</string>
     <string name="restrict_contacts">संपर्क</string>
     <string name="restrict_dictionary">शब्दकोश (उपयोगकर्ता)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">पहचान (साधन)</string>
     <string name="restrict_internet">इंटरनेट</string>
     <string name="restrict_location">स्थान (स्पस्ट/कच्चा)</string>

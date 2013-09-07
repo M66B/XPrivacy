@@ -45,6 +45,7 @@
     <string name="restrict_clipboard">Pano</string>
     <string name="restrict_contacts">Kişiler</string>
     <string name="restrict_dictionary">Sözlük (kullıcı)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Kimlik (cihaz)</string>
     <string name="restrict_internet">İnternet</string>
     <string name="restrict_location">Konum (hassas/yaklaşık)</string>

@@ -46,6 +46,7 @@
     <string name="restrict_clipboard">الحافظة</string>
     <string name="restrict_contacts">الأسماء</string>
     <string name="restrict_dictionary">القاموس (المستخدم)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">الهوية (الجهاز)</string>
     <string name="restrict_internet">الإنترنت</string>
     <string name="restrict_location">تحديد الموقع (ناعم,خشن)</string>

@@ -46,6 +46,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="restrict_clipboard">Área de transferência</string>
     <string name="restrict_contacts">Contactos</string>
     <string name="restrict_dictionary">Dicionário (usuário)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Identificação (dispositivo)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Localização (boa/vulgar)</string>

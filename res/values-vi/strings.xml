@@ -45,6 +45,7 @@
     <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Danh bạ</string>
     <string name="restrict_dictionary">Từ điển (người dùng)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Định danh (thiết bị)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Vị trí (fine/coarse)</string>

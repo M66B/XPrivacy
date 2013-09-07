@@ -46,6 +46,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="restrict_clipboard">Vágólap</string>
     <string name="restrict_contacts">Névjegyzék</string>
     <string name="restrict_dictionary">Szótár (felhasználó)</string>
+    <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Azonosító (eszköz)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Hely (pontos / hozzávetőleges)</string>
