@@ -1,8 +1,10 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,18 @@ import java.util.concurrent.ThreadFactory;
 
 import javax.xml.parsers.SAXParserFactory;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -29,8 +43,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings.Secure;
@@ -39,8 +56,9 @@ import android.util.Log;
 import android.util.Xml;
 
 public class ActivityShare extends Activity {
-
 	public static final String cFileName = "FileName";
+	public static final String cPackageName = "PackageName";
+	public static final String BASE_URL = "http://updates.faircode.eu/xprivacy";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -60,18 +78,32 @@ public class ActivityShare extends Activity {
 
 		if (Util.hasProLicense(this) != null) {
 			Bundle extras = getIntent().getExtras();
-			String fileName = (extras.containsKey(cFileName) ? extras.getString(cFileName) : getFileName(false));
 
 			// Import
 			if (getIntent().getAction().equals("biz.bokhorst.xprivacy.action.IMPORT")) {
+				String fileName = (extras.containsKey(cFileName) ? extras.getString(cFileName) : getFileName(false));
 				ImportTask importTask = new ImportTask();
 				importTask.executeOnExecutor(mExecutor, new File(fileName));
 			}
 
 			// Export
 			if (getIntent().getAction().equals("biz.bokhorst.xprivacy.action.EXPORT")) {
+				String fileName = (extras.containsKey(cFileName) ? extras.getString(cFileName) : getFileName(false));
 				ExportTask exportTask = new ExportTask();
 				exportTask.executeOnExecutor(mExecutor, new File(fileName));
+			}
+
+			// Fetch
+			if (getIntent().getAction().equals("biz.bokhorst.xprivacy.action.FETCH")) {
+				if (extras != null && extras.containsKey(cPackageName)) {
+					FetchTask fetchTask = new FetchTask();
+					fetchTask.executeOnExecutor(mExecutor, extras.getString(cPackageName));
+				} else {
+					for (ApplicationInfo aInfo : getPackageManager().getInstalledApplications(0)) {
+						FetchTask fetchTask = new FetchTask();
+						fetchTask.executeOnExecutor(mExecutor, aInfo.packageName);
+					}
+				}
 			}
 		}
 	}
@@ -372,6 +404,138 @@ public class ActivityShare extends Activity {
 			public boolean isRestricted() {
 				return mRestricted;
 			}
+		}
+	}
+
+	private class FetchTask extends AsyncTask<String, String, Object> {
+		private ApplicationInfoEx mAppInfo;
+		private final static int NOTIFY_ID = 3;
+
+		@Override
+		protected Object doInBackground(String... params) {
+			try {
+				// Get data
+				publishProgress(params[0]);
+				mAppInfo = new ApplicationInfoEx(ActivityShare.this, params[0]);
+				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
+				String[] license = Util.getLicense();
+
+				// Encode package
+				JSONObject jRoot = new JSONObject();
+				jRoot.put("protocol_version", 3);
+				jRoot.put("android_id", android_id);
+				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
+				jRoot.put("xprivacy_version", pInfo.versionCode);
+				jRoot.put("application_name", mAppInfo.getFirstApplicationName());
+				jRoot.put("package_name", mAppInfo.getPackageName());
+				jRoot.put("package_version", mAppInfo.getVersion());
+				jRoot.put("email", license[1]);
+				jRoot.put("signature", license[2]);
+
+				// Fetch
+				int TIMEOUT_MILLISEC = 45000; // 45 seconds
+				HttpParams httpParams = new BasicHttpParams();
+				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpClient httpclient = new DefaultHttpClient(httpParams);
+
+				HttpPost httpost = new HttpPost(BASE_URL + "?format=json&action=fetch");
+				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+				httpost.setHeader("Accept", "application/json");
+				httpost.setHeader("Content-type", "application/json");
+				HttpResponse response = httpclient.execute(httpost);
+				StatusLine statusLine = response.getStatusLine();
+
+				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+					// Succeeded
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					response.getEntity().writeTo(out);
+					out.close();
+					return new JSONObject(out.toString("UTF-8"));
+				} else {
+					// Failed
+					response.getEntity().getContent().close();
+					throw new IOException(statusLine.getReasonPhrase());
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return ex;
+			}
+		}
+
+		@Override
+		protected void onProgressUpdate(String... values) {
+			notify(values[0], true);
+			super.onProgressUpdate(values);
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			try {
+				if (result.getClass().equals(JSONObject.class)) {
+					JSONObject status = (JSONObject) result;
+					if (status.getBoolean("ok")) {
+						JSONArray settings = status.getJSONArray("settings");
+						if (settings.length() > 0) {
+							// Delete existing restrictions
+							PrivacyManager.deleteRestrictions(ActivityShare.this, mAppInfo.getUid());
+
+							// Set fetched restrictions
+							for (int i = 0; i < settings.length(); i++) {
+								JSONObject entry = settings.getJSONObject(i);
+								String restrictionName = entry.getString("restriction");
+								String methodName = entry.has("method") ? entry.getString("method") : null;
+								int voted_restricted = entry.getInt("restricted");
+								int voted_not_restricted = entry.getInt("not_restricted");
+								boolean restricted = (voted_restricted > voted_not_restricted);
+								if (methodName == null || restricted)
+									PrivacyManager.setRestricted(null, ActivityShare.this, mAppInfo.getUid(),
+											restrictionName, methodName, restricted);
+							}
+						} else
+							Util.log(null, Log.INFO, "No restrictions available");
+						notify(getString(R.string.msg_done), false);
+					} else
+						throw new Exception(status.getString("error"));
+				} else
+					throw (Throwable) result;
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				notify(ex.toString(), false);
+			}
+
+			Intent intent = new Intent();
+			setResult(0, intent);
+			finish();
+			super.onPostExecute(result);
+		}
+
+		private void notify(String text, boolean ongoing) {
+			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityShare.this);
+			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+			notificationBuilder.setContentTitle(getString(R.string.menu_fetch));
+			notificationBuilder.setContentText(text);
+			notificationBuilder.setWhen(System.currentTimeMillis());
+			if (ongoing)
+				notificationBuilder.setOngoing(true);
+			else {
+				// Build result intent
+				Intent resultIntent = new Intent(ActivityShare.this, ActivityMain.class);
+				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+				// Build pending intent
+				PendingIntent pendingIntent = PendingIntent.getActivity(ActivityShare.this, NOTIFY_ID, resultIntent,
+						PendingIntent.FLAG_UPDATE_CURRENT);
+
+				notificationBuilder.setAutoCancel(true);
+				notificationBuilder.setContentIntent(pendingIntent);
+			}
+			Notification notification = notificationBuilder.build();
+
+			NotificationManager notificationManager = (NotificationManager) ActivityShare.this
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.notify(NOTIFY_ID, notification);
 		}
 	}
 

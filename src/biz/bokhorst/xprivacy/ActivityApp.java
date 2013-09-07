@@ -52,7 +52,6 @@ import android.provider.Settings.Secure;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -79,7 +78,7 @@ public class ActivityApp extends Activity {
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
 
-	public static final String BASE_URL = "http://updates.faircode.eu/xprivacy";
+	private static final int ACTIVITY_FETCH = 1;
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -128,8 +127,9 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(View view) {
 				Intent infoIntent = new Intent(Intent.ACTION_VIEW);
-				infoIntent.setData(Uri.parse(String.format(BASE_URL + "?application_name=%s&package_name=%s",
-						mAppInfo.getFirstApplicationName(), mAppInfo.getPackageName())));
+				infoIntent.setData(Uri.parse(String.format(ActivityShare.BASE_URL
+						+ "?application_name=%s&package_name=%s", mAppInfo.getFirstApplicationName(),
+						mAppInfo.getPackageName())));
 				startActivity(infoIntent);
 			}
 		});
@@ -294,6 +294,14 @@ public class ActivityApp extends Activity {
 		}
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == ACTIVITY_FETCH)
+			if (mPrivacyListAdapter != null)
+				mPrivacyListAdapter.notifyDataSetChanged();
+	}
+
 	// Options
 
 	private void optionHelp() {
@@ -371,9 +379,9 @@ public class ActivityApp extends Activity {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
 			startActivity(browserIntent);
 		} else {
-			// Initiate fetch
-			FetchTask fetchTask = new FetchTask();
-			fetchTask.executeOnExecutor(mExecutor, mAppInfo);
+			Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
+			intent.putExtra(ActivityShare.cPackageName, mAppInfo.getPackageName());
+			startActivityForResult(intent, ACTIVITY_FETCH);
 		}
 	}
 
@@ -613,7 +621,7 @@ public class ActivityApp extends Activity {
 				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 				HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-				HttpPost httpost = new HttpPost(BASE_URL + "?format=json&action=submit");
+				HttpPost httpost = new HttpPost(ActivityShare.BASE_URL + "?format=json&action=submit");
 				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 				httpost.setHeader("Accept", "application/json");
 				httpost.setHeader("Content-type", "application/json");
@@ -669,101 +677,6 @@ public class ActivityApp extends Activity {
 			NotificationManager notificationManager = (NotificationManager) ActivityApp.this
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.notify(NOTIFY_ID, notification);
-		}
-	}
-
-	private class FetchTask extends AsyncTask<ApplicationInfoEx, Object, Object> {
-		private ApplicationInfoEx mAppInfo;
-
-		@Override
-		protected Object doInBackground(ApplicationInfoEx... params) {
-			try {
-				// Get data
-				mAppInfo = params[0];
-				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-				String android_id = Secure.getString(ActivityApp.this.getContentResolver(), Secure.ANDROID_ID);
-				String[] license = Util.getLicense();
-
-				// Encode package
-				JSONObject jRoot = new JSONObject();
-				jRoot.put("protocol_version", 3);
-				jRoot.put("android_id", android_id);
-				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
-				jRoot.put("xprivacy_version", pInfo.versionCode);
-				jRoot.put("application_name", mAppInfo.getFirstApplicationName());
-				jRoot.put("package_name", mAppInfo.getPackageName());
-				jRoot.put("package_version", mAppInfo.getVersion());
-				jRoot.put("email", license[1]);
-				jRoot.put("signature", license[2]);
-
-				// Fetch
-				int TIMEOUT_MILLISEC = 45000; // 45 seconds
-				HttpParams httpParams = new BasicHttpParams();
-				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
-				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
-				HttpClient httpclient = new DefaultHttpClient(httpParams);
-
-				HttpPost httpost = new HttpPost(BASE_URL + "?format=json&action=fetch");
-				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
-				httpost.setHeader("Accept", "application/json");
-				httpost.setHeader("Content-type", "application/json");
-				HttpResponse response = httpclient.execute(httpost);
-				StatusLine statusLine = response.getStatusLine();
-
-				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-					// Succeeded
-					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					response.getEntity().writeTo(out);
-					out.close();
-					return new JSONObject(out.toString("UTF-8"));
-				} else {
-					// Failed
-					response.getEntity().getContent().close();
-					throw new IOException(statusLine.getReasonPhrase());
-				}
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				return ex;
-			}
-		}
-
-		@Override
-		protected void onPostExecute(Object result) {
-			try {
-				if (result.getClass().equals(JSONObject.class)) {
-					JSONObject status = (JSONObject) result;
-					if (status.getBoolean("ok")) {
-						JSONArray settings = status.getJSONArray("settings");
-						if (settings.length() > 0) {
-							// Delete existing restrictions
-							PrivacyManager.deleteRestrictions(ActivityApp.this, mAppInfo.getUid());
-
-							// Set fetched restrictions
-							for (int i = 0; i < settings.length(); i++) {
-								JSONObject entry = settings.getJSONObject(i);
-								String restrictionName = entry.getString("restriction");
-								String methodName = entry.has("method") ? entry.getString("method") : null;
-								int voted_restricted = entry.getInt("restricted");
-								int voted_not_restricted = entry.getInt("not_restricted");
-								boolean restricted = (voted_restricted > voted_not_restricted);
-								if (methodName == null || restricted)
-									PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(),
-											restrictionName, methodName, restricted);
-								if (mPrivacyListAdapter != null)
-									mPrivacyListAdapter.notifyDataSetChanged();
-							}
-						} else
-							Util.log(null, Log.INFO, "No restrictions available");
-					} else
-						throw new Exception(status.getString("error"));
-				} else
-					throw (Throwable) result;
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
-				toast.show();
-			}
-			super.onPostExecute(result);
 		}
 	}
 

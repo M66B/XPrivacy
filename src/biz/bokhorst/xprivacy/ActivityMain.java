@@ -72,6 +72,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int ACTIVITY_EXPORT = 1;
 	private static final int ACTIVITY_IMPORT = 2;
 	private static final int ACTIVITY_IMPORT_SELECT = 3;
+	private static final int ACTIVITY_FETCH = 4;
 
 	private static final int LICENSED = 0x0100;
 	private static final int NOT_LICENSED = 0x0231;
@@ -392,6 +393,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
+		} else if (requestCode == ACTIVITY_FETCH) {
+			// Fetched: recreate UI
+			ActivityMain.this.recreate();
 		}
 	}
 
@@ -441,6 +445,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				return true;
 			case R.id.menu_import:
 				optionImport();
+				return true;
+			case R.id.menu_fetch:
+				optionFetch();
 				return true;
 			case R.id.menu_theme:
 				optionSwitchTheme();
@@ -812,6 +819,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Intent intent = new Intent("biz.bokhorst.xprivacy.action.IMPORT");
 			intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(false));
 			startActivityForResult(intent, ACTIVITY_IMPORT);
+		}
+	}
+
+	private void optionFetch() {
+		if (Util.getLicense() == null) {
+			// Redirect to pro page
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
+			startActivity(browserIntent);
+		} else {
+			Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
+			startActivityForResult(intent, ACTIVITY_FETCH);
 		}
 	}
 

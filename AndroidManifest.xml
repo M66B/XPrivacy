@@ -61,6 +61,7 @@
             <intent-filter>
                 <action android:name="biz.bokhorst.xprivacy.action.IMPORT" />
                 <action android:name="biz.bokhorst.xprivacy.action.EXPORT" />
+                <action android:name="biz.bokhorst.xprivacy.action.FETCH" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

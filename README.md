@@ -570,6 +570,7 @@ Changelog
 * Display new/update in notification ([issue](https://github.com/M66B/XPrivacy/issues/631))
 * Attempt to fix opening wrong settings from notification
 * Support for randomize at boot per application (no GUI yet)
+* Fetch restrictions for all applications ([issue](https://github.com/M66B/XPrivacy/issues/514))
 * Added Estonian translation
 * Updated German translation
 * Updated Slovenian translation

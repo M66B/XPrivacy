@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-	<item android:id="@+id/menu_help"
-          android:title="@string/menu_help"
-          android:icon="?attr/icon_help"
-          android:showAsAction="always" />
+    <item
+        android:id="@+id/menu_help"
+        android:icon="?attr/icon_help"
+        android:showAsAction="always"
+        android:title="@string/menu_help"/>
     <item
         android:id="@+id/menu_all"
         android:title="@string/menu_all"/>
@@ -17,6 +18,10 @@
     <item
         android:id="@+id/menu_import"
         android:title="@string/menu_import"/>
+    <item
+        android:id="@+id/menu_fetch"
+        android:title="@string/menu_fetch"
+        android:visible="true"/>
     <item
         android:id="@+id/menu_pro"
         android:title="@string/menu_pro"/>
