@@ -1,15 +1,11 @@
 <resources>
 
-    <!-- Translators: do not include texts with translatable="false" -->
-    <string name="app_name" translatable="false">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Xposed raamistik versioon %d+ ei ole installeeritud</string>
-    <string name="app_notenabled">XPrivacy ei ole aktiveeritud Xposed raamistiku installeerias/string>
-    <string name="app_wrongandroid">See rakendus on ainult android 4.0+'le </string>
+    <string name="app_notenabled">XPrivacy ei ole aktiveeritud Xposed raamistiku installeerias</string>
+    <string name="app_wrongandroid">See rakendus on ainult android 4.0+\'le </string>
     <string name="app_version" formatted="false">XPrivacy versioon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed raamistiku versioon: %d</string>
     <string name="app_copyright">Autoriõigus \u00A9 2013 by M. Bokhorst (M66B)</string>
-    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#xprivacy</string>
-    <string name="app_support" translatable="false">http://forum.xda-developers.com/showthread.php?t=2320783</string>
     <string name="menu_usage">Kasutus</string>
     <string name="menu_refresh">Värskenda</string>
     <string name="menu_settings">Seaded</string>
@@ -50,14 +46,12 @@ kuid on võimata garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="restrict_clipboard">Lõikelaud</string>
     <string name="restrict_contacts">Kontaktid</string>
     <string name="restrict_dictionary">Sõnastik (kasutaja)</string>
-    <string name="restrict_email" translatable="false">E-mail</string>
     <string name="restrict_identification">Tuvastamine (seadme)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Asukoht (täpne/umbkaudne)</string>
     <string name="restrict_media">Meedia (helid, pildid ja videod)</string>
     <string name="restrict_messages">Sõnumid (SMS, MMS)</string>
     <string name="restrict_network">Võrk (aadressid)</string>
-    <string name="restrict_nfc" translatable="false">NFC</string>
     <string name="restrict_notifications">Teated</string>
     <string name="restrict_phone">Telefon (ID, numbrid, kõned)</string>
     <string name="restrict_storage">Mälu (Meedia, SD kaart)</string>
@@ -78,15 +72,10 @@ kuid on võimata garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="settings_lon">Pikkuskraad</string>
     <string name="settings_mac">MAC aadress</string>
     <string name="settings_ip">IP aadress</string>
-    <string name="settings_imei" translatable="false">IMEI</string>
     <string name="settings_phone">Telefoninumber</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_gsfid" translatable="false">GSF ID</string>
-    <string name="settings_mcc" translatable="false">MCC</string>
-    <string name="settings_mnc" translatable="false">MNC</string>
     <string name="settings_country">Riik</string>
     <string name="settings_operator">Opeeraator</string>
-    <string name="settings_iccid" translatable="false">ICC ID</string>
     <string name="settings_subscriber">Abonendi ID</string>
     <string name="settings_ua">Kasutaja agent</string>
     <string name="settings_fpermission">Filtreeri loa järgi</string>
@@ -99,11 +88,10 @@ kuid on võimata garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="filter_app_user">Kasutaja rakendus</string>
     <string name="filter_app_both">Kõik rakendused</string>
     <string name="help_application">Rakendus</string>
-    <string name="help_internet">on interneti kasutamise luba/string>
+    <string name="help_internet">on interneti kasutamise luba</string>
     <string name="help_granted">on Android luba</string>
     <string name="help_used">on kasutanud seda andmeside tüüpi</string>
     <string name="help_frozen">on välja lülitatud</string>
     <string name="help_dangerous">On ohtlik</string>
-    <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
 
 </resources>
