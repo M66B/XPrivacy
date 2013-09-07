@@ -99,10 +99,11 @@ public class ActivityShare extends Activity {
 					FetchTask fetchTask = new FetchTask();
 					fetchTask.executeOnExecutor(mExecutor, extras.getString(cPackageName));
 				} else {
-					for (ApplicationInfo aInfo : getPackageManager().getInstalledApplications(0)) {
-						FetchTask fetchTask = new FetchTask();
-						fetchTask.executeOnExecutor(mExecutor, aInfo.packageName);
-					}
+					for (ApplicationInfo aInfo : getPackageManager().getInstalledApplications(0))
+						if ((aInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) == 0) {
+							FetchTask fetchTask = new FetchTask();
+							fetchTask.executeOnExecutor(mExecutor, aInfo.packageName);
+						}
 				}
 			}
 		}
