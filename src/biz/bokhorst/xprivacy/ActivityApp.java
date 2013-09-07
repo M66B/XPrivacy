@@ -72,11 +72,9 @@ import android.widget.Toast;
 public class ActivityApp extends Activity {
 
 	private int mThemeId;
-	private boolean mNotified;
-	private ApplicationInfoEx mAppInfo;
+	private ApplicationInfoEx mAppInfo = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 
-	public static final String cNotified = "Notified";
 	public static final String cPackageName = "PackageName";
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
@@ -107,12 +105,18 @@ public class ActivityApp extends Activity {
 
 		// Get arguments
 		Bundle extras = getIntent().getExtras();
-		mNotified = (extras.containsKey(cNotified) ? extras.getBoolean(cNotified) : false);
+		String packageName = extras.getString(cPackageName);
 		String restrictionName = (extras.containsKey(cRestrictionName) ? extras.getString(cRestrictionName) : null);
 		String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
 
+		// Check if new package
+		if (mAppInfo != null && !mAppInfo.getPackageName().equals(packageName)) {
+			recreate();
+			return;
+		}
+
 		// Get app info
-		mAppInfo = new ApplicationInfoEx(this, extras.getString(cPackageName));
+		mAppInfo = new ApplicationInfoEx(this, packageName);
 		if (!mAppInfo.getIsInstalled()) {
 			finish();
 			return;
@@ -209,13 +213,6 @@ public class ActivityApp extends Activity {
 		super.onResume();
 		if (mPrivacyListAdapter != null)
 			mPrivacyListAdapter.notifyDataSetChanged();
-	}
-
-	@Override
-	protected void onStop() {
-		if (mNotified)
-			finish();
-		super.onStop();
 	}
 
 	@Override
