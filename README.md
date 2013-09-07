@@ -573,7 +573,7 @@ How to get beta releases:
 * Auto fix file permissions ([issue](https://github.com/M66B/XPrivacy/issues/627))
 * Display new/updated in notification ([issue](https://github.com/M66B/XPrivacy/issues/631))
 * Attempt to fix opening wrong settings from notification
-* Support for randomize at boot per application (no UID yet)
+* Support for randomize at boot per application (no GUI yet)
 * Added Estonian translation
 * Updated German translation
 * Updated Slovenian translation
