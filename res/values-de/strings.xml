@@ -46,7 +46,7 @@
     <string name="restrict_clipboard">Zwischenablage</string>
     <string name="restrict_contacts">Kontakte</string>
     <string name="restrict_dictionary">Wörterbuch (Benutzer)</string>
-    <string name="restrict_email">E-mail</string>
+    <string name="restrict_email">E-Mail</string>
     <string name="restrict_identification">Identifikation (Gerät)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Standort (genau/ungenau)</string>
