@@ -6,33 +6,16 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.support.v4.app.NotificationCompat;
 
 public class BootReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent bootIntent) {
-		// Randomize
-		boolean random = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingRandom, true, false);
-		if (random) {
-			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingLatitude,
-					PrivacyManager.getRandomProp("LAT"));
-			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingLongitude,
-					PrivacyManager.getRandomProp("LON"));
-			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingSerial,
-					PrivacyManager.getRandomProp("SERIAL"));
-			PrivacyManager
-					.setSetting(null, context, 0, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC"));
-			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingPhone,
-					PrivacyManager.getRandomProp("PHONE"));
-			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingImei,
-					PrivacyManager.getRandomProp("IMEI"));
-			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingId,
-					PrivacyManager.getRandomProp("ANDROID_ID"));
-			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingGsfId,
-					PrivacyManager.getRandomProp("GSF_ID"));
-			PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingCountry,
-					PrivacyManager.getRandomProp("ISO3166"));
-		}
+		// Randomize settings
+		randomizeSettings(context, 0);
+		for (ApplicationInfo aInfo : context.getPackageManager().getInstalledApplications(0))
+			randomizeSettings(context, aInfo.uid);
 
 		// Check if Xposed enabled
 		if (Util.isXposedEnabled())
@@ -60,6 +43,30 @@ public class BootReceiver extends BroadcastReceiver {
 			NotificationManager notificationManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.notify(0, notification);
+		}
+	}
+
+	private void randomizeSettings(Context context, int uid) {
+		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, true, false);
+		if (random) {
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude,
+					PrivacyManager.getRandomProp("LAT"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude,
+					PrivacyManager.getRandomProp("LON"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSerial,
+					PrivacyManager.getRandomProp("SERIAL"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMac,
+					PrivacyManager.getRandomProp("MAC"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingPhone,
+					PrivacyManager.getRandomProp("PHONE"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingImei,
+					PrivacyManager.getRandomProp("IMEI"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingId,
+					PrivacyManager.getRandomProp("ANDROID_ID"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingGsfId,
+					PrivacyManager.getRandomProp("GSF_ID"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingCountry,
+					PrivacyManager.getRandomProp("ISO3166"));
 		}
 	}
 }
