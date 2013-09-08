@@ -566,11 +566,15 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.9.13 BETA!**
+
 * Auto fix file permissions ([issue](https://github.com/M66B/XPrivacy/issues/627))
 * Display new/update in notification ([issue](https://github.com/M66B/XPrivacy/issues/631))
 * Attempt to fix opening wrong settings from notification
 * Support for randomize at boot per application (no GUI yet)
-* Fetch restrictions for all applications ([issue](https://github.com/M66B/XPrivacy/issues/514))
+* Fetch restrictions for all user applications ([issue](https://github.com/M66B/XPrivacy/issues/514))
 * Added Estonian translation
 * Updated Arabic translation
 * Updated German translation
