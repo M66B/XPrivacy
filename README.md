@@ -572,6 +572,7 @@ Changelog
 * Support for randomize at boot per application (no GUI yet)
 * Fetch restrictions for all applications ([issue](https://github.com/M66B/XPrivacy/issues/514))
 * Added Estonian translation
+* Updated Arabic translation
 * Updated German translation
 * Updated Slovenian translation
 

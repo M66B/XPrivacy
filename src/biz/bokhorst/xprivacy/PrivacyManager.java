@@ -269,7 +269,7 @@ public class PrivacyManager {
 				}
 
 			// Do not use context before system ready
-			if (!XActivityManagerService.isSystemReady(true))
+			if (uid == cAndroidUid && !XActivityManagerService.isSystemReady())
 				context = null;
 
 			// Check if restricted

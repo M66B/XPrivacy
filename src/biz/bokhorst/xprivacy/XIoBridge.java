@@ -37,8 +37,7 @@ public class XIoBridge extends XHook {
 			String fileName = (String) param.args[0];
 			if (fileName != null && fileName.startsWith(mFileName)) {
 				// Zygote, Android
-				if (Process.myUid() <= 0 || Process.myUid() == PrivacyManager.cAndroidUid
-						|| !XActivityManagerService.isSystemReady(false))
+				if (Process.myUid() <= 0 || Process.myUid() == PrivacyManager.cAndroidUid)
 					return;
 
 				// /proc

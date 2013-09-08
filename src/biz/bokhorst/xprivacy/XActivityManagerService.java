@@ -14,7 +14,7 @@ public class XActivityManagerService extends XHook {
 	private static boolean mSystemReady = false;
 	private static long mSystemReadyAt = 0;
 
-	private static final long cSystemReadyDelay = 60 * 1000;
+	private static final long cSystemReadyDelay = 90 * 1000;
 
 	protected XActivityManagerService(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);
@@ -46,7 +46,7 @@ public class XActivityManagerService extends XHook {
 		Util.log(this, Log.WARN, "System ready");
 	}
 
-	public static boolean isSystemReady(boolean wait) {
-		return (mSystemReady ? SystemClock.uptimeMillis() - mSystemReadyAt > (wait ? cSystemReadyDelay : 0) : false);
+	public static boolean isSystemReady() {
+		return (mSystemReady ? SystemClock.uptimeMillis() - mSystemReadyAt > cSystemReadyDelay : false);
 	}
 }

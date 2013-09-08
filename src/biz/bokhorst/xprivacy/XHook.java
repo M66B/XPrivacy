@@ -5,7 +5,6 @@ import android.app.AndroidAppHelper;
 import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Process;
 import android.util.Log;
 import android.widget.Toast;
 
