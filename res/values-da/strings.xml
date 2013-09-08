@@ -1,99 +1,97 @@
 <resources>
 
     <string name="app_notxposed" formatted="false">Xposed framework version %d+ er ikke installeret</string>
-    <string name="app_notenabled">XPrivacy er ikke aktiveret i XPosed Installer</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_notenabled">XPrivacy er ikke aktiveret i Xposed installer</string>
+    <string name="app_wrongandroid">Kun til Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy version: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013 af M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Usage</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="app_copyright">Ophavsret \u00A9 2013 M. Bokhorst (M66B)</string>
+    <string name="menu_usage">Brug</string>
+    <string name="menu_refresh">Opdatér</string>
     <string name="menu_settings">Indstillinger</string>
-    <string name="menu_template">Template</string>
-    <string name="menu_report">Rapoter fejl</string>
-    <string name="menu_export">Ekspoter</string>
-    <string name="menu_import">Importer</string>
-    <string name="menu_submit">Submit restrictions</string>
-    <string name="menu_fetch">Fetch restrictions</string>
-    <string name="menu_theme">Skift Tema</string>
-    <string name="menu_pro">Pro version</string>
+    <string name="menu_template">Skabelon</string>
+    <string name="menu_report">Rapportér problem</string>
+    <string name="menu_export">Eksportér</string>
+    <string name="menu_import">Importér</string>
+    <string name="menu_submit">Angiv restriktioner</string>
+    <string name="menu_fetch">Hent restriktioner</string>
+    <string name="menu_theme">Skift tema</string>
+    <string name="menu_pro">Pro-version</string>
     <string name="menu_about">Om</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Hjælp</string>
     <string name="menu_all">Alle</string>
-    <string name="menu_clear">Clear</string>
-    <string name="menu_app_launch">Start</string>
-    <string name="menu_app_settings">Indstillinger</string>
+    <string name="menu_clear">Ryd</string>
+    <string name="menu_app_launch">Kør</string>
+    <string name="menu_app_settings">App-indstillinger</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Vælg tilladte konti</string>
-    <string name="menu_contacts">Vælg tilladte kontakter</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s begrænset af XPrivacy</string>
-    <string name="msg_licensed" formatted="false">Licenseret til: %s</string>
-    <string name="msg_loading">Loader</string>
-    <string name="msg_edit">Klik på program ikonet for at redigere restriktioner</string>
+    <string name="menu_accounts">Vælg konti som skal tillades</string>
+    <string name="menu_contacts">Vælg kontakter som skal tillades</string>
+    <string name="msg_new">Ny</string>
+    <string name="msg_update">Opdatér</string>
+    <string name="msg_restricted" formatted="false">%s blokeret af XPrivacy</string>
+    <string name="msg_licensed" formatted="false">Givet i licens til: %s</string>
+    <string name="msg_loading">Indlæser</string>
+    <string name="msg_edit">Klik på app-ikonet for at redigere alle restriktioner</string>
     <string name="msg_sure">Er du sikker?</string>
-    <string name="msg_done">Færdig</string>
-    <string name="msg_reboot">Reboot required</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
-    <string name="restrict_accounts">Konti (Google, Facebook, etc)</string>
-    <string name="restrict_browser">Browser (Bogmærker/Historie)</string>
-    <string name="restrict_calendar">Kalendar</string>
-    <string name="restrict_calling">Komunikation (Telefon, SMS, MMS)</string>
-    <string name="restrict_clipboard">Clipboard</string>
-    <string name="restrict_contacts">Contacts</string>
-    <string name="restrict_dictionary">Ordbog (Bruger Difineret)</string>
+    <string name="msg_done">Udført</string>
+    <string name="msg_reboot">Genstart nødvendig</string>
+    <string name="msg_random">Indlæs tilfældige værdier</string>
+    <string name="msg_random_boot">Indlæs tilfældige værdier ved boot</string>
+    <string name="msg_first"><b>XPrivacy er grundigt udviklet og testet, dog er det umuligt at garantere, at appen fungerer fejlfrit på alle enheder og for alle apps.\n\nBrug af denne app foregår udelukkende på egen risiko.</b>\n\nSe også licensen:</string>
+    <string name="restrict_accounts">Konti (Google, Facebook, osv.)</string>
+    <string name="restrict_browser">Browser (bogmærker/historik)</string>
+    <string name="restrict_calendar">Kalender</string>
+    <string name="restrict_calling">Opkald (telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard">Udklipsholder</string>
+    <string name="restrict_contacts">Kontakter</string>
+    <string name="restrict_dictionary">Ordbog (bruger)</string>
     <string name="restrict_email">E-mail</string>
-    <string name="restrict_identification">Identifikation (Enhed)</string>
+    <string name="restrict_identification">Identifikation (enhed)</string>
     <string name="restrict_internet">Internet</string>
-    <string name="restrict_location">Plasering (Fin/Grov)</string>
-    <string name="restrict_media">Medie (Audio, Photo, Video)</string>
+    <string name="restrict_location">Position (fin/grov)</string>
+    <string name="restrict_media">Medier (lyd, foto, video)</string>
     <string name="restrict_messages">Beskeder (SMS, MMS)</string>
-    <string name="restrict_network">Netværk (Adresser)</string>
-    <string name="restrict_notifications">Notifications</string>
-    <string name="restrict_phone">Telefon (ID, Numre, Opkald)</string>
-    <string name="restrict_storage">Opbevaring (Medier, SD-Kort)</string>
-    <string name="restrict_shell">Shell (Kommandoer, Administrator)</string>
-    <string name="restrict_system">System (Installerede Programmer)</string>
-    <string name="restrict_view">View (Browser)</string>
+    <string name="restrict_network">Netværk (adresser)</string>
+    <string name="restrict_notifications">Meddelelser</string>
+    <string name="restrict_phone">Telefon (ID, numre, opkald)</string>
+    <string name="restrict_storage">Hukommelse (medier, SD-kort)</string>
+    <string name="restrict_shell">Shell (kommandoer, superbruger)</string>
+    <string name="restrict_system">System (installerede apps)</string>
+    <string name="restrict_view">Vis (browser)</string>
     <string name="title_category">Kategori:</string>
-    <string name="title_restrict">Afkryds for at begrænse:</string>
-    <string name="title_nofilter">No active filter</string>
+    <string name="title_restrict">Markér for at blokere:</string>
+    <string name="title_nofilter">Intet aktivt filter</string>
 
     <plurals name="title_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+        <item quantity="one">1 aktivt filter</item>
+        <item quantity="other">%d aktive filtre</item>
     </plurals>
 
-    <string name="settings_serial">Serial#</string>
-    <string name="settings_lat">Højdegrad</string>
+    <string name="settings_serial">Serienummer</string>
+    <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Længdegrad</string>
-    <string name="settings_mac">MAC adresse</string>
-    <string name="settings_ip">IP address</string>
-    <string name="settings_phone">Telefon Nummer</string>
-    <string name="settings_id">Android ID</string>
+    <string name="settings_mac">MAC-adresse</string>
+    <string name="settings_ip">IP-adresse</string>
+    <string name="settings_phone">Telefonnummer</string>
+    <string name="settings_id">Android-ID</string>
     <string name="settings_country">Land</string>
-    <string name="settings_operator">Operator</string>
-    <string name="settings_subscriber">Abonnent ID</string>
+    <string name="settings_operator">Operatør</string>
+    <string name="settings_subscriber">Abonnent-ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_fpermission">Filtrer efter Restriktioner</string>
-    <string name="settings_fapplication">Filter by application type</string>
-    <string name="settings_log">Debug log (requires restart)</string>
-    <string name="filter_used">Filter on data usage</string>
-    <string name="filter_internet">Filter on internet access</string>
-    <string name="filter_restricted">Filter on restricted</string>
-    <string name="filter_app_sys">System application</string>
-    <string name="filter_app_user">User application</string>
-    <string name="filter_app_both">All applications</string>
-    <string name="help_application">Program</string>
-    <string name="help_internet">har internet tilladelse</string>
-    <string name="help_granted">har Android tilladelse</string>
-    <string name="help_used">har benyttet denne data type</string>
-    <string name="help_frozen">is disabled</string>
-    <string name="help_dangerous">is dangerous</string>
+    <string name="settings_fpermission">Filtrér efter tilladelse</string>
+    <string name="settings_fapplication">Filtrér efter app-type</string>
+    <string name="settings_log">Debug-log (kræver genstart)</string>
+    <string name="filter_used">Filtrér efter brug af data</string>
+    <string name="filter_internet">Filtrér efter internettilladelse</string>
+    <string name="filter_restricted">Filtrér efter restriktioner</string>
+    <string name="filter_app_sys">System-app</string>
+    <string name="filter_app_user">Bruger-app</string>
+    <string name="filter_app_both">Alle apps</string>
+    <string name="help_application">App</string>
+    <string name="help_internet">har internettilladelse</string>
+    <string name="help_granted">har Android-tilladelse</string>
+    <string name="help_used">har benyttet denne type data</string>
+    <string name="help_frozen">er deaktiveret</string>
+    <string name="help_dangerous">er farlig</string>
 
 </resources>
