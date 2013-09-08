@@ -828,8 +828,25 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
 			startActivity(browserIntent);
 		} else {
-			Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
-			startActivityForResult(intent, ACTIVITY_FETCH);
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.app_name));
+			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
+					startActivityForResult(intent, ACTIVITY_FETCH);
+				}
+			});
+			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
 		}
 	}
 
