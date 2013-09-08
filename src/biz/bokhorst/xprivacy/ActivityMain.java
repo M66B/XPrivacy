@@ -358,6 +358,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				if (code > 0) {
 					Util.setPro(true);
 					invalidateOptionsMenu();
+					Toast toast = Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG);
+					toast.show();
 				} else if (reason == RETRY) {
 					Util.setPro(false);
 					new Handler().postDelayed(new Runnable() {

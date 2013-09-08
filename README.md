@@ -566,7 +566,8 @@ Changelog
 
 **Next release**
 
-* ...
+* Removed popup for pro license (not enabler)
+* Updated Slovak translation
 
 **Version 1.9.13 BETA!**
 
