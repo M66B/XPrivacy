@@ -3,9 +3,9 @@
     <string name="app_notxposed" formatted="false">La version %d+ de l\'environnement Xposed n\'est pas installée</string>
     <string name="app_notenabled">XPrivacy n\'est pas activé dans l\'installateur Xposed</string>
     <string name="app_wrongandroid">Uniquement pour Android 4.0 et ultérieur</string>
-    <string name="app_version" formatted="false">Version XPrivacy: %s (%d)</string>
+    <string name="app_version" formatted="false">Version XPrivacy : %s (%d)</string>
     <string name="app_xversion" formatted="false">Version de l\'environnement Xposed : %d</string>
-    <string name="app_copyright">Droits d\'auteur: M. Bokhorst (M66B) \u00A9 2013 </string>
+    <string name="app_copyright">Droits d\'auteur : M. Bokhorst (M66B) \u00A9 2013 </string>
     <string name="menu_usage">Usage</string>
     <string name="menu_refresh">Rafraîchir</string>
     <string name="menu_settings">Paramètres</string>
@@ -26,10 +26,10 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Choisir les comptes à autoriser</string>
     <string name="menu_contacts">Choisir les contacts à autoriser</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="msg_new">Nouv. :</string>
+    <string name="msg_update">MàJ :</string>
     <string name="msg_restricted" formatted="false">%s restreint par XPrivacy</string>
-    <string name="msg_licensed" formatted="false">Autorisé à: %s</string>
+    <string name="msg_licensed" formatted="false">Autorisé à : %s</string>
     <string name="msg_loading">Chargement</string>
     <string name="msg_edit">Cliquer sur l\'icône de l\'application pour éditer ses restrictions</string>
     <string name="msg_sure">Êtes-vous certain ?</string>
@@ -39,7 +39,7 @@
     <string name="msg_random_boot">Randomiser après le démarrage</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
-\n\nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence:</string>
+\n\nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc)</string>
     <string name="restrict_browser">Navigateur (marque-pages/historique)</string>
     <string name="restrict_calendar">Calendrier</string>
@@ -60,8 +60,8 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_shell">Shell (commandes, root)</string>
     <string name="restrict_system">Système (applis installées)</string>
     <string name="restrict_view">Vue (navigateur)</string>
-    <string name="title_category">Catégorie:</string>
-    <string name="title_restrict">Cocher pour restreindre:</string>
+    <string name="title_category">Catégorie :</string>
+    <string name="title_restrict">Cocher pour restreindre :</string>
     <string name="title_nofilter">Pas de filtre actif</string>
 
     <plurals name="title_filters">
@@ -86,8 +86,8 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="filter_used">Filtrer utilisation des données</string>
     <string name="filter_internet">Filtrer ayant accès à internet</string>
     <string name="filter_restricted">Filtrer restreintes</string>
-    <string name="filter_app_sys">Application système</string>
-    <string name="filter_app_user">Application utilisateur</string>
+    <string name="filter_app_sys">Applications système</string>
+    <string name="filter_app_user">Applications utilisateur</string>
     <string name="filter_app_both">Toutes les applications</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
