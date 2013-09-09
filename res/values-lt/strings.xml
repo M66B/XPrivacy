@@ -73,7 +73,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
     <string name="settings_mac">MAC</string>
-    <string name="settings_ip">IP address</string>
+    <string name="settings_ip">IP addresas</string>
     <string name="settings_phone">Telefono numeris</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Šalis</string>
@@ -81,7 +81,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_subscriber">Abonento ID</string>
     <string name="settings_ua">User agent</string>
     <string name="settings_fpermission">Tik naudojami leidimai</string>
-    <string name="settings_fapplication">Filter by application type</string>
+    <string name="settings_fapplication">Filtruoti pagal programos typą</string>
     <string name="settings_log">DEBUG žurnalas (reikia paleisti iš naujo)</string>
     <string name="filter_used">Duomenų naudojimo filtras</string>
     <string name="filter_internet">Interneto prieigos filtras</string>
