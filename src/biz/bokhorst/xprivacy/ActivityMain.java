@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -20,8 +19,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -43,7 +40,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -432,7 +428,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				optionUsage();
 				return true;
 			case R.id.menu_settings:
-				optionSettings();
+				Settings.edit(ActivityMain.this, 0);
 				return true;
 			case R.id.menu_template:
 				optionTemplate();
@@ -576,186 +572,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private void optionUsage() {
 		Intent intent = new Intent(this, ActivityUsage.class);
 		startActivity(intent);
-	}
-
-	private void optionSettings() {
-		// Build dialog
-		final Dialog dlgSettings = new Dialog(this);
-		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dlgSettings.setTitle(getString(R.string.app_name));
-		dlgSettings.setContentView(R.layout.settings);
-		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
-
-		// Reference controls
-		final EditText etSerial = (EditText) dlgSettings.findViewById(R.id.etSerial);
-		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
-		final EditText etLon = (EditText) dlgSettings.findViewById(R.id.etLon);
-		final EditText etSearch = (EditText) dlgSettings.findViewById(R.id.etSearch);
-		Button btnSearch = (Button) dlgSettings.findViewById(R.id.btnSearch);
-		final EditText etMac = (EditText) dlgSettings.findViewById(R.id.etMac);
-		final EditText etIP = (EditText) dlgSettings.findViewById(R.id.etIP);
-		final EditText etImei = (EditText) dlgSettings.findViewById(R.id.etImei);
-		final EditText etPhone = (EditText) dlgSettings.findViewById(R.id.etPhone);
-		final EditText etId = (EditText) dlgSettings.findViewById(R.id.etId);
-		final EditText etGsfId = (EditText) dlgSettings.findViewById(R.id.etGsfId);
-		final EditText etMcc = (EditText) dlgSettings.findViewById(R.id.etMcc);
-		final EditText etMnc = (EditText) dlgSettings.findViewById(R.id.etMnc);
-		final EditText etCountry = (EditText) dlgSettings.findViewById(R.id.etCountry);
-		final EditText etOperator = (EditText) dlgSettings.findViewById(R.id.etOperator);
-		final EditText etIccId = (EditText) dlgSettings.findViewById(R.id.etIccId);
-		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
-		final EditText etUa = (EditText) dlgSettings.findViewById(R.id.etUa);
-		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
-		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
-		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
-		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
-
-		// Set current values
-		boolean log = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingLog, false,
-				false);
-		boolean random = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingRandom,
-				false, false);
-
-		etSerial.setText(PrivacyManager
-				.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSerial, "", false));
-		etLat.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLatitude, "", false));
-		etLon.setText(PrivacyManager
-				.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLongitude, "", false));
-		etMac.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMac, "", false));
-		etIP.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingIP, "", false));
-		etImei.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingImei, "", false));
-		etPhone.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingPhone, "", false));
-		etId.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingId, "", false));
-		etGsfId.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingGsfId, "", false));
-		etMcc.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMcc, "", false));
-		etMnc.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMnc, "", false));
-		etCountry.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingCountry, "",
-				false));
-		etOperator.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingOperator, "",
-				false));
-		etIccId.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingIccId, "", false));
-		etSubscriber.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSubscriber,
-				"", false));
-		etUa.setText(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingUa, "", false));
-		cbLog.setChecked(log);
-		cbRandom.setChecked(random);
-
-		// Handle search
-		etSearch.setEnabled(Geocoder.isPresent());
-		btnSearch.setEnabled(Geocoder.isPresent());
-		btnSearch.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				try {
-					etLat.setText("");
-					etLon.setText("");
-					String search = etSearch.getText().toString();
-					final List<Address> listAddress = new Geocoder(ActivityMain.this).getFromLocationName(search, 1);
-					if (listAddress.size() > 0) {
-						Address address = listAddress.get(0);
-
-						// Get coordinates
-						if (address.hasLatitude())
-							etLat.setText(Double.toString(address.getLatitude()));
-						if (address.hasLongitude())
-							etLon.setText(Double.toString(address.getLongitude()));
-
-						// Get address
-						StringBuilder sb = new StringBuilder();
-						for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
-							if (i != 0)
-								sb.append(", ");
-							sb.append(address.getAddressLine(i));
-						}
-						etSearch.setText(sb.toString());
-					}
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
-			}
-		});
-
-		// Handle randomize
-		btnRandom.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				etLat.setText(PrivacyManager.getRandomProp("LAT"));
-				etLon.setText(PrivacyManager.getRandomProp("LON"));
-				etSerial.setText(PrivacyManager.getRandomProp("SERIAL"));
-				etMac.setText(PrivacyManager.getRandomProp("MAC"));
-				etPhone.setText(PrivacyManager.getRandomProp("PHONE"));
-				etImei.setText(PrivacyManager.getRandomProp("IMEI"));
-				etId.setText(PrivacyManager.getRandomProp("ANDROID_ID"));
-				etGsfId.setText(PrivacyManager.getRandomProp("GSF_ID"));
-				etCountry.setText(PrivacyManager.getRandomProp("ISO3166"));
-			}
-		});
-
-		// Handle OK
-		btnOk.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				// Serial#
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSerial, etSerial.getText()
-						.toString());
-
-				// Set location
-				try {
-					float lat = Float.parseFloat(etLat.getText().toString().replace(',', '.'));
-					float lon = Float.parseFloat(etLon.getText().toString().replace(',', '.'));
-					if (lat < -90 || lat > 90 || lon < -180 || lon > 180)
-						throw new InvalidParameterException();
-
-					PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLatitude,
-							Float.toString(lat));
-					PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLongitude,
-							Float.toString(lon));
-
-				} catch (Throwable ex) {
-					PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLatitude, "");
-					PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLongitude, "");
-				}
-
-				// Other settings
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMac, etMac.getText()
-						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingIP, etIP.getText()
-						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingImei, etImei.getText()
-						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingPhone, etPhone.getText()
-						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingId, etId.getText()
-						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingGsfId, etGsfId.getText()
-						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMcc, etMcc.getText()
-						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingMnc, etMnc.getText()
-						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingCountry, etCountry
-						.getText().toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingOperator, etOperator
-						.getText().toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingIccId, etIccId.getText()
-						.toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSubscriber, etSubscriber
-						.getText().toString());
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingUa, etUa.getText()
-						.toString());
-
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingLog,
-						Boolean.toString(cbLog.isChecked()));
-				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingRandom,
-						Boolean.toString(cbRandom.isChecked()));
-
-				// Done
-				dlgSettings.dismiss();
-			}
-		});
-
-		dlgSettings.setCancelable(true);
-		dlgSettings.show();
 	}
 
 	private void optionTemplate() {

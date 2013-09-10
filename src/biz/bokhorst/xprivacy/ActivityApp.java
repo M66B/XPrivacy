@@ -289,6 +289,9 @@ public class ActivityApp extends Activity {
 		case R.id.menu_contacts:
 			optionContacts();
 			return true;
+		case R.id.menu_settings:
+			Settings.edit(ActivityApp.this, mAppInfo.getUid());
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

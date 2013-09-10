@@ -15,7 +15,7 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="1" >
+            android:stretchColumns="2" >
 
             <TableRow>
 
@@ -23,8 +23,11 @@
                     android:text="@string/settings_serial"
                     android:textIsSelectable="false" />
 
+                <CheckBox android:id="@+id/cbSerial" />
+
                 <EditText
                     android:id="@+id/etSerial"
+                    android:layout_width="10dip"
                     android:hint="DEFACE"
                     android:inputType="textNoSuggestions" />
             </TableRow>
@@ -34,6 +37,8 @@
                 <TextView
                     android:text="@string/settings_lat"
                     android:textIsSelectable="false" />
+
+                <CheckBox android:id="@+id/cbLat" />
 
                 <EditText
                     android:id="@+id/etLat"
@@ -46,6 +51,8 @@
                 <TextView
                     android:text="@string/settings_lon"
                     android:textIsSelectable="false" />
+
+                <CheckBox android:id="@+id/cbLon" />
 
                 <EditText
                     android:id="@+id/etLon"
@@ -62,6 +69,8 @@
                     android:layout_gravity="center_horizontal"
                     android:text="@android:string/search_go" />
 
+                <View />
+
                 <EditText
                     android:id="@+id/etSearch"
                     android:inputType="textNoSuggestions" />
@@ -72,6 +81,8 @@
                 <TextView
                     android:text="@string/settings_mac"
                     android:textIsSelectable="false" />
+
+                <CheckBox android:id="@+id/cbMac" />
 
                 <EditText
                     android:id="@+id/etMac"
@@ -87,6 +98,8 @@
                     android:text="@string/settings_ip"
                     android:textIsSelectable="false" />
 
+                <View />
+
                 <EditText
                     android:id="@+id/etIP"
                     android:digits="0123456789ABCDEF.:"
@@ -99,6 +112,8 @@
                 <TextView
                     android:text="@string/settings_imei"
                     android:textIsSelectable="false" />
+
+                <CheckBox android:id="@+id/cbImei" />
 
                 <EditText
                     android:id="@+id/etImei"
@@ -113,6 +128,8 @@
                     android:text="@string/settings_phone"
                     android:textIsSelectable="false" />
 
+                <CheckBox android:id="@+id/cbPhone" />
+
                 <EditText
                     android:id="@+id/etPhone"
                     android:hint="DEFACE"
@@ -124,6 +141,8 @@
                 <TextView
                     android:text="@string/settings_id"
                     android:textIsSelectable="false" />
+
+                <CheckBox android:id="@+id/cbId" />
 
                 <EditText
                     android:id="@+id/etId"
@@ -138,11 +157,15 @@
                     android:text="@string/settings_gsfid"
                     android:textIsSelectable="false" />
 
+                <View />
+
                 <EditText
                     android:id="@+id/etGsfId"
                     android:digits="0123456789ABCDEF"
                     android:hint="DEFACE"
                     android:inputType="textCapCharacters|textNoSuggestions" />
+
+                <CheckBox android:id="@+id/cbGsfId" />
             </TableRow>
 
             <TableRow>
@@ -150,6 +173,8 @@
                 <TextView
                     android:text="@string/settings_mcc"
                     android:textIsSelectable="false" />
+
+                <View />
 
                 <EditText
                     android:id="@+id/etMcc"
@@ -164,6 +189,8 @@
                     android:text="@string/settings_mnc"
                     android:textIsSelectable="false" />
 
+                <View />
+
                 <EditText
                     android:id="@+id/etMnc"
                     android:hint="01"
@@ -176,6 +203,8 @@
                 <TextView
                     android:text="@string/settings_country"
                     android:textIsSelectable="false" />
+
+                <CheckBox android:id="@+id/cbCountry" />
 
                 <EditText
                     android:id="@+id/etCountry"
@@ -191,6 +220,8 @@
                     android:text="@string/settings_operator"
                     android:textIsSelectable="false" />
 
+                <View />
+
                 <EditText
                     android:id="@+id/etOperator"
                     android:hint="DEFACED"
@@ -202,6 +233,8 @@
                 <TextView
                     android:text="@string/settings_iccid"
                     android:textIsSelectable="false" />
+
+                <View />
 
                 <EditText
                     android:id="@+id/etIccId"
@@ -215,6 +248,8 @@
                     android:text="@string/settings_subscriber"
                     android:textIsSelectable="false" />
 
+                <View />
+
                 <EditText
                     android:id="@+id/etSubscriber"
                     android:inputType="numberDecimal|textNoSuggestions"
@@ -226,6 +261,8 @@
                 <TextView
                     android:text="@string/settings_ua"
                     android:textIsSelectable="false" />
+
+                <View />
 
                 <EditText
                     android:id="@+id/etUa"
@@ -258,6 +295,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@android:string/ok" />
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/menu_clear" />
     </LinearLayout>
 
 </ScrollView>

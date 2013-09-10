@@ -566,7 +566,10 @@ Changelog
 
 **Next release**
 
-* Auto fix file permissions by provider
+* Application specific settings
+* True randomization (both global/per app)
+* Added clear button to settings
+* Auto fix file permissions by privacy provider (not in Zygote anymore)
 * Removed popup for pro license (not enabler)
 * Updated Danish translation
 * Updated French translation
