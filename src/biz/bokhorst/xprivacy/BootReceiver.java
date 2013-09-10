@@ -47,7 +47,7 @@ public class BootReceiver extends BroadcastReceiver {
 	}
 
 	private void randomizeSettings(Context context, int uid) {
-		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, true, false);
+		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
 		if (random) {
 			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude,
 					PrivacyManager.getRandomProp("LAT"));
