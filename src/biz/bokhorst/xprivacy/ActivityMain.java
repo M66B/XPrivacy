@@ -175,7 +175,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		});
 
 		// Setup used filter
-		boolean fUsed = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingFUsed, true,
+		boolean fUsed = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingFUsed, false,
 				false);
 		CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
 		cbUsed.setChecked(fUsed);
@@ -183,14 +183,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Setup internet filter
 		boolean fInternet = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingFInternet,
-				true, false);
+				false, false);
 		CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
 		cbInternet.setChecked(fInternet);
 		cbInternet.setOnCheckedChangeListener(this);
 
 		// Setup restriction filter
 		boolean fRestriction = PrivacyManager.getSettingBool(null, ActivityMain.this, 0,
-				PrivacyManager.cSettingFRestriction, true, false);
+				PrivacyManager.cSettingFRestriction, false, false);
 		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
 		cbRestriction.setChecked(fRestriction);
 		cbRestriction.setOnCheckedChangeListener(this);
