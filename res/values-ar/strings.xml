@@ -69,11 +69,11 @@
         <item quantity="other">%d فلاتر نشِطة</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fsystem">Filter on system application</string>
+    <string name="title_fused">التصفية حسب استخدام البيانات</string>
+    <string name="title_finternet">التصفية حسب الوصول للإنترنت</string>
+    <string name="title_fpermission">التصفية حسب الأُذونات</string>
+    <string name="title_frestricted">التصفية حسب التقييد</string>
+    <string name="title_fsystem">تصفية برامج النظام</string>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
