@@ -26,8 +26,8 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">अनुमति के लिए खातों को चुने</string>
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="msg_new">नया</string>
+    <string name="msg_update">अद्यतन</string>
     <string name="msg_restricted" formatted="false">%s XPrivacy के द्वारा प्रतिबंधित</string>
     <string name="msg_licensed" formatted="false">अधिकारी: %s</string>
     <string name="msg_loading">लोडिंग</string>
@@ -47,7 +47,7 @@
     <string name="restrict_clipboard">क्लिपबोर्ड</string>
     <string name="restrict_contacts">संपर्क</string>
     <string name="restrict_dictionary">शब्दकोश (उपयोगकर्ता)</string>
-    <string name="restrict_email">E-mail</string>
+    <string name="restrict_email">ई-मेल</string>
     <string name="restrict_identification">पहचान (साधन)</string>
     <string name="restrict_internet">इंटरनेट</string>
     <string name="restrict_location">स्थान (स्पस्ट/कच्चा)</string>
