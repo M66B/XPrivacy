@@ -566,6 +566,7 @@ Changelog
 
 **Next release**
 
+* Auto fix file permissions by provider
 * Removed popup for pro license (not enabler)
 * Updated Danish translation
 * Updated French translation
