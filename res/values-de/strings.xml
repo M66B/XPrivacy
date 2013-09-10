@@ -26,7 +26,7 @@
     <string name="menu_app_store">Im Play Store anzeigen</string>
     <string name="menu_accounts">Konten für Zugriff freigeben</string>
     <string name="menu_contacts">Kontakte für Zugriff freigeben</string>
-    <string name="msg_new">New</string>
+    <string name="msg_new">Neu</string>
     <string name="msg_update">Update</string>
     <string name="msg_restricted" formatted="false">%s beschränkt durch XPrivacy</string>
     <string name="msg_licensed" formatted="false">Lizenziert für: %s</string>
@@ -34,7 +34,7 @@
     <string name="msg_edit">Berühren Sie das App-Icon, um alle Berechtigungen zu bearbeiten</string>
     <string name="msg_sure">Sind Sie sicher?</string>
     <string name="msg_done">Fertig</string>
-    <string name="msg_reboot">Neustart des Geräts erforderlich!</string>
+    <string name="msg_reboot">Geräte-Neustart erforderlich</string>
     <string name="msg_random">Zufallswerte erzeugen</string>
     <string name="msg_random_boot">Zufallswerte bei Geräte-Neustart erzeugen</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
@@ -80,11 +80,11 @@
     <string name="settings_operator">Mobilfunkanbieter</string>
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_ua">User-Agent (Browser)</string>
-    <string name="settings_fpermission">Nach Android-Berechtigungen \nfiltern</string>
+    <string name="settings_fpermission">Nach Android-Berechtigungen filtern</string>
     <string name="settings_fapplication">Nach App-Typ filtern</string>
     <string name="settings_log">Debug-Log (erfordert Geräte-Neustart)</string>
     <string name="filter_used">Nach Datennutzung filtern</string>
-    <string name="filter_internet">Nach Internet-Berechtigung \nfiltern</string>
+    <string name="filter_internet">Nach Internet-Berechtigung filtern</string>
     <string name="filter_restricted">Nach Beschränkungen filtern</string>
     <string name="filter_app_sys">System-Apps</string>
     <string name="filter_app_user">Benutzer-Apps</string>
@@ -94,6 +94,6 @@
     <string name="help_granted">hat Android-Berechtigung</string>
     <string name="help_used">hat diese Daten benutzt</string>
     <string name="help_frozen">ist deaktiviert</string>
-    <string name="help_dangerous">Beschränkung bedenklich (App-Absturz)</string>
+    <string name="help_dangerous">Beschränkung bedenklich (eventueller App-Absturz)</string>
 
 </resources>
