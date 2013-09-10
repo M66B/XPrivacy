@@ -568,7 +568,8 @@ Changelog
 
 * Make filter settings persistent
 * Simplified filtering on application type
-* Fix default for randomize on boot
+* Fixed default for randomize on boot
+* Fixed settings text width
 
 **Version 1.9.14 BETA!**
 

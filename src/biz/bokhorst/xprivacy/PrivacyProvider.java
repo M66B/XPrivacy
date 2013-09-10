@@ -419,10 +419,14 @@ public class PrivacyProvider extends ContentProvider {
 	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName, String methodName) {
 		try {
 			long now = new Date().getTime();
+			File file = new File(getPrefFileName(PREF_RESTRICTION, uid));
+			if (!file.canRead())
+				return false;
+
 			synchronized (mFallbackLock) {
 				if (mFallbackRestrictions == null || mFallbackRestrictionsUid != uid) {
 					// Initial load
-					mFallbackRestrictions = new SharedPreferencesEx(new File(getPrefFileName(PREF_RESTRICTION, uid)));
+					mFallbackRestrictions = new SharedPreferencesEx(file);
 					mFallbackRestrictionsUid = uid;
 					mFallbackRestrictionsTime = now;
 					long ms = System.currentTimeMillis() - now;
@@ -447,10 +451,13 @@ public class PrivacyProvider extends ContentProvider {
 	public static String getSettingFallback(String settingName, String defaultValue) {
 		try {
 			long now = new Date().getTime();
+			File file = new File(getPrefFileName(PREF_SETTINGS));
+			if (!file.canRead())
+				return defaultValue;
 
 			// Initial load
 			if (mFallbackSettings == null) {
-				mFallbackSettings = new SharedPreferencesEx(new File(getPrefFileName(PREF_SETTINGS)));
+				mFallbackSettings = new SharedPreferencesEx(file);
 				mFallbackSettingsTime = now;
 				long ms = System.currentTimeMillis() - now;
 				Util.log(null, Log.INFO, "Load fallback settings uid=" + Binder.getCallingUid() + " " + ms + " ms");

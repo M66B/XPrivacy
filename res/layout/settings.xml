@@ -157,15 +157,13 @@
                     android:text="@string/settings_gsfid"
                     android:textIsSelectable="false" />
 
-                <View />
+                <CheckBox android:id="@+id/cbGsfId" />
 
                 <EditText
                     android:id="@+id/etGsfId"
                     android:digits="0123456789ABCDEF"
                     android:hint="DEFACE"
                     android:inputType="textCapCharacters|textNoSuggestions" />
-
-                <CheckBox android:id="@+id/cbGsfId" />
             </TableRow>
 
             <TableRow>
@@ -266,7 +264,6 @@
 
                 <EditText
                     android:id="@+id/etUa"
-                    android:hint="Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9"
                     android:inputType="text|textNoSuggestions" />
             </TableRow>
         </TableLayout>
