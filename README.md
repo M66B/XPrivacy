@@ -551,8 +551,14 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.9.16 BETA!**
+
+* Retry read settings/restrictions
 * Updated Arabic translation
 * Updated Hindi translation
+* Updated Lithuanian translation
 * Updated Slovenian translation
 
 **Version 1.9.15 BETA!**
