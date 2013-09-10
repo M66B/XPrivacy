@@ -566,10 +566,15 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.9.15 BETA!**
+
 * Make filter settings persistent
 * Simplified filtering on application type
 * Fixed default for randomize on boot
 * Fixed settings text width
+* Updated Simplified Chinese translation
 
 **Version 1.9.14 BETA!**
 
