@@ -69,11 +69,11 @@
         <item quantity="other">%d Filter ausgewählt</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fsystem">Filter on system application</string>
+    <string name="title_fused">Nach Datennutzung filtern</string>
+    <string name="title_finternet">Nach Internet-Zugang filtern</string>
+    <string name="title_fpermission">Nach Berechtigungen filtern</string>
+    <string name="title_frestricted">FNach Beschränkungen filtern</string>
+    <string name="title_fsystem">Nach System-Apps filtern</string>
     <string name="settings_serial">Serien-Nr.</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
