@@ -14,7 +14,7 @@
     <string name="menu_export">Exportuoti parametrus</string>
     <string name="menu_import">Importuoti parametrus</string>
     <string name="menu_submit">Pateikti leidimus</string>
-    <string name="menu_fetch">Fetch restrictions</string>
+    <string name="menu_fetch">Rodyti ribojimus</string>
     <string name="menu_theme">Keisti temą</string>
     <string name="menu_pro">Pro versija aktyvi</string>
     <string name="menu_about">Apie XPrivacy</string>
@@ -26,8 +26,8 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Leisti pažymėtas paskyras</string>
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="msg_new">Naujas</string>
+    <string name="msg_update">Atnaujinta</string>
     <string name="msg_restricted" formatted="false">%s apribota XPrivacy</string>
     <string name="msg_licensed" formatted="false">licencija: %s</string>
     <string name="msg_loading">Palaukite...</string>
@@ -69,11 +69,11 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
         <item quantity="other">%d aktyvūs filtrai</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fsystem">Filter on system application</string>
+    <string name="title_fused">Filtruoti duomenų naudojimą</string>
+    <string name="title_finternet">Filtras pagal Interneto prieigą</string>
+    <string name="title_fpermission">Filtras pagal leidimus</string>
+    <string name="title_frestricted">Filtras pagal apribotus</string>
+    <string name="title_fsystem">Filtras pagal sistemos programas</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
