@@ -72,8 +72,6 @@ or alters the result of the original function (for example to return an empty me
 XPrivacy has been tested with CyanogenMod 10 and 10.1 (Android 4.1 and 4.2),
 and is reported to work with any Android version 4.0, 4.1 or 4.2 variant, including stock ROMs.
 Root access is needed to install the Xposed framework.
-Because of a bug in the Xposed framework, XPrivacy currently needs a fixed Xposed binary,
-which is provided as download for both Android version 4.0, 4.1, 4.2 and 4.3.
 
 
 **XPrivacy was a lot of work, so please support this project**
@@ -388,10 +386,6 @@ To export/import settings you will need the [pro version](http://www.faircode.eu
 
 Many, see [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
 
-**(11) What did you fix in the Xposed framework?**
-
-See [here](https://github.com/M66B/Xposed/commit/8a46f91bfd1381f78d1deb575041f51bae5d3dda).
-
 **(12) How safe is XPrivacy?**
 
 Great care has been taken to develop XPrivacy, nevertheless data could leak and applications can crash,
@@ -402,15 +396,7 @@ although this is fortunately rare. So far no critical bugs have been reported.
 An internal check of XPrivacy failed, resulting in potential data leakage.
 Please press *OK* to send me the support information, so I can look into it.
 
-**(15) Do I need to install Xposed/the fix again when I install an update of my kernel or ROM?**
-
-In case of a kernel update: no.
-
-In case of a ROM update: yes.
-
-XPrivacy will warn you when Xposed isn't installed,
-the wrong version of Xposed is installed
-or when the XPrivacy is not enabled in Xposed.
+**(15) What is the procedure for a ROM upate?**
 
 The right order for ROM updates is:
 
@@ -419,7 +405,6 @@ The right order for ROM updates is:
 1. Reboot to recovery
 1. Flash ROM
 1. Flash Google apps (optional)
-1. Flash Xposed fix
 1. Reboot to Android
 1. Restore the android ID (when needed; with for example [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup))
 1. Clear XPrivacy data
