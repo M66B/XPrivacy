@@ -69,6 +69,11 @@
         <item quantity="other">%d Filter ausgewählt</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">Serien-Nr.</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
@@ -80,15 +85,7 @@
     <string name="settings_operator">Mobilfunkanbieter</string>
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_ua">User-Agent (Browser)</string>
-    <string name="settings_fpermission">Nach Android-Berechtigungen filtern</string>
-    <string name="settings_fapplication">Nach App-Typ filtern</string>
     <string name="settings_log">Debug-Log (erfordert Geräte-Neustart)</string>
-    <string name="filter_used">Nach Datennutzung filtern</string>
-    <string name="filter_internet">Nach Internet-Berechtigung filtern</string>
-    <string name="filter_restricted">Nach Beschränkungen filtern</string>
-    <string name="filter_app_sys">System-Apps</string>
-    <string name="filter_app_user">Benutzer-Apps</string>
-    <string name="filter_app_both">Alle Apps</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>

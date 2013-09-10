@@ -566,7 +566,8 @@ Changelog
 
 **Next release**
 
-* ...
+* Make filter settings persistent
+* Simplified filtering on application type
 
 **Version 1.9.14 BETA!**
 

@@ -69,6 +69,11 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
         <item quantity="other">%d aktiva filter</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
@@ -80,15 +85,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="settings_operator">Operatör</string>
     <string name="settings_subscriber">Abonnent-ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_fpermission">Filtrera efter behörighet</string>
-    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (requires restart)</string>
-    <string name="filter_used">Filter on data usage</string>
-    <string name="filter_internet">Filter on internet access</string>
-    <string name="filter_restricted">Filter on restricted</string>
-    <string name="filter_app_sys">System application</string>
-    <string name="filter_app_user">User application</string>
-    <string name="filter_app_both">All applications</string>
     <string name="help_application">Applikation</string>
     <string name="help_internet">har internetbehörighet</string>
     <string name="help_granted">har Android-behörighet</string>

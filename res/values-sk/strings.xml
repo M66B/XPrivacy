@@ -70,6 +70,11 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
         <item quantity="other">%d aktívnych filtrov</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
@@ -81,15 +86,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">Identifikácia prehliadača</string>
-    <string name="settings_fpermission">Filtrovať podľa povolenia</string>
-    <string name="settings_fapplication">Filtrovať podľa typu aplikácie</string>
     <string name="settings_log">Záznam na ladenie (vyžaduje reštart)</string>
-    <string name="filter_used">Filter na využitie dát</string>
-    <string name="filter_internet">Filter na prístup k internetu</string>
-    <string name="filter_restricted">Filter na obmedzené</string>
-    <string name="filter_app_sys">Systémové aplikácie</string>
-    <string name="filter_app_user">Užívateľské aplikácie</string>
-    <string name="filter_app_both">Všetky aplikácie</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>

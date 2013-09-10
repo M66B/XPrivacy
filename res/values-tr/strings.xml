@@ -68,6 +68,11 @@
         <item quantity="other">%d etkin filtre</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">Seri no</string>
     <string name="settings_lat">Enlem</string>
     <string name="settings_lon">Boylam</string>
@@ -79,15 +84,7 @@
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Sim Numarası (IMSI)</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_fpermission">İzne göre gizle</string>
-    <string name="settings_fapplication">Uygulama tipine göre gizle</string>
     <string name="settings_log">Hata ayıklama modu (Yeniden başlatma gerekir)</string>
-    <string name="filter_used">Veriye erişmemişleri gizle</string>
-    <string name="filter_internet">İnternet izni olmayanları gizle</string>
-    <string name="filter_restricted">Engellenmişleri gizle</string>
-    <string name="filter_app_sys">Sistem uygulamaları</string>
-    <string name="filter_app_user">Kullanıcı uygulamaları</string>
-    <string name="filter_app_both">Tüm uygulamalar</string>
     <string name="help_application">Uygulama</string>
     <string name="help_internet">internet izni var</string>
     <string name="help_granted">Android izni var</string>

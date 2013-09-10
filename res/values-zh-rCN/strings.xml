@@ -69,6 +69,11 @@
         <item quantity="other">%d 过滤器</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
@@ -80,15 +85,7 @@
     <string name="settings_operator">运营商</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">UA</string>
-    <string name="settings_fpermission">无关权限过滤</string>
-    <string name="settings_fapplication">按应用级别过滤</string>
     <string name="settings_log">调试日志 (需要重启)</string>
-    <string name="filter_used">未用数据过滤</string>
-    <string name="filter_internet">无联网权过滤</string>
-    <string name="filter_restricted">未勾限制过滤</string>
-    <string name="filter_app_sys">系统应用</string>
-    <string name="filter_app_user">用户应用</string>
-    <string name="filter_app_both">全部应用</string>
     <string name="help_application">应用</string>
     <string name="help_internet">表示联网的权限</string>
     <string name="help_granted">表示授予的权限</string>

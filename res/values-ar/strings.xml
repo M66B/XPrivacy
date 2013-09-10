@@ -69,6 +69,11 @@
         <item quantity="other">%d فلاتر نشِطة</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
@@ -80,15 +85,7 @@
     <string name="settings_operator">المُشغل</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">وكيل المستخدم</string>
-    <string name="settings_fpermission">تصفية بواسطة الأُذونات</string>
-    <string name="settings_fapplication">تصفية بواسطة نوع التطبيق</string>
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
-    <string name="filter_used">التصفية حسب استخدام البيانات</string>
-    <string name="filter_internet">التصفية حسب الاتصال بالإنترنت</string>
-    <string name="filter_restricted">التصفية حسب التقييد</string>
-    <string name="filter_app_sys">تطبيقات النظام</string>
-    <string name="filter_app_user">تطبيقات المستخدم</string>
-    <string name="filter_app_both">كل التطبيقات</string>
     <string name="help_application">التطبيق</string>
     <string name="help_internet">لديه صلاحية الوصول للإنترنت</string>
     <string name="help_granted">لديه صلاحية أندرويد</string>

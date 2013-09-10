@@ -69,6 +69,11 @@ however it is impossible to guarantee it will work flawless on each and every de
         <item quantity="other">%d active filters</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
@@ -80,15 +85,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_fpermission">Filter by permission</string>
-    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (requires restart)</string>
-    <string name="filter_used">Filter on data usage</string>
-    <string name="filter_internet">Filter on internet access</string>
-    <string name="filter_restricted">Filter on restricted</string>
-    <string name="filter_app_sys">System application</string>
-    <string name="filter_app_user">User application</string>
-    <string name="filter_app_both">All applications</string>
     <string name="help_application">Aplicatie</string>
     <string name="help_internet">are permisiune Internet</string>
     <string name="help_granted">are permisiune Android</string>

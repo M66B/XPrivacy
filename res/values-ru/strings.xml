@@ -70,6 +70,11 @@
         <item quantity="other">%d активных фильтров</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">Серийный номер</string>
     <string name="settings_lat">Широта</string>
     <string name="settings_lon">Долгота</string>
@@ -81,15 +86,7 @@
     <string name="settings_operator">Оператор</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_fpermission">Фильтровать по разрешениям</string>
-    <string name="settings_fapplication">Фильтровать по типу приложения</string>
     <string name="settings_log">Отладочный лог (требует перезагрузки)</string>
-    <string name="filter_used">Использовавшие данные</string>
-    <string name="filter_internet">С доступом к интернету</string>
-    <string name="filter_restricted">С установленными разрешениями</string>
-    <string name="filter_app_sys">Системные приложения</string>
-    <string name="filter_app_user">Пользовательские приложения</string>
-    <string name="filter_app_both">Все приложения</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>

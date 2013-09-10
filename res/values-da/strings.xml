@@ -67,6 +67,11 @@
         <item quantity="other">%d aktive filtre</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Længdegrad</string>
@@ -78,15 +83,7 @@
     <string name="settings_operator">Operatør</string>
     <string name="settings_subscriber">Abonnent-ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_fpermission">Filtrér efter tilladelse</string>
-    <string name="settings_fapplication">Filtrér efter app-type</string>
     <string name="settings_log">Debug-log (kræver genstart)</string>
-    <string name="filter_used">Filtrér efter brug af data</string>
-    <string name="filter_internet">Filtrér efter internettilladelse</string>
-    <string name="filter_restricted">Filtrér efter restriktioner</string>
-    <string name="filter_app_sys">System-app</string>
-    <string name="filter_app_user">Bruger-app</string>
-    <string name="filter_app_both">Alle apps</string>
     <string name="help_application">App</string>
     <string name="help_internet">har internettilladelse</string>
     <string name="help_granted">har Android-tilladelse</string>

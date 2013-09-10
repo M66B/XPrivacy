@@ -68,6 +68,11 @@
         <item quantity="other">%d bộ lọc có hiệu lực</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>
@@ -79,15 +84,7 @@
     <string name="settings_operator">Nhà mạng</string>
     <string name="settings_subscriber">ID người đăng kí</string>
     <string name="settings_ua">Nhận dạng trình duyệt (User agent)</string>
-    <string name="settings_fpermission">Lọc theo quyền</string>
-    <string name="settings_fapplication">Lọc theo kiểu ứng dụng</string>
     <string name="settings_log">Lưu thông tin gỡ rối (yêu cầu khởi động lại)</string>
-    <string name="filter_used">Lọc ứng dụng truy cập dữ liệu</string>
-    <string name="filter_internet">Lọc ứng dụng truy cập internet</string>
-    <string name="filter_restricted">Lọc ứng dụng đã hạn chế các quyền</string>
-    <string name="filter_app_sys">Ứng dụng hệ thống</string>
-    <string name="filter_app_user">Ứng dụng người dùng</string>
-    <string name="filter_app_both">Tất cả ứng dụng</string>
     <string name="help_application">Ứng dụng</string>
     <string name="help_internet">có quyền truy cập mạng</string>
     <string name="help_granted">có các quyền của hệ điều hành</string>

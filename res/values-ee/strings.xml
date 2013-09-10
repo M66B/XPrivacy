@@ -69,6 +69,11 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
         <item quantity="other">%d aktiivset filtrit</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">Seeria#</string>
     <string name="settings_lat">Laiuskraad</string>
     <string name="settings_lon">Pikkuskraad</string>
@@ -80,15 +85,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="settings_operator">Opeeraator</string>
     <string name="settings_subscriber">Abonendi ID</string>
     <string name="settings_ua">Kasutaja agent</string>
-    <string name="settings_fpermission">Filtreeri loa järgi</string>
-    <string name="settings_fapplication">Filtreeri rakenduse tüübi järgi</string>
     <string name="settings_log">Silumislogi (nõuab restarti)</string>
-    <string name="filter_used">Filtreeri andmete kasutamise järgi</string>
-    <string name="filter_internet">Filtreeri interneti kasutamis ejärgi</string>
-    <string name="filter_restricted">Filtreeri keelude järgi</string>
-    <string name="filter_app_sys">Süsteemirakendus</string>
-    <string name="filter_app_user">Kasutaja rakendus</string>
-    <string name="filter_app_both">Kõik rakendused</string>
     <string name="help_application">Rakendus</string>
     <string name="help_internet">on interneti kasutamise luba</string>
     <string name="help_granted">on Android luba</string>

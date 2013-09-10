@@ -69,6 +69,11 @@
         <item quantity="other">%d個の有効なフィルタ</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
@@ -80,15 +85,7 @@
     <string name="settings_operator">キャリア</string>
     <string name="settings_subscriber">契約者固有ID</string>
     <string name="settings_ua">ユーザーエージェント</string>
-    <string name="settings_fpermission">権限でフィルタ</string>
-    <string name="settings_fapplication">アプリタイプでフィルタ</string>
     <string name="settings_log">デバッグログ(要再起動)</string>
-    <string name="filter_used">データ使用でフィルタ</string>
-    <string name="filter_internet">ネット接続でフィルタ</string>
-    <string name="filter_restricted">制限済みでフィルタ</string>
-    <string name="filter_app_sys">システムアプリ</string>
-    <string name="filter_app_user">ユーザーアプリ</string>
-    <string name="filter_app_both">全てのアプリ</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>

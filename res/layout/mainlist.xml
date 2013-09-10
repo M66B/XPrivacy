@@ -27,7 +27,6 @@
         <!-- Restriction category -->
 
         <LinearLayout
-            android:id="@+id/llCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/drawable_divider"
@@ -136,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
-                    android:text="@string/filter_used"
+                    android:text="@string/title_fused"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
@@ -156,7 +155,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
-                    android:text="@string/filter_internet"
+                    android:text="@string/title_finternet"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
@@ -175,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
-                    android:text="@string/settings_fpermission"
+                    android:text="@string/title_fpermission"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
@@ -194,69 +193,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
-                    android:text="@string/filter_restricted"
+                    android:text="@string/title_frestricted"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llAppFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <ImageView
-                    android:id="@+id/imgAppFilter"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:contentDescription="@string/help_application"
-                    android:src="?attr/icon_user_system" />
+                    android:src="?attr/icon_system" />
 
                 <CheckBox
                     android:id="@+id/cbFSystem"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
-                    android:text="@string/settings_fapplication"
+                    android:text="@string/title_fsystem"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llAppFilter2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone" >
-
-                <ImageView
-                    android:id="@+id/imgAppAll"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_button"
-                    android:clickable="true"
-                    android:contentDescription="@string/filter_app_both"
-                    android:focusable="true"
-                    android:src="?attr/icon_user_system" />
-
-                <ImageView
-                    android:id="@+id/imgAppUser"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_button"
-                    android:clickable="true"
-                    android:contentDescription="@string/filter_app_user"
-                    android:focusable="true"
-                    android:src="?attr/icon_user" />
-
-                <ImageView
-                    android:id="@+id/imgAppSys"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_button"
-                    android:clickable="true"
-                    android:contentDescription="@string/filter_app_sys"
-                    android:focusable="true"
-                    android:src="?attr/icon_system" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

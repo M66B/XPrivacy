@@ -71,6 +71,11 @@
         <item quantity="other">%d aktivnih filtrov</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
@@ -82,15 +87,7 @@
     <string name="settings_operator">Operater</string>
     <string name="settings_subscriber">ID naročnika</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_fpermission">Filtriraj po pravicah</string>
-    <string name="settings_fapplication">Filter by application type</string>
     <string name="settings_log">Debug log (zahteva ponovni zagon)</string>
-    <string name="filter_used">Filtriraj po uporabi podatkov</string>
-    <string name="filter_internet">Filtriraj po uporabi interneta</string>
-    <string name="filter_restricted">Filtriraj po omejitvah</string>
-    <string name="filter_app_sys">Sistemski programi</string>
-    <string name="filter_app_user">Uporabniški programi</string>
-    <string name="filter_app_both">Vsi programi</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>

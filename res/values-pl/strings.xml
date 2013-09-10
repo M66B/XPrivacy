@@ -70,6 +70,11 @@
         <item quantity="other">%d aktywnych filtrów</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>
@@ -81,15 +86,7 @@
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_fpermission">Filtruj według uprawnień</string>
-    <string name="settings_fapplication">Filtruj według typu aplikacji</string>
     <string name="settings_log">Debug log (wymaga restartu)</string>
-    <string name="filter_used">Filtruj według wymaganych uprawnień</string>
-    <string name="filter_internet">Filtruj według dostepu do internetu</string>
-    <string name="filter_restricted">Filtruj według restrykcji</string>
-    <string name="filter_app_sys">Aplikacja systemowa</string>
-    <string name="filter_app_user">Aplikacja użytkownika</string>
-    <string name="filter_app_both">Wszystkie aplikacje</string>
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">wymaga dostępu do internetu</string>
     <string name="help_granted">wymaga dostępu do tych uprawnień Androida</string>

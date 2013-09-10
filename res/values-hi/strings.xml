@@ -69,6 +69,11 @@
         <item quantity="other">%d सक्रिय फिल्टर</item>
     </plurals>
 
+    <string name="title_fused">Filter on data usage</string>
+    <string name="title_finternet">Filter on internet access</string>
+    <string name="title_fpermission">Filter on permission</string>
+    <string name="title_frestricted">Filter on restricted</string>
+    <string name="title_fsystem">Filter on system application</string>
     <string name="settings_serial">क्रमांक#</string>
     <string name="settings_lat">अक्षांश</string>
     <string name="settings_lon">रेखांश</string>
@@ -80,15 +85,7 @@
     <string name="settings_operator">ऑपरेटर</string>
     <string name="settings_subscriber">ग्राहक क्रमांक</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_fpermission">अनुमति के द्वारा फिल्टर करे</string>
-    <string name="settings_fapplication">Application के प्रकार के द्वारा फिल्टर करे</string>
     <string name="settings_log">Debug log (पुनरारंभ जरूरी)</string>
-    <string name="filter_used">डेटा उपयोग पर फिल्टर करे</string>
-    <string name="filter_internet">इन्टरनेट उपयोग पर फिल्टर करे</string>
-    <string name="filter_restricted">प्रतिबंध पर फिल्टर करे</string>
-    <string name="filter_app_sys">सिस्टम की Application</string>
-    <string name="filter_app_user">उपयोगकर्ता की Application</string>
-    <string name="filter_app_both">सभी applications</string>
     <string name="help_application">Application</string>
     <string name="help_internet">इंटरनेट की अनुमति है</string>
     <string name="help_granted">Android की अनुमति है</string>
