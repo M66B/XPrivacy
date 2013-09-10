@@ -566,6 +566,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.9.14 BETA!**
+
 * Application specific settings
 * True randomization (both global/per app)
 * Added clear button to settings
