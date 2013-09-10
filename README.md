@@ -566,7 +566,9 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated Arabic translation
+* Updated Hindi translation
+* Updated Slovenian translation
 
 **Version 1.9.15 BETA!**
 
