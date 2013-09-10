@@ -568,8 +568,13 @@ Changelog
 
 * Removed popup for pro license (not enabler)
 * Updated Danish translation
+* Updated French translation
+* Updated German translation
 * Updated Japanese translation
+* Updated Lithuanian translation
+* Updated Simplified Chinese translation
 * Updated Slovak translation
+* Updated Vietnamese translation
 
 **Version 1.9.13 BETA!**
 
