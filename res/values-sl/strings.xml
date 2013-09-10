@@ -22,12 +22,12 @@
     <string name="menu_all">Vse</string>
     <string name="menu_clear">Počisti</string>
     <string name="menu_app_launch">Zaženi</string>
-    <string name="menu_app_settings">Nastavitve</string>
+    <string name="menu_app_settings">Podrobnosti programa</string>
     <string name="menu_app_store">Trgovina Play</string>
     <string name="menu_accounts">Izberi dovoljene račune</string>
     <string name="menu_contacts">Izberi dovoljene stike</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="msg_new">Novo</string>
+    <string name="msg_update">Posodobi</string>
     <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencirano na: %s</string>
     <string name="msg_loading">Nalagam</string>
