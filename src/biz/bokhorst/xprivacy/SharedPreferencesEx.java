@@ -117,7 +117,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	}
 
 	private boolean hasFileChanged() {
-		if (!mFile.canRead()) {
+		if (!mFile.canRead() || mBackupFile.exists()) {
 			return true;
 		}
 		long lastModified = mFile.lastModified();
