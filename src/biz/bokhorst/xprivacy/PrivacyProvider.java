@@ -77,6 +77,7 @@ public class PrivacyProvider extends ContentProvider {
 		try {
 			writeMetaData();
 			convertRestrictions();
+			convertSettings();
 			fixFilePermissions();
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -595,5 +596,20 @@ public class PrivacyProvider extends ContentProvider {
 			Util.log(null, Log.INFO, "Backup name=" + backup.getAbsolutePath());
 			Util.copy(source, backup);
 		}
+	}
+
+	private void convertSettings() throws IOException {
+		SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
+		SharedPreferences.Editor editor = prefs.edit();
+		for (String key : prefs.getAll().keySet())
+			try {
+				String value = prefs.getString(key, null);
+				if (PrivacyManager.cValueRandomLegacy.equals(value))
+					editor.putString(key, PrivacyManager.cValueRandom);
+			} catch (Throwable ex) {
+
+			}
+		editor.apply();
+		setPrefFileReadable(PREF_SETTINGS);
 	}
 }

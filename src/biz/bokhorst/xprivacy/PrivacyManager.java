@@ -99,7 +99,8 @@ public class PrivacyManager {
 	public final static String cSettingRandom = "Random@boot";
 	public final static String cSettingLog = "Log";
 
-	public final static String cValueRandom = "\nRandom\n";
+	public final static String cValueRandom = "#Random#";
+	public final static String cValueRandomLegacy = "\nRandom\n";
 
 	private final static String cDeface = "DEFACE";
 	public final static int cRestrictionCacheTimeoutMs = 15 * 1000;
