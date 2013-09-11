@@ -73,6 +73,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_finternet">Filtras pagal Interneto prieigą</string>
     <string name="title_fpermission">Filtras pagal leidimus</string>
     <string name="title_frestricted">Filtras pagal apribotus</string>
+    <string name="title_fuser">Filter on user applications</string>
     <string name="title_fsystem">Filtras pagal sistemos programas</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>

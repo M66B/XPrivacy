@@ -551,6 +551,8 @@ Changelog
 
 **Next release**
 
+* Attempt to fix true randomization setting
+* Add filter on user applications
 * Updated German translation
 
 **Version 1.9.16 BETA!**

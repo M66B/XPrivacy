@@ -73,7 +73,8 @@
     <string name="title_finternet">Filter on internet access</string>
     <string name="title_fpermission">Filter on permission</string>
     <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fsystem">Filter on system application</string>
+    <string name="title_fuser">Filter on user applications</string>
+    <string name="title_fsystem">Filter on system applications</string>
     <string name="settings_serial">Σειριακός αριθμός</string>
     <string name="settings_lat">Γεωγρ. πλάτος</string>
     <string name="settings_lon">Γεωγρ. μήκος</string>

@@ -73,6 +73,7 @@
     <string name="title_finternet">无联网权过滤</string>
     <string name="title_fpermission">无关权限过滤</string>
     <string name="title_frestricted">未勾限制过滤</string>
+    <string name="title_fuser">Filter on user applications</string>
     <string name="title_fsystem">按应用级别过滤</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>

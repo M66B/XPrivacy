@@ -202,6 +202,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		cbFPermission.setChecked(fPermission);
 		cbFPermission.setOnCheckedChangeListener(this);
 
+		// Setup user filter
+		boolean fUser = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingFUser, false,
+				false);
+		final CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
+		cbFUser.setChecked(fUser);
+		cbFUser.setOnCheckedChangeListener(this);
+
 		// Setup system filter
 		boolean fSystem = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingFSystem,
 				true, false);
@@ -433,6 +440,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
 		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
+		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 		if (buttonView == cbUsed)
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFUsed,
@@ -445,6 +453,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					Boolean.toString(isChecked));
 		else if (buttonView == cbFPermission)
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFPermission,
+					Boolean.toString(isChecked));
+		else if (buttonView == cbFUser)
+			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFUser,
 					Boolean.toString(isChecked));
 		else if (buttonView == cbFSystem)
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFSystem,
@@ -459,13 +470,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
 			CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
 			CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
+			CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 			CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 			ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
 			TextView tvStats = (TextView) findViewById(R.id.tvStats);
-			String filter = String
-					.format("%s\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(), cbUsed.isChecked(),
-							cbInternet.isChecked(), cbRestriction.isChecked(), cbFPermission.isChecked(),
-							cbFSystem.isChecked());
+			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(), cbUsed.isChecked(),
+					cbInternet.isChecked(), cbRestriction.isChecked(), cbFPermission.isChecked(), cbFUser.isChecked(),
+					cbFSystem.isChecked());
 			pbFilter.setVisibility(ProgressBar.VISIBLE);
 			tvStats.setVisibility(TextView.GONE);
 			mAppAdapter.getFilter().filter(filter);
@@ -692,6 +703,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
 		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
+		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 
 		if (mFiltersHidden) {
@@ -713,6 +725,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			if (cbRestriction.isChecked())
 				numberOfFilters++;
 			if (cbFPermission.isChecked())
+				numberOfFilters++;
+			if (cbFUser.isChecked())
 				numberOfFilters++;
 			if (cbFSystem.isChecked())
 				numberOfFilters++;
@@ -858,7 +872,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				boolean fInternet = Boolean.parseBoolean(components[2]);
 				boolean fRestricted = Boolean.parseBoolean(components[3]);
 				boolean fPermission = Boolean.parseBoolean(components[4]);
-				boolean fSystem = Boolean.parseBoolean(components[5]);
+				boolean fUser = Boolean.parseBoolean(components[5]);
+				boolean fSystem = Boolean.parseBoolean(components[6]);
 
 				// Match applications
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
@@ -902,6 +917,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								|| PrivacyManager.getUsed(mContext, xAppInfo.getUid(), mRestrictionName, null) > 0)
 							permission = true;
 
+					// Get if user
+					boolean user = false;
+					if (fUser)
+						user = xAppInfo.getIsSystem();
+
 					// Get if system
 					boolean system = false;
 					if (fSystem)
@@ -910,7 +930,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Match application
 					if ((fName.equals("") ? true : contains) && (fUsed ? used : true) && (fInternet ? internet : true)
 							&& (fRestricted ? someRestricted : true) && (fPermission ? permission : true)
-							&& (fSystem ? system : true))
+							&& (fUser ? user : true) && (fSystem ? system : true))
 						lstApp.add(xAppInfo);
 				}
 

@@ -73,7 +73,8 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_finternet">Filter op internet toegang</string>
     <string name="title_fpermission">Filter op rechten</string>
     <string name="title_frestricted">Filter op beperkingen</string>
-    <string name="title_fsystem">Filter op systeem applicatie</string>
+    <string name="title_fuser">Filter op gebruikers applicaties</string>
+    <string name="title_fsystem">Filter op systeem applicaties</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>
