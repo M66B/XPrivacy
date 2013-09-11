@@ -2,33 +2,33 @@
 
     <string name="app_notxposed" formatted="false">La versión %d+ de Xposed no está instalada</string>
     <string name="app_notenabled">XPrivacy no está habilitado en el instalador de Xposed</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_wrongandroid">Solo para Android versión 4.0+</string>
     <string name="app_version" formatted="false">Versión de XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Versión del framework Xposed: %d</string>
     <string name="app_copyright">Copyright © 2013 por M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Usage</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_usage">Uso</string>
+    <string name="menu_refresh">Actualizar</string>
     <string name="menu_settings">Configuración</string>
     <string name="menu_template">Plantilla</string>
     <string name="menu_report">Reportar problema</string>
     <string name="menu_export">Exportar</string>
     <string name="menu_import">Importar</string>
-    <string name="menu_submit">Submit restrictions</string>
-    <string name="menu_fetch">Fetch restrictions</string>
+    <string name="menu_submit">Enviar restricciones</string>
+    <string name="menu_fetch">Obtener restricciones</string>
     <string name="menu_theme">Cambiar tema</string>
     <string name="menu_pro">Versión Pro</string>
     <string name="menu_about">Acerca de</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Ayuda</string>
     <string name="menu_all">Todas</string>
-    <string name="menu_apply">Apply template</string>
-    <string name="menu_clear">Clear</string>
+    <string name="menu_apply">Aplicar plantilla</string>
+    <string name="menu_clear">Borrar</string>
     <string name="menu_app_launch">Ejecutar</string>
     <string name="menu_app_settings">Configuración</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Seleccione las cuentas permitidas</string>
     <string name="menu_contacts">Seleccione los contactos permitidos</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="msg_new">Nuevo</string>
+    <string name="msg_update">Actualizar</string>
     <string name="msg_restricted">%s restringido por XPrivacy</string>
     <string name="msg_licensed">Con licencia para: %s</string>
     <string name="msg_loading">Cargando</string>
@@ -36,19 +36,19 @@
     <string name="msg_sure">¿Estas seguro?</string>
     <string name="msg_done">Completado</string>
     <string name="msg_reboot">Reinicio requerido</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
-    <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
-\n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
+    <string name="msg_random">Selección aleatoria</string>
+    <string name="msg_random_boot">Selección aleatoria después del arranque</string>
+    <string name="msg_first"><b>Gran cuidado se ha tomado para desarrollar y probar XPrivacy,
+sin embargo es imposible garantizar que funcione impecable en todos y cada uno de los dispositivos y para cada aplicación.
+\n\nEl uso es bajo su propio riesgo.</b>\n\nVéase también el permiso:</string>
     <string name="restrict_accounts">Cuentas (Google, Facebook, etc)</string>
     <string name="restrict_browser">Navegador (marcadores/historial)</string>
     <string name="restrict_calendar">Calendario</string>
     <string name="restrict_calling">Llamadas (teléfono, SMS, MMS)</string>
-    <string name="restrict_clipboard">Clipboard</string>
+    <string name="restrict_clipboard">Portapapeles</string>
     <string name="restrict_contacts">Contactos</string>
     <string name="restrict_dictionary">Diccionario (usuario)</string>
-    <string name="restrict_email">E-mail</string>
+    <string name="restrict_email">Correo</string>
     <string name="restrict_identification">Identificación (dispositivo)</string>
     <string name="restrict_internet">Internet</string>
     <string name="restrict_location">Ubicación (fina/gruesa)</string>
@@ -63,36 +63,36 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_view">Ver (navegador)</string>
     <string name="title_category">Categoría:</string>
     <string name="title_restrict">Selecciona para restringir:</string>
-    <string name="title_nofilter">No active filter</string>
+    <string name="title_nofilter">Sin ningún filtro activo</string>
 
     <plurals name="title_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+        <item quantity="one">1 filtro activo</item>
+        <item quantity="other">%d filtros activos</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
-    <string name="settings_serial">Serial#</string>
+    <string name="title_fused">Filtro en uso de datos</string>
+    <string name="title_finternet">Filtro en acceso a Internet</string>
+    <string name="title_fpermission">Filtro en permiso</string>
+    <string name="title_frestricted">Filtro en restringido</string>
+    <string name="title_fuser">Filtro en aplicaciones de usuario</string>
+    <string name="title_fsystem">Filtro en aplicaciones de sistema</string>
+    <string name="settings_serial"># de serie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
     <string name="settings_mac">Dirección MAC</string>
-    <string name="settings_ip">IP address</string>
-    <string name="settings_phone">Numero de Teléfono</string>
-    <string name="settings_id">Android ID</string>
+    <string name="settings_ip">Dirección IP</string>
+    <string name="settings_phone">Número de Teléfono</string>
+    <string name="settings_id">ID de Android</string>
     <string name="settings_country">País</string>
-    <string name="settings_operator">Operator</string>
-    <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_ua">User agent</string>
-    <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_operator">Operador</string>
+    <string name="settings_subscriber">ID de subscriptor</string>
+    <string name="settings_ua">Agente de usuario</string>
+    <string name="settings_log">Registro de depuración (requiere inicio)</string>
     <string name="help_application">Aplicación</string>
     <string name="help_internet">Tiene permisos para Internet</string>
     <string name="help_granted">Tiene permisos por Android</string>
     <string name="help_used">Ha usado estos datos</string>
-    <string name="help_frozen">is disabled</string>
+    <string name="help_frozen">Esta deshabilitado</string>
     <string name="help_dangerous">Es peligroso</string>
 
 </resources>
