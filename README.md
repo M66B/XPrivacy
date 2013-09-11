@@ -551,7 +551,11 @@ Changelog
 
 **Next release**
 
-* Attempt to fix true randomization setting
+* ...
+
+**Version 1.9.17 BETA!**
+
+* Fix true randomization setting ([issue](https://github.com/M66B/XPrivacy/issues/658))
 * Add filter on user applications
 * Updated German translation
 
