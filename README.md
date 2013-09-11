@@ -551,7 +551,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated German translation
 
 **Version 1.9.16 BETA!**
 
