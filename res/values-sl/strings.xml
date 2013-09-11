@@ -20,6 +20,7 @@
     <string name="menu_about">O programu</string>
     <string name="menu_help">Pomoč</string>
     <string name="menu_all">Vse</string>
+    <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Počisti</string>
     <string name="menu_app_launch">Zaženi</string>
     <string name="menu_app_settings">Podrobnosti programa</string>

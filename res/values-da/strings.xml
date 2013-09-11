@@ -20,6 +20,7 @@
     <string name="menu_about">Om</string>
     <string name="menu_help">Hjælp</string>
     <string name="menu_all">Alle</string>
+    <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Ryd</string>
     <string name="menu_app_launch">Kør</string>
     <string name="menu_app_settings">App-indstillinger</string>

@@ -259,8 +259,8 @@ public class ActivityApp extends Activity {
 		case R.id.menu_help:
 			optionHelp();
 			return true;
-		case R.id.menu_all:
-			optionAll();
+		case R.id.menu_apply:
+			optionApply();
 			return true;
 		case R.id.menu_clear:
 			optionClear();
@@ -318,7 +318,7 @@ public class ActivityApp extends Activity {
 		dialog.show();
 	}
 
-	private void optionAll() {
+	private void optionApply() {
 		List<String> listRestriction = PrivacyManager.getRestrictions(false);
 
 		// Get toggle

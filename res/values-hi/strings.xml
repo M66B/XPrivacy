@@ -20,6 +20,7 @@
     <string name="menu_about">जानकारी</string>
     <string name="menu_help">मदद</string>
     <string name="menu_all">प्रत्येक</string>
+    <string name="menu_apply">Apply template</string>
     <string name="menu_clear">साफ़ करे</string>
     <string name="menu_app_launch">चालू करे</string>
     <string name="menu_app_settings">App का विवरण</string>

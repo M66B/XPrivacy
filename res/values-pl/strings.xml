@@ -20,6 +20,7 @@
     <string name="menu_about">O programie</string>
     <string name="menu_help">Pomoc</string>
     <string name="menu_all">Wszystko</string>
+    <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Wyczyść</string>
     <string name="menu_app_launch">Uruchom</string>
     <string name="menu_app_settings">Ustawienia</string>

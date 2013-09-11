@@ -20,6 +20,7 @@
     <string name="menu_about">O aplikaci</string>
     <string name="menu_help">Nápověda</string>
     <string name="menu_all">Vše</string>
+    <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Vyčistit</string>
     <string name="menu_app_launch">Spustit</string>
     <string name="menu_app_settings">Informace o aplikaci</string>

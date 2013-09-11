@@ -20,6 +20,7 @@
     <string name="menu_about">Apie XPrivacy</string>
     <string name="menu_help">Pagalba</string>
     <string name="menu_all">Visi leidimai</string>
+    <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Išvalyti visus leidimus</string>
     <string name="menu_app_launch">Paleisti programą</string>
     <string name="menu_app_settings">Programos informacija</string>

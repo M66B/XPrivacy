@@ -20,6 +20,7 @@
     <string name="menu_about">Riguardo a</string>
     <string name="menu_help">Aiuto</string>
     <string name="menu_all">Tutto</string>
+    <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Pulisci</string>
     <string name="menu_app_launch">Lancia</string>
     <string name="menu_app_settings">Impostazioni</string>

@@ -20,6 +20,7 @@
     <string name="menu_about">Programmist</string>
     <string name="menu_help">Abi</string>
     <string name="menu_all">Kõik</string>
+    <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Tühjenda</string>
     <string name="menu_app_launch">Käivita</string>
     <string name="menu_app_settings">Rakenduse andmed</string>

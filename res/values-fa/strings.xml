@@ -22,6 +22,7 @@
     <string name="menu_about">درباره ی نرم افزار</string>
     <string name="menu_help">راهنما</string>
     <string name="menu_all">همه</string>
+    <string name="menu_apply">Apply template</string>
     <string name="menu_clear">پاک کردن</string>
     <string name="menu_app_launch">دسترسی</string>
     <string name="menu_app_settings">جزییات نرم افزار</string>
