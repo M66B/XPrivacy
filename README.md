@@ -551,7 +551,8 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated Spanish translation
+* Updated Vietnamese translation
 
 **Version 1.9.17 BETA!**
 
