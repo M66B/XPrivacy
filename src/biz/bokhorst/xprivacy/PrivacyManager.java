@@ -353,6 +353,8 @@ public class PrivacyManager {
 							});
 						}
 					}
+				} catch (SecurityException ex) {
+					Util.bug(hook, ex);
 				} catch (Throwable ex) {
 					Util.bug(hook, ex);
 				}
