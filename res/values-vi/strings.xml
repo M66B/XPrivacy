@@ -9,7 +9,7 @@
     <string name="menu_usage">Sử dụng</string>
     <string name="menu_refresh">Làm mới</string>
     <string name="menu_settings">Tùy chỉnh</string>
-    <string name="menu_template">Mẫu</string>
+    <string name="menu_template">Thiết lập hạn chế định sẵn (dành cho ứng dụng cài mới)</string>
     <string name="menu_report">Báo cáo lỗi</string>
     <string name="menu_export">Xuất</string>
     <string name="menu_import">Nhập</string>
@@ -20,7 +20,7 @@
     <string name="menu_about">Về XPrivacy</string>
     <string name="menu_help">Trợ giúp</string>
     <string name="menu_all">Tất cả</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_apply">Áp dụng mẫu hạn chế định sẵn</string>
     <string name="menu_clear">Xóa</string>
     <string name="menu_app_launch">Chạy</string>
     <string name="menu_app_settings">Tùy chỉnh</string>
@@ -69,12 +69,12 @@
         <item quantity="other">%d bộ lọc có hiệu lực</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fused">Lọc các ứng dụng truy cập dữ liệu</string>
+    <string name="title_finternet">Lọc các ứng dụng truy cập internet</string>
+    <string name="title_fpermission">Lọc theo quyền</string>
+    <string name="title_frestricted">Lọc các ứng dụng đã thiết lập hạn chế</string>
+    <string name="title_fuser">Lọc các ứng dụng người dùng</string>
+    <string name="title_fsystem">Lọc các ứng dụng hệ thống</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>
