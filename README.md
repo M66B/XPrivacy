@@ -552,6 +552,7 @@ Changelog
 **Next release**
 
 * Fixed templates no longer applied ([issue](https://github.com/M66B/XPrivacy/issues/669))
+* Fixed wrong permissions sometimes applied (possibly fixing [issue](https://github.com/M66B/XPrivacy/issues/627))
 * Updated French translation
 * Updated Simplified Chinese translation
 

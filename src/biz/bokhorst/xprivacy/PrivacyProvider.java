@@ -56,7 +56,8 @@ public class PrivacyProvider extends ContentProvider {
 	private static final int TYPE_USAGE = 2;
 	private static final int TYPE_SETTING = 3;
 
-	private static Object mFallbackLock = new Object();
+	private static Object mFallbackRestrictionLock = new Object();
+	private static Object mFallbackSettingsLock = new Object();
 	private static int mFallbackRestrictionsUid = 0;
 	private static long mFallbackRestrictionsTime = 0;
 	private static long mFallbackSettingsTime = 0;
@@ -420,33 +421,28 @@ public class PrivacyProvider extends ContentProvider {
 	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName, String methodName) {
 		try {
 			long now = new Date().getTime();
-			String name = getPrefFileName(PREF_RESTRICTION, uid);
-			File file = new File(name);
-			File backup = new File(name + ".bak");
-			if (file.canRead() && !backup.exists())
-				synchronized (mFallbackLock) {
-					if (mFallbackRestrictions == null || mFallbackRestrictionsUid != uid) {
-						// Initial load
-						mFallbackRestrictions = new SharedPreferencesEx(file);
-						mFallbackRestrictionsUid = uid;
-						mFallbackRestrictionsTime = now;
-						long ms = System.currentTimeMillis() - now;
-						Util.log(null, Log.INFO, "Load fallback restrictions uid=" + uid + "/"
-								+ mFallbackRestrictionsUid + " " + ms + " ms");
-					} else if (mFallbackRestrictionsTime + PrivacyManager.cRestrictionCacheTimeoutMs < now) {
-						// Check update
-						mFallbackRestrictions.reload();
-						mFallbackRestrictionsUid = uid;
-						mFallbackRestrictionsTime = now;
-						long ms = System.currentTimeMillis() - now;
-						Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + uid + " " + ms + " ms");
-					}
-				}
+			File file = new File(getPrefFileName(PREF_RESTRICTION, uid));
 
-			if (mFallbackRestrictions == null)
-				return false;
-			else
-				return getRestricted(restrictionName, methodName, mFallbackRestrictions);
+			synchronized (mFallbackRestrictionLock) {
+				if (mFallbackRestrictions == null || mFallbackRestrictionsUid != uid) {
+					// Initial load
+					mFallbackRestrictions = new SharedPreferencesEx(file);
+					mFallbackRestrictionsUid = uid;
+					mFallbackRestrictionsTime = now;
+					long ms = System.currentTimeMillis() - now;
+					Util.log(null, Log.INFO, "Load fallback restrictions uid=" + uid + "/" + mFallbackRestrictionsUid
+							+ " " + ms + " ms");
+				} else if (mFallbackRestrictionsTime + PrivacyManager.cRestrictionCacheTimeoutMs < now) {
+					// Check update
+					mFallbackRestrictions.reload();
+					mFallbackRestrictionsUid = uid;
+					mFallbackRestrictionsTime = now;
+					long ms = System.currentTimeMillis() - now;
+					Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + uid + " " + ms + " ms");
+				}
+			}
+
+			return getRestricted(restrictionName, methodName, mFallbackRestrictions);
 		} catch (Throwable ex) {
 			Util.bug(hook, ex);
 			return false;
@@ -456,10 +452,9 @@ public class PrivacyProvider extends ContentProvider {
 	public static String getSettingFallback(String settingName, String defaultValue) {
 		try {
 			long now = new Date().getTime();
-			String name = getPrefFileName(PREF_SETTINGS);
-			File file = new File(name);
-			File backup = new File(name + ".bak");
-			if (file.canRead() && !backup.exists()) {
+			File file = new File(getPrefFileName(PREF_SETTINGS));
+
+			synchronized (mFallbackSettingsLock) {
 				// Initial load
 				if (mFallbackSettings == null) {
 					mFallbackSettings = new SharedPreferencesEx(file);
@@ -469,21 +464,16 @@ public class PrivacyProvider extends ContentProvider {
 				}
 
 				// Get update
-				synchronized (mFallbackSettings) {
-					if (mFallbackSettingsTime + PrivacyManager.cSettingCacheTimeoutMs < now) {
-						mFallbackSettings.reload();
-						mFallbackSettingsTime = now;
-						long ms = System.currentTimeMillis() - now;
-						Util.log(null, Log.INFO, "Reload fallback settings uid=" + Binder.getCallingUid() + " " + ms
-								+ " ms");
-					}
+				if (mFallbackSettingsTime + PrivacyManager.cSettingCacheTimeoutMs < now) {
+					mFallbackSettings.reload();
+					mFallbackSettingsTime = now;
+					long ms = System.currentTimeMillis() - now;
+					Util.log(null, Log.INFO, "Reload fallback settings uid=" + Binder.getCallingUid() + " " + ms
+							+ " ms");
 				}
 			}
 
-			if (mFallbackSettings == null)
-				return defaultValue;
-			else
-				return mFallbackSettings.getString(getSettingPref(settingName), defaultValue);
+			return mFallbackSettings.getString(getSettingPref(settingName), defaultValue);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 			return defaultValue;
