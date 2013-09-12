@@ -551,6 +551,7 @@ Changelog
 
 **Next release**
 
+* Allow uncheck half checked restrictions
 * Updated Arabic translation
 * Updated Spanish translation
 * Updated Vietnamese translation

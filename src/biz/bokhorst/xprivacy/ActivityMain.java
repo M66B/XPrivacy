@@ -1056,40 +1056,45 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					holder.imgFrozen.setVisibility(xAppInfo.isFrozen() ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					holder.imgCBName.setEnabled(mRestrictionName == null && someRestricted ? allRestricted : true);
 					holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
-							: (someRestricted ? (mRestrictionName == null ? R.drawable.checkbox_half
-									: R.drawable.checkbox_check) : android.R.color.transparent));
+							: (someRestricted ? R.drawable.checkbox_half : android.R.color.transparent));
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							if (!holder.imgCBName.isEnabled())
-								return;
-
 							// Get all/some restricted
 							boolean allRestricted = true;
+							boolean someRestricted = false;
 							if (mRestrictionName == null)
 								for (boolean restricted : PrivacyManager.getRestricted(view.getContext(),
-										xAppInfo.getUid(), false))
+										xAppInfo.getUid(), true)) {
 									allRestricted = allRestricted && restricted;
+									someRestricted = someRestricted || restricted;
+								}
 							else {
 								boolean restricted = PrivacyManager.getRestricted(null, view.getContext(),
 										xAppInfo.getUid(), mRestrictionName, null, false, false);
 								allRestricted = restricted;
+								someRestricted = restricted;
 							}
 
 							// Process click
-							allRestricted = !allRestricted;
-							for (String restrictionName : listRestriction)
-								PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
-										restrictionName, null, allRestricted);
-							holder.imgCBName.setEnabled(!(allRestricted && mRestrictionName == null));
-							holder.imgCBName
-									.setImageResource(allRestricted ? (mRestrictionName == null ? R.drawable.checkbox_half
-											: R.drawable.checkbox_check)
-											: android.R.color.transparent);
+							someRestricted = !someRestricted;
+							if (mRestrictionName == null && !someRestricted) {
+								allRestricted = false;
+								PrivacyManager.deleteRestrictions(view.getContext(), xAppInfo.getUid());
+							} else {
+								if (mRestrictionName != null)
+									allRestricted = someRestricted;
+								for (String restrictionName : listRestriction)
+									PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
+											restrictionName, null, someRestricted);
+							}
+
+							// Update visible state
+							holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
+									: (someRestricted ? R.drawable.checkbox_half : android.R.color.transparent));
 						}
 					});
 				}
