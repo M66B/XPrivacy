@@ -14,7 +14,7 @@ public class XActivityManagerService extends XHook {
 	private static boolean mSystemReady = false;
 	private static long mSystemReadyAt = 0;
 
-	private static final long cSystemReadyDelay = 90 * 1000;
+	private static final long cSystemReadyDelay = 60 * 1000;
 
 	protected XActivityManagerService(String methodName, String restrictionName) {
 		super(restrictionName, methodName, null);

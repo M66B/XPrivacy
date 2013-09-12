@@ -553,6 +553,7 @@ Changelog
 
 * Allow uncheck half checked restrictions
 * Display application name in settings
+* Use privacy provider 60 seconds after system ready
 * Updated Arabic translation
 * Updated Spanish translation
 * Updated Vietnamese translation
