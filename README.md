@@ -551,7 +551,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated French translation
 
 **Version 1.9.19 release candidate**
 
