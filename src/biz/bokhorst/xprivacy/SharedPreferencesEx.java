@@ -62,7 +62,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void loadFromDiskLocked() {
 		int tries = 0;
-		while (!mLoaded && ++tries < 30) {
+		while (!mLoaded && (mFile.exists() || mBackupFile.exists()) && ++tries < 10) {
 			if (mFile.exists() && mFile.canRead() && !mBackupFile.exists()) {
 				Map map = null;
 				long lastModified = mFile.lastModified();
@@ -94,11 +94,16 @@ public final class SharedPreferencesEx implements SharedPreferences {
 			}
 			if (!mLoaded)
 				try {
-					Thread.sleep(500);
+					Thread.sleep(200);
 					Util.log(null, Log.WARN, "Load " + mFile + " try " + tries);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
+		}
+		if (!mLoaded) {
+			mLoaded = true;
+			mMap = new HashMap<String, Object>();
+			notifyAll();
 		}
 	}
 
