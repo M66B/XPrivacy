@@ -556,6 +556,7 @@ Changelog
 **Version 1.9.21 release candidate**
 
 * Fixed hang on boot
+* Fixed filter on restrictions
 
 **Version 1.9.20 release candidate**
 
