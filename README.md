@@ -555,7 +555,7 @@ Changelog
 
 **Version 1.9.21 release candidate**
 
-* Fixed hang on boot
+* Fixed hang on boot / start application
 * Fixed filter on restrictions
 
 **Version 1.9.20 release candidate**
