@@ -20,7 +20,7 @@
     <string name="menu_about">O aplikácii</string>
     <string name="menu_help">Nápoveda</string>
     <string name="menu_all">Všetko</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_apply">Použiť šablónu</string>
     <string name="menu_clear">Vyčistiť</string>
     <string name="menu_app_launch">Spustiť</string>
     <string name="menu_app_settings">Nastavenia</string>
@@ -71,12 +71,12 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
         <item quantity="other">%d aktívnych filtrov</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fused">Filter na využitie dát</string>
+    <string name="title_finternet">Filter na prístup k internetu</string>
+    <string name="title_fpermission">Filter na povolenie</string>
+    <string name="title_frestricted">Filter na obmedzené</string>
+    <string name="title_fuser">Filter na užívateľské aplikácie</string>
+    <string name="title_fsystem">Filter na systémové aplikácie</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
