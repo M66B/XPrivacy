@@ -12,10 +12,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <TextView
+            android:id="@+id/tvAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold" />
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="2" >
+
+            <TableRow>
+
+                <View
+                    android:text="@string/settings_serial"
+                    android:textIsSelectable="false" />
+
+                <TextView
+                    android:layout_span="2"
+                    android:text="@string/msg_random"
+                    android:textIsSelectable="false" />
+            </TableRow>
 
             <TableRow>
 

@@ -379,7 +379,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				optionUsage();
 				return true;
 			case R.id.menu_settings:
-				Settings.edit(ActivityMain.this, 0);
+				SettingsDialog.edit(ActivityMain.this, null);
 				return true;
 			case R.id.menu_template:
 				optionTemplate();

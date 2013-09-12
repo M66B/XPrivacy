@@ -552,6 +552,7 @@ Changelog
 **Next release**
 
 * Allow uncheck half checked restrictions
+* Display application name in settings
 * Updated Arabic translation
 * Updated Spanish translation
 * Updated Vietnamese translation

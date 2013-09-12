@@ -14,10 +14,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
-public class Settings {
+public class SettingsDialog {
 
-	public static void edit(final Context context, final int uid) {
+	public static void edit(final Context context, ApplicationInfoEx appInfo) {
+		final int uid = (appInfo == null ? 0 : appInfo.getUid());
+
 		// Build dialog
 		final Dialog dlgSettings = new Dialog(context);
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
@@ -26,6 +29,7 @@ public class Settings {
 		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(context, R.attr.icon_launcher));
 
 		// Reference controls
+		TextView tvAppName = (TextView) dlgSettings.findViewById(R.id.tvAppName);
 		final EditText etSerial = (EditText) dlgSettings.findViewById(R.id.etSerial);
 		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
 		final EditText etLon = (EditText) dlgSettings.findViewById(R.id.etLon);
@@ -60,6 +64,12 @@ public class Settings {
 
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 		Button btnClear = (Button) dlgSettings.findViewById(R.id.btnClear);
+
+		// Display app name
+		if (appInfo == null)
+			tvAppName.setVisibility(View.GONE);
+		else
+			tvAppName.setText(appInfo.getFirstApplicationName());
 
 		// Set current values
 		boolean log = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingLog, false, false);

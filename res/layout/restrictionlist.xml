@@ -31,7 +31,6 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:paddingLeft="6dip"
-            android:textIsSelectable="false"
             android:textStyle="bold" />
     </LinearLayout>
 
