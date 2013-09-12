@@ -553,6 +553,10 @@ Changelog
 
 * ...
 
+**Version 1.9.19 release candidate**
+
+* Revert *Use privacy provider 60 seconds after system ready for all packages*
+
 **Version 1.9.18 release candidate**
 
 * Allow uncheck half checked restrictions
