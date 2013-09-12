@@ -35,7 +35,7 @@ public class PackageChange extends BroadcastReceiver {
 				PackageManager pm = context.getPackageManager();
 				try {
 					pInfo = pm.getPackageInfo(packageName, 0);
-					system = (pInfo.applicationInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) == 0;
+					system = (pInfo.applicationInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0;
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 					return;
