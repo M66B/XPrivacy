@@ -20,7 +20,7 @@
     <string name="menu_about">À propos</string>
     <string name="menu_help">Aide</string>
     <string name="menu_all">Tous</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_apply">Appliquer le modèle</string>
     <string name="menu_clear">Tout effacer</string>
     <string name="menu_app_launch">Lancer</string>
     <string name="menu_app_settings">Infos sur l\'application</string>
@@ -70,12 +70,12 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
         <item quantity="other">%d filtres actifs</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fused">Filtrer utilisation des données</string>
+    <string name="title_finternet">Filtrer ayant accès à internet</string>
+    <string name="title_fpermission">Filtrer par permissions</string>
+    <string name="title_frestricted">Filtrer restreintes</string>
+    <string name="title_fuser">Filtrer les applis utilisateur</string>
+    <string name="title_fsystem">Filtrer les applis système</string>
     <string name="settings_serial">N° de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
