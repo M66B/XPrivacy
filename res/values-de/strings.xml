@@ -20,7 +20,7 @@
     <string name="menu_about">Über XPrivacy</string>
     <string name="menu_help">Hilfe</string>
     <string name="menu_all">Alles (beschränkt)</string>
-    <string name="menu_apply">Template (Vorlage) übernehmen</string>
+    <string name="menu_apply">Template übernehmen</string>
     <string name="menu_clear">Nichts (beschränkt)</string>
     <string name="menu_app_launch">App öffnen</string>
     <string name="menu_app_settings">App-Info anzeigen</string>
