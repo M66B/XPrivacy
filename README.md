@@ -554,13 +554,15 @@ Changelog
 * Allow uncheck half checked restrictions
 * Display application name in settings
 * Use privacy provider 60 seconds after system ready
+* Fixed system application sometimes get restricted
 * Updated Arabic translation
+* Updated German translation
 * Updated Spanish translation
 * Updated Vietnamese translation
 
 **Version 1.9.17 BETA!**
 
-* Fix true randomization setting ([issue](https://github.com/M66B/XPrivacy/issues/658))
+* Fixed true randomization setting ([issue](https://github.com/M66B/XPrivacy/issues/658))
 * Add filter on user applications
 * Updated German translation
 
