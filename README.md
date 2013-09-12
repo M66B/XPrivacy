@@ -553,8 +553,9 @@ Changelog
 
 * Allow uncheck half checked restrictions
 * Display application name in settings
-* Use privacy provider 60 seconds after system ready
-* Fixed system application sometimes get restricted
+* Use privacy provider 60 seconds after system ready for all packages
+* Fixed system application getting restricted on update
+* Sort application names for same uid
 * Updated Arabic translation
 * Updated German translation
 * Updated Spanish translation

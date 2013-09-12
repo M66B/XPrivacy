@@ -114,6 +114,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	private void AddApplicationName(String Name) {
 		mListApplicationName.add(Name);
+		Collections.sort(mListApplicationName);
 	}
 
 	public String getFirstApplicationName() {
