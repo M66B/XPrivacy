@@ -20,7 +20,7 @@
     <string name="menu_about">关于</string>
     <string name="menu_help">帮助</string>
     <string name="menu_all">全部</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_apply">应用模板</string>
     <string name="menu_clear">清除</string>
     <string name="menu_app_launch">启动</string>
     <string name="menu_app_settings">设置</string>
@@ -74,8 +74,8 @@
     <string name="title_finternet">无联网权过滤</string>
     <string name="title_fpermission">无关权限过滤</string>
     <string name="title_frestricted">未勾限制过滤</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">按应用级别过滤</string>
+    <string name="title_fuser">用户应用过滤</string>
+    <string name="title_fsystem">系统应用过滤</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
@@ -96,3 +96,4 @@
     <string name="help_dangerous">表示勿轻易限制</string>
 
 </resources>
+
