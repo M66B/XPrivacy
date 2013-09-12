@@ -551,6 +551,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.9.18 release candidate**
+
 * Allow uncheck half checked restrictions
 * Display application name in settings
 * Use privacy provider 60 seconds after system ready for all packages
