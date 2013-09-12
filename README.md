@@ -551,6 +551,7 @@ Changelog
 
 **Next release**
 
+* Updated Arabic translation
 * Updated Spanish translation
 * Updated Vietnamese translation
 
