@@ -556,7 +556,7 @@ Changelog
 **Version 1.9.20 release candidate**
 
 * Fixed templates no longer applied ([issue](https://github.com/M66B/XPrivacy/issues/669))
-* Fixed wrong permissions sometimes applied (possibly fixing [issue](https://github.com/M66B/XPrivacy/issues/627))
+* Fixed wrong restrictions sometimes applied (possibly fixing [issue](https://github.com/M66B/XPrivacy/issues/627))
 * Updated French translation
 * Updated Simplified Chinese translation
 
