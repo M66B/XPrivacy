@@ -258,6 +258,7 @@ It seems like a lot of steps, but it is done in no time:
 	* Be sure to install [the latest version](http://dl.xposed.info/latest.apk)
 	* Download and copy the *Xposed* disabler to your SD card to disable Xposed in case of troubles
 	* [MIUI](http://en.miui.com/) is not supported by Xposed
+	* The Xposed fix is not needed anymore
 1. Download and install XPrivacy from [here](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
 	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
 1. Enable XPrivacy from the Xposed installer
