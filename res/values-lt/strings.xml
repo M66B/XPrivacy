@@ -9,7 +9,7 @@
     <string name="menu_usage">Leidimų naudojimas</string>
     <string name="menu_refresh">Atnaujinti</string>
     <string name="menu_settings">XPrivacy parametrai</string>
-    <string name="menu_template">Ruošiniai</string>
+    <string name="menu_template">Šablonai</string>
     <string name="menu_report">Pranešti apie problemą</string>
     <string name="menu_export">Exportuoti parametrus</string>
     <string name="menu_import">Importuoti parametrus</string>
@@ -20,11 +20,11 @@
     <string name="menu_about">Apie XPrivacy</string>
     <string name="menu_help">Pagalba</string>
     <string name="menu_all">Visi leidimai</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_apply">Taikyti šabloną</string>
     <string name="menu_clear">Išvalyti visus leidimus</string>
     <string name="menu_app_launch">Paleisti programą</string>
     <string name="menu_app_settings">Programos informacija</string>
-    <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_store">Play Store parduotuvė</string>
     <string name="menu_accounts">Leisti pažymėtas paskyras</string>
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>
     <string name="msg_new">Naujas</string>
@@ -33,7 +33,7 @@
     <string name="msg_licensed" formatted="false">licencija: %s</string>
     <string name="msg_loading">Palaukite...</string>
     <string name="msg_edit">Spustelėkite programos piktogramą norėdami redaguoti apribojimus</string>
-    <string name="msg_sure">Esate tikri?</string>
+    <string name="msg_sure">Sutinkate?</string></string>
     <string name="msg_done">Atlikta</string>
     <string name="msg_reboot">Privaloma perkrauti prietaisą!</string>
     <string name="msg_random">Atsitiktiniai duomenys</string>
@@ -70,23 +70,23 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
         <item quantity="other">%d aktyvūs filtrai</item>
     </plurals>
 
-    <string name="title_fused">Filtruoti duomenų naudojimą</string>
-    <string name="title_finternet">Filtras pagal Interneto prieigą</string>
-    <string name="title_fpermission">Filtras pagal leidimus</string>
-    <string name="title_frestricted">Filtras pagal apribotus</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filtras pagal sistemos programas</string>
+    <string name="title_fused">Duomenų naudojimas</string>
+    <string name="title_finternet">Interneto prieiga</string>
+    <string name="title_fpermission">Aktyvūs leidimai</string>
+    <string name="title_frestricted">Apribotieji</string>
+    <string name="title_fuser">Vartotojo programos</string>
+    <string name="title_fsystem">Sistemos programos</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
-    <string name="settings_mac">MAC</string>
+    <string name="settings_mac">MAC adresas</string>
     <string name="settings_ip">IP addresas</string>
     <string name="settings_phone">Telefono numeris</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Šalis</string>
     <string name="settings_operator">Operatorius</string>
     <string name="settings_subscriber">Abonento ID</string>
-    <string name="settings_ua">User agent</string>
+    <string name="settings_ua">Vartotojo agentas</string>
     <string name="settings_log">DEBUG žurnalas (reikia paleisti iš naujo)</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
