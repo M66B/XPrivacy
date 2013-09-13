@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated Hindi translation
 
 **Version 1.9.21 release candidate**
 
