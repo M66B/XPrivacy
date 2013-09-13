@@ -386,6 +386,8 @@
 			</div>
 
 			<div class="container">
+				<a id="privacy_policy" href="#">Privacy policy</a>
+				<p id="privacy_policy_text" style="display: none;">I will not, under any circumstances whatsoever, give out or sell your information to anyone, unless required by law.</p>
 				<p class="text-muted credit">&copy; 2013 <a href="http://blog.bokhorst.biz/about/" target="_blank">Marcel Bokhorst</a></p>
 			</div>
 		</div>
@@ -397,6 +399,10 @@
 			  $('#details').click(function() {
 				  $('.details').toggle();
 				  return false;
+			  });
+			  $('#privacy_policy').click(function() {
+				$('#privacy_policy_text').toggle();
+				return false;
 			  });
 			});
 		</script>
