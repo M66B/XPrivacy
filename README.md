@@ -406,11 +406,12 @@ The right order for ROM updates is:
 1. Reboot to recovery
 1. Flash ROM
 1. Flash Google apps (optional)
+1. Re-activate Xposed using [Xposed toggle](http://forum.xda-developers.com/showpost.php?p=45188739)
 1. Reboot to Android
 1. Restore the android ID (when needed; with for example [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup))
 1. Clear XPrivacy data
 1. Import XPrivacy settings
-1. Disable fligh mode
+1. Disable flight mode
 
 (this assumes no data wipe and Xposed and XPrivacy installed before updating the ROM)
 
