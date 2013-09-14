@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.os.Process;
@@ -168,6 +169,7 @@ public class Util {
 				Util.log(null, Log.INFO, "Licensing: enabler installed");
 				return true;
 			}
+		} catch (NameNotFoundException ignored) {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
