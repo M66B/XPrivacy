@@ -20,7 +20,7 @@
     <string name="menu_about">O programu</string>
     <string name="menu_help">Pomoč</string>
     <string name="menu_all">Vse</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_apply">Uporabi predlogo</string>
     <string name="menu_clear">Počisti</string>
     <string name="menu_app_launch">Zaženi</string>
     <string name="menu_app_settings">Podrobnosti programa</string>
@@ -28,7 +28,7 @@
     <string name="menu_accounts">Izberi dovoljene račune</string>
     <string name="menu_contacts">Izberi dovoljene stike</string>
     <string name="msg_new">Novo</string>
-    <string name="msg_update">Posodobi</string>
+    <string name="msg_update">Posodobitev</string>
     <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencirano na: %s</string>
     <string name="msg_loading">Nalagam</string>
@@ -72,12 +72,12 @@
         <item quantity="other">%d aktivnih filtrov</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fused">Filtriraj po uporabi podatkov</string>
+    <string name="title_finternet">Filtriraj po internetnem dostopu</string>
+    <string name="title_fpermission">Filtriraj po pravicah</string>
+    <string name="title_frestricted">Filtriraj po omejitvah</string>
+    <string name="title_fuser">Filtriraj uporabniške programe</string>
+    <string name="title_fsystem">Filtriraj sistemske programe</string>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
