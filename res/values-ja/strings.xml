@@ -9,7 +9,7 @@
     <string name="menu_usage">履歴</string>
     <string name="menu_refresh">再読み込み</string>
     <string name="menu_settings">設定</string>
-    <string name="menu_template">カテゴリ</string>
+    <string name="menu_template">テンプレ</string>
     <string name="menu_report">問題を報告</string>
     <string name="menu_export">エクスポート</string>
     <string name="menu_import">インポート</string>
@@ -20,7 +20,7 @@
     <string name="menu_about">アプリ情報</string>
     <string name="menu_help">ヘルプ</string>
     <string name="menu_all">全て</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_apply">テンプレを適用</string>
     <string name="menu_clear">消去</string>
     <string name="menu_app_launch">アプリを起動</string>
     <string name="menu_app_settings">設定</string>
@@ -63,19 +63,19 @@
     <string name="restrict_view">表示 (ブラウザ)</string>
     <string name="title_category">カテゴリ:</string>
     <string name="title_restrict">チェックで制限:</string>
-    <string name="title_nofilter">有効なフィルタなし</string>
+    <string name="title_nofilter">フィルタなし</string>
 
     <plurals name="title_filters">
-        <item quantity="one">1個の有効なフィルタ</item>
-        <item quantity="other">%d個の有効なフィルタ</item>
+        <item quantity="one">1個のフィルタ適用中</item>
+        <item quantity="other">%d個のフィルタ適用中</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fused">データ使用有りを表示</string>
+    <string name="title_finternet">ネットアクセス有りを表示</string>
+    <string name="title_fpermission">権限有りを表示</string>
+    <string name="title_frestricted">制限済みを表示</string>
+    <string name="title_fuser">ユーザーアプリを表示</string>
+    <string name="title_fsystem">システムアプリを表示</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
