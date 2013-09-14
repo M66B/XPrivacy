@@ -5,6 +5,7 @@ Changelog
 
 * Group some application menu items (thanks @[tonymanou](https://github.com/tonymanou))
 * Prevent user/system app filter both being applied
+* Auto fix folder permissions
 * Updated Hindi translation
 * Updated Japanese translation
 * Updated Lithuanian translation

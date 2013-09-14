@@ -509,8 +509,10 @@ public class PrivacyProvider extends ContentProvider {
 
 	public static void fixFilePermissions() {
 		String packageName = PrivacyManager.class.getPackage().getName();
-		File list[] = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName
-				+ File.separator + "shared_prefs").listFiles();
+		File folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName
+				+ File.separator + "shared_prefs");
+		folder.setReadable(true, false);
+		File list[] = folder.listFiles();
 		if (list != null)
 			for (File file : list)
 				if (file.getName().startsWith("biz.bokhorst.xprivacy.provider.") && file.getName().endsWith(".xml")
