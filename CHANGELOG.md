@@ -8,6 +8,7 @@ Changelog
 * Updated Hindi translation
 * Updated Japanese translation
 * Updated Lithuanian translation
+* Updated Slovenian translation
 
 **Version 1.9.21 release candidate**
 
