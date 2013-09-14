@@ -4,6 +4,8 @@ Changelog
 **Next release**
 
 * Updated Hindi translation
+* Updated Japanese translation
+* Updated Lithuanian translation
 
 **Version 1.9.21 release candidate**
 
