@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Group some application menu items (thanks @[tonymanou](https://github.com/tonymanou))
+* Prevent user/system app filter both being applied
 * Updated Hindi translation
 * Updated Japanese translation
 * Updated Lithuanian translation

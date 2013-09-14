@@ -454,12 +454,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		else if (buttonView == cbFPermission)
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFPermission,
 					Boolean.toString(isChecked));
-		else if (buttonView == cbFUser)
+		else if (buttonView == cbFUser) {
+			if (isChecked)
+				cbFSystem.setChecked(false);
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFUser,
 					Boolean.toString(isChecked));
-		else if (buttonView == cbFSystem)
+		} else if (buttonView == cbFSystem) {
+			if (isChecked)
+				cbFUser.setChecked(false);
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFSystem,
 					Boolean.toString(isChecked));
+		}
 		applyFilter();
 	}
 
