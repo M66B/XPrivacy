@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.9.22 release candidate**
+
 * Group some application menu items (thanks @[tonymanou](https://github.com/tonymanou))
 * Prevent user/system application filter both being applied
 * Auto fix folder permissions
