@@ -6,7 +6,8 @@ Changelog
 * Group some application menu items (thanks @[tonymanou](https://github.com/tonymanou))
 * Prevent user/system application filter both being applied
 * Auto fix folder permissions
-* Added icon for user application filter, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642) for the icon
+* Added icon for user application filter, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
+* Display file name after export ([issue](https://github.com/M66B/XPrivacy/issues/680))
 * Updated Hindi translation
 * Updated Japanese translation
 * Updated Lithuanian translation

@@ -54,6 +54,7 @@ import android.provider.Settings.Secure;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.util.Xml;
+import android.widget.Toast;
 
 public class ActivityShare extends Activity {
 	public static final String cFileName = "FileName";
@@ -213,6 +214,9 @@ public class ActivityShare extends Activity {
 			intent.putExtra(cFileName, mFile.getAbsolutePath());
 			setResult(result.equals(getString(R.string.msg_done)) ? 0 : 1, intent);
 			finish();
+
+			Toast toast = Toast.makeText(ActivityShare.this, mFile.getAbsolutePath(), Toast.LENGTH_LONG);
+			toast.show();
 			super.onPostExecute(result);
 		}
 
