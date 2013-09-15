@@ -4,8 +4,9 @@ Changelog
 **Next release**
 
 * Group some application menu items (thanks @[tonymanou](https://github.com/tonymanou))
-* Prevent user/system app filter both being applied
+* Prevent user/system application filter both being applied
 * Auto fix folder permissions
+* Added icon for user application filter, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642) for the icon
 * Updated Hindi translation
 * Updated Japanese translation
 * Updated Lithuanian translation
