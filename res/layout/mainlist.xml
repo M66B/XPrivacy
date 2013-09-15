@@ -205,7 +205,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:contentDescription="@string/title_fuser"
-                    android:src="@drawable/user" />
+                    android:src="@drawable/apps" />
 
                 <CheckBox
                     android:id="@+id/cbFUser"
