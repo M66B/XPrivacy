@@ -69,6 +69,16 @@ public class PackageChange extends BroadcastReceiver {
 					PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
 							PendingIntent.FLAG_UPDATE_CURRENT);
 
+					// Build result intent clear
+					Intent resultIntentClear = new Intent(context, ActivityApp.class);
+					resultIntentClear.putExtra(ActivityApp.cPackageName, packageName);
+					resultIntentClear.putExtra(ActivityApp.cActionClear, true);
+					resultIntentClear.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+					// Build pending intent clear
+					PendingIntent pendingIntentClear = PendingIntent.getActivity(context, uid, resultIntentClear,
+							PendingIntent.FLAG_UPDATE_CURRENT);
+
 					// Title
 					String title = String.format("%s %s %s",
 							context.getString(replacing ? R.string.msg_update : R.string.msg_new),
@@ -82,6 +92,8 @@ public class PackageChange extends BroadcastReceiver {
 					notificationBuilder.setContentIntent(pendingIntent);
 					notificationBuilder.setWhen(System.currentTimeMillis());
 					notificationBuilder.setAutoCancel(true);
+					notificationBuilder.addAction(R.drawable.cross_holo_dark, context.getString(R.string.menu_clear),
+							pendingIntentClear);
 					Notification notification = notificationBuilder.build();
 
 					// Notify

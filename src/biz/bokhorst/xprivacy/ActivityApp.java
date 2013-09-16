@@ -77,6 +77,7 @@ public class ActivityApp extends Activity {
 	public static final String cPackageName = "PackageName";
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
+	public static final String cActionClear = "Clear";
 
 	private static final int ACTIVITY_FETCH = 1;
 
@@ -108,7 +109,7 @@ public class ActivityApp extends Activity {
 		String restrictionName = (extras.containsKey(cRestrictionName) ? extras.getString(cRestrictionName) : null);
 		String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
 
-		// Check if new package
+		// Failsafe
 		if (mAppInfo != null && !mAppInfo.getPackageName().equals(packageName)) {
 			recreate();
 			return;
@@ -206,6 +207,10 @@ public class ActivityApp extends Activity {
 
 		// Up navigation
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		// Clear
+		if (extras.containsKey(cActionClear))
+			optionClear();
 	}
 
 	@Override
