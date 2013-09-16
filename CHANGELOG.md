@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Fixed up navigation ([issue](https://github.com/M66B/XPrivacy/issues/681))
 
 **Version 1.9.22 release candidate**
 
