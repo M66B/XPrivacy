@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.9.24 release candidate**
+
 * Option to clear restrictions from notification (if your Android version supports this)
 
 **Version 1.9.23 release candidate**
