@@ -1,4 +1,4 @@
-XPrivacy
+GXPrivacy
 ========
 
 The ultimate, yet easy to use, privacy manager for Android
@@ -190,6 +190,7 @@ For easy usage, data is restricted by category:
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID (IMSI for a GSM phone)
 	* return a fake phone device ID (IMEI): 000000000000000
+	* return a fake phone type: GSM (matching IMEI)
 	* return a empty ISIM/ISIM domain
 	* return a empty IMPI/IMPU
 	* return a fake MSISDN
