@@ -1067,7 +1067,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
-						public void onClick(View view) {
+						public void onClick(final View view) {
 							// Get all/some restricted
 							boolean allRestricted = true;
 							boolean someRestricted = false;
@@ -1087,19 +1087,41 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							// Process click
 							someRestricted = !someRestricted;
 							if (mRestrictionName == null && !someRestricted) {
-								allRestricted = false;
-								PrivacyManager.deleteRestrictions(view.getContext(), xAppInfo.getUid());
+								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
+								alertDialogBuilder.setTitle(getString(R.string.app_name));
+								alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+								alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+								alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+										new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												// Update restriction
+												PrivacyManager.deleteRestrictions(view.getContext(), xAppInfo.getUid());
+
+												// Update visible state
+												holder.imgCBName.setImageResource(android.R.color.transparent);
+											}
+										});
+								alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
+										new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+											}
+										});
+								AlertDialog alertDialog = alertDialogBuilder.create();
+								alertDialog.show();
 							} else {
+								// Update restriction
 								if (mRestrictionName != null)
 									allRestricted = someRestricted;
 								for (String restrictionName : listRestriction)
 									PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
 											restrictionName, null, someRestricted);
-							}
 
-							// Update visible state
-							holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
-									: (someRestricted ? R.drawable.checkbox_half : android.R.color.transparent));
+								// Update visible state
+								holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
+										: (someRestricted ? R.drawable.checkbox_half : android.R.color.transparent));
+							}
 						}
 					});
 				}

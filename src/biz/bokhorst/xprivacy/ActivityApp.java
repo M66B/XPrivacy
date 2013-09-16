@@ -319,34 +319,67 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionApply() {
-		List<String> listRestriction = PrivacyManager.getRestrictions(false);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+		alertDialogBuilder.setTitle(getString(R.string.app_name));
+		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// Get toggle
+				boolean restricted = false;
+				List<String> listRestriction = PrivacyManager.getRestrictions(false);
+				for (String restrictionName : listRestriction)
+					if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+							String.format("Template.%s", restrictionName), true, false))
+						if (PrivacyManager.getRestricted(null, ActivityApp.this, mAppInfo.getUid(), restrictionName,
+								null, false, false)) {
+							restricted = true;
+							break;
+						}
 
-		// Get toggle
-		boolean restricted = false;
-		for (String restrictionName : listRestriction)
-			if (PrivacyManager
-					.getSettingBool(null, this, 0, String.format("Template.%s", restrictionName), true, false))
-				if (PrivacyManager.getRestricted(null, this, mAppInfo.getUid(), restrictionName, null, false, false)) {
-					restricted = true;
-					break;
-				}
+				// Do toggle
+				restricted = !restricted;
+				for (String restrictionName : listRestriction)
+					if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+							String.format("Template.%s", restrictionName), true, false))
+						PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(), restrictionName, null,
+								restricted);
 
-		// Do toggle
-		restricted = !restricted;
-		for (String restrictionName : listRestriction)
-			if (PrivacyManager
-					.getSettingBool(null, this, 0, String.format("Template.%s", restrictionName), true, false))
-				PrivacyManager.setRestricted(null, this, mAppInfo.getUid(), restrictionName, null, restricted);
-
-		// Refresh display
-		if (mPrivacyListAdapter != null)
-			mPrivacyListAdapter.notifyDataSetChanged();
+				// Refresh display
+				if (mPrivacyListAdapter != null)
+					mPrivacyListAdapter.notifyDataSetChanged();
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 	private void optionClear() {
-		PrivacyManager.deleteRestrictions(this, mAppInfo.getUid());
-		if (mPrivacyListAdapter != null)
-			mPrivacyListAdapter.notifyDataSetChanged();
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+		alertDialogBuilder.setTitle(getString(R.string.app_name));
+		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				PrivacyManager.deleteRestrictions(ActivityApp.this, mAppInfo.getUid());
+				if (mPrivacyListAdapter != null)
+					mPrivacyListAdapter.notifyDataSetChanged();
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 	private void optionUsage() {
