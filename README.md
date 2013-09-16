@@ -1,4 +1,4 @@
-GXPrivacy
+XPrivacy
 ========
 
 The ultimate, yet easy to use, privacy manager for Android
