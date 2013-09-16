@@ -514,6 +514,10 @@ Read [here](http://forum.xda-developers.com/showpost.php?p=44427089&postcount=24
 The template is used to apply restrictions to newly installed applications
 and when you use the menu *Apply template*.
 
+**(34) Will there be a iOS / Window phone version?**
+
+No, because these OS'es are to closed to implement something like XPrivacy.
+
 Support
 -------
 
