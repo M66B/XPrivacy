@@ -209,8 +209,11 @@ public class ActivityApp extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Clear
-		if (extras.containsKey(cActionClear))
+		if (extras.containsKey(cActionClear)) {
+			NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.cancel(mAppInfo.getUid());
 			optionClear();
+		}
 	}
 
 	@Override
