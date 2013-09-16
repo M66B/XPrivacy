@@ -5,6 +5,11 @@ Changelog
 
 * ...
 
+**Version 1.9.25 release candidate**
+
+* Fixed always asking for clear when tapping notification
+* Remove notification when selecting clear
+
 **Version 1.9.24 release candidate**
 
 * Option to clear restrictions from notification (if your Android version supports this)
