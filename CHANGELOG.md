@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.9.23 release candidate**
+
 * Fixed up navigation ([issue](https://github.com/M66B/XPrivacy/issues/681))
 * Ask if sure when clearing restrictions / applying template
 
