@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework version %d+ är inte installerad</string>
     <string name="app_notenabled">XPrivacy är inte aktiverad i Xposed Installer</string>
-    <string name="app_wrongandroid">Only for Android version 4.0+</string>
+    <string name="app_wrongandroid">Endast för Android 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy version: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 M. Bokhorst (M66B)</string>
@@ -18,17 +18,17 @@
     <string name="menu_theme">Byt tema</string>
     <string name="menu_pro">Pro-version</string>
     <string name="menu_about">Om</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Hjälp</string>
     <string name="menu_all">Alla</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_apply">Applicera mall</string>
     <string name="menu_clear">Rensa</string>
     <string name="menu_app_launch">Starta</string>
     <string name="menu_app_settings">Inställningar</string>
     <string name="menu_app_store">Play Butik</string>
     <string name="menu_accounts">Välj tillåtna konton</string>
     <string name="menu_contacts">Välj kontakter att tillåta</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="msg_new">Ny</string>
+    <string name="msg_update">Uppdatera</string>
     <string name="msg_restricted" formatted="false">%s blockerad av XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licensierat till: %s</string>
     <string name="msg_loading">Laddar</string>
@@ -70,24 +70,24 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
         <item quantity="other">%d aktiva filter</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fused">Filtrera efter använd data</string>
+    <string name="title_finternet">Filtrera efter internetbehörighet</string>
+    <string name="title_fpermission">Filtrera efter behörighet</string>
+    <string name="title_frestricted">Filtrera efter begränsad</string>
+    <string name="title_fuser">Filtrera efter vanliga appar</string>
+    <string name="title_fsystem">Filtrera efter systemappar</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
     <string name="settings_mac">MAC-adress</string>
-    <string name="settings_ip">IP address</string>
+    <string name="settings_ip">IP-adress</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android-ID</string>
     <string name="settings_country">Land</string>
     <string name="settings_operator">Operatör</string>
     <string name="settings_subscriber">Abonnent-ID</string>
-    <string name="settings_ua">User agent</string>
-    <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_ua">Användaragent</string>
+    <string name="settings_log">Felsökningslogg (kräver omstart)</string>
     <string name="help_application">Applikation</string>
     <string name="help_internet">har internetbehörighet</string>
     <string name="help_granted">har Android-behörighet</string>
