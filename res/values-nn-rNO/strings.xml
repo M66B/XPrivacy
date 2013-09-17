@@ -20,15 +20,15 @@
     <string name="menu_about">Om</string>
     <string name="menu_help">Hjelp</string>
     <string name="menu_all">Alle</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_apply">Bruk skjema</string>
     <string name="menu_clear">Slett</string>
     <string name="menu_app_launch">Kjør</string>
     <string name="menu_app_settings">Innstillinger</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Velg konto som skal tillates</string>
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="msg_new">Nytt</string>
+    <string name="msg_update">Oppdater</string>
     <string name="msg_restricted" formatted="false">%s blokkert av XPrivacy</string>
     <string name="msg_licensed" formatted="false">Lisensert til: %s</string>
     <string name="msg_loading">Lader</string>
@@ -68,24 +68,24 @@
         <item quantity="other">%d filter aktivert</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fused">Filtrer etter data bruk</string>
+    <string name="title_finternet">Filtrer etter Internett bruk</string>
+    <string name="title_fpermission">Filtrer etter tillatelse</string>
+    <string name="title_frestricted">Filtrer etter restriksjon</string>
+    <string name="title_fuser">Filtrer etter vanlige apper</string>
+    <string name="title_fsystem">Filtrer etter system apper</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>
     <string name="settings_mac">MAC adresse</string>
-    <string name="settings_ip">IP address</string>
+    <string name="settings_ip">IP adresse</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_country">Land</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Abonnent ID</string>
-    <string name="settings_ua">User agent</string>
-    <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_ua">Brukeragent</string>
+    <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
     <string name="help_application">Applikasjon</string>
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>
