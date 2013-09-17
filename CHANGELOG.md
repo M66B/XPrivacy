@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated Norwegian translation
 
 **Version 1.9.25 release candidate**
 
