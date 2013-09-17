@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Updated Norwegian translation
+* Updated Swedish translation
 
 **Version 1.9.25 release candidate**
 
