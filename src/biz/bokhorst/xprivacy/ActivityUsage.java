@@ -113,8 +113,10 @@ public class ActivityUsage extends Activity {
 			if (upIntent != null)
 				if (NavUtils.shouldUpRecreateTask(this, upIntent))
 					TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
-				else
-					NavUtils.navigateUpTo(this, upIntent);
+				else {
+					startActivity(upIntent);
+					finish();
+				}
 			return true;
 		case R.id.menu_all:
 			mAll = !mAll;

@@ -261,8 +261,10 @@ public class ActivityApp extends Activity {
 			if (upIntent != null)
 				if (NavUtils.shouldUpRecreateTask(this, upIntent))
 					TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
-				else
-					NavUtils.navigateUpTo(this, upIntent);
+				else {
+					startActivity(upIntent);
+					finish();
+				}
 			return true;
 		case R.id.menu_help:
 			optionHelp();

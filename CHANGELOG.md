@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Fixed up navigation (again) ([issue](https://github.com/M66B/XPrivacy/issues/681))
 * Updated German translation
 * Updated Norwegian translation
 * Updated Simplified Chinese translation
