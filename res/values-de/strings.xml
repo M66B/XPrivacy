@@ -88,7 +88,7 @@
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_ua">User-Agent (Browser)</string>
     <string name="settings_log">Debug-Log (erfordert Geräte-Neustart)</string>
-    <string name="help_application">Legende</string>
+    <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>
     <string name="help_used">hat diese Daten benutzt</string>
