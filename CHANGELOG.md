@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Updated German translation
 * Updated Norwegian translation
 * Updated Swedish translation
 
