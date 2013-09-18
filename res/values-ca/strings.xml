@@ -20,15 +20,15 @@
     <string name="menu_about">Quant a</string>
     <string name="menu_help">Ajuda</string>
     <string name="menu_all">Totes</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_apply">Aplica plantilla</string>
     <string name="menu_clear">Neteja</string>
     <string name="menu_app_launch">Executa</string>
     <string name="menu_app_settings">Configuració</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Selecciona comptes a permetre</string>
     <string name="menu_contacts">Selecciona contactes a permetre</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="msg_new">Nou</string>
+    <string name="msg_update">Actualitza</string>
     <string name="msg_restricted" formatted="false">%s restringit per XPrivacy</string>
     <string name="msg_licensed" formatted="false">Llicenciat a: %s</string>
     <string name="msg_loading">Carregant</string>
@@ -68,12 +68,12 @@
         <item quantity="other">%d filtres actius</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fused">Filtra per ús de dades</string>
+    <string name="title_finternet">Filtra per accés a Internet</string>
+    <string name="title_fpermission">Filtra per permís</string>
+    <string name="title_frestricted">Filtra per restringit</string>
+    <string name="title_fuser">Filtra per aplicacions d\'usuari</string>
+    <string name="title_fsystem">Filtra per aplicacions de sistema</string>
     <string name="settings_serial">Número de sèrie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
@@ -84,8 +84,8 @@
     <string name="settings_country">País</string>
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">ID de subscriptor</string>
-    <string name="settings_ua">User agent</string>
-    <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_ua">Agent d\'usuari</string>
+    <string name="settings_log">Registre de depuració (cal reiniciar)</string>
     <string name="help_application">Aplicació</string>
     <string name="help_internet">té permís d\'Internet</string>
     <string name="help_granted">té permisos d\'Android</string>
