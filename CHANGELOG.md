@@ -5,6 +5,10 @@ Changelog
 
 * ...
 
+**Version 1.9.27 release candidate**
+
+* Restore previous up navigation, but disable up navigation if started from notification
+
 **Version 1.9.26 release candidate**
 
 * Fixed up navigation (again) ([issue](https://github.com/M66B/XPrivacy/issues/681))

@@ -78,6 +78,7 @@ public class ActivityApp extends Activity {
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
 	public static final String cActionClear = "Clear";
+	public static final String cNotified = "Notified";
 
 	private static final int ACTIVITY_FETCH = 1;
 
@@ -206,7 +207,7 @@ public class ActivityApp extends Activity {
 		}
 
 		// Up navigation
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(!extras.containsKey(cNotified));
 
 		// Clear
 		if (extras.containsKey(cActionClear)) {
@@ -261,10 +262,8 @@ public class ActivityApp extends Activity {
 			if (upIntent != null)
 				if (NavUtils.shouldUpRecreateTask(this, upIntent))
 					TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
-				else {
-					startActivity(upIntent);
-					finish();
-				}
+				else
+					NavUtils.navigateUpTo(this, upIntent);
 			return true;
 		case R.id.menu_help:
 			optionHelp();
