@@ -259,6 +259,7 @@ It seems like a lot of steps, but it is done in no time:
 	* Custom recovery ([CWM](http://forum.xda-developers.com/wiki/ClockworkMod_Recovery), [TWRP](http://teamw.in/project/twrp2) or similar)
 1. **Make a backup**
 1. If not done already: root your device; the procedure depends on the brand and model of your device
+	* You can find a guide [here](http://www.androidcentral.com/root) for most devices
 1. Enable *System settings* > *Security* > *Unknown sources*
 1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 	* Be sure to install [the latest version](http://dl.xposed.info/latest.apk)
@@ -520,6 +521,20 @@ and when you use the menu *Apply template*.
 
 No, because these OS'es are to closed to implement something like XPrivacy.
 
+**(35) Will you restrict ...?**
+
+* The device manufacturer
+* The device model/product name
+* Synchronization state
+* Screen locking
+* Display settings
+* Wi-Fi settings
+* Bluetooth settings
+* Draw over other applications
+
+No, because I don't consider this as privacy sensitive data.
+I am happy to add new restrictions for data that is really privacy sensitive.
+
 Support
 -------
 
@@ -534,6 +549,8 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 **Before submitting any issue please ensure you are running the latest version of XPrivacy.**
 
 **Before submitting any issue please [read this](http://forum.xda-developers.com/showpost.php?p=43892381&postcount=1703).**
+
+**One bug/feature request per issue please!**
 
 Changelog
 ---------
