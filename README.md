@@ -250,6 +250,8 @@ Limitations
 Installation
 ------------
 
+*Instead of following the steps below, you can try the beta version of the [XPrivacy Installer](http://d-h.st/SUF).*
+
 It seems like a lot of steps, but it is done in no time:
 
 1. Requirements:
