@@ -530,7 +530,6 @@ No, because these OS'es are to closed to implement something like XPrivacy.
 * Display settings
 * Wi-Fi settings
 * Bluetooth settings
-* Draw over other applications
 
 No, because I don't consider this as privacy sensitive data.
 I am happy to add new restrictions for data that is really privacy sensitive.
