@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated Catalan translation
 
 **Version 1.9.27 release candidate**
 
