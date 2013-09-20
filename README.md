@@ -10,6 +10,7 @@ Index
 * [Features](https://github.com/M66B/XPrivacy#features)
 * [Restrictions](https://github.com/M66B/XPrivacy#restrictions)
 * [Limitations](https://github.com/M66B/XPrivacy#limitations)
+* [Compatibility](https://github.com/M66B/XPrivacy#compatibility)
 * [Installation](https://github.com/M66B/XPrivacy#installation)
 * [Upgrading](https://github.com/M66B/XPrivacy#upgrading)
 * [Usage](https://github.com/M66B/XPrivacy#usage)
@@ -246,6 +247,13 @@ Limitations
 * Phone number cannot be restricted for the standard phone application
 * Internet and storage can only be restricted for applications/providers/services started by the Android package manager
 * Due to its static nature Build.Serial can only be randomized on application start
+
+Compatibility
+-------------
+
+XPrivacy is reported to be compatible with most Android version 4.0, 4.1, 4.2 and 4.3 variants, including stock versions.
+
+* LG L7, stock Android 4.0.3: know to restart now and then with XPrivacy
 
 Installation
 ------------
