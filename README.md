@@ -253,7 +253,7 @@ Compatibility
 
 XPrivacy is reported to be compatible with most Android version 4.0, 4.1, 4.2 and 4.3 variants, including stock versions.
 
-* LG L7, stock Android 4.0.3: know to restart now and then with XPrivacy
+* LG L7, stock Android 4.0.3: know to restart/freeze now and then with XPrivacy ([issue](https://github.com/M66B/XPrivacy/issues/694))
 
 Installation
 ------------
