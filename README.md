@@ -259,7 +259,7 @@ and is reported to work with most Android version 4.0, 4.1, 4.2 and 4.3 variants
 Installation
 ------------
 
-*Instead of following the steps below, you can try the beta version of the [XPrivacy Installer](http://d-h.st/SUF).*
+*Instead of following the steps below, you can try the [XPrivacy Installer](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.installer).*
 
 It seems like a lot of steps, but it is done in no time:
 
