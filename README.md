@@ -251,9 +251,10 @@ Limitations
 Compatibility
 -------------
 
-XPrivacy is reported to be compatible with most Android version 4.0, 4.1, 4.2 and 4.3 variants, including stock versions.
+XPrivacy has been tested with CyanogenMod 10, 10.1 and 10.2 (Android 4.1, 4.2 and 4.3),
+and is reported to work with most Android version 4.0, 4.1, 4.2 and 4.3 variants, including stock ROMs.
 
-* LG L7, stock Android 4.0.3: know to restart/freeze now and then with XPrivacy ([issue](https://github.com/M66B/XPrivacy/issues/694))
+* **LG L7, stock Android 4.0.3**: know to restart/freeze now and then ([issue](https://github.com/M66B/XPrivacy/issues/694))
 
 Installation
 ------------
