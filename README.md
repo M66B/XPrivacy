@@ -33,7 +33,7 @@ There are several data categories which can be restricted, for example *contacts
 For example, if you restrict access to contacts for an application,
 this will result in sending an empty contact list to the application.
 Similarly, restricting an application's access to your location
-will result in a set location being sent to the application.
+will result in a fake location being sent to the application.
 
 XPrivacy doesn't revoke (i.e. block) permissions from an application,
 which means that most applications will continue to work as before and won't force close.
