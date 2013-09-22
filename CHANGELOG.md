@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated Arabic translation
 
 **Version 1.10 stable**
 
