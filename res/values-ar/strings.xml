@@ -74,7 +74,7 @@
     <string name="title_finternet">التصفية حسب الوصول للإنترنت</string>
     <string name="title_fpermission">التصفية حسب الأُذونات</string>
     <string name="title_frestricted">التصفية حسب التقييد</string>
-    <string name="title_fuser">Filter on user applications</string>
+    <string name="title_fuser">تصفية برامج المستخدم</string>
     <string name="title_fsystem">تصفية برامج النظام</string>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
