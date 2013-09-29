@@ -22,7 +22,7 @@
     <string name="menu_all">Alles (beschränkt)</string>
     <string name="menu_apply">Template übernehmen</string>
     <string name="menu_clear">Nichts (beschränkt)</string>
-    <string name="menu_app_launch">App öffnen</string>
+    <string name="menu_app_launch">Öffnen</string>
     <string name="menu_app_settings">App-Info anzeigen</string>
     <string name="menu_app_store">Im Play Store anzeigen</string>
     <string name="menu_accounts">Konten für Zugriff freigeben</string>
@@ -37,7 +37,7 @@
     <string name="msg_done">Fertig</string>
     <string name="msg_reboot">Geräteneustart erforderlich</string>
     <string name="msg_random">Zufallswerte erzeugen</string>
-    <string name="msg_random_boot">Zufallswerte bei Geräte-Neustart erzeugen</string>
+    <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
 \ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
 \n\nVerwenden Sie XPrivacy ausschließlich auf Ihr eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>
@@ -74,7 +74,7 @@
     <string name="title_finternet">Nach Internetzugang filtern</string>
     <string name="title_fpermission">Nach Berechtigungen filtern</string>
     <string name="title_frestricted">Nach Beschränkungen filtern</string>
-    <string name="title_fuser">Nach Nutzer-Apps filtern</string>
+    <string name="title_fuser">Nach Benutzer-Apps filtern</string>
     <string name="title_fsystem">Nach System-Apps filtern</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
@@ -87,7 +87,7 @@
     <string name="settings_operator">Mobilfunkanbieter</string>
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_ua">User-Agent (Browser)</string>
-    <string name="settings_log">Debug-Log (erfordert Geräte-Neustart)</string>
+    <string name="settings_log">Debug-Log (erfordert Geräteneustart)</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>
