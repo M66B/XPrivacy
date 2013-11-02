@@ -24,45 +24,12 @@
         android:paddingRight="6dp"
         android:paddingTop="1dp" >
 
-        <!-- Restriction category -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/drawable_divider"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/title_category"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textIsSelectable="false" />
-
-            <Spinner
-                android:id="@+id/spRestriction"
-                android:layout_width="0dp"
-                android:layout_height="37dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:id="@+id/imgInfo"
-                android:layout_width="32dip"
-                android:layout_height="32dip"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/bg_button"
-                android:clickable="true"
-                android:contentDescription="@string/help_application"
-                android:focusable="true"
-                android:src="?attr/icon_info" />
-        </LinearLayout>
-
-        <!-- Filters -->
+        <!-- Filters and batch mode -->
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:background="?attr/drawable_divider" >
 
             <ImageView
                 android:id="@+id/imgToggleFilters"
@@ -74,39 +41,49 @@
                 android:contentDescription="@string/title_category"
                 android:focusable="true"
                 android:src="?attr/icon_expander_maximized" />
-
-            <EditText
-                android:id="@+id/etFilter"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_toRightOf="@id/imgToggleFilters"
-                android:ems="10"
-                android:hint="@string/help_application"
-                android:inputType="textNoSuggestions"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
+            
             <ImageView
-                android:id="@+id/imgClear"
-                android:layout_width="24dip"
-                android:layout_height="24dip"
-                android:layout_alignRight="@id/etFilter"
+                android:id="@+id/imgToggleBatchMode"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
                 android:background="@drawable/bg_button"
                 android:clickable="true"
-                android:contentDescription="@string/help_application"
+                android:contentDescription="@string/title_category"
                 android:focusable="true"
-                android:src="?attr/icon_clear_grayed" />
-
-            <TextView
-                android:id="@+id/tvFilterDetail"
-                android:layout_width="match_parent"
+                android:src="?attr/icon_expander_maximized" />
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:visibility="gone" />
+                android:layout_toRightOf="@id/imgToggleFilters"
+                android:layout_toLeftOf="@id/imgToggleBatchMode"
+                android:orientation="horizontal" >
+
+	            <TextView
+	                android:id="@+id/tvFilterDetail"
+	                android:layout_width="0dp"
+	                android:layout_height="fill_parent"
+	                android:layout_weight="1"
+	                android:gravity="center"
+	                android:textAppearance="?android:attr/textAppearanceSmall" />
+	            
+	            <View
+	                android:layout_width="1dp"
+	                android:layout_height="32dp"
+	                android:background="#888" />
+	
+	            <TextView
+	                android:id="@+id/tvBatchModeDetail"
+	                android:layout_width="0dp"
+	                android:layout_height="fill_parent"
+	                android:layout_weight="1"
+	                android:gravity="center"
+	                android:text="@string/title_batch_mode"
+	                android:textAppearance="?android:attr/textAppearanceSmall" />
+	        </LinearLayout>
+            
         </RelativeLayout>
 
         <!-- Filtering -->
@@ -118,6 +95,35 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:orientation="vertical" >
+            
+	        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+	
+	            <EditText
+	                android:id="@+id/etFilter"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="27dp"
+	                android:layout_marginRight="3dp"
+	                android:ems="10"
+	                android:hint="@string/help_application"
+	                android:inputType="textNoSuggestions"
+	                android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	            <ImageView
+	                android:id="@+id/imgClear"
+	                android:layout_width="24dip"
+	                android:layout_height="24dip"
+	                android:layout_alignRight="@id/etFilter"
+	                android:layout_centerVertical="true"
+	                android:background="@drawable/bg_button"
+	                android:clickable="true"
+	                android:contentDescription="@string/help_application"
+	                android:focusable="true"
+	                android:src="?attr/icon_clear_grayed" />
+	        </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -235,6 +241,43 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
         </LinearLayout>
+        
+        <!-- Batch mode -->
+
+        <LinearLayout
+            android:id="@+id/llBatchMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/title_category"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="false" />
+
+            <Spinner
+                android:id="@+id/spRestriction"
+                android:layout_width="0dp"
+                android:layout_height="37dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imgInfo"
+                android:layout_width="32dip"
+                android:layout_height="32dip"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/bg_button"
+                android:clickable="true"
+                android:contentDescription="@string/help_application"
+                android:focusable="true"
+                android:src="?attr/icon_info" />
+        </LinearLayout>
+        
     </LinearLayout>
 
     <!-- Title -->

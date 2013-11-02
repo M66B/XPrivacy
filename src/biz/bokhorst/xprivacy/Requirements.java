@@ -43,9 +43,17 @@ public class Requirements {
 			alertDialog.show();
 		}
 
+		boolean runningInEmulator = false;
+		if (Build.MODEL.contains("google_sdk") ||
+			    Build.MODEL.contains("Emulator") ||
+			    Build.MODEL.contains("Android SDK") ||
+			    Build.MODEL.equals("sdk")) {
+			runningInEmulator = true;
+		}
+		
 		// Check Xposed version
 		int xVersion = Util.getXposedVersion();
-		if (xVersion < PrivacyManager.cXposedMinVersion) {
+		if (!runningInEmulator && xVersion < PrivacyManager.cXposedMinVersion) {
 			String msg = String.format(context.getString(R.string.app_notxposed), PrivacyManager.cXposedMinVersion);
 			Util.log(null, Log.WARN, msg);
 
@@ -67,7 +75,7 @@ public class Requirements {
 		}
 
 		// Check if XPrivacy is enabled
-		if (!Util.isXposedEnabled()) {
+		if (!runningInEmulator && !Util.isXposedEnabled()) {
 			String msg = context.getString(R.string.app_notenabled);
 			Util.log(null, Log.WARN, msg);
 
