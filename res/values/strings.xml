@@ -67,6 +67,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_system">System (installed apps)</string>
     <string name="restrict_view">View (browser)</string>
     <string name="title_category">Category:</string>
+    <string name="title_categories">Categories</string>
     <string name="title_restrict">Check to restrict:</string>
     <string name="title_nofilter">Filters: 0 active</string>
 
@@ -74,7 +75,8 @@ however it is impossible to guarantee it will work flawless on each and every de
         <item quantity="one">Filters: 1 active</item>
         <item quantity="other">Filters: %d active</item>
     </plurals>
-	<string name="title_batch_mode">Batch mode</string>
+	<string name="title_batch_mode_off">Batch mode: off</string>
+    <string name="title_batch_mode_on">Batch mode: on</string>
     <string name="title_fused">Filter on data usage</string>
     <string name="title_finternet">Filter on internet access</string>
     <string name="title_fpermission">Filter on permission</string>

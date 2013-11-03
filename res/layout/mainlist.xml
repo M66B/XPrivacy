@@ -30,35 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/drawable_divider" >
-
-            <ImageView
-                android:id="@+id/imgToggleFilters"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/bg_button"
-                android:clickable="true"
-                android:contentDescription="@string/title_category"
-                android:focusable="true"
-                android:src="?attr/icon_expander_maximized" />
-            
-            <ImageView
-                android:id="@+id/imgToggleBatchMode"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/bg_button"
-                android:clickable="true"
-                android:contentDescription="@string/title_category"
-                android:focusable="true"
-                android:src="?attr/icon_expander_maximized" />
             
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/imgToggleFilters"
-                android:layout_toLeftOf="@id/imgToggleBatchMode"
                 android:orientation="horizontal" >
 
 	            <TextView
@@ -67,12 +42,13 @@
 	                android:layout_height="fill_parent"
 	                android:layout_weight="1"
 	                android:gravity="center"
+	                android:background="#F4F4F4"
 	                android:textAppearance="?android:attr/textAppearanceSmall" />
 	            
 	            <View
 	                android:layout_width="1dp"
 	                android:layout_height="32dp"
-	                android:background="#888" />
+	                android:background="#E5E5E5" />
 	
 	            <TextView
 	                android:id="@+id/tvBatchModeDetail"
@@ -80,7 +56,10 @@
 	                android:layout_height="fill_parent"
 	                android:layout_weight="1"
 	                android:gravity="center"
-	                android:text="@string/title_batch_mode"
+	                android:background="#F4F4F4"
+	                android:text="@string/title_batch_mode_off"
+	                android:maxLines="1"
+	                android:ellipsize="end"
 	                android:textAppearance="?android:attr/textAppearanceSmall" />
 	        </LinearLayout>
             
@@ -252,13 +231,14 @@
             android:layout_marginRight="4dp"
             android:orientation="horizontal" >
 
-            <TextView
+            <!-- <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/title_category"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textIsSelectable="false" />
+            -->
 
             <Spinner
                 android:id="@+id/spRestriction"
