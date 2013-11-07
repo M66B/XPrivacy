@@ -8,6 +8,7 @@ Changelog
 * Randomize settings at boot in separate thread ([issue](https://github.com/M66B/XPrivacy/issues/700))
 * Added setting to enable Android usage data (default disabled) ([issue](https://github.com/M66B/XPrivacy/issues/694))
 * Added dangerous restrictions to template ([issue](https://github.com/M66B/XPrivacy/issues/716), [issue](https://github.com/M66B/XPrivacy/issues/724))
+* Fixed opening correct application settings from notification ([issue](https://github.com/M66B/XPrivacy/issues/717))
 * Updated Arabic translation
 * Updated German translation
 * Updated Italian translation

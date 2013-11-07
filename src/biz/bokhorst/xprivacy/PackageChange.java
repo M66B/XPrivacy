@@ -78,7 +78,7 @@ public class PackageChange extends BroadcastReceiver {
 						resultIntentClear.putExtra(ActivityApp.cPackageName, packageName);
 						resultIntentClear.putExtra(ActivityApp.cNotified, true);
 						resultIntentClear.putExtra(ActivityApp.cActionClear, true);
-						resultIntentClear.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						resultIntentClear.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 						// Build pending intent clear
 						PendingIntent pendingIntentClear = PendingIntent.getActivity(context, -uid, resultIntentClear,
