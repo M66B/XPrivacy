@@ -89,6 +89,7 @@
     <string name="settings_operator">Operater</string>
     <string name="settings_subscriber">ID naročnika</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Debug log (zahteva ponovni zagon)</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetne pravice</string>

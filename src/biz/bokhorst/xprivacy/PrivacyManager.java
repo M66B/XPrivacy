@@ -99,6 +99,7 @@ public class PrivacyManager {
 	public final static String cSettingFirstRun = "FirstRun";
 	public final static String cSettingRandom = "Random@boot";
 	public final static String cSettingLog = "Log";
+	public final static String cSettingAndroidUsage = "AndroidUsage";
 
 	public final static String cValueRandom = "#Random#";
 	public final static String cValueRandomLegacy = "\nRandom\n";
@@ -109,6 +110,8 @@ public class PrivacyManager {
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
+	private static boolean mAndroidUsage = false;
+	private static boolean mAndroidUsageDetermined = false;
 	private static Map<String, List<MethodDescription>> mMethod = new LinkedHashMap<String, List<MethodDescription>>();
 	private static Map<String, CRestriction> mRestrictionCache = new HashMap<String, CRestriction>();
 	private static Map<String, CSetting> mSettingsCache = new HashMap<String, CSetting>();
@@ -273,8 +276,15 @@ public class PrivacyManager {
 					}
 				}
 
+			// Check if logging enabled
+			if (!mAndroidUsageDetermined) {
+				mAndroidUsageDetermined = true;
+				mAndroidUsage = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage,
+						false, false);
+			}
+
 			// Do not use context before system ready
-			if (uid == cAndroidUid && !XActivityManagerService.isSystemReady())
+			if (uid == cAndroidUid && !(XActivityManagerService.isSystemReady() && mAndroidUsage))
 				context = null;
 
 			// Check if restricted

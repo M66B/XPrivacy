@@ -41,7 +41,7 @@ public class Util {
 		// Check if logging enabled
 		if (Process.myUid() != 0 && !mLogDetermined) {
 			mLogDetermined = true;
-			mLog = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingLog, false, true);
+			mLog = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingLog, false, false);
 		}
 
 		// Log if enabled

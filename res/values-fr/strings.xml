@@ -87,6 +87,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_operator">Opérateur</string>
     <string name="settings_subscriber">ID Abonné</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Debug log (redémarrage nécessaire)</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>

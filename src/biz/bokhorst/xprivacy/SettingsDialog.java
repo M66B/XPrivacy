@@ -48,6 +48,7 @@ public class SettingsDialog {
 		final EditText etIccId = (EditText) dlgSettings.findViewById(R.id.etIccId);
 		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
 		final EditText etUa = (EditText) dlgSettings.findViewById(R.id.etUa);
+		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
 		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
@@ -72,6 +73,8 @@ public class SettingsDialog {
 			tvAppName.setText(appInfo.getFirstApplicationName());
 
 		// Set current values
+		boolean usage = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingAndroidUsage, false,
+				false);
 		boolean log = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingLog, false, false);
 		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
 
@@ -179,10 +182,13 @@ public class SettingsDialog {
 				.getSetting(null, context, uid, PrivacyManager.cSettingSubscriber, "", false));
 		etUa.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingUa, "", false));
 
-		if (uid == 0)
+		if (uid == 0) {
+			cbUsage.setChecked(usage);
 			cbLog.setChecked(log);
-		else
+		} else {
+			cbUsage.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
+		}
 		cbRandom.setChecked(random);
 
 		// Handle search
@@ -287,9 +293,12 @@ public class SettingsDialog {
 						.toString());
 				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingUa, etUa.getText().toString());
 
-				if (uid == 0)
+				if (uid == 0) {
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
+							Boolean.toString(cbUsage.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
 							Boolean.toString(cbLog.isChecked()));
+				}
 				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingRandom,
 						Boolean.toString(cbRandom.isChecked()));
 
@@ -319,8 +328,10 @@ public class SettingsDialog {
 				etIccId.setText("");
 				etSubscriber.setText("");
 				etUa.setText("");
-				if (uid == 0)
+				if (uid == 0) {
+					cbUsage.setChecked(false);
 					cbLog.setChecked(false);
+				}
 				cbRandom.setChecked(false);
 
 				cbSerial.setChecked(false);

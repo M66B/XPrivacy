@@ -86,6 +86,7 @@
     <string name="settings_operator">Nhà mạng</string>
     <string name="settings_subscriber">ID người đăng kí</string>
     <string name="settings_ua">Nhận dạng trình duyệt (User agent)</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Lưu thông tin gỡ rối (yêu cầu khởi động lại)</string>
     <string name="help_application">Ứng dụng</string>
     <string name="help_internet">có quyền truy cập mạng</string>

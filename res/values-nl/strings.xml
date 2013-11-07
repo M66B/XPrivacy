@@ -23,7 +23,7 @@
     <string name="menu_apply">Pas sjabloon toe</string>
     <string name="menu_clear">Wissen</string>
     <string name="menu_app_launch">Uitvoeren</string>
-    <string name="menu_app_settings">Applicatie details</string>
+    <string name="menu_app_settings">Applicatiedetails</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Geef accounts toestemming</string>
     <string name="menu_contacts">Geef contacten toestemming</string>
@@ -32,7 +32,7 @@
     <string name="msg_restricted" formatted="false">%s beperkt door XPrivacy</string>
     <string name="msg_licensed" formatted="false">In licentie gegeven aan: %s</string>
     <string name="msg_loading">Laden</string>
-    <string name="msg_edit">Klik op het applicatie pictogram om alle beperkingen te wijzigen</string>
+    <string name="msg_edit">Klik op het applicatiepictogram om alle beperkingen te wijzigen</string>
     <string name="msg_sure">Zeker weten?</string>
     <string name="msg_done">Gereed</string>
     <string name="msg_reboot">Herstart apparaat vereist</string>
@@ -74,8 +74,8 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_finternet">Filter op internet toegang</string>
     <string name="title_fpermission">Filter op rechten</string>
     <string name="title_frestricted">Filter op beperkingen</string>
-    <string name="title_fuser">Filter op gebruikers applicaties</string>
-    <string name="title_fsystem">Filter op systeem applicaties</string>
+    <string name="title_fuser">Filter op gebruikersapplicaties</string>
+    <string name="title_fsystem">Filter op systeemapplicaties</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>
@@ -87,11 +87,12 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Abonnee ID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_usage">Android gebruiksgegevens (herstart vereist)</string>
     <string name="settings_log">Debug log (herstart vereist)</string>
     <string name="help_application">Applicatie</string>
     <string name="help_internet">heeft internet rechten</string>
     <string name="help_granted">heeft Android rechten</string>
-    <string name="help_used">heeft deze data gebruikt</string>
+    <string name="help_used">heeft deze gegevens gebruikt</string>
     <string name="help_frozen">is uitgezet</string>
     <string name="help_dangerous">is gevaarlijk</string>
 

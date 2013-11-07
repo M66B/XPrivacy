@@ -85,6 +85,7 @@
     <string name="settings_operator">Operatør</string>
     <string name="settings_subscriber">Abonnent-ID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Debug-log (kræver genstart)</string>
     <string name="help_application">App</string>
     <string name="help_internet">har internettilladelse</string>

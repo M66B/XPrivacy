@@ -85,6 +85,7 @@
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">ID de subscriptor</string>
     <string name="settings_ua">Agent d\'usuari</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Registre de depuració (cal reiniciar)</string>
     <string name="help_application">Aplicació</string>
     <string name="help_internet">té permís d\'Internet</string>

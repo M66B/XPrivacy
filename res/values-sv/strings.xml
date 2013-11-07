@@ -87,6 +87,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="settings_operator">Operatör</string>
     <string name="settings_subscriber">Abonnent-ID</string>
     <string name="settings_ua">Användaragent</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Felsökningslogg (kräver omstart)</string>
     <string name="help_application">Applikation</string>
     <string name="help_internet">har internetbehörighet</string>

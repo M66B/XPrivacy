@@ -87,6 +87,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_operator">Operatorius</string>
     <string name="settings_subscriber">Abonento ID</string>
     <string name="settings_ua">Vartotojo agentas</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">DEBUG žurnalas (reikia paleisti iš naujo)</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>

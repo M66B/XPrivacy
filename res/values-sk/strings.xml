@@ -88,6 +88,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">Identifikácia prehliadača</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Záznam na ladenie (vyžaduje reštart)</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
