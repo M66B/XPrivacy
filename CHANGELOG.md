@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Updated Arabic translation
+* Updated Italian translation
 
 **Version 1.10 stable**
 
