@@ -9,6 +9,7 @@ Changelog
 * Added setting to enable Android usage data (default disabled) ([issue](https://github.com/M66B/XPrivacy/issues/694))
 * Added dangerous restrictions to template ([issue](https://github.com/M66B/XPrivacy/issues/716), [issue](https://github.com/M66B/XPrivacy/issues/724))
 * Fixed opening correct application settings from notification ([issue](https://github.com/M66B/XPrivacy/issues/717))
+* Do not use current application context ([issue](https://github.com/M66B/XPrivacy/issues/722))
 * Updated Arabic translation
 * Updated German translation
 * Updated Italian translation
