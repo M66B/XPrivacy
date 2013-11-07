@@ -11,6 +11,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 public class PackageChange extends BroadcastReceiver {
 
@@ -21,14 +22,14 @@ public class PackageChange extends BroadcastReceiver {
 			Uri inputUri = Uri.parse(intent.getDataString());
 			if (inputUri.getScheme().equals("package")) {
 				// Get data
-				String packageName = inputUri.getSchemeSpecificPart();
-				int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
+				final String packageName = inputUri.getSchemeSpecificPart();
+				final int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 				boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
 				boolean fSystem = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingFSystem, true,
 						false);
-
-				NotificationManager notificationManager = (NotificationManager) context
+				final NotificationManager notificationManager = (NotificationManager) context
 						.getSystemService(Context.NOTIFICATION_SERVICE);
+
 				if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
 					// Package added
 					boolean system = false;
@@ -166,9 +167,15 @@ public class PackageChange extends BroadcastReceiver {
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed
-					notificationManager.cancel(uid);
-					PrivacyManager.deleteRestrictions(context, uid);
-					PrivacyManager.deleteUsage(context, uid);
+					final Context fContext = context;
+					new Thread(new Runnable() {
+						public void run() {
+							Util.log(null, Log.INFO, "Removing " + packageName);
+							notificationManager.cancel(uid);
+							PrivacyManager.deleteRestrictions(fContext, uid);
+							PrivacyManager.deleteUsage(fContext, uid);
+						}
+					}).start();
 				}
 			}
 		} catch (Throwable ex) {

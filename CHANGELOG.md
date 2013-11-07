@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Handle all exceptions while processing package events
+* Handle package remove in a separate thread
 * Added setting to enable Android usage data (default disabled)
 * Updated Arabic translation
 * Updated German translation
