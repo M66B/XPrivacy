@@ -7,7 +7,7 @@ Changelog
 * Handle package remove in a separate thread ([issue](https://github.com/M66B/XPrivacy/issues/722))
 * Randomize settings at boot in separate thread ([issue](https://github.com/M66B/XPrivacy/issues/700))
 * Added setting to enable Android usage data (default disabled) ([issue](https://github.com/M66B/XPrivacy/issues/694))
-* Added dangerous restrictions to template ([issue](https://github.com/M66B/XPrivacy/issues/724))
+* Added dangerous restrictions to template ([issue](https://github.com/M66B/XPrivacy/issues/716), [issue](https://github.com/M66B/XPrivacy/issues/724))
 * Updated Arabic translation
 * Updated German translation
 * Updated Italian translation
