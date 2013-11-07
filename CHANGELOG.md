@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Handle all exceptions while processing package events
 * Updated Arabic translation
 * Updated German translation
 * Updated Italian translation
