@@ -5,6 +5,7 @@ Changelog
 
 * Handle all exceptions while processing package events
 * Handle package remove in a separate thread
+* Randomize settings at boot in separate thread
 * Added setting to enable Android usage data (default disabled)
 * Updated Arabic translation
 * Updated German translation
