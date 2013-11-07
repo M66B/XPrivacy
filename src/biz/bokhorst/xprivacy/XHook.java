@@ -69,8 +69,8 @@ public abstract class XHook {
 
 	protected boolean isRestricted(MethodHookParam param, String methodName) throws Throwable {
 		int uid = Binder.getCallingUid();
-		Context context = AndroidAppHelper.currentApplication();
-		return PrivacyManager.getRestricted(this, context, uid, mRestrictionName, methodName, true, true);
+		// Context context = AndroidAppHelper.currentApplication();
+		return PrivacyManager.getRestricted(this, null, uid, mRestrictionName, methodName, true, true);
 	}
 
 	protected boolean getRestricted(Context context, int uid, boolean usage) throws Throwable {
