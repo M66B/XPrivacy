@@ -3,10 +3,10 @@ Changelog
 
 **Next release**
 
-* Handle all exceptions while processing package events
-* Handle package remove in a separate thread
-* Randomize settings at boot in separate thread
-* Added setting to enable Android usage data (default disabled)
+* Handle all exceptions while processing package events ([issue](https://github.com/M66B/XPrivacy/issues/722))
+* Handle package remove in a separate thread ([issue](https://github.com/M66B/XPrivacy/issues/722))
+* Randomize settings at boot in separate thread ([issue](https://github.com/M66B/XPrivacy/issues/700))
+* Added setting to enable Android usage data (default disabled) ([issue](https://github.com/M66B/XPrivacy/issues/694))
 * Updated Arabic translation
 * Updated German translation
 * Updated Italian translation
