@@ -68,7 +68,7 @@ public class PrivacyManager {
 			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
 			cNetwork, cNfc, cNotifications, cPhone, cShell, cStorage, cSystem, cView };
 
-	public final static int cXposedMinVersion = 37;
+	public final static int cXposedMinVersion = 42;
 	public final static int cAndroidUid = 1000;
 
 	public final static String cSettingSerial = "Serial";
