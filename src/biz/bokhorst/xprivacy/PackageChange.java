@@ -168,16 +168,11 @@ public class PackageChange extends BroadcastReceiver {
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed
-					final Context fContext = context;
-					new Thread(new Runnable() {
-						public void run() {
-							Util.log(null, Log.INFO, "Removing " + packageName);
-							notificationManager.cancel(uid);
-							PrivacyManager.deleteRestrictions(fContext, uid);
-							PrivacyManager.deleteUsage(fContext, uid);
-							Util.log(null, Log.INFO, "Removed " + packageName);
-						}
-					}).start();
+					Util.log(null, Log.INFO, "Removing " + packageName);
+					notificationManager.cancel(uid);
+					PrivacyManager.deleteRestrictions(context, uid);
+					PrivacyManager.deleteUsage(context, uid);
+					Util.log(null, Log.INFO, "Removed " + packageName);
 				}
 			}
 		} catch (Throwable ex) {
