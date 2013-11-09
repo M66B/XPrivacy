@@ -277,15 +277,8 @@ public class PrivacyManager {
 					}
 				}
 
-			// Check if logging enabled
-			if (!mAndroidUsageDetermined) {
-				mAndroidUsageDetermined = true;
-				mAndroidUsage = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage,
-						false, false);
-			}
-
-			// Do not use context before system ready
-			if (uid == cAndroidUid && !(XActivityManagerService.isSystemReady() && mAndroidUsage))
+			// Check if usage data enabled
+			if (!isUsageDataEnabled(uid))
 				context = null;
 
 			// Check if restricted
@@ -322,47 +315,7 @@ public class PrivacyManager {
 							}
 
 						// Send usage data async
-						int qSize = 0;
-						synchronized (mUsageQueue) {
-							qSize = mUsageQueue.size();
-						}
-						if (qSize > 0) {
-							final Context fContext = context;
-							mExecutor.execute(new Runnable() {
-								public void run() {
-									Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-									UsageData data = null;
-									do {
-										int size = 0;
-										synchronized (mUsageQueue) {
-											if (mUsageQueue.size() > 0) {
-												data = mUsageQueue.keySet().iterator().next();
-												mUsageQueue.remove(data);
-												size = mUsageQueue.size();
-											} else
-												data = null;
-										}
-										if (data != null) {
-											try {
-												Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
-												ContentValues values = new ContentValues();
-												values.put(PrivacyProvider.COL_UID, data.getUid());
-												values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
-												values.put(PrivacyProvider.COL_METHOD, data.getMethodName());
-												values.put(PrivacyProvider.COL_RESTRICTED, data.getRestricted());
-												values.put(PrivacyProvider.COL_USED, data.getTimeStamp());
-												if (fContext.getContentResolver().update(PrivacyProvider.URI_USAGE,
-														values, null, null) <= 0)
-													Util.log(hook, Log.INFO, "Error updating usage data=" + data);
-												Thread.sleep(500);
-											} catch (Throwable ex) {
-												Util.bug(hook, ex);
-											}
-										}
-									} while (data != null);
-								}
-							});
-						}
+						sendUsageData(hook, context);
 					}
 				} catch (SecurityException ex) {
 					Util.bug(hook, ex);
@@ -402,6 +355,65 @@ public class PrivacyManager {
 			// Failsafe
 			Util.bug(hook, ex);
 			return false;
+		}
+	}
+
+	public static boolean isUsageDataEnabled(int uid) {
+		if (uid != cAndroidUid)
+			return true;
+
+		if (!XActivityManagerService.isSystemReady())
+			return false;
+
+		// Check if Android usage data enabled
+		if (!mAndroidUsageDetermined) {
+			mAndroidUsageDetermined = true;
+			mAndroidUsage = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false,
+					false);
+		}
+		return mAndroidUsage;
+	}
+
+	public static void sendUsageData(final XHook hook, Context context) {
+		int qSize = 0;
+		synchronized (mUsageQueue) {
+			qSize = mUsageQueue.size();
+		}
+		if (qSize > 0) {
+			final Context fContext = context;
+			mExecutor.execute(new Runnable() {
+				public void run() {
+					Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+					UsageData data = null;
+					do {
+						int size = 0;
+						synchronized (mUsageQueue) {
+							if (mUsageQueue.size() > 0) {
+								data = mUsageQueue.keySet().iterator().next();
+								mUsageQueue.remove(data);
+								size = mUsageQueue.size();
+							} else
+								data = null;
+						}
+						if (data != null) {
+							try {
+								Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
+								ContentValues values = new ContentValues();
+								values.put(PrivacyProvider.COL_UID, data.getUid());
+								values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
+								values.put(PrivacyProvider.COL_METHOD, data.getMethodName());
+								values.put(PrivacyProvider.COL_RESTRICTED, data.getRestricted());
+								values.put(PrivacyProvider.COL_USED, data.getTimeStamp());
+								if (fContext.getContentResolver().update(PrivacyProvider.URI_USAGE, values, null, null) <= 0)
+									Util.log(hook, Log.INFO, "Error updating usage data=" + data);
+								Thread.sleep(500);
+							} catch (Throwable ex) {
+								Util.bug(hook, ex);
+							}
+						}
+					} while (data != null);
+				}
+			});
 		}
 	}
 
