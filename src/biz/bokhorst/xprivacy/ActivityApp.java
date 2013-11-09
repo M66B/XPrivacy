@@ -78,7 +78,6 @@ public class ActivityApp extends Activity {
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
 	public static final String cActionClear = "Clear";
-	public static final String cNotified = "Notified";
 
 	private static final int ACTIVITY_FETCH = 1;
 
@@ -109,12 +108,6 @@ public class ActivityApp extends Activity {
 		String packageName = extras.getString(cPackageName);
 		String restrictionName = (extras.containsKey(cRestrictionName) ? extras.getString(cRestrictionName) : null);
 		String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
-
-		// Failsafe
-		if (mAppInfo != null && !mAppInfo.getPackageName().equals(packageName)) {
-			recreate();
-			return;
-		}
 
 		// Get app info
 		mAppInfo = new ApplicationInfoEx(this, packageName);
@@ -207,7 +200,7 @@ public class ActivityApp extends Activity {
 		}
 
 		// Up navigation
-		getActionBar().setDisplayHomeAsUpEnabled(!extras.containsKey(cNotified));
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Clear
 		if (extras.containsKey(cActionClear)) {
@@ -217,6 +210,11 @@ public class ActivityApp extends Activity {
 		}
 	}
 
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+	}
+	
 	@Override
 	protected void onResume() {
 		super.onResume();

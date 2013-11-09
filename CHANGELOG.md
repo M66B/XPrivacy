@@ -4,12 +4,13 @@ Changelog
 **Next release**
 
 * Mark categories dangerous in template
-* Restrict */sys/block/.../cid* and */sys/class/.../cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
-* Restrict system properties ending with *cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
 * Permanently cache XPrivacy version and Android usage settings
 * Do not display number of packages in progress dialog
 * Show location for license file in about dialog
+* Fix up navigation (again) ([issue](https://github.com/M66B/XPrivacy/issues/681))
 * Auto import pro license file ([issue](https://github.com/M66B/XPrivacy/issues/703))
+* Restrict */sys/block/.../cid* and */sys/class/.../cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
+* Restrict system properties ending with *cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
 
 **Version 1.10.5 TEST**
 
