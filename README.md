@@ -458,7 +458,7 @@ Try disabling your popup blocker or download using another computer.
 
 **(22) How can I make a logcat?**
 
-See [here](http://forum.xda-developers.com/showthread.php?t=1726238).
+Enable logging using the settings menu and see [here](http://forum.xda-developers.com/showthread.php?t=1726238).
 
 **(23) Where are the settings of XPrivacy stored?**
 
@@ -543,6 +543,7 @@ Support
 If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues),
 including a [logcat](http://developer.android.com/tools/help/logcat.html)
 (use [pastebin](http://pastebin.com/) or a similar service).
+Don't forget to enable XPrivacy logging using the settings menu!
 
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 

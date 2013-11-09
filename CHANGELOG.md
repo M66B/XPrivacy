@@ -3,12 +3,16 @@ Changelog
 
 **Next release**
 
-* Handle all exceptions while processing package events ([issue](https://github.com/M66B/XPrivacy/issues/722))
-* Randomize settings at boot in separate thread ([issue](https://github.com/M66B/XPrivacy/issues/700))
+* ...
+
+*Version 1.10.4 BETA**
+
 * Added setting to enable Android usage data (default disabled) ([issue](https://github.com/M66B/XPrivacy/issues/694))
+* Randomize settings at boot in separate thread ([issue](https://github.com/M66B/XPrivacy/issues/700))
 * Added dangerous restrictions to template ([issue](https://github.com/M66B/XPrivacy/issues/716), [issue](https://github.com/M66B/XPrivacy/issues/724))
 * Fixed opening correct application settings from notification ([issue](https://github.com/M66B/XPrivacy/issues/717))
 * Do not use current application context ([issue](https://github.com/M66B/XPrivacy/issues/722))
+* Handle all exceptions while processing package events ([issue](https://github.com/M66B/XPrivacy/issues/722))
 * Require Xposed 2.3.1
 * Updated Arabic translation
 * Updated German translation
