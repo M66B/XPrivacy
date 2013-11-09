@@ -681,7 +681,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		String licensed = Util.hasProLicense(this);
 		TextView tvLicensed = (TextView) dlgAbout.findViewById(R.id.tvLicensed);
 		if (licensed == null)
-			tvLicensed.setVisibility(View.GONE);
+			tvLicensed.setText(String.format(getString(R.string.msg_licensed), Environment
+					.getExternalStorageDirectory().getAbsolutePath()));
 		else
 			tvLicensed.setText(String.format(getString(R.string.msg_licensed), licensed));
 

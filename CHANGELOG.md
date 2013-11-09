@@ -8,6 +8,7 @@ Changelog
 * Restrict system properties ending with *cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
 * Permanently cache XPrivacy version and Android usage settings
 * Do not display number of packages in progress dialog
+* Show location for license file in about dialog
 
 **Version 1.10.5 TEST**
 
