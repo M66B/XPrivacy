@@ -5,7 +5,7 @@ Changelog
 
 * ...
 
-*Version 1.10.4 BETA**
+**Version 1.10.4 BETA**
 
 * Added setting to enable Android usage data (default disabled) ([issue](https://github.com/M66B/XPrivacy/issues/694))
 * Randomize settings at boot in separate thread ([issue](https://github.com/M66B/XPrivacy/issues/700))
