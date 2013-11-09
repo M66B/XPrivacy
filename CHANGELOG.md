@@ -9,6 +9,7 @@ Changelog
 * Permanently cache XPrivacy version and Android usage settings
 * Do not display number of packages in progress dialog
 * Show location for license file in about dialog
+* Auto import pro license file ([issue](https://github.com/M66B/XPrivacy/issues/703))
 
 **Version 1.10.5 TEST**
 
