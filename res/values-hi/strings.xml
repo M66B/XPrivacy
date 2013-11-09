@@ -57,6 +57,7 @@
     <string name="restrict_network">नेटवर्क (addresses)</string>
     <string name="restrict_notifications">सूचनाएं</string>
     <string name="restrict_phone">फ़ोन (ID, संख्या, कॉल)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">स्टोरेज (मीडिया, SD card)</string>
     <string name="restrict_shell">Shell (आदेश, superuser)</string>
     <string name="restrict_system">सिस्टम (इन्सटाल्ड apps)</string>

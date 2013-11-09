@@ -57,6 +57,7 @@
     <string name="restrict_network">Netzwerk (-Adressen)</string>
     <string name="restrict_notifications">Benachrichtigungen</string>
     <string name="restrict_phone">Telefon (ID, Nummern, Anrufe)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Speicher (-Medien, SD-Karte)</string>
     <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>

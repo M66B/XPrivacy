@@ -57,6 +57,7 @@
     <string name="restrict_network">الشبكة (العناوين)</string>
     <string name="restrict_notifications">الإشعارات</string>
     <string name="restrict_phone">الهاتف (المعرف,الأرقام,المكالمات)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">التخزين (الميديا’الذاكرة الخارجية)</string>
     <string name="restrict_shell">سطر الأوامر (الأوامر,المستخدم الجذر)</string>
     <string name="restrict_system">النظام (البرامج المنزلة)</string>

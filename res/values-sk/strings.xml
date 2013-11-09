@@ -57,6 +57,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_network">Sieť (adresy)</string>
     <string name="restrict_notifications">Oznámenia</string>
     <string name="restrict_phone">Telefón (ID, čísla, hovory)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Úložisko (médiá, SD karta)</string>
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>

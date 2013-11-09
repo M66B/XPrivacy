@@ -57,6 +57,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="restrict_network">Síť (adresace)</string>
     <string name="restrict_notifications">Upozornění</string>
     <string name="restrict_phone">Telefon (ID, čísla, hovory)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Úložiště (média, SD karta)</string>
     <string name="restrict_shell">Konzole (příkazy, superuser)</string>
     <string name="restrict_system">Systém (nainstalované aplikace)</string>

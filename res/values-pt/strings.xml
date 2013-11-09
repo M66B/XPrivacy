@@ -57,6 +57,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="restrict_network">Rede (endereços)</string>
     <string name="restrict_notifications">Notificações</string>
     <string name="restrict_phone">Telefone (identidade, números, chamadas)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Armazenamento (média, cartão de memória)</string>
     <string name="restrict_shell">Shell (linha de comandos, superuser)</string>
     <string name="restrict_system">Sistema (aplicações instaladas)</string>

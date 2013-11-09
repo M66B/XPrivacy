@@ -55,6 +55,7 @@
     <string name="restrict_network">Netværk (adresser)</string>
     <string name="restrict_notifications">Meddelelser</string>
     <string name="restrict_phone">Telefon (ID, numre, opkald)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Hukommelse (medier, SD-kort)</string>
     <string name="restrict_shell">Shell (kommandoer, superbruger)</string>
     <string name="restrict_system">System (installerede apps)</string>

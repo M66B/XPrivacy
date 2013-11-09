@@ -57,6 +57,7 @@
     <string name="restrict_network">ネットワーク (アドレス)</string>
     <string name="restrict_notifications">通知</string>
     <string name="restrict_phone">電話 (ID, 電話番号, 通話)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">ストレージ (メディア, SDカード)</string>
     <string name="restrict_shell">シェル (コマンド, Superuser)</string>
     <string name="restrict_system">システム (インストール済みアプリ)</string>

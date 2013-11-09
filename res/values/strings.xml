@@ -62,6 +62,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_nfc" translatable="false">NFC</string>
     <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Phone (ID, numbers, calls)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Storage (media, SD card)</string>
     <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">System (installed apps)</string>

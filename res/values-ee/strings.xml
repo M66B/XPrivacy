@@ -57,6 +57,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="restrict_network">Võrk (aadressid)</string>
     <string name="restrict_notifications">Teated</string>
     <string name="restrict_phone">Telefon (ID, numbrid, kõned)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Mälu (Meedia, SD kaart)</string>
     <string name="restrict_shell">Käsurida (käsud, juurkasutaja)</string>
     <string name="restrict_system">Süsteem (installeeritud rakendused)</string>

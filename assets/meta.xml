@@ -147,6 +147,9 @@
     <Hook restriction="phone" method="TelephonyProvider" permissions="WRITE_APN_SETTINGS" sdk="14" />
     <Hook restriction="phone" method="CallLogProvider" permissions="READ_CALL_LOG" sdk="14" />
 
+    <Hook restriction="sensors" method="getDefaultSensor" permissions="" sdk="3" />
+    <Hook restriction="sensors" method="getSensorList" permissions="" sdk="3" />
+
     <Hook restriction="shell" method="sh" permissions="" sdk="14" />
     <Hook restriction="shell" method="su" permissions="" sdk="14" />
     <Hook restriction="shell" method="exec" permissions="" sdk="14" />

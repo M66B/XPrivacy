@@ -57,6 +57,7 @@
     <string name="restrict_network">Сеть (адреса)</string>
     <string name="restrict_notifications">Уведомления</string>
     <string name="restrict_phone">Телефон (ID, номера, журнал вызовов)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Хранилище (медиа, карта памяти)</string>
     <string name="restrict_shell">Команды shell (вкл. суперпользователя)</string>
     <string name="restrict_system">Система (установленные приложения)</string>

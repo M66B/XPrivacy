@@ -59,6 +59,7 @@
     <string name="restrict_network">شبکه (آدرسها)</string>
     <string name="restrict_notifications">اخطارها</string>
     <string name="restrict_phone">تلفن (شناسه، شماره، تماس ها)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">مخزن (مدیا، اس دی کارت)</string>
     <string name="restrict_shell">شل (فرامین، ابر کاربر)</string>
     <string name="restrict_system">سیستم (نرم افزارهای نصب شده)</string>

@@ -55,6 +55,7 @@
     <string name="restrict_network">Xarxa (adreces)</string>
     <string name="restrict_notifications">Notificacions</string>
     <string name="restrict_phone">Telèfon (ID, números, trucades)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Emmagatzematge (mitjans, targeta SD)</string>
     <string name="restrict_shell">Intèrpret d\'ordres (ordres, superusuari)</string>
     <string name="restrict_system">Sistema (aplicacions instal·lades)</string>

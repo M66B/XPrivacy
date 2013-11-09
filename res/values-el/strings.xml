@@ -57,6 +57,7 @@
     <string name="restrict_network">Δίκτυο (διευθύνσεις)</string>
     <string name="restrict_notifications">Ειδοποιήσεις</string>
     <string name="restrict_phone">Τηλέφωνο (στοιχεία, αριθμοί, κλήσεις)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Αποθ. χώρος (πολυμέσα, κάρτα SD)</string>
     <string name="restrict_shell">Shell (εντολές, superuser)</string>
     <string name="restrict_system">Σύστημα (εγκατεστημένες εφαρμογές)</string>

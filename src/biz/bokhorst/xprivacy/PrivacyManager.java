@@ -59,6 +59,7 @@ public class PrivacyManager {
 	public static final String cNfc = "nfc";
 	public static final String cNotifications = "notifications";
 	public static final String cPhone = "phone";
+	public static final String cSensors = "sensors";
 	public static final String cStorage = "storage";
 	public static final String cShell = "shell";
 	public static final String cSystem = "system";
@@ -66,7 +67,7 @@ public class PrivacyManager {
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
 			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
-			cNetwork, cNfc, cNotifications, cPhone, cShell, cStorage, cSystem, cView };
+			cNetwork, cNfc, cNotifications, cSensors, cPhone, cShell, cStorage, cSystem, cView };
 
 	public final static int cXposedMinVersion = 42;
 	public final static int cAndroidUid = 1000;

@@ -57,6 +57,7 @@
     <string name="restrict_network">Rete (indirizzi)</string>
     <string name="restrict_notifications">Notifiche</string>
     <string name="restrict_phone">Telefono (ID, numeri, chiamate)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Memoria (media, scheda SD)</string>
     <string name="restrict_shell">Shell (comandi, superuser)</string>
     <string name="restrict_system">Sistema (applicazioni installate)</string>

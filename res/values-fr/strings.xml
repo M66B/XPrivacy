@@ -57,6 +57,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_network">Réseaux (addresses)</string>
     <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Téléphone (ID, numéros, appels)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Stockage (média, carte SD)</string>
     <string name="restrict_shell">Shell (commandes, root)</string>
     <string name="restrict_system">Système (applis installées)</string>

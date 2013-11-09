@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Restrict access to sensors ([issue](https://github.com/M66B/XPrivacy/issues/723))
 
 **Version 1.10.4 BETA**
 

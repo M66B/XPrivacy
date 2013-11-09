@@ -57,6 +57,7 @@ sin embargo es imposible garantizar que funcione impecable en todos y cada uno d
     <string name="restrict_network">Red (direcciones)</string>
     <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Teléfono (ID, números, llamadas)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Almacenamiento (media, tarjeta SD)</string>
     <string name="restrict_shell">Terminal (comandos, superusuario)</string>
     <string name="restrict_system">Sistema (aplicaciones instaladas)</string>

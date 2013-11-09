@@ -188,14 +188,14 @@ For easy usage, data is restricted by category:
 * Notifications
 	* prevent receiving statusbar notifications (Android 4.3+)
 	* prevent [C2DM](https://developers.google.com/android/c2dm/) messages
-* Phone:
+* Phone
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID (IMSI for a GSM phone)
 	* return a fake phone device ID (IMEI): 000000000000000
 	* return a fake phone type: GSM (matching IMEI)
 	* return a fake network type: unknown
-	* return a empty ISIM/ISIM domain
-	* return a empty IMPI/IMPU
+	* return an empty ISIM/ISIM domain
+	* return an empty IMPI/IMPU
 	* return a fake MSISDN
 	* return fake mobile network info
 		* Country: XX
@@ -217,6 +217,9 @@ For easy usage, data is restricted by category:
 		* Service state changed (service/no service)
 		* Signal level changed
 	* return an empty group identifier level 1
+* Sensors
+	* Return an empty default sensor
+	* Return an empty list of sensors
 * Shell
 	* Linux shell
 	* Superuser shell
