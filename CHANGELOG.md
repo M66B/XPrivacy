@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.10.5 TEST**
+
 * Restrict access to sensors ([issue](https://github.com/M66B/XPrivacy/issues/723))
 * Restrict Google advertising ID ([issue](https://github.com/M66B/XPrivacy/issues/731))
 * Send more usage data and faster
