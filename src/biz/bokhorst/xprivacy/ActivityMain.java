@@ -780,6 +780,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mProgressDialog = new ProgressDialog(lvApp.getContext());
 			mProgressDialog.setMessage(getString(R.string.msg_loading));
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			mProgressDialog.setProgressNumberFormat(null);
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.show();
 		}
