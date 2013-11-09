@@ -1046,8 +1046,6 @@ public class PrivacyManager {
 		public boolean isExpired() {
 			if (mName.equals(PrivacyManager.cSettingVersion))
 				return false;
-			if (mName.equals(PrivacyManager.cSettingLog))
-				return false;
 			if (mName.equals(PrivacyManager.cSettingAndroidUsage))
 				return false;
 			return (mTimestamp + cSettingCacheTimeoutMs < new Date().getTime());

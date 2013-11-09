@@ -34,12 +34,19 @@ import android.util.Log;
 
 public class Util {
 	private static boolean mPro = false;
+	private static boolean mLog = true;
+	private static boolean mLogDetermined = false;
 
 	public static void log(XHook hook, int priority, String msg) {
+		// Check if logging enabled
+		if (Process.myUid() != 0 && !mLogDetermined) {
+			mLog = false;
+			mLogDetermined = true;
+			mLog = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingLog, false, false);
+		}
+
 		// Log if enabled
-		boolean log = (Process.myUid() == 0 || PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingLog,
-				false, false));
-		if (priority != Log.DEBUG && (priority == Log.INFO ? log : true))
+		if (priority != Log.DEBUG && (priority == Log.INFO ? mLog : true))
 			if (hook == null)
 				Log.println(priority, "XPrivacy", msg);
 			else

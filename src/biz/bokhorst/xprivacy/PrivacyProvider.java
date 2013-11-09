@@ -449,7 +449,7 @@ public class PrivacyProvider extends ContentProvider {
 		}
 	}
 
-	public static String getSettingFallback(String settingName, String defaultValue) {
+	public static String getSettingFallback(String name, String defaultValue) {
 		try {
 			long now = new Date().getTime();
 			File file = new File(getPrefFileName(PREF_SETTINGS));
@@ -473,7 +473,7 @@ public class PrivacyProvider extends ContentProvider {
 				}
 			}
 
-			return mFallbackSettings.getString(getSettingPref(settingName), defaultValue);
+			return mFallbackSettings.getString(getSettingPref(name), defaultValue);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 			return defaultValue;
