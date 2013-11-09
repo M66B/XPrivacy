@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Mark categories dangerous in template
 
 **Version 1.10.5 TEST**
 
