@@ -147,7 +147,10 @@ For easy usage, data is restricted by category:
 	* return a fake host name
 	* return a fake Google services framework ID
 	* return file not found for folder /proc
-	* Return a fake Google advertising ID
+	* return a fake Google advertising ID
+	* return a fake system property cid (Card Identification Register)
+	* return file not found for /sys/block/.../cid
+	* return file not found for /sys/class/.../cid
 * Internet
 	* revoke access to the internet
 	* return fake disconnected state
@@ -219,12 +222,12 @@ For easy usage, data is restricted by category:
 		* Signal level changed
 	* return an empty group identifier level 1
 * Sensors
-	* Return an empty default sensor
-	* Return an empty list of sensors
+	* return an empty default sensor
+	* return an empty list of sensors
 * Shell
-	* Linux shell
-	* Superuser shell
-	* Load/library (by default not restricted)
+	* return I/O exception for Linux shell
+	* return I/O exception for Superuser shell
+	* return unsatisfied link error for load/loadLibrary
 * Storage
 	* revoke permission to the [media storage](http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/)
 	* revoke permission to the external storage (SD card)

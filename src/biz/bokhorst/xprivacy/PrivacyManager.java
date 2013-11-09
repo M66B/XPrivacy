@@ -111,8 +111,6 @@ public class PrivacyManager {
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-	private static boolean mAndroidUsage = false;
-	private static boolean mAndroidUsageDetermined = false;
 	private static Map<String, List<MethodDescription>> mMethod = new LinkedHashMap<String, List<MethodDescription>>();
 	private static Map<String, CRestriction> mRestrictionCache = new HashMap<String, CRestriction>();
 	private static Map<String, CSetting> mSettingsCache = new HashMap<String, CSetting>();
@@ -365,13 +363,7 @@ public class PrivacyManager {
 		if (!XActivityManagerService.isSystemReady())
 			return false;
 
-		// Check if Android usage data enabled
-		if (!mAndroidUsageDetermined) {
-			mAndroidUsageDetermined = true;
-			mAndroidUsage = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false,
-					false);
-		}
-		return mAndroidUsage;
+		return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false);
 	}
 
 	public static void sendUsageData(final XHook hook, Context context) {
@@ -586,20 +578,19 @@ public class PrivacyManager {
 		}
 	}
 
-	private static String getSetting(XHook hook, Context context, String settingName, String defaultValue,
-			boolean useCache) {
+	private static String getSetting(XHook hook, Context context, String name, String defaultValue, boolean useCache) {
 		long start = System.currentTimeMillis();
 
 		// Check cache
 		if (useCache)
 			synchronized (mSettingsCache) {
-				if (mSettingsCache.containsKey(settingName)) {
-					CSetting entry = mSettingsCache.get(settingName);
+				if (mSettingsCache.containsKey(name)) {
+					CSetting entry = mSettingsCache.get(name);
 					if (entry.isExpired())
-						mSettingsCache.remove(settingName);
+						mSettingsCache.remove(name);
 					else {
-						String value = mSettingsCache.get(settingName).getSettingsValue();
-						Util.log(hook, Log.INFO, String.format("get setting %s=%s *", settingName, value));
+						String value = mSettingsCache.get(name).getSettingsValue();
+						Util.log(hook, Log.INFO, String.format("get setting %s=%s *", name, value));
 						return value;
 					}
 				}
@@ -615,7 +606,7 @@ public class PrivacyManager {
 					Util.log(hook, Log.WARN, "contentResolver is null");
 					Util.logStack(hook);
 				} else {
-					Cursor cursor = contentResolver.query(PrivacyProvider.URI_SETTING, null, settingName, null, null);
+					Cursor cursor = contentResolver.query(PrivacyProvider.URI_SETTING, null, name, null, null);
 					if (cursor == null) {
 						// Can happen if memory low
 						Util.log(hook, Log.WARN, "cursor is null");
@@ -641,7 +632,7 @@ public class PrivacyManager {
 
 		// Use fallback
 		if (fallback)
-			value = PrivacyProvider.getSettingFallback(settingName, defaultValue);
+			value = PrivacyProvider.getSettingFallback(name, defaultValue);
 
 		// Default value
 		if (value == null || value.equals(""))
@@ -649,17 +640,14 @@ public class PrivacyManager {
 
 		// Add to cache
 		synchronized (mSettingsCache) {
-			if (mSettingsCache.containsKey(settingName))
-				mSettingsCache.remove(settingName);
-			mSettingsCache.put(settingName, new CSetting(value));
+			if (mSettingsCache.containsKey(name))
+				mSettingsCache.remove(name);
+			mSettingsCache.put(name, new CSetting(name, value));
 		}
 
 		long ms = System.currentTimeMillis() - start;
-		Util.log(
-				hook,
-				Log.INFO,
-				String.format("get setting %s=%s%s%s", settingName, value, (fallback ? " #" : ""), (ms > 1 ? " " + ms
-						+ " ms" : "")));
+		Util.log(hook, Log.INFO, String.format("get setting %s=%s%s%s", name, value, (fallback ? " #" : ""),
+				(ms > 1 ? " " + ms + " ms" : "")));
 		return value;
 	}
 
@@ -723,6 +711,10 @@ public class PrivacyManager {
 				sb.insert(i, ':');
 			return sb.toString();
 		}
+
+		// cid
+		if (name.equals("%cid"))
+			return cDeface;
 
 		// IMEI
 		if (name.equals("getDeviceId") || name.equals("%imei")) {
@@ -1042,14 +1034,22 @@ public class PrivacyManager {
 
 	private static class CSetting {
 		private long mTimestamp;
+		private String mName;
 		private String mValue;
 
-		public CSetting(String settingValue) {
+		public CSetting(String name, String value) {
 			mTimestamp = new Date().getTime();
-			mValue = settingValue;
+			mName = name;
+			mValue = value;
 		}
 
 		public boolean isExpired() {
+			if (mName.equals(PrivacyManager.cSettingVersion))
+				return false;
+			if (mName.equals(PrivacyManager.cSettingLog))
+				return false;
+			if (mName.equals(PrivacyManager.cSettingAndroidUsage))
+				return false;
 			return (mTimestamp + cSettingCacheTimeoutMs < new Date().getTime());
 		}
 

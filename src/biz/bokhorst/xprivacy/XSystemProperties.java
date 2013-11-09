@@ -35,7 +35,7 @@ public class XSystemProperties extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		String[] props = new String[] { "%imei", "%hostname", "%serialno", "%macaddr" };
+		String[] props = new String[] { "%imei", "%hostname", "%serialno", "%macaddr", "%cid" };
 		for (String prop : props)
 			for (Methods getter : Methods.values())
 				listHook.add(new XSystemProperties(getter, PrivacyManager.cIdentification, prop));

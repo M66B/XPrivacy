@@ -4,6 +4,9 @@ Changelog
 **Next release**
 
 * Mark categories dangerous in template
+* Restrict */sys/block/.../cid* and */sys/class/.../cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
+* Restrict system properties ending with *cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
+* Permanently cache version, log and usage settings
 
 **Version 1.10.5 TEST**
 

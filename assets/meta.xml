@@ -44,13 +44,16 @@
     <Hook restriction="identification" method="%imei" permissions="" sdk="14" />
     <Hook restriction="identification" method="%macaddr" permissions="" sdk="14" />
     <Hook restriction="identification" method="%serialno" permissions="" sdk="14" />
+    <Hook restriction="identification" method="%cid" permissions="" sdk="14" />
     <Hook restriction="identification" method="/proc" dangerous="true" permissions="" sdk="14" />
     <Hook restriction="identification" method="/system/build.prop" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="identification" method="/sys/block/.../cid" permissions="" sdk="14" />
+    <Hook restriction="identification" method="/sys/class/.../cid" permissions="" sdk="14" />
     <Hook restriction="identification" method="getString" permissions="" sdk="14" />
     <Hook restriction="identification" method="GservicesProvider" dangerous="true" permissions="READ_GSERVICES" sdk="14" />
     <Hook restriction="identification" method="SERIAL" permissions="" sdk="14" />
     <Hook restriction="identification" method="AdvertisingId" permissions="" sdk="14" />
-    
+
     <Hook restriction="internet" method="getAllByName" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getByAddress" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getByName" permissions="INTERNET" sdk="14" />

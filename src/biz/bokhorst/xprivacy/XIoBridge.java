@@ -28,6 +28,8 @@ public class XIoBridge extends XHook {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XIoBridge("open", PrivacyManager.cIdentification, "/proc"));
 		listHook.add(new XIoBridge("open", PrivacyManager.cIdentification, "/system/build.prop"));
+		listHook.add(new XIoBridge("open", PrivacyManager.cIdentification, "/sys/block/.../cid"));
+		listHook.add(new XIoBridge("open", PrivacyManager.cIdentification, "/sys/class/.../cid"));
 		return listHook;
 	}
 
@@ -35,7 +37,7 @@ public class XIoBridge extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (param.args.length > 0) {
 			String fileName = (String) param.args[0];
-			if (fileName != null && fileName.startsWith(mFileName)) {
+			if (fileName != null && (fileName.startsWith(mFileName) || mFileName.contains("..."))) {
 				// Zygote, Android
 				if (Process.myUid() <= 0 || Process.myUid() == PrivacyManager.cAndroidUid)
 					return;
@@ -54,7 +56,12 @@ public class XIoBridge extends XHook {
 				}
 
 				// Check if restricted
-				if (isRestricted(param, mFileName))
+				if (mFileName.contains("...")) {
+					String[] component = mFileName.split("\\.\\.\\.");
+					if (fileName.startsWith(component[0]) && fileName.endsWith(component[1]))
+						if (isRestricted(param, mFileName))
+							param.setThrowable(new FileNotFoundException());
+				} else if (isRestricted(param, mFileName))
 					param.setThrowable(new FileNotFoundException());
 			}
 		}
