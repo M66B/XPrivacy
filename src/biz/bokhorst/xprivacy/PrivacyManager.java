@@ -838,6 +838,9 @@ public class PrivacyManager {
 			return getSetting(null, null, uid, cSettingUa,
 					"Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9", true);
 
+		if (name.equals("AdvertisingId"))
+			return "DEFACE00-0000-0000-0000-000000000000";
+
 		// Fallback
 		Util.log(null, Log.WARN, "Fallback value name=" + name);
 		return cDeface;

@@ -147,6 +147,7 @@ For easy usage, data is restricted by category:
 	* return a fake host name
 	* return a fake Google services framework ID
 	* return file not found for folder /proc
+	* Return a fake Google advertising ID
 * Internet
 	* revoke access to the internet
 	* return fake disconnected state
