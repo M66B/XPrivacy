@@ -590,7 +590,7 @@ public class PrivacyManager {
 						mSettingsCache.remove(name);
 					else {
 						String value = mSettingsCache.get(name).getSettingsValue();
-						Util.log(hook, Log.INFO, String.format("get setting %s=%s *", name, value));
+						Util.log(hook, Log.INFO, String.format("get setting %s=%s (cached)", name, value));
 						return value;
 					}
 				}
@@ -646,8 +646,11 @@ public class PrivacyManager {
 		}
 
 		long ms = System.currentTimeMillis() - start;
-		Util.log(hook, Log.INFO, String.format("get setting %s=%s%s%s", name, value, (fallback ? " #" : ""),
-				(ms > 1 ? " " + ms + " ms" : "")));
+		Util.log(
+				hook,
+				Log.INFO,
+				String.format("get setting %s=%s%s%s", name, value, (fallback ? " (file)" : ""), (ms > 1 ? " " + ms
+						+ " ms" : "")));
 		return value;
 	}
 
