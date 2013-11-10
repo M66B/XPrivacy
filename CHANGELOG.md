@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.10.8 TEST**
+
 * Fixed import of filter settings
 * Fixed up navigation (again) ([issue](https://github.com/M66B/XPrivacy/issues/681))
 
