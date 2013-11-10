@@ -12,6 +12,7 @@ Changelog
 * Allow application specific disable of globally set randomization ([issue](https://github.com/M66B/XPrivacy/issues/706))
 * Restrict */sys/block/.../cid* and */sys/class/.../cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
 * Restrict system properties ending with *cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
+* Updated Slovak translation
 
 **Version 1.10.5 TEST**
 
