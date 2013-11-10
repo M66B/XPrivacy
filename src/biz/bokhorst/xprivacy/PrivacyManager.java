@@ -637,6 +637,8 @@ public class PrivacyManager {
 		// Default value
 		if (value == null)
 			value = defaultValue;
+		else if (value.equals("") && defaultValue != null)
+			value = defaultValue;
 
 		// Add to cache
 		synchronized (mSettingsCache) {
