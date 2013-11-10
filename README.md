@@ -532,7 +532,7 @@ No, because these OS'es are to closed to implement something like XPrivacy.
 
 **(35) Will you restrict ...?**
 
-* The device manufacturer
+* The device brand/manufacturer
 * The device model/product name
 * Synchronization state
 * Screen locking
