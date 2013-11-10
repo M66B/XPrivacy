@@ -206,7 +206,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						hook.before(param);
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
-						report(ex);
 						throw ex;
 					}
 				}
@@ -220,7 +219,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 							hook.after(param);
 						} catch (Throwable ex) {
 							Util.bug(null, ex);
-							report(ex);
 							throw ex;
 						}
 				}
@@ -268,14 +266,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
-		}
-	}
-
-	private static void report(Throwable ex) {
-		Context context = AndroidAppHelper.currentApplication();
-		if (context != null) {
-			Toast toast = Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG);
-			toast.show();
 		}
 	}
 }
