@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.10.7 TEST**
+
 * Mark categories dangerous in template
 * Permanently cache XPrivacy version and Android usage settings
 * Do not display number of packages in progress dialog
