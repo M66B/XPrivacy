@@ -138,7 +138,7 @@ public class XContentProvider extends XHook {
 			if (cursor != null)
 				if (sUri.startsWith("content://com.google.android.gsf.gservices")) {
 					// Google services provider: block only android_id
-					if (param.args.length > 3) {
+					if (param.args.length > 3 && param.args[3] != null) {
 						List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
 						if (Util.containsIgnoreCase(selectionArgs, "android_id"))
 							if (isRestricted(param)) {
