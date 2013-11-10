@@ -9,11 +9,9 @@ import java.util.Set;
 
 import android.annotation.SuppressLint;
 import android.app.AndroidAppHelper;
-import android.content.Context;
 import android.os.Build;
 import android.os.Process;
 import android.util.Log;
-import android.widget.Toast;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
