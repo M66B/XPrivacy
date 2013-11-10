@@ -135,6 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:saveEnabled="false"
                     android:text="@string/title_fused"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -155,6 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:saveEnabled="false"
                     android:text="@string/title_finternet"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -174,6 +176,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:saveEnabled="false"
                     android:text="@string/title_fpermission"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -189,10 +192,11 @@
                     android:src="?attr/icon_checked" />
 
                 <CheckBox
-                    android:id="@+id/cbFilter"
+                    android:id="@+id/cbFRestriction"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:saveEnabled="false"
                     android:text="@string/title_frestricted"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -212,6 +216,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:saveEnabled="false"
                     android:text="@string/title_fuser"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -231,6 +236,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:saveEnabled="false"
                     android:text="@string/title_fsystem"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>

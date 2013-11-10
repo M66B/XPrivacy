@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Fix import of filter settings
 
 **Version 1.10.7 TEST**
 

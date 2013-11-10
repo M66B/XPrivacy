@@ -191,7 +191,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Setup restriction filter
 		boolean fRestriction = PrivacyManager.getSettingBool(null, ActivityMain.this, 0,
 				PrivacyManager.cSettingFRestriction, false, false);
-		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
+		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
 		cbRestriction.setChecked(fRestriction);
 		cbRestriction.setOnCheckedChangeListener(this);
 
@@ -438,7 +438,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
 		CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
-		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
+		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
@@ -473,7 +473,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
 			CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
-			CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
+			CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
 			CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 			CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 			CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
@@ -709,7 +709,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
 		CheckBox cbFUsed = (CheckBox) findViewById(R.id.cbFUsed);
 		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
-		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
+		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
