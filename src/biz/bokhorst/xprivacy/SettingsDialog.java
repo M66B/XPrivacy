@@ -289,21 +289,26 @@ public class SettingsDialog {
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSerial,
 							cbSerial.isChecked() ? PrivacyManager.cValueRandom : etSerial.getText().toString());
 
-					// Set location
+					// Set latitude
 					try {
 						float lat = Float.parseFloat(etLat.getText().toString().replace(',', '.'));
-						float lon = Float.parseFloat(etLon.getText().toString().replace(',', '.'));
-						if (lat < -90 || lat > 90 || lon < -180 || lon > 180)
+						if (lat < -90 || lat > 90)
 							throw new InvalidParameterException();
-
 						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude,
 								cbLat.isChecked() ? PrivacyManager.cValueRandom : Float.toString(lat));
-						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude,
-								cbLon.isChecked() ? PrivacyManager.cValueRandom : Float.toString(lon));
-
 					} catch (Throwable ex) {
 						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude,
 								cbLat.isChecked() ? PrivacyManager.cValueRandom : "");
+					}
+
+					// Set longitude
+					try {
+						float lon = Float.parseFloat(etLon.getText().toString().replace(',', '.'));
+						if (lon < -180 || lon > 180)
+							throw new InvalidParameterException();
+						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude,
+								cbLon.isChecked() ? PrivacyManager.cValueRandom : Float.toString(lon));
+					} catch (Throwable ex) {
 						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude,
 								cbLon.isChecked() ? PrivacyManager.cValueRandom : "");
 					}

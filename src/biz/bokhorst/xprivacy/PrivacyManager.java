@@ -856,22 +856,28 @@ public class PrivacyManager {
 	}
 
 	public static Location getDefacedLocation(int uid, Location location) {
-		String sLat = getSetting(null, null, uid, cSettingLatitude, "", true);
-		String sLon = getSetting(null, null, uid, cSettingLongitude, "", true);
+		String sLat = getSetting(null, null, uid, cSettingLatitude, null, true);
+		String sLon = getSetting(null, null, uid, cSettingLongitude, null, true);
+
 		if (cValueRandom.equals(sLat))
 			sLat = getRandomProp("LAT");
 		if (cValueRandom.equals(sLon))
 			sLon = getRandomProp("LON");
-		if (sLat.equals("") || sLon.equals("")) {
-			// Christmas Island
+
+		// 1 degree ~ 111111 m
+		// 1 m ~ 0,000009 degrees
+		// Christmas Island ~ -10.5 / 105.667
+
+		if (sLat == null)
 			location.setLatitude(-10.5);
-			location.setLongitude(105.667);
-		} else {
-			// 1 degree ~ 111111 m
-			// 1 m ~ 0,000009 degrees = 9e-6
+		else
 			location.setLatitude(Float.parseFloat(sLat) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
+
+		if (sLon == null)
+			location.setLongitude(105.667);
+		else
 			location.setLongitude(Float.parseFloat(sLon) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
-		}
+
 		return location;
 	}
 
