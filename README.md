@@ -541,6 +541,7 @@ No, because these OS'es are to closed to implement something like XPrivacy.
 * Bluetooth settings
 * Shortcuts
 * Android version
+* Starting of applications
 
 No, because I don't consider this as privacy sensitive data.
 I am happy to add new restrictions for data that is really privacy sensitive.
