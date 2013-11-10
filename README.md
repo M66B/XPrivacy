@@ -348,8 +348,8 @@ respectively accessible from the menu of the application list and the menu of th
 The global settings, like a randomized or set latitude/longitude, apply to all applications,
 unless you set any application specific setings.
 In that case all global settings are overriden by the application specific settings.
-There is one special case: saving empty specific application settings will erase all application specific settings,
-so that the global settings will be used again.
+There is one special case: saving empty specific application settings (you can use the clear button)
+will erase all application specific settings, so that the global settings will be used again.
 
 The template, available from the main menu is applied to newly installed applications
 or if you use the menu apply template from the application details view.
