@@ -343,6 +343,17 @@ Some category and function restrictions are considered dangerous.
 These categories and functions are marked with a redish background color.
 Some applications will crash if you restrict these categories and/or functions.
 
+There are global settings and application specific settings,
+respectively accessible from the menu of the application list and the menu of the application details view.
+The global settings, like a randomized or set latitude/longitude, apply to all applications,
+unless you set any application specific setings.
+In that case all global settings are overriden by the application specific settings.
+There is one special case: saving empty specific application settings will erase all application specific settings,
+so that the global settings will be used again.
+
+The template, available from the main menu is applied to newly installed applications
+or if you use the menu apply template from the application details view.
+
 **Using XPrivacy is entirely at your own risk**
 
 Permissions
