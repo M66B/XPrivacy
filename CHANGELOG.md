@@ -10,6 +10,7 @@ Changelog
 * Fix up navigation (again) ([issue](https://github.com/M66B/XPrivacy/issues/681))
 * Auto import pro license file ([issue](https://github.com/M66B/XPrivacy/issues/703))
 * Allow application specific disable of globally set randomization ([issue](https://github.com/M66B/XPrivacy/issues/706))
+* Compatibility with *MultiSimTelephonyManager* ([issue](https://github.com/M66B/XPrivacy/issues/732))
 * Restrict */sys/block/.../cid* and */sys/class/.../cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
 * Restrict system properties ending with *cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
 * Updated Slovak translation

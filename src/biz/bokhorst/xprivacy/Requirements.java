@@ -205,7 +205,7 @@ public class Requirements {
 			// Check field
 			if (field != null) {
 				Object value = field.get(obj);
-				if (value != null && expectedClass.isAssignableFrom(value.getClass()))
+				if (value == null || expectedClass.isAssignableFrom(value.getClass()))
 					return true;
 			}
 		} catch (Throwable ex) {
