@@ -214,7 +214,7 @@ public class ActivityApp extends Activity {
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();

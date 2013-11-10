@@ -231,7 +231,7 @@ public class ActivityShare extends Activity {
 			else {
 				// Build result intent
 				Intent resultIntent = new Intent(ActivityShare.this, ActivityMain.class);
-				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 				// Build pending intent
 				PendingIntent pendingIntent = PendingIntent.getActivity(ActivityShare.this, NOTIFY_ID, resultIntent,
@@ -333,7 +333,7 @@ public class ActivityShare extends Activity {
 			else {
 				// Build result intent
 				Intent resultIntent = new Intent(ActivityShare.this, ActivityMain.class);
-				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 				// Build pending intent
 				PendingIntent pendingIntent = PendingIntent.getActivity(ActivityShare.this, NOTIFY_ID, resultIntent,
@@ -527,7 +527,7 @@ public class ActivityShare extends Activity {
 			else {
 				// Build result intent
 				Intent resultIntent = new Intent(ActivityShare.this, ActivityMain.class);
-				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 				// Build pending intent
 				PendingIntent pendingIntent = PendingIntent.getActivity(ActivityShare.this, NOTIFY_ID, resultIntent,

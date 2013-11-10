@@ -3,7 +3,8 @@ Changelog
 
 **Next release**
 
-* Fix import of filter settings
+* Fixed import of filter settings
+* Fixed up navigation (again) ([issue](https://github.com/M66B/XPrivacy/issues/681))
 
 **Version 1.10.7 TEST**
 
@@ -11,7 +12,7 @@ Changelog
 * Permanently cache XPrivacy version and Android usage settings
 * Do not display number of packages in progress dialog
 * Show location for license file in about dialog
-* Fix up navigation (again) ([issue](https://github.com/M66B/XPrivacy/issues/681))
+* Fixed up navigation (again) ([issue](https://github.com/M66B/XPrivacy/issues/681))
 * Auto import pro license file ([issue](https://github.com/M66B/XPrivacy/issues/703))
 * Allow application specific disable of globally set randomization ([issue](https://github.com/M66B/XPrivacy/issues/706))
 * Compatibility with *MultiSimTelephonyManager* ([issue](https://github.com/M66B/XPrivacy/issues/732))
@@ -303,7 +304,7 @@ Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https:
 
 **Version 1.9.2 BETA!**
 
-* Fix fetching function exceptions ([issue](https://github.com/M66B/XPrivacy/issues/515))
+* Fixed fetching function exceptions ([issue](https://github.com/M66B/XPrivacy/issues/515))
 * Updated Czech translation
 * Updated French translation
 * Updated German translation
@@ -545,7 +546,7 @@ Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https:
 **Version 1.7.18 BETA!**
 
 * Option to show usage data from the application details view
-* Fix usage data ([issue](https://github.com/M66B/XPrivacy/issues/364), [issue](https://github.com/M66B/XPrivacy/issues/365))
+* Fixed usage data ([issue](https://github.com/M66B/XPrivacy/issues/364), [issue](https://github.com/M66B/XPrivacy/issues/365))
 * Revert 1.7.16 change
 
 **Version 1.7.17 BETA!**
