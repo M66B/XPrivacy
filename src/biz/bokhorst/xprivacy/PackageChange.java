@@ -156,7 +156,10 @@ public class PackageChange extends BroadcastReceiver {
 											PrivacyManager.cIdentification, "/system/build.prop", false);
 
 								// Select user applications
-								PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingFSystem, "U");
+								PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingFSystem,
+										Boolean.toString(false));
+								PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingFUser,
+										Boolean.toString(true));
 							}
 						}
 

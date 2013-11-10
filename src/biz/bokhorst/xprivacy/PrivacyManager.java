@@ -561,8 +561,8 @@ public class PrivacyManager {
 
 	public static boolean getSettingBool(XHook hook, Context context, int uid, String settingName,
 			boolean defaultValue, boolean useCache) {
-		return Boolean.parseBoolean(getSetting(hook, context, uid, settingName, Boolean.toString(defaultValue)
-				.toString(), useCache));
+		return Boolean.parseBoolean(getSetting(hook, context, uid, settingName, Boolean.toString(defaultValue),
+				useCache));
 	}
 
 	public static String getSetting(XHook hook, Context context, int uid, String settingName, String defaultValue,
@@ -570,8 +570,8 @@ public class PrivacyManager {
 		if (uid == 0)
 			return getSetting(hook, context, settingName, defaultValue, useCache);
 		else {
-			String setting = getSetting(hook, context, String.format("%s.%d", settingName, uid), defaultValue, useCache);
-			if (setting == null ? setting == defaultValue : setting.equals(defaultValue))
+			String setting = getSetting(hook, context, String.format("%s.%d", settingName, uid), null, useCache);
+			if (setting == null)
 				return getSetting(hook, context, settingName, defaultValue, useCache);
 			else
 				return setting;
@@ -635,7 +635,7 @@ public class PrivacyManager {
 			value = PrivacyProvider.getSettingFallback(name, defaultValue);
 
 		// Default value
-		if (value == null || value.equals(""))
+		if (value == null)
 			value = defaultValue;
 
 		// Add to cache

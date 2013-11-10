@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
@@ -246,61 +247,103 @@ public class SettingsDialog {
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				// Serial#
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSerial,
-						cbSerial.isChecked() ? PrivacyManager.cValueRandom : etSerial.getText().toString());
+				// @formatter:off
+				if (!cbSerial.isChecked() && etSerial.getText().toString().equals("") &&
+					!cbLat.isChecked() && etLat.getText().toString().equals("") &&
+					!cbLon.isChecked() && etLon.getText().toString().equals("") &&
+					!cbMac.isChecked() && etMac.getText().toString().equals("") &&
+					etIP.getText().toString().equals("") &&
+					!cbImei.isChecked() && etImei.getText().toString().equals("") &&
+					!cbPhone.isChecked() && etPhone.getText().toString().equals("") &&
+					!cbId.isChecked() && etId.getText().toString().equals("") &&
+					!cbGsfId.isChecked() && etGsfId.getText().toString().equals("") &&
+					etMcc.getText().toString().equals("") &&
+					etMnc.getText().toString().equals("") &&
+					!cbCountry.isChecked() && etCountry.getText().toString().equals("") &&
+					etOperator.getText().toString().equals("") &&
+					etIccId.getText().toString().equals("") &&
+					etSubscriber.getText().toString().equals("") &&
+					etUa.getText().toString().equals("")) {
+					// @formatter:on
 
-				// Set location
-				try {
-					float lat = Float.parseFloat(etLat.getText().toString().replace(',', '.'));
-					float lon = Float.parseFloat(etLon.getText().toString().replace(',', '.'));
-					if (lat < -90 || lat > 90 || lon < -180 || lon > 180)
-						throw new InvalidParameterException();
+					// Clear all settings
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSerial, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMac, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingIP, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingImei, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingPhone, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingId, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingGsfId, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMcc, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMnc, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingCountry, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingOperator, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingIccId, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSubscriber, null);
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingUa, null);
+					Util.log(null, Log.WARN, "Cleared all settings uid=" + uid);
+				} else {
+					// Serial#
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSerial,
+							cbSerial.isChecked() ? PrivacyManager.cValueRandom : etSerial.getText().toString());
 
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude,
-							cbLat.isChecked() ? PrivacyManager.cValueRandom : Float.toString(lat));
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude,
-							cbLon.isChecked() ? PrivacyManager.cValueRandom : Float.toString(lon));
+					// Set location
+					try {
+						float lat = Float.parseFloat(etLat.getText().toString().replace(',', '.'));
+						float lon = Float.parseFloat(etLon.getText().toString().replace(',', '.'));
+						if (lat < -90 || lat > 90 || lon < -180 || lon > 180)
+							throw new InvalidParameterException();
 
-				} catch (Throwable ex) {
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude,
-							cbLat.isChecked() ? PrivacyManager.cValueRandom : "");
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude,
-							cbLon.isChecked() ? PrivacyManager.cValueRandom : "");
+						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude,
+								cbLat.isChecked() ? PrivacyManager.cValueRandom : Float.toString(lat));
+						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude,
+								cbLon.isChecked() ? PrivacyManager.cValueRandom : Float.toString(lon));
+
+					} catch (Throwable ex) {
+						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude,
+								cbLat.isChecked() ? PrivacyManager.cValueRandom : "");
+						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude,
+								cbLon.isChecked() ? PrivacyManager.cValueRandom : "");
+					}
+
+					// Other settings
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMac,
+							cbMac.isChecked() ? PrivacyManager.cValueRandom : etMac.getText().toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingIP, etIP.getText().toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingImei,
+							cbImei.isChecked() ? PrivacyManager.cValueRandom : etImei.getText().toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingPhone,
+							cbPhone.isChecked() ? PrivacyManager.cValueRandom : etPhone.getText().toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingId,
+							cbId.isChecked() ? PrivacyManager.cValueRandom : etId.getText().toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingGsfId,
+							cbGsfId.isChecked() ? PrivacyManager.cValueRandom : etGsfId.getText().toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMcc, etMcc.getText()
+							.toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMnc, etMnc.getText()
+							.toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingCountry,
+							cbCountry.isChecked() ? PrivacyManager.cValueRandom : etCountry.getText().toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingOperator, etOperator.getText()
+							.toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingIccId, etIccId.getText()
+							.toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSubscriber, etSubscriber
+							.getText().toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingUa, etUa.getText().toString());
+
+					if (uid == 0) {
+						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
+								Boolean.toString(cbUsage.isChecked()));
+						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
+								Boolean.toString(cbLog.isChecked()));
+					}
+
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingRandom,
+							Boolean.toString(cbRandom.isChecked()));
 				}
-
-				// Other settings
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMac,
-						cbMac.isChecked() ? PrivacyManager.cValueRandom : etMac.getText().toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingIP, etIP.getText().toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingImei,
-						cbImei.isChecked() ? PrivacyManager.cValueRandom : etImei.getText().toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingPhone,
-						cbPhone.isChecked() ? PrivacyManager.cValueRandom : etPhone.getText().toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingId,
-						cbId.isChecked() ? PrivacyManager.cValueRandom : etId.getText().toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingGsfId,
-						cbGsfId.isChecked() ? PrivacyManager.cValueRandom : etGsfId.getText().toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMcc, etMcc.getText().toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMnc, etMnc.getText().toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingCountry,
-						cbCountry.isChecked() ? PrivacyManager.cValueRandom : etCountry.getText().toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingOperator, etOperator.getText()
-						.toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingIccId, etIccId.getText()
-						.toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSubscriber, etSubscriber.getText()
-						.toString());
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingUa, etUa.getText().toString());
-
-				if (uid == 0) {
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
-							Boolean.toString(cbUsage.isChecked()));
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
-							Boolean.toString(cbLog.isChecked()));
-				}
-				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingRandom,
-						Boolean.toString(cbRandom.isChecked()));
 
 				// Done
 				dlgSettings.dismiss();
