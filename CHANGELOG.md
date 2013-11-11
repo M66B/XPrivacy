@@ -3,9 +3,10 @@ Changelog
 
 **Next release**
 
-* Updated German translation
 * Fixed rare null pointer exception ([issue](https://github.com/M66B/XPrivacy/issues/739))
 * Added traditional Chinese translation
+* Updated German translation
+* Updated Vietnamese translation
 
 **Version 1.10.8 TEST**
 
