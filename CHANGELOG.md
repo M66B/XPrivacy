@@ -3,7 +3,8 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated German translation
+* Fixed rare null pointer exception ([issue](https://github.com/M66B/XPrivacy/issues/739))
 
 **Version 1.10.8 TEST**
 
