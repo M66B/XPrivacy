@@ -1,15 +1,11 @@
 <resources>
 
-    <!-- Translators: do not include texts with translatable="false" -->
-    <string name="app_name" translatable="false">XPrivacy</string>
     <string name="app_notxposed" formatted="false">尚未安裝 Xposed framework 版本 %d+ </string>
     <string name="app_notenabled">尚未於 Xposed installer 啟用 XPrivacy</string>
     <string name="app_wrongandroid">僅支援 Android 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework 版本: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
-    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#xprivacy</string>
-    <string name="app_support" translatable="false">http://forum.xda-developers.com/showthread.php?t=2320783</string>
     <string name="menu_usage">操作記錄</string>
     <string name="menu_refresh">重新整理</string>
     <string name="menu_settings">設定</string>
@@ -56,7 +52,6 @@
     <string name="restrict_media">媒體 (音訊, 圖片, 影片)</string>
     <string name="restrict_messages">簡訊 (SMS, MMS)</string>
     <string name="restrict_network">網路位置</string>
-    <string name="restrict_nfc" translatable="false">NFC</string>
     <string name="restrict_notifications">通知</string>
     <string name="restrict_phone">手機資訊 (ID, 號碼, 通話)</string>
     <string name="restrict_sensors">感應器</string>
@@ -84,15 +79,10 @@
     <string name="settings_lon">經度</string>
     <string name="settings_mac">MAC 位置</string>
     <string name="settings_ip">IP 位置</string>
-    <string name="settings_imei" translatable="false">IMEI</string>
     <string name="settings_phone">手機號碼</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_gsfid" translatable="false">GSF ID</string>
-    <string name="settings_mcc" translatable="false">MCC</string>
-    <string name="settings_mnc" translatable="false">MNC</string>
     <string name="settings_country">國家</string>
     <string name="settings_operator">電信商</string>
-    <string name="settings_iccid" translatable="false">ICC ID</string>
     <string name="settings_subscriber">簽約者 ID</string>
     <string name="settings_ua">User agent</string>
     <string name="settings_usage">Android 使用記錄 (需重新啟動)</string>
@@ -103,6 +93,5 @@
     <string name="help_used">表示app已獲取過資訊</string>
     <string name="help_frozen">表示app已凍結/停用</string>
     <string name="help_dangerous">不建議限制該程式</string>
-    <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
 
 </resources>
