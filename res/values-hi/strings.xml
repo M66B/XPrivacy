@@ -29,7 +29,6 @@
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
     <string name="msg_new">नया</string>
     <string name="msg_update">अद्यतन</string>
-    <string name="msg_restricted" formatted="false">%s XPrivacy के द्वारा प्रतिबंधित</string>
     <string name="msg_licensed" formatted="false">अधिकारी: %s</string>
     <string name="msg_loading">लोडिंग</string>
     <string name="msg_edit">सभी प्रतिबंध को संपादित करने application के icon को क्लिक करे</string>

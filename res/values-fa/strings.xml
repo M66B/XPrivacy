@@ -31,7 +31,6 @@
     <string name="menu_contacts">تماس هایی را که احازه می دهید انتخاب کنید</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s حدود شده توسط ایکس پرایویسی</string>
     <string name="msg_licensed" formatted="false">%s مجوز به: </string>
     <string name="msg_loading">در حال بارگذاری</string>
     <string name="msg_edit">برای ویرایش تمامی محدودیت ها بر روی آیکون نرم افزار مورد نظر کلیک کنید</string>

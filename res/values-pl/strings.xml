@@ -29,7 +29,6 @@
     <string name="menu_contacts">Wybierz dozwolone kontakty</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s jest ograniczone przez XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencjonowane dla: %s</string>
     <string name="msg_loading">Ładowanie</string>
     <string name="msg_edit">Kliknij na ikonę aplikacji aby zmodyfikować poszczególne ograniczenia</string>

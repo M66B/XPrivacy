@@ -29,7 +29,6 @@
     <string name="menu_contacts">Изабери дозвољене контакте</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s restricted by XPrivacy</string>
     <string name="msg_licensed" formatted="false">Лиценциран %s</string>
     <string name="msg_loading">Учитавање</string>
     <string name="msg_edit">Click the application icon to edit all restrictions</string>

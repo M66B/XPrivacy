@@ -29,7 +29,6 @@
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>
     <string name="msg_new">Naujas</string>
     <string name="msg_update">Atnaujinta</string>
-    <string name="msg_restricted" formatted="false">%s apribota XPrivacy</string>
     <string name="msg_licensed" formatted="false">licencija: %s</string>
     <string name="msg_loading">Palaukite...</string>
     <string name="msg_edit">Spustelėkite programos piktogramą norėdami redaguoti apribojimus</string>

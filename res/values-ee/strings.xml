@@ -29,7 +29,6 @@
     <string name="menu_contacts">Vali kontaktid mida lubada</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s on keelatud XPrivacy poolt</string>
     <string name="msg_licensed" formatted="false">Litsentseeritud: %s</string>
     <string name="msg_loading">Laeb</string>
     <string name="msg_edit">Klõpsa rakenduse ikoonile, et muuta</string>

@@ -29,7 +29,6 @@
     <string name="menu_contacts">Choisir les contacts à autoriser</string>
     <string name="msg_new">Nouv. :</string>
     <string name="msg_update">MàJ :</string>
-    <string name="msg_restricted" formatted="false">%s restreint par XPrivacy</string>
     <string name="msg_licensed" formatted="false">Autorisé à : %s</string>
     <string name="msg_loading">Chargement</string>
     <string name="msg_edit">Cliquer sur l\'icône de l\'application pour éditer ses restrictions</string>

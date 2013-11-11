@@ -29,7 +29,6 @@
     <string name="menu_contacts">Chọn một danh bạ</string>
     <string name="msg_new">Mới</string>
     <string name="msg_update">Cập nhật</string>
-    <string name="msg_restricted" formatted="false">%s hạn chế bởi XPrivacy</string>
     <string name="msg_licensed" formatted="false">Bản quyền: %s</string>
     <string name="msg_loading">Đang tải</string>
     <string name="msg_edit">Chọn biểu tượng của ứng dụng để thiết lập tất cả hạn chế</string>

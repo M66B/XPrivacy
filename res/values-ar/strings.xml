@@ -29,7 +29,6 @@
     <string name="menu_contacts">إختر الأسماء التي تود تمكينها</string>
     <string name="msg_new">جديد</string>
     <string name="msg_update">تحديث</string>
-    <string name="msg_restricted" formatted="false">%s تم تقيده بواسطة XPrivacy</string>
     <string name="msg_licensed" formatted="false">مرخص ل: %s</string>
     <string name="msg_loading">جاري التحميل</string>
     <string name="msg_edit">إضغط ايقونة التطبيق لتعديل كل القيود</string>

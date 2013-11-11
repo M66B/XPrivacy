@@ -29,7 +29,6 @@
     <string name="menu_contacts">Válassza ki az engedélyezendő névjegyeket</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s korlátozva az XPrivacy által</string>
     <string name="msg_licensed" formatted="false">Licensz tulajdonos: %s</string>
     <string name="msg_loading">Töltés</string>
     <string name="msg_edit">Kattintson az alkalmazás ikonra az összes korlátozás módosításához</string>

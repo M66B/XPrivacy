@@ -29,7 +29,6 @@
     <string name="menu_contacts">Izberi dovoljene stike</string>
     <string name="msg_new">Novo</string>
     <string name="msg_update">Posodobitev</string>
-    <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencirano na: %s</string>
     <string name="msg_loading">Nalagam</string>
     <string name="msg_edit">Za spreminjanje pravic klikni na ikono programa</string>

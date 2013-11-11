@@ -29,7 +29,6 @@
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
     <string name="msg_new">Nytt</string>
     <string name="msg_update">Oppdater</string>
-    <string name="msg_restricted" formatted="false">%s blokkert av XPrivacy</string>
     <string name="msg_licensed" formatted="false">Lisensert til: %s</string>
     <string name="msg_loading">Lader</string>
     <string name="msg_edit">Klikk på app ikonet for å bearbeide alle restriksjoner</string>

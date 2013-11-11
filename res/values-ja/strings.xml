@@ -29,7 +29,6 @@
     <string name="menu_contacts">許可する電話帳を選択</string>
     <string name="msg_new">新規</string>
     <string name="msg_update">更新</string>
-    <string name="msg_restricted" formatted="false">%s をXPrivacyが制限しました</string>
     <string name="msg_licensed" formatted="false">ライセンス先: %s</string>
     <string name="msg_loading">読み込み中</string>
     <string name="msg_edit">アプリアイコンをタップすると全ての権限の制限を設定できます</string>
