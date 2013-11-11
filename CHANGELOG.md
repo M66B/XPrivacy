@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Fixed rare null pointer exception ([issue](https://github.com/M66B/XPrivacy/issues/739))
+* Fixed flickering with black theme
 * Added traditional Chinese translation
 * Updated German translation
 * Updated Vietnamese translation
