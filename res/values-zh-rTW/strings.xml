@@ -9,18 +9,18 @@
     <string name="menu_usage">操作記錄</string>
     <string name="menu_refresh">重新整理</string>
     <string name="menu_settings">設定</string>
-    <string name="menu_template">預設範本</string>
+    <string name="menu_template">預設規則</string>
     <string name="menu_report">回報問題</string>
-    <string name="menu_export">匯出</string>
-    <string name="menu_import">匯入</string>
+    <string name="menu_export">匯出規則</string>
+    <string name="menu_import">匯入規則</string>
     <string name="menu_submit">上傳規則</string>
     <string name="menu_fetch">擷取規則</string>
     <string name="menu_theme">更換背景</string>
     <string name="menu_pro">專業版</string>
     <string name="menu_about">關於</string>
     <string name="menu_help">說明</string>
-    <string name="menu_all">全選</string>
-    <string name="menu_apply">套用範本</string>
+    <string name="menu_all">全部</string>
+    <string name="menu_apply">套用預設規則</string>
     <string name="menu_clear">清空</string>
     <string name="menu_app_launch">執行</string>
     <string name="menu_app_settings">應用程式資訊</string>
@@ -30,30 +30,30 @@
     <string name="msg_new">已安裝</string>
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">授權給: %s</string>
-    <string name="msg_loading">載入中</string>
+    <string name="msg_loading">載入中...</string>
     <string name="msg_edit">點選app圖示以檢視並修改限制規則</string>
     <string name="msg_sure">確定進行操作?</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">需要重新啟動</string>
     <string name="msg_random">隨機</string>
     <string name="msg_random_boot">重新啟動後進行亂數</string>
-    <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳盡的測試，但仍無法保證可以在所有裝置/安卓版本/各app上使用\n\n請自行承擔使用XPrivacy的可能風險。</b>\n\n請參閱使用者條款：</string>
+    <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳盡的測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用\n\n請自行承擔使用XPrivacy的可能風險。</b>\n\n請參閱說明文件：</string>
     <string name="restrict_accounts">帳戶 (Google, Facebook, etc)</string>
-    <string name="restrict_browser">瀏覽器 (bookmarks/history)</string>
-    <string name="restrict_calendar">月曆</string>
-    <string name="restrict_calling">電話記錄 (撥號, 簡訊, MMS)</string>
+    <string name="restrict_browser">瀏覽器 (書籤/記錄)</string>
+    <string name="restrict_calendar">行事曆</string>
+    <string name="restrict_calling">通話功能 (撥號, 簡訊, MMS)</string>
     <string name="restrict_clipboard">剪貼簿</string>
     <string name="restrict_contacts">聯絡人</string>
     <string name="restrict_dictionary">使用者辭典</string>
     <string name="restrict_email">電子郵件</string>
     <string name="restrict_identification">手機狀態識別碼</string>
     <string name="restrict_internet">網際網路</string>
-    <string name="restrict_location">位置資訊 (精細/粗略)</string>
+    <string name="restrict_location">位置資訊 (精確/粗略)</string>
     <string name="restrict_media">媒體 (音訊, 圖片, 影片)</string>
     <string name="restrict_messages">簡訊 (SMS, MMS)</string>
     <string name="restrict_network">網路位置</string>
     <string name="restrict_notifications">通知</string>
-    <string name="restrict_phone">手機資訊 (ID, 號碼, 通話)</string>
+    <string name="restrict_phone">手機資訊 (ID, 號碼, 通話記錄)</string>
     <string name="restrict_sensors">感應器</string>
     <string name="restrict_storage">儲存空間 (媒體, SD卡)</string>
     <string name="restrict_shell">Shell (指令, ROOT指令)</string>
@@ -68,12 +68,12 @@
         <item quantity="other">使用 %d 個篩選器</item>
     </plurals>
 
-    <string name="title_fused">程式要求行動網路權限</string>
+    <string name="title_fused">程式曾取得過資訊</string>
     <string name="title_finternet">程式要求網際網路權限</string>
     <string name="title_fpermission">程式要求手機權限</string>
     <string name="title_frestricted">已被限制程式</string>
-    <string name="title_fuser">只顯示使用者app</string>
-    <string name="title_fsystem">只顯示系統app</string>
+    <string name="title_fuser">顯示使用者app</string>
+    <string name="title_fsystem">顯示系統app</string>
     <string name="settings_serial">序號</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">經度</string>
@@ -85,13 +85,13 @@
     <string name="settings_operator">電信商</string>
     <string name="settings_subscriber">簽約者 ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_usage">Android 使用記錄 (需重新啟動)</string>
-    <string name="settings_log">Debug log (需重新啟動)</string>
-    <string name="help_application">程式列表</string>
+    <string name="settings_usage">Android 使用日誌 (需重新啟動)</string>
+    <string name="settings_log">偵錯日誌 (需重新啟動)</string>
+    <string name="help_application">程式</string>
     <string name="help_internet">表示有網際網路權限</string>
     <string name="help_granted">表示有手機權限</string>
-    <string name="help_used">表示app已獲取過資訊</string>
+    <string name="help_used">表示app曾取得過資訊</string>
     <string name="help_frozen">表示app已凍結/停用</string>
-    <string name="help_dangerous">不建議限制該程式</string>
+    <string name="help_dangerous">不建議限制</string>
 
 </resources>
