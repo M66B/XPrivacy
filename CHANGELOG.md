@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated Lithuanian translation
 
 **Version 1.10.12 BETA**
 
