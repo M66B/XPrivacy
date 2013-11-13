@@ -29,18 +29,14 @@ public class PackageChange extends BroadcastReceiver {
 				final NotificationManager notificationManager = (NotificationManager) context
 						.getSystemService(Context.NOTIFICATION_SERVICE);
 
+				// Check action
 				if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
-					// Package added
+					// Get data
 					boolean system = false;
 					PackageInfo pInfo = null;
 					PackageManager pm = context.getPackageManager();
-					try {
-						pInfo = pm.getPackageInfo(packageName, 0);
-						system = (pInfo.applicationInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0;
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-						return;
-					}
+					pInfo = pm.getPackageInfo(packageName, 0);
+					system = (pInfo.applicationInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0;
 
 					if (fSystem ? !system : true) {
 						// Default deny new user apps
@@ -62,6 +58,7 @@ public class PackageChange extends BroadcastReceiver {
 										PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
 						}
 
+						// New/update notification
 						if (!replacing
 								|| PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify,
 										true, false)) {
@@ -121,11 +118,8 @@ public class PackageChange extends BroadcastReceiver {
 
 						// Notify
 						notificationManager.notify(0, notification);
-					}
 
-					// Upgrade
-					try {
-						// Get stored version
+						// Upgrade
 						PackageManager pm = context.getPackageManager();
 						Version sVersion = new Version(PrivacyManager.getSetting(null, context, 0,
 								PrivacyManager.cSettingVersion, "0.0", false));
@@ -169,8 +163,6 @@ public class PackageChange extends BroadcastReceiver {
 						// Update stored version
 						PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
 						PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed
