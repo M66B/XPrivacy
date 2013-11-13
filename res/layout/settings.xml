@@ -290,6 +290,19 @@
             <TableRow>
 
                 <TextView
+                    android:text="@string/settings_ssid"
+                    android:textIsSelectable="false" />
+
+                <CheckBox android:id="@+id/cbSSID" />
+
+                <EditText
+                    android:id="@+id/etSSID"
+                    android:inputType="text|textNoSuggestions" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
                     android:text="@string/settings_ua"
                     android:textIsSelectable="false" />
 

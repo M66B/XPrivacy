@@ -76,6 +76,8 @@ public class BootReceiver extends BroadcastReceiver {
 					PrivacyManager.getRandomProp("ISO3166"));
 			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSubscriber,
 					PrivacyManager.getRandomProp("SubscriberId"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSSID,
+					PrivacyManager.getRandomProp("SSID"));
 		}
 	}
 }

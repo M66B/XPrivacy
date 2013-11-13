@@ -1,5 +1,7 @@
 package biz.bokhorst.xprivacy;
 
+import static de.robv.android.xposed.XposedHelpers.findMethodExact;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -174,8 +176,11 @@ public class Requirements {
 		if (checkField(WifiInfo.class, "mWifiSsid"))
 			try {
 				Class<?> clazz = Class.forName("android.net.wifi.WifiSsid");
-				if (!checkField(clazz, "octets"))
+				try {
+					findMethodExact(clazz, "createFromAsciiEncoded", String.class);
+				} catch (NoSuchMethodError ex) {
 					reportClass(clazz, context);
+				}
 			} catch (Throwable ex) {
 				sendSupportInfo(ex.toString(), context);
 			}

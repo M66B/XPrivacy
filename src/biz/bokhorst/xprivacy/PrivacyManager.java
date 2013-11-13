@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
@@ -89,6 +88,7 @@ public class PrivacyManager {
 	public final static String cSettingOperator = "Operator";
 	public final static String cSettingIccId = "ICC_ID";
 	public final static String cSettingSubscriber = "Subscriber";
+	public final static String cSettingSSID = "SSID";
 	public final static String cSettingUa = "UA";
 	public final static String cSettingFUsed = "FUsed";
 	public final static String cSettingFInternet = "FInternet";
@@ -781,14 +781,10 @@ public class PrivacyManager {
 			return (cValueRandom.equals(value) ? getRandomProp("SubscriberId") : value);
 		}
 
-		if (name.equals("SSID"))
-			return ""; // Hidden network
-		if (name.equals("WifiSsid.octets")) {
-			int size = 8;
-			ByteArrayOutputStream octets = new ByteArrayOutputStream(size);
-			for (int i = 0; i < size; i++)
-				octets.write(0);
-			return octets; // Hidden network
+		if (name.equals("SSID")) {
+			// Default hidden network
+			String value = getSetting(null, null, uid, cSettingSSID, "", true);
+			return (cValueRandom.equals(value) ? getRandomProp("SSID") : value);
 		}
 
 		// Google services framework ID
@@ -968,6 +964,16 @@ public class PrivacyManager {
 			while (subscriber.length() < 15)
 				subscriber += Character.forDigit(r.nextInt(10), 10);
 			return subscriber;
+		}
+
+		if (name.equals("SSID")) {
+			String ssid = "";
+			while (ssid.length() < 6)
+				ssid += (char) (r.nextInt(26) + 'A');
+
+			ssid += Character.forDigit(r.nextInt(10), 10);
+			ssid += Character.forDigit(r.nextInt(10), 10);
+			return ssid;
 		}
 
 		return "";
