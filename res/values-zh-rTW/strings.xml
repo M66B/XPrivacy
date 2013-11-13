@@ -81,6 +81,7 @@
     <string name="settings_ip">IP 位置</string>
     <string name="settings_phone">手機號碼</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">國家</string>
     <string name="settings_operator">電信商</string>
     <string name="settings_subscriber">簽約者 ID</string>

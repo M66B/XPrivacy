@@ -83,6 +83,7 @@
     <string name="settings_ip">عنوان الايبي</string>
     <string name="settings_phone">رقم الهاتف</string>
     <string name="settings_id">هوية اندرويد</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">الدولة</string>
     <string name="settings_operator">المُشغل</string>
     <string name="settings_subscriber">IMSI</string>

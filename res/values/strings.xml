@@ -90,6 +90,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_phone">Phone number</string>
     <string name="settings_id">Android ID</string>
     <string name="settings_gsfid" translatable="false">GSF ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_mcc" translatable="false">MCC</string>
     <string name="settings_mnc" translatable="false">MNC</string>
     <string name="settings_country">Country</string>

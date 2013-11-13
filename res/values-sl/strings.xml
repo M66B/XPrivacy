@@ -85,6 +85,7 @@
     <string name="settings_ip">IP naslov</string>
     <string name="settings_phone">Telefonska številka</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Država</string>
     <string name="settings_operator">Operater</string>
     <string name="settings_subscriber">ID naročnika</string>

@@ -6,6 +6,7 @@ Changelog
 * Fixed rare null pointer exception ([issue](https://github.com/M66B/XPrivacy/issues/739))
 * Fixed flickering with black theme
 * Require Android 4.0.3 (minimum for Xposed)
+* Added settings for Advertisement ID (including randomization) ([issue](https://github.com/M66B/XPrivacy/issues/738))
 * Added traditional Chinese translation
 * Updated German translation
 * Updated Vietnamese translation

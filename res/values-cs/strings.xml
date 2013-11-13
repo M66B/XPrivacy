@@ -84,6 +84,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_ip">IP adresa</string>
     <string name="settings_phone">Telefonní číslo</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Země</string>
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>

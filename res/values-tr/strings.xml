@@ -82,6 +82,7 @@
     <string name="settings_ip">IP adresi</string>
     <string name="settings_phone">Telefon numarası</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Ülke</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Sim Numarası (IMSI)</string>

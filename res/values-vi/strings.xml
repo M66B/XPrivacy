@@ -82,6 +82,7 @@
     <string name="settings_ip">Địa chỉ IP</string>
     <string name="settings_phone">Số điện thoại</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Nước</string>
     <string name="settings_operator">Nhà mạng</string>
     <string name="settings_subscriber">ID người đăng kí</string>

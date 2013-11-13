@@ -187,6 +187,21 @@
             <TableRow>
 
                 <TextView
+                    android:text="@string/settings_adid"
+                    android:textIsSelectable="false" />
+
+                <CheckBox android:id="@+id/cbAdId" />
+
+                <EditText
+                    android:id="@+id/etAdId"
+                    android:digits="0123456789ABCDEF-"
+                    android:hint="DEFACE00-0000-0000-0000-000000000000"
+                    android:inputType="textCapCharacters|textNoSuggestions" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
                     android:text="@string/settings_mcc"
                     android:textIsSelectable="false" />
 

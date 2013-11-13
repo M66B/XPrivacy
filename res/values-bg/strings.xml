@@ -83,6 +83,7 @@
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">Телефонен номер</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Държава</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Абонатно ID</string>

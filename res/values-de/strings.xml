@@ -83,6 +83,7 @@
     <string name="settings_ip">IP-Adresse</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android-ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Land</string>
     <string name="settings_operator">Mobilfunkanbieter</string>
     <string name="settings_subscriber">Subscriber-ID</string>

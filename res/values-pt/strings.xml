@@ -83,6 +83,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_ip">Endereço IP</string>
     <string name="settings_phone">Número de telefone</string>
     <string name="settings_id">Identidade do Android</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">País</string>
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">Identidade do subscritor</string>

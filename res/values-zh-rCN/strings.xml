@@ -83,6 +83,7 @@
     <string name="settings_ip">IP 地址</string>
     <string name="settings_phone">手机号码</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">国家</string>
     <string name="settings_operator">运营商</string>
     <string name="settings_subscriber">IMSI</string>

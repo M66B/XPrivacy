@@ -83,6 +83,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="settings_ip">IP aadress</string>
     <string name="settings_phone">Telefoninumber</string>
     <string name="settings_id">Androidi ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Riik</string>
     <string name="settings_operator">Opeeraator</string>
     <string name="settings_subscriber">Abonendi ID</string>

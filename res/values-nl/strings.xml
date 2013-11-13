@@ -83,6 +83,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_ip">IP adres</string>
     <string name="settings_phone">Telefoonnummer</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertentie ID</string>
     <string name="settings_country">Land</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Abonnee ID</string>

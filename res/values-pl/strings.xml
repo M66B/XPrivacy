@@ -84,6 +84,7 @@
     <string name="settings_ip">Adres IP</string>
     <string name="settings_phone">Numer telefonu</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Kraj</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Subscriber ID</string>

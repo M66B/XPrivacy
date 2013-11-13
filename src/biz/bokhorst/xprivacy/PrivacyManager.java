@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -81,6 +82,7 @@ public class PrivacyManager {
 	public final static String cSettingPhone = "Phone";
 	public final static String cSettingId = "ID";
 	public final static String cSettingGsfId = "GSF_ID";
+	public final static String cSettingAdId = "AdId";
 	public final static String cSettingMcc = "MCC";
 	public final static String cSettingMnc = "MNC";
 	public final static String cSettingCountry = "Country";
@@ -801,6 +803,14 @@ public class PrivacyManager {
 			return gsfid;
 		}
 
+		// Advertisement ID
+		if (name.equals("AdvertisingId")) {
+			String adid = getSetting(null, null, uid, cSettingAdId, "DEFACE00-0000-0000-0000-000000000000", true);
+			if (cValueRandom.equals(adid))
+				adid = getRandomProp(name);
+			return adid;
+		}
+
 		if (name.equals("InetAddress")) {
 			// Set address
 			String ip = getSetting(null, null, uid, cSettingIP, null, true);
@@ -846,9 +856,6 @@ public class PrivacyManager {
 		if (name.equals("UA"))
 			return getSetting(null, null, uid, cSettingUa,
 					"Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9", true);
-
-		if (name.equals("AdvertisingId"))
-			return "DEFACE00-0000-0000-0000-000000000000";
 
 		// Fallback
 		Util.log(null, Log.WARN, "Fallback value name=" + name);
@@ -938,6 +945,9 @@ public class PrivacyManager {
 			long v = r.nextLong();
 			return Long.toHexString(v).toUpperCase();
 		}
+
+		if (name.equals("AdvertisingId"))
+			return UUID.randomUUID().toString().toUpperCase();
 
 		if (name.equals("LAT")) {
 			double d = r.nextDouble() * 180 - 90;
