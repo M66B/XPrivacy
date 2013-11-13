@@ -56,7 +56,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_network">Tinklas (adresai)</string>
     <string name="restrict_notifications">Įspėjimai</string>
     <string name="restrict_phone">Telefonas (ID, numeris, skambučiai)</string>
-    <string name="restrict_sensors">Sensors</string>
+    <string name="restrict_sensors">Sensoriai</string>
     <string name="restrict_storage">Atmintis (media, SD kortelė)</string>
     <string name="restrict_shell">Vykdymas (komandos, superuser)</string>
     <string name="restrict_system">Sistema (įdiegtos programos)</string>
@@ -73,7 +73,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_fused">Duomenų naudojimas</string>
     <string name="title_finternet">Interneto prieiga</string>
     <string name="title_fpermission">Aktyvūs leidimai</string>
-    <string name="title_frestricted">Apribotieji</string>
+    <string name="title_frestricted">Apriboti leidimai</string>
     <string name="title_fuser">Vartotojo programos</string>
     <string name="title_fsystem">Sistemos programos</string>
     <string name="settings_serial">Serial#</string>
@@ -83,13 +83,13 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_ip">IP addresas</string>
     <string name="settings_phone">Telefono numeris</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_adid">Reklamos ID</string>
     <string name="settings_country">Šalis</string>
     <string name="settings_operator">Operatorius</string>
     <string name="settings_subscriber">Abonento ID</string>
     <string name="settings_ua">Vartotojo agentas</string>
-    <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_notify">Atnaujinimų Pranesimas</string>
+    <string name="settings_usage">Android naudojimo duomenys (reikia paleisti iš naujo)</string>
     <string name="settings_log">DEBUG žurnalas (reikia paleisti iš naujo)</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
