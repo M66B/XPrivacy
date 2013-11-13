@@ -21,13 +21,12 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:shrinkColumns="2"
             android:stretchColumns="2" >
 
             <TableRow>
 
-                <View
-                    android:text="@string/settings_serial"
-                    android:textIsSelectable="false" />
+                <View />
 
                 <TextView
                     android:layout_span="2"
@@ -45,7 +44,6 @@
 
                 <EditText
                     android:id="@+id/etSerial"
-                    android:layout_width="10dip"
                     android:hint="DEFACE"
                     android:inputType="textNoSuggestions" />
             </TableRow>
