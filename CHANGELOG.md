@@ -13,6 +13,7 @@ Changelog
 * Added setting to disable update notification (per application) ([issue](https://github.com/M66B/XPrivacy/issues/635))
 * Not filtering on restricted will filter on not restricted ([issue](https://github.com/M66B/XPrivacy/issues/682))
 * Option to randomize subscriber ID (IMSI) ([issue](https://github.com/M66B/XPrivacy/issues/690))
+* Added application icons to usage view ([issue](https://github.com/M66B/XPrivacy/issues/693))
 * Added traditional Chinese translation
 * Updated German translation
 * Updated Vietnamese translation

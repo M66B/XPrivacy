@@ -9,9 +9,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import biz.bokhorst.xprivacy.PrivacyManager.UsageData;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -211,16 +216,59 @@ public class ActivityUsage extends Activity {
 		}
 
 		private class ViewHolder {
+			private View row;
+			private int position;
 			public TextView tvTime;
+			public ImageView imgIcon;
 			public ImageView imgRestricted;
 			public TextView tvApp;
 			public TextView tvRestriction;
 
-			public ViewHolder(View row) {
+			public ViewHolder(View theRow, int thePosition) {
+				row = theRow;
+				position = thePosition;
 				tvTime = (TextView) row.findViewById(R.id.tvTime);
+				imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
 				imgRestricted = (ImageView) row.findViewById(R.id.imgRestricted);
 				tvApp = (TextView) row.findViewById(R.id.tvApp);
 				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
+			}
+		}
+
+		private class HolderTask extends AsyncTask<Object, Object, Object> {
+			private int position;
+			private ViewHolder holder;
+			private UsageData usageData;
+			private Drawable icon = null;
+
+			public HolderTask(int thePosition, ViewHolder theHolder, UsageData theUsageData) {
+				position = thePosition;
+				holder = theHolder;
+				usageData = theUsageData;
+			}
+
+			@Override
+			protected Object doInBackground(Object... params) {
+				if (holder.position == position && usageData != null)
+					try {
+						PackageManager pm = holder.row.getContext().getPackageManager();
+						String[] packages = pm.getPackagesForUid(usageData.getUid());
+						if (packages != null && packages.length > 0) {
+							ApplicationInfo app = pm.getApplicationInfo(packages[0], 0);
+							icon = pm.getApplicationIcon(app);
+						}
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+					}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Object result) {
+				if (holder.position == position && icon != null) {
+					holder.imgIcon.setImageDrawable(icon);
+					holder.imgIcon.setVisibility(View.VISIBLE);
+				}
 			}
 		}
 
@@ -229,10 +277,12 @@ public class ActivityUsage extends Activity {
 			ViewHolder holder;
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.usageentry, null);
-				holder = new ViewHolder(convertView);
+				holder = new ViewHolder(convertView, position);
 				convertView.setTag(holder);
-			} else
+			} else {
 				holder = (ViewHolder) convertView.getTag();
+				holder.position = position;
+			}
 
 			// Get data
 			PrivacyManager.UsageData usageData = getItem(position);
@@ -241,10 +291,14 @@ public class ActivityUsage extends Activity {
 			Date date = new Date(usageData.getTimeStamp());
 			SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ROOT);
 			holder.tvTime.setText(format.format(date));
+			holder.imgIcon.setVisibility(View.INVISIBLE);
 			holder.imgRestricted.setVisibility(usageData.getRestricted() ? View.VISIBLE : View.INVISIBLE);
 			holder.tvApp.setText(Integer.toString(usageData.getUid()));
 			holder.tvRestriction.setText(String.format("%s/%s", usageData.getRestrictionName(),
 					usageData.getMethodName()));
+
+			// Async update
+			new HolderTask(position, holder, usageData).executeOnExecutor(mExecutor, (Object) null);
 
 			return convertView;
 		}
