@@ -88,6 +88,7 @@ sin embargo es imposible garantizar que funcione impecable en todos y cada uno d
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">ID de subscriptor</string>
     <string name="settings_ua">Agente de usuario</string>
+    <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Registro de depuración (requiere inicio)</string>
     <string name="help_application">Aplicación</string>

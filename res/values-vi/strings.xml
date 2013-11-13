@@ -87,6 +87,7 @@
     <string name="settings_operator">Nhà mạng</string>
     <string name="settings_subscriber">ID người đăng kí</string>
     <string name="settings_ua">Nhận dạng trình duyệt</string>
+    <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Mức sử dụng hệ thống (yêu cầu khởi động lại)</string>
     <string name="settings_log">Nhật ký lỗi (yêu cầu khởi động lại)</string>
     <string name="help_application">Ứng dụng</string>

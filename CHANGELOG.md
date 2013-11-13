@@ -9,6 +9,7 @@ Changelog
 * Require Android 4.0.3 (minimum for Xposed)
 * Added settings for Advertisement ID (including randomization) ([issue](https://github.com/M66B/XPrivacy/issues/738))
 * Added settings for SSID (including randomization) ([issue](https://github.com/M66B/XPrivacy/issues/652))
+* Added setting to disable update notification (per application) ([issue](https://github.com/M66B/XPrivacy/issues/635))
 * Not filtering on restricted will filter on not restricted ([issue](https://github.com/M66B/XPrivacy/issues/682))
 * Option to randomize subscriber ID (IMSI) ([issue](https://github.com/M66B/XPrivacy/issues/690))
 * Added traditional Chinese translation

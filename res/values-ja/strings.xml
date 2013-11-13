@@ -88,6 +88,7 @@
     <string name="settings_operator">キャリア</string>
     <string name="settings_subscriber">契約者固有ID</string>
     <string name="settings_ua">ユーザーエージェント</string>
+    <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">デバッグログ(要再起動)</string>
     <string name="help_application">アプリ</string>

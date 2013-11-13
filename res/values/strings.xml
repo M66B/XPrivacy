@@ -99,6 +99,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ssid" translatable="false">SSID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="help_application">Application</string>

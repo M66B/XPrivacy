@@ -89,6 +89,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">Identifikácia prehliadača</string>
+    <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Využitie dát (vyžaduje reštart)</string>
     <string name="settings_log">Záznam na ladenie (vyžaduje reštart)</string>
     <string name="help_application">Aplikácia</string>

@@ -89,6 +89,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">Agent prohlížeče</string>
+    <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Ukládat ladící záznam (vyžaduje restart)</string>
     <string name="help_application">Aplikace</string>

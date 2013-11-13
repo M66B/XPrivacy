@@ -86,6 +86,7 @@
     <string name="settings_operator">電信商</string>
     <string name="settings_subscriber">簽約者 ID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android 使用日誌 (需重新啟動)</string>
     <string name="settings_log">偵錯日誌 (需重新啟動)</string>
     <string name="help_application">程式</string>

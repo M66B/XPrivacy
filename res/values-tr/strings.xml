@@ -87,6 +87,7 @@
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Sim Numarası (IMSI)</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Hata ayıklama modu (Yeniden başlatma gerekir)</string>
     <string name="help_application">Uygulama</string>

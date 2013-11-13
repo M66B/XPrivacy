@@ -11,7 +11,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 public class PackageChange extends BroadcastReceiver {
 
@@ -63,46 +62,50 @@ public class PackageChange extends BroadcastReceiver {
 										PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
 						}
 
-						// Build result intent
-						Intent resultIntent = new Intent(context, ActivityApp.class);
-						resultIntent.putExtra(ActivityApp.cPackageName, packageName);
-						resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
-								| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+						if (!replacing
+								|| PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify,
+										true, false)) {
+							// Build result intent
+							Intent resultIntent = new Intent(context, ActivityApp.class);
+							resultIntent.putExtra(ActivityApp.cPackageName, packageName);
+							resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
+									| Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-						// Build pending intent
-						PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
-								PendingIntent.FLAG_UPDATE_CURRENT);
+							// Build pending intent
+							PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
+									PendingIntent.FLAG_UPDATE_CURRENT);
 
-						// Build result intent clear
-						Intent resultIntentClear = new Intent(context, ActivityApp.class);
-						resultIntentClear.putExtra(ActivityApp.cPackageName, packageName);
-						resultIntentClear.putExtra(ActivityApp.cActionClear, true);
-						resultIntentClear.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
-								| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+							// Build result intent clear
+							Intent resultIntentClear = new Intent(context, ActivityApp.class);
+							resultIntentClear.putExtra(ActivityApp.cPackageName, packageName);
+							resultIntentClear.putExtra(ActivityApp.cActionClear, true);
+							resultIntentClear.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
+									| Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-						// Build pending intent clear
-						PendingIntent pendingIntentClear = PendingIntent.getActivity(context, -uid, resultIntentClear,
-								PendingIntent.FLAG_UPDATE_CURRENT);
+							// Build pending intent clear
+							PendingIntent pendingIntentClear = PendingIntent.getActivity(context, -uid,
+									resultIntentClear, PendingIntent.FLAG_UPDATE_CURRENT);
 
-						// Title
-						String title = String.format("%s %s %s",
-								context.getString(replacing ? R.string.msg_update : R.string.msg_new),
-								pm.getApplicationLabel(pInfo.applicationInfo), pInfo.versionName);
+							// Title
+							String title = String.format("%s %s %s",
+									context.getString(replacing ? R.string.msg_update : R.string.msg_new),
+									pm.getApplicationLabel(pInfo.applicationInfo), pInfo.versionName);
 
-						// Build notification
-						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
-						notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-						notificationBuilder.setContentTitle(context.getString(R.string.app_name));
-						notificationBuilder.setContentText(title);
-						notificationBuilder.setContentIntent(pendingIntent);
-						notificationBuilder.setWhen(System.currentTimeMillis());
-						notificationBuilder.setAutoCancel(true);
-						notificationBuilder.addAction(R.drawable.cross_holo_dark,
-								context.getString(R.string.menu_clear), pendingIntentClear);
-						Notification notification = notificationBuilder.build();
+							// Build notification
+							NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+							notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+							notificationBuilder.setContentTitle(context.getString(R.string.app_name));
+							notificationBuilder.setContentText(title);
+							notificationBuilder.setContentIntent(pendingIntent);
+							notificationBuilder.setWhen(System.currentTimeMillis());
+							notificationBuilder.setAutoCancel(true);
+							notificationBuilder.addAction(R.drawable.cross_holo_dark,
+									context.getString(R.string.menu_clear), pendingIntentClear);
+							Notification notification = notificationBuilder.build();
 
-						// Notify
-						notificationManager.notify(pInfo.applicationInfo.uid, notification);
+							// Notify
+							notificationManager.notify(pInfo.applicationInfo.uid, notification);
+						}
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
 					// Notify reboot required
@@ -171,11 +174,9 @@ public class PackageChange extends BroadcastReceiver {
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed
-					Util.log(null, Log.INFO, "Removing " + packageName);
 					notificationManager.cancel(uid);
 					PrivacyManager.deleteRestrictions(context, uid);
 					PrivacyManager.deleteUsage(context, uid);
-					Util.log(null, Log.INFO, "Removed " + packageName);
 				}
 			}
 		} catch (Throwable ex) {

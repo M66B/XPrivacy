@@ -100,9 +100,10 @@ public class PrivacyManager {
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
 	public final static String cSettingFirstRun = "FirstRun";
-	public final static String cSettingRandom = "Random@boot";
-	public final static String cSettingLog = "Log";
+	public final static String cSettingNotify = "Notify";
 	public final static String cSettingAndroidUsage = "AndroidUsage";
+	public final static String cSettingLog = "Log";
+	public final static String cSettingRandom = "Random@boot";
 
 	public final static String cValueRandom = "#Random#";
 	public final static String cValueRandomLegacy = "\nRandom\n";

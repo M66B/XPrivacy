@@ -89,6 +89,7 @@
     <string name="settings_operator">Оператор</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Отладочный лог (требует перезагрузки)</string>
     <string name="help_application">Приложение</string>

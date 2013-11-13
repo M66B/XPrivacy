@@ -88,6 +88,7 @@
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Αναγνωριστικό συνδρομητή</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="help_application">Εφαρμογή</string>

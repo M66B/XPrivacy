@@ -51,6 +51,7 @@ public class SettingsDialog {
 		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
 		final EditText etSSID = (EditText) dlgSettings.findViewById(R.id.etSSID);
 		final EditText etUa = (EditText) dlgSettings.findViewById(R.id.etUa);
+		final CheckBox cbNotify = (CheckBox) dlgSettings.findViewById(R.id.cbNotify);
 		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
@@ -79,6 +80,7 @@ public class SettingsDialog {
 			tvAppName.setText(appInfo.getFirstApplicationName());
 
 		// Set current values
+		boolean notify = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify, true, false);
 		boolean usage = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingAndroidUsage, false,
 				false);
 		boolean log = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingLog, false, false);
@@ -217,9 +219,11 @@ public class SettingsDialog {
 		etUa.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingUa, "", false));
 
 		if (uid == 0) {
+			cbNotify.setVisibility(View.GONE);
 			cbUsage.setChecked(usage);
 			cbLog.setChecked(log);
 		} else {
+			cbNotify.setChecked(notify);
 			cbUsage.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
 		}
@@ -389,7 +393,9 @@ public class SettingsDialog {
 							Boolean.toString(cbUsage.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
 							Boolean.toString(cbLog.isChecked()));
-				}
+				} else
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingNotify,
+							Boolean.toString(cbNotify.isChecked()));
 
 				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingRandom,
 						Boolean.toString(cbRandom.isChecked()));
@@ -425,7 +431,8 @@ public class SettingsDialog {
 				if (uid == 0) {
 					cbUsage.setChecked(false);
 					cbLog.setChecked(false);
-				}
+				} else
+					cbNotify.setChecked(false);
 				cbRandom.setChecked(false);
 
 				cbSerial.setChecked(false);
