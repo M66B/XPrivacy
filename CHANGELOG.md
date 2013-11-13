@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.10.11 BETA**
+
 * Fixed rare null pointer exception ([issue](https://github.com/M66B/XPrivacy/issues/739))
 * Fixed flickering with black theme
 * Fixed setting global and randomize on boot settings
