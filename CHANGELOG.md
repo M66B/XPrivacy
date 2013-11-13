@@ -8,7 +8,7 @@ Changelog
 
 **Version 1.10.12 BETA**
 
-* Attempt to fix *java.lang.NoClassDefFoundError: de.robv.android.xposed.XposedHelpers*
+* Fixed *java.lang.NoClassDefFoundError: de.robv.android.xposed.XposedHelpers*
 
 **Version 1.10.11 BETA**
 
