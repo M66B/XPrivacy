@@ -355,17 +355,17 @@ public class SettingsDialog {
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSubscriber, etSubscriber
 							.getText().toString());
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingUa, etUa.getText().toString());
-
-					if (uid == 0) {
-						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
-								Boolean.toString(cbUsage.isChecked()));
-						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
-								Boolean.toString(cbLog.isChecked()));
-					}
-
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingRandom,
-							Boolean.toString(cbRandom.isChecked()));
 				}
+
+				if (uid == 0) {
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
+							Boolean.toString(cbUsage.isChecked()));
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
+							Boolean.toString(cbLog.isChecked()));
+				}
+
+				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingRandom,
+						Boolean.toString(cbRandom.isChecked()));
 
 				// Done
 				dlgSettings.dismiss();
