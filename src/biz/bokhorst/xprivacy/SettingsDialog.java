@@ -65,6 +65,7 @@ public class SettingsDialog {
 		final CheckBox cbGsfId = (CheckBox) dlgSettings.findViewById(R.id.cbGsfId);
 		final CheckBox cbAdId = (CheckBox) dlgSettings.findViewById(R.id.cbAdId);
 		final CheckBox cbCountry = (CheckBox) dlgSettings.findViewById(R.id.cbCountry);
+		final CheckBox cbSubscriber = (CheckBox) dlgSettings.findViewById(R.id.cbSubscriber);
 
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 		Button btnClear = (Button) dlgSettings.findViewById(R.id.btnClear);
@@ -91,6 +92,7 @@ public class SettingsDialog {
 		String gsfid = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingGsfId, "", false);
 		String adid = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingAdId, "", false);
 		String country = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingCountry, "", false);
+		String subscriber = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingSubscriber, "", false);
 
 		cbSerial.setChecked(serial.equals(PrivacyManager.cValueRandom));
 		cbLat.setChecked(lat.equals(PrivacyManager.cValueRandom));
@@ -102,6 +104,7 @@ public class SettingsDialog {
 		cbGsfId.setChecked(gsfid.equals(PrivacyManager.cValueRandom));
 		cbAdId.setChecked(adid.equals(PrivacyManager.cValueRandom));
 		cbCountry.setChecked(country.equals(PrivacyManager.cValueRandom));
+		cbSubscriber.setChecked(subscriber.equals(PrivacyManager.cValueRandom));
 
 		etSerial.setText(cbSerial.isChecked() ? "" : serial);
 		etLat.setText(cbLat.isChecked() ? "" : lat);
@@ -113,6 +116,7 @@ public class SettingsDialog {
 		etGsfId.setText(cbGsfId.isChecked() ? "" : gsfid);
 		etAdId.setText(cbAdId.isChecked() ? "" : adid);
 		etCountry.setText(cbCountry.isChecked() ? "" : country);
+		etSubscriber.setText(cbSubscriber.isChecked() ? "" : subscriber);
 
 		etSerial.setEnabled(!cbSerial.isChecked());
 		etLat.setEnabled(!cbLat.isChecked());
@@ -124,6 +128,7 @@ public class SettingsDialog {
 		etGsfId.setEnabled(!cbGsfId.isChecked());
 		etAdId.setEnabled(!cbAdId.isChecked());
 		etCountry.setEnabled(!cbCountry.isChecked());
+		etSubscriber.setEnabled(!cbSubscriber.isChecked());
 
 		cbSerial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
@@ -185,14 +190,18 @@ public class SettingsDialog {
 				etCountry.setEnabled(!isChecked);
 			}
 		});
+		cbSubscriber.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				etSubscriber.setEnabled(!isChecked);
+			}
+		});
 
 		etIP.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingIP, "", false));
 		etMcc.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingMcc, "", false));
 		etMnc.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingMnc, "", false));
 		etOperator.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingOperator, "", false));
 		etIccId.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingIccId, "", false));
-		etSubscriber.setText(PrivacyManager
-				.getSetting(null, context, uid, PrivacyManager.cSettingSubscriber, "", false));
 		etUa.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingUa, "", false));
 
 		if (uid == 0) {
@@ -253,6 +262,7 @@ public class SettingsDialog {
 				etGsfId.setText(PrivacyManager.getRandomProp("GSF_ID"));
 				etAdId.setText(PrivacyManager.getRandomProp("AdvertisingId"));
 				etCountry.setText(PrivacyManager.getRandomProp("ISO3166"));
+				etSubscriber.setText(PrivacyManager.getRandomProp("SubscriberId"));
 			}
 		});
 
@@ -276,7 +286,7 @@ public class SettingsDialog {
 					!cbCountry.isChecked() && etCountry.getText().toString().equals("") &&
 					etOperator.getText().toString().equals("") &&
 					etIccId.getText().toString().equals("") &&
-					etSubscriber.getText().toString().equals("") &&
+					!cbSubscriber.isChecked() && etSubscriber.getText().toString().equals("") &&
 					etUa.getText().toString().equals("")) {
 					// @formatter:on
 
@@ -352,8 +362,8 @@ public class SettingsDialog {
 							.toString());
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingIccId, etIccId.getText()
 							.toString());
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSubscriber, etSubscriber
-							.getText().toString());
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSubscriber,
+							cbSubscriber.isChecked() ? PrivacyManager.cValueRandom : etSubscriber.getText().toString());
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingUa, etUa.getText().toString());
 				}
 
@@ -410,6 +420,7 @@ public class SettingsDialog {
 				cbGsfId.setChecked(false);
 				cbAdId.setChecked(false);
 				cbCountry.setChecked(false);
+				cbSubscriber.setChecked(false);
 			}
 		});
 

@@ -5,8 +5,10 @@ Changelog
 
 * Fixed rare null pointer exception ([issue](https://github.com/M66B/XPrivacy/issues/739))
 * Fixed flickering with black theme
+* Fixed setting global and randomize on boot settings
 * Require Android 4.0.3 (minimum for Xposed)
 * Added settings for Advertisement ID (including randomization) ([issue](https://github.com/M66B/XPrivacy/issues/738))
+* Option to randomize subscriber ID (IMSI) ([issue](https://github.com/M66B/XPrivacy/issues/690))
 * Added traditional Chinese translation
 * Updated German translation
 * Updated Vietnamese translation

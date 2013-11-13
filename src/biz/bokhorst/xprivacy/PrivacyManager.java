@@ -776,8 +776,10 @@ public class PrivacyManager {
 		if (name.equals("getSimSerialNumber"))
 			return getSetting(null, null, uid, cSettingIccId, null, true);
 
-		if (name.equals("getSubscriberId")) // IMSI for a GSM phone
-			return getSetting(null, null, uid, cSettingSubscriber, null, true);
+		if (name.equals("getSubscriberId")) { // IMSI for a GSM phone
+			String value = getSetting(null, null, uid, cSettingSubscriber, null, true);
+			return (cValueRandom.equals(value) ? getRandomProp("SubscriberId") : value);
+		}
 
 		if (name.equals("SSID"))
 			return ""; // Hidden network
@@ -959,6 +961,13 @@ public class PrivacyManager {
 			double d = r.nextDouble() * 360 - 180;
 			d = Math.rint(d * 1e7) / 1e7;
 			return Double.toString(d);
+		}
+
+		if (name.equals("SubscriberId")) {
+			String subscriber = "001";
+			while (subscriber.length() < 15)
+				subscriber += Character.forDigit(r.nextInt(10), 10);
+			return subscriber;
 		}
 
 		return "";

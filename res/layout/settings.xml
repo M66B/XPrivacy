@@ -279,7 +279,7 @@
                     android:text="@string/settings_subscriber"
                     android:textIsSelectable="false" />
 
-                <View />
+                <CheckBox android:id="@+id/cbSubscriber" />
 
                 <EditText
                     android:id="@+id/etSubscriber"
