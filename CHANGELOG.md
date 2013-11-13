@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Option to make XPrivacy device administrator (to prevent unwanted uninstall)
 * Updated Lithuanian translation
 
 **Version 1.10.12 BETA**
