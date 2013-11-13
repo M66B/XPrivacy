@@ -432,7 +432,7 @@ public class SettingsDialog {
 					cbUsage.setChecked(false);
 					cbLog.setChecked(false);
 				} else
-					cbNotify.setChecked(false);
+					cbNotify.setChecked(true);
 				cbRandom.setChecked(false);
 
 				cbSerial.setChecked(false);
