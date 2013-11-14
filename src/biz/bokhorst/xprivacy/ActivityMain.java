@@ -906,16 +906,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					// Get some restricted
 					boolean someRestricted = false;
-					if (mRestrictionName == null) {
-						for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-								xAppInfo.getUid(), true))
-							if (restricted) {
-								someRestricted = true;
-								break;
-							}
-					} else
-						someRestricted = PrivacyManager.getRestricted(null, getApplicationContext(), xAppInfo.getUid(),
-								mRestrictionName, null, false, false);
+					if (fRestricted)
+						if (mRestrictionName == null) {
+							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
+									xAppInfo.getUid(), true))
+								if (restricted) {
+									someRestricted = true;
+									break;
+								}
+						} else
+							someRestricted = PrivacyManager.getRestricted(null, getApplicationContext(),
+									xAppInfo.getUid(), mRestrictionName, null, false, false);
 
 					// Get Android permission
 					boolean permission = false;
@@ -938,7 +939,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					// Match application
 					if ((fName.equals("") ? true : contains) && (fUsed ? used : true) && (fInternet ? internet : true)
-							&& (fRestricted ? someRestricted : !someRestricted) && (fPermission ? permission : true)
+							&& (fRestricted ? someRestricted : true) && (fPermission ? permission : true)
 							&& (fUser ? user : true) && (fSystem ? system : true))
 						lstApp.add(xAppInfo);
 				}
