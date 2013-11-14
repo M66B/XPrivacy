@@ -26,6 +26,7 @@
     <string name="menu_app_settings">Detalhes da aplicação</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Selecione contas a autorizar</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Selecione contactos a autorizar</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>

@@ -26,6 +26,7 @@
     <string name="menu_app_settings">详细设置程序权限</string>
     <string name="menu_app_store">Play 商店</string>
     <string name="menu_accounts">选择允许访问的帐号</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
     <string name="msg_new">已安装</string>
     <string name="msg_update">已升级</string>

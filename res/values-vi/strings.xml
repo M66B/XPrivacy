@@ -26,6 +26,7 @@
     <string name="menu_app_settings">Chi tiết ứng dụng</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Chọn tài khoản cho phép</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Chọn liên lạc cho phép</string>
     <string name="msg_new">Mới</string>
     <string name="msg_update">Cập nhật</string>

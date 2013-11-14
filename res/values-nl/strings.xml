@@ -25,8 +25,9 @@
     <string name="menu_app_launch">Uitvoeren</string>
     <string name="menu_app_settings">Applicatiedetails</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Geef accounts toestemming</string>
-    <string name="menu_contacts">Geef contacten toestemming</string>
+    <string name="menu_accounts">Sta accounts toe</string>
+    <string name="menu_applications">Sta applicaties toe</string>
+    <string name="menu_contacts">Sta contacten toe</string>
     <string name="msg_new">Nieuw</string>
     <string name="msg_update">Bijgewerkt</string>
     <string name="msg_licensed" formatted="false">In licentie gegeven aan: %s</string>

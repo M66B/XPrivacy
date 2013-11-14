@@ -26,6 +26,7 @@
     <string name="menu_app_settings">設定</string>
     <string name="menu_app_store">Playストア</string>
     <string name="menu_accounts">許可するアカウントを選択</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">許可する電話帳を選択</string>
     <string name="msg_new">新規</string>
     <string name="msg_update">更新</string>

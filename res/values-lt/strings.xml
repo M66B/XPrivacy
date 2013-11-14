@@ -26,6 +26,7 @@
     <string name="menu_app_settings">Programos informacija</string>
     <string name="menu_app_store">Play Store parduotuvė</string>
     <string name="menu_accounts">Leisti pažymėtas paskyras</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>
     <string name="msg_new">Naujas</string>
     <string name="msg_update">Atnaujinta</string>

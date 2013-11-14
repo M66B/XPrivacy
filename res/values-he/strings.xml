@@ -26,6 +26,7 @@
     <string name="menu_app_settings">הגדרות</string>
     <string name="menu_app_store">חנות Google Play</string>
     <string name="menu_accounts">בחר חשבונות לאפשר</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">בחר אנשי קשר לאפשר</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>

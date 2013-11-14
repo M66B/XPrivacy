@@ -26,6 +26,7 @@
     <string name="menu_app_settings">Настройки</string>
     <string name="menu_app_store">Google Play магазин</string>
     <string name="menu_accounts">Изберете сметки с позволение</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Изберете контакти с позволение</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
