@@ -1,6 +1,6 @@
 <resources>
 
-    <strinhttps://github.com/jokies/XPrivacy/tree/master/resg name="app_notxposed" formatted="false">Xposed 框架版本 %d+ 未安装</string>
+    <string name="app_notxposed" formatted="false">Xposed 框架版本 %d+ 未安装</string>
     <string name="app_notenabled">XPrivacy 没有在 Xposed 框架中启用</string>
     <string name="app_wrongandroid">仅支持安卓 4.0 以上的版本</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
@@ -94,9 +94,9 @@
     <string name="help_application">程序标记说明</string>
     <string name="help_internet">程序含有联网权限</string>
     <string name="help_granted">程序已申请的权限( Androidmanifest )</string>
-    <string name="help_used">程序已经使用的权限</string>
+    <string name="help_used">程序已使用的权限</string>
     <string name="help_frozen">程序已被冻结/停用</string>
-    <string name="help_dangerous">可能导致隐私泄漏的权限</string>
+    <string name="help_dangerous">可能导致程序异常的权限</string>
 
 </resources>
 
