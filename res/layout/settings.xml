@@ -89,6 +89,7 @@
 
                 <EditText
                     android:id="@+id/etSearch"
+                    android:hint="Christmas Island"
                     android:inputType="textNoSuggestions" />
             </TableRow>
 
