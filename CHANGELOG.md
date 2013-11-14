@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.10.13 BETA**
+
 * Fixed crash on empty latitude/longitude ([issue](https://github.com/M66B/XPrivacy/issues/755))
 * Option to negate filter on restrictions ([issue](https://github.com/M66B/XPrivacy/issues/754))
 * Option to make XPrivacy device administrator (to prevent unwanted uninstall)
