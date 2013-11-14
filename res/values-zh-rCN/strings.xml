@@ -92,7 +92,7 @@
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">调试日志 (需要重启)</string>
     <string name="help_application">应用程序</string>
-    <string name="help_internet">应用含有联网的权限</string>
+    <string name="help_internet">应用含有联网权限</string>
     <string name="help_granted">应用尝试申请的权限</string>
     <string name="help_used">应用已经使用的权限</string>
     <string name="help_frozen">应用已被冻结/停用</string>
