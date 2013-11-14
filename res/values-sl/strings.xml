@@ -78,6 +78,7 @@
     <string name="title_frestricted">Filtriraj po omejitvah</string>
     <string name="title_fuser">Filtriraj uporabniške programe</string>
     <string name="title_fsystem">Filtriraj sistemske programe</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>

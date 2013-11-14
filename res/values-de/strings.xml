@@ -76,6 +76,7 @@
     <string name="title_frestricted">Nach Beschränkungen filtern</string>
     <string name="title_fuser">Nach Benutzer-Apps filtern</string>
     <string name="title_fsystem">Nach System-Apps filtern</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>

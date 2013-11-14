@@ -76,6 +76,7 @@
     <string name="title_frestricted">प्रतिबंध पर फिल्टर करे</string>
     <string name="title_fuser">उपयोगकर्ता की Applications पर फिल्टर करे</string>
     <string name="title_fsystem">सिस्टम की Applications पर फिल्टर करे</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">क्रमांक#</string>
     <string name="settings_lat">अक्षांश</string>
     <string name="settings_lon">रेखांश</string>

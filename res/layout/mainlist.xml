@@ -199,6 +199,15 @@
                     android:saveEnabled="false"
                     android:text="@string/title_frestricted"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <CheckBox
+                    android:id="@+id/cbFRestrictionNot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="4dp"
+                    android:saveEnabled="false"
+                    android:text="@string/title_fnot"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
             <LinearLayout

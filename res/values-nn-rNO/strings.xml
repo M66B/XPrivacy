@@ -74,6 +74,7 @@
     <string name="title_frestricted">Filtrer etter restriksjon</string>
     <string name="title_fuser">Filtrer etter vanlige apper</string>
     <string name="title_fsystem">Filtrer etter system apper</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>

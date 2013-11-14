@@ -93,6 +93,7 @@ public class PrivacyManager {
 	public final static String cSettingFUsed = "FUsed";
 	public final static String cSettingFInternet = "FInternet";
 	public final static String cSettingFRestriction = "FRestriction";
+	public final static String cSettingFRestrictionNot = "FRestrictionNot";
 	public final static String cSettingFPermission = "FPermission";
 	public final static String cSettingFUser = "FUser";
 	public final static String cSettingFSystem = "FSystem";

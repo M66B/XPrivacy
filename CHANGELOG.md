@@ -3,7 +3,9 @@ Changelog
 
 **Next release**
 
+* Option to negate filter on restrictions ([issue](https://github.com/M66B/XPrivacy/issues/754))
 * Option to make XPrivacy device administrator (to prevent unwanted uninstall)
+* Updated Chinese translation
 * Updated Lithuanian translation
 
 **Version 1.10.12 BETA**

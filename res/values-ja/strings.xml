@@ -76,6 +76,7 @@
     <string name="title_frestricted">制限済みを表示</string>
     <string name="title_fuser">ユーザーアプリを表示</string>
     <string name="title_fsystem">システムアプリを表示</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>

@@ -75,6 +75,7 @@
     <string name="title_frestricted">Lọc các ứng dụng đã thiết lập hạn chế</string>
     <string name="title_fuser">Lọc các ứng dụng người dùng</string>
     <string name="title_fsystem">Lọc các ứng dụng hệ thống</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>

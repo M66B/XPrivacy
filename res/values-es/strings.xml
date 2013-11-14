@@ -76,6 +76,7 @@ sin embargo es imposible garantizar que funcione impecable en todos y cada uno d
     <string name="title_frestricted">Filtro en restringido</string>
     <string name="title_fuser">Filtro en aplicaciones de usuario</string>
     <string name="title_fsystem">Filtro en aplicaciones de sistema</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial"># de serie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>

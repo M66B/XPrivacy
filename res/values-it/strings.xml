@@ -76,6 +76,7 @@
     <string name="title_frestricted">Filtra per restrizione</string>
     <string name="title_fuser">Filtra per app utente</string>
     <string name="title_fsystem">Filtra per app di sistema</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Numero di serie#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>

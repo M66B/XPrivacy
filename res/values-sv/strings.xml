@@ -76,6 +76,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="title_frestricted">Filtrera efter begränsad</string>
     <string name="title_fuser">Filtrera efter vanliga appar</string>
     <string name="title_fsystem">Filtrera efter systemappar</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>

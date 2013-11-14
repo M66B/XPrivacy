@@ -76,6 +76,7 @@
     <string name="title_frestricted">仅显示已限制权限的应用</string>
     <string name="title_fuser">仅显示用户应用</string>
     <string name="title_fsystem">仅显示系统应用</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">设备序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
