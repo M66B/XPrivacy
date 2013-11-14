@@ -32,7 +32,7 @@
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
     <string name="msg_edit">点击应用图标以调整权限</string>
-    <string name="msg_sure">是否确定?</string>
+    <string name="msg_sure">是否确定？</string>
     <string name="msg_done">好</string>
     <string name="msg_reboot">设备需要重启</string>
     <string name="msg_random">生成随机数值</string>
@@ -40,27 +40,27 @@
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
-    <string name="restrict_accounts">账户 (Google/Facebook账户)</string>
-    <string name="restrict_browser">浏览器 (书签/历史)</string>
+    <string name="restrict_accounts">账户（Google/Facebook 账户）</string>
+    <string name="restrict_browser">浏览器 （书签/历史）</string>
     <string name="restrict_calendar">日历</string>
-    <string name="restrict_calling">通话 (语音/短信/彩信)</string>
+    <string name="restrict_calling">通话（语音/短信/彩信）</string>
     <string name="restrict_clipboard">剪贴板</string>
-    <string name="restrict_contacts">联系人(通讯录)</string>
-    <string name="restrict_dictionary">词典 (用户词典)</string>
+    <string name="restrict_contacts">联系人（通讯录）</string>
+    <string name="restrict_dictionary">词典（用户词典）</string>
     <string name="restrict_email">E-mail</string>
-    <string name="restrict_identification">识别码 (设备识别信息)</string>
-    <string name="restrict_internet">互联网(网络通讯)</string>
-    <string name="restrict_location">位置 (精确/粗略)</string>
-    <string name="restrict_media">媒体 (声音/图片/视频)</string>
-    <string name="restrict_messages">信息 (短信/彩信)</string>
-    <string name="restrict_network">网络 (地址)</string>
-    <string name="restrict_notifications">通知(通知栏提示)</string>
-    <string name="restrict_phone">电话 ( 电话号码/通话状态)</string>
+    <string name="restrict_identification">识别码（设备识别信息）</string>
+    <string name="restrict_internet">互联网（网络通讯）</string>
+    <string name="restrict_location">位置（精确/粗略）</string>
+    <string name="restrict_media">媒体（声音/图片/视频）</string>
+    <string name="restrict_messages">信息（短信/彩信）</string>
+    <string name="restrict_network">网络状态（IP 地址）</string>
+    <string name="restrict_notifications">通知（通知栏提示）</string>
+    <string name="restrict_phone">电话（电话号码/通话状态）</string>
     <string name="restrict_sensors">感应器（重力方向/光线强度）</string>
-    <string name="restrict_storage">存储 (内置存储器/ SD 卡)</string>
-    <string name="restrict_shell">命令行 (执行命令/获得超级用户权限)</string>
-    <string name="restrict_system">系统 (已安装的应用)</string>
-    <string name="restrict_view">显示网页 (浏览器)</string>
+    <string name="restrict_storage">存储（内置存储器/存储卡）</string>
+    <string name="restrict_shell">命令行（执行命令/获得超级用户权限）</string>
+    <string name="restrict_system">系统（查看已安装的应用）</string>
+    <string name="restrict_view">显示网页（内置浏览器）</string>
     <string name="title_category">权限类型:</string>
     <string name="title_restrict">勾选的权限将被限制:</string>
     <string name="title_nofilter">无过滤器</string>
@@ -89,8 +89,8 @@
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">User Agent</string>
     <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android 程序用量统计数据 (需要重启)</string>
-    <string name="settings_log">调试日志 (需要重启)</string>
+    <string name="settings_usage">Android 程序用量统计数据（需要重启）</string>
+    <string name="settings_log">调试日志（需要重启）</string>
     <string name="help_application">程序标记说明</string>
     <string name="help_internet">程序含有联网权限</string>
     <string name="help_granted">程序已申请的权限( Androidmanifest )</string>
