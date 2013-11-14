@@ -3,7 +3,10 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated Chinese translation
+* Updated French translation
+* Updated Lithuanian translation
+* Updated Polish language
 
 **Version 1.10.13 BETA**
 
