@@ -30,6 +30,7 @@
     <string name="menu_app_settings">App details</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Select accounts to allow</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Select contacts to allow</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>

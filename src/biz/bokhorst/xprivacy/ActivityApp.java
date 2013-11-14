@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,6 +39,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -245,9 +248,12 @@ public class ActivityApp extends Activity {
 		// Accounts
 		boolean accountsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
 				PrivacyManager.cAccounts, null, false, false);
+		boolean appsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(), PrivacyManager.cSystem,
+				null, false, false);
 		boolean contactsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
 				PrivacyManager.cContacts, null, false, false);
 		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
+		menu.findItem(R.id.menu_applications).setEnabled(appsRestricted);
 		menu.findItem(R.id.menu_contacts).setEnabled(contactsRestricted);
 
 		return super.onPrepareOptionsMenu(menu);
@@ -293,6 +299,9 @@ public class ActivityApp extends Activity {
 			return true;
 		case R.id.menu_accounts:
 			optionAccounts();
+			return true;
+		case R.id.menu_applications:
+			optionApplications();
 			return true;
 		case R.id.menu_contacts:
 			optionContacts();
@@ -436,6 +445,11 @@ public class ActivityApp extends Activity {
 		accountsTask.executeOnExecutor(mExecutor, (Object) null);
 	}
 
+	private void optionApplications() {
+		ApplicationsTask appsTask = new ApplicationsTask();
+		appsTask.executeOnExecutor(mExecutor, (Object) null);
+	}
+
 	private void optionLaunch() {
 		Intent intentLaunch = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
 		startActivity(intentLaunch);
@@ -498,6 +512,72 @@ public class ActivityApp extends Activity {
 								String sha1 = Util.sha1(account.name + account.type);
 								PrivacyManager.setSetting(null, ActivityApp.this, 0,
 										String.format("Account.%d.%s", mAppInfo.getUid(), sha1),
+										Boolean.toString(isChecked));
+							} catch (Throwable ex) {
+								Util.bug(null, ex);
+								Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
+								toast.show();
+							}
+						}
+					});
+			alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+				}
+			});
+
+			// Show dialog
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+
+			super.onPostExecute(result);
+		}
+	}
+
+	private class ApplicationsTask extends AsyncTask<Object, Object, Object> {
+		private List<ApplicationInfo> mListInfo;
+		private List<CharSequence> mListApp;
+		private boolean[] mSelection;
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			// Get applications
+			final PackageManager pm = ActivityApp.this.getPackageManager();
+			mListInfo = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+			Collections.sort(mListInfo, new Comparator<ApplicationInfo>() {
+				public int compare(ApplicationInfo info1, ApplicationInfo info2) {
+					return ((String) pm.getApplicationLabel(info1)).compareTo(((String) pm.getApplicationLabel(info2)));
+				}
+			});
+
+			// Build selection list
+			mListApp = new ArrayList<CharSequence>();
+			mSelection = new boolean[mListInfo.size()];
+			for (int i = 0; i < mListInfo.size(); i++)
+				try {
+					mListApp.add(String.format("%s (%s)", pm.getApplicationLabel(mListInfo.get(i)),
+							mListInfo.get(i).packageName));
+					mSelection[i] = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+							String.format("Application.%s", mListInfo.get(i).packageName), false, false);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			// Build dialog
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+			alertDialogBuilder.setTitle(getString(R.string.menu_applications));
+			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setMultiChoiceItems(mListApp.toArray(new CharSequence[0]), mSelection,
+					new DialogInterface.OnMultiChoiceClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+							try {
+								PrivacyManager.setSetting(null, ActivityApp.this, 0,
+										String.format("Application.%s", mListInfo.get(whichButton).packageName),
 										Boolean.toString(isChecked));
 							} catch (Throwable ex) {
 								Util.bug(null, ex);
