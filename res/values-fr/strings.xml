@@ -26,7 +26,7 @@
     <string name="menu_app_settings">Infos sur l\'application</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Choisir les comptes à autoriser</string>
-    <string name="menu_applications">Select applications to allow</string>
+    <string name="menu_applications">Choisir les applis à autoriser</string>
     <string name="menu_contacts">Choisir les contacts à autoriser</string>
     <string name="msg_new">Nouv. :</string>
     <string name="msg_update">MàJ :</string>
@@ -57,7 +57,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_network">Réseaux (addresses)</string>
     <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Téléphone (ID, numéros, appels)</string>
-    <string name="restrict_sensors">Sensors</string>
+    <string name="restrict_sensors">Capteurs</string>
     <string name="restrict_storage">Stockage (média, carte SD)</string>
     <string name="restrict_shell">Shell (commandes, root)</string>
     <string name="restrict_system">Système (applis installées)</string>
@@ -77,7 +77,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_frestricted">Filtrer restreintes</string>
     <string name="title_fuser">Filtrer les applis utilisateur</string>
     <string name="title_fsystem">Filtrer les applis système</string>
-    <string name="title_fnot">Negate</string>
+    <string name="title_fnot">Inverser</string>
     <string name="settings_serial">N° de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
@@ -85,13 +85,13 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_ip">Adresse IP</string>
     <string name="settings_phone">N° de téléphone</string>
     <string name="settings_id">ID Android</string>
-    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_adid">ID publicité</string>
     <string name="settings_country">Pays</string>
     <string name="settings_operator">Opérateur</string>
     <string name="settings_subscriber">ID Abonné</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_notify">Notifications de MàJ</string>
+    <string name="settings_usage">Activer usage log (redémarrage nécessaire)</string>
     <string name="settings_log">Debug log (redémarrage nécessaire)</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
