@@ -40,7 +40,7 @@
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
-    <string name="restrict_accounts">账户（Google/Facebook 账户）</string>
+    <string name="restrict_accounts">账户（ Google/Facebook 账户）</string>
     <string name="restrict_browser">浏览器 （书签/历史）</string>
     <string name="restrict_calendar">日历</string>
     <string name="restrict_calling">通话（语音/短信/彩信）</string>
@@ -70,7 +70,7 @@
         <item quantity="other">%d 个已启用的过滤器</item>
     </plurals>
 
-    <string name="title_fused">曾使用当前选中类型权限的应用</string>
+    <string name="title_fused">曾使用当前选中权限的应用</string>
     <string name="title_finternet">含有联网权限的应用</string>
     <string name="title_fpermission">仅显示应用已申请的权限</string>
     <string name="title_frestricted">仅显示已限制权限的应用</string>
@@ -93,7 +93,7 @@
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="help_application">程序标记说明</string>
     <string name="help_internet">程序含有联网权限</string>
-    <string name="help_granted">程序已申请的权限( Androidmanifest )</string>
+    <string name="help_granted">程序已申请的权限（ Androidmanifest 中表明）</string>
     <string name="help_used">程序已使用的权限</string>
     <string name="help_frozen">程序已被冻结/停用</string>
     <string name="help_dangerous">可能导致程序异常的权限</string>
