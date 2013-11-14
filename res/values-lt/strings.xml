@@ -77,7 +77,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_frestricted">Apriboti leidimai</string>
     <string name="title_fuser">Vartotojo programos</string>
     <string name="title_fsystem">Sistemos programos</string>
-    <string name="title_fnot">Negate</string>
+    <string name="title_fnot">Neriboti</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
