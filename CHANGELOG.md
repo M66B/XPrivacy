@@ -5,7 +5,7 @@ Changelog
 
 * Filter on permissions filters functions too ([issue](https://github.com/M66B/XPrivacy/issues/695))
 * Select applications to allow ([issue](https://github.com/M66B/XPrivacy/issues/686))
-* Require pro license to allow individual accounts, applications and contacts
+* Require [Pro license](http://www.faircode.eu/xprivacy/) to allow individual accounts, applications and contacts
 * Build for Android 4.4 KitKat ([issue](https://github.com/M66B/XPrivacy/issues/733))
 * Updated Chinese translation
 * Updated French translation
