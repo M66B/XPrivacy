@@ -17,7 +17,6 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
 import static de.robv.android.xposed.XposedHelpers.findMethodExact;
 
-@SuppressWarnings("deprecation")
 public class XWifiManager extends XHook {
 	private Methods mMethod;
 
