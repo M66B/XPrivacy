@@ -92,6 +92,7 @@
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Hata ayıklama modu (Yeniden başlatma gerekir)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Uygulama</string>
     <string name="help_internet">internet izni var</string>
     <string name="help_granted">Android izni var</string>

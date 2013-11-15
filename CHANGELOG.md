@@ -7,6 +7,7 @@ Changelog
 * Select applications to allow ([issue](https://github.com/M66B/XPrivacy/issues/686))
 * Require [Pro license](http://www.faircode.eu/xprivacy/) to allow individual accounts, applications and contacts
 * Build for Android 4.4 KitKat ([issue](https://github.com/M66B/XPrivacy/issues/733))
+* Added expert mode (disables dangerous restrictions) ([issue](https://github.com/M66B/XPrivacy/issues/716)) ([issue](https://github.com/M66B/XPrivacy/issues/724))
 * Updated Chinese translation
 * Updated French translation
 * Updated Lithuanian translation

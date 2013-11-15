@@ -92,6 +92,7 @@
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Mức sử dụng hệ thống (yêu cầu khởi động lại)</string>
     <string name="settings_log">Nhật ký lỗi (yêu cầu khởi động lại)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Ứng dụng</string>
     <string name="help_internet">có quyền truy cập mạng</string>
     <string name="help_granted">có các quyền của hệ điều hành</string>

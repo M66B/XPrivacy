@@ -93,6 +93,7 @@
     <string name="settings_notify">通知栏提示</string>
     <string name="settings_usage">Android 程序用量统计数据（需要重启）</string>
     <string name="settings_log">调试日志（需要重启）</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">程序标记说明</string>
     <string name="help_internet">程序含有联网权限</string>
     <string name="help_granted">程序已申请的权限（ Androidmanifest 中表明）</string>

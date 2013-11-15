@@ -51,10 +51,9 @@ public class PackageChange extends BroadcastReceiver {
 
 							// Restrict if no previous restrictions
 							if (!someRestricted)
-								for (String restrictionName : PrivacyManager.getRestrictions(true))
+								for (String restrictionName : PrivacyManager.getRestrictions(false))
 									if (PrivacyManager.getSettingBool(null, context, 0,
-											String.format("Template.%s", restrictionName),
-											!PrivacyManager.isDangerousRestriction(restrictionName), false))
+											String.format("Template.%s", restrictionName), true, false))
 										PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
 						}
 

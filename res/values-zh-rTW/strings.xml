@@ -91,6 +91,7 @@
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android 使用日誌 (需重新啟動)</string>
     <string name="settings_log">偵錯日誌 (需重新啟動)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">程式</string>
     <string name="help_internet">表示有網際網路權限</string>
     <string name="help_granted">表示有手機權限</string>

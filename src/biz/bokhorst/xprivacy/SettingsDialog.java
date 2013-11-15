@@ -54,6 +54,7 @@ public class SettingsDialog {
 		final CheckBox cbNotify = (CheckBox) dlgSettings.findViewById(R.id.cbNotify);
 		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
+		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
 		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
 
@@ -84,6 +85,7 @@ public class SettingsDialog {
 		boolean usage = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingAndroidUsage, false,
 				false);
 		boolean log = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingLog, false, false);
+		boolean expert = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExpert, false, false);
 		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
 
 		String serial = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingSerial, "", false);
@@ -222,10 +224,12 @@ public class SettingsDialog {
 			cbNotify.setVisibility(View.GONE);
 			cbUsage.setChecked(usage);
 			cbLog.setChecked(log);
+			cbExpert.setChecked(expert);
 		} else {
 			cbNotify.setChecked(notify);
 			cbUsage.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
+			cbExpert.setVisibility(View.GONE);
 		}
 		cbRandom.setChecked(random);
 
@@ -393,6 +397,8 @@ public class SettingsDialog {
 							Boolean.toString(cbUsage.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
 							Boolean.toString(cbLog.isChecked()));
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExpert,
+							Boolean.toString(cbExpert.isChecked()));
 				} else
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingNotify,
 							Boolean.toString(cbNotify.isChecked()));
@@ -431,6 +437,7 @@ public class SettingsDialog {
 				if (uid == 0) {
 					cbUsage.setChecked(false);
 					cbLog.setChecked(false);
+					cbExpert.setChecked(false);
 				} else
 					cbNotify.setChecked(true);
 				cbRandom.setChecked(false);

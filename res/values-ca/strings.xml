@@ -91,6 +91,7 @@
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Registre de depuració (cal reiniciar)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Aplicació</string>
     <string name="help_internet">té permís d\'Internet</string>
     <string name="help_granted">té permisos d\'Android</string>

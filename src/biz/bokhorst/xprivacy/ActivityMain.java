@@ -565,16 +565,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionTemplate() {
 		// Get restriction categories
-		final List<String> listRestriction = PrivacyManager.getRestrictions(true);
+		final List<String> listRestriction = PrivacyManager.getRestrictions(false);
 		CharSequence[] options = new CharSequence[listRestriction.size()];
 		boolean[] selection = new boolean[listRestriction.size()];
-		for (int i = 0; i < listRestriction.size(); i++) {
-			boolean dangerous = PrivacyManager.isDangerousRestriction(listRestriction.get(i));
-			options[i] = PrivacyManager.getLocalizedName(this, listRestriction.get(i))
-					+ (dangerous ? String.format(" (%s)", getString(R.string.help_dangerous)) : "");
+		for (int i = 0; i < listRestriction.size(); i++)
 			selection[i] = PrivacyManager.getSettingBool(null, this, 0,
-					String.format("Template.%s", listRestriction.get(i)), !dangerous, false);
-		}
+					String.format("Template.%s", listRestriction.get(i)), true, false);
 
 		// Build dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

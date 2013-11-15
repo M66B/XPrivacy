@@ -93,6 +93,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_notify">Notifications de MàJ</string>
     <string name="settings_usage">Activer usage log (redémarrage nécessaire)</string>
     <string name="settings_log">Debug log (redémarrage nécessaire)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>

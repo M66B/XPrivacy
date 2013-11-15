@@ -93,6 +93,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Silumislogi (nõuab restarti)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Rakendus</string>
     <string name="help_internet">on interneti kasutamise luba</string>
     <string name="help_granted">on Android luba</string>

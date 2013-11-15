@@ -104,6 +104,7 @@ public class PrivacyManager {
 	public final static String cSettingNotify = "Notify";
 	public final static String cSettingAndroidUsage = "AndroidUsage";
 	public final static String cSettingLog = "Log";
+	public final static String cSettingExpert = "Expert";
 	public final static String cSettingRandom = "Random@boot";
 
 	public final static String cValueRandom = "#Random#";
@@ -193,6 +194,8 @@ public class PrivacyManager {
 	}
 
 	public static boolean isDangerousRestriction(String restrictionName) {
+		if (PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExpert, false, true))
+			return false;
 		if (restrictionName == null)
 			return false;
 		if (restrictionName.equals(cInternet) || restrictionName.equals(cStorage) || restrictionName.equals(cSystem))
@@ -201,6 +204,8 @@ public class PrivacyManager {
 	}
 
 	public static boolean isDangerousMethod(String restrictionName, String methodName) {
+		if (PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExpert, false, true))
+			return false;
 		MethodDescription md = new MethodDescription(methodName);
 		int pos = mMethod.get(restrictionName).indexOf(md);
 		md = mMethod.get(restrictionName).get(pos);

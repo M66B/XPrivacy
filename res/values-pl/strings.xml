@@ -94,6 +94,7 @@
     <string name="settings_notify">Aktualizuj powiadomienia</string>
     <string name="settings_usage">Android usage data (wymaga restartu)</string>
     <string name="settings_log">Debug log (wymaga restartu)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">wymaga dostępu do internetu</string>
     <string name="help_granted">wymaga dostępu do tych uprawnień Androida</string>

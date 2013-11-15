@@ -331,6 +331,12 @@
             android:layout_height="wrap_content"
             android:text="@string/settings_log" />
 
+        <CheckBox
+            android:id="@+id/cbExpert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_expert" />
+
         <Button
             android:id="@+id/btnRandom"
             android:layout_width="match_parent"

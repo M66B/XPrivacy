@@ -93,6 +93,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_notify">Atnaujinimų Pranesimas</string>
     <string name="settings_usage">Android naudojimo duomenys (reikia paleisti iš naujo)</string>
     <string name="settings_log">DEBUG žurnalas (reikia paleisti iš naujo)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
     <string name="help_granted">Android leidimai</string>

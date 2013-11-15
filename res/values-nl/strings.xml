@@ -93,6 +93,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_notify">Bijgewerkt notificaties</string>
     <string name="settings_usage">Android gebruiksgegevens (herstart vereist)</string>
     <string name="settings_log">Debug log (herstart vereist)</string>
+    <string name="settings_expert">Expert modus</string>
     <string name="help_application">Applicatie</string>
     <string name="help_internet">heeft internet rechten</string>
     <string name="help_granted">heeft Android rechten</string>
