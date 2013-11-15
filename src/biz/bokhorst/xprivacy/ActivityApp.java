@@ -465,7 +465,7 @@ public class ActivityApp extends Activity {
 	private void optionContacts() {
 		if (Util.getLicense() == null) {
 			// Redirect to pro page
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, cProUri);
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
 			startActivity(browserIntent);
 		} else {
 			ContactsTask contactsTask = new ContactsTask();
