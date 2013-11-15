@@ -574,11 +574,11 @@ public class ActivityApp extends Activity {
 			mSelection = new boolean[mListInfo.size()];
 			for (int i = 0; i < mListInfo.size(); i++)
 				try {
-					mListApp.add(String.format("%s (%s)", pm.getApplicationLabel(mListInfo.get(i)),
-							mListInfo.get(i).packageName));
+					mListApp.add(String.format("%s (%s) (%d)", pm.getApplicationLabel(mListInfo.get(i)),
+							mListInfo.get(i).packageName, mListInfo.get(i).uid));
 					mSelection[i] = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
-							String.format("Application.%d.%s", mListInfo.get(i).uid, mListInfo.get(i).packageName),
-							false, false);
+							String.format("Application.%d.%s", mAppInfo.getUid(), mListInfo.get(i).packageName), false,
+							false);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
@@ -599,7 +599,7 @@ public class ActivityApp extends Activity {
 										null,
 										ActivityApp.this,
 										0,
-										String.format("Application.%d.%s", mListInfo.get(whichButton).uid,
+										String.format("Application.%d.%s", mAppInfo.getUid(),
 												mListInfo.get(whichButton).packageName), Boolean.toString(isChecked));
 							} catch (Throwable ex) {
 								Util.bug(null, ex);
