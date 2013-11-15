@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Filter on permissions filters functions too ([issue](https://github.com/M66B/XPrivacy/issues/695))
 * Select applications to allow ([issue](https://github.com/M66B/XPrivacy/issues/686))
 * Require pro license to allow individual accounts, applications and contacts
 * Updated Chinese translation

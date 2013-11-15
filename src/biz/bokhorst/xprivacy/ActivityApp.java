@@ -179,21 +179,10 @@ public class ActivityApp extends Activity {
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
 		tvPackageName.setText(mAppInfo.getPackageName());
 
-		// Get applicable restrictions
-		boolean fPermission = PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingFPermission, true,
-				false);
-		if (restrictionName != null && methodName != null)
-			fPermission = false;
-		List<String> listRestriction = new ArrayList<String>();
-		for (String rRestrictionName : PrivacyManager.getRestrictions(true))
-			if (fPermission ? PrivacyManager.hasPermission(this, mAppInfo.getPackageName(), rRestrictionName)
-					|| PrivacyManager.getUsed(this, mAppInfo.getUid(), rRestrictionName, null) > 0 : true)
-				listRestriction.add(rRestrictionName);
-
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
-		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, listRestriction);
+		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, restrictionName, methodName);
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 		if (restrictionName != null && methodName != null) {
 			int groupPosition = PrivacyManager.getRestrictions(true).indexOf(restrictionName);
@@ -832,12 +821,28 @@ public class ActivityApp extends Activity {
 
 	private class RestrictionAdapter extends BaseExpandableListAdapter {
 		private ApplicationInfoEx mAppInfo;
+		private String mSelectedRestrictionName;
+		private String mSelectedMethodName;
 		private List<String> mRestrictions;
+		private int mCacheGroupPosition = -1;
+		private List<PrivacyManager.MethodDescription> mMethodDescription = null;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, List<String> restrictions) {
+		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, String selectedRestrictionName,
+				String selectedMethodName) {
 			mAppInfo = appInfo;
-			mRestrictions = restrictions;
+			mSelectedRestrictionName = selectedRestrictionName;
+			mSelectedMethodName = selectedMethodName;
+			mRestrictions = new ArrayList<String>();
+
+			boolean fPermission = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+					PrivacyManager.cSettingFPermission, true, false);
+			for (String rRestrictionName : PrivacyManager.getRestrictions(true))
+				if (fPermission ? mSelectedRestrictionName != null
+						|| PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(), rRestrictionName)
+						|| PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), rRestrictionName, null) > 0
+						: true)
+					mRestrictions.add(rRestrictionName);
 		}
 
 		@Override
@@ -990,9 +995,28 @@ public class ActivityApp extends Activity {
 			return convertView;
 		}
 
+		private List<PrivacyManager.MethodDescription> getMethodDescriptions(int groupPosition) {
+			if (mCacheGroupPosition != groupPosition) {
+				boolean fPermission = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+						PrivacyManager.cSettingFPermission, true, false);
+				List<PrivacyManager.MethodDescription> listMethod = new ArrayList<PrivacyManager.MethodDescription>();
+				String restrictionName = mRestrictions.get(groupPosition);
+				for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods((String) getGroup(groupPosition)))
+					if (fPermission ? mSelectedMethodName != null
+							|| PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(), md)
+							|| PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), restrictionName,
+									md.getMethodName()) > 0 : true)
+						listMethod.add(md);
+
+				mCacheGroupPosition = groupPosition;
+				mMethodDescription = listMethod;
+			}
+			return mMethodDescription;
+		}
+
 		@Override
 		public Object getChild(int groupPosition, int childPosition) {
-			return PrivacyManager.getMethods((String) getGroup(groupPosition)).get(childPosition);
+			return getMethodDescriptions(groupPosition).get(childPosition);
 		}
 
 		@Override
@@ -1002,7 +1026,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return PrivacyManager.getMethods((String) getGroup(groupPosition)).size();
+			return getMethodDescriptions(groupPosition).size();
 		}
 
 		@Override
