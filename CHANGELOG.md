@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Select applications to allow ([issue](https://github.com/M66B/XPrivacy/issues/686))
 * Updated Chinese translation
 * Updated French translation
 * Updated Lithuanian translation
