@@ -2,14 +2,14 @@
 
     <string name="app_notxposed" formatted="false">Xposed 框架版本 %d+ 未安装</string>
     <string name="app_notenabled">XPrivacy 没有在 Xposed 框架中启用</string>
-    <string name="app_wrongandroid">仅支持安卓 4.0 以上的版本</string>
+    <string name="app_wrongandroid">仅支持 Android 4.0 以上的版本</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
     <string name="app_copyright">版权所有 \u00A9 2013 M. Bokhorst (M66B)</string>
     <string name="menu_usage">权限使用日志（所有程序）</string>
     <string name="menu_refresh">刷新程序列表</string>
-    <string name="menu_settings">设置模拟信息</string>
-    <string name="menu_template">调整默认权限模板（用于新安装的应用）</string>
+    <string name="menu_settings">用于被限制程序的模拟信息</string>
+    <string name="menu_template">新安装程序默认权限模板</string>
     <string name="menu_report">报告问题</string>
     <string name="menu_export">导出全局配置到本地存储器</string>
     <string name="menu_import">导入本地存储器上的全局配置</string>
@@ -26,7 +26,7 @@
     <string name="menu_app_settings">详细设置程序权限</string>
     <string name="menu_app_store">Play 商店</string>
     <string name="menu_accounts">选择允许访问的帐号</string>
-    <string name="menu_applications">Select applications to allow</string>
+    <string name="menu_applications">选择允许访问的程序</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
     <string name="msg_new">已安装</string>
     <string name="msg_update">已升级</string>
@@ -42,7 +42,7 @@
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
     <string name="restrict_accounts">账户（ Google/Facebook 账户）</string>
-    <string name="restrict_browser">浏览器 （书签/历史）</string>
+    <string name="restrict_browser">浏览器（收藏夹/历史）</string>
     <string name="restrict_calendar">日历</string>
     <string name="restrict_calling">通话（语音/短信/彩信）</string>
     <string name="restrict_clipboard">剪贴板</string>
@@ -54,7 +54,7 @@
     <string name="restrict_location">位置（精确/粗略）</string>
     <string name="restrict_media">媒体（声音/图片/视频）</string>
     <string name="restrict_messages">信息（短信/彩信）</string>
-    <string name="restrict_network">网络状态（IP 地址）</string>
+    <string name="restrict_network">网络状态（ IP 地址）</string>
     <string name="restrict_notifications">通知（通知栏提示）</string>
     <string name="restrict_phone">电话（电话号码/通话状态）</string>
     <string name="restrict_sensors">感应器（重力方向/光线强度）</string>
@@ -77,20 +77,20 @@
     <string name="title_frestricted">仅显示已限制权限的应用</string>
     <string name="title_fuser">仅显示用户应用</string>
     <string name="title_fsystem">仅显示系统应用</string>
-    <string name="title_fnot">Negate</string>
-    <string name="settings_serial">设备序列号</string>
+    <string name="title_fnot">反选</string>
+    <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
     <string name="settings_mac">MAC 地址</string>
     <string name="settings_ip">IP 地址</string>
-    <string name="settings_phone">已插入的 SIM 卡电话号码</string>
+    <string name="settings_phone">电话号码</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_adid">广告 ID</string>
     <string name="settings_country">国家</string>
     <string name="settings_operator">运营商</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">User Agent</string>
-    <string name="settings_notify">Update notifications</string>
+    <string name="settings_notify">通知栏提示</string>
     <string name="settings_usage">Android 程序用量统计数据（需要重启）</string>
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="help_application">程序标记说明</string>
