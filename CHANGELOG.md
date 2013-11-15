@@ -3,6 +3,11 @@ Changelog
 
 **Next release**
 
+* Updated Chinese translation
+* Updated German translation
+
+**Version 1.10.15 TEST**
+
 * Fixed empty/crashing template
 * Restrict input device descriptor ([issue](https://github.com/M66B/XPrivacy/issues/768))
 
