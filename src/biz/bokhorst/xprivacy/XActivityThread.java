@@ -10,6 +10,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
 import android.os.Build;
@@ -140,6 +141,19 @@ public class XActivityThread extends XHook {
 												.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
 								}
 							}
+						} else if (getRestrictionName().equals(PrivacyManager.cSystem)) {
+							String[] packageNames;
+							if (action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE)
+									|| action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE))
+								packageNames = intent.getStringArrayExtra(Intent.EXTRA_CHANGED_PACKAGE_LIST);
+							else
+								packageNames = new String[] { intent.getData().getEncodedSchemeSpecificPart() };
+							for (String packageName : packageNames)
+								if (!XApplicationPackageManager.isPackageAllowed(packageName)) {
+									finish(param);
+									param.setResult(null);
+									break;
+								}
 						} else if (isRestricted(param, mActionName)) {
 							finish(param);
 							param.setResult(null);

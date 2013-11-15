@@ -94,7 +94,7 @@ public class XApplicationPackageManager extends XHook {
 	private List<ApplicationInfo> filterApplicationInfo(List<ApplicationInfo> original) {
 		ArrayList<ApplicationInfo> result = new ArrayList<ApplicationInfo>();
 		for (ApplicationInfo appInfo : original)
-			if (packageAllowed(appInfo.packageName))
+			if (isPackageAllowed(appInfo.packageName))
 				result.add(appInfo);
 		return result;
 	}
@@ -102,7 +102,7 @@ public class XApplicationPackageManager extends XHook {
 	private List<PackageInfo> filterPackageInfo(List<PackageInfo> original) {
 		ArrayList<PackageInfo> result = new ArrayList<PackageInfo>();
 		for (PackageInfo appInfo : original)
-			if (packageAllowed(appInfo.packageName))
+			if (isPackageAllowed(appInfo.packageName))
 				result.add(appInfo);
 		return result;
 	}
@@ -110,7 +110,7 @@ public class XApplicationPackageManager extends XHook {
 	private List<ProviderInfo> filterProviderInfo(List<ProviderInfo> original) {
 		ArrayList<ProviderInfo> result = new ArrayList<ProviderInfo>();
 		for (ProviderInfo appInfo : original)
-			if (packageAllowed(appInfo.packageName))
+			if (isPackageAllowed(appInfo.packageName))
 				result.add(appInfo);
 		return result;
 	}
@@ -118,12 +118,12 @@ public class XApplicationPackageManager extends XHook {
 	private List<ResolveInfo> filterResolveInfo(List<ResolveInfo> original) {
 		ArrayList<ResolveInfo> result = new ArrayList<ResolveInfo>();
 		for (ResolveInfo appInfo : original)
-			if (packageAllowed(appInfo.resolvePackageName))
+			if (isPackageAllowed(appInfo.resolvePackageName))
 				result.add(appInfo);
 		return result;
 	}
 
-	private boolean packageAllowed(String packageName) {
+	public static boolean isPackageAllowed(String packageName) {
 		return PrivacyManager.getSettingBool(null, null, 0, String.format("Application.%s", packageName), false, true);
 	}
 }
