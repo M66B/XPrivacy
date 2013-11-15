@@ -14,6 +14,7 @@ import android.nfc.NfcAdapter;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -73,6 +74,14 @@ public class XActivityThread extends XHook {
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_NDEF_DISCOVERED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TAG_DISCOVERED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TECH_DISCOVERED));
+
+		// Intent receive: SMS
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
+				Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
+				Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
+				Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION));
 
 		// Intent receive: notifications
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,
