@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Fixed empty/crashing template
+* Restrict input device descriptor ([issue](https://github.com/M66B/XPrivacy/issues/768))
 
 **Version 1.10.14 TEST**
 

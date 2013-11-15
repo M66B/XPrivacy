@@ -862,6 +862,10 @@ public class PrivacyManager {
 			return getSetting(null, null, uid, cSettingUa,
 					"Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9", true);
 
+		// InputDevice
+		if (name.equals("DeviceDescriptor"))
+			return cDeface;
+
 		// Fallback
 		Util.log(null, Log.WARN, "Fallback value name=" + name);
 		return cDeface;
