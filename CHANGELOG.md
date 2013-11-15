@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+**Version 1.10.14 TEST**
+
 * Filter on permissions filters functions too ([issue](https://github.com/M66B/XPrivacy/issues/695))
 * Select applications to allow ([issue](https://github.com/M66B/XPrivacy/issues/686))
 * Require [Pro license](http://www.faircode.eu/xprivacy/) to allow individual accounts, applications and contacts
