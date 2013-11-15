@@ -21,12 +21,12 @@ public class PackageChange extends BroadcastReceiver {
 			Uri inputUri = Uri.parse(intent.getDataString());
 			if (inputUri.getScheme().equals("package")) {
 				// Get data
-				final String packageName = inputUri.getSchemeSpecificPart();
-				final int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
+				String packageName = inputUri.getSchemeSpecificPart();
+				int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 				boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
 				boolean fSystem = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingFSystem, true,
 						false);
-				final NotificationManager notificationManager = (NotificationManager) context
+				NotificationManager notificationManager = (NotificationManager) context
 						.getSystemService(Context.NOTIFICATION_SERVICE);
 
 				// Check action
