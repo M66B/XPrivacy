@@ -73,6 +73,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int ERROR_INVALID_PACKAGE_NAME = 0x102;
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
+	public static final Uri cProUri = Uri.parse("http://www.faircode.eu/xprivacy/");
+
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
 
@@ -630,7 +632,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private void optionFetch() {
 		if (Util.getLicense() == null) {
 			// Redirect to pro page
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, cProUri);
 			startActivity(browserIntent);
 		} else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -664,7 +666,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionPro() {
 		// Redirect to pro page
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, cProUri);
 		startActivity(browserIntent);
 	}
 

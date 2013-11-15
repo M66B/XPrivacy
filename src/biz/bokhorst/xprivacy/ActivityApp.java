@@ -431,7 +431,7 @@ public class ActivityApp extends Activity {
 	private void optionFetch() {
 		if (Util.getLicense() == null) {
 			// Redirect to pro page
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
 			startActivity(browserIntent);
 		} else {
 			Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
@@ -441,13 +441,36 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionAccounts() {
-		AccountsTask accountsTask = new AccountsTask();
-		accountsTask.executeOnExecutor(mExecutor, (Object) null);
+		if (Util.getLicense() == null) {
+			// Redirect to pro page
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
+			startActivity(browserIntent);
+		} else {
+			AccountsTask accountsTask = new AccountsTask();
+			accountsTask.executeOnExecutor(mExecutor, (Object) null);
+		}
 	}
 
 	private void optionApplications() {
-		ApplicationsTask appsTask = new ApplicationsTask();
-		appsTask.executeOnExecutor(mExecutor, (Object) null);
+		if (Util.getLicense() == null) {
+			// Redirect to pro page
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
+			startActivity(browserIntent);
+		} else {
+			ApplicationsTask appsTask = new ApplicationsTask();
+			appsTask.executeOnExecutor(mExecutor, (Object) null);
+		}
+	}
+
+	private void optionContacts() {
+		if (Util.getLicense() == null) {
+			// Redirect to pro page
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, cProUri);
+			startActivity(browserIntent);
+		} else {
+			ContactsTask contactsTask = new ContactsTask();
+			contactsTask.executeOnExecutor(mExecutor, (Object) null);
+		}
 	}
 
 	private void optionLaunch() {
@@ -465,11 +488,6 @@ public class ActivityApp extends Activity {
 		Intent intentStore = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
 				+ mAppInfo.getPackageName()));
 		startActivity(intentStore);
-	}
-
-	private void optionContacts() {
-		ContactsTask contactsTask = new ContactsTask();
-		contactsTask.executeOnExecutor(mExecutor, (Object) null);
 	}
 
 	// Tasks
