@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -824,8 +825,7 @@ public class ActivityApp extends Activity {
 		private String mSelectedRestrictionName;
 		private String mSelectedMethodName;
 		private List<String> mRestrictions;
-		private int mCacheGroupPosition = -1;
-		private List<PrivacyManager.MethodDescription> mMethodDescription = null;
+		private HashMap<Integer, List<PrivacyManager.MethodDescription>> mMethodDescription;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, String selectedRestrictionName,
@@ -834,6 +834,7 @@ public class ActivityApp extends Activity {
 			mSelectedRestrictionName = selectedRestrictionName;
 			mSelectedMethodName = selectedMethodName;
 			mRestrictions = new ArrayList<String>();
+			mMethodDescription = new LinkedHashMap<Integer, List<PrivacyManager.MethodDescription>>();
 
 			boolean fPermission = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 					PrivacyManager.cSettingFPermission, true, false);
@@ -996,7 +997,7 @@ public class ActivityApp extends Activity {
 		}
 
 		private List<PrivacyManager.MethodDescription> getMethodDescriptions(int groupPosition) {
-			if (mCacheGroupPosition != groupPosition) {
+			if (!mMethodDescription.containsKey(groupPosition)) {
 				boolean fPermission = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 						PrivacyManager.cSettingFPermission, true, false);
 				List<PrivacyManager.MethodDescription> listMethod = new ArrayList<PrivacyManager.MethodDescription>();
@@ -1007,11 +1008,9 @@ public class ActivityApp extends Activity {
 							|| PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), restrictionName,
 									md.getMethodName()) > 0 : true)
 						listMethod.add(md);
-
-				mCacheGroupPosition = groupPosition;
-				mMethodDescription = listMethod;
+				mMethodDescription.put(groupPosition, listMethod);
 			}
-			return mMethodDescription;
+			return mMethodDescription.get(groupPosition);
 		}
 
 		@Override
