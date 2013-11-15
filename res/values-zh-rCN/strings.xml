@@ -19,27 +19,27 @@
     <string name="menu_pro">捐赠/升级到专业版</string>
     <string name="menu_about">关于</string>
     <string name="menu_help">帮助</string>
-    <string name="menu_all">选中全部选框</string>
-    <string name="menu_apply">应用规则</string>
-    <string name="menu_clear">清除全部选框</string>
+    <string name="menu_all">全部权限</string>
+    <string name="menu_apply">套用默认权限模板</string>
+    <string name="menu_clear">清除默认权限模板</string>
     <string name="menu_app_launch">启动程序</string>
     <string name="menu_app_settings">详细设置程序权限</string>
     <string name="menu_app_store">Play 商店</string>
     <string name="menu_accounts">选择允许访问的帐号</string>
-    <string name="menu_applications">选择允许访问的程序</string>
+    <string name="menu_applications">程序操作</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
     <string name="msg_new">已安装</string>
     <string name="msg_update">已升级</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
-    <string name="msg_edit">点击应用图标以调整权限</string>
+    <string name="msg_edit">点击程序图标以调整权限</string>
     <string name="msg_sure">是否确定？</string>
     <string name="msg_done">好</string>
     <string name="msg_reboot">设备需要重启</string>
     <string name="msg_random">生成随机数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
-但仍然不可能保证它能完美兼容所有设备及应用。
+但仍然不可能保证它能完美兼容所有设备及程序。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
     <string name="restrict_accounts">账户（ Google/Facebook 账户）</string>
     <string name="restrict_browser">浏览器（收藏夹/历史）</string>
@@ -60,7 +60,7 @@
     <string name="restrict_sensors">感应器（重力方向/光线强度）</string>
     <string name="restrict_storage">存储（内置存储器/存储卡）</string>
     <string name="restrict_shell">命令行（执行命令/获得超级用户权限）</string>
-    <string name="restrict_system">系统（查看已安装的应用）</string>
+    <string name="restrict_system">系统（查看已安装的程序）</string>
     <string name="restrict_view">显示网页（内置浏览器）</string>
     <string name="title_category">权限类型:</string>
     <string name="title_restrict">勾选的权限将被限制:</string>
@@ -71,12 +71,12 @@
         <item quantity="other">%d 个已启用的过滤器</item>
     </plurals>
 
-    <string name="title_fused">曾使用当前选中权限的应用</string>
-    <string name="title_finternet">含有联网权限的应用</string>
-    <string name="title_fpermission">仅显示应用已申请的权限</string>
-    <string name="title_frestricted">仅显示已限制权限的应用</string>
-    <string name="title_fuser">仅显示用户应用</string>
-    <string name="title_fsystem">仅显示系统应用</string>
+    <string name="title_fused">曾使用当前选中权限的程序</string>
+    <string name="title_finternet">含有联网权限的程序</string>
+    <string name="title_fpermission">仅显示程序已申请的权限</string>
+    <string name="title_frestricted">仅显示已限制权限的程序</string>
+    <string name="title_fuser">仅显示用户程序</string>
+    <string name="title_fsystem">仅显示系统程序</string>
     <string name="title_fnot">反选</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
@@ -93,7 +93,7 @@
     <string name="settings_notify">通知栏提示</string>
     <string name="settings_usage">Android 程序用量统计数据（需要重启）</string>
     <string name="settings_log">调试日志（需要重启）</string>
-    <string name="settings_expert">Expert mode</string>
+    <string name="settings_expert">专家模式</string>
     <string name="help_application">程序标记说明</string>
     <string name="help_internet">程序含有联网权限</string>
     <string name="help_granted">程序已申请的权限（ Androidmanifest 中表明）</string>
