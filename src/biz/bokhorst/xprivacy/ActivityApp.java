@@ -574,8 +574,8 @@ public class ActivityApp extends Activity {
 			mSelection = new boolean[mListInfo.size()];
 			for (int i = 0; i < mListInfo.size(); i++)
 				try {
-					mListApp.add(String.format("%s (%s) (%d)", pm.getApplicationLabel(mListInfo.get(i)),
-							mListInfo.get(i).packageName, mListInfo.get(i).uid));
+					mListApp.add(String.format("%s (%s)", pm.getApplicationLabel(mListInfo.get(i)),
+							mListInfo.get(i).packageName));
 					mSelection[i] = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 							String.format("Application.%d.%s", mAppInfo.getUid(), mListInfo.get(i).packageName), false,
 							false);
