@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Fixed empty/crashing template
+
 **Version 1.10.14 TEST**
 
 * Filter on permissions filters functions too ([issue](https://github.com/M66B/XPrivacy/issues/695))
