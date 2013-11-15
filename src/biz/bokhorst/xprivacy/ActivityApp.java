@@ -1048,7 +1048,8 @@ public class ActivityApp extends Activity {
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition) {
+				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition
+						&& restrictionName != null) {
 					// Get info
 					md = (PrivacyManager.MethodDescription) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName,
@@ -1065,7 +1066,7 @@ public class ActivityApp extends Activity {
 			@Override
 			protected void onPostExecute(Object result) {
 				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition
-						&& restrictionName != null && md != null) {
+						&& restrictionName != null) {
 					// Set data
 					if (lastUsage > 0) {
 						Date date = new Date(lastUsage);
