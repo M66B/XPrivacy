@@ -731,7 +731,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			llFilters.setVisibility(LinearLayout.VISIBLE);
 			llBatchMode.setVisibility(LinearLayout.GONE);
 			
-			tvFilters.setText("Filters"); // TODO put in string resource
+			tvFilters.setText(R.string.title_filters);
 			
 			if (!mBatchModeHidden) toggleBatchModeVisibility();
 		} else {
@@ -755,9 +755,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Change text
 			if (numberOfFilters == 0)
-				tvFilters.setText(getResources().getString(android.R.color.transparent));
+				tvFilters.setText(getResources().getString(R.string.title_nofilter));
 			else
-				tvFilters.setText(getResources().getQuantityString(R.plurals.title_filters, numberOfFilters,
+				tvFilters.setText(getResources().getQuantityString(R.plurals.title_active_filters, numberOfFilters,
 						numberOfFilters));
 
 			// Change visibility
