@@ -45,7 +45,8 @@
             android:name=".ActivityApp"
             android:allowTaskReparenting="true"
             android:parentActivityName=".ActivityMain"
-            android:taskAffinity=".ActivityMain" >
+            android:taskAffinity=".ActivityMain"
+            android:noHistory="true" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="biz.bokhorst.xprivacy.ActivityMain" />
