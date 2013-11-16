@@ -21,7 +21,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
@@ -1073,25 +1072,43 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && xAppInfo != null) {
 					// Draw border around icon
-					if (holder.imgIcon.getDrawable() instanceof BitmapDrawable) {
-						Bitmap bMap = ((BitmapDrawable) holder.imgIcon.getDrawable()).getBitmap();
-						bMap = Bitmap.createScaledBitmap(bMap, 32, 32, false);
+					if (xAppInfo.getIcon() instanceof BitmapDrawable) {
+						// Get icon bitmap
+						Bitmap icon = ((BitmapDrawable) xAppInfo.getIcon()).getBitmap();
 
-						TypedArray array = getTheme().obtainStyledAttributes(
-								new int[] { android.R.attr.colorMultiSelectHighlight });
-						int textColor = array.getColor(0, 0xFF00FF);
-						array.recycle();
+						// Get list item height
+						TypedArray arrayHeight = getTheme().obtainStyledAttributes(
+								new int[] { android.R.attr.listPreferredItemHeightSmall });
+						int height = (int) Math.round(arrayHeight.getDimension(0, 32)
+								* getResources().getDisplayMetrics().density + 0.5f);
+						arrayHeight.recycle();
 
-						Bitmap res = Bitmap.createBitmap(bMap.getWidth() + 2, bMap.getHeight() + 2, bMap.getConfig());
-						Canvas c = new Canvas(res);
-						Paint p = new Paint();
-						p.setColor(textColor);
-						p.setStyle(Style.STROKE);
-						p.setStrokeWidth(1);
-						c.drawRect(0, 0, res.getWidth(), res.getHeight(), p);
-						p = new Paint(Paint.FILTER_BITMAP_FLAG);
-						c.drawBitmap(bMap, 1, 1, p);
-						holder.imgIcon.setImageBitmap(res);
+						// Scale icon to list item height
+						icon = Bitmap.createScaledBitmap(icon, height, height, false);
+
+						// Create bitmap with borders
+						int borderSize = (int) Math.round(2 * getResources().getDisplayMetrics().density + 0.5f);
+						Bitmap bitmap = Bitmap.createBitmap(icon.getWidth() + 2 * borderSize, icon.getHeight() + 2
+								* borderSize, icon.getConfig());
+
+						// Get highlight color
+						TypedArray arrayColor = getTheme().obtainStyledAttributes(
+								new int[] { android.R.attr.colorActivatedHighlight });
+						int textColor = arrayColor.getColor(0, 0xFF00FF);
+						arrayColor.recycle();
+
+						// Draw bitmap with borders
+						Canvas canvas = new Canvas(bitmap);
+						Paint paint = new Paint();
+						paint.setColor(textColor);
+						paint.setStyle(Style.STROKE);
+						paint.setStrokeWidth(borderSize);
+						canvas.drawRect(0, 0, bitmap.getWidth(), bitmap.getHeight(), paint);
+						paint = new Paint(Paint.FILTER_BITMAP_FLAG);
+						canvas.drawBitmap(icon, borderSize, borderSize, paint);
+
+						// Show bitmap
+						holder.imgIcon.setImageBitmap(bitmap);
 					}
 
 					// Check if used

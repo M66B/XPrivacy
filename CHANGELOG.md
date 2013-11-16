@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Compatibility with Android 4.4 KitKat ([issue](https://github.com/M66B/XPrivacy/issues/733))
+* Draw border around application icons in main list
 * Updated Arabic translation
 * Updated Chinese translation
 * Updated German translation
