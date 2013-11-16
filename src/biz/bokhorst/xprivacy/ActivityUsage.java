@@ -83,7 +83,7 @@ public class ActivityUsage extends Activity {
 				String[] packageName = getPackageManager().getPackagesForUid(usageData.getUid());
 				if (packageName != null && packageName.length > 0) {
 					Intent intent = new Intent(ActivityUsage.this, ActivityApp.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					intent.putExtra(ActivityApp.cPackageName, packageName[0]);
 					intent.putExtra(ActivityApp.cRestrictionName, usageData.getRestrictionName());
 					intent.putExtra(ActivityApp.cMethodName, usageData.getMethodName());

@@ -33,8 +33,7 @@
         <activity
             android:name=".ActivityMain"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name"
-            android:launchMode="singleTop" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,6 +51,7 @@
         </activity>
         <activity
             android:name=".ActivityUsage"
+            android:noHistory="true"
             android:parentActivityName=".ActivityMain" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
