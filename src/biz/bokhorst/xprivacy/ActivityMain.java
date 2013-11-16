@@ -17,8 +17,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -1065,6 +1072,28 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && xAppInfo != null) {
+					// Draw border around icon
+					if (holder.imgIcon.getDrawable() instanceof BitmapDrawable) {
+						Bitmap bMap = ((BitmapDrawable) holder.imgIcon.getDrawable()).getBitmap();
+						bMap = Bitmap.createScaledBitmap(bMap, 32, 32, false);
+
+						TypedArray array = getTheme().obtainStyledAttributes(
+								new int[] { android.R.attr.colorMultiSelectHighlight });
+						int textColor = array.getColor(0, 0xFF00FF);
+						array.recycle();
+
+						Bitmap res = Bitmap.createBitmap(bMap.getWidth() + 2, bMap.getHeight() + 2, bMap.getConfig());
+						Canvas c = new Canvas(res);
+						Paint p = new Paint();
+						p.setColor(textColor);
+						p.setStyle(Style.STROKE);
+						p.setStrokeWidth(1);
+						c.drawRect(0, 0, res.getWidth(), res.getHeight(), p);
+						p = new Paint(Paint.FILTER_BITMAP_FLAG);
+						c.drawBitmap(bMap, 1, 1, p);
+						holder.imgIcon.setImageBitmap(res);
+					}
+
 					// Check if used
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);

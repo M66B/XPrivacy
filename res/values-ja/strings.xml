@@ -20,6 +20,7 @@
     <string name="menu_about">アプリ情報</string>
     <string name="menu_help">ヘルプ</string>
     <string name="menu_all">全て</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">テンプレを適用</string>
     <string name="menu_clear">消去</string>

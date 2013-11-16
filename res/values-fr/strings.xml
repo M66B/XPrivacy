@@ -20,6 +20,7 @@
     <string name="menu_about">À propos</string>
     <string name="menu_help">Aide</string>
     <string name="menu_all">Tous</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Appliquer le modèle</string>
     <string name="menu_clear">Tout effacer</string>
