@@ -163,7 +163,7 @@ public class ActivityApp extends Activity {
 			icon = Bitmap.createScaledBitmap(icon, height, height, false);
 
 			// Create bitmap with borders
-			int borderSize = (int) Math.round(1 * getResources().getDisplayMetrics().density + 0.5f);
+			int borderSize = (int) Math.round(getResources().getDisplayMetrics().density + 0.5f);
 			Bitmap bitmap = Bitmap.createBitmap(icon.getWidth() + 2 * borderSize, icon.getHeight() + 2 * borderSize,
 					icon.getConfig());
 
