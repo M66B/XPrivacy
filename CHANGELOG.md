@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Fixed opening wrong settings from notification (again) ([issue](https://github.com/M66B/XPrivacy/issues/777))
 * Draw border around application icon in application details view
 * Updated Slovak translation
 
