@@ -121,7 +121,7 @@ public class ActivityUsage extends Activity {
 				else
 					NavUtils.navigateUpTo(this, upIntent);
 			return true;
-		case R.id.menu_all:
+		case R.id.menu_usage_all:
 			mAll = !mAll;
 			if (mUsageAdapter != null)
 				mUsageAdapter.getFilter().filter(Boolean.toString(mAll));
