@@ -112,7 +112,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_granted">has Android permission</string>
     <string name="help_used">has used this data</string>
     <string name="help_frozen">is disabled</string>
-    <string name="help_dangerous">is critical, restricting may cause problems</string>
+    <string name="help_dangerous">is dangerous, restricting may cause problems</string>
     <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
 
 </resources>
