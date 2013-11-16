@@ -20,6 +20,7 @@
     <string name="menu_about">Hakkında</string>
     <string name="menu_help">Yardım</string>
     <string name="menu_all">Tümü</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Temizle</string>
     <string name="menu_app_launch">Çalıştır</string>

@@ -20,6 +20,7 @@
     <string name="menu_about">Om</string>
     <string name="menu_help">Hjelp</string>
     <string name="menu_all">Alle</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Bruk skjema</string>
     <string name="menu_clear">Slett</string>
     <string name="menu_app_launch">Kjør</string>

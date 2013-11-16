@@ -19,7 +19,8 @@
     <string name="menu_pro">Pro versie</string>
     <string name="menu_about">Over</string>
     <string name="menu_help">Help</string>
-    <string name="menu_all">Alles</string>
+    <string name="menu_all">Schakel beperkingen</string>
+    <string name="menu_usage_all">Schakel filter</string>
     <string name="menu_apply">Pas sjabloon toe</string>
     <string name="menu_clear">Wissen</string>
     <string name="menu_app_launch">Uitvoeren</string>

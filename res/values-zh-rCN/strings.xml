@@ -20,6 +20,7 @@
     <string name="menu_about">关于</string>
     <string name="menu_help">帮助</string>
     <string name="menu_all">全部权限</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">套用默认权限模板</string>
     <string name="menu_clear">清除默认权限模板</string>
     <string name="menu_app_launch">启动应用</string>

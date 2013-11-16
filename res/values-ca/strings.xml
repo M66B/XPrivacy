@@ -20,6 +20,7 @@
     <string name="menu_about">Quant a</string>
     <string name="menu_help">Ajuda</string>
     <string name="menu_all">Totes</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Aplica plantilla</string>
     <string name="menu_clear">Neteja</string>
     <string name="menu_app_launch">Executa</string>

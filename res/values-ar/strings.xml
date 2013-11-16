@@ -20,6 +20,7 @@
     <string name="menu_about">عن التطبيق</string>
     <string name="menu_help">مساعدة</string>
     <string name="menu_all">تحديد الكل</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">تطبيق القالب</string>
     <string name="menu_clear">إلغاء التحديد</string>
     <string name="menu_app_launch">تشغيل التطبيق</string>
