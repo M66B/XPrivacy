@@ -43,9 +43,15 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.Paint.Style;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -146,7 +152,41 @@ public class ActivityApp extends Activity {
 
 		// Display app icon
 		ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
-		imgIcon.setImageDrawable(mAppInfo.getIcon());
+		if (mAppInfo.getIcon() instanceof BitmapDrawable) {
+			// Get icon bitmap
+			Bitmap icon = ((BitmapDrawable) mAppInfo.getIcon()).getBitmap();
+
+			// Get height
+			int height = (int) Math.round(32 * getResources().getDisplayMetrics().density + 0.5f);
+
+			// Scale icon to height
+			icon = Bitmap.createScaledBitmap(icon, height, height, false);
+
+			// Create bitmap with borders
+			int borderSize = (int) Math.round(1 * getResources().getDisplayMetrics().density + 0.5f);
+			Bitmap bitmap = Bitmap.createBitmap(icon.getWidth() + 2 * borderSize, icon.getHeight() + 2 * borderSize,
+					icon.getConfig());
+
+			// Get highlight color
+			TypedArray arrayColor = getTheme().obtainStyledAttributes(
+					new int[] { android.R.attr.colorActivatedHighlight });
+			int textColor = arrayColor.getColor(0, 0xFF00FF);
+			arrayColor.recycle();
+
+			// Draw bitmap with borders
+			Canvas canvas = new Canvas(bitmap);
+			Paint paint = new Paint();
+			paint.setColor(textColor);
+			paint.setStyle(Style.STROKE);
+			paint.setStrokeWidth(borderSize);
+			canvas.drawRect(0, 0, bitmap.getWidth(), bitmap.getHeight(), paint);
+			paint = new Paint(Paint.FILTER_BITMAP_FLAG);
+			canvas.drawBitmap(icon, borderSize, borderSize, paint);
+
+			// Show bitmap
+			imgIcon.setImageBitmap(bitmap);
+		} else
+			imgIcon.setImageDrawable(mAppInfo.getIcon());
 
 		// Handle icon click
 		imgIcon.setOnClickListener(new View.OnClickListener() {

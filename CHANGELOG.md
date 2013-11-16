@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Draw border around application icon in application details view
 
 **Version 1.10.16 TEST**
 
