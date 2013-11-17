@@ -77,11 +77,11 @@ public class XActivityThread extends XHook {
 
 		// Intent receive: SMS
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
-				Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION));
+				Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
-				Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
+				Telephony.Sms.Intents.SMS_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
-				Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION));
+				Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
 
 		// Intent receive: notifications
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,

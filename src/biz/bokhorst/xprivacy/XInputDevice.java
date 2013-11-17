@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Binder;
+import android.os.Build;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -12,7 +13,7 @@ public class XInputDevice extends XHook {
 	private Methods mMethod;
 
 	private XInputDevice(Methods method, String restrictionName) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name(), null, Build.VERSION_CODES.JELLY_BEAN);
 		mMethod = method;
 	}
 
