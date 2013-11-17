@@ -84,8 +84,6 @@ OR
 
 buy [the pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) from Google play
 
-(note that you cannot fetch [crowd sourced restrictions](http://updates.faircode.eu/xprivacy) with the pro enabler, only with the pro license)
-
 OR
 
 [![Flattr](http://api.flattr.com/button/flattr-badge-large.png "Flattr This!")](http://flattr.com/thing/1491130/ "The ultimate, yet easy to use, privacy manager")
