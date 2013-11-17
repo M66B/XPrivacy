@@ -94,6 +94,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_ua">User agent</string>
     <string name="settings_notify">Notifications de MàJ</string>
     <string name="settings_usage">Activer usage log (redémarrage nécessaire)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (redémarrage nécessaire)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="help_application">Application</string>

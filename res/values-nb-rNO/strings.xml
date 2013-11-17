@@ -92,6 +92,7 @@
     <string name="settings_ua">Brukeragent</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="help_application">Applikasjon</string>

@@ -94,6 +94,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="settings_ua">User agent</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="help_application">Alkalmazás</string>

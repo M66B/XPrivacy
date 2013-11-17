@@ -53,6 +53,7 @@ public class SettingsDialog {
 		final EditText etUa = (EditText) dlgSettings.findViewById(R.id.etUa);
 		final CheckBox cbNotify = (CheckBox) dlgSettings.findViewById(R.id.cbNotify);
 		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
+		final CheckBox cbExtra = (CheckBox) dlgSettings.findViewById(R.id.cbExtra);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
 		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
@@ -83,6 +84,8 @@ public class SettingsDialog {
 		// Set current values
 		boolean notify = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify, true, false);
 		boolean usage = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingAndroidUsage, false,
+				false);
+		boolean extra = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExtraUsage, false,
 				false);
 		boolean log = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingLog, false, false);
 		boolean expert = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExpert, false, false);
@@ -223,11 +226,13 @@ public class SettingsDialog {
 		if (uid == 0) {
 			cbNotify.setVisibility(View.GONE);
 			cbUsage.setChecked(usage);
+			cbExtra.setChecked(extra);
 			cbLog.setChecked(log);
 			cbExpert.setChecked(expert);
 		} else {
 			cbNotify.setChecked(notify);
 			cbUsage.setVisibility(View.GONE);
+			cbExtra.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
 			cbExpert.setVisibility(View.GONE);
 		}
@@ -395,6 +400,8 @@ public class SettingsDialog {
 				if (uid == 0) {
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
 							Boolean.toString(cbUsage.isChecked()));
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExtraUsage,
+							Boolean.toString(cbExtra.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
 							Boolean.toString(cbLog.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExpert,
@@ -436,6 +443,7 @@ public class SettingsDialog {
 				etUa.setText("");
 				if (uid == 0) {
 					cbUsage.setChecked(false);
+					cbExtra.setChecked(false);
 					cbLog.setChecked(false);
 					cbExpert.setChecked(false);
 				} else

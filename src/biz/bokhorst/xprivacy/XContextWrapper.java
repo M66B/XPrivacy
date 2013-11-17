@@ -21,15 +21,17 @@ public class XContextWrapper extends XHook {
 		return "android.content.ContextWrapper";
 	}
 
+	// public Context getApplicationContext()
 	// public Context getBaseContext()
 	// frameworks/base/core/java/android/content/ContextWrapper.java
 
 	private enum Methods {
-		getBaseContext
+		getApplicationContext, getBaseContext
 	};
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XContextWrapper(Methods.getApplicationContext, null));
 		listHook.add(new XContextWrapper(Methods.getBaseContext, null));
 		return listHook;
 	}
@@ -42,9 +44,10 @@ public class XContextWrapper extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		// Do nothing
-		if (mMethod == Methods.getBaseContext) {
+		if (mMethod == Methods.getApplicationContext || mMethod == Methods.getBaseContext) {
+			int uid = Binder.getCallingUid();
 			Context context = (Context) param.getResult();
-			if (context != null && PrivacyManager.isUsageDataEnabled(Binder.getCallingUid()))
+			if (context != null && PrivacyManager.isExtraUsageDataEnabled(uid))
 				PrivacyManager.sendUsageData(this, context);
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());

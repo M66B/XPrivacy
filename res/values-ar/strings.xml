@@ -94,6 +94,7 @@
     <string name="settings_ua">وكيل المستخدم</string>
     <string name="settings_notify">تحديث الإشعارات</string>
     <string name="settings_usage">بيانات إستخدام الأندرويد (يتطلب إعادة التشغيل)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
     <string name="settings_expert">وضع الخبراء</string>
     <string name="help_application">التطبيق</string>

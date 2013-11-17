@@ -92,6 +92,7 @@
     <string name="settings_ua">User agent</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android 使用日誌 (需重新啟動)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">偵錯日誌 (需重新啟動)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="help_application">程式</string>

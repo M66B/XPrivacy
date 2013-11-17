@@ -5,6 +5,7 @@ Changelog
 
 * Fixed opening wrong settings from notification (again) ([issue](https://github.com/M66B/XPrivacy/issues/777))
 * Draw border around application icon in application details view
+* Option to enable extra usage data ([issue](https://github.com/M66B/XPrivacy/issues/783)) ([issue](https://github.com/M66B/XPrivacy/issues/785)) ([issue](https://github.com/M66B/XPrivacy/issues/786))
 * Updated Arabic translation
 * Updated Chinese translation
 * Updated Slovak translation
