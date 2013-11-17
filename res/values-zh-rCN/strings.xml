@@ -20,7 +20,7 @@
     <string name="menu_about">关于</string>
     <string name="menu_help">帮助</string>
     <string name="menu_all">全部权限</string>
-    <string name="menu_restriction_all">权限限制开关</string>
+    <string name="menu_restriction_all">限制/取消限制列表中的应用</string>
     <string name="menu_usage_all">过滤器开关</string>
     <string name="menu_apply">套用默认权限模板</string>
     <string name="menu_clear">清除默认权限模板</string>
@@ -34,9 +34,9 @@
     <string name="msg_update">已升级</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
-    <string name="msg_edit">点击应用图标以调整权限</string>
+    <string name="msg_edit">点击应用图标以调整详细权限限制</string>
     <string name="msg_sure">是否确定？</string>
-    <string name="msg_done">好</string>
+    <string name="msg_done">已完成</string>
     <string name="msg_reboot">设备需要重启</string>
     <string name="msg_random">生成随机数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
