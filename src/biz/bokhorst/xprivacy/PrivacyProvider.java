@@ -604,13 +604,13 @@ public class PrivacyProvider extends ContentProvider {
 					editor.putString(key, PrivacyManager.cValueRandom);
 			} catch (Throwable ex) {
 			}
+
+		if (!Boolean.parseBoolean(prefs.getString(PrivacyManager.cSettingExpert, Boolean.toString(false)))) {
+			editor.putString(PrivacyManager.cSettingAndroidUsage, Boolean.toString(false));
+			editor.putString(PrivacyManager.cSettingExtraUsage, Boolean.toString(false));
+		}
+
 		editor.apply();
 		setPrefFileReadable(PREF_SETTINGS);
-
-		boolean expert = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExpert, false, false);
-		if (!expert) {
-			PrivacyManager.setSetting(null, null, 0, PrivacyManager.cSettingAndroidUsage, Boolean.toString(false));
-			PrivacyManager.setSetting(null, null, 0, PrivacyManager.cSettingExtraUsage, Boolean.toString(false));
-		}
 	}
 }
