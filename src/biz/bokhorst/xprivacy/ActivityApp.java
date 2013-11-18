@@ -469,14 +469,8 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionAccounts() {
-		if (Util.getLicense() == null) {
-			// Redirect to pro page
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
-			startActivity(browserIntent);
-		} else {
-			AccountsTask accountsTask = new AccountsTask();
-			accountsTask.executeOnExecutor(mExecutor, (Object) null);
-		}
+		AccountsTask accountsTask = new AccountsTask();
+		accountsTask.executeOnExecutor(mExecutor, (Object) null);
 	}
 
 	private void optionApplications() {

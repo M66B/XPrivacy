@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Move selecting accounts to allow to free version
 
 **Version 1.10.18 TEST**
 
