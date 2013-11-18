@@ -88,7 +88,8 @@ public class SettingsDialog {
 		boolean extra = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExtraUsage, false,
 				false);
 		boolean log = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingLog, false, false);
-		boolean expert = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExpert, false, false);
+		final boolean expert = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExpert, false,
+				false);
 		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
 
 		String serial = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingSerial, "", false);
@@ -225,8 +226,13 @@ public class SettingsDialog {
 
 		if (uid == 0) {
 			cbNotify.setVisibility(View.GONE);
-			cbUsage.setChecked(usage);
-			cbExtra.setChecked(extra);
+			if (expert) {
+				cbUsage.setChecked(usage);
+				cbExtra.setChecked(extra);
+			} else {
+				cbUsage.setVisibility(View.GONE);
+				cbExtra.setVisibility(View.GONE);
+			}
 			cbLog.setChecked(log);
 			cbExpert.setChecked(expert);
 		} else {
@@ -398,10 +404,12 @@ public class SettingsDialog {
 				}
 
 				if (uid == 0) {
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
-							Boolean.toString(cbUsage.isChecked()));
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExtraUsage,
-							Boolean.toString(cbExtra.isChecked()));
+					if (expert) {
+						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
+								Boolean.toString(cbUsage.isChecked()));
+						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExtraUsage,
+								Boolean.toString(cbExtra.isChecked()));
+					}
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
 							Boolean.toString(cbLog.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExpert,
