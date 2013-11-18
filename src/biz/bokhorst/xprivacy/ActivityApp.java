@@ -127,6 +127,9 @@ public class ActivityApp extends Activity {
 			return;
 		}
 
+		// Set title
+		setTitle(String.format("%s - %s", getString(R.string.app_name), mAppInfo.getFirstApplicationName()));
+
 		// Handle info click
 		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
 		imgInfo.setOnClickListener(new View.OnClickListener() {

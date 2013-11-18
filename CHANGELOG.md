@@ -5,6 +5,7 @@ Changelog
 
 * Move selecting accounts to allow to free version
 * Move settings Android usage data / extra usage data to expert mode
+* Add application name to title of application details view
 
 **Version 1.10.18 TEST**
 
