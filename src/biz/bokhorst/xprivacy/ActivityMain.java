@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
+import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -776,10 +777,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				numberOfFilters++;
 
 			// Change text
-			if (numberOfFilters == 0)
-				tvFilters.setText(getResources().getString(R.string.title_nofilter));
-			else
-				tvFilters.setText(getResources().getQuantityString(R.plurals.title_active_filters, numberOfFilters,
+			tvFilters.setText(getResources().getQuantityString(R.plurals.title_active_filters, numberOfFilters,
 						numberOfFilters));
 
 			// Change visibility
@@ -787,7 +785,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		mFiltersHidden = !mFiltersHidden;
-		tvFilters.setBackgroundResource(mFiltersHidden ? android.R.color.transparent : R.drawable.selected_tab_bar);
+		tvFilters.setBackgroundResource(mFiltersHidden ? android.R.color.transparent : R.drawable.selected_tab);
 	}
 
 	protected void toggleBatchModeVisibility() {
@@ -812,7 +810,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		mBatchModeHidden = !mBatchModeHidden;
-		tvBatchMode.setBackgroundResource(mBatchModeHidden ? android.R.color.transparent : R.drawable.selected_tab_bar);
+		tvBatchMode.setBackgroundResource(mBatchModeHidden ? android.R.color.transparent : R.drawable.selected_tab);
 	}
 
 	// Tasks
