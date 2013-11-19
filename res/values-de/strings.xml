@@ -92,9 +92,9 @@
     <string name="settings_operator">Mobilfunkanbieter</string>
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_ua">User-Agent (Browser)</string>
-    <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
+    <string name="settings_notify">Update-Benachrichtigungen</string>
+    <string name="settings_usage">Android Usage-Data (erfordert Geräteneustart)</string>
+    <string name="settings_extra">Extra Usage-Data (erfordert Geräteneustart)</string>
     <string name="settings_log">Debug-Log (erfordert Geräteneustart)</string>
     <string name="settings_expert">Experten-Modus</string>
     <string name="help_application">App</string>
