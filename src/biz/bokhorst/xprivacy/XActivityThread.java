@@ -14,6 +14,7 @@ import android.nfc.NfcAdapter;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -73,6 +74,14 @@ public class XActivityThread extends XHook {
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_NDEF_DISCOVERED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TAG_DISCOVERED));
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TECH_DISCOVERED));
+
+		// Intent receive: SMS
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
+				Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
+				Telephony.Sms.Intents.SMS_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
+		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
+				Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
 
 		// Intent receive: notifications
 		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,
@@ -139,6 +148,22 @@ public class XActivityThread extends XHook {
 										intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, (String) PrivacyManager
 												.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
 								}
+							}
+						} else if (getRestrictionName().equals(PrivacyManager.cSystem)) {
+							// Package event
+							if (isRestricted(param, mActionName)) {
+								String[] packageNames;
+								if (action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE)
+										|| action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE))
+									packageNames = intent.getStringArrayExtra(Intent.EXTRA_CHANGED_PACKAGE_LIST);
+								else
+									packageNames = new String[] { intent.getData().getEncodedSchemeSpecificPart() };
+								for (String packageName : packageNames)
+									if (!XApplicationPackageManager.isPackageAllowed(packageName)) {
+										finish(param);
+										param.setResult(null);
+										break;
+									}
 							}
 						} else if (isRestricted(param, mActionName)) {
 							finish(param);

@@ -20,16 +20,18 @@
     <string name="menu_about">Riguardo a</string>
     <string name="menu_help">Aiuto</string>
     <string name="menu_all">Tutto</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_apply">Applica template</string>
     <string name="menu_clear">Pulisci</string>
     <string name="menu_app_launch">Lancia</string>
     <string name="menu_app_settings">Impostazioni</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Seleziona account consentiti</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Seleziona contatti consentiti</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s limitato da XPrivacy</string>
+    <string name="msg_new">Nuovo</string>
+    <string name="msg_update">Aggiorna</string>
     <string name="msg_licensed" formatted="false">Licenziato a: %s</string>
     <string name="msg_loading">Caricamento in corso</string>
     <string name="msg_edit">Clicca l\'icona dell\'applicazione per modificare tutte le restrizioni</string>
@@ -57,6 +59,7 @@
     <string name="restrict_network">Rete (indirizzi)</string>
     <string name="restrict_notifications">Notifiche</string>
     <string name="restrict_phone">Telefono (ID, numeri, chiamate)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Memoria (media, scheda SD)</string>
     <string name="restrict_shell">Shell (comandi, superuser)</string>
     <string name="restrict_system">Sistema (applicazioni installate)</string>
@@ -70,24 +73,30 @@
         <item quantity="other">%d filtri attivi</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fused">Filtra per utilizzo dati</string>
+    <string name="title_finternet">Filtra per accesso a internet</string>
+    <string name="title_fpermission">Filtra per permesso</string>
+    <string name="title_frestricted">Filtra per restrizione</string>
+    <string name="title_fuser">Filtra per app utente</string>
+    <string name="title_fsystem">Filtra per app di sistema</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Numero di serie#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
     <string name="settings_mac">Indirizzo MAC</string>
-    <string name="settings_ip">IP address</string>
+    <string name="settings_ip">Indirizzo IP</string>
     <string name="settings_phone">Numero di Telefono</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Nazione</string>
     <string name="settings_operator">Operatore</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
+    <string name="settings_log">Debug log (richiede riavvio)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Applicazione</string>
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>

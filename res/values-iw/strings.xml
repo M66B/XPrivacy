@@ -20,16 +20,18 @@
     <string name="menu_about">אודות</string>
     <string name="menu_help">Help</string>
     <string name="menu_all">בחר הכול</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">הפעל</string>
     <string name="menu_app_settings">הגדרות</string>
     <string name="menu_app_store">חנות Google Play</string>
     <string name="menu_accounts">בחר חשבונות לאפשר</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">בחר אנשי קשר לאפשר</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s מוגבל על ידי XPrivacy</string>
     <string name="msg_licensed" formatted="false">יישום מורשה ל: %s</string>
     <string name="msg_loading">טוען</string>
     <string name="msg_edit">לחץ על סמל היישום כדי לערוך את כל ההגבלות</string>
@@ -57,6 +59,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_network">רשת (כתובות)</string>
     <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">טלפון (זיהוי, מספרים, שיחות)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">אחסון (מדיה, כרטיס SD)</string>
     <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">מערכת (יישומים מותקנים)</string>
@@ -76,6 +79,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_frestricted">Filter on restricted</string>
     <string name="title_fuser">Filter on user applications</string>
     <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">קו אורך</string>
     <string name="settings_lon">קו רוחב</string>
@@ -83,11 +87,16 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">מספר טלפון</string>
     <string name="settings_id">אנדרואיד ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">מדינה</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">מנוי ID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">יישום</string>
     <string name="help_internet">כולל הרשאות גישה לאינטרנט</string>
     <string name="help_granted">כולל הרשאות גישה לאנדרואיד</string>

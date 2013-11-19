@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
@@ -15,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -59,6 +59,7 @@ public class PrivacyManager {
 	public static final String cNfc = "nfc";
 	public static final String cNotifications = "notifications";
 	public static final String cPhone = "phone";
+	public static final String cSensors = "sensors";
 	public static final String cStorage = "storage";
 	public static final String cShell = "shell";
 	public static final String cSystem = "system";
@@ -66,9 +67,9 @@ public class PrivacyManager {
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
 			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
-			cNetwork, cNfc, cNotifications, cPhone, cShell, cStorage, cSystem, cView };
+			cNetwork, cNfc, cNotifications, cSensors, cPhone, cShell, cStorage, cSystem, cView };
 
-	public final static int cXposedMinVersion = 37;
+	public final static int cXposedMinVersion = 42;
 	public final static int cAndroidUid = 1000;
 
 	public final static String cSettingSerial = "Serial";
@@ -80,16 +81,19 @@ public class PrivacyManager {
 	public final static String cSettingPhone = "Phone";
 	public final static String cSettingId = "ID";
 	public final static String cSettingGsfId = "GSF_ID";
+	public final static String cSettingAdId = "AdId";
 	public final static String cSettingMcc = "MCC";
 	public final static String cSettingMnc = "MNC";
 	public final static String cSettingCountry = "Country";
 	public final static String cSettingOperator = "Operator";
 	public final static String cSettingIccId = "ICC_ID";
 	public final static String cSettingSubscriber = "Subscriber";
+	public final static String cSettingSSID = "SSID";
 	public final static String cSettingUa = "UA";
 	public final static String cSettingFUsed = "FUsed";
 	public final static String cSettingFInternet = "FInternet";
 	public final static String cSettingFRestriction = "FRestriction";
+	public final static String cSettingFRestrictionNot = "FRestrictionNot";
 	public final static String cSettingFPermission = "FPermission";
 	public final static String cSettingFUser = "FUser";
 	public final static String cSettingFSystem = "FSystem";
@@ -97,8 +101,12 @@ public class PrivacyManager {
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
 	public final static String cSettingFirstRun = "FirstRun";
-	public final static String cSettingRandom = "Random@boot";
+	public final static String cSettingNotify = "Notify";
+	public final static String cSettingAndroidUsage = "AndroidUsage";
+	public final static String cSettingExtraUsage = "ExtraUsage";
 	public final static String cSettingLog = "Log";
+	public final static String cSettingExpert = "Expert";
+	public final static String cSettingRandom = "Random@boot";
 
 	public final static String cValueRandom = "#Random#";
 	public final static String cValueRandomLegacy = "\nRandom\n";
@@ -187,6 +195,8 @@ public class PrivacyManager {
 	}
 
 	public static boolean isDangerousRestriction(String restrictionName) {
+		if (PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExpert, false, true))
+			return false;
 		if (restrictionName == null)
 			return false;
 		if (restrictionName.equals(cInternet) || restrictionName.equals(cStorage) || restrictionName.equals(cSystem))
@@ -195,6 +205,8 @@ public class PrivacyManager {
 	}
 
 	public static boolean isDangerousMethod(String restrictionName, String methodName) {
+		if (PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExpert, false, true))
+			return false;
 		MethodDescription md = new MethodDescription(methodName);
 		int pos = mMethod.get(restrictionName).indexOf(md);
 		md = mMethod.get(restrictionName).get(pos);
@@ -273,8 +285,8 @@ public class PrivacyManager {
 					}
 				}
 
-			// Do not use context before system ready
-			if (uid == cAndroidUid && !XActivityManagerService.isSystemReady())
+			// Check if usage data enabled
+			if (!isUsageDataEnabled(uid))
 				context = null;
 
 			// Check if restricted
@@ -311,47 +323,7 @@ public class PrivacyManager {
 							}
 
 						// Send usage data async
-						int qSize = 0;
-						synchronized (mUsageQueue) {
-							qSize = mUsageQueue.size();
-						}
-						if (qSize > 0) {
-							final Context fContext = context;
-							mExecutor.execute(new Runnable() {
-								public void run() {
-									Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-									UsageData data = null;
-									do {
-										int size = 0;
-										synchronized (mUsageQueue) {
-											if (mUsageQueue.size() > 0) {
-												data = mUsageQueue.keySet().iterator().next();
-												mUsageQueue.remove(data);
-												size = mUsageQueue.size();
-											} else
-												data = null;
-										}
-										if (data != null) {
-											try {
-												Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
-												ContentValues values = new ContentValues();
-												values.put(PrivacyProvider.COL_UID, data.getUid());
-												values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
-												values.put(PrivacyProvider.COL_METHOD, data.getMethodName());
-												values.put(PrivacyProvider.COL_RESTRICTED, data.getRestricted());
-												values.put(PrivacyProvider.COL_USED, data.getTimeStamp());
-												if (fContext.getContentResolver().update(PrivacyProvider.URI_USAGE,
-														values, null, null) <= 0)
-													Util.log(hook, Log.INFO, "Error updating usage data=" + data);
-												Thread.sleep(500);
-											} catch (Throwable ex) {
-												Util.bug(hook, ex);
-											}
-										}
-									} while (data != null);
-								}
-							});
-						}
+						sendUsageData(hook, context);
 					}
 				} catch (SecurityException ex) {
 					Util.bug(hook, ex);
@@ -391,6 +363,66 @@ public class PrivacyManager {
 			// Failsafe
 			Util.bug(hook, ex);
 			return false;
+		}
+	}
+
+	public static boolean isUsageDataEnabled(int uid) {
+		if (uid != cAndroidUid)
+			return true;
+
+		if (!XActivityManagerService.isSystemReady())
+			return false;
+
+		return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false);
+	}
+
+	public static boolean isExtraUsageDataEnabled(int uid) {
+		if (!isUsageDataEnabled(uid))
+			return false;
+
+		return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExtraUsage, false, false);
+	}
+
+	public static void sendUsageData(final XHook hook, Context context) {
+		int qSize = 0;
+		synchronized (mUsageQueue) {
+			qSize = mUsageQueue.size();
+		}
+		if (qSize > 0) {
+			final Context fContext = context;
+			mExecutor.execute(new Runnable() {
+				public void run() {
+					Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+					UsageData data = null;
+					do {
+						int size = 0;
+						synchronized (mUsageQueue) {
+							if (mUsageQueue.size() > 0) {
+								data = mUsageQueue.keySet().iterator().next();
+								mUsageQueue.remove(data);
+								size = mUsageQueue.size();
+							} else
+								data = null;
+						}
+						if (data != null) {
+							try {
+								Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
+								ContentValues values = new ContentValues();
+								values.put(PrivacyProvider.COL_UID, data.getUid());
+								values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
+								values.put(PrivacyProvider.COL_METHOD, data.getMethodName());
+								values.put(PrivacyProvider.COL_RESTRICTED, data.getRestricted());
+								values.put(PrivacyProvider.COL_USED, data.getTimeStamp());
+								if (fContext.getContentResolver().update(PrivacyProvider.URI_USAGE, values, null, null) <= 0)
+									Util.log(hook, Log.INFO, "Error updating usage data=" + data);
+								Thread.sleep(500);
+							} catch (Throwable ex) {
+								Util.bug(hook, ex);
+							}
+						}
+					} while (data != null);
+				}
+			});
 		}
 	}
 
@@ -546,8 +578,8 @@ public class PrivacyManager {
 
 	public static boolean getSettingBool(XHook hook, Context context, int uid, String settingName,
 			boolean defaultValue, boolean useCache) {
-		return Boolean.parseBoolean(getSetting(hook, context, uid, settingName, Boolean.toString(defaultValue)
-				.toString(), useCache));
+		return Boolean.parseBoolean(getSetting(hook, context, uid, settingName, Boolean.toString(defaultValue),
+				useCache));
 	}
 
 	public static String getSetting(XHook hook, Context context, int uid, String settingName, String defaultValue,
@@ -555,28 +587,27 @@ public class PrivacyManager {
 		if (uid == 0)
 			return getSetting(hook, context, settingName, defaultValue, useCache);
 		else {
-			String setting = getSetting(hook, context, String.format("%s.%d", settingName, uid), defaultValue, useCache);
-			if (setting == null ? setting == defaultValue : setting.equals(defaultValue))
+			String setting = getSetting(hook, context, String.format("%s.%d", settingName, uid), null, useCache);
+			if (setting == null)
 				return getSetting(hook, context, settingName, defaultValue, useCache);
 			else
 				return setting;
 		}
 	}
 
-	private static String getSetting(XHook hook, Context context, String settingName, String defaultValue,
-			boolean useCache) {
+	private static String getSetting(XHook hook, Context context, String name, String defaultValue, boolean useCache) {
 		long start = System.currentTimeMillis();
 
 		// Check cache
 		if (useCache)
 			synchronized (mSettingsCache) {
-				if (mSettingsCache.containsKey(settingName)) {
-					CSetting entry = mSettingsCache.get(settingName);
+				if (mSettingsCache.containsKey(name)) {
+					CSetting entry = mSettingsCache.get(name);
 					if (entry.isExpired())
-						mSettingsCache.remove(settingName);
+						mSettingsCache.remove(name);
 					else {
-						String value = mSettingsCache.get(settingName).getSettingsValue();
-						Util.log(hook, Log.INFO, String.format("get setting %s=%s *", settingName, value));
+						String value = mSettingsCache.get(name).getSettingsValue();
+						Util.log(hook, Log.INFO, String.format("get setting %s=%s (cached)", name, value));
 						return value;
 					}
 				}
@@ -592,7 +623,7 @@ public class PrivacyManager {
 					Util.log(hook, Log.WARN, "contentResolver is null");
 					Util.logStack(hook);
 				} else {
-					Cursor cursor = contentResolver.query(PrivacyProvider.URI_SETTING, null, settingName, null, null);
+					Cursor cursor = contentResolver.query(PrivacyProvider.URI_SETTING, null, name, null, null);
 					if (cursor == null) {
 						// Can happen if memory low
 						Util.log(hook, Log.WARN, "cursor is null");
@@ -618,24 +649,26 @@ public class PrivacyManager {
 
 		// Use fallback
 		if (fallback)
-			value = PrivacyProvider.getSettingFallback(settingName, defaultValue);
+			value = PrivacyProvider.getSettingFallback(name, defaultValue);
 
 		// Default value
-		if (value == null || value.equals(""))
+		if (value == null)
+			value = defaultValue;
+		else if (value.equals("") && defaultValue != null)
 			value = defaultValue;
 
 		// Add to cache
 		synchronized (mSettingsCache) {
-			if (mSettingsCache.containsKey(settingName))
-				mSettingsCache.remove(settingName);
-			mSettingsCache.put(settingName, new CSetting(value));
+			if (mSettingsCache.containsKey(name))
+				mSettingsCache.remove(name);
+			mSettingsCache.put(name, new CSetting(name, value));
 		}
 
 		long ms = System.currentTimeMillis() - start;
 		Util.log(
 				hook,
 				Log.INFO,
-				String.format("get setting %s=%s%s%s", settingName, value, (fallback ? " #" : ""), (ms > 1 ? " " + ms
+				String.format("get setting %s=%s%s%s", name, value, (fallback ? " (file)" : ""), (ms > 1 ? " " + ms
 						+ " ms" : "")));
 		return value;
 	}
@@ -701,6 +734,10 @@ public class PrivacyManager {
 			return sb.toString();
 		}
 
+		// cid
+		if (name.equals("%cid"))
+			return cDeface;
+
 		// IMEI
 		if (name.equals("getDeviceId") || name.equals("%imei")) {
 			String value = getSetting(null, null, uid, cSettingImei, "000000000000000", true);
@@ -754,17 +791,15 @@ public class PrivacyManager {
 		if (name.equals("getSimSerialNumber"))
 			return getSetting(null, null, uid, cSettingIccId, null, true);
 
-		if (name.equals("getSubscriberId")) // IMSI for a GSM phone
-			return getSetting(null, null, uid, cSettingSubscriber, null, true);
+		if (name.equals("getSubscriberId")) { // IMSI for a GSM phone
+			String value = getSetting(null, null, uid, cSettingSubscriber, null, true);
+			return (cValueRandom.equals(value) ? getRandomProp("SubscriberId") : value);
+		}
 
-		if (name.equals("SSID"))
-			return ""; // Hidden network
-		if (name.equals("WifiSsid.octets")) {
-			int size = 8;
-			ByteArrayOutputStream octets = new ByteArrayOutputStream(size);
-			for (int i = 0; i < size; i++)
-				octets.write(0);
-			return octets; // Hidden network
+		if (name.equals("SSID")) {
+			// Default hidden network
+			String value = getSetting(null, null, uid, cSettingSSID, "", true);
+			return (cValueRandom.equals(value) ? getRandomProp("SSID") : value);
 		}
 
 		// Google services framework ID
@@ -779,6 +814,14 @@ public class PrivacyManager {
 				Util.bug(null, ex);
 			}
 			return gsfid;
+		}
+
+		// Advertisement ID
+		if (name.equals("AdvertisingId")) {
+			String adid = getSetting(null, null, uid, cSettingAdId, "DEFACE00-0000-0000-0000-000000000000", true);
+			if (cValueRandom.equals(adid))
+				adid = getRandomProp(name);
+			return adid;
 		}
 
 		if (name.equals("InetAddress")) {
@@ -827,28 +870,38 @@ public class PrivacyManager {
 			return getSetting(null, null, uid, cSettingUa,
 					"Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9", true);
 
+		// InputDevice
+		if (name.equals("DeviceDescriptor"))
+			return cDeface;
+
 		// Fallback
 		Util.log(null, Log.WARN, "Fallback value name=" + name);
 		return cDeface;
 	}
 
 	public static Location getDefacedLocation(int uid, Location location) {
-		String sLat = getSetting(null, null, uid, cSettingLatitude, "", true);
-		String sLon = getSetting(null, null, uid, cSettingLongitude, "", true);
+		String sLat = getSetting(null, null, uid, cSettingLatitude, null, true);
+		String sLon = getSetting(null, null, uid, cSettingLongitude, null, true);
+
 		if (cValueRandom.equals(sLat))
 			sLat = getRandomProp("LAT");
 		if (cValueRandom.equals(sLon))
 			sLon = getRandomProp("LON");
-		if (sLat.equals("") || sLon.equals("")) {
-			// Christmas Island
+
+		// 1 degree ~ 111111 m
+		// 1 m ~ 0,000009 degrees
+		// Christmas Island ~ -10.5 / 105.667
+
+		if (sLat == null || "".equals(sLat))
 			location.setLatitude(-10.5);
-			location.setLongitude(105.667);
-		} else {
-			// 1 degree ~ 111111 m
-			// 1 m ~ 0,000009 degrees = 9e-6
+		else
 			location.setLatitude(Float.parseFloat(sLat) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
+
+		if (sLon == null || "".equals(sLon))
+			location.setLongitude(105.667);
+		else
 			location.setLongitude(Float.parseFloat(sLon) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
-		}
+
 		return location;
 	}
 
@@ -910,6 +963,9 @@ public class PrivacyManager {
 			return Long.toHexString(v).toUpperCase();
 		}
 
+		if (name.equals("AdvertisingId"))
+			return UUID.randomUUID().toString().toUpperCase();
+
 		if (name.equals("LAT")) {
 			double d = r.nextDouble() * 180 - 90;
 			d = Math.rint(d * 1e7) / 1e7;
@@ -920,6 +976,23 @@ public class PrivacyManager {
 			double d = r.nextDouble() * 360 - 180;
 			d = Math.rint(d * 1e7) / 1e7;
 			return Double.toString(d);
+		}
+
+		if (name.equals("SubscriberId")) {
+			String subscriber = "001";
+			while (subscriber.length() < 15)
+				subscriber += Character.forDigit(r.nextInt(10), 10);
+			return subscriber;
+		}
+
+		if (name.equals("SSID")) {
+			String ssid = "";
+			while (ssid.length() < 6)
+				ssid += (char) (r.nextInt(26) + 'A');
+
+			ssid += Character.forDigit(r.nextInt(10), 10);
+			ssid += Character.forDigit(r.nextInt(10), 10);
+			return ssid;
 		}
 
 		return "";
@@ -1016,14 +1089,22 @@ public class PrivacyManager {
 
 	private static class CSetting {
 		private long mTimestamp;
+		private String mName;
 		private String mValue;
 
-		public CSetting(String settingValue) {
+		public CSetting(String name, String value) {
 			mTimestamp = new Date().getTime();
-			mValue = settingValue;
+			mName = name;
+			mValue = value;
 		}
 
 		public boolean isExpired() {
+			if (mName.equals(PrivacyManager.cSettingVersion))
+				return false;
+			if (mName.equals(PrivacyManager.cSettingAndroidUsage))
+				return false;
+			if (mName.equals(PrivacyManager.cSettingExtraUsage))
+				return false;
 			return (mTimestamp + cSettingCacheTimeoutMs < new Date().getTime());
 		}
 

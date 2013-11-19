@@ -119,7 +119,6 @@ public class XActivity extends XHook {
 							param.setResult(true);
 						else
 							param.setResult(null);
-						notifyUser(mActionName);
 						return;
 					}
 				}

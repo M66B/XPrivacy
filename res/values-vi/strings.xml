@@ -1,49 +1,51 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed framework phiên bản %d+ chưa được cài đặt</string>
+    <string name="app_notxposed" formatted="false">Chưa cài Xposed framework phiên bản %d+</string>
     <string name="app_notenabled">XPrivacy chưa được kích hoạt trong Xposed installer</string>
     <string name="app_wrongandroid">Chỉ hỗ trợ Android 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy phiên bản: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework phiên bản: %d</string>
-    <string name="app_copyright">Bản quyền \u00A9 2013 bởi M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Bản quyền \u00A9 2013 thuộc về M. Bokhorst (M66B)</string>
     <string name="menu_usage">Sử dụng</string>
     <string name="menu_refresh">Làm mới</string>
-    <string name="menu_settings">Tùy chỉnh</string>
-    <string name="menu_template">Thiết lập hạn chế định sẵn (dành cho ứng dụng cài mới)</string>
+    <string name="menu_settings">Thiết lập</string>
+    <string name="menu_template">Thiết lập mẫu (cho ứng dụng mới)</string>
     <string name="menu_report">Báo cáo lỗi</string>
     <string name="menu_export">Xuất</string>
     <string name="menu_import">Nhập</string>
-    <string name="menu_submit">Gửi thông tin thiết lập</string>
+    <string name="menu_submit">Áp dung thiết lập</string>
     <string name="menu_fetch">Lấy thông tin thiết lập</string>
     <string name="menu_theme">Đổi giao diện</string>
     <string name="menu_pro">Phiên bản Pro</string>
-    <string name="menu_about">Về XPrivacy</string>
+    <string name="menu_about">Giới thiệu</string>
     <string name="menu_help">Trợ giúp</string>
     <string name="menu_all">Tất cả</string>
-    <string name="menu_apply">Áp dụng mẫu hạn chế định sẵn</string>
-    <string name="menu_clear">Xóa</string>
-    <string name="menu_app_launch">Chạy</string>
-    <string name="menu_app_settings">Tùy chỉnh</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_apply">Áp dụng thiết lập mẫu</string>
+    <string name="menu_clear">Xóa thiết lập</string>
+    <string name="menu_app_launch">Mở ứng dụng</string>
+    <string name="menu_app_settings">Chi tiết ứng dụng</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_accounts">Chọn một tài khoản</string>
-    <string name="menu_contacts">Chọn một danh bạ</string>
+    <string name="menu_accounts">Chọn tài khoản cho phép</string>
+    <string name="menu_applications">Select applications to allow</string>
+    <string name="menu_contacts">Chọn liên lạc cho phép</string>
     <string name="msg_new">Mới</string>
     <string name="msg_update">Cập nhật</string>
-    <string name="msg_restricted" formatted="false">%s hạn chế bởi XPrivacy</string>
     <string name="msg_licensed" formatted="false">Bản quyền: %s</string>
     <string name="msg_loading">Đang tải</string>
-    <string name="msg_edit">Chọn biểu tượng của ứng dụng để thiết lập tất cả hạn chế</string>
-    <string name="msg_sure">Bạn có chắc?</string>
+    <string name="msg_edit">Chạm vào biểu tượng ứng dụng để thay đổi các thiết lập</string>
+    <string name="msg_sure">Bạn có chắc không?</string>
     <string name="msg_done">Xong</string>
     <string name="msg_reboot">Yêu cầu khởi động lại thiết bị</string>
-    <string name="msg_random">Tạo thông tin ngẫu nhiên</string>
-    <string name="msg_random_boot">Tự động tạo thông tin ngẫu nhiên mỗi lần khởi động thiết bị</string>
-    <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ chạy hoàn toàn ổn định và mượt mà trên tất cả thiết bị cũng như tất cả ứng dụng.
-\n\nBạn sẽ chịu trách nhiệm về những rủi ro (nếu có).</b>\n\nXem thêm về bản quyền:</string>
-    <string name="restrict_accounts">Tài khoản (Google, Facebook, .v.v.)</string>
+    <string name="msg_random">Ngẫu nhiên</string>
+    <string name="msg_random_boot">Tạo thông tin ngẫu nhiên khi khởi động</string>
+    <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ hoạt động trơn tru trên mọi thiết bị cũng như với mọi ứng dụng.
+\n\nBạn tự chịu trách nhiệm khi sử dụng ứng dụng này.</b>\n\nXem thêm về bản quyền:</string>
+    <string name="restrict_accounts">Tài khoản (Google, Facebook, v.v.)</string>
     <string name="restrict_browser">Trình duyệt (bookmarks/history)</string>
     <string name="restrict_calendar">Lịch</string>
-    <string name="restrict_calling">Cuộc gọi (phone, SMS, MMS)</string>
+    <string name="restrict_calling">Gọi điện (điện thoại, SMS, MMS)</string>
     <string name="restrict_clipboard">Clipboard</string>
     <string name="restrict_contacts">Danh bạ</string>
     <string name="restrict_dictionary">Từ điển (người dùng)</string>
@@ -55,13 +57,14 @@
     <string name="restrict_messages">Tin nhắn (SMS, MMS)</string>
     <string name="restrict_network">Mạng (địa chỉ mạng)</string>
     <string name="restrict_notifications">Thông báo</string>
-    <string name="restrict_phone">Điện thoại (ID, số liên lạc, cuộc gọi)</string>
-    <string name="restrict_storage">Lưu trữ (media, thẻ nhớ)</string>
+    <string name="restrict_phone">Điện thoại (ID, số điện thoại, cuộc gọi)</string>
+    <string name="restrict_sensors">Cảm biến</string>
+    <string name="restrict_storage">Lưu trữ (media, thẻ SD)</string>
     <string name="restrict_shell">Shell (câu lệnh, superuser)</string>
     <string name="restrict_system">Hệ thống (các ứng dụng)</string>
     <string name="restrict_view">Mở trình duyệt</string>
     <string name="title_category">Danh mục:</string>
-    <string name="title_restrict">Chọn để hạn chế:</string>
+    <string name="title_restrict">Đánh dấu để hạn chế:</string>
     <string name="title_nofilter">Không lọc</string>
 
     <plurals name="title_filters">
@@ -69,12 +72,13 @@
         <item quantity="other">%d bộ lọc có hiệu lực</item>
     </plurals>
 
-    <string name="title_fused">Lọc các ứng dụng truy cập dữ liệu</string>
-    <string name="title_finternet">Lọc các ứng dụng truy cập internet</string>
+    <string name="title_fused">Lọc theo truy cập dữ liệu</string>
+    <string name="title_finternet">Lọc theo truy cập internet</string>
     <string name="title_fpermission">Lọc theo quyền</string>
     <string name="title_frestricted">Lọc các ứng dụng đã thiết lập hạn chế</string>
     <string name="title_fuser">Lọc các ứng dụng người dùng</string>
     <string name="title_fsystem">Lọc các ứng dụng hệ thống</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>
@@ -82,11 +86,16 @@
     <string name="settings_ip">Địa chỉ IP</string>
     <string name="settings_phone">Số điện thoại</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Nước</string>
     <string name="settings_operator">Nhà mạng</string>
     <string name="settings_subscriber">ID người đăng kí</string>
-    <string name="settings_ua">Nhận dạng trình duyệt (User agent)</string>
-    <string name="settings_log">Lưu thông tin gỡ rối (yêu cầu khởi động lại)</string>
+    <string name="settings_ua">Nhận dạng trình duyệt</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Mức sử dụng hệ thống (yêu cầu khởi động lại)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
+    <string name="settings_log">Nhật ký lỗi (yêu cầu khởi động lại)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Ứng dụng</string>
     <string name="help_internet">có quyền truy cập mạng</string>
     <string name="help_granted">có các quyền của hệ điều hành</string>

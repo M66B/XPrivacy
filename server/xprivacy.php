@@ -172,19 +172,21 @@
 			</div>
 
 			<div class="container">
+<?php		if (!empty($package_name)) { ?>
 				<p><a href="#" id="details">Show details</a></p>
+<?php		} ?>
 				<table class="table table-hover table-condensed">
 					<thead>
 						<tr>
 <?php					if (empty($package_name)) { ?>
-							<th style="text-align: center;">Votes</th>
+							<!--th style="text-align: center;">Votes</th-->
 							<th>Application</th>
 							<th>Package</th>
-							<th style="display: none;" class="details">Versions</th>
+							<!--th style="display: none;" class="details">Versions</th>
 							<th style="display: none;" class="details">Last update (UTC)</th>
 							<th style="display: none;" class="details">Last access (UTC)</th>
 							<th style="display: none; text-align: center;" class="details">Max. updates</th>
-							<th style="display: none; text-align: center;" class="details">Fetches</th>
+							<th style="display: none; text-align: center;" class="details">Fetches</th-->
 <?php					} else { ?>
 							<th style="text-align: center;">Votes<br />deny/allow</th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
@@ -214,37 +216,40 @@
 	else {
 		if (empty($package_name)) {
 			// Get application list
-			$sql = "SELECT application_name, package_name,";
-			$sql .= " COUNT(DISTINCT android_id_md5) AS count";
-			$sql .= ", COUNT(DISTINCT package_version) AS versions";
-			$sql .= ", MAX(modified) AS modified";
-			$sql .= ", MAX(accessed) AS accessed";
-			$sql .= ", MAX(updates) AS updates";
-			$sql .= ", MAX(fetches) AS fetches";
+			//$sql = "SELECT application_name, package_name,";
+			//$sql .= " COUNT(DISTINCT android_id_md5) AS count";
+			//$sql .= ", COUNT(DISTINCT package_version) AS versions";
+			//$sql .= ", MAX(modified) AS modified";
+			//$sql .= ", MAX(accessed) AS accessed";
+			//$sql .= ", MAX(updates) AS updates";
+			//$sql .= ", MAX(fetches) AS fetches";
+			//$sql .= " FROM xprivacy";
+			//$sql .= " WHERE method = ''";
+			//$sql .= " GROUP BY package_name";
+			//$sql .= " ORDER BY application_name";
+			$sql = "SELECT DISTINCT application_name, package_name";
 			$sql .= " FROM xprivacy";
-			$sql .= " WHERE method = ''";
-			$sql .= " GROUP BY package_name";
 			$sql .= " ORDER BY application_name";
 			$result = $db->query($sql);
 			if ($result) {
 				while (($row = $result->fetch_object())) {
 					$count++;
-					$votes += $row->count;
-					$fetches += $row->fetches;
-					$name = (empty($row->application_name) ? '???' : $row->application_name);
+					//$votes += $row->count;
+					//$fetches += $row->fetches;
+					$name = (empty($row->application_name) ? '---' : $row->application_name);
 					echo '<tr>';
-					echo '<td style="text-align: center;">' . $row->count . '</td>';
+					//echo '<td style="text-align: center;">' . $row->count . '</td>';
 
 					echo '<td><a href="?application_name=' . urlencode($name);
 					echo '&amp;package_name=' . urlencode($row->package_name) . '">';
 					echo htmlentities($name, ENT_COMPAT, 'UTF-8') . '</a></td>';
 
 					echo '<td>' . htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</td>';
-					echo '<td style="display: none; text-align: center;" class="details">' . htmlentities($row->versions, ENT_COMPAT, 'UTF-8') . '</td>';
-					echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
-					echo '<td style="display: none;" class="details">' . $row->accessed . '</td>';
-					echo '<td style="display: none; text-align: center;" class="details">' . ($row->updates > 1 ? $row->updates : '-'). '</td>';
-					echo '<td style="display: none; text-align: center;" class="details">' . ($row->fetches > 0 ? $row->fetches : '-') . '</td>';
+					//echo '<td style="display: none; text-align: center;" class="details">' . htmlentities($row->versions, ENT_COMPAT, 'UTF-8') . '</td>';
+					//echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
+					//echo '<td style="display: none;" class="details">' . $row->accessed . '</td>';
+					//echo '<td style="display: none; text-align: center;" class="details">' . ($row->updates > 1 ? $row->updates : '-'). '</td>';
+					//echo '<td style="display: none; text-align: center;" class="details">' . ($row->fetches > 0 ? $row->fetches : '-') . '</td>';
 					echo '</tr>' . PHP_EOL;
 				}
 				$result->close();
@@ -307,53 +312,53 @@
 		}
 
 		// Get number of users
-		$users = 0;
-		if (empty($package_name)) {
-			$sql = "SELECT COUNT(DISTINCT android_id_md5) AS users";
-			$sql .= " FROM xprivacy";
-			$sql .= " WHERE method = ''";
-			$result = $db->query($sql);
-			if ($result) {
-				if (($row = $result->fetch_object()))
-					$users = $row->users;
-				$result->close();
-			}
-			else
-				echo $db->error;
-		}
-		else {
-			$sql = "SELECT COUNT(DISTINCT android_id_md5) AS users";
-			$sql .= " FROM xprivacy";
-			$sql .= " WHERE method = ''";
-			$sql .= " AND package_name = '" . $db->real_escape_string($package_name) . "'";
-			$result = $db->query($sql);
-			if ($result) {
-				if (($row = $result->fetch_object()))
-					$users = $row->users;
-				$result->close();
-			}
-			else
-				echo $db->error;
-		}
+		//$users = 0;
+		//if (empty($package_name)) {
+		//	$sql = "SELECT COUNT(DISTINCT android_id_md5) AS users";
+		//	$sql .= " FROM xprivacy";
+		//	$sql .= " WHERE method = ''";
+		//	$result = $db->query($sql);
+		//	if ($result) {
+		//		if (($row = $result->fetch_object()))
+		//			$users = $row->users;
+		//		$result->close();
+		//	}
+		//	else
+		//		echo $db->error;
+		//}
+		//else {
+		//	$sql = "SELECT COUNT(DISTINCT android_id_md5) AS users";
+		//	$sql .= " FROM xprivacy";
+		//	$sql .= " WHERE method = ''";
+		//	$sql .= " AND package_name = '" . $db->real_escape_string($package_name) . "'";
+		//	$result = $db->query($sql);
+		//	if ($result) {
+		//		if (($row = $result->fetch_object()))
+		//			$users = $row->users;
+		//		$result->close();
+		//	}
+		//	else
+		//		echo $db->error;
+		//}
 
 		// Get number of records
-		if (empty($package_name)) {
-			$sql = "SELECT COUNT(*) AS count";
-			$sql .= ", MIN(modified) AS first";
-			$sql .= ", MAX(modified) AS last";
-			$sql .= " FROM xprivacy";
-			$result = $db->query($sql);
-			if ($result) {
-				if (($row = $result->fetch_object())) {
-					$records = $row->count;
-					$first = $row->first;
-					$last = $row->last;
-				}
-				$result->close();
-			}
-			else
-				echo $db->error;
-		}
+		//if (empty($package_name)) {
+		//	$sql = "SELECT COUNT(*) AS count";
+		//	$sql .= ", MIN(modified) AS first";
+		//	$sql .= ", MAX(modified) AS last";
+		//	$sql .= " FROM xprivacy";
+		//	$result = $db->query($sql);
+		//	if ($result) {
+		//		if (($row = $result->fetch_object())) {
+		//			$records = $row->count;
+		//			$first = $row->first;
+		//			$last = $row->last;
+		//		}
+		//		$result->close();
+		//	}
+		//	else
+		//		echo $db->error;
+		//}
 
 		// Close database connection
 		$db->close();
@@ -364,23 +369,24 @@
 				<p class="text-muted">
 <?php
 				$elapse = round(microtime(true) - $starttime, 3);
-				if (empty($package_name)) {
-					$appvote = round($votes / $count, 2);
-					$appfetch = round($fetches / $count, 2);
-					$uservote = round($votes / $users, 2);
-					echo $appvote . ' votes/application';
-					echo ', ' . $appfetch . ' fetches/application';
-					echo ', ' . $uservote . ' votes/user';
-					echo '<br />' . $records . ' records';
-					echo ', ' . $votes . ' votes';
-					echo ', ' . $fetches . ' fetches';
-					echo ', ' . $count . ' applications';
-					echo ', ' . $users . ' users';
-					echo ', ' . $elapse . ' seconds';
-					echo '<br />First entry: ' . $first . ' UTC';
-					echo '<br />Last update: ' . $last . ' UTC';
-				} else
-					echo $count . ' restrictions, ' . $votes . ' votes, ' . $users . ' users, ' . $elapse . ' seconds';
+				//if (empty($package_name)) {
+				//	$appvote = round($votes / $count, 2);
+				//	$appfetch = round($fetches / $count, 2);
+				//	$uservote = round($votes / $users, 2);
+				//	echo $appvote . ' votes/application';
+				//	echo ', ' . $appfetch . ' fetches/application';
+				//	echo ', ' . $uservote . ' votes/user';
+				//	echo '<br />' . $records . ' records';
+				//	echo ', ' . $votes . ' votes';
+				//	echo ', ' . $fetches . ' fetches';
+				//	echo ', ' . $count . ' applications';
+				//	echo ', ' . $users . ' users';
+				//	echo ', ' . $elapse . ' seconds';
+				//	echo '<br />First entry: ' . $first . ' UTC';
+				//	echo '<br />Last update: ' . $last . ' UTC';
+				//} else
+				//	echo $count . ' restrictions, ' . $votes . ' votes, ' . $users . ' users, ' . $elapse . ' seconds';
+				echo $count . ' entries ' . $elapse . ' seconds';
 ?>
 				</p>
 			</div>

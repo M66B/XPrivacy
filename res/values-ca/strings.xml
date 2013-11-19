@@ -20,16 +20,18 @@
     <string name="menu_about">Quant a</string>
     <string name="menu_help">Ajuda</string>
     <string name="menu_all">Totes</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Aplica plantilla</string>
     <string name="menu_clear">Neteja</string>
     <string name="menu_app_launch">Executa</string>
     <string name="menu_app_settings">Configuració</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Selecciona comptes a permetre</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Selecciona contactes a permetre</string>
     <string name="msg_new">Nou</string>
     <string name="msg_update">Actualitza</string>
-    <string name="msg_restricted" formatted="false">%s restringit per XPrivacy</string>
     <string name="msg_licensed" formatted="false">Llicenciat a: %s</string>
     <string name="msg_loading">Carregant</string>
     <string name="msg_edit">Prem la icona de l\'aplicació per a editar tots els permisos</string>
@@ -55,6 +57,7 @@
     <string name="restrict_network">Xarxa (adreces)</string>
     <string name="restrict_notifications">Notificacions</string>
     <string name="restrict_phone">Telèfon (ID, números, trucades)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Emmagatzematge (mitjans, targeta SD)</string>
     <string name="restrict_shell">Intèrpret d\'ordres (ordres, superusuari)</string>
     <string name="restrict_system">Sistema (aplicacions instal·lades)</string>
@@ -74,6 +77,7 @@
     <string name="title_frestricted">Filtra per restringit</string>
     <string name="title_fuser">Filtra per aplicacions d\'usuari</string>
     <string name="title_fsystem">Filtra per aplicacions de sistema</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Número de sèrie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
@@ -81,11 +85,16 @@
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">Número de telèfon</string>
     <string name="settings_id">ID d\'Android</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">País</string>
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">ID de subscriptor</string>
     <string name="settings_ua">Agent d\'usuari</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Registre de depuració (cal reiniciar)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Aplicació</string>
     <string name="help_internet">té permís d\'Internet</string>
     <string name="help_granted">té permisos d\'Android</string>

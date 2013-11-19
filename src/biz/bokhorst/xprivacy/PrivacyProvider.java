@@ -32,13 +32,14 @@ import android.util.Log;
 @SuppressWarnings("deprecation")
 @SuppressLint({ "DefaultLocale", "WorldReadableFiles" })
 public class PrivacyProvider extends ContentProvider {
-	public static final String AUTHORITY = "biz.bokhorst.xprivacy.provider";
-	public static final String PREF_RESTRICTION = AUTHORITY;
-	public static final String PREF_USAGE = AUTHORITY + ".usage";
-	public static final String PREF_SETTINGS = AUTHORITY + ".settings";
-	public static final String PATH_RESTRICTION = "restriction";
-	public static final String PATH_USAGE = "usage";
-	public static final String PATH_SETTINGS = "settings";
+	private static final String AUTHORITY = "biz.bokhorst.xprivacy.provider";
+	private static final String PREF_RESTRICTION = AUTHORITY;
+	private static final String PREF_USAGE = AUTHORITY + ".usage";
+	private static final String PREF_SETTINGS = AUTHORITY + ".settings";
+	private static final String PATH_RESTRICTION = "restriction";
+	private static final String PATH_USAGE = "usage";
+	private static final String PATH_SETTINGS = "settings";
+
 	public static final Uri URI_RESTRICTION = Uri.parse("content://" + AUTHORITY + "/" + PATH_RESTRICTION);
 	public static final Uri URI_USAGE = Uri.parse("content://" + AUTHORITY + "/" + PATH_USAGE);
 	public static final Uri URI_SETTING = Uri.parse("content://" + AUTHORITY + "/" + PATH_SETTINGS);
@@ -340,7 +341,10 @@ public class PrivacyProvider extends ContentProvider {
 	private void updateSetting(String name, String value) {
 		SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
 		SharedPreferences.Editor editor = prefs.edit();
-		editor.putString(getSettingPref(name), value);
+		if (value == null)
+			editor.remove(getSettingPref(name));
+		else
+			editor.putString(getSettingPref(name), value);
 		editor.apply();
 		setPrefFileReadable(PREF_SETTINGS);
 	}
@@ -449,7 +453,7 @@ public class PrivacyProvider extends ContentProvider {
 		}
 	}
 
-	public static String getSettingFallback(String settingName, String defaultValue) {
+	public static String getSettingFallback(String name, String defaultValue) {
 		try {
 			long now = new Date().getTime();
 			File file = new File(getPrefFileName(PREF_SETTINGS));
@@ -473,7 +477,7 @@ public class PrivacyProvider extends ContentProvider {
 				}
 			}
 
-			return mFallbackSettings.getString(getSettingPref(settingName), defaultValue);
+			return mFallbackSettings.getString(getSettingPref(name), defaultValue);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 			return defaultValue;
@@ -599,8 +603,14 @@ public class PrivacyProvider extends ContentProvider {
 				if (PrivacyManager.cValueRandomLegacy.equals(value))
 					editor.putString(key, PrivacyManager.cValueRandom);
 			} catch (Throwable ex) {
-
 			}
+
+		if (!Boolean.parseBoolean(prefs.getString(getSettingPref(PrivacyManager.cSettingExpert),
+				Boolean.toString(false)))) {
+			editor.putString(getSettingPref(PrivacyManager.cSettingAndroidUsage), Boolean.toString(false));
+			editor.putString(getSettingPref(PrivacyManager.cSettingExtraUsage), Boolean.toString(false));
+		}
+
 		editor.apply();
 		setPrefFileReadable(PREF_SETTINGS);
 	}

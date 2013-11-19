@@ -3,7 +3,113 @@ Changelog
 
 **Next release**
 
+* Move selecting accounts to allow to free version
+* Move settings Android usage data / extra usage data to expert mode
+* Add application name to title of application details view
+* Removed version warning for KitKat
+* Updated Chinese translation
+* Updated Lithuanian translation
+
+**Version 1.10.18 TEST**
+
+* Fixed opening wrong settings from notification (again) ([issue](https://github.com/M66B/XPrivacy/issues/777))
+* Draw border around application icon in application details view
+* Option to enable extra usage data ([issue](https://github.com/M66B/XPrivacy/issues/783)) ([issue](https://github.com/M66B/XPrivacy/issues/785)) ([issue](https://github.com/M66B/XPrivacy/issues/786))
 * Updated Arabic translation
+* Updated Chinese translation
+* Updated Slovak translation
+
+**Version 1.10.16 TEST**
+
+* Compatibility with Android 4.4 KitKat ([issue](https://github.com/M66B/XPrivacy/issues/733))
+* Draw border around application icons in main list
+* Updated Arabic translation
+* Updated Chinese translation
+* Updated German translation
+
+**Version 1.10.15 TEST**
+
+* Fixed empty/crashing template
+* Restrict input device descriptor ([issue](https://github.com/M66B/XPrivacy/issues/768))
+
+**Version 1.10.14 TEST**
+
+* Filter on permissions filters functions too ([issue](https://github.com/M66B/XPrivacy/issues/695))
+* Select applications to allow ([issue](https://github.com/M66B/XPrivacy/issues/686))
+* Require [Pro license](http://www.faircode.eu/xprivacy/) to allow individual accounts, applications and contacts
+* Build for Android 4.4 KitKat ([issue](https://github.com/M66B/XPrivacy/issues/733))
+* Added expert mode (disables dangerous restrictions) ([issue](https://github.com/M66B/XPrivacy/issues/716)) ([issue](https://github.com/M66B/XPrivacy/issues/724))
+* Updated Chinese translation
+* Updated French translation
+* Updated Lithuanian translation
+* Updated Polish language
+
+**Version 1.10.13 BETA**
+
+* Fixed crash on empty latitude/longitude ([issue](https://github.com/M66B/XPrivacy/issues/755))
+* Option to negate filter on restrictions ([issue](https://github.com/M66B/XPrivacy/issues/754))
+* Option to make XPrivacy device administrator (to prevent unwanted uninstall)
+* Updated Chinese translation
+* Updated Lithuanian translation
+
+**Version 1.10.12 BETA**
+
+* Fixed *java.lang.NoClassDefFoundError: de.robv.android.xposed.XposedHelpers*
+
+**Version 1.10.11 BETA**
+
+* Fixed rare null pointer exception ([issue](https://github.com/M66B/XPrivacy/issues/739))
+* Fixed flickering with black theme
+* Fixed setting global and randomize on boot settings
+* Fixed width settings dialog
+* Require Android 4.0.3 (minimum for Xposed)
+* Added settings for Advertisement ID (including randomization) ([issue](https://github.com/M66B/XPrivacy/issues/738))
+* Added settings for SSID (including randomization) ([issue](https://github.com/M66B/XPrivacy/issues/652))
+* Added setting to disable update notification (per application) ([issue](https://github.com/M66B/XPrivacy/issues/635))
+* Not filtering on restricted will filter on not restricted ([issue](https://github.com/M66B/XPrivacy/issues/682))
+* Option to randomize subscriber ID (IMSI) ([issue](https://github.com/M66B/XPrivacy/issues/690))
+* Added application icons to usage view ([issue](https://github.com/M66B/XPrivacy/issues/693))
+* Added traditional Chinese translation
+* Updated German translation
+* Updated Vietnamese translation
+
+**Version 1.10.8 TEST**
+
+* Fixed import of filter settings
+* Fixed up navigation (again) ([issue](https://github.com/M66B/XPrivacy/issues/681))
+
+**Version 1.10.7 TEST**
+
+* Mark categories dangerous in template
+* Permanently cache XPrivacy version and Android usage settings
+* Do not display number of packages in progress dialog
+* Show location for license file in about dialog
+* Fixed up navigation (again) ([issue](https://github.com/M66B/XPrivacy/issues/681))
+* Auto import pro license file ([issue](https://github.com/M66B/XPrivacy/issues/703))
+* Allow application specific disable of globally set randomization ([issue](https://github.com/M66B/XPrivacy/issues/706))
+* Compatibility with *MultiSimTelephonyManager* ([issue](https://github.com/M66B/XPrivacy/issues/732))
+* Restrict */sys/block/.../cid* and */sys/class/.../cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
+* Restrict system properties ending with *cid* ([issue](https://github.com/M66B/XPrivacy/issues/734))
+* Updated Slovak translation
+
+**Version 1.10.5 TEST**
+
+* Restrict access to sensors ([issue](https://github.com/M66B/XPrivacy/issues/723))
+* Restrict Google advertising ID ([issue](https://github.com/M66B/XPrivacy/issues/731))
+* Send more usage data and faster
+
+**Version 1.10.4 BETA**
+
+* Added setting to enable Android usage data (default disabled) ([issue](https://github.com/M66B/XPrivacy/issues/694))
+* Randomize settings at boot in separate thread ([issue](https://github.com/M66B/XPrivacy/issues/700))
+* Added dangerous restrictions to template ([issue](https://github.com/M66B/XPrivacy/issues/716), [issue](https://github.com/M66B/XPrivacy/issues/724))
+* Fixed opening correct application settings from notification ([issue](https://github.com/M66B/XPrivacy/issues/717))
+* Do not use current application context ([issue](https://github.com/M66B/XPrivacy/issues/722))
+* Handle all exceptions while processing package events ([issue](https://github.com/M66B/XPrivacy/issues/722))
+* Require Xposed 2.3.1
+* Updated Arabic translation
+* Updated German translation
+* Updated Italian translation
 
 **Version 1.10 stable**
 
@@ -270,7 +376,7 @@ Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https:
 
 **Version 1.9.2 BETA!**
 
-* Fix fetching function exceptions ([issue](https://github.com/M66B/XPrivacy/issues/515))
+* Fixed fetching function exceptions ([issue](https://github.com/M66B/XPrivacy/issues/515))
 * Updated Czech translation
 * Updated French translation
 * Updated German translation
@@ -512,7 +618,7 @@ Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https:
 **Version 1.7.18 BETA!**
 
 * Option to show usage data from the application details view
-* Fix usage data ([issue](https://github.com/M66B/XPrivacy/issues/364), [issue](https://github.com/M66B/XPrivacy/issues/365))
+* Fixed usage data ([issue](https://github.com/M66B/XPrivacy/issues/364), [issue](https://github.com/M66B/XPrivacy/issues/365))
 * Revert 1.7.16 change
 
 **Version 1.7.17 BETA!**

@@ -58,21 +58,22 @@ public class XApplicationPackageManager extends XHook {
 		// Do nothing
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.getInstalledApplications) {
 			if (param.getResult() != null && isRestricted(param))
-				param.setResult(new ArrayList<ApplicationInfo>());
+				param.setResult(filterApplicationInfo((List<ApplicationInfo>) param.getResult()));
 		} else if (mMethod == Methods.getInstalledPackages || mMethod == Methods.getPreferredPackages) {
 			if (param.getResult() != null && isRestricted(param))
-				param.setResult(new ArrayList<PackageInfo>());
+				param.setResult(filterPackageInfo((List<PackageInfo>) param.getResult()));
 		} else if (mMethod == Methods.queryBroadcastReceivers || mMethod == Methods.queryIntentActivities
 				|| mMethod == Methods.queryIntentActivityOptions || mMethod == Methods.queryIntentServices) {
 			if (param.getResult() != null && isRestricted(param))
-				param.setResult(new ArrayList<ResolveInfo>());
+				param.setResult(filterResolveInfo((List<ResolveInfo>) param.getResult()));
 		} else if (mMethod == Methods.queryContentProviders) {
 			if (param.getResult() != null && isRestricted(param))
-				param.setResult(new ArrayList<ProviderInfo>());
+				param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
@@ -88,5 +89,42 @@ public class XApplicationPackageManager extends XHook {
 		}
 		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
+	}
+
+	private List<ApplicationInfo> filterApplicationInfo(List<ApplicationInfo> original) {
+		ArrayList<ApplicationInfo> result = new ArrayList<ApplicationInfo>();
+		for (ApplicationInfo appInfo : original)
+			if (isPackageAllowed(appInfo.packageName))
+				result.add(appInfo);
+		return result;
+	}
+
+	private List<PackageInfo> filterPackageInfo(List<PackageInfo> original) {
+		ArrayList<PackageInfo> result = new ArrayList<PackageInfo>();
+		for (PackageInfo appInfo : original)
+			if (isPackageAllowed(appInfo.packageName))
+				result.add(appInfo);
+		return result;
+	}
+
+	private List<ProviderInfo> filterProviderInfo(List<ProviderInfo> original) {
+		ArrayList<ProviderInfo> result = new ArrayList<ProviderInfo>();
+		for (ProviderInfo appInfo : original)
+			if (isPackageAllowed(appInfo.packageName))
+				result.add(appInfo);
+		return result;
+	}
+
+	private List<ResolveInfo> filterResolveInfo(List<ResolveInfo> original) {
+		ArrayList<ResolveInfo> result = new ArrayList<ResolveInfo>();
+		for (ResolveInfo appInfo : original)
+			if (isPackageAllowed(appInfo.resolvePackageName))
+				result.add(appInfo);
+		return result;
+	}
+
+	public static boolean isPackageAllowed(String packageName) {
+		return PrivacyManager.getSettingBool(null, null, 0,
+				String.format("Application.%d.%s", Binder.getCallingUid(), packageName), false, true);
 	}
 }

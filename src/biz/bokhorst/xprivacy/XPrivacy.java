@@ -9,11 +9,9 @@ import java.util.Set;
 
 import android.annotation.SuppressLint;
 import android.app.AndroidAppHelper;
-import android.content.Context;
 import android.os.Build;
 import android.os.Process;
 import android.util.Log;
-import android.widget.Toast;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -34,7 +32,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	@SuppressLint("InlinedApi")
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		// Log load
-		Util.log(null, Log.INFO, String.format("load %s", startupParam.modulePath));
+		Util.log(null, Log.INFO, String.format("Load %s", startupParam.modulePath));
 
 		// Account manager
 		hookAll(XAccountManager.getInstances());
@@ -69,11 +67,17 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Connectivity manager
 		hookAll(XConnectivityManager.getInstances());
 
+		// Context wrapper
+		hookAll(XContextWrapper.getInstances());
+
 		// Environment
 		hookAll(XEnvironment.getInstances());
 
 		// InetAddress
 		hookAll(XInetAddress.getInstances());
+
+		// InputDevice
+		hookAll(XInputDevice.getInstances());
 
 		// IO bridge
 		hookAll(XIoBridge.getInstances());
@@ -101,6 +105,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Runtime
 		hookAll(XRuntime.getInstances());
+
+		// Sensor manager
+		hookAll(XSensorManager.getInstances());
 
 		// Settings secure
 		hookAll(XSettingsSecure.getInstances());
@@ -130,7 +137,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		// Log load
-		Util.log(null, Log.INFO, String.format("load package=%s uid=%d", lpparam.packageName, Process.myUid()));
+		Util.log(null, Log.INFO, String.format("Load package=%s uid=%d", lpparam.packageName, Process.myUid()));
 
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
@@ -147,6 +154,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Providers
 		hookAll(XContentProvider.getInstances(lpparam.packageName), lpparam.classLoader);
+
+		// Advertising Id
+		try {
+			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, lpparam.classLoader);
+			hookAll(XAdvertisingIdClientInfo.getInstances(), lpparam.classLoader);
+		} catch (Throwable ex) {
+		}
 
 		// Google auth
 		try {
@@ -193,7 +207,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						hook.before(param);
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
-						report(ex);
 						throw ex;
 					}
 				}
@@ -207,7 +220,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 							hook.after(param);
 						} catch (Throwable ex) {
 							Util.bug(null, ex);
-							report(ex);
 							throw ex;
 						}
 				}
@@ -255,14 +267,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
-		}
-	}
-
-	private static void report(Throwable ex) {
-		Context context = AndroidAppHelper.currentApplication();
-		if (context != null) {
-			Toast toast = Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG);
-			toast.show();
 		}
 	}
 }

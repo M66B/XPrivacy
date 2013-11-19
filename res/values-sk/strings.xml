@@ -6,7 +6,7 @@
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Verzia Xposed frameworku: %d</string>
     <string name="app_copyright">Autorské práva \u00A9 2013 od M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Využitie</string>
+    <string name="menu_usage">Využitie dát</string>
     <string name="menu_refresh">Obnoviť</string>
     <string name="menu_settings">Nastavenia</string>
     <string name="menu_template">Šablóna</string>
@@ -20,16 +20,18 @@
     <string name="menu_about">O aplikácii</string>
     <string name="menu_help">Nápoveda</string>
     <string name="menu_all">Všetko</string>
+    <string name="menu_restriction_all">Prepnúť obmedzenia</string>
+    <string name="menu_usage_all">Prepnúť filter</string>
     <string name="menu_apply">Použiť šablónu</string>
     <string name="menu_clear">Vyčistiť</string>
     <string name="menu_app_launch">Spustiť</string>
     <string name="menu_app_settings">Nastavenia</string>
     <string name="menu_app_store">Obchod Play</string>
     <string name="menu_accounts">Povolené účty</string>
+    <string name="menu_applications">Vyberte povolené aplikácie</string>
     <string name="menu_contacts">Povolené kontakty</string>
     <string name="msg_new">Nové</string>
     <string name="msg_update">Aktualizácia</string>
-    <string name="msg_restricted" formatted="false">%s obmedzené pomocou XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
     <string name="msg_loading">Prebieha načítavanie</string>
     <string name="msg_edit">Kliknite na ikonu aplikácie pre úpravu všetkých obmedzení</string>
@@ -57,6 +59,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_network">Sieť (adresy)</string>
     <string name="restrict_notifications">Oznámenia</string>
     <string name="restrict_phone">Telefón (ID, čísla, hovory)</string>
+    <string name="restrict_sensors">Sensory</string>
     <string name="restrict_storage">Úložisko (médiá, SD karta)</string>
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
@@ -77,6 +80,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_frestricted">Filter na obmedzené</string>
     <string name="title_fuser">Filter na užívateľské aplikácie</string>
     <string name="title_fsystem">Filter na systémové aplikácie</string>
+    <string name="title_fnot">Obrátiť</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
@@ -84,11 +88,16 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_ip">IP adresa</string>
     <string name="settings_phone">Telefónne číslo</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">ID reklamy</string>
     <string name="settings_country">Krajina</string>
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">Identifikácia prehliadača</string>
+    <string name="settings_notify">Oznámenia o aktualizáciách</string>
+    <string name="settings_usage">Využitie dát (vyžaduje reštart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Záznam na ladenie (vyžaduje reštart)</string>
+    <string name="settings_expert">Režim experta</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>

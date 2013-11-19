@@ -25,7 +25,8 @@ public class Requirements {
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR1
-				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR2) {
+				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR2
+				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.KITKAT) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
 			alertDialogBuilder.setMessage(context.getString(R.string.app_wrongandroid));
@@ -182,8 +183,11 @@ public class Requirements {
 		if (checkField(WifiInfo.class, "mWifiSsid"))
 			try {
 				Class<?> clazz = Class.forName("android.net.wifi.WifiSsid");
-				if (!checkField(clazz, "octets"))
+				try {
+					clazz.getDeclaredMethod("createFromAsciiEncoded", String.class);
+				} catch (NoSuchMethodError ex) {
 					reportClass(clazz, context);
+				}
 			} catch (Throwable ex) {
 				sendSupportInfo(ex.toString(), context);
 			}
@@ -213,7 +217,7 @@ public class Requirements {
 			// Check field
 			if (field != null) {
 				Object value = field.get(obj);
-				if (value != null && expectedClass.isAssignableFrom(value.getClass()))
+				if (value == null || expectedClass.isAssignableFrom(value.getClass()))
 					return true;
 			}
 		} catch (Throwable ex) {
@@ -288,9 +292,10 @@ public class Requirements {
 		}
 
 		StringBuilder sb = new StringBuilder(text);
-		sb.insert(0, String.format("Android SDK %d\r\n", Build.VERSION.SDK_INT));
-		sb.insert(0, String.format("XPrivacy %s\r\n", xversion));
-		sb.append("\r\n");
+		sb.insert(0, "\r\n");
+		sb.insert(0, String.format("Model: %s\r\n", android.os.Build.MODEL));
+		sb.insert(0, String.format("Android SDK int: %d\r\n", Build.VERSION.SDK_INT));
+		sb.insert(0, String.format("XPrivacy version: %s\r\n", xversion));
 
 		Intent sendEmail = new Intent(Intent.ACTION_SEND);
 		sendEmail.setType("message/rfc822");

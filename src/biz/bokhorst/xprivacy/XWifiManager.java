@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +15,8 @@ import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
+import static de.robv.android.xposed.XposedHelpers.findMethodExact;
 
-@SuppressWarnings("deprecation")
 public class XWifiManager extends XHook {
 	private Methods mMethod;
 
@@ -101,17 +102,20 @@ public class XWifiManager extends XHook {
 					}
 
 					// SSID
+					String ssid = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "SSID");
 					try {
 						Field fieldSSID = findField(WifiInfo.class, "mSSID");
-						fieldSSID.set(wInfo, PrivacyManager.getDefacedProp(Binder.getCallingUid(), "SSID"));
+						fieldSSID.set(wInfo, ssid);
 					} catch (Throwable ex) {
 						try {
 							Field fieldWifiSsid = findField(WifiInfo.class, "mWifiSsid");
 							Object mWifiSsid = fieldWifiSsid.get(wInfo);
 							if (mWifiSsid != null) {
-								Field octets = findField(mWifiSsid.getClass(), "octets");
-								octets.set(mWifiSsid,
-										PrivacyManager.getDefacedProp(Binder.getCallingUid(), "WifiSsid.octets"));
+								// public static WifiSsid
+								// createFromAsciiEncoded(String asciiEncoded)
+								Method methodCreateFromAsciiEncoded = findMethodExact(mWifiSsid.getClass(),
+										"createFromAsciiEncoded", String.class);
+								fieldWifiSsid.set(wInfo, methodCreateFromAsciiEncoded.invoke(null, ssid));
 							}
 						} catch (Throwable exex) {
 							Util.bug(this, exex);

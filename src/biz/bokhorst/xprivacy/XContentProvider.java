@@ -138,7 +138,7 @@ public class XContentProvider extends XHook {
 			if (cursor != null)
 				if (sUri.startsWith("content://com.google.android.gsf.gservices")) {
 					// Google services provider: block only android_id
-					if (param.args.length > 3) {
+					if (param.args.length > 3 && param.args[3] != null) {
 						List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
 						if (Util.containsIgnoreCase(selectionArgs, "android_id"))
 							if (isRestricted(param)) {
@@ -194,38 +194,27 @@ public class XContentProvider extends XHook {
 
 							// Conditionally copy row
 							if (copy)
-								try {
-									Object[] columns = new Object[cursor.getColumnCount()];
-									for (int i = 0; i < cursor.getColumnCount(); i++)
-										switch (cursor.getType(i)) {
-										case Cursor.FIELD_TYPE_NULL:
-											columns[i] = null;
-											break;
-										case Cursor.FIELD_TYPE_INTEGER:
-											columns[i] = cursor.getInt(i);
-											break;
-										case Cursor.FIELD_TYPE_FLOAT:
-											columns[i] = cursor.getFloat(i);
-											break;
-										case Cursor.FIELD_TYPE_STRING:
-											columns[i] = cursor.getString(i);
-											break;
-										case Cursor.FIELD_TYPE_BLOB:
-											columns[i] = cursor.getBlob(i);
-											break;
-										default:
-											Util.log(this, Log.WARN, "Unknown cursor data type=" + cursor.getType(i));
-										}
-									result.addRow(columns);
-								} catch (Throwable ex) {
-									Util.bug(this, ex);
-								}
+								copyColumns(cursor, result);
 						}
 						result.respond(cursor.getExtras());
 						param.setResult(result);
 						cursor.close();
 					}
 
+				} else if (sUri.startsWith("content://applications")) {
+					// Applications provider: allow selected applications
+					if (isRestricted(param)) {
+						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+						while (cursor.moveToNext()) {
+							int colPackage = cursor.getColumnIndex("package");
+							String packageName = (colPackage < 0 ? null : cursor.getString(colPackage));
+							if (packageName != null && XApplicationPackageManager.isPackageAllowed(packageName))
+								copyColumns(cursor, result);
+						}
+						result.respond(cursor.getExtras());
+						param.setResult(result);
+						cursor.close();
+					}
 				} else {
 					if (isRestricted(param)) {
 						// Return empty cursor
@@ -235,6 +224,35 @@ public class XContentProvider extends XHook {
 						cursor.close();
 					}
 				}
+		}
+	}
+
+	private void copyColumns(Cursor cursor, MatrixCursor result) {
+		try {
+			Object[] columns = new Object[cursor.getColumnCount()];
+			for (int i = 0; i < cursor.getColumnCount(); i++)
+				switch (cursor.getType(i)) {
+				case Cursor.FIELD_TYPE_NULL:
+					columns[i] = null;
+					break;
+				case Cursor.FIELD_TYPE_INTEGER:
+					columns[i] = cursor.getInt(i);
+					break;
+				case Cursor.FIELD_TYPE_FLOAT:
+					columns[i] = cursor.getFloat(i);
+					break;
+				case Cursor.FIELD_TYPE_STRING:
+					columns[i] = cursor.getString(i);
+					break;
+				case Cursor.FIELD_TYPE_BLOB:
+					columns[i] = cursor.getBlob(i);
+					break;
+				default:
+					Util.log(this, Log.WARN, "Unknown cursor data type=" + cursor.getType(i));
+				}
+			result.addRow(columns);
+		} catch (Throwable ex) {
+			Util.bug(this, ex);
 		}
 	}
 

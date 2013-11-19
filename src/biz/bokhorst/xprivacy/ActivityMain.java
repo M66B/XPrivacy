@@ -17,8 +17,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -74,6 +80,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int ERROR_INVALID_PACKAGE_NAME = 0x102;
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
+	public static final Uri cProUri = Uri.parse("http://www.faircode.eu/xprivacy/");
+
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
 
@@ -96,6 +104,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		// Salt should be the same when exporting/importing
 		String salt = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingSalt, null, false);
 		if (salt == null) {
@@ -178,23 +187,29 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Setup used filter
 		boolean fUsed = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingFUsed, false,
 				false);
-		CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
-		cbUsed.setChecked(fUsed);
-		cbUsed.setOnCheckedChangeListener(this);
+		CheckBox cFbUsed = (CheckBox) findViewById(R.id.cbFUsed);
+		cFbUsed.setChecked(fUsed);
+		cFbUsed.setOnCheckedChangeListener(this);
 
 		// Setup internet filter
 		boolean fInternet = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingFInternet,
 				false, false);
-		CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
-		cbInternet.setChecked(fInternet);
-		cbInternet.setOnCheckedChangeListener(this);
+		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
+		cbFInternet.setChecked(fInternet);
+		cbFInternet.setOnCheckedChangeListener(this);
 
 		// Setup restriction filter
 		boolean fRestriction = PrivacyManager.getSettingBool(null, ActivityMain.this, 0,
 				PrivacyManager.cSettingFRestriction, false, false);
-		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
-		cbRestriction.setChecked(fRestriction);
-		cbRestriction.setOnCheckedChangeListener(this);
+		CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
+		cbFRestriction.setChecked(fRestriction);
+		cbFRestriction.setOnCheckedChangeListener(this);
+
+		boolean fRestrictionNot = PrivacyManager.getSettingBool(null, ActivityMain.this, 0,
+				PrivacyManager.cSettingFRestrictionNot, false, false);
+		CheckBox cbFRestrictionNot = (CheckBox) findViewById(R.id.cbFRestrictionNot);
+		cbFRestrictionNot.setChecked(fRestrictionNot);
+		cbFRestrictionNot.setOnCheckedChangeListener(this);
 
 		// Setup permission filter
 		boolean fPermission = PrivacyManager.getSettingBool(null, ActivityMain.this, 0,
@@ -452,20 +467,24 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
-		CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
-		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
+		CheckBox cbFUsed = (CheckBox) findViewById(R.id.cbFUsed);
+		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
+		CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
+		CheckBox cbFRestrictionNot = (CheckBox) findViewById(R.id.cbFRestrictionNot);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
-		if (buttonView == cbUsed)
+		if (buttonView == cbFUsed)
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFUsed,
 					Boolean.toString(isChecked));
-		else if (buttonView == cbInternet)
+		else if (buttonView == cbFInternet)
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFInternet,
 					Boolean.toString(isChecked));
-		else if (buttonView == cbRestriction)
+		else if (buttonView == cbFRestriction)
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFRestriction,
+					Boolean.toString(isChecked));
+		else if (buttonView == cbFRestrictionNot)
+			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFRestrictionNot,
 					Boolean.toString(isChecked));
 		else if (buttonView == cbFPermission)
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFPermission,
@@ -487,17 +506,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private void applyFilter() {
 		if (mAppAdapter != null) {
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
-			CheckBox cbUsed = (CheckBox) findViewById(R.id.cbFUsed);
-			CheckBox cbInternet = (CheckBox) findViewById(R.id.cbFInternet);
-			CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
+			CheckBox cFbUsed = (CheckBox) findViewById(R.id.cbFUsed);
+			CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
+			CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
+			CheckBox cbFRestrictionNot = (CheckBox) findViewById(R.id.cbFRestrictionNot);
 			CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 			CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 			CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 			ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
 			TextView tvStats = (TextView) findViewById(R.id.tvStats);
-			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(),
-					cbUsed.isChecked(), cbInternet.isChecked(), cbRestriction.isChecked(), cbFPermission.isChecked(),
-					cbFUser.isChecked(), cbFSystem.isChecked());
+			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(),
+					cFbUsed.isChecked(), cbFInternet.isChecked(), cbFRestriction.isChecked(),
+					cbFRestrictionNot.isChecked(), cbFPermission.isChecked(), cbFUser.isChecked(),
+					cbFSystem.isChecked());
 			pbFilter.setVisibility(ProgressBar.VISIBLE);
 			tvStats.setVisibility(TextView.GONE);
 			mAppAdapter.getFilter().filter(filter);
@@ -631,7 +652,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private void optionFetch() {
 		if (Util.getLicense() == null) {
 			// Redirect to pro page
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, cProUri);
 			startActivity(browserIntent);
 		} else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -665,7 +686,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionPro() {
 		// Redirect to pro page
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, cProUri);
 		startActivity(browserIntent);
 	}
 
@@ -695,7 +716,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		String licensed = Util.hasProLicense(this);
 		TextView tvLicensed = (TextView) dlgAbout.findViewById(R.id.tvLicensed);
 		if (licensed == null)
-			tvLicensed.setVisibility(View.GONE);
+			tvLicensed.setText(String.format(getString(R.string.msg_licensed), Environment
+					.getExternalStorageDirectory().getAbsolutePath()));
 		else
 			tvLicensed.setText(String.format(getString(R.string.msg_licensed), licensed));
 
@@ -721,7 +743,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		LinearLayout llBatchMode = (LinearLayout) findViewById(R.id.llBatchMode);
 		CheckBox cbFUsed = (CheckBox) findViewById(R.id.cbFUsed);
 		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
-		CheckBox cbRestriction = (CheckBox) findViewById(R.id.cbFilter);
+		CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
@@ -744,7 +766,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				numberOfFilters++;
 			if (cbFInternet.isChecked())
 				numberOfFilters++;
-			if (cbRestriction.isChecked())
+			if (cbFRestriction.isChecked())
 				numberOfFilters++;
 			if (cbFPermission.isChecked())
 				numberOfFilters++;
@@ -816,6 +838,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mProgressDialog = new ProgressDialog(lvApp.getContext());
 			mProgressDialog.setMessage(getString(R.string.msg_loading));
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			mProgressDialog.setProgressNumberFormat(null);
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.show();
 		}
@@ -914,9 +937,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				boolean fUsed = Boolean.parseBoolean(components[1]);
 				boolean fInternet = Boolean.parseBoolean(components[2]);
 				boolean fRestricted = Boolean.parseBoolean(components[3]);
-				boolean fPermission = Boolean.parseBoolean(components[4]);
-				boolean fUser = Boolean.parseBoolean(components[5]);
-				boolean fSystem = Boolean.parseBoolean(components[6]);
+				boolean fRestrictedNot = Boolean.parseBoolean(components[4]);
+				boolean fPermission = Boolean.parseBoolean(components[5]);
+				boolean fUser = Boolean.parseBoolean(components[6]);
+				boolean fSystem = Boolean.parseBoolean(components[7]);
 
 				// Match applications
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
@@ -972,8 +996,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					// Match application
 					if ((fName.equals("") ? true : contains) && (fUsed ? used : true) && (fInternet ? internet : true)
-							&& (fRestricted ? someRestricted : true) && (fPermission ? permission : true)
-							&& (fUser ? user : true) && (fSystem ? system : true))
+							&& (fRestricted ? (fRestrictedNot ? !someRestricted : someRestricted) : true)
+							&& (fPermission ? permission : true) && (fUser ? user : true) && (fSystem ? system : true))
 						lstApp.add(xAppInfo);
 				}
 
@@ -1047,7 +1071,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				if (holder.position == position) {
+				if (holder.position == position && xAppInfo != null) {
 					// Get if used
 					used = (PrivacyManager.getUsed(holder.row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
 
@@ -1085,6 +1109,46 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && xAppInfo != null) {
+					// Draw border around icon
+					if (xAppInfo.getIcon() instanceof BitmapDrawable) {
+						// Get icon bitmap
+						Bitmap icon = ((BitmapDrawable) xAppInfo.getIcon()).getBitmap();
+
+						// Get list item height
+						TypedArray arrayHeight = getTheme().obtainStyledAttributes(
+								new int[] { android.R.attr.listPreferredItemHeightSmall });
+						int height = (int) Math.round(arrayHeight.getDimension(0, 32)
+								* getResources().getDisplayMetrics().density + 0.5f);
+						arrayHeight.recycle();
+
+						// Scale icon to list item height
+						icon = Bitmap.createScaledBitmap(icon, height, height, false);
+
+						// Create bitmap with borders
+						int borderSize = (int) Math.round(getResources().getDisplayMetrics().density + 0.5f);
+						Bitmap bitmap = Bitmap.createBitmap(icon.getWidth() + 2 * borderSize, icon.getHeight() + 2
+								* borderSize, icon.getConfig());
+
+						// Get highlight color
+						TypedArray arrayColor = getTheme().obtainStyledAttributes(
+								new int[] { android.R.attr.colorActivatedHighlight });
+						int textColor = arrayColor.getColor(0, 0xFF00FF);
+						arrayColor.recycle();
+
+						// Draw bitmap with borders
+						Canvas canvas = new Canvas(bitmap);
+						Paint paint = new Paint();
+						paint.setColor(textColor);
+						paint.setStyle(Style.STROKE);
+						paint.setStrokeWidth(borderSize);
+						canvas.drawRect(0, 0, bitmap.getWidth(), bitmap.getHeight(), paint);
+						paint = new Paint(Paint.FILTER_BITMAP_FLAG);
+						canvas.drawBitmap(icon, borderSize, borderSize, paint);
+
+						// Show bitmap
+						holder.imgIcon.setImageBitmap(bitmap);
+					}
+
 					// Check if used
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);

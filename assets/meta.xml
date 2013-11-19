@@ -44,9 +44,14 @@
     <Hook restriction="identification" method="%imei" permissions="" sdk="14" />
     <Hook restriction="identification" method="%macaddr" permissions="" sdk="14" />
     <Hook restriction="identification" method="%serialno" permissions="" sdk="14" />
+    <Hook restriction="identification" method="%cid" permissions="" sdk="14" />
     <Hook restriction="identification" method="/proc" dangerous="true" permissions="" sdk="14" />
     <Hook restriction="identification" method="/system/build.prop" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="identification" method="/sys/block/.../cid" permissions="" sdk="14" />
+    <Hook restriction="identification" method="/sys/class/.../cid" permissions="" sdk="14" />
+    <Hook restriction="identification" method="AdvertisingId" permissions="" sdk="14" />
     <Hook restriction="identification" method="getString" permissions="" sdk="14" />
+    <Hook restriction="identification" method="getDescriptor" permissions="" sdk="16" />
     <Hook restriction="identification" method="GservicesProvider" dangerous="true" permissions="READ_GSERVICES" sdk="14" />
     <Hook restriction="identification" method="SERIAL" permissions="" sdk="14" />
 
@@ -99,6 +104,9 @@
     <Hook restriction="messages" method="MmsProvider" permissions="READ_SMS" sdk="14" />
     <Hook restriction="messages" method="MmsSmsProvider" permissions="READ_SMS" sdk="14" />
     <Hook restriction="messages" method="VoicemailContentProvider" permissions="READ_WRITE_ALL_VOICEMAIL" sdk="14" />
+    <Hook restriction="messages" method="android.intent.action.DATA_SMS_RECEIVED" permissions="" sdk="19" />
+    <Hook restriction="messages" method="android.provider.Telephony.SMS_RECEIVED" permissions="" sdk="19" />
+    <Hook restriction="messages" method="android.provider.Telephony.WAP_PUSH_RECEIVED" permissions="" sdk="19" />
 
     <Hook restriction="network" method="getAddress" permissions="BLUETOOTH" sdk="14" />
     <Hook restriction="network" method="getBondedDevices" permissions="BLUETOOTH" sdk="14" />
@@ -146,6 +154,9 @@
     <Hook restriction="phone" method="android.intent.action.PHONE_STATE" permissions="READ_PHONE_STATE" sdk="14" />
     <Hook restriction="phone" method="TelephonyProvider" permissions="WRITE_APN_SETTINGS" sdk="14" />
     <Hook restriction="phone" method="CallLogProvider" permissions="READ_CALL_LOG" sdk="14" />
+
+    <Hook restriction="sensors" method="getDefaultSensor" permissions="" sdk="3" />
+    <Hook restriction="sensors" method="getSensorList" permissions="" sdk="3" />
 
     <Hook restriction="shell" method="sh" permissions="" sdk="14" />
     <Hook restriction="shell" method="su" permissions="" sdk="14" />

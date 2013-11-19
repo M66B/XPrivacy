@@ -20,16 +20,18 @@
     <string name="menu_about">Hakkında</string>
     <string name="menu_help">Yardım</string>
     <string name="menu_all">Tümü</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Temizle</string>
     <string name="menu_app_launch">Çalıştır</string>
     <string name="menu_app_settings">Ayarlar</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">İzin verilecek hesapları seç</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">İzin verilecek kişileri seç</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s XPrivacy tarafından engellendi</string>
     <string name="msg_licensed" formatted="false">%s adına lisanslıdır.</string>
     <string name="msg_loading">Yükleniyor</string>
     <string name="msg_edit">Tüm izinleri düzenlemek için uygulamanın simgesine dokun</string>
@@ -56,6 +58,7 @@
     <string name="restrict_network">Ağ (adresler)</string>
     <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefon (Kimlik, numaralar, aramalar)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Depolama (medya, SD kart)</string>
     <string name="restrict_shell">Kabuk (komutlar, superuser)</string>
     <string name="restrict_system">Sistem (yüklü uygulamalar)</string>
@@ -75,6 +78,7 @@
     <string name="title_frestricted">Filter on restricted</string>
     <string name="title_fuser">Filter on user applications</string>
     <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Seri no</string>
     <string name="settings_lat">Enlem</string>
     <string name="settings_lon">Boylam</string>
@@ -82,11 +86,16 @@
     <string name="settings_ip">IP adresi</string>
     <string name="settings_phone">Telefon numarası</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Ülke</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Sim Numarası (IMSI)</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Hata ayıklama modu (Yeniden başlatma gerekir)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Uygulama</string>
     <string name="help_internet">internet izni var</string>
     <string name="help_granted">Android izni var</string>

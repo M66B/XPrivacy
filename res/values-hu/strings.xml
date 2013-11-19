@@ -20,16 +20,18 @@
     <string name="menu_about">Névjegy</string>
     <string name="menu_help">Help</string>
     <string name="menu_all">Minden</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Indítás</string>
     <string name="menu_app_settings">Beállítások</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Válassza ki az engedélyezendő fiókokat</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Válassza ki az engedélyezendő névjegyeket</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s korlátozva az XPrivacy által</string>
     <string name="msg_licensed" formatted="false">Licensz tulajdonos: %s</string>
     <string name="msg_loading">Töltés</string>
     <string name="msg_edit">Kattintson az alkalmazás ikonra az összes korlátozás módosításához</string>
@@ -57,6 +59,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="restrict_network">Hálózat (címek)</string>
     <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Telefon (ID, számok, hívások)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Tárhely (média, SD kártya)</string>
     <string name="restrict_shell">Parancssor (parancsok, rendszergazda)</string>
     <string name="restrict_system">Rendszer (telepített alkalmazások)</string>
@@ -76,6 +79,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="title_frestricted">Filter on restricted</string>
     <string name="title_fuser">Filter on user applications</string>
     <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Sorozatszám#</string>
     <string name="settings_lat">Szélesség</string>
     <string name="settings_lon">Hosszúság</string>
@@ -83,11 +87,16 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">Telefonszám</string>
     <string name="settings_id">Android azonosító</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Ország</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Előfizető azonosító</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Alkalmazás</string>
     <string name="help_internet">Internet engedély</string>
     <string name="help_granted">Android engedély</string>

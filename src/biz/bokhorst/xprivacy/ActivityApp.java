@@ -4,7 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -37,11 +40,18 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.Paint.Style;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -78,7 +88,6 @@ public class ActivityApp extends Activity {
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
 	public static final String cActionClear = "Clear";
-	public static final String cNotified = "Notified";
 
 	private static final int ACTIVITY_FETCH = 1;
 
@@ -96,6 +105,7 @@ public class ActivityApp extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		// Set theme
 		String themeName = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingTheme, "", false);
 		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
@@ -110,18 +120,15 @@ public class ActivityApp extends Activity {
 		String restrictionName = (extras.containsKey(cRestrictionName) ? extras.getString(cRestrictionName) : null);
 		String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
 
-		// Failsafe
-		if (mAppInfo != null && !mAppInfo.getPackageName().equals(packageName)) {
-			recreate();
-			return;
-		}
-
 		// Get app info
 		mAppInfo = new ApplicationInfoEx(this, packageName);
 		if (!mAppInfo.getIsInstalled()) {
 			finish();
 			return;
 		}
+
+		// Set title
+		setTitle(String.format("%s - %s", getString(R.string.app_name), mAppInfo.getFirstApplicationName()));
 
 		// Handle info click
 		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
@@ -148,7 +155,41 @@ public class ActivityApp extends Activity {
 
 		// Display app icon
 		ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
-		imgIcon.setImageDrawable(mAppInfo.getIcon());
+		if (mAppInfo.getIcon() instanceof BitmapDrawable) {
+			// Get icon bitmap
+			Bitmap icon = ((BitmapDrawable) mAppInfo.getIcon()).getBitmap();
+
+			// Get height
+			int height = (int) Math.round(32 * getResources().getDisplayMetrics().density + 0.5f);
+
+			// Scale icon to height
+			icon = Bitmap.createScaledBitmap(icon, height, height, false);
+
+			// Create bitmap with borders
+			int borderSize = (int) Math.round(getResources().getDisplayMetrics().density + 0.5f);
+			Bitmap bitmap = Bitmap.createBitmap(icon.getWidth() + 2 * borderSize, icon.getHeight() + 2 * borderSize,
+					icon.getConfig());
+
+			// Get highlight color
+			TypedArray arrayColor = getTheme().obtainStyledAttributes(
+					new int[] { android.R.attr.colorActivatedHighlight });
+			int textColor = arrayColor.getColor(0, 0xFF00FF);
+			arrayColor.recycle();
+
+			// Draw bitmap with borders
+			Canvas canvas = new Canvas(bitmap);
+			Paint paint = new Paint();
+			paint.setColor(textColor);
+			paint.setStyle(Style.STROKE);
+			paint.setStrokeWidth(borderSize);
+			canvas.drawRect(0, 0, bitmap.getWidth(), bitmap.getHeight(), paint);
+			paint = new Paint(Paint.FILTER_BITMAP_FLAG);
+			canvas.drawBitmap(icon, borderSize, borderSize, paint);
+
+			// Show bitmap
+			imgIcon.setImageBitmap(bitmap);
+		} else
+			imgIcon.setImageDrawable(mAppInfo.getIcon());
 
 		// Handle icon click
 		imgIcon.setOnClickListener(new View.OnClickListener() {
@@ -182,21 +223,10 @@ public class ActivityApp extends Activity {
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
 		tvPackageName.setText(mAppInfo.getPackageName());
 
-		// Get applicable restrictions
-		boolean fPermission = PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingFPermission, true,
-				false);
-		if (restrictionName != null && methodName != null)
-			fPermission = false;
-		List<String> listRestriction = new ArrayList<String>();
-		for (String rRestrictionName : PrivacyManager.getRestrictions(true))
-			if (fPermission ? PrivacyManager.hasPermission(this, mAppInfo.getPackageName(), rRestrictionName)
-					|| PrivacyManager.getUsed(this, mAppInfo.getUid(), rRestrictionName, null) > 0 : true)
-				listRestriction.add(rRestrictionName);
-
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
-		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, listRestriction);
+		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, restrictionName, methodName);
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 		if (restrictionName != null && methodName != null) {
 			int groupPosition = PrivacyManager.getRestrictions(true).indexOf(restrictionName);
@@ -207,7 +237,7 @@ public class ActivityApp extends Activity {
 		}
 
 		// Up navigation
-		getActionBar().setDisplayHomeAsUpEnabled(!extras.containsKey(cNotified));
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Clear
 		if (extras.containsKey(cActionClear)) {
@@ -215,6 +245,11 @@ public class ActivityApp extends Activity {
 			notificationManager.cancel(mAppInfo.getUid());
 			optionClear();
 		}
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
 	}
 
 	@Override
@@ -246,9 +281,12 @@ public class ActivityApp extends Activity {
 		// Accounts
 		boolean accountsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
 				PrivacyManager.cAccounts, null, false, false);
+		boolean appsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(), PrivacyManager.cSystem,
+				null, false, false);
 		boolean contactsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
 				PrivacyManager.cContacts, null, false, false);
 		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
+		menu.findItem(R.id.menu_applications).setEnabled(appsRestricted);
 		menu.findItem(R.id.menu_contacts).setEnabled(contactsRestricted);
 
 		return super.onPrepareOptionsMenu(menu);
@@ -294,6 +332,9 @@ public class ActivityApp extends Activity {
 			return true;
 		case R.id.menu_accounts:
 			optionAccounts();
+			return true;
+		case R.id.menu_applications:
+			optionApplications();
 			return true;
 		case R.id.menu_contacts:
 			optionContacts();
@@ -421,7 +462,7 @@ public class ActivityApp extends Activity {
 	private void optionFetch() {
 		if (Util.getLicense() == null) {
 			// Redirect to pro page
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.faircode.eu/xprivacy/"));
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
 			startActivity(browserIntent);
 		} else {
 			Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
@@ -433,6 +474,28 @@ public class ActivityApp extends Activity {
 	private void optionAccounts() {
 		AccountsTask accountsTask = new AccountsTask();
 		accountsTask.executeOnExecutor(mExecutor, (Object) null);
+	}
+
+	private void optionApplications() {
+		if (Util.getLicense() == null) {
+			// Redirect to pro page
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
+			startActivity(browserIntent);
+		} else {
+			ApplicationsTask appsTask = new ApplicationsTask();
+			appsTask.executeOnExecutor(mExecutor, (Object) null);
+		}
+	}
+
+	private void optionContacts() {
+		if (Util.getLicense() == null) {
+			// Redirect to pro page
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
+			startActivity(browserIntent);
+		} else {
+			ContactsTask contactsTask = new ContactsTask();
+			contactsTask.executeOnExecutor(mExecutor, (Object) null);
+		}
 	}
 
 	private void optionLaunch() {
@@ -450,11 +513,6 @@ public class ActivityApp extends Activity {
 		Intent intentStore = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
 				+ mAppInfo.getPackageName()));
 		startActivity(intentStore);
-	}
-
-	private void optionContacts() {
-		ContactsTask contactsTask = new ContactsTask();
-		contactsTask.executeOnExecutor(mExecutor, (Object) null);
 	}
 
 	// Tasks
@@ -498,6 +556,76 @@ public class ActivityApp extends Activity {
 								PrivacyManager.setSetting(null, ActivityApp.this, 0,
 										String.format("Account.%d.%s", mAppInfo.getUid(), sha1),
 										Boolean.toString(isChecked));
+							} catch (Throwable ex) {
+								Util.bug(null, ex);
+								Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
+								toast.show();
+							}
+						}
+					});
+			alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do nothing
+				}
+			});
+
+			// Show dialog
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+
+			super.onPostExecute(result);
+		}
+	}
+
+	private class ApplicationsTask extends AsyncTask<Object, Object, Object> {
+		private List<ApplicationInfo> mListInfo;
+		private List<CharSequence> mListApp;
+		private boolean[] mSelection;
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			// Get applications
+			final PackageManager pm = ActivityApp.this.getPackageManager();
+			mListInfo = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+			Collections.sort(mListInfo, new Comparator<ApplicationInfo>() {
+				public int compare(ApplicationInfo info1, ApplicationInfo info2) {
+					return ((String) pm.getApplicationLabel(info1)).compareTo(((String) pm.getApplicationLabel(info2)));
+				}
+			});
+
+			// Build selection list
+			mListApp = new ArrayList<CharSequence>();
+			mSelection = new boolean[mListInfo.size()];
+			for (int i = 0; i < mListInfo.size(); i++)
+				try {
+					mListApp.add(String.format("%s (%s)", pm.getApplicationLabel(mListInfo.get(i)),
+							mListInfo.get(i).packageName));
+					mSelection[i] = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+							String.format("Application.%d.%s", mAppInfo.getUid(), mListInfo.get(i).packageName), false,
+							false);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			// Build dialog
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+			alertDialogBuilder.setTitle(getString(R.string.menu_applications));
+			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setMultiChoiceItems(mListApp.toArray(new CharSequence[0]), mSelection,
+					new DialogInterface.OnMultiChoiceClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+							try {
+								PrivacyManager.setSetting(
+										null,
+										ActivityApp.this,
+										0,
+										String.format("Application.%d.%s", mAppInfo.getUid(),
+												mListInfo.get(whichButton).packageName), Boolean.toString(isChecked));
 							} catch (Throwable ex) {
 								Util.bug(null, ex);
 								Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
@@ -729,12 +857,28 @@ public class ActivityApp extends Activity {
 
 	private class RestrictionAdapter extends BaseExpandableListAdapter {
 		private ApplicationInfoEx mAppInfo;
+		private String mSelectedRestrictionName;
+		private String mSelectedMethodName;
 		private List<String> mRestrictions;
+		private HashMap<Integer, List<PrivacyManager.MethodDescription>> mMethodDescription;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, List<String> restrictions) {
+		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, String selectedRestrictionName,
+				String selectedMethodName) {
 			mAppInfo = appInfo;
-			mRestrictions = restrictions;
+			mSelectedRestrictionName = selectedRestrictionName;
+			mSelectedMethodName = selectedMethodName;
+			mRestrictions = new ArrayList<String>();
+			mMethodDescription = new LinkedHashMap<Integer, List<PrivacyManager.MethodDescription>>();
+
+			boolean fPermission = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+					PrivacyManager.cSettingFPermission, true, false);
+			for (String rRestrictionName : PrivacyManager.getRestrictions(true))
+				if (fPermission ? mSelectedRestrictionName != null
+						|| PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(), rRestrictionName)
+						|| PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), rRestrictionName, null) > 0
+						: true)
+					mRestrictions.add(rRestrictionName);
 		}
 
 		@Override
@@ -788,7 +932,7 @@ public class ActivityApp extends Activity {
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				if (holder.position == position) {
+				if (holder.position == position && restrictionName != null) {
 					// Get info
 					used = (PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
@@ -887,9 +1031,26 @@ public class ActivityApp extends Activity {
 			return convertView;
 		}
 
+		private List<PrivacyManager.MethodDescription> getMethodDescriptions(int groupPosition) {
+			if (!mMethodDescription.containsKey(groupPosition)) {
+				boolean fPermission = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+						PrivacyManager.cSettingFPermission, true, false);
+				List<PrivacyManager.MethodDescription> listMethod = new ArrayList<PrivacyManager.MethodDescription>();
+				String restrictionName = mRestrictions.get(groupPosition);
+				for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods((String) getGroup(groupPosition)))
+					if (fPermission ? mSelectedMethodName != null
+							|| PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(), md)
+							|| PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), restrictionName,
+									md.getMethodName()) > 0 : true)
+						listMethod.add(md);
+				mMethodDescription.put(groupPosition, listMethod);
+			}
+			return mMethodDescription.get(groupPosition);
+		}
+
 		@Override
 		public Object getChild(int groupPosition, int childPosition) {
-			return PrivacyManager.getMethods((String) getGroup(groupPosition)).get(childPosition);
+			return getMethodDescriptions(groupPosition).get(childPosition);
 		}
 
 		@Override
@@ -899,7 +1060,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return PrivacyManager.getMethods((String) getGroup(groupPosition)).size();
+			return getMethodDescriptions(groupPosition).size();
 		}
 
 		@Override
@@ -945,7 +1106,8 @@ public class ActivityApp extends Activity {
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition) {
+				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition
+						&& restrictionName != null) {
 					// Get info
 					md = (PrivacyManager.MethodDescription) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName,
@@ -962,7 +1124,7 @@ public class ActivityApp extends Activity {
 			@Override
 			protected void onPostExecute(Object result) {
 				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition
-						&& restrictionName != null && md != null) {
+						&& restrictionName != null) {
 					// Set data
 					if (lastUsage > 0) {
 						Date date = new Date(lastUsage);

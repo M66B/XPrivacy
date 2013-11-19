@@ -20,16 +20,18 @@
     <string name="menu_about">Om</string>
     <string name="menu_help">Hjelp</string>
     <string name="menu_all">Alle</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Bruk skjema</string>
     <string name="menu_clear">Slett</string>
     <string name="menu_app_launch">Kjør</string>
     <string name="menu_app_settings">Innstillinger</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Velg konto som skal tillates</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
     <string name="msg_new">Nytt</string>
     <string name="msg_update">Oppdater</string>
-    <string name="msg_restricted" formatted="false">%s blokkert av XPrivacy</string>
     <string name="msg_licensed" formatted="false">Lisensert til: %s</string>
     <string name="msg_loading">Lader</string>
     <string name="msg_edit">Klikk på app ikonet for å bearbeide alle restriksjoner</string>
@@ -55,6 +57,7 @@
     <string name="restrict_network">Nettverk (adresser)</string>
     <string name="restrict_notifications">Varslinger</string>
     <string name="restrict_phone">Telefon (ID, nummere, oppringninger)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Minne (medier, SD kort)</string>
     <string name="restrict_shell">Shell (kommandoer, superbruker)</string>
     <string name="restrict_system">System (installerte apper)</string>
@@ -74,6 +77,7 @@
     <string name="title_frestricted">Filtrer etter restriksjon</string>
     <string name="title_fuser">Filtrer etter vanlige apper</string>
     <string name="title_fsystem">Filtrer etter system apper</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>
@@ -81,11 +85,16 @@
     <string name="settings_ip">IP adresse</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Land</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Abonnent ID</string>
     <string name="settings_ua">Brukeragent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Applikasjon</string>
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>

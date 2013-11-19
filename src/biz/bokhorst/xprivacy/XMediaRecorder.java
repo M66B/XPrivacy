@@ -31,10 +31,8 @@ public class XMediaRecorder extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
 		if (methodName.equals("setOutputFile")) {
-			if (isRestricted(param)) {
+			if (isRestricted(param))
 				param.setResult(null);
-				notifyUser(this.getClass().getSimpleName());
-			}
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}

@@ -20,16 +20,18 @@
     <string name="menu_about">जानकारी</string>
     <string name="menu_help">मदद</string>
     <string name="menu_all">प्रत्येक</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">टेम्पलेट लागू करें</string>
     <string name="menu_clear">साफ़ करे</string>
     <string name="menu_app_launch">चालू करे</string>
     <string name="menu_app_settings">App का विवरण</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">अनुमति के लिए खातों को चुने</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
     <string name="msg_new">नया</string>
     <string name="msg_update">अद्यतन</string>
-    <string name="msg_restricted" formatted="false">%s XPrivacy के द्वारा प्रतिबंधित</string>
     <string name="msg_licensed" formatted="false">अधिकारी: %s</string>
     <string name="msg_loading">लोडिंग</string>
     <string name="msg_edit">सभी प्रतिबंध को संपादित करने application के icon को क्लिक करे</string>
@@ -57,6 +59,7 @@
     <string name="restrict_network">नेटवर्क (addresses)</string>
     <string name="restrict_notifications">सूचनाएं</string>
     <string name="restrict_phone">फ़ोन (ID, संख्या, कॉल)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">स्टोरेज (मीडिया, SD card)</string>
     <string name="restrict_shell">Shell (आदेश, superuser)</string>
     <string name="restrict_system">सिस्टम (इन्सटाल्ड apps)</string>
@@ -76,6 +79,7 @@
     <string name="title_frestricted">प्रतिबंध पर फिल्टर करे</string>
     <string name="title_fuser">उपयोगकर्ता की Applications पर फिल्टर करे</string>
     <string name="title_fsystem">सिस्टम की Applications पर फिल्टर करे</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">क्रमांक#</string>
     <string name="settings_lat">अक्षांश</string>
     <string name="settings_lon">रेखांश</string>
@@ -83,11 +87,16 @@
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">फ़ोन संख्या</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">देश</string>
     <string name="settings_operator">ऑपरेटर</string>
     <string name="settings_subscriber">ग्राहक क्रमांक</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (पुनरारंभ जरूरी)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Application</string>
     <string name="help_internet">इंटरनेट की अनुमति है</string>
     <string name="help_granted">Android की अनुमति है</string>

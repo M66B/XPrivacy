@@ -20,16 +20,18 @@
     <string name="menu_about">Programmist</string>
     <string name="menu_help">Abi</string>
     <string name="menu_all">Kõik</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Tühjenda</string>
     <string name="menu_app_launch">Käivita</string>
     <string name="menu_app_settings">Rakenduse andmed</string>
     <string name="menu_app_store">Play Pood</string>
     <string name="menu_accounts">Vali kasutajad mida lubada</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Vali kontaktid mida lubada</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s on keelatud XPrivacy poolt</string>
     <string name="msg_licensed" formatted="false">Litsentseeritud: %s</string>
     <string name="msg_loading">Laeb</string>
     <string name="msg_edit">Klõpsa rakenduse ikoonile, et muuta</string>
@@ -57,6 +59,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="restrict_network">Võrk (aadressid)</string>
     <string name="restrict_notifications">Teated</string>
     <string name="restrict_phone">Telefon (ID, numbrid, kõned)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Mälu (Meedia, SD kaart)</string>
     <string name="restrict_shell">Käsurida (käsud, juurkasutaja)</string>
     <string name="restrict_system">Süsteem (installeeritud rakendused)</string>
@@ -76,6 +79,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="title_frestricted">Filter on restricted</string>
     <string name="title_fuser">Filter on user applications</string>
     <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Seeria#</string>
     <string name="settings_lat">Laiuskraad</string>
     <string name="settings_lon">Pikkuskraad</string>
@@ -83,11 +87,16 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="settings_ip">IP aadress</string>
     <string name="settings_phone">Telefoninumber</string>
     <string name="settings_id">Androidi ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Riik</string>
     <string name="settings_operator">Opeeraator</string>
     <string name="settings_subscriber">Abonendi ID</string>
     <string name="settings_ua">Kasutaja agent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Silumislogi (nõuab restarti)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Rakendus</string>
     <string name="help_internet">on interneti kasutamise luba</string>
     <string name="help_granted">on Android luba</string>

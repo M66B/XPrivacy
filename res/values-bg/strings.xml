@@ -20,16 +20,18 @@
     <string name="menu_about">Относно</string>
     <string name="menu_help">Help</string>
     <string name="menu_all">Всички</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Пусни</string>
     <string name="menu_app_settings">Настройки</string>
     <string name="menu_app_store">Google Play магазин</string>
     <string name="menu_accounts">Изберете сметки с позволение</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Изберете контакти с позволение</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s е ограничен от XPrivacy</string>
     <string name="msg_licensed" formatted="false">Лицензирано на: %s</string>
     <string name="msg_loading">Зареждане</string>
     <string name="msg_edit">Цъкнете иконата на приложението за редактиране на всички забрани</string>
@@ -57,6 +59,7 @@
     <string name="restrict_network">Мрежа (адреси)</string>
     <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Телефон (ID, номера, обаждания)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Съхранение (носители, SD карта)</string>
     <string name="restrict_shell">Терминал (команди, суперпотребител)</string>
     <string name="restrict_system">Система (инсталирани приложения)</string>
@@ -76,6 +79,7 @@
     <string name="title_frestricted">Filter on restricted</string>
     <string name="title_fuser">Filter on user applications</string>
     <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Геогр. ширина</string>
     <string name="settings_lon">Геогр. дължина</string>
@@ -83,11 +87,16 @@
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">Телефонен номер</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Държава</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Абонатно ID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">има разрешение за интернет</string>
     <string name="help_granted">има разрешение в Android</string>

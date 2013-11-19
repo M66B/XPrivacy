@@ -20,16 +20,18 @@
     <string name="menu_about">アプリ情報</string>
     <string name="menu_help">ヘルプ</string>
     <string name="menu_all">全て</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">テンプレを適用</string>
     <string name="menu_clear">消去</string>
     <string name="menu_app_launch">アプリを起動</string>
     <string name="menu_app_settings">設定</string>
     <string name="menu_app_store">Playストア</string>
     <string name="menu_accounts">許可するアカウントを選択</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">許可する電話帳を選択</string>
     <string name="msg_new">新規</string>
     <string name="msg_update">更新</string>
-    <string name="msg_restricted" formatted="false">%s をXPrivacyが制限しました</string>
     <string name="msg_licensed" formatted="false">ライセンス先: %s</string>
     <string name="msg_loading">読み込み中</string>
     <string name="msg_edit">アプリアイコンをタップすると全ての権限の制限を設定できます</string>
@@ -57,6 +59,7 @@
     <string name="restrict_network">ネットワーク (アドレス)</string>
     <string name="restrict_notifications">通知</string>
     <string name="restrict_phone">電話 (ID, 電話番号, 通話)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">ストレージ (メディア, SDカード)</string>
     <string name="restrict_shell">シェル (コマンド, Superuser)</string>
     <string name="restrict_system">システム (インストール済みアプリ)</string>
@@ -76,6 +79,7 @@
     <string name="title_frestricted">制限済みを表示</string>
     <string name="title_fuser">ユーザーアプリを表示</string>
     <string name="title_fsystem">システムアプリを表示</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
@@ -83,11 +87,16 @@
     <string name="settings_ip">IP アドレス</string>
     <string name="settings_phone">電話番号</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">国</string>
     <string name="settings_operator">キャリア</string>
     <string name="settings_subscriber">契約者固有ID</string>
     <string name="settings_ua">ユーザーエージェント</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">デバッグログ(要再起動)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>

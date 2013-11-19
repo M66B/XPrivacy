@@ -20,16 +20,18 @@
     <string name="menu_about">O programu</string>
     <string name="menu_help">Pomoč</string>
     <string name="menu_all">Vse</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Uporabi predlogo</string>
     <string name="menu_clear">Počisti</string>
     <string name="menu_app_launch">Zaženi</string>
     <string name="menu_app_settings">Podrobnosti programa</string>
     <string name="menu_app_store">Trgovina Play</string>
     <string name="menu_accounts">Izberi dovoljene račune</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Izberi dovoljene stike</string>
     <string name="msg_new">Novo</string>
     <string name="msg_update">Posodobitev</string>
-    <string name="msg_restricted" formatted="false">Pravica %s omejena s programom XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licencirano na: %s</string>
     <string name="msg_loading">Nalagam</string>
     <string name="msg_edit">Za spreminjanje pravic klikni na ikono programa</string>
@@ -57,6 +59,7 @@
     <string name="restrict_network">Omrežje (naslovi)</string>
     <string name="restrict_notifications">Obvestila</string>
     <string name="restrict_phone">Telefon (ID, številke, klici)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Pomnilnik (medij, SD kartica)</string>
     <string name="restrict_shell">Lupina (ukazi, superuser)</string>
     <string name="restrict_system">Sistem (nameščeni programi)</string>
@@ -78,6 +81,7 @@
     <string name="title_frestricted">Filtriraj po omejitvah</string>
     <string name="title_fuser">Filtriraj uporabniške programe</string>
     <string name="title_fsystem">Filtriraj sistemske programe</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
@@ -85,11 +89,16 @@
     <string name="settings_ip">IP naslov</string>
     <string name="settings_phone">Telefonska številka</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Država</string>
     <string name="settings_operator">Operater</string>
     <string name="settings_subscriber">ID naročnika</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (zahteva ponovni zagon)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>

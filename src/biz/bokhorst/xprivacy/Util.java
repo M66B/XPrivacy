@@ -36,12 +36,14 @@ public class Util {
 	private static boolean mPro = false;
 	private static boolean mLog = true;
 	private static boolean mLogDetermined = false;
+	private static String LICENSE_NAME = "XPrivacy_license.txt";
 
 	public static void log(XHook hook, int priority, String msg) {
 		// Check if logging enabled
 		if (Process.myUid() != 0 && !mLogDetermined) {
+			mLog = false;
 			mLogDetermined = true;
-			mLog = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingLog, false, true);
+			mLog = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingLog, false, false);
 		}
 
 		// Log if enabled
@@ -134,13 +136,40 @@ public class Util {
 
 	public static String[] getLicense() {
 		// Get license file name
-		String folder = Environment.getExternalStorageDirectory().getAbsolutePath();
-		String fileName = folder + File.separator + "XPrivacy_license.txt";
-		File licenseFile = new File(fileName);
-		if (!licenseFile.exists()) {
-			fileName = folder + File.separator + ".xprivacy" + File.separator + "XPrivacy_license.txt";
-			licenseFile = new File(fileName);
+		String storageDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+		File licenseFile = new File(storageDir + File.separator + LICENSE_NAME);
+		if (!licenseFile.exists())
+			licenseFile = new File(storageDir + File.separator + ".xprivacy" + File.separator + LICENSE_NAME);
+
+		// Get imported license file name
+		String packageName = Util.class.getPackage().getName();
+		String importedLicense = Environment.getDataDirectory() + File.separator + "data" + File.separator
+				+ packageName + File.separator + LICENSE_NAME;
+
+		// Import license file
+		if (licenseFile.exists()) {
+			try {
+				File out = new File(importedLicense);
+				Util.log(null, Log.WARN, "Licensing: importing " + out.getAbsolutePath());
+				InputStream is = new FileInputStream(licenseFile.getAbsolutePath());
+				OutputStream os = new FileOutputStream(out.getAbsolutePath());
+				byte[] buffer = new byte[1024];
+				int read;
+				while ((read = is.read(buffer)) != -1)
+					os.write(buffer, 0, read);
+				is.close();
+				os.flush();
+				os.close();
+
+				out.setWritable(false);
+				licenseFile.delete();
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 		}
+
+		// Check license file
+		licenseFile = new File(importedLicense);
 		if (licenseFile.exists()) {
 			// Read license
 			try {
@@ -154,7 +183,7 @@ public class Util {
 				return null;
 			}
 		} else
-			Util.log(null, Log.INFO, "Licensing: no license folder=" + Environment.getExternalStorageDirectory());
+			Util.log(null, Log.INFO, "Licensing: no license file");
 		return null;
 	}
 

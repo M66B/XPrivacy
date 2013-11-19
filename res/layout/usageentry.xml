@@ -12,6 +12,14 @@
         android:textIsSelectable="false" />
 
     <ImageView
+        android:id="@+id/imgIcon"
+        android:layout_width="16dip"
+        android:layout_height="16dip"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="2dip"
+        android:contentDescription="@string/help_application" />
+
+    <ImageView
         android:id="@+id/imgRestricted"
         android:layout_width="16dip"
         android:layout_height="16dip"

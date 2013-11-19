@@ -20,16 +20,18 @@
     <string name="menu_about">О</string>
     <string name="menu_help">Help</string>
     <string name="menu_all">Све</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Покрени</string>
     <string name="menu_app_settings">Подешавања</string>
     <string name="menu_app_store">Продавница Плеј</string>
     <string name="menu_accounts">Изабери дозвољене рачуне</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Изабери дозвољене контакте</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s restricted by XPrivacy</string>
     <string name="msg_licensed" formatted="false">Лиценциран %s</string>
     <string name="msg_loading">Учитавање</string>
     <string name="msg_edit">Click the application icon to edit all restrictions</string>
@@ -57,6 +59,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_network">Мрежа (адресе)</string>
     <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Телефон (ИД, бројеви, позиви)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Уложни простор (медија, СД карта)</string>
     <string name="restrict_shell">Шел (команде, суперкорисник)</string>
     <string name="restrict_system">Систем (инсталиране апликације)</string>
@@ -76,6 +79,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_frestricted">Filter on restricted</string>
     <string name="title_fuser">Filter on user applications</string>
     <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Ширина</string>
     <string name="settings_lon">Дужина</string>
@@ -83,11 +87,16 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">Број телефона</string>
     <string name="settings_id">ИД Андроида</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Земља</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Претплатнички ИД</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Апликација</string>
     <string name="help_internet">има дозволу за Интернет</string>
     <string name="help_granted">има дозволу за Андроид</string>

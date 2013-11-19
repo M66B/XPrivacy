@@ -20,16 +20,18 @@
     <string name="menu_about">Σχετικά</string>
     <string name="menu_help">Βοήθεια</string>
     <string name="menu_all">Όλα</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Εκκαθάριση</string>
     <string name="menu_app_launch">Εκκίνηση</string>
     <string name="menu_app_settings">Λεπτομέρειες εφαρμογής</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Επιλογή επιτρεπόμενων λογαριασμών</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Επιλογή επιτρεπόμενων επαφών</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s περιορίστικε από το XPrivacy</string>
     <string name="msg_licensed" formatted="false">Άδεια για: %s</string>
     <string name="msg_loading">Φόρτωση</string>
     <string name="msg_edit">Πιέστε το εικονίδιο της εφαρμογής για επεξεργασία όλων των περιορισμών</string>
@@ -57,6 +59,7 @@
     <string name="restrict_network">Δίκτυο (διευθύνσεις)</string>
     <string name="restrict_notifications">Ειδοποιήσεις</string>
     <string name="restrict_phone">Τηλέφωνο (στοιχεία, αριθμοί, κλήσεις)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Αποθ. χώρος (πολυμέσα, κάρτα SD)</string>
     <string name="restrict_shell">Shell (εντολές, superuser)</string>
     <string name="restrict_system">Σύστημα (εγκατεστημένες εφαρμογές)</string>
@@ -76,6 +79,7 @@
     <string name="title_frestricted">Filter on restricted</string>
     <string name="title_fuser">Filter on user applications</string>
     <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Σειριακός αριθμός</string>
     <string name="settings_lat">Γεωγρ. πλάτος</string>
     <string name="settings_lon">Γεωγρ. μήκος</string>
@@ -83,11 +87,16 @@
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">Αριθμός τηλεφώνου</string>
     <string name="settings_id">Αναγνωριστικό android</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Χώρα</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Αναγνωριστικό συνδρομητή</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Εφαρμογή</string>
     <string name="help_internet">έχει άδεια internet</string>
     <string name="help_granted">έχει άδεια Android</string>

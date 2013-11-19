@@ -21,13 +21,12 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:shrinkColumns="2"
             android:stretchColumns="2" >
 
             <TableRow>
 
-                <View
-                    android:text="@string/settings_serial"
-                    android:textIsSelectable="false" />
+                <View />
 
                 <TextView
                     android:layout_span="2"
@@ -45,7 +44,6 @@
 
                 <EditText
                     android:id="@+id/etSerial"
-                    android:layout_width="10dip"
                     android:hint="DEFACE"
                     android:inputType="textNoSuggestions" />
             </TableRow>
@@ -91,6 +89,7 @@
 
                 <EditText
                     android:id="@+id/etSearch"
+                    android:hint="Christmas Island"
                     android:inputType="textNoSuggestions" />
             </TableRow>
 
@@ -187,6 +186,21 @@
             <TableRow>
 
                 <TextView
+                    android:text="@string/settings_adid"
+                    android:textIsSelectable="false" />
+
+                <CheckBox android:id="@+id/cbAdId" />
+
+                <EditText
+                    android:id="@+id/etAdId"
+                    android:digits="0123456789ABCDEF-"
+                    android:hint="DEFACE00-0000-0000-0000-000000000000"
+                    android:inputType="textCapCharacters|textNoSuggestions" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
                     android:text="@string/settings_mcc"
                     android:textIsSelectable="false" />
 
@@ -264,12 +278,25 @@
                     android:text="@string/settings_subscriber"
                     android:textIsSelectable="false" />
 
-                <View />
+                <CheckBox android:id="@+id/cbSubscriber" />
 
                 <EditText
                     android:id="@+id/etSubscriber"
                     android:inputType="numberDecimal|textNoSuggestions"
                     android:maxLength="15" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/settings_ssid"
+                    android:textIsSelectable="false" />
+
+                <CheckBox android:id="@+id/cbSSID" />
+
+                <EditText
+                    android:id="@+id/etSSID"
+                    android:inputType="text|textNoSuggestions" />
             </TableRow>
 
             <TableRow>
@@ -287,10 +314,34 @@
         </TableLayout>
 
         <CheckBox
+            android:id="@+id/cbNotify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_notify" />
+
+        <CheckBox
+            android:id="@+id/cbUsage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_usage" />
+
+        <CheckBox
+            android:id="@+id/cbExtra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_extra" />
+
+        <CheckBox
             android:id="@+id/cbLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_log" />
+
+        <CheckBox
+            android:id="@+id/cbExpert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_expert" />
 
         <Button
             android:id="@+id/btnRandom"

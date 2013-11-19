@@ -39,7 +39,7 @@ XPrivacy doesn't revoke (i.e. block) permissions from an application,
 which means that most applications will continue to work as before and won't force close.
 There are two exceptions to this, access to the internet and to external storage (typically an SD card)
 is restricted by denying access (revoking permissions).
-There is no other way to realize this, since these permissions are handled by Android in a special way.
+There is no other way to implement this, since these permissions are handled by Android in a special way.
 Android delegates handling of these permission to the underlying Linux network/file system.
 XPrivacy will fake offline (internet) and/or unmounted (storage) state,
 but some applications try to access the internet/storage nevertheless,
@@ -83,8 +83,6 @@ Donate a few dollars for the [pro version](http://www.faircode.eu/xprivacy/)
 OR
 
 buy [the pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) from Google play
-
-(note that you cannot fetch [crowd sourced restrictions](http://updates.faircode.eu/xprivacy) with the pro enabler, only with the pro license)
 
 OR
 
@@ -147,6 +145,10 @@ For easy usage, data is restricted by category:
 	* return a fake host name
 	* return a fake Google services framework ID
 	* return file not found for folder /proc
+	* return a fake Google advertising ID
+	* return a fake system property cid (Card Identification Register)
+	* return file not found for /sys/block/.../cid
+	* return file not found for /sys/class/.../cid
 * Internet
 	* revoke access to the internet
 	* return fake disconnected state
@@ -188,14 +190,14 @@ For easy usage, data is restricted by category:
 * Notifications
 	* prevent receiving statusbar notifications (Android 4.3+)
 	* prevent [C2DM](https://developers.google.com/android/c2dm/) messages
-* Phone:
+* Phone
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID (IMSI for a GSM phone)
 	* return a fake phone device ID (IMEI): 000000000000000
 	* return a fake phone type: GSM (matching IMEI)
 	* return a fake network type: unknown
-	* return a empty ISIM/ISIM domain
-	* return a empty IMPI/IMPU
+	* return an empty ISIM/ISIM domain
+	* return an empty IMPI/IMPU
 	* return a fake MSISDN
 	* return fake mobile network info
 		* Country: XX
@@ -217,10 +219,13 @@ For easy usage, data is restricted by category:
 		* Service state changed (service/no service)
 		* Signal level changed
 	* return an empty group identifier level 1
+* Sensors
+	* return an empty default sensor
+	* return an empty list of sensors
 * Shell
-	* Linux shell
-	* Superuser shell
-	* Load/library (by default not restricted)
+	* return I/O exception for Linux shell
+	* return I/O exception for Superuser shell
+	* return unsatisfied link error for load/loadLibrary
 * Storage
 	* revoke permission to the [media storage](http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/)
 	* revoke permission to the external storage (SD card)
@@ -254,8 +259,6 @@ Compatibility
 XPrivacy has been tested with CyanogenMod 10, 10.1 and 10.2 (Android 4.1, 4.2 and 4.3),
 and is reported to work with most Android version 4.0, 4.1, 4.2 and 4.3 variants, including stock ROMs.
 
-* **LG L7, stock Android 4.0.3**: know to restart/freeze now and then ([issue](https://github.com/M66B/XPrivacy/issues/694))
-
 Installation
 ------------
 
@@ -272,8 +275,6 @@ It seems like a lot of steps, but it is done in no time:
 1. Enable *System settings* > *Security* > *Unknown sources*
 1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 	* Be sure to install [the latest version](http://dl.xposed.info/latest.apk)
-	* Download and copy the *Xposed* disabler to your SD card to disable Xposed in case of troubles
-	* [MIUI](http://en.miui.com/) is not supported by Xposed
 	* The Xposed fix is not needed anymore
 1. Download and install XPrivacy from [here](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
 	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
@@ -300,9 +301,6 @@ Upgrading
 
 When following this procedure your data will not leak, because the Xposed part of XPrivacy keeps running.
 
-You can check for updates using the options menu.
-If there is an update the browser will download it.
-
 Usage
 -----
 
@@ -313,7 +311,7 @@ The default category is *All*, meaning that all data categories will be restrict
 Tapping on an application icon shows the detailed view, where all the data categories for the selected application can be managed.
 This view will also appear by tapping on the notification that appears after updating or installing an application.
 By default all data categories will be restricted for new installed applications to prevent leaking privacy sensitive data from the beginning.
-You can change wich data categories will be restricted by changing the *Template* available from the main menu.
+You can change which data categories will be restricted by changing the *Template* available from the main menu.
 
 Data categories exist to make it easier to manage restrictions.
 The data categories in the detailed view can be drilled down to individual functions.
@@ -343,6 +341,17 @@ Some category and function restrictions are considered dangerous.
 These categories and functions are marked with a redish background color.
 Some applications will crash if you restrict these categories and/or functions.
 
+There are global settings and application specific settings,
+respectively accessible from the menu of the application list and the menu of the application details view.
+The global settings, like a randomized or set latitude/longitude, apply to all applications,
+unless you set any application specific setings.
+In that case all global settings are overriden by the application specific settings.
+There is one special case: saving empty specific application settings (you can use the clear button)
+will erase all application specific settings, so that the global settings will be used again.
+
+The template, available from the main menu is applied to newly installed applications
+or if you use the menu apply template from the application details view.
+
 **Using XPrivacy is entirely at your own risk**
 
 Permissions
@@ -371,7 +380,7 @@ Almost nothing.
 
 **(3) Can you help me with rooting my device?**
 
-There are already enough guides to help you to root your device.
+There are already enough [guides](http://www.androidcentral.com/root) to help you to root your device.
 Use your favorite search engine to find one.
 
 **(5) How can I reset all XPrivacy settings?**
@@ -401,7 +410,7 @@ although this is fortunately rare.
 An internal check of XPrivacy failed, resulting in potential data leakage.
 Please press *OK* to send me the support information, so I can look into it.
 
-**(15) What is the procedure for a ROM upate?**
+**(15) What is the procedure for a ROM update?**
 
 The right order for ROM updates is:
 
@@ -413,7 +422,7 @@ The right order for ROM updates is:
 1. Re-activate Xposed using [Xposed toggle](http://forum.xda-developers.com/showpost.php?p=45188739)
 1. Reboot to Android
 1. Restore the android ID (when needed; with for example [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup))
-1. Clear XPrivacy data
+1. Clear XPrivacy data (please note that this will erase the imported pro license file if any)
 1. Import XPrivacy settings
 1. Disable flight mode
 
@@ -446,7 +455,7 @@ It would slow down your device significantly if XPrivacy would notify data usage
 
 Newly installed applications are by default fully restricted.
 Restricting an application should not result into any force closes (crashes),
-please create an issue if this happens (see the support secion below),
+please create an issue if this happens (see the support section below),
 it only means that an application cannot see the restricted data.
 If an application should see the data, you can remove the associated restriction at any time.
 
@@ -465,14 +474,14 @@ Try disabling your popup blocker or download using another computer.
 
 **(22) How can I make a logcat?**
 
-See [here](http://forum.xda-developers.com/showthread.php?t=1726238).
+Enable logging using the settings menu and see [here](http://forum.xda-developers.com/showthread.php?t=1726238).
 
 **(23) Where are the settings of XPrivacy stored?**
 
 The restriction settings of XPrivacy are stored as private application data.
 It is possible to backup the application and the data,
 but you can restore it onto the same environment (device/ROM) only.
-This is because Android assigns different UID's to the same applications on different devices.
+This is because Android assigns different uid's to the same applications on different devices.
 Exporting settings on one device and importing settings onto another device will work,
 but this requires the [pro version](http://www.faircode.eu/xprivacy/).
 If you want to backup the exported settings, they are in the folder *.xprivacy* on the SD card.
@@ -488,7 +497,7 @@ For this you need the [pro version](http://www.faircode.eu/xprivacy/).
 Exported settings are stored in the folder *.xprivacy* in the file *XPrivacy.xml*.
 You can copy this file to the same place on a second device.
 When importing, settings are only applied to applications that exist on the second device.
-This also applies to system apps.
+This also applies to system applications.
 
 Note that allowed accounts and allowed contacts (not the accounts and contacts itself)
 can only be imported when the android ID is the same.
@@ -503,7 +512,7 @@ The idea is that everything should appear as normal as possible to an applicatio
 **(29) How about multi-user support?**
 
 The XPrivacy engine works deep within Android and has no information about users.
-Each application is identified by a *uid* and all restictions are based on this unique identifier.
+Each application is identified by a *uid* and all restrictions are based on this unique identifier.
 Each user has his own set of applications.
 Each user can manage the restrictions for the applications available to him/her.
 If Android uses the same uid for an application that two users share,
@@ -532,16 +541,23 @@ No, because these OS'es are to closed to implement something like XPrivacy.
 
 **(35) Will you restrict ...?**
 
-* The device manufacturer
+* The device brand/manufacturer
 * The device model/product name
 * Synchronization state
 * Screen locking
 * Display settings
 * Wi-Fi settings
 * Bluetooth settings
+* Shortcuts
+* Android version
+* Starting of applications
 
 No, because I don't consider this as privacy sensitive data.
 I am happy to add new restrictions for data that is really privacy sensitive.
+
+**(36) What does expert mode?**
+
+Expert mode disables the dangerous restrictions warning.
 
 Support
 -------
@@ -549,6 +565,7 @@ Support
 If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues),
 including a [logcat](http://developer.android.com/tools/help/logcat.html)
 (use [pastebin](http://pastebin.com/) or a similar service).
+Don't forget to enable XPrivacy logging using the settings menu!
 
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
@@ -590,12 +607,12 @@ The CyanogenMod Incognito Mode seems not to be fine grained and provides only pr
 if the associated content provider chooses to do so.
 
 The *Per App Settings Module* revokes permissions like LBE Privacy Guard does.
-This modules offers a lot of other, intersting features.
+This modules offers a lot of other, interesting features.
 
 Android 4.3+ Permission Manager is like CyanogenMod Incognito Mode.
 
 XPrivacy can restrict more data than any of the above solutions,
-including closed source applications and libraries, like Google Play services.
+also for closed source applications and libraries, like Google Play services.
 
 News
 ----
@@ -645,6 +662,7 @@ Current translations:
 1. Slovenian (sl)
 1. Spanish (es)
 1. Swedish (sv)
+1. Traditional Chinese (zh-rTW)
 1. Turkish (tr)
 1. Vietnamese (vi)
 

@@ -13,9 +13,14 @@ public class BootReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent bootIntent) {
 		// Randomize settings
-		randomizeSettings(context, 0);
-		for (ApplicationInfo aInfo : context.getPackageManager().getInstalledApplications(0))
-			randomizeSettings(context, aInfo.uid);
+		final Context fContext = context;
+		new Thread(new Runnable() {
+			public void run() {
+				randomizeSettings(fContext, 0);
+				for (ApplicationInfo aInfo : fContext.getPackageManager().getInstalledApplications(0))
+					randomizeSettings(fContext, aInfo.uid);
+			}
+		}).start();
 
 		// Check if Xposed enabled
 		if (Util.isXposedEnabled())
@@ -65,8 +70,14 @@ public class BootReceiver extends BroadcastReceiver {
 					PrivacyManager.getRandomProp("ANDROID_ID"));
 			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingGsfId,
 					PrivacyManager.getRandomProp("GSF_ID"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAdId,
+					PrivacyManager.getRandomProp("AdvertisingId"));
 			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingCountry,
 					PrivacyManager.getRandomProp("ISO3166"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSubscriber,
+					PrivacyManager.getRandomProp("SubscriberId"));
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSSID,
+					PrivacyManager.getRandomProp("SSID"));
 		}
 	}
 }

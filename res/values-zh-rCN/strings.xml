@@ -1,99 +1,108 @@
 <resources>
 
     <string name="app_notxposed" formatted="false">Xposed 框架版本 %d+ 未安装</string>
-    <string name="app_notenabled">XPrivacy 没有在 Xposed 程序中启用</string>
-    <string name="app_wrongandroid">仅支持安卓 4.0 以上的版本</string>
+    <string name="app_notenabled">XPrivacy 没有在 Xposed 框架中启用</string>
+    <string name="app_wrongandroid">仅支持 Android 4.0 以上的版本</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
     <string name="app_copyright">版权所有 \u00A9 2013 M. Bokhorst (M66B)</string>
-    <string name="menu_usage">日志</string>
-    <string name="menu_refresh">刷新</string>
-    <string name="menu_settings">设置</string>
-    <string name="menu_template">默认模板</string>
+    <string name="menu_usage">权限使用日志（所有应用）</string>
+    <string name="menu_refresh">刷新应用列表</string>
+    <string name="menu_settings">用于被限制应用的模拟信息</string>
+    <string name="menu_template">新安装应用默认权限模板</string>
     <string name="menu_report">报告问题</string>
-    <string name="menu_export">导出配置</string>
-    <string name="menu_import">导入配置</string>
-    <string name="menu_submit">上传规则</string>
-    <string name="menu_fetch">下载规则</string>
-    <string name="menu_theme">切换主题</string>
-    <string name="menu_pro">专业版</string>
+    <string name="menu_export">导出全局配置到本地存储器</string>
+    <string name="menu_import">导入本地存储器上的全局配置</string>
+    <string name="menu_submit">上传权限限制规则</string>
+    <string name="menu_fetch">下载权限限制规则</string>
+    <string name="menu_theme">切换明/暗主题</string>
+    <string name="menu_pro">捐赠/升级到专业版</string>
     <string name="menu_about">关于</string>
     <string name="menu_help">帮助</string>
-    <string name="menu_all">全部</string>
-    <string name="menu_apply">应用模板</string>
-    <string name="menu_clear">清除</string>
-    <string name="menu_app_launch">启动</string>
-    <string name="menu_app_settings">设置</string>
+    <string name="menu_all">全部权限</string>
+    <string name="menu_restriction_all">全选/不选列表中的应用</string>
+    <string name="menu_usage_all">过滤器开关</string>
+    <string name="menu_apply">套用默认权限模板</string>
+    <string name="menu_clear">清除默认权限模板</string>
+    <string name="menu_app_launch">启动应用</string>
+    <string name="menu_app_settings">应用信息</string>
     <string name="menu_app_store">Play 商店</string>
-    <string name="menu_accounts">选择允许的帐号</string>
-    <string name="menu_contacts">选择允许的联系人</string>
-    <string name="msg_new">新安装</string>
+    <string name="menu_accounts">选择允许访问的帐号</string>
+    <string name="menu_applications">选择允许访问的应用</string>
+    <string name="menu_contacts">选择允许访问的联系人</string>
+    <string name="msg_new">已安装</string>
     <string name="msg_update">已升级</string>
-    <string name="msg_restricted" formatted="false">%s 被 XPrivacy 限制</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
-    <string name="msg_loading">加载中</string>
-    <string name="msg_edit">点击应用图标修改所有权限</string>
-    <string name="msg_sure">你确定吗?</string>
-    <string name="msg_done">完成</string>
+    <string name="msg_loading">加载中…</string>
+    <string name="msg_edit">点击应用图标以调整详细限制规则</string>
+    <string name="msg_sure">是否确定？</string>
+    <string name="msg_done">已完成</string>
     <string name="msg_reboot">设备需要重启</string>
     <string name="msg_random">生成随机数值</string>
-    <string name="msg_random_boot">重启生成随机数值</string>
-    <string name="msg_first"><b>XPrivacy的开发和测试工作已经非常全面和细致,
-但仍然不可能保证它能完美兼容所有设备及应用.
-\n\n使用者完全自担风险.</b>\n\n另请参阅许可:</string>
-    <string name="restrict_accounts">账户 (Google, Facebook等)</string>
-    <string name="restrict_browser">浏览器 (书签/历史)</string>
+    <string name="msg_random_boot">设备启动时重新生成随机数值</string>
+    <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
+但仍然不可能保证它能完美兼容所有设备及应用。
+\n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
+    <string name="restrict_accounts">账户（ Google/Facebook 账户）</string>
+    <string name="restrict_browser">浏览器（收藏夹/历史）</string>
     <string name="restrict_calendar">日历</string>
-    <string name="restrict_calling">通话 (语音, 短信, 彩信)</string>
+    <string name="restrict_calling">通讯（语音呼叫/发送短信/发送彩信）</string>
     <string name="restrict_clipboard">剪贴板</string>
-    <string name="restrict_contacts">联系人</string>
-    <string name="restrict_dictionary">词典 (用户)</string>
+    <string name="restrict_contacts">联系人（通讯录）</string>
+    <string name="restrict_dictionary">词典（用户词典）</string>
     <string name="restrict_email">E-mail</string>
-    <string name="restrict_identification">识别码 (设备)</string>
-    <string name="restrict_internet">互联网</string>
-    <string name="restrict_location">位置 (精细/粗略)</string>
-    <string name="restrict_media">媒体 (声音, 图片, 视频)</string>
-    <string name="restrict_messages">信息 (短信, 彩信)</string>
-    <string name="restrict_network">网络 (地址)</string>
-    <string name="restrict_notifications">通知</string>
-    <string name="restrict_phone">手机 (ID, 电话号码, 通话)</string>
-    <string name="restrict_storage">存储 (媒体, SD 卡)</string>
-    <string name="restrict_shell">Shell (命令, 超级用户)</string>
-    <string name="restrict_system">系统 (已安装的应用)</string>
-    <string name="restrict_view">查看 (浏览器)</string>
-    <string name="title_category">类目:</string>
+    <string name="restrict_identification">识别码（设备识别信息）</string>
+    <string name="restrict_internet">互联网（网络通讯）</string>
+    <string name="restrict_location">位置（精确/粗略）</string>
+    <string name="restrict_media">媒体（声音/图片/视频）</string>
+    <string name="restrict_messages">信息（短信/彩信）</string>
+    <string name="restrict_network">网络状态（ IP 地址）</string>
+    <string name="restrict_notifications">通知（通知栏提示）</string>
+    <string name="restrict_phone">电话（电话号码/通话状态）</string>
+    <string name="restrict_sensors">感应器（重力方向/光线强度）</string>
+    <string name="restrict_storage">存储（内置存储器/存储卡）</string>
+    <string name="restrict_shell">命令行（执行命令/获得超级用户权限）</string>
+    <string name="restrict_system">系统（查看已安装的应用）</string>
+    <string name="restrict_view">显示网页（内置浏览器）</string>
+    <string name="title_category">权限类型:</string>
     <string name="title_restrict">勾选表示限制:</string>
     <string name="title_nofilter">无过滤器</string>
 
     <plurals name="title_filters">
-        <item quantity="one">1 过滤器</item>
-        <item quantity="other">%d 过滤器</item>
+        <item quantity="one">1 个已启用的过滤器</item>
+        <item quantity="other">%d 个已启用的过滤器</item>
     </plurals>
 
-    <string name="title_fused">未用数据过滤</string>
-    <string name="title_finternet">无联网权过滤</string>
-    <string name="title_fpermission">无关权限过滤</string>
-    <string name="title_frestricted">未勾限制过滤</string>
-    <string name="title_fuser">显示用户应用</string>
-    <string name="title_fsystem">显示系统应用</string>
+    <string name="title_fused">曾使用当前选中权限的应用</string>
+    <string name="title_finternet">含有联网权限的应用</string>
+    <string name="title_fpermission">仅显示应用已申请的权限</string>
+    <string name="title_frestricted">仅显示已限制权限的应用</string>
+    <string name="title_fuser">仅显示用户应用</string>
+    <string name="title_fsystem">仅显示系统应用</string>
+    <string name="title_fnot">反选</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
     <string name="settings_mac">MAC 地址</string>
     <string name="settings_ip">IP 地址</string>
-    <string name="settings_phone">手机号码</string>
+    <string name="settings_phone">电话号码</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">广告 ID</string>
     <string name="settings_country">国家</string>
     <string name="settings_operator">运营商</string>
     <string name="settings_subscriber">IMSI</string>
-    <string name="settings_ua">UA</string>
-    <string name="settings_log">调试日志 (需要重启)</string>
-    <string name="help_application">应用</string>
-    <string name="help_internet">表示联网的权限</string>
-    <string name="help_granted">表示授予的权限</string>
-    <string name="help_used">表示使用的数据</string>
-    <string name="help_frozen">表示应用被冻结</string>
-    <string name="help_dangerous">表示勿轻易限制</string>
+    <string name="settings_ua">User Agent</string>
+    <string name="settings_notify">通知栏提示</string>
+    <string name="settings_usage">Android 应用用量统计数据（需要重启）</string>
+    <string name="settings_extra">额外用量统计数据（需要重启）</string>
+    <string name="settings_log">调试日志（需要重启）</string>
+    <string name="settings_expert">专家模式</string>
+    <string name="help_application">应用详情</string>
+    <string name="help_internet">应用含有联网权限</string>
+    <string name="help_granted">应用已申请的权限（ Androidmanifest 中表明）</string>
+    <string name="help_used">应用已使用的权限</string>
+    <string name="help_frozen">应用已被冻结/停用</string>
+    <string name="help_dangerous">可能导致应用异常的权限</string>
 
 </resources>
 

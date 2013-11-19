@@ -20,16 +20,18 @@
     <string name="menu_about">Om</string>
     <string name="menu_help">Hjälp</string>
     <string name="menu_all">Alla</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Applicera mall</string>
     <string name="menu_clear">Rensa</string>
     <string name="menu_app_launch">Starta</string>
     <string name="menu_app_settings">Inställningar</string>
     <string name="menu_app_store">Play Butik</string>
     <string name="menu_accounts">Välj tillåtna konton</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Välj kontakter att tillåta</string>
     <string name="msg_new">Ny</string>
     <string name="msg_update">Uppdatera</string>
-    <string name="msg_restricted" formatted="false">%s blockerad av XPrivacy</string>
     <string name="msg_licensed" formatted="false">Licensierat till: %s</string>
     <string name="msg_loading">Laddar</string>
     <string name="msg_edit">Klicka på appikonen för att ändra alla restriktioner</string>
@@ -57,6 +59,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="restrict_network">Nätverk (adresser)</string>
     <string name="restrict_notifications">Notifikationer</string>
     <string name="restrict_phone">Telefon (ID, nummer, samtal)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Lagring (media, SD-kort)</string>
     <string name="restrict_shell">Shell (kommandon, superuser)</string>
     <string name="restrict_system">System (installerade appar)</string>
@@ -76,6 +79,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="title_frestricted">Filtrera efter begränsad</string>
     <string name="title_fuser">Filtrera efter vanliga appar</string>
     <string name="title_fsystem">Filtrera efter systemappar</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
@@ -83,11 +87,16 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="settings_ip">IP-adress</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android-ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Land</string>
     <string name="settings_operator">Operatör</string>
     <string name="settings_subscriber">Abonnent-ID</string>
     <string name="settings_ua">Användaragent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Felsökningslogg (kräver omstart)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Applikation</string>
     <string name="help_internet">har internetbehörighet</string>
     <string name="help_granted">har Android-behörighet</string>

@@ -10,6 +10,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Binder;
 import android.util.Log;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivityManager extends XHook {

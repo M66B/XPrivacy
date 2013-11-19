@@ -20,16 +20,18 @@
     <string name="menu_about">О программе</string>
     <string name="menu_help">Помощь</string>
     <string name="menu_all">Выделить все</string>
+    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Очистить</string>
     <string name="menu_app_launch">Запустить приложение</string>
     <string name="menu_app_settings">Настройки приложения</string>
     <string name="menu_app_store">Play Маркет</string>
     <string name="menu_accounts">Выберите разрешенные учетные записи</string>
+    <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Выберите разрешенные контакты</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_restricted" formatted="false">%s запрещено XPrivacy</string>
     <string name="msg_licensed" formatted="false">Владелец лицензии: %s</string>
     <string name="msg_loading">Загрузка</string>
     <string name="msg_edit">Нажмите на иконку приложения для редактирования всех разрешений</string>
@@ -57,6 +59,7 @@
     <string name="restrict_network">Сеть (адреса)</string>
     <string name="restrict_notifications">Уведомления</string>
     <string name="restrict_phone">Телефон (ID, номера, журнал вызовов)</string>
+    <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Хранилище (медиа, карта памяти)</string>
     <string name="restrict_shell">Команды shell (вкл. суперпользователя)</string>
     <string name="restrict_system">Система (установленные приложения)</string>
@@ -77,6 +80,7 @@
     <string name="title_frestricted">Filter on restricted</string>
     <string name="title_fuser">Filter on user applications</string>
     <string name="title_fsystem">Filter on system applications</string>
+    <string name="title_fnot">Negate</string>
     <string name="settings_serial">Серийный номер</string>
     <string name="settings_lat">Широта</string>
     <string name="settings_lon">Долгота</string>
@@ -84,11 +88,16 @@
     <string name="settings_ip">IP адрес</string>
     <string name="settings_phone">Номер телефона</string>
     <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Страна</string>
     <string name="settings_operator">Оператор</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_notify">Update notifications</string>
+    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Отладочный лог (требует перезагрузки)</string>
+    <string name="settings_expert">Expert mode</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>
