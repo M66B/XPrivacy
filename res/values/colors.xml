@@ -6,6 +6,6 @@
     <color name="color_filter_border">#70707070</color>
     <color name="color_filter_background">#30404040</color>
     <color name="color_filter_background2">#30D0D0D0</color>
-    <color name="home_background_ligth">#ffe5e5e5</color>
+    <color name="home_background_light">#ffe5e5e5</color>
 
 </resources>

@@ -23,7 +23,9 @@ public class SettingsDialog {
 		final int uid = (appInfo == null ? 0 : appInfo.getUid());
 
 		// Build dialog
-		final Dialog dlgSettings = new Dialog(context);
+		String themeName = PrivacyManager.getSetting(null, context, 0, PrivacyManager.cSettingTheme, "", false);
+		int themeId = (themeName.equals("Dark") ? R.style.CustomTheme_Dialog : R.style.CustomTheme_Light_Dialog);
+		final Dialog dlgSettings = new Dialog(context, themeId);
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgSettings.setTitle(context.getString(R.string.app_name));
 		dlgSettings.setContentView(R.layout.settings);
