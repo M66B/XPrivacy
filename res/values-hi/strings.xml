@@ -38,7 +38,8 @@
     <string name="msg_sure">क्या आप निश्चित हैं?</string>
     <string name="msg_done">हो गया</string>
     <string name="msg_reboot">साधन पुनरारंभ करना आवश्यक</string>
-    <string name="msg_random">अटपटा करे</string>
+    <string name="msg_random_now">अटपटा करे</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">रिबूट के पश्चात अटपटा करे</string>
     <string name="msg_first"><b>XPrivacy बनाने मैं बहुत ख्याल रखा गया है,
 किन्तु वह सभी साधन और सभी application के लिए बरोबर चलेगा उसकी गारंटी देना असंभव है।
@@ -92,6 +93,9 @@
     <string name="settings_operator">ऑपरेटर</string>
     <string name="settings_subscriber">ग्राहक क्रमांक</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global settings</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

@@ -46,7 +46,7 @@
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randomize on boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
-however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
+however it is impossible to guarantee it will work flawlessly on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
     <string name="restrict_browser">Browser (bookmarks/history)</string>
@@ -104,6 +104,9 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ssid" translatable="false">SSID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global settings</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

@@ -38,7 +38,8 @@
     <string name="msg_sure">Emin misin?</string>
     <string name="msg_done">Bitti</string>
     <string name="msg_reboot">Yeniden başlatma gerekli</string>
-    <string name="msg_random">Rasgele Oluştur</string>
+    <string name="msg_random_now">Rasgele Oluştur</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Cihaz yeniden başlatılınca tekrar rasgele oluştur</string>
     <string name="msg_first"><b>Xprivacy titizlikle geliştirilmiş ve test edilmiştir, ancak her cihazda veya her uygulamada kusursuz çalışacağını garantilemek imkansızdır.
 \n\nKullanım riski tamamen size aittir.</b>\n\nAyrıca lisansa bakınız:</string>
@@ -91,6 +92,9 @@
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Sim Numarası (IMSI)</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global settings</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

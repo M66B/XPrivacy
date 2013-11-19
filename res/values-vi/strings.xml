@@ -38,7 +38,8 @@
     <string name="msg_sure">Bạn có chắc không?</string>
     <string name="msg_done">Xong</string>
     <string name="msg_reboot">Yêu cầu khởi động lại thiết bị</string>
-    <string name="msg_random">Ngẫu nhiên</string>
+    <string name="msg_random_now">Ngẫu nhiên</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Tạo thông tin ngẫu nhiên khi khởi động</string>
     <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ hoạt động trơn tru trên mọi thiết bị cũng như với mọi ứng dụng.
 \n\nBạn tự chịu trách nhiệm khi sử dụng ứng dụng này.</b>\n\nXem thêm về bản quyền:</string>
@@ -91,6 +92,9 @@
     <string name="settings_operator">Nhà mạng</string>
     <string name="settings_subscriber">ID người đăng kí</string>
     <string name="settings_ua">Nhận dạng trình duyệt</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global settings</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Mức sử dụng hệ thống (yêu cầu khởi động lại)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

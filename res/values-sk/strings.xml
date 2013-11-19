@@ -38,7 +38,8 @@
     <string name="msg_sure">Ste si istý?</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadovaný reštart zariadenia</string>
-    <string name="msg_random">Náhodné hodnoty</string>
+    <string name="msg_random_now">Náhodné hodnoty</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Náhodné hodnoty pri štarte zariadenia</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
@@ -93,6 +94,9 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">Identifikácia prehliadača</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global settings</string>
     <string name="settings_notify">Oznámenia o aktualizáciách</string>
     <string name="settings_usage">Využitie dát (vyžaduje reštart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

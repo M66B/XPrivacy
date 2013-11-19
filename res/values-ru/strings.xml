@@ -38,7 +38,8 @@
     <string name="msg_sure">Вы уверены?</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Требуется перезагрузка</string>
-    <string name="msg_random">Случайные значения</string>
+    <string name="msg_random_now">Случайные значения</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Случайные значения после перезагрузки</string>
     <string name="msg_first"><b>Большое внимание было уделено разработке и тестированию XPrivacy, 
 однако нельзя гарантировать, что оно будет работать безупречно на всех устройствах и со всеми приложениями.
@@ -93,6 +94,9 @@
     <string name="settings_operator">Оператор</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global settings</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

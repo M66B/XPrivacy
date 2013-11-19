@@ -38,7 +38,8 @@
     <string name="msg_sure">Sind Sie sicher?</string>
     <string name="msg_done">Fertig</string>
     <string name="msg_reboot">Geräteneustart erforderlich</string>
-    <string name="msg_random">Zufallswerte erzeugen</string>
+    <string name="msg_random_now">Zufallswerte erzeugen</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
 \ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
@@ -92,6 +93,9 @@
     <string name="settings_operator">Mobilfunkanbieter</string>
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_ua">User-Agent (Browser)</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global settings</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

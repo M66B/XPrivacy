@@ -26,7 +26,7 @@
             android:background="#888888"/>
         
         <TextView
-            android:text="GENERAL"
+            android:text="@string/settings_general"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             android:text="@string/settings_extra" />
         
         <TextView
-            android:text="FAKE DATA"
+            android:text="@string/settings_fake_data"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
             android:id="@+id/cbGlobal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Use global settings" />
+            android:text="@string/settings_global" />
 
         <Button
             android:id="@+id/btnClear"

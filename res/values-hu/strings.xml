@@ -38,7 +38,8 @@
     <string name="msg_sure">Biztos benne?</string>
     <string name="msg_done">Kész</string>
     <string name="msg_reboot">Újraindítás szükséges</string>
-    <string name="msg_random">Véletlenszerűsítés</string>
+    <string name="msg_random_now">Véletlenszerűsítés</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Véletlenszerűsítés boot után</string>
     <string name="msg_first"><b>Az XPrivacy fejlesztése és tesztelése nagy gondossággal történik,
 de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön és az összes alkalmazással.
@@ -92,6 +93,9 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Előfizető azonosító</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global settings</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

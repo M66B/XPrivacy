@@ -38,7 +38,8 @@
     <string name="msg_sure">هل أنت متأكد ؟</string>
     <string name="msg_done">إنتهى</string>
     <string name="msg_reboot">يحتاج إعادة تشغيل</string>
-    <string name="msg_random">عشوائي</string>
+    <string name="msg_random_now">عشوائي</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">عشوائي بعد الإقلاع</string>
     <string name="msg_first"><b>بُذلت عناية كبيرة لتطوير وإختبار XPrivacy,
 ومع ذلك فإنه من المستحيل ضمان أنه سيعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
@@ -92,6 +93,9 @@
     <string name="settings_operator">المُشغل</string>
     <string name="settings_subscriber">IMSI(الهوية العالمية لمشتركي الهواتف)</string>
     <string name="settings_ua">وكيل المستخدم</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global settings</string>
     <string name="settings_notify">تحديث الإشعارات</string>
     <string name="settings_usage">بيانات إستخدام الأندرويد (يتطلب إعادة التشغيل)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

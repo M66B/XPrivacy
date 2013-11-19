@@ -38,7 +38,8 @@
     <string name="msg_sure">Ste prepričani?</string>
     <string name="msg_done">Dokončano</string>
     <string name="msg_reboot">Zahtevan ponovni zagon</string>
-    <string name="msg_random">Randomize</string>
+    <string name="msg_random_now">Randomize</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>Za razvoj in preizkušanje programa XPrivacy je bilo vloženo veliko truda, vendar pa
     je nemogoče zagotoviti brezhibno delovanje na vsaki napravi in za vsak program.\n\nUporaba programa je na lastno
@@ -94,6 +95,9 @@
     <string name="settings_operator">Operater</string>
     <string name="settings_subscriber">ID naročnika</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global settings</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>
