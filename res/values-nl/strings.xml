@@ -95,7 +95,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_ua">User agent</string>
     <string name="settings_general">GENERAL</string>
     <string name="settings_fake_data">FAKE DATA</string>
-    <string name="settings_global">Use global settings</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Bijgewerkt notificaties</string>
     <string name="settings_usage">Android gebruiksgegevens (herstart vereist)</string>
     <string name="settings_extra">Extra gebruiksgegevens (herstart vereist)</string>

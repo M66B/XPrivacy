@@ -95,7 +95,7 @@
     <string name="settings_ua">وكيل المستخدم</string>
     <string name="settings_general">GENERAL</string>
     <string name="settings_fake_data">FAKE DATA</string>
-    <string name="settings_global">Use global settings</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">تحديث الإشعارات</string>
     <string name="settings_usage">بيانات إستخدام الأندرويد (يتطلب إعادة التشغيل)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

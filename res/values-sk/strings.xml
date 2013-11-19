@@ -96,7 +96,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_ua">Identifikácia prehliadača</string>
     <string name="settings_general">GENERAL</string>
     <string name="settings_fake_data">FAKE DATA</string>
-    <string name="settings_global">Use global settings</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Oznámenia o aktualizáciách</string>
     <string name="settings_usage">Využitie dát (vyžaduje reštart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

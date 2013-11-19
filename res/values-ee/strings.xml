@@ -95,7 +95,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="settings_ua">Kasutaja agent</string>
     <string name="settings_general">GENERAL</string>
     <string name="settings_fake_data">FAKE DATA</string>
-    <string name="settings_global">Use global settings</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>
