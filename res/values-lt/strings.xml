@@ -37,7 +37,7 @@
     <string name="msg_edit">Spustelėkite programos piktogramą norėdami redaguoti apribojimus</string>
     <string name="msg_sure">Įsitikinę?</string>
     <string name="msg_done">Atlikta</string>
-    <string name="msg_reboot">Privaloma perkrauti prietaisą!</string>
+    <string name="msg_reboot">Privaloma perkrauti prietaisą</string>
     <string name="msg_random_now">Atsitiktiniai duomenys</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Atsitiktiniai duomenys po perkrovimo</string>
@@ -98,9 +98,9 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Atnaujinimų Pranesimas</string>
     <string name="settings_usage">Android naudojimo duomenys (reikia paleisti iš naujo)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
+    <string name="settings_extra">Papildomi naudojimo duomenys (reikia paleisti iš naujo)</string>
     <string name="settings_log">DEBUG žurnalas (reikia paleisti iš naujo)</string>
-    <string name="settings_expert">Expert mode</string>
+    <string name="settings_expert">Eksperto režimas</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
     <string name="help_granted">Android leidimai</string>
