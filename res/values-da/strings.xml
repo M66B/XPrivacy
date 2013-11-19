@@ -63,7 +63,10 @@
     <string name="restrict_system">System (installerede apps)</string>
     <string name="restrict_view">Vis (browser)</string>
     <string name="title_category">Kategori:</string>
+    <string name="title_categories">Categories</string>
     <string name="title_restrict">Markér for at blokere:</string>
+    <string name="title_filters">Filters</string>
+    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">Intet aktivt filter</string>
 
     <plurals name="title_filters">

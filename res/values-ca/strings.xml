@@ -63,7 +63,10 @@
     <string name="restrict_system">Sistema (aplicacions instal·lades)</string>
     <string name="restrict_view">Vista (navegador)</string>
     <string name="title_category">Categoria:</string>
+    <string name="title_categories">Categories</string>
     <string name="title_restrict">Activa per a restringir:</string>
+    <string name="title_filters">Filters</string>
+    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">Cap filtre actiu</string>
 
     <plurals name="title_filters">

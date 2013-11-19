@@ -65,7 +65,10 @@
     <string name="restrict_system">Sistem (nameščeni programi)</string>
     <string name="restrict_view">Pogled (brskalnik)</string>
     <string name="title_category">Kategorija:</string>
+    <string name="title_categories">Categories</string>
     <string name="title_restrict">Označi za omejitev pravic:</string>
+    <string name="title_filters">Filters</string>
+    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">Ni aktivnih filtrov</string>
 
     <plurals name="title_filters">

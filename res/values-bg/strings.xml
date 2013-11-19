@@ -65,7 +65,10 @@
     <string name="restrict_system">Система (инсталирани приложения)</string>
     <string name="restrict_view">Преглед (браузър)</string>
     <string name="title_category">Category:</string>
+    <string name="title_categories">Categories</string>
     <string name="title_restrict">Отбележи за ограничаване:</string>
+    <string name="title_filters">Filters</string>
+    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">No active filter</string>
 
     <plurals name="title_filters">

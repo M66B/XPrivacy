@@ -65,7 +65,10 @@
     <string name="restrict_system">النظام (البرامج المنزلة)</string>
     <string name="restrict_view">تصفح (المتصفح)</string>
     <string name="title_category">الفئة:</string>
+    <string name="title_categories">Categories</string>
     <string name="title_restrict">إختر للتقيد:</string>
+    <string name="title_filters">Filters</string>
+    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">لايوجد فلتر مُنشّط</string>
 
     <plurals name="title_filters">

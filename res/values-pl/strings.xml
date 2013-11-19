@@ -65,7 +65,10 @@
     <string name="restrict_system">System (zainstalowane aplikacje)</string>
     <string name="restrict_view">Widok (przeglądarka)</string>
     <string name="title_category">Kategoria:</string>
+    <string name="title_categories">Categories</string>
     <string name="title_restrict">Zaznacz aby zablokować:</string>
+    <string name="title_filters">Filters</string>
+    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">Brak aktywnego filtra</string>
 
     <plurals name="title_filters">
