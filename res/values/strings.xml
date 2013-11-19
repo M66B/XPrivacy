@@ -42,8 +42,9 @@
     <string name="msg_sure">Are you sure?</string>
     <string name="msg_done">Done</string>
     <string name="msg_reboot">Device restart required</string>
-    <string name="msg_random">Randomize</string>
-    <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_random_now">Randomize now</string>
+    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_boot">Randomize on boot</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
