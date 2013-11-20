@@ -10,12 +10,16 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Binder;
 import android.provider.Settings;
+import android.util.Log;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSettingsSecure extends XHook {
+	private Methods mMethod;
 
-	private XSettingsSecure(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XSettingsSecure(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -31,9 +35,13 @@ public class XSettingsSecure extends XHook {
 
 	// @formatter:on
 
+	private enum Methods {
+		getString
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XSettingsSecure("getString", PrivacyManager.cIdentification));
+		listHook.add(new XSettingsSecure(Methods.getString, PrivacyManager.cIdentification));
 		return listHook;
 	}
 
@@ -44,10 +52,13 @@ public class XSettingsSecure extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String name = (param.args.length > 1 ? (String) param.args[1] : null);
-		if (Settings.Secure.ANDROID_ID.equals(name))
-			if (param.getResult() != null && isRestricted(param))
-				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "ANDROID_ID"));
+		if (mMethod == Methods.getString) {
+			String name = (param.args.length > 1 ? (String) param.args[1] : null);
+			if (Settings.Secure.ANDROID_ID.equals(name))
+				if (param.getResult() != null && isRestricted(param))
+					param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "ANDROID_ID"));
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override

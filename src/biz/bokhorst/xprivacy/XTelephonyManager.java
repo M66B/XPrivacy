@@ -19,6 +19,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
+
 import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XTelephonyManager extends XHook {

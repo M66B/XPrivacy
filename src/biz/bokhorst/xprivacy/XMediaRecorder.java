@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.util.Log;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XMediaRecorder extends XHook {
+	private Methods mMethod;
 
-	private XMediaRecorder(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XMediaRecorder(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -21,20 +24,23 @@ public class XMediaRecorder extends XHook {
 	// frameworks/base/media/java/android/media/MediaRecorder.java
 	// http://developer.android.com/reference/android/media/MediaRecorder.html
 
+	private enum Methods {
+		setOutputFile
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XMediaRecorder("setOutputFile", PrivacyManager.cMedia));
+		listHook.add(new XMediaRecorder(Methods.setOutputFile, PrivacyManager.cMedia));
 		return listHook;
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("setOutputFile")) {
+		if (mMethod == Methods.setOutputFile) {
 			if (isRestricted(param))
 				param.setResult(null);
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override

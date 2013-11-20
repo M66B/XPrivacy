@@ -5,13 +5,16 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.Binder;
+import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XNfcAdapter extends XHook {
+	private Methods mMethod;
 
-	protected XNfcAdapter(String restrictionName, String methodName) {
-		super(restrictionName, methodName, null);
+	protected XNfcAdapter(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	@Override
@@ -19,20 +22,27 @@ public class XNfcAdapter extends XHook {
 		return "android.nfc.NfcAdapter";
 	}
 
+	private enum Methods {
+		getNfcAdapter
+	};
+
 	// public static synchronized NfcAdapter getNfcAdapter(Context context)
 	// frameworks/base/core/java/android/nfc/NfcAdapter.java
 	// http://developer.android.com/reference/android/nfc/NfcAdapter.html
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XNfcAdapter(PrivacyManager.cNfc, "getNfcAdapter"));
+		listHook.add(new XNfcAdapter(Methods.getNfcAdapter, PrivacyManager.cNfc));
 		return listHook;
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (isRestricted(param))
-			param.setResult(null);
+		if (mMethod == Methods.getNfcAdapter) {
+			if (isRestricted(param))
+				param.setResult(null);
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override

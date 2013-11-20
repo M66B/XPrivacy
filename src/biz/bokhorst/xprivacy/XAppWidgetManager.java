@@ -9,9 +9,11 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XAppWidgetManager extends XHook {
+	private Methods mMethod;
 
-	private XAppWidgetManager(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XAppWidgetManager(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -22,9 +24,13 @@ public class XAppWidgetManager extends XHook {
 	// frameworks/base/core/java/android/appwidget/AppWidgetManager.java
 	// http://developer.android.com/reference/android/appwidget/AppWidgetManager.html
 
+	private enum Methods {
+		getInstalledProviders
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XAppWidgetManager("getInstalledProviders", PrivacyManager.cSystem));
+		listHook.add(new XAppWidgetManager(Methods.getInstalledProviders, PrivacyManager.cSystem));
 		return listHook;
 	}
 
@@ -35,11 +41,10 @@ public class XAppWidgetManager extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("getInstalledProviders")) {
+		if (mMethod == Methods.getInstalledProviders) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<AppWidgetProviderInfo>());
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 }

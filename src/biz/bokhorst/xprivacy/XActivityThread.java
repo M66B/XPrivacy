@@ -18,19 +18,22 @@ import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivityThread extends XHook {
-
+	private Methods mMethod;
 	private String mActionName;
 
-	private XActivityThread(String methodName, String restrictionName, String actionName) {
-		super(restrictionName, methodName, actionName);
+	private XActivityThread(Methods method, String restrictionName, String actionName) {
+		super(restrictionName, method.name(), actionName);
+		mMethod = method;
 		mActionName = actionName;
 	}
 
-	private XActivityThread(String methodName, String restrictionName, String actionName, int sdk) {
-		super(restrictionName, methodName, actionName, sdk);
+	private XActivityThread(Methods method, String restrictionName, String actionName, int sdk) {
+		super(restrictionName, method.name(), actionName, sdk);
+		mMethod = method;
 		mActionName = actionName;
 	}
 
@@ -42,6 +45,10 @@ public class XActivityThread extends XHook {
 	public boolean isVisible() {
 		return false;
 	}
+
+	private enum Methods {
+		handleReceiver
+	};
 
 	// @formatter:off
 
@@ -55,55 +62,59 @@ public class XActivityThread extends XHook {
 		List<XHook> listHook = new ArrayList<XHook>();
 
 		// Intent receive: calling
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cPhone, Intent.ACTION_NEW_OUTGOING_CALL));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cPhone,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cPhone, Intent.ACTION_NEW_OUTGOING_CALL));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cPhone,
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED));
 
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cCalling,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cCalling,
 				TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, Build.VERSION_CODES.JELLY_BEAN_MR2));
 
 		// Intent receive: C2DM
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNotifications,
 				"com.google.android.c2dm.intent.REGISTRATION"));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNotifications,
 				"com.google.android.c2dm.intent.RECEIVE"));
 
 		// Intent receive: NFC
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc,
 				NfcAdapter.ACTION_ADAPTER_STATE_CHANGED, Build.VERSION_CODES.JELLY_BEAN_MR2));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_NDEF_DISCOVERED));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TAG_DISCOVERED));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNfc, NfcAdapter.ACTION_TECH_DISCOVERED));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc, NfcAdapter.ACTION_NDEF_DISCOVERED));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc, NfcAdapter.ACTION_TAG_DISCOVERED));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc, NfcAdapter.ACTION_TECH_DISCOVERED));
 
 		// Intent receive: SMS
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cMessages,
 				Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cMessages,
 				Telephony.Sms.Intents.SMS_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cMessages,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cMessages,
 				Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
 
 		// Intent receive: notifications
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cNotifications,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNotifications,
 				NotificationListenerService.SERVICE_INTERFACE, Build.VERSION_CODES.JELLY_BEAN_MR2));
 
 		// Intent receive: package changes
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_ADDED));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REPLACED));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_RESTARTED));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REMOVED));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem, Intent.ACTION_PACKAGE_ADDED));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REPLACED));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
+				Intent.ACTION_PACKAGE_RESTARTED));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REMOVED));
 
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_CHANGED));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_DATA_CLEARED));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_FIRST_LAUNCH));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_FULLY_REMOVED));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem, Intent.ACTION_PACKAGE_CHANGED));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
+				Intent.ACTION_PACKAGE_DATA_CLEARED));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
+				Intent.ACTION_PACKAGE_FIRST_LAUNCH));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
+				Intent.ACTION_PACKAGE_FULLY_REMOVED));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
 				Intent.ACTION_PACKAGE_NEEDS_VERIFICATION));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem, Intent.ACTION_PACKAGE_VERIFIED));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem, Intent.ACTION_PACKAGE_VERIFIED));
 
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
 				Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE));
-		listHook.add(new XActivityThread("handleReceiver", PrivacyManager.cSystem,
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
 				Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE));
 
 		return listHook;
@@ -112,7 +123,7 @@ public class XActivityThread extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		String methodName = param.method.getName();
-		if (methodName.equals("handleReceiver")) {
+		if (mMethod == Methods.handleReceiver) {
 			if (param.args.length > 0 && param.args[0] != null) {
 				// Get intent
 				Intent intent = null;

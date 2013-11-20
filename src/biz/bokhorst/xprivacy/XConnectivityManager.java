@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.net.NetworkInfo;
 import android.util.Log;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XConnectivityManager extends XHook {

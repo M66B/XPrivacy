@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.util.Log;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XLocationClient extends XHook {
+	private Methods mMethod;
 
-	private XLocationClient(String methodName, String restrictionName) {
-		super(restrictionName, methodName, null);
+	private XLocationClient(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
+		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -19,20 +22,23 @@ public class XLocationClient extends XHook {
 	// void connect()
 	// https://developer.android.com/reference/com/google/android/gms/location/LocationClient.html
 
+	private enum Methods {
+		connect
+	};
+
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XLocationClient("connect", PrivacyManager.cLocation));
+		listHook.add(new XLocationClient(Methods.connect, PrivacyManager.cLocation));
 		return listHook;
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (methodName.equals("connect")) {
+		if (mMethod == Methods.connect) {
 			if (isRestricted(param))
 				param.setResult(null);
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override

@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.10.20 TEST**
+
 * Fixed opening usage data from application details ([issue](https://github.com/M66B/XPrivacy/issues/793))
 * Fixed refreshing application list during fetch restrictions
 * Workaround for PAC boot problem ([issue](https://github.com/M66B/XPrivacy/issues/785))
