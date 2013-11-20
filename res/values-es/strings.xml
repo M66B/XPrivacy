@@ -38,7 +38,8 @@
     <string name="msg_sure">¿Estas seguro?</string>
     <string name="msg_done">Completado</string>
     <string name="msg_reboot">Reinicio requerido</string>
-    <string name="msg_random">Selección aleatoria</string>
+    <string name="msg_random_now">Selección aleatoria</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Selección aleatoria después del arranque</string>
     <string name="msg_first"><b>Gran cuidado se ha tomado para desarrollar y probar XPrivacy,
 sin embargo es imposible garantizar que funcione impecable en todos y cada uno de los dispositivos y para cada aplicación.
@@ -92,6 +93,9 @@ sin embargo es imposible garantizar que funcione impecable en todos y cada uno d
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">ID de subscriptor</string>
     <string name="settings_ua">Agente de usuario</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

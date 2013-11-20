@@ -38,7 +38,8 @@
     <string name="msg_sure">Êtes-vous certain ?</string>
     <string name="msg_done">Effectué</string>
     <string name="msg_reboot">Redémarrage requis</string>
-    <string name="msg_random">Randomiser</string>
+    <string name="msg_random_now">Randomiser maintenant</string>
+    <string name="msg_random_access">Randomiser à chaque accès</string>
     <string name="msg_random_boot">Randomiser après le démarrage</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
@@ -92,6 +93,9 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_operator">Opérateur</string>
     <string name="settings_subscriber">ID Abonné</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_general">GÉNÉRAL</string>
+    <string name="settings_fake_data">FAUSSES DONNÉES</string>
+    <string name="settings_global">Utiliser les valeurs globales</string>
     <string name="settings_notify">Notifications de MàJ</string>
     <string name="settings_usage">Activer usage log (redémarrage nécessaire)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>
@@ -102,6 +106,6 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_granted">a les permissions Android</string>
     <string name="help_used">a utilisé ces données</string>
     <string name="help_frozen">est désactivée</string>
-    <string name="help_dangerous">est dangereuse</string>
+    <string name="help_dangerous">est dangereuse, restreindre peut causer des problèmes</string>
 
 </resources>

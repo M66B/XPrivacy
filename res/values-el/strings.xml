@@ -38,7 +38,8 @@
     <string name="msg_sure">Είστε σίγουρος;</string>
     <string name="msg_done">Τέλος</string>
     <string name="msg_reboot">Απαιτείται επανεκκίνηση</string>
-    <string name="msg_random">Τυχαία διεύθυνση</string>
+    <string name="msg_random_now">Τυχαία διεύθυνση</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Τυχαία διεύθυνση μετά την εκκίνηση</string>
     <string name="msg_first"><b>Μεγάλη προσοχή έχει ληφθεί για την ανάπτυξη και δοκιμή του XPrivacy,
 ωστόσο, είναι αδύνατο να εγγυηθεί ότι θα λειτουργήσει άψογα σε κάθε συσκευή και για κάθε εφαρμογή.
@@ -92,6 +93,9 @@
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Αναγνωριστικό συνδρομητή</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

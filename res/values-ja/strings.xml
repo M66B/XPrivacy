@@ -38,7 +38,8 @@
     <string name="msg_sure">続行しますか?</string>
     <string name="msg_done">完了</string>
     <string name="msg_reboot">再起動してください</string>
-    <string name="msg_random">ランダム化</string>
+    <string name="msg_random_now">ランダム化</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">起動時にランダム化する</string>
     <string name="msg_first"><b>XPrivacyは細心の注意を払って開発･テストしていますが、
 どの端末、どのアプリでも動作するという保証はありません。
@@ -92,6 +93,9 @@
     <string name="settings_operator">キャリア</string>
     <string name="settings_subscriber">契約者固有ID</string>
     <string name="settings_ua">ユーザーエージェント</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

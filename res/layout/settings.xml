@@ -1,373 +1,440 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/drawable_background"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/tvAppName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold" />
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:shrinkColumns="2"
-            android:stretchColumns="2" >
-
-            <TableRow>
-
-                <View />
-
-                <TextView
-                    android:layout_span="2"
-                    android:text="@string/msg_random"
-                    android:textIsSelectable="false" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_serial"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbSerial" />
-
-                <EditText
-                    android:id="@+id/etSerial"
-                    android:hint="DEFACE"
-                    android:inputType="textNoSuggestions" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_lat"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbLat" />
-
-                <EditText
-                    android:id="@+id/etLat"
-                    android:hint="-10.5"
-                    android:inputType="numberDecimal|numberSigned" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_lon"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbLon" />
-
-                <EditText
-                    android:id="@+id/etLon"
-                    android:hint="105.667"
-                    android:inputType="numberDecimal|numberSigned" />
-            </TableRow>
-
-            <TableRow>
-
-                <Button
-                    android:id="@+id/btnSearch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@android:string/search_go" />
-
-                <View />
-
-                <EditText
-                    android:id="@+id/etSearch"
-                    android:hint="Christmas Island"
-                    android:inputType="textNoSuggestions" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_mac"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbMac" />
-
-                <EditText
-                    android:id="@+id/etMac"
-                    android:digits="0123456789ABCDEF:"
-                    android:hint="DE:FA:CE:DE:FA:CE"
-                    android:inputType="textCapCharacters|textNoSuggestions"
-                    android:maxLength="18" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_ip"
-                    android:textIsSelectable="false" />
-
-                <View />
-
-                <EditText
-                    android:id="@+id/etIP"
-                    android:digits="0123456789ABCDEF.:"
-                    android:hint="0.0.0.0"
-                    android:inputType="textCapCharacters|textNoSuggestions" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_imei"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbImei" />
-
-                <EditText
-                    android:id="@+id/etImei"
-                    android:hint="000000000000000"
-                    android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="16" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_phone"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbPhone" />
-
-                <EditText
-                    android:id="@+id/etPhone"
-                    android:hint="DEFACE"
-                    android:inputType="textNoSuggestions|phone" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_id"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbId" />
-
-                <EditText
-                    android:id="@+id/etId"
-                    android:digits="0123456789ABCDEF"
-                    android:hint="DEFACE"
-                    android:inputType="textCapCharacters|textNoSuggestions" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_gsfid"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbGsfId" />
-
-                <EditText
-                    android:id="@+id/etGsfId"
-                    android:digits="0123456789ABCDEF"
-                    android:hint="DEFACE"
-                    android:inputType="textCapCharacters|textNoSuggestions" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_adid"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbAdId" />
-
-                <EditText
-                    android:id="@+id/etAdId"
-                    android:digits="0123456789ABCDEF-"
-                    android:hint="DEFACE00-0000-0000-0000-000000000000"
-                    android:inputType="textCapCharacters|textNoSuggestions" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_mcc"
-                    android:textIsSelectable="false" />
-
-                <View />
-
-                <EditText
-                    android:id="@+id/etMcc"
-                    android:hint="001"
-                    android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="3" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_mnc"
-                    android:textIsSelectable="false" />
-
-                <View />
-
-                <EditText
-                    android:id="@+id/etMnc"
-                    android:hint="01"
-                    android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="3" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_country"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbCountry" />
-
-                <EditText
-                    android:id="@+id/etCountry"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    android:hint="XX"
-                    android:inputType="textCapCharacters|textNoSuggestions"
-                    android:maxLength="2" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_operator"
-                    android:textIsSelectable="false" />
-
-                <View />
-
-                <EditText
-                    android:id="@+id/etOperator"
-                    android:hint="DEFACED"
-                    android:inputType="text|textNoSuggestions" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_iccid"
-                    android:textIsSelectable="false" />
-
-                <View />
-
-                <EditText
-                    android:id="@+id/etIccId"
-                    android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="20" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_subscriber"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbSubscriber" />
-
-                <EditText
-                    android:id="@+id/etSubscriber"
-                    android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="15" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_ssid"
-                    android:textIsSelectable="false" />
-
-                <CheckBox android:id="@+id/cbSSID" />
-
-                <EditText
-                    android:id="@+id/etSSID"
-                    android:inputType="text|textNoSuggestions" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/settings_ua"
-                    android:textIsSelectable="false" />
-
-                <View />
-
-                <EditText
-                    android:id="@+id/etUa"
-                    android:inputType="text|textNoSuggestions" />
-            </TableRow>
-        </TableLayout>
-
-        <CheckBox
-            android:id="@+id/cbNotify"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_notify" />
-
-        <CheckBox
-            android:id="@+id/cbUsage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_usage" />
-
-        <CheckBox
-            android:id="@+id/cbExtra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_extra" />
-
-        <CheckBox
-            android:id="@+id/cbLog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_log" />
-
-        <CheckBox
-            android:id="@+id/cbExpert"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_expert" />
-
-        <Button
-            android:id="@+id/btnRandom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/msg_random" />
-
-        <CheckBox
-            android:id="@+id/cbRandom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/msg_random_boot" />
-
-        <Button
-            android:id="@+id/btnOk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@android:string/ok" />
-
-        <Button
-            android:id="@+id/btnClear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/menu_clear" />
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	
+	        <TextView
+	            android:id="@+id/tvAppName"
+	            android:textSize="22sp"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold" />
+	        
+	        <View 
+	            android:id="@+id/vAppNameBorder"
+	            android:layout_width="fill_parent"
+	            android:layout_height="1dp"
+	            android:background="#888888"/>
+	        
+	        <TextView
+	            android:text="@string/settings_general"
+	            android:layout_marginTop="10dp"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold" />
+	        
+	        <View 
+	            android:layout_width="fill_parent"
+	            android:layout_height="1dp"
+	            android:background="#888888"/>
+	
+	        <CheckBox
+	            android:id="@+id/cbNotify"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/settings_notify" />
+	
+	        <CheckBox
+	            android:id="@+id/cbLog"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/settings_log" />
+	
+	        <CheckBox
+	            android:id="@+id/cbExpert"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/settings_expert" />
+	
+	        <CheckBox
+	            android:id="@+id/cbUsage"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="30dp"
+	            android:text="@string/settings_usage" />
+	
+	        <CheckBox
+	            android:id="@+id/cbExtra"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="30dp"
+	            android:text="@string/settings_extra" />
+	        
+	        <TextView
+	            android:text="@string/settings_fake_data"
+	            android:layout_marginTop="10dp"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold" />
+	        
+	        <View 
+	            android:layout_width="fill_parent"
+	            android:layout_height="1dp"
+	            android:background="#888888"/>
+	
+	        <CheckBox
+	            android:id="@+id/cbGlobal"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/settings_global" />
+	
+	        <Button
+	            android:id="@+id/btnClear"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/menu_clear" />
+	
+	        <CheckBox
+	            android:id="@+id/cbRandom"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/msg_random_boot" />
+	
+	        <Button
+	            android:id="@+id/btnRandom"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/msg_random_now" />
+	
+	        <TableLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:shrinkColumns="2"
+	            android:stretchColumns="2" >
+	
+	            <TableRow>
+	
+	                <ImageView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:adjustViewBounds="true"
+	                    android:maxHeight="20sp"
+	                    android:src="@drawable/ic_arrow" />
+	
+	                <TextView
+	                    android:layout_span="2"
+	                    android:text="@string/msg_random_access"
+	                    android:textIsSelectable="false" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbSerial" />
+	
+	                <TextView
+	                    android:text="@string/settings_serial"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etSerial"
+	                    android:hint="DEFACE"
+	                    android:inputType="textNoSuggestions" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbLat" />
+	
+	                <TextView
+	                    android:text="@string/settings_lat"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etLat"
+	                    android:hint="-10.5"
+	                    android:inputType="numberDecimal|numberSigned" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbLon" />
+	
+	                <TextView
+	                    android:text="@string/settings_lon"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etLon"
+	                    android:hint="105.667"
+	                    android:inputType="numberDecimal|numberSigned" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <View />
+	
+	                <Button
+	                    android:id="@+id/btnSearch"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_horizontal"
+	                    android:text="@android:string/search_go" />
+	
+	                <EditText
+	                    android:id="@+id/etSearch"
+	                    android:hint="Christmas Island"
+	                    android:inputType="textNoSuggestions" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbMac" />
+	
+	                <TextView
+	                    android:text="@string/settings_mac"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etMac"
+	                    android:digits="0123456789ABCDEF:"
+	                    android:hint="DE:FA:CE:DE:FA:CE"
+	                    android:inputType="textCapCharacters|textNoSuggestions"
+	                    android:maxLength="18" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <View />
+	
+	                <TextView
+	                    android:text="@string/settings_ip"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etIP"
+	                    android:digits="0123456789ABCDEF.:"
+	                    android:hint="0.0.0.0"
+	                    android:inputType="textCapCharacters|textNoSuggestions" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbImei" />
+	
+	                <TextView
+	                    android:text="@string/settings_imei"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etImei"
+	                    android:hint="000000000000000"
+	                    android:inputType="numberDecimal|textNoSuggestions"
+	                    android:maxLength="16" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbPhone" />
+	
+	                <TextView
+	                    android:text="@string/settings_phone"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etPhone"
+	                    android:hint="DEFACE"
+	                    android:inputType="textNoSuggestions|phone" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbId" />
+	
+	                <TextView
+	                    android:text="@string/settings_id"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etId"
+	                    android:digits="0123456789ABCDEF"
+	                    android:hint="DEFACE"
+	                    android:inputType="textCapCharacters|textNoSuggestions" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbGsfId" />
+	
+	                <TextView
+	                    android:text="@string/settings_gsfid"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etGsfId"
+	                    android:digits="0123456789ABCDEF"
+	                    android:hint="DEFACE"
+	                    android:inputType="textCapCharacters|textNoSuggestions" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbAdId" />
+	
+	                <TextView
+	                    android:text="@string/settings_adid"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etAdId"
+	                    android:digits="0123456789ABCDEF-"
+	                    android:hint="DEFACE00-0000-0000-0000-000000000000"
+	                    android:inputType="textCapCharacters|textNoSuggestions" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <View />
+	
+	                <TextView
+	                    android:text="@string/settings_mcc"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etMcc"
+	                    android:hint="001"
+	                    android:inputType="numberDecimal|textNoSuggestions"
+	                    android:maxLength="3" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <View />
+	
+	                <TextView
+	                    android:text="@string/settings_mnc"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etMnc"
+	                    android:hint="01"
+	                    android:inputType="numberDecimal|textNoSuggestions"
+	                    android:maxLength="3" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbCountry" />
+	
+	                <TextView
+	                    android:text="@string/settings_country"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etCountry"
+	                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	                    android:hint="XX"
+	                    android:inputType="textCapCharacters|textNoSuggestions"
+	                    android:maxLength="2" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <View />
+	
+	                <TextView
+	                    android:text="@string/settings_operator"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etOperator"
+	                    android:hint="DEFACED"
+	                    android:inputType="text|textNoSuggestions" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <View />
+	
+	                <TextView
+	                    android:text="@string/settings_iccid"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etIccId"
+	                    android:inputType="numberDecimal|textNoSuggestions"
+	                    android:maxLength="20" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbSubscriber" />
+	
+	                <TextView
+	                    android:text="@string/settings_subscriber"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etSubscriber"
+	                    android:inputType="numberDecimal|textNoSuggestions"
+	                    android:maxLength="15" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <CheckBox android:id="@+id/cbSSID" />
+	
+	                <TextView
+	                    android:text="@string/settings_ssid"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etSSID"
+	                    android:inputType="text|textNoSuggestions" />
+	            </TableRow>
+	
+	            <TableRow>
+	
+	                <View />
+	
+	                <TextView
+	                    android:text="@string/settings_ua"
+	                    android:textIsSelectable="false" />
+	
+	                <EditText
+	                    android:id="@+id/etUa"
+	                    android:inputType="text|textNoSuggestions" />
+	            </TableRow>
+	        </TableLayout>
+	    </LinearLayout>
+	</ScrollView>
+        
+    <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" >
+	
+	    <Button
+	        android:id="@+id/btnCancel"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_weight="1"
+	        android:text="@android:string/cancel" />
+	
+	    <Button
+	        android:id="@+id/btnOk"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_gravity="center_horizontal"
+	        android:text="@android:string/ok" />
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

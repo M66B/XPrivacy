@@ -38,7 +38,8 @@
     <string name="msg_sure">Сигурни ли сте?</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Нужно е рестартиране</string>
-    <string name="msg_random">Randomize</string>
+    <string name="msg_random_now">Randomize</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randomize after boot</string>
     <string name="msg_first"><b>XPrivacy е разработен и тестван с голямо внимание,
 но е невъзможно да се гарантира безпроблемна работа на всякакви устройства при всякакви приложения.
@@ -92,6 +93,9 @@
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Абонатно ID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

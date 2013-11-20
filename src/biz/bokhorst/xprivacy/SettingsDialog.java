@@ -23,7 +23,9 @@ public class SettingsDialog {
 		final int uid = (appInfo == null ? 0 : appInfo.getUid());
 
 		// Build dialog
-		final Dialog dlgSettings = new Dialog(context);
+		String themeName = PrivacyManager.getSetting(null, context, 0, PrivacyManager.cSettingTheme, "", false);
+		int themeId = (themeName.equals("Dark") ? R.style.CustomTheme_Dialog : R.style.CustomTheme_Light_Dialog);
+		final Dialog dlgSettings = new Dialog(context, themeId);
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgSettings.setTitle(context.getString(R.string.app_name));
 		dlgSettings.setContentView(R.layout.settings);
@@ -31,11 +33,12 @@ public class SettingsDialog {
 
 		// Reference controls
 		TextView tvAppName = (TextView) dlgSettings.findViewById(R.id.tvAppName);
+		View vAppNameBorder = (View) dlgSettings.findViewById(R.id.vAppNameBorder);
 		final EditText etSerial = (EditText) dlgSettings.findViewById(R.id.etSerial);
 		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
 		final EditText etLon = (EditText) dlgSettings.findViewById(R.id.etLon);
 		final EditText etSearch = (EditText) dlgSettings.findViewById(R.id.etSearch);
-		Button btnSearch = (Button) dlgSettings.findViewById(R.id.btnSearch);
+		final Button btnSearch = (Button) dlgSettings.findViewById(R.id.btnSearch);
 		final EditText etMac = (EditText) dlgSettings.findViewById(R.id.etMac);
 		final EditText etIP = (EditText) dlgSettings.findViewById(R.id.etIP);
 		final EditText etImei = (EditText) dlgSettings.findViewById(R.id.etImei);
@@ -58,6 +61,7 @@ public class SettingsDialog {
 		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
 		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
+		final CheckBox cbGlobal = (CheckBox) dlgSettings.findViewById(R.id.cbGlobal);
 
 		final CheckBox cbSerial = (CheckBox) dlgSettings.findViewById(R.id.cbSerial);
 		final CheckBox cbLat = (CheckBox) dlgSettings.findViewById(R.id.cbLat);
@@ -73,12 +77,14 @@ public class SettingsDialog {
 		final CheckBox cbSSID = (CheckBox) dlgSettings.findViewById(R.id.cbSSID);
 
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
-		Button btnClear = (Button) dlgSettings.findViewById(R.id.btnClear);
+		Button btnCancel = (Button) dlgSettings.findViewById(R.id.btnCancel);
+		final Button btnClear = (Button) dlgSettings.findViewById(R.id.btnClear);
 
 		// Display app name
-		if (appInfo == null)
+		if (appInfo == null) {
 			tvAppName.setVisibility(View.GONE);
-		else
+			vAppNameBorder.setVisibility(View.GONE);
+		} else
 			tvAppName.setText(appInfo.getFirstApplicationName());
 
 		// Set current values
@@ -226,27 +232,115 @@ public class SettingsDialog {
 
 		if (uid == 0) {
 			cbNotify.setVisibility(View.GONE);
+			cbGlobal.setVisibility(View.GONE);
 			if (expert) {
 				cbUsage.setChecked(usage);
 				cbExtra.setChecked(extra);
 			} else {
-				cbUsage.setVisibility(View.GONE);
-				cbExtra.setVisibility(View.GONE);
+				cbUsage.setEnabled(false);
+				cbExtra.setEnabled(false);
 			}
 			cbLog.setChecked(log);
 			cbExpert.setChecked(expert);
+			cbExpert.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					cbUsage.setEnabled(isChecked);
+					cbExtra.setEnabled(isChecked);
+				}
+			});
 		} else {
 			cbNotify.setChecked(notify);
 			cbUsage.setVisibility(View.GONE);
 			cbExtra.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
 			cbExpert.setVisibility(View.GONE);
+			
+			cbGlobal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					etSerial.setEnabled(!isChecked);
+					etLat.setEnabled(!isChecked);
+					etLon.setEnabled(!isChecked);
+					etSearch.setEnabled(!isChecked);
+					etMac.setEnabled(!isChecked);
+					etIP.setEnabled(!isChecked);
+					etImei.setEnabled(!isChecked);
+					etPhone.setEnabled(!isChecked);
+					etId.setEnabled(!isChecked);
+					etGsfId.setEnabled(!isChecked);
+					etAdId.setEnabled(!isChecked);
+					etMcc.setEnabled(!isChecked);
+					etMnc.setEnabled(!isChecked);
+					etCountry.setEnabled(!isChecked);
+					etOperator.setEnabled(!isChecked);
+					etIccId.setEnabled(!isChecked);
+					etSubscriber.setEnabled(!isChecked);
+					etSSID.setEnabled(!isChecked);
+					etUa.setEnabled(!isChecked);
+					
+					btnClear.setEnabled(!isChecked);
+					btnRandom.setEnabled(!isChecked);
+					btnSearch.setEnabled(!isChecked);
+					
+					cbRandom.setEnabled(!isChecked);
+
+					cbSerial.setEnabled(!isChecked);
+					cbLat.setEnabled(!isChecked);
+					cbLon.setEnabled(!isChecked);
+					cbMac.setEnabled(!isChecked);
+					cbImei.setEnabled(!isChecked);
+					cbPhone.setEnabled(!isChecked);
+					cbId.setEnabled(!isChecked);
+					cbGsfId.setEnabled(!isChecked);
+					cbAdId.setEnabled(!isChecked);
+					cbCountry.setEnabled(!isChecked);
+					cbSubscriber.setEnabled(!isChecked);
+					cbSSID.setEnabled(!isChecked);
+				}
+			});
+			cbGlobal.setChecked(PrivacyManager.appUsesGlobalSettings(context, uid));
 		}
+		cbRandom.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				btnRandom.setEnabled(!isChecked);
+				
+				cbSerial.setEnabled(!isChecked);
+				cbLat.setEnabled(!isChecked);
+				cbLon.setEnabled(!isChecked);
+				cbMac.setEnabled(!isChecked);
+				cbImei.setEnabled(!isChecked);
+				cbPhone.setEnabled(!isChecked);
+				cbId.setEnabled(!isChecked);
+				cbGsfId.setEnabled(!isChecked);
+				cbAdId.setEnabled(!isChecked);
+				cbCountry.setEnabled(!isChecked);
+				cbSubscriber.setEnabled(!isChecked);
+				cbSSID.setEnabled(!isChecked);
+				
+				etSearch.setEnabled(!isChecked && Geocoder.isPresent());
+				btnSearch.setEnabled(!isChecked && Geocoder.isPresent());
+				
+				etSerial.setEnabled(!isChecked);
+				etLat.setEnabled(!isChecked);
+				etLon.setEnabled(!isChecked);
+				etMac.setEnabled(!isChecked);
+				etImei.setEnabled(!isChecked);
+				etPhone.setEnabled(!isChecked);
+				etId.setEnabled(!isChecked);
+				etGsfId.setEnabled(!isChecked);
+				etAdId.setEnabled(!isChecked);
+				etCountry.setEnabled(!isChecked);
+				etSubscriber.setEnabled(!isChecked);
+				etSSID.setEnabled(!isChecked);
+			}
+		});
 		cbRandom.setChecked(random);
 
 		// Handle search
-		etSearch.setEnabled(Geocoder.isPresent());
-		btnSearch.setEnabled(Geocoder.isPresent());
+		etSearch.setEnabled(!cbRandom.isChecked() && Geocoder.isPresent());
+		btnSearch.setEnabled(!cbRandom.isChecked() && Geocoder.isPresent());
 		btnSearch.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -303,24 +397,7 @@ public class SettingsDialog {
 			@Override
 			public void onClick(View view) {
 				// @formatter:off
-				if (!cbSerial.isChecked() && etSerial.getText().toString().equals("") &&
-					!cbLat.isChecked() && etLat.getText().toString().equals("") &&
-					!cbLon.isChecked() && etLon.getText().toString().equals("") &&
-					!cbMac.isChecked() && etMac.getText().toString().equals("") &&
-					etIP.getText().toString().equals("") &&
-					!cbImei.isChecked() && etImei.getText().toString().equals("") &&
-					!cbPhone.isChecked() && etPhone.getText().toString().equals("") &&
-					!cbId.isChecked() && etId.getText().toString().equals("") &&
-					!cbGsfId.isChecked() && etGsfId.getText().toString().equals("") &&
-					!cbAdId.isChecked() && etAdId.getText().toString().equals("") &&
-					etMcc.getText().toString().equals("") &&
-					etMnc.getText().toString().equals("") &&
-					!cbCountry.isChecked() && etCountry.getText().toString().equals("") &&
-					etOperator.getText().toString().equals("") &&
-					etIccId.getText().toString().equals("") &&
-					!cbSubscriber.isChecked() && etSubscriber.getText().toString().equals("") &&
-					!cbSSID.isChecked() && etSSID.getText().toString().equals("") &&
-					etUa.getText().toString().equals("")) {
+				if (cbGlobal.isChecked()) {
 					// @formatter:on
 
 					// Clear all settings
@@ -426,6 +503,15 @@ public class SettingsDialog {
 			}
 		});
 
+		// Handle Cancel
+		btnCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// Done
+				dlgSettings.dismiss();
+			}
+		});
+
 		// Handle clear
 		btnClear.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -449,6 +535,7 @@ public class SettingsDialog {
 				etSubscriber.setText("");
 				etSSID.setText("");
 				etUa.setText("");
+				/* Where I have put the clear button, it should not touch these settings, only the fake data
 				if (uid == 0) {
 					cbUsage.setChecked(false);
 					cbExtra.setChecked(false);
@@ -456,6 +543,7 @@ public class SettingsDialog {
 					cbExpert.setChecked(false);
 				} else
 					cbNotify.setChecked(true);
+				*/
 				cbRandom.setChecked(false);
 
 				cbSerial.setChecked(false);

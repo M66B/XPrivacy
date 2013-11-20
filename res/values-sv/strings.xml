@@ -38,7 +38,8 @@
     <string name="msg_sure">Är du säker?</string>
     <string name="msg_done">Klar</string>
     <string name="msg_reboot">Omstart krävs</string>
-    <string name="msg_random">Slumpa</string>
+    <string name="msg_random_now">Slumpa</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Slumpa efter uppstart</string>
     <string name="msg_first"><b>XPrivacy utvecklas och testas med stor omsorg.
 Det är emellertid omöjligt att garantera att appen fungerar på alla enheter och appar.
@@ -92,6 +93,9 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="settings_operator">Operatör</string>
     <string name="settings_subscriber">Abonnent-ID</string>
     <string name="settings_ua">Användaragent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

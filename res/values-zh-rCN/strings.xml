@@ -38,7 +38,8 @@
     <string name="msg_sure">是否确定？</string>
     <string name="msg_done">已完成</string>
     <string name="msg_reboot">设备需要重启</string>
-    <string name="msg_random">生成随机数值</string>
+    <string name="msg_random_now">生成随机数值</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
@@ -92,6 +93,9 @@
     <string name="settings_operator">运营商</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">User Agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">通知栏提示</string>
     <string name="settings_usage">Android 应用用量统计数据（需要重启）</string>
     <string name="settings_extra">额外用量统计数据（需要重启）</string>

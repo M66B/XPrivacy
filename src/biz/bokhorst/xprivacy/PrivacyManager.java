@@ -594,6 +594,10 @@ public class PrivacyManager {
 				return setting;
 		}
 	}
+	
+	public static boolean appUsesGlobalSettings(Context context, int uid) {
+		return getSetting(null, context, String.format("%s.%d", PrivacyManager.cSettingSerial, uid), null, false) == null;
+	}
 
 	private static String getSetting(XHook hook, Context context, String name, String defaultValue, boolean useCache) {
 		long start = System.currentTimeMillis();

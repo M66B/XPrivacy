@@ -38,7 +38,8 @@
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Udført</string>
     <string name="msg_reboot">Genstart nødvendig</string>
-    <string name="msg_random">Indlæs tilfældige værdier</string>
+    <string name="msg_random_now">Indlæs tilfældige værdier</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Indlæs tilfældige værdier ved boot</string>
     <string name="msg_first"><b>XPrivacy er grundigt udviklet og testet, dog er det umuligt at garantere, at appen fungerer fejlfrit på alle enheder og for alle apps.\n\nBrug af denne app foregår udelukkende på egen risiko.</b>\n\nSe også licensen:</string>
     <string name="restrict_accounts">Konti (Google, Facebook, osv.)</string>
@@ -90,6 +91,9 @@
     <string name="settings_operator">Operatør</string>
     <string name="settings_subscriber">Abonnent-ID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

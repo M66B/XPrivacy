@@ -38,7 +38,8 @@
     <string name="msg_sure">確定進行操作?</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">需要重新啟動</string>
-    <string name="msg_random">隨機</string>
+    <string name="msg_random_now">隨機</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">重新啟動後進行亂數</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳盡的測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用\n\n請自行承擔使用XPrivacy的可能風險。</b>\n\n請參閱說明文件：</string>
     <string name="restrict_accounts">帳戶 (Google, Facebook, etc)</string>
@@ -90,6 +91,9 @@
     <string name="settings_operator">電信商</string>
     <string name="settings_subscriber">簽約者 ID</string>
     <string name="settings_ua">User agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android 使用日誌 (需重新啟動)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>

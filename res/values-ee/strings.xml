@@ -38,7 +38,8 @@
     <string name="msg_sure">Oled sa kindel?</string>
     <string name="msg_done">Valmis</string>
     <string name="msg_reboot">Seadme taaskäivitus on vajalik</string>
-    <string name="msg_random">Juhuslik</string>
+    <string name="msg_random_now">Juhuslik</string>
+    <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Juhuslikusta pärast käivitamist</string>
     <string name="msg_first"><b>Palju vaeva on nähtud Xprivacy arendamisel ja testimisel,
 kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
@@ -92,6 +93,9 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="settings_operator">Opeeraator</string>
     <string name="settings_subscriber">Abonendi ID</string>
     <string name="settings_ua">Kasutaja agent</string>
+    <string name="settings_general">GENERAL</string>
+    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_extra">Extra usage data (requires restart)</string>
