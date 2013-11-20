@@ -43,7 +43,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
@@ -96,16 +95,11 @@ public class ActivityShare extends Activity {
 
 			// Fetch
 			if (getIntent().getAction().equals("biz.bokhorst.xprivacy.action.FETCH")) {
-				if (extras != null && extras.containsKey(cPackageName)) {
-					FetchTask fetchTask = new FetchTask();
-					fetchTask.executeOnExecutor(mExecutor, extras.getString(cPackageName));
-				} else {
-					for (ApplicationInfo aInfo : getPackageManager().getInstalledApplications(0))
-						if ((aInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) == 0) {
-							FetchTask fetchTask = new FetchTask();
-							fetchTask.executeOnExecutor(mExecutor, aInfo.packageName);
-						}
-				}
+				String packageName = null;
+				if (extras != null && extras.containsKey(cPackageName))
+					packageName = extras.getString(cPackageName);
+				FetchTask fetchTask = new FetchTask();
+				fetchTask.executeOnExecutor(mExecutor, packageName);
 			}
 		}
 	}
@@ -413,56 +407,92 @@ public class ActivityShare extends Activity {
 	}
 
 	private class FetchTask extends AsyncTask<String, String, Object> {
-		private ApplicationInfoEx mAppInfo;
 		private final static int NOTIFY_ID = 3;
 
 		@Override
 		protected Object doInBackground(String... params) {
 			try {
 				// Get data
-				publishProgress(params[0]);
-				mAppInfo = new ApplicationInfoEx(ActivityShare.this, params[0]);
-				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				List<ApplicationInfoEx> lstApp;
+				if (params[0] == null)
+					lstApp = ApplicationInfoEx.getXApplicationList(ActivityShare.this, null);
+				else {
+					lstApp = new ArrayList<ApplicationInfoEx>();
+					lstApp.add(new ApplicationInfoEx(ActivityShare.this, params[0]));
+				}
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 				String[] license = Util.getLicense();
+				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 
-				// Encode package
-				JSONObject jRoot = new JSONObject();
-				jRoot.put("protocol_version", 3);
-				jRoot.put("android_id", android_id);
-				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
-				jRoot.put("xprivacy_version", pInfo.versionCode);
-				jRoot.put("application_name", mAppInfo.getFirstApplicationName());
-				jRoot.put("package_name", mAppInfo.getPackageName());
-				jRoot.put("package_version", mAppInfo.getVersion());
-				jRoot.put("email", license[1]);
-				jRoot.put("signature", license[2]);
+				// Process applications
+				for (ApplicationInfoEx appInfo : lstApp)
+					if (!appInfo.getIsSystem()) {
+						publishProgress(appInfo.getPackageName());
 
-				// Fetch
-				int TIMEOUT_MILLISEC = 45000; // 45 seconds
-				HttpParams httpParams = new BasicHttpParams();
-				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
-				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
-				HttpClient httpclient = new DefaultHttpClient(httpParams);
+						// Encode package
+						JSONObject jRoot = new JSONObject();
+						jRoot.put("protocol_version", 3);
+						jRoot.put("android_id", android_id);
+						jRoot.put("android_sdk", Build.VERSION.SDK_INT);
+						jRoot.put("xprivacy_version", pXPrivacyInfo.versionCode);
+						jRoot.put("application_name", appInfo.getFirstApplicationName());
+						jRoot.put("package_name", appInfo.getPackageName());
+						jRoot.put("package_version", appInfo.getVersion());
+						jRoot.put("email", license[1]);
+						jRoot.put("signature", license[2]);
 
-				HttpPost httpost = new HttpPost(BASE_URL + "?format=json&action=fetch");
-				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
-				httpost.setHeader("Accept", "application/json");
-				httpost.setHeader("Content-type", "application/json");
-				HttpResponse response = httpclient.execute(httpost);
-				StatusLine statusLine = response.getStatusLine();
+						// Fetch
+						int TIMEOUT_MILLISEC = 45000; // 45 seconds
+						HttpParams httpParams = new BasicHttpParams();
+						HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+						HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
+						HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-					// Succeeded
-					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					response.getEntity().writeTo(out);
-					out.close();
-					return new JSONObject(out.toString("UTF-8"));
-				} else {
-					// Failed
-					response.getEntity().getContent().close();
-					throw new IOException(statusLine.getReasonPhrase());
-				}
+						HttpPost httpost = new HttpPost(BASE_URL + "?format=json&action=fetch");
+						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+						httpost.setHeader("Accept", "application/json");
+						httpost.setHeader("Content-type", "application/json");
+						HttpResponse response = httpclient.execute(httpost);
+						StatusLine statusLine = response.getStatusLine();
+
+						if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+							// Succeeded
+							ByteArrayOutputStream out = new ByteArrayOutputStream();
+							response.getEntity().writeTo(out);
+							out.close();
+
+							// Deserialize
+							JSONObject status = new JSONObject(out.toString("UTF-8"));
+							if (status.getBoolean("ok")) {
+								JSONArray settings = status.getJSONArray("settings");
+								if (settings.length() > 0) {
+									// Delete existing restrictions
+									PrivacyManager.deleteRestrictions(ActivityShare.this, appInfo.getUid());
+
+									// Set fetched restrictions
+									for (int i = 0; i < settings.length(); i++) {
+										JSONObject entry = settings.getJSONObject(i);
+										String restrictionName = entry.getString("restriction");
+										String methodName = entry.has("method") ? entry.getString("method") : null;
+										int voted_restricted = entry.getInt("restricted");
+										int voted_not_restricted = entry.getInt("not_restricted");
+										boolean restricted = (voted_restricted > voted_not_restricted);
+										if (methodName == null || restricted)
+											PrivacyManager.setRestricted(null, ActivityShare.this, appInfo.getUid(),
+													restrictionName, methodName, restricted);
+									}
+								} else
+									Util.log(null, Log.INFO, "No restrictions available");
+								notify(getString(R.string.msg_done), false);
+							} else
+								throw new Exception(status.getString("error"));
+						} else {
+							// Failed
+							response.getEntity().getContent().close();
+							throw new IOException(statusLine.getReasonPhrase());
+						}
+					}
+				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return ex;
@@ -478,32 +508,7 @@ public class ActivityShare extends Activity {
 		@Override
 		protected void onPostExecute(Object result) {
 			try {
-				if (result.getClass().equals(JSONObject.class)) {
-					JSONObject status = (JSONObject) result;
-					if (status.getBoolean("ok")) {
-						JSONArray settings = status.getJSONArray("settings");
-						if (settings.length() > 0) {
-							// Delete existing restrictions
-							PrivacyManager.deleteRestrictions(ActivityShare.this, mAppInfo.getUid());
-
-							// Set fetched restrictions
-							for (int i = 0; i < settings.length(); i++) {
-								JSONObject entry = settings.getJSONObject(i);
-								String restrictionName = entry.getString("restriction");
-								String methodName = entry.has("method") ? entry.getString("method") : null;
-								int voted_restricted = entry.getInt("restricted");
-								int voted_not_restricted = entry.getInt("not_restricted");
-								boolean restricted = (voted_restricted > voted_not_restricted);
-								if (methodName == null || restricted)
-									PrivacyManager.setRestricted(null, ActivityShare.this, mAppInfo.getUid(),
-											restrictionName, methodName, restricted);
-							}
-						} else
-							Util.log(null, Log.INFO, "No restrictions available");
-						notify(getString(R.string.msg_done), false);
-					} else
-						throw new Exception(status.getString("error"));
-				} else
+				if (result != null)
 					throw (Throwable) result;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);

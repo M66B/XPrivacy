@@ -4,11 +4,12 @@ Changelog
 **Next release**
 
 * Fixed opening usage data from application details ([issue](https://github.com/M66B/XPrivacy/issues/793))
+* Fixed refreshing application list during fetch restrictions
 * Workaround for PAC boot problem ([issue](https://github.com/M66B/XPrivacy/issues/785))
-* Move selecting accounts to allow to free version
-* Move settings Android usage data / extra usage data to expert mode
-* Make *inet* dangerous
-* Make Xposed Installer a system application
+* Moved selecting accounts to allow to free version
+* Moved settings Android usage data / extra usage data to expert mode
+* Made *inet* dangerous
+* Made Xposed Installer a system application
 * Add application name to title of application details view
 * Removed version warning for KitKat
 * Redesigned filters/categories, thanks [jpeg729](https://github.com/jpeg729)

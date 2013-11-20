@@ -89,10 +89,12 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		SparseArray<ApplicationInfoEx> mapApp = new SparseArray<ApplicationInfoEx>();
 		List<ApplicationInfoEx> listApp = new ArrayList<ApplicationInfoEx>();
 		List<ApplicationInfo> listAppInfo = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-		dialog.setMax(listAppInfo.size());
+		if (dialog != null)
+			dialog.setMax(listAppInfo.size());
 		for (int app = 0; app < listAppInfo.size(); app++)
 			try {
-				dialog.setProgress(app + 1);
+				if (dialog != null)
+					dialog.setProgress(app + 1);
 				ApplicationInfoEx xAppInfo = new ApplicationInfoEx(context, listAppInfo.get(app));
 				ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
 				if (yAppInfo == null) {
