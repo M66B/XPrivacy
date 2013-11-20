@@ -87,7 +87,7 @@ public class SettingsDialog {
 		} else
 			tvAppName.setText(appInfo.getFirstApplicationName());
 
-		// Set current values
+		// Get current values
 		boolean notify = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify, true, false);
 		boolean usage = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingAndroidUsage, false,
 				false);
@@ -111,6 +111,7 @@ public class SettingsDialog {
 		String subscriber = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingSubscriber, "", false);
 		String ssid = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingSSID, "", false);
 
+		// Set current values
 		cbSerial.setChecked(serial.equals(PrivacyManager.cValueRandom));
 		cbLat.setChecked(lat.equals(PrivacyManager.cValueRandom));
 		cbLon.setChecked(lon.equals(PrivacyManager.cValueRandom));
@@ -150,6 +151,14 @@ public class SettingsDialog {
 		etSubscriber.setEnabled(!cbSubscriber.isChecked());
 		etSSID.setEnabled(!cbSSID.isChecked());
 
+		etIP.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingIP, "", false));
+		etMcc.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingMcc, "", false));
+		etMnc.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingMnc, "", false));
+		etOperator.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingOperator, "", false));
+		etIccId.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingIccId, "", false));
+		etUa.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingUa, "", false));
+
+		// Listen for changes
 		cbSerial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -223,16 +232,11 @@ public class SettingsDialog {
 			}
 		});
 
-		etIP.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingIP, "", false));
-		etMcc.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingMcc, "", false));
-		etMnc.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingMnc, "", false));
-		etOperator.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingOperator, "", false));
-		etIccId.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingIccId, "", false));
-		etUa.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingUa, "", false));
-
 		if (uid == 0) {
+			// Global settings
 			cbNotify.setVisibility(View.GONE);
 			cbGlobal.setVisibility(View.GONE);
+
 			if (expert) {
 				cbUsage.setChecked(usage);
 				cbExtra.setChecked(extra);
@@ -240,7 +244,9 @@ public class SettingsDialog {
 				cbUsage.setEnabled(false);
 				cbExtra.setEnabled(false);
 			}
+
 			cbLog.setChecked(log);
+
 			cbExpert.setChecked(expert);
 			cbExpert.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
@@ -250,12 +256,13 @@ public class SettingsDialog {
 				}
 			});
 		} else {
+			// Application specific settings
 			cbNotify.setChecked(notify);
 			cbUsage.setVisibility(View.GONE);
 			cbExtra.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
 			cbExpert.setVisibility(View.GONE);
-			
+
 			cbGlobal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -278,11 +285,11 @@ public class SettingsDialog {
 					etSubscriber.setEnabled(!isChecked);
 					etSSID.setEnabled(!isChecked);
 					etUa.setEnabled(!isChecked);
-					
+
 					btnClear.setEnabled(!isChecked);
 					btnRandom.setEnabled(!isChecked);
 					btnSearch.setEnabled(!isChecked);
-					
+
 					cbRandom.setEnabled(!isChecked);
 
 					cbSerial.setEnabled(!isChecked);
@@ -299,13 +306,16 @@ public class SettingsDialog {
 					cbSSID.setEnabled(!isChecked);
 				}
 			});
+
 			cbGlobal.setChecked(PrivacyManager.appUsesGlobalSettings(context, uid));
 		}
+
+		// Handle randomize on boot
 		cbRandom.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				btnRandom.setEnabled(!isChecked);
-				
+
 				cbSerial.setEnabled(!isChecked);
 				cbLat.setEnabled(!isChecked);
 				cbLon.setEnabled(!isChecked);
@@ -318,10 +328,10 @@ public class SettingsDialog {
 				cbCountry.setEnabled(!isChecked);
 				cbSubscriber.setEnabled(!isChecked);
 				cbSSID.setEnabled(!isChecked);
-				
+
 				etSearch.setEnabled(!isChecked && Geocoder.isPresent());
 				btnSearch.setEnabled(!isChecked && Geocoder.isPresent());
-				
+
 				etSerial.setEnabled(!isChecked);
 				etLat.setEnabled(!isChecked);
 				etLon.setEnabled(!isChecked);
@@ -336,6 +346,7 @@ public class SettingsDialog {
 				etSSID.setEnabled(!isChecked);
 			}
 		});
+
 		cbRandom.setChecked(random);
 
 		// Handle search
@@ -373,7 +384,7 @@ public class SettingsDialog {
 			}
 		});
 
-		// Handle randomize
+		// Handle manual randomize
 		btnRandom.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -396,10 +407,7 @@ public class SettingsDialog {
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				// @formatter:off
 				if (cbGlobal.isChecked()) {
-					// @formatter:on
-
 					// Clear all settings
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSerial, null);
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude, null);
@@ -481,6 +489,7 @@ public class SettingsDialog {
 				}
 
 				if (uid == 0) {
+					// Global settings
 					if (expert) {
 						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
 								Boolean.toString(cbUsage.isChecked()));
@@ -491,9 +500,11 @@ public class SettingsDialog {
 							Boolean.toString(cbLog.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExpert,
 							Boolean.toString(cbExpert.isChecked()));
-				} else
+				} else {
+					// App specific settings
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingNotify,
 							Boolean.toString(cbNotify.isChecked()));
+				}
 
 				PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingRandom,
 						Boolean.toString(cbRandom.isChecked()));
@@ -535,15 +546,6 @@ public class SettingsDialog {
 				etSubscriber.setText("");
 				etSSID.setText("");
 				etUa.setText("");
-				/* Where I have put the clear button, it should not touch these settings, only the fake data
-				if (uid == 0) {
-					cbUsage.setChecked(false);
-					cbExtra.setChecked(false);
-					cbLog.setChecked(false);
-					cbExpert.setChecked(false);
-				} else
-					cbNotify.setChecked(true);
-				*/
 				cbRandom.setChecked(false);
 
 				cbSerial.setChecked(false);
