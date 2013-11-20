@@ -8,6 +8,8 @@ Changelog
 * Move settings Android usage data / extra usage data to expert mode
 * Add application name to title of application details view
 * Removed version warning for KitKat
+* Redesigned filters/categories, thanks [jpeg729](https://github.com/jpeg729)
+* Redesigned settings dialog, thanks [jpeg729](https://github.com/jpeg729)
 * Updated Chinese translation
 * Updated Lithuanian translation
 
