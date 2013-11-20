@@ -307,7 +307,9 @@ public class SettingsDialog {
 				}
 			});
 
-			cbGlobal.setChecked(PrivacyManager.appUsesGlobalSettings(context, uid));
+			boolean global = (PrivacyManager.getAppSetting(null, context, uid, PrivacyManager.cSettingSerial, null,
+					false) == null);
+			cbGlobal.setChecked(global);
 		}
 
 		// Handle randomize on boot
