@@ -65,6 +65,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		// Get if system application
 		mSystem = ((appInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
 		mSystem = mSystem || appInfo.packageName.equals(ApplicationInfoEx.class.getPackage().getName());
+		mSystem = mSystem || appInfo.packageName.equals("de.robv.android.xposed.installer");
 
 		// Get if frozen (not enabled)
 		int setting = pm.getApplicationEnabledSetting(appInfo.packageName);
