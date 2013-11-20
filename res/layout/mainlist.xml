@@ -239,16 +239,6 @@
             android:layout_marginRight="4dp"
             android:orientation="horizontal" >
 
-            <!--
-                 <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/title_category"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textIsSelectable="false" />
-            -->
-
             <Spinner
                 android:id="@+id/spRestriction"
                 android:layout_width="0dp"
