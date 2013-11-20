@@ -10,6 +10,7 @@ Changelog
 * Moved settings Android usage data / extra usage data to expert mode
 * Removed dangerous categories, only functions can be dangerous
 * Made *inet*, *media*, *sdcard* dangerous
+* Always highlight dangerous functions ([issue](https://github.com/M66B/XPrivacy/issues/796))
 * Made Xposed Installer a system application
 * Add application name to title of application details view
 * Removed version warning for KitKat
