@@ -124,7 +124,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		// Get localized restriction name
-		List<String> listRestriction = PrivacyManager.getRestrictions(true);
+		List<String> listRestriction = PrivacyManager.getRestrictions();
 		List<String> listLocalizedRestriction = new ArrayList<String>();
 		for (String restrictionName : listRestriction)
 			listLocalizedRestriction.add(PrivacyManager.getLocalizedName(this, restrictionName));
@@ -141,7 +141,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			public void onClick(View view) {
 				int position = spRestriction.getSelectedItemPosition();
 				if (position != AdapterView.INVALID_POSITION) {
-					String title = (position == 0 ? "XPrivacy" : PrivacyManager.getRestrictions(true).get(position - 1));
+					String title = (position == 0 ? "XPrivacy" : PrivacyManager.getRestrictions().get(position - 1));
 					String url = String.format("http://wiki.faircode.eu/index.php?title=%s", title);
 					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 					infoIntent.setData(Uri.parse(url));
@@ -459,7 +459,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void selectRestriction(int pos) {
 		if (mAppAdapter != null) {
-			String restrictionName = (pos == 0 ? null : PrivacyManager.getRestrictions(true).get(pos - 1));
+			String restrictionName = (pos == 0 ? null : PrivacyManager.getRestrictions().get(pos - 1));
 			mAppAdapter.setRestrictionName(restrictionName);
 			applyFilter();
 		}
@@ -542,7 +542,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
 						if (mAppAdapter.getRestrictionName() == null) {
 							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-									xAppInfo.getUid(), false))
+									xAppInfo.getUid()))
 								if (restricted) {
 									someRestricted = true;
 									break;
@@ -558,7 +558,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
 						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
 						if (mAppAdapter.getRestrictionName() == null) {
-							for (String restrictionName : PrivacyManager.getRestrictions(false))
+							for (String restrictionName : PrivacyManager.getRestrictions())
 								PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
 										restrictionName, null, !someRestricted);
 						} else
@@ -588,7 +588,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionTemplate() {
 		// Get restriction categories
-		final List<String> listRestriction = PrivacyManager.getRestrictions(false);
+		final List<String> listRestriction = PrivacyManager.getRestrictions();
 		CharSequence[] options = new CharSequence[listRestriction.size()];
 		boolean[] selection = new boolean[listRestriction.size()];
 		for (int i = 0; i < listRestriction.size(); i++) {
@@ -866,28 +866,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		public SpinnerAdapter(Context context, int textViewResourceId) {
 			super(context, textViewResourceId);
 		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View row = super.getView(position, convertView, parent);
-			row.setBackgroundColor(getBackgroundColor(position));
-			return row;
-		}
-
-		@Override
-		public View getDropDownView(int position, View convertView, ViewGroup parent) {
-			View row = super.getDropDownView(position, convertView, parent);
-			row.setBackgroundColor(getBackgroundColor(position));
-			return row;
-		}
-
-		private int getBackgroundColor(int position) {
-			String restrictionName = (position == 0 ? null : PrivacyManager.getRestrictions(true).get(position - 1));
-			if (PrivacyManager.isDangerousRestriction(restrictionName))
-				return getResources().getColor(getThemed(R.attr.color_dangerous));
-			else
-				return Color.TRANSPARENT;
-		}
 	}
 
 	@SuppressLint("DefaultLocale")
@@ -962,7 +940,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					if (fRestricted)
 						if (mRestrictionName == null) {
 							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-									xAppInfo.getUid(), true))
+									xAppInfo.getUid()))
 								if (restricted) {
 									someRestricted = true;
 									break;
@@ -1079,7 +1057,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					// Get restrictions
 					if (mRestrictionName == null)
-						listRestriction = PrivacyManager.getRestrictions(false);
+						listRestriction = PrivacyManager.getRestrictions();
 					else {
 						listRestriction = new ArrayList<String>();
 						listRestriction.add(mRestrictionName);
@@ -1088,7 +1066,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Get all/some restricted
 					if (mRestrictionName == null)
 						for (boolean restricted : PrivacyManager.getRestricted(holder.row.getContext(),
-								xAppInfo.getUid(), true)) {
+								xAppInfo.getUid())) {
 							allRestricted = allRestricted && restricted;
 							someRestricted = someRestricted || restricted;
 						}
@@ -1171,7 +1149,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							boolean someRestricted = false;
 							if (mRestrictionName == null)
 								for (boolean restricted : PrivacyManager.getRestricted(view.getContext(),
-										xAppInfo.getUid(), true)) {
+										xAppInfo.getUid())) {
 									allRestricted = allRestricted && restricted;
 									someRestricted = someRestricted || restricted;
 								}

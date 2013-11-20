@@ -8,7 +8,8 @@ Changelog
 * Workaround for PAC boot problem ([issue](https://github.com/M66B/XPrivacy/issues/785))
 * Moved selecting accounts to allow to free version
 * Moved settings Android usage data / extra usage data to expert mode
-* Made *inet* dangerous
+* Removed dangerous categories, only functions can be dangerous
+* Made *inet*, *media*, *sdcard* dangerous
 * Made Xposed Installer a system application
 * Add application name to title of application details view
 * Removed version warning for KitKat

@@ -43,7 +43,7 @@ public class PackageChange extends BroadcastReceiver {
 						if (!system && !replacing) {
 							// Check for existing restrictions
 							boolean someRestricted = false;
-							for (boolean restricted : PrivacyManager.getRestricted(context, uid, false))
+							for (boolean restricted : PrivacyManager.getRestricted(context, uid))
 								if (restricted) {
 									someRestricted = true;
 									break;
@@ -51,7 +51,7 @@ public class PackageChange extends BroadcastReceiver {
 
 							// Restrict if no previous restrictions
 							if (!someRestricted)
-								for (String restrictionName : PrivacyManager.getRestrictions(false))
+								for (String restrictionName : PrivacyManager.getRestrictions())
 									if (PrivacyManager.getSettingBool(null, context, 0,
 											String.format("Template.%s", restrictionName), true, false))
 										PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);

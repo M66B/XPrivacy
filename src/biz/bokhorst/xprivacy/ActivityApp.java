@@ -229,7 +229,7 @@ public class ActivityApp extends Activity {
 		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, restrictionName, methodName);
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 		if (restrictionName != null && methodName != null) {
-			int groupPosition = PrivacyManager.getRestrictions(true).indexOf(restrictionName);
+			int groupPosition = PrivacyManager.getRestrictions().indexOf(restrictionName);
 			int childPosition = PrivacyManager.getMethods(restrictionName).indexOf(
 					new PrivacyManager.MethodDescription(methodName));
 			lvRestriction.expandGroup(groupPosition);
@@ -378,7 +378,7 @@ public class ActivityApp extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 				// Get toggle
 				boolean restricted = false;
-				List<String> listRestriction = PrivacyManager.getRestrictions(false);
+				List<String> listRestriction = PrivacyManager.getRestrictions();
 				for (String restrictionName : listRestriction)
 					if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 							String.format("Template.%s", restrictionName), true, false))
@@ -747,7 +747,7 @@ public class ActivityApp extends Activity {
 				// Encode restrictions
 				int uid = params[0].getUid();
 				JSONArray jSettings = new JSONArray();
-				for (String restrictionName : PrivacyManager.getRestrictions(true)) {
+				for (String restrictionName : PrivacyManager.getRestrictions()) {
 					boolean restricted = PrivacyManager.getRestricted(null, ActivityApp.this, uid, restrictionName,
 							null, false, false);
 					// Category
@@ -874,7 +874,7 @@ public class ActivityApp extends Activity {
 
 			boolean fPermission = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 					PrivacyManager.cSettingFPermission, true, false);
-			for (String rRestrictionName : PrivacyManager.getRestrictions(true))
+			for (String rRestrictionName : PrivacyManager.getRestrictions())
 				if (fPermission ? mSelectedRestrictionName != null
 						|| PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(), rRestrictionName)
 						|| PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), rRestrictionName, null) > 0
@@ -984,12 +984,6 @@ public class ActivityApp extends Activity {
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
-
-			// Set background color
-			if (PrivacyManager.isDangerousRestriction(restrictionName))
-				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
-			else
-				holder.row.setBackgroundColor(Color.TRANSPARENT);
 
 			// Indicator state
 			holder.imgIndicator.setImageResource(getThemed(isExpanded ? R.attr.icon_expander_maximized
@@ -1174,7 +1168,7 @@ public class ActivityApp extends Activity {
 					childPosition);
 
 			// Set background color
-			if (PrivacyManager.isDangerousMethod(restrictionName, md.getMethodName()))
+			if (PrivacyManager.isDangerousMethod(restrictionName, md.getMethodName(), true))
 				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
