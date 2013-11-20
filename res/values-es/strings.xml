@@ -66,7 +66,10 @@ sin embargo es imposible garantizar que funcione impecable en todos y cada uno d
     <string name="restrict_system">Sistema (aplicaciones instaladas)</string>
     <string name="restrict_view">Ver (navegador)</string>
     <string name="title_category">Categoría:</string>
+    <string name="title_categories">Categories</string>
     <string name="title_restrict">Selecciona para restringir:</string>
+    <string name="title_filters">Filters</string>
+    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">Sin ningún filtro activo</string>
 
     <plurals name="title_filters">

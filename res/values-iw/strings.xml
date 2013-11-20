@@ -66,7 +66,10 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_system">מערכת (יישומים מותקנים)</string>
     <string name="restrict_view">גישה (דפדפן)</string>
     <string name="title_category">קטגוריה:</string>
+    <string name="title_categories">Categories</string>
     <string name="title_restrict">בחר להגביל:</string>
+    <string name="title_filters">Filters</string>
+    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">No active filter</string>
 
     <plurals name="title_filters">

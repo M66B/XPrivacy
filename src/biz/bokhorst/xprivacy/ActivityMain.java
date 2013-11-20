@@ -63,7 +63,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
-	private boolean mFiltersHidden = false;
+	private boolean mFiltersHidden = true;
+	private boolean mBatchModeHidden = true;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int ACTIVITY_EXPORT = 1;
@@ -236,12 +237,26 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mFiltersHidden = !savedInstanceState.getBoolean("Filters");
 		toggleFiltersVisibility();
 
+		// Hide Batch mode
+		if (savedInstanceState != null && savedInstanceState.containsKey("BatchMode"))
+			mBatchModeHidden = !savedInstanceState.getBoolean("BatchMode");
+		toggleBatchModeVisibility();
+
 		// Handle toggle filters visibility
-		ImageView imgFilterToggle = (ImageView) findViewById(R.id.imgToggleFilters);
-		imgFilterToggle.setOnClickListener(new View.OnClickListener() {
+		TextView tvFilters = (TextView) findViewById(R.id.tvFilterDetail);
+		tvFilters.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				toggleFiltersVisibility();
+			}
+		});
+
+		// Handle toggle batch mode visibility
+		TextView tvBatchMode = (TextView) findViewById(R.id.tvBatchModeDetail);
+		tvBatchMode.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				toggleBatchModeVisibility();
 			}
 		});
 
@@ -272,6 +287,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putBoolean("Filters", mFiltersHidden);
+		outState.putBoolean("BatchMode", mBatchModeHidden);
 		super.onSaveInstanceState(outState);
 	}
 
@@ -722,11 +738,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void toggleFiltersVisibility() {
-		ImageView imgFilterToggle = (ImageView) findViewById(R.id.imgToggleFilters);
-		ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
 		TextView tvFilters = (TextView) findViewById(R.id.tvFilterDetail);
 		EditText etFilter = (EditText) findViewById(R.id.etFilter);
 		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
+		LinearLayout llBatchMode = (LinearLayout) findViewById(R.id.llBatchMode);
 		CheckBox cbFUsed = (CheckBox) findViewById(R.id.cbFUsed);
 		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
 		CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
@@ -736,10 +751,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		if (mFiltersHidden) {
 			// Change visibility
-			tvFilters.setVisibility(TextView.GONE);
-			etFilter.setVisibility(EditText.VISIBLE);
-			imgClear.setVisibility(ImageView.VISIBLE);
 			llFilters.setVisibility(LinearLayout.VISIBLE);
+			llBatchMode.setVisibility(LinearLayout.GONE);
+			
+			tvFilters.setText(R.string.title_filters);
+			
+			if (!mBatchModeHidden) toggleBatchModeVisibility();
 		} else {
 			int numberOfFilters = 0;
 
@@ -760,22 +777,40 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				numberOfFilters++;
 
 			// Change text
-			if (numberOfFilters == 0)
-				tvFilters.setText(getResources().getString(R.string.title_nofilter));
-			else
-				tvFilters.setText(getResources().getQuantityString(R.plurals.title_filters, numberOfFilters,
+			tvFilters.setText(getResources().getQuantityString(R.plurals.title_active_filters, numberOfFilters,
 						numberOfFilters));
 
 			// Change visibility
-			tvFilters.setVisibility(TextView.VISIBLE);
-			etFilter.setVisibility(EditText.GONE);
-			imgClear.setVisibility(ImageView.GONE);
 			llFilters.setVisibility(LinearLayout.GONE);
 		}
 
 		mFiltersHidden = !mFiltersHidden;
-		imgFilterToggle.setImageDrawable(getResources().getDrawable(
-				getThemed(mFiltersHidden ? R.attr.icon_expander_minimized : R.attr.icon_expander_maximized)));
+		tvFilters.setBackgroundResource(mFiltersHidden ? android.R.color.transparent : R.drawable.selected_tab);
+	}
+
+	protected void toggleBatchModeVisibility() {
+		TextView tvBatchMode = (TextView) findViewById(R.id.tvBatchModeDetail);
+		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
+		LinearLayout llBatchMode = (LinearLayout) findViewById(R.id.llBatchMode);
+
+		if (mBatchModeHidden) {
+			// Change visibility
+			llFilters.setVisibility(LinearLayout.GONE);
+			llBatchMode.setVisibility(LinearLayout.VISIBLE);
+			tvBatchMode.setText(R.string.title_categories);
+			if (!mFiltersHidden) toggleFiltersVisibility();
+		} else {
+			// Change visibility
+			llBatchMode.setVisibility(LinearLayout.GONE);
+			if (spRestriction.getSelectedItemPosition() == 0) {
+				tvBatchMode.setText(R.string.title_batch_mode_off);
+			} else {
+				tvBatchMode.setText((String) spRestriction.getSelectedItem());
+			}
+		}
+
+		mBatchModeHidden = !mBatchModeHidden;
+		tvBatchMode.setBackgroundResource(mBatchModeHidden ? android.R.color.transparent : R.drawable.selected_tab);
 	}
 
 	// Tasks

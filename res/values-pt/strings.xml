@@ -66,7 +66,10 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="restrict_system">Sistema (aplicações instaladas)</string>
     <string name="restrict_view">Ver (navegador)</string>
     <string name="title_category">Categoria:</string>
+    <string name="title_categories">Categories</string>
     <string name="title_restrict">Clique para restringir:</string>
+    <string name="title_filters">Filters</string>
+    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">Nenhum filtro ativo</string>
 
     <plurals name="title_filters">
