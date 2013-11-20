@@ -187,28 +187,14 @@ public class PrivacyManager {
 		}
 	}
 
-	public static List<String> getRestrictions(boolean dangerous) {
-		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
-		if (!dangerous)
-			for (String restrictionName : cRestrictionNames)
-				if (isDangerousRestriction(restrictionName))
-					listRestriction.remove(restrictionName);
-		return listRestriction;
+	public static List<String> getRestrictions() {
+		return new ArrayList<String>(Arrays.asList(cRestrictionNames));
 	}
 
-	public static boolean isDangerousRestriction(String restrictionName) {
-		if (PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExpert, false, true))
-			return false;
-		if (restrictionName == null)
-			return false;
-		if (restrictionName.equals(cInternet) || restrictionName.equals(cStorage) || restrictionName.equals(cSystem))
-			return true;
-		return false;
-	}
-
-	public static boolean isDangerousMethod(String restrictionName, String methodName) {
-		if (PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExpert, false, true))
-			return false;
+	public static boolean isDangerousMethod(String restrictionName, String methodName, boolean display) {
+		if (!display)
+			if (PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExpert, false, true))
+				return false;
 		MethodDescription md = new MethodDescription(methodName);
 		int pos = mMethod.get(restrictionName).indexOf(md);
 		md = mMethod.get(restrictionName).get(pos);
@@ -466,11 +452,11 @@ public class PrivacyManager {
 		// Set default exceptions for methods
 		if (restricted && methodName == null)
 			for (MethodDescription md : getMethods(restrictionName))
-				if (isDangerousMethod(restrictionName, md.getMethodName()))
+				if (isDangerousMethod(restrictionName, md.getMethodName(), false))
 					PrivacyManager.setRestricted(null, context, uid, restrictionName, md.getMethodName(), false);
 	}
 
-	public static List<Boolean> getRestricted(Context context, int uid, boolean dangerous) {
+	public static List<Boolean> getRestricted(Context context, int uid) {
 		List<Boolean> listRestricted = new ArrayList<Boolean>();
 		ContentResolver contentResolver = context.getContentResolver();
 		if (contentResolver != null) {
@@ -479,12 +465,6 @@ public class PrivacyManager {
 			if (cursor != null)
 				try {
 					while (cursor.moveToNext()) {
-						if (!dangerous) {
-							String restrictionName = cursor.getString(cursor
-									.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
-							if (PrivacyManager.isDangerousRestriction(restrictionName))
-								continue;
-						}
 						listRestricted.add(Boolean.parseBoolean(cursor.getString(cursor
 								.getColumnIndex(PrivacyProvider.COL_RESTRICTED))));
 					}

@@ -112,7 +112,7 @@ public class PrivacyProvider extends ContentProvider {
 			// Return usage
 			List<String> listRestriction;
 			if (selection == null)
-				listRestriction = PrivacyManager.getRestrictions(true);
+				listRestriction = PrivacyManager.getRestrictions();
 			else {
 				listRestriction = new ArrayList<String>();
 				listRestriction.add(selection);
@@ -133,7 +133,7 @@ public class PrivacyProvider extends ContentProvider {
 		// Build restriction list
 		List<String> listRestrictionName;
 		if (restrictionName == null)
-			listRestrictionName = PrivacyManager.getRestrictions(true);
+			listRestrictionName = PrivacyManager.getRestrictions();
 		else {
 			listRestrictionName = new ArrayList<String>();
 			listRestrictionName.add(restrictionName);
@@ -155,7 +155,8 @@ public class PrivacyProvider extends ContentProvider {
 						// Exceptions
 						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
 							boolean restricted = getRestricted(eRestrictionName, md.getMethodName(), prefs);
-							if (!restricted || PrivacyManager.isDangerousMethod(eRestrictionName, md.getMethodName()))
+							if (!restricted
+									|| PrivacyManager.isDangerousMethod(eRestrictionName, md.getMethodName(), false))
 								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getMethodName(),
 										restricted });
 						}
@@ -205,7 +206,7 @@ public class PrivacyProvider extends ContentProvider {
 				COL_USED });
 		if (uid == 0) {
 			// All
-			for (String restrictionName : PrivacyManager.getRestrictions(true)) {
+			for (String restrictionName : PrivacyManager.getRestrictions()) {
 				SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
 						Context.MODE_PRIVATE);
 				for (String prefName : prefs.getAll().keySet())
@@ -386,7 +387,7 @@ public class PrivacyProvider extends ContentProvider {
 	private int deleteUsage(int uid) {
 		int rows = 0;
 		String sUid = Integer.toString(uid);
-		for (String restrictionName : PrivacyManager.getRestrictions(true)) {
+		for (String restrictionName : PrivacyManager.getRestrictions()) {
 			SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
 					Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = prefs.edit();
