@@ -169,31 +169,31 @@
     <Hook restriction="storage" method="sdcard" dangerous="true" permissions="READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE" sdk="14" />
     <Hook restriction="storage" method="getExternalStorageState" sdk="14" />
 
-    <Hook restriction="system" method="getRecentTasks" permissions="GET_TASKS" sdk="14" />
-    <Hook restriction="system" method="getRunningAppProcesses" permissions="GET_TASKS" sdk="14" />
-    <Hook restriction="system" method="getRunningServices" permissions="GET_TASKS" sdk="14" />
-    <Hook restriction="system" method="getRunningTasks" permissions="GET_TASKS" sdk="14" />
-    <Hook restriction="system" method="getInstalledProviders" permissions="" sdk="14" />
-    <Hook restriction="system" method="getInstalledApplications" permissions="" sdk="14" />
-    <Hook restriction="system" method="getInstalledPackages" permissions="" sdk="14" />
-    <Hook restriction="system" method="getPreferredPackages" permissions="" sdk="14" />
-    <Hook restriction="system" method="queryBroadcastReceivers" permissions="" sdk="14" />
-    <Hook restriction="system" method="queryContentProviders" permissions="" sdk="14" />
-    <Hook restriction="system" method="queryIntentActivities" permissions="" sdk="14" />
-    <Hook restriction="system" method="queryIntentActivityOptions" permissions="" sdk="14" />
-    <Hook restriction="system" method="queryIntentServices" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.PACKAGE_ADDED" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.PACKAGE_REPLACED" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.PACKAGE_RESTARTED" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.PACKAGE_REMOVED" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.PACKAGE_CHANGED" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.PACKAGE_DATA_CLEARED" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.PACKAGE_FIRST_LAUNCH" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.PACKAGE_FULLY_REMOVED" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.PACKAGE_NEEDS_VERIFICATION" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.PACKAGE_VERIFIED" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE" permissions="" sdk="14" />
-    <Hook restriction="system" method="android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE" permissions="" sdk="14" />
+    <Hook restriction="system" method="getRecentTasks" dangerous="true" permissions="GET_TASKS" sdk="14" />
+    <Hook restriction="system" method="getRunningAppProcesses" dangerous="true" permissions="GET_TASKS" sdk="14" />
+    <Hook restriction="system" method="getRunningServices" dangerous="true" permissions="GET_TASKS" sdk="14" />
+    <Hook restriction="system" method="getRunningTasks" dangerous="true" permissions="GET_TASKS" sdk="14" />
+    <Hook restriction="system" method="getInstalledProviders" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="getInstalledApplications" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="getInstalledPackages" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="getPreferredPackages" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="queryBroadcastReceivers" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="queryContentProviders" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="queryIntentActivities" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="queryIntentActivityOptions" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="queryIntentServices" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_ADDED" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_REPLACED" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_RESTARTED" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_REMOVED" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_CHANGED" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_DATA_CLEARED" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_FIRST_LAUNCH" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_FULLY_REMOVED" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_NEEDS_VERIFICATION" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.PACKAGE_VERIFIED" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE" dangerous="true" permissions="" sdk="14" />
+    <Hook restriction="system" method="android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE" dangerous="true" permissions="" sdk="14" />
     <Hook restriction="system" method="ApplicationsProvider" permissions="" sdk="14" />
 
     <Hook restriction="view" method="getDefaultUserAgent" permissions="" sdk="17" />

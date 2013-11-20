@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Mark all functions in the system category as dangerous, except one
 
 **Version 1.10.20 TEST**
 
