@@ -358,13 +358,10 @@ public class PrivacyManager {
 		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs)
 			return false;
 
-		if (uid != cAndroidUid)
+		if (uid == cAndroidUid)
+			return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false);
+		else
 			return true;
-
-		if (!XActivityManagerService.isSystemReady())
-			return false;
-
-		return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false);
 	}
 
 	public static boolean isExtraUsageDataEnabled(int uid) {
