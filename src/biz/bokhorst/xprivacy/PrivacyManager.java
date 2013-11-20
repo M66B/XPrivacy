@@ -37,6 +37,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
+import android.os.SystemClock;
 import android.util.Log;
 
 public class PrivacyManager {
@@ -114,6 +115,7 @@ public class PrivacyManager {
 	private final static String cDeface = "DEFACE";
 	public final static int cRestrictionCacheTimeoutMs = 15 * 1000;
 	public final static int cSettingCacheTimeoutMs = 30 * 1000;
+	private final static int cUseProviderAfterMs = 3 * 60 * 1000;
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -367,6 +369,9 @@ public class PrivacyManager {
 	}
 
 	public static boolean isUsageDataEnabled(int uid) {
+		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs)
+			return false;
+
 		if (uid != cAndroidUid)
 			return true;
 
