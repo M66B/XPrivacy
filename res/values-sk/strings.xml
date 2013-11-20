@@ -69,7 +69,6 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Zaškrtnite pre obmedzenie:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">Žiadny aktívny filter</string>
 
     <plurals name="title_filters">

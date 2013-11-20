@@ -69,7 +69,6 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Cocher pour restreindre :</string>
     <string name="title_filters">Filters</string>
-    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">Pas de filtre actif</string>
 
     <plurals name="title_filters">

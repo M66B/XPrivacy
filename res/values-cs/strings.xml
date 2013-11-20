@@ -69,7 +69,6 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">Žádný aktivní filtr</string>
 
     <plurals name="title_filters">

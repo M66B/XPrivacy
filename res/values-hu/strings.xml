@@ -69,7 +69,6 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Jelölje be a korlátozáshoz:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">No active filter</string>
 
     <plurals name="title_filters">

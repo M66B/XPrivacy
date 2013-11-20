@@ -80,7 +80,6 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     </plurals>
 
     <string name="title_filters">Filters</string>
-    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_fused">Filter on data usage</string>
     <string name="title_finternet">Filter on internet access</string>
     <string name="title_fpermission">Filter on permission</string>

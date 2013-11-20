@@ -753,10 +753,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Change visibility
 			llFilters.setVisibility(LinearLayout.VISIBLE);
 			llBatchMode.setVisibility(LinearLayout.GONE);
-			
+
 			tvFilters.setText(R.string.title_filters);
-			
-			if (!mBatchModeHidden) toggleBatchModeVisibility();
+
+			if (!mBatchModeHidden)
+				toggleBatchModeVisibility();
 		} else {
 			int numberOfFilters = 0;
 
@@ -778,7 +779,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Change text
 			tvFilters.setText(getResources().getQuantityString(R.plurals.title_active_filters, numberOfFilters,
-						numberOfFilters));
+					numberOfFilters));
 
 			// Change visibility
 			llFilters.setVisibility(LinearLayout.GONE);
@@ -798,15 +799,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			llFilters.setVisibility(LinearLayout.GONE);
 			llBatchMode.setVisibility(LinearLayout.VISIBLE);
 			tvBatchMode.setText(R.string.title_categories);
-			if (!mFiltersHidden) toggleFiltersVisibility();
+			if (!mFiltersHidden)
+				toggleFiltersVisibility();
 		} else {
 			// Change visibility
 			llBatchMode.setVisibility(LinearLayout.GONE);
-			if (spRestriction.getSelectedItemPosition() == 0) {
-				tvBatchMode.setText(R.string.title_batch_mode_off);
-			} else {
-				tvBatchMode.setText((String) spRestriction.getSelectedItem());
-			}
+			tvBatchMode.setText((String) spRestriction.getSelectedItem());
 		}
 
 		mBatchModeHidden = !mBatchModeHidden;

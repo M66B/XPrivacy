@@ -69,7 +69,6 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Vink aan om te beperken:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_nofilter">Geen filters actief</string>
 
     <plurals name="title_filters">
