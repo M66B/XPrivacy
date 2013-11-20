@@ -7,6 +7,7 @@ Changelog
 * Workaround for PAC boot problem ([issue](https://github.com/M66B/XPrivacy/issues/785))
 * Move selecting accounts to allow to free version
 * Move settings Android usage data / extra usage data to expert mode
+* Make *inet* dangerous
 * Add application name to title of application details view
 * Removed version warning for KitKat
 * Redesigned filters/categories, thanks [jpeg729](https://github.com/jpeg729)
