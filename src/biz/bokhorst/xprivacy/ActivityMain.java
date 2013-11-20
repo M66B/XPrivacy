@@ -566,6 +566,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionUsage() {
 		Intent intent = new Intent(this, ActivityUsage.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 	}
 

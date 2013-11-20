@@ -435,6 +435,7 @@ public class ActivityApp extends Activity {
 	private void optionUsage() {
 		Intent intent = new Intent(this, ActivityUsage.class);
 		intent.putExtra(ActivityUsage.cUid, mAppInfo.getUid());
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 	}
 
