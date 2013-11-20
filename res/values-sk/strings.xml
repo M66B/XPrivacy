@@ -97,8 +97,8 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">Identifikácia prehliadača</string>
-    <string name="settings_general">GENERAL</string>
-    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_general">General</string>
+    <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Oznámenia o aktualizáciách</string>
     <string name="settings_usage">Využitie dát (vyžaduje reštart)</string>

@@ -96,8 +96,8 @@
     <string name="settings_operator">المُشغل</string>
     <string name="settings_subscriber">IMSI(الهوية العالمية لمشتركي الهواتف)</string>
     <string name="settings_ua">وكيل المستخدم</string>
-    <string name="settings_general">GENERAL</string>
-    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_general">General</string>
+    <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">تحديث الإشعارات</string>
     <string name="settings_usage">بيانات إستخدام الأندرويد (يتطلب إعادة التشغيل)</string>

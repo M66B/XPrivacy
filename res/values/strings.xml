@@ -78,8 +78,9 @@ however it is impossible to guarantee it will work flawlessly on each and every 
         <item quantity="one">Filters: 1 active</item>
         <item quantity="other">Filters: %d active</item>
     </plurals>
+
     <string name="title_filters">Filters</string>
-	<string name="title_batch_mode_off">Batch mode: off</string>
+    <string name="title_batch_mode_off">Batch mode: off</string>
     <string name="title_fused">Filter on data usage</string>
     <string name="title_finternet">Filter on internet access</string>
     <string name="title_fpermission">Filter on permission</string>
@@ -105,8 +106,8 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ssid" translatable="false">SSID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_general">GENERAL</string>
-    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_general">General</string>
+    <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>

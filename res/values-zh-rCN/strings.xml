@@ -96,8 +96,8 @@
     <string name="settings_operator">运营商</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">User Agent</string>
-    <string name="settings_general">GENERAL</string>
-    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_general">General</string>
+    <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">通知栏提示</string>
     <string name="settings_usage">Android 应用用量统计数据（需要重启）</string>

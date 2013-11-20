@@ -96,8 +96,8 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">מנוי ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_general">GENERAL</string>
-    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_general">General</string>
+    <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>

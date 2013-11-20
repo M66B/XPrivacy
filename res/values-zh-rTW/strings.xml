@@ -94,8 +94,8 @@
     <string name="settings_operator">電信商</string>
     <string name="settings_subscriber">簽約者 ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_general">GENERAL</string>
-    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_general">General</string>
+    <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android 使用日誌 (需重新啟動)</string>

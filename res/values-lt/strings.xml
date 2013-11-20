@@ -96,8 +96,8 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_operator">Operatorius</string>
     <string name="settings_subscriber">Abonento ID</string>
     <string name="settings_ua">Vartotojo agentas</string>
-    <string name="settings_general">GENERAL</string>
-    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_general">General</string>
+    <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Atnaujinimų Pranesimas</string>
     <string name="settings_usage">Android naudojimo duomenys (reikia paleisti iš naujo)</string>

@@ -96,8 +96,8 @@
     <string name="settings_operator">Mobilfunkanbieter</string>
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_ua">User-Agent (Browser)</string>
-    <string name="settings_general">GENERAL</string>
-    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_general">General</string>
+    <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>

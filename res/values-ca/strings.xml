@@ -94,8 +94,8 @@
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">ID de subscriptor</string>
     <string name="settings_ua">Agent d\'usuari</string>
-    <string name="settings_general">GENERAL</string>
-    <string name="settings_fake_data">FAKE DATA</string>
+    <string name="settings_general">General</string>
+    <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
