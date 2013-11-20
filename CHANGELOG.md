@@ -10,6 +10,7 @@ Changelog
 * Removed version warning for KitKat
 * Redesigned filters/categories, thanks [jpeg729](https://github.com/jpeg729)
 * Redesigned settings dialog, thanks [jpeg729](https://github.com/jpeg729)
+* Added Finnish translation
 * Updated German translation
 * Updated Chinese translation
 * Updated Lithuanian translation

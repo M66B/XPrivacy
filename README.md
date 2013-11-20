@@ -642,6 +642,7 @@ Current translations:
 1. English
 1. Estonian (ee)
 1. Farsi (fa)
+1. Finnish (fi)
 1. French (fr)
 1. German (de)
 1. Greek (el)

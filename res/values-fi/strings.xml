@@ -1,0 +1,112 @@
+<resources>
+
+    <string name="app_notxposed" formatted="false">Xposed framework versio %d+ ei ole asennettu</string>
+    <string name="app_notenabled">XPrivacy ei ole enabloitu Xposed asennusohjelmassa</string>
+    <string name="app_wrongandroid">Vain Android versiolle 4.0+</string>
+    <string name="app_version" formatted="false">XPrivacy versio: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed framework versio: %d</string>
+    <string name="app_copyright">Tekijänoikeus \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="menu_usage">Käyttötiedot</string>
+    <string name="menu_refresh">Päivitä</string>
+    <string name="menu_settings">Asetukset</string>
+    <string name="menu_template">Pohja</string>
+    <string name="menu_report">Raportoi asia</string>
+    <string name="menu_export">Vie</string>
+    <string name="menu_import">Tuo</string>
+    <string name="menu_submit">Aseta rajoitukset</string>
+    <string name="menu_fetch">Hae rajoitukset</string>
+    <string name="menu_theme">Vaihda teema</string>
+    <string name="menu_pro">Pro versio</string>
+    <string name="menu_about">Tietoja</string>
+    <string name="menu_help">Apua</string>
+    <string name="menu_all">Kaikki</string>
+    <string name="menu_restriction_all">Vaihda rajoitukset</string>
+    <string name="menu_usage_all">Vaihda suodatin</string>
+    <string name="menu_apply">Aseta pohja</string>
+    <string name="menu_clear">Tyhjennä</string>
+    <string name="menu_app_launch">Käynnistä</string>
+    <string name="menu_app_settings">Applikaation tarkemmat tiedot</string>
+    <string name="menu_app_store">Play Store</string>
+    <string name="menu_accounts">Valitse sallittavat tilit</string>
+    <string name="menu_applications">Valitse sallittavat applikaatiot</string>
+    <string name="menu_contacts">Valitse sallittavat kontaktit</string>
+    <string name="msg_new">Uusi</string>
+    <string name="msg_update">Päivitä</string>
+    <string name="msg_licensed" formatted="false">Lisensoitu: %s</string>
+    <string name="msg_loading">Lataa</string>
+    <string name="msg_edit">Klikkaa applikaation ikonia editoidaksesi kaikki rajoituksia</string>
+    <string name="msg_sure">Oletko varma?</string>
+    <string name="msg_done">Valmis</string>
+    <string name="msg_reboot">Laite on käynnistettävä uudelleen</string>
+    <string name="msg_random_now">Randomize now</string>
+    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_boot">Satunnaista uudelleenkäynnistyksen jälkeen</string>
+    <string name="msg_first"><b>Xprivacy on tehty ja testattu huolellisesti, mutta on kuitenkin mahdotonta antaa takeita että se toimii virheettömästi kaikissa laitteissa ja jokaisessa applikaatiossa.
+\n\nKäyttö on täysin omalla vastuullasi.</b>\n\nKatso myös lisenssi:</string>
+    <string name="restrict_accounts">Tilit (Google, Facebook, jne)</string>
+    <string name="restrict_browser">Selain (kirjanmerkit/historia)</string>
+    <string name="restrict_calendar">Kalenteri</string>
+    <string name="restrict_calling">Soittotiedot (puhelin, SMS, MMS)</string>
+    <string name="restrict_clipboard">Leikepöytä</string>
+    <string name="restrict_contacts">Kontaktit</string>
+    <string name="restrict_dictionary">Sanakirja (käyttäjä)</string>
+    <string name="restrict_email">Sähköposti</string>
+    <string name="restrict_identification">Tunniste (laite)</string>
+    <string name="restrict_internet">Internet</string>
+    <string name="restrict_location">Sijainti (tarkka/karkea)</string>
+    <string name="restrict_media">Media (ääni, kuva, video)</string>
+    <string name="restrict_messages">Viestit (SMS, MMS)</string>
+    <string name="restrict_network">Verkko (osoitteet)</string>
+    <string name="restrict_notifications">Ilmoitukset</string>
+    <string name="restrict_phone">Puhelin (ID, numerot, puhelut)</string>
+    <string name="restrict_sensors">Sensorit</string>
+    <string name="restrict_storage">Muisti (media, SD-kortti)</string>
+    <string name="restrict_shell">Shell (komennot, superuser)</string>
+    <string name="restrict_system">Järjestelmä (asennetut ohjelmat)</string>
+    <string name="restrict_view">Katso (selaimessa)</string>
+    <string name="title_category">Kategoria:</string>
+    <string name="title_categories">Categories</string>
+    <string name="title_restrict">Valitse rajoittaaksesi:</string>
+    <string name="title_filters">Filters</string>
+    <string name="title_nofilter">Ei aktiivisia suodattimia</string>
+
+    <plurals name="title_active_filters">
+        <item quantity="one">1 aktiivinen suodatin</item>
+        <item quantity="other">%d aktiivista suodatinta</item>
+    </plurals>
+
+    <string name="title_fused">Suodata datan käytössä</string>
+    <string name="title_finternet">Suodata internet yhteydessä</string>
+    <string name="title_fpermission">Suodata käyttöoikeuksissa</string>
+    <string name="title_frestricted">Suodata rajoitetuissa</string>
+    <string name="title_fuser">Suodata käyttäjän applikaatioissa</string>
+    <string name="title_fsystem">Suodata järjestelmän applikaatioissa</string>
+    <string name="title_fnot">Kiellä</string>
+    <string name="settings_serial">sarjanumero#</string>
+    <string name="settings_lat">Latituudi</string>
+    <string name="settings_lon">Longituudi</string>
+    <string name="settings_mac">MAC osoite</string>
+    <string name="settings_ip">IP osoite</string>
+    <string name="settings_phone">Puhelinnumero</string>
+    <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Mainos ID</string>
+    <string name="settings_country">Maa</string>
+    <string name="settings_operator">Operaattori</string>
+    <string name="settings_subscriber">Tilaajan ID</string>
+    <string name="settings_ua">User agent</string>
+    <string name="settings_general">General</string>
+    <string name="settings_fake_data">Fake data</string>
+    <string name="settings_global">Use global fake data</string>
+    <string name="settings_notify">Päivitä ilmoitukset</string>
+    <string name="settings_usage">Androidin käyttötiedot (vaatii uudelleenkäynnistyksen)</string>
+    <string name="settings_extra">Tarkemmat käyttötiedot (vaatii uudelleenkäynnistyksen)</string>
+    <string name="settings_log">Debuggaus logi (vaatii uudelleenkäynnistyksen)</string>
+    <string name="settings_expert">Expert moodi</string>
+    <string name="help_application">Applikaatio</string>
+    <string name="help_internet">on internet käyttöoikeus</string>
+    <string name="help_granted">on Android käyttöoikeus</string>
+    <string name="help_used">on käyttänyt tätä dataa</string>
+    <string name="help_frozen">on poistettu</string>
+    <string name="help_dangerous">on vaarallinen, rajoitus voi aiheuttaa ongelmia</string>
+
+</resources>
