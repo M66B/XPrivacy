@@ -65,13 +65,11 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="restrict_shell">Shell (linha de comandos, superuser)</string>
     <string name="restrict_system">Sistema (aplicações instaladas)</string>
     <string name="restrict_view">Ver (navegador)</string>
-    <string name="title_category">Categoria:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Clique para restringir:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">Nenhum filtro ativo</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 filtro ativo</item>
         <item quantity="other">%d filtros ativos</item>
     </plurals>

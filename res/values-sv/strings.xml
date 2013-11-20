@@ -65,13 +65,11 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="restrict_shell">Shell (kommandon, superuser)</string>
     <string name="restrict_system">System (installerade appar)</string>
     <string name="restrict_view">View (webbläsare)</string>
-    <string name="title_category">Kategori:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Markera för att blockera:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">Inga aktiva filter</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 aktivt filter</item>
         <item quantity="other">%d aktiva filter</item>
     </plurals>

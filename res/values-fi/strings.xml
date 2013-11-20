@@ -64,11 +64,9 @@
     <string name="restrict_shell">Shell (komennot, superuser)</string>
     <string name="restrict_system">Järjestelmä (asennetut ohjelmat)</string>
     <string name="restrict_view">Katso (selaimessa)</string>
-    <string name="title_category">Kategoria:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Valitse rajoittaaksesi:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">Ei aktiivisia suodattimia</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1 aktiivinen suodatin</item>

@@ -70,16 +70,15 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">System (installed apps)</string>
     <string name="restrict_view">View (browser)</string>
-    <string name="title_category">Category:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Check to restrict:</string>
+    <string name="title_filters">Filters</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">Filters: 1 active</item>
         <item quantity="other">Filters: %d active</item>
     </plurals>
 
-    <string name="title_filters">Filters</string>
     <string name="title_fused">Filter on data usage</string>
     <string name="title_finternet">Filter on internet access</string>
     <string name="title_fpermission">Filter on permission</string>

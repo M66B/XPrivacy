@@ -65,13 +65,11 @@
     <string name="restrict_shell">Команды shell (вкл. суперпользователя)</string>
     <string name="restrict_system">Система (установленные приложения)</string>
     <string name="restrict_view">Просмотр (браузер)</string>
-    <string name="title_category">Категория:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Отметьте приложения:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">Фильтр не задан</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 активный фильтр</item>
         <item quantity="few">%d активных фильтра</item>
         <item quantity="other">%d активных фильтров</item>

@@ -65,13 +65,11 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="restrict_shell">Käsurida (käsud, juurkasutaja)</string>
     <string name="restrict_system">Süsteem (installeeritud rakendused)</string>
     <string name="restrict_view">Vaade (brauser)</string>
-    <string name="title_category">Katekooria:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Lisa linnuke, et keelata:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">Ühtegi aktiivset filtrit pole</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 aktiivne filter</item>
         <item quantity="other">%d aktiivset filtrit</item>
     </plurals>

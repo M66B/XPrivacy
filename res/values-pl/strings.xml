@@ -65,13 +65,11 @@
     <string name="restrict_shell">Powłoka (polecenia, superuser)</string>
     <string name="restrict_system">System (zainstalowane aplikacje)</string>
     <string name="restrict_view">Widok (przeglądarka)</string>
-    <string name="title_category">Kategoria:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Zaznacz aby zablokować:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">Brak aktywnego filtra</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 aktywny filtr</item>
         <item quantity="few">%d aktywne filtry</item>
         <item quantity="other">%d aktywnych filtrów</item>

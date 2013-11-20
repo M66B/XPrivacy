@@ -65,13 +65,11 @@ sin embargo es imposible garantizar que funcione impecable en todos y cada uno d
     <string name="restrict_shell">Terminal (comandos, superusuario)</string>
     <string name="restrict_system">Sistema (aplicaciones instaladas)</string>
     <string name="restrict_view">Ver (navegador)</string>
-    <string name="title_category">Categoría:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Selecciona para restringir:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">Sin ningún filtro activo</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 filtro activo</item>
         <item quantity="other">%d filtros activos</item>
     </plurals>

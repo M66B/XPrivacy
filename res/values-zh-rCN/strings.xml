@@ -65,13 +65,11 @@
     <string name="restrict_shell">命令行（执行命令/获得超级用户权限）</string>
     <string name="restrict_system">系统（查看已安装的应用）</string>
     <string name="restrict_view">显示网页（内置浏览器）</string>
-    <string name="title_category">权限类型:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">勾选表示限制:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">无过滤器</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 个已启用的过滤器</item>
         <item quantity="other">%d 个已启用的过滤器</item>
     </plurals>

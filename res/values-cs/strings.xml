@@ -65,13 +65,11 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="restrict_shell">Konzole (příkazy, superuser)</string>
     <string name="restrict_system">Systém (nainstalované aplikace)</string>
     <string name="restrict_view">Zobrazení (v prohlížeči)</string>
-    <string name="title_category">Kategorie:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">Žádný aktivní filtr</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 aktivní filtr</item>
         <item quantity="few">%d aktivní filtry</item>
         <item quantity="other">%d aktivních filtrů</item>

@@ -65,13 +65,11 @@
     <string name="restrict_shell">سطر الأوامر (الأوامر,المستخدم الجذر)</string>
     <string name="restrict_system">النظام (البرامج المنزلة)</string>
     <string name="restrict_view">تصفح (المتصفح)</string>
-    <string name="title_category">الفئة:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">إختر للتقيد:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">لايوجد فلتر مُنشّط</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 فلتر نشط</item>
         <item quantity="other">%d فلاتر نشِطة</item>
     </plurals>

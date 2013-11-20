@@ -65,13 +65,11 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
-    <string name="title_category">Kategória:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Zaškrtnite pre obmedzenie:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">Žiadny aktívny filter</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 aktívny filter</item>
         <item quantity="few">%d aktívne filtre</item>
         <item quantity="other">%d aktívnych filtrov</item>

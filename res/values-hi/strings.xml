@@ -65,13 +65,11 @@
     <string name="restrict_shell">Shell (आदेश, superuser)</string>
     <string name="restrict_system">सिस्टम (इन्सटाल्ड apps)</string>
     <string name="restrict_view">View (ब्राउज़र)</string>
-    <string name="title_category">श्रेणी:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">प्रतिबंधित करने के लिए मार्क करे:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">कोई सक्रिय फिल्टर नहीं</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">१ सक्रिय फिल्टर</item>
         <item quantity="other">%d सक्रिय फिल्टर</item>
     </plurals>

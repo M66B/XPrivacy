@@ -64,13 +64,11 @@
     <string name="restrict_shell">Shell (câu lệnh, superuser)</string>
     <string name="restrict_system">Hệ thống (các ứng dụng)</string>
     <string name="restrict_view">Mở trình duyệt</string>
-    <string name="title_category">Danh mục:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Đánh dấu để hạn chế:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">Không lọc</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 bộ lọc có hiệu lực</item>
         <item quantity="other">%d bộ lọc có hiệu lực</item>
     </plurals>

@@ -65,13 +65,11 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_shell">Шел (команде, суперкорисник)</string>
     <string name="restrict_system">Систем (инсталиране апликације)</string>
     <string name="restrict_view">Поглед (браузер)</string>
-    <string name="title_category">Категорија:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Означи да забраниш:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">No active filter</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">1 active filter</item>
         <item quantity="other">%d active filters</item>
     </plurals>

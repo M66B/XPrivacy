@@ -63,13 +63,11 @@
     <string name="restrict_shell">Shell (指令, ROOT指令)</string>
     <string name="restrict_system">已安裝軟體清單</string>
     <string name="restrict_view">使用瀏覽器介面</string>
-    <string name="title_category">分類:</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">限制項目:</string>
     <string name="title_filters">Filters</string>
-    <string name="title_nofilter">未使用篩選器</string>
 
-    <plurals name="title_filters">
+    <plurals name="title_active_filters">
         <item quantity="one">使用 1 個篩選器</item>
         <item quantity="other">使用 %d 個篩選器</item>
     </plurals>
