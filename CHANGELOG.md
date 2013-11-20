@@ -12,10 +12,10 @@ Changelog
 * Made *inet*, *media*, *sdcard* dangerous
 * Always highlight dangerous functions ([issue](https://github.com/M66B/XPrivacy/issues/796))
 * Made Xposed Installer a system application
-* Add application name to title of application details view
+* Added application name to title of application details view
 * Removed version warning for KitKat
-* Redesigned filters/categories, thanks [jpeg729](https://github.com/jpeg729)
-* Redesigned settings dialog, thanks [jpeg729](https://github.com/jpeg729)
+* Redesigned filters/categories, thanks @[jpeg729](https://github.com/jpeg729)
+* Redesigned settings dialog, thanks @[jpeg729](https://github.com/jpeg729)
 * Added Finnish translation
 * Updated German translation
 * Updated Chinese translation
