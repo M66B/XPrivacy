@@ -31,7 +31,7 @@
     <string name="menu_applications">选择允许访问的应用</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
     <string name="msg_new">已安装</string>
-    <string name="msg_update">已升级</string>
+    <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
     <string name="msg_edit">点击应用图标以调整详细限制规则</string>
@@ -39,7 +39,7 @@
     <string name="msg_done">已完成</string>
     <string name="msg_reboot">设备需要重启</string>
     <string name="msg_random_now">生成随机数值</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">访问时随机生成数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
@@ -65,9 +65,9 @@
     <string name="restrict_shell">命令行（执行命令/获得超级用户权限）</string>
     <string name="restrict_system">系统（查看已安装的应用）</string>
     <string name="restrict_view">显示网页（内置浏览器）</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">类别</string>
     <string name="title_restrict">勾选表示限制:</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">过滤器</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1 个已启用的过滤器</item>
@@ -93,9 +93,9 @@
     <string name="settings_operator">运营商</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">User Agent</string>
-    <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
+    <string name="settings_general">一般设置</string>
+    <string name="settings_fake_data">模拟信息</string>
+    <string name="settings_global">使用全局模拟信息</string>
     <string name="settings_notify">通知栏提示</string>
     <string name="settings_usage">Android 应用用量统计数据（需要重启）</string>
     <string name="settings_extra">额外用量统计数据（需要重启）</string>
