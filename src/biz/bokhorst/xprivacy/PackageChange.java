@@ -61,20 +61,19 @@ public class PackageChange extends BroadcastReceiver {
 						if (!replacing
 								|| PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify,
 										true, false)) {
-							// Build result intent
-							Intent resultIntent = new Intent(context, ActivityApp.class);
+							Intent resultIntent = new Intent(Intent.ACTION_MAIN);
 							resultIntent.putExtra(ActivityApp.cPackageName, packageName);
-							resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							resultIntent.setClass(context.getApplicationContext(), ActivityApp.class);
 
 							// Build pending intent
 							PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
 									PendingIntent.FLAG_UPDATE_CURRENT);
 
 							// Build result intent clear
-							Intent resultIntentClear = new Intent(context, ActivityApp.class);
+							Intent resultIntentClear = new Intent(Intent.ACTION_MAIN);
 							resultIntentClear.putExtra(ActivityApp.cPackageName, packageName);
 							resultIntentClear.putExtra(ActivityApp.cActionClear, true);
-							resultIntentClear.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							resultIntentClear.setClass(context.getApplicationContext(), ActivityApp.class);
 
 							// Build pending intent clear
 							PendingIntent pendingIntentClear = PendingIntent.getActivity(context, -uid,

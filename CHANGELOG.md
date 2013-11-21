@@ -3,11 +3,12 @@ Changelog
 
 **Next release**
 
-* Mark all functions in the system category as dangerous, except one
+* Marked all functions in the system category as dangerous, except one
 * Don't return an empty gids list to prevent exception
 * Require [Pro enabler](http://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) version 1.12
 * Leave randomize button enabled when randomize on boot is enabled, thanks @[jpeg729](https://github.com/jpeg729)
-* Change title of usage data view
+* Changed title of usage data view
+* Fixed activity history ([issue](https://github.com/M66B/XPrivacy/issues/804))
 
 **Version 1.10.20 TEST**
 

@@ -42,8 +42,6 @@
         </activity>
         <activity
             android:name=".ActivityApp"
-            android:allowTaskReparenting="true"
-            android:noHistory="true"
             android:parentActivityName=".ActivityMain"
             android:taskAffinity=".ActivityMain" >
             <meta-data
@@ -52,7 +50,6 @@
         </activity>
         <activity
             android:name=".ActivityUsage"
-            android:noHistory="true"
             android:parentActivityName=".ActivityMain" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
