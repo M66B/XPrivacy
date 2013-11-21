@@ -6,6 +6,7 @@ Changelog
 * Mark all functions in the system category as dangerous, except one
 * Don't return an empty gids list to prevent exception
 * Require [Pro enabler](http://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) version 1.12
+* Leave randomize button enabled when randomize on boot is enabled, thanks @[jpeg729](https://github.com/jpeg729)
 
 **Version 1.10.20 TEST**
 
