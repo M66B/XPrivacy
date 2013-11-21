@@ -316,8 +316,6 @@ public class SettingsDialog {
 		cbRandom.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				btnRandom.setEnabled(!isChecked);
-
 				cbSerial.setEnabled(!isChecked);
 				cbLat.setEnabled(!isChecked);
 				cbLon.setEnabled(!isChecked);
