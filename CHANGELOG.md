@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Mark all functions in the system category as dangerous, except one
+* Don't return an empty gids list
 
 **Version 1.10.20 TEST**
 
