@@ -5,7 +5,7 @@ Changelog
 
 * ...
 
-**Version 1.10.21 TEST**
+**Version 1.10.21 BETA**
 
 * Marked all functions in the system category as dangerous, except one
 * Don't return an empty gids list to prevent exception
