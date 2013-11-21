@@ -70,6 +70,9 @@ public class ActivityUsage extends Activity {
 		Bundle extras = getIntent().getExtras();
 		mUid = (extras == null ? 0 : extras.getInt(cUid, 0));
 
+		// Set title
+		setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_usage)));
+
 		// Start task to get usage data
 		UsageTask usageTask = new UsageTask();
 		usageTask.executeOnExecutor(mExecutor, (Object) null);
