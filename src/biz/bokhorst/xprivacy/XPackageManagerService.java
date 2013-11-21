@@ -54,7 +54,7 @@ public class XPackageManagerService extends XHook {
 		int uid = -1;
 		try {
 			// ICS: public int getPackageUid(String packageName)
-			// public int getPackageUid(String packageName, int userId)
+			// JB+: public int getPackageUid(String packageName, int userId)
 			if (param.args.length > 0) {
 				String packageName = (String) param.args[0];
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -97,7 +97,10 @@ public class XPackageManagerService extends XHook {
 			for (int i = 0; i < listGids.size(); i++)
 				mGids[i] = listGids.get(i);
 
-			param.setResult(mGids);
+			if (mGids.length == 0)
+				param.setResult(null);
+			else
+				param.setResult(mGids);
 		}
 	}
 }
