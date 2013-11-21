@@ -90,6 +90,29 @@ public class Requirements {
 			alertDialog.show();
 		}
 
+		// Check pro enabler
+		Version version = Util.getProEnablerVersion(context);
+		if (version != null && !Util.isValidProEnablerVersion(version)) {
+			String msg = context.getString(R.string.app_wrongenabler);
+			Util.log(null, Log.WARN, msg);
+
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
+			alertDialogBuilder.setMessage(msg);
+			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher, context));
+			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Intent intentStore = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
+									+ context.getPackageName() + ".pro"));
+							context.startActivity(intentStore);
+						}
+					});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		}
+
 		// Check activity manager
 		if (!checkField(context.getSystemService(Context.ACTIVITY_SERVICE), "mContext", Context.class))
 			reportClass(context.getSystemService(Context.ACTIVITY_SERVICE).getClass(), context);

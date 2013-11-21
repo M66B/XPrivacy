@@ -461,7 +461,7 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionFetch() {
-		if (Util.getLicense() == null) {
+		if (Util.getProLicense() == null) {
 			// Redirect to pro page
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
 			startActivity(browserIntent);
@@ -478,7 +478,7 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionApplications() {
-		if (Util.getLicense() == null) {
+		if (Util.getProLicense() == null) {
 			// Redirect to pro page
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
 			startActivity(browserIntent);
@@ -489,7 +489,7 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionContacts() {
-		if (Util.getLicense() == null) {
+		if (Util.getProLicense() == null) {
 			// Redirect to pro page
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
 			startActivity(browserIntent);

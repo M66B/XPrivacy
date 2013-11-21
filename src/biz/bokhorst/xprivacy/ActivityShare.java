@@ -421,7 +421,7 @@ public class ActivityShare extends Activity {
 					lstApp.add(new ApplicationInfoEx(ActivityShare.this, params[0]));
 				}
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
-				String[] license = Util.getLicense();
+				String[] license = Util.getProLicense();
 				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 
 				// Process applications

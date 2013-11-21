@@ -651,7 +651,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionFetch() {
-		if (Util.getLicense() == null) {
+		if (Util.getProLicense() == null) {
 			// Redirect to pro page
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, cProUri);
 			startActivity(browserIntent);

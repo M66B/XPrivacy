@@ -36,7 +36,8 @@ public class Util {
 	private static boolean mPro = false;
 	private static boolean mLog = true;
 	private static boolean mLogDetermined = false;
-	private static String LICENSE_NAME = "XPrivacy_license.txt";
+	private static Version MIN_PRO_VERSION = new Version("1.12");
+	private static String LICENSE_FILE_NAME = "XPrivacy_license.txt";
 
 	public static void log(XHook hook, int priority, String msg) {
 		// Check if logging enabled
@@ -103,7 +104,7 @@ public class Util {
 				return "";
 
 			// Get license
-			String[] license = getLicense();
+			String[] license = getProLicense();
 			if (license == null)
 				return null;
 			String name = license[0];
@@ -120,7 +121,7 @@ public class Util {
 
 			// Verify license
 			boolean licensed = verifyData(bEmail, bSignature, getPublicKey(context));
-			if (licensed && (isDebug(context) || validFingerPrint(context)))
+			if (licensed && (isDebuggable(context) || hasValidFingerPrint(context)))
 				Util.log(null, Log.INFO, "Licensing: ok for " + name);
 			else
 				Util.log(null, Log.ERROR, "Licensing: invalid for " + name);
@@ -134,17 +135,17 @@ public class Util {
 		return null;
 	}
 
-	public static String[] getLicense() {
+	public static String[] getProLicense() {
 		// Get license file name
 		String storageDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-		File licenseFile = new File(storageDir + File.separator + LICENSE_NAME);
+		File licenseFile = new File(storageDir + File.separator + LICENSE_FILE_NAME);
 		if (!licenseFile.exists())
-			licenseFile = new File(storageDir + File.separator + ".xprivacy" + File.separator + LICENSE_NAME);
+			licenseFile = new File(storageDir + File.separator + ".xprivacy" + File.separator + LICENSE_FILE_NAME);
 
 		// Get imported license file name
 		String packageName = Util.class.getPackage().getName();
 		String importedLicense = Environment.getDataDirectory() + File.separator + "data" + File.separator
-				+ packageName + File.separator + LICENSE_NAME;
+				+ packageName + File.separator + LICENSE_FILE_NAME;
 
 		// Import license file
 		if (licenseFile.exists()) {
@@ -187,20 +188,34 @@ public class Util {
 		return null;
 	}
 
-	public static boolean isProInstalled(Context context) {
+	public static Version getProEnablerVersion(Context context) {
 		try {
-			String proPackageName = "biz.bokhorst.xprivacy.pro";
+			String proPackageName = context.getPackageName() + ".pro";
 			PackageManager pm = context.getPackageManager();
 			PackageInfo pi = pm.getPackageInfo(proPackageName, 0);
-			Version vPro = new Version(pi.versionName);
-			if (pm.checkSignatures(context.getPackageName(), proPackageName) == PackageManager.SIGNATURE_MATCH
-					&& vPro.compareTo(new Version("1.10")) >= 0 && validFingerPrint(context)) {
-				Util.log(null, Log.INFO, "Licensing: enabler installed");
-				return true;
-			}
+			return new Version(pi.versionName);
 		} catch (NameNotFoundException ignored) {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
+		}
+		return null;
+	}
+
+	public static boolean isValidProEnablerVersion(Version version) {
+		return (version.compareTo(MIN_PRO_VERSION) >= 0);
+	}
+
+	private static boolean hasValidProEnablerSignature(Context context) {
+		return (context.getPackageManager()
+				.checkSignatures(context.getPackageName(), context.getPackageName() + ".pro") == PackageManager.SIGNATURE_MATCH);
+	}
+
+	public static boolean isProInstalled(Context context) {
+		Version version = getProEnablerVersion(context);
+		if (version != null && isValidProEnablerVersion(version) && hasValidProEnablerSignature(context)
+				&& hasValidFingerPrint(context)) {
+			Util.log(null, Log.INFO, "Licensing: enabler installed");
+			return true;
 		}
 		Util.log(null, Log.INFO, "Licensing: enabler not installed");
 		return false;
@@ -278,7 +293,7 @@ public class Util {
 	}
 
 	@SuppressLint("DefaultLocale")
-	public static boolean validFingerPrint(Context context) {
+	public static boolean hasValidFingerPrint(Context context) {
 		try {
 			PackageManager pm = context.getPackageManager();
 			String packageName = context.getPackageName();
@@ -303,7 +318,7 @@ public class Util {
 		}
 	}
 
-	public static boolean isDebug(Context context) {
+	public static boolean isDebuggable(Context context) {
 		return ((context.getApplicationContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
 	}
 
