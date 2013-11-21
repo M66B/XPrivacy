@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Allow fetching restrictions for system applications on per app basis
 
 **Version 1.10.21 BETA**
 
