@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Allow fetching restrictions for system applications per application
+* Updated Lithuanian translation
 * Updated Polish translation
 
 **Version 1.10.21 BETA**
