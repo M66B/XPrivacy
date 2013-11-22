@@ -36,8 +36,8 @@
     <string name="msg_loading">加载中…</string>
     <string name="msg_edit">点击应用图标以调整详细限制规则</string>
     <string name="msg_sure">是否确定？</string>
-    <string name="msg_done">已完成</string>
-    <string name="msg_reboot">设备需要重启</string>
+    <string name="msg_done">完成</string>
+    <string name="msg_reboot">XPrivacy 需要在重启后才能生效</string>
     <string name="msg_random_now">生成随机数值</string>
     <string name="msg_random_access">访问时随机生成数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
