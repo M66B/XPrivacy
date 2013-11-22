@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Allow fetching restrictions for system applications per application
+* Updated Finnish translation
 * Updated Lithuanian translation
 * Updated Polish translation
 
