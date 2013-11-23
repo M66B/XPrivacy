@@ -11,8 +11,8 @@
     <string name="menu_settings">用于被限制应用的模拟信息</string>
     <string name="menu_template">新安装应用默认权限模板</string>
     <string name="menu_report">报告问题</string>
-    <string name="menu_export">导出全局配置到本地存储器</string>
-    <string name="menu_import">导入本地存储器上的全局配置</string>
+    <string name="menu_export">导出全局配置</string>
+    <string name="menu_import">导入全局配置</string>
     <string name="menu_submit">上传权限限制规则</string>
     <string name="menu_fetch">下载权限限制规则</string>
     <string name="menu_theme">切换明/暗主题</string>
