@@ -961,12 +961,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Get if user
 					boolean user = false;
 					if (fUser)
-						user = !xAppInfo.getIsSystem();
+						user = !xAppInfo.isSystem();
 
 					// Get if system
 					boolean system = false;
 					if (fSystem)
-						system = xAppInfo.getIsSystem();
+						system = xAppInfo.isSystem();
 
 					// Match application
 					if ((fName.equals("") ? true : contains) && (fUsed ? used : true) && (fInternet ? internet : true)
@@ -1220,7 +1220,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			final ApplicationInfoEx xAppInfo = getItem(holder.position);
 
 			// Set background color
-			if (xAppInfo.getIsSystem())
+			if (xAppInfo.isSystem())
 				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
@@ -1261,10 +1261,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void checkLicense() {
 		if (Util.hasProLicense(this) == null) {
-			if (Util.isProInstalled(this))
+			if (Util.isProEnablerInstalled(this))
 				try {
-					int uid = getPackageManager().getApplicationInfo("biz.bokhorst.xprivacy.pro", 0).uid;
-					PrivacyManager.deleteRestrictions(this, uid);
 					Util.log(null, Log.INFO, "Licensing: check");
 					startActivityForResult(new Intent("biz.bokhorst.xprivacy.pro.CHECK"), ACTIVITY_LICENSE);
 				} catch (Throwable ex) {

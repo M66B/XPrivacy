@@ -210,7 +210,7 @@ public class Util {
 				.checkSignatures(context.getPackageName(), context.getPackageName() + ".pro") == PackageManager.SIGNATURE_MATCH);
 	}
 
-	public static boolean isProInstalled(Context context) {
+	public static boolean isProEnablerInstalled(Context context) {
 		Version version = getProEnablerVersion(context);
 		if (version != null && isValidProEnablerVersion(version) && hasValidProEnablerSignature(context)
 				&& hasValidFingerPrint(context)) {

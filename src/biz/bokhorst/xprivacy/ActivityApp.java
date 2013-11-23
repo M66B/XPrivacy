@@ -122,7 +122,7 @@ public class ActivityApp extends Activity {
 
 		// Get app info
 		mAppInfo = new ApplicationInfoEx(this, packageName);
-		if (!mAppInfo.getIsInstalled()) {
+		if (!mAppInfo.isInstalled()) {
 			finish();
 			return;
 		}
@@ -148,7 +148,7 @@ public class ActivityApp extends Activity {
 		tvAppName.setText(mAppInfo.toString());
 
 		// Background color
-		if (mAppInfo.getIsSystem()) {
+		if (mAppInfo.isSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
 			llInfo.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 		}

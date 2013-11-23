@@ -32,15 +32,11 @@ public class PackageChange extends BroadcastReceiver {
 				// Check action
 				if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
 					// Get data
-					boolean system = false;
-					PackageInfo pInfo = null;
-					PackageManager pm = context.getPackageManager();
-					pInfo = pm.getPackageInfo(packageName, 0);
-					system = (pInfo.applicationInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0;
+					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, packageName);
 
-					if (fSystem ? !system : true) {
+					if (fSystem ? !appInfo.isSystem() : true) {
 						// Default deny new user apps
-						if (!system && !replacing) {
+						if (!appInfo.isSystem() && !replacing) {
 							// Check for existing restrictions
 							boolean someRestricted = false;
 							for (boolean restricted : PrivacyManager.getRestricted(context, uid))
@@ -82,7 +78,7 @@ public class PackageChange extends BroadcastReceiver {
 							// Title
 							String title = String.format("%s %s %s",
 									context.getString(replacing ? R.string.msg_update : R.string.msg_new),
-									pm.getApplicationLabel(pInfo.applicationInfo), pInfo.versionName);
+									appInfo.getFirstApplicationName(), appInfo.getVersion());
 
 							// Build notification
 							NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
@@ -97,7 +93,7 @@ public class PackageChange extends BroadcastReceiver {
 							Notification notification = notificationBuilder.build();
 
 							// Notify
-							notificationManager.notify(pInfo.applicationInfo.uid, notification);
+							notificationManager.notify(appInfo.getUid(), notification);
 						}
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {

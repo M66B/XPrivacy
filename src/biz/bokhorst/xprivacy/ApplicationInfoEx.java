@@ -64,7 +64,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 		// Get if system application
 		mSystem = ((appInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
-		mSystem = mSystem || appInfo.packageName.equals(ApplicationInfoEx.class.getPackage().getName());
+		mSystem = mSystem || appInfo.packageName.equals(context.getPackageName());
+		mSystem = mSystem || appInfo.packageName.equals(context.getPackageName() + ".pro");
 		mSystem = mSystem || appInfo.packageName.equals("de.robv.android.xposed.installer");
 
 		// Get if frozen (not enabled)
@@ -101,7 +102,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 					mapApp.put(xAppInfo.getUid(), xAppInfo);
 					listApp.add(xAppInfo);
 				} else
-					yAppInfo.AddApplicationName(getApplicationName(listAppInfo.get(app), pm));
+					yAppInfo.addApplicationName(getApplicationName(listAppInfo.get(app), pm));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
@@ -115,7 +116,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return (String) pm.getApplicationLabel(appInfo);
 	}
 
-	private void AddApplicationName(String Name) {
+	private void addApplicationName(String Name) {
 		mListApplicationName.add(Name);
 		Collections.sort(mListApplicationName);
 	}
@@ -148,11 +149,11 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return mVersion;
 	}
 
-	public boolean getIsSystem() {
+	public boolean isSystem() {
 		return mSystem;
 	}
 
-	public boolean getIsInstalled() {
+	public boolean isInstalled() {
 		return mInstalled;
 	}
 

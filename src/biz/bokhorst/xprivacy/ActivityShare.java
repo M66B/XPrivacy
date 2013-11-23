@@ -426,7 +426,7 @@ public class ActivityShare extends Activity {
 
 				// Process applications
 				for (ApplicationInfoEx appInfo : lstApp)
-					if (!appInfo.getIsSystem() || params[0] != null) {
+					if (!appInfo.isSystem() || params[0] != null) {
 						publishProgress(appInfo.getPackageName());
 
 						// Encode package
