@@ -322,21 +322,6 @@ public class Util {
 		return ((context.getApplicationContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
 	}
 
-	public static Context getXContext(Context context) throws Throwable {
-		String xPackageName = Util.class.getPackage().getName();
-		return context.createPackageContext(xPackageName, 0);
-	}
-
-	public static Resources getXResources(Context context) throws Throwable {
-		String xPackageName = Util.class.getPackage().getName();
-		PackageManager pm = context.getPackageManager();
-		return pm.getResourcesForApplication(xPackageName);
-	}
-
-	public static String getXString(Context context, int id) throws Throwable {
-		return getXResources(context).getString(id);
-	}
-
 	public static boolean containsIgnoreCase(List<String> strings, String value) {
 		for (String string : strings)
 			if (string.equalsIgnoreCase(value))
