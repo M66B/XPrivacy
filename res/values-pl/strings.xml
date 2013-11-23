@@ -20,8 +20,8 @@
     <string name="menu_about">O programie</string>
     <string name="menu_help">Pomoc</string>
     <string name="menu_all">Wszystko</string>
-    <string name="menu_restriction_all">Toggle restrictions</string>
-    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_restriction_all">Przełącz restrykcje</string>
+    <string name="menu_usage_all">Przełącz filtry</string>
     <string name="menu_apply">Zastosuj szablon</string>
     <string name="menu_clear">Wyczyść</string>
     <string name="menu_app_launch">Uruchom</string>
@@ -31,7 +31,7 @@
     <string name="menu_applications">Wybierz dozwolone aplikacje</string>
     <string name="menu_contacts">Wybierz dozwolone kontakty</string>
     <string name="msg_new">Nowy</string>
-    <string name="msg_update">Aktualizuj</string>
+    <string name="msg_update">Aktualizacja</string>
     <string name="msg_licensed" formatted="false">Licencjonowane dla: %s</string>
     <string name="msg_loading">Ładowanie</string>
     <string name="msg_edit">Kliknij na ikonę aplikacji aby zmodyfikować poszczególne ograniczenia</string>
