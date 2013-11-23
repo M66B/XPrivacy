@@ -331,7 +331,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				else
 					sReason = Integer.toString(reason);
 
-				Util.log(null, Log.INFO, "Licensing: code=" + code + " reason=" + sReason);
+				Util.log(null, Log.WARN, "Licensing: code=" + code + " reason=" + sReason);
 
 				if (code > 0) {
 					Util.setPro(true);
@@ -345,7 +345,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						public void run() {
 							checkLicense();
 						}
-					}, 60 * 1000);
+					}, 30 * 1000);
 				}
 			}
 		} else if (requestCode == ACTIVITY_EXPORT) {
