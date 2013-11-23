@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Display third state for categories not fully restricted ([issue](https://github.com/M66B/XPrivacy/issues/815))
+* Automatically open and scroll to category in application view
 
 **Version 1.10.23 BETA**
 

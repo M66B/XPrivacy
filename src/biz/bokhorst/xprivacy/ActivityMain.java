@@ -1219,6 +1219,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				public void onClick(View view) {
 					Intent intentSettings = new Intent(view.getContext(), ActivityApp.class);
 					intentSettings.putExtra(ActivityApp.cPackageName, xAppInfo.getPackageName());
+					intentSettings.putExtra(ActivityApp.cRestrictionName, mRestrictionName);
 					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					view.getContext().startActivity(intentSettings);
 				}
