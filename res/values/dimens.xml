@@ -5,4 +5,10 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_horizontal_margin_list">0dp</dimen>
 
+    <!-- Samsung multi window support -->
+    <dimen name="app_defaultsize_w">640dip</dimen>
+    <dimen name="app_defaultsize_h">400dip</dimen>
+    <dimen name="app_minimumsize_w">400dip</dimen>
+    <dimen name="app_minimumsize_h">200dip</dimen>
+
 </resources>
