@@ -141,6 +141,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:saveEnabled="false"
                     android:text="@string/title_fused"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -162,6 +164,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:saveEnabled="false"
                     android:text="@string/title_finternet"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -182,6 +186,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:saveEnabled="false"
                     android:text="@string/title_fpermission"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -202,6 +208,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:saveEnabled="false"
                     android:text="@string/title_frestricted"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -211,6 +219,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:saveEnabled="false"
                     android:text="@string/title_fnot"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -231,6 +241,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:saveEnabled="false"
                     android:text="@string/title_fuser"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -251,6 +263,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:saveEnabled="false"
                     android:text="@string/title_fsystem"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
