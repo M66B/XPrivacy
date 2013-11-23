@@ -39,7 +39,7 @@ public class PackageChange extends BroadcastReceiver {
 						if (!appInfo.isSystem() && !replacing) {
 							// Check for existing restrictions
 							boolean someRestricted = false;
-							for (boolean restricted : PrivacyManager.getRestricted(context, uid))
+							for (boolean restricted : PrivacyManager.getRestricted(context, uid, null))
 								if (restricted) {
 									someRestricted = true;
 									break;

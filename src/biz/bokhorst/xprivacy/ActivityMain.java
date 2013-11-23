@@ -540,16 +540,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					boolean someRestricted = false;
 					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
 						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
-						if (mAppAdapter.getRestrictionName() == null) {
-							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-									xAppInfo.getUid()))
-								if (restricted) {
-									someRestricted = true;
-									break;
-								}
-						} else if (PrivacyManager.getRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-								mAppAdapter.getRestrictionName(), null, false, false))
-							someRestricted = true;
+						for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
+								xAppInfo.getUid(), mAppAdapter.getRestrictionName()))
+							if (restricted) {
+								someRestricted = true;
+								break;
+							}
 						if (someRestricted)
 							break;
 					}
@@ -938,16 +934,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Get some restricted
 					boolean someRestricted = false;
 					if (fRestricted)
-						if (mRestrictionName == null) {
-							for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-									xAppInfo.getUid()))
-								if (restricted) {
-									someRestricted = true;
-									break;
-								}
-						} else
-							someRestricted = PrivacyManager.getRestricted(null, getApplicationContext(),
-									xAppInfo.getUid(), mRestrictionName, null, false, false);
+						for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
+								xAppInfo.getUid(), mRestrictionName))
+							if (restricted) {
+								someRestricted = true;
+								break;
+							}
 
 					// Get Android permission
 					boolean permission = false;
@@ -968,7 +960,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					if (fSystem)
 						system = xAppInfo.isSystem();
 
-					// Match application
+					// Apply filters
 					if ((fName.equals("") ? true : contains) && (fUsed ? used : true) && (fInternet ? internet : true)
 							&& (fRestricted ? (fRestrictedNot ? !someRestricted : someRestricted) : true)
 							&& (fPermission ? permission : true) && (fUser ? user : true) && (fSystem ? system : true))
@@ -1064,17 +1056,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					}
 
 					// Get all/some restricted
-					if (mRestrictionName == null)
-						for (boolean restricted : PrivacyManager.getRestricted(holder.row.getContext(),
-								xAppInfo.getUid())) {
-							allRestricted = allRestricted && restricted;
-							someRestricted = someRestricted || restricted;
-						}
-					else {
-						boolean restricted = PrivacyManager.getRestricted(null, holder.row.getContext(),
-								xAppInfo.getUid(), mRestrictionName, null, false, false);
-						allRestricted = restricted;
-						someRestricted = restricted;
+					for (boolean restricted : PrivacyManager.getRestricted(holder.row.getContext(), xAppInfo.getUid(),
+							mRestrictionName)) {
+						allRestricted = (allRestricted && restricted);
+						someRestricted = (someRestricted || restricted);
 					}
 				}
 				return null;
@@ -1147,22 +1132,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							// Get all/some restricted
 							boolean allRestricted = true;
 							boolean someRestricted = false;
-							if (mRestrictionName == null)
-								for (boolean restricted : PrivacyManager.getRestricted(view.getContext(),
-										xAppInfo.getUid())) {
-									allRestricted = allRestricted && restricted;
-									someRestricted = someRestricted || restricted;
-								}
-							else {
-								boolean restricted = PrivacyManager.getRestricted(null, view.getContext(),
-										xAppInfo.getUid(), mRestrictionName, null, false, false);
-								allRestricted = restricted;
-								someRestricted = restricted;
+							for (boolean restricted : PrivacyManager.getRestricted(view.getContext(),
+									xAppInfo.getUid(), mRestrictionName)) {
+								allRestricted = (allRestricted && restricted);
+								someRestricted = (someRestricted || restricted);
 							}
 
 							// Process click
-							someRestricted = !someRestricted;
-							if (mRestrictionName == null && !someRestricted) {
+							if (mRestrictionName == null && someRestricted) {
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
 								alertDialogBuilder.setTitle(getString(R.string.app_name));
 								alertDialogBuilder.setMessage(getString(R.string.msg_sure));
@@ -1188,11 +1165,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								alertDialog.show();
 							} else {
 								// Update restriction
-								if (mRestrictionName != null)
-									allRestricted = someRestricted;
 								for (String restrictionName : listRestriction)
 									PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
-											restrictionName, null, someRestricted);
+											restrictionName, null, !someRestricted);
+
+								// Update all/some restricted
+								allRestricted = true;
+								someRestricted = false;
+								for (boolean restricted : PrivacyManager.getRestricted(view.getContext(),
+										xAppInfo.getUid(), mRestrictionName)) {
+									allRestricted = (allRestricted && restricted);
+									someRestricted = (someRestricted || restricted);
+								}
 
 								// Update visible state
 								holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check

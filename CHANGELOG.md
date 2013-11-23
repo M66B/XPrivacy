@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Display third state for categories not fully restricted ([issue](https://github.com/M66B/XPrivacy/issues/815))
 
 **Version 1.10.23 BETA**
 
