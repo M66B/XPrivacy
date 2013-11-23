@@ -38,7 +38,7 @@
     <string name="msg_sure">確定進行操作?</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">需要重新啟動</string>
-    <string name="msg_random_now"><亂數/string>
+    <string name="msg_random_now">亂數</string>
     <string name="msg_random_access">存取資訊時進行亂數</string>
     <string name="msg_random_boot">重新啟動後進行亂數</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳盡的測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用\n\n請自行承擔使用XPrivacy的可能風險。</b>\n\n請參閱說明文件：</string>
