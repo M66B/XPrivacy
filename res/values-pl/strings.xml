@@ -6,7 +6,7 @@
     <string name="app_version" formatted="false">Wersja XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Wersja Xposed framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Log dostępów</string>
+    <string name="menu_usage">Log dostępu do danych</string>
     <string name="menu_refresh">Odśwież</string>
     <string name="menu_settings">Ustawienia</string>
     <string name="menu_template">Szablon</string>
@@ -39,7 +39,7 @@
     <string name="msg_done">Gotowe</string>
     <string name="msg_reboot">Wymagany restart</string>
     <string name="msg_random_now">Losuj</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">Losuj podczas dostępu</string>
     <string name="msg_random_boot">Losuj po restarcie</string>
     <string name="msg_first"><b>Dołożyliśmy wszelkich starań podczas programowania i testów XPrivacy.
     Jednak nie możemy zagwarantować, że będzie on działać bezbłędnie na każdym urządzeniu oraz z każdą aplikacją.
@@ -65,9 +65,9 @@
     <string name="restrict_shell">Powłoka (polecenia, superuser)</string>
     <string name="restrict_system">System (zainstalowane aplikacje)</string>
     <string name="restrict_view">Widok (przeglądarka)</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">Kategorie</string>
     <string name="title_restrict">Zaznacz aby zablokować:</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">Filtry</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1 aktywny filtr</item>
@@ -75,12 +75,12 @@
         <item quantity="other">%d aktywnych filtrów</item>
     </plurals>
 
-    <string name="title_fused">Filtruj według dostępu do danych użytkownika</string>
-    <string name="title_finternet">Filtruj według dostępu do internetu</string>
-    <string name="title_fpermission">Filtruj według uprawnień</string>
-    <string name="title_frestricted">Filtruj według ograniczeń</string>
-    <string name="title_fuser">Filtruj według aplikacji użytkownika</string>
-    <string name="title_fsystem">Filtruj według aplikacji systemowych</string>
+    <string name="title_fused">Filtruj wg dostępu do danych</string>
+    <string name="title_finternet">Filtruj wg dostępu do internetu</string>
+    <string name="title_fpermission">Filtruj wg uprawnień</string>
+    <string name="title_frestricted">Filtruj wg ograniczeń</string>
+    <string name="title_fuser">Filtruj wg aplikacji użytkownika</string>
+    <string name="title_fsystem">Filtruj wg aplikacji systemowych</string>
     <string name="title_fnot">Odwróć</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
@@ -94,19 +94,19 @@
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
+    <string name="settings_general">Ogólne</string>
+    <string name="settings_fake_data">Fałszowanie danych</string>
+    <string name="settings_global">Użyj globalnych fałszywych danych</string>
     <string name="settings_notify">Aktualizuj powiadomienia</string>
     <string name="settings_usage">Android usage data (wymaga restartu)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
+    <string name="settings_extra">Extra usage data (wymaga restartu)</string>
     <string name="settings_log">Debug log (wymaga restartu)</string>
-    <string name="settings_expert">Expert mode</string>
+    <string name="settings_expert">Tryb eksperta</string>
     <string name="help_application">Aplikacja</string>
-    <string name="help_internet">wymaga dostępu do internetu</string>
-    <string name="help_granted">wymaga dostępu do tych uprawnień Androida</string>
-    <string name="help_used">użyła dostępu do danych</string>
+    <string name="help_internet">ma dostęp do internetu</string>
+    <string name="help_granted">ma dostęp do uprawnień Androida</string>
+    <string name="help_used">wykorzystała dane</string>
     <string name="help_frozen">jest wyłączona</string>
-    <string name="help_dangerous">jest niebezpieczne</string>
+    <string name="help_dangerous">niebezpieczne uprawnienie, ograniczenie może spowodować problemy</string>
 
 </resources>

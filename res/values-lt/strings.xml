@@ -20,9 +20,9 @@
     <string name="menu_pro">Pro versija aktyvi</string>
     <string name="menu_about">Apie</string>
     <string name="menu_help">Pagalba</string>
-    <string name="menu_all">Visi</string>
-    <string name="menu_restriction_all">Toggle restrictions</string>
-    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_all">Visos</string>
+    <string name="menu_restriction_all">Perjungti aribojimus</string>
+    <string name="menu_usage_all">Perjungti filtrą</string>
     <string name="menu_apply">Taikyti šabloną</string>
     <string name="menu_clear">Išvalyti</string>
     <string name="menu_app_launch">Paleisti</string>
@@ -40,7 +40,7 @@
     <string name="msg_done">Atlikta</string>
     <string name="msg_reboot">Privaloma perkrauti prietaisą</string>
     <string name="msg_random_now">Atsitiktiniai duomenys</string>
-    <string name="msg_random_access">Atsitiktiniai duomenys po prieeigai</string>
+    <string name="msg_random_access">Atsitiktiniai duomenys prieeigai</string>
     <string name="msg_random_boot">Atsitiktiniai duomenys po perkrovimo</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
@@ -98,8 +98,8 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_fake_data">Netikri duomenys</string>
     <string name="settings_global">Naudoti globalius netikrus duomenis</string>
     <string name="settings_notify">Atnaujinimų Pranesimas</string>
-    <string name="settings_usage">Android naudojimo duomenys (reikia paleisti iš naujo)</string>
-    <string name="settings_extra">Papildomi naudojimo duomenys (reikia paleisti iš naujo)</string>
+    <string name="settings_usage">Android duomenų naudojimas (reikia paleisti iš naujo)</string>
+    <string name="settings_extra">Papildomas duomenų naudojimas (reikia paleisti iš naujo)</string>
     <string name="settings_log">DEBUG žurnalas (reikia paleisti iš naujo)</string>
     <string name="settings_expert">Eksperto režimas</string>
     <string name="help_application">Programa</string>

@@ -5,6 +5,10 @@ Changelog
 
 * Allow fetching restrictions for system applications per application
 * Do not restrict the [Pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) on new install ([issue](https://github.com/M66B/XPrivacy/issues/812))
+* Updated Chinese translation
+* Updated Finnish translation
+* Updated Lithuanian translation
+* Updated Polish translation
 
 **Version 1.10.21 BETA**
 
