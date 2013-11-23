@@ -557,7 +557,11 @@ I am happy to add new restrictions for data that is really privacy sensitive.
 
 **(36) What does expert mode?**
 
-Expert mode disables the dangerous restrictions warning.
+Expert mode disables the dangerous restrictions warning and enables some advanced settings.
+
+**(37) Does XPrivacy work with SELinux (Fort Knox) ?**
+
+Yes.
 
 Support
 -------
