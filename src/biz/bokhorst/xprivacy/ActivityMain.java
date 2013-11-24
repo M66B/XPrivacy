@@ -554,8 +554,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					boolean someRestricted = false;
 					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
 						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
-						for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-								xAppInfo.getUid(), mAppAdapter.getRestrictionName()))
+						for (boolean restricted : PrivacyManager.getRestricted(ActivityMain.this, xAppInfo.getUid(),
+								mAppAdapter.getRestrictionName()))
 							if (restricted) {
 								someRestricted = true;
 								break;
@@ -937,19 +937,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Get if used
 					boolean used = false;
 					if (fUsed)
-						used = (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(), mRestrictionName,
-								null) != 0);
+						used = (PrivacyManager.getUsed(mContext, xAppInfo.getUid(), mRestrictionName, null) != 0);
 
 					// Get if internet
 					boolean internet = false;
 					if (fInternet)
-						internet = xAppInfo.hasInternet();
+						internet = xAppInfo.hasInternet(mContext);
 
 					// Get some restricted
 					boolean someRestricted = false;
 					if (fRestricted)
-						for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-								xAppInfo.getUid(), mRestrictionName))
+						for (boolean restricted : PrivacyManager.getRestricted(mContext, xAppInfo.getUid(),
+								mRestrictionName))
 							if (restricted) {
 								someRestricted = true;
 								break;
@@ -1083,9 +1082,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && xAppInfo != null) {
 					// Draw border around icon
-					if (xAppInfo.getIcon() instanceof BitmapDrawable) {
+					if (xAppInfo.getIcon(ActivityMain.this) instanceof BitmapDrawable) {
 						// Get icon bitmap
-						Bitmap icon = ((BitmapDrawable) xAppInfo.getIcon()).getBitmap();
+						Bitmap icon = ((BitmapDrawable) xAppInfo.getIcon(ActivityMain.this)).getBitmap();
 
 						// Get list item height
 						TypedArray arrayHeight = getTheme().obtainStyledAttributes(
@@ -1121,6 +1120,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						// Show bitmap
 						holder.imgIcon.setImageBitmap(bitmap);
 					}
+					holder.imgIcon.setVisibility(View.VISIBLE);
 
 					// Check if used
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
@@ -1130,10 +1130,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					holder.imgGranted.setVisibility(granted ? View.VISIBLE : View.INVISIBLE);
 
 					// Check if internet access
-					holder.imgInternet.setVisibility(xAppInfo.hasInternet() ? View.VISIBLE : View.INVISIBLE);
+					holder.imgInternet.setVisibility(xAppInfo.hasInternet(ActivityMain.this) ? View.VISIBLE
+							: View.INVISIBLE);
 
 					// Check if frozen
-					holder.imgFrozen.setVisibility(xAppInfo.isFrozen() ? View.VISIBLE : View.INVISIBLE);
+					holder.imgFrozen
+							.setVisibility(xAppInfo.isFrozen(ActivityMain.this) ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
 					if (allRestricted)
@@ -1233,8 +1235,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
 
 			// Set icon
-			holder.imgIcon.setImageDrawable(xAppInfo.getIcon());
-			holder.imgIcon.setVisibility(View.VISIBLE);
+			// holder.imgIcon.setImageDrawable(xAppInfo.getIcon(ActivityMain.this));
+			holder.imgIcon.setVisibility(View.GONE);
 
 			// Handle details click
 			holder.imgIcon.setOnClickListener(new View.OnClickListener() {

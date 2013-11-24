@@ -437,7 +437,7 @@ public class ActivityShare extends Activity {
 						jRoot.put("xprivacy_version", pXPrivacyInfo.versionCode);
 						jRoot.put("application_name", appInfo.getFirstApplicationName());
 						jRoot.put("package_name", appInfo.getPackageName());
-						jRoot.put("package_version", appInfo.getVersion());
+						jRoot.put("package_version", appInfo.getVersion(ActivityShare.this));
 						jRoot.put("email", license[1]);
 						jRoot.put("signature", license[2]);
 

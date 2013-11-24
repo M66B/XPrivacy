@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Faster startup
 * Improved application icon image quality
 
 **Version 1.10.26 TEST**

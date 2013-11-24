@@ -43,6 +43,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -53,6 +54,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -124,8 +126,9 @@ public class ActivityApp extends Activity {
 		String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
 
 		// Get app info
-		mAppInfo = new ApplicationInfoEx(this, packageName);
-		if (!mAppInfo.isInstalled()) {
+		try {
+			mAppInfo = new ApplicationInfoEx(this, packageName);
+		} catch (NameNotFoundException ignored) {
 			finish();
 			return;
 		}
@@ -158,9 +161,10 @@ public class ActivityApp extends Activity {
 
 		// Display app icon
 		ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
-		if (mAppInfo.getIcon() instanceof BitmapDrawable) {
+		Drawable dIcon = mAppInfo.getIcon(this);
+		if (dIcon instanceof BitmapDrawable) {
 			// Get icon bitmap
-			Bitmap icon = ((BitmapDrawable) mAppInfo.getIcon()).getBitmap();
+			Bitmap icon = ((BitmapDrawable) dIcon).getBitmap();
 
 			// Get height
 			int height = (int) Math.round(32 * getResources().getDisplayMetrics().density + 0.5f);
@@ -192,7 +196,7 @@ public class ActivityApp extends Activity {
 			// Show bitmap
 			imgIcon.setImageBitmap(bitmap);
 		} else
-			imgIcon.setImageDrawable(mAppInfo.getIcon());
+			imgIcon.setImageDrawable(mAppInfo.getIcon(this));
 
 		// Handle icon click
 		imgIcon.setOnClickListener(new View.OnClickListener() {
@@ -207,20 +211,20 @@ public class ActivityApp extends Activity {
 		});
 
 		// Check if internet access
-		if (!mAppInfo.hasInternet()) {
+		if (!mAppInfo.hasInternet(this)) {
 			ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
 			imgInternet.setVisibility(View.INVISIBLE);
 		}
 
 		// Check if frozen
-		if (!mAppInfo.isFrozen()) {
+		if (!mAppInfo.isFrozen(this)) {
 			ImageView imgFrozen = (ImageView) findViewById(R.id.imgFrozen);
 			imgFrozen.setVisibility(View.INVISIBLE);
 		}
 
 		// Display version
 		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
-		tvVersion.setText(mAppInfo.getVersion());
+		tvVersion.setText(mAppInfo.getVersion(this));
 
 		// Display package name
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
@@ -544,7 +548,7 @@ public class ActivityApp extends Activity {
 		protected Object doInBackground(Object... params) {
 			// Get accounts
 			mListAccount = new ArrayList<CharSequence>();
-			AccountManager accountManager = AccountManager.get(getApplicationContext());
+			AccountManager accountManager = AccountManager.get(ActivityApp.this);
 			mAccounts = accountManager.getAccounts();
 			mSelection = new boolean[mAccounts.length];
 			for (int i = 0; i < mAccounts.length; i++)
@@ -802,7 +806,7 @@ public class ActivityApp extends Activity {
 				jRoot.put("xprivacy_version", pInfo.versionCode);
 				jRoot.put("application_name", params[0].getFirstApplicationName());
 				jRoot.put("package_name", params[0].getPackageName());
-				jRoot.put("package_version", params[0].getVersion());
+				jRoot.put("package_version", params[0].getVersion(ActivityApp.this));
 				jRoot.put("settings", jSettings);
 
 				// Submit
