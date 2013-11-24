@@ -58,6 +58,7 @@
         android:id="@+id/rlName"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
+        android:background="@drawable/list_item_pressed"
         android:clickable="true"
         android:focusable="true"
         android:paddingLeft="6dip" >
@@ -70,7 +71,6 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="6dp"
-            android:background="?attr/drawable_checkbox_bg"
             android:contentDescription="@string/title_restrict"
             android:duplicateParentState="true" />
 

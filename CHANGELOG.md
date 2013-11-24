@@ -3,7 +3,8 @@ Changelog
 
 **Next release**
 
-* Increase category selector dropdown size
+* Increase category selector drop down size
+* Display clicks in application lists to prevent unintended restriction changes
 * Updated Polish translation
 * Updated Vietnamese translations
 
