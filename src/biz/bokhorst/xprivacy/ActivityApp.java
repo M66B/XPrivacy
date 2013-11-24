@@ -245,18 +245,13 @@ public class ActivityApp extends Activity {
 		// Up navigation
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		// Get highlight color
-		TypedArray arrayColor = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorActivatedHighlight });
-		int textColor = arrayColor.getColor(0, 0xFF00FF);
-		arrayColor.recycle();
-
 		// Create half check box
 		Bitmap checkbox_off = BitmapFactory.decodeResource(getResources(), android.R.drawable.checkbox_off_background);
 		mHalfCheck = Bitmap.createBitmap(checkbox_off.getWidth(), checkbox_off.getHeight(), checkbox_off.getConfig());
 		Canvas canvas = new Canvas(mHalfCheck);
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
-		paint.setColor(textColor);
+		paint.setColor(Color.GRAY);
 		int border = mHalfCheck.getWidth() / 3;
 		canvas.drawBitmap(checkbox_off, 0, 0, paint);
 		canvas.drawRect(border, border, mHalfCheck.getWidth() - border, mHalfCheck.getHeight() - border, paint);
