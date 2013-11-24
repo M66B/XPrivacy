@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Fixed Android KitKat message permissions
+* Updated Slovak translation
 
 **Version 1.10.27 TEST**
 
