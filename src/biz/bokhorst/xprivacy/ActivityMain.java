@@ -1082,7 +1082,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						arrayHeight.recycle();
 
 						// Scale icon to list item height
-						icon = Bitmap.createScaledBitmap(icon, height, height, false);
+						icon = Bitmap.createScaledBitmap(icon, height, height, true);
 
 						// Create bitmap with borders
 						int borderSize = (int) Math.round(getResources().getDisplayMetrics().density + 0.5f);

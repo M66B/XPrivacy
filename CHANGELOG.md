@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Improved application icon image quality
 
 **Version 1.10.26 TEST**
 
