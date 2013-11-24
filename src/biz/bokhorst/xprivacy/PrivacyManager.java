@@ -453,12 +453,12 @@ public class PrivacyManager {
 					PrivacyManager.setRestricted(null, context, uid, restrictionName, md.getMethodName(), false);
 	}
 
-	public static List<Boolean> getRestricted(Context context, int uid) {
+	public static List<Boolean> getRestricted(Context context, int uid, String restrictionName) {
 		List<Boolean> listRestricted = new ArrayList<Boolean>();
 		ContentResolver contentResolver = context.getContentResolver();
 		if (contentResolver != null) {
-			Cursor cursor = contentResolver.query(PrivacyProvider.URI_RESTRICTION, null, null,
-					new String[] { Integer.toString(uid), Boolean.toString(false), null }, null);
+			Cursor cursor = contentResolver.query(PrivacyProvider.URI_RESTRICTION, null, restrictionName, new String[] {
+					Integer.toString(uid), Boolean.toString(false), restrictionName == null ? null : "*" }, null);
 			if (cursor != null)
 				try {
 					while (cursor.moveToNext()) {

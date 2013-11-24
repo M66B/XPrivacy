@@ -26,7 +26,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.Resources;
 import android.os.Environment;
 import android.os.Process;
 import android.util.Base64;
@@ -210,7 +209,7 @@ public class Util {
 				.checkSignatures(context.getPackageName(), context.getPackageName() + ".pro") == PackageManager.SIGNATURE_MATCH);
 	}
 
-	public static boolean isProInstalled(Context context) {
+	public static boolean isProEnablerInstalled(Context context) {
 		Version version = getProEnablerVersion(context);
 		if (version != null && isValidProEnablerVersion(version) && hasValidProEnablerSignature(context)
 				&& hasValidFingerPrint(context)) {
@@ -320,21 +319,6 @@ public class Util {
 
 	public static boolean isDebuggable(Context context) {
 		return ((context.getApplicationContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
-	}
-
-	public static Context getXContext(Context context) throws Throwable {
-		String xPackageName = Util.class.getPackage().getName();
-		return context.createPackageContext(xPackageName, 0);
-	}
-
-	public static Resources getXResources(Context context) throws Throwable {
-		String xPackageName = Util.class.getPackage().getName();
-		PackageManager pm = context.getPackageManager();
-		return pm.getResourcesForApplication(xPackageName);
-	}
-
-	public static String getXString(Context context, int id) throws Throwable {
-		return getXResources(context).getString(id);
 	}
 
 	public static boolean containsIgnoreCase(List<String> strings, String value) {

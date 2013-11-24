@@ -3,7 +3,19 @@ Changelog
 
 **Next release**
 
+...
+
+**Version 1.10.25 BETA**
+
+* Display third state for categories not fully restricted ([issue](https://github.com/M66B/XPrivacy/issues/815))
+* Automatically open and scroll to category in application view
+* Updated Chinese translations
+
+**Version 1.10.23 BETA**
+
 * Allow fetching restrictions for system applications per application
+* Do not restrict the [Pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) on new install ([issue](https://github.com/M66B/XPrivacy/issues/812))
+* Samsung multi window support ([issue](https://github.com/M66B/XPrivacy/issues/816))
 * Updated Chinese translation
 * Updated Finnish translation
 * Updated Lithuanian translation

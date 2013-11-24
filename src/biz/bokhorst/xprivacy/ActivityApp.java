@@ -122,7 +122,7 @@ public class ActivityApp extends Activity {
 
 		// Get app info
 		mAppInfo = new ApplicationInfoEx(this, packageName);
-		if (!mAppInfo.getIsInstalled()) {
+		if (!mAppInfo.isInstalled()) {
 			finish();
 			return;
 		}
@@ -148,7 +148,7 @@ public class ActivityApp extends Activity {
 		tvAppName.setText(mAppInfo.toString());
 
 		// Background color
-		if (mAppInfo.getIsSystem()) {
+		if (mAppInfo.isSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
 			llInfo.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 		}
@@ -228,12 +228,15 @@ public class ActivityApp extends Activity {
 		lvRestriction.setGroupIndicator(null);
 		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, restrictionName, methodName);
 		lvRestriction.setAdapter(mPrivacyListAdapter);
-		if (restrictionName != null && methodName != null) {
+		if (restrictionName != null) {
 			int groupPosition = PrivacyManager.getRestrictions().indexOf(restrictionName);
-			int childPosition = PrivacyManager.getMethods(restrictionName).indexOf(
-					new PrivacyManager.MethodDescription(methodName));
 			lvRestriction.expandGroup(groupPosition);
-			lvRestriction.setSelectedChild(groupPosition, childPosition, true);
+			lvRestriction.setSelectedGroup(groupPosition);
+			if (methodName != null) {
+				int childPosition = PrivacyManager.getMethods(restrictionName).indexOf(
+						new PrivacyManager.MethodDescription(methodName));
+				lvRestriction.setSelectedChild(groupPosition, childPosition, true);
+			}
 		}
 
 		// Up navigation

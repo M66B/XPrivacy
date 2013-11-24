@@ -101,26 +101,20 @@ public class PrivacyProvider extends ContentProvider {
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		if (sUriMatcher.match(uri) == TYPE_RESTRICTION && selectionArgs != null && selectionArgs.length >= 2) {
-			// Get arguments
-			final String restrictionName = selection;
-			final int uid = Integer.parseInt(selectionArgs[0]);
+			// Query restrictions
+			String restrictionName = selection;
+			int uid = Integer.parseInt(selectionArgs[0]);
 			boolean usage = Boolean.parseBoolean(selectionArgs[1]);
-			final String methodName = (selectionArgs.length >= 3 ? selectionArgs[2] : null);
+			String methodName = (selectionArgs.length >= 3 ? selectionArgs[2] : null);
 
 			return queryRestrictions(uid, restrictionName, methodName, usage);
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE && selectionArgs != null && selectionArgs.length >= 1) {
-			// Return usage
-			List<String> listRestriction;
-			if (selection == null)
-				listRestriction = PrivacyManager.getRestrictions();
-			else {
-				listRestriction = new ArrayList<String>();
-				listRestriction.add(selection);
-			}
+			// Query usage
+			String restrictionName = selection;
 			int uid = Integer.parseInt(selectionArgs[0]);
 			String methodName = (selectionArgs.length >= 2 ? selectionArgs[1] : null);
 
-			return queryUsage(uid, listRestriction, methodName);
+			return queryUsage(uid, restrictionName, methodName);
 		} else if (sUriMatcher.match(uri) == TYPE_SETTING && selectionArgs == null)
 			return querySettings(selection);
 
@@ -168,14 +162,26 @@ public class PrivacyProvider extends ContentProvider {
 
 			// Process restrictions
 			boolean restricted = false;
-			for (String eRestrictionName : listRestrictionName) {
-				boolean eRestricted = getRestricted(eRestrictionName, methodName, prefs);
-				cursor.addRow(new Object[] { uid, eRestrictionName, methodName, Boolean.toString(eRestricted) });
-				restricted = restricted || eRestricted;
+			if (methodName != null && methodName.equals("*")) {
+				for (String eRestrictionName : listRestrictionName) {
+					boolean eRestricted = getRestricted(eRestrictionName, null, prefs);
+					cursor.addRow(new Object[] { uid, eRestrictionName, null, Boolean.toString(eRestricted) });
+					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
+						eRestricted = getRestricted(eRestrictionName, md.getMethodName(), prefs);
+						cursor.addRow(new Object[] { uid, eRestrictionName, md.getMethodName(),
+								Boolean.toString(eRestricted) });
+					}
+				}
+			} else {
+				for (String eRestrictionName : listRestrictionName) {
+					boolean eRestricted = getRestricted(eRestrictionName, methodName, prefs);
+					cursor.addRow(new Object[] { uid, eRestrictionName, methodName, Boolean.toString(eRestricted) });
+					restricted = (restricted || eRestricted);
+				}
 			}
 
 			// Update usage data
-			if (usage && restrictionName != null && methodName != null) {
+			if (usage && restrictionName != null && methodName != null && !methodName.equals("*")) {
 				final boolean isRestricted = restricted;
 				mExecutor.execute(new Runnable() {
 					public void run() {
@@ -201,30 +207,39 @@ public class PrivacyProvider extends ContentProvider {
 		return restricted;
 	}
 
-	private Cursor queryUsage(int uid, List<String> listRestriction, String methodName) {
+	private Cursor queryUsage(int uid, String restrictionName, String methodName) {
 		MatrixCursor cursor = new MatrixCursor(new String[] { COL_UID, COL_RESTRICTION, COL_METHOD, COL_RESTRICTED,
 				COL_USED });
+
+		List<String> listRestriction;
+		if (restrictionName == null)
+			listRestriction = PrivacyManager.getRestrictions();
+		else {
+			listRestriction = new ArrayList<String>();
+			listRestriction.add(restrictionName);
+		}
+
 		if (uid == 0) {
 			// All
-			for (String restrictionName : PrivacyManager.getRestrictions()) {
-				SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + restrictionName,
+			for (String eRestrictionName : PrivacyManager.getRestrictions()) {
+				SharedPreferences prefs = getContext().getSharedPreferences(PREF_USAGE + "." + eRestrictionName,
 						Context.MODE_PRIVATE);
 				for (String prefName : prefs.getAll().keySet())
 					if (prefName.startsWith(COL_USED)) {
 						String[] prefParts = prefName.split("\\.");
 						int rUid = Integer.parseInt(prefParts[1]);
 						String rMethodName = prefParts[2];
-						getUsage(rUid, restrictionName, rMethodName, cursor);
+						getUsage(rUid, eRestrictionName, rMethodName, cursor);
 					}
 			}
 		} else {
 			// Selected restrictions/methods
-			for (String restrictionName : listRestriction)
+			for (String eRestrictionName : listRestriction)
 				if (methodName == null)
-					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName))
-						getUsage(uid, restrictionName, md.getMethodName(), cursor);
+					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName))
+						getUsage(uid, eRestrictionName, md.getMethodName(), cursor);
 				else
-					getUsage(uid, restrictionName, methodName, cursor);
+					getUsage(uid, eRestrictionName, methodName, cursor);
 		}
 		return cursor;
 	}
