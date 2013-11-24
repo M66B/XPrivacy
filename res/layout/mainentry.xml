@@ -71,6 +71,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="6dp"
+            android:background="?attr/drawable_checkbox_bg"
             android:contentDescription="@string/title_restrict"
             android:duplicateParentState="true" />
 
