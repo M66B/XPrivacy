@@ -39,7 +39,7 @@
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadovaný reštart zariadenia</string>
     <string name="msg_random_now">Náhodné hodnoty</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">Náhodné hodnoty po prístupe</string>
     <string name="msg_random_boot">Náhodné hodnoty pri štarte zariadenia</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
@@ -65,9 +65,9 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">Kategórie</string>
     <string name="title_restrict">Zaškrtnite pre obmedzenie:</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">Filtre</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1 aktívny filter</item>
@@ -94,12 +94,12 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">Identifikácia prehliadača</string>
-    <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
+    <string name="settings_general">Všeobecné</string>
+    <string name="settings_fake_data">Falošné údaje</string>
+    <string name="settings_global">Použiť globálne falošné údaje</string>
     <string name="settings_notify">Oznámenia o aktualizáciách</string>
     <string name="settings_usage">Využitie dát (vyžaduje reštart)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
+    <string name="settings_extra">Extra dáta využitia (vyžaduje reštart)</string>
     <string name="settings_log">Záznam na ladenie (vyžaduje reštart)</string>
     <string name="settings_expert">Režim experta</string>
     <string name="help_application">Aplikácia</string>
