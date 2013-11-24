@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+* ...
+
+**Version 1.10.26 TEST**
+
 * Increase category selector drop down size
 * Display clicks in application lists to prevent unintended restriction changes
 * Added half state check box to application details view
@@ -10,7 +14,7 @@ Changelog
 * Updated Polish translation
 * Updated Vietnamese translations
 
-**Version 1.10.25 BETA**
+**Version 1.10.25 TEST**
 
 * Display third state for categories not fully restricted ([issue](https://github.com/M66B/XPrivacy/issues/815))
 * Automatically open and scroll to category in application view
