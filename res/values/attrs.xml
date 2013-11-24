@@ -18,7 +18,6 @@
     <attr name="drawable_background" format="reference" />
     <attr name="drawable_divider" format="reference" />
     <attr name="drawable_card" format="reference" />
-    <attr name="drawable_checkbox_bg" format="reference" />
     <attr name="color_dangerous" format="reference" />
 
 </resources>
