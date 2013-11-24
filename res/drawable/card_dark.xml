@@ -8,6 +8,6 @@
         android:type="linear"
         android:useLevel="false" />
 
-    <corners android:radius="4dp" />
+    <corners android:radius="3dp" />
 
 </shape>
