@@ -104,9 +104,9 @@
     <Hook restriction="messages" method="MmsProvider" permissions="READ_SMS" sdk="14" />
     <Hook restriction="messages" method="MmsSmsProvider" permissions="READ_SMS" sdk="14" />
     <Hook restriction="messages" method="VoicemailContentProvider" permissions="READ_WRITE_ALL_VOICEMAIL" sdk="14" />
-    <Hook restriction="messages" method="android.intent.action.DATA_SMS_RECEIVED" permissions="" sdk="19" />
-    <Hook restriction="messages" method="android.provider.Telephony.SMS_RECEIVED" permissions="" sdk="19" />
-    <Hook restriction="messages" method="android.provider.Telephony.WAP_PUSH_RECEIVED" permissions="" sdk="19" />
+    <Hook restriction="messages" method="android.intent.action.DATA_SMS_RECEIVED" permissions="RECEIVE_SMS" sdk="19" />
+    <Hook restriction="messages" method="android.provider.Telephony.SMS_RECEIVED" permissions="RECEIVE_SMS" sdk="19" />
+    <Hook restriction="messages" method="android.provider.Telephony.WAP_PUSH_RECEIVED" permissions="RECEIVE_WAP_PUSH" sdk="19" />
 
     <Hook restriction="network" method="getAddress" permissions="BLUETOOTH" sdk="14" />
     <Hook restriction="network" method="getBondedDevices" permissions="BLUETOOTH" sdk="14" />

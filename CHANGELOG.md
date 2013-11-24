@@ -3,7 +3,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Fixed Android KitKat message permissions
 
 **Version 1.10.27 TEST**
 
