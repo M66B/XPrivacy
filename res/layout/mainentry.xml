@@ -60,7 +60,6 @@
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:background="@drawable/list_item_pressed"
         android:clickable="true"
-        android:focusable="true"
         android:paddingLeft="6dip" >
 
         <ImageView
@@ -73,7 +72,7 @@
             android:layout_marginRight="6dp"
             android:background="?attr/drawable_checkbox_bg"
             android:contentDescription="@string/title_restrict"
-            android:duplicateParentState="true" />
+            android:src="@android:color/transparent" />
 
         <TextView
             android:id="@+id/tvName"

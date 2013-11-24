@@ -17,7 +17,7 @@
         <item name="drawable_background">@android:color/black</item>
         <item name="drawable_card">@drawable/card_dark</item>
         <item name="drawable_divider">@drawable/divider_dark</item>
-        <item name="drawable_checkbox_bg">@drawable/bg_checkbox_dark</item>
+        <item name="drawable_checkbox_bg">@drawable/bg_checkbox_holo_dark</item>
         <item name="color_dangerous">@color/color_dangerous_dark</item>
     </style>
 
@@ -38,7 +38,7 @@
         <item name="drawable_background">@color/color_home_background_light</item>
         <item name="drawable_card">@drawable/card_light</item>
         <item name="drawable_divider">@drawable/divider_light</item>
-        <item name="drawable_checkbox_bg">@drawable/bg_checkbox_light</item>
+        <item name="drawable_checkbox_bg">@drawable/bg_checkbox_holo_light</item>
         <item name="color_dangerous">@color/color_dangerous_light</item>
     </style>
 

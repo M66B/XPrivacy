@@ -5,6 +5,7 @@ Changelog
 
 * Increase category selector drop down size
 * Display clicks in application lists to prevent unintended restriction changes
+* Added half state check box to application details view
 * Updated Arabic translation
 * Updated Polish translation
 * Updated Vietnamese translations

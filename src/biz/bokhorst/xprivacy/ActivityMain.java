@@ -1234,7 +1234,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
 			holder.imgCBName.setImageResource(android.R.color.transparent);
-			holder.imgCBName.setEnabled(false);
 
 			// Async update
 			new HolderTask(position, holder, xAppInfo).executeOnExecutor(mExecutor, (Object) null);

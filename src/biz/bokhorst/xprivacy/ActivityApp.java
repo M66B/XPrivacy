@@ -75,6 +75,7 @@ import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -907,7 +908,9 @@ public class ActivityApp extends Activity {
 			public ImageView imgUsed;
 			public ImageView imgGranted;
 			public ImageView imgInfo;
-			public CheckedTextView ctvRestriction;
+			public TextView tvName;
+			public ImageView imgCBName;
+			public RelativeLayout rlName;
 
 			public GroupViewHolder(View theRow, int thePosition) {
 				row = theRow;
@@ -916,7 +919,9 @@ public class ActivityApp extends Activity {
 				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
-				ctvRestriction = (CheckedTextView) row.findViewById(R.id.ctvName);
+				tvName = (TextView) row.findViewById(R.id.tvName);
+				imgCBName = (ImageView) row.findViewById(R.id.imgCBName);
+				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
 
@@ -926,7 +931,8 @@ public class ActivityApp extends Activity {
 			private String restrictionName;
 			private boolean used;
 			private boolean permission;
-			private boolean restricted;
+			private boolean allRestricted = true;
+			private boolean someRestricted = false;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
@@ -941,8 +947,12 @@ public class ActivityApp extends Activity {
 					used = (PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
 							restrictionName);
-					restricted = PrivacyManager.getRestricted(null, holder.row.getContext(), mAppInfo.getUid(),
-							restrictionName, null, false, false);
+
+					for (boolean restricted : PrivacyManager.getRestricted(holder.row.getContext(), mAppInfo.getUid(),
+							restrictionName)) {
+						allRestricted = (allRestricted && restricted);
+						someRestricted = (someRestricted || restricted);
+					}
 				}
 				return null;
 			}
@@ -951,21 +961,40 @@ public class ActivityApp extends Activity {
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && restrictionName != null) {
 					// Set data
-					holder.ctvRestriction.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
+					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
-					holder.ctvRestriction.setChecked(restricted);
+
+					// Display restriction
+					holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
+							: (someRestricted ? R.drawable.checkbox_half : android.R.color.transparent));
 
 					// Listen for restriction changes
-					holder.ctvRestriction.setOnClickListener(new View.OnClickListener() {
+					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							boolean restricted = PrivacyManager.getRestricted(null, view.getContext(),
-									mAppInfo.getUid(), restrictionName, null, false, false);
-							restricted = !restricted;
-							holder.ctvRestriction.setChecked(restricted);
+							// Get all/some restricted
+							boolean allRestricted = true;
+							boolean someRestricted = false;
+							for (boolean restricted : PrivacyManager.getRestricted(view.getContext(),
+									mAppInfo.getUid(), restrictionName)) {
+								allRestricted = (allRestricted && restricted);
+								someRestricted = (someRestricted || restricted);
+							}
 							PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName,
-									null, restricted);
+									null, !someRestricted);
+
+							// Update all/some restricted
+							allRestricted = true;
+							someRestricted = false;
+							for (boolean restricted : PrivacyManager.getRestricted(holder.row.getContext(),
+									mAppInfo.getUid(), restrictionName)) {
+								allRestricted = (allRestricted && restricted);
+								someRestricted = (someRestricted || restricted);
+							}
+
+							holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
+									: (someRestricted ? R.drawable.checkbox_half : android.R.color.transparent));
 							notifyDataSetChanged(); // Needed to update childs
 						}
 					});
@@ -999,7 +1028,7 @@ public class ActivityApp extends Activity {
 				holder.imgIndicator.setVisibility(View.VISIBLE);
 
 			// Display if used
-			holder.ctvRestriction.setTypeface(null, Typeface.NORMAL);
+			holder.tvName.setTypeface(null, Typeface.NORMAL);
 			holder.imgUsed.setVisibility(View.INVISIBLE);
 
 			// Check if permission
@@ -1017,11 +1046,10 @@ public class ActivityApp extends Activity {
 			});
 
 			// Display localized name
-			holder.ctvRestriction.setText(PrivacyManager.getLocalizedName(holder.row.getContext(), restrictionName));
+			holder.tvName.setText(PrivacyManager.getLocalizedName(holder.row.getContext(), restrictionName));
 
 			// Display restriction
-			holder.ctvRestriction.setChecked(false);
-			holder.ctvRestriction.setClickable(false);
+			holder.imgCBName.setImageResource(android.R.color.transparent);
 
 			// Async update
 			new GroupHolderTask(groupPosition, holder, restrictionName).executeOnExecutor(mExecutor, (Object) null);
@@ -1145,6 +1173,7 @@ public class ActivityApp extends Activity {
 							holder.ctvMethodName.setChecked(restricted);
 							PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName,
 									md.getMethodName(), restricted);
+							notifyDataSetChanged(); // Needed to update parent
 						}
 					});
 				}
