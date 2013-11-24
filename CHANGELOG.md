@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Increase category selector dropdown size
 * Updated Polish translation
 * Updated Vietnamese translations
 

@@ -132,6 +132,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Build spinner adapter
 		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
+		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spAdapter.addAll(listLocalizedRestriction);
 
 		// Handle info
