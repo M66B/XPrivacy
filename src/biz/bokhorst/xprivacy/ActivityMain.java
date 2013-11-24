@@ -1144,6 +1144,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						holder.imgCBName.setImageBitmap(mHalfCheck);
 					else
 						holder.imgCBName.setImageResource(android.R.drawable.checkbox_off_background);
+					holder.imgCBName.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
@@ -1257,7 +1258,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
-			holder.imgCBName.setImageResource(android.R.color.transparent);
+			holder.imgCBName.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new HolderTask(position, holder, xAppInfo).executeOnExecutor(mExecutor, (Object) null);

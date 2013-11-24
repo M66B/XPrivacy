@@ -58,8 +58,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="6dp"
-            android:contentDescription="@string/title_restrict"
-            android:src="@android:drawable/checkbox_off_background" />
+            android:contentDescription="@string/title_restrict" />
 
         <TextView
             android:id="@+id/tvName"

@@ -990,6 +990,7 @@ public class ActivityApp extends Activity {
 						holder.imgCBName.setImageBitmap(mHalfCheck);
 					else
 						holder.imgCBName.setImageResource(android.R.drawable.checkbox_off_background);
+					holder.imgCBName.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
@@ -1077,7 +1078,7 @@ public class ActivityApp extends Activity {
 			holder.tvName.setText(PrivacyManager.getLocalizedName(holder.row.getContext(), restrictionName));
 
 			// Display restriction
-			holder.imgCBName.setImageResource(android.R.color.transparent);
+			holder.imgCBName.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new GroupHolderTask(groupPosition, holder, restrictionName).executeOnExecutor(mExecutor, (Object) null);
