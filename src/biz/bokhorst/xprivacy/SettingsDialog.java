@@ -237,14 +237,6 @@ public class SettingsDialog {
 			cbNotify.setVisibility(View.GONE);
 			cbGlobal.setVisibility(View.GONE);
 
-			if (expert) {
-				cbUsage.setChecked(usage);
-				cbExtra.setChecked(extra);
-			} else {
-				cbUsage.setEnabled(false);
-				cbExtra.setEnabled(false);
-			}
-
 			cbLog.setChecked(log);
 
 			cbExpert.setChecked(expert);
@@ -255,6 +247,9 @@ public class SettingsDialog {
 					cbExtra.setEnabled(isChecked);
 				}
 			});
+
+			cbUsage.setChecked(usage);
+			cbExtra.setChecked(extra);
 		} else {
 			// Application specific settings
 			cbNotify.setChecked(notify);
@@ -490,16 +485,14 @@ public class SettingsDialog {
 
 				if (uid == 0) {
 					// Global settings
-					if (expert) {
-						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
-								Boolean.toString(cbUsage.isChecked()));
-						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExtraUsage,
-								Boolean.toString(cbExtra.isChecked()));
-					}
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
 							Boolean.toString(cbLog.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExpert,
 							Boolean.toString(cbExpert.isChecked()));
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
+							Boolean.toString(cbUsage.isChecked()));
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExtraUsage,
+							Boolean.toString(cbExtra.isChecked()));
 				} else {
 					// App specific settings
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingNotify,

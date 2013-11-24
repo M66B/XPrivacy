@@ -67,14 +67,12 @@
                 android:id="@+id/cbUsage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
                 android:text="@string/settings_usage" />
 
             <CheckBox
                 android:id="@+id/cbExtra"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
                 android:text="@string/settings_extra" />
 
             <TextView

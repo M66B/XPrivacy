@@ -5,6 +5,7 @@ Changelog
 
 * Faster startup
 * Improved application icon image quality
+* Allow Android / extra usage data setting without expert mode
 
 **Version 1.10.26 TEST**
 
