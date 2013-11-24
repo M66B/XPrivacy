@@ -3,7 +3,8 @@ Changelog
 
 **Next release**
 
-...
+* Updated Polish translation
+* Updated Vietnamese translations
 
 **Version 1.10.25 BETA**
 
