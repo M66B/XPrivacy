@@ -52,15 +52,14 @@
 
         <ImageView
             android:id="@+id/imgCBName"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="6dp"
-            android:background="?attr/drawable_checkbox_bg"
             android:contentDescription="@string/title_restrict"
-            android:src="@android:color/transparent" />
+            android:src="@android:drawable/checkbox_off_background" />
 
         <TextView
             android:id="@+id/tvName"
