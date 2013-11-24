@@ -563,6 +563,16 @@ Expert mode disables the dangerous restrictions warning and enables some advance
 
 Yes.
 
+**(38) What is 'Android usage data' and 'Extra usage data' ?**
+
+The setting *Android usage data* enables sending more usage data for Android itself (uid=1000).
+
+The setting *Extra usage data* enables sending more usage data for all applications.
+
+Enabling these settings can cause instability and/or decrease performance on some devices.
+
+Usage data = orange triangles.
+
 Support
 -------
 
