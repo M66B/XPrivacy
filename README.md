@@ -573,7 +573,7 @@ Enabling these settings can cause instability and/or decrease performance on som
 
 Usage data = orange triangles.
 
-**(39) How does the tri-state check box work? **
+**(39) How does the tri-state check box work?**
 
 The tri-state check box follows this pattern:
 
