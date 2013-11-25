@@ -621,12 +621,6 @@ public class PrivacyProvider extends ContentProvider {
 			} catch (Throwable ex) {
 			}
 
-		if (!Boolean.parseBoolean(prefs.getString(getSettingPref(PrivacyManager.cSettingExpert),
-				Boolean.toString(false)))) {
-			editor.putString(getSettingPref(PrivacyManager.cSettingAndroidUsage), Boolean.toString(false));
-			editor.putString(getSettingPref(PrivacyManager.cSettingExtraUsage), Boolean.toString(false));
-		}
-
 		editor.apply();
 		setPrefFileReadable(PREF_SETTINGS);
 	}

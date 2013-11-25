@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Fixed Android KitKat message permissions
+* Do not disable Android/extra usage data when not in expert mode
 * Updated Slovak translation
 
 **Version 1.10.27 TEST**
