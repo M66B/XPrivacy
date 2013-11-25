@@ -66,7 +66,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private AppListAdapter mAppAdapter = null;
 	private boolean mFiltersHidden = true;
 	private boolean mCategoriesHidden = true;
-	private Bitmap mHalfCheck;
+	private Bitmap mCheckOff;
+	private Bitmap mCheckHalf;
+	private Bitmap mCheckFull;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int ACTIVITY_EXPORT = 1;
@@ -286,16 +288,20 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			PrivacyManager.setSetting(null, this, 0, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
 		}
 
+		// Create off check box
+		mCheckOff = BitmapFactory.decodeResource(getResources(), android.R.drawable.checkbox_off_background);
+
 		// Create half check box
-		Bitmap checkbox_off = BitmapFactory.decodeResource(getResources(), android.R.drawable.checkbox_off_background);
-		mHalfCheck = Bitmap.createBitmap(checkbox_off.getWidth(), checkbox_off.getHeight(), checkbox_off.getConfig());
-		Canvas canvas = new Canvas(mHalfCheck);
+		mCheckHalf = Bitmap.createBitmap(mCheckOff.getWidth(), mCheckOff.getHeight(), mCheckOff.getConfig());
+		Canvas canvas = new Canvas(mCheckHalf);
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
 		paint.setColor(Color.GRAY);
-		int border = mHalfCheck.getWidth() / 3;
-		canvas.drawBitmap(checkbox_off, 0, 0, paint);
-		canvas.drawRect(border, border, mHalfCheck.getWidth() - border, mHalfCheck.getHeight() - border, paint);
+		int border = mCheckHalf.getWidth() / 3;
+		canvas.drawBitmap(mCheckOff, 0, 0, paint);
+		canvas.drawRect(border, border, mCheckHalf.getWidth() - border, mCheckHalf.getHeight() - border, paint);
+
+		mCheckFull = BitmapFactory.decodeResource(getResources(), android.R.drawable.checkbox_on_background);
 	}
 
 	@Override
@@ -1139,11 +1145,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					// Display restriction
 					if (allRestricted)
-						holder.imgCBName.setImageResource(android.R.drawable.checkbox_on_background);
+						holder.imgCBName.setImageBitmap(mCheckFull);
 					else if (someRestricted)
-						holder.imgCBName.setImageBitmap(mHalfCheck);
+						holder.imgCBName.setImageBitmap(mCheckHalf);
 					else
-						holder.imgCBName.setImageResource(android.R.drawable.checkbox_off_background);
+						holder.imgCBName.setImageBitmap(mCheckOff);
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
@@ -1173,8 +1179,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 												PrivacyManager.deleteRestrictions(view.getContext(), xAppInfo.getUid());
 
 												// Update visible state
-												holder.imgCBName
-														.setImageResource(android.R.drawable.checkbox_off_background);
+												holder.imgCBName.setImageBitmap(mCheckOff);
 											}
 										});
 								alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
@@ -1202,11 +1207,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 								// Update visible state
 								if (allRestricted)
-									holder.imgCBName.setImageResource(android.R.drawable.checkbox_on_background);
+									holder.imgCBName.setImageBitmap(mCheckFull);
 								else if (someRestricted)
-									holder.imgCBName.setImageBitmap(mHalfCheck);
+									holder.imgCBName.setImageBitmap(mCheckHalf);
 								else
-									holder.imgCBName.setImageResource(android.R.drawable.checkbox_off_background);
+									holder.imgCBName.setImageBitmap(mCheckOff);
 							}
 						}
 					});
