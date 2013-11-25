@@ -1235,10 +1235,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
 
-			// Set icon
-			// holder.imgIcon.setImageDrawable(xAppInfo.getIcon(ActivityMain.this));
-			holder.imgIcon.setVisibility(View.GONE);
-
 			// Handle details click
 			holder.imgIcon.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -1252,6 +1248,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			});
 
 			// Set data
+			holder.imgIcon.setVisibility(View.INVISIBLE);
 			holder.tvName.setText(xAppInfo.toString());
 			holder.tvName.setTypeface(null, Typeface.NORMAL);
 			holder.imgUsed.setVisibility(View.INVISIBLE);
