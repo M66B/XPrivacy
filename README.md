@@ -573,6 +573,22 @@ Enabling these settings can cause instability and/or decrease performance on som
 
 Usage data = orange triangles.
 
+**(39) How does the tri-state check box work? **
+
+The tri-state check box follows this pattern:
+
+* Unchecked = no retrictions
+* Solid square = some restrictions
+* Check mark = all restrictions
+
+Some/all is determined as follows:
+
+* All category: some/all other categories
+* Other categories: some/all functions
+
+Be aware that by default categories and functions are filtered by permission,
+so you may not see all of them. The check box state is independent of this.
+
 Support
 -------
 
