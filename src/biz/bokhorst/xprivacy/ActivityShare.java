@@ -535,7 +535,7 @@ public class ActivityShare extends Activity {
 													restrictionName, methodName, restricted);
 									}
 								} else
-									throw new Exception(getString(R.string.msg_no_restrictions));
+									publishProgress(getString(R.string.msg_no_restrictions), Integer.toString(mCurrent));
 							} else
 								throw new Exception(status.getString("error"));
 						} else {
