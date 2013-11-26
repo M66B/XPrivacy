@@ -34,6 +34,8 @@
     <string name="msg_update">Cập nhật</string>
     <string name="msg_licensed" formatted="false">Bản quyền: %s</string>
     <string name="msg_loading">Đang tải</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Chạm vào biểu tượng ứng dụng để thay đổi các thiết lập</string>
     <string name="msg_sure">Bạn có chắc không?</string>
     <string name="msg_done">Xong</string>

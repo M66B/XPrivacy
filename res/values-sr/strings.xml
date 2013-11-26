@@ -34,6 +34,8 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Лиценциран %s</string>
     <string name="msg_loading">Учитавање</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_sure">Да ли сте сигурни?</string>
     <string name="msg_done">Готово</string>

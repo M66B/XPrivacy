@@ -278,19 +278,23 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin" >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="@string/title_restrict"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textIsSelectable="false" />
-
-        <TextView
             android:id="@+id/tvStats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/tvState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/tvStats"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/title_restrict"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textIsSelectable="false" />
 
         <ProgressBar
             android:id="@+id/pbFilter"
@@ -304,10 +308,18 @@
     <!-- Thin divider -->
 
     <View
+        android:id="@+id/vProgressEmpty"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
+        android:layout_marginBottom="-3dp"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:background="@android:color/darker_gray" />
+
+    <View
+        android:id="@+id/vProgressFull"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:background="?android:attr/colorActivatedHighlight" />
 
     <!-- What it is all about -->
 

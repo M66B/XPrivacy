@@ -34,6 +34,8 @@
     <string name="msg_update">Actualitza</string>
     <string name="msg_licensed" formatted="false">Llicenciat a: %s</string>
     <string name="msg_loading">Carregant</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Prem la icona de l\'aplicació per a editar tots els permisos</string>
     <string name="msg_sure">Esteu segur?</string>
     <string name="msg_done">Fet</string>

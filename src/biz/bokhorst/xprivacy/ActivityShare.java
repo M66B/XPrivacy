@@ -51,11 +51,19 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings.Secure;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
 
 public class ActivityShare extends Activity {
+	public static final String cProgressReport = "ProgressReport";
+	public static final String cProgressMessage = "ProgressMessage";
+	public static final String cProgressValue = "ProgressValue";
+	public static final String cProgressMax = "ProgressMax";
+
+	private LocalBroadcastManager mBroadcastManager;
+
 	public static final String cFileName = "FileName";
 	public static final String cPackageName = "PackageName";
 	public static final String BASE_URL = "http://updates.faircode.eu/xprivacy";
@@ -78,6 +86,8 @@ public class ActivityShare extends Activity {
 
 		if (Util.hasProLicense(this) != null) {
 			Bundle extras = getIntent().getExtras();
+
+			mBroadcastManager = LocalBroadcastManager.getInstance(this);
 
 			// Import
 			if (getIntent().getAction().equals("biz.bokhorst.xprivacy.action.IMPORT")) {
@@ -108,6 +118,8 @@ public class ActivityShare extends Activity {
 
 	private class ExportTask extends AsyncTask<File, String, String> {
 		private File mFile;
+		private int mProgressMax = 1;
+		private int mCurrent = 0;
 		private final static int NOTIFY_ID = 1;
 
 		@Override
@@ -126,7 +138,7 @@ public class ActivityShare extends Activity {
 					serializer.startTag(null, "XPrivacy");
 
 					// Process settings
-					publishProgress(getString(R.string.menu_settings));
+					publishProgress(getString(R.string.msg_loading));
 					Util.log(null, Log.INFO, "Exporting settings");
 
 					String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
@@ -163,9 +175,14 @@ public class ActivityShare extends Activity {
 							}
 					}
 
+					// Set some numbers for the progress bar
+					mProgressMax = mapRestriction.size();
+					mCurrent = 0;
+
 					// Process result
 					for (String packageName : mapRestriction.keySet()) {
-						publishProgress(packageName);
+						mCurrent++;
+						publishProgress(packageName, Integer.toString(mCurrent));
 						Util.log(null, Log.INFO, "Exporting " + packageName);
 						for (PrivacyManager.RestrictionDesc restrictionDesc : mapRestriction.get(packageName)) {
 							serializer.startTag(null, "Package");
@@ -197,13 +214,16 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			notify(values[0], true);
+			int progress = 0;
+			if (values.length > 1)
+				progress = Integer.parseInt(values[1]);
+			notify(values[0], true, progress);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result, false);
+			notify(result, false, 0);
 			Intent intent = new Intent();
 			intent.putExtra(cFileName, mFile.getAbsolutePath());
 			setResult(result.equals(getString(R.string.msg_done)) ? 0 : 1, intent);
@@ -214,7 +234,15 @@ public class ActivityShare extends Activity {
 			super.onPostExecute(result);
 		}
 
-		private void notify(String text, boolean ongoing) {
+		private void notify(String text, boolean ongoing, int progress) {
+			// Send progress info to main activity
+			Intent progressIntent = new Intent(cProgressReport);
+			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_export), text));
+			progressIntent.putExtra(cProgressMax, mProgressMax);
+			progressIntent.putExtra(cProgressValue, progress);
+			mBroadcastManager.sendBroadcast(progressIntent);
+
+			// Create/update the progress notification
 			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityShare.this);
 			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 			notificationBuilder.setContentTitle(getString(R.string.menu_export));
@@ -244,6 +272,8 @@ public class ActivityShare extends Activity {
 
 	private class ImportTask extends AsyncTask<File, String, String> {
 		private File mFile;
+		private int mProgressMax;
+		private int mCurrent;
 		private final static int NOTIFY_ID = 2;
 
 		@Override
@@ -267,10 +297,15 @@ public class ActivityShare extends Activity {
 						fis.close();
 				}
 
+				// Set some numbers for the progress bar
+				mProgressMax = mapPackage.size();
+				mCurrent = 0;
+
 				// Process result
 				for (String packageName : mapPackage.keySet()) {
+					mCurrent++;
 					try {
-						publishProgress(packageName);
+						publishProgress(packageName, Integer.toString(mCurrent));
 						Util.log(null, Log.INFO, "Importing " + packageName);
 
 						// Get uid
@@ -302,13 +337,16 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			notify(values[0], true);
+			int progress = 0;
+			if (values.length > 1)
+				progress = Integer.parseInt(values[1]);
+			notify(values[0], true, progress);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result, false);
+			notify(result, false, 0);
 			Intent intent = new Intent();
 			intent.putExtra(cFileName, mFile.getAbsolutePath());
 			setResult(result.equals(getString(R.string.msg_done)) ? 0 : 1, intent);
@@ -316,7 +354,15 @@ public class ActivityShare extends Activity {
 			super.onPostExecute(result);
 		}
 
-		private void notify(String text, boolean ongoing) {
+		private void notify(String text, boolean ongoing, int progress) {
+			// Send progress info to main activity
+			Intent progressIntent = new Intent(cProgressReport);
+			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_import), text));
+			progressIntent.putExtra(cProgressMax, mProgressMax);
+			progressIntent.putExtra(cProgressValue, progress);
+			mBroadcastManager.sendBroadcast(progressIntent);
+
+			// Create/update the progress notification
 			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityShare.this);
 			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 			notificationBuilder.setContentTitle(getString(R.string.menu_import));
@@ -408,6 +454,8 @@ public class ActivityShare extends Activity {
 
 	private class FetchTask extends AsyncTask<String, String, Object> {
 		private final static int NOTIFY_ID = 3;
+		private int mProgressMax;
+		private int mCurrent;
 
 		@Override
 		protected Object doInBackground(String... params) {
@@ -424,10 +472,15 @@ public class ActivityShare extends Activity {
 				String[] license = Util.getProLicense();
 				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 
+				// Set some numbers for the progress bar
+				mProgressMax = lstApp.size();
+				mCurrent = 0;
+
 				// Process applications
-				for (ApplicationInfoEx appInfo : lstApp)
+				for (ApplicationInfoEx appInfo : lstApp) {
+					mCurrent++;
 					if (!appInfo.isSystem() || params[0] != null) {
-						publishProgress(appInfo.getPackageName());
+						publishProgress(appInfo.getPackageName(), Integer.toString(mCurrent));
 
 						// Encode package
 						JSONObject jRoot = new JSONObject();
@@ -483,7 +536,14 @@ public class ActivityShare extends Activity {
 									}
 								} else
 									Util.log(null, Log.INFO, "No restrictions available");
-								notify(getString(R.string.msg_done), false);
+								notify(getString(R.string.msg_no_restrictions), false, 0); // TODO
+																							// shouldn't
+																							// this
+																							// message
+																							// be
+																							// a
+																							// failure
+																							// msg
 							} else
 								throw new Exception(status.getString("error"));
 						} else {
@@ -492,6 +552,7 @@ public class ActivityShare extends Activity {
 							throw new IOException(statusLine.getReasonPhrase());
 						}
 					}
+				}
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -501,7 +562,10 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			notify(values[0], true);
+			int progress = 0;
+			if (values.length > 1)
+				progress = Integer.parseInt(values[1]);
+			notify(values[0], true, progress);
 			super.onProgressUpdate(values);
 		}
 
@@ -512,7 +576,7 @@ public class ActivityShare extends Activity {
 					throw (Throwable) result;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				notify(ex.toString(), false);
+				notify(ex.toString(), false, 0);
 			}
 
 			Intent intent = new Intent();
@@ -521,7 +585,15 @@ public class ActivityShare extends Activity {
 			super.onPostExecute(result);
 		}
 
-		private void notify(String text, boolean ongoing) {
+		private void notify(String text, boolean ongoing, int progress) {
+			// Send progress info to main activity
+			Intent progressIntent = new Intent(cProgressReport);
+			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_fetch), text));
+			progressIntent.putExtra(cProgressMax, mProgressMax);
+			progressIntent.putExtra(cProgressValue, progress);
+			mBroadcastManager.sendBroadcast(progressIntent);
+
+			// Create/update the progress notification
 			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityShare.this);
 			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 			notificationBuilder.setContentTitle(getString(R.string.menu_fetch));
