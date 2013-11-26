@@ -26,6 +26,11 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Environment;
 import android.os.Process;
 import android.util.Base64;
@@ -342,5 +347,33 @@ public class Util {
 			out.write(buf, 0, len);
 		in.close();
 		out.close();
+	}
+
+	public static Bitmap[] getTriStateCheckBox(Context context) {
+		Bitmap[] bitmap = new Bitmap[3];
+
+		// Get highlight color
+		TypedArray arrayColor = context.getTheme().obtainStyledAttributes(
+				new int[] { android.R.attr.colorActivatedHighlight });
+		int highlightColor = arrayColor.getColor(0, 0xFF00FF);
+		arrayColor.recycle();
+
+		// Create off check box
+		bitmap[0] = BitmapFactory.decodeResource(context.getResources(), android.R.drawable.checkbox_off_background);
+
+		// Create half check box
+		bitmap[1] = Bitmap.createBitmap(bitmap[0].getWidth(), bitmap[0].getHeight(), bitmap[0].getConfig());
+		Canvas canvas = new Canvas(bitmap[1]);
+		Paint paint = new Paint();
+		paint.setStyle(Paint.Style.FILL);
+		paint.setColor(highlightColor);
+		int border = bitmap[1].getWidth() / 3;
+		canvas.drawBitmap(bitmap[0], 0, 0, paint);
+		canvas.drawRect(border, border, bitmap[1].getWidth() - border, bitmap[1].getHeight() - border, paint);
+
+		// Create full check box
+		bitmap[2] = BitmapFactory.decodeResource(context.getResources(), android.R.drawable.checkbox_on_background);
+
+		return bitmap;
 	}
 }

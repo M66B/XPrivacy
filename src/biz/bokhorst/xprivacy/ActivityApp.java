@@ -47,7 +47,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -87,7 +86,7 @@ public class ActivityApp extends Activity {
 	private int mThemeId;
 	private ApplicationInfoEx mAppInfo = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
-	private Bitmap mHalfCheck;
+	private Bitmap[] mCheck;
 
 	public static final String cPackageName = "PackageName";
 	public static final String cRestrictionName = "RestrictionName";
@@ -249,16 +248,7 @@ public class ActivityApp extends Activity {
 		// Up navigation
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		// Create half check box
-		Bitmap checkbox_off = BitmapFactory.decodeResource(getResources(), android.R.drawable.checkbox_off_background);
-		mHalfCheck = Bitmap.createBitmap(checkbox_off.getWidth(), checkbox_off.getHeight(), checkbox_off.getConfig());
-		Canvas canvas = new Canvas(mHalfCheck);
-		Paint paint = new Paint();
-		paint.setStyle(Paint.Style.FILL);
-		paint.setColor(Color.GRAY);
-		int border = mHalfCheck.getWidth() / 3;
-		canvas.drawBitmap(checkbox_off, 0, 0, paint);
-		canvas.drawRect(border, border, mHalfCheck.getWidth() - border, mHalfCheck.getHeight() - border, paint);
+		mCheck = Util.getTriStateCheckBox(this);
 
 		// Clear
 		if (extras.containsKey(cActionClear)) {
@@ -983,13 +973,12 @@ public class ActivityApp extends Activity {
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					// Display restriction
 					if (allRestricted)
-						holder.imgCBName.setImageResource(android.R.drawable.checkbox_on_background);
+						holder.imgCBName.setImageBitmap(mCheck[2]); // Full
 					else if (someRestricted)
-						holder.imgCBName.setImageBitmap(mHalfCheck);
+						holder.imgCBName.setImageBitmap(mCheck[1]); // Half
 					else
-						holder.imgCBName.setImageResource(android.R.drawable.checkbox_off_background);
+						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
@@ -1018,11 +1007,11 @@ public class ActivityApp extends Activity {
 
 							// Display restriction
 							if (allRestricted)
-								holder.imgCBName.setImageResource(android.R.drawable.checkbox_on_background);
+								holder.imgCBName.setImageBitmap(mCheck[2]); // Full
 							else if (someRestricted)
-								holder.imgCBName.setImageBitmap(mHalfCheck);
+								holder.imgCBName.setImageBitmap(mCheck[1]); // Half
 							else
-								holder.imgCBName.setImageResource(android.R.drawable.checkbox_off_background);
+								holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 
 							notifyDataSetChanged(); // Needed to update childs
 						}
