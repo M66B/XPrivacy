@@ -150,6 +150,13 @@ public class PackageChange extends BroadcastReceiver {
 								PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingFUser,
 										Boolean.toString(true));
 							}
+
+							// Version 1.10.27+
+							if (sVersion.compareTo(new Version("1.10.27")) < 0) {
+								PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingDangerous,
+										PrivacyManager.getSetting(null, context, 0, "Expert", Boolean.toString(false),
+												false));
+							}
 						}
 
 						// Update stored version
