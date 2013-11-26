@@ -197,5 +197,6 @@
     <Hook restriction="system" method="ApplicationsProvider" permissions="" sdk="14" />
 
     <Hook restriction="view" method="getSettings" permissions="" sdk="1" />
+    <Hook restriction="view" method="WebView.constructor" permissions="" sdk="1" />
     <Hook restriction="view" method="android.intent.action.VIEW" permissions="" sdk="14" />
 </Meta>

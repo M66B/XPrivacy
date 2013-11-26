@@ -4,9 +4,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.os.Binder;
 import android.util.Log;
+import android.webkit.WebView;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -17,7 +17,8 @@ public class XWebView extends XHook {
 	private static final List<String> mWebSettings = new ArrayList<String>();
 
 	private XWebView(Methods method, String restrictionName) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, (method == Methods.constructor ? null : method.name()),
+				(method == Methods.constructor ? "WebView.constructor" : null));
 		mMethod = method;
 	}
 
@@ -35,11 +36,12 @@ public class XWebView extends XHook {
 	// http://developer.android.com/reference/android/webkit/WebSettings.html
 
 	private enum Methods {
-		getSettings
+		constructor, getSettings
 	};
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XWebView(Methods.constructor, PrivacyManager.cView));
 		listHook.add(new XWebView(Methods.getSettings, PrivacyManager.cView));
 		return listHook;
 	}
@@ -51,7 +53,13 @@ public class XWebView extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (mMethod == Methods.getSettings) {
+		if (mMethod == Methods.constructor) {
+			if (isRestricted(param)) {
+				String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
+				WebView webView = (WebView) param.thisObject;
+				webView.getSettings().setUserAgentString(ua);
+			}
+		} else if (mMethod == Methods.getSettings) {
 			if (param.getResult() != null) {
 				// Check web settings type
 				Class<?> clazzWebSettings = param.getResultOrThrowable().getClass();
@@ -93,14 +101,5 @@ public class XWebView extends XHook {
 			}
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
-	}
-
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = null;
-		if (param.args.length > 0)
-			context = (Context) param.args[0];
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
 	}
 }
