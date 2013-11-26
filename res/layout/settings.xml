@@ -417,6 +417,7 @@
 
                     <EditText
                         android:id="@+id/etUa"
+                        android:hint="Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9"
                         android:inputType="text|textNoSuggestions" />
                 </TableRow>
             </TableLayout>
