@@ -67,15 +67,15 @@ public class XWebView extends XHook {
 					mWebSettings.add(clazzWebSettings.getName());
 					Util.log(this, Log.INFO, "Hooking " + clazzWebSettings.getName());
 
-					// getUserAgentString
+					// setUserAgent
 					try {
-						Method getUserAgentString = clazzWebSettings.getDeclaredMethod("getUserAgentString");
-						Util.log(this, Log.INFO, "Hooking " + getUserAgentString.getName());
-						XposedBridge.hookMethod(getUserAgentString, new XC_MethodHook() {
+						Method setUserAgent = clazzWebSettings.getDeclaredMethod("setUserAgent", String.class);
+						Util.log(this, Log.INFO, "Hooking " + setUserAgent.getName());
+						XposedBridge.hookMethod(setUserAgent, new XC_MethodHook() {
 							@Override
-							protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 								if (isRestricted(param))
-									param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA"));
+									param.setResult(null);
 							}
 						});
 					} catch (NoSuchFieldError ex) {
