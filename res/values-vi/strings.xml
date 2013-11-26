@@ -100,6 +100,7 @@
     <string name="settings_extra">Sử dụng dữ liệu phụ (cần khởi động lại)</string>
     <string name="settings_log">Nhật ký lỗi (cần khởi động lại)</string>
     <string name="settings_expert">Chế độ nâng cao</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Ứng dụng</string>
     <string name="help_internet">có quyền truy cập mạng</string>
     <string name="help_granted">có các quyền của hệ điều hành</string>

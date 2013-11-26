@@ -103,6 +103,7 @@
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (zahteva ponovni zagon)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>

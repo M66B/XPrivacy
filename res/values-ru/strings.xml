@@ -102,6 +102,7 @@
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Отладочный лог (требует перезагрузки)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>

@@ -101,6 +101,7 @@
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">デバッグログ(要再起動)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>

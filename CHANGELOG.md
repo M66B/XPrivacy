@@ -5,6 +5,7 @@ Changelog
 
 * Fixed Android KitKat message permissions
 * Do not disable Android/extra usage data when not in expert mode
+* Separate setting to enable restricting dangerous functions, thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Norwegian translation
 * Updated Slovak translation
 

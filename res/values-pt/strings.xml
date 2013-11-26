@@ -101,6 +101,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Relatório de depuração (requer reinicialização)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Aplicação</string>
     <string name="help_internet">Tem permissão da internet</string>
     <string name="help_granted">Tem permissão do Android</string>
