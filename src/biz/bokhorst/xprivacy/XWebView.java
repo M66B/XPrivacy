@@ -65,33 +65,36 @@ public class XWebView extends XHook {
 				Class<?> clazzWebSettings = param.getResultOrThrowable().getClass();
 				if (!mWebSettings.contains(clazzWebSettings.getName())) {
 					mWebSettings.add(clazzWebSettings.getName());
-					Util.log(this, Log.INFO, "Hooking " + clazzWebSettings.getName());
 
-					// setUserAgent
+					// Hook setUserAgent
 					try {
-						Util.log(this, Log.INFO, "Hooking setUserAgent");
+						Util.log(this, Log.INFO, "Hooking " + clazzWebSettings.getName() + ".setUserAgent");
 						Method setUserAgent = clazzWebSettings.getDeclaredMethod("setUserAgent", int.class);
 						XposedBridge.hookMethod(setUserAgent, new XC_MethodHook() {
 							@Override
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								if (isRestricted(param))
+								if (isRestricted(param)) {
+									Util.log(XWebView.this, Log.INFO, "Restricting setUserAgent");
 									param.setResult(null);
+								}
 							}
 						});
 					} catch (NoSuchFieldError ex) {
 						Util.bug(this, ex);
 					}
 
-					// setUserAgentString
+					// Hook setUserAgentString
 					try {
-						Util.log(this, Log.INFO, "Hooking setUserAgentString");
+						Util.log(this, Log.INFO, "Hooking " + clazzWebSettings.getName() + ".setUserAgentString");
 						Method setUserAgentString = clazzWebSettings.getDeclaredMethod("setUserAgentString",
 								String.class);
 						XposedBridge.hookMethod(setUserAgentString, new XC_MethodHook() {
 							@Override
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								if (isRestricted(param))
+								if (isRestricted(param)) {
+									Util.log(XWebView.this, Log.INFO, "Restricting setUserAgentString");
 									param.args[0] = PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
+								}
 							}
 						});
 					} catch (NoSuchFieldError ex) {
