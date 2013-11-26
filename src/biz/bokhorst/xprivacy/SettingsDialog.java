@@ -96,7 +96,7 @@ public class SettingsDialog {
 				false);
 		boolean extra = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExtraUsage, false,
 				false);
-		final boolean expert = dangerous || usage || extra;
+		final boolean expert = (dangerous || usage || extra);
 		boolean log = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingLog, false, false);
 		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
 
