@@ -9,6 +9,7 @@ Changelog
 * Separate setting to enable restricting dangerous functions, thanks @[jpeg729](https://github.com/jpeg729)
 * Show exported file name while sharing, thanks @[jpeg729](https://github.com/jpeg729)
 * Progress indication for export, import and fetch, thanks @[jpeg729](https://github.com/jpeg729)
+* Selected tab (categories, filter) in theme color, thanks @[jpeg729](https://github.com/jpeg729)
 * Added tri-state check box to legend ([issue](https://github.com/M66B/XPrivacy/issues/827))
 * Updated Lithuanian translation
 * Updated Norwegian translation
