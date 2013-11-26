@@ -6,6 +6,7 @@ Changelog
 * Fixed Android KitKat message permissions
 * Do not disable Android/extra usage data when not in expert mode
 * Separate setting to enable restricting dangerous functions, thanks @[jpeg729](https://github.com/jpeg729)
+* Added tri-state check box to legend ([issue](https://github.com/M66B/XPrivacy/issues/827))
 * Updated Norwegian translation
 * Updated Slovak translation
 

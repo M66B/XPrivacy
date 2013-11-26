@@ -110,5 +110,6 @@
     <string name="help_used">از این داده استفاده کرده است</string>
     <string name="help_frozen">غیر فعال است</string>
     <string name="help_dangerous">خطرناک است</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

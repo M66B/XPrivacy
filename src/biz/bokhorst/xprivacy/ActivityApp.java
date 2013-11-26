@@ -375,6 +375,10 @@ public class ActivityApp extends Activity {
 		dialog.setTitle(getString(R.string.help_application));
 		dialog.setContentView(R.layout.help);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+		TextView tvHelpHalf = (TextView) dialog.findViewById(R.id.help_half);
+		Drawable dHalf = new BitmapDrawable(getResources(), mCheck[1]);
+		dHalf.setBounds(0, 0, 48, 48);
+		tvHelpHalf.setCompoundDrawables(dHalf, null, null, null);
 		dialog.setCancelable(true);
 		dialog.show();
 	}

@@ -108,5 +108,6 @@
     <string name="help_used">hat diese Daten benutzt</string>
     <string name="help_frozen">ist deaktiviert</string>
     <string name="help_dangerous">Beschränkung bedenklich (eventueller App-Absturz)</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

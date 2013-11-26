@@ -107,5 +107,6 @@
     <string name="help_used">on käyttänyt tätä dataa</string>
     <string name="help_frozen">on disabloitu</string>
     <string name="help_dangerous">on vaarallinen, rajoitus voi aiheuttaa ongelmia</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

@@ -109,5 +109,6 @@
     <string name="help_used">данные уже использовались</string>
     <string name="help_frozen">отключено</string>
     <string name="help_dangerous">изменение разрешений опасно</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

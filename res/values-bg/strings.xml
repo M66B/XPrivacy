@@ -108,5 +108,6 @@
     <string name="help_used">използвало е тези данни</string>
     <string name="help_frozen">е деактивирано</string>
     <string name="help_dangerous">е опасно</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

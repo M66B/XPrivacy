@@ -108,5 +108,6 @@
     <string name="help_used">έχει χρησιμοποιήσει αυτά τα δεδομένα</string>
     <string name="help_frozen">είναι απενεργοποιημένη</string>
     <string name="help_dangerous">είναι επικίνδυνη</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

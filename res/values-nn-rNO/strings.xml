@@ -106,5 +106,6 @@
     <string name="help_used">har benyttet denne typen av data</string>
     <string name="help_frozen">er deaktivert</string>
     <string name="help_dangerous">er farlig</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

@@ -108,6 +108,7 @@
     <string name="help_used">应用已使用的权限</string>
     <string name="help_frozen">应用已被冻结/停用</string>
     <string name="help_dangerous">可能导致应用异常的权限</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>
 

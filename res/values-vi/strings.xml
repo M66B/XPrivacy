@@ -107,5 +107,6 @@
     <string name="help_used">đã sử dụng dữ liệu</string>
     <string name="help_frozen">đã được tắt</string>
     <string name="help_dangerous">nguy hiểm</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

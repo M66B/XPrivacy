@@ -109,5 +109,6 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="help_used">Privačių duomenų leidimai</string>
     <string name="help_frozen">Išjungtų programų leidimai</string>
     <string name="help_dangerous">Pavojingi leidimai, apribojus, gali sukelti problemų</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

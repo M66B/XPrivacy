@@ -108,5 +108,6 @@ sin embargo es imposible garantizar que funcione impecable en todos y cada uno d
     <string name="help_used">Ha usado estos datos</string>
     <string name="help_frozen">Esta deshabilitado</string>
     <string name="help_dangerous">Es peligroso</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

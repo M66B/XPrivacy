@@ -107,5 +107,6 @@
     <string name="help_used">bu izni kullandı</string>
     <string name="help_frozen">uygulama devredışı</string>
     <string name="help_dangerous">tehlikeli izin</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

@@ -106,5 +106,6 @@
     <string name="help_used">ha utilitzat aquesta informació</string>
     <string name="help_frozen">està desactivat</string>
     <string name="help_dangerous">és perillós</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

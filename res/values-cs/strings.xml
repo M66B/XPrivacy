@@ -109,5 +109,6 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="help_used">přistupovala k těmto datům</string>
     <string name="help_frozen">je zakázaná</string>
     <string name="help_dangerous">je nebezpečná</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

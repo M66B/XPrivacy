@@ -108,5 +108,6 @@
     <string name="help_used">ha usato questi dati</string>
     <string name="help_frozen">è disabilitato</string>
     <string name="help_dangerous">è pericoloso</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>
