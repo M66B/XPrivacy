@@ -69,8 +69,8 @@ public class XWebView extends XHook {
 
 					// setUserAgent
 					try {
-						Method setUserAgent = clazzWebSettings.getDeclaredMethod("setUserAgent", Integer.class);
-						Util.log(this, Log.INFO, "Hooking " + setUserAgent.getName());
+						Util.log(this, Log.INFO, "Hooking setUserAgent");
+						Method setUserAgent = clazzWebSettings.getDeclaredMethod("setUserAgent", int.class);
 						XposedBridge.hookMethod(setUserAgent, new XC_MethodHook() {
 							@Override
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -84,9 +84,9 @@ public class XWebView extends XHook {
 
 					// setUserAgentString
 					try {
+						Util.log(this, Log.INFO, "Hooking setUserAgentString");
 						Method setUserAgentString = clazzWebSettings.getDeclaredMethod("setUserAgentString",
 								String.class);
-						Util.log(this, Log.INFO, "Hooking " + setUserAgentString.getName());
 						XposedBridge.hookMethod(setUserAgentString, new XC_MethodHook() {
 							@Override
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
