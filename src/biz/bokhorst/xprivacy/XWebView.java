@@ -30,7 +30,7 @@ public class XWebView extends XHook {
 	// frameworks/base/core/java/android/webkit/WebView.java
 	// http://developer.android.com/reference/android/webkit/WebView.html
 
-	// public synchronize String getUserAgentString()
+	// public synchronized void setUserAgent(int ua)
 	// public synchronized void setUserAgentString (String ua)
 	// frameworks/base/core/java/android/webkit/WebSettings.java
 	// http://developer.android.com/reference/android/webkit/WebSettings.html
@@ -69,7 +69,7 @@ public class XWebView extends XHook {
 
 					// setUserAgent
 					try {
-						Method setUserAgent = clazzWebSettings.getDeclaredMethod("setUserAgent", String.class);
+						Method setUserAgent = clazzWebSettings.getDeclaredMethod("setUserAgent", Integer.class);
 						Util.log(this, Log.INFO, "Hooking " + setUserAgent.getName());
 						XposedBridge.hookMethod(setUserAgent, new XC_MethodHook() {
 							@Override
