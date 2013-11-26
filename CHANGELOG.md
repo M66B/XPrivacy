@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Fixed Android KitKat message permissions
+* Fixed restricting browser user agent ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Do not disable Android/extra usage data when not in expert mode
 * Separate setting to enable restricting dangerous functions, thanks @[jpeg729](https://github.com/jpeg729)
 * Show exported file name while sharing, thanks @[jpeg729](https://github.com/jpeg729)
