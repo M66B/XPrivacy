@@ -35,8 +35,8 @@
     <string name="msg_update">Atnaujinta</string>
     <string name="msg_licensed" formatted="false">licencija: %s</string>
     <string name="msg_loading">Palaukite...</string>
-    <string name="msg_saved_to">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_saved_to">Išsaugomi %s</string>
+    <string name="msg_no_restrictions">Nerasta apribojimų</string>
     <string name="msg_edit">Spustelėkite programos piktogramą norėdami redaguoti apribojimus</string>
     <string name="msg_sure">Įsitikinę?</string>
     <string name="msg_done">Atlikta</string>
@@ -111,6 +111,6 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="help_used">Privačių duomenų leidimai</string>
     <string name="help_frozen">Išjungtų programų leidimai</string>
     <string name="help_dangerous">Pavojingi leidimai, apribojus, gali sukelti problemų</string>
-    <string name="help_half">partly restricted</string>
+    <string name="help_half">Iš dalies apribota</string>
 
 </resources>
