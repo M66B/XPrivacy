@@ -535,15 +535,7 @@ public class ActivityShare extends Activity {
 													restrictionName, methodName, restricted);
 									}
 								} else
-									Util.log(null, Log.INFO, "No restrictions available");
-								notify(getString(R.string.msg_no_restrictions), false, 0); // TODO
-																							// shouldn't
-																							// this
-																							// message
-																							// be
-																							// a
-																							// failure
-																							// msg
+									throw new Exception(getString(R.string.msg_no_restrictions));
 							} else
 								throw new Exception(status.getString("error"));
 						} else {
