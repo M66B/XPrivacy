@@ -778,6 +778,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void toggleFiltersVisibility() {
 		TextView tvFilterDetail = (TextView) findViewById(R.id.tvFilterDetail);
+		View vFilterHighlight = findViewById(R.id.vFilterHighlight);
 		EditText etFilter = (EditText) findViewById(R.id.etFilter);
 		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
 		LinearLayout llCategories = (LinearLayout) findViewById(R.id.llCategories);
@@ -825,11 +826,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		mFiltersHidden = !mFiltersHidden;
-		tvFilterDetail.setBackgroundResource(mFiltersHidden ? android.R.color.transparent : R.drawable.selected_tab);
+		vFilterHighlight.setBackgroundResource(mFiltersHidden ? android.R.color.transparent : getThemed(android.R.attr.colorActivatedHighlight));
 	}
 
-	protected void toggleCategoriesVisibility() {
+	private void toggleCategoriesVisibility() {
 		TextView tvCategories = (TextView) findViewById(R.id.tvCategoryDetail);
+		View vCategoryHighlight = findViewById(R.id.vCategoryHighlight);
 		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
 		LinearLayout llCategories = (LinearLayout) findViewById(R.id.llCategories);
 
@@ -847,7 +849,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		mCategoriesHidden = !mCategoriesHidden;
-		tvCategories.setBackgroundResource(mCategoriesHidden ? android.R.color.transparent : R.drawable.selected_tab);
+		vCategoryHighlight.setBackgroundResource(mCategoriesHidden ? android.R.color.transparent : getThemed(android.R.attr.colorActivatedHighlight));
 	}
 
 	// Tasks
