@@ -20,28 +20,28 @@
     <string name="menu_about">О программе</string>
     <string name="menu_help">Помощь</string>
     <string name="menu_all">Выделить все</string>
-    <string name="menu_restriction_all">Toggle restrictions</string>
-    <string name="menu_usage_all">Toggle filter</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_restriction_all">Переключить разрешения</string>
+    <string name="menu_usage_all">Переключить фильтр</string>
+    <string name="menu_apply">Применить шаблон</string>
     <string name="menu_clear">Очистить</string>
     <string name="menu_app_launch">Запустить приложение</string>
     <string name="menu_app_settings">Настройки приложения</string>
     <string name="menu_app_store">Play Маркет</string>
     <string name="menu_accounts">Выберите разрешенные учетные записи</string>
-    <string name="menu_applications">Select applications to allow</string>
+    <string name="menu_applications">Выберите разрешенные приложения</string>
     <string name="menu_contacts">Выберите разрешенные контакты</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="msg_new">Новое</string>
+    <string name="msg_update">Обновить</string>
     <string name="msg_licensed" formatted="false">Владелец лицензии: %s</string>
     <string name="msg_loading">Загрузка</string>
-    <string name="msg_saved_to">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_saved_to">Сохранено в %s</string>
+    <string name="msg_no_restrictions">Не найдено разрешений</string>
     <string name="msg_edit">Нажмите на иконку приложения для редактирования всех разрешений</string>
     <string name="msg_sure">Вы уверены?</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Требуется перезагрузка</string>
     <string name="msg_random_now">Случайные значения</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">Случайные значения при запросе</string>
     <string name="msg_random_boot">Случайные значения после перезагрузки</string>
     <string name="msg_first"><b>Большое внимание было уделено разработке и тестированию XPrivacy, 
 однако нельзя гарантировать, что оно будет работать безупречно на всех устройствах и со всеми приложениями.
@@ -62,14 +62,14 @@
     <string name="restrict_network">Сеть (адреса)</string>
     <string name="restrict_notifications">Уведомления</string>
     <string name="restrict_phone">Телефон (ID, номера, журнал вызовов)</string>
-    <string name="restrict_sensors">Sensors</string>
+    <string name="restrict_sensors">Сенсоры</string>
     <string name="restrict_storage">Хранилище (медиа, карта памяти)</string>
     <string name="restrict_shell">Команды shell (вкл. суперпользователя)</string>
     <string name="restrict_system">Система (установленные приложения)</string>
     <string name="restrict_view">Просмотр (браузер)</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">Категории</string>
     <string name="title_restrict">Отметьте приложения:</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">Фильтры</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1 активный фильтр</item>
@@ -77,13 +77,13 @@
         <item quantity="other">%d активных фильтров</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
-    <string name="title_fnot">Negate</string>
+    <string name="title_fused">по использованию данных</string>
+    <string name="title_finternet">по доступу к Интернету</string>
+    <string name="title_fpermission">по разрешениям</string>
+    <string name="title_frestricted">по запрещенным</string>
+    <string name="title_fuser">пользовательские приложения</string>
+    <string name="title_fsystem">системные приложения</string>
+    <string name="title_fnot">Переключить</string>
     <string name="settings_serial">Серийный номер</string>
     <string name="settings_lat">Широта</string>
     <string name="settings_lon">Долгота</string>
@@ -96,21 +96,21 @@
     <string name="settings_operator">Оператор</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
-    <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
-    <string name="settings_log">Отладочный лог (требует перезагрузки)</string>
-    <string name="settings_expert">Expert mode</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_general">Общее</string>
+    <string name="settings_fake_data">Фальшивые данные</string>
+    <string name="settings_global">Использовать общие фальшивые данные</string>
+    <string name="settings_notify">Обновить уведомления</string>
+    <string name="settings_usage">Андроид - данные об использовании (требует перезапуска)</string>
+    <string name="settings_extra">Расширенные данные об использовании (требует перезапуска)</string>
+    <string name="settings_log">Отладочный лог (требует перезапуска)</string>
+    <string name="settings_expert">Экспертный режим</string>
+    <string name="settings_dangerous">Запрещение опасных функций</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>
     <string name="help_used">данные уже использовались</string>
     <string name="help_frozen">отключено</string>
     <string name="help_dangerous">изменение разрешений опасно</string>
-    <string name="help_half">partly restricted</string>
+    <string name="help_half">частично запрещено</string>
 
 </resources>
