@@ -627,5 +627,4 @@ public class ActivityShare extends Activity {
 			fileName = "XPrivacy.xml";
 		return new File(folder + File.separator + fileName).getAbsolutePath();
 	}
-
 }

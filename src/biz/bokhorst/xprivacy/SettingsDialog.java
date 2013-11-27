@@ -8,7 +8,6 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -29,7 +28,7 @@ public class SettingsDialog {
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgSettings.setTitle(context.getString(R.string.app_name));
 		dlgSettings.setContentView(R.layout.settings);
-		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(context, R.attr.icon_launcher));
+		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(context, R.attr.icon_launcher));
 
 		// Reference controls
 		TextView tvAppName = (TextView) dlgSettings.findViewById(R.id.tvAppName);
@@ -575,11 +574,5 @@ public class SettingsDialog {
 
 		dlgSettings.setCancelable(true);
 		dlgSettings.show();
-	}
-
-	private static int getThemed(Context context, int attr) {
-		TypedValue typedvalueattr = new TypedValue();
-		context.getTheme().resolveAttribute(attr, typedvalueattr, true);
-		return typedvalueattr.resourceId;
 	}
 }

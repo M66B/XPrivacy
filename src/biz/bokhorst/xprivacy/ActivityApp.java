@@ -64,7 +64,6 @@ import android.provider.Settings.Secure;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -155,7 +154,7 @@ public class ActivityApp extends Activity {
 		// Background color
 		if (mAppInfo.isSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
-			llInfo.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+			llInfo.setBackgroundColor(getResources().getColor(Util.getThemed(this, R.attr.color_dangerous)));
 		}
 
 		// Display app icon
@@ -374,7 +373,7 @@ public class ActivityApp extends Activity {
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dialog.setTitle(getString(R.string.help_application));
 		dialog.setContentView(R.layout.help);
-		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
 		TextView tvHelpHalf = (TextView) dialog.findViewById(R.id.help_half);
 		Drawable dHalf = new BitmapDrawable(getResources(), mCheck[1]);
 		dHalf.setBounds(0, 0, 48, 48);
@@ -387,7 +386,7 @@ public class ActivityApp extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 		alertDialogBuilder.setTitle(getString(R.string.app_name));
 		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -429,7 +428,7 @@ public class ActivityApp extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 		alertDialogBuilder.setTitle(getString(R.string.app_name));
 		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -458,7 +457,7 @@ public class ActivityApp extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(getString(R.string.app_name));
 		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -562,7 +561,7 @@ public class ActivityApp extends Activity {
 			// Build dialog
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 			alertDialogBuilder.setTitle(getString(R.string.menu_accounts));
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setIcon(Util.getThemed(ActivityApp.this, R.attr.icon_launcher));
 			alertDialogBuilder.setMultiChoiceItems(mListAccount.toArray(new CharSequence[0]), mSelection,
 					new DialogInterface.OnMultiChoiceClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
@@ -631,7 +630,7 @@ public class ActivityApp extends Activity {
 			// Build dialog
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 			alertDialogBuilder.setTitle(getString(R.string.menu_applications));
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setIcon(Util.getThemed(ActivityApp.this, R.attr.icon_launcher));
 			alertDialogBuilder.setMultiChoiceItems(mListApp.toArray(new CharSequence[0]), mSelection,
 					new DialogInterface.OnMultiChoiceClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
@@ -707,7 +706,7 @@ public class ActivityApp extends Activity {
 			// Build dialog
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 			alertDialogBuilder.setTitle(getString(R.string.menu_contacts));
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setIcon(Util.getThemed(ActivityApp.this, R.attr.icon_launcher));
 			alertDialogBuilder.setMultiChoiceItems(mListContact.toArray(new CharSequence[0]), mSelection,
 					new DialogInterface.OnMultiChoiceClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
@@ -1040,8 +1039,8 @@ public class ActivityApp extends Activity {
 			final String restrictionName = (String) getGroup(groupPosition);
 
 			// Indicator state
-			holder.imgIndicator.setImageResource(getThemed(isExpanded ? R.attr.icon_expander_maximized
-					: R.attr.icon_expander_minimized));
+			holder.imgIndicator.setImageResource(Util.getThemed(ActivityApp.this,
+					isExpanded ? R.attr.icon_expander_maximized : R.attr.icon_expander_minimized));
 
 			// Disable indicator for empty groups
 			if (getChildrenCount(groupPosition) == 0)
@@ -1223,7 +1222,8 @@ public class ActivityApp extends Activity {
 
 			// Set background color
 			if (PrivacyManager.isDangerousMethod(restrictionName, md.getMethodName()))
-				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+				holder.row.setBackgroundColor(getResources().getColor(
+						Util.getThemed(ActivityApp.this, R.attr.color_dangerous)));
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
 
@@ -1253,13 +1253,5 @@ public class ActivityApp extends Activity {
 		public boolean hasStableIds() {
 			return true;
 		}
-	}
-
-	// Helper methods
-
-	private int getThemed(int attr) {
-		TypedValue typedvalueattr = new TypedValue();
-		getTheme().resolveAttribute(attr, typedvalueattr, true);
-		return typedvalueattr.resourceId;
 	}
 }

@@ -26,15 +26,17 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Process;
 import android.util.Base64;
 import android.util.Log;
+import android.util.TypedValue;
 
 public class Util {
 	private static boolean mPro = false;
@@ -352,28 +354,43 @@ public class Util {
 	public static Bitmap[] getTriStateCheckBox(Context context) {
 		Bitmap[] bitmap = new Bitmap[3];
 
-		// Get highlight color
-		TypedArray arrayColor = context.getTheme().obtainStyledAttributes(
-				new int[] { android.R.attr.colorActivatedHighlight });
-		int highlightColor = arrayColor.getColor(0, 0xFF00FF);
-		arrayColor.recycle();
+		int size = 32;
+		int border0 = 4;
+		int border1 = border0 * 2;
+		int border2 = border0;
 
 		// Create off check box
-		bitmap[0] = BitmapFactory.decodeResource(context.getResources(), android.R.drawable.checkbox_off_background);
+		bitmap[0] = Bitmap.createBitmap(size, size, Config.ARGB_8888);
+		Canvas canvas0 = new Canvas(bitmap[0]);
+		Paint paint0 = new Paint();
+		paint0.setStyle(Paint.Style.STROKE);
+		paint0.setColor(Color.GRAY);
+		paint0.setStrokeWidth(2);
+		canvas0.drawRect(border0, border0, bitmap[0].getWidth() - border0, bitmap[0].getHeight() - border0, paint0);
 
 		// Create half check box
 		bitmap[1] = Bitmap.createBitmap(bitmap[0].getWidth(), bitmap[0].getHeight(), bitmap[0].getConfig());
-		Canvas canvas = new Canvas(bitmap[1]);
-		Paint paint = new Paint();
-		paint.setStyle(Paint.Style.FILL);
-		paint.setColor(highlightColor);
-		int border = bitmap[1].getWidth() / 3;
-		canvas.drawBitmap(bitmap[0], 0, 0, paint);
-		canvas.drawRect(border, border, bitmap[1].getWidth() - border, bitmap[1].getHeight() - border, paint);
+		Canvas canvas1 = new Canvas(bitmap[1]);
+		Paint paint1 = new Paint();
+		paint1.setStyle(Paint.Style.FILL);
+		paint1.setColor(Color.GRAY);
+		canvas1.drawBitmap(bitmap[0], 0, 0, paint1);
+		canvas1.drawRect(border1, border1, bitmap[1].getWidth() - border1, bitmap[1].getHeight() - border1, paint1);
 
 		// Create full check box
-		bitmap[2] = BitmapFactory.decodeResource(context.getResources(), android.R.drawable.checkbox_on_background);
+		bitmap[2] = Bitmap.createBitmap(bitmap[0].getWidth(), bitmap[0].getHeight(), bitmap[0].getConfig());
+		Canvas canvas2 = new Canvas(bitmap[2]);
+		canvas2.drawBitmap(bitmap[0], 0, 0, new Paint());
+		Drawable checkmark = context.getResources().getDrawable(getThemed(context, R.attr.icon_checked));
+		checkmark.setBounds(border2, border2, bitmap[2].getWidth() - border2, bitmap[2].getHeight() - border2);
+		checkmark.draw(canvas2);
 
 		return bitmap;
+	}
+
+	public static int getThemed(Context context, int attr) {
+		TypedValue tv = new TypedValue();
+		context.getTheme().resolveAttribute(attr, tv, true);
+		return tv.resourceId;
 	}
 }

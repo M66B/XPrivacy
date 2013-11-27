@@ -36,7 +36,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -171,7 +170,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				String text = etFilter.getText().toString();
 				ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
 				imgClear.setImageDrawable(getResources().getDrawable(
-						getThemed(text.equals("") ? R.attr.icon_clear_grayed : R.attr.icon_clear)));
+						Util.getThemed(ActivityMain.this, text.equals("") ? R.attr.icon_clear_grayed
+								: R.attr.icon_clear)));
 				applyFilter();
 			}
 
@@ -564,7 +564,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(getString(R.string.app_name));
 		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -629,7 +629,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Build dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(getString(R.string.menu_template));
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setMultiChoiceItems(options, selection, new DialogInterface.OnMultiChoiceClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 				PrivacyManager.setSetting(null, ActivityMain.this, 0,
@@ -694,7 +694,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(getString(R.string.app_name));
 			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -732,7 +732,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgAbout.setTitle(getString(R.string.app_name));
 		dlgAbout.setContentView(R.layout.about);
-		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
 
 		// Show version
 		try {
@@ -767,7 +767,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dialog.setTitle(getString(R.string.help_application));
 		dialog.setContentView(R.layout.help);
-		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
 		TextView tvHelpHalf = (TextView) dialog.findViewById(R.id.help_half);
 		Drawable dHalf = new BitmapDrawable(getResources(), mCheck[1]);
 		dHalf.setBounds(0, 0, 48, 48);
@@ -826,7 +826,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		mFiltersHidden = !mFiltersHidden;
-		vFilterHighlight.setBackgroundResource(mFiltersHidden ? android.R.color.transparent : getThemed(android.R.attr.colorActivatedHighlight));
+		vFilterHighlight.setBackgroundResource(mFiltersHidden ? android.R.color.transparent : Util.getThemed(this,
+				android.R.attr.colorActivatedHighlight));
 	}
 
 	private void toggleCategoriesVisibility() {
@@ -849,7 +850,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		mCategoriesHidden = !mCategoriesHidden;
-		vCategoryHighlight.setBackgroundResource(mCategoriesHidden ? android.R.color.transparent : getThemed(android.R.attr.colorActivatedHighlight));
+		vCategoryHighlight.setBackgroundResource(mCategoriesHidden ? android.R.color.transparent : Util.getThemed(this,
+				android.R.attr.colorActivatedHighlight));
 	}
 
 	// Tasks
@@ -1201,7 +1203,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
 								alertDialogBuilder.setTitle(getString(R.string.app_name));
 								alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-								alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+								alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
 								alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
 										new DialogInterface.OnClickListener() {
 											@Override
@@ -1267,7 +1269,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Set background color
 			if (xAppInfo.isSystem())
-				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+				holder.row.setBackgroundColor(getResources().getColor(
+						Util.getThemed(ActivityMain.this, R.attr.color_dangerous)));
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
 
@@ -1364,11 +1367,5 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					Util.bug(null, ex);
 				}
 		}
-	}
-
-	private int getThemed(int attr) {
-		TypedValue typedvalueattr = new TypedValue();
-		getTheme().resolveAttribute(attr, typedvalueattr, true);
-		return typedvalueattr.resourceId;
 	}
 }
