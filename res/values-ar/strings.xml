@@ -34,8 +34,8 @@
     <string name="msg_update">تحديث</string>
     <string name="msg_licensed" formatted="false">مرخص ل: %s</string>
     <string name="msg_loading">جاري التحميل</string>
-    <string name="msg_saved_to">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_saved_to">حُفِظت في  %s</string>
+    <string name="msg_no_restrictions">لا توجد قيود</string>
     <string name="msg_edit">إضغط ايقونة التطبيق لتعديل كل القيود</string>
     <string name="msg_sure">هل أنت متأكد ؟</string>
     <string name="msg_done">إنتهى</string>
@@ -103,7 +103,7 @@
     <string name="settings_extra">بيانات إستخدام إضافية (يتطلب إعادة التشغيل)</string>
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
     <string name="settings_expert">وضع الخبراء</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_dangerous">تقييد الوظائف الخطيرة</string>
     <string name="help_application">التطبيق</string>
     <string name="help_internet">لديه صلاحية الوصول للإنترنت</string>
     <string name="help_granted">لديه صلاحية أندرويد</string>
