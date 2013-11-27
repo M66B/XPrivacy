@@ -27,7 +27,7 @@
         <!-- Filters and categories -->
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="38sp"
             android:orientation="horizontal"
             android:layout_marginBottom="-5dp" >
@@ -35,7 +35,7 @@
             <TextView
                 android:id="@+id/tvCategoryDetail"
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center"
@@ -50,7 +50,7 @@
             <TextView
                 android:id="@+id/tvFilterDetail"
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center"
@@ -59,29 +59,29 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="5dp"
             android:orientation="horizontal" >
 
             <View
                 android:id="@+id/vCategoryHighlight"
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="fill_parent" />
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/vFilterHighlight"
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1" />
         </LinearLayout>
 
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/color_filter_border" />
 
@@ -129,7 +129,7 @@
 
                 <EditText
                     android:id="@+id/etFilter"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="27dp"
                     android:layout_marginRight="3dp"
@@ -336,7 +336,7 @@
 
     <View
         android:id="@+id/vProgressEmpty"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginBottom="-3dp"
         android:layout_marginRight="@dimen/activity_horizontal_margin"

@@ -28,7 +28,7 @@
 
             <View
                 android:id="@+id/vAppNameBorder"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="#888888" />
 
@@ -41,7 +41,7 @@
                 android:textStyle="bold" />
 
             <View
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#888888" />
 
@@ -93,7 +93,7 @@
                 android:textStyle="bold" />
 
             <View
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#888888" />
 
