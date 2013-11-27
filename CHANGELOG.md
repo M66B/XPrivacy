@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Caching of application information for better response times
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

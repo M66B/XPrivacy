@@ -17,8 +17,15 @@ import android.util.SparseArray;
 @SuppressLint("DefaultLocale")
 public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private ApplicationInfo mAppInfo;
-	private String mVersion = null;
 	private List<String> mListApplicationName = null;
+
+	// Cache
+	private Drawable mIcon = null;
+	private boolean mInternet;
+	private boolean mInternetDetermined = false;
+	private boolean mFrozen;
+	private boolean mFrozenDetermined = false;
+	private String mVersion = null;
 
 	public ApplicationInfoEx(Context context, String packageName) throws NameNotFoundException {
 		ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
@@ -29,7 +36,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		this.Initialize(context, appInfo);
 	}
 
-	@SuppressLint("InlinedApi")
 	private void Initialize(Context context, ApplicationInfo appInfo) {
 		mAppInfo = appInfo;
 		PackageManager pm = context.getPackageManager();
@@ -81,18 +87,28 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public Drawable getIcon(Context context) {
-		return mAppInfo.loadIcon(context.getPackageManager());
+		if (mIcon == null)
+			mIcon = mAppInfo.loadIcon(context.getPackageManager());
+		return mIcon;
 	}
 
 	public boolean hasInternet(Context context) {
-		return PrivacyManager.hasInternet(context, mAppInfo.packageName);
+		if (!mInternetDetermined) {
+			mInternet = PrivacyManager.hasInternet(context, mAppInfo.packageName);
+			mInternetDetermined = true;
+		}
+		return mInternet;
 	}
 
 	public boolean isFrozen(Context context) {
-		int setting = context.getPackageManager().getApplicationEnabledSetting(mAppInfo.packageName);
-		boolean enabled = (setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
-		enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
-		return !enabled;
+		if (!mFrozenDetermined) {
+			int setting = context.getPackageManager().getApplicationEnabledSetting(mAppInfo.packageName);
+			boolean enabled = (setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
+			enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+			mFrozen = !enabled;
+			mFrozenDetermined = true;
+		}
+		return mFrozen;
 	}
 
 	public int getUid() {
