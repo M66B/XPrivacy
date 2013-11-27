@@ -382,11 +382,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		} else if (requestCode == ACTIVITY_IMPORT) {
 			// Imported: clean-up UI
 			sharingDone();
-			// recreate UI
 			ActivityMain.this.recreate();
 		} else if (requestCode == ACTIVITY_IMPORT_SELECT) {
 			// Result for import file choice
-			if (data != null)
+			if (resultCode == RESULT_CANCELED)
+				sharingDone();
+			else if (data != null)
 				try {
 					String fileName = data.getData().getPath();
 					Intent intent = new Intent("biz.bokhorst.xprivacy.action.IMPORT");
@@ -398,7 +399,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		} else if (requestCode == ACTIVITY_FETCH) {
 			// Fetched: clean-up UI
 			sharingDone();
-			// recreate UI
 			ActivityMain.this.recreate();
 		}
 	}

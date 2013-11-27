@@ -6,6 +6,7 @@ Changelog
 * Caching of application information for better response times
 * Restriction of draw over / on top ([issue](https://github.com/M66B/XPrivacy/issues/830))
 * Modified tri-state check box implementation ([issue](https://github.com/M66B/XPrivacy/issues/833))
+* Fixed cancel import file select ([issue](https://github.com/M66B/XPrivacy/issues/837))
 * Updated Arabic translation
 * Updated Dutch translation
 * Updated Polish translation
