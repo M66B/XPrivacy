@@ -151,6 +151,7 @@
 						<ul class="nav navbar-nav">
 							<li><a href="http://forum.xda-developers.com/showthread.php?t=2320783" target="_blank">XDA</a></li>
 							<li><a href="https://github.com/M66B/XPrivacy" target="_blank">GitHub</a></li>
+							<li><a href="http://stats.pingdom.com/dcqg2snuqaf1/388316" target="_blank">Status</a></li>
 						</ul>
 					</div>
 				</div>
