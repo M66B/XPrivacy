@@ -3,12 +3,15 @@ package biz.bokhorst.xprivacy;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import android.content.Context;
 import android.os.Binder;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -17,6 +20,7 @@ import de.robv.android.xposed.XposedBridge;
 public class XContextWrapper extends XHook {
 	private Methods mMethod;
 	private static boolean mWindowManagerHooked = false;
+	private static final Map<View, WindowManager.LayoutParams> mViewParam = new WeakHashMap<View, WindowManager.LayoutParams>();
 
 	private XContextWrapper(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), null);
@@ -95,8 +99,24 @@ public class XContextWrapper extends XHook {
 			XposedBridge.hookMethod(addView, new XC_MethodHook() {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					if (isRestricted(param, methodName))
-						param.setResult(null);
+					View view = (View) param.args[0];
+					if (view != null) {
+						WindowManager.LayoutParams params = null;
+						synchronized (mViewParam) {
+							if (param.args.length > 1) {
+								params = (WindowManager.LayoutParams) param.args[1];
+								if (params != null)
+									mViewParam.put(view, params);
+							} else if (mViewParam.containsKey(view))
+								params = mViewParam.get(view);
+						}
+
+						if (params != null)
+							if (params.type == WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
+									|| params.type == WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY)
+								if (isRestricted(param, methodName))
+									param.setResult(null);
+					}
 				}
 			});
 		} catch (NoSuchMethodException ex) {

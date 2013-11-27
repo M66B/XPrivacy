@@ -199,8 +199,8 @@
     <Hook restriction="view" method="setUserAgent" permissions="" sdk="1" />
     <Hook restriction="view" method="setUserAgentString" permissions="" sdk="1" />
     <Hook restriction="view" method="WebView.constructor" permissions="" sdk="1" />
-    <Hook restriction="view" method="addView" permissions="" sdk="1" />
-    <Hook restriction="view" method="removeView" permissions="" sdk="1" />
-    <Hook restriction="view" method="updateViewLayout" permissions="" sdk="1" />
+    <Hook restriction="view" method="addView" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
+    <Hook restriction="view" method="removeView" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
+    <Hook restriction="view" method="updateViewLayout" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
     <Hook restriction="view" method="android.intent.action.VIEW" permissions="" sdk="14" />
 </Meta>
