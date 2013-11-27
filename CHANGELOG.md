@@ -4,7 +4,9 @@ Changelog
 **Next release**
 
 * Caching of application information for better response times
+* Updated Arabic translation
 * Updated Dutch translation
+* Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
