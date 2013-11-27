@@ -3,7 +3,9 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated Dutch translation
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.29 TEST**
 
