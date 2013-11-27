@@ -9,6 +9,7 @@ Changelog
 * Updated Arabic translation
 * Updated Dutch translation
 * Updated Polish translation
+* Updated Russian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
