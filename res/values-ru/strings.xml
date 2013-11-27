@@ -21,7 +21,7 @@
     <string name="menu_help">Помощь</string>
     <string name="menu_all">Выделить все</string>
     <string name="menu_restriction_all">Переключить разрешения</string>
-    <string name="menu_usage_all">Переключить Фильтр</string>
+    <string name="menu_usage_all">Переключить фильтр</string>
     <string name="menu_apply">Применить шаблон</string>
     <string name="menu_clear">Очистить</string>
     <string name="menu_app_launch">Запустить приложение</string>
