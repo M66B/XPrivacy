@@ -73,10 +73,8 @@ public class XWebView extends XHook {
 						XposedBridge.hookMethod(setUserAgent, new XC_MethodHook() {
 							@Override
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								if (isRestricted(param)) {
-									Util.log(XWebView.this, Log.INFO, "Restricting setUserAgent");
+								if (isRestricted(param, "setUserAgent"))
 									param.setResult(null);
-								}
 							}
 						});
 					} catch (NoSuchFieldError ex) {
@@ -91,10 +89,8 @@ public class XWebView extends XHook {
 						XposedBridge.hookMethod(setUserAgentString, new XC_MethodHook() {
 							@Override
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								if (isRestricted(param)) {
-									Util.log(XWebView.this, Log.INFO, "Restricting setUserAgentString");
+								if (isRestricted(param, "setUserAgentString"))
 									param.args[0] = PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
-								}
 							}
 						});
 					} catch (NoSuchFieldError ex) {

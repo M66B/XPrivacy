@@ -196,7 +196,11 @@
     <Hook restriction="system" method="android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE" dangerous="true" permissions="" sdk="14" />
     <Hook restriction="system" method="ApplicationsProvider" permissions="" sdk="14" />
 
-    <Hook restriction="view" method="getSettings" permissions="" sdk="1" />
+    <Hook restriction="view" method="setUserAgent" permissions="" sdk="1" />
+    <Hook restriction="view" method="setUserAgentString" permissions="" sdk="1" />
     <Hook restriction="view" method="WebView.constructor" permissions="" sdk="1" />
+    <Hook restriction="view" method="addView" permissions="" sdk="1" />
+    <Hook restriction="view" method="removeView" permissions="" sdk="1" />
+    <Hook restriction="view" method="updateViewLayout" permissions="" sdk="1" />
     <Hook restriction="view" method="android.intent.action.VIEW" permissions="" sdk="14" />
 </Meta>

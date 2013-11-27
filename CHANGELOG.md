@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Caching of application information for better response times
+* Restriction of draw over / on top ([issue](https://github.com/M66B/XPrivacy/issues/830))
 * Updated Arabic translation
 * Updated Dutch translation
 * Updated Polish translation
