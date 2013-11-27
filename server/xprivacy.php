@@ -21,10 +21,19 @@
 
 		// Store/update settings
 		if (empty($action) || $action == 'submit') {
+			// Validate data
+			if (empty($data->protocol_version) || empty($data->settings)) {
+				echo json_encode(array('ok' => false, 'error' => 'No data'));
+				exit();
+			}
+
+			// Fixes
 			if ($data->protocol_version <= 3)
 				$data->android_id = md5($data->android_id);
 			if (empty($data->application_name))
 				$data->application_name = '';
+			if (empty($data->package_version))
+				$data->package_version = '';
 
 			// Check if restrictions
 			$empty = true;
@@ -33,40 +42,42 @@
 					$empty = false;
 					break;
 				}
-			if ($empty)
+			if ($empty) {
 				echo json_encode(array('ok' => false, 'error' => 'No restrictions'));
-			else {
-				foreach ($data->settings as $restriction) {
-					if (empty($restriction->method))
-						$restriction->method = '';
-					$sql = "INSERT INTO xprivacy (android_id_md5, android_sdk, xprivacy_version, application_name, package_name, package_version,";
-					$sql .= " restriction, method, restricted, used) VALUES ";
-					$sql .= "('" . $data->android_id . "'";
-					$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
-					$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : $db->real_escape_string($data->xprivacy_version)) . "";
-					$sql .= ",'" . $db->real_escape_string($data->application_name) . "'";
-					$sql .= ",'" . $db->real_escape_string($data->package_name) . "'";
-					$sql .= ",'" . $db->real_escape_string($data->package_version) . "'";
-					$sql .= ",'" . $db->real_escape_string($restriction->restriction) . "'";
-					$sql .= ",'" . $db->real_escape_string($restriction->method) . "'";
-					$sql .= "," . ($restriction->restricted ? 1 : 0);
-					$sql .= "," . $db->real_escape_string($restriction->used) . ")";
-					$sql .= " ON DUPLICATE KEY UPDATE";
-					$sql .= " xprivacy_version=VALUES(xprivacy_version)";
-					$sql .= ", application_name=VALUES(application_name)";
-					$sql .= ", restricted=VALUES(restricted)";
-					$sql .= ", used=VALUES(used)";
-					$sql .= ", modified=CURRENT_TIMESTAMP()";
-					$sql .= ", updates=updates+1";
-					if (!$db->query($sql)) {
-						$ok = false;
-						break;
-					}
-				}
-
-				// Send reponse
-				echo json_encode(array('ok' => $ok, 'error' => $db->error));
+				exit();
 			}
+
+			// Process restrictions
+			foreach ($data->settings as $restriction) {
+				if (empty($restriction->method))
+					$restriction->method = '';
+				$sql = "INSERT INTO xprivacy (android_id_md5, android_sdk, xprivacy_version, application_name, package_name, package_version,";
+				$sql .= " restriction, method, restricted, used) VALUES ";
+				$sql .= "('" . $data->android_id . "'";
+				$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
+				$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : $db->real_escape_string($data->xprivacy_version)) . "";
+				$sql .= ",'" . $db->real_escape_string($data->application_name) . "'";
+				$sql .= ",'" . $db->real_escape_string($data->package_name) . "'";
+				$sql .= ",'" . $db->real_escape_string($data->package_version) . "'";
+				$sql .= ",'" . $db->real_escape_string($restriction->restriction) . "'";
+				$sql .= ",'" . $db->real_escape_string($restriction->method) . "'";
+				$sql .= "," . ($restriction->restricted ? 1 : 0);
+				$sql .= "," . $db->real_escape_string($restriction->used) . ")";
+				$sql .= " ON DUPLICATE KEY UPDATE";
+				$sql .= " xprivacy_version=VALUES(xprivacy_version)";
+				$sql .= ", application_name=VALUES(application_name)";
+				$sql .= ", restricted=VALUES(restricted)";
+				$sql .= ", used=VALUES(used)";
+				$sql .= ", modified=CURRENT_TIMESTAMP()";
+				$sql .= ", updates=updates+1";
+				if (!$db->query($sql)) {
+					$ok = false;
+					break;
+				}
+			}
+
+			// Send reponse
+			echo json_encode(array('ok' => $ok, 'error' => $db->error));
 		}
 
 		// Fetch settings
