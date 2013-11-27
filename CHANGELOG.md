@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * New check mark images, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
+* Updated German translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
