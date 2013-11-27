@@ -571,6 +571,7 @@ public class ActivityShare extends Activity {
 				notify(ex.toString(), false, 0);
 			}
 
+			notify(getString(R.string.msg_done), false, 0);
 			Intent intent = new Intent();
 			setResult(0, intent);
 			finish();

@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Fixed ongoing notification of fetch restrictions
+* Attempt to fix non-aligned check boxes
 * New check mark images, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
 * Updated German translation
 
