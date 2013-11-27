@@ -30,12 +30,12 @@
     <string name="menu_accounts">Wybierz dozwolone konta</string>
     <string name="menu_applications">Wybierz dozwolone aplikacje</string>
     <string name="menu_contacts">Wybierz dozwolone kontakty</string>
-    <string name="msg_new">Nowy</string>
+    <string name="msg_new">Nowa aplikacja</string>
     <string name="msg_update">Aktualizacja</string>
     <string name="msg_licensed" formatted="false">Licencjonowane dla: %s</string>
     <string name="msg_loading">Ładowanie</string>
-    <string name="msg_saved_to">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_saved_to">Zapisane do %s</string>
+    <string name="msg_no_restrictions">Nie znaleziono ograniczeń</string>
     <string name="msg_edit">Kliknij na ikonę aplikacji aby zmodyfikować poszczególne ograniczenia</string>
     <string name="msg_sure">Czy jesteś pewny/a?</string>
     <string name="msg_done">Gotowe</string>
@@ -104,13 +104,13 @@
     <string name="settings_extra">Extra usage data (wymaga restartu)</string>
     <string name="settings_log">Debug log (wymaga restartu)</string>
     <string name="settings_expert">Tryb eksperta</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_dangerous">Ogranicz niebezpieczne funkcje</string>
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">ma dostęp do internetu</string>
     <string name="help_granted">ma dostęp do uprawnień Androida</string>
     <string name="help_used">wykorzystała dane</string>
     <string name="help_frozen">jest wyłączona</string>
     <string name="help_dangerous">niebezpieczne uprawnienie, ograniczenie może spowodować problemy</string>
-    <string name="help_half">partly restricted</string>
+    <string name="help_half">częściowo ograniczona</string>
 
 </resources>
