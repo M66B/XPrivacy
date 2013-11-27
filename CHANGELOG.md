@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.30 BETA**
+
 * Caching of application information for better response times
 * Restriction of draw over / on top ([issue](https://github.com/M66B/XPrivacy/issues/830))
 * Modified tri-state check box implementation ([issue](https://github.com/M66B/XPrivacy/issues/833))
@@ -11,8 +15,6 @@ Changelog
 * Updated Dutch translation
 * Updated Polish translation
 * Updated Russian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.29 TEST**
 
