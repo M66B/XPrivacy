@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* New check mark images, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.30 BETA**
