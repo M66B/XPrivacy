@@ -354,7 +354,7 @@ public class Util {
 	public static Bitmap[] getTriStateCheckBox(Context context) {
 		Bitmap[] bitmap = new Bitmap[3];
 
-		int size = 32;
+		int size = 24;
 		int border0 = 4;
 		int border1 = border0 * 2;
 		int border2 = border0;

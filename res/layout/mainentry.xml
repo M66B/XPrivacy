@@ -64,13 +64,14 @@
 
         <ImageView
             android:id="@+id/imgCBName"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="6dp"
-            android:contentDescription="@string/title_restrict" />
+            android:contentDescription="@string/title_restrict"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvName"
