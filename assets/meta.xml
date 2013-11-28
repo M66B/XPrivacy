@@ -198,7 +198,7 @@
 
     <Hook restriction="view" method="setUserAgent" permissions="" sdk="1" />
     <Hook restriction="view" method="setUserAgentString" permissions="" sdk="1" />
-    <Hook restriction="view" method="WebView.constructor" permissions="" sdk="1" />
+    <Hook restriction="view" method="WebView.constructor" requires_restart="true" permissions="" sdk="1" />
     <Hook restriction="view" method="addView" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
     <Hook restriction="view" method="removeView" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
     <Hook restriction="view" method="updateViewLayout" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
