@@ -37,6 +37,8 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xmlpull.v1.XmlSerializer;
 
+import biz.bokhorst.xprivacy.PrivacyManager.RestrictionDesc;
+
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -45,6 +47,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -160,20 +163,39 @@ public class ActivityShare extends Activity {
 					}
 
 					// Process restrictions
-					List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager
-							.getRestricted(ActivityShare.this);
 					Map<String, List<PrivacyManager.RestrictionDesc>> mapRestriction = new HashMap<String, List<PrivacyManager.RestrictionDesc>>();
-					for (PrivacyManager.RestrictionDesc restriction : listRestriction) {
-						String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
-						if (packages == null)
-							Util.log(null, Log.WARN, "No packages for uid=" + restriction.uid);
-						else
-							for (String packageName : packages) {
-								if (!mapRestriction.containsKey(packageName))
-									mapRestriction.put(packageName, new ArrayList<PrivacyManager.RestrictionDesc>());
-								mapRestriction.get(packageName).add(restriction);
+					Cursor rCursor = PrivacyManager.getRestrictedCursor(ActivityShare.this);
+					if (rCursor != null)
+						try {
+							// Set some numbers for the progress bar
+							mProgressMax = rCursor.getCount();
+							mCurrent = 0;
+
+							while (rCursor.moveToNext()) {
+								mCurrent++;
+								if (mCurrent % 50 == 0) // Don't update progress too often
+									publishProgress(getString(R.string.msg_loading), Integer.toString(mCurrent));
+								RestrictionDesc restriction = new RestrictionDesc();
+								restriction.uid = rCursor.getInt(rCursor.getColumnIndex(PrivacyProvider.COL_UID));
+								restriction.restricted = Boolean.parseBoolean(rCursor.getString(rCursor
+										.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
+								restriction.restrictionName = rCursor.getString(rCursor
+										.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
+								restriction.methodName = rCursor.getString(rCursor.getColumnIndex(PrivacyProvider.COL_METHOD));
+								String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
+								// add restriction to map
+								if (packages == null)
+									Util.log(null, Log.WARN, "No packages for uid=" + restriction.uid);
+								else
+									for (String packageName : packages) {
+										if (!mapRestriction.containsKey(packageName))
+											mapRestriction.put(packageName, new ArrayList<PrivacyManager.RestrictionDesc>());
+										mapRestriction.get(packageName).add(restriction);
+									}
 							}
-					}
+						} finally {
+							rCursor.close();
+						}
 
 					// Set some numbers for the progress bar
 					mProgressMax = mapRestriction.size();

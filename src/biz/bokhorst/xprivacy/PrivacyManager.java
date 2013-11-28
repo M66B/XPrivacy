@@ -500,6 +500,12 @@ public class PrivacyManager {
 		return result;
 	}
 
+	public static Cursor getRestrictedCursor(Context context) {
+		Cursor rCursor = context.getContentResolver().query(PrivacyProvider.URI_RESTRICTION, null, null,
+				new String[] { Integer.toString(0), Boolean.toString(false) }, null);
+		return rCursor;
+	}
+
 	public static void deleteRestrictions(Context context, int uid) {
 		context.getContentResolver().delete(PrivacyProvider.URI_RESTRICTION, null,
 				new String[] { Integer.toString(uid) });
