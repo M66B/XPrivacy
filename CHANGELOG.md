@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Fixed missing usage data, thanks @[jpeg729](https://github.com/jpeg729)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.31 BETA**
