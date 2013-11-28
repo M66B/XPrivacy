@@ -140,41 +140,65 @@ public class ActivityShare extends Activity {
 					serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 					serializer.startTag(null, "XPrivacy");
 
-					// Process settings
 					publishProgress(getString(R.string.msg_loading));
 					Util.log(null, Log.INFO, "Exporting settings");
 
-					String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityShare.this);
-					for (String setting : mapSetting.keySet()) {
-						String value = mapSetting.get(setting);
+					Cursor sCursor = PrivacyManager.getSettingsCursor(ActivityShare.this);
+					Cursor rCursor = PrivacyManager.getRestrictedCursor(ActivityShare.this);
 
-						// Bound accounts/contacts to same device
-						if (setting.startsWith("Account.") || setting.startsWith("Contact.")
-								|| setting.startsWith("RawContact.")) {
-							setting += "." + android_id;
+					// Set some numbers for the progress bar
+					mCurrent = 0;
+					if (sCursor != null)
+						try {
+							mProgressMax = sCursor.getCount();
+						} finally {
+							// do nothing yet
+						}
+					if (rCursor != null)
+						try {
+							mProgressMax += rCursor.getCount();
+						} finally {
+							// do nothing yet
 						}
 
-						// Serialize setting
-						serializer.startTag(null, "Setting");
-						serializer.attribute(null, "Name", setting);
-						serializer.attribute(null, "Value", value);
-						serializer.endTag(null, "Setting");
-					}
+					// Process settings
+					String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
+					if (sCursor != null)
+						try {
+							while (sCursor.moveToNext()) {
+								mCurrent++;
+								if (mCurrent % 50 == 0) // Don't update progress too often
+									publishProgress(getString(R.string.msg_loading), Integer.toString(mCurrent));
+
+								// Get setting
+								String setting = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_SETTING));
+								String value = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_VALUE));
+
+								// Bound accounts/contacts to same device
+								if (setting.startsWith("Account.") || setting.startsWith("Contact.")
+										|| setting.startsWith("RawContact.")) {
+									setting += "." + android_id;
+								}
+
+								// Serialize setting
+								serializer.startTag(null, "Setting");
+								serializer.attribute(null, "Name", setting);
+								serializer.attribute(null, "Value", value);
+								serializer.endTag(null, "Setting");
+							}
+						} finally {
+							sCursor.close();
+						}
 
 					// Process restrictions
 					Map<String, List<PrivacyManager.RestrictionDesc>> mapRestriction = new HashMap<String, List<PrivacyManager.RestrictionDesc>>();
-					Cursor rCursor = PrivacyManager.getRestrictedCursor(ActivityShare.this);
 					if (rCursor != null)
 						try {
-							// Set some numbers for the progress bar
-							mProgressMax = rCursor.getCount();
-							mCurrent = 0;
-
 							while (rCursor.moveToNext()) {
 								mCurrent++;
 								if (mCurrent % 50 == 0) // Don't update progress too often
 									publishProgress(getString(R.string.msg_loading), Integer.toString(mCurrent));
+
 								RestrictionDesc restriction = new RestrictionDesc();
 								restriction.uid = rCursor.getInt(rCursor.getColumnIndex(PrivacyProvider.COL_UID));
 								restriction.restricted = Boolean.parseBoolean(rCursor.getString(rCursor

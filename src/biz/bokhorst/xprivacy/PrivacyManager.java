@@ -693,6 +693,11 @@ public class PrivacyManager {
 		return result;
 	}
 
+	public static Cursor getSettingsCursor(Context context) {
+		Cursor sCursor = context.getContentResolver().query(PrivacyProvider.URI_SETTING, null, null, null, null);
+		return sCursor;
+	}
+
 	public static void deleteSettings(Context context) {
 		context.getContentResolver().delete(PrivacyProvider.URI_SETTING, null, null);
 		Util.log(null, Log.INFO, "Deleted settings");
