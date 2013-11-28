@@ -78,7 +78,7 @@ public class PackageChange extends BroadcastReceiver {
 							// Title
 							String title = String.format("%s %s %s",
 									context.getString(replacing ? R.string.msg_update : R.string.msg_new),
-									appInfo.getFirstApplicationName(), appInfo.getVersion());
+									appInfo.getFirstApplicationName(), appInfo.getVersion(context));
 
 							// Build notification
 							NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
@@ -149,6 +149,13 @@ public class PackageChange extends BroadcastReceiver {
 										Boolean.toString(false));
 								PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingFUser,
 										Boolean.toString(true));
+							}
+
+							// Version 1.10.27+
+							if (sVersion.compareTo(new Version("1.10.27")) < 0) {
+								PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingDangerous,
+										PrivacyManager.getSetting(null, context, 0, "Expert", Boolean.toString(false),
+												false));
 							}
 						}
 

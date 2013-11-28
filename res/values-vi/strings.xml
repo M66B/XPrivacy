@@ -34,6 +34,8 @@
     <string name="msg_update">Cập nhật</string>
     <string name="msg_licensed" formatted="false">Bản quyền: %s</string>
     <string name="msg_loading">Đang tải</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Chạm vào biểu tượng ứng dụng để thay đổi các thiết lập</string>
     <string name="msg_sure">Bạn có chắc không?</string>
     <string name="msg_done">Xong</string>
@@ -100,11 +102,13 @@
     <string name="settings_extra">Sử dụng dữ liệu phụ (cần khởi động lại)</string>
     <string name="settings_log">Nhật ký lỗi (cần khởi động lại)</string>
     <string name="settings_expert">Chế độ nâng cao</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Ứng dụng</string>
     <string name="help_internet">có quyền truy cập mạng</string>
     <string name="help_granted">có các quyền của hệ điều hành</string>
     <string name="help_used">đã sử dụng dữ liệu</string>
     <string name="help_frozen">đã được tắt</string>
     <string name="help_dangerous">nguy hiểm</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

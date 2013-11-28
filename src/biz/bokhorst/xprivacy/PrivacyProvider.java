@@ -149,8 +149,7 @@ public class PrivacyProvider extends ContentProvider {
 						// Exceptions
 						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
 							boolean restricted = getRestricted(eRestrictionName, md.getMethodName(), prefs);
-							if (!restricted
-									|| PrivacyManager.isDangerousMethod(eRestrictionName, md.getMethodName(), false))
+							if (!restricted || PrivacyManager.isDangerousMethod(eRestrictionName, md.getMethodName()))
 								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getMethodName(),
 										restricted });
 						}
@@ -620,12 +619,6 @@ public class PrivacyProvider extends ContentProvider {
 					editor.putString(key, PrivacyManager.cValueRandom);
 			} catch (Throwable ex) {
 			}
-
-		if (!Boolean.parseBoolean(prefs.getString(getSettingPref(PrivacyManager.cSettingExpert),
-				Boolean.toString(false)))) {
-			editor.putString(getSettingPref(PrivacyManager.cSettingAndroidUsage), Boolean.toString(false));
-			editor.putString(getSettingPref(PrivacyManager.cSettingExtraUsage), Boolean.toString(false));
-		}
 
 		editor.apply();
 		setPrefFileReadable(PREF_SETTINGS);

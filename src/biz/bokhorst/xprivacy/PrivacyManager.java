@@ -103,10 +103,10 @@ public class PrivacyManager {
 	public final static String cSettingVersion = "Version";
 	public final static String cSettingFirstRun = "FirstRun";
 	public final static String cSettingNotify = "Notify";
+	public final static String cSettingDangerous = "Dangerous";
 	public final static String cSettingAndroidUsage = "AndroidUsage";
 	public final static String cSettingExtraUsage = "ExtraUsage";
 	public final static String cSettingLog = "Log";
-	public final static String cSettingExpert = "Expert";
 	public final static String cSettingRandom = "Random@boot";
 
 	public final static String cValueRandom = "#Random#";
@@ -191,10 +191,7 @@ public class PrivacyManager {
 		return new ArrayList<String>(Arrays.asList(cRestrictionNames));
 	}
 
-	public static boolean isDangerousMethod(String restrictionName, String methodName, boolean display) {
-		if (!display)
-			if (PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExpert, false, true))
-				return false;
+	public static boolean isDangerousMethod(String restrictionName, String methodName) {
 		MethodDescription md = new MethodDescription(methodName);
 		int pos = mMethod.get(restrictionName).indexOf(md);
 		md = mMethod.get(restrictionName).get(pos);
@@ -449,8 +446,10 @@ public class PrivacyManager {
 		// Set default exceptions for methods
 		if (restricted && methodName == null)
 			for (MethodDescription md : getMethods(restrictionName))
-				if (isDangerousMethod(restrictionName, md.getMethodName(), false))
-					PrivacyManager.setRestricted(null, context, uid, restrictionName, md.getMethodName(), false);
+				if (isDangerousMethod(restrictionName, md.getMethodName()))
+					PrivacyManager.setRestricted(null, context, uid, restrictionName, md.getMethodName(),
+							PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingDangerous, false,
+									false));
 	}
 
 	public static List<Boolean> getRestricted(Context context, int uid, String restrictionName) {

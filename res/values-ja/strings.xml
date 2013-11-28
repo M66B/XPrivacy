@@ -34,6 +34,8 @@
     <string name="msg_update">更新</string>
     <string name="msg_licensed" formatted="false">ライセンス先: %s</string>
     <string name="msg_loading">読み込み中</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">アプリアイコンをタップすると全ての権限の制限を設定できます</string>
     <string name="msg_sure">続行しますか?</string>
     <string name="msg_done">完了</string>
@@ -101,11 +103,13 @@
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">デバッグログ(要再起動)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はAndroid権限を持っています</string>
     <string name="help_used">はそのデータを使用しています</string>
     <string name="help_frozen">は無効になっています</string>
     <string name="help_dangerous">は危険です</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

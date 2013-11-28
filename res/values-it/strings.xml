@@ -34,6 +34,8 @@
     <string name="msg_update">Aggiorna</string>
     <string name="msg_licensed" formatted="false">Licenziato a: %s</string>
     <string name="msg_loading">Caricamento in corso</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Clicca l\'icona dell\'applicazione per modificare tutte le restrizioni</string>
     <string name="msg_sure">Sei sicuro?</string>
     <string name="msg_done">Fatto</string>
@@ -101,11 +103,13 @@
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (richiede riavvio)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Applicazione</string>
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>
     <string name="help_used">ha usato questi dati</string>
     <string name="help_frozen">è disabilitato</string>
     <string name="help_dangerous">è pericoloso</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

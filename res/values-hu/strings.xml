@@ -34,6 +34,8 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Licensz tulajdonos: %s</string>
     <string name="msg_loading">Töltés</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Kattintson az alkalmazás ikonra az összes korlátozás módosításához</string>
     <string name="msg_sure">Biztos benne?</string>
     <string name="msg_done">Kész</string>
@@ -101,11 +103,13 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Alkalmazás</string>
     <string name="help_internet">Internet engedély</string>
     <string name="help_granted">Android engedély</string>
     <string name="help_used">Használta ezt az adatot</string>
     <string name="help_frozen">Ki van kapcsolva</string>
     <string name="help_dangerous">Veszélyes</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

@@ -34,6 +34,8 @@
     <string name="msg_update">Uppdatera</string>
     <string name="msg_licensed" formatted="false">Licensierat till: %s</string>
     <string name="msg_loading">Laddar</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Klicka på appikonen för att ändra alla restriktioner</string>
     <string name="msg_sure">Är du säker?</string>
     <string name="msg_done">Klar</string>
@@ -101,11 +103,13 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Felsökningslogg (kräver omstart)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Applikation</string>
     <string name="help_internet">har internetbehörighet</string>
     <string name="help_granted">har Android-behörighet</string>
     <string name="help_used">har använt denna data</string>
     <string name="help_frozen">is inaktiverad</string>
     <string name="help_dangerous">är farlig</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

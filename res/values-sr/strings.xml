@@ -34,6 +34,8 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Лиценциран %s</string>
     <string name="msg_loading">Учитавање</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_sure">Да ли сте сигурни?</string>
     <string name="msg_done">Готово</string>
@@ -101,11 +103,13 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Апликација</string>
     <string name="help_internet">има дозволу за Интернет</string>
     <string name="help_granted">има дозволу за Андроид</string>
     <string name="help_used">је користио ове податке</string>
     <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">је опасан</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

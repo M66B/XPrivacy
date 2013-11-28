@@ -34,6 +34,8 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Άδεια για: %s</string>
     <string name="msg_loading">Φόρτωση</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Πιέστε το εικονίδιο της εφαρμογής για επεξεργασία όλων των περιορισμών</string>
     <string name="msg_sure">Είστε σίγουρος;</string>
     <string name="msg_done">Τέλος</string>
@@ -101,11 +103,13 @@
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Εφαρμογή</string>
     <string name="help_internet">έχει άδεια internet</string>
     <string name="help_granted">έχει άδεια Android</string>
     <string name="help_used">έχει χρησιμοποιήσει αυτά τα δεδομένα</string>
     <string name="help_frozen">είναι απενεργοποιημένη</string>
     <string name="help_dangerous">είναι επικίνδυνη</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

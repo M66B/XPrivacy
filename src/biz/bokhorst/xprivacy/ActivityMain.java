@@ -25,16 +25,17 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -65,6 +66,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private AppListAdapter mAppAdapter = null;
 	private boolean mFiltersHidden = true;
 	private boolean mCategoriesHidden = true;
+	private Bitmap[] mCheck;
+	private int mProgressWidth;
+	private int mProgress = 0;
+	private boolean mSharing = false;
+	private String mSharingState = null;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int ACTIVITY_EXPORT = 1;
@@ -132,6 +138,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Build spinner adapter
 		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
+		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spAdapter.addAll(listLocalizedRestriction);
 
 		// Handle info
@@ -163,7 +170,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				String text = etFilter.getText().toString();
 				ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
 				imgClear.setImageDrawable(getResources().getDrawable(
-						getThemed(text.equals("") ? R.attr.icon_clear_grayed : R.attr.icon_clear)));
+						Util.getThemed(ActivityMain.this, text.equals("") ? R.attr.icon_clear_grayed
+								: R.attr.icon_clear)));
 				applyFilter();
 			}
 
@@ -260,6 +268,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		});
 
+		// Handle post share operation done message
+		if (mSharingState != null) {
+			TextView tvState = (TextView) findViewById(R.id.tvState);
+			tvState.setText(mSharingState);
+			mSharingState = null;
+		}
+
 		// Start task to get app list
 		AppListTask appListTask = new AppListTask();
 		appListTask.executeOnExecutor(mExecutor, (Object) null);
@@ -282,6 +297,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			optionAbout();
 			PrivacyManager.setSetting(null, this, 0, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
 		}
+
+		mCheck = Util.getTriStateCheckBox(this);
 	}
 
 	@Override
@@ -303,6 +320,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		super.onDestroy();
 		if (mPackageChangeReceiver != null)
 			unregisterReceiver(mPackageChangeReceiver);
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(progressListener);
 	}
 
 	@Override
@@ -349,20 +367,27 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 			}
 		} else if (requestCode == ACTIVITY_EXPORT) {
-			// Exported: send share intent
+			// Exported: clean-up UI
+			sharingDone();
+
+			// send share intent
 			if (data != null && data.hasExtra(ActivityShare.cFileName)) {
 				Intent intent = new Intent(android.content.Intent.ACTION_SEND);
 				intent.setType("text/xml");
 				intent.putExtra(Intent.EXTRA_STREAM,
 						Uri.parse("file://" + data.getStringExtra(ActivityShare.cFileName)));
-				startActivity(Intent.createChooser(intent, getString(R.string.app_name)));
+				startActivity(Intent.createChooser(intent,
+						String.format(getString(R.string.msg_saved_to), data.getStringExtra(ActivityShare.cFileName))));
 			}
 		} else if (requestCode == ACTIVITY_IMPORT) {
-			// Imported: recreate UI
+			// Imported: clean-up UI
+			sharingDone();
 			ActivityMain.this.recreate();
 		} else if (requestCode == ACTIVITY_IMPORT_SELECT) {
 			// Result for import file choice
-			if (data != null)
+			if (resultCode == RESULT_CANCELED)
+				sharingDone();
+			else if (data != null)
 				try {
 					String fileName = data.getData().getPath();
 					Intent intent = new Intent("biz.bokhorst.xprivacy.action.IMPORT");
@@ -372,7 +397,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					Util.bug(null, ex);
 				}
 		} else if (requestCode == ACTIVITY_FETCH) {
-			// Fetched: recreate UI
+			// Fetched: clean-up UI
+			sharingDone();
 			ActivityMain.this.recreate();
 		}
 	}
@@ -389,8 +415,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		boolean pro = (Util.hasProLicense(this) != null);
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
-		menu.findItem(R.id.menu_export).setEnabled(pro && mounted);
-		menu.findItem(R.id.menu_import).setEnabled(pro && mounted);
+		menu.findItem(R.id.menu_export).setEnabled(pro && mounted && !mSharing);
+		menu.findItem(R.id.menu_import).setEnabled(pro && mounted && !mSharing);
+		menu.findItem(R.id.menu_fetch).setEnabled(!mSharing);
 		menu.findItem(R.id.menu_pro).setVisible(!pro);
 
 		return super.onPrepareOptionsMenu(menu);
@@ -515,12 +542,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 			ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
 			TextView tvStats = (TextView) findViewById(R.id.tvStats);
+			TextView tvState = (TextView) findViewById(R.id.tvState);
 			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(),
 					cFbUsed.isChecked(), cbFInternet.isChecked(), cbFRestriction.isChecked(),
 					cbFRestrictionNot.isChecked(), cbFPermission.isChecked(), cbFUser.isChecked(),
 					cbFSystem.isChecked());
 			pbFilter.setVisibility(ProgressBar.VISIBLE);
 			tvStats.setVisibility(TextView.GONE);
+
+			// Adjust progress state width
+			RelativeLayout.LayoutParams tvStateLayout = (RelativeLayout.LayoutParams) tvState.getLayoutParams();
+			tvStateLayout.addRule(RelativeLayout.LEFT_OF, R.id.pbFilter);
+
 			mAppAdapter.getFilter().filter(filter);
 		}
 	}
@@ -531,7 +564,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(getString(R.string.app_name));
 		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -540,8 +573,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					boolean someRestricted = false;
 					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
 						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
-						for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-								xAppInfo.getUid(), mAppAdapter.getRestrictionName()))
+						for (boolean restricted : PrivacyManager.getRestricted(ActivityMain.this, xAppInfo.getUid(),
+								mAppAdapter.getRestrictionName()))
 							if (restricted) {
 								someRestricted = true;
 								break;
@@ -596,7 +629,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Build dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(getString(R.string.menu_template));
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setMultiChoiceItems(options, selection, new DialogInterface.OnMultiChoiceClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 				PrivacyManager.setSetting(null, ActivityMain.this, 0,
@@ -622,6 +655,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionExport() {
+		sharingStart();
+
 		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
 		file.setType("file/*");
 		boolean multiple = Util.isIntentAvailable(ActivityMain.this, file);
@@ -631,6 +666,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionImport() {
+		sharingStart();
+
 		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
 		file.setType("file/*");
 		if (Util.isIntentAvailable(ActivityMain.this, file)) {
@@ -647,6 +684,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionFetch() {
+		sharingStart();
+
 		if (Util.getProLicense() == null) {
 			// Redirect to pro page
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, cProUri);
@@ -655,7 +694,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(getString(R.string.app_name));
 			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -693,7 +732,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgAbout.setTitle(getString(R.string.app_name));
 		dlgAbout.setContentView(R.layout.about);
-		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
 
 		// Show version
 		try {
@@ -728,13 +767,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dialog.setTitle(getString(R.string.help_application));
 		dialog.setContentView(R.layout.help);
-		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
+		TextView tvHelpHalf = (TextView) dialog.findViewById(R.id.help_half);
+		Drawable dHalf = new BitmapDrawable(getResources(), mCheck[1]);
+		dHalf.setBounds(0, 0, 48, 48);
+		tvHelpHalf.setCompoundDrawables(dHalf, null, null, null);
 		dialog.setCancelable(true);
 		dialog.show();
 	}
 
 	private void toggleFiltersVisibility() {
 		TextView tvFilterDetail = (TextView) findViewById(R.id.tvFilterDetail);
+		View vFilterHighlight = findViewById(R.id.vFilterHighlight);
 		EditText etFilter = (EditText) findViewById(R.id.etFilter);
 		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
 		LinearLayout llCategories = (LinearLayout) findViewById(R.id.llCategories);
@@ -782,11 +826,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		mFiltersHidden = !mFiltersHidden;
-		tvFilterDetail.setBackgroundResource(mFiltersHidden ? android.R.color.transparent : R.drawable.selected_tab);
+		vFilterHighlight.setBackgroundResource(mFiltersHidden ? android.R.color.transparent : Util.getThemed(this,
+				android.R.attr.colorActivatedHighlight));
 	}
 
-	protected void toggleCategoriesVisibility() {
+	private void toggleCategoriesVisibility() {
 		TextView tvCategories = (TextView) findViewById(R.id.tvCategoryDetail);
+		View vCategoryHighlight = findViewById(R.id.vCategoryHighlight);
 		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
 		LinearLayout llCategories = (LinearLayout) findViewById(R.id.llCategories);
 
@@ -804,7 +850,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		mCategoriesHidden = !mCategoriesHidden;
-		tvCategories.setBackgroundResource(mCategoriesHidden ? android.R.color.transparent : R.drawable.selected_tab);
+		vCategoryHighlight.setBackgroundResource(mCategoriesHidden ? android.R.color.transparent : Util.getThemed(this,
+				android.R.attr.colorActivatedHighlight));
 	}
 
 	// Tasks
@@ -923,19 +970,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Get if used
 					boolean used = false;
 					if (fUsed)
-						used = (PrivacyManager.getUsed(getApplicationContext(), xAppInfo.getUid(), mRestrictionName,
-								null) != 0);
+						used = (PrivacyManager.getUsed(mContext, xAppInfo.getUid(), mRestrictionName, null) != 0);
 
 					// Get if internet
 					boolean internet = false;
 					if (fInternet)
-						internet = xAppInfo.hasInternet();
+						internet = xAppInfo.hasInternet(mContext);
 
 					// Get some restricted
 					boolean someRestricted = false;
 					if (fRestricted)
-						for (boolean restricted : PrivacyManager.getRestricted(getApplicationContext(),
-								xAppInfo.getUid(), mRestrictionName))
+						for (boolean restricted : PrivacyManager.getRestricted(mContext, xAppInfo.getUid(),
+								mRestrictionName))
 							if (restricted) {
 								someRestricted = true;
 								break;
@@ -980,10 +1026,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			protected void publishResults(CharSequence constraint, FilterResults results) {
 				clear();
 				TextView tvStats = (TextView) findViewById(R.id.tvStats);
+				TextView tvState = (TextView) findViewById(R.id.tvState);
 				ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
 				pbFilter.setVisibility(ProgressBar.GONE);
 				tvStats.setVisibility(TextView.VISIBLE);
 				tvStats.setText(results.count + "/" + AppListAdapter.this.mListApp.size());
+
+				// Adjust progress state width
+				RelativeLayout.LayoutParams tvStateLayout = (RelativeLayout.LayoutParams) tvState.getLayoutParams();
+				tvStateLayout.addRule(RelativeLayout.LEFT_OF, R.id.tvStats);
+
 				if (results.values == null)
 					notifyDataSetInvalidated();
 				else {
@@ -1069,9 +1121,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && xAppInfo != null) {
 					// Draw border around icon
-					if (xAppInfo.getIcon() instanceof BitmapDrawable) {
+					if (xAppInfo.getIcon(ActivityMain.this) instanceof BitmapDrawable) {
 						// Get icon bitmap
-						Bitmap icon = ((BitmapDrawable) xAppInfo.getIcon()).getBitmap();
+						Bitmap icon = ((BitmapDrawable) xAppInfo.getIcon(ActivityMain.this)).getBitmap();
 
 						// Get list item height
 						TypedArray arrayHeight = getTheme().obtainStyledAttributes(
@@ -1081,7 +1133,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						arrayHeight.recycle();
 
 						// Scale icon to list item height
-						icon = Bitmap.createScaledBitmap(icon, height, height, false);
+						icon = Bitmap.createScaledBitmap(icon, height, height, true);
 
 						// Create bitmap with borders
 						int borderSize = (int) Math.round(getResources().getDisplayMetrics().density + 0.5f);
@@ -1107,6 +1159,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						// Show bitmap
 						holder.imgIcon.setImageBitmap(bitmap);
 					}
+					holder.imgIcon.setVisibility(View.VISIBLE);
 
 					// Check if used
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
@@ -1116,14 +1169,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					holder.imgGranted.setVisibility(granted ? View.VISIBLE : View.INVISIBLE);
 
 					// Check if internet access
-					holder.imgInternet.setVisibility(xAppInfo.hasInternet() ? View.VISIBLE : View.INVISIBLE);
+					holder.imgInternet.setVisibility(xAppInfo.hasInternet(ActivityMain.this) ? View.VISIBLE
+							: View.INVISIBLE);
 
 					// Check if frozen
-					holder.imgFrozen.setVisibility(xAppInfo.isFrozen() ? View.VISIBLE : View.INVISIBLE);
+					holder.imgFrozen
+							.setVisibility(xAppInfo.isFrozen(ActivityMain.this) ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
-							: (someRestricted ? R.drawable.checkbox_half : android.R.color.transparent));
+					if (allRestricted)
+						holder.imgCBName.setImageBitmap(mCheck[2]); // Full
+					else if (someRestricted)
+						holder.imgCBName.setImageBitmap(mCheck[1]); // Half
+					else
+						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+					holder.imgCBName.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
@@ -1143,7 +1203,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
 								alertDialogBuilder.setTitle(getString(R.string.app_name));
 								alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-								alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+								alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
 								alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
 										new DialogInterface.OnClickListener() {
 											@Override
@@ -1152,7 +1212,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 												PrivacyManager.deleteRestrictions(view.getContext(), xAppInfo.getUid());
 
 												// Update visible state
-												holder.imgCBName.setImageResource(android.R.color.transparent);
+												holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 											}
 										});
 								alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
@@ -1179,8 +1239,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								}
 
 								// Update visible state
-								holder.imgCBName.setImageResource(allRestricted ? R.drawable.checkbox_check
-										: (someRestricted ? R.drawable.checkbox_half : android.R.color.transparent));
+								if (allRestricted)
+									holder.imgCBName.setImageBitmap(mCheck[2]); // Full
+								else if (someRestricted)
+									holder.imgCBName.setImageBitmap(mCheck[1]); // Half
+								else
+									holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 							}
 						}
 					});
@@ -1205,13 +1269,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Set background color
 			if (xAppInfo.isSystem())
-				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+				holder.row.setBackgroundColor(getResources().getColor(
+						Util.getThemed(ActivityMain.this, R.attr.color_dangerous)));
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
-
-			// Set icon
-			holder.imgIcon.setImageDrawable(xAppInfo.getIcon());
-			holder.imgIcon.setVisibility(View.VISIBLE);
 
 			// Handle details click
 			holder.imgIcon.setOnClickListener(new View.OnClickListener() {
@@ -1226,20 +1287,72 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			});
 
 			// Set data
+			holder.imgIcon.setVisibility(View.INVISIBLE);
 			holder.tvName.setText(xAppInfo.toString());
 			holder.tvName.setTypeface(null, Typeface.NORMAL);
 			holder.imgUsed.setVisibility(View.INVISIBLE);
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
-			holder.imgCBName.setImageResource(android.R.color.transparent);
-			holder.imgCBName.setEnabled(false);
+			holder.imgCBName.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new HolderTask(position, holder, xAppInfo).executeOnExecutor(mExecutor, (Object) null);
 
 			return convertView;
 		}
+	}
+
+	// Share operations progress listener
+
+	private void sharingStart() {
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ActivityShare.cProgressReport);
+		LocalBroadcastManager.getInstance(this).registerReceiver(progressListener, filter);
+
+		mSharing = true;
+		invalidateOptionsMenu();
+
+		// Set up the progress bar
+		final View vProgressEmpty = (View) findViewById(R.id.vProgressEmpty);
+		mProgressWidth = vProgressEmpty.getMeasuredWidth();
+	}
+
+	private void sharingDone() {
+		// Re-enable menu items
+		mSharing = false;
+		invalidateOptionsMenu();
+		// Stop listening for progress reports
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(progressListener);
+		// Keep done message for after UI recreation
+		TextView tvState = (TextView) findViewById(R.id.tvState);
+		mSharingState = (String) tvState.getText();
+	}
+
+	private BroadcastReceiver progressListener = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// String action = intent.getAction();
+			String message = intent.getStringExtra(ActivityShare.cProgressMessage);
+			int progress = intent.getIntExtra(ActivityShare.cProgressValue, 0);
+			int max = intent.getIntExtra(ActivityShare.cProgressMax, 1);
+			setProgress(message, progress, max);
+		}
+	};
+
+	private void setProgress(String text, int progress, int max) {
+		TextView tvState = (TextView) findViewById(R.id.tvState);
+		if (text != null)
+			tvState.setText(text);
+		if (max == 0)
+			max = 1;
+		mProgress = (int) ((float) mProgressWidth) * progress / max;
+		updateProgress();
+	}
+
+	private void updateProgress() {
+		View vProgressFull = (View) findViewById(R.id.vProgressFull);
+		vProgressFull.getLayoutParams().width = mProgress;
 	}
 
 	// Helper methods
@@ -1254,11 +1367,5 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					Util.bug(null, ex);
 				}
 		}
-	}
-
-	private int getThemed(int attr) {
-		TypedValue typedvalueattr = new TypedValue();
-		getTheme().resolveAttribute(attr, typedvalueattr, true);
-		return typedvalueattr.resourceId;
 	}
 }

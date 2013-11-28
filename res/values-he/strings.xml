@@ -34,6 +34,8 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">יישום מורשה ל: %s</string>
     <string name="msg_loading">טוען</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">לחץ על סמל היישום כדי לערוך את כל ההגבלות</string>
     <string name="msg_sure">אתה בטוח?</string>
     <string name="msg_done">בוצע</string>
@@ -101,11 +103,13 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">יישום</string>
     <string name="help_internet">כולל הרשאות גישה לאינטרנט</string>
     <string name="help_granted">כולל הרשאות גישה לאנדרואיד</string>
     <string name="help_used">קיבל גישה להרשאה זו</string>
     <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">מסוכן</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

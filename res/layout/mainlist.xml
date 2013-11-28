@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="3dp"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:background="?attr/drawable_card"
         android:orientation="vertical"
@@ -27,19 +27,19 @@
         <!-- Filters and categories -->
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="38sp"
-            android:background="?attr/drawable_divider"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:layout_marginBottom="-5dp" >
 
             <TextView
                 android:id="@+id/tvCategoryDetail"
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <View
@@ -50,13 +50,40 @@
             <TextView
                 android:id="@+id/tvFilterDetail"
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:orientation="horizontal" >
+
+            <View
+                android:id="@+id/vCategoryHighlight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/vFilterHighlight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_filter_border" />
 
         <!-- Categories -->
 
@@ -64,8 +91,8 @@
             android:id="@+id/llCategories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
             android:orientation="horizontal" >
 
             <Spinner
@@ -79,7 +106,6 @@
                 android:layout_width="32dip"
                 android:layout_height="32dip"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/bg_button"
                 android:clickable="true"
                 android:contentDescription="@string/help_application"
                 android:focusable="true"
@@ -92,8 +118,8 @@
             android:id="@+id/llFilters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
             android:orientation="vertical" >
 
             <RelativeLayout
@@ -103,7 +129,7 @@
 
                 <EditText
                     android:id="@+id/etFilter"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="27dp"
                     android:layout_marginRight="3dp"
@@ -118,7 +144,6 @@
                     android:layout_height="24dip"
                     android:layout_alignRight="@id/etFilter"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/bg_button"
                     android:clickable="true"
                     android:contentDescription="@string/help_application"
                     android:focusable="true"
@@ -140,10 +165,10 @@
                     android:id="@+id/cbFUsed"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="3dp"
                     android:ellipsize="end"
-                    android:maxLines="1"
                     android:saveEnabled="false"
+                    android:singleLine="true"
                     android:text="@string/title_fused"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -163,10 +188,10 @@
                     android:id="@+id/cbFInternet"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="3dp"
                     android:ellipsize="end"
-                    android:maxLines="1"
                     android:saveEnabled="false"
+                    android:singleLine="true"
                     android:text="@string/title_finternet"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -185,10 +210,10 @@
                     android:id="@+id/cbFPermission"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="3dp"
                     android:ellipsize="end"
-                    android:maxLines="1"
                     android:saveEnabled="false"
+                    android:singleLine="true"
                     android:text="@string/title_fpermission"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -207,10 +232,10 @@
                     android:id="@+id/cbFRestriction"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="3dp"
                     android:ellipsize="end"
-                    android:maxLines="1"
                     android:saveEnabled="false"
+                    android:singleLine="true"
                     android:text="@string/title_frestricted"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -218,10 +243,10 @@
                     android:id="@+id/cbFRestrictionNot"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="3dp"
                     android:ellipsize="end"
-                    android:maxLines="1"
                     android:saveEnabled="false"
+                    android:singleLine="true"
                     android:text="@string/title_fnot"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -240,10 +265,10 @@
                     android:id="@+id/cbFUser"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="3dp"
                     android:ellipsize="end"
-                    android:maxLines="1"
                     android:saveEnabled="false"
+                    android:singleLine="true"
                     android:text="@string/title_fuser"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -262,10 +287,10 @@
                     android:id="@+id/cbFSystem"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="3dp"
                     android:ellipsize="end"
-                    android:maxLines="1"
                     android:saveEnabled="false"
+                    android:singleLine="true"
                     android:text="@string/title_fsystem"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -280,19 +305,23 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin" >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="@string/title_restrict"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textIsSelectable="false" />
-
-        <TextView
             android:id="@+id/tvStats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/tvState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/tvStats"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/title_restrict"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textIsSelectable="false" />
 
         <ProgressBar
             android:id="@+id/pbFilter"
@@ -306,10 +335,18 @@
     <!-- Thin divider -->
 
     <View
-        android:layout_width="fill_parent"
+        android:id="@+id/vProgressEmpty"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginBottom="-3dp"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:background="@android:color/darker_gray" />
+
+    <View
+        android:id="@+id/vProgressFull"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:background="?android:attr/colorActivatedHighlight" />
 
     <!-- What it is all about -->
 

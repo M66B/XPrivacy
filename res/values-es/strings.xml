@@ -34,6 +34,8 @@
     <string name="msg_update">Actualizar</string>
     <string name="msg_licensed">Con licencia para: %s</string>
     <string name="msg_loading">Cargando</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Tocar el icono de la aplicación para editar los permisos</string>
     <string name="msg_sure">¿Estas seguro?</string>
     <string name="msg_done">Completado</string>
@@ -101,11 +103,13 @@ sin embargo es imposible garantizar que funcione impecable en todos y cada uno d
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Registro de depuración (requiere inicio)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Aplicación</string>
     <string name="help_internet">Tiene permisos para Internet</string>
     <string name="help_granted">Tiene permisos por Android</string>
     <string name="help_used">Ha usado estos datos</string>
     <string name="help_frozen">Esta deshabilitado</string>
     <string name="help_dangerous">Es peligroso</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

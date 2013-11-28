@@ -34,6 +34,8 @@
     <string name="msg_update">Opdatér</string>
     <string name="msg_licensed" formatted="false">Givet i licens til: %s</string>
     <string name="msg_loading">Indlæser</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Klik på app-ikonet for at redigere alle restriktioner</string>
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Udført</string>
@@ -99,11 +101,13 @@
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug-log (kræver genstart)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">App</string>
     <string name="help_internet">har internettilladelse</string>
     <string name="help_granted">har Android-tilladelse</string>
     <string name="help_used">har benyttet denne type data</string>
     <string name="help_frozen">er deaktiveret</string>
     <string name="help_dangerous">er farlig</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

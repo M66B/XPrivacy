@@ -551,6 +551,7 @@ No, because these OS'es are to closed to implement something like XPrivacy.
 * Shortcuts
 * Android version
 * Starting of applications
+* Vibration
 
 No, because I don't consider this as privacy sensitive data.
 I am happy to add new restrictions for data that is really privacy sensitive.
@@ -563,23 +564,58 @@ Expert mode disables the dangerous restrictions warning and enables some advance
 
 Yes.
 
+**(38) What is 'Android usage data' and 'Extra usage data' ?**
+
+The setting *Android usage data* enables sending more usage data for Android itself (uid=1000).
+
+The setting *Extra usage data* enables sending more usage data for all applications.
+
+Enabling these settings can cause instability and/or decrease performance on some devices.
+
+Usage data = orange triangles.
+
+**(39) How does the tri-state check box work?**
+
+The tri-state check box follows this pattern:
+
+* Unchecked = no retrictions
+* Solid square = some restrictions
+* Check mark = all restrictions
+
+Some/all is determined as follows:
+
+* All category: some/all other categories
+* Other categories: some/all functions
+
+Be aware that by default categories and functions are filtered by permission,
+so you may not see all of them. The check box state is independent of this.
+
+**(40) How can I get usage data for all applications?**
+
+Try enabling the setting *Extra usage data* from the main menu,
+but be aware that this might cause instability on some ROMs.
+
 Support
 -------
 
-If you encounter any bug or data leakage please [report an issue](https://github.com/M66B/XPrivacy/issues),
-including a [logcat](http://developer.android.com/tools/help/logcat.html)
+If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy/issues).
+
+Including a [logcat](http://developer.android.com/tools/help/logcat.html) when relevant
 (use [pastebin](http://pastebin.com/) or a similar service).
 Don't forget to enable XPrivacy logging using the settings menu!
 
-If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
-
-If you have any question, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
+Please describe the exact steps to reproduce the issue
+and include information about your device type and the ROM you are using.
 
 **Before submitting any issue please ensure you are running the latest version of XPrivacy.**
 
 **Before submitting any issue please [read this](http://forum.xda-developers.com/showpost.php?p=43892381&postcount=1703).**
 
 **One bug/feature request per issue please!**
+
+If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
+
+If you have any question, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
 Changelog
 ---------

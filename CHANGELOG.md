@@ -3,9 +3,57 @@ Changelog
 
 **Next release**
 
-...
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 1.10.25 BETA**
+**Version 1.10.31 BETA**
+
+* Fixed ongoing notification of fetch restrictions
+* Attempt to fix non-aligned check boxes
+* New check mark images, thanks @[Looki75](http://forum.xda-developers.com/member.php?u=2468642)
+* Updated German translation
+
+**Version 1.10.30 BETA**
+
+* Caching of application information for better response times
+* Restriction of draw over / on top ([issue](https://github.com/M66B/XPrivacy/issues/830))
+* Modified tri-state check box implementation ([issue](https://github.com/M66B/XPrivacy/issues/833))
+* Fixed cancel import file select ([issue](https://github.com/M66B/XPrivacy/issues/837))
+* Updated Arabic translation
+* Updated Dutch translation
+* Updated Polish translation
+* Updated Russian translation
+
+**Version 1.10.29 TEST**
+
+* Fixed Android KitKat message permissions
+* Do not disable Android/extra usage data when not in expert mode
+* Separate setting to enable restricting dangerous functions, thanks @[jpeg729](https://github.com/jpeg729)
+* Show exported file name while sharing, thanks @[jpeg729](https://github.com/jpeg729)
+* Progress indication for export, import and fetch, thanks @[jpeg729](https://github.com/jpeg729)
+* Selected tab (categories, filter) in theme color, thanks @[jpeg729](https://github.com/jpeg729)
+* Added tri-state check box to legend ([issue](https://github.com/M66B/XPrivacy/issues/827))
+* Another method to restrict the browser user agent ([issue](https://github.com/M66B/XPrivacy/issues/825))
+* Updated Lithuanian translation
+* Updated Norwegian translation
+* Updated Slovak translation
+
+**Version 1.10.27 TEST**
+
+* Faster startup
+* Modified tri-state check box implementation
+* Improved application icon image quality
+* Allow Android / extra usage data setting without expert mode
+
+**Version 1.10.26 TEST**
+
+* Increase category selector drop down size
+* Display click effect to prevent unintended restriction changes
+* Added half state check box to application details view
+* Updated Arabic translation
+* Updated Polish translation
+* Updated Vietnamese translations
+
+**Version 1.10.25 TEST**
 
 * Display third state for categories not fully restricted ([issue](https://github.com/M66B/XPrivacy/issues/815))
 * Automatically open and scroll to category in application view

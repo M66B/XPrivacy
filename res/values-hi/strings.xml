@@ -34,6 +34,8 @@
     <string name="msg_update">अद्यतन</string>
     <string name="msg_licensed" formatted="false">अधिकारी: %s</string>
     <string name="msg_loading">लोडिंग</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">सभी प्रतिबंध को संपादित करने application के icon को क्लिक करे</string>
     <string name="msg_sure">क्या आप निश्चित हैं?</string>
     <string name="msg_done">हो गया</string>
@@ -101,11 +103,13 @@
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (पुनरारंभ जरूरी)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Application</string>
     <string name="help_internet">इंटरनेट की अनुमति है</string>
     <string name="help_granted">Android की अनुमति है</string>
     <string name="help_used">इस डेटा का उपयोग किया है</string>
     <string name="help_frozen">अक्षम किया गया है</string>
     <string name="help_dangerous">खतरनाक है</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

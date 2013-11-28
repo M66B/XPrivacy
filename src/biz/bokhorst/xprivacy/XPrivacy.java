@@ -118,9 +118,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Telephony
 		hookAll(XTelephonyManager.getInstances());
 
-		// Web settings
-		hookAll(XWebSettings.getInstances());
-		hookAll(XWebSettingsClassic.getInstances());
+		// Web view
+		hookAll(XWebView.getInstances());
 
 		// Wi-Fi manager
 		hookAll(XWifiManager.getInstances());
@@ -257,9 +256,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			// Log
 			for (XC_MethodHook.Unhook unhook : hookSet) {
-				Util.log(hook, Log.INFO, String.format("%s: hooked %s.%s/%s (%d)",
-						AndroidAppHelper.currentPackageName(), hookClass.getName(), unhook.getHookedMethod().getName(),
-						hook.getRestrictionName(), hookSet.size()));
+				String packageName = AndroidAppHelper.currentPackageName();
+				String className = hookClass.getName();
+				String methodName = unhook.getHookedMethod().getName();
+				String restrictionName = hook.getRestrictionName();
+				if (className.equals(methodName))
+					methodName = "constructor";
+				Util.log(hook, Log.INFO, String.format("%s: hooked %s.%s/%s (%d)", packageName, className, methodName,
+						restrictionName, hookSet.size()));
 				break;
 			}
 		} catch (Throwable ex) {

@@ -34,6 +34,8 @@
     <string name="msg_update">Posodobitev</string>
     <string name="msg_licensed" formatted="false">Licencirano na: %s</string>
     <string name="msg_loading">Nalagam</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Za spreminjanje pravic klikni na ikono programa</string>
     <string name="msg_sure">Ste prepričani?</string>
     <string name="msg_done">Dokončano</string>
@@ -103,11 +105,13 @@
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (zahteva ponovni zagon)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>
     <string name="help_used">je uporabljal te podatke</string>
     <string name="help_frozen">je onemogočen</string>
     <string name="help_dangerous">je nevaren</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

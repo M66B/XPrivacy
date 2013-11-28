@@ -34,6 +34,8 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Лицензирано на: %s</string>
     <string name="msg_loading">Зареждане</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Цъкнете иконата на приложението за редактиране на всички забрани</string>
     <string name="msg_sure">Сигурни ли сте?</string>
     <string name="msg_done">Готово</string>
@@ -101,11 +103,13 @@
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">има разрешение за интернет</string>
     <string name="help_granted">има разрешение в Android</string>
     <string name="help_used">използвало е тези данни</string>
     <string name="help_frozen">е деактивирано</string>
     <string name="help_dangerous">е опасно</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>

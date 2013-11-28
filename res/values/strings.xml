@@ -39,6 +39,8 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>
     <string name="msg_loading">Loading</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_sure">Are you sure?</string>
     <string name="msg_done">Done</string>
@@ -113,12 +115,14 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Application</string>
     <string name="help_internet">has internet permission</string>
     <string name="help_granted">has Android permission</string>
     <string name="help_used">has used this data</string>
     <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">is dangerous, restricting may cause problems</string>
+    <string name="help_half">partly restricted</string>
     <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
 
 </resources>

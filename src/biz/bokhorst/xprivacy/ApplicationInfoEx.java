@@ -16,27 +16,20 @@ import android.util.SparseArray;
 
 @SuppressLint("DefaultLocale")
 public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
-	private List<String> mListApplicationName;
-	private String mPackageName;
-	private boolean mHasInternet;
-	private boolean mIsFrozen;
-	private int mUid;
-	private String mVersion;
-	private boolean mSystem;
-	private boolean mInstalled;
-	private Drawable mIcon;
+	private ApplicationInfo mAppInfo;
+	private List<String> mListApplicationName = null;
 
-	public ApplicationInfoEx(Context context, String packageName) {
-		// Get app info
-		try {
-			ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
-			this.Initialize(context, appInfo);
-		} catch (NameNotFoundException ex) {
-			mInstalled = false;
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			return;
-		}
+	// Cache
+	private Drawable mIcon = null;
+	private boolean mInternet;
+	private boolean mInternetDetermined = false;
+	private boolean mFrozen;
+	private boolean mFrozenDetermined = false;
+	private String mVersion = null;
+
+	public ApplicationInfoEx(Context context, String packageName) throws NameNotFoundException {
+		ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
+		this.Initialize(context, appInfo);
 	}
 
 	private ApplicationInfoEx(Context context, ApplicationInfo appInfo) {
@@ -44,42 +37,10 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	private void Initialize(Context context, ApplicationInfo appInfo) {
+		mAppInfo = appInfo;
 		PackageManager pm = context.getPackageManager();
 		mListApplicationName = new ArrayList<String>();
-		mListApplicationName.add(getApplicationName(appInfo, pm));
-		mPackageName = appInfo.packageName;
-		mHasInternet = PrivacyManager.hasInternet(context, appInfo.packageName);
-		mUid = appInfo.uid;
-
-		// Get version
-		try {
-			mVersion = pm.getPackageInfo(appInfo.packageName, 0).versionName;
-			mInstalled = true;
-		} catch (NameNotFoundException ex) {
-			mInstalled = false;
-		} catch (Throwable ex) {
-			mInstalled = false;
-			Util.bug(null, ex);
-		}
-
-		// Get if system application
-		mSystem = ((appInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
-		mSystem = mSystem || appInfo.packageName.equals(context.getPackageName());
-		mSystem = mSystem || appInfo.packageName.equals(context.getPackageName() + ".pro");
-		mSystem = mSystem || appInfo.packageName.equals("de.robv.android.xposed.installer");
-
-		// Get if frozen (not enabled)
-		int setting = pm.getApplicationEnabledSetting(appInfo.packageName);
-		boolean enabled = (setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
-		enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
-		mIsFrozen = !enabled;
-
-		// Get icon
-		try {
-			mIcon = pm.getApplicationInfo(mPackageName, 0).loadIcon(pm);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
+		mListApplicationName.add((String) pm.getApplicationLabel(appInfo));
 	}
 
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
@@ -102,7 +63,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 					mapApp.put(xAppInfo.getUid(), xAppInfo);
 					listApp.add(xAppInfo);
 				} else
-					yAppInfo.addApplicationName(getApplicationName(listAppInfo.get(app), pm));
+					yAppInfo.addApplicationName((String) pm.getApplicationLabel(listAppInfo.get(app)));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
@@ -110,10 +71,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		// Sort result
 		Collections.sort(listApp);
 		return listApp;
-	}
-
-	private static String getApplicationName(ApplicationInfo appInfo, PackageManager pm) {
-		return (String) pm.getApplicationLabel(appInfo);
 	}
 
 	private void addApplicationName(String Name) {
@@ -126,40 +83,59 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public String getPackageName() {
-		return mPackageName;
+		return mAppInfo.packageName;
 	}
 
-	public Drawable getIcon() {
+	public Drawable getIcon(Context context) {
+		if (mIcon == null)
+			mIcon = mAppInfo.loadIcon(context.getPackageManager());
 		return mIcon;
 	}
 
-	public boolean hasInternet() {
-		return mHasInternet;
+	public boolean hasInternet(Context context) {
+		if (!mInternetDetermined) {
+			mInternet = PrivacyManager.hasInternet(context, mAppInfo.packageName);
+			mInternetDetermined = true;
+		}
+		return mInternet;
 	}
 
-	public boolean isFrozen() {
-		return mIsFrozen;
+	public boolean isFrozen(Context context) {
+		if (!mFrozenDetermined) {
+			int setting = context.getPackageManager().getApplicationEnabledSetting(mAppInfo.packageName);
+			boolean enabled = (setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
+			enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+			mFrozen = !enabled;
+			mFrozenDetermined = true;
+		}
+		return mFrozen;
 	}
 
 	public int getUid() {
-		return mUid;
+		return mAppInfo.uid;
 	}
 
-	public String getVersion() {
+	public String getVersion(Context context) {
+		if (mVersion == null)
+			try {
+				mVersion = context.getPackageManager().getPackageInfo(mAppInfo.packageName, 0).versionName;
+			} catch (Throwable ignored) {
+
+			}
 		return mVersion;
 	}
 
 	public boolean isSystem() {
+		boolean mSystem = ((mAppInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
+		mSystem = mSystem || mAppInfo.packageName.equals(this.getClass().getPackage().getName());
+		mSystem = mSystem || mAppInfo.packageName.equals(this.getClass().getPackage().getName() + ".pro");
+		mSystem = mSystem || mAppInfo.packageName.equals("de.robv.android.xposed.installer");
 		return mSystem;
-	}
-
-	public boolean isInstalled() {
-		return mInstalled;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%d %s", mUid, getApplicationNames());
+		return String.format("%d %s", mAppInfo.uid, getApplicationNames());
 	}
 
 	@Override

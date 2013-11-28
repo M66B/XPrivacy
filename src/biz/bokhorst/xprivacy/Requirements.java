@@ -15,7 +15,6 @@ import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.os.Build;
 import android.util.Log;
-import android.util.TypedValue;
 
 public class Requirements {
 
@@ -30,7 +29,7 @@ public class Requirements {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
 			alertDialogBuilder.setMessage(context.getString(R.string.app_wrongandroid));
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher, context));
+			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -53,7 +52,7 @@ public class Requirements {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
 			alertDialogBuilder.setMessage(msg);
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher, context));
+			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -75,7 +74,7 @@ public class Requirements {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
 			alertDialogBuilder.setMessage(msg);
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher, context));
+			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -99,7 +98,7 @@ public class Requirements {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
 			alertDialogBuilder.setMessage(msg);
-			alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher, context));
+			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -256,7 +255,7 @@ public class Requirements {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 		alertDialogBuilder.setTitle(context.getString(R.string.app_name));
 		alertDialogBuilder.setMessage(msg);
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher, context));
+		alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 				new DialogInterface.OnClickListener() {
 					@Override
@@ -322,11 +321,5 @@ public class Requirements {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
-	}
-
-	private static int getThemed(int attr, Context context) {
-		TypedValue typedvalueattr = new TypedValue();
-		context.getTheme().resolveAttribute(attr, typedvalueattr, true);
-		return typedvalueattr.resourceId;
 	}
 }

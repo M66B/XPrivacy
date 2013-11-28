@@ -10,7 +10,7 @@
     <string name="menu_refresh">Ververs</string>
     <string name="menu_settings">Instellingen</string>
     <string name="menu_template">Sjabloon</string>
-    <string name="menu_report">Meldt probleem</string>
+    <string name="menu_report">Meld probleem</string>
     <string name="menu_export">Exporteer</string>
     <string name="menu_import">Importeer</string>
     <string name="menu_submit">Stuur beperkingen</string>
@@ -34,6 +34,8 @@
     <string name="msg_update">Bijgewerkt</string>
     <string name="msg_licensed" formatted="false">In licentie gegeven aan: %s</string>
     <string name="msg_loading">Laden</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">Geen beperkingen gevonden</string>
     <string name="msg_edit">Klik op het applicatiepictogram om alle beperkingen te wijzigen</string>
     <string name="msg_sure">Zeker weten?</string>
     <string name="msg_done">Gereed</string>
@@ -75,12 +77,12 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     </plurals>
 
     <string name="title_fused">Filter op gegevensgebruik</string>
-    <string name="title_finternet">Filter op internet toegang</string>
+    <string name="title_finternet">Filter op internettoegang</string>
     <string name="title_fpermission">Filter op rechten</string>
     <string name="title_frestricted">Filter op beperkingen</string>
     <string name="title_fuser">Filter op gebruikersapplicaties</string>
     <string name="title_fsystem">Filter op systeemapplicaties</string>
-    <string name="title_fnot">Ontken</string>
+    <string name="title_fnot">Negatief</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>
@@ -94,18 +96,20 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_subscriber">Abonnee ID</string>
     <string name="settings_ua">User agent</string>
     <string name="settings_general">Algemeen</string>
-    <string name="settings_fake_data">Nep gegevens</string>
+    <string name="settings_fake_data">Nepgegevens</string>
     <string name="settings_global">Gebruik globale nep gegevens</string>
     <string name="settings_notify">Bijgewerkt notificaties</string>
     <string name="settings_usage">Android gebruiksgegevens (herstart vereist)</string>
     <string name="settings_extra">Extra gebruiksgegevens (herstart vereist)</string>
     <string name="settings_log">Debug log (herstart vereist)</string>
-    <string name="settings_expert">Expert modus</string>
+    <string name="settings_expert">Expertmodus</string>
+    <string name="settings_dangerous">Beperk gevaarlijke functies</string>
     <string name="help_application">Applicatie</string>
     <string name="help_internet">heeft internet rechten</string>
     <string name="help_granted">heeft Android rechten</string>
     <string name="help_used">heeft deze gegevens gebruikt</string>
     <string name="help_frozen">is uitgezet</string>
     <string name="help_dangerous">is gevaarlijk</string>
+    <string name="help_half">is gedeeltelijk beperkt</string>
 
 </resources>

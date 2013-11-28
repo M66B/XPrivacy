@@ -42,13 +42,33 @@
         android:contentDescription="@string/help_application"
         android:src="?attr/icon_info" />
 
-    <CheckedTextView
-        android:id="@+id/ctvName"
+    <RelativeLayout
+        android:id="@+id/rlName"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-        android:gravity="center_vertical"
-        android:paddingLeft="6dip"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:background="@drawable/list_item_pressed"
+        android:clickable="true"
+        android:paddingLeft="6dip" >
+
+        <ImageView
+            android:id="@+id/imgCBName"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="6dp"
+            android:contentDescription="@string/title_restrict"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/imgCBName"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
 
 </LinearLayout>

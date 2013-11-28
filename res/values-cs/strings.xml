@@ -34,6 +34,8 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Licencováno na: %s</string>
     <string name="msg_loading">Probíhá načítání</string>
+    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Pro úpravu jednotlivých oprávnění aplikace klikněte na její ikonu</string>
     <string name="msg_sure">Jste si jistý?</string>
     <string name="msg_done">Hotovo</string>
@@ -102,11 +104,13 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Ukládat ladící záznam (vyžaduje restart)</string>
     <string name="settings_expert">Expert mode</string>
+    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="help_application">Aplikace</string>
     <string name="help_internet">má oprávnění k Internetu</string>
     <string name="help_granted">má Android oprávnění</string>
     <string name="help_used">přistupovala k těmto datům</string>
     <string name="help_frozen">je zakázaná</string>
     <string name="help_dangerous">je nebezpečná</string>
+    <string name="help_half">partly restricted</string>
 
 </resources>
