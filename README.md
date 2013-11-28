@@ -590,6 +590,11 @@ Some/all is determined as follows:
 Be aware that by default categories and functions are filtered by permission,
 so you may not see all of them. The check box state is independent of this.
 
+**(40) How can I get usage data for all applications?**
+
+Try enabling the setting *Extra usage data* from the main menu,
+but be aware that this might cause instability on some ROMs.
+
 Support
 -------
 
