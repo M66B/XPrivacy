@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Fixed missing usage data, thanks @[jpeg729](https://github.com/jpeg729)
+* Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
