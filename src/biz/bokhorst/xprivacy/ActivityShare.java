@@ -37,7 +37,10 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xmlpull.v1.XmlSerializer;
 
+import biz.bokhorst.xprivacy.PrivacyManager.RestrictedIterator;
 import biz.bokhorst.xprivacy.PrivacyManager.RestrictionDesc;
+import biz.bokhorst.xprivacy.PrivacyManager.SettingDesc;
+import biz.bokhorst.xprivacy.PrivacyManager.SettingsIterator;
 
 import android.app.Activity;
 import android.app.Notification;
@@ -143,36 +146,26 @@ public class ActivityShare extends Activity {
 					publishProgress(getString(R.string.msg_loading));
 					Util.log(null, Log.INFO, "Exporting settings");
 
-					Cursor sCursor = PrivacyManager.getSettingsCursor(ActivityShare.this);
-					Cursor rCursor = PrivacyManager.getRestrictedCursor(ActivityShare.this);
+					SettingsIterator sIterator = PrivacyManager.getSettingsIterator(ActivityShare.this);
+					RestrictedIterator rIterator = PrivacyManager.getRestrictedIterator(ActivityShare.this);
 
 					// Set some numbers for the progress bar
 					mCurrent = 0;
-					if (sCursor != null)
-						try {
-							mProgressMax = sCursor.getCount();
-						} finally {
-							// do nothing yet
-						}
-					if (rCursor != null)
-						try {
-							mProgressMax += rCursor.getCount();
-						} finally {
-							// do nothing yet
-						}
+					mProgressMax = sIterator.getCount();
+					mProgressMax += rIterator.getCount();
 
 					// Process settings
 					String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-					if (sCursor != null)
+					if (sIterator.getCount() > 0)
 						try {
-							while (sCursor.moveToNext()) {
+							for (SettingDesc settingDesc : sIterator) {
 								mCurrent++;
 								if (mCurrent % 50 == 0) // Don't update progress too often
 									publishProgress(getString(R.string.msg_loading), Integer.toString(mCurrent));
 
 								// Get setting
-								String setting = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_SETTING));
-								String value = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_VALUE));
+								String setting = settingDesc.settingName;
+								String value = settingDesc.value;
 
 								// Bound accounts/contacts to same device
 								if (setting.startsWith("Account.") || setting.startsWith("Contact.")
@@ -187,25 +180,18 @@ public class ActivityShare extends Activity {
 								serializer.endTag(null, "Setting");
 							}
 						} finally {
-							sCursor.close();
+							sIterator.cleanUp();
 						}
 
 					// Process restrictions
 					Map<String, List<PrivacyManager.RestrictionDesc>> mapRestriction = new HashMap<String, List<PrivacyManager.RestrictionDesc>>();
-					if (rCursor != null)
+					if (rIterator.getCount() > 0)
 						try {
-							while (rCursor.moveToNext()) {
+							for (RestrictionDesc restriction : rIterator) {
 								mCurrent++;
 								if (mCurrent % 50 == 0) // Don't update progress too often
 									publishProgress(getString(R.string.msg_loading), Integer.toString(mCurrent));
 
-								RestrictionDesc restriction = new RestrictionDesc();
-								restriction.uid = rCursor.getInt(rCursor.getColumnIndex(PrivacyProvider.COL_UID));
-								restriction.restricted = Boolean.parseBoolean(rCursor.getString(rCursor
-										.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
-								restriction.restrictionName = rCursor.getString(rCursor
-										.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
-								restriction.methodName = rCursor.getString(rCursor.getColumnIndex(PrivacyProvider.COL_METHOD));
 								String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
 								// add restriction to map
 								if (packages == null)
@@ -218,7 +204,7 @@ public class ActivityShare extends Activity {
 									}
 							}
 						} finally {
-							rCursor.close();
+							rIterator.cleanUp();
 						}
 
 					// Set some numbers for the progress bar
