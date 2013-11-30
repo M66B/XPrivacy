@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -27,11 +28,6 @@ public class XActivity extends XHook {
 		super(restrictionName, method.name(), actionName, sdk);
 		mMethod = method;
 		mActionName = actionName;
-	}
-
-	private XActivity(Methods method) {
-		super(null, method.name(), null);
-		mMethod = method;
 	}
 
 	public String getClassName() {
@@ -67,10 +63,9 @@ public class XActivity extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		
-		List<Methods> startMethods = new ArrayList<Methods>();
-		for (Methods method : Methods.values())
-			if (method.name().startsWith("start"))
-				startMethods.add(method);
+		List<Methods> startMethods = new ArrayList<Methods>(Arrays.asList(Methods.values()));
+		startMethods.remove(Methods.onPause);
+		startMethods.remove(Methods.onDestroy);
 
 		// Intent send: browser
 		for (Methods activity : startMethods)
@@ -89,10 +84,8 @@ public class XActivity extends XHook {
 		}
 
 		// sendUsageData on activity stop
-		// It looks to me as though all the start methods are hooked five times each which seemed a bit much
-		// for these two.
-		listHook.add(new XActivity(Methods.onPause));
-		listHook.add(new XActivity(Methods.onDestroy));
+		listHook.add(new XActivity(Methods.onPause, null, null));
+		listHook.add(new XActivity(Methods.onDestroy, null, null));
 
 		return listHook;
 	}
@@ -149,6 +142,10 @@ public class XActivity extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.onPause || mMethod == Methods.onDestroy)
-			PrivacyManager.sendUsageData(this, (Context) param.thisObject);
+			try {
+				PrivacyManager.sendUsageData(this, (Context) param.thisObject);
+			} finally {
+				// do nothing
+			}
 	}
 }
