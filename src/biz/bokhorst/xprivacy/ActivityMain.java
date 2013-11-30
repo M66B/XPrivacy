@@ -960,8 +960,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				boolean fSystem = Boolean.parseBoolean(components[7]);
 
 				// Match applications
+				int current = 0;
+				final int max = AppListAdapter.this.mListApp.size();
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListApp) {
+					current++;
+					if (!mSharing) setProgress(getString(R.string.msg_filtering), current, max);
 					// Get if name contains
 					boolean contains = false;
 					if (!fName.equals(""))
