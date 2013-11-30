@@ -479,13 +479,20 @@ public class PrivacyManager {
 		public String methodName;
 	}
 
-	public static List<RestrictionDesc> getRestricted(Context context) {
+	public static List<RestrictionDesc> getRestricted(Context context, Runnable progress) {
 		List<RestrictionDesc> result = new ArrayList<RestrictionDesc>();
+		progress.run(); // 1% for getting the cursor
 		Cursor rCursor = context.getContentResolver().query(PrivacyProvider.URI_RESTRICTION, null, null,
 				new String[] { Integer.toString(0), Boolean.toString(false) }, null);
 		if (rCursor != null)
 			try {
+				final int max = rCursor.getCount();
+				final int step = (max + 95)/96; // 96% left for loading the restrictions
+				int current = 0;
 				while (rCursor.moveToNext()) {
+					current++;
+					if (current % step == 0 || current == max)
+						progress.run();
 					RestrictionDesc restriction = new RestrictionDesc();
 					restriction.uid = rCursor.getInt(rCursor.getColumnIndex(PrivacyProvider.COL_UID));
 					restriction.restricted = Boolean.parseBoolean(rCursor.getString(rCursor
@@ -730,12 +737,18 @@ public class PrivacyManager {
 		Util.log(hook, Log.INFO, String.format("set setting %s=%s", sName, value));
 	}
 
-	public static Map<String, String> getSettings(Context context) {
+	public static Map<String, String> getSettings(Context context, Runnable progress) {
 		Map<String, String> result = new HashMap<String, String>();
+		progress.run(); // 1% for getting the cursor
 		Cursor sCursor = context.getContentResolver().query(PrivacyProvider.URI_SETTING, null, null, null, null);
 		if (sCursor != null)
 			try {
+				final int max = sCursor.getCount();
+				int current = 0;
 				while (sCursor.moveToNext()) {
+					current++;
+					if (current == max/2 || current == max)
+						progress.run(); // 2% for fetching settings
 					// Get setting
 					String setting = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_SETTING));
 					String value = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_VALUE));
