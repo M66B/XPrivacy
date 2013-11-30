@@ -60,9 +60,9 @@ public class XWebView extends XHook {
 				webView.getSettings().setUserAgentString(ua);
 			}
 		} else if (mMethod == Methods.getSettings) {
-			if (param.getResult() != null) {
+			if (param.getResultOrThrowable() != null) {
 				// Check web settings type
-				Class<?> clazzWebSettings = param.getResultOrThrowable().getClass();
+				Class<?> clazzWebSettings = param.getResult().getClass();
 				if (!mWebSettings.contains(clazzWebSettings.getName())) {
 					mWebSettings.add(clazzWebSettings.getName());
 
