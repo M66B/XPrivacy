@@ -9,6 +9,7 @@ Changelog
 
 * Fixed missing usage data, thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Chinese translations
+* Updated Japanese translation
 
 **Version 1.10.31 BETA**
 
