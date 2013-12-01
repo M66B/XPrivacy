@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Binder;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -46,7 +47,7 @@ public class XApplication extends XHook {
 		if (mMethod == Methods.onCreate) {
 			Thread.UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
 			if (!(defaultHandler instanceof XUncaughtExceptionHandler)) {
-				Util.log(this, Log.INFO, "Installing XUncaughtExceptionHandler");
+				Util.log(this, Log.INFO, "Installing XUncaughtExceptionHandler uid=" + Binder.getCallingUid());
 				Application app = (Application) param.thisObject;
 				Thread.setDefaultUncaughtExceptionHandler(new XUncaughtExceptionHandler(this, app, defaultHandler));
 			}
@@ -68,7 +69,7 @@ public class XApplication extends XHook {
 		@Override
 		public void uncaughtException(Thread thread, Throwable ex) {
 			try {
-				Util.log(mHook, Log.INFO, "Handling " + ex.getMessage());
+				Util.log(mHook, Log.WARN, "Uncaught exception uid=" + Binder.getCallingUid() + ": " + ex.getMessage());
 				PrivacyManager.sendUsageData(null, mContext);
 			} catch (Throwable exex) {
 				Util.bug(mHook, exex);
