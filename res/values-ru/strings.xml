@@ -68,7 +68,7 @@
     <string name="restrict_system">Система (установленные приложения)</string>
     <string name="restrict_view">Просмотр (браузер)</string>
     <string name="title_categories">Категории</string>
-    <string name="title_restrict">Отметьте приложения:</string>
+    <string name="title_restrict">Отметьте для запрета:</string>
     <string name="title_filters">Фильтры</string>
 
     <plurals name="title_active_filters">
@@ -77,10 +77,10 @@
         <item quantity="other">%d активных фильтров</item>
     </plurals>
 
-    <string name="title_fused">по использованию данных</string>
-    <string name="title_finternet">по доступу к Интернету</string>
-    <string name="title_fpermission">по разрешениям</string>
-    <string name="title_frestricted">по запрещенным</string>
+    <string name="title_fused">использовавшие данные</string>
+    <string name="title_finternet">с доступом к Интернету</string>
+    <string name="title_fpermission">с разрешениями</string>
+    <string name="title_frestricted">запрещенные</string>
     <string name="title_fuser">пользовательские приложения</string>
     <string name="title_fsystem">системные приложения</string>
     <string name="title_fnot">Переключить</string>
