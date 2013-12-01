@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Updated Slovak translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.34 TEST**
