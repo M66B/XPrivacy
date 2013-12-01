@@ -143,7 +143,8 @@ public class ActivityShare extends Activity {
 					// Progress updater
 					Runnable progress = new Runnable() {
 						@Override
-						public void run() { // This should be called exactly 100 times
+						public void run() {
+							// This should be called exactly 100 times
 							mCurrent++;
 							publishProgress(getString(R.string.msg_loading), Integer.toString(mCurrent), "100");
 						}
@@ -168,8 +169,8 @@ public class ActivityShare extends Activity {
 					}
 
 					// Process restrictions
-					List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager
-							.getRestricted(ActivityShare.this, progress);
+					List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager.getRestricted(
+							ActivityShare.this, progress);
 					Map<String, List<PrivacyManager.RestrictionDesc>> mapRestriction = new HashMap<String, List<PrivacyManager.RestrictionDesc>>();
 					for (PrivacyManager.RestrictionDesc restriction : listRestriction) {
 						String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
