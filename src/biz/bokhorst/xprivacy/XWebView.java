@@ -42,7 +42,7 @@ public class XWebView extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XWebView(Methods.constructor, PrivacyManager.cView));
-		listHook.add(new XWebView(Methods.getSettings, PrivacyManager.cView));
+		listHook.add(new XWebView(Methods.getSettings, null));
 		return listHook;
 	}
 

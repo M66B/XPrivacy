@@ -44,7 +44,7 @@ public class XContextWrapper extends XHook {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XContextWrapper(Methods.getApplicationContext, null));
 		listHook.add(new XContextWrapper(Methods.getBaseContext, null));
-		listHook.add(new XContextWrapper(Methods.getSystemService, PrivacyManager.cView));
+		listHook.add(new XContextWrapper(Methods.getSystemService, null));
 		return listHook;
 	}
 
