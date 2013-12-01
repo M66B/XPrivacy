@@ -55,14 +55,13 @@ public class XActivity extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded,
-		onPause, onDestroy
+		startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded, onPause, onDestroy
 	};
 
 	@SuppressLint("InlinedApi")
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		
+
 		List<Methods> startMethods = new ArrayList<Methods>(Arrays.asList(Methods.values()));
 		startMethods.remove(Methods.onPause);
 		startMethods.remove(Methods.onDestroy);
@@ -106,7 +105,7 @@ public class XActivity extends XHook {
 			if (param.args.length > 0 && param.args[0] != null)
 				intents = (Intent[]) param.args[0];
 		} else if (mMethod == Methods.onPause || mMethod == Methods.onDestroy) {
-			// Wait until after
+			// Do nothing
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 
@@ -144,8 +143,8 @@ public class XActivity extends XHook {
 		if (mMethod == Methods.onPause || mMethod == Methods.onDestroy)
 			try {
 				PrivacyManager.sendUsageData(this, (Context) param.thisObject);
-			} finally {
-				// do nothing
+			} catch (Throwable ex) {
+				Util.bug(this, ex);
 			}
 	}
 }

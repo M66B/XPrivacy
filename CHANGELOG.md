@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Send usage data on application (force) close, thanks @[jpeg729](https://github.com/jpeg729)
 * Progress reports while export is loading, thanks @[jpeg729](https://github.com/jpeg729)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

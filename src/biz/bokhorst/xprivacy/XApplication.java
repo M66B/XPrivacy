@@ -50,9 +50,8 @@ public class XApplication extends XHook {
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
-	
-	private static class XUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
+	private static class XUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 		private static Context mContext;
 
 		public XUncaughtExceptionHandler(Application app) {
@@ -63,8 +62,8 @@ public class XApplication extends XHook {
 		public void uncaughtException(Thread arg0, Throwable arg1) {
 			try {
 				PrivacyManager.sendUsageData(null, mContext);
-			} finally {
-				// do nothing
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
 			}
 		}
 	}
