@@ -425,6 +425,7 @@ The right order for ROM updates is:
 1. Clear XPrivacy data (please note that this will erase the imported pro license file if any)
 1. Import XPrivacy settings
 1. Disable flight mode
+1. Fake network type (Wi-Fi, mobile)
 
 (this assumes no data wipe and Xposed and XPrivacy installed before updating the ROM)
 
