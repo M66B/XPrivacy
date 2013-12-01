@@ -23,12 +23,13 @@
     <Hook restriction="calling" method="android.intent.action.RESPOND_VIA_MESSAGE" permissions="SEND_RESPOND_VIA_MESSAGE" sdk="18" />
     <Hook restriction="calling" method="android.intent.action.CALL" permissions="CALL_PHONE" sdk="14" />
 
-    <Hook restriction="clipboard" method="addPrimaryClipChangedListener" permissions="" sdk="14" />
-    <Hook restriction="clipboard" method="getPrimaryClip" permissions="" sdk="14" />
-    <Hook restriction="clipboard" method="getPrimaryClipDescription" permissions="" sdk="14" />
-    <Hook restriction="clipboard" method="getText" permissions="" sdk="14" />
-    <Hook restriction="clipboard" method="hasPrimaryClip" permissions="" sdk="14" />
-    <Hook restriction="clipboard" method="hasText" permissions="" sdk="14" />
+    <Hook restriction="clipboard" method="addPrimaryClipChangedListener" permissions="" sdk="11" />
+    <Hook restriction="clipboard" method="getPrimaryClip" permissions="" sdk="11" />
+    <Hook restriction="clipboard" method="getPrimaryClipDescription" permissions="" sdk="11" />
+    <Hook restriction="clipboard" method="getText" permissions="" sdk="11" />
+    <Hook restriction="clipboard" method="hasPrimaryClip" permissions="" sdk="11" />
+    <Hook restriction="clipboard" method="hasText" permissions="" sdk="11" />
+    <Hook restriction="clipboard" method="removePrimaryClipChangedListener" permissions="" sdk="11" />
 
     <Hook restriction="contacts" method="contacts/contacts" permissions="READ_CONTACTS" sdk="14" />
     <Hook restriction="contacts" method="contacts/data" permissions="READ_CONTACTS" sdk="14" />
