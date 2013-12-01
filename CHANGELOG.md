@@ -10,6 +10,7 @@ Changelog
 * Fixed missing usage data
 * Send usage data on application close or force close (FC)
 * Progress reports while export is loading, thanks @[jpeg729](https://github.com/jpeg729)
+* Require Xposed version 2.4
 
 **Version 1.10.33 BETA**
 
