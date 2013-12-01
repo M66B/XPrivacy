@@ -337,7 +337,7 @@ public class PrivacyProvider extends ContentProvider {
 			editor.putBoolean(getRestrictionPref(restrictionName), !allowed);
 		if (methodName != null)
 			editor.putBoolean(getExceptionPref(restrictionName, methodName), allowed);
-		editor.apply();
+		editor.commit();
 		setPrefFileReadable(PREF_RESTRICTION, uid);
 	}
 
@@ -350,7 +350,7 @@ public class PrivacyProvider extends ContentProvider {
 		String prefValue = String.format("%d:%b", timeStamp, restricted);
 		editor.remove(prefName);
 		editor.putString(prefName, prefValue);
-		editor.apply();
+		editor.commit();
 	}
 
 	private void updateSetting(String name, String value) {
@@ -360,7 +360,7 @@ public class PrivacyProvider extends ContentProvider {
 			editor.remove(getSettingPref(name));
 		else
 			editor.putString(getSettingPref(name), value);
-		editor.apply();
+		editor.commit();
 		setPrefFileReadable(PREF_SETTINGS);
 	}
 
@@ -392,7 +392,7 @@ public class PrivacyProvider extends ContentProvider {
 			editor.remove(pref);
 			rows++;
 		}
-		editor.apply();
+		editor.commit();
 		setPrefFileReadable(PREF_RESTRICTION, uid);
 
 		return rows;
@@ -413,7 +413,7 @@ public class PrivacyProvider extends ContentProvider {
 					rows++;
 				}
 			}
-			editor.apply();
+			editor.commit();
 		}
 
 		return rows;
@@ -428,7 +428,7 @@ public class PrivacyProvider extends ContentProvider {
 			editor.remove(pref);
 			Util.log(null, Log.INFO, "Removed setting=" + pref);
 		}
-		editor.apply();
+		editor.commit();
 		setPrefFileReadable(PREF_SETTINGS);
 		return rows;
 	}
@@ -620,7 +620,7 @@ public class PrivacyProvider extends ContentProvider {
 			} catch (Throwable ex) {
 			}
 
-		editor.apply();
+		editor.commit();
 		setPrefFileReadable(PREF_SETTINGS);
 	}
 }
