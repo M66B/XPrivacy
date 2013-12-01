@@ -182,9 +182,9 @@ public class PrivacyProvider extends ContentProvider {
 			// Update usage data
 			if (usage && restrictionName != null && methodName != null && !methodName.equals("*")) {
 				final boolean isRestricted = restricted;
+				final long timeStamp = new Date().getTime();
 				mExecutor.execute(new Runnable() {
 					public void run() {
-						long timeStamp = new Date().getTime();
 						updateUsage(uid, restrictionName, methodName, isRestricted, timeStamp);
 					}
 				});

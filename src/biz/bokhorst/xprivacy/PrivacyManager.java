@@ -306,6 +306,9 @@ public class PrivacyManager {
 							} finally {
 								cursor.close();
 							}
+
+						// Send usage data async
+						sendUsageData(hook, context);
 					}
 				} catch (SecurityException ex) {
 					Util.bug(hook, ex);
@@ -313,24 +316,21 @@ public class PrivacyManager {
 					Util.bug(hook, ex);
 				}
 
-			// Queue usage data
-			if (usage) {
-				UsageData usageData = new UsageData(uid, restrictionName, methodName, restricted);
-				synchronized (mUsageQueue) {
-					if (mUsageQueue.containsKey(usageData))
-						mUsageQueue.remove(usageData);
-					mUsageQueue.put(usageData, usageData);
-					Util.log(hook, Log.INFO, "Queue usage data=" + usageData + " size=" + mUsageQueue.size());
-				}
-			}
-
 			// Use fallback
 			if (fallback) {
 				// Fallback
 				restricted = PrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
-			} else {
-				// Send usage data async
-				sendUsageData(hook, context);
+
+				// Queue usage data
+				if (usage) {
+					UsageData usageData = new UsageData(uid, restrictionName, methodName, restricted);
+					synchronized (mUsageQueue) {
+						if (mUsageQueue.containsKey(usageData))
+							mUsageQueue.remove(usageData);
+						mUsageQueue.put(usageData, usageData);
+						Util.log(hook, Log.INFO, "Queue usage data=" + usageData + " size=" + mUsageQueue.size());
+					}
+				}
 			}
 
 			// Add to cache
