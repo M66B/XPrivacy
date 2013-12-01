@@ -32,13 +32,14 @@ public class XClipboardManager extends XHook {
 	// public CharSequence getText()
 	// public boolean hasPrimaryClip()
 	// public boolean hasText()
+	// public void removePrimaryClipChangedListener(ClipboardManager.OnPrimaryClipChangedListener what)
 	// frameworks/base/core/java/android/content/ClipboardManager.java
 	// http://developer.android.com/reference/android/content/ClipboardManager.html
 
 	// @formatter:on
 
 	private enum Methods {
-		addPrimaryClipChangedListener, getPrimaryClip, getPrimaryClipDescription, getText, hasPrimaryClip, hasText
+		addPrimaryClipChangedListener, getPrimaryClip, getPrimaryClipDescription, getText, hasPrimaryClip, hasText, removePrimaryClipChangedListener
 	};
 
 	public static List<XHook> getInstances() {
@@ -50,23 +51,22 @@ public class XClipboardManager extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (mMethod == Methods.addPrimaryClipChangedListener)
+		if (mMethod == Methods.addPrimaryClipChangedListener || mMethod == Methods.removePrimaryClipChangedListener)
 			if (isRestricted(param))
 				param.setResult(null);
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (mMethod != Methods.addPrimaryClipChangedListener)
-			if (mMethod == Methods.getPrimaryClip || mMethod == Methods.getPrimaryClipDescription
-					|| mMethod == Methods.getText) {
-				if (param.getResult() != null && isRestricted(param))
-					param.setResult(null);
-			} else if (mMethod == Methods.hasPrimaryClip || mMethod == Methods.hasText) {
-				if (isRestricted(param))
-					param.setResult(false);
-			} else
-				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+		if (mMethod == Methods.getPrimaryClip || mMethod == Methods.getPrimaryClipDescription
+				|| mMethod == Methods.getText) {
+			if (param.getResult() != null && isRestricted(param))
+				param.setResult(null);
+		} else if (mMethod == Methods.hasPrimaryClip || mMethod == Methods.hasText) {
+			if (isRestricted(param))
+				param.setResult(false);
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override
