@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -478,13 +479,20 @@ public class PrivacyManager {
 		public String methodName;
 	}
 
-	public static List<RestrictionDesc> getRestricted(Context context) {
+	public static List<RestrictionDesc> getRestricted(Context context, Runnable progress) {
 		List<RestrictionDesc> result = new ArrayList<RestrictionDesc>();
+		progress.run(); // 1% for getting the cursor
 		Cursor rCursor = context.getContentResolver().query(PrivacyProvider.URI_RESTRICTION, null, null,
 				new String[] { Integer.toString(0), Boolean.toString(false) }, null);
 		if (rCursor != null)
 			try {
+				final int max = rCursor.getCount();
+				final int step = (max + 95)/96; // 96% left for loading the restrictions
+				int current = 0;
 				while (rCursor.moveToNext()) {
+					current++;
+					if (current % step == 0 || current == max)
+						progress.run();
 					RestrictionDesc restriction = new RestrictionDesc();
 					restriction.uid = rCursor.getInt(rCursor.getColumnIndex(PrivacyProvider.COL_UID));
 					restriction.restricted = Boolean.parseBoolean(rCursor.getString(rCursor
@@ -498,6 +506,65 @@ public class PrivacyManager {
 				rCursor.close();
 			}
 		return result;
+	}
+
+	public static class RestrictedIterator implements Iterator<RestrictionDesc>, Iterable<RestrictionDesc> {
+
+		private Cursor mCursor;
+
+		public RestrictedIterator(Cursor cursor) {
+			mCursor = cursor;
+		}
+
+		public int getCount() {
+			return mCursor != null ? mCursor.getCount() : 0;
+		}
+
+		public void cleanUp() {
+			try {
+				mCursor.close();
+			} finally {
+				// nothing to do here
+			}
+		}
+
+		@Override
+		public boolean hasNext() {
+			if (mCursor.moveToNext()) {
+				return true;
+			} else {
+				cleanUp();
+				return false;
+			}
+		}
+
+		@Override
+		public RestrictionDesc next() {
+			RestrictionDesc restriction = new RestrictionDesc();
+			restriction.uid = mCursor.getInt(mCursor.getColumnIndex(PrivacyProvider.COL_UID));
+			restriction.restricted = Boolean.parseBoolean(mCursor.getString(mCursor
+					.getColumnIndex(PrivacyProvider.COL_RESTRICTED)));
+			restriction.restrictionName = mCursor.getString(mCursor
+					.getColumnIndex(PrivacyProvider.COL_RESTRICTION));
+			restriction.methodName = mCursor.getString(mCursor.getColumnIndex(PrivacyProvider.COL_METHOD));
+			return restriction;
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException("remove not supported");
+		}
+
+		@Override
+		public Iterator<RestrictionDesc> iterator() {
+			return this;
+		}
+	}
+
+	public static RestrictedIterator getRestrictedIterator(Context context) {
+		Cursor rCursor = context.getContentResolver().query(PrivacyProvider.URI_RESTRICTION, null, null,
+				new String[] { Integer.toString(0), Boolean.toString(false) }, null);
+		return new RestrictedIterator(rCursor);
 	}
 
 	public static void deleteRestrictions(Context context, int uid) {
@@ -670,12 +737,18 @@ public class PrivacyManager {
 		Util.log(hook, Log.INFO, String.format("set setting %s=%s", sName, value));
 	}
 
-	public static Map<String, String> getSettings(Context context) {
+	public static Map<String, String> getSettings(Context context, Runnable progress) {
 		Map<String, String> result = new HashMap<String, String>();
+		progress.run(); // 1% for getting the cursor
 		Cursor sCursor = context.getContentResolver().query(PrivacyProvider.URI_SETTING, null, null, null, null);
 		if (sCursor != null)
 			try {
+				final int max = sCursor.getCount();
+				int current = 0;
 				while (sCursor.moveToNext()) {
+					current++;
+					if (current == max/2 || current == max)
+						progress.run(); // 2% for fetching settings
 					// Get setting
 					String setting = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_SETTING));
 					String value = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_VALUE));
@@ -685,6 +758,65 @@ public class PrivacyManager {
 				sCursor.close();
 			}
 		return result;
+	}
+
+	public static class SettingDesc {
+		public String settingName;
+		public String value;
+	}
+
+	public static class SettingsIterator implements Iterator<SettingDesc>, Iterable<SettingDesc> {
+
+		private Cursor mCursor;
+
+		public SettingsIterator(Cursor cursor) {
+			mCursor = cursor;
+		}
+
+		public int getCount() {
+			return mCursor != null ? mCursor.getCount() : 0;
+		}
+
+		public void cleanUp() {
+			try {
+				mCursor.close();
+			} finally {
+				// nothing to do here
+			}
+		}
+
+		@Override
+		public boolean hasNext() {
+			if (mCursor.moveToNext()) {
+				return true;
+			} else {
+				cleanUp();
+				return false;
+			}
+		}
+
+		@Override
+		public SettingDesc next() {
+			SettingDesc setting = new SettingDesc();
+			setting.settingName = mCursor.getString(mCursor.getColumnIndex(PrivacyProvider.COL_SETTING));
+			setting.value = mCursor.getString(mCursor.getColumnIndex(PrivacyProvider.COL_VALUE));
+			return setting;
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException("remove not supported");
+		}
+
+		@Override
+		public Iterator<SettingDesc> iterator() {
+			return this;
+		}
+	}
+
+	public static SettingsIterator getSettingsIterator(Context context) {
+		Cursor sCursor = context.getContentResolver().query(PrivacyProvider.URI_SETTING, null, null, null, null);
+		return new SettingsIterator(sCursor);
 	}
 
 	public static void deleteSettings(Context context) {

@@ -118,7 +118,6 @@ public class ActivityShare extends Activity {
 
 	private class ExportTask extends AsyncTask<File, String, String> {
 		private File mFile;
-		private int mProgressMax = 1;
 		private int mCurrent = 0;
 		private final static int NOTIFY_ID = 1;
 
@@ -141,8 +140,17 @@ public class ActivityShare extends Activity {
 					publishProgress(getString(R.string.msg_loading));
 					Util.log(null, Log.INFO, "Exporting settings");
 
+					// Progress updater
+					Runnable progress = new Runnable() {
+						@Override
+						public void run() { // This should be called exactly 100 times
+							mCurrent++;
+							publishProgress(getString(R.string.msg_loading), Integer.toString(mCurrent), "100");
+						}
+					};
+
 					String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityShare.this);
+					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityShare.this, progress);
 					for (String setting : mapSetting.keySet()) {
 						String value = mapSetting.get(setting);
 
@@ -161,7 +169,7 @@ public class ActivityShare extends Activity {
 
 					// Process restrictions
 					List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager
-							.getRestricted(ActivityShare.this);
+							.getRestricted(ActivityShare.this, progress);
 					Map<String, List<PrivacyManager.RestrictionDesc>> mapRestriction = new HashMap<String, List<PrivacyManager.RestrictionDesc>>();
 					for (PrivacyManager.RestrictionDesc restriction : listRestriction) {
 						String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
@@ -176,13 +184,13 @@ public class ActivityShare extends Activity {
 					}
 
 					// Set some numbers for the progress bar
-					mProgressMax = mapRestriction.size();
+					final String max = Integer.toString(mapRestriction.size());
 					mCurrent = 0;
 
 					// Process result
 					for (String packageName : mapRestriction.keySet()) {
 						mCurrent++;
-						publishProgress(packageName, Integer.toString(mCurrent));
+						publishProgress(packageName, Integer.toString(mCurrent), max);
 						Util.log(null, Log.INFO, "Exporting " + packageName);
 						for (PrivacyManager.RestrictionDesc restrictionDesc : mapRestriction.get(packageName)) {
 							serializer.startTag(null, "Package");
@@ -215,15 +223,18 @@ public class ActivityShare extends Activity {
 		@Override
 		protected void onProgressUpdate(String... values) {
 			int progress = 0;
-			if (values.length > 1)
+			int max = 1;
+			if (values.length > 2) {
 				progress = Integer.parseInt(values[1]);
-			notify(values[0], true, progress);
+				max = Integer.parseInt(values[2]);
+			}
+			notify(values[0], true, progress, max);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result, false, 0);
+			notify(result, false, 0, 1);
 			Intent intent = new Intent();
 			intent.putExtra(cFileName, mFile.getAbsolutePath());
 			setResult(result.equals(getString(R.string.msg_done)) ? 0 : 1, intent);
@@ -234,11 +245,11 @@ public class ActivityShare extends Activity {
 			super.onPostExecute(result);
 		}
 
-		private void notify(String text, boolean ongoing, int progress) {
+		private void notify(String text, boolean ongoing, int progress, int max) {
 			// Send progress info to main activity
 			Intent progressIntent = new Intent(cProgressReport);
 			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_export), text));
-			progressIntent.putExtra(cProgressMax, mProgressMax);
+			progressIntent.putExtra(cProgressMax, max);
 			progressIntent.putExtra(cProgressValue, progress);
 			mBroadcastManager.sendBroadcast(progressIntent);
 
