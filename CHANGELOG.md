@@ -3,10 +3,13 @@ Changelog
 
 **Next release**
 
-* Send usage data on application (force) close, thanks @[jpeg729](https://github.com/jpeg729)
-* Progress reports while export is loading, thanks @[jpeg729](https://github.com/jpeg729)
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.34 TEST**
+
+* Fixed missing usage data
+* Send usage data on application close or force close (FC)
+* Progress reports while export is loading, thanks @[jpeg729](https://github.com/jpeg729)
 
 **Version 1.10.33 BETA**
 
