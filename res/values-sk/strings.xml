@@ -34,8 +34,8 @@
     <string name="msg_update">Aktualizácia</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
     <string name="msg_loading">Prebieha načítavanie</string>
-    <string name="msg_saved_to">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_saved_to">Uložené do %s</string>
+    <string name="msg_no_restrictions">Nenájdené žiadne obmedzenia</string>
     <string name="msg_edit">Kliknite na ikonu aplikácie pre úpravu všetkých obmedzení</string>
     <string name="msg_sure">Ste si istý?</string>
     <string name="msg_done">Hotovo</string>
@@ -104,13 +104,13 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_extra">Extra dáta využitia (vyžaduje reštart)</string>
     <string name="settings_log">Záznam na ladenie (vyžaduje reštart)</string>
     <string name="settings_expert">Režim experta</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_dangerous">Obmedziť nebezpečné funkcie</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>
     <string name="help_used">používala tieto dáta</string>
     <string name="help_frozen">je zakázaná</string>
     <string name="help_dangerous">je nebezpečná</string>
-    <string name="help_half">partly restricted</string>
+    <string name="help_half">čiastočne obmedzené</string>
 
 </resources>
