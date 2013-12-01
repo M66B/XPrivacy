@@ -62,10 +62,12 @@ public class XContextWrapper extends XHook {
 			if (context != null && PrivacyManager.isExtraUsageDataEnabled(uid))
 				PrivacyManager.sendUsageData(this, context);
 		} else if (mMethod == Methods.getSystemService) {
-			Util.log(this, Log.INFO, "getSystemService name=" + param.args[0]);
-			if (!mWindowManagerHooked) {
-				String name = (String) param.args[0];
-				if (name != null && name.equals(Context.WINDOW_SERVICE)) {
+			String name = (String) param.args[0];
+			Object result = param.getResultOrThrowable();
+			if (name != null && result != null) {
+				Util.log(this, Log.INFO, "getSystemService " + name + "=" + result.getClass().getName());
+
+				if (!mWindowManagerHooked && name.equals(Context.WINDOW_SERVICE)) {
 
 					// @formatter:off
 
@@ -77,16 +79,11 @@ public class XContextWrapper extends XHook {
 
 					// @formatter:on
 
-					Object windowManager = param.getResultOrThrowable();
-					if (windowManager != null) {
-						{
-							Class<?> clazz = windowManager.getClass();
-							hook(clazz, "addView", View.class, ViewGroup.LayoutParams.class);
-							hook(clazz, "removeView", View.class);
-							hook(clazz, "updateViewLayout", View.class, ViewGroup.LayoutParams.class);
-							mWindowManagerHooked = true;
-						}
-					}
+					Class<?> clazz = result.getClass();
+					hook(clazz, "addView", View.class, ViewGroup.LayoutParams.class);
+					hook(clazz, "removeView", View.class);
+					hook(clazz, "updateViewLayout", View.class, ViewGroup.LayoutParams.class);
+					mWindowManagerHooked = true;
 				}
 			}
 		} else

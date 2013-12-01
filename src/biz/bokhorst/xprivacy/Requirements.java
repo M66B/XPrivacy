@@ -44,9 +44,10 @@ public class Requirements {
 		}
 
 		// Check Xposed version
-		int xVersion = Util.getXposedVersion();
-		if (xVersion < PrivacyManager.cXposedMinVersion) {
-			String msg = String.format(context.getString(R.string.app_notxposed), PrivacyManager.cXposedMinVersion);
+		int xVersion = Util.getXposedAppProcessVersion();
+		if (xVersion < PrivacyManager.cXposedAppProcessMinVersion) {
+			String msg = String.format(context.getString(R.string.app_notxposed),
+					PrivacyManager.cXposedAppProcessMinVersion);
 			Util.log(null, Log.WARN, msg);
 
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);

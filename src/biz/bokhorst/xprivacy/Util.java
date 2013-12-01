@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.robv.android.xposed.XposedBridge;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -59,6 +61,9 @@ public class Util {
 				Log.println(priority, "XPrivacy", msg);
 			else
 				Log.println(priority, String.format("XPrivacy/%s", hook.getClass().getSimpleName()), msg);
+
+		if (priority != Log.DEBUG && priority != Log.INFO)
+			XposedBridge.log(msg);
 	}
 
 	public static void bug(XHook hook, Throwable ex) {
@@ -70,7 +75,7 @@ public class Util {
 		log(hook, Log.INFO, Log.getStackTraceString(new Exception("StackTrace")));
 	}
 
-	public static int getXposedVersion() {
+	public static int getXposedAppProcessVersion() {
 		final Pattern PATTERN_APP_PROCESS_VERSION = Pattern.compile(".*with Xposed support \\(version (.+)\\).*");
 		try {
 			InputStream is = new FileInputStream("/system/bin/app_process");

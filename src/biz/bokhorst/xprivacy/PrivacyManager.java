@@ -34,6 +34,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
@@ -70,7 +71,7 @@ public class PrivacyManager {
 			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
 			cNetwork, cNfc, cNotifications, cSensors, cPhone, cShell, cStorage, cSystem, cView };
 
-	public final static int cXposedMinVersion = 42;
+	public final static int cXposedAppProcessMinVersion = 46;
 	public final static int cAndroidUid = 1000;
 
 	public final static String cSettingSerial = "Serial";
@@ -391,7 +392,8 @@ public class PrivacyManager {
 						}
 						if (data != null) {
 							try {
-								Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
+								Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size + " uid="
+										+ Binder.getCallingUid());
 								ContentValues values = new ContentValues();
 								values.put(PrivacyProvider.COL_UID, data.getUid());
 								values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
@@ -408,7 +410,8 @@ public class PrivacyManager {
 					} while (data != null);
 				}
 			});
-		}
+		} else
+			Util.log(hook, Log.INFO, "No usage data queued uid=" + Binder.getCallingUid());
 	}
 
 	public static void setRestricted(XHook hook, Context context, int uid, String restrictionName, String methodName,

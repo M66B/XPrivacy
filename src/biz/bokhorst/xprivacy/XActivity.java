@@ -34,6 +34,11 @@ public class XActivity extends XHook {
 		return "android.app.Activity";
 	}
 
+	@Override
+	public boolean isVisible() {
+		return !(mMethod == Methods.onDestroy || mMethod == Methods.onPause);
+	}
+
 	// @formatter:off
 
 	// public void startActivities(Intent[] intents)
@@ -48,8 +53,8 @@ public class XActivity extends XHook {
 	// public void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode, Bundle options)
 	// public boolean startActivityIfNeeded(Intent intent, int requestCode)
 	// public boolean startActivityIfNeeded(Intent intent, int requestCode, Bundle options)
-	// protected void onPause ()
-	// protected void onDestroy ()
+	// protected void onPause()
+	// protected void onDestroy()
 	// frameworks/base/core/java/android/app/Activity.java
 
 	// @formatter:on

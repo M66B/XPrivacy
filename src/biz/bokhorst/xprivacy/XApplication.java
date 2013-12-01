@@ -11,7 +11,6 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XApplication extends XHook {
 	private Methods mMethod;
-	private static XUncaughtExceptionHandler mUncaughtExceptionHandler = null;
 
 	public XApplication(Methods method, String restrictionName, String actionName) {
 		super(restrictionName, method.name(), actionName);
@@ -45,26 +44,36 @@ public class XApplication extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.onCreate) {
-			if (mUncaughtExceptionHandler == null)
-				mUncaughtExceptionHandler = new XUncaughtExceptionHandler((Application) param.thisObject);
+			Thread.UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+			if (!(defaultHandler instanceof XUncaughtExceptionHandler)) {
+				Util.log(this, Log.INFO, "Installing XUncaughtExceptionHandler");
+				Application app = (Application) param.thisObject;
+				Thread.setDefaultUncaughtExceptionHandler(new XUncaughtExceptionHandler(this, app, defaultHandler));
+			}
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	private static class XUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
-		private static Context mContext;
+		private XHook mHook;
+		private Context mContext;
+		private Thread.UncaughtExceptionHandler mDefaultHandler;
 
-		public XUncaughtExceptionHandler(Application app) {
-			mContext = app;
+		public XUncaughtExceptionHandler(XHook hook, Context context, Thread.UncaughtExceptionHandler defaultHandler) {
+			mHook = hook;
+			mContext = context;
+			mDefaultHandler = defaultHandler;
 		}
 
 		@Override
-		public void uncaughtException(Thread arg0, Throwable arg1) {
+		public void uncaughtException(Thread thread, Throwable ex) {
 			try {
+				Util.log(mHook, Log.INFO, "Handling " + ex.getMessage());
 				PrivacyManager.sendUsageData(null, mContext);
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
+			} catch (Throwable exex) {
+				Util.bug(mHook, exex);
 			}
+			mDefaultHandler.uncaughtException(thread, ex);
 		}
 	}
 }

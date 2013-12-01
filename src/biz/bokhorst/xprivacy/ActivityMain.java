@@ -744,7 +744,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		// Show Xposed version
-		int xVersion = Util.getXposedVersion();
+		int xVersion = Util.getXposedAppProcessVersion();
 		TextView tvXVersion = (TextView) dlgAbout.findViewById(R.id.tvXVersion);
 		tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
 
