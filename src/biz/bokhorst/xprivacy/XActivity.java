@@ -1,9 +1,11 @@
 package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -46,33 +48,44 @@ public class XActivity extends XHook {
 	// public void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode, Bundle options)
 	// public boolean startActivityIfNeeded(Intent intent, int requestCode)
 	// public boolean startActivityIfNeeded(Intent intent, int requestCode, Bundle options)
+	// protected void onPause ()
+	// protected void onDestroy ()
 	// frameworks/base/core/java/android/app/Activity.java
 
 	// @formatter:on
 
 	private enum Methods {
-		startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded
+		startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded,
+		onPause, onDestroy
 	};
 
 	@SuppressLint("InlinedApi")
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
+		
+		List<Methods> startMethods = new ArrayList<Methods>(Arrays.asList(Methods.values()));
+		startMethods.remove(Methods.onPause);
+		startMethods.remove(Methods.onDestroy);
 
 		// Intent send: browser
-		for (Methods activity : Methods.values())
+		for (Methods activity : startMethods)
 			listHook.add(new XActivity(activity, PrivacyManager.cView, Intent.ACTION_VIEW));
 
 		// Intent send: call
-		for (Methods activity : Methods.values())
+		for (Methods activity : startMethods)
 			listHook.add(new XActivity(activity, PrivacyManager.cCalling, Intent.ACTION_CALL));
 
 		// Intent send: media
-		for (Methods activity : Methods.values()) {
+		for (Methods activity : startMethods) {
 			listHook.add(new XActivity(activity, PrivacyManager.cMedia, MediaStore.ACTION_IMAGE_CAPTURE));
 			listHook.add(new XActivity(activity, PrivacyManager.cMedia, MediaStore.ACTION_IMAGE_CAPTURE_SECURE,
 					Build.VERSION_CODES.JELLY_BEAN_MR1));
 			listHook.add(new XActivity(activity, PrivacyManager.cMedia, MediaStore.ACTION_VIDEO_CAPTURE));
 		}
+
+		// sendUsageData on activity stop
+		listHook.add(new XActivity(Methods.onPause, null, null));
+		listHook.add(new XActivity(Methods.onDestroy, null, null));
 
 		return listHook;
 	}
@@ -92,6 +105,8 @@ public class XActivity extends XHook {
 		} else if (mMethod == Methods.startActivities) {
 			if (param.args.length > 0 && param.args[0] != null)
 				intents = (Intent[]) param.args[0];
+		} else if (mMethod == Methods.onPause || mMethod == Methods.onDestroy) {
+			// Wait until after
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 
@@ -126,6 +141,11 @@ public class XActivity extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		// Do nothing
+		if (mMethod == Methods.onPause || mMethod == Methods.onDestroy)
+			try {
+				PrivacyManager.sendUsageData(this, (Context) param.thisObject);
+			} finally {
+				// do nothing
+			}
 	}
 }
