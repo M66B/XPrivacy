@@ -82,7 +82,7 @@
     <string name="settings_mac">MAC seoladh</string>
     <string name="settings_ip">seoladh IP</string>
     <string name="settings_phone">uimhir Fón</string>
-    <string name="settings_id">Android ID</string>
+    <string name="settings_id">ID Android</string>
     <string name="settings_country">Tír</string>
     <string name="settings_operator">Oibreoir</string>
     <string name="settings_subscriber">ID Suibscríobhaí</string>
