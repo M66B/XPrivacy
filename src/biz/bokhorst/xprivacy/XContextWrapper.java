@@ -62,6 +62,7 @@ public class XContextWrapper extends XHook {
 			if (context != null && PrivacyManager.isExtraUsageDataEnabled(uid))
 				PrivacyManager.sendUsageData(this, context);
 		} else if (mMethod == Methods.getSystemService) {
+			Util.log(this, Log.INFO, "getSystemService name=" + param.args[0]);
 			if (!mWindowManagerHooked) {
 				String name = (String) param.args[0];
 				if (name != null && name.equals(Context.WINDOW_SERVICE)) {
