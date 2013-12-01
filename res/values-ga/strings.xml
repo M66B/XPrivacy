@@ -1,15 +1,11 @@
 ﻿<resources>
 
-    <!-- Translators: do not include texts with translatable="false" -->
-    <string name="app_name" translatable="false">XPrivacy</string>
     <string name="app_notxposed" formatted="false">Ní Xposed framework leagan %d+ suiteáilte</string>
     <string name="app_notenabled">Ní XPrivacy chumasú i an suiteálaí Xposed</string>
     <string name="app_wrongandroid">Ach amháin le haghaidh Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy leagan: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
     <string name="app_copyright">Cóipcheart \ u00A9 2013 le M. Bokhorst (M66B)</string>
-    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#xprivacy</string>
-    <string name="app_support" translatable="false">http://forum.xda-developers.com/showthread.php?t=2320783</string>
     <string name="menu_usage">Úsáid</string>
     <string name="menu_refresh">Athnuaigh</string>
     <string name="menu_settings">Socruithe</string>
@@ -59,8 +55,7 @@
     <string name="restrict_media">Meáin (fuaime, grianghraf, físeán)</string>
     <string name="restrict_messages">Teachtaireachtaí (SMS, MMS)</string>
     <string name="restrict_network">Líonra (seoltaí)</string>
-    <string name="restrict_nfc" translatable="false">NFC</string>
-    <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_notifications">Fógraí</string>
     <string name="restrict_phone">Fón (ID, uimhreacha, glaonna)</string>
     <string name="restrict_storage">Stóráil (meáin, SD-cárta)</string>
     <string name="restrict_shell">Shell (orduithe, fhorúsáideoir)</string>
@@ -86,24 +81,18 @@
     <string name="settings_lon">Domhanfhad</string>
     <string name="settings_mac">MAC seoladh</string>
     <string name="settings_ip">seoladh IP</string>
-    <string name="settings_imei" translatable="false">IMEI</string>
-    <string name="settings_phone">Phone number</string>
+    <string name="settings_phone">uimhir Fón</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_gsfid" translatable="false">GSF ID</string>
-    <string name="settings_mcc" translatable="false">MCC</string>
-    <string name="settings_mnc" translatable="false">MNC</string>
     <string name="settings_country">Tír</string>
     <string name="settings_operator">Oibreoir</string>
-    <string name="settings_iccid" translatable="false">ICC ID</string>
-    <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_ua">User agent</string>
+    <string name="settings_subscriber">ID Suibscríobhaí</string>
+    <string name="settings_ua">gníomhaire Úsáideoir</string>
     <string name="settings_log">logáil Debug (Éilíonn atosú)</string>
     <string name="help_application">Iarratais</string>
-    <string name="help_internet">has internet permission</string>
+    <string name="help_internet">Tá cead idirlín</string>
     <string name="help_granted">Tá cead Android</string>
     <string name="help_used">Tá úsáid na sonraí seo</string>
     <string name="help_frozen">faoi mhíchumas</string>
     <string name="help_dangerous">contúirteacha</string>
-    <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
 
 </resources>
