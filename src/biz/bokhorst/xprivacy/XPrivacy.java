@@ -295,15 +295,20 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			// Add hook
 			Set<XC_MethodHook.Unhook> hookSet = new HashSet<XC_MethodHook.Unhook>();
-			if (hook.getMethodName() == null) {
-				for (Constructor<?> constructor : hookClass.getDeclaredConstructors())
-					if (Modifier.isPublic(constructor.getModifiers()) ? hook.isVisible() : !hook.isVisible())
-						hookSet.add(XposedBridge.hookMethod(constructor, methodHook));
-			} else
-				for (Method method : hookClass.getDeclaredMethods())
-					if (method.getName().equals(hook.getMethodName())
-							&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible()))
-						hookSet.add(XposedBridge.hookMethod(method, methodHook));
+
+			Class<?> clazz = hookClass;
+			while (clazz != null) {
+				if (hook.getMethodName() == null) {
+					for (Constructor<?> constructor : clazz.getDeclaredConstructors())
+						if (Modifier.isPublic(constructor.getModifiers()) ? hook.isVisible() : !hook.isVisible())
+							hookSet.add(XposedBridge.hookMethod(constructor, methodHook));
+				} else
+					for (Method method : clazz.getDeclaredMethods())
+						if (method.getName().equals(hook.getMethodName())
+								&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible()))
+							hookSet.add(XposedBridge.hookMethod(method, methodHook));
+				clazz = (hookSet.isEmpty() ? clazz.getSuperclass() : null);
+			}
 
 			// Check if found
 			if (hookSet.isEmpty()) {
@@ -318,7 +323,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Log
 			for (XC_MethodHook.Unhook unhook : hookSet) {
 				String packageName = AndroidAppHelper.currentPackageName();
-				String className = hookClass.getName();
+				String className = unhook.getHookedMethod().getDeclaringClass().getName();
 				String methodName = unhook.getHookedMethod().getName();
 				String restrictionName = hook.getRestrictionName();
 				if (className.equals(methodName))
