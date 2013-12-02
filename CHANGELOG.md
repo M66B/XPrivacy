@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Attempt to fix clipboard restriction for some devices ([issue](https://github.com/M66B/XPrivacy/issues/857))
+* Attempt to fix user agent restriction for KitKat ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Updated Irish translation
 * Updated Russian translation
 * Updated Slovak translation
