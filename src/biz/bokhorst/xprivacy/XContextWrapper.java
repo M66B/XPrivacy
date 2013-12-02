@@ -11,6 +11,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XContextWrapper extends XHook {
 	private Methods mMethod;
+	private static boolean mClipboardManagerHooked = false;
 	private static boolean mWindowManagerHooked = false;
 
 	private XContextWrapper(Methods method, String restrictionName) {
@@ -57,7 +58,13 @@ public class XContextWrapper extends XHook {
 			Object result = param.getResultOrThrowable();
 			if (name != null && result != null) {
 				Util.log(this, Log.INFO, "getSystemService " + name + "=" + result.getClass().getName());
-				if (name.equals(Context.WINDOW_SERVICE)) {
+				if (name.equals(Context.CLIPBOARD_SERVICE)) {
+					// Clipboard service
+					if (!mClipboardManagerHooked) {
+						XPrivacy.hookAll(XClipboardManager.getInstances(result));
+						mClipboardManagerHooked = true;
+					}
+				} else if (name.equals(Context.WINDOW_SERVICE)) {
 					// Windows service
 					if (!mWindowManagerHooked) {
 						XPrivacy.hookAll(XWindowManager.getInstances(result));

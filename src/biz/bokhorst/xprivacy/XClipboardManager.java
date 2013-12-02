@@ -14,14 +14,16 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XClipboardManager extends XHook {
 	private Methods mMethod;
+	private String mClassName;
 
-	private XClipboardManager(Methods method, String restrictionName) {
+	private XClipboardManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
+		mClassName = className;
 	}
 
 	public String getClassName() {
-		return "android.content.ClipboardManager";
+		return mClassName;
 	}
 
 	// @formatter:off
@@ -42,10 +44,11 @@ public class XClipboardManager extends XHook {
 		addPrimaryClipChangedListener, getPrimaryClip, getPrimaryClipDescription, getText, hasPrimaryClip, hasText, removePrimaryClipChangedListener
 	};
 
-	public static List<XHook> getInstances() {
+	public static List<XHook> getInstances(Object instance) {
+		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods clip : Methods.values())
-			listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard));
+			listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard, className));
 		return listHook;
 	}
 
