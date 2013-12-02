@@ -11,5 +11,6 @@ For interested developers:
 * Button to refresh application list
 * Dialogs for all the things in *Requirements.java* (no intents without user consent)
 * Sort localized category lists
-* Holo check boxes functions
+* Holo check boxes for functions exceptions
 * Move *SubmitTask* to *ActivityShare* (or the replacing service)
+* Updated *SharedPreferencesEx* with KitKat changes
