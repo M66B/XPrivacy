@@ -21,6 +21,8 @@
     <string name="menu_help">Trợ giúp</string>
     <string name="menu_all">Tất cả</string>
     <string name="menu_restriction_all">Thay đổi các sự hạn chế</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">Thay đổi bộ lọc</string>
     <string name="menu_apply">Áp dụng thiết lập mẫu</string>
     <string name="menu_clear">Xóa thiết lập</string>

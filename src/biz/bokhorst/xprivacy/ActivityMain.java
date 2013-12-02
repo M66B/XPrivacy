@@ -567,29 +567,32 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	// Options
 
 	private void optionAll() {
+		// Check if some restricted
+		boolean some = false;
+		for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
+			ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
+			for (boolean restricted : PrivacyManager.getRestricted(ActivityMain.this, xAppInfo.getUid(),
+					mAppAdapter.getRestrictionName()))
+				if (restricted) {
+					some = true;
+					break;
+				}
+			if (some)
+				break;
+		}
+		final boolean someRestricted = some;
+
+		// Are you sure?
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(R.string.app_name));
+		alertDialogBuilder.setTitle(String.format("%s - %s", getString(R.string.app_name),
+				getString(someRestricted ? R.string.menu_clear_all : R.string.menu_restrict_all)));
 		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (mAppAdapter != null) {
-					// Check if some restricted
-					boolean someRestricted = false;
-					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
-						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
-						for (boolean restricted : PrivacyManager.getRestricted(ActivityMain.this, xAppInfo.getUid(),
-								mAppAdapter.getRestrictionName()))
-							if (restricted) {
-								someRestricted = true;
-								break;
-							}
-						if (someRestricted)
-							break;
-					}
-
-					// Invert selection
+					// Apply action
 					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
 						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
 						if (mAppAdapter.getRestrictionName() == null) {

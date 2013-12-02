@@ -21,6 +21,8 @@
     <string name="menu_help">說明</string>
     <string name="menu_all">所有程式</string>
     <string name="menu_restriction_all">套用預設規則</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">切換顯示限制項目</string>
     <string name="menu_apply">套用預設規則</string>
     <string name="menu_clear">清空</string>

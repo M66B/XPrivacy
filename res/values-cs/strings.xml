@@ -21,6 +21,8 @@
     <string name="menu_help">Nápověda</string>
     <string name="menu_all">Vše</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Vyčistit</string>

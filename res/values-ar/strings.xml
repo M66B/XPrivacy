@@ -21,6 +21,8 @@
     <string name="menu_help">مساعدة</string>
     <string name="menu_all">تحديد الكل</string>
     <string name="menu_restriction_all">تبديل القيود</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">تغيير الفلتر</string>
     <string name="menu_apply">تطبيق القالب</string>
     <string name="menu_clear">إلغاء التحديد</string>

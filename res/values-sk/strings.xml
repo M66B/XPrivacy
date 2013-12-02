@@ -21,6 +21,8 @@
     <string name="menu_help">Nápoveda</string>
     <string name="menu_all">Všetko</string>
     <string name="menu_restriction_all">Prepnúť obmedzenia</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">Prepnúť filter</string>
     <string name="menu_apply">Použiť šablónu</string>
     <string name="menu_clear">Vyčistiť</string>

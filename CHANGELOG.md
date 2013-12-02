@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Fixed error message fetch restrictions
+* Better title for toggle all restrictions, thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
