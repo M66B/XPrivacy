@@ -12,4 +12,4 @@ For interested developers:
 * Dialogs for all the things in Requirements.java
 * Sort localized category list
 * Holo check boxes functions
-* Application name for fetch/import/export progress and notifications
+* Move *SubmitTask* to *ActivityShare* (or the replacing service)

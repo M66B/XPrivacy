@@ -216,7 +216,7 @@ public class ActivityShare extends Activity {
 				return getString(R.string.msg_done);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.toString();
+				return ex.getMessage();
 			}
 		}
 
@@ -342,7 +342,7 @@ public class ActivityShare extends Activity {
 				return getString(R.string.msg_done);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.toString();
+				return ex.getMessage();
 			}
 		}
 

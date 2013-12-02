@@ -849,13 +849,14 @@ public class ActivityApp extends Activity {
 				JSONObject status = (JSONObject) result;
 				try {
 					if (status.getBoolean("ok"))
-						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getFirstApplicationName(),
+						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getPackageName(),
 								getString(R.string.msg_done)));
 					else
-						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getFirstApplicationName(),
+						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getPackageName(),
 								status.getString("error")));
 				} catch (Throwable ex) {
-					notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getFirstApplicationName(), ex));
+					notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getPackageName(),
+							ex.getMessage()));
 				}
 			} else
 				notificationBuilder.setContentText(result.toString());
