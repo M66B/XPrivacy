@@ -105,6 +105,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="settings_expert">Modo experto</string>
     <string name="settings_dangerous">Denegar funciones peligrosas</string>
     <string name="help_application">Aplicación</string>
+    <string name="help_internet">has internet permission</string>
     <string name="help_granted">Tiene permisos Android</string>
     <string name="help_used">Ha usado estos datos</string>
     <string name="help_frozen">Esta deshabilitado</string>
