@@ -198,6 +198,9 @@
     <Hook restriction="system" method="ApplicationsProvider" permissions="" sdk="14" />
 
     <Hook restriction="view" method="getDefaultUserAgent" permissions="" sdk="17" />
+    <Hook restriction="view" method="getUserAgent" permissions="" sdk="1" />
+    <Hook restriction="view" method="getUserAgentString" permissions="" sdk="1" />
+    <Hook restriction="view" method="setUserAgent" permissions="" sdk="1" />
     <Hook restriction="view" method="setUserAgentString" permissions="" sdk="1" />
     <Hook restriction="view" method="WebView.constructor" permissions="" sdk="1" />
     <Hook restriction="view" method="addView" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
