@@ -14,14 +14,16 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XBluetoothAdapter extends XHook {
 	private Methods mMethod;
+	private String mClassName;
 
-	private XBluetoothAdapter(Methods method, String restrictionName) {
+	private XBluetoothAdapter(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
+		mClassName = className;
 	}
 
 	public String getClassName() {
-		return "android.bluetooth.BluetoothAdapter";
+		return mClassName;
 	}
 
 	// public String getAddress()
@@ -34,9 +36,14 @@ public class XBluetoothAdapter extends XHook {
 	};
 
 	public static List<XHook> getInstances() {
+		return getInstances(null);
+	}
+
+	public static List<XHook> getInstances(Object instance) {
+		String className = (instance == null ? "android.bluetooth.BluetoothAdapter" : instance.getClass().getName());
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XBluetoothAdapter(Methods.getAddress, PrivacyManager.cNetwork));
-		listHook.add(new XBluetoothAdapter(Methods.getBondedDevices, PrivacyManager.cNetwork));
+		listHook.add(new XBluetoothAdapter(Methods.getAddress, PrivacyManager.cNetwork, className));
+		listHook.add(new XBluetoothAdapter(Methods.getBondedDevices, PrivacyManager.cNetwork, className));
 		return listHook;
 	}
 

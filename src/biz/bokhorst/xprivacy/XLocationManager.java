@@ -19,20 +19,23 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XLocationManager extends XHook {
 	private Methods mMethod;
+	private String mClassName;
 	private static final Map<LocationListener, XLocationListener> mListener = new WeakHashMap<LocationListener, XLocationListener>();
 
-	private XLocationManager(Methods method, String restrictionName) {
+	private XLocationManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
+		mClassName = className;
 	}
 
-	private XLocationManager(Methods method, String restrictionName, int sdk) {
+	private XLocationManager(Methods method, String restrictionName, String className, int sdk) {
 		super(restrictionName, method.name(), null, sdk);
 		mMethod = method;
+		mClassName = className;
 	}
 
 	public String getClassName() {
-		return "android.location.LocationManager";
+		return mClassName;
 	}
 
 	// @formatter:off
@@ -65,14 +68,15 @@ public class XLocationManager extends XHook {
 		addNmeaListener, addProximityAlert, getLastKnownLocation, getProviders, isProviderEnabled, removeUpdates, requestLocationUpdates, requestSingleUpdate, sendExtraCommand, addGeofence, getLastLocation
 	};
 
-	public static List<XHook> getInstances() {
+	public static List<XHook> getInstances(Object instance) {
+		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods loc : Methods.values())
 			if (loc != Methods.addGeofence && loc != Methods.getLastLocation)
-				listHook.add(new XLocationManager(loc, PrivacyManager.cLocation));
-		listHook.add(new XLocationManager(Methods.addGeofence, PrivacyManager.cLocation,
+				listHook.add(new XLocationManager(loc, PrivacyManager.cLocation, className));
+		listHook.add(new XLocationManager(Methods.addGeofence, PrivacyManager.cLocation, className,
 				Build.VERSION_CODES.JELLY_BEAN_MR1));
-		listHook.add(new XLocationManager(Methods.getLastLocation, PrivacyManager.cLocation,
+		listHook.add(new XLocationManager(Methods.getLastLocation, PrivacyManager.cLocation, className,
 				Build.VERSION_CODES.JELLY_BEAN_MR1));
 		return listHook;
 	}

@@ -36,12 +36,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Log load
 		Util.log(null, Log.INFO, String.format("Load %s", startupParam.modulePath));
 
-		// Account manager
-		hookAll(XAccountManager.getInstances());
-
-		// Activity manager
-		hookAll(XActivityManager.getInstances());
-
 		// App widget manager
 		hookAll(XAppWidgetManager.getInstances());
 
@@ -54,17 +48,15 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Audio record
 		hookAll(XAudioRecord.getInstances());
 
-		// Bluetooth adapter
-		hookAll(XBluetoothAdapter.getInstances());
+		// Bluetooth adapater
+		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1)
+			hookAll(XBluetoothAdapter.getInstances());
 
 		// Bluetooth device
 		hookAll(XBluetoothDevice.getInstances());
 
 		// Camera
 		hookAll(XCamera.getInstances());
-
-		// Connectivity manager
-		hookAll(XConnectivityManager.getInstances());
 
 		// Context wrapper
 		hookAll(XContextImpl.getInstances());
@@ -80,9 +72,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// IO bridge
 		hookAll(XIoBridge.getInstances());
-
-		// Location manager
-		hookAll(XLocationManager.getInstances());
 
 		// Media recorder
 		hookAll(XMediaRecorder.getInstances());
@@ -105,9 +94,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Runtime
 		hookAll(XRuntime.getInstances());
 
-		// Sensor manager
-		hookAll(XSensorManager.getInstances());
-
 		// Settings secure
 		hookAll(XSettingsSecure.getInstances());
 
@@ -117,14 +103,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// System properties
 		hookAll(XSystemProperties.getInstances());
 
-		// Telephony
-		hookAll(XTelephonyManager.getInstances());
-
 		// Web view
 		hookAll(XWebView.getInstances());
-
-		// Wi-Fi manager
-		hookAll(XWifiManager.getInstances());
 
 		// Intent receive
 		hookAll(XActivityThread.getInstances());
@@ -175,24 +155,81 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 	}
 
+	private static boolean mAccountManagerHooked = false;
+	private static boolean mActivityManagerHooked = false;
+	private static boolean mBluetoothAdapterHooked = false;
 	private static boolean mClipboardManagerHooked = false;
+	private static boolean mConnectivityManagerHooked = false;
+	private static boolean mLocationManagerHooked = false;
+	private static boolean mSensorManagerHooked = false;
+	private static boolean mTelephonyManagerHooked = false;
 	private static boolean mWindowManagerHooked = false;
+	private static boolean mWiFiManagerHooked = false;
 
 	public static void handleGetSystemService(XHook hook, String name, Object instance) {
 		Util.log(hook, Log.INFO,
 				"getSystemService " + name + "=" + instance.getClass().getName() + " uid=" + Binder.getCallingUid());
 
-		if (name.equals(Context.CLIPBOARD_SERVICE)) {
-			// Clipboard service
+		if (name.equals(Context.ACCOUNT_SERVICE)) {
+			// Account manager
+			if (!mAccountManagerHooked) {
+				hookAll(XAccountManager.getInstances(instance));
+				mAccountManagerHooked = true;
+			}
+		} else if (name.equals(Context.ACTIVITY_SERVICE)) {
+			// Activity manager
+			if (!mActivityManagerHooked) {
+				hookAll(XActivityManager.getInstances(instance));
+				mActivityManagerHooked = true;
+			}
+		} else if (name.equals(Context.BLUETOOTH_SERVICE)) {
+			// Bluetooth adapter
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+				if (!mBluetoothAdapterHooked) {
+					hookAll(XBluetoothAdapter.getInstances(instance));
+					mBluetoothAdapterHooked = true;
+				}
+		} else if (name.equals(Context.CLIPBOARD_SERVICE)) {
+			// Clipboard manager
 			if (!mClipboardManagerHooked) {
 				XPrivacy.hookAll(XClipboardManager.getInstances(instance));
 				mClipboardManagerHooked = true;
 			}
+		} else if (name.equals(Context.CONNECTIVITY_SERVICE)) {
+			// Connectivity manager
+			if (!mConnectivityManagerHooked) {
+				hookAll(XConnectivityManager.getInstances(instance));
+				mConnectivityManagerHooked = true;
+			}
+		} else if (name.equals(Context.LOCATION_SERVICE)) {
+			// Location manager
+			if (!mLocationManagerHooked) {
+				hookAll(XLocationManager.getInstances(instance));
+				mLocationManagerHooked = true;
+			}
+		} else if (name.equals(Context.SENSOR_SERVICE)) {
+			// Sensor manager
+			if (!mSensorManagerHooked) {
+				hookAll(XSensorManager.getInstances(instance));
+				mSensorManagerHooked = true;
+			}
+		} else if (name.equals(Context.TELEPHONY_SERVICE)) {
+			// Telephony manager
+			if (!mTelephonyManagerHooked) {
+				hookAll(XTelephonyManager.getInstances(instance));
+				mTelephonyManagerHooked = true;
+			}
 		} else if (name.equals(Context.WINDOW_SERVICE)) {
-			// Window service
+			// Window manager
 			if (!mWindowManagerHooked) {
 				XPrivacy.hookAll(XWindowManager.getInstances(instance));
 				mWindowManagerHooked = true;
+			}
+		} else if (name.equals(Context.WIFI_SERVICE)) {
+			// WiFi manager
+			if (!mWiFiManagerHooked) {
+				XPrivacy.hookAll(XWifiManager.getInstances(instance));
+				mWiFiManagerHooked = true;
 			}
 		}
 	}

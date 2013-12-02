@@ -26,20 +26,23 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XAccountManager extends XHook {
 	private Methods mMethod;
+	private String mClassName;
 	private static final Map<OnAccountsUpdateListener, XOnAccountsUpdateListener> mListener = new WeakHashMap<OnAccountsUpdateListener, XOnAccountsUpdateListener>();
 
-	private XAccountManager(Methods method, String restrictionName) {
+	private XAccountManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
+		mClassName = className;
 	}
 
-	private XAccountManager(Methods method, String restrictionName, int sdk) {
+	private XAccountManager(Methods method, String restrictionName, String className, int sdk) {
 		super(restrictionName, method.name(), null, sdk);
 		mMethod = method;
+		mClassName = className;
 	}
 
 	public String getClassName() {
-		return "android.accounts.AccountManager";
+		return mClassName;
 	}
 
 	// @formatter:off
@@ -65,19 +68,20 @@ public class XAccountManager extends XHook {
 		addOnAccountsUpdatedListener, blockingGetAuthToken, getAccounts, getAccountsByType, getAccountsByTypeForPackage, getAccountsByTypeAndFeatures, getAuthToken, getAuthTokenByFeatures, hasFeatures, removeOnAccountsUpdatedListener
 	};
 
-	public static List<XHook> getInstances() {
+	public static List<XHook> getInstances(Object instance) {
+		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XAccountManager(Methods.addOnAccountsUpdatedListener, PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager(Methods.blockingGetAuthToken, PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager(Methods.getAccounts, PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager(Methods.getAccountsByType, PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager(Methods.getAccountsByTypeForPackage, PrivacyManager.cAccounts,
+		listHook.add(new XAccountManager(Methods.addOnAccountsUpdatedListener, PrivacyManager.cAccounts, className));
+		listHook.add(new XAccountManager(Methods.blockingGetAuthToken, PrivacyManager.cAccounts, className));
+		listHook.add(new XAccountManager(Methods.getAccounts, PrivacyManager.cAccounts, className));
+		listHook.add(new XAccountManager(Methods.getAccountsByType, PrivacyManager.cAccounts, className));
+		listHook.add(new XAccountManager(Methods.getAccountsByTypeForPackage, PrivacyManager.cAccounts, className,
 				Build.VERSION_CODES.JELLY_BEAN_MR2));
-		listHook.add(new XAccountManager(Methods.getAccountsByTypeAndFeatures, PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager(Methods.getAuthToken, PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager(Methods.getAuthTokenByFeatures, PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager(Methods.hasFeatures, PrivacyManager.cAccounts));
-		listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, PrivacyManager.cAccounts));
+		listHook.add(new XAccountManager(Methods.getAccountsByTypeAndFeatures, PrivacyManager.cAccounts, className));
+		listHook.add(new XAccountManager(Methods.getAuthToken, PrivacyManager.cAccounts, className));
+		listHook.add(new XAccountManager(Methods.getAuthTokenByFeatures, PrivacyManager.cAccounts, className));
+		listHook.add(new XAccountManager(Methods.hasFeatures, PrivacyManager.cAccounts, className));
+		listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, PrivacyManager.cAccounts, className));
 		return listHook;
 	}
 
