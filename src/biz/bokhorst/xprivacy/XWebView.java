@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +7,6 @@ import android.os.Binder;
 import android.util.Log;
 import android.webkit.WebView;
 
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XWebView extends XHook {
@@ -29,11 +26,6 @@ public class XWebView extends XHook {
 	// public WebSettings getSettings()
 	// frameworks/base/core/java/android/webkit/WebView.java
 	// http://developer.android.com/reference/android/webkit/WebView.html
-
-	// public synchronized void setUserAgent(int ua)
-	// public synchronized void setUserAgentString (String ua)
-	// frameworks/base/core/java/android/webkit/WebSettings.java
-	// http://developer.android.com/reference/android/webkit/WebSettings.html
 
 	private enum Methods {
 		constructor, getSettings
@@ -61,41 +53,10 @@ public class XWebView extends XHook {
 			}
 		} else if (mMethod == Methods.getSettings) {
 			if (param.getResult() != null) {
-				// Check web settings type
-				Class<?> clazzWebSettings = param.getResult().getClass();
-				if (!mWebSettings.contains(clazzWebSettings.getName())) {
-					mWebSettings.add(clazzWebSettings.getName());
-
-					// Hook setUserAgent
-					try {
-						Util.log(this, Log.INFO, "Hooking " + clazzWebSettings.getName() + ".setUserAgent");
-						Method setUserAgent = clazzWebSettings.getDeclaredMethod("setUserAgent", int.class);
-						XposedBridge.hookMethod(setUserAgent, new XC_MethodHook() {
-							@Override
-							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								if (isRestricted(param, "setUserAgent"))
-									param.setResult(null);
-							}
-						});
-					} catch (NoSuchFieldError ex) {
-						Util.bug(this, ex);
-					}
-
-					// Hook setUserAgentString
-					try {
-						Util.log(this, Log.INFO, "Hooking " + clazzWebSettings.getName() + ".setUserAgentString");
-						Method setUserAgentString = clazzWebSettings.getDeclaredMethod("setUserAgentString",
-								String.class);
-						XposedBridge.hookMethod(setUserAgentString, new XC_MethodHook() {
-							@Override
-							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								if (isRestricted(param, "setUserAgentString"))
-									param.args[0] = PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
-							}
-						});
-					} catch (NoSuchFieldError ex) {
-						Util.bug(this, ex);
-					}
+				Class<?> clazz = param.getResult().getClass();
+				if (!mWebSettings.contains(clazz.getName())) {
+					mWebSettings.add(clazz.getName());
+					XPrivacy.hookAll(XWebSettings.getInstances(param.getResult()));
 				}
 			}
 		} else

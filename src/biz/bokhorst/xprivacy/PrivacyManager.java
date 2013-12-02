@@ -241,7 +241,7 @@ public class PrivacyManager {
 
 			// Check restriction
 			if (restrictionName == null || restrictionName.equals("")) {
-				Util.log(hook, Log.WARN, "restriction empty");
+				Util.log(hook, Log.WARN, "restriction empty method=" + methodName);
 				Util.logStack(hook);
 				return false;
 			}
