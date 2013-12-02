@@ -189,8 +189,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					hookAll(XBluetoothAdapter.getInstances(instance));
 					mBluetoothAdapterHooked = true;
 				}
-		} else if (name.equals(Context.CLIPBOARD_SERVICE)) {
+		} else if (name.equals(Context.CLIPBOARD_SERVICE) || name.equals("clipboardEx")) {
 			// Clipboard manager
+			// clipboardEx: Samsung stock ROM
 			if (!mClipboardManagerHooked) {
 				XPrivacy.hookAll(XClipboardManager.getInstances(instance));
 				mClipboardManagerHooked = true;

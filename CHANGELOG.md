@@ -6,6 +6,7 @@ Changelog
 * Better titles for dialogs
 * Fixed error message fetch restrictions
 * Fixed canceling fetch all restrictions
+* Attempt to fix clipboard restriction for some devices ([issue](https://github.com/M66B/XPrivacy/issues/857))
 * Better title for toggle all restrictions, thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Lithuanian translation
 
