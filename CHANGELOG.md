@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Updated Irish translation
 * Updated Russian translation
 * Updated Slovak translation
 * Updated Spanish translation
