@@ -4,7 +4,7 @@
     <string name="app_notenabled">XPrivacy no está habilitado en el instalador de Xposed</string>
     <string name="app_wrongandroid">Solo para Android versión 4.0+</string>
     <string name="app_version" formatted="false">Versión de XPrivacy: %s (%d)</string>
-    <string name="app_xversion" formatted="false">Versión del framework Xposed: %d</string>
+    <string name="app_xversion" formatted="false">Versión de Xposed Framework: %d</string>
     <string name="app_copyright">Copyright © 2013 por M. Bokhorst (M66B)</string>
     <string name="menu_usage">Uso</string>
     <string name="menu_refresh">Actualizar</string>
@@ -20,32 +20,32 @@
     <string name="menu_about">Acerca de</string>
     <string name="menu_help">Ayuda</string>
     <string name="menu_all">Todas</string>
-    <string name="menu_restriction_all">Toggle restrictions</string>
-    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_restriction_all">Restringir todo</string>
+    <string name="menu_usage_all">Cambiar filtro</string>
     <string name="menu_apply">Aplicar plantilla</string>
     <string name="menu_clear">Borrar</string>
     <string name="menu_app_launch">Ejecutar</string>
     <string name="menu_app_settings">Configuración</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Seleccione las cuentas permitidas</string>
-    <string name="menu_applications">Select applications to allow</string>
+    <string name="menu_applications">Seleccione las aplicaciones permitidas</string>
     <string name="menu_contacts">Seleccione los contactos permitidos</string>
     <string name="msg_new">Nuevo</string>
     <string name="msg_update">Actualizar</string>
     <string name="msg_licensed">Con licencia para: %s</string>
     <string name="msg_loading">Cargando</string>
-    <string name="msg_saved_to">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_saved_to">Guardado en %s</string>
+    <string name="msg_no_restrictions">No se han encontrado restricciones</string>
     <string name="msg_edit">Tocar el icono de la aplicación para editar los permisos</string>
     <string name="msg_sure">¿Estas seguro?</string>
     <string name="msg_done">Completado</string>
     <string name="msg_reboot">Reinicio requerido</string>
     <string name="msg_random_now">Selección aleatoria</string>
-    <string name="msg_random_access">Randomize on access</string>
-    <string name="msg_random_boot">Selección aleatoria después del arranque</string>
-    <string name="msg_first"><b>Gran cuidado se ha tomado para desarrollar y probar XPrivacy,
-sin embargo es imposible garantizar que funcione impecable en todos y cada uno de los dispositivos y para cada aplicación.
-\n\nEl uso es bajo su propio riesgo.</b>\n\nVéase también el permiso:</string>
+    <string name="msg_random_access">Inventar al acceder</string>
+    <string name="msg_random_boot">Inventar en el arranque</string>
+    <string name="msg_first"><b>Se ha puesto mucho cuidado en el desarrollo y pruebas de XPrivacy,
+sin embargo no puedo garantizar que funcione sin ningún fallo para cada dispositivo y aplicación.
+\n\nÚselo bajo su responsabilidad.</b>\n\nVéase también el permiso:</string>
     <string name="restrict_accounts">Cuentas (Google, Facebook, etc)</string>
     <string name="restrict_browser">Navegador (marcadores/historial)</string>
     <string name="restrict_calendar">Calendario</string>
@@ -62,27 +62,27 @@ sin embargo es imposible garantizar que funcione impecable en todos y cada uno d
     <string name="restrict_network">Red (direcciones)</string>
     <string name="restrict_notifications">Notifications</string>
     <string name="restrict_phone">Teléfono (ID, números, llamadas)</string>
-    <string name="restrict_sensors">Sensors</string>
+    <string name="restrict_sensors">Sensores</string>
     <string name="restrict_storage">Almacenamiento (media, tarjeta SD)</string>
     <string name="restrict_shell">Terminal (comandos, superusuario)</string>
     <string name="restrict_system">Sistema (aplicaciones instaladas)</string>
     <string name="restrict_view">Ver (navegador)</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Selecciona para restringir:</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">Filtros</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1 filtro activo</item>
         <item quantity="other">%d filtros activos</item>
     </plurals>
 
-    <string name="title_fused">Filtro en uso de datos</string>
-    <string name="title_finternet">Filtro en acceso a Internet</string>
-    <string name="title_fpermission">Filtro en permiso</string>
-    <string name="title_frestricted">Filtro en restringido</string>
-    <string name="title_fuser">Filtro en aplicaciones de usuario</string>
-    <string name="title_fsystem">Filtro en aplicaciones de sistema</string>
-    <string name="title_fnot">Negate</string>
+    <string name="title_fused">Filtrar uso de datos</string>
+    <string name="title_finternet">Filtrar acceso a Internet</string>
+    <string name="title_fpermission">Filtrar permisos Android</string>
+    <string name="title_frestricted">Filtrar permisos restringidos</string>
+    <string name="title_fuser">Filtrar aplicaciones de usuario</string>
+    <string name="title_fsystem">Filtrar aplicaciones de sistema</string>
+    <string name="title_fnot">Negar</string>
     <string name="settings_serial"># de serie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
@@ -90,26 +90,25 @@ sin embargo es imposible garantizar que funcione impecable en todos y cada uno d
     <string name="settings_ip">Dirección IP</string>
     <string name="settings_phone">Número de Teléfono</string>
     <string name="settings_id">ID de Android</string>
-    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_adid">ID de Publicidad</string>
     <string name="settings_country">País</string>
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">ID de subscriptor</string>
     <string name="settings_ua">Agente de usuario</string>
     <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
-    <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
+    <string name="settings_fake_data">Datos falsos</string>
+    <string name="settings_global">Usa datos falsos globales</string>
+    <string name="settings_notify">Notificaciones de actualización</string>
+    <string name="settings_usage">Bloquear datos del sistema Android(uid=1000) (requiere reinicio)</string>
+    <string name="settings_extra">Bloquear datos extra Android (requiere reinicio)</string>
     <string name="settings_log">Registro de depuración (requiere inicio)</string>
-    <string name="settings_expert">Expert mode</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_expert">Modo experto</string>
+    <string name="settings_dangerous">Denegar funciones peligrosas</string>
     <string name="help_application">Aplicación</string>
-    <string name="help_internet">Tiene permisos para Internet</string>
-    <string name="help_granted">Tiene permisos por Android</string>
+    <string name="help_granted">Tiene permisos Android</string>
     <string name="help_used">Ha usado estos datos</string>
     <string name="help_frozen">Esta deshabilitado</string>
-    <string name="help_dangerous">Es peligroso</string>
-    <string name="help_half">partly restricted</string>
+    <string name="help_dangerous">Es peligroso, restringirlo puede causar problemas</string>
+    <string name="help_half">Restringido parcialmente</string>
 
 </resources>
