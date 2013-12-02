@@ -176,7 +176,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 	}
 
-	private static void hookAll(List<XHook> listHook) {
+	public static void hookAll(List<XHook> listHook) {
 		for (XHook hook : listHook)
 			hook(hook);
 	}
