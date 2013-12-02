@@ -698,7 +698,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			startActivity(browserIntent);
 		} else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.app_name));
+			alertDialogBuilder.setTitle(getString(R.string.menu_fetch));
 			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
 			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
@@ -737,7 +737,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// About
 		Dialog dlgAbout = new Dialog(this);
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dlgAbout.setTitle(getString(R.string.app_name));
+		dlgAbout.setTitle(getString(R.string.menu_about));
 		dlgAbout.setContentView(R.layout.about);
 		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
 
@@ -1225,7 +1225,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							// Process click
 							if (mRestrictionName == null && someRestricted) {
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
-								alertDialogBuilder.setTitle(getString(R.string.app_name));
+								alertDialogBuilder.setTitle(getString(R.string.menu_clear_all));
 								alertDialogBuilder.setMessage(getString(R.string.msg_sure));
 								alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
 								alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),

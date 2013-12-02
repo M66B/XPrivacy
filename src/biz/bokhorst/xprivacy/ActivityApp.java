@@ -383,27 +383,27 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionApply() {
+		// Get toggle
+		boolean some = false;
+		final List<String> listRestriction = PrivacyManager.getRestrictions();
+		for (String restrictionName : listRestriction)
+			if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0, String.format("Template.%s", restrictionName),
+					true, false))
+				if (PrivacyManager.getRestricted(null, ActivityApp.this, mAppInfo.getUid(), restrictionName, null,
+						false, false)) {
+					some = true;
+					break;
+				}
+		final boolean restricted = !some;
+
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-		alertDialogBuilder.setTitle(getString(R.string.app_name));
+		alertDialogBuilder.setTitle(getString(restricted ? R.string.menu_apply : R.string.menu_clear_all));
 		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// Get toggle
-				boolean restricted = false;
-				List<String> listRestriction = PrivacyManager.getRestrictions();
-				for (String restrictionName : listRestriction)
-					if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
-							String.format("Template.%s", restrictionName), true, false))
-						if (PrivacyManager.getRestricted(null, ActivityApp.this, mAppInfo.getUid(), restrictionName,
-								null, false, false)) {
-							restricted = true;
-							break;
-						}
-
 				// Do toggle
-				restricted = !restricted;
 				for (String restrictionName : listRestriction)
 					if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 							String.format("Template.%s", restrictionName), true, false))
@@ -426,7 +426,7 @@ public class ActivityApp extends Activity {
 
 	private void optionClear() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-		alertDialogBuilder.setTitle(getString(R.string.app_name));
+		alertDialogBuilder.setTitle(getString(R.string.menu_clear_all));
 		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
@@ -455,7 +455,7 @@ public class ActivityApp extends Activity {
 
 	private void optionSubmit() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(R.string.app_name));
+		alertDialogBuilder.setTitle(getString(R.string.menu_submit));
 		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {

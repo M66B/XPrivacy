@@ -21,8 +21,8 @@
     <string name="menu_help">Help</string>
     <string name="menu_all">Alle</string>
     <string name="menu_restriction_all">Schakel beperkingen</string>
-    <string name="menu_clear_all">Clear all</string>
-    <string name="menu_restrict_all">Restrict all</string>
+    <string name="menu_clear_all">Alles wissen</string>
+    <string name="menu_restrict_all">Alles beperken</string>
     <string name="menu_usage_all">Schakel filter</string>
     <string name="menu_apply">Pas sjabloon toe</string>
     <string name="menu_clear">Wissen</string>

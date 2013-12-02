@@ -12,11 +12,4 @@ For interested developers:
 * Dialogs for all the things in Requirements.java
 * Sort localized category list
 * Holo check boxes functions
-* Functional titles for all dialogs
-	* Fetch restrictions (main)
-	* About (main)
-	* Apply template (app)
-	* Clear (app)
-	* Submit restrictions (app)
 * Application name for fetch/import/export progress and notifications
-* Apply template: display clear or set
