@@ -34,6 +34,7 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Lizenziert für: %s</string>
     <string name="msg_loading">Lade...</string>
+    <string name="msg_filtering">Applying filters</string>
     <string name="msg_saved_to">Gespeichert nach %s</string>
     <string name="msg_no_restrictions">Keine Beschränkung gefunden</string>
     <string name="msg_edit">Berühren Sie das App-Icon, um alle Berechtigungen zu bearbeiten.</string>

@@ -67,7 +67,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private boolean mFiltersHidden = true;
 	private boolean mCategoriesHidden = true;
 	private Bitmap[] mCheck;
-	private int mProgressWidth;
+	private int mProgressWidth = 0;
 	private int mProgress = 0;
 	private boolean mSharing = false;
 	private String mSharingState = null;
@@ -292,6 +292,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		iff.addDataScheme("package");
 		registerReceiver(mPackageChangeReceiver, iff);
 
+		// Listen for progress reports
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ActivityShare.cProgressReport);
+		LocalBroadcastManager.getInstance(this).registerReceiver(progressListener, filter);
+
 		// First run
 		if (PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingFirstRun, true, false)) {
 			optionAbout();
@@ -320,6 +325,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		super.onDestroy();
 		if (mPackageChangeReceiver != null)
 			unregisterReceiver(mPackageChangeReceiver);
+		// Stop listening for progress reports
 		LocalBroadcastManager.getInstance(this).unregisterReceiver(progressListener);
 	}
 
@@ -960,8 +966,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				boolean fSystem = Boolean.parseBoolean(components[7]);
 
 				// Match applications
+				int current = 0;
+				int max = AppListAdapter.this.mListApp.size();
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListApp) {
+					current++;
+					if (!mSharing && current % 5 == 0) {
+						// Send progress info to main activity
+						Intent progressIntent = new Intent(ActivityShare.cProgressReport);
+						progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.msg_filtering));
+						progressIntent.putExtra(ActivityShare.cProgressMax, max);
+						progressIntent.putExtra(ActivityShare.cProgressValue, current);
+						LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
+					}
 					// Get if name contains
 					boolean contains = false;
 					if (!fName.equals(""))
@@ -1031,6 +1048,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				pbFilter.setVisibility(ProgressBar.GONE);
 				tvStats.setVisibility(TextView.VISIBLE);
 				tvStats.setText(results.count + "/" + AppListAdapter.this.mListApp.size());
+				// we could call setProgress directly from here, but there might still be intents waiting
+				// sending another intent makes sure the progress bar is reset at the end.
+				Intent progressIntent = new Intent(ActivityShare.cProgressReport);
+				progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.title_restrict));
+				progressIntent.putExtra(ActivityShare.cProgressMax, 1);
+				progressIntent.putExtra(ActivityShare.cProgressValue, 0);
+				LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
 
 				// Adjust progress state width
 				RelativeLayout.LayoutParams tvStateLayout = (RelativeLayout.LayoutParams) tvState.getLayoutParams();
@@ -1306,24 +1330,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	// Share operations progress listener
 
 	private void sharingStart() {
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(ActivityShare.cProgressReport);
-		LocalBroadcastManager.getInstance(this).registerReceiver(progressListener, filter);
 
 		mSharing = true;
 		invalidateOptionsMenu();
-
-		// Set up the progress bar
-		final View vProgressEmpty = (View) findViewById(R.id.vProgressEmpty);
-		mProgressWidth = vProgressEmpty.getMeasuredWidth();
 	}
 
 	private void sharingDone() {
 		// Re-enable menu items
 		mSharing = false;
 		invalidateOptionsMenu();
-		// Stop listening for progress reports
-		LocalBroadcastManager.getInstance(this).unregisterReceiver(progressListener);
 		// Keep done message for after UI recreation
 		TextView tvState = (TextView) findViewById(R.id.tvState);
 		mSharingState = (String) tvState.getText();
@@ -1341,6 +1356,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	};
 
 	private void setProgress(String text, int progress, int max) {
+		// Set up the progress bar
+		if (mProgressWidth == 0) {
+			final View vProgressEmpty = (View) findViewById(R.id.vProgressEmpty);
+			mProgressWidth = vProgressEmpty.getMeasuredWidth();
+		}
+		// Display stuff
 		TextView tvState = (TextView) findViewById(R.id.tvState);
 		if (text != null)
 			tvState.setText(text);
