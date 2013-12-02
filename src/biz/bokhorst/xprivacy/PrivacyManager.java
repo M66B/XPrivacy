@@ -439,12 +439,12 @@ public class PrivacyManager {
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
 
 		// Set default exceptions for methods
-		if (restricted && methodName == null) {
-			boolean dangerous = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingDangerous,
-					false, false);
+		boolean dangerous = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingDangerous,
+				false, false);
+		if (restricted && methodName == null && !dangerous) {
 			for (MethodDescription md : getMethods(restrictionName))
 				if (isDangerousMethod(restrictionName, md.getMethodName()))
-					PrivacyManager.setRestricted(null, context, uid, restrictionName, md.getMethodName(), dangerous);
+					PrivacyManager.setRestricted(null, context, uid, restrictionName, md.getMethodName(), !dangerous);
 		}
 	}
 
