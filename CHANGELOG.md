@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.35 EXPERIMENTAL**
+
 * Attempt to fix user agent restriction for KitKat ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Attempt to fix clipboard restriction for some devices ([issue](https://github.com/M66B/XPrivacy/issues/857))
 * Dynamic hooking of service managers for better compatibility
@@ -11,8 +15,6 @@ Changelog
 * Updated Russian translation
 * Updated Slovak translation
 * Updated Spanish translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.34 TEST**
 
