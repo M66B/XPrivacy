@@ -57,16 +57,15 @@ import android.util.Xml;
 import android.widget.Toast;
 
 public class ActivityShare extends Activity {
-	public static final String cProgressReport = "ProgressReport";
-	public static final String cProgressMessage = "ProgressMessage";
-	public static final String cProgressValue = "ProgressValue";
-	public static final String cProgressMax = "ProgressMax";
-
 	private LocalBroadcastManager mBroadcastManager;
 
 	public static final String cFileName = "FileName";
 	public static final String cPackageName = "PackageName";
 	public static final String BASE_URL = "http://updates.faircode.eu/xprivacy";
+	public static final String cProgressReport = "ProgressReport";
+	public static final String cProgressMessage = "ProgressMessage";
+	public static final String cProgressValue = "ProgressValue";
+	public static final String cProgressMax = "ProgressMax";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -575,15 +574,7 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(Object result) {
-			try {
-				if (result != null)
-					throw (Throwable) result;
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				notify(ex.toString(), false, 0);
-			}
-
-			notify(getString(R.string.msg_done), false, 0);
+			notify(result == null ? getString(R.string.msg_done) : ((Throwable) result).getMessage(), false, 0);
 			Intent intent = new Intent();
 			setResult(0, intent);
 			finish();

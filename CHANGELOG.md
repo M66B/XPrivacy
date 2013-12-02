@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Fixed error message fetch restrictions
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.35 EXPERIMENTAL**
