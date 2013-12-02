@@ -692,8 +692,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionFetch() {
-		sharingStart();
-
 		if (Util.getProLicense() == null) {
 			// Redirect to pro page
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, cProUri);
@@ -706,6 +704,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
+					sharingStart();
 					Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
 					startActivityForResult(intent, ACTIVITY_FETCH);
 				}
@@ -1331,7 +1330,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	// Share operations progress listener
 
 	private void sharingStart() {
-
 		mSharing = true;
 		invalidateOptionsMenu();
 	}

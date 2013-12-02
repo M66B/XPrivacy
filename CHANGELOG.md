@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Fixed error message fetch restrictions
+* Fixed canceling fetch all restrictions
 * Better title for toggle all restrictions, thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Lithuanian translation
 
