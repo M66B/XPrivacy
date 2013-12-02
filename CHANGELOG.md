@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Fixed error message fetch restrictions
+* Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
