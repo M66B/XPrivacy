@@ -371,7 +371,7 @@ public class ActivityApp extends Activity {
 		// Show help
 		Dialog dialog = new Dialog(ActivityApp.this);
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dialog.setTitle(getString(R.string.help_application));
+		dialog.setTitle(getString(R.string.menu_help));
 		dialog.setContentView(R.layout.help);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
 		TextView tvHelpHalf = (TextView) dialog.findViewById(R.id.help_half);
