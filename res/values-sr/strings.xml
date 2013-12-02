@@ -37,6 +37,7 @@
     <string name="msg_licensed" formatted="false">Лиценциран %s</string>
     <string name="msg_loading">Учитавање</string>
     <string name="msg_filtering">Applying filters</string>
+    <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Click the application icon to edit all restrictions</string>
