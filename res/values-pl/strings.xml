@@ -36,7 +36,6 @@
     <string name="msg_update">Aktualizacja</string>
     <string name="msg_licensed" formatted="false">Licencjonowane dla: %s</string>
     <string name="msg_loading">Ładowanie</string>
-    <string name="msg_filtering">Applying filters</string>
     <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Zapisane do %s</string>
     <string name="msg_no_restrictions">Nie znaleziono ograniczeń</string>

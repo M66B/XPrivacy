@@ -625,42 +625,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		alertDialog.show();
 	}
 
-	private class ToggleTask extends AsyncTask<Boolean, Integer, Integer> {
-		@Override
-		protected Integer doInBackground(Boolean... params) {
-			boolean someRestricted = params[0];
-			// Apply action
-			for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
-				publishProgress(pos, mAppAdapter.getCount());
-				ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
-				if (mAppAdapter.getRestrictionName() == null && someRestricted)
-					PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid());
-				else if (mAppAdapter.getRestrictionName() == null) {
-					for (String restrictionName : PrivacyManager.getRestrictions())
-						PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-								restrictionName, null, !someRestricted);
-				} else
-					PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-							mAppAdapter.getRestrictionName(), null, !someRestricted);
-			}
-			return null;
-		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			setProgress(getString(R.string.msg_applying), values[0], values[1]);
-		}
-
-		@Override
-		protected void onPostExecute(Integer result) {
-			// Refresh
-			setProgress(getString(R.string.title_restrict), 0, 1);
-			mAppAdapter.notifyDataSetChanged();
-			mBatchOpRunning = false;
-			invalidateOptionsMenu();
-		}
-	}
-
 	private void optionUsage() {
 		Intent intent = new Intent(this, ActivityUsage.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -954,6 +918,42 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
+	private class ToggleTask extends AsyncTask<Boolean, Integer, Integer> {
+		@Override
+		protected Integer doInBackground(Boolean... params) {
+			boolean someRestricted = params[0];
+			// Apply action
+			for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
+				publishProgress(pos, mAppAdapter.getCount());
+				ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
+				if (mAppAdapter.getRestrictionName() == null && someRestricted)
+					PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid());
+				else if (mAppAdapter.getRestrictionName() == null) {
+					for (String restrictionName : PrivacyManager.getRestrictions())
+						PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+								restrictionName, null, !someRestricted);
+				} else
+					PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+							mAppAdapter.getRestrictionName(), null, !someRestricted);
+			}
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			setProgress(getString(R.string.msg_applying), values[0], values[1]);
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			// Refresh
+			setProgress(getString(R.string.title_restrict), 0, 1);
+			mAppAdapter.notifyDataSetChanged();
+			mBatchOpRunning = false;
+			invalidateOptionsMenu();
+		}
+	}
+
 	// Adapters
 
 	private class SpinnerAdapter extends ArrayAdapter<String> {
@@ -1019,7 +1019,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					if (!mBatchOpRunning && current % 5 == 0) {
 						// Send progress info to main activity
 						Intent progressIntent = new Intent(ActivityShare.cProgressReport);
-						progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.msg_filtering));
+						progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.msg_applying));
 						progressIntent.putExtra(ActivityShare.cProgressMax, max);
 						progressIntent.putExtra(ActivityShare.cProgressValue, current);
 						LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);

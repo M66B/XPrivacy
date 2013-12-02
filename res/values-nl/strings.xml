@@ -36,7 +36,6 @@
     <string name="msg_update">Bijgewerkt</string>
     <string name="msg_licensed" formatted="false">In licentie gegeven aan: %s</string>
     <string name="msg_loading">Laden</string>
-    <string name="msg_filtering">Filteren</string>
     <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Bewaard als %s</string>
     <string name="msg_no_restrictions">Geen beperkingen gevonden</string>
