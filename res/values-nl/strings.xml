@@ -46,6 +46,7 @@
     <string name="msg_random_now">Willekeurig</string>
     <string name="msg_random_access">Willekeurig bij gebruik</string>
     <string name="msg_random_boot">Willekeurig na herstart</string>
+    <string name="msg_usage">Bijwerken van gegevensgebruik</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
 \n\nGebruik is geheel op eigen risico.</b>\n\nZie ook de licentie:</string>

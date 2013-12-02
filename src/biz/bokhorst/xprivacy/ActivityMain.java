@@ -32,6 +32,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -71,6 +72,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mProgress = 0;
 	private boolean mSharing = false;
 	private String mSharingState = null;
+	private Handler mHandler = new Handler();
+	private Runnable mTimerRunnable = null;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int ACTIVITY_EXPORT = 1;
@@ -303,6 +306,20 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			PrivacyManager.setSetting(null, this, 0, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
 		}
 
+		// Notify usage data
+		long elapsedRealtime = SystemClock.elapsedRealtime();
+		if (elapsedRealtime < PrivacyManager.cUseProviderAfterMs) {
+			mTimerRunnable = new Runnable() {
+				@Override
+				public void run() {
+					Toast toast = Toast.makeText(ActivityMain.this, getString(R.string.msg_usage), Toast.LENGTH_LONG);
+					toast.show();
+				}
+			};
+			mHandler.postDelayed(mTimerRunnable, PrivacyManager.cUseProviderAfterMs - elapsedRealtime);
+		}
+
+		// Build tri-state check box images
 		mCheck = Util.getTriStateCheckBox(this);
 	}
 
@@ -325,8 +342,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		super.onDestroy();
 		if (mPackageChangeReceiver != null)
 			unregisterReceiver(mPackageChangeReceiver);
-		// Stop listening for progress reports
 		LocalBroadcastManager.getInstance(this).unregisterReceiver(progressListener);
+		if (mTimerRunnable != null)
+			mHandler.removeCallbacks(mTimerRunnable);
 	}
 
 	@Override

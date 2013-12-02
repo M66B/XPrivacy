@@ -46,6 +46,7 @@
     <string name="msg_random_now">अटपटा करे</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">रिबूट के पश्चात अटपटा करे</string>
+    <string name="msg_usage">Updating usage data</string>
     <string name="msg_first"><b>XPrivacy बनाने मैं बहुत ख्याल रखा गया है,
 किन्तु वह सभी साधन और सभी application के लिए बरोबर चलेगा उसकी गारंटी देना असंभव है।
 \n\nइसका उपयोग पूरी तरह से आपके अपने जोखिम पर है।</b>\n\nलाइसेंस को भी पढ़े:</string>

@@ -46,6 +46,7 @@
     <string name="msg_random_now">Τυχαία διεύθυνση</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Τυχαία διεύθυνση μετά την εκκίνηση</string>
+    <string name="msg_usage">Updating usage data</string>
     <string name="msg_first"><b>Μεγάλη προσοχή έχει ληφθεί για την ανάπτυξη και δοκιμή του XPrivacy,
 ωστόσο, είναι αδύνατο να εγγυηθεί ότι θα λειτουργήσει άψογα σε κάθε συσκευή και για κάθε εφαρμογή.
 \n\nΗ χρήση γίνεται αποκλειστικά με δική σας ευθύνη.</b>\n\nΔείτε επίσης την άδεια:</string>

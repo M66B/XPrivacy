@@ -46,6 +46,7 @@
     <string name="msg_random_now">Ngẫu nhiên</string>
     <string name="msg_random_access">Ngẫu nhiên lúc truy cập</string>
     <string name="msg_random_boot">Tạo thông tin ngẫu nhiên khi khởi động</string>
+    <string name="msg_usage">Updating usage data</string>
     <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ hoạt động trơn tru trên mọi thiết bị cũng như với mọi ứng dụng.
 \n\nBạn tự chịu trách nhiệm khi sử dụng ứng dụng này.</b>\n\nXem thêm về bản quyền:</string>
     <string name="restrict_accounts">Tài khoản (Google, Facebook, v.v.)</string>
