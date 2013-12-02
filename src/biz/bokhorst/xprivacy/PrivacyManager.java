@@ -106,7 +106,6 @@ public class PrivacyManager {
 	public final static String cSettingNotify = "Notify";
 	public final static String cSettingDangerous = "Dangerous";
 	public final static String cSettingAndroidUsage = "AndroidUsage";
-	public final static String cSettingExtraUsage = "ExtraUsage";
 	public final static String cSettingLog = "Log";
 	public final static String cSettingRandom = "Random@boot";
 
@@ -360,13 +359,6 @@ public class PrivacyManager {
 			return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false);
 		else
 			return true;
-	}
-
-	public static boolean isExtraUsageDataEnabled(int uid) {
-		if (!isUsageDataEnabled(uid))
-			return false;
-
-		return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExtraUsage, false, false);
 	}
 
 	public static void sendUsageData(final XHook hook, Context context) {
@@ -1106,8 +1098,6 @@ public class PrivacyManager {
 			if (mName.equals(PrivacyManager.cSettingVersion))
 				return false;
 			if (mName.equals(PrivacyManager.cSettingAndroidUsage))
-				return false;
-			if (mName.equals(PrivacyManager.cSettingExtraUsage))
 				return false;
 			return (mTimestamp + cSettingCacheTimeoutMs < new Date().getTime());
 		}

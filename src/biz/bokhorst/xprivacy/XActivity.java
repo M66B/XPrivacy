@@ -41,6 +41,7 @@ public class XActivity extends XHook {
 
 	// @formatter:off
 
+	// public Object getSystemService(String name)
 	// public void startActivities(Intent[] intents)
 	// public void startActivities(Intent[] intents, Bundle options)
 	// public void startActivity(Intent intent)
@@ -60,16 +61,21 @@ public class XActivity extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded, onPause, onDestroy
+		getSystemService, startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded, onPause, onDestroy
 	};
 
 	@SuppressLint("InlinedApi")
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 
+		listHook.add(new XActivity(Methods.getSystemService, null, null));
+		listHook.add(new XActivity(Methods.onDestroy, null, null));
+		listHook.add(new XActivity(Methods.onPause, null, null));
+
 		List<Methods> startMethods = new ArrayList<Methods>(Arrays.asList(Methods.values()));
-		startMethods.remove(Methods.onPause);
+		startMethods.remove(Methods.getSystemService);
 		startMethods.remove(Methods.onDestroy);
+		startMethods.remove(Methods.onPause);
 
 		// Intent send: browser
 		for (Methods activity : startMethods)
@@ -87,10 +93,6 @@ public class XActivity extends XHook {
 			listHook.add(new XActivity(activity, PrivacyManager.cMedia, MediaStore.ACTION_VIDEO_CAPTURE));
 		}
 
-		// sendUsageData on activity stop
-		listHook.add(new XActivity(Methods.onPause, null, null));
-		listHook.add(new XActivity(Methods.onDestroy, null, null));
-
 		return listHook;
 	}
 
@@ -99,7 +101,11 @@ public class XActivity extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		// Get intent(s)
 		Intent[] intents = null;
-		if (mMethod == Methods.startActivity || mMethod == Methods.startActivityForResult
+		if (mMethod == Methods.getSystemService) {
+			// Do nothing
+		} else if (mMethod == Methods.onDestroy || mMethod == Methods.onPause) {
+			// Do nothing
+		} else if (mMethod == Methods.startActivity || mMethod == Methods.startActivityForResult
 				|| mMethod == Methods.startActivityIfNeeded) {
 			if (param.args.length > 0 && param.args[0] != null)
 				intents = new Intent[] { (Intent) param.args[0] };
@@ -109,8 +115,6 @@ public class XActivity extends XHook {
 		} else if (mMethod == Methods.startActivities) {
 			if (param.args.length > 0 && param.args[0] != null)
 				intents = (Intent[]) param.args[0];
-		} else if (mMethod == Methods.onPause || mMethod == Methods.onDestroy) {
-			// Do nothing
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 
@@ -145,7 +149,13 @@ public class XActivity extends XHook {
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (mMethod == Methods.onPause || mMethod == Methods.onDestroy)
+		if (mMethod == Methods.getSystemService) {
+			if (param.args.length > 0 && param.args[0] != null) {
+				Object instance = param.getResult();
+				if (instance != null)
+					XPrivacy.handleGetSystemService(this, (String) param.args[0], instance);
+			}
+		} else if (mMethod == Methods.onDestroy || mMethod == Methods.onPause)
 			try {
 				PrivacyManager.sendUsageData(this, (Context) param.thisObject);
 			} catch (Throwable ex) {

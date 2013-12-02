@@ -99,7 +99,6 @@
     <string name="settings_global">Sử dụng dữ liệu giả chung</string>
     <string name="settings_notify">Cập nhật thông báo</string>
     <string name="settings_usage">Mức sử dụng hệ thống (cần khởi động lại)</string>
-    <string name="settings_extra">Sử dụng dữ liệu phụ (cần khởi động lại)</string>
     <string name="settings_log">Nhật ký lỗi (cần khởi động lại)</string>
     <string name="settings_expert">Chế độ nâng cao</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

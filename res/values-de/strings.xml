@@ -100,7 +100,6 @@
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update-Benachrichtigungen</string>
     <string name="settings_usage">Android Usage-Data (erfordert Geräteneustart)</string>
-    <string name="settings_extra">Extra Usage-Data (erfordert Geräteneustart)</string>
     <string name="settings_log">Debug-Log (erfordert Geräteneustart)</string>
     <string name="settings_expert">Experten-Modus</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

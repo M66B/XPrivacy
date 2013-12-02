@@ -101,7 +101,6 @@
     <string name="settings_global">Użyj globalnych fałszywych danych</string>
     <string name="settings_notify">Aktualizuj powiadomienia</string>
     <string name="settings_usage">Android usage data (wymaga restartu)</string>
-    <string name="settings_extra">Extra usage data (wymaga restartu)</string>
     <string name="settings_log">Debug log (wymaga restartu)</string>
     <string name="settings_expert">Tryb eksperta</string>
     <string name="settings_dangerous">Ogranicz niebezpieczne funkcje</string>

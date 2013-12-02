@@ -100,7 +100,6 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Felsökningslogg (kräver omstart)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

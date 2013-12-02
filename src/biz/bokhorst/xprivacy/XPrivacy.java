@@ -9,6 +9,8 @@ import java.util.Set;
 
 import android.annotation.SuppressLint;
 import android.app.AndroidAppHelper;
+import android.content.Context;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Process;
 import android.util.Log;
@@ -68,7 +70,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XConnectivityManager.getInstances());
 
 		// Context wrapper
-		hookAll(XContextWrapper.getInstances());
+		hookAll(XContextImpl.getInstances());
 
 		// Environment
 		hookAll(XEnvironment.getInstances());
@@ -176,7 +178,29 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 	}
 
-	public static void hookAll(List<XHook> listHook) {
+	private static boolean mClipboardManagerHooked = false;
+	private static boolean mWindowManagerHooked = false;
+
+	public static void handleGetSystemService(XHook hook, String name, Object instance) {
+		Util.log(hook, Log.INFO,
+				"getSystemService " + name + "=" + instance.getClass().getName() + " uid=" + Binder.getCallingUid());
+
+		if (name.equals(Context.CLIPBOARD_SERVICE)) {
+			// Clipboard service
+			if (!mClipboardManagerHooked) {
+				XPrivacy.hookAll(XClipboardManager.getInstances(instance));
+				mClipboardManagerHooked = true;
+			}
+		} else if (name.equals(Context.WINDOW_SERVICE)) {
+			// Window service
+			if (!mWindowManagerHooked) {
+				XPrivacy.hookAll(XWindowManager.getInstances(instance));
+				mWindowManagerHooked = true;
+			}
+		}
+	}
+
+	private static void hookAll(List<XHook> listHook) {
 		for (XHook hook : listHook)
 			hook(hook);
 	}

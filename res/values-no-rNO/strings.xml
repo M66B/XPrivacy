@@ -98,7 +98,6 @@
     <string name="settings_global">Bruk forfalsket data globalt</string>
     <string name="settings_notify">Oppdater varslinger</string>
     <string name="settings_usage">Android data bruk (omstart nødvendig)</string>
-    <string name="settings_extra">Ekstra data bruk (omstart nødvendig)</string>
     <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
     <string name="settings_expert">Ekspert modus</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

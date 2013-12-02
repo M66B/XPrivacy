@@ -101,7 +101,6 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_global">Naudoti globalius netikrus duomenis</string>
     <string name="settings_notify">Atnaujinimų Pranesimas</string>
     <string name="settings_usage">Android duomenų naudojimas (reikia paleisti iš naujo)</string>
-    <string name="settings_extra">Papildomas duomenų naudojimas (reikia paleisti iš naujo)</string>
     <string name="settings_log">DEBUG žurnalas (reikia paleisti iš naujo)</string>
     <string name="settings_expert">Eksperto režimas</string>
     <string name="settings_dangerous">Apriboti pavojingas funkcijas</string>
