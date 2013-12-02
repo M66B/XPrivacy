@@ -9,7 +9,7 @@ For interested developers:
 * Remove indeterminate progress indicator
 * Prevent parallel filter requests
 * Button to refresh application list
-* Dialogs for all the things in Requirements.java
-* Sort localized category list
+* Dialogs for all the things in *Requirements.java* (no intents without user consent)
+* Sort localized category lists
 * Holo check boxes functions
 * Move *SubmitTask* to *ActivityShare* (or the replacing service)
