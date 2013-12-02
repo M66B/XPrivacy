@@ -35,6 +35,7 @@
     <string name="msg_update">Atnaujinta</string>
     <string name="msg_licensed" formatted="false">licencija: %s</string>
     <string name="msg_loading">Palaukite...</string>
+    <string name="msg_filtering">Applying filters</string>
     <string name="msg_saved_to">Išsaugomi %s</string>
     <string name="msg_no_restrictions">Nerasta apribojimų</string>
     <string name="msg_edit">Spustelėkite programos piktogramą norėdami redaguoti apribojimus</string>

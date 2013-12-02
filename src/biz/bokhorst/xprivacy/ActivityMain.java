@@ -1048,7 +1048,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				pbFilter.setVisibility(ProgressBar.GONE);
 				tvStats.setVisibility(TextView.VISIBLE);
 				tvStats.setText(results.count + "/" + AppListAdapter.this.mListApp.size());
-				setProgress(getString(R.string.title_restrict), 0, 1);
+				// we could call setProgress directly from here, but there might still be intents waiting
+				// sending another intent makes sure the progress bar is reset at the end.
+				Intent progressIntent = new Intent(ActivityShare.cProgressReport);
+				progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.title_restrict));
+				progressIntent.putExtra(ActivityShare.cProgressMax, 1);
+				progressIntent.putExtra(ActivityShare.cProgressValue, 0);
+				LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
 
 				// Adjust progress state width
 				RelativeLayout.LayoutParams tvStateLayout = (RelativeLayout.LayoutParams) tvState.getLayoutParams();
@@ -1350,7 +1356,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	};
 
 	private void setProgress(String text, int progress, int max) {
-		Util.log(null, Log.WARN, "progress " + text + " " + progress + "/" + max);
 		// Set up the progress bar
 		if (mProgressWidth == 0) {
 			final View vProgressEmpty = (View) findViewById(R.id.vProgressEmpty);
