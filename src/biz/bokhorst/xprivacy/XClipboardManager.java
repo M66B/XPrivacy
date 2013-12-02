@@ -23,7 +23,7 @@ public class XClipboardManager extends XHook {
 	}
 
 	public String getClassName() {
-		return mClassName;
+		return (mClassName == null ? "android.content.ClipboardManager" : mClassName);
 	}
 
 	// @formatter:off
@@ -45,7 +45,7 @@ public class XClipboardManager extends XHook {
 	};
 
 	public static List<XHook> getInstances(Object instance) {
-		String className = instance.getClass().getName();
+		String className = (instance == null ? null : instance.getClass().getName());
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods clip : Methods.values())
 			listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard, className));

@@ -61,6 +61,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Camera
 		hookAll(XCamera.getInstances());
 
+		// Clipboard manager
+		hookAll(XClipboardManager.getInstances(null));
+
 		// Connectivity manager
 		hookAll(XConnectivityManager.getInstances());
 

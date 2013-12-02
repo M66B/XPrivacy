@@ -55,9 +55,10 @@ public class XContextWrapper extends XHook {
 				PrivacyManager.sendUsageData(this, context);
 		} else if (mMethod == Methods.getSystemService) {
 			String name = (String) param.args[0];
-			Object result = param.getResultOrThrowable();
+			Object result = param.getResult();
+			Util.log(this, Log.INFO, "getSystemService " + name + "="
+					+ (result == null ? "null" : result.getClass().getName()));
 			if (name != null && result != null) {
-				Util.log(this, Log.INFO, "getSystemService " + name + "=" + result.getClass().getName());
 				if (name.equals(Context.CLIPBOARD_SERVICE)) {
 					// Clipboard service
 					if (!mClipboardManagerHooked) {
@@ -65,7 +66,7 @@ public class XContextWrapper extends XHook {
 						mClipboardManagerHooked = true;
 					}
 				} else if (name.equals(Context.WINDOW_SERVICE)) {
-					// Windows service
+					// Window service
 					if (!mWindowManagerHooked) {
 						XPrivacy.hookAll(XWindowManager.getInstances(result));
 						mWindowManagerHooked = true;
