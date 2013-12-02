@@ -584,8 +584,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Are you sure?
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(String.format("%s - %s", getString(R.string.app_name),
-				getString(someRestricted ? R.string.menu_clear_all : R.string.menu_restrict_all)));
+		alertDialogBuilder.setTitle(getString(someRestricted ? R.string.menu_clear_all : R.string.menu_restrict_all));
 		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
