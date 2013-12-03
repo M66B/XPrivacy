@@ -138,37 +138,41 @@
 <html>
 	<head>
 		<title>XPrivacy</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="XPrivacy">
 		<meta name="author" content="M66B">
-		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 		<meta name="robots" content="noindex,nofollow">
-		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<style type="text/css">
 			body { padding-left: 5px; padding-right: 5px; }
 			th, tr, td { padding: 0px !important; }
 		</style>
 	</head>
 	<body>
-		<div class="container">
-			<div class="navbar">
-				<div class="container">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+		<div class="navbar navbar-default navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/xprivacy">XPrivacy</a>
-					<div class="nav-collapse collapse">
-						<ul class="nav navbar-nav">
-							<li><a href="http://forum.xda-developers.com/showthread.php?t=2320783" target="_blank">XDA</a></li>
-							<li><a href="https://github.com/M66B/XPrivacy" target="_blank">GitHub</a></li>
-							<li><a href="http://stats.pingdom.com/dcqg2snuqaf1/388316" target="_blank">Status</a></li>
-						</ul>
-					</div>
+					<a class="navbar-brand" href="#">XPrivacy</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="http://forum.xda-developers.com/showthread.php?t=2320783" target="_blank">XDA</a></li>
+						<li><a href="https://github.com/M66B/XPrivacy" target="_blank">GitHub</a></li>
+						<li><a href="http://stats.pingdom.com/dcqg2snuqaf1/388316" target="_blank">Status</a></li>
+					</ul>
 				</div>
 			</div>
+		</div>
 
+		<div class="container">
 			<div class="page-header">
 <?php		if (empty($package_name)) { ?>
 				<h1>XPrivacy</h1>
@@ -327,7 +331,7 @@
 		</div>
 
 		<script src="http://code.jquery.com/jquery.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 		<script>
 			jQuery(document).ready(function($) {
 			  $('#details').click(function() {
