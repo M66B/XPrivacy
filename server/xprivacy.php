@@ -142,6 +142,7 @@
 		<meta name="description" content="XPrivacy">
 		<meta name="author" content="M66B">
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<meta name="robots" content="noindex,nofollow">
 		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<style type="text/css">
 			body { padding-left: 5px; padding-right: 5px; }
