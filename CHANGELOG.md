@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Show relative usage time
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.36 TEST**

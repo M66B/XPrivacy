@@ -2,7 +2,6 @@ package biz.bokhorst.xprivacy;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,7 +9,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -64,6 +62,7 @@ import android.provider.Settings.Secure;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -1176,8 +1175,9 @@ public class ActivityApp extends Activity {
 					// Set data
 					if (lastUsage > 0) {
 						Date date = new Date(lastUsage);
-						SimpleDateFormat format = new SimpleDateFormat("dd/HH:mm", Locale.ROOT);
-						holder.ctvMethodName.setText(String.format("%s %s", md.getMethodName(), format.format(date)));
+						CharSequence sLastUsage = DateUtils.getRelativeTimeSpanString(lastUsage, new Date().getTime(),
+								DateUtils.SECOND_IN_MILLIS, 0);
+						holder.ctvMethodName.setText(String.format("%s %s", md.getMethodName(), sLastUsage));
 					}
 					holder.ctvMethodName.setEnabled(parentRestricted);
 					holder.imgUsed.setVisibility(lastUsage == 0 ? View.INVISIBLE : View.VISIBLE);
