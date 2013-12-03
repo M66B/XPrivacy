@@ -930,8 +930,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid());
 				else if (mAppAdapter.getRestrictionName() == null) {
 					for (String restrictionName : PrivacyManager.getRestrictions())
-						PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-								restrictionName, null, !someRestricted);
+						PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(), restrictionName, null,
+								!someRestricted);
 				} else
 					PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
 							mAppAdapter.getRestrictionName(), null, !someRestricted);
