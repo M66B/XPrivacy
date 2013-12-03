@@ -36,7 +36,7 @@
     <string name="msg_update">更新されました</string>
     <string name="msg_licensed" formatted="false">ライセンス先: %s</string>
     <string name="msg_loading">読み込み中</string>
-    <string name="msg_filtering">Applying filters</string>
+    <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">%sに保存されました</string>
     <string name="msg_no_restrictions">制限などは見つかりませんでした</string>
     <string name="msg_edit">アプリアイコンをタップすると全ての権限の制限を設定できます</string>

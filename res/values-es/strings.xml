@@ -36,7 +36,7 @@
     <string name="msg_update">Actualizar</string>
     <string name="msg_licensed">Con licencia para: %s</string>
     <string name="msg_loading">Cargando</string>
-    <string name="msg_filtering">Applying filters</string>
+    <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Guardado en %s</string>
     <string name="msg_no_restrictions">No se han encontrado restricciones</string>
     <string name="msg_edit">Tocar el icono de la aplicación para editar los permisos</string>

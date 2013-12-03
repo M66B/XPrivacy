@@ -70,7 +70,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private Bitmap[] mCheck;
 	private int mProgressWidth = 0;
 	private int mProgress = 0;
-	private boolean mSharing = false;
+	private boolean mBatchOpRunning = false;
 	private String mSharingState = null;
 	private Handler mHandler = new Handler();
 	private Runnable mTimerRunnable = null;
@@ -439,9 +439,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		boolean pro = (Util.hasProLicense(this) != null);
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
-		menu.findItem(R.id.menu_export).setEnabled(pro && mounted && !mSharing);
-		menu.findItem(R.id.menu_import).setEnabled(pro && mounted && !mSharing);
-		menu.findItem(R.id.menu_fetch).setEnabled(!mSharing);
+		menu.findItem(R.id.menu_all).setEnabled(!mBatchOpRunning);
+		menu.findItem(R.id.menu_export).setEnabled(pro && mounted && !mBatchOpRunning);
+		menu.findItem(R.id.menu_import).setEnabled(pro && mounted && !mBatchOpRunning);
+		menu.findItem(R.id.menu_fetch).setEnabled(!mBatchOpRunning);
 		menu.findItem(R.id.menu_pro).setVisible(!pro);
 
 		return super.onPrepareOptionsMenu(menu);
@@ -609,20 +610,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (mAppAdapter != null) {
-					// Apply action
-					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
-						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
-						if (mAppAdapter.getRestrictionName() == null) {
-							for (String restrictionName : PrivacyManager.getRestrictions())
-								PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-										restrictionName, null, !someRestricted);
-						} else
-							PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-									mAppAdapter.getRestrictionName(), null, !someRestricted);
-					}
-
-					// Refresh
-					mAppAdapter.notifyDataSetChanged();
+					mBatchOpRunning = true;
+					invalidateOptionsMenu();
+					new ToggleTask().executeOnExecutor(mExecutor, someRestricted);
 				}
 			}
 		});
@@ -928,6 +918,42 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
+	private class ToggleTask extends AsyncTask<Boolean, Integer, Integer> {
+		@Override
+		protected Integer doInBackground(Boolean... params) {
+			boolean someRestricted = params[0];
+			// Apply action
+			for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
+				publishProgress(pos, mAppAdapter.getCount());
+				ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
+				if (mAppAdapter.getRestrictionName() == null && someRestricted)
+					PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid());
+				else if (mAppAdapter.getRestrictionName() == null) {
+					for (String restrictionName : PrivacyManager.getRestrictions())
+						PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+								restrictionName, null, !someRestricted);
+				} else
+					PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+							mAppAdapter.getRestrictionName(), null, !someRestricted);
+			}
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			setProgress(getString(R.string.msg_applying), values[0], values[1]);
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			// Refresh
+			setProgress(getString(R.string.title_restrict), 0, 1);
+			mAppAdapter.notifyDataSetChanged();
+			mBatchOpRunning = false;
+			invalidateOptionsMenu();
+		}
+	}
+
 	// Adapters
 
 	private class SpinnerAdapter extends ArrayAdapter<String> {
@@ -990,10 +1016,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListApp) {
 					current++;
-					if (!mSharing && current % 5 == 0) {
+					if (!mBatchOpRunning && current % 5 == 0) {
 						// Send progress info to main activity
 						Intent progressIntent = new Intent(ActivityShare.cProgressReport);
-						progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.msg_filtering));
+						progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.msg_applying));
 						progressIntent.putExtra(ActivityShare.cProgressMax, max);
 						progressIntent.putExtra(ActivityShare.cProgressValue, current);
 						LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
@@ -1348,13 +1374,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	// Share operations progress listener
 
 	private void sharingStart() {
-		mSharing = true;
+		mBatchOpRunning = true;
 		invalidateOptionsMenu();
 	}
 
 	private void sharingDone() {
 		// Re-enable menu items
-		mSharing = false;
+		mBatchOpRunning = false;
 		invalidateOptionsMenu();
 		// Keep done message for after UI recreation
 		TextView tvState = (TextView) findViewById(R.id.tvState);
