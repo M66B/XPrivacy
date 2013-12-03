@@ -3,14 +3,16 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.36 TEST**
+
 * Better titles for dialogs
 * Fixed error message fetch restrictions
 * Fixed canceling fetch all restrictions
 * Better title for toggle all restrictions, thanks @[jpeg729](https://github.com/jpeg729)
 * Run toggle all restriction in a background task, thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.35 EXPERIMENTAL**
 
