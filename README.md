@@ -732,7 +732,8 @@ Testing:
 * [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 * [SIM Card](https://play.google.com/store/apps/details?id=com.gsmdev.simcard)
 
-Contributors do not have to donate for the [pro version](http://www.faircode.eu/xprivacy/).
+Serious contributors do not have to donate for the [pro version](http://www.faircode.eu/xprivacy/).
+New translations are considered as a serious contribution, but translating a few lines of text is not.
 
 License
 -------
