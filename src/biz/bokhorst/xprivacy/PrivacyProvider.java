@@ -148,9 +148,9 @@ public class PrivacyProvider extends ContentProvider {
 
 						// Exceptions
 						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
-							boolean restricted = getRestricted(eRestrictionName, md.getMethodName(), prefs);
-							if (!restricted || PrivacyManager.isDangerousMethod(eRestrictionName, md.getMethodName()))
-								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getMethodName(),
+							boolean restricted = getRestricted(eRestrictionName, md.getName(), prefs);
+							if (!restricted || PrivacyManager.isDangerousMethod(eRestrictionName, md.getName()))
+								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getName(),
 										restricted });
 						}
 					}
@@ -166,8 +166,8 @@ public class PrivacyProvider extends ContentProvider {
 					boolean eRestricted = getRestricted(eRestrictionName, null, prefs);
 					cursor.addRow(new Object[] { uid, eRestrictionName, null, Boolean.toString(eRestricted) });
 					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
-						eRestricted = getRestricted(eRestrictionName, md.getMethodName(), prefs);
-						cursor.addRow(new Object[] { uid, eRestrictionName, md.getMethodName(),
+						eRestricted = getRestricted(eRestrictionName, md.getName(), prefs);
+						cursor.addRow(new Object[] { uid, eRestrictionName, md.getName(),
 								Boolean.toString(eRestricted) });
 					}
 				}
@@ -236,7 +236,7 @@ public class PrivacyProvider extends ContentProvider {
 			for (String eRestrictionName : listRestriction)
 				if (methodName == null)
 					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName))
-						getUsage(uid, eRestrictionName, md.getMethodName(), cursor);
+						getUsage(uid, eRestrictionName, md.getName(), cursor);
 				else
 					getUsage(uid, eRestrictionName, methodName, cursor);
 		}

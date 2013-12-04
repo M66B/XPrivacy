@@ -775,11 +775,11 @@ public class ActivityApp extends Activity {
 					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
 						boolean mRestricted = restricted
 								&& PrivacyManager.getRestricted(null, ActivityApp.this, uid, restrictionName,
-										md.getMethodName(), false, false);
-						long mUsed = PrivacyManager.getUsed(ActivityApp.this, uid, restrictionName, md.getMethodName());
+										md.getName(), false, false);
+						long mUsed = PrivacyManager.getUsed(ActivityApp.this, uid, restrictionName, md.getName());
 						JSONObject jMethod = new JSONObject();
 						jMethod.put("restriction", restrictionName);
-						jMethod.put("method", md.getMethodName());
+						jMethod.put("method", md.getName());
 						jMethod.put("restricted", mRestricted);
 						jMethod.put("used", mUsed);
 						jSettings.put(jMethod);
@@ -1093,7 +1093,7 @@ public class ActivityApp extends Activity {
 				String restrictionName = mRestrictions.get(groupPosition);
 				for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods((String) getGroup(groupPosition))) {
 					boolean isUsed = (PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), restrictionName,
-							md.getMethodName()) > 0);
+							md.getName()) > 0);
 					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
 							md);
 					if (mSelectedMethodName != null
@@ -1168,12 +1168,12 @@ public class ActivityApp extends Activity {
 					// Get info
 					md = (PrivacyManager.MethodDescription) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName,
-							md.getMethodName());
+							md.getName());
 					parentRestricted = PrivacyManager.getRestricted(null, holder.row.getContext(), mAppInfo.getUid(),
 							restrictionName, null, false, false);
 					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(), md);
 					restricted = PrivacyManager.getRestricted(null, holder.row.getContext(), mAppInfo.getUid(),
-							restrictionName, md.getMethodName(), false, false);
+							restrictionName, md.getName(), false, false);
 				}
 				return null;
 			}
@@ -1186,7 +1186,7 @@ public class ActivityApp extends Activity {
 					if (lastUsage > 0) {
 						CharSequence sLastUsage = DateUtils.getRelativeTimeSpanString(lastUsage, new Date().getTime(),
 								DateUtils.SECOND_IN_MILLIS, 0);
-						holder.ctvMethodName.setText(String.format("%s (%s)", md.getMethodName(), sLastUsage));
+						holder.ctvMethodName.setText(String.format("%s (%s)", md.getName(), sLastUsage));
 					}
 					holder.ctvMethodName.setEnabled(parentRestricted);
 					holder.imgUsed.setVisibility(lastUsage == 0 ? View.INVISIBLE : View.VISIBLE);
@@ -1199,11 +1199,11 @@ public class ActivityApp extends Activity {
 						@Override
 						public void onClick(View view) {
 							boolean restricted = PrivacyManager.getRestricted(null, view.getContext(),
-									mAppInfo.getUid(), restrictionName, md.getMethodName(), false, false);
+									mAppInfo.getUid(), restrictionName, md.getName(), false, false);
 							restricted = !restricted;
 							holder.ctvMethodName.setChecked(restricted);
 							PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName,
-									md.getMethodName(), restricted);
+									md.getName(), restricted);
 							notifyDataSetChanged(); // Needed to update parent
 						}
 					});
@@ -1231,14 +1231,14 @@ public class ActivityApp extends Activity {
 					childPosition);
 
 			// Set background color
-			if (PrivacyManager.isDangerousMethod(restrictionName, md.getMethodName()))
+			if (PrivacyManager.isDangerousMethod(restrictionName, md.getName()))
 				holder.row.setBackgroundColor(getResources().getColor(
 						Util.getThemed(ActivityApp.this, R.attr.color_dangerous)));
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
 
 			// Display method name
-			holder.ctvMethodName.setText(md.getMethodName());
+			holder.ctvMethodName.setText(md.getName());
 			holder.ctvMethodName.setEnabled(false);
 			holder.ctvMethodName.setTypeface(null, Typeface.NORMAL);
 
