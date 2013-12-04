@@ -67,6 +67,10 @@ public class ActivityShare extends Activity {
 	public static final String cProgressValue = "ProgressValue";
 	public static final String cProgressMax = "ProgressMax";
 
+	public static final String ACTION_EXPORT = "biz.bokhorst.xprivacy.action.EXPORT";
+	public static final String ACTION_IMPORT = "biz.bokhorst.xprivacy.action.IMPORT";
+	public static final String ACTION_FETCH = "biz.bokhorst.xprivacy.action.FETCH";
+
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
 

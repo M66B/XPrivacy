@@ -414,7 +414,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			else if (data != null)
 				try {
 					String fileName = data.getData().getPath();
-					Intent intent = new Intent("biz.bokhorst.xprivacy.action.IMPORT");
+					Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
 					intent.putExtra(ActivityShare.cFileName, fileName);
 					startActivityForResult(intent, ACTIVITY_IMPORT);
 				} catch (Throwable ex) {
@@ -676,7 +676,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
 		file.setType("file/*");
 		boolean multiple = Util.isIntentAvailable(ActivityMain.this, file);
-		Intent intent = new Intent("biz.bokhorst.xprivacy.action.EXPORT");
+		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
 		intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(multiple));
 		startActivityForResult(intent, ACTIVITY_EXPORT);
 	}
@@ -693,7 +693,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Intent intent = Intent.createChooser(chooseFile, getString(R.string.app_name));
 			startActivityForResult(intent, ACTIVITY_IMPORT_SELECT);
 		} else {
-			Intent intent = new Intent("biz.bokhorst.xprivacy.action.IMPORT");
+			Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
 			intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(false));
 			startActivityForResult(intent, ACTIVITY_IMPORT);
 		}
@@ -713,7 +713,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					sharingStart();
-					Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
+					Intent intent = new Intent(ActivityShare.ACTION_FETCH);
 					startActivityForResult(intent, ACTIVITY_FETCH);
 				}
 			});
