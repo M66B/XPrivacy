@@ -8,6 +8,7 @@ Changelog
 * Show relative usage time
 * Filter application details on data usage
 * Notify if application needs restart, thanks @[jpeg729](https://github.com/jpeg729)
+* Chain new uncaught exception handlers
 * Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

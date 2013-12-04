@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -157,7 +158,8 @@ public class XActivity extends XHook {
 			}
 		} else if (mMethod == Methods.onDestroy || mMethod == Methods.onPause)
 			try {
-				PrivacyManager.sendUsageData(this, (Context) param.thisObject);
+				if (PrivacyManager.isUsageDataEnabled(Binder.getCallingUid()))
+					PrivacyManager.sendUsageData(this, (Context) param.thisObject);
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}

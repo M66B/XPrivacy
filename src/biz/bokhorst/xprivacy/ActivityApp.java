@@ -1222,7 +1222,7 @@ public class ActivityApp extends Activity {
 							holder.ctvMethodName.setChecked(restricted);
 							boolean restart = PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(),
 									restrictionName, md.getName(), restricted);
-							
+
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent
 

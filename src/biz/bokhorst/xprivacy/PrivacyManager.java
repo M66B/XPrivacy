@@ -182,7 +182,7 @@ public class PrivacyManager {
 	// Data
 
 	public static void registerMethod(String restrictionName, String methodName, int sdk) {
-		if (Build.VERSION.SDK_INT >= sdk) {
+		if (restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
 			if (!mMethod.containsKey(restrictionName)
 					|| !mMethod.get(restrictionName).contains(new MethodDescription(methodName)))
 				Util.log(null, Log.WARN, "Missing method " + methodName);

@@ -55,7 +55,7 @@ public class XApplication extends XHook {
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
-	private static class XUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
+	public static class XUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 		private XHook mHook;
 		private Context mContext;
 		private Thread.UncaughtExceptionHandler mDefaultHandler;
@@ -66,11 +66,22 @@ public class XApplication extends XHook {
 			mDefaultHandler = defaultHandler;
 		}
 
+		public Thread.UncaughtExceptionHandler getDefaultHandler() {
+			return mDefaultHandler;
+		}
+
+		public void setDefaultHandler(Thread.UncaughtExceptionHandler handler) {
+			Util.log(mHook, Log.WARN, "Setting new default handler uid=" + Binder.getCallingUid());
+			mDefaultHandler = handler;
+		}
+
 		@Override
 		public void uncaughtException(Thread thread, Throwable ex) {
 			try {
-				Util.log(mHook, Log.WARN, "Uncaught exception uid=" + Binder.getCallingUid() + ": " + ex.getMessage());
-				PrivacyManager.sendUsageData(null, mContext);
+				int uid = Binder.getCallingUid();
+				Util.log(mHook, Log.WARN, "Uncaught exception uid=" + uid + ": " + ex.getMessage());
+				if (PrivacyManager.isUsageDataEnabled(uid))
+					PrivacyManager.sendUsageData(null, mContext);
 			} catch (Throwable exex) {
 				Util.bug(mHook, exex);
 			}
