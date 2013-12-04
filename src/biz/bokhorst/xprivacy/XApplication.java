@@ -23,7 +23,7 @@ public class XApplication extends XHook {
 		return "android.app.Application";
 	}
 
-	// public void onCreate ()
+	// public void onCreate()
 	// frameworks/base/core/java/android/app/Application.java
 	// http://developer.android.com/reference/android/app/Application.html
 

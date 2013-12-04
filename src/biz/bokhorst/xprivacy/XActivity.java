@@ -156,12 +156,13 @@ public class XActivity extends XHook {
 				if (instance != null)
 					XPrivacy.handleGetSystemService(this, (String) param.args[0], instance);
 			}
-		} else if (mMethod == Methods.onDestroy || mMethod == Methods.onPause)
+		} else if (mMethod == Methods.onDestroy || mMethod == Methods.onPause) {
 			try {
 				if (PrivacyManager.isUsageDataEnabled(Binder.getCallingUid()))
 					PrivacyManager.sendUsageData(this, (Context) param.thisObject);
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}
+		}
 	}
 }
