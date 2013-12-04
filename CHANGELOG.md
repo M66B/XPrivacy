@@ -7,6 +7,7 @@ Changelog
 * Attempt to fix user agent restriction for KitKat ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Show relative usage time
 * Filter application details on data usage
+* Notify if application needs restart, thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

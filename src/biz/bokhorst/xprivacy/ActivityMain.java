@@ -923,19 +923,26 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		protected Integer doInBackground(Boolean... params) {
 			boolean someRestricted = params[0];
 			// Apply action
+			boolean restart = false;
 			for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
 				publishProgress(pos, mAppAdapter.getCount());
 				ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
 				if (mAppAdapter.getRestrictionName() == null && someRestricted)
-					PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid());
+					restart = restart || PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid());
 				else if (mAppAdapter.getRestrictionName() == null) {
 					for (String restrictionName : PrivacyManager.getRestrictions())
-						PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(), restrictionName, null,
-								!someRestricted);
+						restart = restart
+								|| PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+										restrictionName, null, !someRestricted);
 				} else
-					PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-							mAppAdapter.getRestrictionName(), null, !someRestricted);
+					restart = restart
+							|| PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+									mAppAdapter.getRestrictionName(), null, !someRestricted);
 			}
+
+			// Notify restart
+			if (restart)
+				Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
 			return null;
 		}
 
@@ -1277,10 +1284,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 											@Override
 											public void onClick(DialogInterface dialog, int which) {
 												// Update restriction
-												PrivacyManager.deleteRestrictions(view.getContext(), xAppInfo.getUid());
+												boolean restart = PrivacyManager.deleteRestrictions(view.getContext(),
+														xAppInfo.getUid());
 
 												// Update visible state
 												holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+
+												// Notify restart
+												if (restart)
+													Toast.makeText(view.getContext(), getString(R.string.msg_restart),
+															Toast.LENGTH_SHORT).show();
 											}
 										});
 								alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
@@ -1293,9 +1306,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								alertDialog.show();
 							} else {
 								// Update restriction
+								boolean restart = false;
 								for (String restrictionName : listRestriction)
-									PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
-											restrictionName, null, !someRestricted);
+									restart = restart
+											|| PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
+													restrictionName, null, !someRestricted);
 
 								// Update all/some restricted
 								allRestricted = true;
@@ -1313,6 +1328,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 									holder.imgCBName.setImageBitmap(mCheck[1]); // Half
 								else
 									holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+
+								// Notify restart
+								if (restart)
+									Toast.makeText(view.getContext(), getString(R.string.msg_restart),
+											Toast.LENGTH_SHORT).show();
 							}
 						}
 					});

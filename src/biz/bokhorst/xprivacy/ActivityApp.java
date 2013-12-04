@@ -403,15 +403,21 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// Do toggle
+				boolean restart = false;
 				for (String restrictionName : listRestriction)
 					if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 							String.format("Template.%s", restrictionName), true, false))
-						PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(), restrictionName, null,
-								restricted);
+						restart = restart
+								|| PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(),
+										restrictionName, null, restricted);
 
 				// Refresh display
 				if (mPrivacyListAdapter != null)
 					mPrivacyListAdapter.notifyDataSetChanged();
+
+				// Notify restart
+				if (restart)
+					Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
 			}
 		});
 		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
@@ -431,9 +437,15 @@ public class ActivityApp extends Activity {
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				PrivacyManager.deleteRestrictions(ActivityApp.this, mAppInfo.getUid());
+				boolean restart = PrivacyManager.deleteRestrictions(ActivityApp.this, mAppInfo.getUid());
+
+				// Refresh display
 				if (mPrivacyListAdapter != null)
 					mPrivacyListAdapter.notifyDataSetChanged();
+
+				// Notify restart
+				if (restart)
+					Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
 			}
 		});
 		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
@@ -1001,8 +1013,8 @@ public class ActivityApp extends Activity {
 								allRestricted = (allRestricted && restricted);
 								someRestricted = (someRestricted || restricted);
 							}
-							PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName,
-									null, !someRestricted);
+							boolean restart = PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(),
+									restrictionName, null, !someRestricted);
 
 							// Update all/some restricted
 							allRestricted = true;
@@ -1021,7 +1033,13 @@ public class ActivityApp extends Activity {
 							else
 								holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 
+							// Refresh display
 							notifyDataSetChanged(); // Needed to update childs
+
+							// Notify restart
+							if (restart)
+								Toast.makeText(view.getContext(), getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+										.show();
 						}
 					});
 				}
@@ -1202,9 +1220,16 @@ public class ActivityApp extends Activity {
 									mAppInfo.getUid(), restrictionName, md.getName(), false, false);
 							restricted = !restricted;
 							holder.ctvMethodName.setChecked(restricted);
-							PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(), restrictionName,
-									md.getName(), restricted);
+							boolean restart = PrivacyManager.setRestricted(null, view.getContext(), mAppInfo.getUid(),
+									restrictionName, md.getName(), restricted);
+							
+							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent
+
+							// Notify restart
+							if (restart)
+								Toast.makeText(view.getContext(), getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+										.show();
 						}
 					});
 				}
@@ -1231,7 +1256,7 @@ public class ActivityApp extends Activity {
 					childPosition);
 
 			// Set background color
-			if (PrivacyManager.isDangerousMethod(restrictionName, md.getName()))
+			if (md.isDangerous())
 				holder.row.setBackgroundColor(getResources().getColor(
 						Util.getThemed(ActivityApp.this, R.attr.color_dangerous)));
 			else

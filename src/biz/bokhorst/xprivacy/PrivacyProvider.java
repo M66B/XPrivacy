@@ -149,9 +149,8 @@ public class PrivacyProvider extends ContentProvider {
 						// Exceptions
 						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
 							boolean restricted = getRestricted(eRestrictionName, md.getName(), prefs);
-							if (!restricted || PrivacyManager.isDangerousMethod(eRestrictionName, md.getName()))
-								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getName(),
-										restricted });
+							if (!restricted || md.isDangerous())
+								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getName(), restricted });
 						}
 					}
 			}
@@ -167,8 +166,7 @@ public class PrivacyProvider extends ContentProvider {
 					cursor.addRow(new Object[] { uid, eRestrictionName, null, Boolean.toString(eRestricted) });
 					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
 						eRestricted = getRestricted(eRestrictionName, md.getName(), prefs);
-						cursor.addRow(new Object[] { uid, eRestrictionName, md.getName(),
-								Boolean.toString(eRestricted) });
+						cursor.addRow(new Object[] { uid, eRestrictionName, md.getName(), Boolean.toString(eRestricted) });
 					}
 				}
 			} else {

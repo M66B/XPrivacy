@@ -47,6 +47,7 @@
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Slumpa efter uppstart</string>
     <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>XPrivacy utvecklas och testas med stor omsorg.
 Det är emellertid omöjligt att garantera att appen fungerar på alla enheter och appar.
 \n\nAnvänding sker helt på egen risk.</b>\n\nSe också licensen:</string>

@@ -52,6 +52,7 @@
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randomize on boot</string>
     <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawlessly on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>

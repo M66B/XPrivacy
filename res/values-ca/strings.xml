@@ -47,6 +47,7 @@
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Genera aleatòriament després d\'arrencar</string>
     <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>S\'ha tingut molta cura desenvolupant i provant XPrivacy, però és impossible garantir que funcionarà perfectament a tots els dispositius i per a totes les aplicacions.\n\nUtilitzeu-lo sota el vostre propi risc.</b>\n\nVegeu també la llicència:</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc.)</string>
     <string name="restrict_browser">Navegador (marcadors/historial)</string>
