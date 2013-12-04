@@ -79,7 +79,9 @@ public class XApplication extends XHook {
 		public void uncaughtException(Thread thread, Throwable ex) {
 			try {
 				int uid = Binder.getCallingUid();
-				Util.log(mHook, Log.WARN, "Uncaught exception uid=" + uid + ": " + ex.getMessage());
+				Util.log(mHook, Log.WARN, "Uncaught exception uid=" + uid + ": " + ex);
+
+				// Update usage data
 				if (PrivacyManager.isUsageDataEnabled(uid))
 					PrivacyManager.sendUsageData(null, mContext);
 			} catch (Throwable exex) {
