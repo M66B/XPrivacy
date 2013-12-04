@@ -886,14 +886,19 @@ public class ActivityApp extends Activity {
 			mRestrictions = new ArrayList<String>();
 			mMethodDescription = new LinkedHashMap<Integer, List<PrivacyManager.MethodDescription>>();
 
+			boolean fUsed = PrivacyManager.getSettingBool(null, ActivityApp.this, 0, PrivacyManager.cSettingFUsed,
+					false, false);
 			boolean fPermission = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
-					PrivacyManager.cSettingFPermission, true, false);
-			for (String rRestrictionName : PrivacyManager.getRestrictions())
-				if (fPermission ? mSelectedRestrictionName != null
-						|| PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(), rRestrictionName)
-						|| PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), rRestrictionName, null) > 0
-						: true)
+					PrivacyManager.cSettingFPermission, false, false);
+
+			for (String rRestrictionName : PrivacyManager.getRestrictions()) {
+				boolean isUsed = (PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), rRestrictionName, null) > 0);
+				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
+						rRestrictionName);
+				if (mSelectedRestrictionName != null
+						|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
 					mRestrictions.add(rRestrictionName);
+			}
 		}
 
 		@Override
@@ -1080,16 +1085,21 @@ public class ActivityApp extends Activity {
 
 		private List<PrivacyManager.MethodDescription> getMethodDescriptions(int groupPosition) {
 			if (!mMethodDescription.containsKey(groupPosition)) {
+				boolean fUsed = PrivacyManager.getSettingBool(null, ActivityApp.this, 0, PrivacyManager.cSettingFUsed,
+						false, false);
 				boolean fPermission = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
-						PrivacyManager.cSettingFPermission, true, false);
+						PrivacyManager.cSettingFPermission, false, false);
 				List<PrivacyManager.MethodDescription> listMethod = new ArrayList<PrivacyManager.MethodDescription>();
 				String restrictionName = mRestrictions.get(groupPosition);
-				for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods((String) getGroup(groupPosition)))
-					if (fPermission ? mSelectedMethodName != null
-							|| PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(), md)
-							|| PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), restrictionName,
-									md.getMethodName()) > 0 : true)
+				for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods((String) getGroup(groupPosition))) {
+					boolean isUsed = (PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), restrictionName,
+							md.getMethodName()) > 0);
+					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
+							md);
+					if (mSelectedMethodName != null
+							|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
 						listMethod.add(md);
+				}
 				mMethodDescription.put(groupPosition, listMethod);
 			}
 			return mMethodDescription.get(groupPosition);

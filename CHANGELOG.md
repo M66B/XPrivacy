@@ -6,6 +6,7 @@ Changelog
 * Fixed setting dangerous restrictions ([issue](https://github.com/M66B/XPrivacy/issues/876))
 * Attempt to fix user agent restriction for KitKat ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Show relative usage time
+* Filter application details on data usage
 * Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
