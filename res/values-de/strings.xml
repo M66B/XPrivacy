@@ -44,7 +44,7 @@
     <string name="msg_done">Fertig</string>
     <string name="msg_reboot">Geräteneustart erforderlich</string>
     <string name="msg_random_now">Zufallswerte erzeugen</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">Zufallswerte bei Neustart</string>
     <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
     <string name="msg_usage">Aktualisiere Usage-Data</string>
     <string name="msg_restart">App-Neustart erforderlich</string>
@@ -72,7 +72,7 @@
     <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">Kategorien</string>
     <string name="title_restrict">Zum Beschränken markieren:</string>
     <string name="title_filters">Filter</string>
 
@@ -101,7 +101,7 @@
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_ua">User-Agent (Browser)</string>
     <string name="settings_general">General</string>
-    <string name="settings_fake_data">Daten fälschen</string>
+    <string name="settings_fake_data">Daten manipulieren</string>
     <string name="settings_global">Benutze globale gefälschte Daten</string>
     <string name="settings_notify">Update-Benachrichtigungen</string>
     <string name="settings_usage">Android Usage-Data (erfordert Geräteneustart)</string>
