@@ -20,36 +20,36 @@
     <string name="menu_about">Riguardo a</string>
     <string name="menu_help">Aiuto</string>
     <string name="menu_all">Tutto</string>
-    <string name="menu_restriction_all">Toggle restrictions</string>
-    <string name="menu_clear_all">Clear all</string>
-    <string name="menu_restrict_all">Restrict all</string>
-    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_restriction_all">Imposta restrizioni</string>
+    <string name="menu_clear_all">Deseleziona tutto</string>
+    <string name="menu_restrict_all">Seleziona tutto</string>
+    <string name="menu_usage_all">Imposta filtro</string>
     <string name="menu_apply">Applica template</string>
     <string name="menu_clear">Pulisci</string>
     <string name="menu_app_launch">Lancia</string>
     <string name="menu_app_settings">Impostazioni</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Seleziona account consentiti</string>
-    <string name="menu_applications">Select applications to allow</string>
+    <string name="menu_applications">Seleziona le applicazioni permesse</string>
     <string name="menu_contacts">Seleziona contatti consentiti</string>
     <string name="msg_new">Nuovo</string>
     <string name="msg_update">Aggiorna</string>
     <string name="msg_licensed" formatted="false">Licenziato a: %s</string>
     <string name="msg_loading">Caricamento in corso</string>
-    <string name="msg_applying">Applying</string>
-    <string name="msg_saved_to">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_applying">Applicazione in corso</string>
+    <string name="msg_saved_to">Salvato su %s</string>
+    <string name="msg_no_restrictions">Nessuna restrizione trovata</string>
     <string name="msg_edit">Clicca l\'icona dell\'applicazione per modificare tutte le restrizioni</string>
     <string name="msg_sure">Sei sicuro?</string>
     <string name="msg_done">Fatto</string>
     <string name="msg_reboot">Riavvio richiesto</string>
     <string name="msg_random_now">Generazione casuale</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">Generazione casuale all\'accesso</string>
     <string name="msg_random_boot">Generazione casuale all\'avvio</string>
-    <string name="msg_usage">Updating usage data</string>
-    <string name="msg_restart">Application restart required</string>
+    <string name="msg_usage">Aggiornamento dati di utilizzo</string>
+    <string name="msg_restart">Richiesto riavvio dell\'applicazione</string>
     <string name="msg_first"><b>XPrivacy è stato testato e sviluppato con cura,
-        ma è impossibile garantire che funzionerà in modo impeccabile su ogni dispositivo e per ogni applicazione.
+ma è impossibile garantire che funzionerà in modo impeccabile su ogni dispositivo e per ogni applicazione.
 \n\nUsalo a tuo rischio.</b>\n\nLeggi la licenza:</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
     <string name="restrict_browser">Browser (bookmarks/history)</string>
@@ -67,14 +67,14 @@
     <string name="restrict_network">Rete (indirizzi)</string>
     <string name="restrict_notifications">Notifiche</string>
     <string name="restrict_phone">Telefono (ID, numeri, chiamate)</string>
-    <string name="restrict_sensors">Sensors</string>
+    <string name="restrict_sensors">Sensori</string>
     <string name="restrict_storage">Memoria (media, scheda SD)</string>
     <string name="restrict_shell">Shell (comandi, superuser)</string>
     <string name="restrict_system">Sistema (applicazioni installate)</string>
     <string name="restrict_view">Visualizzazione (browser)</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">Categorie</string>
     <string name="title_restrict">Spunta per limitare:</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">Filtri</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1 filtro attivo</item>
@@ -87,7 +87,7 @@
     <string name="title_frestricted">Filtra per restrizione</string>
     <string name="title_fuser">Filtra per app utente</string>
     <string name="title_fsystem">Filtra per app di sistema</string>
-    <string name="title_fnot">Negate</string>
+    <string name="title_fnot">Nega</string>
     <string name="settings_serial">Numero di serie#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
@@ -95,25 +95,25 @@
     <string name="settings_ip">Indirizzo IP</string>
     <string name="settings_phone">Numero di Telefono</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_adid">ID Pubblicità</string>
     <string name="settings_country">Nazione</string>
     <string name="settings_operator">Operatore</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
-    <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_general">Generale</string>
+    <string name="settings_fake_data">Dati falsi</string>
+    <string name="settings_global">Usa dati falsi globali</string>
+    <string name="settings_notify">Aggiorna notifiche</string>
+    <string name="settings_usage">Utilizzo dati di Android (richiede riavvio)</string>
     <string name="settings_log">Debug log (richiede riavvio)</string>
-    <string name="settings_expert">Expert mode</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_expert">Modalità esperto</string>
+    <string name="settings_dangerous">Limita funzioni pericolose</string>
     <string name="help_application">Applicazione</string>
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>
     <string name="help_used">ha usato questi dati</string>
     <string name="help_frozen">è disabilitato</string>
     <string name="help_dangerous">è pericoloso</string>
-    <string name="help_half">partly restricted</string>
+    <string name="help_half">parzialmente limitato</string>
 
 </resources>
