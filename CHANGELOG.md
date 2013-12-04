@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.37 BETA**
+
 * Fixed setting dangerous restrictions ([issue](https://github.com/M66B/XPrivacy/issues/876))
 * Fixed web view usage data
 * Attempt to fix user agent restriction for KitKat ([issue](https://github.com/M66B/XPrivacy/issues/825))
@@ -13,8 +17,6 @@ Changelog
 * Send usage data on service destroy
 * Updated German translation
 * Updated Polish translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.36 TEST**
 
