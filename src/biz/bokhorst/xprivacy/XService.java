@@ -44,8 +44,10 @@ public class XService extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.onDestroy) {
+			int uid = Binder.getCallingUid();
+			Util.log(this, Log.INFO, "Service destroyed uid=" + uid);
 			try {
-				if (PrivacyManager.isUsageDataEnabled(Binder.getCallingUid()))
+				if (PrivacyManager.isUsageDataEnabled(uid))
 					PrivacyManager.sendUsageData(this, (Context) param.thisObject);
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
