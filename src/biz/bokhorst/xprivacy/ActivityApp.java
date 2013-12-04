@@ -1174,10 +1174,9 @@ public class ActivityApp extends Activity {
 						&& restrictionName != null) {
 					// Set data
 					if (lastUsage > 0) {
-						Date date = new Date(lastUsage);
 						CharSequence sLastUsage = DateUtils.getRelativeTimeSpanString(lastUsage, new Date().getTime(),
 								DateUtils.SECOND_IN_MILLIS, 0);
-						holder.ctvMethodName.setText(String.format("%s %s", md.getMethodName(), sLastUsage));
+						holder.ctvMethodName.setText(String.format("%s (%s)", md.getMethodName(), sLastUsage));
 					}
 					holder.ctvMethodName.setEnabled(parentRestricted);
 					holder.imgUsed.setVisibility(lastUsage == 0 ? View.INVISIBLE : View.VISIBLE);
