@@ -198,7 +198,7 @@
     <Hook restriction="system" method="ApplicationsProvider" permissions="" sdk="14" />
 
     <Hook restriction="view" method="loadUrl" permissions="" sdk="1" />
-    <Hook restriction="view" method="WebView" permissions="" sdk="1" />
+    <Hook restriction="view" method="android.webkit.WebView.WebView" permissions="" sdk="1" />
     <Hook restriction="view" method="getDefaultUserAgent" permissions="" sdk="17" />
     <Hook restriction="view" method="getUserAgent" permissions="" sdk="1" />
     <Hook restriction="view" method="getUserAgentString" permissions="" sdk="1" />
