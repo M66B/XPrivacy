@@ -90,6 +90,7 @@ public class ActivityApp extends Activity {
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
 	public static final String cActionClear = "Clear";
+	public static final String cActionCrash = "Crash";
 
 	private static final int ACTIVITY_FETCH = 1;
 

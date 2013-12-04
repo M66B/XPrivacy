@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Binder;
 import android.util.Log;
 
@@ -84,6 +85,17 @@ public class XApplication extends XHook {
 				// Update usage data
 				if (PrivacyManager.isUsageDataEnabled(uid))
 					PrivacyManager.sendUsageData(null, mContext);
+
+				// Open app settings
+				String self = XApplication.class.getPackage().getName();
+				if (!mContext.getPackageName().equals(self)) {
+					Intent intentCrashed = new Intent(Intent.ACTION_MAIN);
+					intentCrashed.putExtra(ActivityApp.cPackageName, mContext.getPackageName());
+					intentCrashed.putExtra(ActivityApp.cActionCrash, ex.toString());
+					intentCrashed.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					intentCrashed.setClass(mContext.getApplicationContext(), ActivityApp.class);
+					mContext.startActivity(intentCrashed);
+				}
 			} catch (Throwable exex) {
 				Util.bug(mHook, exex);
 			}
