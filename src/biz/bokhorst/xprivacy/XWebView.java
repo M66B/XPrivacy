@@ -15,8 +15,7 @@ public class XWebView extends XHook {
 	private static final List<String> mWebSettings = new ArrayList<String>();
 
 	private XWebView(Methods method, String restrictionName) {
-		super(restrictionName, (method == Methods.WebView ? null : method.name()),
-				(method == Methods.WebView ? "WebView.constructor" : null));
+		super(restrictionName, (method == Methods.WebView ? null : method.name()), null);
 		mMethod = method;
 	}
 
@@ -46,7 +45,7 @@ public class XWebView extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XWebView(Methods.WebView, PrivacyManager.cView));
-		listHook.add(new XWebView(Methods.loadUrl, null));
+		listHook.add(new XWebView(Methods.loadUrl, PrivacyManager.cView));
 		listHook.add(new XWebView(Methods.getSettings, null));
 		return listHook;
 	}
