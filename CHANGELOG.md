@@ -11,6 +11,7 @@ Changelog
 * Notify if application needs restart, thanks @[jpeg729](https://github.com/jpeg729)
 * Chain new uncaught exception handlers
 * Send usage data on service destroy
+* Updated German translation
 * Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
