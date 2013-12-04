@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Show relative usage time
+* Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
