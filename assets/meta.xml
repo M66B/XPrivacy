@@ -54,14 +54,14 @@
     <Hook restriction="identification" method="getString" permissions="" sdk="14" />
     <Hook restriction="identification" method="getDescriptor" permissions="" sdk="16" />
     <Hook restriction="identification" method="GservicesProvider" dangerous="true" permissions="READ_GSERVICES" sdk="14" />
-    <Hook restriction="identification" method="SERIAL" requires_restart="true" permissions="" sdk="14" />
+    <Hook restriction="identification" method="SERIAL" restart="true" permissions="" sdk="14" />
 
     <Hook restriction="internet" method="getAllByName" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getByAddress" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getByName" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getByInetAddress" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getNetworkInterfaces" permissions="INTERNET" sdk="14" />
-    <Hook restriction="internet" method="inet" dangerous="true" requires_restart="true" permissions="INTERNET" sdk="14" />
+    <Hook restriction="internet" method="inet" dangerous="true" restart="true" permissions="INTERNET" sdk="14" />
     <Hook restriction="internet" method="getActiveNetworkInfo" dangerous="true" sdk="14" />
     <Hook restriction="internet" method="getAllNetworkInfo" sdk="14" />
     <Hook restriction="internet" method="getNetworkInfo" dangerous="true" sdk="14" />
@@ -166,8 +166,8 @@
     <Hook restriction="shell" method="loadLibrary" dangerous="true" permissions="" sdk="14" />
     <Hook restriction="shell" method="start" permissions="" sdk="14" />
 
-    <Hook restriction="storage" method="media" dangerous="true" requires_restart="true" permissions="WRITE_MEDIA_STORAGE" sdk="14" />
-    <Hook restriction="storage" method="sdcard" dangerous="true" requires_restart="true" permissions="READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE" sdk="14" />
+    <Hook restriction="storage" method="media" dangerous="true" restart="true" permissions="WRITE_MEDIA_STORAGE" sdk="14" />
+    <Hook restriction="storage" method="sdcard" dangerous="true" restart="true" permissions="READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE" sdk="14" />
     <Hook restriction="storage" method="getExternalStorageState" sdk="14" />
 
     <Hook restriction="system" method="getRecentTasks" dangerous="true" permissions="GET_TASKS" sdk="14" />

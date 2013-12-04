@@ -157,14 +157,16 @@ public class PrivacyManager {
 				String restrictionName = attributes.getValue("restriction");
 				String methodName = attributes.getValue("method");
 				String dangerous = attributes.getValue("dangerous");
+				String restart = attributes.getValue("restart");
 				String permissions = attributes.getValue("permissions");
 				int sdk = Integer.parseInt(attributes.getValue("sdk"));
 
 				// Add meta data
 				if (Build.VERSION.SDK_INT >= sdk) {
 					boolean danger = (dangerous == null ? false : Boolean.parseBoolean(dangerous));
+					boolean restartRequired = (restart == null ? false : Boolean.parseBoolean(restart));
 					String[] permission = (permissions == null ? null : permissions.split(","));
-					MethodDescription md = new MethodDescription(methodName, danger, permission, sdk);
+					MethodDescription md = new MethodDescription(methodName, danger, restartRequired, permission, sdk);
 
 					if (!mMethod.containsKey(restrictionName))
 						mMethod.put(restrictionName, new ArrayList<MethodDescription>());
@@ -195,7 +197,7 @@ public class PrivacyManager {
 		MethodDescription md = new MethodDescription(methodName);
 		int pos = mMethod.get(restrictionName).indexOf(md);
 		md = mMethod.get(restrictionName).get(pos);
-		return md.getDangerous();
+		return md.isDangerous();
 	}
 
 	public static String getLocalizedName(Context context, String restrictionName) {
@@ -1111,6 +1113,7 @@ public class PrivacyManager {
 	public static class MethodDescription implements Comparable<MethodDescription> {
 		private String mMethodName;
 		private boolean mDangerous;
+		private boolean mRestart;
 		private String[] mPermissions;
 		private int mSdk;
 
@@ -1118,9 +1121,10 @@ public class PrivacyManager {
 			mMethodName = methodName;
 		}
 
-		public MethodDescription(String methodName, boolean dangerous, String[] permissions, int sdk) {
+		public MethodDescription(String methodName, boolean dangerous, boolean restart, String[] permissions, int sdk) {
 			mMethodName = methodName;
 			mDangerous = dangerous;
+			mRestart = restart;
 			mPermissions = permissions;
 			mSdk = sdk;
 		}
@@ -1129,8 +1133,12 @@ public class PrivacyManager {
 			return mMethodName;
 		}
 
-		public boolean getDangerous() {
+		public boolean isDangerous() {
 			return mDangerous;
+		}
+
+		public boolean isRestartRequired() {
+			return mRestart;
 		}
 
 		public String[] getPermissions() {
