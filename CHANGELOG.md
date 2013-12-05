@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Fixed index out of range in web view hook
 * Updated Italian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
