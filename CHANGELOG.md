@@ -3,13 +3,15 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.38 BETA**
+
 * Fixed toggling all restrictions
 * Fixed partial apply of template
 * Fixed index out of range in web view hook
 * Updated Italian translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.37 BETA**
 
