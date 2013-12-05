@@ -3,8 +3,10 @@ Changelog
 
 **Next release**
 
+* Fixed partial apply of template
 * Fixed index out of range in web view hook
 * Updated Italian translation
+* Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
