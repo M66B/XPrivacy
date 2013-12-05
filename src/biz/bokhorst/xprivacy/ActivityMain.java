@@ -918,10 +918,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
-	private class ToggleTask extends AsyncTask<Boolean, Integer, Integer> {
+	private class ToggleTask extends AsyncTask<Boolean, Integer, Boolean> {
 		@Override
-		protected Integer doInBackground(Boolean... params) {
+		protected Boolean doInBackground(Boolean... params) {
 			boolean someRestricted = params[0];
+
 			// Apply action
 			boolean restart = false;
 			for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
@@ -939,10 +940,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							|| restart;
 			}
 
-			// Notify restart
-			if (restart)
-				Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
-			return null;
+			return restart;
 		}
 
 		@Override
@@ -951,12 +949,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		@Override
-		protected void onPostExecute(Integer result) {
+		protected void onPostExecute(Boolean restart) {
 			// Refresh
 			setProgress(getString(R.string.title_restrict), 0, 1);
 			mAppAdapter.notifyDataSetChanged();
 			mBatchOpRunning = false;
 			invalidateOptionsMenu();
+
+			// Notify restart
+			if (restart)
+				Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
 		}
 	}
 

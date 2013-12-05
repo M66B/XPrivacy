@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Fixed toggling all restrictions
 * Fixed partial apply of template
 * Fixed index out of range in web view hook
 * Updated Italian translation
