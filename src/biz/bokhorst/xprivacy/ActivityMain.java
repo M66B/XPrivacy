@@ -932,10 +932,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				else if (mAppAdapter.getRestrictionName() == null) {
 					for (String restrictionName : PrivacyManager.getRestrictions())
 						restart = PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-										restrictionName, null, !someRestricted) || restart;
+								restrictionName, null, !someRestricted) || restart;
 				} else
 					restart = PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-									mAppAdapter.getRestrictionName(), null, !someRestricted) || restart;
+							mAppAdapter.getRestrictionName(), null, !someRestricted)
+							|| restart;
 			}
 
 			// Notify restart
@@ -1307,7 +1308,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								boolean restart = false;
 								for (String restrictionName : listRestriction)
 									restart = PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
-													restrictionName, null, !someRestricted) || restart;
+											restrictionName, null, !someRestricted) || restart;
 
 								// Update all/some restricted
 								allRestricted = true;
