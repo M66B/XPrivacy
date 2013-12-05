@@ -408,9 +408,8 @@ public class ActivityApp extends Activity {
 				for (String restrictionName : listRestriction)
 					if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 							String.format("Template.%s", restrictionName), true, false))
-						restart = restart
-								|| PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(),
-										restrictionName, null, restricted);
+						restart = PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(),
+										restrictionName, null, restricted) || restart;
 
 				// Refresh display
 				if (mPrivacyListAdapter != null)

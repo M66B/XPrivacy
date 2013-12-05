@@ -928,16 +928,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				publishProgress(pos, mAppAdapter.getCount());
 				ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
 				if (mAppAdapter.getRestrictionName() == null && someRestricted)
-					restart = restart || PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid());
+					restart = PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid()) || restart;
 				else if (mAppAdapter.getRestrictionName() == null) {
 					for (String restrictionName : PrivacyManager.getRestrictions())
-						restart = restart
-								|| PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-										restrictionName, null, !someRestricted);
+						restart = PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+										restrictionName, null, !someRestricted) || restart;
 				} else
-					restart = restart
-							|| PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-									mAppAdapter.getRestrictionName(), null, !someRestricted);
+					restart = PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+									mAppAdapter.getRestrictionName(), null, !someRestricted) || restart;
 			}
 
 			// Notify restart
@@ -1308,9 +1306,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								// Update restriction
 								boolean restart = false;
 								for (String restrictionName : listRestriction)
-									restart = restart
-											|| PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
-													restrictionName, null, !someRestricted);
+									restart = PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
+													restrictionName, null, !someRestricted) || restart;
 
 								// Update all/some restricted
 								allRestricted = true;
