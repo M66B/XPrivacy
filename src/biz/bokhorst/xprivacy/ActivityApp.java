@@ -63,6 +63,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateUtils;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -70,6 +72,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
@@ -208,6 +211,9 @@ public class ActivityApp extends Activity {
 			}
 		});
 
+		// Add context menu to icon
+		registerForContextMenu(imgIcon);
+
 		// Check if internet access
 		if (!mAppInfo.hasInternet(this)) {
 			ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
@@ -287,6 +293,14 @@ public class ActivityApp extends Activity {
 	}
 
 	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+	                                ContextMenuInfo menuInfo) {
+	    super.onCreateContextMenu(menu, v, menuInfo);
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.app_icon, menu);
+	}
+
+	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// Accounts
 		boolean accountsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
@@ -355,6 +369,23 @@ public class ActivityApp extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+		case R.id.menu_app_launch:
+			optionLaunch();
+			return true;
+		case R.id.menu_app_settings:
+			optionSettings();
+			return true;
+		case R.id.menu_app_store:
+			optionStore();
+			return true;
+        default:
+            return super.onContextItemSelected(item);
+	    }
 	}
 
 	@Override
