@@ -6,7 +6,7 @@
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
     <string name="app_copyright">版权所有 \u00A9 2013 M. Bokhorst (M66B)</string>
-    <string name="menu_usage">权限使用日志（所有应用）</string>
+    <string name="menu_usage">权限使用记录</string>
     <string name="menu_refresh">刷新应用列表</string>
     <string name="menu_settings">用于被限制应用的模拟信息</string>
     <string name="menu_template">新安装应用默认权限模板</string>
@@ -21,8 +21,8 @@
     <string name="menu_help">帮助</string>
     <string name="menu_all">全部权限</string>
     <string name="menu_restriction_all">全选/不选列表中的应用</string>
-    <string name="menu_clear_all">Clear all</string>
-    <string name="menu_restrict_all">Restrict all</string>
+    <string name="menu_clear_all">清除全部限制</string>
+    <string name="menu_restrict_all">限制所有权限</string>
     <string name="menu_usage_all">过滤器开关</string>
     <string name="menu_apply">套用默认权限模板</string>
     <string name="menu_clear">清除所有权限限制</string>
@@ -36,9 +36,9 @@
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
-    <string name="msg_applying">Applying</string>
-    <string name="msg_saved_to">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_applying">正在应用…</string>
+    <string name="msg_saved_to">保存到%s</string>
+    <string name="msg_no_restrictions">没有找到权限限制规则</string>
     <string name="msg_edit">点击应用图标以调整详细限制规则</string>
     <string name="msg_sure">是否确定？</string>
     <string name="msg_done">完成</string>
@@ -46,8 +46,8 @@
     <string name="msg_random_now">生成随机数值</string>
     <string name="msg_random_access">访问时随机生成数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
-    <string name="msg_usage">Updating usage data</string>
-    <string name="msg_restart">Application restart required</string>
+    <string name="msg_usage">正在更新用量统计数据…</string>
+    <string name="msg_restart">需要重启应用使限制生效</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
@@ -77,8 +77,8 @@
     <string name="title_filters">过滤器</string>
 
     <plurals name="title_active_filters">
-        <item quantity="one">1 个已启用的过滤器</item>
-        <item quantity="other">%d 个已启用的过滤器</item>
+        <item quantity="one">1个已启用的过滤器</item>
+        <item quantity="other">%d个已启用的过滤器</item>
     </plurals>
 
     <string name="title_fused">曾使用当前选中权限的应用</string>
