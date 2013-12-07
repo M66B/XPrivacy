@@ -5,6 +5,7 @@ Changelog
 
 * Small performance improvement
 * Updated Chinese translation
+* Updated Italian translation
 * Updated Vietnamese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
