@@ -20,6 +20,7 @@
 			echo json_encode(array('ok' => false, 'error' => 'Unable to connect db'));
 			exit();
 		}
+		$db->query("SET NAMES 'utf8'");
 
 		// Store/update settings
 		if (empty($action) || $action == 'submit') {
@@ -184,6 +185,7 @@
 				echo '<pre>Error connecting to database</pre>';
 				exit();
 			}
+			//$db->query("SET NAMES 'utf8'");
 ?>
 			<div class="page-header">
 <?php
