@@ -3,6 +3,9 @@ Changelog
 
 **Next release**
 
+* Updated Chinese translation
+* Updated Vietnamese translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.38 BETA**
