@@ -162,7 +162,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="https://github.com/M66B/XPrivacy">XPrivacy</a>
+					<a class="navbar-brand" href="http://updates.faircode.eu/xprivacy">XPrivacy</a>
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
@@ -179,12 +179,12 @@
 
 		<div class="container">
 <?php
-		// Connect to database
-		$db = new mysqli($db_host, $db_user, $db_password, $db_database);
-		if ($db->connect_errno) {
-			echo 'Error connecting to database';
-			exit();
-		}
+			// Connect to database
+			$db = new mysqli($db_host, $db_user, $db_password, $db_database);
+			if ($db->connect_errno) {
+				echo '<pre>Error connecting to database</pre>';
+				exit();
+			}
 ?>
 			<div class="page-header">
 <?php
@@ -193,7 +193,7 @@
 				<h1>XPrivacy</h1>
 				<p>Crowd sourced restrictions</p>
 				<p>This is a voting system for
-					the <a href="https://github.com/M66B/XPrivacy#description">XPrivacy</a> restrictions.<br />
+					the <a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
 					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch the restriction settings most voted for.</p>
 <?php
@@ -226,7 +226,28 @@
 
 			<div class="container">
 <?php
-			if (!empty($package_name)) {
+			if (empty($package_name)) {
+				echo '<p>';
+				$sql = "SELECT DISTINCT LEFT(UCASE(application_name), 1) AS letter";
+				$sql .= " FROM xprivacy";
+				$sql .= " ORDER BY application_name";
+				$result = $db->query($sql);
+				if ($result) {
+					while ($row = $result->fetch_object()) {
+						echo '<a href="?letter=' . urlencode($row->letter) . '">';
+						if ($row->letter == '')
+							echo '---';
+						else {
+							$ent = htmlentities($row->letter, ENT_NOQUOTES | ENT_SUBSTITUTE | ENT_DISALLOWED | ENT_HTML5, 'UTF-8');
+							echo ($ent == '' ? '???' : $ent);
+						}
+						echo '</a> ';
+					}
+					$result->close();
+				}
+				echo '</p>';
+			}
+			else {
 ?>
 				<p><a href="#" id="details">Show details</a></p>
 <?php
@@ -267,8 +288,13 @@
 
 					if (empty($package_name)) {
 						// Get application list
+						$letter = isset($_REQUEST['letter']) ? $_REQUEST['letter'] :'A';
 						$sql = "SELECT DISTINCT application_name, package_name";
 						$sql .= " FROM xprivacy";
+						if (empty($letter))
+							$sql .= " WHERE application_name = ''";
+						else
+							$sql .= " WHERE application_name LIKE '" . ($letter == '%' ? '\\' : '') . $db->real_escape_string($letter) . "%'";
 						$sql .= " ORDER BY application_name";
 						$result = $db->query($sql);
 						if ($result) {
@@ -277,8 +303,7 @@
 								$name = (empty($row->application_name) ? '---' : $row->application_name);
 								echo '<tr>';
 
-								echo '<td><a href="?application_name=' . urlencode($name);
-								echo '&amp;package_name=' . urlencode($row->package_name) . '">';
+								echo '<td><a href="?package_name=' . urlencode($row->package_name) . '">';
 								echo htmlentities($name, ENT_COMPAT, 'UTF-8') . '</a></td>';
 
 								echo '<td>' . htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</td>';
