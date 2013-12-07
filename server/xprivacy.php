@@ -249,7 +249,7 @@
 						if ($row->letter == '')
 							echo '---';
 						else {
-							$ent = htmlentities($row->letter, ENT_NOQUOTES | ENT_SUBSTITUTE | ENT_DISALLOWED | ENT_HTML5, 'UTF-8');
+							$ent = htmlentities($row->letter, ENT_NOQUOTES, 'UTF-8');
 							echo ($ent == '' ? '???' : $ent);
 						}
 						echo '</a> ';
