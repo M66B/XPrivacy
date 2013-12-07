@@ -185,19 +185,23 @@
 				echo '<pre>Error connecting to database</pre>';
 				exit();
 			}
-			//$db->query("SET NAMES 'utf8'");
+			$db->query("SET NAMES 'utf8'");
 ?>
 			<div class="page-header">
 <?php
 			if (empty($package_name)) {
 				$count = 0;
+				$total = 0;
 				$sql = "SELECT COUNT(DISTINCT application_name) AS count";
+				$sql .= ", COUNT(*) AS total";
 				$sql .= " FROM xprivacy";
 				$result = $db->query($sql);
 				if ($result) {
 					$row = $result->fetch_object();
-					if ($row)
+					if ($row) {
 						$count = $row->count;
+						$total = $row->total;
+					}
 					$result->close();
 				}
 ?>
@@ -207,7 +211,8 @@
 					the <a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
 					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch submitted restriction settings.<br />
-					There are currently restriction settings for <?php echo $count; ?> applications submitted.
+					There are currently <?php echo number_format($total, 0, '.', ','); ?> restriction settings
+					for <?php echo number_format($count, 0, '.', ',') ?> applications submitted.
 				</p>
 <?php
 			} else {
@@ -241,23 +246,9 @@
 <?php
 			if (empty($package_name)) {
 				echo '<p>';
-				$sql = "SELECT DISTINCT LEFT(UCASE(application_name), 1) AS letter";
-				$sql .= " FROM xprivacy";
-				$sql .= " ORDER BY application_name";
-				$result = $db->query($sql);
-				if ($result) {
-					while ($row = $result->fetch_object()) {
-						echo '<a href="?letter=' . urlencode($row->letter) . '">';
-						if ($row->letter == '')
-							echo '---';
-						else {
-							$ent = htmlentities($row->letter, ENT_NOQUOTES, 'UTF-8');
-							echo ($ent == '' ? '???' : $ent);
-						}
-						echo '</a> ';
-					}
-					$result->close();
-				}
+				foreach(range('A', 'Z') as $letter)
+					echo '<a href="?letter=' . $letter . '">' . $letter . '</a> ';
+				echo '<a href="?letter=*">other</a> ';
 				echo '</p>';
 			}
 			else {
@@ -301,11 +292,11 @@
 
 					if (empty($package_name)) {
 						// Get application list
-						$letter = isset($_REQUEST['letter']) ? $_REQUEST['letter'] :'A';
+						$letter = empty($_REQUEST['letter']) ? 'A' : $_REQUEST['letter'];
 						$sql = "SELECT DISTINCT application_name, package_name";
 						$sql .= " FROM xprivacy";
-						if ($letter == '')
-							$sql .= " WHERE application_name = ''";
+						if ($letter == '*')
+							$sql .= " WHERE application_name NOT REGEXP '^[[:alpha:]]'";
 						else
 							$sql .= " WHERE application_name LIKE '" . ($letter == '%' ? '\\' : '') . $db->real_escape_string($letter) . "%'";
 						$sql .= " ORDER BY application_name";
@@ -313,6 +304,7 @@
 						if ($result) {
 							while (($row = $result->fetch_object())) {
 								$count++;
+								ini_set('mbstring.substitute_character', "none");
 								$name = (empty($row->application_name) ? '---' : $row->application_name);
 								echo '<tr>';
 
