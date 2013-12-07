@@ -162,13 +162,16 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">XPrivacy</a>
+					<a class="navbar-brand" href="https://github.com/M66B/XPrivacy">XPrivacy</a>
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="http://forum.xda-developers.com/showthread.php?t=2320783" target="_blank">XDA</a></li>
-						<li><a href="https://github.com/M66B/XPrivacy" target="_blank">GitHub</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="http://forum.faircode.eu/contact/" target="_blank">Contact</a></li>
 						<li><a href="http://stats.pingdom.com/dcqg2snuqaf1/388316" target="_blank">Status</a></li>
+						<li><a href="http://forum.xda-developers.com/showthread.php?t=2320783" target="_blank">Support</a></li>
+						<li><a href="http://blog.bokhorst.biz/about/" target="_blank">About</a></li>
 					</ul>
 				</div>
 			</div>
@@ -190,7 +193,7 @@
 				<h1>XPrivacy</h1>
 				<p>Crowd sourced restrictions</p>
 				<p>This is a voting system for
-					the <a href="http://forum.xda-developers.com/showthread.php?t=2320783">XPrivacy</a> restrictions.<br />
+					the <a href="https://github.com/M66B/XPrivacy#description">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
 					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch the restriction settings most voted for.</p>
 <?php
@@ -349,7 +352,7 @@
 			<div class="container">
 				<a id="privacy_policy" href="#">Privacy policy</a>
 				<p id="privacy_policy_text" style="display: none;">I will not, under any circumstances whatsoever, give out or sell your information to anyone, unless required by law.</p>
-				<p class="text-muted credit">&copy; 2013 <a href="http://blog.bokhorst.biz/about/" target="_blank">Marcel Bokhorst</a></p>
+				<p class="text-muted credit">&copy; 2013-<?php echo date("Y"); ?> <a href="http://blog.bokhorst.biz/about/" target="_blank">Marcel Bokhorst</a></p>
 			</div>
 <?php
 		// Close database connection
@@ -361,14 +364,14 @@
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 		<script>
 			jQuery(document).ready(function($) {
-			  $('#details').click(function() {
-				  $('.details').toggle();
-				  return false;
-			  });
-			  $('#privacy_policy').click(function() {
-				$('#privacy_policy_text').toggle();
-				return false;
-			  });
+				$('#details').click(function() {
+					$('.details').toggle();
+					return false;
+				});
+				$('#privacy_policy').click(function() {
+					$('#privacy_policy_text').toggle();
+					return false;
+				});
 			});
 		</script>
 		<!-- Piwik -->
