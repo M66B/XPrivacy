@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Small performance improvement
 * Updated Chinese translation
 * Updated Vietnamese translation
 
