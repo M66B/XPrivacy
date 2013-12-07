@@ -189,13 +189,25 @@
 			<div class="page-header">
 <?php
 			if (empty($package_name)) {
+				$count = 0;
+				$sql = "SELECT COUNT(DISTINCT application_name) AS count";
+				$sql .= " FROM xprivacy";
+				$result = $db->query($sql);
+				if ($result) {
+					$row = $result->fetch_object();
+					if ($row)
+						$count = $row->count;
+					$result->close();
+				}
 ?>
 				<h1>XPrivacy</h1>
 				<p>Crowd sourced restrictions</p>
 				<p>This is a voting system for
 					the <a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
-					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch the restriction settings most voted for.</p>
+					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch submitted restriction settings.<br />
+					There are currently restriction settings for <?php echo $count; ?> applications submitted.
+				</p>
 <?php
 			} else {
 				$application_name = '---';
