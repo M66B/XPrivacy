@@ -252,6 +252,8 @@ Limitations
 * Phone number cannot be restricted for the standard phone application
 * Internet and storage can only be restricted for applications/providers/services started by the Android package manager
 * Due to its static nature [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized on application start and there is no usage data
+* Due to a bug in Chromium the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
+* Due to a custom implementation the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
 
 Compatibility
 -------------
