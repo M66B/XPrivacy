@@ -23,6 +23,8 @@
     <string name="menu_help">راهنما</string>
     <string name="menu_all">همه</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">پاک کردن</string>
@@ -36,6 +38,7 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">%s مجوز به: </string>
     <string name="msg_loading">در حال بارگذاری</string>
+    <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">برای ویرایش تمامی محدودیت ها بر روی آیکون نرم افزار مورد نظر کلیک کنید</string>
@@ -45,6 +48,8 @@
     <string name="msg_random_now">رندم سازی</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">رندم سازی پس از روشن شدن مجدد</string>
+    <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>نرم افزار ایکس پرایوسی با دقت بالایی تولید و تست شده است، با این وجود تضمینی برای عملکرد صحیح
 این نرم افزار بر روی تمامی دستگاه ها و در مورد تمامی نرم افزارها وجود ندارد.
 \n\n ریسک استفاده از این نرم افزار بر عهده ی شما می باشد</b>\n\n:همچنین پروانه ی برنامه را مشاهده کنید</string>
@@ -102,7 +107,6 @@
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">لاگ ایرادیابی (نیازمند دوباره راه اندازی می باشد)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

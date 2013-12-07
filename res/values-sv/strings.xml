@@ -21,6 +21,8 @@
     <string name="menu_help">Hjälp</string>
     <string name="menu_all">Alla</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Applicera mall</string>
     <string name="menu_clear">Rensa</string>
@@ -34,6 +36,7 @@
     <string name="msg_update">Uppdatera</string>
     <string name="msg_licensed" formatted="false">Licensierat till: %s</string>
     <string name="msg_loading">Laddar</string>
+    <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Klicka på appikonen för att ändra alla restriktioner</string>
@@ -43,6 +46,8 @@
     <string name="msg_random_now">Slumpa</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Slumpa efter uppstart</string>
+    <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>XPrivacy utvecklas och testas med stor omsorg.
 Det är emellertid omöjligt att garantera att appen fungerar på alla enheter och appar.
 \n\nAnvänding sker helt på egen risk.</b>\n\nSe också licensen:</string>
@@ -100,7 +105,6 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Felsökningslogg (kräver omstart)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

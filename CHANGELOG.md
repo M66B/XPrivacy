@@ -5,6 +5,60 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 1.10.38 BETA**
+
+* Fixed toggling all restrictions
+* Fixed partial apply of template
+* Fixed index out of range in web view hook
+* Updated Italian translation
+* Updated Lithuanian translation
+
+**Version 1.10.37 BETA**
+
+* Fixed setting dangerous restrictions ([issue](https://github.com/M66B/XPrivacy/issues/876))
+* Fixed web view usage data
+* Attempt to fix user agent restriction for KitKat ([issue](https://github.com/M66B/XPrivacy/issues/825))
+* Show relative usage time
+* Filter application details on data usage
+* Notify if application needs restart, thanks @[jpeg729](https://github.com/jpeg729)
+* Chain new uncaught exception handlers
+* Send usage data on service destroy
+* Updated German translation
+* Updated Polish translation
+
+**Version 1.10.36 TEST**
+
+* Better titles for dialogs
+* Fixed error message fetch restrictions
+* Fixed canceling fetch all restrictions
+* Better title for toggle all restrictions, thanks @[jpeg729](https://github.com/jpeg729)
+* Run toggle all restriction in a background task, thanks @[jpeg729](https://github.com/jpeg729)
+* Updated Lithuanian translation
+
+**Version 1.10.35 EXPERIMENTAL**
+
+* Attempt to fix user agent restriction for KitKat ([issue](https://github.com/M66B/XPrivacy/issues/825))
+* Attempt to fix clipboard restriction for some devices ([issue](https://github.com/M66B/XPrivacy/issues/857))
+* Dynamic hooking of service managers for better compatibility
+* Progress reports while filtering, thanks @[jpeg729](https://github.com/jpeg729)
+* Updated Irish translation
+* Updated Russian translation
+* Updated Slovak translation
+* Updated Spanish translation
+
+**Version 1.10.34 TEST**
+
+* Fixed missing usage data
+* Send usage data on application close or force close (FC)
+* Progress reports while export is loading, thanks @[jpeg729](https://github.com/jpeg729)
+* Require Xposed version 2.4
+
+**Version 1.10.33 BETA**
+
+* Fixed missing usage data, thanks @[jpeg729](https://github.com/jpeg729)
+* Updated Chinese translations
+* Updated Japanese translation
+
 **Version 1.10.31 BETA**
 
 * Fixed ongoing notification of fetch restrictions

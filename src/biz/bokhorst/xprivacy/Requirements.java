@@ -34,9 +34,9 @@ public class Requirements {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
-							xposedIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy#installation"));
-							context.startActivity(xposedIntent);
+							Intent androidIntent = new Intent(Intent.ACTION_VIEW);
+							androidIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy#installation"));
+							context.startActivity(androidIntent);
 						}
 					});
 			AlertDialog alertDialog = alertDialogBuilder.create();
@@ -44,9 +44,10 @@ public class Requirements {
 		}
 
 		// Check Xposed version
-		int xVersion = Util.getXposedVersion();
-		if (xVersion < PrivacyManager.cXposedMinVersion) {
-			String msg = String.format(context.getString(R.string.app_notxposed), PrivacyManager.cXposedMinVersion);
+		int xVersion = Util.getXposedAppProcessVersion();
+		if (xVersion < PrivacyManager.cXposedAppProcessMinVersion) {
+			String msg = String.format(context.getString(R.string.app_notxposed),
+					PrivacyManager.cXposedAppProcessMinVersion);
 			Util.log(null, Log.WARN, msg);
 
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
@@ -103,9 +104,9 @@ public class Requirements {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Intent intentStore = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
+							Intent storeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
 									+ context.getPackageName() + ".pro"));
-							context.startActivity(intentStore);
+							context.startActivity(storeIntent);
 						}
 					});
 			AlertDialog alertDialog = alertDialogBuilder.create();

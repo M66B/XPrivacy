@@ -26,6 +26,8 @@
     <string name="menu_help">Help</string>
     <string name="menu_all">All</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Clear</string>
@@ -39,7 +41,8 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>
     <string name="msg_loading">Loading</string>
-    <string name="msg_saved_to">Saved to %s</string>
+    <string name="msg_applying">Applying</string>
+    <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Click the application icon to edit all restrictions</string>
     <string name="msg_sure">Are you sure?</string>
@@ -48,6 +51,8 @@
     <string name="msg_random_now">Randomize now</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randomize on boot</string>
+    <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawlessly on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
@@ -112,7 +117,6 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

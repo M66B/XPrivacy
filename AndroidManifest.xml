@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
-    android:versionCode="198"
-    android:versionName="1.10.31" >
+    android:versionCode="205"
+    android:versionName="1.10.38" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -25,7 +25,7 @@
             android:value="true" />
         <meta-data
             android:name="xposedminversion"
-            android:value="36+" />
+            android:value="42+" />
         <meta-data
             android:name="xposeddescription"
             android:value="The ultimate privacy manager" />

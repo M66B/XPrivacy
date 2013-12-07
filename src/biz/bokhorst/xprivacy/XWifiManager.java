@@ -19,14 +19,16 @@ import static de.robv.android.xposed.XposedHelpers.findMethodExact;
 
 public class XWifiManager extends XHook {
 	private Methods mMethod;
+	private String mClassName;
 
-	private XWifiManager(Methods method, String restrictionName) {
+	private XWifiManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
+		mClassName = className;
 	}
 
 	public String getClassName() {
-		return "android.net.wifi.WifiManager";
+		return mClassName;
 	}
 
 	// public List<WifiConfiguration> getConfiguredNetworks()
@@ -43,15 +45,16 @@ public class XWifiManager extends XHook {
 		getConfiguredNetworks, getConnectionInfo, getDhcpInfo, getScanResults, getWifiApConfiguration
 	};
 
-	public static List<XHook> getInstances() {
+	public static List<XHook> getInstances(Object instance) {
+		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods wifi : Methods.values())
-			listHook.add(new XWifiManager(wifi, PrivacyManager.cNetwork));
+			listHook.add(new XWifiManager(wifi, PrivacyManager.cNetwork, className));
 
-		listHook.add(new XWifiManager(Methods.getScanResults, PrivacyManager.cLocation));
+		listHook.add(new XWifiManager(Methods.getScanResults, PrivacyManager.cLocation, className));
 
 		// This is to fake "offline", no permission required
-		listHook.add(new XWifiManager(Methods.getConnectionInfo, PrivacyManager.cInternet));
+		listHook.add(new XWifiManager(Methods.getConnectionInfo, PrivacyManager.cInternet, className));
 		return listHook;
 	}
 

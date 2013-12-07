@@ -251,7 +251,7 @@ Limitations
 * /proc and system properties cannot be restricted for Android (serial number, IMEI, MAC address, etc)
 * Phone number cannot be restricted for the standard phone application
 * Internet and storage can only be restricted for applications/providers/services started by the Android package manager
-* Due to its static nature Build.Serial can only be randomized on application start
+* Due to its static nature [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized on application start and there is no usage data
 
 Compatibility
 -------------
@@ -425,6 +425,7 @@ The right order for ROM updates is:
 1. Clear XPrivacy data (please note that this will erase the imported pro license file if any)
 1. Import XPrivacy settings
 1. Disable flight mode
+1. Fake network type (Wi-Fi, mobile)
 
 (this assumes no data wipe and Xposed and XPrivacy installed before updating the ROM)
 
@@ -689,6 +690,7 @@ Current translations:
 1. Hebrew (he/iw)
 1. Hindi (hi)
 1. Hungarian (hu)
+1. Irish (ga)
 1. Italian (it)
 1. Japanese (ja)
 1. Lithuanian (lt)
@@ -730,7 +732,8 @@ Testing:
 * [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 * [SIM Card](https://play.google.com/store/apps/details?id=com.gsmdev.simcard)
 
-Contributors do not have to donate for the [pro version](http://www.faircode.eu/xprivacy/).
+Serious contributors do not have to donate for the [pro version](http://www.faircode.eu/xprivacy/).
+New translations are considered as a serious contribution, but translating a few lines of text is not.
 
 License
 -------

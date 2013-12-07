@@ -15,14 +15,16 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivityManager extends XHook {
 	private Methods mMethod;
+	private String mClassName;
 
-	private XActivityManager(Methods method, String restrictionName) {
+	private XActivityManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
+		mClassName = className;
 	}
 
 	public String getClassName() {
-		return "android.app.ActivityManager";
+		return mClassName;
 	}
 
 	// public List<RecentTaskInfo> getRecentTasks(int maxNum, int flags)
@@ -36,10 +38,11 @@ public class XActivityManager extends XHook {
 		getRecentTasks, getRunningAppProcesses, getRunningServices, getRunningTasks
 	};
 
-	public static List<XHook> getInstances() {
+	public static List<XHook> getInstances(Object instance) {
+		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods act : Methods.values())
-			listHook.add(new XActivityManager(act, PrivacyManager.cSystem));
+			listHook.add(new XActivityManager(act, PrivacyManager.cSystem, className));
 		return listHook;
 	}
 

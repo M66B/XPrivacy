@@ -26,7 +26,7 @@ public class SettingsDialog {
 		int themeId = (themeName.equals("Dark") ? R.style.CustomTheme_Dialog : R.style.CustomTheme_Light_Dialog);
 		final Dialog dlgSettings = new Dialog(context, themeId);
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dlgSettings.setTitle(context.getString(R.string.app_name));
+		dlgSettings.setTitle(context.getString(R.string.menu_settings));
 		dlgSettings.setContentView(R.layout.settings);
 		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(context, R.attr.icon_launcher));
 
@@ -55,7 +55,6 @@ public class SettingsDialog {
 		final EditText etUa = (EditText) dlgSettings.findViewById(R.id.etUa);
 		final CheckBox cbNotify = (CheckBox) dlgSettings.findViewById(R.id.cbNotify);
 		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
-		final CheckBox cbExtra = (CheckBox) dlgSettings.findViewById(R.id.cbExtra);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
 		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		final CheckBox cbDangerous = (CheckBox) dlgSettings.findViewById(R.id.cbDangerous);
@@ -93,9 +92,7 @@ public class SettingsDialog {
 				false);
 		boolean usage = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingAndroidUsage, false,
 				false);
-		boolean extra = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExtraUsage, false,
-				false);
-		final boolean expert = (dangerous || usage || extra);
+		final boolean expert = (dangerous || usage);
 		boolean log = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingLog, false, false);
 		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
 
@@ -241,11 +238,9 @@ public class SettingsDialog {
 			if (expert) {
 				cbDangerous.setChecked(dangerous);
 				cbUsage.setChecked(usage);
-				cbExtra.setChecked(extra);
 			} else {
 				cbDangerous.setEnabled(false);
 				cbUsage.setEnabled(false);
-				cbExtra.setEnabled(false);
 			}
 
 			cbLog.setChecked(log);
@@ -256,11 +251,9 @@ public class SettingsDialog {
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					cbDangerous.setEnabled(isChecked);
 					cbUsage.setEnabled(isChecked);
-					cbExtra.setEnabled(isChecked);
 					if (!isChecked) {
 						cbDangerous.setChecked(false);
 						cbUsage.setChecked(false);
-						cbExtra.setChecked(false);
 					}
 				}
 			});
@@ -269,7 +262,6 @@ public class SettingsDialog {
 			cbNotify.setChecked(notify);
 			cbDangerous.setVisibility(View.GONE);
 			cbUsage.setVisibility(View.GONE);
-			cbExtra.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
 			cbExpert.setVisibility(View.GONE);
 
@@ -507,8 +499,6 @@ public class SettingsDialog {
 							Boolean.toString(cbDangerous.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
 							Boolean.toString(cbUsage.isChecked()));
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExtraUsage,
-							Boolean.toString(cbExtra.isChecked()));
 				} else {
 					// App specific settings
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingNotify,

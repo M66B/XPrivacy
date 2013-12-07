@@ -21,6 +21,8 @@
     <string name="menu_help">Aide</string>
     <string name="menu_all">Tous</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Appliquer le modèle</string>
     <string name="menu_clear">Tout effacer</string>
@@ -34,6 +36,7 @@
     <string name="msg_update">MàJ :</string>
     <string name="msg_licensed" formatted="false">Autorisé à : %s</string>
     <string name="msg_loading">Chargement</string>
+    <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Cliquer sur l\'icône de l\'application pour éditer ses restrictions</string>
@@ -43,6 +46,8 @@
     <string name="msg_random_now">Randomiser maintenant</string>
     <string name="msg_random_access">Randomiser à chaque accès</string>
     <string name="msg_random_boot">Randomiser après le démarrage</string>
+    <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
 \n\nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>
@@ -100,7 +105,6 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_global">Utiliser les valeurs globales</string>
     <string name="settings_notify">Notifications de MàJ</string>
     <string name="settings_usage">Activer usage log (redémarrage nécessaire)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (redémarrage nécessaire)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

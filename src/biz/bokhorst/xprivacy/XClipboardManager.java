@@ -14,14 +14,16 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XClipboardManager extends XHook {
 	private Methods mMethod;
+	private String mClassName;
 
-	private XClipboardManager(Methods method, String restrictionName) {
+	private XClipboardManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
+		mClassName = className;
 	}
 
 	public String getClassName() {
-		return "android.content.ClipboardManager";
+		return (mClassName == null ? "android.content.ClipboardManager" : mClassName);
 	}
 
 	// @formatter:off
@@ -32,41 +34,42 @@ public class XClipboardManager extends XHook {
 	// public CharSequence getText()
 	// public boolean hasPrimaryClip()
 	// public boolean hasText()
+	// public void removePrimaryClipChangedListener(ClipboardManager.OnPrimaryClipChangedListener what)
 	// frameworks/base/core/java/android/content/ClipboardManager.java
 	// http://developer.android.com/reference/android/content/ClipboardManager.html
 
 	// @formatter:on
 
 	private enum Methods {
-		addPrimaryClipChangedListener, getPrimaryClip, getPrimaryClipDescription, getText, hasPrimaryClip, hasText
+		addPrimaryClipChangedListener, getPrimaryClip, getPrimaryClipDescription, getText, hasPrimaryClip, hasText, removePrimaryClipChangedListener
 	};
 
-	public static List<XHook> getInstances() {
+	public static List<XHook> getInstances(Object instance) {
+		String className = (instance == null ? null : instance.getClass().getName());
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods clip : Methods.values())
-			listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard));
+			listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard, className));
 		return listHook;
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (mMethod == Methods.addPrimaryClipChangedListener)
+		if (mMethod == Methods.addPrimaryClipChangedListener || mMethod == Methods.removePrimaryClipChangedListener)
 			if (isRestricted(param))
 				param.setResult(null);
 	}
 
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
-		if (mMethod != Methods.addPrimaryClipChangedListener)
-			if (mMethod == Methods.getPrimaryClip || mMethod == Methods.getPrimaryClipDescription
-					|| mMethod == Methods.getText) {
-				if (param.getResult() != null && isRestricted(param))
-					param.setResult(null);
-			} else if (mMethod == Methods.hasPrimaryClip || mMethod == Methods.hasText) {
-				if (isRestricted(param))
-					param.setResult(false);
-			} else
-				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+		if (mMethod == Methods.getPrimaryClip || mMethod == Methods.getPrimaryClipDescription
+				|| mMethod == Methods.getText) {
+			if (param.getResult() != null && isRestricted(param))
+				param.setResult(null);
+		} else if (mMethod == Methods.hasPrimaryClip || mMethod == Methods.hasText) {
+			if (isRestricted(param))
+				param.setResult(false);
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override

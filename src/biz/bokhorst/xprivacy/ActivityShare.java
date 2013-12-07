@@ -57,16 +57,19 @@ import android.util.Xml;
 import android.widget.Toast;
 
 public class ActivityShare extends Activity {
-	public static final String cProgressReport = "ProgressReport";
-	public static final String cProgressMessage = "ProgressMessage";
-	public static final String cProgressValue = "ProgressValue";
-	public static final String cProgressMax = "ProgressMax";
-
 	private LocalBroadcastManager mBroadcastManager;
 
 	public static final String cFileName = "FileName";
 	public static final String cPackageName = "PackageName";
 	public static final String BASE_URL = "http://updates.faircode.eu/xprivacy";
+	public static final String cProgressReport = "ProgressReport";
+	public static final String cProgressMessage = "ProgressMessage";
+	public static final String cProgressValue = "ProgressValue";
+	public static final String cProgressMax = "ProgressMax";
+
+	public static final String ACTION_EXPORT = "biz.bokhorst.xprivacy.action.EXPORT";
+	public static final String ACTION_IMPORT = "biz.bokhorst.xprivacy.action.IMPORT";
+	public static final String ACTION_FETCH = "biz.bokhorst.xprivacy.action.FETCH";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -118,7 +121,6 @@ public class ActivityShare extends Activity {
 
 	private class ExportTask extends AsyncTask<File, String, String> {
 		private File mFile;
-		private int mProgressMax = 1;
 		private int mCurrent = 0;
 		private final static int NOTIFY_ID = 1;
 
@@ -141,8 +143,18 @@ public class ActivityShare extends Activity {
 					publishProgress(getString(R.string.msg_loading));
 					Util.log(null, Log.INFO, "Exporting settings");
 
+					// Progress updater
+					Runnable progress = new Runnable() {
+						@Override
+						public void run() {
+							// This should be called exactly 100 times
+							mCurrent++;
+							publishProgress(getString(R.string.msg_loading), Integer.toString(mCurrent), "100");
+						}
+					};
+
 					String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityShare.this);
+					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityShare.this, progress);
 					for (String setting : mapSetting.keySet()) {
 						String value = mapSetting.get(setting);
 
@@ -160,8 +172,8 @@ public class ActivityShare extends Activity {
 					}
 
 					// Process restrictions
-					List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager
-							.getRestricted(ActivityShare.this);
+					List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager.getRestricted(
+							ActivityShare.this, progress);
 					Map<String, List<PrivacyManager.RestrictionDesc>> mapRestriction = new HashMap<String, List<PrivacyManager.RestrictionDesc>>();
 					for (PrivacyManager.RestrictionDesc restriction : listRestriction) {
 						String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
@@ -176,13 +188,13 @@ public class ActivityShare extends Activity {
 					}
 
 					// Set some numbers for the progress bar
-					mProgressMax = mapRestriction.size();
+					final String max = Integer.toString(mapRestriction.size());
 					mCurrent = 0;
 
 					// Process result
 					for (String packageName : mapRestriction.keySet()) {
 						mCurrent++;
-						publishProgress(packageName, Integer.toString(mCurrent));
+						publishProgress(packageName, Integer.toString(mCurrent), max);
 						Util.log(null, Log.INFO, "Exporting " + packageName);
 						for (PrivacyManager.RestrictionDesc restrictionDesc : mapRestriction.get(packageName)) {
 							serializer.startTag(null, "Package");
@@ -208,22 +220,25 @@ public class ActivityShare extends Activity {
 				return getString(R.string.msg_done);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.toString();
+				return ex.getMessage();
 			}
 		}
 
 		@Override
 		protected void onProgressUpdate(String... values) {
 			int progress = 0;
-			if (values.length > 1)
+			int max = 1;
+			if (values.length > 2) {
 				progress = Integer.parseInt(values[1]);
-			notify(values[0], true, progress);
+				max = Integer.parseInt(values[2]);
+			}
+			notify(values[0], true, progress, max);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result, false, 0);
+			notify(result, false, 0, 1);
 			Intent intent = new Intent();
 			intent.putExtra(cFileName, mFile.getAbsolutePath());
 			setResult(result.equals(getString(R.string.msg_done)) ? 0 : 1, intent);
@@ -234,11 +249,11 @@ public class ActivityShare extends Activity {
 			super.onPostExecute(result);
 		}
 
-		private void notify(String text, boolean ongoing, int progress) {
+		private void notify(String text, boolean ongoing, int progress, int max) {
 			// Send progress info to main activity
 			Intent progressIntent = new Intent(cProgressReport);
 			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_export), text));
-			progressIntent.putExtra(cProgressMax, mProgressMax);
+			progressIntent.putExtra(cProgressMax, max);
 			progressIntent.putExtra(cProgressValue, progress);
 			mBroadcastManager.sendBroadcast(progressIntent);
 
@@ -331,7 +346,7 @@ public class ActivityShare extends Activity {
 				return getString(R.string.msg_done);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.toString();
+				return ex.getMessage();
 			}
 		}
 
@@ -563,15 +578,7 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(Object result) {
-			try {
-				if (result != null)
-					throw (Throwable) result;
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				notify(ex.toString(), false, 0);
-			}
-
-			notify(getString(R.string.msg_done), false, 0);
+			notify(result == null ? getString(R.string.msg_done) : ((Throwable) result).getMessage(), false, 0);
 			Intent intent = new Intent();
 			setResult(0, intent);
 			finish();

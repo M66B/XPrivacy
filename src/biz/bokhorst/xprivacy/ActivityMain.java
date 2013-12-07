@@ -32,6 +32,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -67,10 +68,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private boolean mFiltersHidden = true;
 	private boolean mCategoriesHidden = true;
 	private Bitmap[] mCheck;
-	private int mProgressWidth;
+	private int mProgressWidth = 0;
 	private int mProgress = 0;
-	private boolean mSharing = false;
+	private boolean mBatchOpRunning = false;
 	private String mSharingState = null;
+	private Handler mHandler = new Handler();
+	private Runnable mTimerRunnable = null;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int ACTIVITY_EXPORT = 1;
@@ -292,12 +295,31 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		iff.addDataScheme("package");
 		registerReceiver(mPackageChangeReceiver, iff);
 
+		// Listen for progress reports
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ActivityShare.cProgressReport);
+		LocalBroadcastManager.getInstance(this).registerReceiver(progressListener, filter);
+
 		// First run
 		if (PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingFirstRun, true, false)) {
 			optionAbout();
 			PrivacyManager.setSetting(null, this, 0, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
 		}
 
+		// Notify usage data
+		long elapsedRealtime = SystemClock.elapsedRealtime();
+		if (elapsedRealtime < PrivacyManager.cUseProviderAfterMs) {
+			mTimerRunnable = new Runnable() {
+				@Override
+				public void run() {
+					Toast toast = Toast.makeText(ActivityMain.this, getString(R.string.msg_usage), Toast.LENGTH_LONG);
+					toast.show();
+				}
+			};
+			mHandler.postDelayed(mTimerRunnable, PrivacyManager.cUseProviderAfterMs - elapsedRealtime);
+		}
+
+		// Build tri-state check box images
 		mCheck = Util.getTriStateCheckBox(this);
 	}
 
@@ -321,6 +343,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (mPackageChangeReceiver != null)
 			unregisterReceiver(mPackageChangeReceiver);
 		LocalBroadcastManager.getInstance(this).unregisterReceiver(progressListener);
+		if (mTimerRunnable != null)
+			mHandler.removeCallbacks(mTimerRunnable);
 	}
 
 	@Override
@@ -390,7 +414,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			else if (data != null)
 				try {
 					String fileName = data.getData().getPath();
-					Intent intent = new Intent("biz.bokhorst.xprivacy.action.IMPORT");
+					Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
 					intent.putExtra(ActivityShare.cFileName, fileName);
 					startActivityForResult(intent, ACTIVITY_IMPORT);
 				} catch (Throwable ex) {
@@ -415,9 +439,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		boolean pro = (Util.hasProLicense(this) != null);
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
-		menu.findItem(R.id.menu_export).setEnabled(pro && mounted && !mSharing);
-		menu.findItem(R.id.menu_import).setEnabled(pro && mounted && !mSharing);
-		menu.findItem(R.id.menu_fetch).setEnabled(!mSharing);
+		menu.findItem(R.id.menu_all).setEnabled(!mBatchOpRunning);
+		menu.findItem(R.id.menu_export).setEnabled(pro && mounted && !mBatchOpRunning);
+		menu.findItem(R.id.menu_import).setEnabled(pro && mounted && !mBatchOpRunning);
+		menu.findItem(R.id.menu_fetch).setEnabled(!mBatchOpRunning);
 		menu.findItem(R.id.menu_pro).setVisible(!pro);
 
 		return super.onPrepareOptionsMenu(menu);
@@ -561,42 +586,33 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	// Options
 
 	private void optionAll() {
+		// Check if some restricted
+		boolean some = false;
+		for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
+			ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
+			for (boolean restricted : PrivacyManager.getRestricted(ActivityMain.this, xAppInfo.getUid(),
+					mAppAdapter.getRestrictionName()))
+				if (restricted) {
+					some = true;
+					break;
+				}
+			if (some)
+				break;
+		}
+		final boolean someRestricted = some;
+
+		// Are you sure?
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(R.string.app_name));
+		alertDialogBuilder.setTitle(getString(someRestricted ? R.string.menu_clear_all : R.string.menu_restrict_all));
 		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (mAppAdapter != null) {
-					// Check if some restricted
-					boolean someRestricted = false;
-					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
-						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
-						for (boolean restricted : PrivacyManager.getRestricted(ActivityMain.this, xAppInfo.getUid(),
-								mAppAdapter.getRestrictionName()))
-							if (restricted) {
-								someRestricted = true;
-								break;
-							}
-						if (someRestricted)
-							break;
-					}
-
-					// Invert selection
-					for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
-						ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
-						if (mAppAdapter.getRestrictionName() == null) {
-							for (String restrictionName : PrivacyManager.getRestrictions())
-								PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-										restrictionName, null, !someRestricted);
-						} else
-							PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-									mAppAdapter.getRestrictionName(), null, !someRestricted);
-					}
-
-					// Refresh
-					mAppAdapter.notifyDataSetChanged();
+					mBatchOpRunning = true;
+					invalidateOptionsMenu();
+					new ToggleTask().executeOnExecutor(mExecutor, someRestricted);
 				}
 			}
 		});
@@ -660,7 +676,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
 		file.setType("file/*");
 		boolean multiple = Util.isIntentAvailable(ActivityMain.this, file);
-		Intent intent = new Intent("biz.bokhorst.xprivacy.action.EXPORT");
+		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
 		intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(multiple));
 		startActivityForResult(intent, ACTIVITY_EXPORT);
 	}
@@ -677,28 +693,27 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Intent intent = Intent.createChooser(chooseFile, getString(R.string.app_name));
 			startActivityForResult(intent, ACTIVITY_IMPORT_SELECT);
 		} else {
-			Intent intent = new Intent("biz.bokhorst.xprivacy.action.IMPORT");
+			Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
 			intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(false));
 			startActivityForResult(intent, ACTIVITY_IMPORT);
 		}
 	}
 
 	private void optionFetch() {
-		sharingStart();
-
 		if (Util.getProLicense() == null) {
 			// Redirect to pro page
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, cProUri);
 			startActivity(browserIntent);
 		} else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.app_name));
+			alertDialogBuilder.setTitle(getString(R.string.menu_fetch));
 			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
 			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
+					sharingStart();
+					Intent intent = new Intent(ActivityShare.ACTION_FETCH);
 					startActivityForResult(intent, ACTIVITY_FETCH);
 				}
 			});
@@ -730,7 +745,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// About
 		Dialog dlgAbout = new Dialog(this);
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dlgAbout.setTitle(getString(R.string.app_name));
+		dlgAbout.setTitle(getString(R.string.menu_about));
 		dlgAbout.setContentView(R.layout.about);
 		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
 
@@ -744,7 +759,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		// Show Xposed version
-		int xVersion = Util.getXposedVersion();
+		int xVersion = Util.getXposedAppProcessVersion();
 		TextView tvXVersion = (TextView) dlgAbout.findViewById(R.id.tvXVersion);
 		tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
 
@@ -765,7 +780,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Show help
 		Dialog dialog = new Dialog(ActivityMain.this);
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dialog.setTitle(getString(R.string.help_application));
+		dialog.setTitle(getString(R.string.menu_help));
 		dialog.setContentView(R.layout.help);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
 		TextView tvHelpHalf = (TextView) dialog.findViewById(R.id.help_half);
@@ -903,6 +918,50 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
+	private class ToggleTask extends AsyncTask<Boolean, Integer, Boolean> {
+		@Override
+		protected Boolean doInBackground(Boolean... params) {
+			boolean someRestricted = params[0];
+
+			// Apply action
+			boolean restart = false;
+			for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
+				publishProgress(pos, mAppAdapter.getCount());
+				ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
+				if (mAppAdapter.getRestrictionName() == null && someRestricted)
+					restart = PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid()) || restart;
+				else if (mAppAdapter.getRestrictionName() == null) {
+					for (String restrictionName : PrivacyManager.getRestrictions())
+						restart = PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+								restrictionName, null, !someRestricted) || restart;
+				} else
+					restart = PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+							mAppAdapter.getRestrictionName(), null, !someRestricted)
+							|| restart;
+			}
+
+			return restart;
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			setProgress(getString(R.string.msg_applying), values[0], values[1]);
+		}
+
+		@Override
+		protected void onPostExecute(Boolean restart) {
+			// Refresh
+			setProgress(getString(R.string.title_restrict), 0, 1);
+			mAppAdapter.notifyDataSetChanged();
+			mBatchOpRunning = false;
+			invalidateOptionsMenu();
+
+			// Notify restart
+			if (restart)
+				Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
+		}
+	}
+
 	// Adapters
 
 	private class SpinnerAdapter extends ArrayAdapter<String> {
@@ -960,8 +1019,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				boolean fSystem = Boolean.parseBoolean(components[7]);
 
 				// Match applications
+				int current = 0;
+				int max = AppListAdapter.this.mListApp.size();
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListApp) {
+					current++;
+					if (!mBatchOpRunning && current % 5 == 0) {
+						// Send progress info to main activity
+						Intent progressIntent = new Intent(ActivityShare.cProgressReport);
+						progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.msg_applying));
+						progressIntent.putExtra(ActivityShare.cProgressMax, max);
+						progressIntent.putExtra(ActivityShare.cProgressValue, current);
+						LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
+					}
 					// Get if name contains
 					boolean contains = false;
 					if (!fName.equals(""))
@@ -1031,6 +1101,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				pbFilter.setVisibility(ProgressBar.GONE);
 				tvStats.setVisibility(TextView.VISIBLE);
 				tvStats.setText(results.count + "/" + AppListAdapter.this.mListApp.size());
+
+				Intent progressIntent = new Intent(ActivityShare.cProgressReport);
+				progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.title_restrict));
+				progressIntent.putExtra(ActivityShare.cProgressMax, 1);
+				progressIntent.putExtra(ActivityShare.cProgressValue, 0);
+				LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
 
 				// Adjust progress state width
 				RelativeLayout.LayoutParams tvStateLayout = (RelativeLayout.LayoutParams) tvState.getLayoutParams();
@@ -1201,7 +1277,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							// Process click
 							if (mRestrictionName == null && someRestricted) {
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
-								alertDialogBuilder.setTitle(getString(R.string.app_name));
+								alertDialogBuilder.setTitle(getString(R.string.menu_clear_all));
 								alertDialogBuilder.setMessage(getString(R.string.msg_sure));
 								alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
 								alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
@@ -1209,10 +1285,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 											@Override
 											public void onClick(DialogInterface dialog, int which) {
 												// Update restriction
-												PrivacyManager.deleteRestrictions(view.getContext(), xAppInfo.getUid());
+												boolean restart = PrivacyManager.deleteRestrictions(view.getContext(),
+														xAppInfo.getUid());
 
 												// Update visible state
 												holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+
+												// Notify restart
+												if (restart)
+													Toast.makeText(view.getContext(), getString(R.string.msg_restart),
+															Toast.LENGTH_SHORT).show();
 											}
 										});
 								alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
@@ -1225,9 +1307,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								alertDialog.show();
 							} else {
 								// Update restriction
+								boolean restart = false;
 								for (String restrictionName : listRestriction)
-									PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
-											restrictionName, null, !someRestricted);
+									restart = PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
+											restrictionName, null, !someRestricted) || restart;
 
 								// Update all/some restricted
 								allRestricted = true;
@@ -1245,6 +1328,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 									holder.imgCBName.setImageBitmap(mCheck[1]); // Half
 								else
 									holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+
+								// Notify restart
+								if (restart)
+									Toast.makeText(view.getContext(), getString(R.string.msg_restart),
+											Toast.LENGTH_SHORT).show();
 							}
 						}
 					});
@@ -1306,24 +1394,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	// Share operations progress listener
 
 	private void sharingStart() {
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(ActivityShare.cProgressReport);
-		LocalBroadcastManager.getInstance(this).registerReceiver(progressListener, filter);
-
-		mSharing = true;
+		mBatchOpRunning = true;
 		invalidateOptionsMenu();
-
-		// Set up the progress bar
-		final View vProgressEmpty = (View) findViewById(R.id.vProgressEmpty);
-		mProgressWidth = vProgressEmpty.getMeasuredWidth();
 	}
 
 	private void sharingDone() {
 		// Re-enable menu items
-		mSharing = false;
+		mBatchOpRunning = false;
 		invalidateOptionsMenu();
-		// Stop listening for progress reports
-		LocalBroadcastManager.getInstance(this).unregisterReceiver(progressListener);
 		// Keep done message for after UI recreation
 		TextView tvState = (TextView) findViewById(R.id.tvState);
 		mSharingState = (String) tvState.getText();
@@ -1341,6 +1419,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	};
 
 	private void setProgress(String text, int progress, int max) {
+		// Set up the progress bar
+		if (mProgressWidth == 0) {
+			final View vProgressEmpty = (View) findViewById(R.id.vProgressEmpty);
+			mProgressWidth = vProgressEmpty.getMeasuredWidth();
+		}
+		// Display stuff
 		TextView tvState = (TextView) findViewById(R.id.tvState);
 		if (text != null)
 			tvState.setText(text);

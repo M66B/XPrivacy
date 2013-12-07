@@ -10,14 +10,16 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XSensorManager extends XHook {
 	private Methods mMethod;
+	private String mClassName;
 
-	private XSensorManager(Methods method, String restrictionName) {
+	private XSensorManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
+		mClassName = className;
 	}
 
 	public String getClassName() {
-		return "android.hardware.SensorManager";
+		return mClassName;
 	}
 
 	// @formatter:off
@@ -25,6 +27,7 @@ public class XSensorManager extends XHook {
 	// public Sensor getDefaultSensor(int type)
 	// public List<Sensor> getSensorList(int type)
 	// frameworks/base/core/java/android/hardware/SensorManager.java
+	// http://developer.android.com/reference/android/hardware/SensorManager.html
 	
 	// @formatter:on
 
@@ -32,10 +35,11 @@ public class XSensorManager extends XHook {
 		getDefaultSensor, getSensorList
 	};
 
-	public static List<XHook> getInstances() {
+	public static List<XHook> getInstances(Object instance) {
+		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XSensorManager(Methods.getDefaultSensor, PrivacyManager.cSensors));
-		listHook.add(new XSensorManager(Methods.getSensorList, PrivacyManager.cSensors));
+		listHook.add(new XSensorManager(Methods.getDefaultSensor, PrivacyManager.cSensors, className));
+		listHook.add(new XSensorManager(Methods.getSensorList, PrivacyManager.cSensors, className));
 		return listHook;
 	}
 

@@ -21,6 +21,8 @@
     <string name="menu_help">Help</string>
     <string name="menu_all">Всички</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Clear</string>
@@ -34,6 +36,7 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Лицензирано на: %s</string>
     <string name="msg_loading">Зареждане</string>
+    <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Цъкнете иконата на приложението за редактиране на всички забрани</string>
@@ -43,6 +46,8 @@
     <string name="msg_random_now">Randomize</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randomize after boot</string>
+    <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>XPrivacy е разработен и тестван с голямо внимание,
 но е невъзможно да се гарантира безпроблемна работа на всякакви устройства при всякакви приложения.
 \n\nИзползвате го на свой собствен риск.</b>\n\nВижте и лиценза:</string>
@@ -100,7 +105,6 @@
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_usage">Android usage data (requires restart)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

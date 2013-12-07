@@ -21,6 +21,8 @@
     <string name="menu_help">Помощь</string>
     <string name="menu_all">Выделить все</string>
     <string name="menu_restriction_all">Переключить разрешения</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">Переключить фильтр</string>
     <string name="menu_apply">Применить шаблон</string>
     <string name="menu_clear">Очистить</string>
@@ -34,6 +36,7 @@
     <string name="msg_update">Обновить</string>
     <string name="msg_licensed" formatted="false">Владелец лицензии: %s</string>
     <string name="msg_loading">Загрузка</string>
+    <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Сохранено в %s</string>
     <string name="msg_no_restrictions">Не найдено разрешений</string>
     <string name="msg_edit">Нажмите на иконку приложения для редактирования всех разрешений</string>
@@ -43,6 +46,8 @@
     <string name="msg_random_now">Случайные значения</string>
     <string name="msg_random_access">Случайные значения при запросе</string>
     <string name="msg_random_boot">Случайные значения после перезагрузки</string>
+    <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>Большое внимание было уделено разработке и тестированию XPrivacy, 
 однако нельзя гарантировать, что оно будет работать безупречно на всех устройствах и со всеми приложениями.
 \n\nИспользуйте исключительно на свой страх и риск.</b>\n\nСм. также лицензию:</string>
@@ -68,7 +73,7 @@
     <string name="restrict_system">Система (установленные приложения)</string>
     <string name="restrict_view">Просмотр (браузер)</string>
     <string name="title_categories">Категории</string>
-    <string name="title_restrict">Отметьте приложения:</string>
+    <string name="title_restrict">Отметьте для запрета:</string>
     <string name="title_filters">Фильтры</string>
 
     <plurals name="title_active_filters">
@@ -77,10 +82,10 @@
         <item quantity="other">%d активных фильтров</item>
     </plurals>
 
-    <string name="title_fused">по использованию данных</string>
-    <string name="title_finternet">по доступу к Интернету</string>
-    <string name="title_fpermission">по разрешениям</string>
-    <string name="title_frestricted">по запрещенным</string>
+    <string name="title_fused">использовавшие данные</string>
+    <string name="title_finternet">с доступом к Интернету</string>
+    <string name="title_fpermission">с разрешениями</string>
+    <string name="title_frestricted">запрещенные</string>
     <string name="title_fuser">пользовательские приложения</string>
     <string name="title_fsystem">системные приложения</string>
     <string name="title_fnot">Переключить</string>
@@ -101,7 +106,6 @@
     <string name="settings_global">Использовать общие фальшивые данные</string>
     <string name="settings_notify">Обновить уведомления</string>
     <string name="settings_usage">Андроид - данные об использовании (требует перезапуска)</string>
-    <string name="settings_extra">Расширенные данные об использовании (требует перезапуска)</string>
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Экспертный режим</string>
     <string name="settings_dangerous">Запрещение опасных функций</string>

@@ -10,14 +10,16 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XConnectivityManager extends XHook {
 	private Methods mMethod;
+	private String mClassName;
 
-	private XConnectivityManager(Methods method, String restrictionName) {
+	private XConnectivityManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
+		mClassName = className;
 	}
 
 	public String getClassName() {
-		return "android.net.ConnectivityManager";
+		return mClassName;
 	}
 
 	// public NetworkInfo getActiveNetworkInfo()
@@ -30,10 +32,11 @@ public class XConnectivityManager extends XHook {
 		getActiveNetworkInfo, getAllNetworkInfo, getNetworkInfo
 	};
 
-	public static List<XHook> getInstances() {
+	public static List<XHook> getInstances(Object instance) {
+		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods connmgr : Methods.values())
-			listHook.add(new XConnectivityManager(connmgr, PrivacyManager.cInternet));
+			listHook.add(new XConnectivityManager(connmgr, PrivacyManager.cInternet, className));
 		return listHook;
 	}
 

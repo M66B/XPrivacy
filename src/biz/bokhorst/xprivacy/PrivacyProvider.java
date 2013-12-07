@@ -148,10 +148,9 @@ public class PrivacyProvider extends ContentProvider {
 
 						// Exceptions
 						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
-							boolean restricted = getRestricted(eRestrictionName, md.getMethodName(), prefs);
-							if (!restricted || PrivacyManager.isDangerousMethod(eRestrictionName, md.getMethodName()))
-								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getMethodName(),
-										restricted });
+							boolean restricted = getRestricted(eRestrictionName, md.getName(), prefs);
+							if (!restricted || md.isDangerous())
+								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getName(), restricted });
 						}
 					}
 			}
@@ -166,9 +165,8 @@ public class PrivacyProvider extends ContentProvider {
 					boolean eRestricted = getRestricted(eRestrictionName, null, prefs);
 					cursor.addRow(new Object[] { uid, eRestrictionName, null, Boolean.toString(eRestricted) });
 					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
-						eRestricted = getRestricted(eRestrictionName, md.getMethodName(), prefs);
-						cursor.addRow(new Object[] { uid, eRestrictionName, md.getMethodName(),
-								Boolean.toString(eRestricted) });
+						eRestricted = getRestricted(eRestrictionName, md.getName(), prefs);
+						cursor.addRow(new Object[] { uid, eRestrictionName, md.getName(), Boolean.toString(eRestricted) });
 					}
 				}
 			} else {
@@ -182,9 +180,9 @@ public class PrivacyProvider extends ContentProvider {
 			// Update usage data
 			if (usage && restrictionName != null && methodName != null && !methodName.equals("*")) {
 				final boolean isRestricted = restricted;
+				final long timeStamp = new Date().getTime();
 				mExecutor.execute(new Runnable() {
 					public void run() {
-						long timeStamp = new Date().getTime();
 						updateUsage(uid, restrictionName, methodName, isRestricted, timeStamp);
 					}
 				});
@@ -236,7 +234,7 @@ public class PrivacyProvider extends ContentProvider {
 			for (String eRestrictionName : listRestriction)
 				if (methodName == null)
 					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName))
-						getUsage(uid, eRestrictionName, md.getMethodName(), cursor);
+						getUsage(uid, eRestrictionName, md.getName(), cursor);
 				else
 					getUsage(uid, eRestrictionName, methodName, cursor);
 		}
@@ -337,7 +335,7 @@ public class PrivacyProvider extends ContentProvider {
 			editor.putBoolean(getRestrictionPref(restrictionName), !allowed);
 		if (methodName != null)
 			editor.putBoolean(getExceptionPref(restrictionName, methodName), allowed);
-		editor.apply();
+		editor.commit();
 		setPrefFileReadable(PREF_RESTRICTION, uid);
 	}
 
@@ -350,7 +348,7 @@ public class PrivacyProvider extends ContentProvider {
 		String prefValue = String.format("%d:%b", timeStamp, restricted);
 		editor.remove(prefName);
 		editor.putString(prefName, prefValue);
-		editor.apply();
+		editor.commit();
 	}
 
 	private void updateSetting(String name, String value) {
@@ -360,7 +358,7 @@ public class PrivacyProvider extends ContentProvider {
 			editor.remove(getSettingPref(name));
 		else
 			editor.putString(getSettingPref(name), value);
-		editor.apply();
+		editor.commit();
 		setPrefFileReadable(PREF_SETTINGS);
 	}
 
@@ -392,7 +390,7 @@ public class PrivacyProvider extends ContentProvider {
 			editor.remove(pref);
 			rows++;
 		}
-		editor.apply();
+		editor.commit();
 		setPrefFileReadable(PREF_RESTRICTION, uid);
 
 		return rows;
@@ -413,7 +411,7 @@ public class PrivacyProvider extends ContentProvider {
 					rows++;
 				}
 			}
-			editor.apply();
+			editor.commit();
 		}
 
 		return rows;
@@ -428,7 +426,7 @@ public class PrivacyProvider extends ContentProvider {
 			editor.remove(pref);
 			Util.log(null, Log.INFO, "Removed setting=" + pref);
 		}
-		editor.apply();
+		editor.commit();
 		setPrefFileReadable(PREF_SETTINGS);
 		return rows;
 	}
@@ -620,7 +618,7 @@ public class PrivacyProvider extends ContentProvider {
 			} catch (Throwable ex) {
 			}
 
-		editor.apply();
+		editor.commit();
 		setPrefFileReadable(PREF_SETTINGS);
 	}
 }

@@ -21,6 +21,8 @@
     <string name="menu_help">Apua</string>
     <string name="menu_all">Kaikki</string>
     <string name="menu_restriction_all">Vaihda rajoitukset</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">Vaihda suodatin</string>
     <string name="menu_apply">Aseta pohja</string>
     <string name="menu_clear">Tyhjennä</string>
@@ -34,6 +36,7 @@
     <string name="msg_update">Päivitä</string>
     <string name="msg_licensed" formatted="false">Lisensoitu: %s</string>
     <string name="msg_loading">Lataa</string>
+    <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Klikkaa applikaation ikonia editoidaksesi kaikki rajoituksia</string>
@@ -43,6 +46,8 @@
     <string name="msg_random_now">Randomize now</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Satunnaista uudelleenkäynnistyksen jälkeen</string>
+    <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>Xprivacy on tehty ja testattu huolellisesti, mutta on kuitenkin mahdotonta antaa takeita että se toimii virheettömästi kaikissa laitteissa ja jokaisessa applikaatiossa.
 \n\nKäyttö on täysin omalla vastuullasi.</b>\n\nKatso myös lisenssi:</string>
     <string name="restrict_accounts">Tilit (Google, Facebook, jne)</string>
@@ -99,7 +104,6 @@
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Päivitä ilmoitukset</string>
     <string name="settings_usage">Androidin käyttötiedot (vaatii uudelleenkäynnistyksen)</string>
-    <string name="settings_extra">Tarkemmat käyttötiedot (vaatii uudelleenkäynnistyksen)</string>
     <string name="settings_log">Debuggaus logi (vaatii uudelleenkäynnistyksen)</string>
     <string name="settings_expert">Expert tila</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

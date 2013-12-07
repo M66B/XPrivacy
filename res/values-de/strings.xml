@@ -20,8 +20,10 @@
     <string name="menu_about">Über XPrivacy</string>
     <string name="menu_help">Hilfe</string>
     <string name="menu_all">Alles (beschränkt)</string>
-    <string name="menu_restriction_all">Toggle restrictions</string>
-    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_restriction_all">Beschränkungen invertieren</string>
+    <string name="menu_clear_all">Alles löschen</string>
+    <string name="menu_restrict_all">Alles beschränken</string>
+    <string name="menu_usage_all">Filter invertieren</string>
     <string name="menu_apply">Template übernehmen</string>
     <string name="menu_clear">Nichts (beschränkt)</string>
     <string name="menu_app_launch">Öffnen</string>
@@ -34,6 +36,7 @@
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Lizenziert für: %s</string>
     <string name="msg_loading">Lade...</string>
+    <string name="msg_applying">Übernehme</string>
     <string name="msg_saved_to">Gespeichert nach %s</string>
     <string name="msg_no_restrictions">Keine Beschränkung gefunden</string>
     <string name="msg_edit">Berühren Sie das App-Icon, um alle Berechtigungen zu bearbeiten.</string>
@@ -41,8 +44,10 @@
     <string name="msg_done">Fertig</string>
     <string name="msg_reboot">Geräteneustart erforderlich</string>
     <string name="msg_random_now">Zufallswerte erzeugen</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">Zufallswerte bei Neustart</string>
     <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
+    <string name="msg_usage">Aktualisiere Usage-Data</string>
+    <string name="msg_restart">App-Neustart erforderlich</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
 \ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
 \n\nVerwenden Sie XPrivacy ausschließlich auf Ihr eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>
@@ -67,9 +72,9 @@
     <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">Kategorien</string>
     <string name="title_restrict">Zum Beschränken markieren:</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">Filter</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1 Filter ausgewählt</item>
@@ -90,26 +95,25 @@
     <string name="settings_ip">IP-Adresse</string>
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android-ID</string>
-    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_adid">Werbungs-ID</string>
     <string name="settings_country">Land</string>
     <string name="settings_operator">Mobilfunkanbieter</string>
     <string name="settings_subscriber">Subscriber-ID</string>
     <string name="settings_ua">User-Agent (Browser)</string>
     <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
+    <string name="settings_fake_data">Daten manipulieren</string>
+    <string name="settings_global">Benutze globale gefälschte Daten</string>
     <string name="settings_notify">Update-Benachrichtigungen</string>
     <string name="settings_usage">Android Usage-Data (erfordert Geräteneustart)</string>
-    <string name="settings_extra">Extra Usage-Data (erfordert Geräteneustart)</string>
     <string name="settings_log">Debug-Log (erfordert Geräteneustart)</string>
     <string name="settings_expert">Experten-Modus</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_dangerous">Beschränke "bedenkliche" Funktionen</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>
     <string name="help_used">hat diese Daten benutzt</string>
     <string name="help_frozen">ist deaktiviert</string>
     <string name="help_dangerous">Beschränkung bedenklich (eventueller App-Absturz)</string>
-    <string name="help_half">partly restricted</string>
+    <string name="help_half">teilweise beschränkt</string>
 
 </resources>

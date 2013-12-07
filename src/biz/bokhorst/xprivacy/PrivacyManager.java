@@ -34,6 +34,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
@@ -70,7 +71,7 @@ public class PrivacyManager {
 			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
 			cNetwork, cNfc, cNotifications, cSensors, cPhone, cShell, cStorage, cSystem, cView };
 
-	public final static int cXposedMinVersion = 42;
+	public final static int cXposedAppProcessMinVersion = 46;
 	public final static int cAndroidUid = 1000;
 
 	public final static String cSettingSerial = "Serial";
@@ -105,7 +106,6 @@ public class PrivacyManager {
 	public final static String cSettingNotify = "Notify";
 	public final static String cSettingDangerous = "Dangerous";
 	public final static String cSettingAndroidUsage = "AndroidUsage";
-	public final static String cSettingExtraUsage = "ExtraUsage";
 	public final static String cSettingLog = "Log";
 	public final static String cSettingRandom = "Random@boot";
 
@@ -115,7 +115,7 @@ public class PrivacyManager {
 	private final static String cDeface = "DEFACE";
 	public final static int cRestrictionCacheTimeoutMs = 15 * 1000;
 	public final static int cSettingCacheTimeoutMs = 30 * 1000;
-	private final static int cUseProviderAfterMs = 3 * 60 * 1000;
+	public final static int cUseProviderAfterMs = 3 * 60 * 1000;
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -157,14 +157,16 @@ public class PrivacyManager {
 				String restrictionName = attributes.getValue("restriction");
 				String methodName = attributes.getValue("method");
 				String dangerous = attributes.getValue("dangerous");
+				String restart = attributes.getValue("restart");
 				String permissions = attributes.getValue("permissions");
 				int sdk = Integer.parseInt(attributes.getValue("sdk"));
 
 				// Add meta data
 				if (Build.VERSION.SDK_INT >= sdk) {
 					boolean danger = (dangerous == null ? false : Boolean.parseBoolean(dangerous));
+					boolean restartRequired = (restart == null ? false : Boolean.parseBoolean(restart));
 					String[] permission = (permissions == null ? null : permissions.split(","));
-					MethodDescription md = new MethodDescription(methodName, danger, permission, sdk);
+					MethodDescription md = new MethodDescription(methodName, danger, restartRequired, permission, sdk);
 
 					if (!mMethod.containsKey(restrictionName))
 						mMethod.put(restrictionName, new ArrayList<MethodDescription>());
@@ -180,7 +182,7 @@ public class PrivacyManager {
 	// Data
 
 	public static void registerMethod(String restrictionName, String methodName, int sdk) {
-		if (Build.VERSION.SDK_INT >= sdk) {
+		if (restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
 			if (!mMethod.containsKey(restrictionName)
 					|| !mMethod.get(restrictionName).contains(new MethodDescription(methodName)))
 				Util.log(null, Log.WARN, "Missing method " + methodName);
@@ -191,11 +193,10 @@ public class PrivacyManager {
 		return new ArrayList<String>(Arrays.asList(cRestrictionNames));
 	}
 
-	public static boolean isDangerousMethod(String restrictionName, String methodName) {
+	public static MethodDescription getMethod(String restrictionName, String methodName) {
 		MethodDescription md = new MethodDescription(methodName);
 		int pos = mMethod.get(restrictionName).indexOf(md);
-		md = mMethod.get(restrictionName).get(pos);
-		return md.getDangerous();
+		return mMethod.get(restrictionName).get(pos);
 	}
 
 	public static String getLocalizedName(Context context, String restrictionName) {
@@ -241,7 +242,7 @@ public class PrivacyManager {
 
 			// Check restriction
 			if (restrictionName == null || restrictionName.equals("")) {
-				Util.log(hook, Log.WARN, "restriction empty");
+				Util.log(hook, Log.WARN, "restriction empty method=" + methodName);
 				Util.logStack(hook);
 				return false;
 			}
@@ -361,13 +362,6 @@ public class PrivacyManager {
 			return true;
 	}
 
-	public static boolean isExtraUsageDataEnabled(int uid) {
-		if (!isUsageDataEnabled(uid))
-			return false;
-
-		return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExtraUsage, false, false);
-	}
-
 	public static void sendUsageData(final XHook hook, Context context) {
 		int qSize = 0;
 		synchronized (mUsageQueue) {
@@ -391,7 +385,8 @@ public class PrivacyManager {
 						}
 						if (data != null) {
 							try {
-								Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size);
+								Util.log(hook, Log.INFO, "Sending usage data=" + data + " size=" + size + " uid="
+										+ Binder.getCallingUid());
 								ContentValues values = new ContentValues();
 								values.put(PrivacyProvider.COL_UID, data.getUid());
 								values.put(PrivacyProvider.COL_RESTRICTION, data.getRestrictionName());
@@ -408,28 +403,29 @@ public class PrivacyManager {
 					} while (data != null);
 				}
 			});
-		}
+		} else
+			Util.log(hook, Log.INFO, "No usage data queued uid=" + Binder.getCallingUid());
 	}
 
-	public static void setRestricted(XHook hook, Context context, int uid, String restrictionName, String methodName,
-			boolean restricted) {
+	public static boolean setRestricted(XHook hook, Context context, int uid, String restrictionName,
+			String methodName, boolean restricted) {
 		// Check context
 		if (context == null) {
 			Util.log(hook, Log.WARN, "context is null");
-			return;
+			return false;
 		}
 
 		// Check uid
 		if (uid == 0) {
 			Util.log(hook, Log.WARN, "uid=0");
-			return;
+			return false;
 		}
 
 		// Get content resolver
 		ContentResolver contentResolver = context.getContentResolver();
 		if (contentResolver == null) {
 			Util.log(hook, Log.WARN, "contentResolver is null");
-			return;
+			return false;
 		}
 
 		// Set restrictions
@@ -443,13 +439,25 @@ public class PrivacyManager {
 		// Result
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
 
-		// Set default exceptions for methods
-		if (restricted && methodName == null)
+		boolean dangerous = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingDangerous, false,
+				false);
+		if (methodName == null) {
+			// Make exceptions for dangerous methods
+			if (restricted && !dangerous) {
+				for (MethodDescription md : getMethods(restrictionName))
+					if (md.isDangerous())
+						PrivacyManager.setRestricted(null, context, uid, restrictionName, md.getName(), dangerous);
+			}
+
+			// Check restart
 			for (MethodDescription md : getMethods(restrictionName))
-				if (isDangerousMethod(restrictionName, md.getMethodName()))
-					PrivacyManager.setRestricted(null, context, uid, restrictionName, md.getMethodName(),
-							PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingDangerous, false,
-									false));
+				if (md.isRestartRequired() && !(restricted && !dangerous && md.isDangerous()))
+					return true;
+			return false;
+		} else {
+			// Check restart
+			return getMethod(restrictionName, methodName).isDangerous();
+		}
 	}
 
 	public static List<Boolean> getRestricted(Context context, int uid, String restrictionName) {
@@ -478,13 +486,22 @@ public class PrivacyManager {
 		public String methodName;
 	}
 
-	public static List<RestrictionDesc> getRestricted(Context context) {
+	public static List<RestrictionDesc> getRestricted(Context context, Runnable progress) {
 		List<RestrictionDesc> result = new ArrayList<RestrictionDesc>();
+		progress.run(); // 1% for getting the cursor
 		Cursor rCursor = context.getContentResolver().query(PrivacyProvider.URI_RESTRICTION, null, null,
 				new String[] { Integer.toString(0), Boolean.toString(false) }, null);
 		if (rCursor != null)
 			try {
+				final int max = rCursor.getCount();
+				final int step = (max + 95) / 96;
+				// 96% left for loading the restrictions
+
+				int current = 0;
 				while (rCursor.moveToNext()) {
+					current++;
+					if (current % step == 0 || current == max)
+						progress.run();
 					RestrictionDesc restriction = new RestrictionDesc();
 					restriction.uid = rCursor.getInt(rCursor.getColumnIndex(PrivacyProvider.COL_UID));
 					restriction.restricted = Boolean.parseBoolean(rCursor.getString(rCursor
@@ -500,10 +517,26 @@ public class PrivacyManager {
 		return result;
 	}
 
-	public static void deleteRestrictions(Context context, int uid) {
+	public static boolean deleteRestrictions(Context context, int uid) {
+		// Check if restart required
+		boolean restart = false;
+		for (String restrictionName : getRestrictions()) {
+			for (MethodDescription md : getMethods(restrictionName))
+				if (getRestricted(null, context, uid, restrictionName, md.getName(), false, false))
+					if (md.isRestartRequired()) {
+						restart = true;
+						break;
+					}
+			if (restart)
+				break;
+		}
+
+		// Delete restrictions
 		context.getContentResolver().delete(PrivacyProvider.URI_RESTRICTION, null,
 				new String[] { Integer.toString(uid) });
 		Util.log(null, Log.INFO, "Deleted restrictions uid=" + uid);
+
+		return restart;
 	}
 
 	// Usage
@@ -670,12 +703,18 @@ public class PrivacyManager {
 		Util.log(hook, Log.INFO, String.format("set setting %s=%s", sName, value));
 	}
 
-	public static Map<String, String> getSettings(Context context) {
+	public static Map<String, String> getSettings(Context context, Runnable progress) {
 		Map<String, String> result = new HashMap<String, String>();
+		progress.run(); // 1% for getting the cursor
 		Cursor sCursor = context.getContentResolver().query(PrivacyProvider.URI_SETTING, null, null, null, null);
 		if (sCursor != null)
 			try {
+				final int max = sCursor.getCount();
+				int current = 0;
 				while (sCursor.moveToNext()) {
+					current++;
+					if (current == max / 2 || current == max)
+						progress.run(); // 2% for fetching settings
 					// Get setting
 					String setting = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_SETTING));
 					String value = sCursor.getString(sCursor.getColumnIndex(PrivacyProvider.COL_VALUE));
@@ -1089,8 +1128,6 @@ public class PrivacyManager {
 				return false;
 			if (mName.equals(PrivacyManager.cSettingAndroidUsage))
 				return false;
-			if (mName.equals(PrivacyManager.cSettingExtraUsage))
-				return false;
 			return (mTimestamp + cSettingCacheTimeoutMs < new Date().getTime());
 		}
 
@@ -1102,6 +1139,7 @@ public class PrivacyManager {
 	public static class MethodDescription implements Comparable<MethodDescription> {
 		private String mMethodName;
 		private boolean mDangerous;
+		private boolean mRestart;
 		private String[] mPermissions;
 		private int mSdk;
 
@@ -1109,19 +1147,24 @@ public class PrivacyManager {
 			mMethodName = methodName;
 		}
 
-		public MethodDescription(String methodName, boolean dangerous, String[] permissions, int sdk) {
+		public MethodDescription(String methodName, boolean dangerous, boolean restart, String[] permissions, int sdk) {
 			mMethodName = methodName;
 			mDangerous = dangerous;
+			mRestart = restart;
 			mPermissions = permissions;
 			mSdk = sdk;
 		}
 
-		public String getMethodName() {
+		public String getName() {
 			return mMethodName;
 		}
 
-		public boolean getDangerous() {
+		public boolean isDangerous() {
 			return mDangerous;
+		}
+
+		public boolean isRestartRequired() {
+			return mRestart;
 		}
 
 		public String[] getPermissions() {

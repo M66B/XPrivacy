@@ -21,6 +21,8 @@
     <string name="menu_help">帮助</string>
     <string name="menu_all">全部权限</string>
     <string name="menu_restriction_all">全选/不选列表中的应用</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">过滤器开关</string>
     <string name="menu_apply">套用默认权限模板</string>
     <string name="menu_clear">清除所有权限限制</string>
@@ -34,6 +36,7 @@
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
+    <string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">点击应用图标以调整详细限制规则</string>
@@ -43,6 +46,8 @@
     <string name="msg_random_now">生成随机数值</string>
     <string name="msg_random_access">访问时随机生成数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
+    <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
@@ -100,17 +105,16 @@
     <string name="settings_global">使用全局模拟信息</string>
     <string name="settings_notify">通知栏提示</string>
     <string name="settings_usage">Android 应用用量统计数据（需要重启）</string>
-    <string name="settings_extra">额外用量统计数据（需要重启）</string>
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_dangerous">限制可能导致应用异常的权限</string>
     <string name="help_application">应用详情</string>
     <string name="help_internet">应用含有联网权限</string>
     <string name="help_granted">应用已申请的权限（ Androidmanifest 中表明）</string>
     <string name="help_used">应用已使用的权限</string>
     <string name="help_frozen">应用已被冻结/停用</string>
     <string name="help_dangerous">可能导致应用异常的权限</string>
-    <string name="help_half">partly restricted</string>
+    <string name="help_half">已限制部分子权限</string>
 
 </resources>
 

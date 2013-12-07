@@ -1,3 +1,3 @@
 #!/bin/bash
-grep -Rl "\<string name=\"help_dangerous" | xargs sed -i "/string name=\"help_dangerous/a \
-\ \ \ \ <string name=\"help_half\">partly restricted</string>"
+grep -RIl "\<string name=\"msg_usage" . | xargs sed -i -e '/string name="msg_usage/a \
+\ \ \ \ <string name="msg_restart">Application restart required</string>'

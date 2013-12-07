@@ -1,49 +1,54 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposedフレームワーク バージョン %d+ がインストールされていません</string>
+    <string name="app_notxposed" formatted="false">Xposedフレームワークバージョン %d+ がインストールされていません</string>
     <string name="app_notenabled">XPrivacyがXposedインストーラで有効になっていません</string>
-    <string name="app_wrongandroid">Androidバージョン 4.0以降でのみ動作します</string>
+    <string name="app_wrongandroid">Androidバージョン 4.0以降でのみを動作します</string>
     <string name="app_version" formatted="false">XPrivacy バージョン: %s (%d)</string>
-    <string name="app_xversion" formatted="false">Xposedフレームワーク バージョン: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
-    <string name="menu_usage">履歴</string>
-    <string name="menu_refresh">再読み込み</string>
+    <string name="app_xversion" formatted="false">Xposedフレームワークバージョン: %d</string>
+    <string name="app_copyright">著作権 \u00A9 2013、 M. Bokhorst より(M66B)</string>
+    <string name="menu_usage">利用履歴</string>
+    <string name="menu_refresh">再読込み</string>
     <string name="menu_settings">設定</string>
-    <string name="menu_template">テンプレ</string>
+    <string name="menu_template">テンプレート</string>
     <string name="menu_report">問題を報告</string>
     <string name="menu_export">エクスポート</string>
     <string name="menu_import">インポート</string>
-    <string name="menu_submit">制限状況を投稿</string>
-    <string name="menu_fetch">制限の読み込み</string>
-    <string name="menu_theme">テーマを切り替え</string>
-    <string name="menu_pro">Proバージョン</string>
-    <string name="menu_about">アプリ情報</string>
+    <string name="menu_submit">制限状況を送信</string>
+    <string name="menu_fetch">制限を読込む</string>
+    <string name="menu_theme">テーマ</string>
+    <string name="menu_pro">プロバージョンを購入</string>
+    <string name="menu_about">アプリの情報</string>
     <string name="menu_help">ヘルプ</string>
     <string name="menu_all">全て</string>
-    <string name="menu_restriction_all">Toggle restrictions</string>
-    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_restriction_all">制限の身に切り替え</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
+    <string name="menu_usage_all">フィルタ</string>
     <string name="menu_apply">テンプレを適用</string>
-    <string name="menu_clear">消去</string>
+    <string name="menu_clear">クリア</string>
     <string name="menu_app_launch">アプリを起動</string>
     <string name="menu_app_settings">設定</string>
-    <string name="menu_app_store">Playストア</string>
+    <string name="menu_app_store">グーグレプレイストア</string>
     <string name="menu_accounts">許可するアカウントを選択</string>
-    <string name="menu_applications">Select applications to allow</string>
-    <string name="menu_contacts">許可する電話帳を選択</string>
+    <string name="menu_applications">許可するアプリを選択</string>
+    <string name="menu_contacts">許可する電話の連絡先を選択</string>
     <string name="msg_new">新規</string>
-    <string name="msg_update">更新</string>
+    <string name="msg_update">更新されました</string>
     <string name="msg_licensed" formatted="false">ライセンス先: %s</string>
     <string name="msg_loading">読み込み中</string>
-    <string name="msg_saved_to">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_applying">Applying</string>
+    <string name="msg_saved_to">%sに保存されました</string>
+    <string name="msg_no_restrictions">制限などは見つかりませんでした</string>
     <string name="msg_edit">アプリアイコンをタップすると全ての権限の制限を設定できます</string>
-    <string name="msg_sure">続行しますか?</string>
-    <string name="msg_done">完了</string>
-    <string name="msg_reboot">再起動してください</string>
+    <string name="msg_sure">続行しますか</string>
+    <string name="msg_done">終了</string>
+    <string name="msg_reboot">再起動して下さい</string>
     <string name="msg_random_now">ランダム化</string>
-    <string name="msg_random_access">Randomize on access</string>
-    <string name="msg_random_boot">起動時にランダム化する</string>
-    <string name="msg_first"><b>XPrivacyは細心の注意を払って開発･テストしていますが、
+    <string name="msg_random_access">アプリにアクセスされたとき、バリューをランダム化する</string>
+    <string name="msg_random_boot">端末を起動時にランダム化する</string>
+    <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
+    <string name="msg_first"><b>XPrivacyは細心の注意をして開発･テストしていますが、
 どの端末、どのアプリでも動作するという保証はありません。
 \n\n自己責任でお使いください。</b>\n\nライセンスの詳細はこちら:</string>
     <string name="restrict_accounts">アカウント (Google, Facebookなど)</string>
@@ -62,14 +67,14 @@
     <string name="restrict_network">ネットワーク (アドレス)</string>
     <string name="restrict_notifications">通知</string>
     <string name="restrict_phone">電話 (ID, 電話番号, 通話)</string>
-    <string name="restrict_sensors">Sensors</string>
+    <string name="restrict_sensors">センサー</string>
     <string name="restrict_storage">ストレージ (メディア, SDカード)</string>
     <string name="restrict_shell">シェル (コマンド, Superuser)</string>
     <string name="restrict_system">システム (インストール済みアプリ)</string>
     <string name="restrict_view">表示 (ブラウザ)</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">カテゴリー</string>
     <string name="title_restrict">チェックで制限:</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">フィルター</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1個のフィルタ適用中</item>
@@ -82,34 +87,33 @@
     <string name="title_frestricted">制限済みを表示</string>
     <string name="title_fuser">ユーザーアプリを表示</string>
     <string name="title_fsystem">システムアプリを表示</string>
-    <string name="title_fnot">Negate</string>
+    <string name="title_fnot">無視</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
     <string name="settings_mac">MAC アドレス</string>
     <string name="settings_ip">IP アドレス</string>
     <string name="settings_phone">電話番号</string>
-    <string name="settings_id">Android ID</string>
-    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_id">アンドロイドID</string>
+    <string name="settings_adid">広告ID</string>
     <string name="settings_country">国</string>
     <string name="settings_operator">キャリア</string>
     <string name="settings_subscriber">契約者固有ID</string>
     <string name="settings_ua">ユーザーエージェント</string>
-    <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
-    <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
-    <string name="settings_extra">Extra usage data (requires restart)</string>
-    <string name="settings_log">デバッグログ(要再起動)</string>
-    <string name="settings_expert">Expert mode</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_general">一般的</string>
+    <string name="settings_fake_data">フェイクデータ</string>
+    <string name="settings_global">グローバルデータを使用</string>
+    <string name="settings_notify">最新の情報に更新</string>
+    <string name="settings_usage">アンドロイド使用状況(再起動が必要)</string>
+    <string name="settings_log">デバッグログ(再起動が必要)</string>
+    <string name="settings_expert">エキスパートモード</string>
+    <string name="settings_dangerous">危険な可能を制限する</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
-    <string name="help_granted">はAndroid権限を持っています</string>
+    <string name="help_granted">はアンドロイドの権限を持っています</string>
     <string name="help_used">はそのデータを使用しています</string>
     <string name="help_frozen">は無効になっています</string>
-    <string name="help_dangerous">は危険です</string>
-    <string name="help_half">partly restricted</string>
+    <string name="help_dangerous">はプライバシーに危険です</string>
+    <string name="help_half">部分的に制限されました</string>
 
 </resources>

@@ -70,7 +70,7 @@ public class Util {
 		log(hook, Log.INFO, Log.getStackTraceString(new Exception("StackTrace")));
 	}
 
-	public static int getXposedVersion() {
+	public static int getXposedAppProcessVersion() {
 		final Pattern PATTERN_APP_PROCESS_VERSION = Pattern.compile(".*with Xposed support \\(version (.+)\\).*");
 		try {
 			InputStream is = new FileInputStream("/system/bin/app_process");

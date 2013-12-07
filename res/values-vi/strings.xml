@@ -21,6 +21,8 @@
     <string name="menu_help">Trợ giúp</string>
     <string name="menu_all">Tất cả</string>
     <string name="menu_restriction_all">Thay đổi các sự hạn chế</string>
+    <string name="menu_clear_all">Clear all</string>
+    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_usage_all">Thay đổi bộ lọc</string>
     <string name="menu_apply">Áp dụng thiết lập mẫu</string>
     <string name="menu_clear">Xóa thiết lập</string>
@@ -34,6 +36,7 @@
     <string name="msg_update">Cập nhật</string>
     <string name="msg_licensed" formatted="false">Bản quyền: %s</string>
     <string name="msg_loading">Đang tải</string>
+	<string name="msg_applying">Applying</string>
     <string name="msg_saved_to">Đã được lưu vào %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Chạm vào biểu tượng ứng dụng để thay đổi các thiết lập</string>
@@ -43,6 +46,8 @@
     <string name="msg_random_now">Tạo thông tin ngẫu nhiên</string>
     <string name="msg_random_access">Tạo thông tin ngẫu nhiên lúc truy cập</string>
     <string name="msg_random_boot">Tạo thông tin ngẫu nhiên khi khởi động</string>
+    <string name="msg_usage">Updating usage data</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ hoạt động trơn tru trên mọi thiết bị cũng như với mọi ứng dụng.
 \n\nBạn tự chịu trách nhiệm khi sử dụng ứng dụng này.</b>\n\nXem thêm về bản quyền:</string>
     <string name="restrict_accounts">Các tài khoản (Google, Facebook, ...)</string>
@@ -99,8 +104,7 @@
     <string name="settings_global">Sử dụng dữ liệu giả chung</string>
     <string name="settings_notify">Cập nhật thông báo</string>
     <string name="settings_usage">Mức sử dụng hệ thống (cần khởi động lại)</string>
-    <string name="settings_extra">Sử dụng dữ liệu phụ (cần khởi động lại)</string>
-    <string name="settings_log">Nhật ký gỡ lỗi (cần khởi động lại)</string>
+    <string name="settings_log">Nhật ký lỗi (cần khởi động lại)</string>
     <string name="settings_expert">Chế độ nâng cao</string>
     <string name="settings_dangerous">Hạn chế các chức năng nguy hiểm</string>
     <string name="help_application">Ứng dụng</string>

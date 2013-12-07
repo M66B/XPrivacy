@@ -21,6 +21,8 @@
     <string name="menu_help">Pomoc</string>
     <string name="menu_all">Wszystko</string>
     <string name="menu_restriction_all">Przełącz restrykcje</string>
+    <string name="menu_clear_all">Wyczyść wszystko</string>
+    <string name="menu_restrict_all">Ogranicz wszystko</string>
     <string name="menu_usage_all">Przełącz filtry</string>
     <string name="menu_apply">Zastosuj szablon</string>
     <string name="menu_clear">Wyczyść</string>
@@ -34,6 +36,7 @@
     <string name="msg_update">Aktualizacja</string>
     <string name="msg_licensed" formatted="false">Licencjonowane dla: %s</string>
     <string name="msg_loading">Ładowanie</string>
+    <string name="msg_applying">Stosowanie</string>
     <string name="msg_saved_to">Zapisane do %s</string>
     <string name="msg_no_restrictions">Nie znaleziono ograniczeń</string>
     <string name="msg_edit">Kliknij na ikonę aplikacji aby zmodyfikować poszczególne ograniczenia</string>
@@ -43,6 +46,8 @@
     <string name="msg_random_now">Losuj</string>
     <string name="msg_random_access">Losuj podczas dostępu</string>
     <string name="msg_random_boot">Losuj po restarcie</string>
+    <string name="msg_usage">Aktualizacja danych użycia</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>Dołożyliśmy wszelkich starań podczas programowania i testów XPrivacy.
     Jednak nie możemy zagwarantować, że będzie on działać bezbłędnie na każdym urządzeniu oraz z każdą aplikacją.
 \n\nUżywasz go całkowicie na własne ryzyko.</b>\n\nZobacz też licencję:</string>
@@ -101,7 +106,6 @@
     <string name="settings_global">Użyj globalnych fałszywych danych</string>
     <string name="settings_notify">Aktualizuj powiadomienia</string>
     <string name="settings_usage">Android usage data (wymaga restartu)</string>
-    <string name="settings_extra">Extra usage data (wymaga restartu)</string>
     <string name="settings_log">Debug log (wymaga restartu)</string>
     <string name="settings_expert">Tryb eksperta</string>
     <string name="settings_dangerous">Ogranicz niebezpieczne funkcje</string>
