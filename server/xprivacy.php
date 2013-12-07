@@ -145,7 +145,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="XPrivacy">
 		<meta name="author" content="M66B">
-		<meta name="robots" content="noindex,nofollow">
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<style type="text/css">
 			body { padding-left: 5px; padding-right: 5px; }
@@ -303,7 +302,7 @@
 						$letter = isset($_REQUEST['letter']) ? $_REQUEST['letter'] :'A';
 						$sql = "SELECT DISTINCT application_name, package_name";
 						$sql .= " FROM xprivacy";
-						if (empty($letter))
+						if ($letter == '')
 							$sql .= " WHERE application_name = ''";
 						else
 							$sql .= " WHERE application_name LIKE '" . ($letter == '%' ? '\\' : '') . $db->real_escape_string($letter) . "%'";
