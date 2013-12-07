@@ -161,7 +161,7 @@ public class ActivityApp extends Activity {
 		}
 
 		// Display app icon
-		ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
+		final ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
 		Drawable dIcon = mAppInfo.getIcon(this);
 		if (dIcon instanceof BitmapDrawable) {
 			// Get icon bitmap
@@ -203,11 +203,7 @@ public class ActivityApp extends Activity {
 		imgIcon.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intentApp = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
-				if (intentApp != null) {
-					intentApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					view.getContext().startActivity(intentApp);
-				}
+				openContextMenu(imgIcon);
 			}
 		});
 
@@ -280,15 +276,6 @@ public class ActivityApp extends Activity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.app, menu);
 
-		// Launch
-		PackageManager pm = getPackageManager();
-		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName()) == null)
-			menu.findItem(R.id.menu_app_launch).setEnabled(false);
-
-		// Play
-		boolean hasMarketLink = Util.hasMarketLink(this, mAppInfo.getPackageName());
-		menu.findItem(R.id.menu_app_store).setEnabled(hasMarketLink);
-
 		return true;
 	}
 
@@ -298,6 +285,15 @@ public class ActivityApp extends Activity {
 	    super.onCreateContextMenu(menu, v, menuInfo);
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.app_icon, menu);
+
+		// Launch
+		PackageManager pm = getPackageManager();
+		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName()) == null)
+			menu.findItem(R.id.menu_app_launch).setEnabled(false); 
+
+		// Play
+		boolean hasMarketLink = Util.hasMarketLink(this, mAppInfo.getPackageName());
+		menu.findItem(R.id.menu_app_store).setEnabled(hasMarketLink);
 	}
 
 	@Override
