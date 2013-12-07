@@ -296,7 +296,7 @@
 						$sql = "SELECT DISTINCT application_name, package_name";
 						$sql .= " FROM xprivacy";
 						if ($letter == '*')
-							$sql .= " WHERE application_name NOT REGEXP '^[[:alpha:]]'";
+							$sql .= " WHERE application_name REGEXP '^[^a-zA-Z]'";
 						else
 							$sql .= " WHERE application_name LIKE '" . ($letter == '%' ? '\\' : '') . $db->real_escape_string($letter) . "%'";
 						$sql .= " ORDER BY application_name";
@@ -304,7 +304,6 @@
 						if ($result) {
 							while (($row = $result->fetch_object())) {
 								$count++;
-								ini_set('mbstring.substitute_character', "none");
 								$name = (empty($row->application_name) ? '---' : $row->application_name);
 								echo '<tr>';
 
