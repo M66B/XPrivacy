@@ -629,7 +629,7 @@ Try enabling the setting *Extra usage data* from the main menu,
 but be aware that this might cause instability on some ROMs.
 
 <a name="FAQ41"></a>
-**(41) Why are not all pro features available in the pro enabler?**
+**(41) Why are not all pro features available with the pro enabler?**
 
 The [pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro)
 is in the Play store on request of some early XPrivacy users.
@@ -786,7 +786,7 @@ License
 
 [GNU General Public License version 3](http://www.gnu.org/licenses/gpl.txt)
 
-Copyright (c) 2013 [Marcel Bokhorst](http://blog.bokhorst.biz/about/)
+Copyright (c) 2013-2014 [Marcel Bokhorst](http://blog.bokhorst.biz/about/)
 ([M66B](http://forum.xda-developers.com/member.php?u=2799345))
 
 This file is part of XPrivacy.
