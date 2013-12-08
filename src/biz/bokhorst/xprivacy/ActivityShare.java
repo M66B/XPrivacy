@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -157,19 +158,23 @@ public class ActivityShare extends Activity {
 					// Process settings
 					String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityShare.this, progress);
-					for (String setting : mapSetting.keySet()) {
-						String value = mapSetting.get(setting);
+					for (String name : mapSetting.keySet()) {
+						// Decode name
+						String[] component = name.split("\\.");
+						if (component.length > 2)
+							throw new InvalidParameterException();
 
 						// Bound accounts/contacts to same device
-						if (setting.startsWith("Account.") || setting.startsWith("Contact.")
-								|| setting.startsWith("RawContact.")) {
-							setting += "." + android_id;
+						if (component[0].startsWith("Account.") || component[0].startsWith("Contact.")
+								|| component[0].startsWith("RawContact.")) {
+							component[0] += "." + android_id;
 						}
 
 						// Serialize setting
 						serializer.startTag(null, "Setting");
-						serializer.attribute(null, "Name", setting);
-						serializer.attribute(null, "Value", value);
+						serializer.attribute(null, "Id", component.length > 1 ? component[1] : "");
+						serializer.attribute(null, "Name", component[0]);
+						serializer.attribute(null, "Value", mapSetting.get(name));
 						serializer.endTag(null, "Setting");
 					}
 
@@ -355,6 +360,7 @@ public class ActivityShare extends Activity {
 				mMapId.put(id, name);
 			} else if (qName.equals("Setting")) {
 				// Setting
+				String id = attributes.getValue("Id");
 				String setting = attributes.getValue("Name");
 				String value = attributes.getValue("Value");
 
@@ -366,13 +372,27 @@ public class ActivityShare extends Activity {
 					else
 						return;
 
-				PrivacyManager.setSetting(null, ActivityShare.this, 0, setting, value);
+				if (id == null) // Legacy
+				{
+					Util.log(null, Log.WARN, "Legacy " + setting + "=" + value);
+					PrivacyManager.setSetting(null, ActivityShare.this, 0, setting, value);
+				} else {
+					if ("".equals(id)) // Global setting
+						PrivacyManager.setSetting(null, ActivityShare.this, 0, setting, value);
+					else { // Application setting
+						int uid = getUid(Integer.parseInt(id));
+						if (uid >= 0)
+							PrivacyManager.setSetting(null, ActivityShare.this, uid, setting, value);
+					}
+				}
 			} else if (qName.equals("Package")) {
 				// Restriction (legacy)
 				String packageName = attributes.getValue("Name");
 				String restrictionName = attributes.getValue("Restriction");
 				String methodName = attributes.getValue("Method");
 				boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
+				Util.log(null, Log.WARN, "Legacy package=" + packageName + " " + restrictionName + "/" + methodName
+						+ "=" + restricted);
 
 				// Map package restriction
 				if (!mMapPackage.containsKey(packageName))
@@ -391,26 +411,29 @@ public class ActivityShare extends Activity {
 				boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
 
 				// Get uid
-				String packageName = mMapId.get(id);
-				if (!mMapUid.containsKey(packageName))
-					try {
-						int newuid = ActivityShare.this.getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
-						mMapUid.put(packageName, newuid);
-					} catch (NameNotFoundException ex) {
-						// Do not lookup again
-						mMapUid.put(packageName, 0);
-						Util.log(null, Log.WARN, "Unknown package name=" + packageName);
-					}
-
-				// Set restriction
-				if (mMapUid.containsKey(packageName)) {
-					int uid = mMapUid.get(packageName);
-					if (uid > 0)
-						PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName, methodName,
-								restricted);
-				}
+				int uid = getUid(id);
+				if (uid >= 0)
+					PrivacyManager
+							.setRestricted(null, ActivityShare.this, uid, restrictionName, methodName, restricted);
 			} else
 				Util.log(null, Log.WARN, "Unknown element name=" + qName);
+		}
+
+		private int getUid(int id) {
+			String packageName = mMapId.get(id);
+			if (packageName == null) {
+				Util.log(null, Log.WARN, "Unknown id=" + id);
+				return -1;
+			} else if (!mMapUid.containsKey(packageName))
+				try {
+					int newuid = ActivityShare.this.getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
+					mMapUid.put(packageName, newuid);
+				} catch (NameNotFoundException ex) {
+					// Do not lookup again
+					mMapUid.put(packageName, -1);
+					Util.log(null, Log.WARN, "Unknown package name=" + packageName);
+				}
+			return (mMapUid.containsKey(packageName) ? mMapUid.get(packageName) : -1);
 		}
 
 		public Map<String, Map<String, List<MethodDescription>>> getPackageMap() {
