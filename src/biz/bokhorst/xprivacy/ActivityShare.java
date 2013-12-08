@@ -239,13 +239,14 @@ public class ActivityShare extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			notify(result, false, 0, 1);
+
+			Toast toast = Toast.makeText(ActivityShare.this, mFile.getAbsolutePath(), Toast.LENGTH_LONG);
+			toast.show();
+
 			Intent intent = new Intent();
 			intent.putExtra(cFileName, mFile.getAbsolutePath());
 			setResult(result.equals(getString(R.string.msg_done)) ? 0 : 1, intent);
 			finish();
-
-			Toast toast = Toast.makeText(ActivityShare.this, mFile.getAbsolutePath(), Toast.LENGTH_LONG);
-			toast.show();
 			super.onPostExecute(result);
 		}
 
@@ -362,6 +363,7 @@ public class ActivityShare extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			notify(result, false, 0);
+
 			Intent intent = new Intent();
 			intent.putExtra(cFileName, mFile.getAbsolutePath());
 			setResult(result.equals(getString(R.string.msg_done)) ? 0 : 1, intent);
@@ -580,7 +582,7 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(Object result) {
-			String text = (result == null ? getString(R.string.msg_done) : ((Throwable) result).toString());
+			String text = (result == null ? getString(R.string.msg_done) : ((Throwable) result).getMessage());
 			notify(text, false, 0);
 
 			text = String.format("%s: %s", getString(R.string.menu_fetch), text);

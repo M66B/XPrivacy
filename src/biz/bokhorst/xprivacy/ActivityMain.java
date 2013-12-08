@@ -356,7 +356,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == ACTIVITY_LICENSE) {
-			// Result for license check
+			// License check
 			if (data != null) {
 				int code = data.getIntExtra("Code", -1);
 				int reason = data.getIntExtra("Reason", -1);
@@ -395,7 +395,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 			}
 		} else if (requestCode == ACTIVITY_EXPORT) {
-			// Exported: clean-up UI
+			// Export
 			sharingDone();
 
 			// send share intent
@@ -408,11 +408,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						String.format(getString(R.string.msg_saved_to), data.getStringExtra(ActivityShare.cFileName))));
 			}
 		} else if (requestCode == ACTIVITY_IMPORT) {
-			// Imported: clean-up UI
+			// Import
 			sharingDone();
 			ActivityMain.this.recreate();
+
+			String text = String.format("%s: %s", getString(R.string.menu_import), getString(R.string.msg_done));
+			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+			toast.show();
 		} else if (requestCode == ACTIVITY_IMPORT_SELECT) {
-			// Result for import file choice
+			// Import select
 			if (resultCode == RESULT_CANCELED)
 				sharingDone();
 			else if (data != null)
@@ -425,7 +429,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					Util.bug(null, ex);
 				}
 		} else if (requestCode == ACTIVITY_FETCH) {
-			// Fetched: clean-up UI
+			// Fetch
 			sharingDone();
 			ActivityMain.this.recreate();
 		}
