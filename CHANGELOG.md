@@ -4,7 +4,9 @@ Changelog
 **Next release**
 
 * Small performance improvement
+* Updated Arabic translation
 * Updated Chinese translation
+* Updated French translation
 * Updated Italian translation
 * Updated Vietnamese translation
 
