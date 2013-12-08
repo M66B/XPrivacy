@@ -72,7 +72,7 @@ public class PrivacyManager {
 			cNetwork, cNfc, cNotifications, cSensors, cPhone, cShell, cStorage, cSystem, cView };
 
 	public final static int cXposedAppProcessMinVersion = 46;
-	public final static int cAndroidUid = 1000;
+	public final static int cAndroidUid = Process.SYSTEM_UID;
 
 	public final static String cSettingSerial = "Serial";
 	public final static String cSettingLatitude = "Latitude";
