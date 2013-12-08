@@ -371,18 +371,15 @@ public class ActivityShare extends Activity {
 					else
 						return;
 
-				if (id == null) // Legacy
-				{
+				if (id == null) { // Legacy
 					Util.log(null, Log.WARN, "Legacy " + name + "=" + value);
 					PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
-				} else {
-					if ("".equals(id)) // Global setting
-						PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
-					else { // Application setting
-						int uid = getUid(Integer.parseInt(id));
-						if (uid >= 0)
-							PrivacyManager.setSetting(null, ActivityShare.this, uid, name, value);
-					}
+				} else if ("".equals(id)) // Global setting
+					PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
+				else { // Application setting
+					int uid = getUid(Integer.parseInt(id));
+					if (uid >= 0)
+						PrivacyManager.setSetting(null, ActivityShare.this, uid, name, value);
 				}
 			} else if (qName.equals("Package")) {
 				// Restriction (legacy)
