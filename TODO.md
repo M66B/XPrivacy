@@ -17,3 +17,4 @@ For interested developers:
 * Holo check boxes for functions exceptions
 * Move *SubmitTask* to *ActivityShare* (or the replacing service)
 * Updated *SharedPreferencesEx* with KitKat changes
+* Add updated, restricted, shared colors to legend
