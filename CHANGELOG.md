@@ -6,6 +6,7 @@ Changelog
 * Color for state ([issue](https://github.com/M66B/XPrivacy/issues/887))
 * Added context menu to icon in application details view, thanks @[jpeg729](https://github.com/jpeg729)
 * Disabled fast scroll of application list, since it is buggy on KitKat
+* Fixed restrictions of isolated processes on KitKat
 * Small performance improvement
 * Updated Arabic translation
 * Updated Chinese translation

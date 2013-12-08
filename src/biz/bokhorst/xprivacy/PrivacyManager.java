@@ -360,7 +360,25 @@ public class PrivacyManager {
 		if (uid == cAndroidUid)
 			return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false);
 		else
-			return true;
+			return !isIsolated(uid);
+	}
+
+	// Waiting for SDK 20 ...
+	public static final int FIRST_ISOLATED_UID = 99000;
+	public static final int LAST_ISOLATED_UID = 99999;
+	public static final int FIRST_SHARED_APPLICATION_GID = 50000;
+	public static final int LAST_SHARED_APPLICATION_GID = 59999;
+
+	public static boolean isApplication(int uid) {
+		return (uid >= Process.FIRST_APPLICATION_UID && uid <= Process.LAST_APPLICATION_UID);
+	}
+
+	public static boolean isShared(int uid) {
+		return (uid >= FIRST_SHARED_APPLICATION_GID && uid <= LAST_SHARED_APPLICATION_GID);
+	}
+
+	public static boolean isIsolated(int uid) {
+		return (uid >= FIRST_ISOLATED_UID && uid <= LAST_ISOLATED_UID);
 	}
 
 	public static void sendUsageData(final XHook hook, Context context) {

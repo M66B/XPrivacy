@@ -62,7 +62,7 @@ public class Util {
 	}
 
 	public static void bug(XHook hook, Throwable ex) {
-		log(hook, Log.ERROR, ex.toString());
+		log(hook, Log.ERROR, ex.toString() + " uid=" + Process.myUid());
 		ex.printStackTrace();
 	}
 
