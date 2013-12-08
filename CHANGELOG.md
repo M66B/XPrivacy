@@ -7,6 +7,7 @@ Changelog
 * Added context menu to icon in application details view, thanks @[jpeg729](https://github.com/jpeg729)
 * Disabled fast scroll of application list, since it is buggy on KitKat
 * Fixed restrictions of isolated processes on KitKat
+* Fixed fetching unknown functions
 * Small performance improvement
 * Updated Arabic translation
 * Updated Chinese translation

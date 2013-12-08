@@ -197,7 +197,7 @@ public class PrivacyManager {
 	public static MethodDescription getMethod(String restrictionName, String methodName) {
 		MethodDescription md = new MethodDescription(methodName);
 		int pos = mMethod.get(restrictionName).indexOf(md);
-		return mMethod.get(restrictionName).get(pos);
+		return (pos < 0 ? null : mMethod.get(restrictionName).get(pos));
 	}
 
 	public static String getLocalizedName(Context context, String restrictionName) {

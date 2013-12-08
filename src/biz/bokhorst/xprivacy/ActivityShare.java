@@ -546,8 +546,10 @@ public class ActivityShare extends Activity {
 										int voted_not_restricted = entry.getInt("not_restricted");
 										boolean restricted = (voted_restricted > voted_not_restricted);
 										if (methodName == null || restricted)
-											PrivacyManager.setRestricted(null, ActivityShare.this, appInfo.getUid(),
-													restrictionName, methodName, restricted);
+											if (methodName == null
+													|| PrivacyManager.getMethod(restrictionName, methodName) != null)
+												PrivacyManager.setRestricted(null, ActivityShare.this,
+														appInfo.getUid(), restrictionName, methodName, restricted);
 									}
 								} else
 									publishProgress(getString(R.string.msg_no_restrictions), Integer.toString(mCurrent));
@@ -578,7 +580,13 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(Object result) {
-			notify(result == null ? getString(R.string.msg_done) : ((Throwable) result).getMessage(), false, 0);
+			String text = (result == null ? getString(R.string.msg_done) : ((Throwable) result).toString());
+			notify(text, false, 0);
+
+			text = String.format("%s: %s", getString(R.string.menu_fetch), text);
+			Toast toast = Toast.makeText(ActivityShare.this, text, Toast.LENGTH_LONG);
+			toast.show();
+
 			Intent intent = new Intent();
 			setResult(0, intent);
 			finish();
