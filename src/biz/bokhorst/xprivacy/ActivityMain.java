@@ -1209,11 +1209,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				if (holder.position == position && xAppInfo != null) {
 					// Display state
 					if (state == STATE_ATTENTION)
-						holder.vwState.setBackgroundColor(getResources().getColor(R.color.color_state_attention));
+						holder.vwState.setBackgroundColor(getResources().getColor(
+								Util.getThemed(ActivityMain.this, R.attr.color_state_attention)));
 					else if (state == STATE_SHARED)
-						holder.vwState.setBackgroundColor(getResources().getColor(R.color.color_state_shared));
+						holder.vwState.setBackgroundColor(getResources().getColor(
+								Util.getThemed(ActivityMain.this, R.attr.color_state_shared)));
 					else
-						holder.vwState.setBackgroundColor(getResources().getColor(R.color.color_state_restricted));
+						holder.vwState.setBackgroundColor(getResources().getColor(
+								Util.getThemed(ActivityMain.this, R.attr.color_state_restricted)));
 
 					// Draw border around icon
 					if (xAppInfo.getIcon(ActivityMain.this) instanceof BitmapDrawable) {
@@ -1309,8 +1312,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 												// Update visible state
 												holder.imgCBName.setImageBitmap(mCheck[0]); // Off
-												holder.vwState.setBackgroundColor(getResources().getColor(
-														R.color.color_state_attention));
+												holder.vwState.setBackgroundColor(getResources()
+														.getColor(
+																Util.getThemed(view.getContext(),
+																		R.attr.color_state_attention)));
 
 												// Notify restart
 												if (restart)
@@ -1360,13 +1365,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							state = Integer.parseInt(PrivacyManager.getSetting(null, holder.row.getContext(),
 									xAppInfo.getUid(), PrivacyManager.cSettingState, "1", false));
 							if (state == STATE_ATTENTION)
-								holder.vwState.setBackgroundColor(getResources()
-										.getColor(R.color.color_state_attention));
+								holder.vwState.setBackgroundColor(getResources().getColor(
+										Util.getThemed(holder.row.getContext(), R.attr.color_state_attention)));
 							else if (state == STATE_SHARED)
-								holder.vwState.setBackgroundColor(getResources().getColor(R.color.color_state_shared));
+								holder.vwState.setBackgroundColor(getResources().getColor(
+										Util.getThemed(holder.row.getContext(), R.attr.color_state_shared)));
 							else
 								holder.vwState.setBackgroundColor(getResources().getColor(
-										R.color.color_state_restricted));
+										Util.getThemed(holder.row.getContext(), R.attr.color_state_restricted)));
 						}
 					});
 				}

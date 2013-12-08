@@ -17,6 +17,9 @@
         <item name="drawable_background">@android:color/black</item>
         <item name="drawable_card">@drawable/card_dark</item>
         <item name="color_dangerous">@color/color_dangerous_dark</item>
+        <item name="color_state_attention">@color/color_state_attention_dark</item>
+        <item name="color_state_restricted">@color/color_state_restricted_dark</item>
+        <item name="color_state_shared">@color/color_state_shared_dark</item>
     </style>
 
     <style name="CustomTheme.Light" parent="android:Theme.Holo.Light.DarkActionBar">
@@ -36,6 +39,9 @@
         <item name="drawable_background">@color/color_home_background_light</item>
         <item name="drawable_card">@drawable/card_light</item>
         <item name="color_dangerous">@color/color_dangerous_light</item>
+        <item name="color_state_attention">@color/color_state_attention_light</item>
+        <item name="color_state_restricted">@color/color_state_restricted_light</item>
+        <item name="color_state_shared">@color/color_state_shared_light</item>
     </style>
 
     <style name="CustomTheme.Light.Dialog" parent="android:Theme.Holo.Light">

@@ -7,8 +7,11 @@
     <color name="color_filter_background_start">#30404040</color>
     <color name="color_filter_background_end">#30D0D0D0</color>
     <color name="color_home_background_light">#FFE5E5E5</color>
-    <color name="color_state_attention">#FF8C00</color>
-    <color name="color_state_restricted">#A9A9A9</color>
-    <color name="color_state_shared">#008000</color>
+    <color name="color_state_attention_light">#FF8C00</color>
+    <color name="color_state_attention_dark">#FF8C00</color>
+    <color name="color_state_restricted_light">#A9A9A9</color>
+    <color name="color_state_restricted_dark">#A9A9A9</color>
+    <color name="color_state_shared_light">#008000</color>
+    <color name="color_state_shared_dark">#008000</color>
 
 </resources>
