@@ -72,7 +72,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
@@ -280,16 +279,15 @@ public class ActivityApp extends Activity {
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-	                                ContextMenuInfo menuInfo) {
-	    super.onCreateContextMenu(menu, v, menuInfo);
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.app_icon, menu);
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.app_icon, menu);
 
 		// Launch
 		PackageManager pm = getPackageManager();
 		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName()) == null)
-			menu.findItem(R.id.menu_app_launch).setEnabled(false); 
+			menu.findItem(R.id.menu_app_launch).setEnabled(false);
 
 		// Play
 		boolean hasMarketLink = Util.hasMarketLink(this, mAppInfo.getPackageName());
@@ -369,7 +367,7 @@ public class ActivityApp extends Activity {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
+		switch (item.getItemId()) {
 		case R.id.menu_app_launch:
 			optionLaunch();
 			return true;
@@ -379,9 +377,9 @@ public class ActivityApp extends Activity {
 		case R.id.menu_app_store:
 			optionStore();
 			return true;
-        default:
-            return super.onContextItemSelected(item);
-	    }
+		default:
+			return super.onContextItemSelected(item);
+		}
 	}
 
 	@Override
