@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.39 TEST**
+
 * Fixed fetching unknown functions
 * Fixed restrictions of isolated processes on KitKat
 * Fixed importing wrong application specific settings
@@ -10,7 +14,7 @@ Changelog
 * Added context menu to icon in application details view, thanks @[jpeg729](https://github.com/jpeg729)
 * Disabled fast scroll of application list, since it is buggy on KitKat
 * Added new restriction category *Overlay*
-* Less resource intensive export/import
+* Less resource intensive export/import (export file format has changed)
 * Small performance improvement
 * Updated Arabic translation
 * Updated Chinese translation
@@ -18,8 +22,6 @@ Changelog
 * Updated Italian translation
 * Updated Polish translation
 * Updated Vietnamese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.38 BETA**
 
