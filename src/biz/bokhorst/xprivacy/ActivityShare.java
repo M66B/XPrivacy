@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -162,20 +161,21 @@ public class ActivityShare extends Activity {
 						// Decode name
 						String[] component = name.split("\\.");
 						if (component.length > 2)
-							throw new InvalidParameterException();
+							Util.log(null, Log.WARN, "Legacy name=" + name + " value=" + mapSetting.get(name));
+						else {
+							// Bind accounts/contacts to same device
+							if (component[0].startsWith("Account.") || component[0].startsWith("Contact.")
+									|| component[0].startsWith("RawContact.")) {
+								component[0] += "." + android_id;
+							}
 
-						// Bound accounts/contacts to same device
-						if (component[0].startsWith("Account.") || component[0].startsWith("Contact.")
-								|| component[0].startsWith("RawContact.")) {
-							component[0] += "." + android_id;
+							// Serialize setting
+							serializer.startTag(null, "Setting");
+							serializer.attribute(null, "Id", component.length > 1 ? component[1] : "");
+							serializer.attribute(null, "Name", component[0]);
+							serializer.attribute(null, "Value", mapSetting.get(name));
+							serializer.endTag(null, "Setting");
 						}
-
-						// Serialize setting
-						serializer.startTag(null, "Setting");
-						serializer.attribute(null, "Id", component.length > 1 ? component[1] : "");
-						serializer.attribute(null, "Name", component[0]);
-						serializer.attribute(null, "Value", mapSetting.get(name));
-						serializer.endTag(null, "Setting");
 					}
 
 					// Process restrictions
@@ -361,28 +361,27 @@ public class ActivityShare extends Activity {
 			} else if (qName.equals("Setting")) {
 				// Setting
 				String id = attributes.getValue("Id");
-				String setting = attributes.getValue("Name");
+				String name = attributes.getValue("Name");
 				String value = attributes.getValue("Value");
 
 				// Import accounts/contacts only for same device
-				if (setting.startsWith("Account.") || setting.startsWith("Contact.")
-						|| setting.startsWith("RawContact."))
-					if (setting.endsWith("." + android_id))
-						setting = setting.replace("." + android_id, "");
+				if (name.startsWith("Account.") || name.startsWith("Contact.") || name.startsWith("RawContact."))
+					if (name.endsWith("." + android_id))
+						name = name.replace("." + android_id, "");
 					else
 						return;
 
 				if (id == null) // Legacy
 				{
-					Util.log(null, Log.WARN, "Legacy " + setting + "=" + value);
-					PrivacyManager.setSetting(null, ActivityShare.this, 0, setting, value);
+					Util.log(null, Log.WARN, "Legacy " + name + "=" + value);
+					PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
 				} else {
 					if ("".equals(id)) // Global setting
-						PrivacyManager.setSetting(null, ActivityShare.this, 0, setting, value);
+						PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
 					else { // Application setting
 						int uid = getUid(Integer.parseInt(id));
 						if (uid >= 0)
-							PrivacyManager.setSetting(null, ActivityShare.this, uid, setting, value);
+							PrivacyManager.setSetting(null, ActivityShare.this, uid, name, value);
 					}
 				}
 			} else if (qName.equals("Package")) {
