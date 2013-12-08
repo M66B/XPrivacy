@@ -65,6 +65,7 @@
     <string name="restrict_messages">Tin nhắn (SMS, MMS)</string>
     <string name="restrict_network">Mạng (các địa chỉ mạng)</string>
     <string name="restrict_notifications">Thông báo</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">Điện thoại (ID, số điện thoại, cuộc gọi)</string>
     <string name="restrict_sensors">Cảm biến</string>
     <string name="restrict_storage">Lưu trữ (media, thẻ SD)</string>

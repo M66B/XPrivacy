@@ -130,6 +130,10 @@
     <Hook restriction="notifications" method="com.google.android.c2dm.intent.REGISTRATION" dangerous="true" permissions="com.google.android.c2dm.permission.RECEIVE" sdk="14" />
     <Hook restriction="notifications" method="com.google.android.c2dm.intent.RECEIVE" dangerous="true" permissions="com.google.android.c2dm.permission.RECEIVE" sdk="14" />
     
+    <Hook restriction="overlay" method="addView" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
+    <Hook restriction="overlay" method="removeView" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
+    <Hook restriction="overlay" method="updateViewLayout" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
+
     <Hook restriction="phone" method="getDeviceId" permissions="READ_PHONE_STATE" sdk="14" />
     <Hook restriction="phone" method="getIsimDomain" permissions="READ_PHONE_STATE" sdk="14" />
     <Hook restriction="phone" method="getIsimImpi" permissions="READ_PHONE_STATE" sdk="14" />
@@ -204,8 +208,5 @@
     <Hook restriction="view" method="getUserAgentString" permissions="" sdk="1" />
     <Hook restriction="view" method="setUserAgent" permissions="" sdk="1" />
     <Hook restriction="view" method="setUserAgentString" permissions="" sdk="1" />
-    <Hook restriction="view" method="addView" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
-    <Hook restriction="view" method="removeView" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
-    <Hook restriction="view" method="updateViewLayout" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
     <Hook restriction="view" method="android.intent.action.VIEW" permissions="" sdk="14" />
 </Meta>

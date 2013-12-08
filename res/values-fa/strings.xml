@@ -68,6 +68,7 @@
     <string name="restrict_messages">پیغام ها (اس ام اس، ام ام اس)</string>
     <string name="restrict_network">شبکه (آدرسها)</string>
     <string name="restrict_notifications">اخطارها</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">تلفن (شناسه، شماره، تماس ها)</string>
     <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">مخزن (مدیا، اس دی کارت)</string>

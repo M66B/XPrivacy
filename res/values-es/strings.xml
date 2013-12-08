@@ -66,6 +66,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="restrict_messages">Mensajes (SMS, MMS)</string>
     <string name="restrict_network">Red (direcciones)</string>
     <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">Teléfono (ID, números, llamadas)</string>
     <string name="restrict_sensors">Sensores</string>
     <string name="restrict_storage">Almacenamiento (media, tarjeta SD)</string>

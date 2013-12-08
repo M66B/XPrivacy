@@ -66,6 +66,7 @@
     <string name="restrict_messages">الرسائل (النصية , الوسائط)</string>
     <string name="restrict_network">الشبكة (العناوين)</string>
     <string name="restrict_notifications">الإشعارات</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">الهاتف (المعرف,الأرقام,المكالمات)</string>
     <string name="restrict_sensors">الحساسات</string>
     <string name="restrict_storage">التخزين (الميديا’الذاكرة الخارجية)</string>

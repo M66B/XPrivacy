@@ -66,6 +66,7 @@
     <string name="restrict_messages">メッセージ (SMS, MMS)</string>
     <string name="restrict_network">ネットワーク (アドレス)</string>
     <string name="restrict_notifications">通知</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">電話 (ID, 電話番号, 通話)</string>
     <string name="restrict_sensors">センサー</string>
     <string name="restrict_storage">ストレージ (メディア, SDカード)</string>

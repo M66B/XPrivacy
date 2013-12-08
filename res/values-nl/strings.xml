@@ -37,7 +37,7 @@
     <string name="msg_licensed" formatted="false">In licentie gegeven aan: %s</string>
     <string name="msg_loading">Laden</string>
     <string name="msg_applying">Applying</string>
-    <string name="msg_saved_to">Bewaard als %s</string>
+    <string name="msg_saved_to" formatted="false">Bewaard als %s</string>
     <string name="msg_no_restrictions">Geen beperkingen gevonden</string>
     <string name="msg_edit">Klik op het applicatiepictogram om alle beperkingen te wijzigen</string>
     <string name="msg_sure">Zeker weten?</string>
@@ -66,6 +66,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_messages">Berichten (SMS, MMS)</string>
     <string name="restrict_network">Netwerk (adressen)</string>
     <string name="restrict_notifications">Notificaties</string>
+    <string name="restrict_overlay">Overlap</string>
     <string name="restrict_phone">Telefoon (ID, nummers, oproepen)</string>
     <string name="restrict_sensors">Sensoren</string>
     <string name="restrict_storage">Opslag (media, SD card)</string>

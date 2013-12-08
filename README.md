@@ -149,6 +149,7 @@ For easy usage, data is restricted by category:
 	* return a fake system property cid (Card Identification Register)
 	* return file not found for /sys/block/.../cid
 	* return file not found for /sys/class/.../cid
+	* return fake input device descriptor
 * Internet
 	* revoke access to the internet
 	* return fake disconnected state
@@ -190,6 +191,8 @@ For easy usage, data is restricted by category:
 * Notifications
 	* prevent receiving statusbar notifications (Android 4.3+)
 	* prevent [C2DM](https://developers.google.com/android/c2dm/) messages
+* Overlay
+	* prevent draw over / on top
 * Phone
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID (IMSI for a GSM phone)
@@ -241,7 +244,6 @@ For easy usage, data is restricted by category:
 	* prevent package add, replace, restart and remove notifications
 * View
 	* prevent links from opening in the browser
-		* you will be notified if an application tries to open a link
 	* return fake browser user agent string
 		* *Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9*
 

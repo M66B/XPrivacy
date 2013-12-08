@@ -66,6 +66,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="restrict_messages">Meddelanden (SMS, MMS)</string>
     <string name="restrict_network">Nätverk (adresser)</string>
     <string name="restrict_notifications">Notifikationer</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">Telefon (ID, nummer, samtal)</string>
     <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Lagring (media, SD-kort)</string>

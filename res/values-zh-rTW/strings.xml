@@ -64,6 +64,7 @@
     <string name="restrict_messages">簡訊 (SMS, MMS)</string>
     <string name="restrict_network">網路資訊 (IP, MAC, DHCP)</string>
     <string name="restrict_notifications">通知</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">手機資訊 (ID, 號碼, 通話記錄)</string>
     <string name="restrict_sensors">感應器</string>
     <string name="restrict_storage">儲存空間 (媒體檔案, SD卡)</string>
