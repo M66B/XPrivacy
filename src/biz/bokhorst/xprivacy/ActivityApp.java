@@ -63,6 +63,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateUtils;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -70,6 +72,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
@@ -158,7 +161,7 @@ public class ActivityApp extends Activity {
 		}
 
 		// Display app icon
-		ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
+		final ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
 		Drawable dIcon = mAppInfo.getIcon(this);
 		if (dIcon instanceof BitmapDrawable) {
 			// Get icon bitmap
@@ -200,13 +203,12 @@ public class ActivityApp extends Activity {
 		imgIcon.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intentApp = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
-				if (intentApp != null) {
-					intentApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					view.getContext().startActivity(intentApp);
-				}
+				openContextMenu(imgIcon);
 			}
 		});
+
+		// Add context menu to icon
+		registerForContextMenu(imgIcon);
 
 		// Check if internet access
 		if (!mAppInfo.hasInternet(this)) {
@@ -274,16 +276,24 @@ public class ActivityApp extends Activity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.app, menu);
 
+		return true;
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+	                                ContextMenuInfo menuInfo) {
+	    super.onCreateContextMenu(menu, v, menuInfo);
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.app_icon, menu);
+
 		// Launch
 		PackageManager pm = getPackageManager();
 		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName()) == null)
-			menu.findItem(R.id.menu_app_launch).setEnabled(false);
+			menu.findItem(R.id.menu_app_launch).setEnabled(false); 
 
 		// Play
 		boolean hasMarketLink = Util.hasMarketLink(this, mAppInfo.getPackageName());
 		menu.findItem(R.id.menu_app_store).setEnabled(hasMarketLink);
-
-		return true;
 	}
 
 	@Override
@@ -355,6 +365,23 @@ public class ActivityApp extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+		case R.id.menu_app_launch:
+			optionLaunch();
+			return true;
+		case R.id.menu_app_settings:
+			optionSettings();
+			return true;
+		case R.id.menu_app_store:
+			optionStore();
+			return true;
+        default:
+            return super.onContextItemSelected(item);
+	    }
 	}
 
 	@Override
