@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Disabled fast scroll, since it is buggy on KitKat
 * Small performance improvement
 * Updated Arabic translation
 * Updated Chinese translation
