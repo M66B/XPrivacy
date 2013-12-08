@@ -598,7 +598,8 @@ so you may not see all of them. The check box state is independent of this.
 Try enabling the setting *Extra usage data* from the main menu,
 but be aware that this might cause instability on some ROMs.
 
-**([41](#41)) Why are not all pro features available in the pro enabler?**
+<a name="41"></a>
+**(41) Why are not all pro features available in the pro enabler?**
 
 The [pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro)
 is in the Play store on request of some early XPrivacy users.
