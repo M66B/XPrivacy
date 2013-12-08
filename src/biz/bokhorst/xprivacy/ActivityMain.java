@@ -75,6 +75,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private Handler mHandler = new Handler();
 	private Runnable mTimerRunnable = null;
 
+	public static final int STATE_ATTENTION = 0;
+	public static final int STATE_RESTRICTED = 1;
+	public static final int STATE_SHARED = 2;
+
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int ACTIVITY_EXPORT = 1;
 	private static final int ACTIVITY_IMPORT = 2;
@@ -1124,6 +1128,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private class ViewHolder {
 			private View row;
 			private int position;
+			public View vwState;
 			public ImageView imgIcon;
 			public ImageView imgUsed;
 			public ImageView imgGranted;
@@ -1136,6 +1141,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			public ViewHolder(View theRow, int thePosition) {
 				row = theRow;
 				position = thePosition;
+				vwState = (View) row.findViewById(R.id.vwState);
 				imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
 				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
@@ -1151,6 +1157,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			private int position;
 			private ViewHolder holder;
 			private ApplicationInfoEx xAppInfo = null;
+			private int state;
 			private boolean used;
 			private boolean granted = true;
 			private List<String> listRestriction;
@@ -1166,6 +1173,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			protected Object doInBackground(Object... params) {
 				if (holder.position == position && xAppInfo != null) {
+					// Get state
+					state = Integer.parseInt(PrivacyManager.getSetting(null, holder.row.getContext(),
+							xAppInfo.getUid(), PrivacyManager.cSettingState, "1", false));
+
 					// Get if used
 					used = (PrivacyManager.getUsed(holder.row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
 
@@ -1196,6 +1207,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && xAppInfo != null) {
+					// Display state
+					if (state == STATE_ATTENTION)
+						holder.vwState.setBackgroundColor(getResources().getColor(R.color.color_state_attention));
+					else if (state == STATE_SHARED)
+						holder.vwState.setBackgroundColor(getResources().getColor(R.color.color_state_shared));
+					else
+						holder.vwState.setBackgroundColor(getResources().getColor(R.color.color_state_restricted));
+
 					// Draw border around icon
 					if (xAppInfo.getIcon(ActivityMain.this) instanceof BitmapDrawable) {
 						// Get icon bitmap
@@ -1237,18 +1256,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					}
 					holder.imgIcon.setVisibility(View.VISIBLE);
 
-					// Check if used
+					// Display usage
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 
-					// Check if permission
+					// Display if permissions
 					holder.imgGranted.setVisibility(granted ? View.VISIBLE : View.INVISIBLE);
 
-					// Check if internet access
+					// Display if internet access
 					holder.imgInternet.setVisibility(xAppInfo.hasInternet(ActivityMain.this) ? View.VISIBLE
 							: View.INVISIBLE);
 
-					// Check if frozen
+					// Display if frozen
 					holder.imgFrozen
 							.setVisibility(xAppInfo.isFrozen(ActivityMain.this) ? View.VISIBLE : View.INVISIBLE);
 
@@ -1290,6 +1309,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 												// Update visible state
 												holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+												holder.vwState.setBackgroundColor(getResources().getColor(
+														R.color.color_state_attention));
 
 												// Notify restart
 												if (restart)
@@ -1334,6 +1355,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 									Toast.makeText(view.getContext(), getString(R.string.msg_restart),
 											Toast.LENGTH_SHORT).show();
 							}
+
+							// Display new state
+							state = Integer.parseInt(PrivacyManager.getSetting(null, holder.row.getContext(),
+									xAppInfo.getUid(), PrivacyManager.cSettingState, "1", false));
+							if (state == STATE_ATTENTION)
+								holder.vwState.setBackgroundColor(getResources()
+										.getColor(R.color.color_state_attention));
+							else if (state == STATE_SHARED)
+								holder.vwState.setBackgroundColor(getResources().getColor(R.color.color_state_shared));
+							else
+								holder.vwState.setBackgroundColor(getResources().getColor(
+										R.color.color_state_restricted));
 						}
 					});
 				}
@@ -1375,6 +1408,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			});
 
 			// Set data
+			holder.vwState.setBackgroundColor(Color.TRANSPARENT);
 			holder.imgIcon.setVisibility(View.INVISIBLE);
 			holder.tvName.setText(xAppInfo.toString());
 			holder.tvName.setTypeface(null, Typeface.NORMAL);

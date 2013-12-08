@@ -4,6 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
+    <View
+        android:id="@+id/vwState"
+        android:layout_width="6dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:paddingRight="3dp" />
+
     <ImageView
         android:id="@+id/imgIcon"
         android:layout_width="?android:attr/listPreferredItemHeightSmall"
@@ -71,7 +78,7 @@
             android:layout_marginLeft="3dp"
             android:layout_marginRight="6dp"
             android:contentDescription="@string/title_restrict"
-            android:visibility="gone" />
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/tvName"

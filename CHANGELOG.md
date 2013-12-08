@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Color for state ([issue](https://github.com/M66B/XPrivacy/issues/887))
 * Disabled fast scroll, since it is buggy on KitKat
 * Small performance improvement
 * Updated Arabic translation

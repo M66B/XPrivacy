@@ -859,10 +859,14 @@ public class ActivityApp extends Activity {
 			} else if (result.getClass().equals(JSONObject.class)) {
 				JSONObject status = (JSONObject) result;
 				try {
-					if (status.getBoolean("ok"))
+					if (status.getBoolean("ok")) {
 						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getPackageName(),
 								getString(R.string.msg_done)));
-					else
+
+						// Mark as shared
+						PrivacyManager.setSetting(null, ActivityApp.this, mAppInfo.getUid(),
+								PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_SHARED));
+					} else
 						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getPackageName(),
 								status.getString("error")));
 				} catch (Throwable ex) {

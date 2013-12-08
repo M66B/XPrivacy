@@ -96,6 +96,10 @@ public class PackageChange extends BroadcastReceiver {
 							notificationManager.notify(appInfo.getUid(), notification);
 						}
 					}
+
+					// Mark as new/changed
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingState,
+							Integer.toString(ActivityMain.STATE_ATTENTION));
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
 					// Notify reboot required
 					if (packageName.equals(context.getPackageName())) {

@@ -108,6 +108,7 @@ public class PrivacyManager {
 	public final static String cSettingAndroidUsage = "AndroidUsage";
 	public final static String cSettingLog = "Log";
 	public final static String cSettingRandom = "Random@boot";
+	public final static String cSettingState = "State";
 
 	public final static String cValueRandom = "#Random#";
 	public final static String cValueRandomLegacy = "\nRandom\n";
@@ -439,6 +440,11 @@ public class PrivacyManager {
 		// Result
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
 
+		// Mark as restricted
+		if (restricted)
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingState,
+					Integer.toString(ActivityMain.STATE_RESTRICTED));
+
 		boolean dangerous = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingDangerous, false,
 				false);
 		if (methodName == null) {
@@ -535,6 +541,10 @@ public class PrivacyManager {
 		context.getContentResolver().delete(PrivacyProvider.URI_RESTRICTION, null,
 				new String[] { Integer.toString(uid) });
 		Util.log(null, Log.INFO, "Deleted restrictions uid=" + uid);
+
+		// Mark as new/changed
+		PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingState,
+				Integer.toString(ActivityMain.STATE_ATTENTION));
 
 		return restart;
 	}
