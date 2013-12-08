@@ -109,6 +109,9 @@ public class Util {
 			if (mPro)
 				return "";
 
+			// Disable storage restriction
+			PrivacyManager.setRestricted(null, context, Process.myUid(), PrivacyManager.cStorage, null, false);
+
 			// Get license
 			String[] license = getProLicense();
 			if (license == null)
