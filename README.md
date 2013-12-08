@@ -598,6 +598,19 @@ so you may not see all of them. The check box state is independent of this.
 Try enabling the setting *Extra usage data* from the main menu,
 but be aware that this might cause instability on some ROMs.
 
+**([41](#41)) Why are not all pro features available in the pro enabler?**
+
+The [pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro)
+is in the Play store on request of some early XPrivacy users.
+In the beginning there was just one pro feature: export/import of all restrictions and settings.
+In a later stage fetching [crowd sourced restrictions](http://updates.faircode.eu/xprivacy)
+were added as a pro feature.
+Processing of the crowd sourced restrictions requires a big server which has to be paid for.
+The low price of the pro enabler, don't forget Google takes already 30%,
+didn't allow to give this feature for free to existing users.
+Looking back I would never have put the pro enabler into the Play store,
+but I cannot remove it anymore now, because of the existing users.
+
 Support
 -------
 
