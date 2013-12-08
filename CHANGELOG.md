@@ -3,9 +3,11 @@ Changelog
 
 **Next release**
 
-* Fixed exporting of legacy settings
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.40 TEST**
+
+* Fixed exporting of legacy settings
 
 **Version 1.10.39 TEST**
 
