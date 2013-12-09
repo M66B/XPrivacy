@@ -117,7 +117,7 @@
     <string name="help_frozen">отключено</string>
     <string name="help_dangerous">изменение разрешений опасно</string>
     <string name="help_half">частично запрещено</string>
-    <string name="help_attention">ограничения, требующие внимания</string>
+    <string name="help_attention">ограничения требуют внимания</string>
     <string name="help_restricted">ограничения имзенены</string>
     <string name="help_shared">ограничения отосланы</string>
 
