@@ -62,7 +62,7 @@ public class Util {
 	}
 
 	public static void bug(XHook hook, Throwable ex) {
-		log(hook, Log.ERROR, ex.toString());
+		log(hook, Log.ERROR, ex.toString() + " uid=" + Process.myUid());
 		ex.printStackTrace();
 	}
 
@@ -108,6 +108,9 @@ public class Util {
 			// Pro enabled
 			if (mPro)
 				return "";
+
+			// Disable storage restriction
+			PrivacyManager.setRestricted(null, context, Process.myUid(), PrivacyManager.cStorage, null, false);
 
 			// Get license
 			String[] license = getProLicense();

@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.2
+-- version 4.0.9
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 23, 2013 at 04:06 PM
+-- Generation Time: Dec 07, 2013 at 04:23 PM
 -- Server version: 5.5.31-1~dotdeb.0
 -- PHP Version: 5.3.27-1~dotdeb.0
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `xprivacy` (
   UNIQUE KEY `restriction` (`android_id_md5`(50),`android_sdk`,`package_name`(100),`package_version`(50),`restriction`(20),`method`(70)),
   KEY `package` (`package_name`(100)),
   KEY `application` (`application_name`(100),`package_name`(100))
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1720096 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1989751 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -60,6 +60,7 @@ public class PrivacyManager {
 	public static final String cNetwork = "network";
 	public static final String cNfc = "nfc";
 	public static final String cNotifications = "notifications";
+	public static final String cOverlay = "overlay";
 	public static final String cPhone = "phone";
 	public static final String cSensors = "sensors";
 	public static final String cStorage = "storage";
@@ -69,10 +70,10 @@ public class PrivacyManager {
 
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
 			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
-			cNetwork, cNfc, cNotifications, cSensors, cPhone, cShell, cStorage, cSystem, cView };
+			cNetwork, cNfc, cNotifications, cSensors, cOverlay, cPhone, cShell, cStorage, cSystem, cView };
 
 	public final static int cXposedAppProcessMinVersion = 46;
-	public final static int cAndroidUid = 1000;
+	public final static int cAndroidUid = Process.SYSTEM_UID;
 
 	public final static String cSettingSerial = "Serial";
 	public final static String cSettingLatitude = "Latitude";
@@ -108,6 +109,7 @@ public class PrivacyManager {
 	public final static String cSettingAndroidUsage = "AndroidUsage";
 	public final static String cSettingLog = "Log";
 	public final static String cSettingRandom = "Random@boot";
+	public final static String cSettingState = "State";
 
 	public final static String cValueRandom = "#Random#";
 	public final static String cValueRandomLegacy = "\nRandom\n";
@@ -196,7 +198,7 @@ public class PrivacyManager {
 	public static MethodDescription getMethod(String restrictionName, String methodName) {
 		MethodDescription md = new MethodDescription(methodName);
 		int pos = mMethod.get(restrictionName).indexOf(md);
-		return mMethod.get(restrictionName).get(pos);
+		return (pos < 0 ? null : mMethod.get(restrictionName).get(pos));
 	}
 
 	public static String getLocalizedName(Context context, String restrictionName) {
@@ -359,7 +361,25 @@ public class PrivacyManager {
 		if (uid == cAndroidUid)
 			return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false);
 		else
-			return true;
+			return !isIsolated(uid);
+	}
+
+	// Waiting for SDK 20 ...
+	public static final int FIRST_ISOLATED_UID = 99000;
+	public static final int LAST_ISOLATED_UID = 99999;
+	public static final int FIRST_SHARED_APPLICATION_GID = 50000;
+	public static final int LAST_SHARED_APPLICATION_GID = 59999;
+
+	public static boolean isApplication(int uid) {
+		return (uid >= Process.FIRST_APPLICATION_UID && uid <= Process.LAST_APPLICATION_UID);
+	}
+
+	public static boolean isShared(int uid) {
+		return (uid >= FIRST_SHARED_APPLICATION_GID && uid <= LAST_SHARED_APPLICATION_GID);
+	}
+
+	public static boolean isIsolated(int uid) {
+		return (uid >= FIRST_ISOLATED_UID && uid <= LAST_ISOLATED_UID);
 	}
 
 	public static void sendUsageData(final XHook hook, Context context) {
@@ -438,6 +458,11 @@ public class PrivacyManager {
 
 		// Result
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
+
+		// Mark as restricted
+		if (restricted)
+			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingState,
+					Integer.toString(ActivityMain.STATE_RESTRICTED));
 
 		boolean dangerous = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingDangerous, false,
 				false);
@@ -535,6 +560,10 @@ public class PrivacyManager {
 		context.getContentResolver().delete(PrivacyProvider.URI_RESTRICTION, null,
 				new String[] { Integer.toString(uid) });
 		Util.log(null, Log.INFO, "Deleted restrictions uid=" + uid);
+
+		// Mark as new/changed
+		PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingState,
+				Integer.toString(ActivityMain.STATE_ATTENTION));
 
 		return restart;
 	}

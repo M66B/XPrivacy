@@ -133,6 +133,14 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return mSystem;
 	}
 
+	public boolean isShared() {
+		return PrivacyManager.isShared(mAppInfo.uid);
+	}
+
+	public boolean isIsolated() {
+		return PrivacyManager.isIsolated(mAppInfo.uid);
+	}
+
 	@Override
 	public String toString() {
 		return String.format("%d %s", mAppInfo.uid, getApplicationNames());

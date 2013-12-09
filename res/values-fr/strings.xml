@@ -21,11 +21,11 @@
     <string name="menu_help">Aide</string>
     <string name="menu_all">Tous</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
-    <string name="menu_clear_all">Clear all</string>
-    <string name="menu_restrict_all">Restrict all</string>
-    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_clear_all">Tout effacer</string>
+    <string name="menu_restrict_all">Tout restreindre</string>
+    <string name="menu_usage_all">Basculer tout/restreintes uniquement</string>
     <string name="menu_apply">Appliquer le modèle</string>
-    <string name="menu_clear">Tout effacer</string>
+    <string name="menu_clear">Effacer</string>
     <string name="menu_app_launch">Lancer</string>
     <string name="menu_app_settings">Infos sur l\'application</string>
     <string name="menu_app_store">Play Store</string>
@@ -36,9 +36,9 @@
     <string name="msg_update">MàJ :</string>
     <string name="msg_licensed" formatted="false">Autorisé à : %s</string>
     <string name="msg_loading">Chargement</string>
-    <string name="msg_applying">Applying</string>
-    <string name="msg_saved_to">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_applying">Filtrage en cours</string>
+    <string name="msg_saved_to">Sauvé dans %s</string>
+    <string name="msg_no_restrictions">Pas de restriction trouvée</string>
     <string name="msg_edit">Cliquer sur l\'icône de l\'application pour éditer ses restrictions</string>
     <string name="msg_sure">Êtes-vous certain ?</string>
     <string name="msg_done">Effectué</string>
@@ -46,8 +46,8 @@
     <string name="msg_random_now">Randomiser maintenant</string>
     <string name="msg_random_access">Randomiser à chaque accès</string>
     <string name="msg_random_boot">Randomiser après le démarrage</string>
-    <string name="msg_usage">Updating usage data</string>
-    <string name="msg_restart">Application restart required</string>
+    <string name="msg_usage">Usage log en rafraîchissement</string>
+    <string name="msg_restart">Redémarrage de l\'application nécessaire</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
 \n\nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>
@@ -66,15 +66,16 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_messages">Messages (SMS, MMS)</string>
     <string name="restrict_network">Réseaux (addresses)</string>
     <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">Téléphone (ID, numéros, appels)</string>
     <string name="restrict_sensors">Capteurs</string>
     <string name="restrict_storage">Stockage (média, carte SD)</string>
     <string name="restrict_shell">Shell (commandes, root)</string>
     <string name="restrict_system">Système (applis installées)</string>
     <string name="restrict_view">Vue (navigateur)</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">Catégories</string>
     <string name="title_restrict">Cocher pour restreindre :</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">Filtres</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1 filtre actif</item>
@@ -106,14 +107,14 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_notify">Notifications de MàJ</string>
     <string name="settings_usage">Activer usage log (redémarrage nécessaire)</string>
     <string name="settings_log">Debug log (redémarrage nécessaire)</string>
-    <string name="settings_expert">Expert mode</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_expert">Mode expert</string>
+    <string name="settings_dangerous">Restreindre fonctions dangereuses</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>
     <string name="help_used">a utilisé ces données</string>
     <string name="help_frozen">est désactivée</string>
     <string name="help_dangerous">est dangereuse, restreindre peut causer des problèmes</string>
-    <string name="help_half">partly restricted</string>
+    <string name="help_half">partiellement restreinte</string>
 
 </resources>

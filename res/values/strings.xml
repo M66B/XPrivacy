@@ -72,6 +72,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="restrict_network">Network (addresses)</string>
     <string name="restrict_nfc" translatable="false">NFC</string>
     <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">Phone (ID, numbers, calls)</string>
     <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Storage (media, SD card)</string>

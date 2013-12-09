@@ -1,3 +1,3 @@
 #!/bin/bash
-grep -RIl "\<string name=\"msg_usage" . | xargs sed -i -e '/string name="msg_usage/a \
-\ \ \ \ <string name="msg_restart">Application restart required</string>'
+grep -RIl "\<string name=\"restrict_notifications" . | xargs sed -i -e '/string name="restrict_notifications/a \
+\ \ \ \ <string name="restrict_overlay">Overlay</string>'

@@ -66,6 +66,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_messages">Správy (SMS, MMS)</string>
     <string name="restrict_network">Sieť (adresy)</string>
     <string name="restrict_notifications">Oznámenia</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">Telefón (ID, čísla, hovory)</string>
     <string name="restrict_sensors">Sensory</string>
     <string name="restrict_storage">Úložisko (médiá, SD karta)</string>

@@ -63,6 +63,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateUtils;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -158,7 +160,7 @@ public class ActivityApp extends Activity {
 		}
 
 		// Display app icon
-		ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
+		final ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
 		Drawable dIcon = mAppInfo.getIcon(this);
 		if (dIcon instanceof BitmapDrawable) {
 			// Get icon bitmap
@@ -200,13 +202,12 @@ public class ActivityApp extends Activity {
 		imgIcon.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intentApp = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
-				if (intentApp != null) {
-					intentApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					view.getContext().startActivity(intentApp);
-				}
+				openContextMenu(imgIcon);
 			}
 		});
+
+		// Add context menu to icon
+		registerForContextMenu(imgIcon);
 
 		// Check if internet access
 		if (!mAppInfo.hasInternet(this)) {
@@ -274,6 +275,15 @@ public class ActivityApp extends Activity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.app, menu);
 
+		return true;
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.app_icon, menu);
+
 		// Launch
 		PackageManager pm = getPackageManager();
 		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName()) == null)
@@ -282,8 +292,6 @@ public class ActivityApp extends Activity {
 		// Play
 		boolean hasMarketLink = Util.hasMarketLink(this, mAppInfo.getPackageName());
 		menu.findItem(R.id.menu_app_store).setEnabled(hasMarketLink);
-
-		return true;
 	}
 
 	@Override
@@ -358,6 +366,23 @@ public class ActivityApp extends Activity {
 	}
 
 	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_app_launch:
+			optionLaunch();
+			return true;
+		case R.id.menu_app_settings:
+			optionSettings();
+			return true;
+		case R.id.menu_app_store:
+			optionStore();
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
+	}
+
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == ACTIVITY_FETCH)
@@ -409,7 +434,7 @@ public class ActivityApp extends Activity {
 					if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 							String.format("Template.%s", restrictionName), true, false))
 						restart = PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(),
-										restrictionName, null, restricted) || restart;
+								restrictionName, null, restricted) || restart;
 
 				// Refresh display
 				if (mPrivacyListAdapter != null)
@@ -859,10 +884,14 @@ public class ActivityApp extends Activity {
 			} else if (result.getClass().equals(JSONObject.class)) {
 				JSONObject status = (JSONObject) result;
 				try {
-					if (status.getBoolean("ok"))
+					if (status.getBoolean("ok")) {
 						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getPackageName(),
 								getString(R.string.msg_done)));
-					else
+
+						// Mark as shared
+						PrivacyManager.setSetting(null, ActivityApp.this, mAppInfo.getUid(),
+								PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_SHARED));
+					} else
 						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getPackageName(),
 								status.getString("error")));
 				} catch (Throwable ex) {

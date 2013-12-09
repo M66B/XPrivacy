@@ -66,6 +66,7 @@
     <string name="restrict_messages">Teachtaireachtaí (SMS, MMS)</string>
     <string name="restrict_network">Líonra (seoltaí)</string>
     <string name="restrict_notifications">Fógraí</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">Fón (ID, uimhreacha, glaonna)</string>
     <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Stóráil (meáin, SD-cárta)</string>

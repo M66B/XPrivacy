@@ -38,10 +38,6 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -50,9 +46,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings.Secure;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.util.SparseArray;
 import android.util.Xml;
 import android.widget.Toast;
 
@@ -121,8 +117,7 @@ public class ActivityShare extends Activity {
 
 	private class ExportTask extends AsyncTask<File, String, String> {
 		private File mFile;
-		private int mCurrent = 0;
-		private final static int NOTIFY_ID = 1;
+		private int mProgressCurrent = 0;
 
 		@Override
 		protected String doInBackground(File... params) {
@@ -139,72 +134,66 @@ public class ActivityShare extends Activity {
 					serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 					serializer.startTag(null, "XPrivacy");
 
-					// Process settings
+					// Progress
 					publishProgress(getString(R.string.msg_loading));
 					Util.log(null, Log.INFO, "Exporting settings");
-
-					// Progress updater
 					Runnable progress = new Runnable() {
 						@Override
 						public void run() {
 							// This should be called exactly 100 times
-							mCurrent++;
-							publishProgress(getString(R.string.msg_loading), Integer.toString(mCurrent), "100");
+							publishProgress(getString(R.string.msg_loading), Integer.toString(++mProgressCurrent),
+									"100");
 						}
 					};
 
+					// Process packages
+					for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0)) {
+						serializer.startTag(null, "PackageInfo");
+						serializer.attribute(null, "Id", Integer.toString(pInfo.applicationInfo.uid));
+						serializer.attribute(null, "Name", pInfo.packageName);
+						serializer.endTag(null, "PackageInfo");
+					}
+
+					// Process settings
 					String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 					Map<String, String> mapSetting = PrivacyManager.getSettings(ActivityShare.this, progress);
-					for (String setting : mapSetting.keySet()) {
-						String value = mapSetting.get(setting);
+					for (String name : mapSetting.keySet()) {
+						// Decode name
+						String[] component = name.split("\\.");
+						if (component.length > 2)
+							Util.log(null, Log.WARN, "Legacy name=" + name + " value=" + mapSetting.get(name));
+						else {
+							// Bind accounts/contacts to same device
+							if (component[0].startsWith("Account.") || component[0].startsWith("Contact.")
+									|| component[0].startsWith("RawContact.")) {
+								component[0] += "." + android_id;
+							}
 
-						// Bound accounts/contacts to same device
-						if (setting.startsWith("Account.") || setting.startsWith("Contact.")
-								|| setting.startsWith("RawContact.")) {
-							setting += "." + android_id;
+							// Serialize setting
+							serializer.startTag(null, "Setting");
+							serializer.attribute(null, "Id", component.length > 1 ? component[1] : "");
+							serializer.attribute(null, "Name", component[0]);
+							serializer.attribute(null, "Value", mapSetting.get(name));
+							serializer.endTag(null, "Setting");
 						}
-
-						// Serialize setting
-						serializer.startTag(null, "Setting");
-						serializer.attribute(null, "Name", setting);
-						serializer.attribute(null, "Value", value);
-						serializer.endTag(null, "Setting");
 					}
 
 					// Process restrictions
 					List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager.getRestricted(
 							ActivityShare.this, progress);
-					Map<String, List<PrivacyManager.RestrictionDesc>> mapRestriction = new HashMap<String, List<PrivacyManager.RestrictionDesc>>();
-					for (PrivacyManager.RestrictionDesc restriction : listRestriction) {
-						String[] packages = getPackageManager().getPackagesForUid(restriction.uid);
-						if (packages == null)
-							Util.log(null, Log.WARN, "No packages for uid=" + restriction.uid);
-						else
-							for (String packageName : packages) {
-								if (!mapRestriction.containsKey(packageName))
-									mapRestriction.put(packageName, new ArrayList<PrivacyManager.RestrictionDesc>());
-								mapRestriction.get(packageName).add(restriction);
-							}
-					}
 
-					// Set some numbers for the progress bar
-					final String max = Integer.toString(mapRestriction.size());
-					mCurrent = 0;
-
-					// Process result
-					for (String packageName : mapRestriction.keySet()) {
-						mCurrent++;
-						publishProgress(packageName, Integer.toString(mCurrent), max);
-						Util.log(null, Log.INFO, "Exporting " + packageName);
-						for (PrivacyManager.RestrictionDesc restrictionDesc : mapRestriction.get(packageName)) {
-							serializer.startTag(null, "Package");
-							serializer.attribute(null, "Name", packageName);
-							serializer.attribute(null, "Restriction", restrictionDesc.restrictionName);
-							if (restrictionDesc.methodName != null)
-								serializer.attribute(null, "Method", restrictionDesc.methodName);
-							serializer.attribute(null, "Restricted", Boolean.toString(restrictionDesc.restricted));
-							serializer.endTag(null, "Package");
-						}
+					mProgressCurrent = 0;
+					for (PrivacyManager.RestrictionDesc restrictionDesc : listRestriction) {
+						if ((++mProgressCurrent % (listRestriction.size() / 10 + 1)) == 0)
+							publishProgress(getString(R.string.menu_export), Integer.toString(mProgressCurrent),
+									Integer.toString(listRestriction.size()));
+						serializer.startTag(null, "Restriction");
+						serializer.attribute(null, "Id", Integer.toString(restrictionDesc.uid));
+						serializer.attribute(null, "Name", restrictionDesc.restrictionName);
+						if (restrictionDesc.methodName != null)
+							serializer.attribute(null, "Method", restrictionDesc.methodName);
+						serializer.attribute(null, "Restricted", Boolean.toString(restrictionDesc.restricted));
+						serializer.endTag(null, "Restriction");
 					}
 
 					// End serialization
@@ -239,13 +228,14 @@ public class ActivityShare extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			notify(result, false, 0, 1);
+
+			Toast toast = Toast.makeText(ActivityShare.this, mFile.getAbsolutePath(), Toast.LENGTH_LONG);
+			toast.show();
+
 			Intent intent = new Intent();
 			intent.putExtra(cFileName, mFile.getAbsolutePath());
 			setResult(result.equals(getString(R.string.msg_done)) ? 0 : 1, intent);
 			finish();
-
-			Toast toast = Toast.makeText(ActivityShare.this, mFile.getAbsolutePath(), Toast.LENGTH_LONG);
-			toast.show();
 			super.onPostExecute(result);
 		}
 
@@ -256,40 +246,13 @@ public class ActivityShare extends Activity {
 			progressIntent.putExtra(cProgressMax, max);
 			progressIntent.putExtra(cProgressValue, progress);
 			mBroadcastManager.sendBroadcast(progressIntent);
-
-			// Create/update the progress notification
-			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityShare.this);
-			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-			notificationBuilder.setContentTitle(getString(R.string.menu_export));
-			notificationBuilder.setContentText(text);
-			notificationBuilder.setWhen(System.currentTimeMillis());
-			if (ongoing)
-				notificationBuilder.setOngoing(true);
-			else {
-				// Build result intent
-				Intent resultIntent = new Intent(ActivityShare.this, ActivityMain.class);
-				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-				// Build pending intent
-				PendingIntent pendingIntent = PendingIntent.getActivity(ActivityShare.this, NOTIFY_ID, resultIntent,
-						PendingIntent.FLAG_UPDATE_CURRENT);
-
-				notificationBuilder.setAutoCancel(true);
-				notificationBuilder.setContentIntent(pendingIntent);
-			}
-			Notification notification = notificationBuilder.build();
-
-			NotificationManager notificationManager = (NotificationManager) ActivityShare.this
-					.getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.notify(NOTIFY_ID, notification);
 		}
 	}
 
 	private class ImportTask extends AsyncTask<File, String, String> {
 		private File mFile;
 		private int mProgressMax;
-		private int mCurrent;
-		private final static int NOTIFY_ID = 2;
+		private int mProgressCurrent;
 
 		@Override
 		protected String doInBackground(File... params) {
@@ -312,15 +275,15 @@ public class ActivityShare extends Activity {
 						fis.close();
 				}
 
-				// Set some numbers for the progress bar
+				// Progress
 				mProgressMax = mapPackage.size();
-				mCurrent = 0;
 
-				// Process result
+				// Process result (legacy)
+				mProgressCurrent = 0;
 				for (String packageName : mapPackage.keySet()) {
-					mCurrent++;
+					mProgressCurrent++;
 					try {
-						publishProgress(packageName, Integer.toString(mCurrent));
+						publishProgress(packageName, Integer.toString(mProgressCurrent));
 						Util.log(null, Log.INFO, "Importing " + packageName);
 
 						// Get uid
@@ -362,6 +325,7 @@ public class ActivityShare extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			notify(result, false, 0);
+
 			Intent intent = new Intent();
 			intent.putExtra(cFileName, mFile.getAbsolutePath());
 			setResult(result.equals(getString(R.string.msg_done)) ? 0 : 1, intent);
@@ -376,61 +340,55 @@ public class ActivityShare extends Activity {
 			progressIntent.putExtra(cProgressMax, mProgressMax);
 			progressIntent.putExtra(cProgressValue, progress);
 			mBroadcastManager.sendBroadcast(progressIntent);
-
-			// Create/update the progress notification
-			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityShare.this);
-			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-			notificationBuilder.setContentTitle(getString(R.string.menu_import));
-			notificationBuilder.setContentText(text);
-			notificationBuilder.setWhen(System.currentTimeMillis());
-			if (ongoing)
-				notificationBuilder.setOngoing(true);
-			else {
-				// Build result intent
-				Intent resultIntent = new Intent(ActivityShare.this, ActivityMain.class);
-				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-				// Build pending intent
-				PendingIntent pendingIntent = PendingIntent.getActivity(ActivityShare.this, NOTIFY_ID, resultIntent,
-						PendingIntent.FLAG_UPDATE_CURRENT);
-
-				notificationBuilder.setAutoCancel(true);
-				notificationBuilder.setContentIntent(pendingIntent);
-			}
-			Notification notification = notificationBuilder.build();
-
-			NotificationManager notificationManager = (NotificationManager) ActivityShare.this
-					.getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.notify(NOTIFY_ID, notification);
 		}
 	}
 
 	private class ImportHandler extends DefaultHandler {
+		private SparseArray<String> mMapId = new SparseArray<String>();
+		private Map<String, Integer> mMapUid = new HashMap<String, Integer>();
 		private Map<String, Map<String, List<MethodDescription>>> mMapPackage = new HashMap<String, Map<String, List<MethodDescription>>>();
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			if (qName.equals("Setting")) {
+			if (qName.equals("XPrivacy")) {
+				// Ignore
+			} else if (qName.equals("PackageInfo")) {
+				// Package info
+				int id = Integer.parseInt(attributes.getValue("Id"));
+				String name = attributes.getValue("Name");
+				mMapId.put(id, name);
+			} else if (qName.equals("Setting")) {
 				// Setting
-				String setting = attributes.getValue("Name");
+				String id = attributes.getValue("Id");
+				String name = attributes.getValue("Name");
 				String value = attributes.getValue("Value");
 
 				// Import accounts/contacts only for same device
-				if (setting.startsWith("Account.") || setting.startsWith("Contact.")
-						|| setting.startsWith("RawContact."))
-					if (setting.endsWith("." + android_id))
-						setting = setting.replace("." + android_id, "");
+				if (name.startsWith("Account.") || name.startsWith("Contact.") || name.startsWith("RawContact."))
+					if (name.endsWith("." + android_id))
+						name = name.replace("." + android_id, "");
 					else
 						return;
 
-				PrivacyManager.setSetting(null, ActivityShare.this, 0, setting, value);
+				if (id == null) { // Legacy
+					Util.log(null, Log.WARN, "Legacy " + name + "=" + value);
+					PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
+				} else if ("".equals(id)) // Global setting
+					PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
+				else { // Application setting
+					int uid = getUid(Integer.parseInt(id));
+					if (uid >= 0)
+						PrivacyManager.setSetting(null, ActivityShare.this, uid, name, value);
+				}
 			} else if (qName.equals("Package")) {
-				// Restriction
+				// Restriction (legacy)
 				String packageName = attributes.getValue("Name");
 				String restrictionName = attributes.getValue("Restriction");
 				String methodName = attributes.getValue("Method");
 				boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
+				Util.log(null, Log.WARN, "Legacy package=" + packageName + " " + restrictionName + "/" + methodName
+						+ "=" + restricted);
 
 				// Map package restriction
 				if (!mMapPackage.containsKey(packageName))
@@ -441,7 +399,37 @@ public class ActivityShare extends Activity {
 					MethodDescription md = new MethodDescription(methodName, restricted);
 					mMapPackage.get(packageName).get(restrictionName).add(md);
 				}
-			}
+			} else if (qName.equals("Restriction")) {
+				// Restriction (new style)
+				int id = Integer.parseInt(attributes.getValue("Id"));
+				String restrictionName = attributes.getValue("Name");
+				String methodName = attributes.getValue("Method");
+				boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
+
+				// Get uid
+				int uid = getUid(id);
+				if (uid >= 0)
+					PrivacyManager
+							.setRestricted(null, ActivityShare.this, uid, restrictionName, methodName, restricted);
+			} else
+				Util.log(null, Log.WARN, "Unknown element name=" + qName);
+		}
+
+		private int getUid(int id) {
+			String packageName = mMapId.get(id);
+			if (packageName == null) {
+				Util.log(null, Log.WARN, "Unknown id=" + id);
+				return -1;
+			} else if (!mMapUid.containsKey(packageName))
+				try {
+					int newuid = ActivityShare.this.getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
+					mMapUid.put(packageName, newuid);
+				} catch (NameNotFoundException ex) {
+					// Do not lookup again
+					mMapUid.put(packageName, -1);
+					Util.log(null, Log.WARN, "Unknown package name=" + packageName);
+				}
+			return (mMapUid.containsKey(packageName) ? mMapUid.get(packageName) : -1);
 		}
 
 		public Map<String, Map<String, List<MethodDescription>>> getPackageMap() {
@@ -468,9 +456,8 @@ public class ActivityShare extends Activity {
 	}
 
 	private class FetchTask extends AsyncTask<String, String, Object> {
-		private final static int NOTIFY_ID = 3;
 		private int mProgressMax;
-		private int mCurrent;
+		private int mProgressCurrent;
 
 		@Override
 		protected Object doInBackground(String... params) {
@@ -489,13 +476,13 @@ public class ActivityShare extends Activity {
 
 				// Set some numbers for the progress bar
 				mProgressMax = lstApp.size();
-				mCurrent = 0;
+				mProgressCurrent = 0;
 
 				// Process applications
 				for (ApplicationInfoEx appInfo : lstApp) {
-					mCurrent++;
+					mProgressCurrent++;
 					if (!appInfo.isSystem() || params[0] != null) {
-						publishProgress(appInfo.getPackageName(), Integer.toString(mCurrent));
+						publishProgress(appInfo.getPackageName(), Integer.toString(mProgressCurrent));
 
 						// Encode package
 						JSONObject jRoot = new JSONObject();
@@ -546,11 +533,14 @@ public class ActivityShare extends Activity {
 										int voted_not_restricted = entry.getInt("not_restricted");
 										boolean restricted = (voted_restricted > voted_not_restricted);
 										if (methodName == null || restricted)
-											PrivacyManager.setRestricted(null, ActivityShare.this, appInfo.getUid(),
-													restrictionName, methodName, restricted);
+											if (methodName == null
+													|| PrivacyManager.getMethod(restrictionName, methodName) != null)
+												PrivacyManager.setRestricted(null, ActivityShare.this,
+														appInfo.getUid(), restrictionName, methodName, restricted);
 									}
 								} else
-									publishProgress(getString(R.string.msg_no_restrictions), Integer.toString(mCurrent));
+									publishProgress(getString(R.string.msg_no_restrictions),
+											Integer.toString(mProgressCurrent));
 							} else
 								throw new Exception(status.getString("error"));
 						} else {
@@ -578,7 +568,13 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(Object result) {
-			notify(result == null ? getString(R.string.msg_done) : ((Throwable) result).getMessage(), false, 0);
+			String text = (result == null ? getString(R.string.msg_done) : ((Throwable) result).getMessage());
+			notify(text, false, 0);
+
+			text = String.format("%s: %s", getString(R.string.menu_fetch), text);
+			Toast toast = Toast.makeText(ActivityShare.this, text, Toast.LENGTH_LONG);
+			toast.show();
+
 			Intent intent = new Intent();
 			setResult(0, intent);
 			finish();
@@ -592,32 +588,6 @@ public class ActivityShare extends Activity {
 			progressIntent.putExtra(cProgressMax, mProgressMax);
 			progressIntent.putExtra(cProgressValue, progress);
 			mBroadcastManager.sendBroadcast(progressIntent);
-
-			// Create/update the progress notification
-			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityShare.this);
-			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-			notificationBuilder.setContentTitle(getString(R.string.menu_fetch));
-			notificationBuilder.setContentText(text);
-			notificationBuilder.setWhen(System.currentTimeMillis());
-			if (ongoing)
-				notificationBuilder.setOngoing(true);
-			else {
-				// Build result intent
-				Intent resultIntent = new Intent(ActivityShare.this, ActivityMain.class);
-				resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-				// Build pending intent
-				PendingIntent pendingIntent = PendingIntent.getActivity(ActivityShare.this, NOTIFY_ID, resultIntent,
-						PendingIntent.FLAG_UPDATE_CURRENT);
-
-				notificationBuilder.setAutoCancel(true);
-				notificationBuilder.setContentIntent(pendingIntent);
-			}
-			Notification notification = notificationBuilder.build();
-
-			NotificationManager notificationManager = (NotificationManager) ActivityShare.this
-					.getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.notify(NOTIFY_ID, notification);
 		}
 	}
 

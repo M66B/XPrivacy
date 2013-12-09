@@ -66,6 +66,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_messages">Mesaje (SMS, MMS)</string>
     <string name="restrict_network">Retea Internet (adrese)</string>
     <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">Telefon (date proprii de identificare, numere, apeluri)</string>
     <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Stocare (media, card SD)</string>

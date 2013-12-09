@@ -65,6 +65,7 @@
     <string name="restrict_messages">Viestit (SMS, MMS)</string>
     <string name="restrict_network">Verkko (osoitteet)</string>
     <string name="restrict_notifications">Ilmoitukset</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">Puhelin (ID, numerot, puhelut)</string>
     <string name="restrict_sensors">Sensorit</string>
     <string name="restrict_storage">Muisti (media, SD-kortti)</string>

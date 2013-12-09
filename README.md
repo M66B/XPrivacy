@@ -149,6 +149,7 @@ For easy usage, data is restricted by category:
 	* return a fake system property cid (Card Identification Register)
 	* return file not found for /sys/block/.../cid
 	* return file not found for /sys/class/.../cid
+	* return fake input device descriptor
 * Internet
 	* revoke access to the internet
 	* return fake disconnected state
@@ -190,6 +191,8 @@ For easy usage, data is restricted by category:
 * Notifications
 	* prevent receiving statusbar notifications (Android 4.3+)
 	* prevent [C2DM](https://developers.google.com/android/c2dm/) messages
+* Overlay
+	* prevent draw over / on top
 * Phone
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID (IMSI for a GSM phone)
@@ -241,7 +244,6 @@ For easy usage, data is restricted by category:
 	* prevent package add, replace, restart and remove notifications
 * View
 	* prevent links from opening in the browser
-		* you will be notified if an application tries to open a link
 	* return fake browser user agent string
 		* *Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9*
 
@@ -252,6 +254,8 @@ Limitations
 * Phone number cannot be restricted for the standard phone application
 * Internet and storage can only be restricted for applications/providers/services started by the Android package manager
 * Due to its static nature [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized on application start and there is no usage data
+* Due to a bug in Chromium the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
+* Due to a custom implementation the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
 
 Compatibility
 -------------
@@ -370,25 +374,30 @@ If you don't like this, you can always restrict XPrivacy itself ...
 Frequently asked questions
 --------------------------
 
+<a name="FAQ1"></a>
 **(1) Will XPrivacy make my device slower?**
 
 Maybe a little bit, but it will probably not be noticeable.
 
+<a name="FAQ2"></a>
 **(2) Does XPrivacy use a lot of memory or battery?**
 
 Almost nothing.
 
+<a name="FAQ3"></a>
 **(3) Can you help me with rooting my device?**
 
 There are already enough [guides](http://www.androidcentral.com/root) to help you to root your device.
 Use your favorite search engine to find one.
 
+<a name="FAQ5"></a>
 **(5) How can I reset all XPrivacy settings?**
 
 *Manage apps* > *XPrivacy* > *Clear data*
 
 Reboot.
 
+<a name="FAQ6"></a>
 **(6) Can I backup XPrivacy and settings?**
 
 Yes, you can, for example with [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup),
@@ -396,20 +405,24 @@ but you can only restore into the same environment (device/ROM).
 Exporting/importing settings will work across devices/ROMs.
 To export/import settings you will need the [pro version](http://www.faircode.eu/xprivacy/).
 
+<a name="FAQ10"></a>
 **(10) Which functions are exactly restricted?**
 
 Many, see [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
 
+<a name="FAQ12"></a>
 **(12) How safe is XPrivacy?**
 
 Great care has been taken to develop XPrivacy, nevertheless data could leak and applications can crash,
 although this is fortunately rare.
 
+<a name="FAQ14"></a>
 **(14) I get 'Incompatible ...' !**
 
 An internal check of XPrivacy failed, resulting in potential data leakage.
 Please press *OK* to send me the support information, so I can look into it.
 
+<a name="FAQ15"></a>
 **(15) What is the procedure for a ROM update?**
 
 The right order for ROM updates is:
@@ -434,16 +447,19 @@ because the uid's of these applications might have been changed.
 
 For export/importing XPrivacy data you need [pro version](http://www.faircode.eu/xprivacy/).
 
+<a name="FAQ16"></a>
 **(16) Can I restrict an application with root access?**
 
 Yes, you can by restricting su shell access.
 
+<a name="FAQ17"></a>
 **(17) Will restrictions be applied immediately?**
 
 It can take up to 15 seconds before changes in restrictions will be effective, because of caching.
 Changing the internet and storage restriction requires an application restart.
 Please note that in many cases pressing *back*, only moves the application to the background.
 
+<a name="FAQ18"></a>
 **(18) Can XPrivacy ask for restrictions on demand / display a message on data usage?**
 
 It cannot always, since it works deep within Android,
@@ -460,6 +476,7 @@ please create an issue if this happens (see the support section below),
 it only means that an application cannot see the restricted data.
 If an application should see the data, you can remove the associated restriction at any time.
 
+<a name="FAQ19"></a>
 **(19) Does XPrivacy have a firewall?**
 
 Yes, you can restrict internet access for any application.
@@ -468,15 +485,18 @@ you will have to use a firewall application, like [AFWall+](http://forum.xda-dev
 The reason is that XPrivacy works within Android
 and detailed firewall rules can only be applied within the Linux kernel.
 
+<a name="FAQ21"></a>
 **(21) I get 'Unable to parse package'**
 
 This means the downloaded apk is corrupt.
 Try disabling your popup blocker or download using another computer.
 
+<a name="FAQ22"></a>
 **(22) How can I make a logcat?**
 
 Enable logging using the settings menu and see [here](http://forum.xda-developers.com/showthread.php?t=1726238).
 
+<a name="FAQ23"></a>
 **(23) Where are the settings of XPrivacy stored?**
 
 The restriction settings of XPrivacy are stored as private application data.
@@ -487,11 +507,13 @@ Exporting settings on one device and importing settings onto another device will
 but this requires the [pro version](http://www.faircode.eu/xprivacy/).
 If you want to backup the exported settings, they are in the folder *.xprivacy* on the SD card.
 
+<a name="FAQ25"></a>
 **(25) Why doesn't undoing a data category restriction disable the function exceptions too?**
 
 If you accidentally undo a data category restriction all the function exception would be lost.
 The function exceptions only apply when the data category is restricted.
 
+<a name="FAQ26"></a>
 **(26) How can I export/import my settings?**
 
 For this you need the [pro version](http://www.faircode.eu/xprivacy/).
@@ -504,12 +526,14 @@ Note that allowed accounts and allowed contacts (not the accounts and contacts i
 can only be imported when the android ID is the same.
 See question 15 about what to do when updating your ROM.
 
+<a name="FAQ28"></a>
 **(28) I have restricted locations but my GPS status icon still appears**
 
 That is correct, XPrivacy only replaces the real location by a fake location.
 It even uses the real location to randomize the fake location.
 The idea is that everything should appear as normal as possible to an application.
 
+<a name="FAQ29"></a>
 **(29) How about multi-user support?**
 
 The XPrivacy engine works deep within Android and has no information about users.
@@ -519,27 +543,33 @@ Each user can manage the restrictions for the applications available to him/her.
 If Android uses the same uid for an application that two users share,
 both users can manage the restrictions for this application.
 
+<a name="FAQ30"></a>
 **(30) Why is the location search in the settings disabled?**
 
 Because some Google components are not installed.
 
+<a name="FAQ31"></a>
 **(31) Do I still need root after installing Xposed?**
 
 No.
 
+<a name="FAQ32"></a>
 **(32) Why is XPrivacy not available in the Play store anymore?**
 
 Read [here](http://forum.xda-developers.com/showpost.php?p=44427089&postcount=2433) why.
 
+<a name="FAQ33"></a>
 **(33) What is 'Template' used for?**
 
 The template is used to apply restrictions to newly installed applications
 and when you use the menu *Apply template*.
 
+<a name="FAQ34"></a>
 **(34) Will there be a iOS / Window phone version?**
 
 No, because these OS'es are to closed to implement something like XPrivacy.
 
+<a name="FAQ35"></a>
 **(35) Will you restrict ...?**
 
 * The device brand/manufacturer
@@ -551,20 +581,22 @@ No, because these OS'es are to closed to implement something like XPrivacy.
 * Bluetooth settings
 * Shortcuts
 * Android version
-* Starting of applications
 * Vibration
 
 No, because I don't consider this as privacy sensitive data.
 I am happy to add new restrictions for data that is really privacy sensitive.
 
+<a name="FAQ36"></a>
 **(36) What does expert mode?**
 
 Expert mode disables the dangerous restrictions warning and enables some advanced settings.
 
+<a name="FAQ37"></a>
 **(37) Does XPrivacy work with SELinux (Fort Knox) ?**
 
 Yes.
 
+<a name="FAQ38"></a>
 **(38) What is 'Android usage data' and 'Extra usage data' ?**
 
 The setting *Android usage data* enables sending more usage data for Android itself (uid=1000).
@@ -575,6 +607,7 @@ Enabling these settings can cause instability and/or decrease performance on som
 
 Usage data = orange triangles.
 
+<a name="FAQ39"></a>
 **(39) How does the tri-state check box work?**
 
 The tri-state check box follows this pattern:
@@ -591,10 +624,25 @@ Some/all is determined as follows:
 Be aware that by default categories and functions are filtered by permission,
 so you may not see all of them. The check box state is independent of this.
 
+<a name="FAQ40"></a>
 **(40) How can I get usage data for all applications?**
 
 Try enabling the setting *Extra usage data* from the main menu,
 but be aware that this might cause instability on some ROMs.
+
+<a name="FAQ41"></a>
+**(41) Why are not all pro features available with the pro enabler?**
+
+The [pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro)
+is in the Play store on request of some early XPrivacy users.
+In the beginning there was just one pro feature: export/import of all restrictions and settings.
+In a later stage fetching [crowd sourced restrictions](http://updates.faircode.eu/xprivacy)
+were added as a pro feature.
+Processing of the crowd sourced restrictions requires a big server which has to be paid for.
+The low price of the pro enabler, don't forget Google takes already 30%,
+didn't allow to give this feature for free to existing users.
+Looking back I would never have put the pro enabler into the Play store,
+but I cannot remove it anymore now, because of the existing users.
 
 Support
 -------
@@ -740,7 +788,7 @@ License
 
 [GNU General Public License version 3](http://www.gnu.org/licenses/gpl.txt)
 
-Copyright (c) 2013 [Marcel Bokhorst](http://blog.bokhorst.biz/about/)
+Copyright (c) 2013-2014 [Marcel Bokhorst](http://blog.bokhorst.biz/about/)
 ([M66B](http://forum.xda-developers.com/member.php?u=2799345))
 
 This file is part of XPrivacy.

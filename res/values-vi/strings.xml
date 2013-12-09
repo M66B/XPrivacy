@@ -21,8 +21,8 @@
     <string name="menu_help">Trợ giúp</string>
     <string name="menu_all">Tất cả</string>
     <string name="menu_restriction_all">Thay đổi các sự hạn chế</string>
-    <string name="menu_clear_all">Clear all</string>
-    <string name="menu_restrict_all">Restrict all</string>
+    <string name="menu_clear_all">Xóa tất cả</string>
+    <string name="menu_restrict_all">Hạn chế tất cả</string>
     <string name="menu_usage_all">Thay đổi bộ lọc</string>
     <string name="menu_apply">Áp dụng thiết lập mẫu</string>
     <string name="menu_clear">Xóa thiết lập</string>
@@ -36,24 +36,24 @@
     <string name="msg_update">Cập nhật</string>
     <string name="msg_licensed" formatted="false">Bản quyền: %s</string>
     <string name="msg_loading">Đang tải</string>
-    <string name="msg_applying">Applying</string>
-    <string name="msg_saved_to">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_applying">Đang áp dụng</string>
+    <string name="msg_saved_to">Đã được lưu vào %s</string>
+    <string name="msg_no_restrictions">Không có thông tin hạn chế nào được tìm thấy</string>
     <string name="msg_edit">Chạm vào biểu tượng ứng dụng để thay đổi các thiết lập</string>
     <string name="msg_sure">Bạn có chắc không?</string>
     <string name="msg_done">Xong</string>
     <string name="msg_reboot">Yêu cầu khởi động lại thiết bị</string>
-    <string name="msg_random_now">Ngẫu nhiên</string>
-    <string name="msg_random_access">Ngẫu nhiên lúc truy cập</string>
+    <string name="msg_random_now">Tạo thông tin ngẫu nhiên</string>
+    <string name="msg_random_access">Tạo thông tin ngẫu nhiên lúc truy cập</string>
     <string name="msg_random_boot">Tạo thông tin ngẫu nhiên khi khởi động</string>
-    <string name="msg_usage">Updating usage data</string>
-    <string name="msg_restart">Application restart required</string>
+    <string name="msg_usage">Đang cập nhật mức sử dụng dữ liệu</string>
+    <string name="msg_restart">Yêu cầu khởi động lại ứng dụng</string>
     <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ hoạt động trơn tru trên mọi thiết bị cũng như với mọi ứng dụng.
 \n\nBạn tự chịu trách nhiệm khi sử dụng ứng dụng này.</b>\n\nXem thêm về bản quyền:</string>
-    <string name="restrict_accounts">Tài khoản (Google, Facebook, v.v.)</string>
-    <string name="restrict_browser">Trình duyệt (bookmarks/history)</string>
+    <string name="restrict_accounts">Các tài khoản (Google, Facebook, ...)</string>
+    <string name="restrict_browser">Trình duyệt (đánh dấu/lịch sử duyệt web)</string>
     <string name="restrict_calendar">Lịch</string>
-    <string name="restrict_calling">Gọi điện (điện thoại, SMS, MMS)</string>
+    <string name="restrict_calling">Gọi điện (tạo cuộc gọi, gửi tin nhắn...)</string>
     <string name="restrict_clipboard">Bộ nhớ đệm</string>
     <string name="restrict_contacts">Danh bạ</string>
     <string name="restrict_dictionary">Từ điển (người dùng)</string>
@@ -63,8 +63,9 @@
     <string name="restrict_location">Vị trí (fine/coarse)</string>
     <string name="restrict_media">Media (nhạc, phim, ảnh)</string>
     <string name="restrict_messages">Tin nhắn (SMS, MMS)</string>
-    <string name="restrict_network">Mạng (địa chỉ mạng)</string>
+    <string name="restrict_network">Mạng (các địa chỉ mạng)</string>
     <string name="restrict_notifications">Thông báo</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">Điện thoại (ID, số điện thoại, cuộc gọi)</string>
     <string name="restrict_sensors">Cảm biến</string>
     <string name="restrict_storage">Lưu trữ (media, thẻ SD)</string>
@@ -80,7 +81,7 @@
         <item quantity="other">%d bộ lọc có hiệu lực</item>
     </plurals>
 
-    <string name="title_fused">Lọc theo truy cập dữ liệu</string>
+    <string name="title_fused">Lọc theo sử dụng dữ liệu</string>
     <string name="title_finternet">Lọc theo truy cập internet</string>
     <string name="title_fpermission">Lọc theo quyền</string>
     <string name="title_frestricted">Lọc các ứng dụng đã thiết lập hạn chế</string>
@@ -103,16 +104,16 @@
     <string name="settings_fake_data">Dữ liệu giả</string>
     <string name="settings_global">Sử dụng dữ liệu giả chung</string>
     <string name="settings_notify">Cập nhật thông báo</string>
-    <string name="settings_usage">Mức sử dụng hệ thống (cần khởi động lại)</string>
+    <string name="settings_usage">Mức sử dụng dữ liệu hệ thống (cần khởi động lại)</string>
     <string name="settings_log">Nhật ký lỗi (cần khởi động lại)</string>
     <string name="settings_expert">Chế độ nâng cao</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_dangerous">Hạn chế các chức năng nguy hiểm</string>
     <string name="help_application">Ứng dụng</string>
     <string name="help_internet">có quyền truy cập mạng</string>
-    <string name="help_granted">có các quyền của hệ điều hành</string>
-    <string name="help_used">đã sử dụng dữ liệu</string>
+    <string name="help_granted">có quyền của hệ điều hành</string>
+    <string name="help_used">đã sử dụng dữ liệu này</string>
     <string name="help_frozen">đã được tắt</string>
-    <string name="help_dangerous">nguy hiểm</string>
-    <string name="help_half">partly restricted</string>
+    <string name="help_dangerous">nguy hiểm, hạn chế có thể gây lỗi</string>
+    <string name="help_half">đã hạn chế một phần</string>
 
 </resources>

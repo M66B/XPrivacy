@@ -20,6 +20,7 @@
 			echo json_encode(array('ok' => false, 'error' => 'Unable to connect db'));
 			exit();
 		}
+		$db->query("SET NAMES 'utf8'");
 
 		// Store/update settings
 		if (empty($action) || $action == 'submit') {
@@ -145,7 +146,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="XPrivacy">
 		<meta name="author" content="M66B">
-		<meta name="robots" content="noindex,nofollow">
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<style type="text/css">
 			body { padding-left: 5px; padding-right: 5px; }
@@ -162,13 +162,16 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">XPrivacy</a>
+					<a class="navbar-brand" href="http://updates.faircode.eu/xprivacy">XPrivacy</a>
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="http://forum.xda-developers.com/showthread.php?t=2320783" target="_blank">XDA</a></li>
-						<li><a href="https://github.com/M66B/XPrivacy" target="_blank">GitHub</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="http://forum.faircode.eu/contact/" target="_blank">Contact</a></li>
 						<li><a href="http://stats.pingdom.com/dcqg2snuqaf1/388316" target="_blank">Status</a></li>
+						<li><a href="http://forum.xda-developers.com/showthread.php?t=2320783" target="_blank">Support</a></li>
+						<li><a href="http://blog.bokhorst.biz/about/" target="_blank">About</a></li>
 					</ul>
 				</div>
 			</div>
@@ -176,23 +179,41 @@
 
 		<div class="container">
 <?php
-		// Connect to database
-		$db = new mysqli($db_host, $db_user, $db_password, $db_database);
-		if ($db->connect_errno) {
-			echo 'Error connecting to database';
-			exit();
-		}
+			// Connect to database
+			$db = new mysqli($db_host, $db_user, $db_password, $db_database);
+			if ($db->connect_errno) {
+				echo '<pre>Error connecting to database</pre>';
+				exit();
+			}
+			$db->query("SET NAMES 'utf8'");
 ?>
 			<div class="page-header">
 <?php
 			if (empty($package_name)) {
+				$count = 0;
+				$total = 0;
+				$sql = "SELECT COUNT(DISTINCT application_name) AS count";
+				$sql .= ", COUNT(*) AS total";
+				$sql .= " FROM xprivacy";
+				$result = $db->query($sql);
+				if ($result) {
+					$row = $result->fetch_object();
+					if ($row) {
+						$count = $row->count;
+						$total = $row->total;
+					}
+					$result->close();
+				}
 ?>
 				<h1>XPrivacy</h1>
 				<p>Crowd sourced restrictions</p>
 				<p>This is a voting system for
-					the <a href="http://forum.xda-developers.com/showthread.php?t=2320783">XPrivacy</a> restrictions.<br />
+					the <a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
-					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch the restriction settings most voted for.</p>
+					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch submitted restriction settings.<br />
+					There are currently <?php echo number_format($total, 0, '.', ','); ?> restriction settings
+					for <?php echo number_format($count, 0, '.', ',') ?> applications submitted.
+				</p>
 <?php
 			} else {
 				$application_name = '---';
@@ -223,7 +244,14 @@
 
 			<div class="container">
 <?php
-			if (!empty($package_name)) {
+			if (empty($package_name)) {
+				echo '<p>';
+				foreach(range('A', 'Z') as $letter)
+					echo '<a href="?letter=' . $letter . '">' . $letter . '</a> ';
+				echo '<a href="?letter=*">other</a> ';
+				echo '</p>';
+			}
+			else {
 ?>
 				<p><a href="#" id="details">Show details</a></p>
 <?php
@@ -264,8 +292,13 @@
 
 					if (empty($package_name)) {
 						// Get application list
+						$letter = empty($_REQUEST['letter']) ? 'A' : $_REQUEST['letter'];
 						$sql = "SELECT DISTINCT application_name, package_name";
 						$sql .= " FROM xprivacy";
+						if ($letter == '*')
+							$sql .= " WHERE application_name REGEXP '^[^a-zA-Z]'";
+						else
+							$sql .= " WHERE application_name LIKE '" . ($letter == '%' ? '\\' : '') . $db->real_escape_string($letter) . "%'";
 						$sql .= " ORDER BY application_name";
 						$result = $db->query($sql);
 						if ($result) {
@@ -274,8 +307,7 @@
 								$name = (empty($row->application_name) ? '---' : $row->application_name);
 								echo '<tr>';
 
-								echo '<td><a href="?application_name=' . urlencode($name);
-								echo '&amp;package_name=' . urlencode($row->package_name) . '">';
+								echo '<td><a href="?package_name=' . urlencode($row->package_name) . '">';
 								echo htmlentities($name, ENT_COMPAT, 'UTF-8') . '</a></td>';
 
 								echo '<td>' . htmlentities($row->package_name, ENT_COMPAT, 'UTF-8') . '</td>';
@@ -349,7 +381,7 @@
 			<div class="container">
 				<a id="privacy_policy" href="#">Privacy policy</a>
 				<p id="privacy_policy_text" style="display: none;">I will not, under any circumstances whatsoever, give out or sell your information to anyone, unless required by law.</p>
-				<p class="text-muted credit">&copy; 2013 <a href="http://blog.bokhorst.biz/about/" target="_blank">Marcel Bokhorst</a></p>
+				<p class="text-muted credit">&copy; 2013-<?php echo date("Y"); ?> <a href="http://blog.bokhorst.biz/about/" target="_blank">Marcel Bokhorst</a></p>
 			</div>
 <?php
 		// Close database connection
@@ -361,14 +393,14 @@
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 		<script>
 			jQuery(document).ready(function($) {
-			  $('#details').click(function() {
-				  $('.details').toggle();
-				  return false;
-			  });
-			  $('#privacy_policy').click(function() {
-				$('#privacy_policy_text').toggle();
-				return false;
-			  });
+				$('#details').click(function() {
+					$('.details').toggle();
+					return false;
+				});
+				$('#privacy_policy').click(function() {
+					$('#privacy_policy_text').toggle();
+					return false;
+				});
 			});
 		</script>
 		<!-- Piwik -->

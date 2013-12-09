@@ -43,9 +43,9 @@ public class XWindowManager extends XHook {
 	public static List<XHook> getInstances(Object instance) {
 		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XWindowManager(Methods.addView, PrivacyManager.cView, className));
-		listHook.add(new XWindowManager(Methods.removeView, PrivacyManager.cView, className));
-		listHook.add(new XWindowManager(Methods.updateViewLayout, PrivacyManager.cView, className));
+		listHook.add(new XWindowManager(Methods.addView, PrivacyManager.cOverlay, className));
+		listHook.add(new XWindowManager(Methods.removeView, PrivacyManager.cOverlay, className));
+		listHook.add(new XWindowManager(Methods.updateViewLayout, PrivacyManager.cOverlay, className));
 		return listHook;
 	}
 

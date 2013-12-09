@@ -66,6 +66,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="restrict_messages">Üzenetek (SMS, MMS)</string>
     <string name="restrict_network">Hálózat (címek)</string>
     <string name="restrict_notifications">Notifications</string>
+    <string name="restrict_overlay">Overlay</string>
     <string name="restrict_phone">Telefon (ID, számok, hívások)</string>
     <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Tárhely (média, SD kártya)</string>
