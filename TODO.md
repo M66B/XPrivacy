@@ -18,4 +18,4 @@ For interested developers:
 * Move *SubmitTask* to *ActivityShare* (or the replacing service)
 * Updated *SharedPreferencesEx* with KitKat changes
 * Add updated, restricted, shared colors to legend
-* Toast after all long running task (for example toggle all)
+* Toast after all long running tasks (for example toggle all)

@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Reverted "Updated Italian translation" (update for another language)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.40 TEST**
