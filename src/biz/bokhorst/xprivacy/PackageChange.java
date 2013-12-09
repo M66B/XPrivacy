@@ -34,67 +34,61 @@ public class PackageChange extends BroadcastReceiver {
 					// Get data
 					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, packageName);
 
-					if (fSystem ? !appInfo.isSystem() : true) {
-						// Default deny new user apps
-						if (!appInfo.isSystem() && !replacing) {
-							// Check for existing restrictions
-							boolean someRestricted = false;
-							for (boolean restricted : PrivacyManager.getRestricted(context, uid, null))
-								if (restricted) {
-									someRestricted = true;
-									break;
-								}
+					// Default deny new user apps
+					if (!replacing) {
+						// Delete any existing restrictions
+						PrivacyManager.deleteRestrictions(context, uid);
+						PrivacyManager.deleteUsage(context, uid);
 
-							// Restrict if no previous restrictions
-							if (!someRestricted)
-								for (String restrictionName : PrivacyManager.getRestrictions())
-									if (PrivacyManager.getSettingBool(null, context, 0,
-											String.format("Template.%s", restrictionName), true, false))
-										PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
-						}
+						// Restrict new non-system apps
+						if (!appInfo.isSystem())
+							for (String restrictionName : PrivacyManager.getRestrictions())
+								if (PrivacyManager.getSettingBool(null, context, 0,
+										String.format("Template.%s", restrictionName), true, false))
+									PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
+					}
 
-						// New/update notification
-						if (!replacing
-								|| PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify,
-										true, false)) {
-							Intent resultIntent = new Intent(Intent.ACTION_MAIN);
-							resultIntent.putExtra(ActivityApp.cPackageName, packageName);
-							resultIntent.setClass(context.getApplicationContext(), ActivityApp.class);
+					// New/update notification
+					if (!replacing
+							|| PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify,
+									true, false)) {
+						Intent resultIntent = new Intent(Intent.ACTION_MAIN);
+						resultIntent.putExtra(ActivityApp.cPackageName, packageName);
+						resultIntent.setClass(context.getApplicationContext(), ActivityApp.class);
 
-							// Build pending intent
-							PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
-									PendingIntent.FLAG_UPDATE_CURRENT);
+						// Build pending intent
+						PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
+								PendingIntent.FLAG_UPDATE_CURRENT);
 
-							// Build result intent clear
-							Intent resultIntentClear = new Intent(Intent.ACTION_MAIN);
-							resultIntentClear.putExtra(ActivityApp.cPackageName, packageName);
-							resultIntentClear.putExtra(ActivityApp.cActionClear, true);
-							resultIntentClear.setClass(context.getApplicationContext(), ActivityApp.class);
+						// Build result intent clear
+						Intent resultIntentClear = new Intent(Intent.ACTION_MAIN);
+						resultIntentClear.putExtra(ActivityApp.cPackageName, packageName);
+						resultIntentClear.putExtra(ActivityApp.cActionClear, true);
+						resultIntentClear.setClass(context.getApplicationContext(), ActivityApp.class);
 
-							// Build pending intent clear
-							PendingIntent pendingIntentClear = PendingIntent.getActivity(context, -uid,
-									resultIntentClear, PendingIntent.FLAG_UPDATE_CURRENT);
+						// Build pending intent clear
+						PendingIntent pendingIntentClear = PendingIntent.getActivity(context, -uid,
+								resultIntentClear, PendingIntent.FLAG_UPDATE_CURRENT);
 
-							// Title
-							String title = String.format("%s %s %s",
-									context.getString(replacing ? R.string.msg_update : R.string.msg_new),
-									appInfo.getFirstApplicationName(), appInfo.getVersion(context));
+						// Title
+						String title = String.format("%s %s %s",
+								context.getString(replacing ? R.string.msg_update : R.string.msg_new),
+								appInfo.getFirstApplicationName(), appInfo.getVersion(context));
 
-							// Build notification
-							NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
-							notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-							notificationBuilder.setContentTitle(context.getString(R.string.app_name));
-							notificationBuilder.setContentText(title);
-							notificationBuilder.setContentIntent(pendingIntent);
-							notificationBuilder.setWhen(System.currentTimeMillis());
-							notificationBuilder.setAutoCancel(true);
-							notificationBuilder.addAction(R.drawable.cross_holo_dark,
-									context.getString(R.string.menu_clear), pendingIntentClear);
-							Notification notification = notificationBuilder.build();
+						// Build notification
+						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+						notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+						notificationBuilder.setContentTitle(context.getString(R.string.app_name));
+						notificationBuilder.setContentText(title);
+						notificationBuilder.setContentIntent(pendingIntent);
+						notificationBuilder.setWhen(System.currentTimeMillis());
+						notificationBuilder.setAutoCancel(true);
+						notificationBuilder.addAction(R.drawable.cross_holo_dark,
+								context.getString(R.string.menu_clear), pendingIntentClear);
+						Notification notification = notificationBuilder.build();
 
-							// Notify
-							notificationManager.notify(appInfo.getUid(), notification);
-						}
+						// Notify
+						notificationManager.notify(appInfo.getUid(), notification);
 					}
 
 					// Mark as new/changed
