@@ -1,7 +1,6 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,7 +32,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -60,7 +58,6 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.Settings.Secure;
 import android.support.v4.app.NavUtils;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
@@ -783,16 +780,9 @@ public class ActivityApp extends Activity {
 	}
 
 	@SuppressLint("DefaultLocale")
-	private class SubmitTask extends AsyncTask<ApplicationInfoEx, Object, Object> {
-		private final static int NOTIFY_ID = 5;
-
+	private class SubmitTask extends AsyncTask<ApplicationInfoEx, Object, String> {
 		@Override
-		protected void onPreExecute() {
-			notify(null);
-		}
-
-		@Override
-		protected Object doInBackground(ApplicationInfoEx... params) {
+		protected String doInBackground(ApplicationInfoEx... params) {
 			try {
 				// Encode restrictions
 				int uid = params[0].getUid();
@@ -857,55 +847,31 @@ public class ActivityApp extends Activity {
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
 					response.getEntity().writeTo(out);
 					out.close();
-					return new JSONObject(out.toString("UTF-8"));
+					JSONObject status = new JSONObject(out.toString("UTF-8"));
+					if (status.getBoolean("ok")) {
+						// Mark as shared
+						PrivacyManager.setSetting(null, ActivityApp.this, mAppInfo.getUid(),
+								PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_SHARED));
+						return getString(R.string.msg_done);
+					} else
+						return status.getString("error");
 				} else {
 					// Failed
 					response.getEntity().getContent().close();
-					throw new IOException(statusLine.getReasonPhrase());
+					return statusLine.getReasonPhrase();
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex;
+				return ex.toString();
 			}
 		}
 
 		@Override
-		protected void onPostExecute(Object result) {
-			notify(result);
+		protected void onPostExecute(String result) {
+			Toast toast = Toast.makeText(ActivityApp.this,
+					String.format("%s: %s", getString(R.string.menu_fetch), result), Toast.LENGTH_LONG);
+			toast.show();
 			super.onPostExecute(result);
-		}
-
-		private void notify(Object result) {
-			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ActivityApp.this);
-			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-			notificationBuilder.setContentTitle(getString(R.string.menu_submit));
-			if (result == null) {
-				notificationBuilder.setContentText(mAppInfo.getFirstApplicationName());
-			} else if (result.getClass().equals(JSONObject.class)) {
-				JSONObject status = (JSONObject) result;
-				try {
-					if (status.getBoolean("ok")) {
-						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getPackageName(),
-								getString(R.string.msg_done)));
-
-						// Mark as shared
-						PrivacyManager.setSetting(null, ActivityApp.this, mAppInfo.getUid(),
-								PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_SHARED));
-					} else
-						notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getPackageName(),
-								status.getString("error")));
-				} catch (Throwable ex) {
-					notificationBuilder.setContentText(String.format("%s: %s", mAppInfo.getPackageName(),
-							ex.getMessage()));
-				}
-			} else
-				notificationBuilder.setContentText(result.toString());
-			notificationBuilder.setWhen(System.currentTimeMillis());
-			notificationBuilder.setAutoCancel(true);
-			Notification notification = notificationBuilder.build();
-			NotificationManager notificationManager = (NotificationManager) ActivityApp.this
-					.getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.notify(NOTIFY_ID, notification);
 		}
 	}
 
