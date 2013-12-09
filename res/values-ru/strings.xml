@@ -66,7 +66,7 @@
     <string name="restrict_messages">Сообщения (SMS, MMS)</string>
     <string name="restrict_network">Сеть (адреса)</string>
     <string name="restrict_notifications">Уведомления</string>
-    <string name="restrict_overlay">Overlay</string>
+    <string name="restrict_overlay">Оверлей</string>
     <string name="restrict_phone">Телефон (ID, номера, журнал вызовов)</string>
     <string name="restrict_sensors">Сенсоры</string>
     <string name="restrict_storage">Хранилище (медиа, карта памяти)</string>
@@ -117,8 +117,8 @@
     <string name="help_frozen">отключено</string>
     <string name="help_dangerous">изменение разрешений опасно</string>
     <string name="help_half">частично запрещено</string>
-    <string name="help_attention">restrictions need attention</string>
-    <string name="help_restricted">restrictions are changed</string>
-    <string name="help_shared">restrictions are submitted</string>
+    <string name="help_attention">ограничения, требующие внимания</string>
+    <string name="help_restricted">ограничения имзенены</string>
+    <string name="help_shared">ограничения отосланы</string>
 
 </resources>
