@@ -7,6 +7,7 @@ Changelog
 * Replaced notification by 'toast' for fetch restrictions
 * Reverted "Updated Italian translation" (update for another language)
 * Added Ukranian translation
+* Updated Russian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
