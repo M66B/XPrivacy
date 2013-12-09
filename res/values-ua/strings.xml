@@ -1,0 +1,121 @@
+<resources>
+
+    <string name="app_notxposed" formatted="false">Не встановлено Xposed framework версії %d+</string>
+    <string name="app_notenabled">Модуль XPrivacy не активован в Xposed installer</string>
+    <string name="app_wrongandroid">Тільки для Android версії 4.0 і новіше</string>
+    <string name="app_version" formatted="false">Версія XPrivacy: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Версія Xposed framework: %d</string>
+    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="menu_usage">Використання</string>
+    <string name="menu_refresh">Оновити</string>
+    <string name="menu_settings">Параметри</string>
+    <string name="menu_template">Шаблон</string>
+    <string name="menu_report">Повідомити про помилку</string>
+    <string name="menu_export">Експорт налаштувань</string>
+    <string name="menu_import">Імпорт налаштувань</string>
+    <string name="menu_submit">Відправити дозволи</string>
+    <string name="menu_fetch">Отримати дозволи</string>
+    <string name="menu_theme">Переключити тему</string>
+    <string name="menu_pro">Pro-версія</string>
+    <string name="menu_about">Про програму</string>
+    <string name="menu_help">Допомога</string>
+    <string name="menu_all">Виділити все</string>
+    <string name="menu_restriction_all">Переключити довзоли</string>
+    <string name="menu_clear_all">Очистити всі</string>
+    <string name="menu_restrict_all">Заборонити всі</string>
+    <string name="menu_usage_all">Переключити фільтр</string>
+    <string name="menu_apply">Застосувати шаблон</string>
+    <string name="menu_clear">Очистити</string>
+    <string name="menu_app_launch">Запустити програму</string>
+    <string name="menu_app_settings">Налаштуванная програми</string>
+    <string name="menu_app_store">Play Маркет</string>
+    <string name="menu_accounts">Оберіть дозволені облікові записи</string>
+    <string name="menu_applications">Оберіть дозволені програми</string>
+    <string name="menu_contacts">Оберіть дозволені контакти</string>
+    <string name="msg_new">Нове</string>
+    <string name="msg_update">Оновити</string>
+    <string name="msg_licensed" formatted="false">Власник ліцензіі: %s</string>
+    <string name="msg_loading">Загрузка</string>
+    <string name="msg_applying">Застосовується</string>
+    <string name="msg_saved_to">Збережено в %s</string>
+    <string name="msg_no_restrictions">Не знайдено дозволів</string>
+    <string name="msg_edit">Натисніть на іконку програми для редагування всіх дозволів</string>
+    <string name="msg_sure">Ви впевнені?</string>
+    <string name="msg_done">Готово</string>
+    <string name="msg_reboot">Необхідне перезавантаження пристрою</string>
+    <string name="msg_random_now">Випадкові значення</string>
+    <string name="msg_random_access">Випадкові значення при запиті</string>
+    <string name="msg_random_boot">Випадкові значення після перезавантаження</string>
+    <string name="msg_usage">Оновлення даних використання</string>
+    <string name="msg_restart">Необхідне перезавантаження</string>
+    <string name="msg_first"><b>Велика увага була приділена розробці та тестуванню XPrivacy, 
+але не можна гарантувати, що вона буде працювати бездоганно на всіх пристроях та зі всімома програмами.
+\n\nВикористовуйте виключно на свій страх та ризик.</b>\n\nДив. також ліцензію:</string>
+    <string name="restrict_accounts">Облікові записи (Google, Facebook і т.д.)</string>
+    <string name="restrict_browser">Браузер (закладки/історія)</string>
+    <string name="restrict_calendar">Календар</string>
+    <string name="restrict_calling">Ініціація дзвінків, відправлення SMS/MMS</string>
+    <string name="restrict_clipboard">Буфер обміну</string>
+    <string name="restrict_contacts">Контакти</string>
+    <string name="restrict_dictionary">Словник користувача</string>
+    <string name="restrict_email">Електронна пошта</string>
+    <string name="restrict_identification">Ідентифікація пристрою</string>
+    <string name="restrict_internet">Інтернет</string>
+    <string name="restrict_location">Місцезнаходження (точне/наближене)</string>
+    <string name="restrict_media">Медіа (аудіо, фото, відео)</string>
+    <string name="restrict_messages">Повідомлення (SMS, MMS)</string>
+    <string name="restrict_network">Мережа (адреси)</string>
+    <string name="restrict_notifications">Сповіщення</string>
+    <string name="restrict_overlay">Оверлей</string>
+    <string name="restrict_phone">Телефон (ID, номери, журнал викликів)</string>
+    <string name="restrict_sensors">Сенсори</string>
+    <string name="restrict_storage">Сховище даних (медіа, карта пам\'яті)</string>
+    <string name="restrict_shell">Команди shell (вкл. суперкористувача)</string>
+    <string name="restrict_system">Система (встановлені програми)</string>
+    <string name="restrict_view">Перегляд (браузер)</string>
+    <string name="title_categories">Категорії</string>
+    <string name="title_restrict">Позначте для заборони:</string>
+    <string name="title_filters">Фільтри</string>
+
+    <plurals name="title_active_filters">
+        <item quantity="one">1 активний фільтр</item>
+        <item quantity="few">%d активних фільтра</item>
+        <item quantity="other">%d активних фільтров</item>
+    </plurals>
+
+    <string name="title_fused">що використовують дані</string>
+    <string name="title_finternet">з доступом до Інтернету</string>
+    <string name="title_fpermission">з дозволами</string>
+    <string name="title_frestricted">заборонені</string>
+    <string name="title_fuser">програми користувача</string>
+    <string name="title_fsystem">системні програми</string>
+    <string name="title_fnot">Переключити</string>
+    <string name="settings_serial">Серійний номер</string>
+    <string name="settings_lat">Широта</string>
+    <string name="settings_lon">Довгота</string>
+    <string name="settings_mac">MAC-адреса</string>
+    <string name="settings_ip">IP адреса</string>
+    <string name="settings_phone">Номер телефону</string>
+    <string name="settings_id">Android ID</string>
+    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_country">Країна</string>
+    <string name="settings_operator">Оператор</string>
+    <string name="settings_subscriber">Subscriber ID</string>
+    <string name="settings_ua">User agent</string>
+    <string name="settings_general">Загальне</string>
+    <string name="settings_fake_data">Фальшиві дані</string>
+    <string name="settings_global">Використовувати загальні фальшиві дані</string>
+    <string name="settings_notify">Оновити сповіщення</string>
+    <string name="settings_usage">Андроид - данные об использовании (требует перезапуска)</string>
+    <string name="settings_log">Отладочный лог (требует перезапуска)</string>
+    <string name="settings_expert">Експертний режим</string>
+    <string name="settings_dangerous">Заборона небезпечних функцій</string>
+    <string name="help_application">Програма</string>
+    <string name="help_internet">запитує доступ до Інтернету</string>
+    <string name="help_granted">має дозвол Android</string>
+    <string name="help_used">дані вже використовувались</string>
+    <string name="help_frozen">вимкнено</string>
+    <string name="help_dangerous">зміна дозволів небезпечна</string>
+    <string name="help_half">частково заборонено</string>
+
+</resources>
