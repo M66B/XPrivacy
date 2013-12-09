@@ -755,7 +755,7 @@ Current translations:
 1. Swedish (sv)
 1. Traditional Chinese (zh-rTW)
 1. Turkish (tr)
-1. Ukranian (ua)
+1. Ukrainian (ua)
 1. Vietnamese (vi)
 
 Restrict new data:
