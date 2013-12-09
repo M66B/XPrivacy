@@ -5,6 +5,7 @@ Changelog
 
 * Delete old restrictions on new application install, thanks @[jpeg729](https://github.com/jpeg729)
 * Replaced notification by 'toast' for fetch restrictions
+* Added application state colors to legend
 * Reverted "Updated Italian translation" (update for another language)
 * Added Ukrainian translation
 * Updated Russian translation
