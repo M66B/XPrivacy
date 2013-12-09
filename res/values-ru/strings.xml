@@ -21,8 +21,8 @@
     <string name="menu_help">Помощь</string>
     <string name="menu_all">Выделить все</string>
     <string name="menu_restriction_all">Переключить разрешения</string>
-    <string name="menu_clear_all">Clear all</string>
-    <string name="menu_restrict_all">Restrict all</string>
+    <string name="menu_clear_all">Очистить все</string>
+    <string name="menu_restrict_all">Запретить все</string>
     <string name="menu_usage_all">Переключить фильтр</string>
     <string name="menu_apply">Применить шаблон</string>
     <string name="menu_clear">Очистить</string>
@@ -36,7 +36,7 @@
     <string name="msg_update">Обновить</string>
     <string name="msg_licensed" formatted="false">Владелец лицензии: %s</string>
     <string name="msg_loading">Загрузка</string>
-    <string name="msg_applying">Applying</string>
+    <string name="msg_applying">Применение</string>
     <string name="msg_saved_to">Сохранено в %s</string>
     <string name="msg_no_restrictions">Не найдено разрешений</string>
     <string name="msg_edit">Нажмите на иконку приложения для редактирования всех разрешений</string>
@@ -46,8 +46,8 @@
     <string name="msg_random_now">Случайные значения</string>
     <string name="msg_random_access">Случайные значения при запросе</string>
     <string name="msg_random_boot">Случайные значения после перезагрузки</string>
-    <string name="msg_usage">Updating usage data</string>
-    <string name="msg_restart">Application restart required</string>
+    <string name="msg_usage">Обновление данных об использовании</string>
+    <string name="msg_restart">Требуется перезапуск приложения</string>
     <string name="msg_first"><b>Большое внимание было уделено разработке и тестированию XPrivacy, 
 однако нельзя гарантировать, что оно будет работать безупречно на всех устройствах и со всеми приложениями.
 \n\nИспользуйте исключительно на свой страх и риск.</b>\n\nСм. также лицензию:</string>
