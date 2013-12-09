@@ -116,6 +116,9 @@
     <string name="help_frozen">应用已被冻结/停用</string>
     <string name="help_dangerous">可能导致应用异常的权限</string>
     <string name="help_half">已限制部分子权限</string>
+    <string name="help_attention">restrictions need attention</string>
+    <string name="help_restricted">restrictions are changed</string>
+    <string name="help_shared">restrictions are submitted</string>
 
 </resources>
 

@@ -116,5 +116,8 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">מסוכן</string>
     <string name="help_half">partly restricted</string>
+    <string name="help_attention">restrictions need attention</string>
+    <string name="help_restricted">restrictions are changed</string>
+    <string name="help_shared">restrictions are submitted</string>
 
 </resources>

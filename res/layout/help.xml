@@ -93,6 +93,69 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="2dip" >
+
+            <View
+                android:layout_width="48dip"
+                android:layout_height="48dip"
+                android:background="?attr/color_state_attention" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dip"
+                android:gravity="center_vertical"
+                android:paddingLeft="6dip"
+                android:text="@string/help_attention"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="2dip" >
+
+            <View
+                android:layout_width="48dip"
+                android:layout_height="48dip"
+                android:background="?attr/color_state_restricted" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dip"
+                android:gravity="center_vertical"
+                android:paddingLeft="6dip"
+                android:text="@string/help_restricted"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="2dip" >
+
+            <View
+                android:layout_width="48dip"
+                android:layout_height="48dip"
+                android:background="?attr/color_state_shared" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dip"
+                android:gravity="center_vertical"
+                android:paddingLeft="6dip"
+                android:text="@string/help_shared"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="false" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

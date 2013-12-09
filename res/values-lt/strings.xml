@@ -117,5 +117,8 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="help_frozen">Išjungtų programų leidimai</string>
     <string name="help_dangerous">Pavojingi leidimai, apribojus, gali sukelti problemų</string>
     <string name="help_half">Iš dalies apribota</string>
+    <string name="help_attention">restrictions need attention</string>
+    <string name="help_restricted">restrictions are changed</string>
+    <string name="help_shared">restrictions are submitted</string>
 
 </resources>

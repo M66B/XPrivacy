@@ -128,6 +128,9 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">is dangerous, restricting may cause problems</string>
     <string name="help_half">partly restricted</string>
+    <string name="help_attention">restrictions need attention</string>
+    <string name="help_restricted">restrictions are changed</string>
+    <string name="help_shared">restrictions are submitted</string>
     <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
 
 </resources>

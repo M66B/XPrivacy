@@ -114,5 +114,8 @@
     <string name="help_frozen">er deaktiveret</string>
     <string name="help_dangerous">er farlig</string>
     <string name="help_half">partly restricted</string>
+    <string name="help_attention">restrictions need attention</string>
+    <string name="help_restricted">restrictions are changed</string>
+    <string name="help_shared">restrictions are submitted</string>
 
 </resources>

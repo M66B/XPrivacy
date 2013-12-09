@@ -1,3 +1,3 @@
 #!/bin/bash
-grep -RIl "\<string name=\"restrict_notifications" . | xargs sed -i -e '/string name="restrict_notifications/a \
-\ \ \ \ <string name="restrict_overlay">Overlay</string>'
+grep -RIl "\<string name=\"help_half" . | xargs sed -i -e '/string name="help_half/a \
+\ \ \ \ <string name="help_attention">restrictions need attention</string>'

@@ -116,5 +116,8 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="help_frozen">is uitgezet</string>
     <string name="help_dangerous">is gevaarlijk</string>
     <string name="help_half">is gedeeltelijk beperkt</string>
+    <string name="help_attention">Beperkingen hebben aandacht nodig</string>
+    <string name="help_restricted">Beperkingen zijn gewijzigd</string>
+    <string name="help_shared">Beperkingen zijn gestuurd</string>
 
 </resources>

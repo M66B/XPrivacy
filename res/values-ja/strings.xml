@@ -116,5 +116,8 @@
     <string name="help_frozen">は無効になっています</string>
     <string name="help_dangerous">はプライバシーに危険です</string>
     <string name="help_half">部分的に制限されました</string>
+    <string name="help_attention">restrictions need attention</string>
+    <string name="help_restricted">restrictions are changed</string>
+    <string name="help_shared">restrictions are submitted</string>
 
 </resources>

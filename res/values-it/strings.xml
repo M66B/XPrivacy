@@ -116,5 +116,8 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="help_frozen">è disabilitato</string>
     <string name="help_dangerous">è pericoloso</string>
     <string name="help_half">parzialmente limitato</string>
+    <string name="help_attention">restrictions need attention</string>
+    <string name="help_restricted">restrictions are changed</string>
+    <string name="help_shared">restrictions are submitted</string>
 
 </resources>
