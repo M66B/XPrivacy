@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Delete old restrictions on new application install, thanks @[jpeg729](https://github.com/jpeg729)
 * Reverted "Updated Italian translation" (update for another language)
 * Added Ukranian translation
 

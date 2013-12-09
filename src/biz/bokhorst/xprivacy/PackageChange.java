@@ -24,8 +24,6 @@ public class PackageChange extends BroadcastReceiver {
 				String packageName = inputUri.getSchemeSpecificPart();
 				int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 				boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
-				boolean fSystem = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingFSystem, true,
-						false);
 				NotificationManager notificationManager = (NotificationManager) context
 						.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -50,8 +48,8 @@ public class PackageChange extends BroadcastReceiver {
 
 					// New/update notification
 					if (!replacing
-							|| PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify,
-									true, false)) {
+							|| PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify, true,
+									false)) {
 						Intent resultIntent = new Intent(Intent.ACTION_MAIN);
 						resultIntent.putExtra(ActivityApp.cPackageName, packageName);
 						resultIntent.setClass(context.getApplicationContext(), ActivityApp.class);
@@ -67,8 +65,8 @@ public class PackageChange extends BroadcastReceiver {
 						resultIntentClear.setClass(context.getApplicationContext(), ActivityApp.class);
 
 						// Build pending intent clear
-						PendingIntent pendingIntentClear = PendingIntent.getActivity(context, -uid,
-								resultIntentClear, PendingIntent.FLAG_UPDATE_CURRENT);
+						PendingIntent pendingIntentClear = PendingIntent.getActivity(context, -uid, resultIntentClear,
+								PendingIntent.FLAG_UPDATE_CURRENT);
 
 						// Title
 						String title = String.format("%s %s %s",
