@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Reverted "Updated Italian translation" (update for another language)
+* Added Ukranian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
