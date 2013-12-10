@@ -1,4 +1,4 @@
-To Do
+To do
 =====
 
 For interested developers:
@@ -7,14 +7,16 @@ For interested developers:
 
 * Hook *Service.onCreate* for uncaught exception
 * Replace *ActivityShare* by a [Service](http://developer.android.com/reference/android/app/Service.html)
-* Remove indeterminate progress indicator
 * Prevent parallel filter requests
-* Button to refresh application list
+* Button or menu to refresh application list
+* Button or menu to delete usage data (all / per app)
 * Dialogs for all the things in *Requirements.java* (no intents without user consent)
 * Sort localized category lists
 * Holo check boxes for functions exceptions
+* Themed check boxes
 * Move *SubmitTask* to *ActivityShare* (or the replacing service)
 * Updated *SharedPreferencesEx* with KitKat changes
-* Button to delete usage data (all / per app)
 * Import should clear app settings
+
 * Split settings file?
+* Remove indeterminate progress indicator?
