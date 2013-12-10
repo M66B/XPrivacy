@@ -76,17 +76,17 @@
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
     <string name="title_categories">Kategorien</string>
     <string name="title_restrict">Zum Beschränken markieren:</string>
-    <string name="title_filters">Filter</string>
+    <string name="title_filters">Filtern nach:</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1 Filter ausgewählt</item>
         <item quantity="other">%d Filter ausgewählt</item>
     </plurals>
 
-    <string name="title_fused">Nach Datennutzung filtern</string>
-    <string name="title_finternet">Nach Internetzugang filtern</string>
-    <string name="title_fpermission">Nach Berechtigungen filtern</string>
-    <string name="title_frestricted">Nach Beschränkungen filtern</string>
+    <string name="title_fused">Datennutzung</string>
+    <string name="title_finternet">Internetzugang</string>
+    <string name="title_fpermission">Berechtigungen</string>
+    <string name="title_frestricted">Beschränkungen</string>
     <string name="title_fuser">Nach Benutzer-Apps filtern</string>
     <string name="title_fsystem">Nach System-Apps filtern</string>
     <string name="title_fnot">Negieren</string>
