@@ -15,7 +15,6 @@ For interested developers:
 * Holo check boxes for functions exceptions
 * Move *SubmitTask* to *ActivityShare* (or the replacing service)
 * Updated *SharedPreferencesEx* with KitKat changes
-* Add updated, restricted, shared colors to legend
-* Toast after all long running tasks (for example toggle all)
 * Button to delete usage data (all / per app)
 * Import should clear app settings
+* Split settings file?

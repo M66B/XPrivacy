@@ -964,9 +964,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mBatchOpRunning = false;
 			invalidateOptionsMenu();
 
-			// Notify restart
+			// Notify
 			if (restart)
 				Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
+			else
+				Toast.makeText(
+						ActivityMain.this,
+						String.format("%s: %s", getString(R.string.menu_restriction_all), getString(R.string.msg_done)),
+						Toast.LENGTH_SHORT).show();
 		}
 	}
 
