@@ -36,6 +36,7 @@ public class PackageChange extends BroadcastReceiver {
 					if (!replacing) {
 						// Delete any existing restrictions
 						PrivacyManager.deleteRestrictions(context, uid);
+						PrivacyManager.deleteSettings(context, uid);
 						PrivacyManager.deleteUsage(context, uid);
 
 						// Restrict new non-system apps
@@ -163,6 +164,7 @@ public class PackageChange extends BroadcastReceiver {
 					// Package removed
 					notificationManager.cancel(uid);
 					PrivacyManager.deleteRestrictions(context, uid);
+					PrivacyManager.deleteSettings(context, uid);
 					PrivacyManager.deleteUsage(context, uid);
 				}
 			}

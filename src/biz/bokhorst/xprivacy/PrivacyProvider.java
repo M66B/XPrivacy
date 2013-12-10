@@ -373,8 +373,9 @@ public class PrivacyProvider extends ContentProvider {
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE) {
 			int uid = Integer.parseInt(selectionArgs[0]);
 			return deleteUsage(uid);
-		} else if (sUriMatcher.match(uri) == TYPE_SETTING && selectionArgs == null) {
-			return deleteSettings();
+		} else if (sUriMatcher.match(uri) == TYPE_SETTING) {
+			int uid = Integer.parseInt(selectionArgs[0]);
+			return deleteSettings(uid);
 		}
 
 		throw new IllegalArgumentException(uri.toString());
@@ -392,7 +393,6 @@ public class PrivacyProvider extends ContentProvider {
 		}
 		editor.commit();
 		setPrefFileReadable(PREF_RESTRICTION, uid);
-
 		return rows;
 	}
 
@@ -413,18 +413,21 @@ public class PrivacyProvider extends ContentProvider {
 			}
 			editor.commit();
 		}
-
 		return rows;
 	}
 
-	private int deleteSettings() {
+	private int deleteSettings(int uid) {
 		int rows = 0;
+		String sUid = Integer.toString(uid);
 		SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
 		SharedPreferences.Editor editor = prefs.edit();
 		for (String pref : prefs.getAll().keySet()) {
-			rows++;
-			editor.remove(pref);
-			Util.log(null, Log.INFO, "Removed setting=" + pref);
+			String[] component = pref.split("\\.");
+			if (component.length >= 2 && component[1].equals(sUid)) {
+				Util.log(null, Log.INFO, "Removed setting=" + pref + " uid=" + uid);
+				editor.remove(pref);
+				rows++;
+			}
 		}
 		editor.commit();
 		setPrefFileReadable(PREF_SETTINGS);

@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Delete old restrictions on new application install, thanks @[jpeg729](https://github.com/jpeg729)
+* Delete application specific settings on application uninstall ([issue](https://github.com/M66B/XPrivacy/issues/901))
 * Replaced notification by 'toast' for fetch restrictions
 * Added application state colors to legend
 * Ask if sure when fetching

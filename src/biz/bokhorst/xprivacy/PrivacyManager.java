@@ -755,9 +755,9 @@ public class PrivacyManager {
 		return result;
 	}
 
-	public static void deleteSettings(Context context) {
-		context.getContentResolver().delete(PrivacyProvider.URI_SETTING, null, null);
-		Util.log(null, Log.INFO, "Deleted settings");
+	public static void deleteSettings(Context context, int uid) {
+		context.getContentResolver().delete(PrivacyProvider.URI_SETTING, null, new String[] { Integer.toString(uid) });
+		Util.log(null, Log.INFO, "Deleted settings uid=" + uid);
 	}
 
 	// Defacing
