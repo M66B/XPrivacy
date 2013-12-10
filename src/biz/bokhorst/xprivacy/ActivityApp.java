@@ -513,9 +513,26 @@ public class ActivityApp extends Activity {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
 			startActivity(browserIntent);
 		} else {
-			Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
-			intent.putExtra(ActivityShare.cPackageName, mAppInfo.getPackageName());
-			startActivityForResult(intent, ACTIVITY_FETCH);
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.menu_fetch));
+			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
+					intent.putExtra(ActivityShare.cPackageName, mAppInfo.getPackageName());
+					startActivityForResult(intent, ACTIVITY_FETCH);
+				}
+			});
+			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
 		}
 	}
 
