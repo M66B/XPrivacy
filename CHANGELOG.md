@@ -11,6 +11,7 @@ Changelog
 * Display *Template applied* for new applications in the notification
 * Reverted "Updated Italian translation" (update for another language)
 * Added Ukrainian translation
+* Updated Lithuanian translation
 * Updated Russian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
