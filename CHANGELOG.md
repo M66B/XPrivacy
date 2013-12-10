@@ -9,9 +9,12 @@ Changelog
 * Added application state colors to legend
 * Ask if sure when fetching
 * Display *Template applied* for new applications in the notification
+* Changed application state colors, thanks @[danielmmmm](https://github.com/danielmmmm)
 * Reverted "Updated Italian translation" (update for another language)
 * Added Ukrainian translation
+* Updated German translation
 * Updated Lithuanian translation
+* Updated Norwegian translation
 * Updated Russian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
