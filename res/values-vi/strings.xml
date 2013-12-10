@@ -37,7 +37,7 @@
     <string name="msg_licensed" formatted="false">Bản quyền: %s</string>
     <string name="msg_loading">Đang tải</string>
     <string name="msg_applying">Đang áp dụng</string>
-    <string name="msg_saved_to">Đã được lưu vào %s</string>
+    <string name="msg_saved_to" formatted="false">Đã được lưu vào %s</string>
     <string name="msg_no_restrictions">Không có thông tin hạn chế nào được tìm thấy</string>
     <string name="msg_edit">Chạm vào biểu tượng ứng dụng để thay đổi các thiết lập</string>
     <string name="msg_sure">Bạn có chắc không?</string>
