@@ -37,6 +37,7 @@
     <string name="msg_licensed" formatted="false">Licenziato a: %s</string>
     <string name="msg_loading">Caricamento in corso</string>
     <string name="msg_applying">Applicazione in corso</string>
+    <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Salvato su %s</string>
     <string name="msg_no_restrictions">Nessuna restrizione trovata</string>
     <string name="msg_edit">Clicca l\'icona dell\'applicazione per modificare tutte le restrizioni</string>

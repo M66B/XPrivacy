@@ -37,6 +37,7 @@
     <string name="msg_licensed" formatted="false">Ceadúnaithe do: %s</string>
     <string name="msg_loading">Loading</string>
     <string name="msg_applying">Applying</string>
+    <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">Cliceáil ar an deilbhín iarratas a chur in eagar na srianta uile</string>

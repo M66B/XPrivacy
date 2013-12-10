@@ -37,6 +37,7 @@
     <string name="msg_licensed">Con licencia para: %s</string>
     <string name="msg_loading">Cargando</string>
     <string name="msg_applying">Applying</string>
+    <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Guardado en %s</string>
     <string name="msg_no_restrictions">No se han encontrado restricciones</string>
     <string name="msg_edit">Tocar el icono de la aplicación para editar los permisos</string>

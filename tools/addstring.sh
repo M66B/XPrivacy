@@ -1,3 +1,3 @@
 #!/bin/bash
-grep -RIl "\<string name=\"help_half" . | xargs sed -i -e '/string name="help_half/a \
-\ \ \ \ <string name="help_attention">restrictions need attention</string>'
+grep -RIl "\<string name=\"msg_applying" . | xargs sed -i -e '/string name="msg_applying/a \
+\ \ \ \ <string name="msg_applied">Template applied</string>'

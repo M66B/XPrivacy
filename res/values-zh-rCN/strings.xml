@@ -37,6 +37,7 @@
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
     <string name="msg_applying">正在应用…</string>
+    <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">保存到%s</string>
     <string name="msg_no_restrictions">没有找到权限限制规则</string>
     <string name="msg_edit">点击应用图标以调整详细限制规则</string>

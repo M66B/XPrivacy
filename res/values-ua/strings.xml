@@ -37,6 +37,7 @@
     <string name="msg_licensed" formatted="false">Власник ліцензіі: %s</string>
     <string name="msg_loading">Загрузка</string>
     <string name="msg_applying">Застосовується</string>
+    <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Збережено в %s</string>
     <string name="msg_no_restrictions">Не знайдено дозволів</string>
     <string name="msg_edit">Натисніть на іконку програми для редагування всіх дозволів</string>

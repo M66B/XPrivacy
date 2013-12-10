@@ -73,6 +73,8 @@ public class PackageChange extends BroadcastReceiver {
 						String title = String.format("%s %s %s",
 								context.getString(replacing ? R.string.msg_update : R.string.msg_new),
 								appInfo.getFirstApplicationName(), appInfo.getVersion(context));
+						if (!replacing)
+							title = String.format("%s %s", title, context.getString(R.string.msg_applied));
 
 						// Build notification
 						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);

@@ -37,6 +37,7 @@
     <string name="msg_licensed" formatted="false">अधिकारी: %s</string>
     <string name="msg_loading">लोडिंग</string>
     <string name="msg_applying">Applying</string>
+    <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_edit">सभी प्रतिबंध को संपादित करने application के icon को क्लिक करे</string>

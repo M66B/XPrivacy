@@ -8,6 +8,7 @@ Changelog
 * Replaced notification by 'toast' for fetch restrictions
 * Added application state colors to legend
 * Ask if sure when fetching
+* Display *Template applied* for new applications in the notification
 * Reverted "Updated Italian translation" (update for another language)
 * Added Ukrainian translation
 * Updated Russian translation
