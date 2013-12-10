@@ -256,6 +256,7 @@ Limitations
 * Due to its static nature [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized on application start and there is no usage data
 * Due to a bug in Chromium the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Due to a custom implementation the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
+* You cannot restrict the Android ID used for submitting restrictions (only [pro version](http://www.faircode.eu/xprivacy/))
 
 Compatibility
 -------------
@@ -649,22 +650,25 @@ Support
 
 If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
-Including a [logcat](http://developer.android.com/tools/help/logcat.html) when relevant
+Include a [logcat](http://developer.android.com/tools/help/logcat.html) when relevant
 (use [pastebin](http://pastebin.com/) or a similar service).
-Don't forget to enable XPrivacy logging using the settings menu!
+
+**Do not forget to enable XPrivacy logging using the settings menu!**
 
 Please describe the exact steps to reproduce the issue
-and include information about your device type and the ROM you are using.
-
-**Before submitting any issue please ensure you are running the latest version of XPrivacy.**
-
-**Before submitting any issue please [read this](http://forum.xda-developers.com/showpost.php?p=43892381&postcount=1703).**
-
-**One bug/feature request per issue please!**
+and include information about your device type and Android version.
 
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
 If you have any question, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
+
+**Before submitting any issue please make sure you are running the latest version of XPrivacy.**
+
+**Before submitting any issue please make sure XPrivacy is causing the problem by disabling XPrivacy.**
+
+**One bug report / feature request per issue please!**
+
+**Do not use my personal or XDA e-mail for bug reports and feature requests.**
 
 Changelog
 ---------
