@@ -423,7 +423,7 @@ public class PrivacyProvider extends ContentProvider {
 		SharedPreferences.Editor editor = prefs.edit();
 		for (String pref : prefs.getAll().keySet()) {
 			String[] component = pref.split("\\.");
-			if (component.length >= 2 && component[1].equals(sUid)) {
+			if (component.length >= 3 && component[2].equals(sUid)) {
 				Util.log(null, Log.INFO, "Removed setting=" + pref + " uid=" + uid);
 				editor.remove(pref);
 				rows++;
