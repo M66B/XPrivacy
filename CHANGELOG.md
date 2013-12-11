@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Corrected submit ready message
 * Updated Chinese translations
 * Updated Lithuanian translation
 * Updated Ukrainian translation

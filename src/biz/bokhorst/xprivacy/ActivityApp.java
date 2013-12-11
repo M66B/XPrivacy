@@ -873,7 +873,7 @@ public class ActivityApp extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			Toast toast = Toast.makeText(ActivityApp.this,
-					String.format("%s: %s", getString(R.string.menu_fetch), result), Toast.LENGTH_LONG);
+					String.format("%s: %s", getString(R.string.menu_submit), result), Toast.LENGTH_LONG);
 			toast.show();
 			super.onPostExecute(result);
 		}
