@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.41 BETA**
+
 * Delete old restrictions on new application install, thanks @[jpeg729](https://github.com/jpeg729)
 * Delete application specific settings on application uninstall ([issue](https://github.com/M66B/XPrivacy/issues/901))
 * Replaced notification by 'toast' for fetch restrictions
@@ -20,8 +24,6 @@ Changelog
 * Updated Norwegian translation
 * Updated Russian translation
 * Updated Vietnamese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.40 TEST**
 
