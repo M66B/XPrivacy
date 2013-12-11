@@ -32,7 +32,7 @@
     <string name="menu_accounts">Выберите разрешенные учетные записи</string>
     <string name="menu_applications">Выберите разрешенные приложения</string>
     <string name="menu_contacts">Выберите разрешенные контакты</string>
-    <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_tutorial">Обучение</string>
     <string name="msg_new">Новое</string>
     <string name="msg_update">Обновить</string>
     <string name="msg_licensed" formatted="false">Владелец лицензии: %s</string>
