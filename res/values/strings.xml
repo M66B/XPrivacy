@@ -133,5 +133,8 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="help_restricted">restrictions are changed</string>
     <string name="help_shared">restrictions are submitted</string>
     <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
+    <string name="tutorial_categories" translatable="false">Select a category to restrict</string>
+    <string name="tutorial_applist" translatable="false">Check to restrict category for application\n
+Tap the application icon for details</string>
 
 </resources>

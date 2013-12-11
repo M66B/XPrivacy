@@ -9,292 +9,322 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ActivityMain" >
 
-    <!-- Frame -->
+    <!-- Filter frame -->
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="?attr/drawable_card"
-        android:orientation="vertical"
-        android:paddingBottom="6dp"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:paddingTop="6dp" >
-
-        <!-- Filters and categories -->
+        android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="38sp"
-            android:layout_marginBottom="-5dp"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/tvCategoryDetail"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="32dp"
-                android:background="@color/color_filter_border" />
-
-            <TextView
-                android:id="@+id/tvFilterDetail"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:orientation="horizontal" >
-
-            <View
-                android:id="@+id/vCategoryHighlight"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:id="@+id/vFilterHighlight"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_filter_border" />
-
-        <!-- Categories -->
-
-        <LinearLayout
-            android:id="@+id/llCategories"
+            android:id="@+id/llFilterFrame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:orientation="horizontal" >
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="?attr/drawable_card"
+            android:orientation="vertical"
+            android:paddingBottom="6dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="6dp" >
 
-            <Spinner
-                android:id="@+id/spRestriction"
-                android:layout_width="0dp"
-                android:layout_height="37dp"
-                android:layout_weight="1" />
+            <!-- Filters and categories -->
 
-            <ImageView
-                android:id="@+id/imgInfo"
-                android:layout_width="32dip"
-                android:layout_height="32dip"
-                android:layout_gravity="center_vertical"
-                android:clickable="true"
-                android:contentDescription="@string/help_application"
-                android:focusable="true"
-                android:src="?attr/icon_info" />
-        </LinearLayout>
-
-        <!-- Filters -->
-
-        <LinearLayout
-            android:id="@+id/llFilters"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:orientation="vertical" >
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38sp"
+                android:layout_marginBottom="-5dp"
                 android:orientation="horizontal" >
 
-                <EditText
-                    android:id="@+id/etFilter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="27dp"
-                    android:layout_marginRight="3dp"
-                    android:ems="10"
-                    android:hint="@string/help_application"
-                    android:inputType="textNoSuggestions"
+                <TextView
+                    android:id="@+id/tvCategoryDetail"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="32dp"
+                    android:background="@color/color_filter_border" />
+
+                <TextView
+                    android:id="@+id/tvFilterDetail"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:orientation="horizontal" >
+
+                <View
+                    android:id="@+id/vCategoryHighlight"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/vFilterHighlight"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_filter_border" />
+
+            <!-- Categories -->
+
+            <LinearLayout
+                android:id="@+id/llCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/spRestriction"
+                    android:layout_width="0dp"
+                    android:layout_height="37dp"
+                    android:layout_weight="1" />
+
                 <ImageView
-                    android:id="@+id/imgClear"
-                    android:layout_width="24dip"
-                    android:layout_height="24dip"
-                    android:layout_alignRight="@id/etFilter"
-                    android:layout_centerVertical="true"
+                    android:id="@+id/imgInfo"
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
+                    android:layout_gravity="center_vertical"
                     android:clickable="true"
                     android:contentDescription="@string/help_application"
                     android:focusable="true"
-                    android:src="?attr/icon_clear_grayed" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/help_used"
-                    android:src="?attr/icon_used" />
-
-                <CheckBox
-                    android:id="@+id/cbFUsed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="3dp"
-                    android:ellipsize="end"
-                    android:saveEnabled="false"
-                    android:singleLine="true"
-                    android:text="@string/title_fused"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:src="?attr/icon_info" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/help_internet"
-                    android:src="?attr/icon_internet" />
-
-                <CheckBox
-                    android:id="@+id/cbFInternet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="3dp"
-                    android:ellipsize="end"
-                    android:saveEnabled="false"
-                    android:singleLine="true"
-                    android:text="@string/title_finternet"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            </LinearLayout>
+            <!-- Filters -->
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/help_granted"
-                    android:src="?attr/icon_granted" />
-
-                <CheckBox
-                    android:id="@+id/cbFPermission"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="3dp"
-                    android:ellipsize="end"
-                    android:saveEnabled="false"
-                    android:singleLine="true"
-                    android:text="@string/title_fpermission"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/title_restrict"
-                    android:src="?attr/icon_checked" />
-
-                <CheckBox
-                    android:id="@+id/cbFRestriction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="3dp"
-                    android:ellipsize="end"
-                    android:saveEnabled="false"
-                    android:singleLine="true"
-                    android:text="@string/title_frestricted"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <CheckBox
-                    android:id="@+id/cbFRestrictionNot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="3dp"
-                    android:ellipsize="end"
-                    android:saveEnabled="false"
-                    android:singleLine="true"
-                    android:text="@string/title_fnot"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            </LinearLayout>
-
-            <LinearLayout
+                android:id="@+id/llFilters"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:orientation="vertical" >
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/title_fuser"
-                    android:src="@drawable/apps" />
-
-                <CheckBox
-                    android:id="@+id/cbFUser"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="3dp"
-                    android:ellipsize="end"
-                    android:saveEnabled="false"
-                    android:singleLine="true"
-                    android:text="@string/title_fuser"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                    <EditText
+                        android:id="@+id/etFilter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="27dp"
+                        android:layout_marginRight="3dp"
+                        android:ems="10"
+                        android:hint="@string/help_application"
+                        android:inputType="textNoSuggestions"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/help_application"
-                    android:src="?attr/icon_system" />
+                    <ImageView
+                        android:id="@+id/imgClear"
+                        android:layout_width="24dip"
+                        android:layout_height="24dip"
+                        android:layout_alignRight="@id/etFilter"
+                        android:layout_centerVertical="true"
+                        android:clickable="true"
+                        android:contentDescription="@string/help_application"
+                        android:focusable="true"
+                        android:src="?attr/icon_clear_grayed" />
+                </RelativeLayout>
 
-                <CheckBox
-                    android:id="@+id/cbFSystem"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="3dp"
-                    android:ellipsize="end"
-                    android:saveEnabled="false"
-                    android:singleLine="true"
-                    android:text="@string/title_fsystem"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/help_used"
+                        android:src="?attr/icon_used" />
+
+                    <CheckBox
+                        android:id="@+id/cbFUsed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="3dp"
+                        android:ellipsize="end"
+                        android:saveEnabled="false"
+                        android:singleLine="true"
+                        android:text="@string/title_fused"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/help_internet"
+                        android:src="?attr/icon_internet" />
+
+                    <CheckBox
+                        android:id="@+id/cbFInternet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="3dp"
+                        android:ellipsize="end"
+                        android:saveEnabled="false"
+                        android:singleLine="true"
+                        android:text="@string/title_finternet"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/help_granted"
+                        android:src="?attr/icon_granted" />
+
+                    <CheckBox
+                        android:id="@+id/cbFPermission"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="3dp"
+                        android:ellipsize="end"
+                        android:saveEnabled="false"
+                        android:singleLine="true"
+                        android:text="@string/title_fpermission"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/title_restrict"
+                        android:src="?attr/icon_checked" />
+
+                    <CheckBox
+                        android:id="@+id/cbFRestriction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="3dp"
+                        android:ellipsize="end"
+                        android:saveEnabled="false"
+                        android:singleLine="true"
+                        android:text="@string/title_frestricted"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <CheckBox
+                        android:id="@+id/cbFRestrictionNot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="3dp"
+                        android:ellipsize="end"
+                        android:saveEnabled="false"
+                        android:singleLine="true"
+                        android:text="@string/title_fnot"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/title_fuser"
+                        android:src="@drawable/apps" />
+
+                    <CheckBox
+                        android:id="@+id/cbFUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="3dp"
+                        android:ellipsize="end"
+                        android:saveEnabled="false"
+                        android:singleLine="true"
+                        android:text="@string/title_fuser"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/help_application"
+                        android:src="?attr/icon_system" />
+
+                    <CheckBox
+                        android:id="@+id/cbFSystem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="3dp"
+                        android:ellipsize="end"
+                        android:saveEnabled="false"
+                        android:singleLine="true"
+                        android:text="@string/title_fsystem"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlTutorialCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/llFilterFrame"
+            android:layout_alignTop="@id/llFilterFrame"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/tutorial_background" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tutorial_categories"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/btnTutorialCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="@android:string/ok" />
+        </RelativeLayout>
+    </RelativeLayout>
 
     <!-- Title -->
 
@@ -349,14 +379,42 @@
 
     <!-- What it is all about -->
 
-    <ListView
-        android:id="@+id/lvApp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/activity_horizontal_margin_list"
-        android:layout_marginTop="6dip"
-        android:choiceMode="multipleChoice"
-        android:paddingRight="12dip"
-        android:scrollbarStyle="insideInset" />
+        android:layout_height="wrap_content" >
+
+        <ListView
+            android:id="@+id/lvApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_horizontal_margin_list"
+            android:layout_marginTop="6dip"
+            android:choiceMode="multipleChoice"
+            android:paddingRight="12dip"
+            android:scrollbarStyle="insideInset" />
+
+        <RelativeLayout
+            android:id="@+id/rlTutorialAppList"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignTop="@id/lvApp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/tutorial_background" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tutorial_applist"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/btnTutorialAppList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="@android:string/ok" />
+        </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>
