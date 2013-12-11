@@ -41,7 +41,6 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
-    <string name="msg_edit">Klik på app-ikonet for at redigere alle restriktioner</string>
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Udført</string>
     <string name="msg_reboot">Genstart nødvendig</string>

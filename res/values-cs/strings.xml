@@ -41,7 +41,6 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
-    <string name="msg_edit">Pro úpravu jednotlivých oprávnění aplikace klikněte na její ikonu</string>
     <string name="msg_sure">Jste si jistý?</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadován restart zařízení</string>

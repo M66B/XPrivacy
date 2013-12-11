@@ -41,7 +41,6 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
-    <string name="msg_edit">Prem la icona de l\'aplicació per a editar tots els permisos</string>
     <string name="msg_sure">Esteu segur?</string>
     <string name="msg_done">Fet</string>
     <string name="msg_reboot">Cal reiniciar</string>

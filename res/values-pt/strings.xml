@@ -41,7 +41,6 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
-    <string name="msg_edit">Clique no ícone da aplicação para editar todas as restrições</string>
     <string name="msg_sure">Tem a certeza?</string>
     <string name="msg_done">Concluído</string>
     <string name="msg_reboot">É necessário reiniciar o dispositivo</string>

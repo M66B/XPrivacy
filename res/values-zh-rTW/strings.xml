@@ -41,7 +41,6 @@
     <string name="msg_applied">已經套用模版</string>
     <string name="msg_saved_to" formatted="false">已經保存到 %s</string>
     <string name="msg_no_restrictions">找不到限制規則</string>
-    <string name="msg_edit">點選app圖示以檢視並修改限制規則</string>
     <string name="msg_sure">確定進行操作?</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">需要重新啟動</string>

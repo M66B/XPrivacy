@@ -41,7 +41,6 @@
     <string name="msg_applied">Thiết lập mẫu đã được áp dụng</string>
     <string name="msg_saved_to" formatted="false">Đã được lưu vào %s</string>
     <string name="msg_no_restrictions">Không có thông tin hạn chế nào được tìm thấy</string>
-    <string name="msg_edit">Chạm vào biểu tượng ứng dụng để thay đổi các thiết lập</string>
     <string name="msg_sure">Bạn có chắc không?</string>
     <string name="msg_done">Xong</string>
     <string name="msg_reboot">Yêu cầu khởi động lại thiết bị</string>

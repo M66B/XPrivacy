@@ -20,8 +20,6 @@ import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -807,10 +805,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		dialog.setTitle(getString(R.string.menu_help));
 		dialog.setContentView(R.layout.help);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
-		TextView tvHelpHalf = (TextView) dialog.findViewById(R.id.help_half);
-		Drawable dHalf = new BitmapDrawable(getResources(), mCheck[1]);
-		dHalf.setBounds(0, 0, 48, 48);
-		tvHelpHalf.setCompoundDrawables(dHalf, null, null, null);
+		ImageView imgHelpHalf = (ImageView) dialog.findViewById(R.id.imgHelpHalf);
+		imgHelpHalf.setImageBitmap(mCheck[1]);
 		dialog.setCancelable(true);
 		dialog.show();
 	}

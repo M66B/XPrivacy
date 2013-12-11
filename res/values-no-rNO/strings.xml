@@ -41,7 +41,6 @@
     <string name="msg_applied">Skjema i bruk</string>
     <string name="msg_saved_to" formatted="false">Lagre till %s</string>
     <string name="msg_no_restrictions">Ingen restriksjoner funnet</string>
-    <string name="msg_edit">Klikk på app ikonet for å bearbeide alle restriksjoner</string>
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_done">Ferdig</string>
     <string name="msg_reboot">Omstart nødvendig</string>

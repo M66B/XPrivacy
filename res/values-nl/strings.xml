@@ -41,7 +41,6 @@
     <string name="msg_applied">Sjabloon toegepast</string>
     <string name="msg_saved_to" formatted="false">Bewaard als %s</string>
     <string name="msg_no_restrictions">Geen beperkingen gevonden</string>
-    <string name="msg_edit">Klik op het applicatiepictogram om alle beperkingen te wijzigen</string>
     <string name="msg_sure">Zeker weten?</string>
     <string name="msg_done">Gereed</string>
     <string name="msg_reboot">Herstart apparaat vereist</string>

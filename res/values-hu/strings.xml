@@ -41,7 +41,6 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
-    <string name="msg_edit">Kattintson az alkalmazás ikonra az összes korlátozás módosításához</string>
     <string name="msg_sure">Biztos benne?</string>
     <string name="msg_done">Kész</string>
     <string name="msg_reboot">Újraindítás szükséges</string>

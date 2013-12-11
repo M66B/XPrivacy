@@ -41,7 +41,6 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
-    <string name="msg_edit">לחץ על סמל היישום כדי לערוך את כל ההגבלות</string>
     <string name="msg_sure">אתה בטוח?</string>
     <string name="msg_done">בוצע</string>
     <string name="msg_reboot">נדרש אתחול מחדש</string>

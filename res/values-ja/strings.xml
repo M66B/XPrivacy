@@ -41,7 +41,6 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">%sに保存されました</string>
     <string name="msg_no_restrictions">制限などは見つかりませんでした</string>
-    <string name="msg_edit">アプリアイコンをタップすると全ての権限の制限を設定できます</string>
     <string name="msg_sure">続行しますか</string>
     <string name="msg_done">終了</string>
     <string name="msg_reboot">再起動して下さい</string>

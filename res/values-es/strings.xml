@@ -41,7 +41,6 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Guardado en %s</string>
     <string name="msg_no_restrictions">No se han encontrado restricciones</string>
-    <string name="msg_edit">Tocar el icono de la aplicación para editar los permisos</string>
     <string name="msg_sure">¿Estas seguro?</string>
     <string name="msg_done">Completado</string>
     <string name="msg_reboot">Reinicio requerido</string>

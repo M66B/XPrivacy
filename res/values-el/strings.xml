@@ -41,7 +41,6 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
-    <string name="msg_edit">Πιέστε το εικονίδιο της εφαρμογής για επεξεργασία όλων των περιορισμών</string>
     <string name="msg_sure">Είστε σίγουρος;</string>
     <string name="msg_done">Τέλος</string>
     <string name="msg_reboot">Απαιτείται επανεκκίνηση</string>

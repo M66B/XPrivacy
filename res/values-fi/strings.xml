@@ -41,7 +41,6 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
-    <string name="msg_edit">Klikkaa applikaation ikonia editoidaksesi kaikki rajoituksia</string>
     <string name="msg_sure">Oletko varma?</string>
     <string name="msg_done">Valmis</string>
     <string name="msg_reboot">Laite on käynnistettävä uudelleen</string>

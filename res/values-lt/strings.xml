@@ -42,7 +42,6 @@
     <string name="msg_applied">Šablonas pritaikytas</string>
     <string name="msg_saved_to" formatted="false">Išsaugomi %s</string>
     <string name="msg_no_restrictions">Nerasta ribojimų</string>
-    <string name="msg_edit">Spustelėkite programos piktogramą norėdami redaguoti ribojimus</string>
     <string name="msg_sure">Įsitikinę?</string>
     <string name="msg_done">Atlikta</string>
     <string name="msg_reboot">Reikia perkrauti prietaisą</string>

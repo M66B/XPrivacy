@@ -41,7 +41,6 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Сохранено в %s</string>
     <string name="msg_no_restrictions">Не найдено разрешений</string>
-    <string name="msg_edit">Нажмите на иконку приложения для редактирования всех разрешений</string>
     <string name="msg_sure">Вы уверены?</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Требуется перезагрузка</string>
