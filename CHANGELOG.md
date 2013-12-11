@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Updated Ukrainian translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.41 BETA**
