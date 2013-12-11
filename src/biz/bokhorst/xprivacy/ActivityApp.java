@@ -62,6 +62,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.Window;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
@@ -215,7 +216,10 @@ public class ActivityApp extends Activity {
 		View.OnClickListener listener = new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				((View) view.getParent()).setVisibility(View.GONE);
+				ViewParent parent = view.getParent();
+				while (!parent.getClass().equals(RelativeLayout.class))
+					parent = parent.getParent();
+				((View) parent).setVisibility(View.GONE);
 				PrivacyManager.setSetting(null, ActivityApp.this, 0, PrivacyManager.cSettingTutorialDetails,
 						Boolean.TRUE.toString());
 			}

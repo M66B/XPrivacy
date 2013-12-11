@@ -37,6 +37,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -329,7 +330,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		View.OnClickListener listener = new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				((View) view.getParent()).setVisibility(View.GONE);
+				ViewParent parent = view.getParent();
+				while (!parent.getClass().equals(RelativeLayout.class))
+					parent = parent.getParent();
+				((View) parent).setVisibility(View.GONE);
 				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingTutorialMain,
 						Boolean.TRUE.toString());
 			}
