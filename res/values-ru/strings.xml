@@ -111,7 +111,7 @@
     <string name="settings_usage">Андроид - данные об использовании (требует перезапуска)</string>
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Экспертный режим</string>
-    <string name="settings_dangerous">Запрещение опасных функций</string>
+    <string name="settings_dangerous">Запрет опасных функций</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>
@@ -119,8 +119,8 @@
     <string name="help_frozen">отключено</string>
     <string name="help_dangerous">изменение разрешений опасно</string>
     <string name="help_half">частично запрещено</string>
-    <string name="help_attention">ограничения требуют внимания</string>
-    <string name="help_restricted">ограничения имзенены</string>
-    <string name="help_shared">ограничения отосланы</string>
+    <string name="help_attention">разрешения требуют внимания</string>
+    <string name="help_restricted">разрешения изменены</string>
+    <string name="help_shared">разрешения отправлены</string>
 
 </resources>
