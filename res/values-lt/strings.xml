@@ -33,7 +33,7 @@
     <string name="menu_accounts">Leisti pažymėtas paskyras</string>
     <string name="menu_applications">Leisti pažymėtas programas</string>
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>
-    <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_tutorial">Instukcija</string>
     <string name="msg_new">Naujas</string>
     <string name="msg_update">Atnaujinta</string>
     <string name="msg_licensed" formatted="false">licencija: %s</string>
@@ -69,7 +69,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_messages">Pranešimai (SMS, MMS)</string>
     <string name="restrict_network">Tinklas (adresai)</string>
     <string name="restrict_notifications">Įspėjimai</string>
-    <string name="restrict_overlay">Overlay</string>
+    <string name="restrict_overlay">Perdanga</string>
     <string name="restrict_phone">Telefonas (ID, numeris, skambučiai)</string>
     <string name="restrict_sensors">Sensoriai</string>
     <string name="restrict_storage">Atmintis (media, SD kortelė)</string>
