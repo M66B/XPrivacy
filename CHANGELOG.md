@@ -3,8 +3,10 @@ Changelog
 
 **Next release**
 
+* Corrected submit ready message
 * Updated Chinese translations
 * Updated Lithuanian translation
+* Updated Russian translation
 * Updated Ukrainian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
