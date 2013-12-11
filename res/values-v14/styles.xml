@@ -20,6 +20,7 @@
         <item name="color_state_attention">@color/color_state_attention_dark</item>
         <item name="color_state_restricted">@color/color_state_restricted_dark</item>
         <item name="color_state_shared">@color/color_state_shared_dark</item>
+        <item name="background_tutorial">@drawable/tutorial_background_dark</item>
     </style>
 
     <style name="CustomTheme.Light" parent="android:Theme.Holo.Light.DarkActionBar">
@@ -42,6 +43,7 @@
         <item name="color_state_attention">@color/color_state_attention_light</item>
         <item name="color_state_restricted">@color/color_state_restricted_light</item>
         <item name="color_state_shared">@color/color_state_shared_light</item>
+        <item name="background_tutorial">@drawable/tutorial_background_light</item>
     </style>
 
     <style name="CustomTheme.Light.Dialog" parent="android:Theme.Holo.Light">

@@ -11,6 +11,7 @@ Changelog
 * Display *Template applied* for new applications in the notification
 * Changed application state colors, thanks @[danielmmmm](https://github.com/danielmmmm)
 * Updated Android Support Library package
+* Added tutorial ([issue](https://github.com/M66B/XPrivacy/issues/890))
 * Reverted "Updated Italian translation" (update for another language)
 * Added Ukrainian translation
 * Updated Chinese translation

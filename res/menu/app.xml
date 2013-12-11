@@ -7,6 +7,9 @@
         android:showAsAction="always"
         android:title="@string/menu_help"/>
     <item
+        android:id="@+id/menu_tutorial"
+        android:title="@string/menu_tutorial"/>
+    <item
         android:id="@+id/menu_apply"
         android:title="@string/menu_apply"/>
     <item

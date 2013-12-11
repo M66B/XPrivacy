@@ -17,12 +17,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -48,6 +44,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -325,6 +322,22 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Build tri-state check box images
 		mCheck = Util.getTriStateCheckBox(this);
+
+		// Tutorial
+		if (!PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingTutorialMain, false, false)) {
+			((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
+			((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
+		}
+		View.OnClickListener listener = new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				((View) view.getParent()).setVisibility(View.GONE);
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingTutorialMain,
+						Boolean.TRUE.toString());
+			}
+		};
+		((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
+		((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
 	}
 
 	@Override
@@ -462,6 +475,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			switch (item.getItemId()) {
 			case R.id.menu_help:
 				optionHelp();
+				return true;
+			case R.id.menu_tutorial:
+				optionTutorial();
 				return true;
 			case R.id.menu_all:
 				optionAll();
@@ -797,6 +813,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		tvHelpHalf.setCompoundDrawables(dHalf, null, null, null);
 		dialog.setCancelable(true);
 		dialog.show();
+	}
+
+	private void optionTutorial() {
+		((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
+		((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
+		PrivacyManager.setSetting(null, this, 0, PrivacyManager.cSettingTutorialMain, Boolean.FALSE.toString());
 	}
 
 	private void toggleFiltersVisibility() {
@@ -1227,47 +1249,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						holder.vwState.setBackgroundColor(getResources().getColor(
 								Util.getThemed(ActivityMain.this, R.attr.color_state_restricted)));
 
-					// Draw border around icon
-					if (xAppInfo.getIcon(ActivityMain.this) instanceof BitmapDrawable) {
-						// Get icon bitmap
-						Bitmap icon = ((BitmapDrawable) xAppInfo.getIcon(ActivityMain.this)).getBitmap();
-
-						// Get list item height
-						TypedArray arrayHeight = getTheme().obtainStyledAttributes(
-								new int[] { android.R.attr.listPreferredItemHeightSmall });
-						int height = (int) Math.round(arrayHeight.getDimension(0, 32)
-								* getResources().getDisplayMetrics().density + 0.5f);
-						arrayHeight.recycle();
-
-						// Scale icon to list item height
-						icon = Bitmap.createScaledBitmap(icon, height, height, true);
-
-						// Create bitmap with borders
-						int borderSize = (int) Math.round(getResources().getDisplayMetrics().density + 0.5f);
-						Bitmap bitmap = Bitmap.createBitmap(icon.getWidth() + 2 * borderSize, icon.getHeight() + 2
-								* borderSize, icon.getConfig());
-
-						// Get highlight color
-						TypedArray arrayColor = getTheme().obtainStyledAttributes(
-								new int[] { android.R.attr.colorActivatedHighlight });
-						int textColor = arrayColor.getColor(0, 0xFF00FF);
-						arrayColor.recycle();
-
-						// Draw bitmap with borders
-						Canvas canvas = new Canvas(bitmap);
-						Paint paint = new Paint();
-						paint.setColor(textColor);
-						paint.setStyle(Style.STROKE);
-						paint.setStrokeWidth(borderSize);
-						canvas.drawRect(0, 0, bitmap.getWidth(), bitmap.getHeight(), paint);
-						paint = new Paint(Paint.FILTER_BITMAP_FLAG);
-						canvas.drawBitmap(icon, borderSize, borderSize, paint);
-
-						// Show bitmap
-						holder.imgIcon.setImageBitmap(bitmap);
-					}
-					holder.imgIcon.setVisibility(View.VISIBLE);
-
 					// Display usage
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
@@ -1402,6 +1383,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Get info
 			final ApplicationInfoEx xAppInfo = getItem(holder.position);
+			holder.imgIcon.setImageDrawable(xAppInfo.getIcon(convertView.getContext()));
 
 			// Set background color
 			if (xAppInfo.isSystem())
@@ -1424,7 +1406,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Set data
 			holder.vwState.setBackgroundColor(Color.TRANSPARENT);
-			holder.imgIcon.setVisibility(View.INVISIBLE);
 			holder.tvName.setText(xAppInfo.toString());
 			holder.tvName.setTypeface(null, Typeface.NORMAL);
 			holder.imgUsed.setVisibility(View.INVISIBLE);

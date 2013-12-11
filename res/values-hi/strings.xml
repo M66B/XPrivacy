@@ -32,6 +32,7 @@
     <string name="menu_accounts">अनुमति के लिए खातों को चुने</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">नया</string>
     <string name="msg_update">अद्यतन</string>
     <string name="msg_licensed" formatted="false">अधिकारी: %s</string>

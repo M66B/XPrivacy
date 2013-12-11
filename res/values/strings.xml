@@ -37,6 +37,7 @@
     <string name="menu_accounts">Select accounts to allow</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Select contacts to allow</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Licensed to: %s</string>
@@ -133,8 +134,10 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="help_restricted">restrictions are changed</string>
     <string name="help_shared">restrictions are submitted</string>
     <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
-    <string name="tutorial_categories" translatable="false">Select a category to restrict</string>
-    <string name="tutorial_applist" translatable="false">Check to restrict category for application\n
-Tap the application icon for details</string>
+    <string name="tutorial_mainheader" translatable="false">Select a category to restrict</string>
+    <string name="tutorial_mainlist" translatable="false">Tap a check box to restrict the selected category for an application\n
+\nTap the application icon for detailed restrictions and settings</string>
+    <string name="tutorial_detailsheader" translatable="false">Tap the icon for more actions</string>
+    <string name="tutorial_detailslist" translatable="false">Tap the arrow to see the function exceptions</string>
 
 </resources>

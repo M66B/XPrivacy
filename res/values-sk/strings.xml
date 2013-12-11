@@ -32,6 +32,7 @@
     <string name="menu_accounts">Povolené účty</string>
     <string name="menu_applications">Vyberte povolené aplikácie</string>
     <string name="menu_contacts">Povolené kontakty</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">Nové</string>
     <string name="msg_update">Aktualizácia</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>

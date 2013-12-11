@@ -40,14 +40,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.graphics.Paint.Style;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -70,6 +66,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -158,42 +155,7 @@ public class ActivityApp extends Activity {
 
 		// Display app icon
 		final ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
-		Drawable dIcon = mAppInfo.getIcon(this);
-		if (dIcon instanceof BitmapDrawable) {
-			// Get icon bitmap
-			Bitmap icon = ((BitmapDrawable) dIcon).getBitmap();
-
-			// Get height
-			int height = (int) Math.round(32 * getResources().getDisplayMetrics().density + 0.5f);
-
-			// Scale icon to height
-			icon = Bitmap.createScaledBitmap(icon, height, height, true);
-
-			// Create bitmap with borders
-			int borderSize = (int) Math.round(getResources().getDisplayMetrics().density + 0.5f);
-			Bitmap bitmap = Bitmap.createBitmap(icon.getWidth() + 2 * borderSize, icon.getHeight() + 2 * borderSize,
-					icon.getConfig());
-
-			// Get highlight color
-			TypedArray arrayColor = getTheme().obtainStyledAttributes(
-					new int[] { android.R.attr.colorActivatedHighlight });
-			int textColor = arrayColor.getColor(0, 0xFF00FF);
-			arrayColor.recycle();
-
-			// Draw bitmap with borders
-			Canvas canvas = new Canvas(bitmap);
-			Paint paint = new Paint();
-			paint.setColor(textColor);
-			paint.setStyle(Style.STROKE);
-			paint.setStrokeWidth(borderSize);
-			canvas.drawRect(0, 0, bitmap.getWidth(), bitmap.getHeight(), paint);
-			paint = new Paint(Paint.FILTER_BITMAP_FLAG);
-			canvas.drawBitmap(icon, borderSize, borderSize, paint);
-
-			// Show bitmap
-			imgIcon.setImageBitmap(bitmap);
-		} else
-			imgIcon.setImageDrawable(mAppInfo.getIcon(this));
+		imgIcon.setImageDrawable(mAppInfo.getIcon(this));
 
 		// Handle icon click
 		imgIcon.setOnClickListener(new View.OnClickListener() {
@@ -246,6 +208,22 @@ public class ActivityApp extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mCheck = Util.getTriStateCheckBox(this);
+
+		// Tutorial
+		if (!PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingTutorialDetails, false, false)) {
+			((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
+			((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
+		}
+		View.OnClickListener listener = new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				((View) view.getParent()).setVisibility(View.GONE);
+				PrivacyManager.setSetting(null, ActivityApp.this, 0, PrivacyManager.cSettingTutorialDetails,
+						Boolean.TRUE.toString());
+			}
+		};
+		((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
+		((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
 
 		// Clear
 		if (extras.containsKey(cActionClear)) {
@@ -320,6 +298,9 @@ public class ActivityApp extends Activity {
 			return true;
 		case R.id.menu_help:
 			optionHelp();
+			return true;
+		case R.id.menu_tutorial:
+			optionTutorial();
 			return true;
 		case R.id.menu_apply:
 			optionApply();
@@ -402,6 +383,12 @@ public class ActivityApp extends Activity {
 		tvHelpHalf.setCompoundDrawables(dHalf, null, null, null);
 		dialog.setCancelable(true);
 		dialog.show();
+	}
+
+	private void optionTutorial() {
+		((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
+		((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
+		PrivacyManager.setSetting(null, this, 0, PrivacyManager.cSettingTutorialDetails, Boolean.FALSE.toString());
 	}
 
 	private void optionApply() {

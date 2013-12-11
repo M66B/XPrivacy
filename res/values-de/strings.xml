@@ -32,6 +32,7 @@
     <string name="menu_accounts">Konten für Zugriff freigeben</string>
     <string name="menu_applications">Apps für Zugriff freigeben</string>
     <string name="menu_contacts">Kontakte für Zugriff freigeben</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">Neu</string>
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Lizenziert für: %s</string>

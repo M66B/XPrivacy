@@ -32,6 +32,7 @@
     <string name="menu_accounts">Izberi dovoljene račune</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Izberi dovoljene stike</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">Novo</string>
     <string name="msg_update">Posodobitev</string>
     <string name="msg_licensed" formatted="false">Licencirano na: %s</string>

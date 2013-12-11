@@ -32,6 +32,7 @@
     <string name="menu_accounts">Επιλογή επιτρεπόμενων λογαριασμών</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Επιλογή επιτρεπόμενων επαφών</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Άδεια για: %s</string>

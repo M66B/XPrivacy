@@ -32,6 +32,7 @@
     <string name="menu_accounts">Vælg konti som skal tillades</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Vælg kontakter som skal tillades</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">Ny</string>
     <string name="msg_update">Opdatér</string>
     <string name="msg_licensed" formatted="false">Givet i licens til: %s</string>

@@ -32,6 +32,7 @@
     <string name="menu_accounts">Wybierz dozwolone konta</string>
     <string name="menu_applications">Wybierz dozwolone aplikacje</string>
     <string name="menu_contacts">Wybierz dozwolone kontakty</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">Nowa aplikacja</string>
     <string name="msg_update">Aktualizacja</string>
     <string name="msg_licensed" formatted="false">Licencjonowane dla: %s</string>

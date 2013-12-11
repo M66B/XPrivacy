@@ -32,6 +32,7 @@
     <string name="menu_accounts">設定允許之帳戶</string>
     <string name="menu_applications">設定允許之app</string>
     <string name="menu_contacts">設定允許之聯絡人</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">已安裝</string>
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">授權給: %s</string>

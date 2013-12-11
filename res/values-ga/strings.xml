@@ -32,6 +32,7 @@
     <string name="menu_accounts">Roghnaigh cuntais a cheadú</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Roghnaigh cuntais a cheadú</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">Nua</string>
     <string name="msg_update">Nuashonrú</string>
     <string name="msg_licensed" formatted="false">Ceadúnaithe do: %s</string>

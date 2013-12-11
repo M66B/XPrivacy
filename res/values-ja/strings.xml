@@ -32,6 +32,7 @@
     <string name="menu_accounts">許可するアカウントを選択</string>
     <string name="menu_applications">許可するアプリを選択</string>
     <string name="menu_contacts">許可する電話の連絡先を選択</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">新規</string>
     <string name="msg_update">更新されました</string>
     <string name="msg_licensed" formatted="false">ライセンス先: %s</string>

@@ -32,6 +32,7 @@
     <string name="menu_accounts">Valitse sallittavat tilit</string>
     <string name="menu_applications">Valitse sallittavat applikaatiot</string>
     <string name="menu_contacts">Valitse sallittavat kontaktit</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">Uusi</string>
     <string name="msg_update">Päivitä</string>
     <string name="msg_licensed" formatted="false">Lisensoitu: %s</string>

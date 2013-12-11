@@ -32,6 +32,7 @@
     <string name="menu_accounts">Vali kasutajad mida lubada</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Vali kontaktid mida lubada</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Litsentseeritud: %s</string>

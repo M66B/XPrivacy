@@ -104,6 +104,8 @@ public class PrivacyManager {
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
 	public final static String cSettingFirstRun = "FirstRun";
+	public final static String cSettingTutorialMain = "TutorialMain";
+	public final static String cSettingTutorialDetails = "TutorialDetails";
 	public final static String cSettingNotify = "Notify";
 	public final static String cSettingDangerous = "Dangerous";
 	public final static String cSettingAndroidUsage = "AndroidUsage";

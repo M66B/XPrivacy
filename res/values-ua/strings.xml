@@ -32,6 +32,7 @@
     <string name="menu_accounts">Оберіть дозволені облікові записи</string>
     <string name="menu_applications">Оберіть дозволені програми</string>
     <string name="menu_contacts">Оберіть дозволені контакти</string>
+    <string name="menu_tutorial">Tutorial</string>
     <string name="msg_new">Нове</string>
     <string name="msg_update">Оновити</string>
     <string name="msg_licensed" formatted="false">Власник ліцензіі: %s</string>

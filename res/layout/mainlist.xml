@@ -16,7 +16,7 @@
         android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:id="@+id/llFilterFrame"
+            android:id="@+id/llHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
@@ -302,22 +302,23 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/rlTutorialCategories"
+            android:id="@+id/rlTutorialHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/llFilterFrame"
-            android:layout_alignTop="@id/llFilterFrame"
+            android:layout_alignBottom="@id/llHeader"
+            android:layout_alignTop="@id/llHeader"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@drawable/tutorial_background" >
+            android:background="?background_tutorial"
+            android:visibility="gone" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tutorial_categories"
+                android:text="@string/tutorial_mainheader"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
-                android:id="@+id/btnTutorialCategories"
+                android:id="@+id/btnTutorialHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -394,25 +395,28 @@
             android:scrollbarStyle="insideInset" />
 
         <RelativeLayout
-            android:id="@+id/rlTutorialAppList"
+            android:id="@+id/rlTutorialDetails"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_alignTop="@id/lvApp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@drawable/tutorial_background" >
+            android:background="?background_tutorial"
+            android:visibility="gone" >
 
             <TextView
+                android:id="@+id/tvTutorialDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tutorial_applist"
+                android:text="@string/tutorial_mainlist"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
-                android:id="@+id/btnTutorialAppList"
+                android:id="@+id/btnTutorialDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
+                android:layout_below="@id/tvTutorialDetails"
+                android:layout_marginTop="6dp"
                 android:text="@android:string/ok" />
         </RelativeLayout>
     </RelativeLayout>

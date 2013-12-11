@@ -10,97 +10,134 @@
 
     <!-- Title & help -->
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/imgInfo"
-            android:layout_width="32dip"
-            android:layout_height="32dip"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/help_application"
-            android:src="?attr/icon_info" />
-
-        <TextView
-            android:id="@+id/tvApp"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:paddingLeft="6dip"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <!-- Thick divider -->
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray" />
-
-    <!-- Icon -->
-
-    <LinearLayout
-        android:id="@+id/llInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dip"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/imgIcon"
-            android:layout_width="?android:attr/listPreferredItemHeightSmall"
-            android:layout_height="?android:attr/listPreferredItemHeightSmall"
-            android:contentDescription="@string/help_application" />
+        android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/llHeader"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/imgInternet"
-                android:layout_width="24dip"
-                android:layout_height="24dip"
-                android:contentDescription="@string/help_internet"
-                android:src="?attr/icon_internet" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/imgFrozen"
-                android:layout_width="24dip"
-                android:layout_height="24dip"
-                android:contentDescription="@string/help_application"
-                android:src="?attr/icon_frozen" />
+                <ImageView
+                    android:id="@+id/imgInfo"
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/help_application"
+                    android:src="?attr/icon_info" />
+
+                <TextView
+                    android:id="@+id/tvApp"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="6dip"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Thick divider -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray" />
+
+            <!-- Icon -->
+
+            <LinearLayout
+                android:id="@+id/llInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dip"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/imgIcon"
+                    android:layout_width="?android:attr/listPreferredItemHeightSmall"
+                    android:layout_height="?android:attr/listPreferredItemHeightSmall"
+                    android:contentDescription="@string/help_application" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/imgInternet"
+                        android:layout_width="24dip"
+                        android:layout_height="24dip"
+                        android:contentDescription="@string/help_internet"
+                        android:src="?attr/icon_internet" />
+
+                    <ImageView
+                        android:id="@+id/imgFrozen"
+                        android:layout_width="24dip"
+                        android:layout_height="24dip"
+                        android:contentDescription="@string/help_application"
+                        android:src="?attr/icon_frozen" />
+                </LinearLayout>
+
+                <!-- Version / package name -->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dip"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/tvVersion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textIsSelectable="false" />
+
+                    <TextView
+                        android:id="@+id/tvPackageName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textIsSelectable="false" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- Version / package name -->
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rlTutorialHeader"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dip"
-            android:orientation="vertical" >
+            android:layout_alignBottom="@id/llHeader"
+            android:layout_alignTop="@id/llHeader"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="?background_tutorial"
+            android:visibility="gone" >
 
             <TextView
-                android:id="@+id/tvVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textIsSelectable="false" />
+                android:text="@string/tutorial_detailsheader"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TextView
-                android:id="@+id/tvPackageName"
+            <Button
+                android:id="@+id/btnTutorialHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textIsSelectable="false" />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="@android:string/ok" />
+        </RelativeLayout>
+    </RelativeLayout>
 
     <!-- Title -->
 
@@ -121,13 +158,44 @@
 
     <!-- What it is all about -->
 
-    <ExpandableListView
-        android:id="@+id/elvRestriction"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dip"
-        android:choiceMode="multipleChoice"
-        android:paddingRight="6dip"
-        android:scrollbarStyle="insideInset" />
+        android:layout_height="wrap_content" >
+
+        <ExpandableListView
+            android:id="@+id/elvRestriction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dip"
+            android:choiceMode="multipleChoice"
+            android:paddingRight="6dip"
+            android:scrollbarStyle="insideInset" />
+
+        <RelativeLayout
+            android:id="@+id/rlTutorialDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/elvRestriction"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="?background_tutorial"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tvTutorialDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tutorial_detailslist"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/btnTutorialDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/tvTutorialDetails"
+                android:layout_marginTop="6dp"
+                android:text="@android:string/ok" />
+        </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>
