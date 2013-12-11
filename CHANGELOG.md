@@ -13,6 +13,7 @@ Changelog
 * Updated Android Support Library package
 * Reverted "Updated Italian translation" (update for another language)
 * Added Ukrainian translation
+* Updated Chinese translation
 * Updated German translation
 * Updated Lithuanian translation
 * Updated Norwegian translation
