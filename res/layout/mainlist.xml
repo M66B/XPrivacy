@@ -19,26 +19,26 @@
             android:id="@+id/llHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="3dip"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:background="?attr/drawable_card"
             android:orientation="vertical"
-            android:paddingBottom="6dp"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:paddingTop="6dp" >
+            android:paddingBottom="6dip"
+            android:paddingLeft="6dip"
+            android:paddingRight="6dip"
+            android:paddingTop="6dip" >
 
             <!-- Filters and categories -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="38sp"
-                android:layout_marginBottom="-5dp"
+                android:layout_marginBottom="-5dip"
                 android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/tvCategoryDetail"
-                    android:layout_width="0dp"
+                    android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ellipsize="end"
@@ -47,13 +47,13 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <View
-                    android:layout_width="1dp"
-                    android:layout_height="32dp"
+                    android:layout_width="1dip"
+                    android:layout_height="32dip"
                     android:background="@color/color_filter_border" />
 
                 <TextView
                     android:id="@+id/tvFilterDetail"
-                    android:layout_width="0dp"
+                    android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ellipsize="end"
@@ -64,29 +64,29 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="5dp"
+                android:layout_height="5dip"
                 android:orientation="horizontal" >
 
                 <View
                     android:id="@+id/vCategoryHighlight"
-                    android:layout_width="0dp"
+                    android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
                 <View
-                    android:layout_width="1dp"
+                    android:layout_width="1dip"
                     android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/vFilterHighlight"
-                    android:layout_width="0dp"
+                    android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="1dip"
                 android:background="@color/color_filter_border" />
 
             <!-- Categories -->
@@ -95,14 +95,14 @@
                 android:id="@+id/llCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
+                android:layout_marginLeft="3dip"
+                android:layout_marginRight="3dip"
                 android:orientation="horizontal" >
 
                 <Spinner
                     android:id="@+id/spRestriction"
-                    android:layout_width="0dp"
-                    android:layout_height="37dp"
+                    android:layout_width="0dip"
+                    android:layout_height="37dip"
                     android:layout_weight="1" />
 
                 <ImageView
@@ -122,8 +122,8 @@
                 android:id="@+id/llFilters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
+                android:layout_marginLeft="3dip"
+                android:layout_marginRight="3dip"
                 android:orientation="vertical" >
 
                 <RelativeLayout
@@ -135,8 +135,8 @@
                         android:id="@+id/etFilter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="27dp"
-                        android:layout_marginRight="3dp"
+                        android:layout_marginLeft="27dip"
+                        android:layout_marginRight="3dip"
                         android:ems="10"
                         android:hint="@string/help_application"
                         android:inputType="textNoSuggestions"
@@ -160,16 +160,16 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="24dip"
+                        android:layout_height="24dip"
                         android:contentDescription="@string/help_used"
                         android:src="?attr/icon_used" />
 
                     <CheckBox
                         android:id="@+id/cbFUsed"
                         android:layout_width="wrap_content"
-                        android:layout_height="24dp"
-                        android:layout_marginLeft="3dp"
+                        android:layout_height="24dip"
+                        android:layout_marginLeft="3dip"
                         android:ellipsize="end"
                         android:saveEnabled="false"
                         android:singleLine="true"
@@ -183,16 +183,16 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="24dip"
+                        android:layout_height="24dip"
                         android:contentDescription="@string/help_internet"
                         android:src="?attr/icon_internet" />
 
                     <CheckBox
                         android:id="@+id/cbFInternet"
                         android:layout_width="wrap_content"
-                        android:layout_height="24dp"
-                        android:layout_marginLeft="3dp"
+                        android:layout_height="24dip"
+                        android:layout_marginLeft="3dip"
                         android:ellipsize="end"
                         android:saveEnabled="false"
                         android:singleLine="true"
@@ -205,16 +205,16 @@
                     android:layout_height="match_parent" >
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="24dip"
+                        android:layout_height="24dip"
                         android:contentDescription="@string/help_granted"
                         android:src="?attr/icon_granted" />
 
                     <CheckBox
                         android:id="@+id/cbFPermission"
                         android:layout_width="wrap_content"
-                        android:layout_height="24dp"
-                        android:layout_marginLeft="3dp"
+                        android:layout_height="24dip"
+                        android:layout_marginLeft="3dip"
                         android:ellipsize="end"
                         android:saveEnabled="false"
                         android:singleLine="true"
@@ -227,16 +227,16 @@
                     android:layout_height="match_parent" >
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="24dip"
+                        android:layout_height="24dip"
                         android:contentDescription="@string/title_restrict"
                         android:src="?attr/icon_checked" />
 
                     <CheckBox
                         android:id="@+id/cbFRestriction"
                         android:layout_width="wrap_content"
-                        android:layout_height="24dp"
-                        android:layout_marginLeft="3dp"
+                        android:layout_height="24dip"
+                        android:layout_marginLeft="3dip"
                         android:ellipsize="end"
                         android:saveEnabled="false"
                         android:singleLine="true"
@@ -246,8 +246,8 @@
                     <CheckBox
                         android:id="@+id/cbFRestrictionNot"
                         android:layout_width="wrap_content"
-                        android:layout_height="24dp"
-                        android:layout_marginLeft="3dp"
+                        android:layout_height="24dip"
+                        android:layout_marginLeft="3dip"
                         android:ellipsize="end"
                         android:saveEnabled="false"
                         android:singleLine="true"
@@ -260,16 +260,16 @@
                     android:layout_height="wrap_content" >
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="24dip"
+                        android:layout_height="24dip"
                         android:contentDescription="@string/title_fuser"
                         android:src="@drawable/apps" />
 
                     <CheckBox
                         android:id="@+id/cbFUser"
                         android:layout_width="wrap_content"
-                        android:layout_height="24dp"
-                        android:layout_marginLeft="3dp"
+                        android:layout_height="24dip"
+                        android:layout_marginLeft="3dip"
                         android:ellipsize="end"
                         android:saveEnabled="false"
                         android:singleLine="true"
@@ -282,16 +282,16 @@
                     android:layout_height="wrap_content" >
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="24dip"
+                        android:layout_height="24dip"
                         android:contentDescription="@string/help_application"
                         android:src="?attr/icon_system" />
 
                     <CheckBox
                         android:id="@+id/cbFSystem"
                         android:layout_width="wrap_content"
-                        android:layout_height="24dp"
-                        android:layout_marginLeft="3dp"
+                        android:layout_height="24dip"
+                        android:layout_marginLeft="3dip"
                         android:ellipsize="end"
                         android:saveEnabled="false"
                         android:singleLine="true"
@@ -367,15 +367,15 @@
     <View
         android:id="@+id/vProgressEmpty"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="-3dp"
+        android:layout_height="1dip"
+        android:layout_marginBottom="-3dip"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:background="@android:color/darker_gray" />
 
     <View
         android:id="@+id/vProgressFull"
-        android:layout_width="0dp"
-        android:layout_height="3dp"
+        android:layout_width="0dip"
+        android:layout_height="3dip"
         android:background="?android:attr/colorActivatedHighlight" />
 
     <!-- What it is all about -->
@@ -416,7 +416,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/tvTutorialDetails"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="6dip"
                 android:text="@android:string/ok" />
         </RelativeLayout>
     </RelativeLayout>

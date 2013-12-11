@@ -11,7 +11,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="0dip"
         android:layout_weight="1" >
 
         <LinearLayout
@@ -29,20 +29,20 @@
             <View
                 android:id="@+id/vAppNameBorder"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="2dip"
                 android:background="#888888" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="10dip"
                 android:text="@string/settings_general"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="1dip"
                 android:background="#888888" />
 
             <CheckBox
@@ -67,27 +67,27 @@
                 android:id="@+id/cbDangerous"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="30dip"
                 android:text="@string/settings_dangerous" />
 
             <CheckBox
                 android:id="@+id/cbUsage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="30dip"
                 android:text="@string/settings_usage" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="10dip"
                 android:text="@string/settings_fake_data"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="1dip"
                 android:background="#888888" />
 
             <CheckBox
@@ -443,7 +443,7 @@
 
         <Button
             android:id="@+id/btnCancel"
-            android:layout_width="0dp"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
@@ -451,7 +451,7 @@
 
         <Button
             android:id="@+id/btnOk"
-            android:layout_width="0dp"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"

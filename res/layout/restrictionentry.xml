@@ -52,12 +52,12 @@
 
         <ImageView
             android:id="@+id/imgCBName"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="6dp"
+            android:layout_marginLeft="3dip"
+            android:layout_marginRight="6dip"
             android:contentDescription="@string/title_restrict"
             android:visibility="gone" />
 
