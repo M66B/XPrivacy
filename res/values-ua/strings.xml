@@ -13,8 +13,8 @@
     <string name="menu_report">Повідомити про помилку</string>
     <string name="menu_export">Експорт налаштувань</string>
     <string name="menu_import">Імпорт налаштувань</string>
-    <string name="menu_submit">Відправити дозволи</string>
-    <string name="menu_fetch">Отримати дозволи</string>
+    <string name="menu_submit">Відправити обмеження</string>
+    <string name="menu_fetch">Отримати обмеження</string>
     <string name="menu_theme">Переключити тему</string>
     <string name="menu_pro">Pro-версія</string>
     <string name="menu_about">Про програму</string>
@@ -32,16 +32,16 @@
     <string name="menu_accounts">Оберіть дозволені облікові записи</string>
     <string name="menu_applications">Оберіть дозволені програми</string>
     <string name="menu_contacts">Оберіть дозволені контакти</string>
-    <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_tutorial">Навчання</string>
     <string name="msg_new">Нове</string>
     <string name="msg_update">Оновити</string>
     <string name="msg_licensed" formatted="false">Власник ліцензіі: %s</string>
     <string name="msg_loading">Загрузка</string>
     <string name="msg_applying">Застосовується</string>
-    <string name="msg_applied">Template applied</string>
+    <string name="msg_applied">Шаблон застосовано</string>
     <string name="msg_saved_to" formatted="false">Збережено в %s</string>
-    <string name="msg_no_restrictions">Не знайдено дозволів</string>
-    <string name="msg_edit">Натисніть на іконку програми для редагування всіх дозволів</string>
+    <string name="msg_no_restrictions">Не знайдено обмежень</string>
+    <string name="msg_edit">Натисніть на іконку програми для редагування всіх обмежень</string>
     <string name="msg_sure">Ви впевнені?</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Необхідне перезавантаження пристрою</string>
@@ -119,8 +119,8 @@
     <string name="help_frozen">вимкнено</string>
     <string name="help_dangerous">зміна дозволів небезпечна</string>
     <string name="help_half">частково заборонено</string>
-    <string name="help_attention">restrictions need attention</string>
-    <string name="help_restricted">restrictions are changed</string>
-    <string name="help_shared">restrictions are submitted</string>
+    <string name="help_attention">обмеження потребують уваги</string>
+    <string name="help_restricted">обмеження змінені</string>
+    <string name="help_shared">обмеження відправлені</string>
 
 </resources>
