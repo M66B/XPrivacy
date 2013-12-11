@@ -37,7 +37,7 @@
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
     <string name="msg_applying">正在应用…</string>
-    <string name="msg_applied">Template applied</string>
+    <string name="msg_applied">已经应用模版</string>
     <string name="msg_saved_to" formatted="false">保存到%s</string>
     <string name="msg_no_restrictions">没有找到权限限制规则</string>
     <string name="msg_edit">点击应用图标以调整详细限制规则</string>
@@ -59,7 +59,7 @@
     <string name="restrict_clipboard">剪贴板</string>
     <string name="restrict_contacts">联系人（通讯录）</string>
     <string name="restrict_dictionary">词典（用户词典）</string>
-    <string name="restrict_email">E-mail</string>
+    <string name="restrict_email">电子邮件</string>
     <string name="restrict_identification">识别码（设备识别信息）</string>
     <string name="restrict_internet">互联网（网络通讯）</string>
     <string name="restrict_location">位置（精确/粗略）</string>
@@ -100,8 +100,8 @@
     <string name="settings_adid">广告 ID</string>
     <string name="settings_country">国家</string>
     <string name="settings_operator">运营商</string>
-    <string name="settings_subscriber">IMSI</string>
-    <string name="settings_ua">User Agent</string>
+    <string name="settings_subscriber">签约者 ID</string>
+    <string name="settings_ua">用户代理（UA）</string>
     <string name="settings_general">一般设置</string>
     <string name="settings_fake_data">模拟信息</string>
     <string name="settings_global">使用全局模拟信息</string>
@@ -117,9 +117,9 @@
     <string name="help_frozen">应用已被冻结/停用</string>
     <string name="help_dangerous">可能导致应用异常的权限</string>
     <string name="help_half">已限制部分子权限</string>
-    <string name="help_attention">restrictions need attention</string>
-    <string name="help_restricted">restrictions are changed</string>
-    <string name="help_shared">restrictions are submitted</string>
+    <string name="help_attention">限制需要注意</string>
+    <string name="help_restricted">限制已经更改</string>
+    <string name="help_shared">限制已经提交</string>
 
 </resources>
 
