@@ -18,6 +18,7 @@ Changelog
 * Updated Lithuanian translation
 * Updated Norwegian translation
 * Updated Russian translation
+* Updated Vietnamese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
