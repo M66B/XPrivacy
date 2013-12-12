@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -457,6 +458,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			else if (dataIntent != null)
 				try {
 					String fileName = dataIntent.getData().getPath();
+					fileName = fileName.replace("/document/primary:", Environment.getExternalStorageDirectory()
+							.getAbsolutePath() + File.separatorChar);
 					Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
 					intent.putExtra(ActivityShare.cFileName, fileName);
 					startActivityForResult(intent, ACTIVITY_IMPORT);

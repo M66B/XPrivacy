@@ -4,7 +4,8 @@ Changelog
 **Next release**
 
 * Corrected submit ready message
-* Better error messages import, export and fetch
+* Better error messages for import, export and fetch
+* Workaround for Google file chooser new URI format
 * Updated Chinese translations
 * Updated Lithuanian translation
 * Updated Polish translation
