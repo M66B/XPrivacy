@@ -3,9 +3,13 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.42 BETA**
+
 * Corrected submit ready message
 * Better error messages for import, export and fetch
-* Workaround for Google file chooser new URI format
+* Workaround for Google file chooser new URI format (KitKat)
 * Made tutorial translatable
 * Updated Chinese translations
 * Updated Lithuanian translation
@@ -13,8 +17,6 @@ Changelog
 * Updated Russian translation
 * Updated Ukrainian translation
 * Updated Vietnamese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.41 BETA**
 
