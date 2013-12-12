@@ -6,8 +6,10 @@ Changelog
 * Corrected submit ready message
 * Updated Chinese translations
 * Updated Lithuanian translation
+* Updated Polish translation
 * Updated Russian translation
 * Updated Ukrainian translation
+* Updated Vietnamese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
@@ -56,7 +58,7 @@ Changelog
 **Version 1.10.38 BETA**
 
 * Fixed toggling all restrictions
-* Fixed partial apply of template
+* Fixed template only being partially applied, thanks @[jpeg729](https://github.com/jpeg729)
 * Fixed index out of range in web view hook
 * Updated Italian translation
 * Updated Lithuanian translation
