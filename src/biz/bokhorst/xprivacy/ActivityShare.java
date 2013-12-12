@@ -89,21 +89,21 @@ public class ActivityShare extends Activity {
 			mBroadcastManager = LocalBroadcastManager.getInstance(this);
 
 			// Import
-			if (getIntent().getAction().equals("biz.bokhorst.xprivacy.action.IMPORT")) {
+			if (getIntent().getAction().equals(ACTION_IMPORT)) {
 				String fileName = (extras.containsKey(cFileName) ? extras.getString(cFileName) : getFileName(false));
 				ImportTask importTask = new ImportTask();
 				importTask.executeOnExecutor(mExecutor, new File(fileName));
 			}
 
 			// Export
-			if (getIntent().getAction().equals("biz.bokhorst.xprivacy.action.EXPORT")) {
+			if (getIntent().getAction().equals(ACTION_EXPORT)) {
 				String fileName = (extras.containsKey(cFileName) ? extras.getString(cFileName) : getFileName(false));
 				ExportTask exportTask = new ExportTask();
 				exportTask.executeOnExecutor(mExecutor, new File(fileName));
 			}
 
 			// Fetch
-			if (getIntent().getAction().equals("biz.bokhorst.xprivacy.action.FETCH")) {
+			if (getIntent().getAction().equals(ACTION_FETCH)) {
 				String packageName = null;
 				if (extras != null && extras.containsKey(cPackageName))
 					packageName = extras.getString(cPackageName);
