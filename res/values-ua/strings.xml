@@ -121,11 +121,11 @@
     <string name="help_attention">обмеження потребують уваги</string>
     <string name="help_restricted">обмеження змінені</string>
     <string name="help_shared">обмеження відправлені</string>
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="tutorial_mainheader">Оберіть категорію для обмежень; оберіть видимі програми з фільтрами</string>
+    <string name="tutorial_mainlist">Натисніть чекбокс для застосування обмежень з обраної категоріі до програми\n
+\nПрограми будуть отримувати порожні або фальшиві дані для обраних категорій\n
+\nНатисніть іконку програми для детальних обмежень та налаштувань</string>
+    <string name="tutorial_detailsheader">Натисніть іконку програми для додаткових дій</string>
+    <string name="tutorial_detailslist">Натисніть стрілку, щоб побачити окремі функціі та обмеження в категоріі</string>
 
 </resources>
