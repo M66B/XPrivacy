@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Fixed exporting legacy settings
 * Updated Dutch translation
 * Updated Russian translation
 * Updated Ukrainian translation

@@ -160,7 +160,16 @@ public class ActivityShare extends Activity {
 					for (String name : mapSetting.keySet()) {
 						// Decode name
 						String[] component = name.split("\\.");
-						if (component.length > 2)
+
+						// Get id
+						int id = -1;
+						try {
+							if (component.length == 2)
+								id = Integer.parseInt(component[1]);
+						} finally {
+						}
+
+						if ((component.length == 2 && id < 0) || component.length > 2)
 							Util.log(null, Log.WARN, "Legacy name=" + name + " value=" + mapSetting.get(name));
 						else {
 							// Bind accounts/contacts to same device
@@ -171,7 +180,7 @@ public class ActivityShare extends Activity {
 
 							// Serialize setting
 							serializer.startTag(null, "Setting");
-							serializer.attribute(null, "Id", component.length > 1 ? component[1] : "");
+							serializer.attribute(null, "Id", id >= 0 ? component[1] : "");
 							serializer.attribute(null, "Name", component[0]);
 							serializer.attribute(null, "Value", mapSetting.get(name));
 							serializer.endTag(null, "Setting");
@@ -350,68 +359,72 @@ public class ActivityShare extends Activity {
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			if (qName.equals("XPrivacy")) {
-				// Ignore
-			} else if (qName.equals("PackageInfo")) {
-				// Package info
-				int id = Integer.parseInt(attributes.getValue("Id"));
-				String name = attributes.getValue("Name");
-				mMapId.put(id, name);
-			} else if (qName.equals("Setting")) {
-				// Setting
-				String id = attributes.getValue("Id");
-				String name = attributes.getValue("Name");
-				String value = attributes.getValue("Value");
+			try {
+				if (qName.equals("XPrivacy")) {
+					// Ignore
+				} else if (qName.equals("PackageInfo")) {
+					// Package info
+					int id = Integer.parseInt(attributes.getValue("Id"));
+					String name = attributes.getValue("Name");
+					mMapId.put(id, name);
+				} else if (qName.equals("Setting")) {
+					// Setting
+					String id = attributes.getValue("Id");
+					String name = attributes.getValue("Name");
+					String value = attributes.getValue("Value");
 
-				// Import accounts/contacts only for same device
-				if (name.startsWith("Account.") || name.startsWith("Contact.") || name.startsWith("RawContact."))
-					if (name.endsWith("." + android_id))
-						name = name.replace("." + android_id, "");
-					else
-						return;
+					// Import accounts/contacts only for same device
+					if (name.startsWith("Account.") || name.startsWith("Contact.") || name.startsWith("RawContact."))
+						if (name.endsWith("." + android_id))
+							name = name.replace("." + android_id, "");
+						else
+							return;
 
-				if (id == null) { // Legacy
-					Util.log(null, Log.WARN, "Legacy " + name + "=" + value);
-					PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
-				} else if ("".equals(id)) // Global setting
-					PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
-				else { // Application setting
-					int uid = getUid(Integer.parseInt(id));
+					if (id == null) { // Legacy
+						Util.log(null, Log.WARN, "Legacy " + name + "=" + value);
+						PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
+					} else if ("".equals(id)) // Global setting
+						PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
+					else { // Application setting
+						int uid = getUid(Integer.parseInt(id));
+						if (uid >= 0)
+							PrivacyManager.setSetting(null, ActivityShare.this, uid, name, value);
+					}
+				} else if (qName.equals("Package")) {
+					// Restriction (legacy)
+					String packageName = attributes.getValue("Name");
+					String restrictionName = attributes.getValue("Restriction");
+					String methodName = attributes.getValue("Method");
+					boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
+					Util.log(null, Log.WARN, "Legacy package=" + packageName + " " + restrictionName + "/" + methodName
+							+ "=" + restricted);
+
+					// Map package restriction
+					if (!mMapPackage.containsKey(packageName))
+						mMapPackage.put(packageName, new HashMap<String, List<MethodDescription>>());
+					if (!mMapPackage.get(packageName).containsKey(restrictionName))
+						mMapPackage.get(packageName).put(restrictionName, new ArrayList<MethodDescription>());
+					if (methodName != null) {
+						MethodDescription md = new MethodDescription(methodName, restricted);
+						mMapPackage.get(packageName).get(restrictionName).add(md);
+					}
+				} else if (qName.equals("Restriction")) {
+					// Restriction (new style)
+					int id = Integer.parseInt(attributes.getValue("Id"));
+					String restrictionName = attributes.getValue("Name");
+					String methodName = attributes.getValue("Method");
+					boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
+
+					// Get uid
+					int uid = getUid(id);
 					if (uid >= 0)
-						PrivacyManager.setSetting(null, ActivityShare.this, uid, name, value);
-				}
-			} else if (qName.equals("Package")) {
-				// Restriction (legacy)
-				String packageName = attributes.getValue("Name");
-				String restrictionName = attributes.getValue("Restriction");
-				String methodName = attributes.getValue("Method");
-				boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
-				Util.log(null, Log.WARN, "Legacy package=" + packageName + " " + restrictionName + "/" + methodName
-						+ "=" + restricted);
-
-				// Map package restriction
-				if (!mMapPackage.containsKey(packageName))
-					mMapPackage.put(packageName, new HashMap<String, List<MethodDescription>>());
-				if (!mMapPackage.get(packageName).containsKey(restrictionName))
-					mMapPackage.get(packageName).put(restrictionName, new ArrayList<MethodDescription>());
-				if (methodName != null) {
-					MethodDescription md = new MethodDescription(methodName, restricted);
-					mMapPackage.get(packageName).get(restrictionName).add(md);
-				}
-			} else if (qName.equals("Restriction")) {
-				// Restriction (new style)
-				int id = Integer.parseInt(attributes.getValue("Id"));
-				String restrictionName = attributes.getValue("Name");
-				String methodName = attributes.getValue("Method");
-				boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
-
-				// Get uid
-				int uid = getUid(id);
-				if (uid >= 0)
-					PrivacyManager
-							.setRestricted(null, ActivityShare.this, uid, restrictionName, methodName, restricted);
-			} else
-				Util.log(null, Log.WARN, "Unknown element name=" + qName);
+						PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName, methodName,
+								restricted);
+				} else
+					Util.log(null, Log.ERROR, "Unknown element name=" + qName);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 		}
 
 		private int getUid(int id) {
