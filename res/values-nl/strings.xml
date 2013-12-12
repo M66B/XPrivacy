@@ -120,5 +120,11 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="help_attention">beperkingen hebben aandacht nodig</string>
     <string name="help_restricted">beperkingen zijn gewijzigd</string>
     <string name="help_shared">beperkingen zijn gestuurd</string>
+    <string name="tutorial_mainheader">Selecteer de te beperken categorie; kies zichtbare apps met de filters</string>
+    <string name="tutorial_mainlist">Zet een vinkje om de geselecteerde categorie te beperken\n
+\nApps worden gevoed met lege of nepgegevens voor beperkte categorieën\n
+\nKlik op het app icoon voor gedetailleerde beperkingen en instellingen</string>
+    <string name="tutorial_detailsheader">Klik op het app icoon voor meer akties</string>
+    <string name="tutorial_detailslist">Klik op de pijl naar beneden voor functie-uitzonderingen</string>
 
 </resources>

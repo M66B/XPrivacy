@@ -6,6 +6,7 @@ Changelog
 * Corrected submit ready message
 * Better error messages for import, export and fetch
 * Workaround for Google file chooser new URI format
+* Made tutorial translatable
 * Updated Chinese translations
 * Updated Lithuanian translation
 * Updated Polish translation
