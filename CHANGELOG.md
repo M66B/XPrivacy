@@ -5,6 +5,7 @@ Changelog
 
 * Updated Dutch translation
 * Updated Russian translation
+* Updated Ukrainian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
