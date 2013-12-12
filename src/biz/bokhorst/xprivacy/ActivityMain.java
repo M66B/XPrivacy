@@ -816,6 +816,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionTutorial() {
+		if (mFiltersHidden)
+			toggleFiltersVisibility();
 		((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
 		((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
 		PrivacyManager.setSetting(null, this, 0, PrivacyManager.cSettingTutorialMain, Boolean.FALSE.toString());
