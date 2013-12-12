@@ -575,6 +575,7 @@ No, because these OS'es are to closed to implement something like XPrivacy.
 
 * The device brand/manufacturer
 * The device model/product name
+* The device (phone) type
 * Synchronization state
 * Screen locking
 * Display settings
