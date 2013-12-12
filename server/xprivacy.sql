@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 07, 2013 at 04:23 PM
+-- Generation Time: Dec 12, 2013 at 12:28 PM
 -- Server version: 5.5.31-1~dotdeb.0
 -- PHP Version: 5.3.27-1~dotdeb.0
 
@@ -46,7 +46,23 @@ CREATE TABLE IF NOT EXISTS `xprivacy` (
   UNIQUE KEY `restriction` (`android_id_md5`(50),`android_sdk`,`package_name`(100),`package_version`(50),`restriction`(20),`method`(70)),
   KEY `package` (`package_name`(100)),
   KEY `application` (`application_name`(100),`package_name`(100))
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1989751 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2139279 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `xprivacy_app`
+--
+
+CREATE TABLE IF NOT EXISTS `xprivacy_app` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `application_name` text CHARACTER SET utf8 NOT NULL,
+  `package_name` text CHARACTER SET utf8 NOT NULL,
+  `package_version` text CHARACTER SET utf8 NOT NULL,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `application` (`application_name`(100),`package_name`(100),`package_version`(50))
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15583 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
