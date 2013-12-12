@@ -697,9 +697,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CharSequence[] options = new CharSequence[listRestriction.size()];
 		boolean[] selection = new boolean[listRestriction.size()];
 		for (int i = 0; i < listRestriction.size(); i++) {
+			String name = String.format("Template.%s", listRestriction.get(i));
 			options[i] = PrivacyManager.getLocalizedName(this, listRestriction.get(i));
-			selection[i] = PrivacyManager.getSettingBool(null, this, 0,
-					String.format("Template.%s", listRestriction.get(i)), true, false);
+			selection[i] = PrivacyManager.getSettingBool(null, this, 0, name, true, false);
+			PrivacyManager.setSetting(null, this, 0, name, Boolean.toString(selection[i]));
 		}
 
 		// Build dialog
