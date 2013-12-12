@@ -67,7 +67,7 @@
     <string name="restrict_messages">信息（短信/彩信）</string>
     <string name="restrict_network">网络状态（ IP 地址）</string>
     <string name="restrict_notifications">通知（通知栏提示）</string>
-    <string name="restrict_overlay">Overlay</string>
+    <string name="restrict_overlay">浮动窗口（在其他应用之上显示内容）</string>
     <string name="restrict_phone">电话（电话号码/通话状态）</string>
     <string name="restrict_sensors">感应器（重力方向/光线强度）</string>
     <string name="restrict_storage">存储（内置存储器/存储卡）</string>
