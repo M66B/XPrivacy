@@ -409,29 +409,47 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					}, 30 * 1000);
 				}
 			}
+
 		} else if (requestCode == ACTIVITY_EXPORT) {
 			// Export
 			sharingDone();
 
-			// send share intent
-			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cFileName)) {
+			String fileName = null;
+			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cFileName))
+				fileName = dataIntent.getStringExtra(ActivityShare.cFileName);
+
+			String errorMessage = null;
+			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
+				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
+
+			Toast toast = Toast.makeText(this, errorMessage == null ? fileName : errorMessage, Toast.LENGTH_LONG);
+			toast.show();
+
+			// Share
+			if (errorMessage == null) {
 				Intent intent = new Intent(android.content.Intent.ACTION_SEND);
 				intent.setType("text/xml");
-				intent.putExtra(Intent.EXTRA_STREAM,
-						Uri.parse("file://" + dataIntent.getStringExtra(ActivityShare.cFileName)));
+				intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + fileName));
 				startActivity(Intent.createChooser(
 						intent,
 						String.format(getString(R.string.msg_saved_to),
 								dataIntent.getStringExtra(ActivityShare.cFileName))));
 			}
+
 		} else if (requestCode == ACTIVITY_IMPORT) {
 			// Import
 			sharingDone();
 			ActivityMain.this.recreate();
 
-			String text = String.format("%s: %s", getString(R.string.menu_import), getString(R.string.msg_done));
+			String errorMessage = null;
+			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
+				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
+
+			String text = String.format("%s: %s", getString(R.string.menu_import),
+					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
 			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
 			toast.show();
+
 		} else if (requestCode == ACTIVITY_IMPORT_SELECT) {
 			// Import select
 			if (resultCode == RESULT_CANCELED)
@@ -445,10 +463,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
+
 		} else if (requestCode == ACTIVITY_FETCH) {
 			// Fetch
 			sharingDone();
-			ActivityMain.this.recreate();
+			if (mAppAdapter != null)
+				mAppAdapter.notifyDataSetChanged();
+
+			String errorMessage = null;
+			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
+				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
+
+			String text = String.format("%s: %s", getString(R.string.menu_fetch),
+					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
+			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+			toast.show();
 		}
 	}
 

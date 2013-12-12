@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Corrected submit ready message
+* Better error messages import, export and fetch
 * Updated Chinese translations
 * Updated Lithuanian translation
 * Updated Polish translation

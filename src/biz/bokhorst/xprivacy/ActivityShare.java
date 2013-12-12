@@ -50,13 +50,13 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
-import android.widget.Toast;
 
 public class ActivityShare extends Activity {
 	private LocalBroadcastManager mBroadcastManager;
 
 	public static final String cFileName = "FileName";
 	public static final String cPackageName = "PackageName";
+	public static final String cErrorMessage = "ErrorMessage";
 	public static final String BASE_URL = "http://updates.faircode.eu/xprivacy";
 	public static final String cProgressReport = "ProgressReport";
 	public static final String cProgressMessage = "ProgressMessage";
@@ -206,7 +206,7 @@ public class ActivityShare extends Activity {
 
 				// Display message
 				Util.log(null, Log.INFO, "Exporting finished");
-				return getString(R.string.msg_done);
+				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return ex.getMessage();
@@ -227,14 +227,12 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result, false, 0, 1);
-
-			Toast toast = Toast.makeText(ActivityShare.this, mFile.getAbsolutePath(), Toast.LENGTH_LONG);
-			toast.show();
+			notify(result == null ? getString(R.string.msg_done) : null, false, 0, 1);
 
 			Intent intent = new Intent();
 			intent.putExtra(cFileName, mFile.getAbsolutePath());
-			setResult(result.equals(getString(R.string.msg_done)) ? 0 : 1, intent);
+			intent.putExtra(cErrorMessage, result);
+			setResult(result == null ? 0 : 1, intent);
 			finish();
 			super.onPostExecute(result);
 		}
@@ -306,7 +304,7 @@ public class ActivityShare extends Activity {
 
 				// Display message
 				Util.log(null, Log.INFO, "Importing finished");
-				return getString(R.string.msg_done);
+				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return ex.getMessage();
@@ -324,11 +322,12 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result, false, 0);
+			notify(result == null ? getString(R.string.msg_done) : result, false, 0);
 
 			Intent intent = new Intent();
 			intent.putExtra(cFileName, mFile.getAbsolutePath());
-			setResult(result.equals(getString(R.string.msg_done)) ? 0 : 1, intent);
+			intent.putExtra(cErrorMessage, result);
+			setResult(result == null ? 0 : 1, intent);
 			finish();
 			super.onPostExecute(result);
 		}
@@ -455,12 +454,12 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	private class FetchTask extends AsyncTask<String, String, Object> {
+	private class FetchTask extends AsyncTask<String, String, String> {
 		private int mProgressMax;
 		private int mProgressCurrent;
 
 		@Override
-		protected Object doInBackground(String... params) {
+		protected String doInBackground(String... params) {
 			try {
 				// Get data
 				List<ApplicationInfoEx> lstApp;
@@ -553,7 +552,7 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex;
+				return ex.getMessage();
 			}
 		}
 
@@ -567,16 +566,12 @@ public class ActivityShare extends Activity {
 		}
 
 		@Override
-		protected void onPostExecute(Object result) {
-			String text = (result == null ? getString(R.string.msg_done) : ((Throwable) result).getMessage());
-			notify(text, false, 0);
-
-			text = String.format("%s: %s", getString(R.string.menu_fetch), text);
-			Toast toast = Toast.makeText(ActivityShare.this, text, Toast.LENGTH_LONG);
-			toast.show();
+		protected void onPostExecute(String result) {
+			notify(result == null ? getString(R.string.msg_done) : result, false, 0);
 
 			Intent intent = new Intent();
-			setResult(0, intent);
+			intent.putExtra(cErrorMessage, result);
+			setResult(result == null ? 0 : 1, intent);
 			finish();
 			super.onPostExecute(result);
 		}
