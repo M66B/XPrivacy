@@ -367,14 +367,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
+	protected void onActivityResult(int requestCode, int resultCode, Intent dataIntent) {
+		super.onActivityResult(requestCode, resultCode, dataIntent);
 
 		if (requestCode == ACTIVITY_LICENSE) {
 			// License check
-			if (data != null) {
-				int code = data.getIntExtra("Code", -1);
-				int reason = data.getIntExtra("Reason", -1);
+			if (dataIntent != null) {
+				int code = dataIntent.getIntExtra("Code", -1);
+				int reason = dataIntent.getIntExtra("Reason", -1);
 
 				String sReason;
 				if (reason == LICENSED)
@@ -414,13 +414,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			sharingDone();
 
 			// send share intent
-			if (data != null && data.hasExtra(ActivityShare.cFileName)) {
+			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cFileName)) {
 				Intent intent = new Intent(android.content.Intent.ACTION_SEND);
 				intent.setType("text/xml");
 				intent.putExtra(Intent.EXTRA_STREAM,
-						Uri.parse("file://" + data.getStringExtra(ActivityShare.cFileName)));
-				startActivity(Intent.createChooser(intent,
-						String.format(getString(R.string.msg_saved_to), data.getStringExtra(ActivityShare.cFileName))));
+						Uri.parse("file://" + dataIntent.getStringExtra(ActivityShare.cFileName)));
+				startActivity(Intent.createChooser(
+						intent,
+						String.format(getString(R.string.msg_saved_to),
+								dataIntent.getStringExtra(ActivityShare.cFileName))));
 			}
 		} else if (requestCode == ACTIVITY_IMPORT) {
 			// Import
@@ -434,9 +436,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Import select
 			if (resultCode == RESULT_CANCELED)
 				sharingDone();
-			else if (data != null)
+			else if (dataIntent != null)
 				try {
-					String fileName = data.getData().getPath();
+					String fileName = dataIntent.getData().getPath();
 					Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
 					intent.putExtra(ActivityShare.cFileName, fileName);
 					startActivityForResult(intent, ACTIVITY_IMPORT);
