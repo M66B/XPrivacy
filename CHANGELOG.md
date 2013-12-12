@@ -3,12 +3,15 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.43 BETA**
+
 * Fixed exporting legacy settings
+* Fixed exporting default template
 * Updated Dutch translation
 * Updated Russian translation
 * Updated Ukrainian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.42 BETA**
 
