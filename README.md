@@ -646,6 +646,16 @@ didn't allow to give this feature for free to existing users.
 Looking back I would never have put the pro enabler into the Play store,
 but I cannot remove it anymore now, because of the existing users.
 
+<a name="FAQ42"></a>
+**(42) What should I do if an application force closes (crashes)?**
+
+Take a look into the usage view of the application,
+available through the menu in the application details view,
+to see which functions the application uses.
+Disable category and/or function restrictions one by one
+until you have found the one causing the force close.
+Help others by submitting your working restrictions.
+
 Support
 -------
 
