@@ -49,7 +49,7 @@
     <string name="msg_random_boot">重新啟動後進行亂數</string>
     <string name="msg_usage">正在更新使用數據</string>
     <string name="msg_restart">需要重載程式</string>
-    <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳盡的測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用\n\n請自行承擔使用XPrivacy的可能風險。</b>\n\n請參閱說明文件：</string>
+    <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用\n\n請自行承擔使用XPrivacy的可能風險。</b>\n\n請參閱說明文件：</string>
     <string name="restrict_accounts">帳戶 (Google, Facebook, etc)</string>
     <string name="restrict_browser">瀏覽器 (書籤/記錄)</string>
     <string name="restrict_calendar">行事曆</string>
@@ -118,11 +118,11 @@
     <string name="help_attention">限制需要注意</string>
     <string name="help_restricted">限制已經更改</string>
     <string name="help_shared">限制已經提交</string>
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="tutorial_mainheader">[分類]：依APP調用之權限顯示。[篩選器]：依APP名稱或其他規則顯示。</string>
+    <string name="tutorial_mainlist">點選勾選框可封鎖APP使無法取得資訊\n
+     \n當特定資訊被封鎖時，該APP會接收到假資料或空白資料\n
+     \n點選APP圖示可針對該APP做細部規則設定</string>
+    <string name="tutorial_detailsheader">點選APP圖示有進階動作選單</string>
+    <string name="tutorial_detailslist">點選 V 符號可編輯更細部的權限設定</string>
 
 </resources>
