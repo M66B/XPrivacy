@@ -13,7 +13,7 @@
     <string name="menu_report">报告问题</string>
     <string name="menu_export">导出全局配置</string>
     <string name="menu_import">导入全局配置</string>
-    <string name="menu_submit">上传权限限制规则</string>
+    <string name="menu_submit">分享权限限制规则</string>
     <string name="menu_fetch">下载权限限制规则</string>
     <string name="menu_theme">切换明/暗主题</string>
     <string name="menu_pro">捐赠/升级到专业版</string>
@@ -32,7 +32,7 @@
     <string name="menu_accounts">选择允许访问的帐号</string>
     <string name="menu_applications">选择允许访问的应用</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
-    <string name="menu_tutorial">教程</string>
+    <string name="menu_tutorial">界面功能指引</string>
     <string name="msg_new">已安装</string>
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
@@ -48,7 +48,7 @@
     <string name="msg_random_access">访问时随机生成数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
     <string name="msg_usage">正在更新用量统计数据…</string>
-    <string name="msg_restart">需要重启应用使限制生效</string>
+    <string name="msg_restart">需要重启应用使规则生效</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
@@ -110,22 +110,22 @@
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
     <string name="settings_dangerous">限制可能导致应用异常的权限</string>
-    <string name="help_application">应用详情</string>
+    <string name="help_application">请输入应用名称</string>
     <string name="help_internet">应用含有联网权限</string>
     <string name="help_granted">应用已申请的权限（ Androidmanifest 中表明）</string>
     <string name="help_used">应用已使用的权限</string>
     <string name="help_frozen">应用已被冻结/停用</string>
     <string name="help_dangerous">可能导致应用异常的权限</string>
-    <string name="help_half">已限制部分子权限</string>
-    <string name="help_attention">限制需要注意</string>
-    <string name="help_restricted">限制已经更改</string>
-    <string name="help_shared">限制已经提交</string>
-    <string name="tutorial_mainheader">选择限制权限类别；按照过滤器选择对应需要限制权限的应用</string>
-    <string name="tutorial_mainlist">点击应用后面的复选框来限制所选类别的应用\n
-\n被限制类别的应用会接收到空（个人隐私）数据或者伪造数据\n
-\n点击应用图标查看详细权限限制和设置</string>
-    <string name="tutorial_detailsheader">点击应用图标查看更多操作</string>
-    <string name="tutorial_detailslist">点击(左侧)向下箭头查看限制权限类别的功能异常详情</string>
+    <string name="help_half">已限制部分权限</string>
+    <string name="help_attention">可以下载限制规则的应用</string>
+    <string name="help_restricted">限制规则已经生效的应用</string>
+    <string name="help_shared">已经分享限制规则的应用</string>
+    <string name="tutorial_mainheader">选择权限类别以筛选含有对应权限的应用</string>
+    <string name="tutorial_mainlist">勾选应用后的复选框以限制所选类别的权限\n
+\n被限制的应用请求该权限时会接收到空或伪造的数据\n
+\n点击应用图标以查看详细权限限制规则和设置</string>
+    <string name="tutorial_detailsheader">点击应用图标以查看更多操作</string>
+    <string name="tutorial_detailslist">点击左侧向下的箭头以查看该类别的子权限</string>
 
 </resources>
 
