@@ -361,12 +361,15 @@ public class ActivityShare extends Activity {
 		private Map<String, Integer> mMapUid = new HashMap<String, Integer>();
 		private Map<String, Map<String, List<MethodDescription>>> mMapPackage = new HashMap<String, Map<String, List<MethodDescription>>>();
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
+		private int mProgress = 0;
+		private int mCurrent = 0;
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			try {
 				if (qName.equals("XPrivacy")) {
 					// Ignore
+					mProgress = 0;
 				} else if (qName.equals("PackageInfo")) {
 					// Package info
 					int id = Integer.parseInt(attributes.getValue("Id"));
@@ -420,6 +423,13 @@ public class ActivityShare extends Activity {
 					String methodName = attributes.getValue("Method");
 					boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
 
+					// Progress report
+					if (id != mCurrent) {
+						mCurrent = id;
+						mProgress++;
+						reportProgress();
+					}
+
 					// Get uid
 					int uid = getUid(id);
 					if (uid >= 0)
@@ -469,6 +479,15 @@ public class ActivityShare extends Activity {
 			public boolean isRestricted() {
 				return mRestricted;
 			}
+		}
+
+		private void reportProgress() { // DefaultHandler already has a method called notify()
+			// Send progress info to main activity
+			Intent progressIntent = new Intent(cProgressReport);
+			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_import), mMapId.get(mCurrent)));
+			progressIntent.putExtra(cProgressMax, mMapId.size());
+			progressIntent.putExtra(cProgressValue, mProgress);
+			mBroadcastManager.sendBroadcast(progressIntent);
 		}
 	}
 
