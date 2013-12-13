@@ -32,7 +32,7 @@
     <string name="menu_accounts">选择允许访问的帐号</string>
     <string name="menu_applications">选择允许访问的应用</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
-    <string name="menu_tutorial">界面指引</string>
+    <string name="menu_tutorial">界面功能指引</string>
     <string name="msg_new">已安装</string>
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
@@ -110,13 +110,13 @@
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
     <string name="settings_dangerous">限制可能导致应用异常的权限</string>
-    <string name="help_application">应用详情</string>
+    <string name="help_application">请输入应用名称</string>
     <string name="help_internet">应用含有联网权限</string>
     <string name="help_granted">应用已申请的权限（ Androidmanifest 中表明）</string>
     <string name="help_used">应用已使用的权限</string>
     <string name="help_frozen">应用已被冻结/停用</string>
     <string name="help_dangerous">可能导致应用异常的权限</string>
-    <string name="help_half">已限制部分子权限</string>
+    <string name="help_half">已限制部分权限</string>
     <string name="help_attention">可以下载限制规则的应用</string>
     <string name="help_restricted">限制规则已经生效的应用</string>
     <string name="help_shared">已经分享限制规则的应用</string>
