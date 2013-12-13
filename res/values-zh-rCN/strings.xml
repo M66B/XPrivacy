@@ -120,12 +120,12 @@
     <string name="help_attention">限制需要注意</string>
     <string name="help_restricted">限制已经更改</string>
     <string name="help_shared">限制已经提交</string>
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="tutorial_mainheader">选择限制权限类别；按照过滤器选择对应需要限制权限的应用</string>
+    <string name="tutorial_mainlist">点击应用后面的复选框来限制所选类别的应用\n
+\n被限制类别的应用会接收到空（个人隐私）数据或者伪造数据\n
+\n点击应用图标查看详细权限限制和设置</string>
+    <string name="tutorial_detailsheader">点击应用图标查看更多操作</string>
+    <string name="tutorial_detailslist">点击(左侧)向下箭头查看限制权限类别的功能异常详情</string>
 
 </resources>
 
