@@ -289,9 +289,9 @@ public class ActivityShare extends Activity {
 
 				// Progress
 				mProgressMax = mapPackage.size();
+				mProgressCurrent = 0;
 
 				// Process result (legacy)
-				mProgressCurrent = 0;
 				for (String packageName : mapPackage.keySet()) {
 					mProgressCurrent++;
 					try {
@@ -426,7 +426,6 @@ public class ActivityShare extends Activity {
 					// Progress report
 					if (id != mCurrent) {
 						mCurrent = id;
-						mProgress++;
 						reportProgress();
 					}
 
@@ -481,12 +480,13 @@ public class ActivityShare extends Activity {
 			}
 		}
 
-		private void reportProgress() { // DefaultHandler already has a method called notify()
+		private void reportProgress() {
 			// Send progress info to main activity
 			Intent progressIntent = new Intent(cProgressReport);
-			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_import), mMapId.get(mCurrent)));
+			progressIntent.putExtra(cProgressMessage,
+					String.format("%s: %s", getString(R.string.menu_import), mMapId.get(mCurrent)));
 			progressIntent.putExtra(cProgressMax, mMapId.size());
-			progressIntent.putExtra(cProgressValue, mProgress);
+			progressIntent.putExtra(cProgressValue, ++mProgress);
 			mBroadcastManager.sendBroadcast(progressIntent);
 		}
 	}
