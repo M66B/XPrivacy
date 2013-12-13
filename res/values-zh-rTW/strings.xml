@@ -32,14 +32,14 @@
     <string name="menu_accounts">設定允許之帳戶</string>
     <string name="menu_applications">設定允許之app</string>
     <string name="menu_contacts">設定允許之聯絡人</string>
-    <string name="menu_tutorial">指導</string>
+    <string name="menu_tutorial">說明</string>
     <string name="msg_new">已安裝</string>
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">授權給: %s</string>
     <string name="msg_loading">載入中...</string>
-    <string name="msg_applying">正在應用</string>
-    <string name="msg_applied">已經套用模版</string>
-    <string name="msg_saved_to" formatted="false">已經保存到 %s</string>
+    <string name="msg_applying">正在套用設定...</string>
+    <string name="msg_applied">已套用預設規則</string>
+    <string name="msg_saved_to" formatted="false">已儲存至 %s</string>
     <string name="msg_no_restrictions">找不到限制規則</string>
     <string name="msg_sure">確定進行操作?</string>
     <string name="msg_done">完成</string>
@@ -47,8 +47,8 @@
     <string name="msg_random_now">亂數</string>
     <string name="msg_random_access">存取資訊時進行亂數</string>
     <string name="msg_random_boot">重新啟動後進行亂數</string>
-    <string name="msg_usage">正在更新使用數據</string>
-    <string name="msg_restart">需要重載程式</string>
+    <string name="msg_usage">正在更新操作記錄</string>
+    <string name="msg_restart">需要重新啓動程式</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用\n\n請自行承擔使用XPrivacy的可能風險。</b>\n\n請參閱說明文件：</string>
     <string name="restrict_accounts">帳戶 (Google, Facebook, etc)</string>
     <string name="restrict_browser">瀏覽器 (書籤/記錄)</string>
@@ -65,7 +65,7 @@
     <string name="restrict_messages">簡訊 (SMS, MMS)</string>
     <string name="restrict_network">網路資訊 (IP, MAC, DHCP)</string>
     <string name="restrict_notifications">通知</string>
-    <string name="restrict_overlay">Overlay</string>
+    <string name="restrict_overlay">畫面混成(Overlay)</string>
     <string name="restrict_phone">手機資訊 (ID, 號碼, 通話記錄)</string>
     <string name="restrict_sensors">感應器</string>
     <string name="restrict_storage">儲存空間 (媒體檔案, SD卡)</string>
@@ -115,9 +115,9 @@
     <string name="help_frozen">表示app已凍結/停用</string>
     <string name="help_dangerous">不建議限制</string>
     <string name="help_half">只有限制部分權限</string>
-    <string name="help_attention">限制需要注意</string>
-    <string name="help_restricted">限制已經更改</string>
-    <string name="help_shared">限制已經提交</string>
+    <string name="help_attention">限制時需特別注意</string>
+    <string name="help_restricted">規則已變更</string>
+    <string name="help_shared">規則已送出</string>
     <string name="tutorial_mainheader">[分類]：依APP調用之權限顯示。[篩選器]：依APP名稱或其他規則顯示。</string>
     <string name="tutorial_mainlist">點選勾選框可封鎖APP使無法取得資訊\n
      \n當特定資訊被封鎖時，該APP會接收到假資料或空白資料\n
