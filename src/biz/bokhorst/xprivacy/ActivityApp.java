@@ -407,14 +407,15 @@ public class ActivityApp extends Activity {
 		// Get toggle
 		boolean some = false;
 		final List<String> listRestriction = PrivacyManager.getRestrictions();
-		for (String restrictionName : listRestriction)
-			if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0, String.format("Template.%s", restrictionName),
-					true, false))
+		for (String restrictionName : listRestriction) {
+			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
+			if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0, templateName, true, false))
 				if (PrivacyManager.getRestricted(null, ActivityApp.this, mAppInfo.getUid(), restrictionName, null,
 						false, false)) {
 					some = true;
 					break;
 				}
+		}
 		final boolean restricted = !some;
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
@@ -426,11 +427,12 @@ public class ActivityApp extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 				// Do toggle
 				boolean restart = false;
-				for (String restrictionName : listRestriction)
-					if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
-							String.format("Template.%s", restrictionName), true, false))
+				for (String restrictionName : listRestriction) {
+					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
+					if (PrivacyManager.getSettingBool(null, ActivityApp.this, 0, templateName, true, false))
 						restart = PrivacyManager.setRestricted(null, ActivityApp.this, mAppInfo.getUid(),
 								restrictionName, null, restricted) || restart;
+				}
 
 				// Refresh display
 				if (mPrivacyListAdapter != null)

@@ -41,10 +41,11 @@ public class PackageChange extends BroadcastReceiver {
 
 						// Restrict new non-system apps
 						if (!appInfo.isSystem())
-							for (String restrictionName : PrivacyManager.getRestrictions())
-								if (PrivacyManager.getSettingBool(null, context, 0,
-										String.format("Template.%s", restrictionName), true, false))
+							for (String restrictionName : PrivacyManager.getRestrictions()) {
+								String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
+								if (PrivacyManager.getSettingBool(null, context, 0, templateName, true, false))
 									PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
+							}
 					}
 
 					// New/update notification

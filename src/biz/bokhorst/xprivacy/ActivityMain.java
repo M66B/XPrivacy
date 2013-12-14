@@ -697,10 +697,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CharSequence[] options = new CharSequence[listRestriction.size()];
 		boolean[] selection = new boolean[listRestriction.size()];
 		for (int i = 0; i < listRestriction.size(); i++) {
-			String name = String.format("Template.%s", listRestriction.get(i));
+			String templateName = PrivacyManager.cSettingTemplate + "." + listRestriction.get(i);
 			options[i] = PrivacyManager.getLocalizedName(this, listRestriction.get(i));
-			selection[i] = PrivacyManager.getSettingBool(null, this, 0, name, true, false);
-			PrivacyManager.setSetting(null, this, 0, name, Boolean.toString(selection[i]));
+			selection[i] = PrivacyManager.getSettingBool(null, this, 0, templateName, true, false);
+			PrivacyManager.setSetting(null, this, 0, templateName, Boolean.toString(selection[i]));
 		}
 
 		// Build dialog
@@ -709,8 +709,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setMultiChoiceItems(options, selection, new DialogInterface.OnMultiChoiceClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-				PrivacyManager.setSetting(null, ActivityMain.this, 0,
-						String.format("Template.%s", listRestriction.get(whichButton)), Boolean.toString(isChecked));
+				String templateName = PrivacyManager.cSettingTemplate + "." + listRestriction.get(whichButton);
+				PrivacyManager.setSetting(null, ActivityMain.this, 0, templateName, Boolean.toString(isChecked));
 			}
 		});
 		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {

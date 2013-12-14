@@ -164,7 +164,7 @@ public class ActivityShare extends Activity {
 						String[] component = name.split("\\.");
 
 						// Template
-						if (component[0].equals("Template"))
+						if (component[0].equals(PrivacyManager.cSettingTemplate))
 							component = new String[] { name };
 
 						// Get id
