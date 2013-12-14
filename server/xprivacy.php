@@ -283,8 +283,6 @@
 				<p>
 					<a href="/xprivacy">Home</a>
 					-
-					<a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($package_name); ?>" target="_blank">Wiki</a>
-					-
 					<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
 				</p>
 <?php
@@ -422,7 +420,7 @@
 								echo '<td style="display: none; text-align: center;" class="details">' . ($row->used ? 'Yes' : '') . '</td>';
 
 								echo '<td>' . ($row->method ? '' :
-								'<a href="http://wiki.faircode.eu/index.php?title=' . urlencode($row->restriction) . '" target="_blank">' .
+								'<a href="https://github.com/M66B/XPrivacy#' . urlencode($row->restriction) . '" target="_blank">' .
 								htmlentities($row->restriction, ENT_COMPAT, 'UTF-8') . '</a>') . '</td>';
 
 								echo '<td style="display: none;" class="details">' . htmlentities($row->method, ENT_COMPAT, 'UTF-8') . '</td>';
