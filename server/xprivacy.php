@@ -2,6 +2,20 @@
 	$starttime = microtime(true);
 	require_once('xprivacy.inc.php');
 
+	$max_confidence = 0.35;
+	function confidence($restricted, $not_restricted) {
+		// Agresti-Coull Interval
+		// http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval
+		$n = $restricted + $not_restricted;
+		$p = $restricted / $n;
+		$z = 1.96; // 95%
+		$n1 = $n + $z * $z;
+		$p1 = (1 / $n1) * ($restricted + 0.5 * $z * $z);
+		$ci = $z * sqrt((1 / $n1) * $p1 * (1- $p1));
+		// $ci = $z * sqrt($p * (1-$p) / $n);
+		return $ci;
+	}
+
 	// Check if JSON request
 	parse_str($_SERVER['QUERY_STRING']);
 	if (!empty($format) && $format == 'json') {
@@ -118,13 +132,16 @@
 				$result = $db->query($sql);
 				if ($result) {
 					while (($row = $result->fetch_object())) {
-						$entry = Array();
-						$entry['restriction'] = $row->restriction;
-						if (!empty($row->method))
-							$entry['method'] = $row->method;
-						$entry['restricted'] = $row->restricted;
-						$entry['not_restricted'] = $row->not_restricted;
-						$settings[] = (object) $entry;
+						$ci = confidence($row->restricted, $row->not_restricted);
+						if ($ci < $max_confidence) {
+							$entry = Array();
+							$entry['restriction'] = $row->restriction;
+							if (!empty($row->method))
+								$entry['method'] = $row->method;
+							$entry['restricted'] = $row->restricted;
+							$entry['not_restricted'] = $row->not_restricted;
+							$settings[] = (object) $entry;
+						}
 					}
 					$result->close();
 
@@ -260,11 +277,11 @@
 				<h1><?php echo htmlentities($application_name, ENT_COMPAT, 'UTF-8'); ?></h1>
 				<span style="font-size: smaller;"><?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></span>
 				<p>
+					<a href="/xprivacy">Home</a>
+					-
 					<a href="http://wiki.faircode.eu/index.php?title=<?php echo urlencode($package_name); ?>" target="_blank">Wiki</a>
 					-
 					<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
-					-
-					<a href="/xprivacy">Back</a>
 				</p>
 <?php
 			}
@@ -306,6 +323,7 @@
 						} else {
 ?>
 							<th style="text-align: center;">Votes<br />deny/allow</th>
+							<th style="text-align: center;">CI95 &plusmn;% <sup>*</sup></th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
 							<th>Restriction</th>
 							<th style="display: none;" class="details">Method</th>
@@ -373,11 +391,15 @@
 							while (($row = $result->fetch_object())) {
 								$count++;
 								$votes += $row->restricted + $row->not_restricted;
+								$ci = confidence($row->restricted, $row->not_restricted);
+
 								echo '<tr style="';
-								if ($row->used)
-									echo 'font-weight: bold;';
 								if (!empty($row->method))
 									echo 'display: none;';
+								if ($row->used)
+									echo 'font-weight: bold;';
+								if ($ci < $max_confidence && $row->restricted > $row->not_restricted)
+									echo 'background: lightgray;';
 								echo '"';
 								if (!empty($row->method))
 									echo ' class="details"';
@@ -387,6 +409,10 @@
 								echo ($row->restricted < $row->not_restricted) ? '<span class="text-muted">' . $row->restricted . '</span>' : $row->restricted;
 								echo ' / ';
 								echo ($row->restricted > $row->not_restricted) ? '<span class="text-muted">' . $row->not_restricted . '</span>' : $row->not_restricted;
+								echo '</td>';
+
+								echo '<td style="text-align: center;">';
+								echo number_format($ci * 100, 1);
 								echo '</td>';
 
 								echo '<td style="display: none; text-align: center;" class="details">' . ($row->used ? 'Yes' : '') . '</td>';
@@ -411,6 +437,15 @@
 ?>
 					</tbody>
 				</table>
+				<p>
+					* Calculated using the
+					<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull Interval</a>.<br />
+					Values below <?php echo number_format($max_confidence * 100, 1); ?> % are considered reliable.<br />
+					Rows marked with a grey background will be restricted when fetched.<br />
+				</p>
+			</div>
+
+			<div class="container">
 				<p class="text-muted">
 <?php
 				$elapse = round(microtime(true) - $starttime, 3);
