@@ -112,6 +112,8 @@ public class PrivacyManager {
 	public final static String cSettingLog = "Log";
 	public final static String cSettingRandom = "Random@boot";
 	public final static String cSettingState = "State";
+	public final static String cSettingConfidence = "Confidence";
+	public final static String cSettingTemplate = "Template";
 
 	public final static String cValueRandom = "#Random#";
 	public final static String cValueRandomLegacy = "\nRandom\n";

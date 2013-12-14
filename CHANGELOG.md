@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Better progress report while importing, thanks @[jpeg729](https://github.com/jpeg729)
+* Setting to set maximum confidence fetch interval
 * Updated Chinese translations
 * Updated Slovak translation
 

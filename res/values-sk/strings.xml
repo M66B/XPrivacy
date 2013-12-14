@@ -111,6 +111,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_log">Záznam na ladenie (vyžaduje reštart)</string>
     <string name="settings_expert">Režim experta</string>
     <string name="settings_dangerous">Obmedziť nebezpečné funkcie</string>
+    <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>

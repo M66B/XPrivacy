@@ -110,6 +110,7 @@
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
     <string name="settings_dangerous">限制可能导致应用异常的权限</string>
+    <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="help_application">请输入应用名称</string>
     <string name="help_internet">应用含有联网权限</string>
     <string name="help_granted">应用已申请的权限（ Androidmanifest 中表明）</string>

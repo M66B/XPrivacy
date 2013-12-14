@@ -510,6 +510,9 @@ public class ActivityShare extends Activity {
 				String[] license = Util.getProLicense();
 				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 
+				String confidence = PrivacyManager.getSetting(null, ActivityShare.this, 0,
+						PrivacyManager.cSettingConfidence, "", false);
+
 				// Set some numbers for the progress bar
 				mProgressMax = lstApp.size();
 				mProgressCurrent = 0;
@@ -531,6 +534,7 @@ public class ActivityShare extends Activity {
 						jRoot.put("package_version", appInfo.getVersion(ActivityShare.this));
 						jRoot.put("email", license[1]);
 						jRoot.put("signature", license[2]);
+						jRoot.put("confidence", confidence);
 
 						// Fetch
 						int TIMEOUT_MILLISEC = 45000; // 45 seconds

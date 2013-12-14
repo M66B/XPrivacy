@@ -12,7 +12,6 @@
 		$n1 = $n + $z * $z;
 		$p1 = (1 / $n1) * ($restricted + 0.5 * $z * $z);
 		$ci = $z * sqrt((1 / $n1) * $p1 * (1- $p1));
-		// $ci = $z * sqrt($p * (1-$p) / $n);
 		return $ci;
 	}
 
@@ -28,7 +27,6 @@
 		header('Content-Type: application/json');
 
 		// Connect to database
-		require_once('xprivacy.inc.php');
 		$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 		if ($db->connect_errno) {
 			error_log('XPrivacy database connect: ' . $db->connect_error . PHP_EOL, 1, $my_email);
@@ -122,6 +120,7 @@
 				echo json_encode(array('ok' => false, 'error' => 'Not authorized'));
 			}
 			else {
+				$max_ci = (empty($data->confidence) ? $max_confidence : $data->confidence / 100);
 				$settings = Array();
 				$sql = "SELECT restriction, method, restricted";
 				$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
@@ -133,13 +132,13 @@
 				if ($result) {
 					while (($row = $result->fetch_object())) {
 						$ci = confidence($row->restricted, $row->not_restricted);
-						if ($ci < $max_confidence) {
+						if ($ci < $max_ci) {
 							$entry = Array();
 							$entry['restriction'] = $row->restriction;
 							if (!empty($row->method))
 								$entry['method'] = $row->method;
-							$entry['restricted'] = $row->restricted;
-							$entry['not_restricted'] = $row->not_restricted;
+							$entry['restricted'] = ($row->restricted > $row->not_restricted ? 1 : 0);
+							$entry['not_restricted'] = 0; // backward compatibility
 							$settings[] = (object) $entry;
 						}
 					}
@@ -260,16 +259,21 @@
 				</p>
 <?php
 			} else {
-				$application_name = '---';
+				$application_name = '';
 				$sql = "SELECT DISTINCT application_name";
-				$sql .= " FROM xprivacy";
+				$sql .= " FROM xprivacy_app";
 				$sql .= " WHERE package_name = '" . $db->real_escape_string($package_name) . "'";
+				$sql .= " ORDER BY application_name";
 				$result = $db->query($sql);
 				if ($result) {
-					$row = $result->fetch_object();
-					if ($row)
-						$application_name = $row->application_name;
+					while (($row = $result->fetch_object())) {
+						if (!empty($application_name))
+							$application_name .= ', ';
+						$application_name .= $row->application_name;
+					}
 					$result->close();
+					if (empty($application_name))
+						$application_name = '---';
 				}
 				else
 					error_log('XPrivacy query application: ' . $db->error . PHP_EOL, 1, $my_email);

@@ -53,6 +53,7 @@ public class SettingsDialog {
 		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
 		final EditText etSSID = (EditText) dlgSettings.findViewById(R.id.etSSID);
 		final EditText etUa = (EditText) dlgSettings.findViewById(R.id.etUa);
+		final EditText etConfidence = (EditText) dlgSettings.findViewById(R.id.etConfidence);
 		final CheckBox cbNotify = (CheckBox) dlgSettings.findViewById(R.id.cbNotify);
 		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
@@ -95,6 +96,8 @@ public class SettingsDialog {
 		final boolean expert = (dangerous || usage);
 		boolean log = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingLog, false, false);
 		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
+
+		String confidence = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingConfidence, "", false);
 
 		String serial = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingSerial, "", false);
 		String lat = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingLatitude, "", false);
@@ -257,6 +260,8 @@ public class SettingsDialog {
 					}
 				}
 			});
+
+			etConfidence.setText(confidence);
 		} else {
 			// Application specific settings
 			cbNotify.setChecked(notify);
@@ -264,6 +269,7 @@ public class SettingsDialog {
 			cbUsage.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
 			cbExpert.setVisibility(View.GONE);
+			etConfidence.setVisibility(View.GONE);
 
 			cbGlobal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
@@ -499,6 +505,8 @@ public class SettingsDialog {
 							Boolean.toString(cbDangerous.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
 							Boolean.toString(cbUsage.isChecked()));
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingConfidence, etConfidence
+							.getText().toString());
 				} else {
 					// App specific settings
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingNotify,

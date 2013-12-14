@@ -110,6 +110,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_log">Debug log (herstart vereist)</string>
     <string name="settings_expert">Expertmodus</string>
     <string name="settings_dangerous">Beperk gevaarlijke functies</string>
+    <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="help_application">Applicatie</string>
     <string name="help_internet">heeft internet rechten</string>
     <string name="help_granted">heeft Android rechten</string>

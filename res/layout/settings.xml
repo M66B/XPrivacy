@@ -77,6 +77,27 @@
                 android:layout_marginLeft="30dip"
                 android:text="@string/settings_usage" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_confidence"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etConfidence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="35"
+                    android:inputType="numberDecimal"
+                    android:maxLength="2"
+                    android:singleLine="true" />
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

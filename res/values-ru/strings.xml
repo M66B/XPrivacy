@@ -111,6 +111,7 @@
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Экспертный режим</string>
     <string name="settings_dangerous">Запрет опасных функций</string>
+    <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>
