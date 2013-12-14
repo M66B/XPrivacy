@@ -85,7 +85,6 @@ public class ActivityApp extends Activity {
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
 	public static final String cActionClear = "Clear";
-	public static final String cActionCrash = "Crash";
 
 	private static final int ACTIVITY_FETCH = 1;
 
@@ -1095,8 +1094,7 @@ public class ActivityApp extends Activity {
 				@Override
 				public void onClick(View view) {
 					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
-					infoIntent.setData(Uri.parse(String.format("http://wiki.faircode.eu/index.php?title=%s",
-							restrictionName)));
+					infoIntent.setData(Uri.parse(ActivityMain.cXUrl + "#" + restrictionName));
 					startActivity(infoIntent);
 				}
 			});

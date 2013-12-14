@@ -91,6 +91,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
 	public static final Uri cProUri = Uri.parse("http://www.faircode.eu/xprivacy/");
+	public static final String cXUrl = "https://github.com/M66B/XPrivacy";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -152,10 +153,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			public void onClick(View view) {
 				int position = spRestriction.getSelectedItemPosition();
 				if (position != AdapterView.INVALID_POSITION) {
-					String title = (position == 0 ? "XPrivacy" : PrivacyManager.getRestrictions().get(position - 1));
-					String url = String.format("http://wiki.faircode.eu/index.php?title=%s", title);
+					String query = (position == 0 ? "restrictions" : PrivacyManager.getRestrictions().get(position - 1));
 					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
-					infoIntent.setData(Uri.parse(url));
+					infoIntent.setData(Uri.parse(cXUrl + "#" + query));
 					startActivity(infoIntent);
 				}
 			}

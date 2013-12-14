@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Removed opening applications settings on force close ([issue](https://github.com/M66B/XPrivacy/issues/951))
+* Replaced wiki restriction links by links to GitHub
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
@@ -11,6 +12,7 @@ Changelog
 
 * Better progress report while importing, thanks @[jpeg729](https://github.com/jpeg729)
 * Setting to set maximum confidence fetch interval
+* Changed connection time out from 45 to 20 seconds
 * Updated Chinese translations
 * Updated Hungarian translation
 * Updated Slovak translation
