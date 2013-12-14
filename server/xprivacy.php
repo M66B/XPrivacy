@@ -274,10 +274,18 @@
 			<div class="container">
 <?php
 			if (empty($package_name)) {
+				$letter = empty($_REQUEST['letter']) ? 'A' : $_REQUEST['letter'];
 				echo '<p>';
-				foreach (range('A', 'Z') as $letter)
-					echo '<a href="?letter=' . $letter . '">' . $letter . '</a> ';
-				echo '<a href="?letter=*">other</a> ';
+				foreach (range('A', 'Z') as $alpha) {
+					echo '<a href="?letter=' . $alpha . '"';
+					if ($letter == $alpha)
+						echo ' style="font-weight: bold;"';
+					echo '>' . $alpha . '</a> ';
+				}
+				echo '<a href="?letter=*"';
+				if ($letter == '*')
+					echo ' style="font-weight: bold;"';
+				echo '>other</a> ';
 				echo '</p>';
 			}
 			else {
