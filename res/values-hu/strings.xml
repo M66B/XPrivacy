@@ -30,7 +30,7 @@
     <string name="menu_app_settings">Beállítások</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Válassza ki az engedélyezendő fiókokat</string>
-    <string name="menu_applications">SVálassza ki az engedélyezendő alkalmazásokat</string>
+    <string name="menu_applications">Válassza ki az engedélyezendő alkalmazásokat</string>
     <string name="menu_contacts">Válassza ki az engedélyezendő névjegyeket</string>
     <string name="menu_tutorial">Útmutató</string>
     <string name="msg_new">Új</string>
