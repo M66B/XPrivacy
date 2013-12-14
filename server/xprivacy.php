@@ -252,7 +252,7 @@
 				<h1>XPrivacy</h1>
 				<p>Crowd sourced restrictions</p>
 				<p>This is a voting system for
-					the <a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
+					<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
 					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch submitted restriction settings.<br />
 					There are currently <?php echo number_format($total, 0, '.', ','); ?> restriction settings
@@ -439,7 +439,7 @@
 				</table>
 				<p>
 					* Calculated using the
-					<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull Interval</a>.<br />
+					<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull interval</a>.<br />
 					Values below <?php echo number_format($max_confidence * 100, 1); ?> % are considered reliable.<br />
 					Rows marked with a grey background will be restricted when fetched.<br />
 				</p>
