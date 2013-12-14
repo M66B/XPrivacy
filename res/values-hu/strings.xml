@@ -18,37 +18,37 @@
     <string name="menu_theme">Téma váltás</string>
     <string name="menu_pro">Pro verzió</string>
     <string name="menu_about">Névjegy</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Segítség</string>
     <string name="menu_all">Minden</string>
-    <string name="menu_restriction_all">Toggle restrictions</string>
-    <string name="menu_clear_all">Clear all</string>
-    <string name="menu_restrict_all">Restrict all</string>
-    <string name="menu_usage_all">Toggle filter</string>
-    <string name="menu_apply">Apply template</string>
-    <string name="menu_clear">Clear</string>
+    <string name="menu_restriction_all">Korlátozások kapcsolása</string>
+    <string name="menu_clear_all">Összes törlése</string>
+    <string name="menu_restrict_all">Összes korlátozása</string>
+    <string name="menu_usage_all">Szűrő kapcsolása</string>
+    <string name="menu_apply">Sablon alkalmazása</string>
+    <string name="menu_clear">Törlés</string>
     <string name="menu_app_launch">Indítás</string>
     <string name="menu_app_settings">Beállítások</string>
     <string name="menu_app_store">Play Store</string>
     <string name="menu_accounts">Válassza ki az engedélyezendő fiókokat</string>
-    <string name="menu_applications">Select applications to allow</string>
+    <string name="menu_applications">Válassza ki az engedélyezendő alkalmazásokat</string>
     <string name="menu_contacts">Válassza ki az engedélyezendő névjegyeket</string>
-    <string name="menu_tutorial">Tutorial</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="menu_tutorial">Útmutató</string>
+    <string name="msg_new">Új</string>
+    <string name="msg_update">Frissítés</string>
     <string name="msg_licensed" formatted="false">Licensz tulajdonos: %s</string>
     <string name="msg_loading">Töltés</string>
-    <string name="msg_applying">Applying</string>
-    <string name="msg_applied">Template applied</string>
-    <string name="msg_saved_to" formatted="false">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_applying">Alkalmazás</string>
+    <string name="msg_applied">Útmutató alkalmazva</string>
+    <string name="msg_saved_to" formatted="false">Elmentve ide: %s</string>
+    <string name="msg_no_restrictions">Nem található korlátozás</string>
     <string name="msg_sure">Biztos benne?</string>
     <string name="msg_done">Kész</string>
     <string name="msg_reboot">Újraindítás szükséges</string>
     <string name="msg_random_now">Véletlenszerűsítés</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">Véletlenszerűsítés hozzáféréskor</string>
     <string name="msg_random_boot">Véletlenszerűsítés boot után</string>
-    <string name="msg_usage">Updating usage data</string>
-    <string name="msg_restart">Application restart required</string>
+    <string name="msg_usage">Használati adat frissítése</string>
+    <string name="msg_restart">Az alkalmazás újraindítása szükséges</string>
     <string name="msg_first"><b>Az XPrivacy fejlesztése és tesztelése nagy gondossággal történik,
 de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön és az összes alkalmazással.
 \n\nCsak saját felelősségre.</b>\n\nNézze meg a licenszet is:</string>
@@ -66,50 +66,50 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="restrict_media">Média (hang, fotó, videó)</string>
     <string name="restrict_messages">Üzenetek (SMS, MMS)</string>
     <string name="restrict_network">Hálózat (címek)</string>
-    <string name="restrict_notifications">Notifications</string>
-    <string name="restrict_overlay">Overlay</string>
+    <string name="restrict_notifications">Értesítések</string>
+    <string name="restrict_overlay">Átfedés</string>
     <string name="restrict_phone">Telefon (ID, számok, hívások)</string>
-    <string name="restrict_sensors">Sensors</string>
+    <string name="restrict_sensors">Szenzorok</string>
     <string name="restrict_storage">Tárhely (média, SD kártya)</string>
     <string name="restrict_shell">Parancssor (parancsok, rendszergazda)</string>
     <string name="restrict_system">Rendszer (telepített alkalmazások)</string>
     <string name="restrict_view">Megtekintés (böngésző)</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">Kategóriák</string>
     <string name="title_restrict">Jelölje be a korlátozáshoz:</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">Szűrők</string>
 
     <plurals name="title_active_filters">
-        <item quantity="one">1 active filter</item>
-        <item quantity="other">%d active filters</item>
+        <item quantity="one">1 aktív szűrő</item>
+        <item quantity="other">%d aktív szűrő</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fsystem">Filter on system applications</string>
-    <string name="title_fnot">Negate</string>
+    <string name="title_fused">Szűrés adathasználat alapján</string>
+    <string name="title_finternet">Szűrés internet hozzáférés alapján</string>
+    <string name="title_fpermission">Szűrés engedély alapján</string>
+    <string name="title_frestricted">Szűrés korlátozás alapján</string>
+    <string name="title_fuser">Szűrés felhasználói alkalmazások alapján</string>
+    <string name="title_fsystem">Szűrés rendszeralkalmazások alapján</string>
+    <string name="title_fnot">Negálás</string>
     <string name="settings_serial">Sorozatszám#</string>
     <string name="settings_lat">Szélesség</string>
     <string name="settings_lon">Hosszúság</string>
     <string name="settings_mac">MAC-cím</string>
-    <string name="settings_ip">IP address</string>
+    <string name="settings_ip">IP cím</string>
     <string name="settings_phone">Telefonszám</string>
     <string name="settings_id">Android azonosító</string>
-    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_adid">Reklám azonosító</string>
     <string name="settings_country">Ország</string>
     <string name="settings_operator">Operator</string>
     <string name="settings_subscriber">Előfizető azonosító</string>
-    <string name="settings_ua">User agent</string>
-    <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
-    <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
-    <string name="settings_log">Debug log (requires restart)</string>
-    <string name="settings_expert">Expert mode</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
+    <string name="settings_ua">Böngésző azonosító</string>
+    <string name="settings_general">Általános</string>
+    <string name="settings_fake_data">Kamu adat</string>
+    <string name="settings_global">Globális kamu adat használata</string>
+    <string name="settings_notify">Értesítések frissítése</string>
+    <string name="settings_usage">Android használati adat (újraindítás szükséges)</string>
+    <string name="settings_log">Debug log (újraindítás szükséges)</string>
+    <string name="settings_expert">Szakértői mód</string>
+    <string name="settings_dangerous">Veszélyes funkciók korlátozása</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="help_application">Alkalmazás</string>
     <string name="help_internet">Internet engedély</string>
@@ -117,15 +117,15 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="help_used">Használta ezt az adatot</string>
     <string name="help_frozen">Ki van kapcsolva</string>
     <string name="help_dangerous">Veszélyes</string>
-    <string name="help_half">partly restricted</string>
-    <string name="help_attention">restrictions need attention</string>
-    <string name="help_restricted">restrictions are changed</string>
-    <string name="help_shared">restrictions are submitted</string>
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="help_half">részben korlátozott</string>
+    <string name="help_attention">a korlátozásoknak beavatkozásra van szükségük</string>
+    <string name="help_restricted">korlátozások megváltoztatva</string>
+    <string name="help_shared">korlátozások beküldve</string>
+    <string name="tutorial_mainheader">Válassza ki a korlátozandó kategóriát; válassza ki a látható alkalmázásokat szűrőkkel</string>
+    <string name="tutorial_mainlist">Kattintson a jelölőnégyzetre a kategória korlátozásához egy alkalmazásnál\n
+\nAz alkalmazások feltöltődnek üres vagy kamu adatokkal a korlátozott kategóriákban\n
+\nKattintson az alkalmazás ikonjára további korlátozásokhoz vagy beállításokhoz</string>
+    <string name="tutorial_detailsheader">Kattintson az alkalmazás ikonjára további műveletekhez</string>
+    <string name="tutorial_detailslist">Kattintson a lefe nyílra, hogy lássa a korlátozott kategóriák kivételeit</string>
 
 </resources>
