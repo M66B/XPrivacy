@@ -684,7 +684,7 @@ Support
 
 If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
-Include a [logcat](http://developer.android.com/tools/help/logcat.html) when relevant
+Include a [logcat](#FAQ22) when relevant
 (use [pastebin](http://pastebin.com/) or a similar service).
 
 **Do not forget to enable XPrivacy logging using the settings menu!**
