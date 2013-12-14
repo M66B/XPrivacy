@@ -5,6 +5,7 @@ Changelog
 
 * Better progress report while importing, thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Chinese translations
+* Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
