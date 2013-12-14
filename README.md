@@ -113,32 +113,41 @@ Restrictions
 
 For easy usage, data is restricted by category:
 
+<a name="accounts"></a>
 * Accounts
 	* return an empty account list
 	* return fake account info
 	* return empty authorization tokens
+<a name="browser"></a>
 * Browser
 	* return an empty bookmark list
 	* return empty search history
+<a name="calendar"></a>
 * Calendar
 	* return an empty calendar
+<a name="calling"></a>
 * Calling
 	* prevent calls from being placed
 	* prevent SMS messages from being sent
 	* prevent MMS messages from being sent
 	* prevent data messages from being sent
+<a name="clipboard"></a>
 * Clipboard
 	* prevent paste from clipboard (both manual and from an application)
+<a name="contacts"></a>
 * Contacts
 	* return an empty contact list
 		* content://com.android.contacts/data
 		* content://com.android.contacts/raw_contacts
 		* content://com.android.contacts/phone_lookup
 		* content://com.android.contacts/profile
+<a name="dictionary"></a>
 * Dictionary
 	* return an empty user dictionary
+<a name="email"></a>
 * E-mail
 	* return an empty list of accounts, e-mails, etc (provider)
+<a name="identification"></a>
 * Identification
 	* return a fake Android ID
 	* return a fake device serial number
@@ -150,10 +159,12 @@ For easy usage, data is restricted by category:
 	* return file not found for /sys/block/.../cid
 	* return file not found for /sys/class/.../cid
 	* return fake input device descriptor
+<a name="internet"></a>
 * Internet
 	* revoke access to the internet
 	* return fake disconnected state
 	* return fake supplicant disconnected state
+<a name="location"></a>
 * Location
 	* return a random or set location
 	* return empty cell location
@@ -167,15 +178,18 @@ For easy usage, data is restricted by category:
 	* prevent sending extra commands (aGPS data)
 	* return an empty list of Wi-Fi scan results
 	* prevents connecting to Google Play services
+<a name="media"></a>
 * Media
 	* prevent recording audio (including from the microphone)
 	* prevent taking pictures
 	* prevent recording video
 	* you will be notified if an application tries to perform any of these actions
+<a name="messages"></a>
 * Messages
 	* return an empty SMS/MMS message list
 	* return an empty list of SMS messages stored on the SIM (ICC SMS)
 	* return an empty list of voicemail messages
+<a name="network"></a>
 * Network
 	* return fake IP's
 	* return fake MAC's (network, Wi-Fi, bluetooth)
@@ -183,16 +197,20 @@ For easy usage, data is restricted by category:
 	* return an empty list of Wi-Fi scan results
 	* return an empty list of configured Wi-Fi networks
 	* return an empty list of bluetooth adapters/devices
+<a name="nfc"></a>
 * NFC
 	* prevent receiving NFC adapter state changes
 	* prevent receiving NDEF discovered
 	* prevent receiving TAG discovered
 	* prevent receiving TECH discovered
+<a name="notifications"></a>
 * Notifications
 	* prevent receiving statusbar notifications (Android 4.3+)
 	* prevent [C2DM](https://developers.google.com/android/c2dm/) messages
+<a name="overlay"></a>
 * Overlay
 	* prevent draw over / on top
+<a name="phone"></a>
 * Phone
 	* return a fake own/in/outgoing/voicemail number
 	* return a fake subscriber ID (IMSI for a GSM phone)
@@ -222,17 +240,21 @@ For easy usage, data is restricted by category:
 		* Service state changed (service/no service)
 		* Signal level changed
 	* return an empty group identifier level 1
+<a name="sensors"></a>
 * Sensors
 	* return an empty default sensor
 	* return an empty list of sensors
+<a name="shell"></a>
 * Shell
 	* return I/O exception for Linux shell
 	* return I/O exception for Superuser shell
 	* return unsatisfied link error for load/loadLibrary
+<a name="storage"></a>
 * Storage
 	* revoke permission to the [media storage](http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/)
 	* revoke permission to the external storage (SD card)
 	* return fake unmounted state
+<a name="system"></a>
 * System
 	* return an empty list of installed applications
 	* return an empty list of recent tasks
@@ -242,6 +264,7 @@ For easy usage, data is restricted by category:
 	* return an empty list of widgets
 	* return an empty list of applications (provider)
 	* prevent package add, replace, restart and remove notifications
+<a name="view"></a>
 * View
 	* prevent links from opening in the browser
 	* return fake browser user agent string
