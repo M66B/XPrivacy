@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Removed opening applications settings on force close ([issue](https://github.com/M66B/XPrivacy/issues/951))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.44 BETA**
