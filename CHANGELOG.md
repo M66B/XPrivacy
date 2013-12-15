@@ -5,6 +5,7 @@ Changelog
 
 * Removed opening applications settings on force close ([issue](https://github.com/M66B/XPrivacy/issues/951))
 * Removed confidence settings text from application details view
+* Moved confidence setting to expert mode
 * Replaced wiki restriction links by links to GitHub
 * Added refresh menu to application list
 

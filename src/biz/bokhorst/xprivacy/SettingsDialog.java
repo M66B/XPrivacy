@@ -90,9 +90,11 @@ public class SettingsDialog {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				cbDangerous.setEnabled(isChecked);
 				cbUsage.setEnabled(isChecked);
+				etConfidence.setEnabled(isChecked);
 				if (!isChecked) {
 					cbDangerous.setChecked(false);
 					cbUsage.setChecked(false);
+					etConfidence.setText("");
 				}
 			}
 		});
@@ -272,8 +274,8 @@ public class SettingsDialog {
 				false);
 		boolean usage = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingAndroidUsage, false,
 				false);
-		final boolean expert = (dangerous || usage);
 		String confidence = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingConfidence, "", false);
+		final boolean expert = (dangerous || usage || !"".equals(confidence));
 		boolean global = (PrivacyManager.getAppSetting(null, context, uid, PrivacyManager.cSettingSerial, null, false) == null);
 		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
 
@@ -302,11 +304,12 @@ public class SettingsDialog {
 			if (expert) {
 				cbDangerous.setChecked(dangerous);
 				cbUsage.setChecked(usage);
+				etConfidence.setText(confidence);
 			} else {
 				cbDangerous.setEnabled(false);
 				cbUsage.setEnabled(false);
+				etConfidence.setEnabled(false);
 			}
-			etConfidence.setText(confidence);
 		} else {
 			// Disable global settings
 			cbLog.setVisibility(View.GONE);
