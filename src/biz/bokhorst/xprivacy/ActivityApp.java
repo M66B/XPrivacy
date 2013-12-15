@@ -88,8 +88,6 @@ public class ActivityApp extends Activity {
 
 	private static final int ACTIVITY_FETCH = 1;
 
-	private final int TIMEOUT_MILLISEC = 20000;
-
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
 
@@ -847,8 +845,8 @@ public class ActivityApp extends Activity {
 
 				// Submit
 				HttpParams httpParams = new BasicHttpParams();
-				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
-				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+				HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
 				HttpClient httpclient = new DefaultHttpClient(httpParams);
 
 				HttpPost httpost = new HttpPost(ActivityShare.BASE_URL + "?format=json&action=submit");
