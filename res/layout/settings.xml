@@ -27,7 +27,7 @@
                 android:textStyle="bold" />
 
             <View
-                android:id="@+id/vAppNameBorder"
+                android:id="@+id/vwAppNameBorder"
                 android:layout_width="match_parent"
                 android:layout_height="2dip"
                 android:background="#888888" />
@@ -78,6 +78,7 @@
                 android:text="@string/settings_usage" />
 
             <LinearLayout
+                android:id="@+id/llConfidence"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
