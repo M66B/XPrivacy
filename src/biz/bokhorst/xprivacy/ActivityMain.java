@@ -539,6 +539,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			case R.id.menu_fetch:
 				optionFetch();
 				return true;
+			case R.id.menu_refresh:
+				optionRefresh();
+				return true;
 			case R.id.menu_theme:
 				optionSwitchTheme();
 				return true;
@@ -787,6 +790,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
 		}
+	}
+
+	private void optionRefresh() {
+		this.recreate();
 	}
 
 	private void optionSwitchTheme() {

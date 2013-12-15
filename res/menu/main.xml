@@ -23,8 +23,10 @@
         android:title="@string/menu_import"/>
     <item
         android:id="@+id/menu_fetch"
-        android:title="@string/menu_fetch"
-        android:visible="true"/>
+        android:title="@string/menu_fetch"/>
+    <item
+        android:id="@+id/menu_refresh"
+        android:title="@string/menu_refresh"/>
     <item
         android:id="@+id/menu_pro"
         android:title="@string/menu_pro"/>
