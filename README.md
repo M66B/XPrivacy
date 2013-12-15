@@ -608,7 +608,7 @@ No, because these OS'es are to closed to implement something like XPrivacy.
 * Android version
 * Vibration
 
-No, because I don't consider this as privacy sensitive data.
+No, because I don't consider this as privacy sensitive data (=able to identify you and collect data about you).
 I am happy to add new restrictions for data that is really privacy sensitive.
 
 <a name="FAQ36"></a>
