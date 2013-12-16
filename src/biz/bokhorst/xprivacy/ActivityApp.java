@@ -136,8 +136,8 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(View view) {
 				Intent infoIntent = new Intent(Intent.ACTION_VIEW);
-				infoIntent.setData(Uri.parse(String.format(ActivityShare.BASE_URL + "?package_name=%s",
-						mAppInfo.getPackageName())));
+				infoIntent.setData(Uri.parse(String.format(ActivityShare.BASE_URL + "?package_name=%s", mAppInfo
+						.getPackageName().get(0))));
 				startActivity(infoIntent);
 			}
 		});
@@ -569,13 +569,13 @@ public class ActivityApp extends Activity {
 
 	private void optionSettings() {
 		Intent intentSettings = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-				Uri.parse("package:" + mAppInfo.getPackageName()));
+				Uri.parse("package:" + mAppInfo.getPackageName().get(0)));
 		startActivity(intentSettings);
 	}
 
 	private void optionStore() {
 		Intent intentStore = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
-				+ mAppInfo.getPackageName()));
+				+ mAppInfo.getPackageName().get(0)));
 		startActivity(intentStore);
 	}
 
