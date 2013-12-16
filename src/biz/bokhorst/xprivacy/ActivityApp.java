@@ -53,6 +53,7 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.Settings.Secure;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -81,7 +82,7 @@ public class ActivityApp extends Activity {
 	private RestrictionAdapter mPrivacyListAdapter = null;
 	private Bitmap[] mCheck;
 
-	public static final String cPackageName = "PackageName";
+	public static final String cUid = "Uid";
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
 	public static final String cActionClear = "Clear";
@@ -113,20 +114,21 @@ public class ActivityApp extends Activity {
 
 		// Get arguments
 		Bundle extras = getIntent().getExtras();
-		String packageName = extras.getString(cPackageName);
+		int uid = extras.getInt(cUid);
 		String restrictionName = (extras.containsKey(cRestrictionName) ? extras.getString(cRestrictionName) : null);
 		String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
 
 		// Get app info
 		try {
-			mAppInfo = new ApplicationInfoEx(this, packageName);
+			mAppInfo = new ApplicationInfoEx(this, uid);
 		} catch (NameNotFoundException ignored) {
 			finish();
 			return;
 		}
 
 		// Set title
-		setTitle(String.format("%s - %s", getString(R.string.app_name), mAppInfo.getFirstApplicationName()));
+		setTitle(String.format("%s - %s", getString(R.string.app_name),
+				TextUtils.join(", ", mAppInfo.getApplicationName())));
 
 		// Handle info click
 		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
@@ -183,7 +185,7 @@ public class ActivityApp extends Activity {
 
 		// Display package name
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
-		tvPackageName.setText(mAppInfo.getPackageName());
+		tvPackageName.setText(TextUtils.join(", ", mAppInfo.getPackageName()));
 
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
@@ -261,11 +263,11 @@ public class ActivityApp extends Activity {
 
 		// Launch
 		PackageManager pm = getPackageManager();
-		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName()) == null)
+		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName().get(0)) == null)
 			menu.findItem(R.id.menu_app_launch).setEnabled(false);
 
 		// Play
-		boolean hasMarketLink = Util.hasMarketLink(this, mAppInfo.getPackageName());
+		boolean hasMarketLink = Util.hasMarketLink(this, mAppInfo.getPackageName().get(0));
 		menu.findItem(R.id.menu_app_store).setEnabled(hasMarketLink);
 	}
 
@@ -518,7 +520,7 @@ public class ActivityApp extends Activity {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
-					intent.putExtra(ActivityShare.cPackageName, mAppInfo.getPackageName());
+					intent.putExtra(ActivityShare.cUid, mAppInfo.getUid());
 					startActivityForResult(intent, ACTIVITY_FETCH);
 				}
 			});
@@ -561,7 +563,7 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionLaunch() {
-		Intent intentLaunch = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName());
+		Intent intentLaunch = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName().get(0));
 		startActivity(intentLaunch);
 	}
 
@@ -831,15 +833,27 @@ public class ActivityApp extends Activity {
 				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 				String android_id = Secure.getString(ActivityApp.this.getContentResolver(), Secure.ANDROID_ID);
 
+				JSONArray appName = new JSONArray();
+				for (String name : params[0].getApplicationName())
+					appName.put(name);
+
+				JSONArray pkgName = new JSONArray();
+				for (String name : params[0].getPackageName())
+					pkgName.put(name);
+
+				JSONArray pkgVersion = new JSONArray();
+				for (String version : params[0].getPackageVersion(ActivityApp.this))
+					pkgVersion.put(version);
+
 				// Encode package
 				JSONObject jRoot = new JSONObject();
 				jRoot.put("protocol_version", 4);
 				jRoot.put("android_id", Util.md5(android_id).toLowerCase());
 				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 				jRoot.put("xprivacy_version", pInfo.versionCode);
-				jRoot.put("application_name", params[0].getFirstApplicationName());
-				jRoot.put("package_name", params[0].getPackageName());
-				jRoot.put("package_version", params[0].getVersion(ActivityApp.this));
+				jRoot.put("application_name", appName);
+				jRoot.put("package_name", pkgName);
+				jRoot.put("package_version", pkgVersion);
 				jRoot.put("settings", jSettings);
 
 				// Submit
@@ -913,8 +927,8 @@ public class ActivityApp extends Activity {
 
 			for (String rRestrictionName : PrivacyManager.getRestrictions()) {
 				boolean isUsed = (PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), rRestrictionName, null) > 0);
-				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
-						rRestrictionName);
+				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this,
+						mAppInfo.getPackageName().get(0), rRestrictionName);
 				if (mSelectedRestrictionName != null
 						|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
 					mRestrictions.add(rRestrictionName);
@@ -980,8 +994,8 @@ public class ActivityApp extends Activity {
 				if (holder.position == position && restrictionName != null) {
 					// Get info
 					used = (PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0);
-					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
-							restrictionName);
+					permission = PrivacyManager.hasPermission(holder.row.getContext(),
+							mAppInfo.getPackageName().get(0), restrictionName);
 
 					for (boolean restricted : PrivacyManager.getRestricted(holder.row.getContext(), mAppInfo.getUid(),
 							restrictionName)) {
@@ -1119,8 +1133,8 @@ public class ActivityApp extends Activity {
 				for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods((String) getGroup(groupPosition))) {
 					boolean isUsed = (PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), restrictionName,
 							md.getName()) > 0);
-					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
-							md);
+					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName()
+							.get(0), md);
 					if (mSelectedMethodName != null
 							|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
 						listMethod.add(md);
@@ -1196,7 +1210,8 @@ public class ActivityApp extends Activity {
 							md.getName());
 					parentRestricted = PrivacyManager.getRestricted(null, holder.row.getContext(), mAppInfo.getUid(),
 							restrictionName, null, false, false);
-					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(), md);
+					permission = PrivacyManager.hasPermission(holder.row.getContext(),
+							mAppInfo.getPackageName().get(0), md);
 					restricted = PrivacyManager.getRestricted(null, holder.row.getContext(), mAppInfo.getUid(),
 							restrictionName, md.getName(), false, false);
 				}

@@ -9,6 +9,7 @@ Changelog
 * Replaced wiki restriction links by links to GitHub
 * Added menu to clear usage data
 * Added refresh menu to application list
+* Display, submit, fetch all application and package name
 * Updated Chinese translation
 * Updated Norwegian translation
 

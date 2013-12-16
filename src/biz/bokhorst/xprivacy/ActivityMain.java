@@ -1141,7 +1141,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					if (fPermission)
 						if (mRestrictionName == null)
 							permission = true;
-						else if (PrivacyManager.hasPermission(mContext, xAppInfo.getPackageName(), mRestrictionName)
+						else if (PrivacyManager.hasPermission(mContext, xAppInfo.getPackageName().get(0),
+								mRestrictionName)
 								|| PrivacyManager.getUsed(mContext, xAppInfo.getUid(), mRestrictionName, null) > 0)
 							permission = true;
 
@@ -1257,7 +1258,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					// Get if granted
 					if (mRestrictionName != null)
-						if (!PrivacyManager.hasPermission(holder.row.getContext(), xAppInfo.getPackageName(),
+						if (!PrivacyManager.hasPermission(holder.row.getContext(), xAppInfo.getPackageName().get(0),
 								mRestrictionName))
 							granted = false;
 
@@ -1441,7 +1442,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				@Override
 				public void onClick(View view) {
 					Intent intentSettings = new Intent(view.getContext(), ActivityApp.class);
-					intentSettings.putExtra(ActivityApp.cPackageName, xAppInfo.getPackageName());
+					intentSettings.putExtra(ActivityApp.cUid, xAppInfo.getUid());
 					intentSettings.putExtra(ActivityApp.cRestrictionName, mRestrictionName);
 					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					view.getContext().startActivity(intentSettings);

@@ -38,18 +38,29 @@
 		// Store/update settings
 		if (empty($action) || $action == 'submit') {
 			// Validate data
-			if (empty($data->protocol_version) || empty($data->settings)) {
+			if (empty($data->package_name) || empty($data->settings)) {
 				echo json_encode(array('ok' => false, 'error' => 'No data'));
 				exit();
 			}
 
 			// Fixes
+			if (empty($data->protocol_version))
+				$data->protocol_version = 0;
 			if ($data->protocol_version <= 3)
 				$data->android_id = md5($data->android_id);
+
 			if (empty($data->application_name))
-				$data->application_name = '';
+				$data->application_name = array('');
+			else if (!is_array($data->application_name))
+				$data->application_name = array($data->application_name);
+
+			if (!is_array($data->package_name))
+				$data->package_name = array($data->package_name);
+
 			if (empty($data->package_version))
-				$data->package_version = '';
+				$data->package_version = array('');
+			else if (!is_array($data->package_version))
+				$data->package_version = array($data->package_version);
 
 			// Check if restrictions
 			$empty = true;
@@ -64,44 +75,50 @@
 			}
 
 			// Process application
-			$sql = "INSERT INTO xprivacy_app (application_name, package_name, package_version) VALUES ";
-			$sql .= "('" . $db->real_escape_string($data->application_name) . "'";
-			$sql .= ",'" . $db->real_escape_string($data->package_name) . "'";
-			$sql .= ",'" . $db->real_escape_string($data->package_version) . "')";
-			$sql .= " ON DUPLICATE KEY UPDATE";
-			$sql .= " modified=CURRENT_TIMESTAMP()";
-			if (!$db->query($sql))
-				error_log('XPrivacy insert application: ' . $db->error . PHP_EOL, 1, $my_email);
+			$log = '';
+			foreach ($data->application_name as $application_name)
+				for ($i = 0; $i < count($data->package_name); $i++) {
+					$sql = "INSERT INTO xprivacy_app (application_name, package_name, package_version) VALUES ";
+					$sql .= "('" . $db->real_escape_string($application_name) . "'";
+					$sql .= ",'" . $db->real_escape_string($data->package_name[$i]) . "'";
+					$sql .= ",'" . $db->real_escape_string($data->package_version[$i]) . "')";
+					$sql .= " ON DUPLICATE KEY UPDATE";
+					$sql .= " modified=CURRENT_TIMESTAMP()";
+					$log .= $sql . PHP_EOL . PHP_EOL;
+					if (!$db->query($sql))
+						error_log('XPrivacy insert application: ' . $db->error . PHP_EOL, 1, $my_email);
+				}
 
 			// Process restrictions
-			foreach ($data->settings as $restriction) {
-				if (empty($restriction->method))
-					$restriction->method = '';
-				$sql = "INSERT INTO xprivacy (android_id_md5, android_sdk, xprivacy_version, application_name, package_name, package_version,";
-				$sql .= " restriction, method, restricted, used) VALUES ";
-				$sql .= "('" . $data->android_id . "'";
-				$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
-				$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : $db->real_escape_string($data->xprivacy_version)) . "";
-				$sql .= ",'" . $db->real_escape_string($data->application_name) . "'";
-				$sql .= ",'" . $db->real_escape_string($data->package_name) . "'";
-				$sql .= ",'" . $db->real_escape_string($data->package_version) . "'";
-				$sql .= ",'" . $db->real_escape_string($restriction->restriction) . "'";
-				$sql .= ",'" . $db->real_escape_string($restriction->method) . "'";
-				$sql .= "," . ($restriction->restricted ? 1 : 0);
-				$sql .= "," . $db->real_escape_string($restriction->used) . ")";
-				$sql .= " ON DUPLICATE KEY UPDATE";
-				$sql .= " xprivacy_version=VALUES(xprivacy_version)";
-				$sql .= ", application_name=VALUES(application_name)";
-				$sql .= ", restricted=VALUES(restricted)";
-				$sql .= ", used=VALUES(used)";
-				$sql .= ", modified=CURRENT_TIMESTAMP()";
-				$sql .= ", updates=updates+1";
-				if (!$db->query($sql)) {
-					error_log('XPrivacy insert restrictions: ' . $db->error . PHP_EOL, 1, $my_email);
-					$ok = false;
-					break;
+			for ($i = 0; $i < count($data->package_name); $i++)
+				foreach ($data->settings as $restriction) {
+					if (empty($restriction->method))
+						$restriction->method = '';
+					$sql = "INSERT INTO xprivacy (android_id_md5, android_sdk, xprivacy_version, application_name, package_name, package_version,";
+					$sql .= " restriction, method, restricted, used) VALUES ";
+					$sql .= "('" . $data->android_id . "'";
+					$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
+					$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : $db->real_escape_string($data->xprivacy_version)) . "";
+					$sql .= ",'" . $db->real_escape_string($data->application_name[0]) . "'";
+					$sql .= ",'" . $db->real_escape_string($data->package_name[$i]) . "'";
+					$sql .= ",'" . $db->real_escape_string($data->package_version[$i]) . "'";
+					$sql .= ",'" . $db->real_escape_string($restriction->restriction) . "'";
+					$sql .= ",'" . $db->real_escape_string($restriction->method) . "'";
+					$sql .= "," . ($restriction->restricted ? 1 : 0);
+					$sql .= "," . $db->real_escape_string($restriction->used) . ")";
+					$sql .= " ON DUPLICATE KEY UPDATE";
+					$sql .= " xprivacy_version=VALUES(xprivacy_version)";
+					$sql .= ", application_name=VALUES(application_name)";
+					$sql .= ", restricted=VALUES(restricted)";
+					$sql .= ", used=VALUES(used)";
+					$sql .= ", modified=CURRENT_TIMESTAMP()";
+					$sql .= ", updates=updates+1";
+					$log .= $sql . PHP_EOL . PHP_EOL;
+					if (!$db->query($sql)) {
+						error_log('XPrivacy insert restrictions: ' . $db->error . PHP_EOL, 1, $my_email);
+						$ok = false;
+					}
 				}
-			}
 
 			// Send reponse
 			echo json_encode(array('ok' => $ok, 'error' => $db->error));
@@ -120,13 +137,31 @@
 				echo json_encode(array('ok' => false, 'error' => 'Not authorized'));
 			}
 			else {
+				// Validate
+				if (empty($data->package_name)) {
+					echo json_encode(array('ok' => false, 'error' => 'No package name'));
+					exit();
+				}
+
+				// Fixes
+				if (!is_array($data->package_name))
+					$data->package_name = array($data->package_name);
+
 				$max_ci = (empty($data->confidence) ? $max_confidence : $data->confidence / 100);
+
+				$package_names = '';
+				foreach ($data->package_name as $package_name) {
+					if (!empty($package_names))
+						$package_names .= ', ';
+					$package_names .= "'" . $db->real_escape_string($package_name) . "'";
+				}
+
 				$settings = Array();
 				$sql = "SELECT restriction, method, restricted";
 				$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 				$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
 				$sql .= " FROM xprivacy";
-				$sql .= " WHERE package_name = '" . $db->real_escape_string($data->package_name) . "'";
+				$sql .= " WHERE package_name IN (" . $package_names . ")";
 				$sql .= " GROUP BY restriction, method";
 				$result = $db->query($sql);
 				if ($result) {
@@ -275,25 +310,13 @@
 <?php
 			}
 ?>
-			<p>This is a voting system for
-				<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
-				Everybody using XPrivacy can submit his/her restriction settings.<br />
-				With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch submitted restriction settings.<br />
-				There are currently <?php echo number_format($total, 0, '.', ','); ?> restriction settings
-				for <?php echo number_format($count, 0, '.', ',') ?> applications submitted.
-			</p>
-<?php
-			if (empty($package_name)) {
-?>
-				<span style="font-size: smaller;"><?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></span>
-				<p>
-					<a href="/xprivacy">Home</a>
-					-
-					<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
+				<p>This is a voting system for
+					<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
+					Everybody using XPrivacy can submit his/her restriction settings.<br />
+					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch submitted restriction settings.<br />
+					There are currently <?php echo number_format($total, 0, '.', ','); ?> restriction settings
+					for <?php echo number_format($count, 0, '.', ',') ?> applications submitted.
 				</p>
-<?php
-			}
-?>
 			</div>
 
 			<div class="container">

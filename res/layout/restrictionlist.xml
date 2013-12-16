@@ -98,7 +98,6 @@
                         android:id="@+id/tvVersion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textIsSelectable="false" />
 
@@ -106,7 +105,6 @@
                         android:id="@+id/tvPackageName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textIsSelectable="false" />
                 </LinearLayout>

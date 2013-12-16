@@ -11,6 +11,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 
 public class PackageChange extends BroadcastReceiver {
 
@@ -21,7 +22,6 @@ public class PackageChange extends BroadcastReceiver {
 			Uri inputUri = Uri.parse(intent.getDataString());
 			if (inputUri.getScheme().equals("package")) {
 				// Get data
-				String packageName = inputUri.getSchemeSpecificPart();
 				int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 				boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
 				NotificationManager notificationManager = (NotificationManager) context
@@ -30,7 +30,7 @@ public class PackageChange extends BroadcastReceiver {
 				// Check action
 				if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
 					// Get data
-					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, packageName);
+					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
 
 					// Default deny new user apps
 					if (!replacing) {
@@ -53,7 +53,7 @@ public class PackageChange extends BroadcastReceiver {
 							|| PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify, true,
 									false)) {
 						Intent resultIntent = new Intent(Intent.ACTION_MAIN);
-						resultIntent.putExtra(ActivityApp.cPackageName, packageName);
+						resultIntent.putExtra(ActivityApp.cUid, uid);
 						resultIntent.setClass(context.getApplicationContext(), ActivityApp.class);
 
 						// Build pending intent
@@ -62,7 +62,7 @@ public class PackageChange extends BroadcastReceiver {
 
 						// Build result intent clear
 						Intent resultIntentClear = new Intent(Intent.ACTION_MAIN);
-						resultIntentClear.putExtra(ActivityApp.cPackageName, packageName);
+						resultIntentClear.putExtra(ActivityApp.cUid, uid);
 						resultIntentClear.putExtra(ActivityApp.cActionClear, true);
 						resultIntentClear.setClass(context.getApplicationContext(), ActivityApp.class);
 
@@ -73,7 +73,7 @@ public class PackageChange extends BroadcastReceiver {
 						// Title
 						String title = String.format("%s %s %s",
 								context.getString(replacing ? R.string.msg_update : R.string.msg_new),
-								appInfo.getFirstApplicationName(), appInfo.getVersion(context));
+								TextUtils.join(", ", appInfo.getApplicationName()), appInfo.getVersion(context));
 						if (!replacing)
 							title = String.format("%s %s", title, context.getString(R.string.msg_applied));
 
@@ -98,6 +98,7 @@ public class PackageChange extends BroadcastReceiver {
 							Integer.toString(ActivityMain.STATE_ATTENTION));
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
 					// Notify reboot required
+					String packageName = inputUri.getSchemeSpecificPart();
 					if (packageName.equals(context.getPackageName())) {
 						// Build notification
 						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
