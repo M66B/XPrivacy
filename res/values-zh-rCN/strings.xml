@@ -9,7 +9,7 @@
     <string name="menu_usage">权限使用记录</string>
     <string name="menu_refresh">刷新应用列表</string>
     <string name="menu_settings">用于被限制应用的模拟信息</string>
-    <string name="menu_template">新安装应用默认权限模板</string>
+    <string name="menu_template">新装应用默认权限模板</string>
     <string name="menu_report">报告问题</string>
     <string name="menu_export">导出全局配置</string>
     <string name="menu_import">导入全局配置</string>
@@ -23,7 +23,7 @@
     <string name="menu_restriction_all">全选/不选列表中的应用</string>
     <string name="menu_clear_all">清除全部限制</string>
     <string name="menu_restrict_all">限制所有权限</string>
-    <string name="menu_clear_usage">Clear</string>
+    <string name="menu_clear_usage">清除权限使用记录</string>
     <string name="menu_usage_all">过滤器开关</string>
     <string name="menu_apply">套用默认权限模板</string>
     <string name="menu_clear">清除所有权限限制</string>
@@ -101,8 +101,8 @@
     <string name="settings_adid">广告 ID</string>
     <string name="settings_country">国家</string>
     <string name="settings_operator">运营商</string>
-    <string name="settings_subscriber">签约者 ID</string>
-    <string name="settings_ua">用户代理（UA）</string>
+    <string name="settings_subscriber">签约者 ID（IMSI）</string>
+    <string name="settings_ua">浏览器用户代理信息（UA）</string>
     <string name="settings_general">一般设置</string>
     <string name="settings_fake_data">模拟信息</string>
     <string name="settings_global">使用全局模拟信息</string>
@@ -111,7 +111,7 @@
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
     <string name="settings_dangerous">限制可能导致应用异常的权限</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
+    <string name="settings_confidence">最大刷新间隔</string>
     <string name="help_application">请输入应用名称</string>
     <string name="help_internet">应用含有联网权限</string>
     <string name="help_granted">应用已申请的权限（ Androidmanifest 中表明）</string>
