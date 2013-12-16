@@ -10,8 +10,9 @@ Changelog
 * Added menu to clear usage data
 * Added refresh menu to application list
 * Display, submit, fetch all application and package name
-* Updated Chinese translation
+* Updated Chineses translations
 * Updated Norwegian translation
+* Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
