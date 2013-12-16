@@ -32,7 +32,7 @@
     <string name="menu_accounts">Velg konto som skal tillates</string>
     <string name="menu_applications">Velg apper som skal tillates</string>
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
-    <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_tutorial">Innføring</string>
     <string name="msg_new">Nytt</string>
     <string name="msg_update">Oppdater</string>
     <string name="msg_licensed" formatted="false">Lisensert til: %s</string>
@@ -108,7 +108,7 @@
     <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
     <string name="settings_expert">Ekspert modus</string>
     <string name="settings_dangerous">Blokker farlige funksjoner</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
+    <string name="settings_confidence">Maksimalt konfidensintervall for å hente restriksjoner</string>
     <string name="help_application">App</string>
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>
@@ -119,11 +119,12 @@
     <string name="help_attention">restriksjoner trenger oppmerksomhet</string>
     <string name="help_restricted">restriksjoner ble forandret</string>
     <string name="help_shared">restriksjoner ble lastet opp</string> 
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="tutorial_mainheader">Velg kategorien som skal blokkeres; velg synlige apper med hjelp av filtere</string>
+    <string name="tutorial_mainlist">Sett hake for å blokkere kategorien som er valgt for en app\n
+\nApper får tom eller forfalsket data for kategorier som er blokkert\n
+\nTrykk på app ikonet for å se detaljerte restriksjoner og innstillinger
+</string>
+    <string name="tutorial_detailsheader">Trykk på app ikonet for å få flere valg/aksjoner</string>
+    <string name="tutorial_detailslist">Trykk på pilene som viser ned for å se funksjonene innen en kategorie</string>
 
 </resources>
