@@ -134,8 +134,7 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(View view) {
 				Intent infoIntent = new Intent(Intent.ACTION_VIEW);
-				infoIntent.setData(Uri.parse(String.format(ActivityShare.BASE_URL
-						+ "?application_name=%s&package_name=%s", mAppInfo.getFirstApplicationName(),
+				infoIntent.setData(Uri.parse(String.format(ActivityShare.BASE_URL + "?package_name=%s",
 						mAppInfo.getPackageName())));
 				startActivity(infoIntent);
 			}
