@@ -115,6 +115,7 @@ public class ActivityUsage extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		UsageTask usageTask;
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			Intent upIntent = NavUtils.getParentActivityIntent(this);
@@ -130,7 +131,12 @@ public class ActivityUsage extends Activity {
 				mUsageAdapter.getFilter().filter(Boolean.toString(mAll));
 			return true;
 		case R.id.menu_refresh:
-			UsageTask usageTask = new UsageTask();
+			usageTask = new UsageTask();
+			usageTask.executeOnExecutor(mExecutor, (Object) null);
+			return true;
+		case R.id.menu_clear:
+			PrivacyManager.deleteUsage(this, mUid);
+			usageTask = new UsageTask();
 			usageTask.executeOnExecutor(mExecutor, (Object) null);
 			return true;
 		default:

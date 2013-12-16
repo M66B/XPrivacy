@@ -7,5 +7,8 @@
     <item
         android:id="@+id/menu_refresh"
         android:title="@string/menu_refresh"/>
+    <item
+        android:id="@+id/menu_clear"
+        android:title="@string/menu_clear_usage"/>
 
 </menu>

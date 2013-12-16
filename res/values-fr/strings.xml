@@ -23,6 +23,7 @@
     <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_clear_all">Tout effacer</string>
     <string name="menu_restrict_all">Tout restreindre</string>
+    <string name="menu_clear_usage">Clear</string>
     <string name="menu_usage_all">Basculer tout/restreintes uniquement</string>
     <string name="menu_apply">Appliquer le modèle</string>
     <string name="menu_clear">Effacer</string>

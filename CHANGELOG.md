@@ -7,6 +7,7 @@ Changelog
 * Removed confidence settings text from application details view
 * Moved confidence setting to expert mode
 * Replaced wiki restriction links by links to GitHub
+* Added menu to clear usage data
 * Added refresh menu to application list
 * Updated Chinese translation
 * Updated Norwegian translation

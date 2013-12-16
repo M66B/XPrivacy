@@ -23,6 +23,7 @@
     <string name="menu_restriction_all">全选/不选列表中的应用</string>
     <string name="menu_clear_all">清除全部限制</string>
     <string name="menu_restrict_all">限制所有权限</string>
+    <string name="menu_clear_usage">Clear</string>
     <string name="menu_usage_all">过滤器开关</string>
     <string name="menu_apply">套用默认权限模板</string>
     <string name="menu_clear">清除所有权限限制</string>

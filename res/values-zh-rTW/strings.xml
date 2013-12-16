@@ -23,6 +23,7 @@
     <string name="menu_restriction_all">套用預設規則</string>
     <string name="menu_clear_all">清除全部</string>
     <string name="menu_restrict_all">限制全部</string>
+    <string name="menu_clear_usage">Clear</string>
     <string name="menu_usage_all">切換顯示限制項目</string>
     <string name="menu_apply">套用預設規則</string>
     <string name="menu_clear">清空</string>

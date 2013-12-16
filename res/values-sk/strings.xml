@@ -23,6 +23,7 @@
     <string name="menu_restriction_all">Prepnúť obmedzenia</string>
     <string name="menu_clear_all">Vyčistiť všetky</string>
     <string name="menu_restrict_all">Obmedziť všetky</string>
+    <string name="menu_clear_usage">Clear</string>
     <string name="menu_usage_all">Prepnúť filter</string>
     <string name="menu_apply">Použiť šablónu</string>
     <string name="menu_clear">Vyčistiť</string>

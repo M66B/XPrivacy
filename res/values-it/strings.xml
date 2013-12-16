@@ -23,6 +23,7 @@
     <string name="menu_restriction_all">Imposta restrizioni</string>
     <string name="menu_clear_all">Deseleziona tutto</string>
     <string name="menu_restrict_all">Seleziona tutto</string>
+    <string name="menu_clear_usage">Clear</string>
     <string name="menu_usage_all">Imposta filtro</string>
     <string name="menu_apply">Applica template</string>
     <string name="menu_clear">Pulisci</string>
