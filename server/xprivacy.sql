@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 16, 2013 at 09:58 AM
+-- Generation Time: Dec 16, 2013 at 03:16 PM
 -- Server version: 5.5.31-1~dotdeb.0
 -- PHP Version: 5.3.28-1~dotdeb.0
 
@@ -31,7 +31,6 @@ CREATE TABLE IF NOT EXISTS `xprivacy` (
   `android_id_md5` text NOT NULL,
   `android_sdk` int(11) NOT NULL,
   `xprivacy_version` int(11) DEFAULT NULL,
-  `application_name` text NOT NULL,
   `package_name` text NOT NULL,
   `package_version` text NOT NULL,
   `restriction` text NOT NULL,
@@ -42,9 +41,8 @@ CREATE TABLE IF NOT EXISTS `xprivacy` (
   `updates` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `restriction` (`android_id_md5`(50),`android_sdk`,`package_name`(100),`package_version`(50),`restriction`(20),`method`(70)),
-  KEY `package` (`package_name`(100)),
-  KEY `application` (`application_name`(100),`package_name`(100))
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2256576 ;
+  KEY `package` (`package_name`(100))
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2266116 ;
 
 -- --------------------------------------------------------
 
@@ -60,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `xprivacy_app` (
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `application` (`application_name`(100),`package_name`(100),`package_version`(50))
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15917 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16031 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
