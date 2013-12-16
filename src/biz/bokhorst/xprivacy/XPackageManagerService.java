@@ -6,7 +6,6 @@ import java.util.List;
 
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -82,15 +81,36 @@ public class XPackageManagerService extends XHook {
 					param.setObjectExtra("save_permissions", requestedPermissions);
 
 					// Modify permissions
-					ArrayList<String> modifiedPermissions = new ArrayList<String>(requestedPermissions.size());
-					for (String permission : requestedPermissions)
-						modifiedPermissions.add(permission);
+					ArrayList<String> modifiedPermissions = new ArrayList<String>();
+					for (String requestedPermission : requestedPermissions) {
+						boolean revoke = false;
+						for (String restrictionName : PrivacyManager.getRestrictions()) {
+							for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
+								if (md.getPermissions() != null)
+									for (String permission : md.getPermissions())
+										if (!"".equals(permission) && requestedPermission.endsWith(permission)) {
+											boolean restricted = PrivacyManager.getRestricted(this, null, appInfo.uid,
+													restrictionName, md.getName(), false, true);
+											if (restricted) {
+												Util.log(this, Log.INFO, "Revoking uid=" + appInfo.uid + " permission="
+														+ requestedPermission);
+												revoke = true;
+												break;
+											}
+										}
+								if (revoke)
+									break;
+							}
+							if (revoke)
+								break;
+						}
+
+						if (!revoke)
+							modifiedPermissions.add(requestedPermission);
+					}
 
 					// Set modified permissions
 					setObjectField(param.args[0], "requestedPermissions", modifiedPermissions);
-
-					Util.log(this, Log.INFO, "uid=" + appInfo.uid + " package=" + appInfo.packageName + " permissions="
-							+ TextUtils.join(",", modifiedPermissions));
 				}
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
