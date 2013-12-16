@@ -23,7 +23,7 @@
     <string name="menu_restriction_all">Przełącz restrykcje</string>
     <string name="menu_clear_all">Wyczyść wszystko</string>
     <string name="menu_restrict_all">Ogranicz wszystko</string>
-    <string name="menu_clear_usage">Clear</string>
+    <string name="menu_clear_usage">Wyczyść</string>
     <string name="menu_usage_all">Przełącz filtry</string>
     <string name="menu_apply">Zastosuj szablon</string>
     <string name="menu_clear">Wyczyść</string>
@@ -33,7 +33,7 @@
     <string name="menu_accounts">Wybierz dozwolone konta</string>
     <string name="menu_applications">Wybierz dozwolone aplikacje</string>
     <string name="menu_contacts">Wybierz dozwolone kontakty</string>
-    <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_tutorial">Samouczek</string>
     <string name="msg_new">Nowa aplikacja</string>
     <string name="msg_update">Aktualizacja</string>
     <string name="msg_licensed" formatted="false">Licencjonowane dla: %s</string>
@@ -123,11 +123,11 @@
     <string name="help_attention">ograniczenia wymagają sprawdzenia</string>
     <string name="help_restricted">ograniczenia się zmieniły</string>
     <string name="help_shared">ogrniczenia zostały wysłane</string>
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="tutorial_mainheader">Wybierz kategorię do ograniczenia; wybierz widoczne aplikacje za pomocą filtrów</string>
+    <string name="tutorial_mainlist">Tapnij checkbox aby ograniczyć wybraną kategorię dla danej aplikacji\n
+\nDla ograniczonych kategorii aplikacjom będą podawane puste albo sfałszowane dane\n
+\nTapnij ikonę aplikacji aby uzyskać dostęp do szczegółowych ograniczeń i ustawień</string>
+    <string name="tutorial_detailsheader">Tapnij na ikone aplikacji po więcej akcji</string>
+    <string name="tutorial_detailslist">Tapnij na strzałkę w dół aby zobaczyć wyjątki ograniczeń w danej kategorii</string>
 
 </resources>
