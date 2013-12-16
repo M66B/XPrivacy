@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
@@ -70,8 +71,8 @@ public class XPackageManagerService extends XHook {
 		} else if (mMethod == Methods.grantPermissionsLPw) {
 			try {
 				if (param.args.length > 0 && param.args[0] != null) {
-					// Get package name
-					String packageName = (String) getObjectField(param.args[0], "packageName");
+					// Get application info
+					ApplicationInfo appInfo = (ApplicationInfo) getObjectField(param.args[0], "applicationInfo");
 
 					// Get requested permissions
 					ArrayList<String> requestedPermissions = (ArrayList<String>) getObjectField(param.args[0],
@@ -88,8 +89,8 @@ public class XPackageManagerService extends XHook {
 					// Set modified permissions
 					setObjectField(param.args[0], "requestedPermissions", modifiedPermissions);
 
-					Util.log(this, Log.INFO,
-							"package=" + packageName + " permissions=" + TextUtils.join(",", modifiedPermissions));
+					Util.log(this, Log.INFO, "uid=" + appInfo.uid + " package=" + appInfo.packageName + " permissions="
+							+ TextUtils.join(",", modifiedPermissions));
 				}
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
