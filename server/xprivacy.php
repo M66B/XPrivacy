@@ -30,7 +30,7 @@
 		$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 		if ($db->connect_errno) {
 			error_log('XPrivacy database connect: ' . $db->connect_error . PHP_EOL, 1, $my_email);
-			echo json_encode(array('ok' => false, 'error' => 'Unable to connect db'));
+			echo json_encode(array('ok' => false, 'error' => 'Error connecting to database'));
 			exit();
 		}
 		$db->query("SET NAMES 'utf8'");
@@ -38,8 +38,8 @@
 		// Store/update settings
 		if (empty($action) || $action == 'submit') {
 			// Validate data
-			if (empty($data->package_name) || empty($data->settings)) {
-				echo json_encode(array('ok' => false, 'error' => 'No data'));
+			if (empty($data->package_name)) {
+				echo json_encode(array('ok' => false, 'error' => 'Package name missing'));
 				exit();
 			}
 
@@ -64,18 +64,18 @@
 
 			// Check if restrictions
 			$empty = true;
-			foreach ($data->settings as $restriction)
-				if ($restriction->restricted) {
-					$empty = false;
-					break;
-				}
+			if (!empty($data->settings))
+				foreach ($data->settings as $restriction)
+					if ($restriction->restricted) {
+						$empty = false;
+						break;
+					}
 			if ($empty) {
-				echo json_encode(array('ok' => false, 'error' => 'No restrictions'));
+				echo json_encode(array('ok' => false, 'error' => 'Restrictions missing'));
 				exit();
 			}
 
 			// Process application
-			$log = '';
 			foreach ($data->application_name as $application_name)
 				for ($i = 0; $i < count($data->package_name); $i++) {
 					$sql = "INSERT INTO xprivacy_app (application_name, package_name, package_version) VALUES ";
@@ -84,9 +84,10 @@
 					$sql .= ",'" . $db->real_escape_string($data->package_version[$i]) . "')";
 					$sql .= " ON DUPLICATE KEY UPDATE";
 					$sql .= " modified=CURRENT_TIMESTAMP()";
-					$log .= $sql . PHP_EOL . PHP_EOL;
-					if (!$db->query($sql))
+					if (!$db->query($sql)) {
 						error_log('XPrivacy insert application: ' . $db->error . PHP_EOL, 1, $my_email);
+						$ok = false;
+					}
 				}
 
 			// Process restrictions
@@ -113,7 +114,6 @@
 					$sql .= ", used=VALUES(used)";
 					$sql .= ", modified=CURRENT_TIMESTAMP()";
 					$sql .= ", updates=updates+1";
-					$log .= $sql . PHP_EOL . PHP_EOL;
 					if (!$db->query($sql)) {
 						error_log('XPrivacy insert restrictions: ' . $db->error . PHP_EOL, 1, $my_email);
 						$ok = false;
@@ -121,7 +121,7 @@
 				}
 
 			// Send reponse
-			echo json_encode(array('ok' => $ok, 'error' => $db->error));
+			echo json_encode(array('ok' => $ok, 'error' => ($ok ? '' : 'Error storing restrictions')));
 		}
 
 		// Fetch settings
@@ -135,11 +135,12 @@
 				if (!empty($data->email))
 					error_log(date('c') . ' XPrivacy unauthorized: ' . $data->email . PHP_EOL, 1, $my_email);
 				echo json_encode(array('ok' => false, 'error' => 'Not authorized'));
+				exit();
 			}
 			else {
 				// Validate
 				if (empty($data->package_name)) {
-					echo json_encode(array('ok' => false, 'error' => 'No package name'));
+					echo json_encode(array('ok' => false, 'error' => 'Package name missing'));
 					exit();
 				}
 
@@ -184,7 +185,7 @@
 				}
 
 				// Send reponse
-				echo json_encode(array('ok' => $ok, 'error' => $db->error, 'settings' => $settings));
+				echo json_encode(array('ok' => $ok, 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
 			}
 		}
 
