@@ -8,6 +8,7 @@ Changelog
 * Moved confidence setting to expert mode
 * Replaced wiki restriction links by links to GitHub
 * Added refresh menu to application list
+* Updated Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
