@@ -16,7 +16,7 @@ import android.util.SparseArray;
 
 @SuppressLint("DefaultLocale")
 public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
-	private ApplicationInfo mAppInfo;
+	private List<ApplicationInfo> mListAppInfo = null;
 	private List<String> mListApplicationName = null;
 
 	// Cache
@@ -27,20 +27,16 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private boolean mFrozenDetermined = false;
 	private String mVersion = null;
 
-	public ApplicationInfoEx(Context context, String packageName) throws NameNotFoundException {
-		ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
-		this.Initialize(context, appInfo);
-	}
-
-	private ApplicationInfoEx(Context context, ApplicationInfo appInfo) {
-		this.Initialize(context, appInfo);
-	}
-
-	private void Initialize(Context context, ApplicationInfo appInfo) {
-		mAppInfo = appInfo;
-		PackageManager pm = context.getPackageManager();
+	public ApplicationInfoEx(Context context, int uid) throws NameNotFoundException {
+		mListAppInfo = new ArrayList<ApplicationInfo>();
 		mListApplicationName = new ArrayList<String>();
-		mListApplicationName.add((String) pm.getApplicationLabel(appInfo));
+		PackageManager pm = context.getPackageManager();
+		for (String packageName : pm.getPackagesForUid(uid)) {
+			ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
+			mListAppInfo.add(appInfo);
+			mListApplicationName.add(pm.getApplicationLabel(appInfo).toString());
+		}
+		Collections.sort(mListApplicationName);
 	}
 
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
@@ -57,13 +53,11 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			try {
 				if (dialog != null)
 					dialog.setProgress(app + 1);
-				ApplicationInfoEx xAppInfo = new ApplicationInfoEx(context, listAppInfo.get(app));
-				ApplicationInfoEx yAppInfo = mapApp.get(xAppInfo.getUid());
-				if (yAppInfo == null) {
-					mapApp.put(xAppInfo.getUid(), xAppInfo);
-					listApp.add(xAppInfo);
-				} else
-					yAppInfo.addApplicationName((String) pm.getApplicationLabel(listAppInfo.get(app)));
+				ApplicationInfoEx appInfo = new ApplicationInfoEx(context, listAppInfo.get(app).uid);
+				if (mapApp.get(appInfo.getUid()) == null) {
+					mapApp.put(appInfo.getUid(), appInfo);
+					listApp.add(appInfo);
+				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
@@ -73,28 +67,27 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return listApp;
 	}
 
-	private void addApplicationName(String Name) {
-		mListApplicationName.add(Name);
-		Collections.sort(mListApplicationName);
+	public List<String> getApplicationName() {
+		return mListApplicationName;
 	}
 
-	public String getFirstApplicationName() {
-		return (mListApplicationName.size() > 0 ? mListApplicationName.get(0) : null);
-	}
-
-	public String getPackageName() {
-		return mAppInfo.packageName;
+	public List<String> getPackageName() {
+		List<String> listPackageName = new ArrayList<String>();
+		for (ApplicationInfo appInfo : mListAppInfo)
+			listPackageName.add(appInfo.packageName);
+		Collections.sort(listPackageName);
+		return listPackageName;
 	}
 
 	public Drawable getIcon(Context context) {
 		if (mIcon == null)
-			mIcon = mAppInfo.loadIcon(context.getPackageManager());
+			mIcon = mListAppInfo.get(0).loadIcon(context.getPackageManager());
 		return mIcon;
 	}
 
 	public boolean hasInternet(Context context) {
 		if (!mInternetDetermined) {
-			mInternet = PrivacyManager.hasInternet(context, mAppInfo.packageName);
+			mInternet = PrivacyManager.hasInternet(context, mListAppInfo.get(0).packageName);
 			mInternetDetermined = true;
 		}
 		return mInternet;
@@ -102,7 +95,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	public boolean isFrozen(Context context) {
 		if (!mFrozenDetermined) {
-			int setting = context.getPackageManager().getApplicationEnabledSetting(mAppInfo.packageName);
+			int setting = context.getPackageManager().getApplicationEnabledSetting(mListAppInfo.get(0).packageName);
 			boolean enabled = (setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
 			enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
 			mFrozen = !enabled;
@@ -112,13 +105,13 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public int getUid() {
-		return mAppInfo.uid;
+		return mListAppInfo.get(0).uid;
 	}
 
 	public String getVersion(Context context) {
 		if (mVersion == null)
 			try {
-				mVersion = context.getPackageManager().getPackageInfo(mAppInfo.packageName, 0).versionName;
+				mVersion = context.getPackageManager().getPackageInfo(mListAppInfo.get(0).packageName, 0).versionName;
 			} catch (Throwable ignored) {
 
 			}
@@ -126,32 +119,29 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public boolean isSystem() {
-		boolean mSystem = ((mAppInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
-		mSystem = mSystem || mAppInfo.packageName.equals(this.getClass().getPackage().getName());
-		mSystem = mSystem || mAppInfo.packageName.equals(this.getClass().getPackage().getName() + ".pro");
-		mSystem = mSystem || mAppInfo.packageName.equals("de.robv.android.xposed.installer");
+		boolean mSystem = ((mListAppInfo.get(0).flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
+		mSystem = mSystem || mListAppInfo.get(0).packageName.equals(this.getClass().getPackage().getName());
+		mSystem = mSystem || mListAppInfo.get(0).packageName.equals(this.getClass().getPackage().getName() + ".pro");
+		mSystem = mSystem || mListAppInfo.get(0).packageName.equals("de.robv.android.xposed.installer");
 		return mSystem;
 	}
 
 	public boolean isShared() {
-		return PrivacyManager.isShared(mAppInfo.uid);
+		return PrivacyManager.isShared(mListAppInfo.get(0).uid);
 	}
 
 	public boolean isIsolated() {
-		return PrivacyManager.isIsolated(mAppInfo.uid);
+		return PrivacyManager.isIsolated(mListAppInfo.get(0).uid);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%d %s", mAppInfo.uid, getApplicationNames());
+		return String.format("%d %s", mListAppInfo.get(0).uid, TextUtils.join(", ", getApplicationName()));
 	}
 
 	@Override
 	public int compareTo(ApplicationInfoEx other) {
-		return getApplicationNames().compareToIgnoreCase(other.getApplicationNames());
-	}
-
-	private String getApplicationNames() {
-		return TextUtils.join(", ", mListApplicationName);
+		return TextUtils.join(", ", getApplicationName()).compareToIgnoreCase(
+				TextUtils.join(", ", other.getApplicationName()));
 	}
 }

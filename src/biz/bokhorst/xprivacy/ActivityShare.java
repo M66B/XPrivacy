@@ -55,9 +55,9 @@ public class ActivityShare extends Activity {
 	private LocalBroadcastManager mBroadcastManager;
 
 	public static final String cFileName = "FileName";
-	public static final String cPackageName = "PackageName";
+	public static final String cUid = "Uid";
 	public static final String cErrorMessage = "ErrorMessage";
-	public static final String BASE_URL = "http://updates.faircode.eu/xprivacy";
+	public static final String BASE_URL = "http://updates.faircode.eu/test.php";
 	public static final String cProgressReport = "ProgressReport";
 	public static final String cProgressMessage = "ProgressMessage";
 	public static final String cProgressValue = "ProgressValue";
@@ -106,11 +106,11 @@ public class ActivityShare extends Activity {
 
 			// Fetch
 			if (getIntent().getAction().equals(ACTION_FETCH)) {
-				String packageName = null;
-				if (extras != null && extras.containsKey(cPackageName))
-					packageName = extras.getString(cPackageName);
+				int uid = 0;
+				if (extras != null && extras.containsKey(cUid))
+					uid = extras.getInt(cUid);
 				FetchTask fetchTask = new FetchTask();
-				fetchTask.executeOnExecutor(mExecutor, packageName);
+				fetchTask.executeOnExecutor(mExecutor, uid);
 			}
 		}
 	}
@@ -493,16 +493,16 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	private class FetchTask extends AsyncTask<String, String, String> {
+	private class FetchTask extends AsyncTask<Integer, String, String> {
 		private int mProgressMax;
 		private int mProgressCurrent;
 
 		@Override
-		protected String doInBackground(String... params) {
+		protected String doInBackground(Integer... params) {
 			try {
 				// Get data
 				List<ApplicationInfoEx> lstApp;
-				if (params[0] == null)
+				if (params[0] == 0)
 					lstApp = ApplicationInfoEx.getXApplicationList(ActivityShare.this, null);
 				else {
 					lstApp = new ArrayList<ApplicationInfoEx>();
@@ -523,7 +523,15 @@ public class ActivityShare extends Activity {
 				for (ApplicationInfoEx appInfo : lstApp) {
 					mProgressCurrent++;
 					if (!appInfo.isSystem() || params[0] != null) {
-						publishProgress(appInfo.getPackageName(), Integer.toString(mProgressCurrent));
+						publishProgress(appInfo.getPackageName().get(0), Integer.toString(mProgressCurrent));
+
+						JSONArray appName = new JSONArray();
+						for (String name : appInfo.getApplicationName())
+							appName.put(name);
+
+						JSONArray pkgName = new JSONArray();
+						for (String name : appInfo.getPackageName())
+							pkgName.put(name);
 
 						// Encode package
 						JSONObject jRoot = new JSONObject();
@@ -531,8 +539,8 @@ public class ActivityShare extends Activity {
 						jRoot.put("android_id", android_id);
 						jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 						jRoot.put("xprivacy_version", pXPrivacyInfo.versionCode);
-						jRoot.put("application_name", appInfo.getFirstApplicationName());
-						jRoot.put("package_name", appInfo.getPackageName());
+						jRoot.put("application_name", appName);
+						jRoot.put("package_name", pkgName);
 						jRoot.put("package_version", appInfo.getVersion(ActivityShare.this));
 						jRoot.put("email", license[1]);
 						jRoot.put("signature", license[2]);

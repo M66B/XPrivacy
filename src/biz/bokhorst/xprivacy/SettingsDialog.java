@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -265,7 +266,7 @@ public class SettingsDialog {
 			tvAppName.setVisibility(View.GONE);
 			vwAppNameBorder.setVisibility(View.GONE);
 		} else
-			tvAppName.setText(appInfo.getFirstApplicationName());
+			tvAppName.setText(TextUtils.join(", ", appInfo.getApplicationName()));
 
 		// Get current values
 		boolean notify = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify, true, false);

@@ -64,9 +64,10 @@
     <RelativeLayout
         android:id="@+id/rlName"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeightSmall"
+        android:layout_height="wrap_content"
         android:background="@drawable/list_item_pressed"
         android:clickable="true"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:paddingLeft="6dip" >
 
         <ImageView

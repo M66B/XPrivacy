@@ -83,15 +83,12 @@ public class ActivityUsage extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
 				PrivacyManager.UsageData usageData = mUsageAdapter.getItem(position);
-				String[] packageName = getPackageManager().getPackagesForUid(usageData.getUid());
-				if (packageName != null && packageName.length > 0) {
-					Intent intent = new Intent(ActivityUsage.this, ActivityApp.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					intent.putExtra(ActivityApp.cPackageName, packageName[0]);
-					intent.putExtra(ActivityApp.cRestrictionName, usageData.getRestrictionName());
-					intent.putExtra(ActivityApp.cMethodName, usageData.getMethodName());
-					startActivity(intent);
-				}
+				Intent intent = new Intent(ActivityUsage.this, ActivityApp.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.putExtra(ActivityApp.cUid, usageData.getUid());
+				intent.putExtra(ActivityApp.cRestrictionName, usageData.getRestrictionName());
+				intent.putExtra(ActivityApp.cMethodName, usageData.getMethodName());
+				startActivity(intent);
 			}
 		});
 
