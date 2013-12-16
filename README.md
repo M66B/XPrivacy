@@ -679,6 +679,22 @@ Disable category and/or function restrictions one by one
 until you have found the one causing the force close.
 Help others by submitting your working restrictions.
 
+<a name="FAQ43"></a>
+**(43) Can XPrivacy handle non-Java applications?**
+
+In general, due to the architecture of Android (isolated virtual machines),
+any call to native libraries and binaries is through Java
+and can thus be restricted by XPrivacy.
+As far known any route to a native library or binary is covered by XPrivacy.
+
+XPrivacy cannot hook into native libraries, but can prevent native libraries from loading.
+This could break applications, like Facebook, but can prevent malware from doing its work.
+
+XPrivacy can also restrict access to the Linux shell (including superuser),
+to prevent native binaries from running.
+
+You can find the restrictions in the *Shell* category.
+
 Support
 -------
 
