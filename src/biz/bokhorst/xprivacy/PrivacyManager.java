@@ -1086,38 +1086,35 @@ public class PrivacyManager {
 	}
 	// @formatter:on
 
-	public static boolean hasInternet(Context context, String packageName) {
-		PackageManager pm = context.getPackageManager();
-		return (pm.checkPermission("android.permission.INTERNET", packageName) == PackageManager.PERMISSION_GRANTED);
+	public static boolean hasPermission(Context context, List<String> listPackageName, String restrictionName) {
+		return hasPermission(context, listPackageName, getPermissions(restrictionName));
 	}
 
-	public static boolean hasPermission(Context context, String packageName, String restrictionName) {
-		return hasPermission(context, packageName, getPermissions(restrictionName));
-	}
-
-	public static boolean hasPermission(Context context, String packageName, MethodDescription md) {
+	public static boolean hasPermission(Context context, List<String> listPackageName, MethodDescription md) {
 		List<String> listPermission = (md.getPermissions() == null ? null : Arrays.asList(md.getPermissions()));
-		return hasPermission(context, packageName, listPermission);
+		return hasPermission(context, listPackageName, listPermission);
 	}
 
 	@SuppressLint("DefaultLocale")
-	private static boolean hasPermission(Context context, String packageName, List<String> listPermission) {
+	private static boolean hasPermission(Context context, List<String> listPackageName, List<String> listPermission) {
 		try {
 			if (listPermission == null || listPermission.size() == 0 || listPermission.contains(""))
 				return true;
 			PackageManager pm = context.getPackageManager();
-			PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
-			if (pInfo != null && pInfo.requestedPermissions != null)
-				for (String rPermission : pInfo.requestedPermissions)
-					for (String permission : listPermission)
-						if (permission.equals("")) {
-							// No permission required
-							return true;
-						} else if (rPermission.toLowerCase().contains(permission.toLowerCase()))
-							return true;
-						else if (permission.contains("."))
-							if (pm.checkPermission(permission, packageName) == PackageManager.PERMISSION_GRANTED)
+			for (String packageName : listPackageName) {
+				PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
+				if (pInfo != null && pInfo.requestedPermissions != null)
+					for (String rPermission : pInfo.requestedPermissions)
+						for (String permission : listPermission)
+							if (permission.equals("")) {
+								// No permission required
 								return true;
+							} else if (rPermission.toLowerCase().contains(permission.toLowerCase()))
+								return true;
+							else if (permission.contains("."))
+								if (pm.checkPermission(permission, packageName) == PackageManager.PERMISSION_GRANTED)
+									return true;
+			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 			return false;
