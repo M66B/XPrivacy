@@ -23,9 +23,9 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	// Cache
 	private Drawable mIcon = null;
-	private boolean mInternet;
+	private boolean mInternet = false;
 	private boolean mInternetDetermined = false;
-	private boolean mFrozen;
+	private boolean mFrozen = false;
 	private boolean mFrozenDetermined = false;
 
 	public ApplicationInfoEx(Context context, int uid) throws NameNotFoundException {
@@ -107,13 +107,19 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	public Drawable getIcon(Context context) {
 		if (mIcon == null)
+			// Pick first icon
 			mIcon = mListAppInfo.get(0).loadIcon(context.getPackageManager());
 		return mIcon;
 	}
 
 	public boolean hasInternet(Context context) {
 		if (!mInternetDetermined) {
-			mInternet = PrivacyManager.hasInternet(context, mListAppInfo.get(0).packageName);
+			PackageManager pm = context.getPackageManager();
+			for (ApplicationInfo appInfo : mListAppInfo)
+				if (pm.checkPermission("android.permission.INTERNET", appInfo.packageName) == PackageManager.PERMISSION_GRANTED) {
+					mInternet = true;
+					break;
+				}
 			mInternetDetermined = true;
 		}
 		return mInternet;
@@ -121,9 +127,15 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	public boolean isFrozen(Context context) {
 		if (!mFrozenDetermined) {
-			int setting = context.getPackageManager().getApplicationEnabledSetting(mListAppInfo.get(0).packageName);
-			boolean enabled = (setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
-			enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+			PackageManager pm = context.getPackageManager();
+			boolean enabled = false;
+			for (ApplicationInfo appInfo : mListAppInfo) {
+				int setting = pm.getApplicationEnabledSetting(appInfo.packageName);
+				enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
+				enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+				if (enabled)
+					break;
+			}
 			mFrozen = !enabled;
 			mFrozenDetermined = true;
 		}
@@ -131,27 +143,38 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public int getUid() {
+		// All listed uid's are the same
 		return mListAppInfo.get(0).uid;
 	}
 
 	public boolean isSystem() {
-		boolean mSystem = ((mListAppInfo.get(0).flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
-		mSystem = mSystem || mListAppInfo.get(0).packageName.equals(this.getClass().getPackage().getName());
-		mSystem = mSystem || mListAppInfo.get(0).packageName.equals(this.getClass().getPackage().getName() + ".pro");
-		mSystem = mSystem || mListAppInfo.get(0).packageName.equals("de.robv.android.xposed.installer");
+		boolean mSystem = false;
+		for (ApplicationInfo appInfo : mListAppInfo) {
+			mSystem = ((appInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
+			mSystem = mSystem || appInfo.packageName.equals(this.getClass().getPackage().getName());
+			mSystem = mSystem || appInfo.packageName.equals(this.getClass().getPackage().getName() + ".pro");
+			mSystem = mSystem || appInfo.packageName.equals("de.robv.android.xposed.installer");
+		}
 		return mSystem;
 	}
 
 	public boolean isShared() {
-		return PrivacyManager.isShared(mListAppInfo.get(0).uid);
+		for (ApplicationInfo appInfo : mListAppInfo)
+			if (PrivacyManager.isShared(appInfo.uid))
+				return true;
+		return false;
 	}
 
 	public boolean isIsolated() {
-		return PrivacyManager.isIsolated(mListAppInfo.get(0).uid);
+		for (ApplicationInfo appInfo : mListAppInfo)
+			if (PrivacyManager.isIsolated(appInfo.uid))
+				return true;
+		return false;
 	}
 
 	@Override
 	public String toString() {
+		// All uid's are the same
 		return String.format("%d %s", mListAppInfo.get(0).uid, TextUtils.join(", ", getApplicationName()));
 	}
 

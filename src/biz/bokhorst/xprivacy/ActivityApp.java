@@ -135,6 +135,7 @@ public class ActivityApp extends Activity {
 		imgInfo.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				// Packages can be selected on the web site
 				Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 				infoIntent.setData(Uri.parse(String.format(ActivityShare.BASE_URL + "?package_name=%s", mAppInfo
 						.getPackageName().get(0))));
@@ -251,7 +252,6 @@ public class ActivityApp extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.app, menu);
-
 		return true;
 	}
 
@@ -261,13 +261,25 @@ public class ActivityApp extends Activity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.app_icon, menu);
 
-		// Launch
-		PackageManager pm = getPackageManager();
-		if (pm.getLaunchIntentForPackage(mAppInfo.getPackageName().get(0)) == null)
-			menu.findItem(R.id.menu_app_launch).setEnabled(false);
+		// TODO: add launch / Play store sub menus if there are more packages
 
-		// Play
-		boolean hasMarketLink = Util.hasMarketLink(this, mAppInfo.getPackageName().get(0));
+		// Launch
+		boolean launcheable = false;
+		PackageManager pm = getPackageManager();
+		for (String packageName : mAppInfo.getPackageName())
+			if (pm.getLaunchIntentForPackage(packageName) != null) {
+				launcheable = true;
+				break;
+			}
+		menu.findItem(R.id.menu_app_launch).setEnabled(launcheable);
+
+		// Play store
+		boolean hasMarketLink = false;
+		for (String packageName : mAppInfo.getPackageName())
+			if (Util.hasMarketLink(this, packageName)) {
+				hasMarketLink = true;
+				break;
+			}
 		menu.findItem(R.id.menu_app_store).setEnabled(hasMarketLink);
 	}
 
@@ -927,8 +939,8 @@ public class ActivityApp extends Activity {
 
 			for (String rRestrictionName : PrivacyManager.getRestrictions()) {
 				boolean isUsed = (PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), rRestrictionName, null) > 0);
-				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this,
-						mAppInfo.getPackageName().get(0), rRestrictionName);
+				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
+						rRestrictionName);
 				if (mSelectedRestrictionName != null
 						|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
 					mRestrictions.add(rRestrictionName);
@@ -994,8 +1006,8 @@ public class ActivityApp extends Activity {
 				if (holder.position == position && restrictionName != null) {
 					// Get info
 					used = (PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0);
-					permission = PrivacyManager.hasPermission(holder.row.getContext(),
-							mAppInfo.getPackageName().get(0), restrictionName);
+					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
+							restrictionName);
 
 					for (boolean restricted : PrivacyManager.getRestricted(holder.row.getContext(), mAppInfo.getUid(),
 							restrictionName)) {
@@ -1133,8 +1145,8 @@ public class ActivityApp extends Activity {
 				for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods((String) getGroup(groupPosition))) {
 					boolean isUsed = (PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), restrictionName,
 							md.getName()) > 0);
-					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName()
-							.get(0), md);
+					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
+							md);
 					if (mSelectedMethodName != null
 							|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
 						listMethod.add(md);
@@ -1210,8 +1222,7 @@ public class ActivityApp extends Activity {
 							md.getName());
 					parentRestricted = PrivacyManager.getRestricted(null, holder.row.getContext(), mAppInfo.getUid(),
 							restrictionName, null, false, false);
-					permission = PrivacyManager.hasPermission(holder.row.getContext(),
-							mAppInfo.getPackageName().get(0), md);
+					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(), md);
 					restricted = PrivacyManager.getRestricted(null, holder.row.getContext(), mAppInfo.getUid(),
 							restrictionName, md.getName(), false, false);
 				}
