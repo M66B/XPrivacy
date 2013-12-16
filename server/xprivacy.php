@@ -33,6 +33,8 @@
 			echo json_encode(array('ok' => false, 'error' => 'Error connecting to database'));
 			exit();
 		}
+
+		// Select character set
 		$db->query("SET NAMES 'utf8'");
 
 		// Store/update settings
@@ -120,6 +122,7 @@
 
 			// Send reponse
 			echo json_encode(array('ok' => $ok, 'error' => ($ok ? '' : 'Error storing restrictions')));
+			exit();
 		}
 
 		// Fetch settings
@@ -135,62 +138,65 @@
 				echo json_encode(array('ok' => false, 'error' => 'Not authorized'));
 				exit();
 			}
-			else {
-				// Validate
-				if (empty($data->package_name)) {
-					echo json_encode(array('ok' => false, 'error' => 'Package name missing'));
-					exit();
-				}
 
-				// Fixes
-				if (!is_array($data->package_name))
-					$data->package_name = array($data->package_name);
-
-				$max_ci = (empty($data->confidence) ? $max_confidence : $data->confidence / 100);
-
-				$package_names = '';
-				foreach ($data->package_name as $package_name) {
-					if (!empty($package_names))
-						$package_names .= ', ';
-					$package_names .= "'" . $db->real_escape_string($package_name) . "'";
-				}
-
-				$settings = Array();
-				$sql = "SELECT restriction, method, restricted";
-				$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
-				$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
-				$sql .= " FROM xprivacy";
-				$sql .= " WHERE package_name IN (" . $package_names . ")";
-				$sql .= " GROUP BY restriction, method";
-				$result = $db->query($sql);
-				if ($result) {
-					while (($row = $result->fetch_object())) {
-						$ci = confidence($row->restricted, $row->not_restricted);
-						if ($ci < $max_ci) {
-							$entry = Array();
-							$entry['restriction'] = $row->restriction;
-							if (!empty($row->method))
-								$entry['method'] = $row->method;
-							$entry['restricted'] = ($row->restricted > $row->not_restricted ? 1 : 0);
-							$entry['not_restricted'] = 0; // backward compatibility
-							$settings[] = (object) $entry;
-						}
-					}
-					$result->close();
-				} else {
-					error_log('XPrivacy fetch restrictions: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
-					$ok = false;
-				}
-
-				// Send reponse
-				echo json_encode(array('ok' => $ok, 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
+			// Validate
+			if (empty($data->package_name)) {
+				echo json_encode(array('ok' => false, 'error' => 'Package name missing'));
+				exit();
 			}
+
+			// Fixes
+			if (!is_array($data->package_name))
+				$data->package_name = array($data->package_name);
+
+			// Get confidence interval
+			$max_ci = (empty($data->confidence) ? $max_confidence : $data->confidence / 100);
+
+			// Get requested package names
+			$package_names = '';
+			foreach ($data->package_name as $package_name) {
+				if (!empty($package_names))
+					$package_names .= ', ';
+				$package_names .= "'" . $db->real_escape_string($package_name) . "'";
+			}
+
+			// Get restrictions
+			$settings = Array();
+			$sql = "SELECT restriction, method, restricted";
+			$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
+			$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
+			$sql .= " FROM xprivacy";
+			$sql .= " WHERE package_name IN (" . $package_names . ")";
+			$sql .= " GROUP BY restriction, method";
+			$result = $db->query($sql);
+			if ($result) {
+				while (($row = $result->fetch_object())) {
+					$ci = confidence($row->restricted, $row->not_restricted);
+					if ($ci < $max_ci) {
+						$entry = Array();
+						$entry['restriction'] = $row->restriction;
+						if (!empty($row->method))
+							$entry['method'] = $row->method;
+						$entry['restricted'] = ($row->restricted > $row->not_restricted ? 1 : 0);
+						$entry['not_restricted'] = 0; // backward compatibility
+						$settings[] = (object) $entry;
+					}
+				}
+				$result->close();
+			} else {
+				error_log('XPrivacy fetch restrictions: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+				$ok = false;
+			}
+
+			// Send reponse
+			echo json_encode(array('ok' => $ok, 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
+			exit();
 		}
 
 		// Close database
 		$db->close();
 
-		// JSON done
+		// Failsafe
 		exit();
 	}
 ?>
@@ -243,93 +249,98 @@
 				echo '<pre>Error connecting to database</pre>';
 				exit();
 			}
+
+			// Select character set
 			$db->query("SET NAMES 'utf8'");
 ?>
 			<div class="page-header">
 <?php
-			$count = 0;
-			$total = 0;
+				$count = 0;
+				$total = 0;
 
-			$sql = "SELECT COUNT(DISTINCT package_name) AS count";
-			$sql .= " FROM xprivacy_app";
-			$result = $db->query($sql);
-			if ($result) {
-				$row = $result->fetch_object();
-				if ($row)
-					$count = $row->count;
-				$result->close();
-			}
-			else
-				error_log('XPrivacy query count: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
-
-			$sql = "SELECT COUNT(*) AS total";
-			$sql .= " FROM xprivacy";
-			$result = $db->query($sql);
-			if ($result) {
-				$row = $result->fetch_object();
-				if ($row)
-					$total = $row->total;
-				$result->close();
-			}
-			else
-				error_log('XPrivacy query total: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
-
-			if (empty($package_name)) {
-?>
-				<h1>XPrivacy</h1>
-				<p>Crowd sourced restrictions</p>
-<?php
-			} else {
-				// Get application names
-				$application_names = array();
-				$sql = "SELECT DISTINCT application_name";
+				// Get package count
+				$sql = "SELECT COUNT(DISTINCT package_name) AS count";
 				$sql .= " FROM xprivacy_app";
-				$sql .= " WHERE package_name = '" . $db->real_escape_string($package_name) . "'";
-				$sql .= " ORDER BY application_name";
 				$result = $db->query($sql);
 				if ($result) {
-					while (($row = $result->fetch_object()))
-						$application_names[] = $row->application_name;
+					$row = $result->fetch_object();
+					if ($row)
+						$count = $row->count;
 					$result->close();
 				}
 				else
-					error_log('XPrivacy query application names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+					error_log('XPrivacy query count: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 
-				// Get package names
-				$apps = $application_names;
-				for ($i = 0; $i < count($apps); $i++)
-					$apps[$i] = "'" . $db->real_escape_string($apps[$i]) . "'";
+				// Get restriction count
+				$sql = "SELECT COUNT(*) AS total";
+				$sql .= " FROM xprivacy";
+				$result = $db->query($sql);
+				if ($result) {
+					$row = $result->fetch_object();
+					if ($row)
+						$total = $row->total;
+					$result->close();
+				}
+				else
+					error_log('XPrivacy query total: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 
-				$package_names = array();
-				if (count($apps)) {
-					$sql = "SELECT DISTINCT package_name";
+				// Display titles
+				if (empty($package_name)) {
+?>
+					<h1>XPrivacy</h1>
+					<p>Crowd sourced restrictions</p>
+<?php
+				} else {
+					// Get application names
+					$application_names = array();
+					$sql = "SELECT DISTINCT application_name";
 					$sql .= " FROM xprivacy_app";
-					$sql .= " WHERE application_name IN (" . implode(',', $apps) . ")";
-					$sql .= " ORDER BY package_name";
+					$sql .= " WHERE package_name = '" . $db->real_escape_string($package_name) . "'";
+					$sql .= " ORDER BY application_name";
 					$result = $db->query($sql);
 					if ($result) {
 						while (($row = $result->fetch_object()))
-							$package_names[] = $row->package_name;
+							$application_names[] = $row->application_name;
 						$result->close();
 					}
 					else
-						error_log('XPrivacy query package names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+						error_log('XPrivacy query application names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+
+					// Get package names
+					$apps = $application_names;
+					for ($i = 0; $i < count($apps); $i++)
+						$apps[$i] = "'" . $db->real_escape_string($apps[$i]) . "'";
+
+					$package_names = array();
+					if (count($apps)) {
+						$sql = "SELECT DISTINCT package_name";
+						$sql .= " FROM xprivacy_app";
+						$sql .= " WHERE application_name IN (" . implode(',', $apps) . ")";
+						$sql .= " ORDER BY package_name";
+						$result = $db->query($sql);
+						if ($result) {
+							while (($row = $result->fetch_object()))
+								$package_names[] = $row->package_name;
+							$result->close();
+						}
+						else
+							error_log('XPrivacy query package names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+					}
+?>
+					<h2><?php echo htmlentities(implode(', ', $application_names), ENT_COMPAT, 'UTF-8'); ?></h2>
+					<p style="font-size: smaller;">
+<?php
+					foreach ($package_names as $pname)
+						echo '<a href="/xprivacy?package_name=' . urlencode($pname) . '">' . htmlentities($pname, ENT_COMPAT, 'UTF-8') . '</a> ';
+?>
+					</p>
+					<p>
+						<a href="/xprivacy">Home</a>
+						-
+						<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
+					</p>
+<?php
 				}
-?>
-				<h2><?php echo htmlentities(implode(', ', $application_names), ENT_COMPAT, 'UTF-8'); ?></h2>
-				<p style="font-size: smaller;">
-<?php
-				foreach ($package_names as $pname)
-					echo '<a href="/xprivacy?package_name=' . urlencode($pname) . '">' . htmlentities($pname, ENT_COMPAT, 'UTF-8') . '</a> ';
-?>
-				</p>
-				<p>
-					<a href="/xprivacy">Home</a>
-					-
-					<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
-				</p>
-<?php
-			}
 ?>
 				<p>This is a voting system for
 					<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
@@ -342,31 +353,33 @@
 
 			<div class="container">
 <?php
-			if (empty($package_name)) {
-				$letter = empty($_REQUEST['letter']) ? 'A' : $_REQUEST['letter'];
-				echo '<p>';
-				foreach (range('A', 'Z') as $alpha) {
-					echo '<a href="?letter=' . $alpha . '"';
-					if ($letter == $alpha)
+				if (empty($package_name)) {
+					// Display alphabet
+					$letter = empty($_REQUEST['letter']) ? 'A' : $_REQUEST['letter'];
+					echo '<p>';
+					foreach (range('A', 'Z') as $alpha) {
+						echo '<a href="?letter=' . $alpha . '"';
+						if ($letter == $alpha)
+							echo ' style="font-weight: bold;"';
+						echo '>' . $alpha . '</a> ';
+					}
+					echo '<a href="?letter=*"';
+					if ($letter == '*')
 						echo ' style="font-weight: bold;"';
-					echo '>' . $alpha . '</a> ';
+					echo '>other</a> ';
+					echo '</p>';
 				}
-				echo '<a href="?letter=*"';
-				if ($letter == '*')
-					echo ' style="font-weight: bold;"';
-				echo '>other</a> ';
-				echo '</p>';
-			}
-			else {
+				else {
 ?>
-				<p><a href="#" id="details">Show details</a></p>
+					<p><a href="#" id="details">Show details</a></p>
 <?php
-			}
+				}
 ?>
 				<table class="table table-hover table-condensed">
 					<thead>
 						<tr>
 <?php
+						// Display column titles
 						if (empty($package_name)) {
 ?>
 							<th>Application</th>
@@ -390,9 +403,8 @@
 <?php
 					$count = 0;
 					$votes = 0;
-
 					if (empty($package_name)) {
-						// Get application list
+						// Display application list
 						$letter = empty($_REQUEST['letter']) ? 'A' : $_REQUEST['letter'];
 						$sql = "SELECT DISTINCT application_name, package_name";
 						$sql .= " FROM xprivacy_app";
@@ -419,7 +431,7 @@
 						else
 							error_log('XPrivacy query application list: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 					} else {
-						// Get application details
+						// Display application details
 						$sql = "SELECT restriction, method, restricted";
 						$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 						$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
@@ -479,12 +491,18 @@
 ?>
 					</tbody>
 				</table>
-				<p>
-					* Calculated using the
-					<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull interval</a>.<br />
-					Values below <?php echo number_format($max_confidence * 100, 1); ?> % are considered reliable.<br />
-					Rows marked with a grey background will be restricted when fetched.<br />
-				</p>
+<?php
+				if (!empty($package_name)) {
+?>
+					<p>
+						* Calculated using the
+						<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull interval</a>.<br />
+						Values below <?php echo number_format($max_confidence * 100, 1); ?> % are considered reliable.<br />
+						Rows marked with a grey background will be restricted when fetched.<br />
+					</p>
+<?php
+				}
+?>
 			</div>
 
 			<div class="container">
