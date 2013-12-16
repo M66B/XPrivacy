@@ -85,7 +85,7 @@
 					$sql .= " ON DUPLICATE KEY UPDATE";
 					$sql .= " modified=CURRENT_TIMESTAMP()";
 					if (!$db->query($sql)) {
-						error_log('XPrivacy insert application: ' . $db->error . PHP_EOL, 1, $my_email);
+						error_log('XPrivacy insert application: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 						$ok = false;
 					}
 				}
@@ -113,7 +113,7 @@
 					$sql .= ", modified=CURRENT_TIMESTAMP()";
 					$sql .= ", updates=updates+1";
 					if (!$db->query($sql)) {
-						error_log('XPrivacy insert restrictions: ' . $db->error . PHP_EOL, 1, $my_email);
+						error_log('XPrivacy insert restrictions: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 						$ok = false;
 					}
 				}
@@ -178,7 +178,7 @@
 					}
 					$result->close();
 				} else {
-					error_log('XPrivacy fetch restrictions: ' . $db->error . PHP_EOL, 1, $my_email);
+					error_log('XPrivacy fetch restrictions: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 					$ok = false;
 				}
 
@@ -260,7 +260,7 @@
 				$result->close();
 			}
 			else
-				error_log('XPrivacy query count: ' . $db->error . PHP_EOL, 1, $my_email);
+				error_log('XPrivacy query count: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 
 			$sql = "SELECT COUNT(*) AS total";
 			$sql .= " FROM xprivacy";
@@ -272,7 +272,7 @@
 				$result->close();
 			}
 			else
-				error_log('XPrivacy query total: ' . $db->error . PHP_EOL, 1, $my_email);
+				error_log('XPrivacy query total: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 
 			if (empty($package_name)) {
 ?>
@@ -280,27 +280,49 @@
 				<p>Crowd sourced restrictions</p>
 <?php
 			} else {
-				$application_name = '';
+				// Get application names
+				$application_names = array();
 				$sql = "SELECT DISTINCT application_name";
 				$sql .= " FROM xprivacy_app";
 				$sql .= " WHERE package_name = '" . $db->real_escape_string($package_name) . "'";
 				$sql .= " ORDER BY application_name";
 				$result = $db->query($sql);
 				if ($result) {
-					while (($row = $result->fetch_object())) {
-						if (!empty($application_name))
-							$application_name .= ', ';
-						$application_name .= $row->application_name;
-					}
+					while (($row = $result->fetch_object()))
+						$application_names[] = $row->application_name;
 					$result->close();
-					if (empty($application_name))
-						$application_name = '---';
 				}
 				else
-					error_log('XPrivacy query application: ' . $db->error . PHP_EOL, 1, $my_email);
+					error_log('XPrivacy query application names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+
+				// Get package names
+				$apps = $application_names;
+				for ($i = 0; $i < count($apps); $i++)
+					$apps[$i] = "'" . $db->real_escape_string($apps[$i]) . "'";
+
+				$package_names = array();
+				if (count($apps)) {
+					$sql = "SELECT DISTINCT package_name";
+					$sql .= " FROM xprivacy_app";
+					$sql .= " WHERE application_name IN (" . implode(',', $apps) . ")";
+					$sql .= " ORDER BY package_name";
+					$result = $db->query($sql);
+					if ($result) {
+						while (($row = $result->fetch_object()))
+							$package_names[] = $row->package_name;
+						$result->close();
+					}
+					else
+						error_log('XPrivacy query package names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+				}
 ?>
-				<h1><?php echo htmlentities($application_name, ENT_COMPAT, 'UTF-8'); ?></h1>
-				<span style="font-size: smaller;"><?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></span>
+				<h2><?php echo htmlentities(implode(', ', $application_names), ENT_COMPAT, 'UTF-8'); ?></h2>
+				<p style="font-size: smaller;">
+<?php
+				foreach ($package_names as $pname)
+					echo '<a href="/xprivacy?package_name=' . urlencode($pname) . '">' . htmlentities($pname, ENT_COMPAT, 'UTF-8') . '</a> ';
+?>
+				</p>
 				<p>
 					<a href="/xprivacy">Home</a>
 					-
@@ -395,7 +417,7 @@
 							$result->close();
 						}
 						else
-							error_log('XPrivacy query list: ' . $db->error . PHP_EOL, 1, $my_email);
+							error_log('XPrivacy query application list: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 					} else {
 						// Get application details
 						$sql = "SELECT restriction, method, restricted";
@@ -452,7 +474,7 @@
 							$result->close();
 						}
 						else
-							error_log('XPrivacy query package: ' . $db->error . PHP_EOL, 1, $my_email);
+							error_log('XPrivacy query application details: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 					}
 ?>
 					</tbody>
