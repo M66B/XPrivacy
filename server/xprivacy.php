@@ -143,13 +143,6 @@
 						}
 					}
 					$result->close();
-
-					// Update number of fetches
-					$sql = "UPDATE xprivacy";
-					$sql .= " SET fetches=fetches+1";
-					$sql .= ", accessed=CURRENT_TIMESTAMP()";
-					$sql .= " WHERE package_name = '" . $db->real_escape_string($data->package_name) . "'";
-					$db->query($sql);
 				} else {
 					error_log('XPrivacy fetch restrictions: ' . $db->error . PHP_EOL, 1, $my_email);
 					$ok = false;
@@ -220,43 +213,37 @@
 ?>
 			<div class="page-header">
 <?php
+			$count = 0;
+			$total = 0;
+
+			$sql = "SELECT COUNT(DISTINCT package_name) AS count";
+			$sql .= " FROM xprivacy_app";
+			$result = $db->query($sql);
+			if ($result) {
+				$row = $result->fetch_object();
+				if ($row)
+					$count = $row->count;
+				$result->close();
+			}
+			else
+				error_log('XPrivacy query count: ' . $db->error . PHP_EOL, 1, $my_email);
+
+			$sql = "SELECT COUNT(*) AS total";
+			$sql .= " FROM xprivacy";
+			$result = $db->query($sql);
+			if ($result) {
+				$row = $result->fetch_object();
+				if ($row)
+					$total = $row->total;
+				$result->close();
+			}
+			else
+				error_log('XPrivacy query total: ' . $db->error . PHP_EOL, 1, $my_email);
+
 			if (empty($package_name)) {
-				$count = 0;
-				$total = 0;
-
-				$sql = "SELECT COUNT(DISTINCT package_name) AS count";
-				$sql .= " FROM xprivacy_app";
-				$result = $db->query($sql);
-				if ($result) {
-					$row = $result->fetch_object();
-					if ($row)
-						$count = $row->count;
-					$result->close();
-				}
-				else
-					error_log('XPrivacy query count: ' . $db->error . PHP_EOL, 1, $my_email);
-
-				$sql = "SELECT COUNT(*) AS total";
-				$sql .= " FROM xprivacy";
-				$result = $db->query($sql);
-				if ($result) {
-					$row = $result->fetch_object();
-					if ($row)
-						$total = $row->total;
-					$result->close();
-				}
-				else
-					error_log('XPrivacy query total: ' . $db->error . PHP_EOL, 1, $my_email);
 ?>
 				<h1>XPrivacy</h1>
 				<p>Crowd sourced restrictions</p>
-				<p>This is a voting system for
-					<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
-					Everybody using XPrivacy can submit his/her restriction settings.<br />
-					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch submitted restriction settings.<br />
-					There are currently <?php echo number_format($total, 0, '.', ','); ?> restriction settings
-					for <?php echo number_format($count, 0, '.', ',') ?> applications submitted.
-				</p>
 <?php
 			} else {
 				$application_name = '';
@@ -279,6 +266,25 @@
 					error_log('XPrivacy query application: ' . $db->error . PHP_EOL, 1, $my_email);
 ?>
 				<h1><?php echo htmlentities($application_name, ENT_COMPAT, 'UTF-8'); ?></h1>
+				<span style="font-size: smaller;"><?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></span>
+				<p>
+					<a href="/xprivacy">Home</a>
+					-
+					<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
+				</p>
+<?php
+			}
+?>
+			<p>This is a voting system for
+				<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
+				Everybody using XPrivacy can submit his/her restriction settings.<br />
+				With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch submitted restriction settings.<br />
+				There are currently <?php echo number_format($total, 0, '.', ','); ?> restriction settings
+				for <?php echo number_format($count, 0, '.', ',') ?> applications submitted.
+			</p>
+<?php
+			if (empty($package_name)) {
+?>
 				<span style="font-size: smaller;"><?php echo htmlentities($package_name, ENT_COMPAT, 'UTF-8'); ?></span>
 				<p>
 					<a href="/xprivacy">Home</a>
@@ -330,9 +336,7 @@
 							<th>Restriction</th>
 							<th style="display: none;" class="details">Method</th>
 							<th style="display: none;" class="details">Last update (UTC)</th>
-							<th style="display: none;" class="details">Last access (UTC)</th>
 							<th style="display: none; text-align: center;" class="details">Updates</th>
-							<th style="display: none; text-align: center;" class="details">Fetches</th>
 <?php
 						}
 ?>
@@ -342,10 +346,6 @@
 <?php
 					$count = 0;
 					$votes = 0;
-					$fetches = 0;
-					$records = 0;
-					$first = null;
-					$last = null;
 
 					if (empty($package_name)) {
 						// Get application list
@@ -381,9 +381,7 @@
 						$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
 						$sql .= ", MAX(used) AS used";
 						$sql .= ", MAX(modified) AS modified";
-						$sql .= ", MAX(accessed) AS accessed";
 						$sql .= ", SUM(updates) AS updates";
-						$sql .= ", MAX(fetches) AS fetches";
 						$sql .= " FROM xprivacy";
 						$sql .= " WHERE package_name = '" . $db->real_escape_string($package_name) . "'";
 						$sql .= " GROUP BY restriction, method";
@@ -426,9 +424,7 @@
 								echo '<td style="display: none;" class="details">' . htmlentities($row->method, ENT_COMPAT, 'UTF-8') . '</td>';
 
 								echo '<td style="display: none;" class="details">' . $row->modified . '</td>';
-								echo '<td style="display: none;" class="details">' . $row->accessed . '</td>';
 								echo '<td style="display: none; text-align: center;" class="details">' . ($row->updates > 1 ? $row->updates : '-'). '</td>';
-								echo '<td style="display: none; text-align: center;" class="details">' . ($row->fetches > 0 ? $row->fetches : '-') . '</td>';
 								echo '</tr>' . PHP_EOL;
 							}
 							$result->close();

@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 12, 2013 at 12:28 PM
+-- Generation Time: Dec 16, 2013 at 09:58 AM
 -- Server version: 5.5.31-1~dotdeb.0
--- PHP Version: 5.3.27-1~dotdeb.0
+-- PHP Version: 5.3.28-1~dotdeb.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -39,14 +39,12 @@ CREATE TABLE IF NOT EXISTS `xprivacy` (
   `restricted` bit(1) NOT NULL,
   `used` bigint(13) NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `accessed` timestamp NULL DEFAULT NULL,
   `updates` int(11) NOT NULL DEFAULT '1',
-  `fetches` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `restriction` (`android_id_md5`(50),`android_sdk`,`package_name`(100),`package_version`(50),`restriction`(20),`method`(70)),
   KEY `package` (`package_name`(100)),
   KEY `application` (`application_name`(100),`package_name`(100))
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2139279 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2256576 ;
 
 -- --------------------------------------------------------
 
@@ -62,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `xprivacy_app` (
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `application` (`application_name`(100),`package_name`(100),`package_version`(50))
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15583 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15917 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
