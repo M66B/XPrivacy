@@ -42,7 +42,6 @@ import android.os.SystemClock;
 import android.util.Log;
 
 public class PrivacyManager {
-
 	// This should correspond with restrict_<name> in strings.xml
 	public static final String cAccounts = "accounts";
 	public static final String cBrowser = "browser";
@@ -68,13 +67,12 @@ public class PrivacyManager {
 	public static final String cSystem = "system";
 	public static final String cView = "view";
 
+	// This should correspond with the above definitions
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
 			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
 			cNetwork, cNfc, cNotifications, cSensors, cOverlay, cPhone, cShell, cStorage, cSystem, cView };
 
-	public final static int cXposedAppProcessMinVersion = 46;
-	public final static int cAndroidUid = Process.SYSTEM_UID;
-
+	// Setting names
 	public final static String cSettingSerial = "Serial";
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
@@ -107,28 +105,36 @@ public class PrivacyManager {
 	public final static String cSettingTutorialMain = "TutorialMain";
 	public final static String cSettingTutorialDetails = "TutorialDetails";
 	public final static String cSettingNotify = "Notify";
+	public final static String cSettingLog = "Log";
 	public final static String cSettingDangerous = "Dangerous";
 	public final static String cSettingAndroidUsage = "AndroidUsage";
-	public final static String cSettingLog = "Log";
+	public final static String cSettingExperimental = "Experimental";
 	public final static String cSettingRandom = "Random@boot";
 	public final static String cSettingState = "State";
 	public final static String cSettingConfidence = "Confidence";
 	public final static String cSettingTemplate = "Template";
 
+	// Special value names
 	public final static String cValueRandom = "#Random#";
 	public final static String cValueRandomLegacy = "\nRandom\n";
+
+	// Constants
+	public final static int cXposedAppProcessMinVersion = 46;
+	public final static int cAndroidUid = Process.SYSTEM_UID;
 
 	private final static String cDeface = "DEFACE";
 	public final static int cRestrictionCacheTimeoutMs = 15 * 1000;
 	public final static int cSettingCacheTimeoutMs = 30 * 1000;
 	public final static int cUseProviderAfterMs = 3 * 60 * 1000;
 
-	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
+	// Static data
 	private static Map<String, List<MethodDescription>> mMethod = new LinkedHashMap<String, List<MethodDescription>>();
+	private static Map<String, List<MethodDescription>> mPermission = new LinkedHashMap<String, List<MethodDescription>>();
 	private static Map<String, CRestriction> mRestrictionCache = new HashMap<String, CRestriction>();
 	private static Map<String, CSetting> mSettingsCache = new HashMap<String, CSetting>();
 	private static Map<UsageData, UsageData> mUsageQueue = new LinkedHashMap<UsageData, UsageData>();
+
+	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 	static {
 		// Scan meta data
@@ -172,13 +178,24 @@ public class PrivacyManager {
 					boolean danger = (dangerous == null ? false : Boolean.parseBoolean(dangerous));
 					boolean restartRequired = (restart == null ? false : Boolean.parseBoolean(restart));
 					String[] permission = (permissions == null ? null : permissions.split(","));
-					MethodDescription md = new MethodDescription(methodName, danger, restartRequired, permission, sdk);
+					MethodDescription md = new MethodDescription(restrictionName, methodName, danger, restartRequired,
+							permission, sdk);
 
 					if (!mMethod.containsKey(restrictionName))
 						mMethod.put(restrictionName, new ArrayList<MethodDescription>());
 
 					if (!mMethod.get(restrictionName).contains(methodName))
 						mMethod.get(restrictionName).add(md);
+
+					if (permission != null)
+						for (String perm : permission)
+							if (!perm.equals("")) {
+								String aPermission = (perm.contains(".") ? perm : "android.permission." + perm);
+								if (!mPermission.containsKey(aPermission))
+									mPermission.put(aPermission, new ArrayList<MethodDescription>());
+								if (!mPermission.get(aPermission).contains(md))
+									mPermission.get(aPermission).add(md);
+							}
 				}
 			} else
 				Util.log(null, Log.WARN, "Unknown element=" + qName);
@@ -190,7 +207,7 @@ public class PrivacyManager {
 	public static void registerMethod(String restrictionName, String methodName, int sdk) {
 		if (restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
 			if (!mMethod.containsKey(restrictionName)
-					|| !mMethod.get(restrictionName).contains(new MethodDescription(methodName)))
+					|| !mMethod.get(restrictionName).contains(new MethodDescription(restrictionName, methodName)))
 				Util.log(null, Log.WARN, "Missing method " + methodName);
 		}
 	}
@@ -200,7 +217,7 @@ public class PrivacyManager {
 	}
 
 	public static MethodDescription getMethod(String restrictionName, String methodName) {
-		MethodDescription md = new MethodDescription(methodName);
+		MethodDescription md = new MethodDescription(restrictionName, methodName);
 		int pos = mMethod.get(restrictionName).indexOf(md);
 		return (pos < 0 ? null : mMethod.get(restrictionName).get(pos));
 	}
@@ -257,7 +274,7 @@ public class PrivacyManager {
 				if (methodName == null || methodName.equals("")) {
 					Util.log(hook, Log.WARN, "method empty");
 					Util.logStack(hook);
-				} else if (getMethods(restrictionName).indexOf(new MethodDescription(methodName)) < 0)
+				} else if (getMethods(restrictionName).indexOf(new MethodDescription(restrictionName, methodName)) < 0)
 					Util.log(hook, Log.WARN, "unknown method=" + methodName);
 
 			// Check cache
@@ -358,6 +375,19 @@ public class PrivacyManager {
 		}
 	}
 
+	public static boolean getRestricted(XHook hook, int uid, String permission) {
+		boolean allRestricted = false;
+		if (mPermission.containsKey(permission)) {
+			allRestricted = true;
+			for (MethodDescription md : mPermission.get(permission)) {
+				boolean restricted = PrivacyProvider.getRestrictedFallback(hook, uid, md.getRestrictionName(),
+						md.getName());
+				allRestricted = allRestricted && restricted;
+			}
+		}
+		return allRestricted;
+	}
+
 	public static boolean isUsageDataEnabled(int uid) {
 		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs)
 			return false;
@@ -368,7 +398,7 @@ public class PrivacyManager {
 			return !isIsolated(uid);
 	}
 
-	// Waiting for SDK 20 ...
+	// TODO: Waiting for SDK 20 ...
 	public static final int FIRST_ISOLATED_UID = 99000;
 	public static final int LAST_ISOLATED_UID = 99999;
 	public static final int FIRST_SHARED_APPLICATION_GID = 50000;
@@ -1109,9 +1139,12 @@ public class PrivacyManager {
 							if (permission.equals("")) {
 								// No permission required
 								return true;
-							} else if (rPermission.toLowerCase().contains(permission.toLowerCase()))
+							} else if (rPermission.toLowerCase().contains(permission.toLowerCase())) {
+								String aPermission = "android.permission." + permission;
+								if (!aPermission.equals(rPermission))
+									Util.log(null, Log.WARN, "Check permission=" + permission + "/" + rPermission);
 								return true;
-							else if (permission.contains("."))
+							} else if (permission.contains("."))
 								if (pm.checkPermission(permission, packageName) == PackageManager.PERMISSION_GRANTED)
 									return true;
 			}
@@ -1158,6 +1191,8 @@ public class PrivacyManager {
 				return false;
 			if (mName.equals(PrivacyManager.cSettingAndroidUsage))
 				return false;
+			if (mName.equals(PrivacyManager.cSettingExperimental))
+				return false;
 			return (mTimestamp + cSettingCacheTimeoutMs < new Date().getTime());
 		}
 
@@ -1167,22 +1202,30 @@ public class PrivacyManager {
 	}
 
 	public static class MethodDescription implements Comparable<MethodDescription> {
+		private String mRestrictionName;
 		private String mMethodName;
 		private boolean mDangerous;
 		private boolean mRestart;
 		private String[] mPermissions;
 		private int mSdk;
 
-		public MethodDescription(String methodName) {
+		public MethodDescription(String restrictionName, String methodName) {
+			mRestrictionName = restrictionName;
 			mMethodName = methodName;
 		}
 
-		public MethodDescription(String methodName, boolean dangerous, boolean restart, String[] permissions, int sdk) {
+		public MethodDescription(String restrictionName, String methodName, boolean dangerous, boolean restart,
+				String[] permissions, int sdk) {
+			mRestrictionName = restrictionName;
 			mMethodName = methodName;
 			mDangerous = dangerous;
 			mRestart = restart;
 			mPermissions = permissions;
 			mSdk = sdk;
+		}
+
+		public String getRestrictionName() {
+			return mRestrictionName;
 		}
 
 		public String getName() {
@@ -1213,12 +1256,13 @@ public class PrivacyManager {
 		@Override
 		public boolean equals(Object obj) {
 			MethodDescription other = (MethodDescription) obj;
-			return mMethodName.equals(other.mMethodName);
+			return (mRestrictionName.equals(other.mRestrictionName) && mMethodName.equals(other.mMethodName));
 		}
 
 		@Override
 		public int compareTo(MethodDescription another) {
-			return mMethodName.compareTo(another.mMethodName);
+			int x = mRestrictionName.compareTo(another.mRestrictionName);
+			return (x == 0 ? mMethodName.compareTo(another.mMethodName) : x);
 		}
 	}
 

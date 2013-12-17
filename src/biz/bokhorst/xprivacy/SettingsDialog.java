@@ -41,6 +41,7 @@ public class SettingsDialog {
 		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		final CheckBox cbDangerous = (CheckBox) dlgSettings.findViewById(R.id.cbDangerous);
 		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
+		final CheckBox cbExperimental = (CheckBox) dlgSettings.findViewById(R.id.cbExperimental);
 		final LinearLayout llConfidence = (LinearLayout) dlgSettings.findViewById(R.id.llConfidence);
 		final EditText etConfidence = (EditText) dlgSettings.findViewById(R.id.etConfidence);
 		final CheckBox cbGlobal = (CheckBox) dlgSettings.findViewById(R.id.cbGlobal);
@@ -91,10 +92,12 @@ public class SettingsDialog {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				cbDangerous.setEnabled(isChecked);
 				cbUsage.setEnabled(isChecked);
+				cbExperimental.setEnabled(isChecked);
 				etConfidence.setEnabled(isChecked);
 				if (!isChecked) {
 					cbDangerous.setChecked(false);
 					cbUsage.setChecked(false);
+					cbExperimental.setChecked(false);
 					etConfidence.setText("");
 				}
 			}
@@ -275,8 +278,10 @@ public class SettingsDialog {
 				false);
 		boolean usage = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingAndroidUsage, false,
 				false);
+		boolean experimental = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExperimental,
+				false, false);
 		String confidence = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingConfidence, "", false);
-		final boolean expert = (dangerous || usage || !"".equals(confidence));
+		final boolean expert = (dangerous || usage || experimental || !"".equals(confidence));
 		boolean global = (PrivacyManager.getAppSetting(null, context, uid, PrivacyManager.cSettingSerial, null, false) == null);
 		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
 
@@ -305,10 +310,12 @@ public class SettingsDialog {
 			if (expert) {
 				cbDangerous.setChecked(dangerous);
 				cbUsage.setChecked(usage);
+				cbExperimental.setChecked(experimental);
 				etConfidence.setText(confidence);
 			} else {
 				cbDangerous.setEnabled(false);
 				cbUsage.setEnabled(false);
+				cbExperimental.setEnabled(false);
 				etConfidence.setEnabled(false);
 			}
 		} else {
@@ -317,6 +324,7 @@ public class SettingsDialog {
 			cbExpert.setVisibility(View.GONE);
 			cbDangerous.setVisibility(View.GONE);
 			cbUsage.setVisibility(View.GONE);
+			cbExperimental.setVisibility(View.GONE);
 			llConfidence.setVisibility(View.GONE);
 
 			// Application specific settings
@@ -503,6 +511,8 @@ public class SettingsDialog {
 								Boolean.toString(cbDangerous.isChecked()));
 						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
 								Boolean.toString(cbUsage.isChecked()));
+						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExperimental,
+								Boolean.toString(cbExperimental.isChecked()));
 						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingConfidence, etConfidence
 								.getText().toString());
 					} else {

@@ -199,7 +199,7 @@ public class ActivityApp extends Activity {
 			lvRestriction.setSelectedGroup(groupPosition);
 			if (methodName != null) {
 				int childPosition = PrivacyManager.getMethods(restrictionName).indexOf(
-						new PrivacyManager.MethodDescription(methodName));
+						new PrivacyManager.MethodDescription(restrictionName, methodName));
 				lvRestriction.setSelectedChild(groupPosition, childPosition, true);
 			}
 		}

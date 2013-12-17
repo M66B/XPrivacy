@@ -76,6 +76,13 @@
                 android:layout_marginLeft="30dip"
                 android:text="@string/settings_usage" />
 
+            <CheckBox
+                android:id="@+id/cbExperimental"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:text="@string/settings_experimental" />
+
             <LinearLayout
                 android:id="@+id/llConfidence"
                 android:layout_width="match_parent"
@@ -95,8 +102,7 @@
                     android:layout_height="wrap_content"
                     android:hint="35"
                     android:inputType="numberDecimal"
-                    android:maxLength="2"
-                    android:singleLine="true" />
+                    android:maxLength="2" />
             </LinearLayout>
 
             <TextView

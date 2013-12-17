@@ -112,6 +112,7 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="settings_expert">Modalità esperto</string>
     <string name="settings_dangerous">Limita funzioni pericolose</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
+    <string name="settings_experimental">Experimental features</string>
     <string name="help_application">Applicazione</string>
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>

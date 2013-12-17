@@ -113,6 +113,7 @@
     <string name="settings_expert">Tryb eksperta</string>
     <string name="settings_dangerous">Ogranicz niebezpieczne funkcje</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
+    <string name="settings_experimental">Experimental features</string>
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">ma dostęp do internetu</string>
     <string name="help_granted">ma dostęp do uprawnień Androida</string>

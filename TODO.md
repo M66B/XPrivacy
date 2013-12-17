@@ -16,6 +16,7 @@ For interested developers:
 * Move *SubmitTask* to *ActivityShare* (or the replacing service)
 * Update *SharedPreferencesEx* with KitKat changes
 * Import should clear app settings
+* Accessibility: *android:labelFor="..."*
 
 * Split settings file?
 * Remove indeterminate progress indicator?

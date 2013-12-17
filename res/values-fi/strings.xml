@@ -111,6 +111,7 @@
     <string name="settings_expert">Expert tila</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
+    <string name="settings_experimental">Experimental features</string>
     <string name="help_application">Applikaatio</string>
     <string name="help_internet">on internet käyttöoikeus</string>
     <string name="help_granted">on Android käyttöoikeus</string>

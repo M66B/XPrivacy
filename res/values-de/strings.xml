@@ -112,6 +112,7 @@
     <string name="settings_expert">Experten-Modus</string>
     <string name="settings_dangerous">Beschränke "bedenkliche" Funktionen</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
+    <string name="settings_experimental">Experimental features</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>

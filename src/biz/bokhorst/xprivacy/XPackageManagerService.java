@@ -17,6 +17,8 @@ public class XPackageManagerService extends XHook {
 	private String mRestrictionName;
 	private String mAction;
 
+	private static String SAVED_PERMISIONS = "saved_permissions";
+
 	private XPackageManagerService(Methods method, String restrictionName, String action) {
 		super(restrictionName, method.name(), action);
 		mMethod = method;
@@ -68,50 +70,31 @@ public class XPackageManagerService extends XHook {
 		if (mMethod == Methods.getPackageGids) {
 			// Do nothing
 		} else if (mMethod == Methods.grantPermissionsLPw) {
+			// Revoke permissions
 			try {
-				if (param.args.length > 0 && param.args[0] != null) {
-					// Get application info
-					ApplicationInfo appInfo = (ApplicationInfo) getObjectField(param.args[0], "applicationInfo");
+				if (PrivacyManager.getSettingBool(this, null, 0, PrivacyManager.cSettingExperimental, false, true))
+					if (param.args.length > 0 && param.args[0] != null) {
+						// Get application info
+						ApplicationInfo appInfo = (ApplicationInfo) getObjectField(param.args[0], "applicationInfo");
 
-					// Get requested permissions
-					ArrayList<String> requestedPermissions = (ArrayList<String>) getObjectField(param.args[0],
-							"requestedPermissions");
+						// Get requested permissions
+						ArrayList<String> listPermission = (ArrayList<String>) getObjectField(param.args[0],
+								"requestedPermissions");
 
-					// Save requested permissions
-					param.setObjectExtra("save_permissions", requestedPermissions);
+						// Save requested permissions
+						param.setObjectExtra(SAVED_PERMISIONS, listPermission);
 
-					// Modify permissions
-					ArrayList<String> modifiedPermissions = new ArrayList<String>();
-					for (String requestedPermission : requestedPermissions) {
-						boolean revoke = false;
-						for (String restrictionName : PrivacyManager.getRestrictions()) {
-							for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
-								if (md.getPermissions() != null)
-									for (String permission : md.getPermissions())
-										if (!"".equals(permission) && requestedPermission.endsWith(permission)) {
-											boolean restricted = PrivacyManager.getRestricted(this, null, appInfo.uid,
-													restrictionName, md.getName(), false, true);
-											if (restricted) {
-												Util.log(this, Log.INFO, "Revoking uid=" + appInfo.uid + " permission="
-														+ requestedPermission);
-												revoke = true;
-												break;
-											}
-										}
-								if (revoke)
-									break;
-							}
-							if (revoke)
-								break;
-						}
+						// Modify permissions
+						ArrayList<String> listModified = new ArrayList<String>();
+						for (String permission : listPermission)
+							if (PrivacyManager.getRestricted(this, appInfo.uid, permission))
+								Util.log(this, Log.INFO, "Revoking uid=" + appInfo.uid + " permission=" + permission);
+							else
+								listModified.add(permission);
 
-						if (!revoke)
-							modifiedPermissions.add(requestedPermission);
+						// Set modified permissions
+						setObjectField(param.args[0], "requestedPermissions", listModified);
 					}
-
-					// Set modified permissions
-					setObjectField(param.args[0], "requestedPermissions", modifiedPermissions);
-				}
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}
@@ -178,9 +161,9 @@ public class XPackageManagerService extends XHook {
 		} else if (mMethod == Methods.grantPermissionsLPw) {
 			try {
 				// Restore permissions
-				ArrayList<String> requestedPermissions = (ArrayList<String>) param.getObjectExtra("save_permissions");
-				if (requestedPermissions != null)
-					setObjectField(param.args[0], "requestedPermissions", requestedPermissions);
+				ArrayList<String> listPermission = (ArrayList<String>) param.getObjectExtra(SAVED_PERMISIONS);
+				if (listPermission != null)
+					setObjectField(param.args[0], "requestedPermissions", listPermission);
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}
