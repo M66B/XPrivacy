@@ -24,7 +24,7 @@
     <string name="menu_restriction_all">Išvalyti visus ribojimus</string>
     <string name="menu_clear_all">Išvalyti viską</string>
     <string name="menu_restrict_all">Įjungti visus ribojimus</string>
-    <string name="menu_clear_usage">Clear</string>
+    <string name="menu_clear_usage">Valyti</string>
     <string name="menu_usage_all">Perjungti filtrą</string>
     <string name="menu_apply">Taikyti šabloną</string>
     <string name="menu_clear">Išvalyti</string>
