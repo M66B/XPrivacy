@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.45 BETA**
+
 * Fixed uncaught exception handler ([issue](https://github.com/M66B/XPrivacy/issues/951))
 * Fixed confidence settings (application details view)
 * Fixed always restart required for dangerous functions
@@ -15,8 +19,6 @@ Changelog
 * Updated Norwegian translation
 * Updated Polish translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.44 BETA**
 
