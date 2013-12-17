@@ -112,7 +112,7 @@
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental features</string>
+    <string name="settings_experimental">Experimental functions</string>
     <string name="help_application">Iarratais</string>
     <string name="help_internet">Tá cead idirlín</string>
     <string name="help_granted">Tá cead Android</string>

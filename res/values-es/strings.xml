@@ -112,7 +112,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="settings_expert">Modo experto</string>
     <string name="settings_dangerous">Denegar funciones peligrosas</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental features</string>
+    <string name="settings_experimental">Experimental functions</string>
     <string name="help_application">Aplicación</string>
     <string name="help_internet">has internet permission</string>
     <string name="help_granted">Tiene permisos Android</string>
