@@ -50,65 +50,70 @@
                 android:layout_height="2dip"
                 android:background="@android:color/darker_gray" />
 
-            <!-- Icon -->
+            <!-- Info -->
 
-            <LinearLayout
-                android:id="@+id/llInfo"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dip"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:id="@+id/imgIcon"
-                    android:layout_width="?android:attr/listPreferredItemHeightSmall"
-                    android:layout_height="?android:attr/listPreferredItemHeightSmall"
-                    android:contentDescription="@string/help_application" />
+                android:layout_height="?android:attr/listPreferredItemHeightLarge" >
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/llInfo"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical" >
+                    android:layout_marginTop="6dip"
+                    android:orientation="horizontal" >
 
                     <ImageView
-                        android:id="@+id/imgInternet"
-                        android:layout_width="24dip"
-                        android:layout_height="24dip"
-                        android:contentDescription="@string/help_internet"
-                        android:src="?attr/icon_internet" />
+                        android:id="@+id/imgIcon"
+                        android:layout_width="?android:attr/listPreferredItemHeightSmall"
+                        android:layout_height="?android:attr/listPreferredItemHeightSmall"
+                        android:contentDescription="@string/help_application" />
 
-                    <ImageView
-                        android:id="@+id/imgFrozen"
-                        android:layout_width="24dip"
-                        android:layout_height="24dip"
-                        android:contentDescription="@string/help_application"
-                        android:src="?attr/icon_frozen" />
-                </LinearLayout>
-
-                <!-- Version / package name -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dip"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/tvVersion"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textIsSelectable="false" />
+                        android:gravity="center_vertical"
+                        android:orientation="vertical" >
 
-                    <TextView
-                        android:id="@+id/tvPackageName"
+                        <ImageView
+                            android:id="@+id/imgInternet"
+                            android:layout_width="24dip"
+                            android:layout_height="24dip"
+                            android:contentDescription="@string/help_internet"
+                            android:src="?attr/icon_internet" />
+
+                        <ImageView
+                            android:id="@+id/imgFrozen"
+                            android:layout_width="24dip"
+                            android:layout_height="24dip"
+                            android:contentDescription="@string/help_application"
+                            android:src="?attr/icon_frozen" />
+                    </LinearLayout>
+
+                    <!-- Version / package name -->
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textIsSelectable="false" />
+                        android:layout_marginLeft="6dip"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/tvVersion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textIsSelectable="false" />
+
+                        <TextView
+                            android:id="@+id/tvPackageName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textIsSelectable="false" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </ScrollView>
         </LinearLayout>
 
         <RelativeLayout
