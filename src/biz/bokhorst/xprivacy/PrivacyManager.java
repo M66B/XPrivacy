@@ -1250,7 +1250,7 @@ public class PrivacyManager {
 
 		@Override
 		public int hashCode() {
-			return mMethodName.hashCode();
+			return (mRestrictionName.hashCode() ^ mMethodName.hashCode());
 		}
 
 		@Override
