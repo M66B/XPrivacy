@@ -55,6 +55,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -256,34 +257,6 @@ public class ActivityApp extends Activity {
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.app_icon, menu);
-
-		// TODO: add launch / Play store sub menus if there are more packages
-
-		// Launch
-		boolean launcheable = false;
-		PackageManager pm = getPackageManager();
-		for (String packageName : mAppInfo.getPackageName())
-			if (pm.getLaunchIntentForPackage(packageName) != null) {
-				launcheable = true;
-				break;
-			}
-		menu.findItem(R.id.menu_app_launch).setEnabled(launcheable);
-
-		// Play store
-		boolean hasMarketLink = false;
-		for (String packageName : mAppInfo.getPackageName())
-			if (Util.hasMarketLink(this, packageName)) {
-				hasMarketLink = true;
-				break;
-			}
-		menu.findItem(R.id.menu_app_store).setEnabled(hasMarketLink);
-	}
-
-	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// Accounts
 		boolean accountsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
@@ -297,6 +270,39 @@ public class ActivityApp extends Activity {
 		menu.findItem(R.id.menu_contacts).setEnabled(contactsRestricted);
 
 		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.app_icon, menu);
+
+		// TODO: add launch/kill/store sub menus if there are more packages
+
+		// Launch
+		boolean launcheable = false;
+		PackageManager pm = getPackageManager();
+		for (String packageName : mAppInfo.getPackageName())
+			if (pm.getLaunchIntentForPackage(packageName) != null) {
+				launcheable = true;
+				break;
+			}
+		menu.findItem(R.id.menu_app_launch).setEnabled(launcheable);
+
+		// Kill
+		boolean experimental = PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingExperimental, false,
+				true);
+		menu.findItem(R.id.menu_app_kill).setEnabled(experimental);
+
+		// Play store
+		boolean hasMarketLink = false;
+		for (String packageName : mAppInfo.getPackageName())
+			if (Util.hasMarketLink(this, packageName)) {
+				hasMarketLink = true;
+				break;
+			}
+		menu.findItem(R.id.menu_app_store).setEnabled(hasMarketLink);
 	}
 
 	@Override
@@ -331,15 +337,6 @@ public class ActivityApp extends Activity {
 		case R.id.menu_fetch:
 			optionFetch();
 			return true;
-		case R.id.menu_app_launch:
-			optionLaunch();
-			return true;
-		case R.id.menu_app_settings:
-			optionSettings();
-			return true;
-		case R.id.menu_app_store:
-			optionStore();
-			return true;
 		case R.id.menu_accounts:
 			optionAccounts();
 			return true;
@@ -368,6 +365,9 @@ public class ActivityApp extends Activity {
 			return true;
 		case R.id.menu_app_store:
 			optionStore();
+			return true;
+		case R.id.menu_app_kill:
+			optionKill();
 			return true;
 		default:
 			return super.onContextItemSelected(item);
@@ -583,6 +583,16 @@ public class ActivityApp extends Activity {
 		Intent intentSettings = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
 				Uri.parse("package:" + mAppInfo.getPackageName().get(0)));
 		startActivity(intentSettings);
+	}
+
+	private void optionKill() {
+		String packageName = mAppInfo.getPackageName().get(0);
+		Util.log(null, Log.WARN, "Kill package=" + packageName);
+
+		Intent applyIntent = new Intent(XPackageManagerService.ACTION_MANAGE_PACKAGE);
+		applyIntent.putExtra("Package", packageName);
+		applyIntent.putExtra("Kill", true);
+		sendBroadcast(applyIntent, XPackageManagerService.PERMISSION_MANAGE_PACKAGES);
 	}
 
 	private void optionStore() {

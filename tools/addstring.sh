@@ -1,5 +1,5 @@
 #!/bin/bash
-grep -RIl "\<string name=\"settings_confidence" . | xargs sed -i -e '/string name="settings_confidence/a \
-\ \ \ \ <string name="settings_experimental">Experimental features</string>'
+grep -RIl "\<string name=\"menu_app_store" . | xargs sed -i -e '/string name="menu_app_store/a \
+\ \ \ \ <string name="menu_app_kill">Kill</string>'
 
 #grep -RIl "\<string name=\"msg_edit" . | xargs sed -i -e '/msg_edit/d'

@@ -8,6 +8,9 @@
         android:id="@+id/menu_app_settings"
         android:title="@string/menu_app_settings"/>
     <item
+        android:id="@+id/menu_app_kill"
+        android:title="@string/menu_app_kill"/>
+    <item
         android:id="@+id/menu_app_store"
         android:title="@string/menu_app_store"/>
 

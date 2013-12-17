@@ -3,7 +3,12 @@ package biz.bokhorst.xprivacy;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.util.Log;
@@ -11,6 +16,7 @@ import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.getObjectField;
 import static de.robv.android.xposed.XposedHelpers.setObjectField;
+import static de.robv.android.xposed.XposedHelpers.callMethod;
 
 public class XPackageManagerService extends XHook {
 	private Methods mMethod;
@@ -18,6 +24,9 @@ public class XPackageManagerService extends XHook {
 	private String mAction;
 
 	private static String SAVED_PERMISIONS = "saved_permissions";
+
+	public static String ACTION_MANAGE_PACKAGE = "biz.bokhorst.xprivacy.ACTION_MANAGE_PACKAGE";
+	public static String PERMISSION_MANAGE_PACKAGES = "biz.bokhorst.xprivacy.MANAGE_PACKAGES";
 
 	private XPackageManagerService(Methods method, String restrictionName, String action) {
 		super(restrictionName, method.name(), action);
@@ -31,17 +40,18 @@ public class XPackageManagerService extends XHook {
 	}
 
 	private enum Methods {
-		getPackageGids, grantPermissionsLPw
+		getPackageGids, grantPermissionsLPw, systemReady
 	};
 
 	public boolean isVisible() {
-		return (mMethod == Methods.getPackageGids);
+		return (mMethod != Methods.grantPermissionsLPw);
 	}
 
 	// @formatter:off
 
 	// public int[] getPackageGids(String packageName)
 	// private void grantPermissionsLPw(PackageParser.Package pkg, boolean replace)
+	// public void systemReady()
 	// frameworks/base/services/java/com/android/server/pm/PackageManagerService.java
 
 	// @formatter:on
@@ -52,6 +62,7 @@ public class XPackageManagerService extends XHook {
 		listHook.add(new XPackageManagerService(Methods.getPackageGids, PrivacyManager.cStorage, "media"));
 		listHook.add(new XPackageManagerService(Methods.getPackageGids, PrivacyManager.cStorage, "sdcard"));
 		listHook.add(new XPackageManagerService(Methods.grantPermissionsLPw, null, null));
+		listHook.add(new XPackageManagerService(Methods.systemReady, null, null));
 		return listHook;
 	}
 
@@ -72,7 +83,9 @@ public class XPackageManagerService extends XHook {
 		} else if (mMethod == Methods.grantPermissionsLPw) {
 			// Revoke permissions
 			try {
-				if (PrivacyManager.getSettingBool(this, null, 0, PrivacyManager.cSettingExperimental, false, true))
+				boolean experimental = PrivacyManager.getSettingBool(this, null, 0,
+						PrivacyManager.cSettingExperimental, false, true);
+				if (experimental)
 					if (param.args.length > 0 && param.args[0] != null) {
 						// Get application info
 						ApplicationInfo appInfo = (ApplicationInfo) getObjectField(param.args[0], "applicationInfo");
@@ -98,6 +111,8 @@ public class XPackageManagerService extends XHook {
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}
+		} else if (mMethod == Methods.systemReady) {
+			// Do nothing
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
@@ -167,7 +182,59 @@ public class XPackageManagerService extends XHook {
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}
+		} else if (mMethod == Methods.systemReady) {
+			//
+			Context context = (Context) getObjectField(param.thisObject, "mContext");
+			if (context != null)
+				context.registerReceiver(new Receiver(param.thisObject), new IntentFilter(ACTION_MANAGE_PACKAGE),
+						PERMISSION_MANAGE_PACKAGES, null);
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+	}
+
+	private class Receiver extends BroadcastReceiver {
+		private Object mPms;
+
+		public Receiver(Object pms) {
+			mPms = pms;
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public void onReceive(Context context, Intent intent) {
+			try {
+				String packageName = intent.getExtras().getString("Package");
+				boolean kill = intent.getExtras().getBoolean("Kill", false);
+				Util.log(null, Log.WARN, "Manage package=" + packageName + " kill=" + kill);
+
+				// final HashMap<String, PackageParser.Package> mPackages
+				// final Settings mSettings;
+
+				// Update permissions
+				Object pkgInfo;
+				Map<String, Object> mapPackages = (Map<String, Object>) getObjectField(mPms, "mPackages");
+				Object mSettings = getObjectField(mPms, "mSettings");
+				synchronized (mapPackages) {
+					pkgInfo = mapPackages.get(packageName);
+					callMethod(mPms, "grantPermissionsLPw", pkgInfo, true);
+					callMethod(mSettings, "writeLPr");
+				}
+
+				// Kill application
+				if (kill) {
+					try {
+						ApplicationInfo appInfo = (ApplicationInfo) getObjectField(pkgInfo, "applicationInfo");
+						if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2)
+							callMethod(mPms, "killApplication", packageName, appInfo.uid);
+						else
+							callMethod(mPms, "killApplication", packageName, appInfo.uid, "apply App Settings");
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+					}
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		}
 	}
 }
