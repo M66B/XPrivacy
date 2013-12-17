@@ -5,6 +5,10 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 1.10.47 BETA**
+
+* Fixed application package list filling screen
+
 **Version 1.10.46 BETA**
 
 * Fixed GitHub links by forcing desktop mode
