@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Updated Chinese translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.45 BETA**
@@ -14,7 +16,7 @@ Changelog
 * Replaced wiki links by links to GitHub
 * Added menu to clear usage data
 * Added refresh menu to application list
-* Display, submit, fetch all application and package names, also thanks @[jpeg729](https://github.com/jpeg729)
+* Handle application with shared components, also thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Chinese translations
 * Updated Norwegian translation
 * Updated Polish translation
