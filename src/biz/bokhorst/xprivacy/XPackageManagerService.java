@@ -23,6 +23,9 @@ public class XPackageManagerService extends XHook {
 	private String mRestrictionName;
 	private String mAction;
 
+	private static String cPackageName = "PackageName";
+	private static String cKill = "Kill";
+
 	private static String SAVED_PERMISIONS = "saved_permissions";
 	private static String ACTION_MANAGE_PACKAGE = "biz.bokhorst.xprivacy.ACTION_MANAGE_PACKAGE";
 	private static String PERMISSION_MANAGE_PACKAGES = "biz.bokhorst.xprivacy.MANAGE_PACKAGES";
@@ -196,8 +199,8 @@ public class XPackageManagerService extends XHook {
 	public static void manage(Context context, String packageName, boolean kill) {
 		Util.log(null, Log.WARN, "Manage package=" + packageName + " kill=" + kill);
 		Intent applyIntent = new Intent(XPackageManagerService.ACTION_MANAGE_PACKAGE);
-		applyIntent.putExtra("Package", packageName);
-		applyIntent.putExtra("Kill", true);
+		applyIntent.putExtra(cPackageName, packageName);
+		applyIntent.putExtra(cKill, true);
 		context.sendBroadcast(applyIntent, XPackageManagerService.PERMISSION_MANAGE_PACKAGES);
 	}
 
@@ -212,8 +215,8 @@ public class XPackageManagerService extends XHook {
 		@SuppressWarnings("unchecked")
 		public void onReceive(Context context, Intent intent) {
 			try {
-				String packageName = intent.getExtras().getString("Package");
-				boolean kill = intent.getExtras().getBoolean("Kill", false);
+				String packageName = intent.getExtras().getString(cPackageName);
+				boolean kill = intent.getExtras().getBoolean(cKill, false);
 				Util.log(null, Log.WARN, "Managing package=" + packageName + " kill=" + kill);
 
 				// final HashMap<String, PackageParser.Package> mPackages
