@@ -689,7 +689,8 @@ public class PrivacyManager {
 						mSettingsCache.remove(name);
 					else {
 						String value = mSettingsCache.get(name).getSettingsValue();
-						Util.log(hook, Log.INFO, String.format("get setting %s=%s (cached)", name, value));
+						if (entry.willExpire())
+							Util.log(hook, Log.INFO, String.format("get setting %s=%s (cached)", name, value));
 						return value;
 					}
 				}
@@ -1186,14 +1187,18 @@ public class PrivacyManager {
 			mValue = value;
 		}
 
-		public boolean isExpired() {
+		public boolean willExpire() {
 			if (mName.equals(PrivacyManager.cSettingVersion))
 				return false;
 			if (mName.equals(PrivacyManager.cSettingAndroidUsage))
 				return false;
 			if (mName.equals(PrivacyManager.cSettingExperimental))
 				return false;
-			return (mTimestamp + cSettingCacheTimeoutMs < new Date().getTime());
+			return true;
+		}
+
+		public boolean isExpired() {
+			return (willExpire() ? (mTimestamp + cSettingCacheTimeoutMs < new Date().getTime()) : false);
 		}
 
 		public String getSettingsValue() {
