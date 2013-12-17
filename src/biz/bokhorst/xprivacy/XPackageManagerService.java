@@ -24,9 +24,8 @@ public class XPackageManagerService extends XHook {
 	private String mAction;
 
 	private static String SAVED_PERMISIONS = "saved_permissions";
-
-	public static String ACTION_MANAGE_PACKAGE = "biz.bokhorst.xprivacy.ACTION_MANAGE_PACKAGE";
-	public static String PERMISSION_MANAGE_PACKAGES = "biz.bokhorst.xprivacy.MANAGE_PACKAGES";
+	private static String ACTION_MANAGE_PACKAGE = "biz.bokhorst.xprivacy.ACTION_MANAGE_PACKAGE";
+	private static String PERMISSION_MANAGE_PACKAGES = "biz.bokhorst.xprivacy.MANAGE_PACKAGES";
 
 	private XPackageManagerService(Methods method, String restrictionName, String action) {
 		super(restrictionName, method.name(), action);
@@ -183,13 +182,23 @@ public class XPackageManagerService extends XHook {
 				Util.bug(this, ex);
 			}
 		} else if (mMethod == Methods.systemReady) {
-			//
+			// Prepare package management
 			Context context = (Context) getObjectField(param.thisObject, "mContext");
-			if (context != null)
+			if (context == null)
+				Util.log(this, Log.ERROR, "Context is null");
+			else
 				context.registerReceiver(new Receiver(param.thisObject), new IntentFilter(ACTION_MANAGE_PACKAGE),
 						PERMISSION_MANAGE_PACKAGES, null);
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+	}
+
+	public static void manage(Context context, String packageName, boolean kill) {
+		Util.log(null, Log.WARN, "Manage package=" + packageName + " kill=" + kill);
+		Intent applyIntent = new Intent(XPackageManagerService.ACTION_MANAGE_PACKAGE);
+		applyIntent.putExtra("Package", packageName);
+		applyIntent.putExtra("Kill", true);
+		context.sendBroadcast(applyIntent, XPackageManagerService.PERMISSION_MANAGE_PACKAGES);
 	}
 
 	private class Receiver extends BroadcastReceiver {
@@ -205,7 +214,7 @@ public class XPackageManagerService extends XHook {
 			try {
 				String packageName = intent.getExtras().getString("Package");
 				boolean kill = intent.getExtras().getBoolean("Kill", false);
-				Util.log(null, Log.WARN, "Manage package=" + packageName + " kill=" + kill);
+				Util.log(null, Log.WARN, "Managing package=" + packageName + " kill=" + kill);
 
 				// final HashMap<String, PackageParser.Package> mPackages
 				// final Settings mSettings;

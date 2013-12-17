@@ -55,7 +55,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -293,7 +292,7 @@ public class ActivityApp extends Activity {
 		// Kill
 		boolean experimental = PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingExperimental, false,
 				true);
-		menu.findItem(R.id.menu_app_kill).setEnabled(experimental);
+		menu.findItem(R.id.menu_app_kill).setVisible(experimental);
 
 		// Play store
 		boolean hasMarketLink = false;
@@ -586,13 +585,7 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionKill() {
-		String packageName = mAppInfo.getPackageName().get(0);
-		Util.log(null, Log.WARN, "Kill package=" + packageName);
-
-		Intent applyIntent = new Intent(XPackageManagerService.ACTION_MANAGE_PACKAGE);
-		applyIntent.putExtra("Package", packageName);
-		applyIntent.putExtra("Kill", true);
-		sendBroadcast(applyIntent, XPackageManagerService.PERMISSION_MANAGE_PACKAGES);
+		XPackageManagerService.manage(this, mAppInfo.getPackageName().get(0), true);
 	}
 
 	private void optionStore() {
