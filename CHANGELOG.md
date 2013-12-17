@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Fixed GitHub links by forcing desktop mode
 * Updated Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
@@ -16,7 +17,7 @@ Changelog
 * Replaced wiki links by links to GitHub
 * Added menu to clear usage data
 * Added refresh menu to application list
-* Handle application with shared components, also thanks @[jpeg729](https://github.com/jpeg729)
+* Handle applications with shared components, also thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Chinese translations
 * Updated Norwegian translation
 * Updated Polish translation

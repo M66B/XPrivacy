@@ -91,7 +91,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
 	public static final Uri cProUri = Uri.parse("http://www.faircode.eu/xprivacy/");
-	public static final String cXUrl = "https://github.com/M66B/XPrivacy";
+	public static final String cXUrl = "https://github.com/M66B/XPrivacy?mobile=0";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
