@@ -14,7 +14,7 @@ Changelog
 * Replaced wiki links by links to GitHub
 * Added menu to clear usage data
 * Added refresh menu to application list
-* Display, submit, fetch all application and package names
+* Display, submit, fetch all application and package names, also thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Chinese translations
 * Updated Norwegian translation
 * Updated Polish translation
