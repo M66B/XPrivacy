@@ -89,6 +89,11 @@ public class ActivityApp extends Activity {
 
 	private static final int ACTIVITY_FETCH = 1;
 
+	private static final int MENU_LAUNCH = 1;
+	private static final int MENU_SETTINGS = 2;
+	private static final int MENU_KILL = 3;
+	private static final int MENU_STORE = 4;
+
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
 
@@ -264,6 +269,7 @@ public class ActivityApp extends Activity {
 				null, false, false);
 		boolean contactsRestricted = PrivacyManager.getRestricted(null, this, mAppInfo.getUid(),
 				PrivacyManager.cContacts, null, false, false);
+
 		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
 		menu.findItem(R.id.menu_applications).setEnabled(appsRestricted);
 		menu.findItem(R.id.menu_contacts).setEnabled(contactsRestricted);
@@ -274,34 +280,33 @@ public class ActivityApp extends Activity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.app_icon, menu);
 
-		// TODO: add launch/kill/store sub menus if there are more packages
-
-		// Launch
-		boolean launcheable = false;
 		PackageManager pm = getPackageManager();
-		for (String packageName : mAppInfo.getPackageName())
-			if (pm.getLaunchIntentForPackage(packageName) != null) {
-				launcheable = true;
-				break;
-			}
-		menu.findItem(R.id.menu_app_launch).setEnabled(launcheable);
+		List<String> listPackageNames = mAppInfo.getPackageName();
+		List<String> listApplicationName = mAppInfo.getApplicationName();
+		for (int i = 0; i < listPackageNames.size(); i++) {
+			Menu appMenu = (listPackageNames.size() == 1) ? menu : menu.addSubMenu(i, Menu.NONE, Menu.NONE,
+					listApplicationName.get(i));
 
-		// Kill
-		boolean experimental = PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingExperimental, false,
-				true);
-		menu.findItem(R.id.menu_app_kill).setVisible(experimental);
+			// Launch
+			MenuItem launch = appMenu.add(i, MENU_LAUNCH, Menu.NONE, getString(R.string.menu_app_launch));
+			if (pm.getLaunchIntentForPackage(listPackageNames.get(i)) == null)
+				launch.setEnabled(false);
 
-		// Play store
-		boolean hasMarketLink = false;
-		for (String packageName : mAppInfo.getPackageName())
-			if (Util.hasMarketLink(this, packageName)) {
-				hasMarketLink = true;
-				break;
-			}
-		menu.findItem(R.id.menu_app_store).setEnabled(hasMarketLink);
+			// Settings
+			appMenu.add(i, MENU_SETTINGS, Menu.NONE, getString(R.string.menu_app_settings));
+
+			// Kill
+			boolean experimental = PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingExperimental,
+					false, true);
+			MenuItem kill = appMenu.add(i, MENU_KILL, Menu.NONE, getString(R.string.menu_app_kill));
+			kill.setVisible(experimental);
+
+			// Play store
+			MenuItem store = appMenu.add(i, MENU_STORE, Menu.NONE, getString(R.string.menu_app_store));
+			if (!Util.hasMarketLink(this, listPackageNames.get(i)))
+				store.setEnabled(false);
+		}
 	}
 
 	@Override
@@ -356,17 +361,17 @@ public class ActivityApp extends Activity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_app_launch:
-			optionLaunch();
+		case MENU_LAUNCH:
+			optionLaunch(item.getGroupId());
 			return true;
-		case R.id.menu_app_settings:
-			optionSettings();
+		case MENU_SETTINGS:
+			optionSettings(item.getGroupId());
 			return true;
-		case R.id.menu_app_store:
-			optionStore();
+		case MENU_KILL:
+			optionKill(item.getGroupId());
 			return true;
-		case R.id.menu_app_kill:
-			optionKill();
+		case MENU_STORE:
+			optionStore(item.getGroupId());
 			return true;
 		default:
 			return super.onContextItemSelected(item);
@@ -573,24 +578,24 @@ public class ActivityApp extends Activity {
 		}
 	}
 
-	private void optionLaunch() {
-		Intent intentLaunch = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName().get(0));
+	private void optionLaunch(int which) {
+		Intent intentLaunch = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName().get(which));
 		startActivity(intentLaunch);
 	}
 
-	private void optionSettings() {
+	private void optionSettings(int which) {
 		Intent intentSettings = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-				Uri.parse("package:" + mAppInfo.getPackageName().get(0)));
+				Uri.parse("package:" + mAppInfo.getPackageName().get(which)));
 		startActivity(intentSettings);
 	}
 
-	private void optionKill() {
-		XPackageManagerService.manage(this, mAppInfo.getPackageName().get(0), true);
+	private void optionKill(int which) {
+		XPackageManagerService.manage(this, mAppInfo.getPackageName().get(which), true);
 	}
 
-	private void optionStore() {
+	private void optionStore(int which) {
 		Intent intentStore = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
-				+ mAppInfo.getPackageName().get(0)));
+				+ mAppInfo.getPackageName().get(which)));
 		startActivity(intentStore);
 	}
 

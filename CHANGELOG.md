@@ -7,11 +7,11 @@ Changelog
 * Fixed confidence settings (application details view)
 * Fixed always restart required for dangerous functions
 * Moved confidence setting to expert mode
-* Replaced wiki restriction links by links to GitHub
+* Replaced wiki links by links to GitHub
 * Added menu to clear usage data
 * Added refresh menu to application list
 * Display, submit, fetch all application and package names
-* Updated Chineses translations
+* Updated Chinese translations
 * Updated Norwegian translation
 * Updated Polish translation
 * Updated Lithuanian translation
