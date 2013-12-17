@@ -515,7 +515,7 @@ public class PrivacyManager {
 			return false;
 		} else {
 			// Check restart
-			return getMethod(restrictionName, methodName).isDangerous();
+			return getMethod(restrictionName, methodName).isRestartRequired();
 		}
 	}
 

@@ -3,8 +3,9 @@ Changelog
 
 **Next release**
 
-* Removed opening applications settings on force close ([issue](https://github.com/M66B/XPrivacy/issues/951))
-* Removed confidence settings text from application details view
+* Fixed uncaught exception handler ([issue](https://github.com/M66B/XPrivacy/issues/951))
+* Fixed confidence settings (application details view)
+* Fixed always restart required for dangerous functions
 * Moved confidence setting to expert mode
 * Replaced wiki restriction links by links to GitHub
 * Added menu to clear usage data
