@@ -22,8 +22,21 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="32dip"
                 android:orientation="horizontal" >
+
+                <ScrollView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1" >
+
+                    <TextView
+                        android:id="@+id/tvApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold" />
+                </ScrollView>
 
                 <ImageView
                     android:id="@+id/imgInfo"
@@ -31,16 +44,8 @@
                     android:layout_height="32dip"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="@string/help_application"
-                    android:src="?attr/icon_info" />
-
-                <TextView
-                    android:id="@+id/tvApp"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
                     android:paddingLeft="6dip"
-                    android:textStyle="bold" />
+                    android:src="?attr/icon_info" />
             </LinearLayout>
 
             <!-- Thick divider -->
@@ -48,6 +53,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dip"
+                android:layout_marginTop="6dip"
                 android:background="@android:color/darker_gray" />
 
             <!-- Info -->
@@ -90,12 +96,12 @@
 
                 <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="?android:attr/listPreferredItemHeightSmall" >
+                    android:layout_height="?android:attr/listPreferredItemHeightSmall"
+                    android:layout_marginLeft="6dip" >
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dip"
                         android:orientation="vertical" >
 
                         <TextView
