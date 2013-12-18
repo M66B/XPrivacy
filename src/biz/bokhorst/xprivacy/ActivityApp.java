@@ -187,7 +187,7 @@ public class ActivityApp extends Activity {
 
 		// Display version
 		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
-		tvVersion.setText(mAppInfo.getVersion(this));
+		tvVersion.setText(mAppInfo.getVersionString(this));
 
 		// Display package name
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);

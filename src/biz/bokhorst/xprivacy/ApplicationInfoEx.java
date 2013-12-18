@@ -88,15 +88,19 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			PackageManager pm = context.getPackageManager();
 			for (String packageName : this.getPackageName())
 				try {
-					mVersion.add(pm.getPackageInfo(packageName, 0).versionName);
-				} catch (Throwable ignored) {
-					mVersion.add("");
+					String version = pm.getPackageInfo(packageName, 0).versionName;
+					if (version == null)
+						mVersion.add("???");
+					else
+						mVersion.add(version);
+				} catch (Throwable ex) {
+					mVersion.equals(ex.getMessage());
 				}
 		}
 		return mVersion;
 	}
 
-	public String getVersion(Context context) {
+	public String getVersionString(Context context) {
 		List<String> listVersion = new ArrayList<String>();
 		for (String version : this.getPackageVersion(context))
 			if (!listVersion.contains(version))

@@ -73,7 +73,7 @@ public class PackageChange extends BroadcastReceiver {
 						// Title
 						String title = String.format("%s %s %s",
 								context.getString(replacing ? R.string.msg_update : R.string.msg_new),
-								TextUtils.join(", ", appInfo.getApplicationName()), appInfo.getVersion(context));
+								TextUtils.join(", ", appInfo.getApplicationName()), appInfo.getVersionString(context));
 						if (!replacing)
 							title = String.format("%s %s", title, context.getString(R.string.msg_applied));
 
