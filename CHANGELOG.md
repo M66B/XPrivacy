@@ -5,6 +5,10 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 1.10.49 BETA**
+
+* Make application title scrollable
+
 **Version 1.10.48 BETA**
 
 * Fixed application package list scroll
