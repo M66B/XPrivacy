@@ -38,7 +38,7 @@
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
-    <string name="msg_applying">正在应用…</string>
+    <string name="msg_applying">正在应用过滤器…</string>
     <string name="msg_applied">已经应用模版</string>
     <string name="msg_saved_to" formatted="false">保存到%s</string>
     <string name="msg_no_restrictions">没有找到权限限制规则</string>
@@ -101,8 +101,8 @@
     <string name="settings_adid">广告 ID</string>
     <string name="settings_country">国家</string>
     <string name="settings_operator">运营商</string>
-    <string name="settings_subscriber">签约者 ID（IMSI）</string>
-    <string name="settings_ua">浏览器用户代理信息（UA）</string>
+    <string name="settings_subscriber">IMSI</string>
+    <string name="settings_ua">User Agent</string>
     <string name="settings_general">一般设置</string>
     <string name="settings_fake_data">模拟信息</string>
     <string name="settings_global">使用全局模拟信息</string>
