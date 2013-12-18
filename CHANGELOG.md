@@ -5,6 +5,10 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 1.10.48 BETA**
+
+* Fixed application package list scroll
+
 **Version 1.10.47 BETA**
 
 * Fixed application package list filling screen
