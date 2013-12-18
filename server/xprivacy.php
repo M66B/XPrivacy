@@ -3,6 +3,8 @@
 	require_once('xprivacy.inc.php');
 
 	$max_confidence = 0.35;
+	$max_packages = 25;
+
 	function confidence($restricted, $not_restricted) {
 		// Agresti-Coull Interval
 		// http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval
@@ -39,7 +41,7 @@
 
 		// Store/update settings
 		if (empty($action) || $action == 'submit') {
-			// Validate data
+			// Validate
 			if (empty($data->package_name)) {
 				echo json_encode(array('ok' => false, 'error' => 'Package name missing'));
 				exit();
@@ -63,6 +65,12 @@
 				$data->package_version = array('');
 			else if (!is_array($data->package_version))
 				$data->package_version = array($data->package_version);
+
+			// Validate
+			if (count($data->package_name) > $max_packages) {
+				echo json_encode(array('ok' => false, 'error' => 'Too many packages'));
+				exit();
+			}
 
 			// Check if restrictions
 			$empty = true;
@@ -148,6 +156,12 @@
 			// Fixes
 			if (!is_array($data->package_name))
 				$data->package_name = array($data->package_name);
+
+			// Validate
+			if (count($data->package_name) > $max_packages) {
+				echo json_encode(array('ok' => false, 'error' => 'Too many packages'));
+				exit();
+			}
 
 			// Get confidence interval
 			$max_ci = (empty($data->confidence) ? $max_confidence : $data->confidence / 100);
@@ -495,8 +509,8 @@
 				if (!empty($package_name)) {
 ?>
 					<p>
-						* Calculated using the
-						<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull interval</a>.<br />
+						* Calculated using a
+						<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull interval</a> of 95%.<br />
 						Values below <?php echo number_format($max_confidence * 100, 1); ?> % are considered reliable.<br />
 						Rows marked with a grey background will be restricted when fetched.<br />
 					</p>
