@@ -74,7 +74,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			mListPackageName = new ArrayList<String>();
 			for (ApplicationInfo appInfo : mMapAppInfo.values())
 				mListPackageName.add(appInfo.packageName);
-			Collections.sort(mListPackageName);
 		}
 		return mListPackageName;
 	}
