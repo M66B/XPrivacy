@@ -34,12 +34,12 @@
     <string name="menu_applications">选择允许访问的应用</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
     <string name="menu_tutorial">界面功能指引</string>
-    <string name="msg_new">已安装</string>
+    <string name="msg_new">新应用</string>
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
     <string name="msg_applying">正在应用过滤器…</string>
-    <string name="msg_applied">已经应用模版</string>
+    <string name="msg_applied">已套用模版</string>
     <string name="msg_saved_to" formatted="false">保存到%s</string>
     <string name="msg_no_restrictions">没有找到权限限制规则</string>
     <string name="msg_sure">是否确定？</string>
