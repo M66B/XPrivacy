@@ -23,7 +23,7 @@
     <string name="menu_restriction_all">Переключить разрешения</string>
     <string name="menu_clear_all">Очистить все</string>
     <string name="menu_restrict_all">Запретить все</string>
-    <string name="menu_clear_usage">Clear</string>
+    <string name="menu_clear_usage">Очистить</string>
     <string name="menu_usage_all">Переключить фильтр</string>
     <string name="menu_apply">Применить шаблон</string>
     <string name="menu_clear">Очистить</string>
@@ -39,7 +39,7 @@
     <string name="msg_licensed" formatted="false">Владелец лицензии: %s</string>
     <string name="msg_loading">Загрузка</string>
     <string name="msg_applying">Применение</string>
-    <string name="msg_applied">Template applied</string>
+    <string name="msg_applied">Шаблон применен</string>
     <string name="msg_saved_to" formatted="false">Сохранено в %s</string>
     <string name="msg_no_restrictions">Не найдено разрешений</string>
     <string name="msg_sure">Вы уверены?</string>
@@ -113,7 +113,7 @@
     <string name="settings_expert">Экспертный режим</string>
     <string name="settings_dangerous">Запрет опасных функций</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Экспериментальные функции</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>
