@@ -5,6 +5,7 @@ Changelog
 
 * Fixed missing version names
 * Updated Chinese translation
+* Updated Russian translation
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
