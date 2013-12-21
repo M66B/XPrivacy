@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseArray;
 
 @SuppressLint("DefaultLocale")
@@ -29,6 +30,9 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private boolean mInternetDetermined = false;
 	private boolean mFrozen = false;
 	private boolean mFrozenDetermined = false;
+	private int mState = -1;
+	private long mInstallTime = -1;
+	private long mUpdateTime = -1;
 
 	public ApplicationInfoEx(Context context, int uid) throws NameNotFoundException {
 		mMapAppInfo = new TreeMap<String, ApplicationInfo>();
@@ -151,6 +155,48 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	public int getUid() {
 		// All listed uid's are the same
 		return mMapAppInfo.firstEntry().getValue().uid;
+	}
+
+	public int getState(Context context) {
+		if (mState == -1)
+			mState = Integer.parseInt(PrivacyManager.getSetting(null, context,
+					getUid(), PrivacyManager.cSettingState, "1", false));
+		return mState;
+	}
+
+	public long getInstallTime(Context context) {
+		if (mInstallTime == -1) {
+			long now = System.currentTimeMillis();
+			mInstallTime = now;
+			for (String packageName : this.getPackageName())
+				try {
+					getPackageInfo(context, packageName);
+					long time = mMapPkgInfo.get(packageName).firstInstallTime;
+					if (time < mInstallTime)
+						mInstallTime = time;
+				} catch (NameNotFoundException ex) {
+				}
+			if (mInstallTime == now) // no install time, maybe it came with the rom, and so is old
+				mInstallTime = 0;
+			Util.log(null, Log.WARN, "Install time for " + this.getPackageName().get(0) + " : " + mInstallTime);
+		}
+		return mInstallTime;
+	}
+
+	public long getUpdateTime(Context context) {
+		if (mUpdateTime == -1) {
+			mUpdateTime = 0;
+			for (String packageName : this.getPackageName())
+				try {
+					getPackageInfo(context, packageName);
+					long time = mMapPkgInfo.get(packageName).lastUpdateTime;
+					if (time > mUpdateTime)
+						mUpdateTime = time;
+				} catch (NameNotFoundException ex) {
+				}
+			Util.log(null, Log.WARN, "Update time for " + this.getPackageName().get(0) + " : " + mUpdateTime);
+		}
+		return mUpdateTime;
 	}
 
 	public boolean isSystem() {

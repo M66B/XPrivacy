@@ -143,5 +143,13 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
     <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
     <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
+    <string name="sort_title">Sort by</string>
+    <string-array name="sort_modes">
+        <item >By name</item>
+        <item >By uid</item>
+        <item >Date installed</item>
+        <item >Date last updated</item>
+    </string-array>
+    <string name="sort_attention">Apps requiring attention first</string>
 
 </resources>

@@ -2,6 +2,8 @@ package biz.bokhorst.xprivacy;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -61,6 +63,7 @@ import android.widget.Toast;
 public class ActivityMain extends Activity implements OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 	private int mThemeId;
 	private Spinner spRestriction = null;
+	private Spinner spSMode = null;
 	private AppListAdapter mAppAdapter = null;
 	private boolean mFiltersHidden = true;
 	private boolean mCategoriesHidden = true;
@@ -75,6 +78,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	public static final int STATE_ATTENTION = 0;
 	public static final int STATE_RESTRICTED = 1;
 	public static final int STATE_SHARED = 2;
+
+	private static final int SORT_BY_NAME = 0;
+	private static final int SORT_BY_UID = 1;
+	private static final int SORT_BY_INSTALL_TIME = 2;
+	private static final int SORT_BY_UPDATE_TIME = 3;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int ACTIVITY_EXPORT = 1;
@@ -161,7 +169,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		});
 
-		// Setup spinner
+		// Setup category spinner
 		spRestriction = (Spinner) findViewById(R.id.spRestriction);
 		spRestriction.setAdapter(spAdapter);
 		spRestriction.setOnItemSelectedListener(this);
@@ -243,6 +251,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 		cbFSystem.setChecked(fSystem);
 		cbFSystem.setOnCheckedChangeListener(this);
+
+		// Setup sort mode
+		//int sMode = Integer.parseInt(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSMode,
+		//		"0", false));
+		final Spinner spSMode = (Spinner) findViewById(R.id.spSMode);
+		spSMode.setOnItemSelectedListener(this);
+		//spSMode.setSelection(sMode);
+
+		//boolean sAttention = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingSAttention,
+		//		false, false);
+		final CheckBox cbSAttention = (CheckBox) findViewById(R.id.cbSAttention);
+		//cbSAttention.setChecked(sAttention);
+		cbSAttention.setOnCheckedChangeListener(this);
 
 		// Hide filters
 		if (savedInstanceState != null && savedInstanceState.containsKey("Filters"))
@@ -564,7 +585,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-		selectRestriction(pos);
+		if (parent.equals(spRestriction)) {
+			selectRestriction(pos);
+		} else if (parent.equals(spSMode)) {
+			//PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSMode,
+			//		Integer.toString(pos));
+			applySort();
+		}
 	}
 
 	@Override
@@ -589,6 +616,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
+		CheckBox cbSAttention = (CheckBox) findViewById(R.id.cbSAttention);
 		if (buttonView == cbFUsed)
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFUsed,
 					Boolean.toString(isChecked));
@@ -615,7 +643,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFSystem,
 					Boolean.toString(isChecked));
 		}
-		applyFilter();
+		if (buttonView == cbSAttention) {
+			//PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSAttention,
+			//		Boolean.toString(isChecked));
+			applySort();
+		} else {
+			applyFilter();
+		}
 	}
 
 	private void applyFilter() {
@@ -644,6 +678,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			mAppAdapter.getFilter().filter(filter);
 		}
+	}
+
+	private void applySort() {
+		CheckBox cbSAttention = (CheckBox) findViewById(R.id.cbSAttention); 
+		Spinner spSMode = (Spinner) findViewById(R.id.spSMode);
+		mAppAdapter.setSortMode(spSMode.getSelectedItemPosition(), cbSAttention.isChecked());
 	}
 
 	// Options
@@ -1055,6 +1095,34 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private List<ApplicationInfoEx> mListApp;
 		private String mRestrictionName;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		private int mSortMode = SORT_BY_NAME;
+		private boolean mSortAttention = false;
+		private Comparator<ApplicationInfoEx> mSorter = new Comparator<ApplicationInfoEx>() {
+			@Override
+			public int compare(ApplicationInfoEx appInfo0, ApplicationInfoEx appInfo1) {
+				if ((!mSortAttention) || appInfo0.getState(mContext) == appInfo1.getState(mContext))
+					switch (mSortMode) {
+					case SORT_BY_NAME:
+						return appInfo0.compareTo(appInfo1);
+					case SORT_BY_UID:
+						// lowest first
+						return appInfo0.getUid() - appInfo1.getUid();
+					case SORT_BY_INSTALL_TIME:
+						// newest first
+						Long iTime0 = appInfo0.getInstallTime(mContext);
+						Long iTime1 = appInfo1.getInstallTime(mContext);
+						return iTime1.compareTo(iTime0);
+					case SORT_BY_UPDATE_TIME:
+						// newest first
+						Long uTime0 = appInfo0.getUpdateTime(mContext);
+						Long uTime1 = appInfo1.getUpdateTime(mContext);
+						return uTime1.compareTo(uTime0);
+					}
+				else
+					return appInfo0.getState(mContext) - appInfo1.getState(mContext);
+				return 0;
+			}
+		};
 
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
@@ -1162,6 +1230,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						lstApp.add(xAppInfo);
 				}
 
+				// Apply current sorting
+				if (mSorter != null)
+					Collections.sort(lstApp, mSorter);
+
 				synchronized (this) {
 					results.values = lstApp;
 					results.count = lstApp.size();
@@ -1198,6 +1270,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					notifyDataSetChanged();
 				}
 			}
+		}
+
+		public void setSortMode(int sortMode, boolean attentionFirst) {
+			mSortMode = sortMode;
+			mSortAttention = attentionFirst;
+			sort(mSorter);
 		}
 
 		private class ViewHolder {
