@@ -74,8 +74,8 @@ public class XApplication extends XHook {
 					try {
 						mReceiverInstalled = true;
 						Util.log(this, Log.INFO, "Installing receiver uid=" + Binder.getCallingUid());
-						app.registerReceiver(new Receiver(app), new IntentFilter(ACTION_MANAGE_PACKAGE),
-								PERMISSION_MANAGE_PACKAGES, null);
+						app.registerReceiver(new Receiver(app), new IntentFilter(ACTION_MANAGE_PACKAGE));
+						// PERMISSION_MANAGE_PACKAGES, null);
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
@@ -85,16 +85,52 @@ public class XApplication extends XHook {
 	}
 
 	public static void manage(Context context, int uid, String action) {
-		String[] packageName = context.getPackageManager().getPackagesForUid(uid);
-		manage(context, packageName[0], action);
+		if (uid == 0)
+			manage(context, null, action);
+		else {
+			String[] packageName = context.getPackageManager().getPackagesForUid(uid);
+			if (packageName != null && packageName.length > 0)
+				manage(context, packageName[0], action);
+			else
+				Util.log(null, Log.WARN, "No packages uid=" + uid + " action=" + action);
+		}
 	}
 
 	public static void manage(Context context, String packageName, String action) {
 		Util.log(null, Log.WARN, "Manage package=" + packageName + " action=" + action);
+		if (packageName == null && XApplication.cActionKillProcess.equals(action)) {
+			Util.log(null, Log.WARN, "Kill all");
+			return;
+		}
 		Intent manageIntent = new Intent(XApplication.ACTION_MANAGE_PACKAGE);
 		manageIntent.putExtra(XApplication.cAction, action);
-		manageIntent.setPackage(packageName);
+		if (packageName != null)
+			manageIntent.setPackage(packageName);
 		context.sendBroadcast(manageIntent); // XApplication.PERMISSION_MANAGE_PACKAGES);
+	}
+
+	private class Receiver extends BroadcastReceiver {
+		private Application mApplication;
+
+		public Receiver(Application app) {
+			mApplication = app;
+		}
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			try {
+				String action = intent.getExtras().getString(cAction);
+				Util.log(null, Log.WARN, "Managing uid=" + android.os.Process.myUid() + " action=" + action);
+				if (cActionKillProcess.equals(action))
+					android.os.Process.killProcess(android.os.Process.myPid());
+				else if (cActionFlushCache.equals(action))
+					PrivacyManager.flush(mApplication, android.os.Process.myUid());
+				else
+					Util.log(null, Log.WARN, "Unknown management action=" + action);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		}
 	}
 
 	public static class XUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
@@ -130,30 +166,6 @@ public class XApplication extends XHook {
 				Util.bug(mHook, exex);
 			}
 			mDefaultHandler.uncaughtException(thread, ex);
-		}
-	}
-
-	private class Receiver extends BroadcastReceiver {
-		private Application mApplication;
-
-		public Receiver(Application app) {
-			mApplication = app;
-		}
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			try {
-				String action = intent.getExtras().getString(cAction);
-				Util.log(null, Log.WARN, "Managing uid=" + Binder.getCallingUid() + " action=" + action);
-				if (action.equals(cActionKillProcess))
-					android.os.Process.killProcess(android.os.Process.myPid());
-				else if (action.equals(cActionFlushCache))
-					PrivacyManager.flush(mApplication, Binder.getCallingUid());
-				else
-					Util.log(null, Log.WARN, "Unknown management action=" + action);
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
 		}
 	}
 }
