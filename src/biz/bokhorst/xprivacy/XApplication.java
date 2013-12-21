@@ -74,8 +74,8 @@ public class XApplication extends XHook {
 					try {
 						mReceiverInstalled = true;
 						Util.log(this, Log.INFO, "Installing receiver uid=" + Binder.getCallingUid());
-						app.registerReceiver(new Receiver(app), new IntentFilter(ACTION_MANAGE_PACKAGE));
-						// PERMISSION_MANAGE_PACKAGES, null);
+						app.registerReceiver(new Receiver(app), new IntentFilter(ACTION_MANAGE_PACKAGE),
+								PERMISSION_MANAGE_PACKAGES, null);
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
@@ -106,7 +106,7 @@ public class XApplication extends XHook {
 		manageIntent.putExtra(XApplication.cAction, action);
 		if (packageName != null)
 			manageIntent.setPackage(packageName);
-		context.sendBroadcast(manageIntent); // XApplication.PERMISSION_MANAGE_PACKAGES);
+		context.sendBroadcast(manageIntent);
 	}
 
 	private class Receiver extends BroadcastReceiver {
