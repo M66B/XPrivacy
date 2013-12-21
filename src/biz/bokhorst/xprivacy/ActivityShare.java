@@ -534,7 +534,7 @@ public class ActivityShare extends Activity {
 							pkgName.put(name);
 
 						JSONArray pkgVersion = new JSONArray();
-						for (String version : appInfo.getPackageVersion(ActivityShare.this))
+						for (String version : appInfo.getPackageVersionName(ActivityShare.this))
 							pkgVersion.put(version);
 
 						// Encode package

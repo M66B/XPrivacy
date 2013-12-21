@@ -19,7 +19,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private List<ApplicationInfo> mListAppInfo = null;
 	private List<String> mListApplicationName = null;
 	private List<String> mListPackageName = null;
-	private List<String> mVersion = null;
+	private List<String> mVersionName = null;
+	private List<Integer> mVersionCode = null;
 
 	// Cache
 	private Drawable mIcon = null;
@@ -59,7 +60,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 					mapApp.put(appInfo.getUid(), appInfo);
 					listApp.add(appInfo);
 				}
-			} catch (Throwable ex) {
+			} catch (NameNotFoundException ex) {
 				Util.bug(null, ex);
 			}
 
@@ -82,27 +83,41 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return mListPackageName;
 	}
 
-	public List<String> getPackageVersion(Context context) {
-		if (mVersion == null) {
-			mVersion = new ArrayList<String>();
+	public List<String> getPackageVersionName(Context context) {
+		if (mVersionName == null) {
+			mVersionName = new ArrayList<String>();
 			PackageManager pm = context.getPackageManager();
 			for (String packageName : this.getPackageName())
 				try {
 					String version = pm.getPackageInfo(packageName, 0).versionName;
 					if (version == null)
-						mVersion.add("???");
+						mVersionName.add("???");
 					else
-						mVersion.add(version);
-				} catch (Throwable ex) {
-					mVersion.equals(ex.getMessage());
+						mVersionName.add(version);
+				} catch (NameNotFoundException ex) {
+					mVersionName.add(ex.getMessage());
 				}
 		}
-		return mVersion;
+		return mVersionName;
+	}
+
+	public List<Integer> getPackageVersionCode(Context context) {
+		if (mVersionCode == null) {
+			mVersionCode = new ArrayList<Integer>();
+			PackageManager pm = context.getPackageManager();
+			for (String packageName : this.getPackageName())
+				try {
+					mVersionCode.add(pm.getPackageInfo(packageName, 0).versionCode);
+				} catch (NameNotFoundException ex) {
+					mVersionCode.add(0);
+				}
+		}
+		return mVersionCode;
 	}
 
 	public String getVersionString(Context context) {
 		List<String> listVersion = new ArrayList<String>();
-		for (String version : this.getPackageVersion(context))
+		for (String version : this.getPackageVersionName(context))
 			if (!listVersion.contains(version))
 				listVersion.add(version);
 		Collections.sort(listVersion);

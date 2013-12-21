@@ -908,9 +908,13 @@ public class ActivityApp extends Activity {
 				for (String name : params[0].getPackageName())
 					pkgName.put(name);
 
-				JSONArray pkgVersion = new JSONArray();
-				for (String version : params[0].getPackageVersion(ActivityApp.this))
-					pkgVersion.put(version);
+				JSONArray pkgVersionName = new JSONArray();
+				for (String version : params[0].getPackageVersionName(ActivityApp.this))
+					pkgVersionName.put(version);
+
+				JSONArray pkgVersionCode = new JSONArray();
+				for (Integer version : params[0].getPackageVersionCode(ActivityApp.this))
+					pkgVersionCode.put(version);
 
 				// Encode package
 				JSONObject jRoot = new JSONObject();
@@ -920,7 +924,8 @@ public class ActivityApp extends Activity {
 				jRoot.put("xprivacy_version", pInfo.versionCode);
 				jRoot.put("application_name", appName);
 				jRoot.put("package_name", pkgName);
-				jRoot.put("package_version", pkgVersion);
+				jRoot.put("package_version_name", pkgVersionName);
+				jRoot.put("package_version_code", pkgVersionCode);
 				jRoot.put("settings", jSettings);
 
 				// Submit
