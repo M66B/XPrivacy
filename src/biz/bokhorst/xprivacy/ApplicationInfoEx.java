@@ -101,7 +101,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		for (String version : this.getPackageVersion(context))
 			if (!listVersion.contains(version))
 				listVersion.add(version);
-		Collections.sort(listVersion);
 		return TextUtils.join(",  ", listVersion);
 	}
 
