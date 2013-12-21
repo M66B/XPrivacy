@@ -57,7 +57,7 @@ public class ActivityShare extends Activity {
 	public static final String cFileName = "FileName";
 	public static final String cUid = "Uid";
 	public static final String cErrorMessage = "ErrorMessage";
-	public static final String BASE_URL = "http://updates.faircode.eu/xprivacy";
+	public static final String BASE_URL = "http://updates.faircode.eu/xprivacy_new.php";
 	public static final String cProgressReport = "ProgressReport";
 	public static final String cProgressMessage = "ProgressMessage";
 	public static final String cProgressValue = "ProgressValue";

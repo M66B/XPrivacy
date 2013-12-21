@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Fixed missing version names
+* Updated Arabic translation
 * Updated Chinese translation
 * Updated Russian translation
 * Updated Slovak translation

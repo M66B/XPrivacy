@@ -914,7 +914,7 @@ public class ActivityApp extends Activity {
 
 				JSONArray pkgVersionCode = new JSONArray();
 				for (Integer version : params[0].getPackageVersionCode(ActivityApp.this))
-					pkgVersionCode.put(version);
+					pkgVersionCode.put((int)version);
 
 				// Encode package
 				JSONObject jRoot = new JSONObject();

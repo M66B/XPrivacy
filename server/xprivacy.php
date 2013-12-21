@@ -61,10 +61,18 @@
 			if (!is_array($data->package_name))
 				$data->package_name = array($data->package_name);
 
-			if (empty($data->package_version))
-				$data->package_version = array('');
-			else if (!is_array($data->package_version))
-				$data->package_version = array($data->package_version);
+			if (!empty($data->package_version))
+				$data->package_version_name = $data->package_version; // compatibility
+
+			if (empty($data->package_version_name))
+				$data->package_version_name = array('');
+			else if (!is_array($data->package_version_name))
+				$data->package_version_name = array($data->package_version_name);
+
+			if (empty($data->package_version_code))
+				$data->package_version_code = array();
+			else if (!is_array($data->package_version_code))
+				$data->package_version_code = array($data->package_version_code);
 
 			// Validate
 			if (count($data->package_name) > $max_packages) {
@@ -92,7 +100,7 @@
 					$sql = "INSERT INTO xprivacy_app (application_name, package_name, package_version) VALUES ";
 					$sql .= "('" . $db->real_escape_string($application_name) . "'";
 					$sql .= ",'" . $db->real_escape_string($data->package_name[$i]) . "'";
-					$sql .= ",'" . $db->real_escape_string($data->package_version[$i]) . "')";
+					$sql .= ",'" . $db->real_escape_string($data->package_version_name[$i]) . "')";
 					$sql .= " ON DUPLICATE KEY UPDATE";
 					$sql .= " modified=CURRENT_TIMESTAMP()";
 					if (!$db->query($sql)) {
@@ -106,20 +114,24 @@
 				foreach ($data->settings as $restriction) {
 					if (empty($restriction->method))
 						$restriction->method = '';
-					$sql = "INSERT INTO xprivacy (android_id_md5, android_sdk, xprivacy_version, package_name, package_version,";
-					$sql .= " restriction, method, restricted, used) VALUES ";
+					$sql = "INSERT INTO xprivacy (android_id_md5, android_sdk, xprivacy_version,";
+					$sql .= " package_name, package_version, package_version_code,";
+					$sql .= " restriction, method, restricted, allowed, used) VALUES ";
 					$sql .= "('" . $data->android_id . "'";
 					$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
 					$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : $db->real_escape_string($data->xprivacy_version)) . "";
 					$sql .= ",'" . $db->real_escape_string($data->package_name[$i]) . "'";
-					$sql .= ",'" . $db->real_escape_string($data->package_version[$i]) . "'";
+					$sql .= ",'" . ($i < count($data->package_version_name) ? $db->real_escape_string($data->package_version_name[$i]) : '') . "'";
+					$sql .= "," . ($i < count($data->package_version_code) ? (int)$data->package_version_code[$i] : 0);
 					$sql .= ",'" . $db->real_escape_string($restriction->restriction) . "'";
 					$sql .= ",'" . $db->real_escape_string($restriction->method) . "'";
 					$sql .= "," . ($restriction->restricted ? 1 : 0);
-					$sql .= "," . $db->real_escape_string($restriction->used) . ")";
+					$sql .= "," . ((int)$restriction->allowed);
+					$sql .= "," . ((int)$restriction->used) . ")";
 					$sql .= " ON DUPLICATE KEY UPDATE";
 					$sql .= " xprivacy_version=VALUES(xprivacy_version)";
 					$sql .= ", restricted=VALUES(restricted)";
+					$sql .= ", allowed=VALUES(allowed)";
 					$sql .= ", used=VALUES(used)";
 					$sql .= ", modified=CURRENT_TIMESTAMP()";
 					$sql .= ", updates=updates+1";
@@ -178,12 +190,14 @@
 
 			// Get restrictions
 			$settings = Array();
-			$sql = "SELECT restriction, method, restricted";
+			$sql = "SELECT restriction, method";
 			$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 			$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
+			$sql .= ", SUM(allowed) AS allowed";
 			$sql .= " FROM xprivacy";
 			$sql .= " WHERE package_name IN (" . $package_names . ")";
 			$sql .= " GROUP BY restriction, method";
+			$sql .= " ORDER BY restriction DESC, method DESC";
 			$result = $db->query($sql);
 			if ($result) {
 				while (($row = $result->fetch_object())) {
@@ -193,7 +207,7 @@
 						$entry['restriction'] = $row->restriction;
 						if (!empty($row->method))
 							$entry['method'] = $row->method;
-						$entry['restricted'] = ($row->restricted > $row->not_restricted ? 1 : 0);
+						$entry['restricted'] = ($row->allowed == 0 && $row->restricted > $row->not_restricted ? 1 : 0);
 						$entry['not_restricted'] = 0; // backward compatibility
 						$settings[] = (object) $entry;
 					}
