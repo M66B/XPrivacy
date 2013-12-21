@@ -74,9 +74,6 @@
 			else if (!is_array($data->package_version_code))
 				$data->package_version_code = array($data->package_version_code);
 
-			if (empty($restriction->allowed))
-				$restriction->allowed = 0;
-
 			// Validate
 			if (count($data->package_name) > $max_packages) {
 				error_log('XPrivacy submit: packages=' . count($data->package_name) . '/' . $max_packages . PHP_EOL, 1, $my_email);
@@ -116,8 +113,12 @@
 			// Process restrictions
 			for ($i = 0; $i < count($data->package_name); $i++)
 				foreach ($data->settings as $restriction) {
+					// Fixes
 					if (empty($restriction->method))
 						$restriction->method = '';
+					if (empty($restriction->allowed))
+						$restriction->allowed = 0;
+
 					$sql = "INSERT INTO xprivacy (android_id_md5, android_sdk, xprivacy_version,";
 					$sql .= " package_name, package_version, package_version_code,";
 					$sql .= " restriction, method, restricted, allowed, used) VALUES ";
@@ -429,7 +430,7 @@
 						} else {
 ?>
 							<th style="text-align: center;">Votes<br />deny/allow</th>
-							<th style="text-align: center;">Exceptions</th>
+							<th style="text-align: center;">Exceptions<br />(alllowed)</th>
 							<th style="text-align: center;">CI95 &plusmn;% <sup>*</sup></th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
 							<th>Restriction</th>
@@ -511,7 +512,7 @@
 								echo '</td>';
 
 								echo '<td style="text-align: center;">';
-								echo ($row->allowed ? 'Yes' : 'No');
+								echo ($row->allowed ? 'Yes' : '');
 								echo '</td>';
 
 								echo '<td style="text-align: center;">';
