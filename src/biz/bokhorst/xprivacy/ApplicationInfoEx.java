@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeMap;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -16,8 +17,7 @@ import android.util.SparseArray;
 
 @SuppressLint("DefaultLocale")
 public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
-	private List<ApplicationInfo> mListAppInfo = null;
-	private List<String> mListApplicationName = null;
+	private TreeMap<String, ApplicationInfo> mMapAppInfo = null;
 	private List<String> mListPackageName = null;
 	private List<String> mVersionName = null;
 	private List<Integer> mVersionCode = null;
@@ -30,15 +30,12 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private boolean mFrozenDetermined = false;
 
 	public ApplicationInfoEx(Context context, int uid) throws NameNotFoundException {
-		mListAppInfo = new ArrayList<ApplicationInfo>();
-		mListApplicationName = new ArrayList<String>();
+		mMapAppInfo = new TreeMap<String, ApplicationInfo>();
 		PackageManager pm = context.getPackageManager();
 		for (String packageName : pm.getPackagesForUid(uid)) {
 			ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
-			mListAppInfo.add(appInfo);
-			mListApplicationName.add(pm.getApplicationLabel(appInfo).toString());
+			mMapAppInfo.put(pm.getApplicationLabel(appInfo).toString(), appInfo);
 		}
-		Collections.sort(mListApplicationName);
 	}
 
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
@@ -70,15 +67,14 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public List<String> getApplicationName() {
-		return mListApplicationName;
+		return new ArrayList<String>(mMapAppInfo.navigableKeySet());
 	}
 
 	public List<String> getPackageName() {
 		if (mListPackageName == null) {
 			mListPackageName = new ArrayList<String>();
-			for (ApplicationInfo appInfo : mListAppInfo)
+			for (ApplicationInfo appInfo : mMapAppInfo.values())
 				mListPackageName.add(appInfo.packageName);
-			Collections.sort(mListPackageName);
 		}
 		return mListPackageName;
 	}
@@ -120,21 +116,20 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		for (String version : this.getPackageVersionName(context))
 			if (!listVersion.contains(version))
 				listVersion.add(version);
-		Collections.sort(listVersion);
 		return TextUtils.join(",  ", listVersion);
 	}
 
 	public Drawable getIcon(Context context) {
 		if (mIcon == null)
 			// Pick first icon
-			mIcon = mListAppInfo.get(0).loadIcon(context.getPackageManager());
+			mIcon = mMapAppInfo.firstEntry().getValue().loadIcon(context.getPackageManager());
 		return mIcon;
 	}
 
 	public boolean hasInternet(Context context) {
 		if (!mInternetDetermined) {
 			PackageManager pm = context.getPackageManager();
-			for (ApplicationInfo appInfo : mListAppInfo)
+			for (ApplicationInfo appInfo : mMapAppInfo.values())
 				if (pm.checkPermission("android.permission.INTERNET", appInfo.packageName) == PackageManager.PERMISSION_GRANTED) {
 					mInternet = true;
 					break;
@@ -148,7 +143,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		if (!mFrozenDetermined) {
 			PackageManager pm = context.getPackageManager();
 			boolean enabled = false;
-			for (ApplicationInfo appInfo : mListAppInfo) {
+			for (ApplicationInfo appInfo : mMapAppInfo.values()) {
 				int setting = pm.getApplicationEnabledSetting(appInfo.packageName);
 				enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
 				enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
@@ -163,12 +158,12 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	public int getUid() {
 		// All listed uid's are the same
-		return mListAppInfo.get(0).uid;
+		return mMapAppInfo.firstEntry().getValue().uid;
 	}
 
 	public boolean isSystem() {
 		boolean mSystem = false;
-		for (ApplicationInfo appInfo : mListAppInfo) {
+		for (ApplicationInfo appInfo : mMapAppInfo.values()) {
 			mSystem = ((appInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
 			mSystem = mSystem || appInfo.packageName.equals(this.getClass().getPackage().getName());
 			mSystem = mSystem || appInfo.packageName.equals(this.getClass().getPackage().getName() + ".pro");
@@ -178,14 +173,14 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public boolean isShared() {
-		for (ApplicationInfo appInfo : mListAppInfo)
+		for (ApplicationInfo appInfo : mMapAppInfo.values())
 			if (PrivacyManager.isShared(appInfo.uid))
 				return true;
 		return false;
 	}
 
 	public boolean isIsolated() {
-		for (ApplicationInfo appInfo : mListAppInfo)
+		for (ApplicationInfo appInfo : mMapAppInfo.values())
 			if (PrivacyManager.isIsolated(appInfo.uid))
 				return true;
 		return false;
@@ -194,7 +189,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	@Override
 	public String toString() {
 		// All uid's are the same
-		return String.format("%d %s", mListAppInfo.get(0).uid, TextUtils.join(", ", getApplicationName()));
+		return String.format("%d %s", mMapAppInfo.firstEntry().getValue().uid, TextUtils.join(", ", getApplicationName()));
 	}
 
 	@Override
