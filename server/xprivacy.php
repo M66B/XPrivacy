@@ -74,6 +74,9 @@
 			else if (!is_array($data->package_version_code))
 				$data->package_version_code = array($data->package_version_code);
 
+			if (empty($restriction->allowed))
+				$restriction->allowed = 0;
+
 			// Validate
 			if (count($data->package_name) > $max_packages) {
 				error_log('XPrivacy submit: packages=' . count($data->package_name) . '/' . $max_packages . PHP_EOL, 1, $my_email);
