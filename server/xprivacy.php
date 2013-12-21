@@ -355,7 +355,7 @@
 						$sql = "SELECT DISTINCT package_name, package_version, package_version_code";
 						$sql .= " FROM xprivacy_app";
 						$sql .= " WHERE application_name IN (" . implode(',', $apps) . ")";
-						$sql .= " ORDER BY package_name";
+						$sql .= " ORDER BY package_name, package_version";
 						$result = $db->query($sql);
 						if ($result) {
 							while (($row = $result->fetch_object())) {
@@ -457,7 +457,7 @@
 							$sql .= " WHERE application_name REGEXP '^[^a-zA-Z]'";
 						else
 							$sql .= " WHERE application_name LIKE '" . ($letter == '%' ? '\\' : '') . $db->real_escape_string($letter) . "%'";
-						$sql .= " ORDER BY application_name";
+						$sql .= " ORDER BY application_name, package_name";
 						$result = $db->query($sql);
 						if ($result) {
 							while (($row = $result->fetch_object())) {
