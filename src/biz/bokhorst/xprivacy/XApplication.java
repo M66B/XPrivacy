@@ -18,7 +18,6 @@ public class XApplication extends XHook {
 
 	private static boolean mReceiverInstalled = false;
 
-	public static String cPackageName = "PackageName";
 	public static String cAction = "Action";
 	public static String cActionKillProcess = "Kill";
 	public static String cActionFlushCache = "Flush";
@@ -93,7 +92,6 @@ public class XApplication extends XHook {
 	public static void manage(Context context, String packageName, String action) {
 		Util.log(null, Log.WARN, "Manage package=" + packageName + " action=" + action);
 		Intent manageIntent = new Intent(XApplication.ACTION_MANAGE_PACKAGE);
-		manageIntent.putExtra(XApplication.cPackageName, packageName);
 		manageIntent.putExtra(XApplication.cAction, action);
 		manageIntent.setPackage(packageName);
 		context.sendBroadcast(manageIntent); // XApplication.PERMISSION_MANAGE_PACKAGES);
@@ -144,15 +142,12 @@ public class XApplication extends XHook {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			try {
-				String packageName = intent.getExtras().getString(cPackageName);
-				if (context.getPackageName().equals(packageName)) {
-					String action = intent.getExtras().getString(cAction);
-					Util.log(null, Log.WARN, "Managing package=" + packageName + " action=" + action);
-					if (action.equals(cActionKillProcess))
-						android.os.Process.killProcess(android.os.Process.myPid());
-					else if (action.equals(cActionFlushCache))
-						PrivacyManager.flush(mApplication, Binder.getCallingUid());
-				}
+				String action = intent.getExtras().getString(cAction);
+				Util.log(null, Log.WARN, "Managing uid=" + Binder.getCallingUid() + " action=" + action);
+				if (action.equals(cActionKillProcess))
+					android.os.Process.killProcess(android.os.Process.myPid());
+				else if (action.equals(cActionFlushCache))
+					PrivacyManager.flush(mApplication, Binder.getCallingUid());
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
