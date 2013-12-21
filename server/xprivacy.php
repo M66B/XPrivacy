@@ -3,7 +3,7 @@
 	require_once('xprivacy.inc.php');
 
 	$max_confidence = 0.35;
-	$max_packages = 50;
+	$max_packages = 64;
 
 	function confidence($restricted, $not_restricted) {
 		// Agresti-Coull Interval
@@ -69,7 +69,7 @@
 			// Validate
 			if (count($data->package_name) > $max_packages) {
 				error_log('XPrivacy submit: packages=' . count($data->package_name) . '/' . $max_packages . PHP_EOL, 1, $my_email);
-				echo json_encode(array('ok' => false, 'error' => 'Too many packages'));
+				echo json_encode(array('ok' => false, 'error' => 'Too many packages for application'));
 				exit();
 			}
 
@@ -161,7 +161,7 @@
 			// Validate
 			if (count($data->package_name) > $max_packages) {
 				error_log('XPrivacy fetch: packages=' . count($data->package_name) . '/' . $max_packages . PHP_EOL, 1, $my_email);
-				echo json_encode(array('ok' => false, 'error' => 'Too many packages'));
+				echo json_encode(array('ok' => false, 'error' => 'Too many packages for application'));
 				exit();
 			}
 
