@@ -93,6 +93,16 @@
     <string name="title_fuser">Filtruj wg aplikacji użytkownika</string>
     <string name="title_fsystem">Filtruj wg aplikacji systemowych</string>
     <string name="title_fnot">Odwróć</string>
+    <string name="title_sort_by">Sort by</string>
+
+    <string-array name="title_smodes">
+        <item >name</item>
+        <item >uid</item>
+        <item >date installed</item>
+        <item >date updated</item>
+    </string-array>
+
+    <string name="title_sattention">Apps requiring attention first</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>

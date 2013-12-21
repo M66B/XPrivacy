@@ -129,7 +129,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/sort_title"
+                        android:text="@string/title_sort_by"
                    	    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <Spinner
@@ -137,7 +137,7 @@
 	                    android:layout_width="0dip"
 	                    android:layout_height="37dip"
 	                    android:layout_weight="1"
-	                    android:entries="@array/sort_modes" />
+	                    android:entries="@array/title_smodes" />
 	            </LinearLayout>
 
                 <CheckBox
@@ -148,7 +148,7 @@
                     android:ellipsize="end"
                     android:saveEnabled="false"
                     android:singleLine="true"
-                    android:text="@string/sort_attention"
+                    android:text="@string/title_sattention"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 

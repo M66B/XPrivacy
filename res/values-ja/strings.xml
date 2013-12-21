@@ -92,6 +92,16 @@
     <string name="title_fuser">ユーザーアプリを表示</string>
     <string name="title_fsystem">システムアプリを表示</string>
     <string name="title_fnot">無視</string>
+    <string name="title_sort_by">Sort by</string>
+
+    <string-array name="title_smodes">
+        <item >name</item>
+        <item >uid</item>
+        <item >date installed</item>
+        <item >date updated</item>
+    </string-array>
+
+    <string name="title_sattention">Apps requiring attention first</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>

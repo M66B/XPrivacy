@@ -92,6 +92,16 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_fuser">Filter on user applications</string>
     <string name="title_fsystem">Filter on system applications</string>
     <string name="title_fnot">Negate</string>
+    <string name="title_sort_by">Sort by</string>
+
+    <string-array name="title_smodes">
+        <item >name</item>
+        <item >uid</item>
+        <item >date installed</item>
+        <item >date updated</item>
+    </string-array>
+
+    <string name="title_sattention">Apps requiring attention first</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">קו אורך</string>
     <string name="settings_lon">קו רוחב</string>

@@ -94,6 +94,16 @@
     <string name="title_fuser">Filtriraj uporabniške programe</string>
     <string name="title_fsystem">Filtriraj sistemske programe</string>
     <string name="title_fnot">Negate</string>
+    <string name="title_sort_by">Sort by</string>
+
+    <string-array name="title_smodes">
+        <item >name</item>
+        <item >uid</item>
+        <item >date installed</item>
+        <item >date updated</item>
+    </string-array>
+
+    <string name="title_sattention">Apps requiring attention first</string>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>

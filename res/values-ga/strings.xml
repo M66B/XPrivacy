@@ -92,6 +92,16 @@
     <string name="title_fuser">ar iarratais úsáideora</string>
     <string name="title_fsystem">Scagaire maidir le hiarratais ar chóras</string>
     <string name="title_fnot">Negate</string>
+    <string name="title_sort_by">Sort by</string>
+
+    <string-array name="title_smodes">
+        <item >name</item>
+        <item >uid</item>
+        <item >date installed</item>
+        <item >date updated</item>
+    </string-array>
+
+    <string name="title_sattention">Apps requiring attention first</string>
     <string name="settings_serial">Sraithuimhir#</string>
     <string name="settings_lat">TX</string>
     <string name="settings_lon">Domhanfhad</string>

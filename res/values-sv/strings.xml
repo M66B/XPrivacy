@@ -92,6 +92,16 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="title_fuser">Filtrera efter vanliga appar</string>
     <string name="title_fsystem">Filtrera efter systemappar</string>
     <string name="title_fnot">Negate</string>
+    <string name="title_sort_by">Sort by</string>
+
+    <string-array name="title_smodes">
+        <item >name</item>
+        <item >uid</item>
+        <item >date installed</item>
+        <item >date updated</item>
+    </string-array>
+
+    <string name="title_sattention">Apps requiring attention first</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>

@@ -30,7 +30,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private boolean mInternetDetermined = false;
 	private boolean mFrozen = false;
 	private boolean mFrozenDetermined = false;
-	private int mState = -1;
 	private long mInstallTime = -1;
 	private long mUpdateTime = -1;
 
@@ -158,10 +157,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public int getState(Context context) {
-		if (mState == -1)
-			mState = Integer.parseInt(PrivacyManager.getSetting(null, context,
-					getUid(), PrivacyManager.cSettingState, "1", false));
-		return mState;
+		return Integer.parseInt(PrivacyManager.getSetting(null, context,
+				getUid(), PrivacyManager.cSettingState, "1", false));
 	}
 
 	public long getInstallTime(Context context) {
@@ -178,7 +175,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 				}
 			if (mInstallTime == now) // no install time, maybe it came with the rom, and so is old
 				mInstallTime = 0;
-			Util.log(null, Log.WARN, "Install time for " + this.getPackageName().get(0) + " : " + mInstallTime);
 		}
 		return mInstallTime;
 	}
@@ -194,7 +190,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 						mUpdateTime = time;
 				} catch (NameNotFoundException ex) {
 				}
-			Util.log(null, Log.WARN, "Update time for " + this.getPackageName().get(0) + " : " + mUpdateTime);
 		}
 		return mUpdateTime;
 	}

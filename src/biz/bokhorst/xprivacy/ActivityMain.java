@@ -174,6 +174,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		spRestriction.setAdapter(spAdapter);
 		spRestriction.setOnItemSelectedListener(this);
 
+		// Setup sort mode
+		//int sMode = Integer.parseInt(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSMode,
+		//		"0", false));
+		spSMode = (Spinner) findViewById(R.id.spSMode);
+		spSMode.setOnItemSelectedListener(this);
+		//spSMode.setSelection(sMode);
+
+		//boolean sAttention = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingSAttention,
+		//		false, false);
+		final CheckBox cbSAttention = (CheckBox) findViewById(R.id.cbSAttention);
+		//cbSAttention.setChecked(sAttention);
+		cbSAttention.setOnCheckedChangeListener(this);
+
 		// Setup name filter
 		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
 		etFilter.addTextChangedListener(new TextWatcher() {
@@ -251,19 +264,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 		cbFSystem.setChecked(fSystem);
 		cbFSystem.setOnCheckedChangeListener(this);
-
-		// Setup sort mode
-		//int sMode = Integer.parseInt(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSMode,
-		//		"0", false));
-		final Spinner spSMode = (Spinner) findViewById(R.id.spSMode);
-		spSMode.setOnItemSelectedListener(this);
-		//spSMode.setSelection(sMode);
-
-		//boolean sAttention = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingSAttention,
-		//		false, false);
-		final CheckBox cbSAttention = (CheckBox) findViewById(R.id.cbSAttention);
-		//cbSAttention.setChecked(sAttention);
-		cbSAttention.setOnCheckedChangeListener(this);
 
 		// Hide filters
 		if (savedInstanceState != null && savedInstanceState.containsKey("Filters"))
@@ -681,9 +681,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void applySort() {
-		CheckBox cbSAttention = (CheckBox) findViewById(R.id.cbSAttention); 
-		Spinner spSMode = (Spinner) findViewById(R.id.spSMode);
-		mAppAdapter.setSortMode(spSMode.getSelectedItemPosition(), cbSAttention.isChecked());
+		if (mAppAdapter != null) {
+			CheckBox cbSAttention = (CheckBox) findViewById(R.id.cbSAttention);
+			mAppAdapter.setSortMode(spSMode.getSelectedItemPosition(), cbSAttention.isChecked());
+		}
 	}
 
 	// Options
