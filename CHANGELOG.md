@@ -6,6 +6,7 @@ Changelog
 * Fixed missing version names
 * Fixed wrong package for application, thanks @[jpeg729](https://github.com/jpeg729)
 * Submit if accounts, application, contacts are allowed  ([issue](https://github.com/M66B/XPrivacy/issues/986))
+* Proguard to reduce the apk size (saves about 200 KB)
 * Updated Arabic translation
 * Updated Chinese translation
 * Updated French translation
