@@ -498,25 +498,27 @@ public class PrivacyManager {
 			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingState,
 					Integer.toString(ActivityMain.STATE_RESTRICTED));
 
+		// Make exceptions for dangerous methods
 		boolean dangerous = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingDangerous, false,
 				false);
-		if (methodName == null) {
-			// Make exceptions for dangerous methods
+		if (methodName == null)
 			if (restricted && !dangerous) {
 				for (MethodDescription md : getMethods(restrictionName))
 					if (md.isDangerous())
 						PrivacyManager.setRestricted(null, context, uid, restrictionName, md.getName(), dangerous);
 			}
 
-			// Check restart
+		// Flush caches
+		XApplication.manage(context, uid, XApplication.cActionFlushCache);
+
+		// Check restart
+		if (methodName == null) {
 			for (MethodDescription md : getMethods(restrictionName))
 				if (md.isRestartRequired() && !(restricted && !dangerous && md.isDangerous()))
 					return true;
 			return false;
-		} else {
-			// Check restart
+		} else
 			return getMethod(restrictionName, methodName).isRestartRequired();
-		}
 	}
 
 	public static List<Boolean> getRestricted(Context context, int uid, String restrictionName) {
@@ -536,6 +538,10 @@ public class PrivacyManager {
 				}
 		}
 		return listRestricted;
+	}
+
+	public static void flush(Context context, int uid) {
+		PrivacyProvider.flush();
 	}
 
 	public static class RestrictionDesc {
@@ -765,6 +771,9 @@ public class PrivacyManager {
 		if (contentResolver.update(PrivacyProvider.URI_SETTING, values, sName, null) <= 0)
 			Util.log(hook, Log.INFO, "Error updating setting=" + sName);
 		Util.log(hook, Log.INFO, String.format("set setting %s=%s", sName, value));
+
+		// Flush caches
+		XApplication.manage(context, uid, XApplication.cActionFlushCache);
 	}
 
 	public static Map<String, String> getSettings(Context context, Runnable progress) {

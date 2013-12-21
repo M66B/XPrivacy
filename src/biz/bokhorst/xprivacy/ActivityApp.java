@@ -587,7 +587,7 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionKill(int which) {
-		XPackageManagerService.manage(this, mAppInfo.getPackageName().get(which), true);
+		XApplication.manage(this, mAppInfo.getPackageName().get(which), XApplication.cActionKillProcess);
 	}
 
 	private void optionStore(int which) {
