@@ -125,9 +125,9 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_shared">des restrictions sont envoyées</string>
     <string name="tutorial_mainheader">Choisir la catégorie à restreindre; choisir les applis à afficher avec les filtres</string>
     <string name="tutorial_mainlist">Appuyer sur une case à cocher pour restreindre la catégorie choisie pour l’appli\n
-\nL’appli sera dupée par des données vide ou modifiée\n
+\nL’appli sera dupée par des données vides ou modifiées\n
 \nAppuyer sur l’icône de l’appli pour les restrictions détaillées et les paramètres</string>
     <string name="tutorial_detailsheader">Appuyer sur l’icône pour plus d’actions</string>
-    <string name="tutorial_detailslist">Appuyer sur la flèche vers les bas pour voir les particularités d’une catégorie de restrictions</string>
+    <string name="tutorial_detailslist">Appuyer sur la flèche vers les bas pour voir les exceptions d’une catégorie de restrictions</string>
 
 </resources>
