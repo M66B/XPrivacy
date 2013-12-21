@@ -135,6 +135,7 @@ public class XApplication extends XHook {
 		private Application mApplication;
 
 		public Receiver(Application app) {
+			mApplication = app;
 		}
 
 		@Override
