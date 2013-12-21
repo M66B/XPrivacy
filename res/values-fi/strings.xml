@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Käynnistä</string>
     <string name="menu_app_settings">Applikaation tarkemmat tiedot</string>
     <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Valitse sallittavat tilit</string>
     <string name="menu_applications">Valitse sallittavat applikaatiot</string>
     <string name="menu_contacts">Valitse sallittavat kontaktit</string>

@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Zaženi</string>
     <string name="menu_app_settings">Podrobnosti programa</string>
     <string name="menu_app_store">Trgovina Play</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Izberi dovoljene račune</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Izberi dovoljene stike</string>

@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Покрени</string>
     <string name="menu_app_settings">Подешавања</string>
     <string name="menu_app_store">Продавница Плеј</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Изабери дозвољене рачуне</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Изабери дозвољене контакте</string>

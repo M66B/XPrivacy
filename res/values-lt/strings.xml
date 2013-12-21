@@ -31,6 +31,7 @@
     <string name="menu_app_launch">Paleisti</string>
     <string name="menu_app_settings">Programos informacija</string>
     <string name="menu_app_store">Google play</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Leisti pažymėtas paskyras</string>
     <string name="menu_applications">Leisti pažymėtas programas</string>
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>

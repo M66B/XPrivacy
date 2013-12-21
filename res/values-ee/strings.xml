@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Käivita</string>
     <string name="menu_app_settings">Rakenduse andmed</string>
     <string name="menu_app_store">Play Pood</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Vali kasutajad mida lubada</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Vali kontaktid mida lubada</string>

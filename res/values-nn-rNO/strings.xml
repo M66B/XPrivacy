@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Kjør</string>
     <string name="menu_app_settings">Innstillinger</string>
     <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Velg konto som skal tillates</string>
     <string name="menu_applications">Velg apper som skal tillates</string>
     <string name="menu_contacts">Velg kontakter som skal tillates</string>

@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Запустити програму</string>
     <string name="menu_app_settings">Налаштуванная програми</string>
     <string name="menu_app_store">Play Маркет</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Оберіть дозволені облікові записи</string>
     <string name="menu_applications">Оберіть дозволені програми</string>
     <string name="menu_contacts">Оберіть дозволені контакти</string>
