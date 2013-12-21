@@ -20,3 +20,5 @@
 #}
 
 -libraryjars XposedBridgeApi-42.jar
+
+-keep class biz.bokhorst.xprivacy.XPrivacy { *; }
