@@ -97,10 +97,11 @@
 			// Process application
 			foreach ($data->application_name as $application_name)
 				for ($i = 0; $i < count($data->package_name); $i++) {
-					$sql = "INSERT INTO xprivacy_app (application_name, package_name, package_version) VALUES ";
+					$sql = "INSERT INTO xprivacy_app (application_name, package_name, package_version, package_version_code) VALUES ";
 					$sql .= "('" . $db->real_escape_string($application_name) . "'";
 					$sql .= ",'" . $db->real_escape_string($data->package_name[$i]) . "'";
-					$sql .= ",'" . $db->real_escape_string($data->package_version_name[$i]) . "')";
+					$sql .= ",'" . ($i < count($data->package_version_name) ? $db->real_escape_string($data->package_version_name[$i]) : '') . "'";
+					$sql .= "," . ($i < count($data->package_version_code) ? (int)$data->package_version_code[$i] : 0) . ")";
 					$sql .= " ON DUPLICATE KEY UPDATE";
 					$sql .= " modified=CURRENT_TIMESTAMP()";
 					if (!$db->query($sql)) {
@@ -336,21 +337,25 @@
 					else
 						error_log('XPrivacy query application names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 
-					// Get package names
+					// Get package names/versions
 					$apps = $application_names;
 					for ($i = 0; $i < count($apps); $i++)
 						$apps[$i] = "'" . $db->real_escape_string($apps[$i]) . "'";
 
 					$package_names = array();
+					$package_versions = array();
 					if (count($apps)) {
-						$sql = "SELECT DISTINCT package_name";
+						// Get package names
+						$sql = "SELECT DISTINCT package_name, package_version, package_version_code";
 						$sql .= " FROM xprivacy_app";
 						$sql .= " WHERE application_name IN (" . implode(',', $apps) . ")";
 						$sql .= " ORDER BY package_name";
 						$result = $db->query($sql);
 						if ($result) {
-							while (($row = $result->fetch_object()))
+							while (($row = $result->fetch_object())) {
 								$package_names[] = $row->package_name;
+								$package_versions[] = $row->package_version . ' (' . $row->package_version_code . ')';
+							}
 							$result->close();
 						}
 						else
@@ -360,8 +365,11 @@
 					<h2><?php echo htmlentities(implode(', ', $application_names), ENT_COMPAT, 'UTF-8'); ?></h2>
 					<p style="font-size: smaller;">
 <?php
-					foreach ($package_names as $pname)
-						echo '<a href="/xprivacy?package_name=' . urlencode($pname) . '">' . htmlentities($pname, ENT_COMPAT, 'UTF-8') . '</a> ';
+					for ($i = 0; $i < count($package_names); $i++) {
+						echo '<a href="/xprivacy?package_name=' . urlencode($package_names[$i]) . '">';
+						echo htmlentities($package_names[$i], ENT_COMPAT, 'UTF-8') . '</a> ';
+						echo htmlentities($package_versions[$i]) . ' ';
+					}
 ?>
 					</p>
 					<p>
@@ -418,6 +426,7 @@
 						} else {
 ?>
 							<th style="text-align: center;">Votes<br />deny/allow</th>
+							<th style="text-align: center;">Exceptions</th>
 							<th style="text-align: center;">CI95 &plusmn;% <sup>*</sup></th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
 							<th>Restriction</th>
@@ -462,9 +471,10 @@
 							error_log('XPrivacy query application list: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 					} else {
 						// Display application details
-						$sql = "SELECT restriction, method, restricted";
+						$sql = "SELECT restriction, method";
 						$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 						$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
+						$sql .= ", SUM(allowed) AS allowed";
 						$sql .= ", MAX(used) AS used";
 						$sql .= ", MAX(modified) AS modified";
 						$sql .= ", SUM(updates) AS updates";
@@ -495,6 +505,10 @@
 								echo ($row->restricted < $row->not_restricted) ? '<span class="text-muted">' . $row->restricted . '</span>' : $row->restricted;
 								echo ' / ';
 								echo ($row->restricted > $row->not_restricted) ? '<span class="text-muted">' . $row->not_restricted . '</span>' : $row->not_restricted;
+								echo '</td>';
+
+								echo '<td style="text-align: center;">';
+								echo ($row->allowed ? 'Yes' : 'No');
 								echo '</td>';
 
 								echo '<td style="text-align: center;">';
