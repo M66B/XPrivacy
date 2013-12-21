@@ -546,6 +546,12 @@ public class PrivacyManager {
 	}
 
 	public static void flush(Context context, int uid) {
+		synchronized (mRestrictionCache) {
+			mRestrictionCache.clear();
+		}
+		synchronized (mSettingsCache) {
+			mSettingsCache.clear();
+		}
 		PrivacyProvider.flush();
 	}
 
