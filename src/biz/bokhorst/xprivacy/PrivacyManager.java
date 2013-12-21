@@ -298,6 +298,10 @@ public class PrivacyManager {
 			if (!isUsageDataEnabled(uid))
 				context = null;
 
+			// Check if isolated process
+			if (isIsolated(android.os.Process.myUid()))
+				context = null;
+
 			// Check if restricted
 			boolean fallback = true;
 			boolean restricted = false;
@@ -395,7 +399,7 @@ public class PrivacyManager {
 		if (uid == cAndroidUid)
 			return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false);
 		else
-			return !isIsolated(uid);
+			return true;
 	}
 
 	// TODO: Waiting for SDK 20 ...
@@ -702,6 +706,10 @@ public class PrivacyManager {
 					}
 				}
 			}
+
+		// Check if isolated process
+		if (isIsolated(android.os.Process.myUid()))
+			context = null;
 
 		// Get setting
 		boolean fallback = true;
