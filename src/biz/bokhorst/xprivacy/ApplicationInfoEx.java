@@ -2,13 +2,16 @@ package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
@@ -18,9 +21,7 @@ import android.util.SparseArray;
 @SuppressLint("DefaultLocale")
 public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private TreeMap<String, ApplicationInfo> mMapAppInfo = null;
-	private List<String> mListPackageName = null;
-	private List<String> mVersionName = null;
-	private List<Integer> mVersionCode = null;
+	private Map<String, PackageInfo> mMapPkgInfo = new HashMap<String, PackageInfo>();
 
 	// Cache
 	private Drawable mIcon = null;
@@ -71,52 +72,43 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public List<String> getPackageName() {
-		if (mListPackageName == null) {
-			mListPackageName = new ArrayList<String>();
-			for (ApplicationInfo appInfo : mMapAppInfo.values())
-				mListPackageName.add(appInfo.packageName);
-		}
-		return mListPackageName;
+		List<String> listPackageName = new ArrayList<String>();
+		for (ApplicationInfo appInfo : mMapAppInfo.values())
+			listPackageName.add(appInfo.packageName);
+		return listPackageName;
+	}
+
+	private void getPackageInfo(Context context, String packageName) throws NameNotFoundException {
+		PackageManager pm = context.getPackageManager();
+		mMapPkgInfo.put(packageName, pm.getPackageInfo(packageName, 0));
 	}
 
 	public List<String> getPackageVersionName(Context context) {
-		if (mVersionName == null) {
-			mVersionName = new ArrayList<String>();
-			PackageManager pm = context.getPackageManager();
-			for (String packageName : this.getPackageName())
-				try {
-					String version = pm.getPackageInfo(packageName, 0).versionName;
-					if (version == null)
-						mVersionName.add("???");
-					else
-						mVersionName.add(version);
-				} catch (NameNotFoundException ex) {
-					mVersionName.add(ex.getMessage());
-				}
-		}
-		return mVersionName;
+		List<String> listVersionName = new ArrayList<String>();
+		for (String packageName : this.getPackageName())
+			try {
+				getPackageInfo(context, packageName);
+				String version = mMapPkgInfo.get(packageName).versionName;
+				if (version == null)
+					listVersionName.add("???");
+				else
+					listVersionName.add(version);
+			} catch (NameNotFoundException ex) {
+				listVersionName.add(ex.getMessage());
+			}
+		return listVersionName;
 	}
 
 	public List<Integer> getPackageVersionCode(Context context) {
-		if (mVersionCode == null) {
-			mVersionCode = new ArrayList<Integer>();
-			PackageManager pm = context.getPackageManager();
-			for (String packageName : this.getPackageName())
-				try {
-					mVersionCode.add(pm.getPackageInfo(packageName, 0).versionCode);
-				} catch (NameNotFoundException ex) {
-					mVersionCode.add(0);
-				}
-		}
-		return mVersionCode;
-	}
-
-	public String getVersionString(Context context) {
-		List<String> listVersion = new ArrayList<String>();
-		for (String version : this.getPackageVersionName(context))
-			if (!listVersion.contains(version))
-				listVersion.add(version);
-		return TextUtils.join(",  ", listVersion);
+		List<Integer> listVersionCode = new ArrayList<Integer>();
+		for (String packageName : this.getPackageName())
+			try {
+				getPackageInfo(context, packageName);
+				listVersionCode.add(mMapPkgInfo.get(packageName).versionCode);
+			} catch (NameNotFoundException ex) {
+				listVersionCode.add(0);
+			}
+		return listVersionCode;
 	}
 
 	public Drawable getIcon(Context context) {
@@ -189,7 +181,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	@Override
 	public String toString() {
 		// All uid's are the same
-		return String.format("%d %s", mMapAppInfo.firstEntry().getValue().uid, TextUtils.join(", ", getApplicationName()));
+		return String.format("%d %s", mMapAppInfo.firstEntry().getValue().uid,
+				TextUtils.join(", ", getApplicationName()));
 	}
 
 	@Override

@@ -184,7 +184,7 @@ public class ActivityApp extends Activity {
 
 		// Display version
 		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
-		tvVersion.setText(mAppInfo.getVersionString(this));
+		tvVersion.setText(TextUtils.join(", ", mAppInfo.getPackageVersionName(this)));
 
 		// Display package name
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
@@ -914,7 +914,7 @@ public class ActivityApp extends Activity {
 
 				JSONArray pkgVersionCode = new JSONArray();
 				for (Integer version : params[0].getPackageVersionCode(ActivityApp.this))
-					pkgVersionCode.put((int)version);
+					pkgVersionCode.put((int) version);
 
 				// Encode package
 				JSONObject jRoot = new JSONObject();
