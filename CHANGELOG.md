@@ -3,6 +3,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.50 BETA**
+
 * Fixed missing version names
 * Fixed wrong package for application, thanks @[jpeg729](https://github.com/jpeg729)
 * Fixed getting settings for isolated processes
@@ -15,8 +19,6 @@ Changelog
 * Updated French translation
 * Updated Russian translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.49 BETA**
 
