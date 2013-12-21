@@ -95,6 +95,7 @@ public class XApplication extends XHook {
 		Intent manageIntent = new Intent(XApplication.ACTION_MANAGE_PACKAGE);
 		manageIntent.putExtra(XApplication.cPackageName, packageName);
 		manageIntent.putExtra(XApplication.cAction, action);
+		manageIntent.setPackage(packageName);
 		context.sendBroadcast(manageIntent); // XApplication.PERMISSION_MANAGE_PACKAGES);
 	}
 
