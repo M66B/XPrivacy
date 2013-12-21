@@ -23,6 +23,7 @@ public class XApplication extends XHook {
 	public static String cActionFlushCache = "Flush";
 
 	public static String ACTION_MANAGE_PACKAGE = "biz.bokhorst.xprivacy.ACTION_MANAGE_PACKAGE";
+	public static String PERMISSION_MANAGE_PACKAGES = "biz.bokhorst.xprivacy.MANAGE_PACKAGES";
 
 	public XApplication(Methods method, String restrictionName, String actionName) {
 		super(restrictionName, method.name(), actionName);
@@ -73,7 +74,8 @@ public class XApplication extends XHook {
 					try {
 						mReceiverInstalled = true;
 						Util.log(this, Log.INFO, "Installing receiver uid=" + Binder.getCallingUid());
-						app.registerReceiver(new Receiver(app), new IntentFilter(ACTION_MANAGE_PACKAGE));
+						app.registerReceiver(new Receiver(app), new IntentFilter(ACTION_MANAGE_PACKAGE),
+								PERMISSION_MANAGE_PACKAGES, null);
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
@@ -92,7 +94,7 @@ public class XApplication extends XHook {
 		Intent manageIntent = new Intent(XApplication.ACTION_MANAGE_PACKAGE);
 		manageIntent.putExtra(XApplication.cAction, action);
 		manageIntent.setPackage(packageName);
-		context.sendBroadcast(manageIntent);
+		context.sendBroadcast(manageIntent); // XApplication.PERMISSION_MANAGE_PACKAGES);
 	}
 
 	public static class XUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
