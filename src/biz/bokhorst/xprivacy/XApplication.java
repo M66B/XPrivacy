@@ -147,6 +147,8 @@ public class XApplication extends XHook {
 					android.os.Process.killProcess(android.os.Process.myPid());
 				else if (action.equals(cActionFlushCache))
 					PrivacyManager.flush(mApplication, Binder.getCallingUid());
+				else
+					Util.log(null, Log.WARN, "Unknown management action=" + action);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
