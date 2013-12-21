@@ -120,7 +120,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_frozen">est désactivée</string>
     <string name="help_dangerous">est dangereuse, restreindre peut causer des problèmes</string>
     <string name="help_half">partiellement restreinte</string>
-    <string name="help_attention">des restrictions ont besoin d'attention</string>
+    <string name="help_attention">des restrictions ont besoin d\'attention</string>
     <string name="help_restricted">des restrictions sont changées</string>
     <string name="help_shared">des restrictions sont envoyées</string>
     <string name="tutorial_mainheader">Choisir la catégorie à restreindre; choisir les applis à afficher avec les filtres</string>

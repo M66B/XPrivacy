@@ -4,8 +4,11 @@ Changelog
 **Next release**
 
 * Fixed missing version names
+* Fixed wrong package for application, thanks @[jpeg729](https://github.com/jpeg729)
+* Submit if accounts, application, contacts are allowed  ([issue](https://github.com/M66B/XPrivacy/issues/986))
 * Updated Arabic translation
 * Updated Chinese translation
+* Updated French translation
 * Updated Russian translation
 * Updated Slovak translation
 
