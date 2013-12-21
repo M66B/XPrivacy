@@ -509,7 +509,8 @@ public class PrivacyManager {
 			}
 
 		// Flush caches
-		XApplication.manage(context, uid, XApplication.cActionFlushCache);
+		if (methodName == null)
+			XApplication.manage(context, uid, XApplication.cActionFlushCache);
 
 		// Check restart
 		if (methodName == null) {

@@ -29,10 +29,6 @@ public class XPackageManagerService extends XHook {
 		getPackageGids, systemReady
 	};
 
-	public boolean isVisible() {
-		return true;
-	}
-
 	// @formatter:off
 
 	// public int[] getPackageGids(String packageName)
