@@ -198,7 +198,8 @@
 			$sql = "SELECT restriction, method";
 			$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 			$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
-			$sql .= ", SUM(allowed) AS allowed";
+			$sql .= ", SUM(CASE WHEN allowed > 0 THEN 1 ELSE 0 END) AS allowed";
+			$sql .= ", SUM(CASE WHEN allowed <= 0 THEN 1 ELSE 0 END) AS not_allowed";
 			$sql .= " FROM xprivacy";
 			$sql .= " WHERE package_name IN (" . $package_names . ")";
 			$sql .= " GROUP BY restriction, method";
@@ -208,11 +209,12 @@
 				while (($row = $result->fetch_object())) {
 					$ci = confidence($row->restricted, $row->not_restricted);
 					if ($ci < $max_ci) {
+						$restrict = ($row->allowed <= $row->not_allowed && $row->restricted > $row->not_restricted);
 						$entry = Array();
 						$entry['restriction'] = $row->restriction;
 						if (!empty($row->method))
 							$entry['method'] = $row->method;
-						$entry['restricted'] = ($row->allowed == 0 && $row->restricted > $row->not_restricted ? 1 : 0);
+						$entry['restricted'] = ($restrict ? 1 : 0);
 						$entry['not_restricted'] = 0; // backward compatibility
 						$settings[] = (object) $entry;
 					}
@@ -430,7 +432,7 @@
 						} else {
 ?>
 							<th style="text-align: center;">Votes<br />deny/allow</th>
-							<th style="text-align: center;">Exceptions<br />(alllowed)</th>
+							<th style="text-align: center;">Exceptions<br />(yes/no)</th>
 							<th style="text-align: center;">CI95 &plusmn;% <sup>*</sup></th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
 							<th>Restriction</th>
@@ -478,7 +480,8 @@
 						$sql = "SELECT restriction, method";
 						$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 						$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
-						$sql .= ", SUM(allowed) AS allowed";
+						$sql .= ", SUM(CASE WHEN allowed > 0 THEN 1 ELSE 0 END) AS allowed";
+						$sql .= ", SUM(CASE WHEN allowed <= 0 THEN 1 ELSE 0 END) AS not_allowed";
 						$sql .= ", MAX(used) AS used";
 						$sql .= ", MAX(modified) AS modified";
 						$sql .= ", SUM(updates) AS updates";
@@ -492,13 +495,14 @@
 								$count++;
 								$votes += $row->restricted + $row->not_restricted;
 								$ci = confidence($row->restricted, $row->not_restricted);
+								$restrict = ($row->allowed <= $row->not_allowed && $row->restricted > $row->not_restricted);
 
 								echo '<tr style="';
 								if (!empty($row->method))
 									echo 'display: none;';
 								if ($row->used)
 									echo 'font-weight: bold;';
-								if ($ci < $max_confidence && $row->restricted > $row->not_restricted)
+								if ($ci < $max_confidence && $restrict)
 									echo 'background: lightgray;';
 								echo '"';
 								if (!empty($row->method))
@@ -512,7 +516,7 @@
 								echo '</td>';
 
 								echo '<td style="text-align: center;">';
-								echo ($row->allowed ? 'Yes' : '');
+								echo ($row->allowed . ' / ' . $row->not_allowed);
 								echo '</td>';
 
 								echo '<td style="text-align: center;">';
