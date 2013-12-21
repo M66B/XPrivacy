@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Εκκίνηση</string>
     <string name="menu_app_settings">Λεπτομέρειες εφαρμογής</string>
     <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Επιλογή επιτρεπόμενων λογαριασμών</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Επιλογή επιτρεπόμενων επαφών</string>

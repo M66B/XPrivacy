@@ -32,6 +32,7 @@
     <string name="menu_app_launch">دسترسی</string>
     <string name="menu_app_settings">جزییات نرم افزار</string>
     <string name="menu_app_store">پلی استور</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">حساب هایی را که اجازه می دهید انتخاب کنید</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">تماس هایی را که احازه می دهید انتخاب کنید</string>

@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Öffnen</string>
     <string name="menu_app_settings">App-Info anzeigen</string>
     <string name="menu_app_store">Im Play Store anzeigen</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Konten für Zugriff freigeben</string>
     <string name="menu_applications">Apps für Zugriff freigeben</string>
     <string name="menu_contacts">Kontakte für Zugriff freigeben</string>

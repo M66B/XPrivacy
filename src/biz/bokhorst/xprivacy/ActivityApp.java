@@ -586,8 +586,25 @@ public class ActivityApp extends Activity {
 		startActivity(intentSettings);
 	}
 
-	private void optionKill(int which) {
-		XApplication.manage(this, mAppInfo.getPackageName().get(which), XApplication.cActionKillProcess);
+	private void optionKill(final int which) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+		alertDialogBuilder.setTitle(getString(R.string.menu_app_kill));
+		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int _which) {
+				XApplication.manage(ActivityApp.this, mAppInfo.getPackageName().get(which),
+						XApplication.cActionKillProcess);
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 	private void optionStore(int which) {

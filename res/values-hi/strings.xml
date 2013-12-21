@@ -30,6 +30,7 @@
     <string name="menu_app_launch">चालू करे</string>
     <string name="menu_app_settings">App का विवरण</string>
     <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">अनुमति के लिए खातों को चुने</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>

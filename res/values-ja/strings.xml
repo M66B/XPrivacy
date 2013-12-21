@@ -30,6 +30,7 @@
     <string name="menu_app_launch">アプリを起動</string>
     <string name="menu_app_settings">設定</string>
     <string name="menu_app_store">グーグレプレイストア</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">許可するアカウントを選択</string>
     <string name="menu_applications">許可するアプリを選択</string>
     <string name="menu_contacts">許可する電話の連絡先を選択</string>

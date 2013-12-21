@@ -30,6 +30,7 @@
     <string name="menu_app_launch">執行</string>
     <string name="menu_app_settings">應用程式資訊</string>
     <string name="menu_app_store">Play 商店</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">設定允許之帳戶</string>
     <string name="menu_applications">設定允許之app</string>
     <string name="menu_contacts">設定允許之聯絡人</string>

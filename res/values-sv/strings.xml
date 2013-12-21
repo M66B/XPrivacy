@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Starta</string>
     <string name="menu_app_settings">Inställningar</string>
     <string name="menu_app_store">Play Butik</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Välj tillåtna konton</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Välj kontakter att tillåta</string>

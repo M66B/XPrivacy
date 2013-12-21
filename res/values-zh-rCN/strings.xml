@@ -30,6 +30,7 @@
     <string name="menu_app_launch">启动应用</string>
     <string name="menu_app_settings">应用信息</string>
     <string name="menu_app_store">Play 商店</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">选择允许访问的帐号</string>
     <string name="menu_applications">选择允许访问的应用</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
