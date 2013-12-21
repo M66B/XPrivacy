@@ -10,7 +10,7 @@ Changelog
 * Fixed missing version names
 * Fixed wrong package for application, thanks @[jpeg729](https://github.com/jpeg729)
 * Fixed getting settings for isolated processes
-* Submit if accounts, application, contacts are allowed  ([issue](https://github.com/M66B/XPrivacy/issues/986))
+* Submit if accounts, application, contacts are allowed ([issue](https://github.com/M66B/XPrivacy/issues/986))
 * Proguard to reduce the application size (saves about 200 KB of 650 KB)
 * Experimental: kill applications
 * Experimental: auto flush restriction/settings cache
