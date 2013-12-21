@@ -105,9 +105,10 @@ however it is impossible to guarantee it will work flawlessly on each and every 
         <item >uid</item>
         <item >date installed</item>
         <item >date updated</item>
+        <item >date modified</item>
     </string-array>
 
-    <string name="title_sattention">Apps requiring attention first</string>
+    <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>

@@ -32,6 +32,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private boolean mFrozenDetermined = false;
 	private long mInstallTime = -1;
 	private long mUpdateTime = -1;
+	private long mModificationTime = -1;
 
 	public ApplicationInfoEx(Context context, int uid) throws NameNotFoundException {
 		mMapAppInfo = new TreeMap<String, ApplicationInfo>();
@@ -192,6 +193,14 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 				}
 		}
 		return mUpdateTime;
+	}
+
+	public long getModificationTime(Context context) {
+		if (mModificationTime == -1) {
+			mModificationTime = Long.parseLong(PrivacyManager.getSetting(null, context,
+					getUid(), PrivacyManager.cSettingMTime, "0", false));
+		}
+		return mModificationTime;
 	}
 
 	public boolean isSystem() {

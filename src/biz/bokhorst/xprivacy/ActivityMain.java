@@ -83,6 +83,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int SORT_BY_UID = 1;
 	private static final int SORT_BY_INSTALL_TIME = 2;
 	private static final int SORT_BY_UPDATE_TIME = 3;
+	private static final int SORT_BY_MODIF_TIME = 4;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int ACTIVITY_EXPORT = 1;
@@ -175,17 +176,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		spRestriction.setOnItemSelectedListener(this);
 
 		// Setup sort mode
-		//int sMode = Integer.parseInt(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSMode,
-		//		"0", false));
+		int sMode = Integer.parseInt(PrivacyManager.getSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSMode,
+				"0", false));
 		spSMode = (Spinner) findViewById(R.id.spSMode);
 		spSMode.setOnItemSelectedListener(this);
-		//spSMode.setSelection(sMode);
+		spSMode.setSelection(sMode);
 
-		//boolean sAttention = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingSAttention,
-		//		false, false);
-		final CheckBox cbSAttention = (CheckBox) findViewById(R.id.cbSAttention);
-		//cbSAttention.setChecked(sAttention);
-		cbSAttention.setOnCheckedChangeListener(this);
+		boolean sInvert = PrivacyManager.getSettingBool(null, ActivityMain.this, 0, PrivacyManager.cSettingSInvert,
+				false, false);
+		final CheckBox cbSInvert = (CheckBox) findViewById(R.id.cbSInvert);
+		cbSInvert.setChecked(sInvert);
+		cbSInvert.setOnCheckedChangeListener(this);
 
 		// Setup name filter
 		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
@@ -588,8 +589,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (parent.equals(spRestriction)) {
 			selectRestriction(pos);
 		} else if (parent.equals(spSMode)) {
-			//PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSMode,
-			//		Integer.toString(pos));
+			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSMode,
+					Integer.toString(pos));
 			applySort();
 		}
 	}
@@ -616,7 +617,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
-		CheckBox cbSAttention = (CheckBox) findViewById(R.id.cbSAttention);
+		CheckBox cbSInvert = (CheckBox) findViewById(R.id.cbSInvert);
 		if (buttonView == cbFUsed)
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFUsed,
 					Boolean.toString(isChecked));
@@ -643,9 +644,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingFSystem,
 					Boolean.toString(isChecked));
 		}
-		if (buttonView == cbSAttention) {
-			//PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSAttention,
-			//		Boolean.toString(isChecked));
+		if (buttonView == cbSInvert) {
+			PrivacyManager.setSetting(null, ActivityMain.this, 0, PrivacyManager.cSettingSInvert,
+					Boolean.toString(isChecked));
 			applySort();
 		} else {
 			applyFilter();
@@ -682,8 +683,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void applySort() {
 		if (mAppAdapter != null) {
-			CheckBox cbSAttention = (CheckBox) findViewById(R.id.cbSAttention);
-			mAppAdapter.setSortMode(spSMode.getSelectedItemPosition(), cbSAttention.isChecked());
+			CheckBox cbSInvert = (CheckBox) findViewById(R.id.cbSInvert);
+			mAppAdapter.setSortMode(spSMode.getSelectedItemPosition(), cbSInvert.isChecked());
 		}
 	}
 
@@ -1097,30 +1098,32 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private String mRestrictionName;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		private int mSortMode = SORT_BY_NAME;
-		private boolean mSortAttention = false;
+		private int mSortOrder = 1;
 		private Comparator<ApplicationInfoEx> mSorter = new Comparator<ApplicationInfoEx>() {
 			@Override
 			public int compare(ApplicationInfoEx appInfo0, ApplicationInfoEx appInfo1) {
-				if ((!mSortAttention) || appInfo0.getState(mContext) == appInfo1.getState(mContext))
-					switch (mSortMode) {
-					case SORT_BY_NAME:
-						return appInfo0.compareTo(appInfo1);
-					case SORT_BY_UID:
-						// lowest first
-						return appInfo0.getUid() - appInfo1.getUid();
-					case SORT_BY_INSTALL_TIME:
-						// newest first
-						Long iTime0 = appInfo0.getInstallTime(mContext);
-						Long iTime1 = appInfo1.getInstallTime(mContext);
-						return iTime1.compareTo(iTime0);
-					case SORT_BY_UPDATE_TIME:
-						// newest first
-						Long uTime0 = appInfo0.getUpdateTime(mContext);
-						Long uTime1 = appInfo1.getUpdateTime(mContext);
-						return uTime1.compareTo(uTime0);
-					}
-				else
-					return appInfo0.getState(mContext) - appInfo1.getState(mContext);
+				switch (mSortMode) {
+				case SORT_BY_NAME:
+					return mSortOrder * appInfo0.compareTo(appInfo1);
+				case SORT_BY_UID:
+					// default lowest first
+					return mSortOrder * (appInfo0.getUid() - appInfo1.getUid());
+				case SORT_BY_INSTALL_TIME:
+					// default newest first
+					Long iTime0 = appInfo0.getInstallTime(mContext);
+					Long iTime1 = appInfo1.getInstallTime(mContext);
+					return mSortOrder * iTime1.compareTo(iTime0);
+				case SORT_BY_UPDATE_TIME:
+					// default newest first
+					Long uTime0 = appInfo0.getUpdateTime(mContext);
+					Long uTime1 = appInfo1.getUpdateTime(mContext);
+					return mSortOrder * uTime1.compareTo(uTime0);
+				case SORT_BY_MODIF_TIME:
+					// default newest first
+					Long mTime0 = appInfo0.getModificationTime(mContext);
+					Long mTime1 = appInfo1.getModificationTime(mContext);
+					return mSortOrder * mTime1.compareTo(mTime0);
+				}
 				return 0;
 			}
 		};
@@ -1273,9 +1276,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		}
 
-		public void setSortMode(int sortMode, boolean attentionFirst) {
+		public void setSortMode(int sortMode, boolean invertSort) {
 			mSortMode = sortMode;
-			mSortAttention = attentionFirst;
+			mSortOrder = invertSort ? -1 : 1;
 			sort(mSorter);
 		}
 
@@ -1328,8 +1331,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			protected Object doInBackground(Object... params) {
 				if (holder.position == position && xAppInfo != null) {
 					// Get state
-					state = Integer.parseInt(PrivacyManager.getSetting(null, holder.row.getContext(),
-							xAppInfo.getUid(), PrivacyManager.cSettingState, "1", false));
+					state = xAppInfo.getState(holder.row.getContext());
 
 					// Get if used
 					used = (PrivacyManager.getUsed(holder.row.getContext(), xAppInfo.getUid(), mRestrictionName, null) != 0);
@@ -1475,8 +1477,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							}
 
 							// Display new state
-							state = Integer.parseInt(PrivacyManager.getSetting(null, holder.row.getContext(),
-									xAppInfo.getUid(), PrivacyManager.cSettingState, "1", false));
+							state = xAppInfo.getState(holder.row.getContext());
 							if (state == STATE_ATTENTION)
 								holder.vwState.setBackgroundColor(getResources().getColor(
 										Util.getThemed(holder.row.getContext(), R.attr.color_state_attention)));

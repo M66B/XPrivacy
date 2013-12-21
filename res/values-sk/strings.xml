@@ -100,9 +100,10 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
         <item >uid</item>
         <item >date installed</item>
         <item >date updated</item>
+        <item >date modified</item>
     </string-array>
 
-    <string name="title_sattention">Apps requiring attention first</string>
+    <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>

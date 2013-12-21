@@ -98,8 +98,9 @@ public class PrivacyManager {
 	public final static String cSettingFPermission = "FPermission";
 	public final static String cSettingFUser = "FUser";
 	public final static String cSettingFSystem = "FSystem";
-	// public final static String cSettingSMode = "SMode";
-	// public final static String cSettingSAttention = "SAttention";
+	public final static String cSettingSMode = "SMode";
+	public final static String cSettingSInvert = "SInvert";
+	public final static String cSettingMTime = "MTime";
 	public final static String cSettingTheme = "Theme";
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
@@ -517,6 +518,9 @@ public class PrivacyManager {
 		// Flush caches
 		if (methodName == null)
 			XApplication.manage(context, uid, XApplication.cActionFlushCache);
+
+		// Mark app as updated
+		PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMTime, Long.toString(System.currentTimeMillis()));
 
 		// Check restart
 		if (methodName == null) {

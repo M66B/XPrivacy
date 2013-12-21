@@ -141,14 +141,14 @@
 	            </LinearLayout>
 
                 <CheckBox
-                    android:id="@+id/cbSAttention"
+                    android:id="@+id/cbSInvert"
                     android:layout_width="wrap_content"
                     android:layout_height="24dip"
                     android:layout_marginLeft="3dip"
                     android:ellipsize="end"
                     android:saveEnabled="false"
                     android:singleLine="true"
-                    android:text="@string/title_sattention"
+                    android:text="@string/title_sinvert"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
