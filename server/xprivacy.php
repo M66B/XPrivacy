@@ -368,6 +368,11 @@
 							error_log('XPrivacy query package names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 					}
 ?>
+					<p>
+						<a href="/xprivacy">Home</a>
+						-
+						<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
+					</p>
 					<h2><?php echo htmlentities(implode(', ', $application_names), ENT_COMPAT, 'UTF-8'); ?></h2>
 					<p style="font-size: smaller;">
 <?php
@@ -378,14 +383,12 @@
 					}
 ?>
 					</p>
-					<p>
-						<a href="/xprivacy">Home</a>
-						-
-						<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
-					</p>
 <?php
 				}
 ?>
+			</div>
+
+			<div class="page-header" style="margin-top: 0">
 				<p>This is a voting system for
 					<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
