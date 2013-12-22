@@ -420,7 +420,8 @@
 				else {
 ?>
 					<p><a href="#" id="details">Show details</a></p>
-					<p style="font-size: smaller;">Rows marked with a grey background will be restricted when fetched</p>
+					<p style="font-size: smaller;">Rows marked with a <span style="background: lightgray;">grey background</span> will be restricted when fetched;
+					<strong>bold text</strong> means data was used</p>
 <?php
 				}
 ?>
