@@ -280,6 +280,7 @@ Limitations
 * Due to a bug in Chromium the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Due to a custom implementation the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
 * You cannot restrict the Android ID used for submitting restrictions (only [pro version](http://www.faircode.eu/xprivacy/))
+* There is no usage data for isolated processes (a new concept in Android 4.4)
 
 Compatibility
 -------------

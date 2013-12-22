@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">Έκδοση XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Έκδοση Xposed framework: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013 M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013-2014 M. Bokhorst (M66B)</string>
     <string name="menu_usage">Χρήση</string>
     <string name="menu_refresh">Ανανέωση</string>
     <string name="menu_settings">Ρυθμίσεις</string>
@@ -124,7 +124,7 @@
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Εφαρμογή</string>
     <string name="help_internet">έχει άδεια internet</string>
     <string name="help_granted">έχει άδεια Android</string>

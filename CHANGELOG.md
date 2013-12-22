@@ -3,11 +3,21 @@ Changelog
 
 **Next release**
 
+* Display if Pro version (only [Pro license](http://www.faircode.eu/xprivacy/)) ([issue](https://github.com/M66B/XPrivacy/issues/996))
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.10.51 BETA**
+
+* Fixed boot loop on some devices/ROMs ([issue](https://github.com/M66B/XPrivacy/issues/995))
+
+**Version 1.10.50 BETA**
+
 * Fixed missing version names
 * Fixed wrong package for application, thanks @[jpeg729](https://github.com/jpeg729)
 * Fixed getting settings for isolated processes
-* Submit if accounts, application, contacts are allowed  ([issue](https://github.com/M66B/XPrivacy/issues/986))
-* Proguard to reduce the apk size (saves about 200 KB of 650 KB)
+* Submit if accounts, application, contacts are allowed ([issue](https://github.com/M66B/XPrivacy/issues/986))
+* Proguard to reduce the application size (saves about 200 KB of 650 KB)
 * Experimental: kill applications
 * Experimental: auto flush restriction/settings cache
 * Updated Arabic translation
@@ -15,8 +25,6 @@ Changelog
 * Updated French translation
 * Updated Russian translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.49 BETA**
 

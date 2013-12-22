@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Androidバージョン 4.0以降でのみを動作します</string>
     <string name="app_version" formatted="false">XPrivacy バージョン: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposedフレームワークバージョン: %d</string>
-    <string name="app_copyright">著作権 \u00A9 2013、 M. Bokhorst より(M66B)</string>
+    <string name="app_copyright">著作権 \u00A9 2013-2014、 M. Bokhorst より(M66B)</string>
     <string name="menu_usage">利用履歴</string>
     <string name="menu_refresh">再読込み</string>
     <string name="menu_settings">設定</string>
@@ -124,7 +124,7 @@
     <string name="settings_expert">エキスパートモード</string>
     <string name="settings_dangerous">危険な可能を制限する</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はアンドロイドの権限を持っています</string>

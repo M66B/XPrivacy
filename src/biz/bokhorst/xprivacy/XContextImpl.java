@@ -20,7 +20,7 @@ public class XContextImpl extends XHook {
 	}
 
 	// public Object getSystemService(String name)
-	// frameworks/base/base/core/java/android/app/ContextImpl.java
+	// frameworks/base/core/java/android/app/ContextImpl.java
 
 	private enum Methods {
 		getSystemService

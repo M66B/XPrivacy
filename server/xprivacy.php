@@ -198,7 +198,8 @@
 			$sql = "SELECT restriction, method";
 			$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 			$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
-			$sql .= ", SUM(allowed) AS allowed";
+			$sql .= ", SUM(CASE WHEN allowed > 0 THEN 1 ELSE 0 END) AS allowed";
+			$sql .= ", SUM(CASE WHEN allowed <= 0 THEN 1 ELSE 0 END) AS not_allowed";
 			$sql .= " FROM xprivacy";
 			$sql .= " WHERE package_name IN (" . $package_names . ")";
 			$sql .= " GROUP BY restriction, method";
@@ -208,11 +209,12 @@
 				while (($row = $result->fetch_object())) {
 					$ci = confidence($row->restricted, $row->not_restricted);
 					if ($ci < $max_ci) {
+						$restrict = ($row->allowed <= $row->not_allowed && $row->restricted > $row->not_restricted);
 						$entry = Array();
 						$entry['restriction'] = $row->restriction;
 						if (!empty($row->method))
 							$entry['method'] = $row->method;
-						$entry['restricted'] = ($row->allowed == 0 && $row->restricted > $row->not_restricted ? 1 : 0);
+						$entry['restricted'] = ($restrict ? 1 : 0);
 						$entry['not_restricted'] = 0; // backward compatibility
 						$settings[] = (object) $entry;
 					}
@@ -353,7 +355,7 @@
 						$sql = "SELECT DISTINCT package_name, package_version, package_version_code";
 						$sql .= " FROM xprivacy_app";
 						$sql .= " WHERE application_name IN (" . implode(',', $apps) . ")";
-						$sql .= " ORDER BY package_name";
+						$sql .= " ORDER BY package_name, package_version";
 						$result = $db->query($sql);
 						if ($result) {
 							while (($row = $result->fetch_object())) {
@@ -366,6 +368,11 @@
 							error_log('XPrivacy query package names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 					}
 ?>
+					<p>
+						<a href="/xprivacy">Home</a>
+						-
+						<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
+					</p>
 					<h2><?php echo htmlentities(implode(', ', $application_names), ENT_COMPAT, 'UTF-8'); ?></h2>
 					<p style="font-size: smaller;">
 <?php
@@ -376,14 +383,12 @@
 					}
 ?>
 					</p>
-					<p>
-						<a href="/xprivacy">Home</a>
-						-
-						<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
-					</p>
 <?php
 				}
 ?>
+			</div>
+
+			<div class="page-header" style="margin-top: 0">
 				<p>This is a voting system for
 					<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
@@ -414,6 +419,7 @@
 				else {
 ?>
 					<p><a href="#" id="details">Show details</a></p>
+					<p style="font-size: smaller;">Rows marked with a grey background will be restricted when fetched</p>
 <?php
 				}
 ?>
@@ -430,7 +436,7 @@
 						} else {
 ?>
 							<th style="text-align: center;">Votes<br />deny/allow</th>
-							<th style="text-align: center;">Exceptions<br />(alllowed)</th>
+							<th style="text-align: center;">Exceptions<br />(yes/no)</th>
 							<th style="text-align: center;">CI95 &plusmn;% <sup>*</sup></th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
 							<th>Restriction</th>
@@ -455,7 +461,7 @@
 							$sql .= " WHERE application_name REGEXP '^[^a-zA-Z]'";
 						else
 							$sql .= " WHERE application_name LIKE '" . ($letter == '%' ? '\\' : '') . $db->real_escape_string($letter) . "%'";
-						$sql .= " ORDER BY application_name";
+						$sql .= " ORDER BY application_name, package_name";
 						$result = $db->query($sql);
 						if ($result) {
 							while (($row = $result->fetch_object())) {
@@ -478,7 +484,8 @@
 						$sql = "SELECT restriction, method";
 						$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 						$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
-						$sql .= ", SUM(allowed) AS allowed";
+						$sql .= ", SUM(CASE WHEN allowed > 0 THEN 1 ELSE 0 END) AS allowed";
+						$sql .= ", SUM(CASE WHEN allowed <= 0 THEN 1 ELSE 0 END) AS not_allowed";
 						$sql .= ", MAX(used) AS used";
 						$sql .= ", MAX(modified) AS modified";
 						$sql .= ", SUM(updates) AS updates";
@@ -492,13 +499,14 @@
 								$count++;
 								$votes += $row->restricted + $row->not_restricted;
 								$ci = confidence($row->restricted, $row->not_restricted);
+								$restrict = ($row->allowed <= $row->not_allowed && $row->restricted > $row->not_restricted);
 
 								echo '<tr style="';
 								if (!empty($row->method))
 									echo 'display: none;';
 								if ($row->used)
 									echo 'font-weight: bold;';
-								if ($ci < $max_confidence && $row->restricted > $row->not_restricted)
+								if ($ci < $max_confidence && $restrict)
 									echo 'background: lightgray;';
 								echo '"';
 								if (!empty($row->method))
@@ -512,7 +520,7 @@
 								echo '</td>';
 
 								echo '<td style="text-align: center;">';
-								echo ($row->allowed ? 'Yes' : '');
+								echo ($row->allowed . ' / ' . $row->not_allowed);
 								echo '</td>';
 
 								echo '<td style="text-align: center;">';
@@ -542,11 +550,10 @@
 <?php
 				if (!empty($package_name)) {
 ?>
-					<p>
+					<p style="font-size: smaller;">
 						* Calculated using a
-						<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull interval</a> of 95%.<br />
-						Values below <?php echo number_format($max_confidence * 100, 1); ?> % are considered reliable.<br />
-						Rows marked with a grey background will be restricted when fetched.<br />
+						<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull interval</a> of 95%;
+						values below <?php echo number_format($max_confidence * 100, 1); ?> % are considered reliable.<br />
 					</p>
 <?php
 				}

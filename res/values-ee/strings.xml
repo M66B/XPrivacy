@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">See rakendus on ainult android 4.0+\'le </string>
     <string name="app_version" formatted="false">XPrivacy versioon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed raamistiku versioon: %d</string>
-    <string name="app_copyright">Autoriõigus \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Autoriõigus \u00A9 2013-2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Kasutus</string>
     <string name="menu_refresh">Värskenda</string>
     <string name="menu_settings">Seaded</string>
@@ -124,7 +124,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Rakendus</string>
     <string name="help_internet">on interneti kasutamise luba</string>
     <string name="help_granted">on Android luba</string>

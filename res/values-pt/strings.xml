@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Apenas para a versão do Android 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy version: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
-    <string name="app_copyright">Direitos de autor \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Direitos de autor \u00A9 2013-2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Uso</string>
     <string name="menu_refresh">Atualizar</string>
     <string name="menu_settings">Definições</string>
@@ -124,7 +124,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Aplicação</string>
     <string name="help_internet">Tem permissão da internet</string>
     <string name="help_granted">Tem permissão do Android</string>

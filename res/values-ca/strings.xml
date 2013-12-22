@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Només per a Android versió 4.0+</string>
     <string name="app_version" formatted="false">Versió d\'XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Versió d\'Xposed framework: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013 per M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013-2014 per M. Bokhorst (M66B)</string>
     <string name="menu_usage">Usos</string>
     <string name="menu_refresh">Refresca</string>
     <string name="menu_settings">Configuració</string>
@@ -122,7 +122,7 @@
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Aplicació</string>
     <string name="help_internet">té permís d\'Internet</string>
     <string name="help_granted">té permisos d\'Android</string>

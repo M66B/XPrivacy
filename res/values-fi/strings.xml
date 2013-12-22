@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Vain Android versiolle 4.0.3+</string>
     <string name="app_version" formatted="false">XPrivacy versio: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework versio: %d</string>
-    <string name="app_copyright">Tekijänoikeus \u00A9 2013 M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Tekijänoikeus \u00A9 2013-2014 M. Bokhorst (M66B)</string>
     <string name="menu_usage">Käyttötiedot</string>
     <string name="menu_refresh">Päivitä</string>
     <string name="menu_settings">Asetukset</string>
@@ -123,7 +123,7 @@
     <string name="settings_expert">Expert tila</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Applikaatio</string>
     <string name="help_internet">on internet käyttöoikeus</string>
     <string name="help_granted">on Android käyttöoikeus</string>

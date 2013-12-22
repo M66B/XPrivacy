@@ -297,12 +297,8 @@ public class PrivacyManager {
 					}
 				}
 
-			// Check if usage data enabled
-			if (!isUsageDataEnabled(uid))
-				context = null;
-
-			// Check if isolated process
-			if (isIsolated(android.os.Process.myUid()))
+			// Check if privacy provider usable
+			if (!isProviderUsable(context))
 				context = null;
 
 			// Check if restricted
@@ -395,16 +391,6 @@ public class PrivacyManager {
 		return allRestricted;
 	}
 
-	public static boolean isUsageDataEnabled(int uid) {
-		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs)
-			return false;
-
-		if (uid == cAndroidUid)
-			return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false);
-		else
-			return true;
-	}
-
 	// TODO: Waiting for SDK 20 ...
 	public static final int FIRST_ISOLATED_UID = 99000;
 	public static final int LAST_ISOLATED_UID = 99999;
@@ -423,7 +409,27 @@ public class PrivacyManager {
 		return (uid >= FIRST_ISOLATED_UID && uid <= LAST_ISOLATED_UID);
 	}
 
+	private static boolean isProviderUsable(Context context) {
+		if (context == null)
+			return false;
+
+		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs)
+			return false;
+
+		if (isIsolated(Process.myUid()))
+			return false;
+
+		if (Process.myUid() == cAndroidUid)
+			if (!PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false))
+				return false;
+
+		return true;
+	}
+
 	public static void sendUsageData(final XHook hook, Context context) {
+		if (!isProviderUsable(context))
+			return;
+
 		int qSize = 0;
 		synchronized (mUsageQueue) {
 			qSize = mUsageQueue.size();
@@ -552,6 +558,12 @@ public class PrivacyManager {
 	}
 
 	public static void flush(Context context, int uid) {
+		synchronized (mRestrictionCache) {
+			mRestrictionCache.clear();
+		}
+		synchronized (mSettingsCache) {
+			mSettingsCache.clear();
+		}
 		PrivacyProvider.flush();
 	}
 
@@ -717,8 +729,8 @@ public class PrivacyManager {
 				}
 			}
 
-		// Check if isolated process
-		if (isIsolated(android.os.Process.myUid()))
+		// Check if privacy provider usable
+		if (!isProviderUsable(context))
 			context = null;
 
 		// Get setting
