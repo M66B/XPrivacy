@@ -113,7 +113,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_expert">Mode expert</string>
     <string name="settings_dangerous">Restreindre fonctions dangereuses</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>

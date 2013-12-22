@@ -114,7 +114,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_expert">Eksperto režimas</string>
     <string name="settings_dangerous">Apriboti pavojingas funkcijas</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
     <string name="help_granted">Android leidimai</string>

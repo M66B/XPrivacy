@@ -114,7 +114,7 @@
     <string name="settings_expert">Експертний режим</string>
     <string name="settings_dangerous">Заборона небезпечних функцій</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Програма</string>
     <string name="help_internet">запитує доступ до Інтернету</string>
     <string name="help_granted">має дозвол Android</string>

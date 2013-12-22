@@ -111,7 +111,7 @@
     <string name="settings_expert">進階模式</string>
     <string name="settings_dangerous">關閉高風險功能</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">程式</string>
     <string name="help_internet">表示有網際網路權限</string>
     <string name="help_granted">表示有手機權限</string>
