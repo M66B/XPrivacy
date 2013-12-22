@@ -134,6 +134,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		setContentView(R.layout.mainlist);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+		if (Util.getProLicense() != null)
+			setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_pro)));
+
 		// Get localized restriction name
 		List<String> listRestriction = PrivacyManager.getRestrictions();
 		List<String> listLocalizedRestriction = new ArrayList<String>();

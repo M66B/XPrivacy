@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Display if Pro version (only [Pro license](http://www.faircode.eu/xprivacy/)) ([issue](https://github.com/M66B/XPrivacy/issues/996))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.51 BETA**
