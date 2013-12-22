@@ -616,6 +616,10 @@ public class PrivacyManager {
 		PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingState,
 				Integer.toString(ActivityMain.STATE_ATTENTION));
 
+		// Mark app as updated
+		PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMTime,
+				Long.toString(System.currentTimeMillis()));
+
 		return restart;
 	}
 
