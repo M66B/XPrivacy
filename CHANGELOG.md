@@ -3,6 +3,8 @@ Changelog
 
 **Next release**
 
+* Attempt to fix Note 2 boot loop
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.50 BETA**
