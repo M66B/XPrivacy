@@ -7,7 +7,7 @@
     <string name="app_wrongandroid"> 4.0+ فقط برای اندروبد ورژن</string>
     <string name="app_version" formatted="false">%s (%d):نرم افزار ایکس پرایویسی ورژن </string>
     <string name="app_xversion" formatted="false">%d :فریم ورک ایکس پرایویسی ورژن </string>
-    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013-2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">کاربرد</string>
     <string name="menu_refresh">تازه سازی</string>
     <string name="menu_settings">تنظیمات</string>

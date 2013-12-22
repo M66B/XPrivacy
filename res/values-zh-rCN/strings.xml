@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">仅支持 Android 4.0 以上的版本</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
-    <string name="app_copyright">版权所有 \u00A9 2013 M. Bokhorst (M66B)</string>
+    <string name="app_copyright">版权所有 \u00A9 2013-2014 M. Bokhorst (M66B)</string>
     <string name="menu_usage">权限使用记录</string>
     <string name="menu_refresh">刷新应用列表</string>
     <string name="menu_settings">用于被限制应用的模拟信息</string>
