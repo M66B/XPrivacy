@@ -7,7 +7,7 @@ Changelog
 
 **Version 1.10.51 BETA**
 
-* Fixed boot loop on some devices/ROMs
+* Fixed boot loop on some devices/ROMs ([issue](https://github.com/M66B/XPrivacy/issues/995))
 
 **Version 1.10.50 BETA**
 
