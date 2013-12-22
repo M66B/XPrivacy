@@ -416,6 +416,7 @@
 				else {
 ?>
 					<p><a href="#" id="details">Show details</a></p>
+					<p style="font-size: smaller;">Rows marked with a grey background will be restricted when fetched</p>
 <?php
 				}
 ?>
@@ -546,11 +547,10 @@
 <?php
 				if (!empty($package_name)) {
 ?>
-					<p>
+					<p style="font-size: smaller;">
 						* Calculated using a
-						<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull interval</a> of 95%.<br />
-						Values below <?php echo number_format($max_confidence * 100, 1); ?> % are considered reliable.<br />
-						Rows marked with a grey background will be restricted when fetched.<br />
+						<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull interval</a> of 95%;
+						values below <?php echo number_format($max_confidence * 100, 1); ?> % are considered reliable.<br />
 					</p>
 <?php
 				}
