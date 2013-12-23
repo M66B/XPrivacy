@@ -2,6 +2,7 @@
 	$starttime = microtime(true);
 	require_once('xprivacy.inc.php');
 
+	$min_diff = 0.50;
 	$max_confidence = 0.35;
 	$max_packages = 64;
 
@@ -208,16 +209,16 @@
 			if ($result) {
 				while (($row = $result->fetch_object())) {
 					$ci = confidence($row->restricted, $row->not_restricted);
-					if ($ci < $max_ci) {
-						$restrict = ($row->allowed <= $row->not_allowed && $row->restricted > $row->not_restricted);
-						$entry = Array();
-						$entry['restriction'] = $row->restriction;
-						if (!empty($row->method))
-							$entry['method'] = $row->method;
-						$entry['restricted'] = ($restrict ? 1 : 0);
-						$entry['not_restricted'] = 0; // backward compatibility
-						$settings[] = (object) $entry;
-					}
+					$diff = $row->restricted / ($row->restricted + $row->not_restricted);
+					$restrict = ($ci < $max_ci && $diff > $min_diff && $row->allowed <= $row->not_allowed);
+
+					$entry = Array();
+					$entry['restriction'] = $row->restriction;
+					if (!empty($row->method))
+						$entry['method'] = $row->method;
+					$entry['restricted'] = ($restrict ? 1 : 0);
+					$entry['not_restricted'] = 0; // backward compatibility
+					$settings[] = (object) $entry;
 				}
 				$result->close();
 			} else {
@@ -419,7 +420,8 @@
 				else {
 ?>
 					<p><a href="#" id="details">Show details</a></p>
-					<p style="font-size: smaller;">Rows marked with a grey background will be restricted when fetched</p>
+					<p style="font-size: smaller;">Rows marked with a <span style="background: lightgray;">grey background</span> will be restricted when fetched;
+					<strong>bold text</strong> means data was used</p>
 <?php
 				}
 ?>
@@ -435,9 +437,9 @@
 <?php
 						} else {
 ?>
-							<th style="text-align: center;">Votes<br />deny/allow</th>
+							<th style="text-align: center;">Votes <sup>*</sup><br />deny/allow</th>
 							<th style="text-align: center;">Exceptions<br />(yes/no)</th>
-							<th style="text-align: center;">CI95 &plusmn;% <sup>*</sup></th>
+							<th style="text-align: center;">CI95 &plusmn;% <sup>**</sup></th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
 							<th>Restriction</th>
 							<th style="display: none;" class="details">Method</th>
@@ -498,15 +500,17 @@
 							while (($row = $result->fetch_object())) {
 								$count++;
 								$votes += $row->restricted + $row->not_restricted;
+
 								$ci = confidence($row->restricted, $row->not_restricted);
-								$restrict = ($row->allowed <= $row->not_allowed && $row->restricted > $row->not_restricted);
+								$diff = $row->restricted / ($row->restricted + $row->not_restricted);
+								$restrict = ($ci < $max_confidence && $diff > $min_diff && $row->allowed <= $row->not_allowed);
 
 								echo '<tr style="';
 								if (!empty($row->method))
 									echo 'display: none;';
 								if ($row->used)
 									echo 'font-weight: bold;';
-								if ($ci < $max_confidence && $restrict)
+								if ($restrict)
 									echo 'background: lightgray;';
 								echo '"';
 								if (!empty($row->method))
@@ -517,6 +521,7 @@
 								echo ($row->restricted < $row->not_restricted) ? '<span class="text-muted">' . $row->restricted . '</span>' : $row->restricted;
 								echo ' / ';
 								echo ($row->restricted > $row->not_restricted) ? '<span class="text-muted">' . $row->not_restricted . '</span>' : $row->not_restricted;
+								echo ' <span style="font-size: smaller;">' . number_format($diff * 100, 0) . '%</span>';
 								echo '</td>';
 
 								echo '<td style="text-align: center;">';
@@ -551,7 +556,8 @@
 				if (!empty($package_name)) {
 ?>
 					<p style="font-size: smaller;">
-						* Calculated using a
+						* More than <?php echo number_format($min_diff * 100, 0); ?> % of the votes is required<br />
+						** Calculated using a
 						<a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti-Coull_Interval" target="_blank">Agresti-Coull interval</a> of 95%;
 						values below <?php echo number_format($max_confidence * 100, 1); ?> % are considered reliable.<br />
 					</p>

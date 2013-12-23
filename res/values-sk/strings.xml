@@ -1,10 +1,10 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
-    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed inštalátore</string>
+    <string name="app_notxposed" formatted="false">Verzia frameworku Xposed %d+ nie je nainštalovaná</string>
+    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Inštalátori Xposed</string>
     <string name="app_wrongandroid">Len pre Android 4.0+</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
-    <string name="app_xversion" formatted="false">Verzia Xposed frameworku: %d</string>
+    <string name="app_xversion" formatted="false">Verzia frameworku Xposed: %d</string>
     <string name="app_copyright">Autorské práva \u00A9 2013-2014 od M. Bokhorst (M66B)</string>
     <string name="menu_usage">Využitie dát</string>
     <string name="menu_refresh">Obnoviť</string>
@@ -30,7 +30,7 @@
     <string name="menu_app_launch">Spustiť</string>
     <string name="menu_app_settings">Nastavenia</string>
     <string name="menu_app_store">Obchod Play</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">Ukončiť</string>
     <string name="menu_accounts">Povolené účty</string>
     <string name="menu_applications">Povolené aplikácie</string>
     <string name="menu_contacts">Povolené kontakty</string>
@@ -120,12 +120,12 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_fake_data">Falošné údaje</string>
     <string name="settings_global">Použiť globálne falošné údaje</string>
     <string name="settings_notify">Oznámenia o aktualizáciách</string>
-    <string name="settings_usage">Využitie dát (vyžaduje reštart)</string>
-    <string name="settings_log">Záznam na ladenie (vyžaduje reštart)</string>
+    <string name="settings_usage">Využitie dát (vyžadovaný reštart)</string>
+    <string name="settings_log">Záznam na ladenie (vyžadovaný reštart)</string>
     <string name="settings_expert">Režim experta</string>
     <string name="settings_dangerous">Obmedziť nebezpečné funkcie</string>
     <string name="settings_confidence">Maximálny interval spoľahlivosti sťahovania</string>
-    <string name="settings_experimental">Experimentálne funkcie</string>
+    <string name="settings_experimental">Experimentálne funkcie (vyžadovaný reštart)</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>

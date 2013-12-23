@@ -62,15 +62,15 @@ public class PrivacyManager {
 	public static final String cOverlay = "overlay";
 	public static final String cPhone = "phone";
 	public static final String cSensors = "sensors";
-	public static final String cStorage = "storage";
 	public static final String cShell = "shell";
+	public static final String cStorage = "storage";
 	public static final String cSystem = "system";
 	public static final String cView = "view";
 
 	// This should correspond with the above definitions
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
 			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
-			cNetwork, cNfc, cNotifications, cSensors, cOverlay, cPhone, cShell, cStorage, cSystem, cView };
+			cNetwork, cNfc, cNotifications, cOverlay, cPhone, cSensors, cShell, cStorage, cSystem, cView };
 
 	// Setting names
 	public final static String cSettingSerial = "Serial";

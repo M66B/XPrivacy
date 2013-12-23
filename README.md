@@ -71,7 +71,7 @@ Depending on the function, XPrivacy conditionally skips execution of the origina
 (for example when an application tries to set a proximity alert)
 or alters the result of the original function (for example to return an empty message list).
 
-XPrivacy has been tested with Android version 4.1, 4.2, 4.3 and 4.4,
+XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat),
 and is reported to work with most Android variants, including stock ROMs.
 Root access is needed to install the Xposed framework.
 
@@ -103,7 +103,7 @@ Features
 
 * Simple to use
 * No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
-* For any (stock) variant of Android version 4.0, 4.1, 4.2, 4.3 or 4.4 (ICS, JellyBean)
+* For any (stock) variant of Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
 * Free and open source
@@ -285,7 +285,7 @@ Limitations
 Compatibility
 -------------
 
-XPrivacy has been tested with Android version 4.1, 4.2, 4.3 and 4.4,
+XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat),
 and is reported to work with most Android variants, including stock ROMs.
 
 Installation
@@ -296,7 +296,7 @@ Installation
 It seems like a lot of steps, but it is done in no time:
 
 1. Requirements:
-	* Android 4.0+ (ICS) or 4.1/4.2/4.3/4.4+ (JellyBean); check with *System Settings* > *About phone* > *Android version*
+	* Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat); check with *System Settings* > *About phone* > *Android version*
 	* Custom recovery ([CWM](http://forum.xda-developers.com/wiki/ClockworkMod_Recovery), [TWRP](http://teamw.in/project/twrp2) or similar)
 1. **Make a backup**
 1. If not done already: root your device; the procedure depends on the brand and model of your device
