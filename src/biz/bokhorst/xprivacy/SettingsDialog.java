@@ -481,8 +481,27 @@ public class SettingsDialog {
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				if (uid == 0) {
+					// Global settings
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
+							Boolean.toString(cbLog.isChecked()));
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingDangerous,
+							Boolean.toString(cbDangerous.isChecked()));
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
+							Boolean.toString(cbUsage.isChecked()));
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExperimental,
+							Boolean.toString(cbExperimental.isChecked()));
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingConfidence, etConfidence
+							.getText().toString());
+				} else {
+					// App specific settings
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingNotify,
+							Boolean.toString(cbNotify.isChecked()));
+				}
+
 				if (cbGlobal.isChecked()) {
 					// Clear all settings
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingRandom, null);
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSerial, null);
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude, null);
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude, null);
@@ -503,24 +522,6 @@ public class SettingsDialog {
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingUa, null);
 					Util.log(null, Log.WARN, "Cleared all settings uid=" + uid);
 				} else {
-					if (uid == 0) {
-						// Global settings
-						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLog,
-								Boolean.toString(cbLog.isChecked()));
-						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingDangerous,
-								Boolean.toString(cbDangerous.isChecked()));
-						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAndroidUsage,
-								Boolean.toString(cbUsage.isChecked()));
-						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExperimental,
-								Boolean.toString(cbExperimental.isChecked()));
-						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingConfidence, etConfidence
-								.getText().toString());
-					} else {
-						// App specific settings
-						PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingNotify,
-								Boolean.toString(cbNotify.isChecked()));
-					}
-
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingRandom,
 							Boolean.toString(cbRandom.isChecked()));
 
