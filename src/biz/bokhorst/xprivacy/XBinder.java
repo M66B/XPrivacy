@@ -17,7 +17,7 @@ public class XBinder extends XHook {
 	}
 
 	public String getClassName() {
-		return "android.os.Binder";
+		return (mMethod == Methods.transact ? "android.os.BinderProxy" : "android.os.Binder");
 	}
 
 	public boolean isVisible() {
@@ -28,6 +28,7 @@ public class XBinder extends XHook {
 
 	// private boolean execTransact(int code, int dataObj, int replyObj,int flags)
 	// public final boolean transact(int code, Parcel data, Parcel reply, int flags)
+	// public native boolean transact(int code, Parcel data, Parcel reply, int flags)
 	// frameworks/base/core/java/android/os/Binder.java
 	// http://developer.android.com/reference/android/os/Binder.html
 
