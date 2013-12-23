@@ -686,8 +686,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void applySort() {
 		if (mAppAdapter != null) {
-			CheckBox cbSInvert = (CheckBox) findViewById(R.id.cbSInvert);
-			mAppAdapter.setSortMode(spSMode.getSelectedItemPosition(), cbSInvert.isChecked());
+			mAppAdapter.setSortMode();
+			mAppAdapter.sort();
 		}
 	}
 
@@ -1138,6 +1138,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mListApp = new ArrayList<ApplicationInfoEx>();
 			mListApp.addAll(objects);
 			mRestrictionName = initialRestrictionName;
+			setSortMode();
 		}
 
 		public void setRestrictionName(String restrictionName) {
@@ -1238,8 +1239,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 
 				// Apply current sorting
-				if (mSorter != null)
-					Collections.sort(lstApp, mSorter);
+				Collections.sort(lstApp, mSorter);
 
 				synchronized (this) {
 					results.values = lstApp;
@@ -1279,9 +1279,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		}
 
-		public void setSortMode(int sortMode, boolean invertSort) {
-			mSortMode = sortMode;
-			mSortOrder = invertSort ? -1 : 1;
+		public void setSortMode() {
+			mSortMode = spSMode.getSelectedItemPosition();
+			CheckBox cbSInvert = (CheckBox) findViewById(R.id.cbSInvert);
+			mSortOrder = cbSInvert.isChecked() ? -1 : 1;
+		}
+
+		public void sort() {
 			sort(mSorter);
 		}
 
