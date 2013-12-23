@@ -4,8 +4,10 @@ Changelog
 **Next release**
 
 * Display if Pro version (only [Pro license](http://www.faircode.eu/xprivacy/)) ([issue](https://github.com/M66B/XPrivacy/issues/996))
+* Updated Hindi translation
 * Updated Slovak translation
 * Updated Slovenian translation
+* Updated Ukrainian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
