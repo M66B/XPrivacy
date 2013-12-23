@@ -125,10 +125,10 @@
     <string name="help_restricted">प्रतिबंध बदले गए</string>
     <string name="help_shared">प्रतिबंध submit हो गए</string>
     <string name="tutorial_mainheader">प्रतिबन्ध के लिए श्रेणी चुने; प्रत्यक्ष app को फ़िल्टर के साथ चुने</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="tutorial_mainlist">App कि चुनी गयी श्रेणी को प्रतिबंधित करने के लिए checkbox tap करे\n
+\nप्रतिबंधित श्रेणी के लिए Apps को खाली या नकली डेटा दिया जायेगा\n
+\nविस्तृत प्रतिबन्ध व settings के लिए app icon को tap करे</string>
+    <string name="tutorial_detailsheader">अधिक कार्य के लिए app icon को tap करे</string>
+    <string name="tutorial_detailslist">प्रतिबंधित श्रेणी के अपवाद देखने के लिए down arrow को tap करे</string>
 
 </resources>
