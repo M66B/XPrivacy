@@ -47,7 +47,7 @@
     <string name="msg_done">हो गया</string>
     <string name="msg_reboot">साधन पुनरारंभ करना आवश्यक</string>
     <string name="msg_random_now">अटपटा करे</string>
-    <string name="msg_random_access">उपयोग पर randomize करें</string>
+    <string name="msg_random_access">उपयोग पर अटपटा करें</string>
     <string name="msg_random_boot">रिबूट के पश्चात अटपटा करे</string>
     <string name="msg_usage">उपयोग डेटा update हो रहा हैं</string>
     <string name="msg_restart">application पुनःप्रारंभ जरुरी</string>
