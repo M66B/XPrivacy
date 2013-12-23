@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Kun for Android versjon 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
-    <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013</string>
+    <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013-2014</string>
     <string name="menu_usage">Databruk</string>
     <string name="menu_refresh">Oppdater</string>
     <string name="menu_settings">Innstillinger</string>
@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Kjør</string>
     <string name="menu_app_settings">Innstillinger</string>
     <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Velg konto som skal tillates</string>
     <string name="menu_applications">Velg apper som skal tillates</string>
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
@@ -110,7 +111,7 @@
     <string name="settings_expert">Ekspert modus</string>
     <string name="settings_dangerous">Blokker farlige funksjoner</string>
     <string name="settings_confidence">Maksimalt konfidensintervall for å hente restriksjoner</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">App</string>
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>

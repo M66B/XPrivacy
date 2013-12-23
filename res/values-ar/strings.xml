@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">فقط لأندرويد نسخة 4.0+</string>
     <string name="app_version" formatted="false">نسخة XPrivacy : %s (%d)</string>
     <string name="app_xversion" formatted="false">إطار  Xposed نسخة : %d</string>
-    <string name="app_copyright">حقوق الطبع \u00A9 2013 ب M. Bokhorst (M66B)</string>
+    <string name="app_copyright">حقوق الطبع \u00A9 2013-2014 ل M. Bokhorst (M66B)</string>
     <string name="menu_usage">الإستخدام</string>
     <string name="menu_refresh">إنعاش</string>
     <string name="menu_settings">الإعدادات</string>
@@ -23,23 +23,24 @@
     <string name="menu_restriction_all">تبديل القيود</string>
     <string name="menu_clear_all">مسح الكل</string>
     <string name="menu_restrict_all">تقييد الكل</string>
-    <string name="menu_clear_usage">Clear</string>
+    <string name="menu_clear_usage">إزالة</string>
     <string name="menu_usage_all">تغيير الفلتر</string>
     <string name="menu_apply">تطبيق القالب</string>
     <string name="menu_clear">إلغاء التحديد</string>
     <string name="menu_app_launch">تشغيل التطبيق</string>
     <string name="menu_app_settings">إعدادات التطبيق</string>
     <string name="menu_app_store">متجر قوقل</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_applications">إختر التطبيقات التي تود تمكينها</string>
     <string name="menu_accounts">إختر الحسابات التي تود تمكينها</string>
     <string name="menu_contacts">إختر الأسماء التي تود تمكينها</string>
-    <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_tutorial">تعليمي</string>
     <string name="msg_new">جديد</string>
     <string name="msg_update">تحديث</string>
     <string name="msg_licensed" formatted="false">مرخص ل: %s</string>
     <string name="msg_loading">جاري التحميل</string>
     <string name="msg_applying">تطبيق</string>
-    <string name="msg_applied">Template applied</string>
+    <string name="msg_applied">تم تطبيق القالب</string>
     <string name="msg_saved_to" formatted="false">حُفِظت في  %s</string>
     <string name="msg_no_restrictions">لا توجد قيود</string>
     <string name="msg_sure">هل أنت متأكد ؟</string>
@@ -68,7 +69,7 @@
     <string name="restrict_messages">الرسائل (النصية , الوسائط)</string>
     <string name="restrict_network">الشبكة (العناوين)</string>
     <string name="restrict_notifications">الإشعارات</string>
-    <string name="restrict_overlay">Overlay</string>
+    <string name="restrict_overlay">غشاء</string>
     <string name="restrict_phone">الهاتف (المعرف,الأرقام,المكالمات)</string>
     <string name="restrict_sensors">الحساسات</string>
     <string name="restrict_storage">التخزين (الميديا’الذاكرة الخارجية)</string>
@@ -111,8 +112,8 @@
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
     <string name="settings_expert">وضع الخبراء</string>
     <string name="settings_dangerous">تقييد الوظائف الخطيرة</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_confidence">الحد الأقصى لجلب فترة الثقة</string>
+    <string name="settings_experimental">وظائف تجريبية</string>
     <string name="help_application">التطبيق</string>
     <string name="help_internet">لديه صلاحية الوصول للإنترنت</string>
     <string name="help_granted">لديه صلاحية أندرويد</string>
@@ -120,14 +121,14 @@
     <string name="help_frozen">مُعطل</string>
     <string name="help_dangerous">خطير</string>
     <string name="help_half">تقييد جزئي</string>
-    <string name="help_attention">restrictions need attention</string>
-    <string name="help_restricted">restrictions are changed</string>
-    <string name="help_shared">restrictions are submitted</string>
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="help_attention">قيود تحتاج لعناية</string>
+    <string name="help_restricted">القيود التي تم تغييرها</string>
+    <string name="help_shared">القيود تم تسجيلها</string>
+    <string name="tutorial_mainheader">إختر الفئة لتقييدها,إختر التطبيقات الظاهرة مع المرشحات</string>
+    <string name="tutorial_mainlist">إلمس مربع الإختيار لتقييد الفئة المحددة للتطبيق\n
+\nوسوف يتم إعطاء بيانات فارغة أو وهمية للفئات المقيدة\n
+\nإلمس ايقونة التطبيق لتفاصيل القيود والإعدادات</string>
+    <string name="tutorial_detailsheader">انقر على أيقونة التطبيق لمزيد من الإجراءات</string>
+    <string name="tutorial_detailslist">انقر على السهم المتجه لأسفل لرؤية الوظائف الإستثنائية في الفئة المُقيدة</string>
 
 </resources>

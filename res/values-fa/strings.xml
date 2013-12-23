@@ -7,7 +7,7 @@
     <string name="app_wrongandroid"> 4.0+ فقط برای اندروبد ورژن</string>
     <string name="app_version" formatted="false">%s (%d):نرم افزار ایکس پرایویسی ورژن </string>
     <string name="app_xversion" formatted="false">%d :فریم ورک ایکس پرایویسی ورژن </string>
-    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013-2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">کاربرد</string>
     <string name="menu_refresh">تازه سازی</string>
     <string name="menu_settings">تنظیمات</string>
@@ -32,6 +32,7 @@
     <string name="menu_app_launch">دسترسی</string>
     <string name="menu_app_settings">جزییات نرم افزار</string>
     <string name="menu_app_store">پلی استور</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">حساب هایی را که اجازه می دهید انتخاب کنید</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">تماس هایی را که احازه می دهید انتخاب کنید</string>
@@ -114,7 +115,7 @@
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">برنامه های کاربردی</string>
     <string name="help_internet">مجوز استفاده از اینترنت را دارد</string>
     <string name="help_granted">مجوز اندروید را دارد</string>

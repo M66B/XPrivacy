@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.os.Binder;
+import android.os.Process;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -44,11 +44,9 @@ public class XService extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.onDestroy) {
-			int uid = Binder.getCallingUid();
-			Util.log(this, Log.INFO, "Service destroyed uid=" + uid);
+			Util.log(this, Log.INFO, "Service destroyed uid=" + Process.myUid());
 			try {
-				if (PrivacyManager.isUsageDataEnabled(uid))
-					PrivacyManager.sendUsageData(this, (Context) param.thisObject);
+				PrivacyManager.sendUsageData(this, (Context) param.thisObject);
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}

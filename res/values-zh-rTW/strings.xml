@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">僅支援版本 Android 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework 版本: %d</string>
-    <string name="app_copyright">版權所有 \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">版權所有 \u00A9 2013-2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">操作記錄</string>
     <string name="menu_refresh">重新整理</string>
     <string name="menu_settings">設定</string>
@@ -30,6 +30,7 @@
     <string name="menu_app_launch">執行</string>
     <string name="menu_app_settings">應用程式資訊</string>
     <string name="menu_app_store">Play 商店</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">設定允許之帳戶</string>
     <string name="menu_applications">設定允許之app</string>
     <string name="menu_contacts">設定允許之聯絡人</string>
@@ -110,7 +111,7 @@
     <string name="settings_expert">進階模式</string>
     <string name="settings_dangerous">關閉高風險功能</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">程式</string>
     <string name="help_internet">表示有網際網路權限</string>
     <string name="help_granted">表示有手機權限</string>

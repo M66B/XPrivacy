@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Csak Android 4.0 felett</string>
     <string name="app_version" formatted="false">XPrivacy verzió: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed keretrendszer verzió: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013 M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013-2014 M. Bokhorst (M66B)</string>
     <string name="menu_usage">Használat</string>
     <string name="menu_refresh">Frissítés</string>
     <string name="menu_settings">Beállítások</string>
@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Indítás</string>
     <string name="menu_app_settings">Beállítások</string>
     <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Válassza ki az engedélyezendő fiókokat</string>
     <string name="menu_applications">Válassza ki az engedélyezendő alkalmazásokat</string>
     <string name="menu_contacts">Válassza ki az engedélyezendő névjegyeket</string>
@@ -112,7 +113,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="settings_expert">Szakértői mód</string>
     <string name="settings_dangerous">Veszélyes funkciók korlátozása</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Alkalmazás</string>
     <string name="help_internet">Internet engedély</string>
     <string name="help_granted">Android engedély</string>

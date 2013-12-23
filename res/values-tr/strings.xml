@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Sadece Android 4.0 ve üstünde kullanılabilir.</string>
     <string name="app_version" formatted="false">XPrivacy versiyon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework versiyon: %d</string>
-    <string name="app_copyright">Telif hakkı \u00A9 2013, M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Telif hakkı \u00A9 2013-2014, M. Bokhorst (M66B)</string>
     <string name="menu_usage">Kullanım</string>
     <string name="menu_refresh">Yenile</string>
     <string name="menu_settings">Ayarlar</string>
@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Çalıştır</string>
     <string name="menu_app_settings">Ayarlar</string>
     <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">İzin verilecek hesapları seç</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">İzin verilecek kişileri seç</string>
@@ -111,7 +112,7 @@
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Uygulama</string>
     <string name="help_internet">internet izni var</string>
     <string name="help_granted">Android izni var</string>

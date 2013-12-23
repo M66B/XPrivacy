@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">versiunea XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">versiunea Xposed framework: %d</string>
-    <string name="app_copyright">Drepturi de autor rezervate \u00A9 2013 M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Drepturi de autor rezervate \u00A9 2013-2014 M. Bokhorst (M66B)</string>
     <string name="menu_usage">Usage</string>
     <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">Setari</string>
@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Launch</string>
     <string name="menu_app_settings">Settings</string>
     <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Select accounts to allow</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Select contacts to allow</string>
@@ -112,7 +113,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Aplicatie</string>
     <string name="help_internet">are permisiune Internet</string>
     <string name="help_granted">are permisiune Android</string>

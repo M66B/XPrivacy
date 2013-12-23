@@ -500,6 +500,16 @@ public class PrivacyProvider extends ContentProvider {
 		}
 	}
 
+	public static void flush() {
+		Util.log(null, Log.WARN, "Flush uid=" + Binder.getCallingUid());
+		synchronized (mFallbackRestrictionLock) {
+			mFallbackRestrictions = null;
+		}
+		synchronized (mFallbackSettingsLock) {
+			mFallbackSettings = null;
+		}
+	}
+
 	// Helper methods
 
 	private void enforcePermission() throws SecurityException {

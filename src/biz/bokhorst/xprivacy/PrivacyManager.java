@@ -62,15 +62,15 @@ public class PrivacyManager {
 	public static final String cOverlay = "overlay";
 	public static final String cPhone = "phone";
 	public static final String cSensors = "sensors";
-	public static final String cStorage = "storage";
 	public static final String cShell = "shell";
+	public static final String cStorage = "storage";
 	public static final String cSystem = "system";
 	public static final String cView = "view";
 
 	// This should correspond with the above definitions
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
 			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
-			cNetwork, cNfc, cNotifications, cSensors, cOverlay, cPhone, cShell, cStorage, cSystem, cView };
+			cNetwork, cNfc, cNotifications, cOverlay, cPhone, cSensors, cShell, cStorage, cSystem, cView };
 
 	// Setting names
 	public final static String cSettingSerial = "Serial";
@@ -294,8 +294,8 @@ public class PrivacyManager {
 					}
 				}
 
-			// Check if usage data enabled
-			if (!isUsageDataEnabled(uid))
+			// Check if privacy provider usable
+			if (!isProviderUsable(context))
 				context = null;
 
 			// Check if restricted
@@ -388,16 +388,6 @@ public class PrivacyManager {
 		return allRestricted;
 	}
 
-	public static boolean isUsageDataEnabled(int uid) {
-		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs)
-			return false;
-
-		if (uid == cAndroidUid)
-			return PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false);
-		else
-			return !isIsolated(uid);
-	}
-
 	// TODO: Waiting for SDK 20 ...
 	public static final int FIRST_ISOLATED_UID = 99000;
 	public static final int LAST_ISOLATED_UID = 99999;
@@ -416,7 +406,27 @@ public class PrivacyManager {
 		return (uid >= FIRST_ISOLATED_UID && uid <= LAST_ISOLATED_UID);
 	}
 
+	private static boolean isProviderUsable(Context context) {
+		if (context == null)
+			return false;
+
+		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs)
+			return false;
+
+		if (isIsolated(Process.myUid()))
+			return false;
+
+		if (Process.myUid() == cAndroidUid)
+			if (!PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false))
+				return false;
+
+		return true;
+	}
+
 	public static void sendUsageData(final XHook hook, Context context) {
+		if (!isProviderUsable(context))
+			return;
+
 		int qSize = 0;
 		synchronized (mUsageQueue) {
 			qSize = mUsageQueue.size();
@@ -498,25 +508,28 @@ public class PrivacyManager {
 			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingState,
 					Integer.toString(ActivityMain.STATE_RESTRICTED));
 
+		// Make exceptions for dangerous methods
 		boolean dangerous = PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingDangerous, false,
 				false);
-		if (methodName == null) {
-			// Make exceptions for dangerous methods
+		if (methodName == null)
 			if (restricted && !dangerous) {
 				for (MethodDescription md : getMethods(restrictionName))
 					if (md.isDangerous())
 						PrivacyManager.setRestricted(null, context, uid, restrictionName, md.getName(), dangerous);
 			}
 
-			// Check restart
+		// Flush caches
+		if (methodName == null)
+			XApplication.manage(context, uid, XApplication.cActionFlushCache);
+
+		// Check restart
+		if (methodName == null) {
 			for (MethodDescription md : getMethods(restrictionName))
 				if (md.isRestartRequired() && !(restricted && !dangerous && md.isDangerous()))
 					return true;
 			return false;
-		} else {
-			// Check restart
+		} else
 			return getMethod(restrictionName, methodName).isRestartRequired();
-		}
 	}
 
 	public static List<Boolean> getRestricted(Context context, int uid, String restrictionName) {
@@ -536,6 +549,16 @@ public class PrivacyManager {
 				}
 		}
 		return listRestricted;
+	}
+
+	public static void flush(Context context, int uid) {
+		synchronized (mRestrictionCache) {
+			mRestrictionCache.clear();
+		}
+		synchronized (mSettingsCache) {
+			mSettingsCache.clear();
+		}
+		PrivacyProvider.flush();
 	}
 
 	public static class RestrictionDesc {
@@ -696,6 +719,10 @@ public class PrivacyManager {
 				}
 			}
 
+		// Check if privacy provider usable
+		if (!isProviderUsable(context))
+			context = null;
+
 		// Get setting
 		boolean fallback = true;
 		String value = null;
@@ -765,6 +792,9 @@ public class PrivacyManager {
 		if (contentResolver.update(PrivacyProvider.URI_SETTING, values, sName, null) <= 0)
 			Util.log(hook, Log.INFO, "Error updating setting=" + sName);
 		Util.log(hook, Log.INFO, String.format("set setting %s=%s", sName, value));
+
+		// Flush caches
+		XApplication.manage(context, uid, XApplication.cActionFlushCache);
 	}
 
 	public static Map<String, String> getSettings(Context context, Runnable progress) {

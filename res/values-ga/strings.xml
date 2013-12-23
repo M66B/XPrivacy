@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Ach amháin le haghaidh Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy leagan: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework leagan: %d</string>
-    <string name="app_copyright">Cóipcheart \ u00A9 2013 le M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Cóipcheart \ u00A9 2013-2014 le M. Bokhorst (M66B)</string>
     <string name="menu_usage">Úsáid</string>
     <string name="menu_refresh">Athnuaigh</string>
     <string name="menu_settings">Socruithe</string>
@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Seoladh</string>
     <string name="menu_app_settings">sonraí App</string>
     <string name="menu_app_store">Store Súgartha</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Roghnaigh cuntais a cheadú</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Roghnaigh cuntais a cheadú</string>
@@ -112,7 +113,7 @@
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Iarratais</string>
     <string name="help_internet">Tá cead idirlín</string>
     <string name="help_granted">Tá cead Android</string>

@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy גירסא: %s (%d)</string>
     <string name="app_xversion" formatted="false">גרסת מסגרת Xposed: %d</string>
-    <string name="app_copyright">כל הזכויות שמורות \ u00A9 2013 על ידי מ \'Bokhorst (M66B)</string>
+    <string name="app_copyright">כל הזכויות שמורות \ u00A9 2013-2014 על ידי מ \'Bokhorst (M66B)</string>
     <string name="menu_usage">Usage</string>
     <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">הגדרות</string>
@@ -30,6 +30,7 @@
     <string name="menu_app_launch">הפעל</string>
     <string name="menu_app_settings">הגדרות</string>
     <string name="menu_app_store">חנות Google Play</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">בחר חשבונות לאפשר</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">בחר אנשי קשר לאפשר</string>
@@ -112,7 +113,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">יישום</string>
     <string name="help_internet">כולל הרשאות גישה לאינטרנט</string>
     <string name="help_granted">כולל הרשאות גישה לאנדרואיד</string>

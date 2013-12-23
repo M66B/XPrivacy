@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy верзија: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework верзија: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013-2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Usage</string>
     <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">Подешавања</string>
@@ -30,6 +30,7 @@
     <string name="menu_app_launch">Покрени</string>
     <string name="menu_app_settings">Подешавања</string>
     <string name="menu_app_store">Продавница Плеј</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">Изабери дозвољене рачуне</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Изабери дозвољене контакте</string>
@@ -112,7 +113,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Апликација</string>
     <string name="help_internet">има дозволу за Интернет</string>
     <string name="help_granted">има дозволу за Андроид</string>

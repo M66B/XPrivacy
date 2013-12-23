@@ -2,8 +2,6 @@ package biz.bokhorst.xprivacy;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -36,7 +34,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -187,7 +184,7 @@ public class ActivityApp extends Activity {
 
 		// Display version
 		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
-		tvVersion.setText(mAppInfo.getVersionString(this));
+		tvVersion.setText(TextUtils.join(", ", mAppInfo.getPackageVersionName(this)));
 
 		// Display package name
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
@@ -589,8 +586,25 @@ public class ActivityApp extends Activity {
 		startActivity(intentSettings);
 	}
 
-	private void optionKill(int which) {
-		XPackageManagerService.manage(this, mAppInfo.getPackageName().get(which), true);
+	private void optionKill(final int which) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+		alertDialogBuilder.setTitle(getString(R.string.menu_app_kill));
+		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int _which) {
+				XApplication.manage(ActivityApp.this, mAppInfo.getPackageName().get(which),
+						XApplication.cActionKillProcess);
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 	private void optionStore(int which) {
@@ -663,34 +677,38 @@ public class ActivityApp extends Activity {
 	}
 
 	private class ApplicationsTask extends AsyncTask<Object, Object, Object> {
-		private List<ApplicationInfo> mListInfo;
-		private List<CharSequence> mListApp;
+		private CharSequence[] mApp;
+		private String[] mPackage;
 		private boolean[] mSelection;
 
 		@Override
 		protected Object doInBackground(Object... params) {
 			// Get applications
-			final PackageManager pm = ActivityApp.this.getPackageManager();
-			mListInfo = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-			Collections.sort(mListInfo, new Comparator<ApplicationInfo>() {
-				public int compare(ApplicationInfo info1, ApplicationInfo info2) {
-					return ((String) pm.getApplicationLabel(info1)).compareTo(((String) pm.getApplicationLabel(info2)));
-				}
-			});
+			List<ApplicationInfoEx> listInfo = ApplicationInfoEx.getXApplicationList(ActivityApp.this, null);
+
+			// Count packages
+			int packages = 0;
+			for (ApplicationInfoEx appInfo : listInfo)
+				packages += appInfo.getPackageName().size();
 
 			// Build selection list
-			mListApp = new ArrayList<CharSequence>();
-			mSelection = new boolean[mListInfo.size()];
-			for (int i = 0; i < mListInfo.size(); i++)
-				try {
-					mListApp.add(String.format("%s (%s)", pm.getApplicationLabel(mListInfo.get(i)),
-							mListInfo.get(i).packageName));
-					mSelection[i] = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
-							String.format("Application.%d.%s", mAppInfo.getUid(), mListInfo.get(i).packageName), false,
-							false);
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
+			int i = 0;
+			mApp = new CharSequence[packages];
+			mPackage = new String[packages];
+			mSelection = new boolean[packages];
+			for (ApplicationInfoEx appInfo : listInfo)
+				for (int p = 0; p < appInfo.getPackageName().size(); p++)
+					try {
+						String appName = appInfo.getApplicationName().get(p);
+						String pkgName = appInfo.getPackageName().get(p);
+						mApp[i] = String.format("%s (%s)", appName, pkgName);
+						mPackage[i] = pkgName;
+						mSelection[i] = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+								String.format("Application.%d.%s", mAppInfo.getUid(), pkgName), false, false);
+						i++;
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+					}
 			return null;
 		}
 
@@ -700,23 +718,19 @@ public class ActivityApp extends Activity {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 			alertDialogBuilder.setTitle(getString(R.string.menu_applications));
 			alertDialogBuilder.setIcon(Util.getThemed(ActivityApp.this, R.attr.icon_launcher));
-			alertDialogBuilder.setMultiChoiceItems(mListApp.toArray(new CharSequence[0]), mSelection,
-					new DialogInterface.OnMultiChoiceClickListener() {
-						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-							try {
-								PrivacyManager.setSetting(
-										null,
-										ActivityApp.this,
-										0,
-										String.format("Application.%d.%s", mAppInfo.getUid(),
-												mListInfo.get(whichButton).packageName), Boolean.toString(isChecked));
-							} catch (Throwable ex) {
-								Util.bug(null, ex);
-								Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
-								toast.show();
-							}
-						}
-					});
+			alertDialogBuilder.setMultiChoiceItems(mApp, mSelection, new DialogInterface.OnMultiChoiceClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+					try {
+						PrivacyManager.setSetting(null, ActivityApp.this, 0,
+								String.format("Application.%d.%s", mAppInfo.getUid(), mPackage[whichButton]),
+								Boolean.toString(isChecked));
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+						Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
+						toast.show();
+					}
+				}
+			});
 			alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -820,6 +834,50 @@ public class ActivityApp extends Activity {
 		@Override
 		protected String doInBackground(ApplicationInfoEx... params) {
 			try {
+				// Check if any account allowed
+				boolean allowedAccounts = false;
+				AccountManager accountManager = AccountManager.get(ActivityApp.this);
+				for (Account account : accountManager.getAccounts()) {
+					String sha1 = Util.sha1(account.name + account.type);
+					boolean allowed = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+							String.format("Account.%d.%s", mAppInfo.getUid(), sha1), false, false);
+					if (allowed) {
+						allowedAccounts = true;
+						break;
+					}
+				}
+
+				// Check if any application allowed
+				boolean allowedApplications = false;
+				for (ApplicationInfoEx appInfo : ApplicationInfoEx.getXApplicationList(ActivityApp.this, null))
+					for (String packageName : appInfo.getPackageName()) {
+						boolean allowed = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+								String.format("Application.%d.%s", mAppInfo.getUid(), packageName), false, false);
+						if (allowed) {
+							allowedApplications = true;
+							break;
+						}
+					}
+
+				// Check if any contact allowed
+				boolean allowedContacts = false;
+				Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
+						new String[] { ContactsContract.Contacts._ID }, null, null, null);
+				if (cursor != null)
+					try {
+						while (cursor.moveToNext()) {
+							long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+							boolean allowed = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
+									String.format("Contact.%d.%d", mAppInfo.getUid(), id), false, false);
+							if (allowed) {
+								allowedContacts = true;
+								break;
+							}
+						}
+					} finally {
+						cursor.close();
+					}
+
 				// Encode restrictions
 				int uid = params[0].getUid();
 				JSONArray jSettings = new JSONArray();
@@ -832,6 +890,12 @@ public class ActivityApp extends Activity {
 					jRestriction.put("restriction", restrictionName);
 					jRestriction.put("restricted", restricted);
 					jRestriction.put("used", used);
+					if (restrictionName.equals(PrivacyManager.cAccounts))
+						jRestriction.put("allowed", allowedAccounts ? 1 : 0);
+					else if (restrictionName.equals(PrivacyManager.cSystem))
+						jRestriction.put("allowed", allowedApplications ? 1 : 0);
+					else if (restrictionName.equals(PrivacyManager.cContacts))
+						jRestriction.put("allowed", allowedContacts ? 1 : 0);
 					jSettings.put(jRestriction);
 
 					// Methods
@@ -861,9 +925,13 @@ public class ActivityApp extends Activity {
 				for (String name : params[0].getPackageName())
 					pkgName.put(name);
 
-				JSONArray pkgVersion = new JSONArray();
-				for (String version : params[0].getPackageVersion(ActivityApp.this))
-					pkgVersion.put(version);
+				JSONArray pkgVersionName = new JSONArray();
+				for (String version : params[0].getPackageVersionName(ActivityApp.this))
+					pkgVersionName.put(version);
+
+				JSONArray pkgVersionCode = new JSONArray();
+				for (Integer version : params[0].getPackageVersionCode(ActivityApp.this))
+					pkgVersionCode.put((int) version);
 
 				// Encode package
 				JSONObject jRoot = new JSONObject();
@@ -873,7 +941,8 @@ public class ActivityApp extends Activity {
 				jRoot.put("xprivacy_version", pInfo.versionCode);
 				jRoot.put("application_name", appName);
 				jRoot.put("package_name", pkgName);
-				jRoot.put("package_version", pkgVersion);
+				jRoot.put("package_version_name", pkgVersionName);
+				jRoot.put("package_version_code", pkgVersionCode);
 				jRoot.put("settings", jSettings);
 
 				// Submit

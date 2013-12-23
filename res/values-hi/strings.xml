@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">सिर्फ Android वर्शन 4.0+ के लिये</string>
     <string name="app_version" formatted="false">XPrivacy वर्शन: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework वर्शन: %d</string>
-    <string name="app_copyright">सर्वाधिकार \u00A9 2013 द्वारा M. Bokhorst (M66B)</string>
+    <string name="app_copyright">सर्वाधिकार \u00A9 2013-2014 द्वारा M. Bokhorst (M66B)</string>
     <string name="menu_usage">उपयोग</string>
     <string name="menu_refresh">पुन: करे</string>
     <string name="menu_settings">सेटिंग्स</string>
@@ -30,6 +30,7 @@
     <string name="menu_app_launch">चालू करे</string>
     <string name="menu_app_settings">App का विवरण</string>
     <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">अनुमति के लिए खातों को चुने</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
@@ -112,7 +113,7 @@
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions</string>
+    <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="help_application">Application</string>
     <string name="help_internet">इंटरनेट की अनुमति है</string>
     <string name="help_granted">Android की अनुमति है</string>
