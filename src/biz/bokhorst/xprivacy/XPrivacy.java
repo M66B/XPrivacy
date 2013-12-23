@@ -48,6 +48,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Audio record
 		hookAll(XAudioRecord.getInstances());
 
+		// Binder device
+		hookAll(XBinder.getInstances());
+
 		// Bluetooth adapater
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1)
 			hookAll(XBluetoothAdapter.getInstances());
