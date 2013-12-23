@@ -1,8 +1,10 @@
 package biz.bokhorst.xprivacy;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Parcel;
 import android.os.Process;
 import android.util.Log;
 
@@ -10,6 +12,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XBinder extends XHook {
 	private Methods mMethod;
+	private static Method mObtain = null;
 
 	private XBinder(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), null);
@@ -39,6 +42,15 @@ public class XBinder extends XHook {
 	};
 
 	public static List<XHook> getInstances() {
+		try {
+			// static protected final Parcel obtain(int obj)
+			// frameworks/base/core/java/android/os/Parcel.java
+			mObtain = Parcel.class.getDeclaredMethod("obtain", int.class);
+			mObtain.setAccessible(true);
+		} catch (NoSuchMethodException ex) {
+			Util.bug(null, ex);
+		}
+
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XBinder(Methods.execTransact, null));
 		listHook.add(new XBinder(Methods.transact, null));
@@ -49,6 +61,12 @@ public class XBinder extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.execTransact) {
 			// Entry point from android_util_Binder.cpp's onTransact
+			if (mObtain != null) {
+				int dataObj = (Integer) param.args[1];
+				int replyObj = (Integer) param.args[2];
+				Parcel data = (Parcel) mObtain.invoke(null, dataObj);
+				Parcel reply = (Parcel) mObtain.invoke(null, replyObj);
+			}
 		} else if (mMethod == Methods.transact) {
 			Log.w("XPrivacy", "transact uid=" + Process.myUid());
 		} else
