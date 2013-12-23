@@ -3,6 +3,7 @@ Changelog
 
 **Next release**
 
+* Fixed application notification setting not sticking ([issue](https://github.com/M66B/XPrivacy/issues/1006))
 * Display if Pro version (only [Pro license](http://www.faircode.eu/xprivacy/)) ([issue](https://github.com/M66B/XPrivacy/issues/996))
 * Updated Hindi translation
 * Updated Slovak translation
