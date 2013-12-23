@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Binder;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
 import android.util.Log;
@@ -62,13 +64,19 @@ public class XBinder extends XHook {
 		if (mMethod == Methods.execTransact) {
 			// Entry point from android_util_Binder.cpp's onTransact
 			if (mObtain != null) {
+				int code = (Integer) param.args[0];
 				int dataObj = (Integer) param.args[1];
-				int replyObj = (Integer) param.args[2];
 				Parcel data = (Parcel) mObtain.invoke(null, dataObj);
-				Parcel reply = (Parcel) mObtain.invoke(null, replyObj);
 			}
 		} else if (mMethod == Methods.transact) {
-			Log.w("XPrivacy", "transact uid=" + Process.myUid());
+			try {
+				int code = (Integer) param.args[0];
+				Parcel data = (Parcel) param.args[1];
+				IBinder binder = (IBinder) param.thisObject;
+				Log.w("XPrivacy", "transact uid=" + Process.myUid() + " name=" + binder.getInterfaceDescriptor());
+			} catch (Throwable ex) {
+				Util.bug(this, ex);
+			}
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
