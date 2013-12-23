@@ -24,7 +24,6 @@ import android.util.SparseArray;
 public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private TreeMap<String, ApplicationInfo> mMapAppInfo = null;
 	private Map<String, PackageInfo> mMapPkgInfo = new HashMap<String, PackageInfo>();
-	private static Context mContext = null;
 
 	// Cache
 	private Drawable mIcon = null;
@@ -43,9 +42,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
-		if (mContext == null)
-			mContext = context;
-
 		// Get references
 		PackageManager pm = context.getPackageManager();
 
@@ -193,13 +189,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	@Override
 	public int compareTo(ApplicationInfoEx other) {
-		if (mContext == null)
-			return TextUtils.join(", ", getApplicationName()).compareToIgnoreCase(
-					TextUtils.join(", ", other.getApplicationName()));
-
 		// Locale respecting sorter
 		Collator collator = Collator.getInstance(Locale.getDefault());
-
 		return collator.compare(TextUtils.join(", ", getApplicationName()),
 				TextUtils.join(", ", other.getApplicationName()));
 	}
