@@ -1,9 +1,11 @@
 package biz.bokhorst.xprivacy;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -22,6 +24,7 @@ import android.util.SparseArray;
 public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private TreeMap<String, ApplicationInfo> mMapAppInfo = null;
 	private Map<String, PackageInfo> mMapPkgInfo = new HashMap<String, PackageInfo>();
+	private static Context mContext = null;
 
 	// Cache
 	private Drawable mIcon = null;
@@ -40,6 +43,9 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
+		if (mContext == null)
+			mContext = context;
+
 		// Get references
 		PackageManager pm = context.getPackageManager();
 
@@ -187,7 +193,14 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	@Override
 	public int compareTo(ApplicationInfoEx other) {
-		return TextUtils.join(", ", getApplicationName()).compareToIgnoreCase(
+		if (mContext == null)
+			return TextUtils.join(", ", getApplicationName()).compareToIgnoreCase(
+					TextUtils.join(", ", other.getApplicationName()));
+
+		// Locale respecting sorter
+		Collator collator = Collator.getInstance(Locale.getDefault());
+
+		return collator.compare(TextUtils.join(", ", getApplicationName()),
 				TextUtils.join(", ", other.getApplicationName()));
 	}
 }
