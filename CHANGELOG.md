@@ -4,11 +4,11 @@ Changelog
 **Release types**
 
 * TEST: new or updated features with a higher risk for bugs
-* BETA: new or updated features with a low risk for bugs
+* BETA: new or updated features with a lower risk for bugs
 * STABLE: all known bugs fixed; low risk for bugs
 
-STABLE releases have odd minor version numbers from version 1.11.x
-TEST and BETA releases have even minor version numbers from version 1.12.x
+* STABLE releases have odd minor version numbers from version 1.11.x
+* TEST and BETA releases have even minor version numbers from version 1.12.x
 
 **Next release**
 
