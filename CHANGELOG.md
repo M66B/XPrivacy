@@ -4,6 +4,7 @@ Changelog
 **Next release**
 
 * Fixed application notification setting not sticking ([issue](https://github.com/M66B/XPrivacy/issues/1006))
+* Sort applications respecting locale, thanks @[jpeg729](https://github.com/jpeg729)
 * Display if Pro version (only [Pro license](http://www.xprivacy.eu/)) ([issue](https://github.com/M66B/XPrivacy/issues/996))
 * Updated Hindi translation
 * Updated Slovak translation
