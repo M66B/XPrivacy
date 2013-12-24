@@ -1,9 +1,11 @@
 package biz.bokhorst.xprivacy;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -187,7 +189,9 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	@Override
 	public int compareTo(ApplicationInfoEx other) {
-		return TextUtils.join(", ", getApplicationName()).compareToIgnoreCase(
+		// Locale respecting sorter
+		Collator collator = Collator.getInstance(Locale.getDefault());
+		return collator.compare(TextUtils.join(", ", getApplicationName()),
 				TextUtils.join(", ", other.getApplicationName()));
 	}
 }
