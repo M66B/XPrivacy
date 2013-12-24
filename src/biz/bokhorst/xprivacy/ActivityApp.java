@@ -295,7 +295,7 @@ public class ActivityApp extends Activity {
 
 			// Kill
 			boolean experimental = PrivacyManager.getSettingBool(null, this, 0, PrivacyManager.cSettingExperimental,
-					false, true);
+					PrivacyManager.cTestVersion, true);
 			MenuItem kill = appMenu.add(i, MENU_KILL, Menu.NONE, getString(R.string.menu_app_kill));
 			kill.setVisible(experimental);
 

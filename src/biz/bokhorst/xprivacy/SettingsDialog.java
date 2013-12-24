@@ -279,7 +279,7 @@ public class SettingsDialog {
 		boolean usage = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingAndroidUsage, false,
 				false);
 		boolean experimental = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExperimental,
-				false, false);
+				PrivacyManager.cTestVersion, false);
 		String confidence = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingConfidence, "", false);
 		final boolean expert = (dangerous || usage || experimental || !"".equals(confidence));
 		boolean global = (PrivacyManager.getAppSetting(null, context, uid, PrivacyManager.cSettingSerial, null, false) == null);
