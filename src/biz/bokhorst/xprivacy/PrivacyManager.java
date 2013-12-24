@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.lang.reflect.Field;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,8 +13,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -212,6 +215,16 @@ public class PrivacyManager {
 
 	public static List<String> getRestrictions() {
 		return new ArrayList<String>(Arrays.asList(cRestrictionNames));
+	}
+
+	public static TreeMap<String, String> getLocalizedRestrictions(Context context) {
+		// Locale respecting sorter
+		Collator collator = Collator.getInstance(Locale.getDefault());
+		// Map of restrictions sorted by localized name
+		TreeMap<String, String> restrictions = new TreeMap<String, String>(collator);
+		for (String restriction : getRestrictions())
+			restrictions.put(getLocalizedName(context, restriction), restriction);
+		return restrictions;
 	}
 
 	public static MethodDescription getMethod(String restrictionName, String methodName) {
