@@ -97,16 +97,20 @@ public class XApplication extends XHook {
 	}
 
 	public static void manage(Context context, String packageName, String action) {
-		Util.log(null, Log.WARN, "Manage package=" + packageName + " action=" + action);
-		if (packageName == null && XApplication.cActionKillProcess.equals(action)) {
-			Util.log(null, Log.WARN, "Kill all");
-			return;
+		boolean experimental = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExperimental,
+				PrivacyManager.cTestVersion, true);
+		if (experimental) {
+			Util.log(null, Log.INFO, "Manage package=" + packageName + " action=" + action);
+			if (packageName == null && XApplication.cActionKillProcess.equals(action)) {
+				Util.log(null, Log.WARN, "Kill all");
+				return;
+			}
+			Intent manageIntent = new Intent(XApplication.ACTION_MANAGE_PACKAGE);
+			manageIntent.putExtra(XApplication.cAction, action);
+			if (packageName != null)
+				manageIntent.setPackage(packageName);
+			context.sendBroadcast(manageIntent);
 		}
-		Intent manageIntent = new Intent(XApplication.ACTION_MANAGE_PACKAGE);
-		manageIntent.putExtra(XApplication.cAction, action);
-		if (packageName != null)
-			manageIntent.setPackage(packageName);
-		context.sendBroadcast(manageIntent);
 	}
 
 	private class Receiver extends BroadcastReceiver {
@@ -120,7 +124,7 @@ public class XApplication extends XHook {
 		public void onReceive(Context context, Intent intent) {
 			try {
 				String action = intent.getExtras().getString(cAction);
-				Util.log(null, Log.WARN, "Managing uid=" + Process.myUid() + " action=" + action);
+				Util.log(null, Log.INFO, "Managing uid=" + Process.myUid() + " action=" + action);
 				if (cActionKillProcess.equals(action))
 					android.os.Process.killProcess(Process.myPid());
 				else if (cActionFlushCache.equals(action))
@@ -149,7 +153,7 @@ public class XApplication extends XHook {
 		}
 
 		public void setDefaultHandler(Thread.UncaughtExceptionHandler handler) {
-			Util.log(mHook, Log.WARN, "Setting new default handler uid=" + Process.myUid());
+			Util.log(mHook, Log.INFO, "Setting new default handler uid=" + Process.myUid());
 			mDefaultHandler = handler;
 		}
 
