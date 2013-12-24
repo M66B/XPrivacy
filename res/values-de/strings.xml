@@ -23,14 +23,14 @@
     <string name="menu_restriction_all">Beschränkungen invertieren</string>
     <string name="menu_clear_all">Alles löschen</string>
     <string name="menu_restrict_all">Alles beschränken</string>
-    <string name="menu_clear_usage">Clear</string>
+    <string name="menu_clear_usage">Löschen</string>
     <string name="menu_usage_all">Filter invertieren</string>
     <string name="menu_apply">Template übernehmen</string>
     <string name="menu_clear">Nichts (beschränkt)</string>
     <string name="menu_app_launch">Öffnen</string>
     <string name="menu_app_settings">App-Info anzeigen</string>
     <string name="menu_app_store">Im Play Store anzeigen</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">App beenden</string>
     <string name="menu_accounts">Konten für Zugriff freigeben</string>
     <string name="menu_applications">Apps für Zugriff freigeben</string>
     <string name="menu_contacts">Kontakte für Zugriff freigeben</string>
@@ -112,8 +112,8 @@
     <string name="settings_log">Debug-Log (erfordert Geräteneustart)</string>
     <string name="settings_expert">Experten-Modus</string>
     <string name="settings_dangerous">Beschränke "bedenkliche" Funktionen</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_confidence">Maximaler "runterladen" Konfidenzintervall</string>
+    <string name="settings_experimental">Experimentelle Funktionen (Neustart erforderlich)</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>
@@ -124,11 +124,11 @@
     <string name="help_attention">Beschränkungen bedarfen Beachtung</string>
     <string name="help_restricted">Beschränkungen werden geändert</string>
     <string name="help_shared">Beschränkungen werden eingereicht</string>
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="tutorial_mainheader">Wählen Sie die zu beschränkende Kategorie; wählen Sie anzuzeigende Apps durch die Filter</string>
+    <string name="tutorial_mainlist">Tippen Sie auf ein Kontrollkästchen, um die ausgewählte Kategorie für eine App zu beschränken\n
+\nApps werden mit leeren oder gefälschten Daten für die beschränkten Kategorien "gefüttert" \n
+\nTippen Sie auf das App-Icon für detaillierte Beschränkungen und Einstellungen</string>
+    <string name="tutorial_detailsheader">Tippen Sie auf das App-Icon für weitere Aktionen</string>
+    <string name="tutorial_detailslist">Tippen Sie auf den Pfeil, um die Ausnahmen-Funktionen von einer beschränkten Kategorie zu sehen</string>
 
 </resources>
