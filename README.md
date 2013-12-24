@@ -561,12 +561,9 @@ The idea is that everything should appear as normal as possible to an applicatio
 <a name="FAQ29"></a>
 **(29) How about multi-user support?**
 
-The XPrivacy engine works deep within Android and has no information about users.
 Each application is identified by a *uid* and all restrictions are based on this unique identifier.
-Each user has his own set of applications.
-Each user can manage the restrictions for the applications available to him/her.
-If Android uses the same uid for an application that two users share,
-both users can manage the restrictions for this application.
+Each user has his/her own set of applications, which are identified by separate uids.
+So, each user can manage the restrictions for the applications available to him/her.
 
 <a name="FAQ30"></a>
 **(30) Why is the location search in the settings disabled?**
