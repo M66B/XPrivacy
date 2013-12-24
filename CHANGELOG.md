@@ -1,7 +1,20 @@
 Changelog
 =========
 
+**Release types**
+
+* TEST: new or updated features with a higher risk for bugs
+* BETA: new or updated features with a low risk for bugs
+* STABLE: all known bugs fixed; low risk for bugs
+
+STABLE releases have odd minor version numbers from version 1.11.x
+TEST and BETA releases have even minor version numbers from version 1.12.x
+
 **Next release**
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.11 STABLE**
 
 * Fixed application notification setting not sticking ([issue](https://github.com/M66B/XPrivacy/issues/1006))
 * Sort applications respecting locale, thanks @[jpeg729](https://github.com/jpeg729)
@@ -10,8 +23,6 @@ Changelog
 * Updated Slovak translation
 * Updated Slovenian translation
 * Updated Ukrainian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.10.51 BETA**
 
