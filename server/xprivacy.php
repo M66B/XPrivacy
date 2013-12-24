@@ -18,6 +18,13 @@
 		return $ci;
 	}
 
+	// $_SERVER["HTTP_CONTENT_TYPE"]
+	// max_input_vars
+	// post_max_size
+	// [suhosin]
+	// suhosin.request.max_vars = 1000 # Default is 200
+	// suhosin.post.max_vars = 1000 # Default is 200
+
 	// Check if JSON request
 	parse_str($_SERVER['QUERY_STRING']);
 	if (!empty($format) && $format == 'json') {
@@ -25,6 +32,8 @@
 		$ok = true;
 		$body = file_get_contents('php://input');
 		$data = json_decode($body);
+		if (empty($body) || empty($data))
+			error_log('XPrivacy empty: request=' . print_r($_REQUEST, true) . ' raw=' . print_r($HTTP_RAW_POST_DATA, true) . PHP_EOL, 1, $my_email);
 
 		// Send header
 		header('Content-Type: application/json');
@@ -263,7 +272,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="http://updates.faircode.eu/xprivacy">XPrivacy</a>
+					<a class="navbar-brand" href="/xprivacy">XPrivacy</a>
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
@@ -393,7 +402,7 @@
 				<p>This is a voting system for
 					<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
-					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch submitted restriction settings.<br />
+					With a <a href="http://www.xprivacy.eu/">Pro license</a> you can fetch submitted restriction settings.<br />
 					There are currently <?php echo number_format($total, 0, '.', ','); ?> restriction settings
 					for <?php echo number_format($count, 0, '.', ',') ?> applications submitted.
 				</p>

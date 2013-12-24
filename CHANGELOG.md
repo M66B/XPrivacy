@@ -4,7 +4,7 @@ Changelog
 **Next release**
 
 * Fixed application notification setting not sticking ([issue](https://github.com/M66B/XPrivacy/issues/1006))
-* Display if Pro version (only [Pro license](http://www.faircode.eu/xprivacy/)) ([issue](https://github.com/M66B/XPrivacy/issues/996))
+* Display if Pro version (only [Pro license](http://www.xprivacy.eu/)) ([issue](https://github.com/M66B/XPrivacy/issues/996))
 * Updated Hindi translation
 * Updated Slovak translation
 * Updated Slovenian translation
@@ -309,7 +309,7 @@ Changelog
 
 * Filter on permissions filters functions too ([issue](https://github.com/M66B/XPrivacy/issues/695))
 * Select applications to allow ([issue](https://github.com/M66B/XPrivacy/issues/686))
-* Require [Pro license](http://www.faircode.eu/xprivacy/) to allow individual accounts, applications and contacts
+* Require [Pro license](http://www.xprivacy.eu/) to allow individual accounts, applications and contacts
 * Build for Android 4.4 KitKat ([issue](https://github.com/M66B/XPrivacy/issues/733))
 * Added expert mode (disables dangerous restrictions) ([issue](https://github.com/M66B/XPrivacy/issues/716)) ([issue](https://github.com/M66B/XPrivacy/issues/724))
 * Updated Chinese translation
@@ -807,7 +807,7 @@ Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https:
 
 **Version 1.7.28 BETA!**
 
-* Export/import selected accounts/contacts *for the same device only* ([pro version](http://www.faircode.eu/xprivacy/) only)
+* Export/import selected accounts/contacts *for the same device only* ([pro version](http://www.xprivacy.eu/) only)
 * Fixed crash while filtering ([issue](https://github.com/M66B/XPrivacy/issues/402))
 * Updated Simplified Chinese translation
 * Updated Slovenian translation
@@ -1181,7 +1181,7 @@ Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https:
 
 * Split media/sdcard storage restriction (expert only) ([issue](https://github.com/M66B/XPrivacy/issues/125))
 * Move shell restriction out of expert mode, load/Library by default not restricted
-* Move XPrivacy files to the folder .xprivacy ([pro version](http://www.faircode.eu/xprivacy/) only) ([issue](https://github.com/M66B/XPrivacy/issues/27))
+* Move XPrivacy files to the folder .xprivacy ([pro version](http://www.xprivacy.eu/) only) ([issue](https://github.com/M66B/XPrivacy/issues/27))
 * Fake disconnected state for internet restriction ([issue](https://github.com/M66B/XPrivacy/issues/132))
 * Fake unmounted state for storage restriction (external storage only)
 * Fake Google services framework ID, not restricted by default, thanks @[vipere](https://github.com/vipere) ([issue](https://github.com/M66B/XPrivacy/issues/134))
@@ -1265,7 +1265,7 @@ Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https:
 
 **Version 0.35**
 
-* Speed up import ([pro version](http://www.faircode.eu/xprivacy/) only) ([issue](https://github.com/M66B/XPrivacy/issues/70))
+* Speed up import ([pro version](http://www.xprivacy.eu/) only) ([issue](https://github.com/M66B/XPrivacy/issues/70))
 * Remove pro menu when pro version activated
 * Send support information for detected incompatibilities ([issue](https://github.com/M66B/XPrivacy/issues/82), [issue](https://github.com/M66B/XPrivacy/issues/83))
 * Fixed potential account data leak ([issue](https://github.com/M66B/XPrivacy/issues/75))
@@ -1284,7 +1284,7 @@ Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https:
 **Version 0.32**
 
 * Move *Shell* category to expert mode
-* Export/import function restrictions ([pro version](http://www.faircode.eu/xprivacy/) only)
+* Export/import function restrictions ([pro version](http://www.xprivacy.eu/) only)
 * Ongoing notification while exporting/importing
 * Added link to restrictions in help
 * Prevent application details reached from notification to show up in recent
@@ -1370,7 +1370,7 @@ Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https:
 
 * Renamed category *Actions* to *Calling* again
 * Moved opening links to new category *View*
-* Export/import settings, like expert, location (export/import features [pro version](http://www.faircode.eu/xprivacy/) only)
+* Export/import settings, like expert, location (export/import features [pro version](http://www.xprivacy.eu/) only)
 
 **Version 0.21**
 
@@ -1392,7 +1392,7 @@ Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https:
 **Version 0.18**
 
 * Basic check for updates (manually)
-* Link to [pro version](http://www.faircode.eu/xprivacy/)
+* Link to [pro version](http://www.xprivacy.eu/)
 * Renamed category *Calling* to *Actions* and moved opening browsers links into this category
 
 **Version 0.17**
@@ -1401,7 +1401,7 @@ Contributed by [tonymanou](https://github.com/tonymanou): ([pull request](https:
 * Display system apps in expert mode only
 * Restrict opening links ([issue](https://github.com/M66B/XPrivacy/issues/15))
 * Restrict serial number (system/build properties)
-* Export/import ([issue](https://github.com/M66B/XPrivacy/issues/18)) ([pro version](http://www.faircode.eu/xprivacy/) only)
+* Export/import ([issue](https://github.com/M66B/XPrivacy/issues/18)) ([pro version](http://www.xprivacy.eu/) only)
 
 **Version 0.16**
 
