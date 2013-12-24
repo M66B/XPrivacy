@@ -55,8 +55,8 @@ public class XBinder extends XHook {
 		}
 
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XBinder(Methods.execTransact, null));
-		listHook.add(new XBinder(Methods.transact, null));
+		// listHook.add(new XBinder(Methods.execTransact, null));
+		// listHook.add(new XBinder(Methods.transact, null));
 		return listHook;
 	}
 
@@ -72,8 +72,9 @@ public class XBinder extends XHook {
 				Parcel data = (Parcel) mObtain.invoke(null, dataObj);
 				Parcel reply = (Parcel) mObtain.invoke(null, replyObj);
 				IBinder binder = (IBinder) param.thisObject;
-				//boolean result = execTransact(binder, code, data, reply, flags);
-				//param.setResult(result);
+				// boolean result = execTransact(binder, code, data, reply,
+				// flags);
+				// param.setResult(result);
 			}
 		} else if (mMethod == Methods.transact) {
 			try {
