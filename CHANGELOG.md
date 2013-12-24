@@ -8,9 +8,16 @@ Changelog
 * STABLE: all known bugs fixed; low risk for bugs
 
 Stable releases have odd minor version numbers from version 1.11.x.<br /> 
-Test and beta releases have even minor version numbers from version 1.12.x
+Test and beta releases have even minor version numbers from version 1.12.x.<br />
+Test and beta releases will have experimental functions enabled by default.
 
-**Next release**
+**Next test/beta release**
+
+* Experimental functions enabled by default
+
+**Next stable release**
+
+* ...
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
