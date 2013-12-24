@@ -89,7 +89,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XNfcAdapter.getInstances());
 
 		// Package manager service
-		hookAll(XPackageManagerService.getInstances());
+		hookAll(XProcess.getInstances());
 
 		// Process builder
 		hookAll(XProcessBuilder.getInstances());
