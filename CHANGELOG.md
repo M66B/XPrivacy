@@ -15,10 +15,12 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Fixed restricting internet and storage for multi-user environments ([issue](https://github.com/M66B/XPrivacy/issues/357))
 * Experimental functions enabled by default
+* Updated German translation
 
 **Next stable release**
 
 * Fixed restricting internet and storage for multi-user environments ([issue](https://github.com/M66B/XPrivacy/issues/357))
+* Updated German translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
