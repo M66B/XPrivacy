@@ -174,11 +174,6 @@ public class Util {
 		return userId;
 	}
 
-	public static String getDataDirectory() {
-		return Environment.getDataDirectory() + File.separator + "data" + File.separator
-				+ Util.class.getPackage().getName();
-	}
-
 	public static String getUserDataDirectory() {
 		// Build data directory
 		String dataDir = Environment.getDataDirectory() + File.separator;
