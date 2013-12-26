@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -32,8 +33,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
+import android.os.UserHandle;
 import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
@@ -144,6 +147,28 @@ public class Util {
 		return null;
 	}
 
+	@SuppressLint("NewApi")
+	public static String getUserDataDirectory() {
+		// UserHandle: public static final int getUserId(int uid)
+		int userId = 0;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+			try {
+				Method method = (Method) UserHandle.class.getDeclaredMethod("getUserId", int.class);
+				userId = (Integer) method.invoke(null, Process.myUid());
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+
+		// Build data directory
+		String dataDir = Environment.getDataDirectory() + File.separator;
+		if (userId == 0 && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
+			dataDir += "data";
+		else
+			dataDir += "user" + File.separator + userId;
+		dataDir += File.separator + Util.class.getPackage().getName();
+		return dataDir;
+	}
+
 	public static String[] getProLicense() {
 		// Get license file name
 		String storageDir = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -152,9 +177,7 @@ public class Util {
 			licenseFile = new File(storageDir + File.separator + ".xprivacy" + File.separator + LICENSE_FILE_NAME);
 
 		// Get imported license file name
-		String packageName = Util.class.getPackage().getName();
-		String importedLicense = Environment.getDataDirectory() + File.separator + "data" + File.separator
-				+ packageName + File.separator + LICENSE_FILE_NAME;
+		String importedLicense = getUserDataDirectory() + File.separator + LICENSE_FILE_NAME;
 
 		// Import license file
 		if (licenseFile.exists()) {

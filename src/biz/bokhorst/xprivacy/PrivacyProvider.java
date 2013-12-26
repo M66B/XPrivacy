@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -25,8 +26,9 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
-import android.os.Environment;
+import android.os.Build;
 import android.os.Process;
+import android.os.UserHandle;
 import android.util.Log;
 
 @SuppressWarnings("deprecation")
@@ -512,21 +514,28 @@ public class PrivacyProvider extends ContentProvider {
 
 	// Helper methods
 
+	@SuppressLint("NewApi")
 	private void enforcePermission() throws SecurityException {
-		if (Binder.getCallingUid() != Process.myUid())
+		// UserHandle: public static final int getAppId(int uid)
+		int uid = Binder.getCallingUid();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+			try {
+				Method method = (Method) UserHandle.class.getDeclaredMethod("getAppId", int.class);
+				uid = (Integer) method.invoke(null, uid);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		if (uid != Process.myUid())
 			throw new SecurityException();
 	}
 
 	private static String getPrefFileName(String preference) {
-		String packageName = PrivacyManager.class.getPackage().getName();
-		return Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName + File.separator
-				+ "shared_prefs" + File.separator + preference + ".xml";
+		return Util.getUserDataDirectory() + File.separator + "shared_prefs" + File.separator + preference + ".xml";
 	}
 
 	private static String getPrefFileName(String preference, int uid) {
-		String packageName = PrivacyManager.class.getPackage().getName();
-		return Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName + File.separator
-				+ "shared_prefs" + File.separator + preference + "." + uid + ".xml";
+		return Util.getUserDataDirectory() + File.separator + "shared_prefs" + File.separator + preference + "." + uid
+				+ ".xml";
 	}
 
 	private static void setPrefFileReadable(String preference) {
@@ -538,9 +547,7 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	public static void fixFilePermissions() {
-		String packageName = PrivacyManager.class.getPackage().getName();
-		File folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName
-				+ File.separator + "shared_prefs");
+		File folder = new File(Util.getUserDataDirectory() + File.separator + "shared_prefs");
 		folder.setReadable(true, false);
 		File list[] = folder.listFiles();
 		if (list != null)
@@ -571,9 +578,7 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	private void writeMetaData() throws IOException, FileNotFoundException {
-		String packageName = PrivacyManager.class.getPackage().getName();
-		File out = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName
-				+ File.separator + "meta.xml");
+		File out = new File(Util.getUserDataDirectory() + File.separator + "meta.xml");
 		Util.log(null, Log.INFO, "Writing meta=" + out.getAbsolutePath());
 		InputStream is = getContext().getAssets().open("meta.xml");
 		OutputStream os = new FileOutputStream(out.getAbsolutePath());
@@ -588,9 +593,8 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	private void convertRestrictions() throws IOException {
-		String packageName = PrivacyManager.class.getPackage().getName();
-		File source = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName
-				+ File.separator + "shared_prefs" + File.separator + "biz.bokhorst.xprivacy.provider.xml");
+		File source = new File(Util.getUserDataDirectory() + File.separator + "shared_prefs" + File.separator
+				+ "biz.bokhorst.xprivacy.provider.xml");
 		File backup = new File(source.getAbsoluteFile() + ".orig");
 		if (source.exists() && !backup.exists()) {
 			Util.log(null, Log.INFO, "Converting restrictions");

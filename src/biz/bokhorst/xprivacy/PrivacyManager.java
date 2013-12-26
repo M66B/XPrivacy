@@ -36,7 +36,6 @@ import android.database.Cursor;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Environment;
 import android.os.Process;
 import android.os.SystemClock;
 import android.util.Log;
@@ -140,9 +139,7 @@ public class PrivacyManager {
 	static {
 		// Scan meta data
 		try {
-			String packageName = PrivacyManager.class.getPackage().getName();
-			File in = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator + packageName
-					+ File.separator + "meta.xml");
+			File in = new File(Util.getUserDataDirectory() + File.separator + "meta.xml");
 			Util.log(null, Log.INFO, "Reading meta=" + in.getAbsolutePath());
 			FileInputStream fis = null;
 			try {

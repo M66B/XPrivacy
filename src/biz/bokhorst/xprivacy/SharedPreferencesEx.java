@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 import android.content.SharedPreferences;
-import android.os.Environment;
 import android.util.Log;
 
 import com.android.internal.util.XmlUtils;
@@ -39,8 +38,8 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	}
 
 	public SharedPreferencesEx(String packageName, String prefFileName) {
-		mFile = new File(Environment.getDataDirectory(), "data" + File.pathSeparator + packageName + File.pathSeparator
-				+ "shared_prefs" + File.pathSeparator + prefFileName + ".xml");
+		mFile = new File(Util.getUserDataDirectory() + File.pathSeparator + "shared_prefs" + File.pathSeparator
+				+ prefFileName + ".xml");
 		mBackupFile = makeBackupFile(mFile);
 		startLoadFromDisk();
 	}
