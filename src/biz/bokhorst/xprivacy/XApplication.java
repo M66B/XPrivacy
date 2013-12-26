@@ -67,7 +67,8 @@ public class XApplication extends XHook {
 			}
 
 			// Install receiver for package management
-			if (Util.getAppId(Process.myUid()) != PrivacyManager.cAndroidUid) {
+			int uid = Process.myUid();
+			if (Util.getAppId(uid) != PrivacyManager.cAndroidUid && !PrivacyManager.isIsolated(uid)) {
 				boolean experimental = PrivacyManager.getSettingBool(null, null, 0,
 						PrivacyManager.cSettingExperimental, PrivacyManager.cTestVersion, true);
 				if (experimental && !mReceiverInstalled)
