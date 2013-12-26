@@ -566,7 +566,7 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	private void writeMetaData() throws IOException, FileNotFoundException {
-		File out = new File(Util.getUserDataDirectory() + File.separator + "meta.xml");
+		File out = new File(Util.getDataDirectory() + File.separator + "meta.xml");
 		Util.log(null, Log.INFO, "Writing meta=" + out.getAbsolutePath());
 		InputStream is = getContext().getAssets().open("meta.xml");
 		OutputStream os = new FileOutputStream(out.getAbsolutePath());

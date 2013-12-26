@@ -174,11 +174,16 @@ public class Util {
 		return userId;
 	}
 
+	public static String getDataDirectory() {
+		return Environment.getDataDirectory() + File.separator + "data" + File.separator
+				+ Util.class.getPackage().getName();
+	}
+
 	public static String getUserDataDirectory() {
 		// Build data directory
 		String dataDir = Environment.getDataDirectory() + File.separator;
 		int userId = getUserId(Process.myUid());
-		if (userId == 0 && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
+		if (userId == 0)
 			dataDir += "data";
 		else
 			dataDir += "user" + File.separator + userId;

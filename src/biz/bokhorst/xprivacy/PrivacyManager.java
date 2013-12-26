@@ -139,7 +139,7 @@ public class PrivacyManager {
 	static {
 		// Scan meta data
 		try {
-			File in = new File(Util.getUserDataDirectory() + File.separator + "meta.xml");
+			File in = new File(Util.getDataDirectory() + File.separator + "meta.xml");
 			Util.log(null, Log.INFO, "Reading meta=" + in.getAbsolutePath());
 			FileInputStream fis = null;
 			try {
