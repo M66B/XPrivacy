@@ -23,14 +23,14 @@
     <string name="menu_restriction_all">Thay đổi các sự hạn chế</string>
     <string name="menu_clear_all">Xóa tất cả</string>
     <string name="menu_restrict_all">Hạn chế tất cả</string>
-    <string name="menu_clear_usage">Clear</string>
+    <string name="menu_clear_usage">Xóa</string>
     <string name="menu_usage_all">Thay đổi bộ lọc</string>
     <string name="menu_apply">Áp dụng thiết lập mẫu</string>
     <string name="menu_clear">Xóa thiết lập</string>
     <string name="menu_app_launch">Mở ứng dụng</string>
     <string name="menu_app_settings">Chi tiết ứng dụng</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">Tắt ứng dụng</string>
     <string name="menu_accounts">Chọn tài khoản cho phép</string>
     <string name="menu_applications">Chọn ứng dụng để cấp phép</string>
     <string name="menu_contacts">Chọn liên lạc cho phép</string>
@@ -68,7 +68,7 @@
     <string name="restrict_messages">Tin nhắn (SMS, MMS)</string>
     <string name="restrict_network">Mạng (các địa chỉ mạng)</string>
     <string name="restrict_notifications">Thông báo</string>
-    <string name="restrict_overlay">Overlay</string>
+    <string name="restrict_overlay">Hiển thị trên một phần của ứng dụng (đang hiển thị) khác</string>
     <string name="restrict_phone">Điện thoại (ID, số điện thoại, cuộc gọi)</string>
     <string name="restrict_sensors">Cảm biến</string>
     <string name="restrict_storage">Lưu trữ (media, thẻ SD)</string>
@@ -111,8 +111,8 @@
     <string name="settings_log">Nhật ký lỗi (cần khởi động lại)</string>
     <string name="settings_expert">Chế độ nâng cao</string>
     <string name="settings_dangerous">Hạn chế các chức năng nguy hiểm</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_confidence">Tối đa khoảng thời gian lấy về các thiết lập</string>
+    <string name="settings_experimental">Các chức năng thử nghiệm (Yêu cầu khởi động lại)</string>
     <string name="help_application">Ứng dụng</string>
     <string name="help_internet">có quyền truy cập mạng</string>
     <string name="help_granted">có quyền của hệ điều hành</string>
@@ -123,11 +123,11 @@
     <string name="help_attention">các sự hạn chế cần xem xét</string>
     <string name="help_restricted">các sự hạn chế đã được thay đổi</string>
     <string name="help_shared">các sự hạn chế đã được gửi đi</string>
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="tutorial_mainheader">Lựa chọn danh mục để hạn chế; chọn các ứng dụng hiển thị với các bộ lọc</string>
+    <string name="tutorial_mainlist">Tích vào một ô chọn để hạn chế danh mục đang được chọn cho một ứng dụng\n
+\nỨng dụng sẽ được nhập thông tin giả hoặc thông tin rỗng cho các danh mục bị hạn chế\n
+\nChọn vào biểu tượng của ứng dụng để xem chi tiết các thiết lập và các sự hạn chế</string>
+    <string name="tutorial_detailsheader">Chọn vào biểu tượng của ứng dụng để sử dụng các chức năng khác</string>
+    <string name="tutorial_detailslist">Chọn vào mũi tên xuống để xem các hàm ngoại lệ của danh mục hạn chế</string>
 
 </resources>
