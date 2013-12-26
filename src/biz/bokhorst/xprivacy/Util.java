@@ -148,19 +148,36 @@ public class Util {
 	}
 
 	@SuppressLint("NewApi")
-	public static String getUserDataDirectory() {
-		// UserHandle: public static final int getUserId(int uid)
-		int userId = 0;
+	public static int getAppId(int uid) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
 			try {
-				Method method = (Method) UserHandle.class.getDeclaredMethod("getUserId", int.class);
-				userId = (Integer) method.invoke(null, Process.myUid());
+				// UserHandle: public static final int getAppId(int uid)
+				Method method = (Method) UserHandle.class.getDeclaredMethod("getAppId", int.class);
+				uid = (Integer) method.invoke(null, uid);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
+		return uid;
+	}
 
+	@SuppressLint("NewApi")
+	public static int getUserId(int uid) {
+		int userId = 0;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+			try {
+				// UserHandle: public static final int getUserId(int uid)
+				Method method = (Method) UserHandle.class.getDeclaredMethod("getUserId", int.class);
+				userId = (Integer) method.invoke(null, uid);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		return userId;
+	}
+
+	public static String getUserDataDirectory() {
 		// Build data directory
 		String dataDir = Environment.getDataDirectory() + File.separator;
+		int userId = getUserId(Process.myUid());
 		if (userId == 0 && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
 			dataDir += "data";
 		else

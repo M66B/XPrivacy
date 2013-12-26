@@ -396,14 +396,17 @@ public class PrivacyManager {
 	public static final int LAST_SHARED_APPLICATION_GID = 59999;
 
 	public static boolean isApplication(int uid) {
+		uid = Util.getAppId(uid);
 		return (uid >= Process.FIRST_APPLICATION_UID && uid <= Process.LAST_APPLICATION_UID);
 	}
 
 	public static boolean isShared(int uid) {
+		uid = Util.getAppId(uid);
 		return (uid >= FIRST_SHARED_APPLICATION_GID && uid <= LAST_SHARED_APPLICATION_GID);
 	}
 
 	public static boolean isIsolated(int uid) {
+		uid = Util.getAppId(uid);
 		return (uid >= FIRST_ISOLATED_UID && uid <= LAST_ISOLATED_UID);
 	}
 
@@ -417,7 +420,7 @@ public class PrivacyManager {
 		if (isIsolated(Process.myUid()))
 			return false;
 
-		if (Process.myUid() == cAndroidUid)
+		if (Util.getAppId(Process.myUid()) == cAndroidUid)
 			if (!PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false))
 				return false;
 
