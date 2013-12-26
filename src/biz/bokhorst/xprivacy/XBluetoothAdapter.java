@@ -8,6 +8,7 @@ import java.util.List;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.Binder;
+import android.os.Build;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -40,10 +41,12 @@ public class XBluetoothAdapter extends XHook {
 	}
 
 	public static List<XHook> getInstances(Object instance) {
-		String className = (instance == null ? "android.bluetooth.BluetoothAdapter" : instance.getClass().getName());
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XBluetoothAdapter(Methods.getAddress, PrivacyManager.cNetwork, className));
-		listHook.add(new XBluetoothAdapter(Methods.getBondedDevices, PrivacyManager.cNetwork, className));
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+			String className = (instance == null ? "android.bluetooth.BluetoothAdapter" : instance.getClass().getName());
+			listHook.add(new XBluetoothAdapter(Methods.getAddress, PrivacyManager.cNetwork, className));
+			listHook.add(new XBluetoothAdapter(Methods.getBondedDevices, PrivacyManager.cNetwork, className));
+		}
 		return listHook;
 	}
 
