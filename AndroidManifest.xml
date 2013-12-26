@@ -130,7 +130,6 @@
             android:enabled="true"
             android:exported="true"
             android:process=":provider"
-            android:singleUser="true"
             android:syncable="false" >
         </provider>
     </application>
