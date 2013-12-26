@@ -13,14 +13,19 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next test/beta release**
 
+* Fixed getting restrictions for multi-user environments ([issue](https://github.com/M66B/XPrivacy/issues/357))
 * Fixed restricting internet and storage for multi-user environments ([issue](https://github.com/M66B/XPrivacy/issues/357))
 * Experimental functions enabled by default
+* Added location restriction for Google Play services ([issue](https://github.com/M66B/XPrivacy/issues/1011))
 * Updated German translation
 * Updated Vietnamese translation
 
 **Next stable release**
 
+* Fixed getting restrictions for multi-user environments ([issue](https://github.com/M66B/XPrivacy/issues/357))
 * Fixed restricting internet and storage for multi-user environments ([issue](https://github.com/M66B/XPrivacy/issues/357))
+* Experimental functions disabled by default
+* Added location restriction for Google Play services ([issue](https://github.com/M66B/XPrivacy/issues/1011))
 * Updated German translation
 * Updated Vietnamese translation
 

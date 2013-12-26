@@ -88,7 +88,12 @@
     <Hook restriction="location" method="getNeighboringCellInfo" permissions="ACCESS_COARSE_UPDATES" sdk="14" />
     <Hook restriction="location" method="getAllCellInfo" permissions="ACCESS_COARSE_UPDATES" sdk="17" />
     <Hook restriction="location" method="getScanResults" dangerous="true" permissions="ACCESS_WIFI_STATE" sdk="14" />
-    <Hook restriction="location" method="connect" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
+    <Hook restriction="location" method="GMS.addGeofences" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+    <Hook restriction="location" method="GMS.connect" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" dangerous="true" />
+    <Hook restriction="location" method="GMS.getLastLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+    <Hook restriction="location" method="GMS.removeGeofences" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+    <Hook restriction="location" method="GMS.removeLocationUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+    <Hook restriction="location" method="GMS.requestLocationUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 
     <Hook restriction="media" method="startRecording" permissions="RECORD_AUDIO" sdk="14" />
     <Hook restriction="media" method="setPreviewCallback" permissions="CAMERA" sdk="14" />

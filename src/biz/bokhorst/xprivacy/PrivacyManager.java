@@ -172,7 +172,7 @@ public class PrivacyManager {
 				String dangerous = attributes.getValue("dangerous");
 				String restart = attributes.getValue("restart");
 				String permissions = attributes.getValue("permissions");
-				int sdk = Integer.parseInt(attributes.getValue("sdk"));
+				int sdk = (attributes.getValue("sdk") == null ? 0 : Integer.parseInt(attributes.getValue("sdk")));
 
 				// Add meta data
 				if (Build.VERSION.SDK_INT >= sdk) {

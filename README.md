@@ -166,10 +166,10 @@ For easy usage, data is restricted by category:
 	* return fake supplicant disconnected state
 <a name="location"></a>
 * Location
-	* return a random or set location
+	* return a random or set location (also for Google Play services)
 	* return empty cell location
 	* return an empty list of (neighboring) cell info
-	* prevents geofences from being set
+	* prevents geofences from being set (also for Google Play services)
 	* prevents proximity alerts from being set
 	* prevents sending NMEA data to an application
 	* prevent phone state from being sent to an application
@@ -827,6 +827,7 @@ Using Eclipse:
 * Close Eclipse and copy the project from the temporary location over the imported project
 	* Make sure you copy all hidden files
 * Add the Xposed library to the build path as described [here](https://github.com/rovo89/XposedBridge/wiki/Development-tutorial#making-the-project-an-xposed-module)
+* Add the Google Play services library as decribed [here](https://developer.android.com/google/play-services/setup.html)
 
 Testing:
 
