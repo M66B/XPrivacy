@@ -40,22 +40,25 @@ public class XPackageManagerService extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.checkUidPermission) {
-			if (param.args.length >= 2) {
-				String permissionName = (String) param.args[0];
-				int uid = (Integer) param.args[1];
-				if (INTERACT_ACROSS_USERS.equals(permissionName)) {
-					// public String[] getPackagesForUid(int uid)
-					Method method = param.thisObject.getClass().getDeclaredMethod("getPackagesForUid", int.class);
-					String[] packageName = (String[]) method.invoke(param.thisObject, uid);
-					if (packageName != null && packageName.length > 0) {
-						String self = XPackageParser.class.getPackage().getName();
-						if (self.equals(packageName[0])) {
-							Util.log(this, Log.WARN, "Allowing single user uid=" + uid);
-							param.setResult(PackageManager.PERMISSION_GRANTED);
+			if (param.args.length >= 2)
+				try {
+					String permissionName = (String) param.args[0];
+					int uid = (Integer) param.args[1];
+					if (INTERACT_ACROSS_USERS.equals(permissionName)) {
+						// public String[] getPackagesForUid(int uid)
+						Method method = param.thisObject.getClass().getDeclaredMethod("getPackagesForUid", int.class);
+						String[] packageName = (String[]) method.invoke(param.thisObject, uid);
+						if (packageName != null && packageName.length > 0) {
+							String self = XPackageManagerService.class.getPackage().getName();
+							if (self.equals(packageName[0])) {
+								Util.log(this, Log.WARN, "Allowing single user uid=" + uid);
+								param.setResult(PackageManager.PERMISSION_GRANTED);
+							}
 						}
 					}
+				} catch (Throwable ex) {
+					Util.bug(this, ex);
 				}
-			}
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
