@@ -441,6 +441,8 @@ public class PrivacyProvider extends ContentProvider {
 		try {
 			long now = new Date().getTime();
 			File file = new File(getPrefFileName(PREF_RESTRICTION, uid));
+			if (!file.exists())
+				Util.log(null, Log.INFO, "Not found file=" + file.getAbsolutePath());
 
 			synchronized (mFallbackRestrictionLock) {
 				if (mFallbackRestrictions == null || mFallbackRestrictionsUid != uid) {
@@ -472,6 +474,8 @@ public class PrivacyProvider extends ContentProvider {
 		try {
 			long now = new Date().getTime();
 			File file = new File(getPrefFileName(PREF_SETTINGS));
+			if (!file.exists())
+				Util.log(null, Log.INFO, "Not found file=" + file.getAbsolutePath());
 
 			synchronized (mFallbackSettingsLock) {
 				// Initial load
@@ -517,12 +521,13 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	private static String getPrefFileName(String preference) {
-		return Util.getUserDataDirectory() + File.separator + "shared_prefs" + File.separator + preference + ".xml";
+		return Util.getUserDataDirectory(Process.myUid()) + File.separator + "shared_prefs" + File.separator
+				+ preference + ".xml";
 	}
 
 	private static String getPrefFileName(String preference, int uid) {
-		return Util.getUserDataDirectory() + File.separator + "shared_prefs" + File.separator + preference + "." + uid
-				+ ".xml";
+		return Util.getUserDataDirectory(uid) + File.separator + "shared_prefs" + File.separator + preference + "."
+				+ uid + ".xml";
 	}
 
 	private static void setPrefFileReadable(String preference) {
@@ -534,7 +539,7 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	public static void fixFilePermissions() {
-		File folder = new File(Util.getUserDataDirectory() + File.separator + "shared_prefs");
+		File folder = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "shared_prefs");
 		folder.setReadable(true, false);
 		File list[] = folder.listFiles();
 		if (list != null)
@@ -565,7 +570,7 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	private void writeMetaData() throws IOException, FileNotFoundException {
-		File out = new File(Util.getUserDataDirectory() + File.separator + "meta.xml");
+		File out = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
 		Util.log(null, Log.INFO, "Writing meta=" + out.getAbsolutePath());
 		InputStream is = getContext().getAssets().open("meta.xml");
 		OutputStream os = new FileOutputStream(out.getAbsolutePath());
@@ -580,8 +585,8 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	private void convertRestrictions() throws IOException {
-		File source = new File(Util.getUserDataDirectory() + File.separator + "shared_prefs" + File.separator
-				+ "biz.bokhorst.xprivacy.provider.xml");
+		File source = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "shared_prefs"
+				+ File.separator + "biz.bokhorst.xprivacy.provider.xml");
 		File backup = new File(source.getAbsoluteFile() + ".orig");
 		if (source.exists() && !backup.exists()) {
 			Util.log(null, Log.INFO, "Converting restrictions");

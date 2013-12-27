@@ -174,10 +174,10 @@ public class Util {
 		return userId;
 	}
 
-	public static String getUserDataDirectory() {
+	public static String getUserDataDirectory(int uid) {
 		// Build data directory
 		String dataDir = Environment.getDataDirectory() + File.separator;
-		int userId = getUserId(Process.myUid());
+		int userId = getUserId(uid);
 		if (userId == 0)
 			dataDir += "data";
 		else
@@ -194,7 +194,7 @@ public class Util {
 			licenseFile = new File(storageDir + File.separator + ".xprivacy" + File.separator + LICENSE_FILE_NAME);
 
 		// Get imported license file name
-		String importedLicense = getUserDataDirectory() + File.separator + LICENSE_FILE_NAME;
+		String importedLicense = getUserDataDirectory(Process.myUid()) + File.separator + LICENSE_FILE_NAME;
 
 		// Import license file
 		if (licenseFile.exists()) {
