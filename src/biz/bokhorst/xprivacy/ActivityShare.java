@@ -364,7 +364,7 @@ public class ActivityShare extends Activity {
 		private Map<String, Map<String, List<MethodDescription>>> mMapPackage = new HashMap<String, Map<String, List<MethodDescription>>>();
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 		private int mProgress = 0;
-		private int mCurrent = 0;
+		private List<Integer> mImportedIds = new ArrayList<Integer>();
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -425,14 +425,17 @@ public class ActivityShare extends Activity {
 					String methodName = attributes.getValue("Method");
 					boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
 
-					// Progress report
-					if (id != mCurrent) {
-						mCurrent = id;
-						reportProgress();
-					}
-
 					// Get uid
 					int uid = getUid(id);
+
+					// Progress report and pre-import cleanup
+					if (!mImportedIds.contains(id)) {
+						mImportedIds.add(id);
+						reportProgress(id);
+						if (uid >= 0)
+							PrivacyManager.deleteRestrictions(ActivityShare.this, uid);
+					}
+
 					if (uid >= 0)
 						PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName, methodName,
 								restricted);
@@ -482,11 +485,11 @@ public class ActivityShare extends Activity {
 			}
 		}
 
-		private void reportProgress() {
+		private void reportProgress(int id) {
 			// Send progress info to main activity
 			Intent progressIntent = new Intent(cProgressReport);
 			progressIntent.putExtra(cProgressMessage,
-					String.format("%s: %s", getString(R.string.menu_import), mMapId.get(mCurrent)));
+					String.format("%s: %s", getString(R.string.menu_import), mMapId.get(id)));
 			progressIntent.putExtra(cProgressMax, mMapId.size());
 			progressIntent.putExtra(cProgressValue, ++mProgress);
 			mBroadcastManager.sendBroadcast(progressIntent);
