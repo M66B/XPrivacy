@@ -1066,6 +1066,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private List<ApplicationInfoEx> mListApp;
 		private String mRestrictionName;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		private Integer mFilterOpId = 0;
 
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
@@ -1096,6 +1097,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint) {
 				FilterResults results = new FilterResults();
+				int filterOpId;
+
+				synchronized (mFilterOpId) {
+					filterOpId = ++mFilterOpId;
+				}
 
 				// Get arguments
 				String[] components = ((String) constraint).split("\\n");
@@ -1113,15 +1119,20 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				int max = AppListAdapter.this.mListApp.size();
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListApp) {
+					// If another filter op has started, stop short
+					if (filterOpId != mFilterOpId)
+						return null;
+
+					// Send progress info to main activity
 					current++;
 					if (!mBatchOpRunning && current % 5 == 0) {
-						// Send progress info to main activity
 						Intent progressIntent = new Intent(ActivityShare.cProgressReport);
 						progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.msg_applying));
 						progressIntent.putExtra(ActivityShare.cProgressMax, max);
 						progressIntent.putExtra(ActivityShare.cProgressValue, current);
 						LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
 					}
+
 					// Get if name contains
 					boolean contains = false;
 					if (!fName.equals(""))
@@ -1184,29 +1195,31 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			@SuppressWarnings("unchecked")
 			protected void publishResults(CharSequence constraint, FilterResults results) {
-				clear();
-				TextView tvStats = (TextView) findViewById(R.id.tvStats);
-				TextView tvState = (TextView) findViewById(R.id.tvState);
-				ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
-				pbFilter.setVisibility(ProgressBar.GONE);
-				tvStats.setVisibility(TextView.VISIBLE);
-				tvStats.setText(results.count + "/" + AppListAdapter.this.mListApp.size());
+				if (results != null) {
+					clear();
+					TextView tvStats = (TextView) findViewById(R.id.tvStats);
+					TextView tvState = (TextView) findViewById(R.id.tvState);
+					ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
+					pbFilter.setVisibility(ProgressBar.GONE);
+					tvStats.setVisibility(TextView.VISIBLE);
+					tvStats.setText(results.count + "/" + AppListAdapter.this.mListApp.size());
 
-				Intent progressIntent = new Intent(ActivityShare.cProgressReport);
-				progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.title_restrict));
-				progressIntent.putExtra(ActivityShare.cProgressMax, 1);
-				progressIntent.putExtra(ActivityShare.cProgressValue, 0);
-				LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
+					Intent progressIntent = new Intent(ActivityShare.cProgressReport);
+					progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.title_restrict));
+					progressIntent.putExtra(ActivityShare.cProgressMax, 1);
+					progressIntent.putExtra(ActivityShare.cProgressValue, 0);
+					LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
 
-				// Adjust progress state width
-				RelativeLayout.LayoutParams tvStateLayout = (RelativeLayout.LayoutParams) tvState.getLayoutParams();
-				tvStateLayout.addRule(RelativeLayout.LEFT_OF, R.id.tvStats);
+					// Adjust progress state width
+					RelativeLayout.LayoutParams tvStateLayout = (RelativeLayout.LayoutParams) tvState.getLayoutParams();
+					tvStateLayout.addRule(RelativeLayout.LEFT_OF, R.id.tvStats);
 
-				if (results.values == null)
-					notifyDataSetInvalidated();
-				else {
-					addAll((ArrayList<ApplicationInfoEx>) results.values);
-					notifyDataSetChanged();
+					if (results.values == null)
+						notifyDataSetInvalidated();
+					else {
+						addAll((ArrayList<ApplicationInfoEx>) results.values);
+						notifyDataSetChanged();
+					}
 				}
 			}
 		}
