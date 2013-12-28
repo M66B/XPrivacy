@@ -72,8 +72,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private String mSharingState = null;
 	private Handler mHandler = new Handler();
 	private Runnable mTimerRunnable = null;
-	private List<String> mLocalizedRestrictions;
-	private List<String> mSortedRestrictions;
 
 	public static final int STATE_ATTENTION = 0;
 	public static final int STATE_RESTRICTED = 1;
@@ -141,15 +139,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_pro)));
 
 		// Get localized restriction name
-		TreeMap<String, String> localizedRestrictions = PrivacyManager.getLocalizedRestrictions(this);
-		mLocalizedRestrictions = new ArrayList<String>(localizedRestrictions.navigableKeySet());
-		mLocalizedRestrictions.add(0, getString(R.string.menu_all));
-		mSortedRestrictions = new ArrayList<String>(localizedRestrictions.values());
+		List<String> listRestrictionName = new ArrayList<String>(PrivacyManager.getLocalizedRestrictions(this)
+				.navigableKeySet());
+		listRestrictionName.add(0, getString(R.string.menu_all));
 
 		// Build spinner adapter
 		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
 		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spAdapter.addAll(mLocalizedRestrictions);
+		spAdapter.addAll(listRestrictionName);
 
 		// Handle info
 		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
@@ -158,7 +155,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			public void onClick(View view) {
 				int position = spRestriction.getSelectedItemPosition();
 				if (position != AdapterView.INVALID_POSITION) {
-					String query = (position == 0 ? "restrictions" : mSortedRestrictions.get(position - 1));
+					String query = (position == 0 ? "restrictions" : (String) PrivacyManager
+							.getLocalizedRestrictions(ActivityMain.this).values().toArray()[position - 1]);
 					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 					infoIntent.setData(Uri.parse(cXUrl + "#" + query));
 					startActivity(infoIntent);
@@ -579,8 +577,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void selectRestriction(int pos) {
 		if (mAppAdapter != null) {
-			String restrictionName = (pos == 0 ? null : mSortedRestrictions.get(pos - 1)); // sorted,
-																							// non-l
+			String restrictionName = (pos == 0 ? null : (String) PrivacyManager.getLocalizedRestrictions(this).values()
+					.toArray()[pos - 1]);
 			mAppAdapter.setRestrictionName(restrictionName);
 			applyFilter();
 		}
@@ -702,11 +700,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionTemplate() {
 		// Get restriction categories
-		CharSequence[] options = new CharSequence[mSortedRestrictions.size()];
-		mLocalizedRestrictions.subList(1, mLocalizedRestrictions.size()).toArray(options);
-		boolean[] selection = new boolean[mSortedRestrictions.size()];
-		for (int i = 0; i < mSortedRestrictions.size(); i++) {
-			String templateName = PrivacyManager.cSettingTemplate + "." + mSortedRestrictions.get(i);
+		TreeMap<String, String> tmRestriction = PrivacyManager.getLocalizedRestrictions(this);
+		List<String> listRestrictionName = new ArrayList<String>(tmRestriction.navigableKeySet());
+		final List<String> listLocalizedTitle = new ArrayList<String>(tmRestriction.values());
+
+		CharSequence[] options = new CharSequence[listLocalizedTitle.size()];
+		listRestrictionName.toArray(options);
+		boolean[] selection = new boolean[listLocalizedTitle.size()];
+		for (int i = 0; i < listLocalizedTitle.size(); i++) {
+			String templateName = PrivacyManager.cSettingTemplate + "." + listLocalizedTitle.get(i);
 			selection[i] = PrivacyManager.getSettingBool(null, this, 0, templateName, true, false);
 			PrivacyManager.setSetting(null, this, 0, templateName, Boolean.toString(selection[i]));
 		}
@@ -717,7 +719,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setMultiChoiceItems(options, selection, new DialogInterface.OnMultiChoiceClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-				String templateName = PrivacyManager.cSettingTemplate + "." + mSortedRestrictions.get(whichButton);
+				String templateName = PrivacyManager.cSettingTemplate + "." + listLocalizedTitle.get(whichButton);
 				PrivacyManager.setSetting(null, ActivityMain.this, 0, templateName, Boolean.toString(isChecked));
 			}
 		});

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -79,8 +78,6 @@ public class ActivityApp extends Activity {
 	private ApplicationInfoEx mAppInfo = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 	private Bitmap[] mCheck;
-	private List<String> mLocalizedRestrictions;
-	private List<String> mSortedRestrictions;
 
 	public static final String cUid = "Uid";
 	public static final String cRestrictionName = "RestrictionName";
@@ -195,18 +192,14 @@ public class ActivityApp extends Activity {
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
 		tvPackageName.setText(TextUtils.join(", ", mAppInfo.getPackageName()));
 
-		// Get localized restriction name
-		TreeMap<String, String> localizedRestrictions = PrivacyManager.getLocalizedRestrictions(this);
-		mLocalizedRestrictions = new ArrayList<String>(localizedRestrictions.navigableKeySet());
-		mSortedRestrictions = new ArrayList<String>(localizedRestrictions.values());
-
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
 		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, restrictionName, methodName);
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 		if (restrictionName != null) {
-			int groupPosition = mSortedRestrictions.indexOf(restrictionName);
+			int groupPosition = new ArrayList<String>(PrivacyManager.getLocalizedRestrictions(this).values())
+					.indexOf(restrictionName);
 			lvRestriction.expandGroup(groupPosition);
 			lvRestriction.setSelectedGroup(groupPosition);
 			if (methodName != null) {
@@ -1031,7 +1024,7 @@ public class ActivityApp extends Activity {
 			boolean fPermission = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 					PrivacyManager.cSettingFPermission, false, false);
 
-			for (String rRestrictionName : mSortedRestrictions) {
+			for (String rRestrictionName : PrivacyManager.getLocalizedRestrictions(ActivityApp.this).values()) {
 				boolean isUsed = (PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), rRestrictionName, null) > 0);
 				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
 						rRestrictionName);
@@ -1217,7 +1210,9 @@ public class ActivityApp extends Activity {
 			});
 
 			// Display localized name
-			holder.tvName.setText(mLocalizedRestrictions.get(groupPosition));
+			String title = (String) PrivacyManager.getLocalizedRestrictions(ActivityApp.this).navigableKeySet()
+					.toArray()[groupPosition];
+			holder.tvName.setText(title);
 
 			// Display restriction
 			holder.imgCBName.setVisibility(View.INVISIBLE);

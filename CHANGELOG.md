@@ -11,6 +11,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Fixed disarranged categories ([issue](https://github.com/M66B/XPrivacy/issues/1033))
 * Notify action for application settings ([issue](https://github.com/M66B/XPrivacy/issues/955))
 * Display grayed usage data icon for methods with no usage data ([issue](https://github.com/M66B/XPrivacy/issues/878))
 
