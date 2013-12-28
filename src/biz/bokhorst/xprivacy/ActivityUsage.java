@@ -255,7 +255,7 @@ public class ActivityUsage extends Activity {
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				if (holder.position == position && usageData != null)
+				if (holder.position == position && usageData != null) {
 					try {
 						PackageManager pm = holder.row.getContext().getPackageManager();
 						String[] packages = pm.getPackagesForUid(usageData.getUid());
@@ -266,12 +266,14 @@ public class ActivityUsage extends Activity {
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
 					}
+					return holder;
+				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Object result) {
-				if (holder.position == position && icon != null) {
+				if (result != null) {
 					holder.imgIcon.setImageDrawable(icon);
 					holder.imgIcon.setVisibility(View.VISIBLE);
 				}

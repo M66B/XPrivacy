@@ -1102,13 +1102,15 @@ public class ActivityApp extends Activity {
 						allRestricted = (allRestricted && restricted);
 						someRestricted = (someRestricted || restricted);
 					}
+
+					return holder;
 				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Object result) {
-				if (holder.position == position && restrictionName != null) {
+				if (result != null) {
 					// Set data
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
@@ -1316,14 +1318,15 @@ public class ActivityApp extends Activity {
 					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(), md);
 					restricted = PrivacyManager.getRestricted(null, holder.row.getContext(), mAppInfo.getUid(),
 							restrictionName, md.getName(), false, false);
+
+					return holder;
 				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Object result) {
-				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition
-						&& restrictionName != null) {
+				if (result != null) {
 					// Set data
 					if (lastUsage > 0) {
 						CharSequence sLastUsage = DateUtils.getRelativeTimeSpanString(lastUsage, new Date().getTime(),
@@ -1351,7 +1354,8 @@ public class ActivityApp extends Activity {
 									restrictionName, md.getName(), restricted);
 
 							// Refresh display
-							notifyDataSetChanged(); // Needed to update parent
+							notifyDataSetChanged(); // Needed to update
+													// parent
 
 							// Notify restart
 							if (restart)

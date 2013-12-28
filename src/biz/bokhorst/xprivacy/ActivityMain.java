@@ -1281,13 +1281,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						allRestricted = (allRestricted && restricted);
 						someRestricted = (someRestricted || restricted);
 					}
+
+					return holder;
 				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Object result) {
-				if (holder.position == position && xAppInfo != null) {
+				if (result != null) {
 					// Display state
 					if (state == STATE_ATTENTION)
 						holder.vwState.setBackgroundColor(getResources().getColor(
