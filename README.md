@@ -808,6 +808,7 @@ Current translations:
 1. Slovenian (sl)
 1. Spanish (es)
 1. Swedish (sv)
+1. Tagalog (tl-PH)
 1. Traditional Chinese (zh-rTW)
 1. Turkish (tr)
 1. Ukrainian (ua)
