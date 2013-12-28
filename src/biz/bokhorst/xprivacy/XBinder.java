@@ -40,8 +40,8 @@ public class XBinder extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XBinder(Methods.execTransact, null));
-		listHook.add(new XBinder(Methods.transact, null));
+		//listHook.add(new XBinder(Methods.execTransact, null));
+		//listHook.add(new XBinder(Methods.transact, null));
 		return listHook;
 	}
 
@@ -49,10 +49,26 @@ public class XBinder extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.execTransact) {
 			// Entry point from android_util_Binder.cpp's onTransact
+			int flags = (Integer) param.args[3];
+			boolean ok = ((flags & 0x00010000) != 0);
+			flags &= 0x0000000f;
+			param.args[3] = flags;
+
+			String name = null;
+			try {
+				IBinder b = (IBinder) param.thisObject;
+				name = b.getInterfaceDescriptor();
+			} catch (Throwable ex) {
+				name = ex.getMessage();
+			}
+
+			Log.w("XPrivacy", "flags in ok=" + ok + " name=" + name);
 		} else if (mMethod == Methods.transact) {
 			int flags = (Integer) param.args[3];
 			if (flags != 0 && flags != IBinder.FLAG_ONEWAY)
 				Util.log(this, Log.WARN, "Flags=" + Integer.toHexString(flags));
+			flags |= 0x00010000;
+			param.args[3] = flags;
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
