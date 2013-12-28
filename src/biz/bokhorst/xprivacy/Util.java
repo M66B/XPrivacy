@@ -29,14 +29,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
@@ -398,46 +395,49 @@ public class Util {
 		out.close();
 	}
 
-    public static Bitmap[] getTriStateCheckBox(Context context) {
-        Bitmap[] bitmap = new Bitmap[3];
+	public static Bitmap[] getTriStateCheckBox(Context context) {
+		Bitmap[] bitmap = new Bitmap[3];
 
-        // Get highlight color
-        TypedArray arrayColor = context.getTheme().obtainStyledAttributes(
-                        new int[] { android.R.attr.colorActivatedHighlight });
-        int highlightColor = arrayColor.getColor(0, 0xFF00FF);
-        arrayColor.recycle();
+		// Get highlight color
+		TypedArray arrayColor = context.getTheme().obtainStyledAttributes(
+				new int[] { android.R.attr.colorActivatedHighlight });
+		int highlightColor = arrayColor.getColor(0, 0xFF00FF);
+		arrayColor.recycle();
 
-        // Create off check box TODO do we need btn_check_off_holo_light&dark ?
-        bitmap[0] = BitmapFactory.decodeResource(context.getResources(), getThemed(context, R.attr.icon_check_off));
+		// Create off check box
+		// TODO: do we need btn_check_off_holo_light&dark ?
+		bitmap[0] = BitmapFactory.decodeResource(context.getResources(), getThemed(context, R.attr.icon_check_off));
 
-        // Create half check box
-        bitmap[1] = Bitmap.createBitmap(bitmap[0].getWidth(), bitmap[0].getHeight(), bitmap[0].getConfig());
-        Canvas canvas = new Canvas(bitmap[1]);
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(highlightColor);
-        int border = bitmap[1].getWidth() / 3;
-        canvas.drawBitmap(bitmap[0], 0, 0, paint);
-        canvas.drawRect(border, border, bitmap[1].getWidth() - border, bitmap[1].getHeight() - border, paint);
+		// Create half check box
+		bitmap[1] = Bitmap.createBitmap(bitmap[0].getWidth(), bitmap[0].getHeight(), bitmap[0].getConfig());
+		Canvas canvas = new Canvas(bitmap[1]);
+		Paint paint = new Paint();
+		paint.setStyle(Paint.Style.FILL);
+		paint.setColor(highlightColor);
+		int border = bitmap[1].getWidth() / 3;
+		canvas.drawBitmap(bitmap[0], 0, 0, paint);
+		canvas.drawRect(border, border, bitmap[1].getWidth() - border, bitmap[1].getHeight() - border, paint);
 
-        // Create full check box
-        // square of highlight color
-        bitmap[2] = Bitmap.createBitmap(bitmap[0].getWidth(), bitmap[0].getHeight(), bitmap[0].getConfig());
-        Canvas canvas2 = new Canvas(bitmap[2]);
-        canvas2.drawRect(0, 0, bitmap[2].getWidth(), bitmap[2].getHeight(), paint);
-        
-        // draw checkmark with porter-duff mode DstIn which keeps the highlight color where the checkmark goes
-        Bitmap checkmark = BitmapFactory.decodeResource(context.getResources(), R.drawable.checkmark);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-        canvas2.drawBitmap(checkmark, 0, 0, paint);
-        
-        // add border
-        Bitmap checked_box = BitmapFactory.decodeResource(context.getResources(), getThemed(context, R.attr.icon_checked_box));
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        canvas2.drawBitmap(checked_box, 0, 0, paint);
+		// Create full check box
+		// square of highlight color
+		bitmap[2] = Bitmap.createBitmap(bitmap[0].getWidth(), bitmap[0].getHeight(), bitmap[0].getConfig());
+		Canvas canvas2 = new Canvas(bitmap[2]);
+		canvas2.drawRect(0, 0, bitmap[2].getWidth(), bitmap[2].getHeight(), paint);
 
-        return bitmap;
-    }
+		// draw checkmark with porter-duff mode DstIn which keeps the highlight
+		// color where the checkmark goes
+		Bitmap checkmark = BitmapFactory.decodeResource(context.getResources(), R.drawable.checkmark);
+		paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+		canvas2.drawBitmap(checkmark, 0, 0, paint);
+
+		// add border
+		Bitmap checked_box = BitmapFactory.decodeResource(context.getResources(),
+				getThemed(context, R.attr.icon_checked_box));
+		paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+		canvas2.drawBitmap(checked_box, 0, 0, paint);
+
+		return bitmap;
+	}
 
 	public static int getThemed(Context context, int attr) {
 		TypedValue tv = new TypedValue();
