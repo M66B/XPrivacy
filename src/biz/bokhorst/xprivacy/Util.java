@@ -134,7 +134,7 @@ public class Util {
 
 			// Verify license
 			boolean licensed = verifyData(bEmail, bSignature, getPublicKey(context));
-			if (licensed && (isDebuggable(context) || hasValidFingerPrint(context)))
+			if (licensed)
 				Util.log(null, Log.INFO, "Licensing: ok for " + name);
 			else
 				Util.log(null, Log.ERROR, "Licensing: invalid for " + name);
@@ -262,8 +262,7 @@ public class Util {
 
 	public static boolean isProEnablerInstalled(Context context) {
 		Version version = getProEnablerVersion(context);
-		if (version != null && isValidProEnablerVersion(version) && hasValidProEnablerSignature(context)
-				&& hasValidFingerPrint(context)) {
+		if (version != null && isValidProEnablerVersion(version) && hasValidProEnablerSignature(context)) {
 			Util.log(null, Log.INFO, "Licensing: enabler installed");
 			return true;
 		}
@@ -340,36 +339,6 @@ public class Util {
 		for (byte b : bytes)
 			sb.append(String.format("%02X", b));
 		return sb.toString();
-	}
-
-	@SuppressLint("DefaultLocale")
-	public static boolean hasValidFingerPrint(Context context) {
-		try {
-			PackageManager pm = context.getPackageManager();
-			String packageName = context.getPackageName();
-			PackageInfo packageInfo = pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
-			byte[] cert = packageInfo.signatures[0].toByteArray();
-			MessageDigest digest = MessageDigest.getInstance("SHA1");
-			byte[] bytes = digest.digest(cert);
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < bytes.length; ++i)
-				sb.append((Integer.toHexString((bytes[i] & 0xFF) | 0x100)).substring(1, 3).toLowerCase());
-			String calculated = sb.toString();
-			String expected = context.getString(R.string.fingerprint);
-			boolean valid = calculated.equals(expected);
-			if (valid)
-				log(null, Log.INFO, "Valid fingerprint");
-			else
-				log(null, Log.ERROR, "Invalid fingerprint calculate=" + calculated + " expected=" + expected);
-			return valid;
-		} catch (Throwable ex) {
-			bug(null, ex);
-			return false;
-		}
-	}
-
-	public static boolean isDebuggable(Context context) {
-		return ((context.getApplicationContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
 	}
 
 	public static boolean containsIgnoreCase(List<String> strings, String value) {
