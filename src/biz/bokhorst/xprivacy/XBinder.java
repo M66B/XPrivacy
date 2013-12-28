@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.os.IBinder;
@@ -10,6 +11,8 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XBinder extends XHook {
 	private Methods mMethod;
+
+	int FLAG_XPRIVACY = 0x00010000;
 
 	private XBinder(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), null);
@@ -40,18 +43,21 @@ public class XBinder extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		//listHook.add(new XBinder(Methods.execTransact, null));
-		//listHook.add(new XBinder(Methods.transact, null));
+		listHook.add(new XBinder(Methods.execTransact, null)); // Binder
+		listHook.add(new XBinder(Methods.transact, null)); // BinderProxy
 		return listHook;
 	}
+
+	List<String> listcheck = Arrays.asList(new String[] { "android.content.IContentProvider",
+			"android.location.ILocationManager" });
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.execTransact) {
 			// Entry point from android_util_Binder.cpp's onTransact
 			int flags = (Integer) param.args[3];
-			boolean ok = ((flags & 0x00010000) != 0);
-			flags &= 0x0000000f;
+			boolean ok = ((flags & FLAG_XPRIVACY) != 0);
+			flags &= IBinder.FLAG_ONEWAY;
 			param.args[3] = flags;
 
 			String name = null;
@@ -62,12 +68,14 @@ public class XBinder extends XHook {
 				name = ex.getMessage();
 			}
 
-			Log.w("XPrivacy", "flags in ok=" + ok + " name=" + name);
+			if (!ok && name != null)
+				if (listcheck.contains(name))
+					Log.w("XPrivacy", "flags in ok=" + ok + " name=" + name);
 		} else if (mMethod == Methods.transact) {
 			int flags = (Integer) param.args[3];
 			if (flags != 0 && flags != IBinder.FLAG_ONEWAY)
 				Util.log(this, Log.WARN, "Flags=" + Integer.toHexString(flags));
-			flags |= 0x00010000;
+			flags |= FLAG_XPRIVACY;
 			param.args[3] = flags;
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
