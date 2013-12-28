@@ -52,8 +52,9 @@
     <string name="msg_usage">Ina-update ang impormasyon tungkol sa datang nagamit</string>
     <string name="msg_restart">Kailangan i-umpisa ang Application</string>
     <string name="msg_first"><b>Malaking pag-aalaga ang ginampanan sa pagka-buo at sa pagsu-suri ng XPrivacy,
-    pero sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bilang sa mga isa't-isang aplikasyon. 
-    \n\nAng pag-gamit nito ay buong nasa iyong pagbaka-sakali.</b>\n\nBasahin din ang kanyang lisensya:</string>
+pero sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bilang sa mga isa\'t-isang aplikasyon. 
+\n\nAng pag-gamit nito ay buong nasa iyong pagbaka-sakali.</b>
+\n\nBasahin din ang kanyang lisensya:</string>
     <string name="restrict_accounts">Mga Accounts (Google, Facebook, at iba pa)</string>
     <string name="restrict_browser">Sa Browser (bookmarks/history)</string>
     <string name="restrict_calendar">Sa Kalendaryo</string>
@@ -125,9 +126,9 @@
     <string name="help_restricted">mga restrikto ay naiba</string>
     <string name="help_shared">mga restrikto ay nai-submit</string>
     <string name="tutorial_mainheader">Pumili ng kategorya na i-restrik; piliin ang nakalantad na apps gamit ng filters</string>
-    <string name="tutorial_mainlist">Lagyan ng check sa kanang gilid para i-restrik ang naka-piling kategorya sa kanya-kanyang app\n
-    \nAng mga Apps ay mabi-bigyan ng wala o pekeng impormasyon sa mga nai-restriktong kategorya\n
-    \nPindutin ang App icon sa kaliwang gilid para matignan ang detalye sa kanyang restriksyon at settings</string>
+    <string name="tutorial_mainlist">Lagyan ng check sa kanang gilid para i-restrik ang naka-piling kategorya sa kanya-kanyang app
+\n\nAng mga Apps ay mabi-bigyan ng wala o pekeng impormasyon sa mga nai-restriktong kategorya
+\n\nPindutin ang App icon sa kaliwang gilid para matignan ang detalye sa kanyang restriksyon at settings</string>
     <string name="tutorial_detailsheader">Pindutin ang App icon sa kaliwang gilid para sa iba pang puwedeng aksyon</string>
     <string name="tutorial_detailslist">Pindutin ang down arrow sa kaliwang gilid para makita ang laman ng kategorya na mayroon o walang restrikto</string>
 
