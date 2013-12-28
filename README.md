@@ -273,6 +273,8 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
+* Usage data is not always up-to-date and complete; switching from/to an application will mostly update the usage data
+* Internet (inet) and storage (media, sdcard) usage is assumed as soon as an application with corresponding permissions has been started
 * /proc and system properties cannot be restricted for Android (serial number, IMEI, MAC address, etc)
 * Phone number cannot be restricted for the standard phone application
 * Internet and storage can only be restricted for applications/providers/services started by the Android package manager
