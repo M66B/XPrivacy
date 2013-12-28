@@ -48,9 +48,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Audio record
 		hookAll(XAudioRecord.getInstances());
 
+		// Binder device
+		hookAll(XBinder.getInstances());
+
 		// Bluetooth adapater
-		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1)
-			hookAll(XBluetoothAdapter.getInstances());
+		hookAll(XBluetoothAdapter.getInstances());
 
 		// Bluetooth device
 		hookAll(XBluetoothDevice.getInstances());
@@ -86,7 +88,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XNfcAdapter.getInstances());
 
 		// Package manager service
-		hookAll(XPackageManagerService.getInstances());
+		hookAll(XProcess.getInstances());
 
 		// Process builder
 		hookAll(XProcessBuilder.getInstances());
@@ -190,11 +192,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		} else if (name.equals(Context.BLUETOOTH_SERVICE)) {
 			// Bluetooth adapter
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-				if (!mBluetoothAdapterHooked) {
-					hookAll(XBluetoothAdapter.getInstances(instance));
-					mBluetoothAdapterHooked = true;
-				}
+			if (!mBluetoothAdapterHooked) {
+				hookAll(XBluetoothAdapter.getInstances(instance));
+				mBluetoothAdapterHooked = true;
+			}
 		} else if (name.equals(Context.CLIPBOARD_SERVICE)) {
 			// Clipboard manager
 			if (!mClipboardManagerHooked) {

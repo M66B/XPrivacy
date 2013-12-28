@@ -17,6 +17,7 @@ For interested developers:
 * Update *SharedPreferencesEx* with KitKat changes
 * Import should clear app settings
 * Accessibility: *android:labelFor="..."*
+* Secure usage data
 
 * Split settings file?
 * Remove indeterminate progress indicator?

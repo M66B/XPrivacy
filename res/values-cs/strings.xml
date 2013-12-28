@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Pouze pro Android verze 4.0+</string>
     <string name="app_version" formatted="false">Verze XPrivacy: %s (%d)</string>
     <string name="app_xversion" formatted="false">Verze Xposed frameworku: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013-2014 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Využití</string>
     <string name="menu_refresh">Obnovit</string>
     <string name="menu_settings">Nastavení</string>

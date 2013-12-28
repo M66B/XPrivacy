@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Kun for Android versjon 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
-    <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013-2014</string>
+    <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013–2014</string>
     <string name="menu_usage">Databruk</string>
     <string name="menu_refresh">Oppdater</string>
     <string name="menu_settings">Innstillinger</string>

@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Alleen voor Android versie 4.0.3+</string>
     <string name="app_version" formatted="false">XPrivacy versie: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework versie: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013-2014 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Gebruik</string>
     <string name="menu_refresh">Ververs</string>
     <string name="menu_settings">Instellingen</string>

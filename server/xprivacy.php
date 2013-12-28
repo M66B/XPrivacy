@@ -18,6 +18,13 @@
 		return $ci;
 	}
 
+	// $_SERVER["HTTP_CONTENT_TYPE"]
+	// max_input_vars
+	// post_max_size
+	// [suhosin]
+	// suhosin.request.max_vars = 1000 # Default is 200
+	// suhosin.post.max_vars = 1000 # Default is 200
+
 	// Check if JSON request
 	parse_str($_SERVER['QUERY_STRING']);
 	if (!empty($format) && $format == 'json') {
@@ -25,6 +32,8 @@
 		$ok = true;
 		$body = file_get_contents('php://input');
 		$data = json_decode($body);
+		if (empty($body) || empty($data))
+			error_log('XPrivacy empty: request=' . print_r($_REQUEST, true) . PHP_EOL, 1, $my_email);
 
 		// Send header
 		header('Content-Type: application/json');
@@ -248,9 +257,11 @@
 		<meta name="description" content="XPrivacy">
 		<meta name="author" content="M66B">
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link rel="shortcut icon" href="http://www.faircode.eu/favicon.ico" type="image/x-icon" />
 		<style type="text/css">
 			body { padding-left: 5px; padding-right: 5px; }
 			th, tr, td { padding: 0px !important; }
+			.page-header { margin-top: 0; }
 		</style>
 	</head>
 	<body>
@@ -263,10 +274,12 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="http://updates.faircode.eu/xprivacy">XPrivacy</a>
+					<a class="navbar-brand" href="/">Home</a>
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
+						<li><a href="https://github.com/M66B/XPrivacy#xprivacy" target="_blank">XPrivacy</a></li>
+						<li><a href="https://www.xprivacy.eu/" target="_blank">Pro license</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="http://forum.faircode.eu/contact/" target="_blank">Contact</a></li>
@@ -369,11 +382,6 @@
 							error_log('XPrivacy query package names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
 					}
 ?>
-					<p>
-						<a href="/xprivacy">Home</a>
-						-
-						<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
-					</p>
 					<h2><?php echo htmlentities(implode(', ', $application_names), ENT_COMPAT, 'UTF-8'); ?></h2>
 					<p style="font-size: smaller;">
 <?php
@@ -384,16 +392,19 @@
 					}
 ?>
 					</p>
+					<p>
+						<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
+					</p>
 <?php
 				}
 ?>
 			</div>
 
-			<div class="page-header" style="margin-top: 0">
+			<div class="page-header">
 				<p>This is a voting system for
 					<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
-					With a <a href="http://www.faircode.eu/xprivacy">Pro license</a> you can fetch submitted restriction settings.<br />
+					With a <a href="http://www.xprivacy.eu/">Pro license</a> you can fetch submitted restriction settings.<br />
 					There are currently <?php echo number_format($total, 0, '.', ','); ?> restriction settings
 					for <?php echo number_format($count, 0, '.', ',') ?> applications submitted.
 				</p>

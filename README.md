@@ -78,7 +78,7 @@ Root access is needed to install the Xposed framework.
 
 **XPrivacy was a lot of work, so please support this project**
 
-Donate a few dollars for the [pro version](http://www.faircode.eu/xprivacy/)
+Donate a few dollars for the [pro version](http://www.xprivacy.eu/)
 
 OR
 
@@ -166,10 +166,10 @@ For easy usage, data is restricted by category:
 	* return fake supplicant disconnected state
 <a name="location"></a>
 * Location
-	* return a random or set location
+	* return a random or set location (also for Google Play services)
 	* return empty cell location
 	* return an empty list of (neighboring) cell info
-	* prevents geofences from being set
+	* prevents geofences from being set (also for Google Play services)
 	* prevents proximity alerts from being set
 	* prevents sending NMEA data to an application
 	* prevent phone state from being sent to an application
@@ -273,13 +273,15 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
+* Usage data is not always up-to-date and complete; switching from/to an application will mostly update the usage data
+* Internet (inet) and storage (media, sdcard) usage is assumed as soon as an application with corresponding permissions has been started
 * /proc and system properties cannot be restricted for Android (serial number, IMEI, MAC address, etc)
 * Phone number cannot be restricted for the standard phone application
 * Internet and storage can only be restricted for applications/providers/services started by the Android package manager
 * Due to its static nature [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized on application start and there is no usage data
 * Due to a bug in Chromium the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Due to a custom implementation the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
-* You cannot restrict the Android ID used for submitting restrictions (only [pro version](http://www.faircode.eu/xprivacy/))
+* You cannot restrict the Android ID used for submitting restrictions (only [pro version](http://www.xprivacy.eu/))
 * There is no usage data for isolated processes (a new concept in Android 4.4)
 
 Compatibility
@@ -391,8 +393,8 @@ XPrivacy asks for the following Android permissions:
 * Accounts: to select accounts to allow for applications
 * Contacts: to select contacts to allow for applications
 * Boot: to check if XPrivacy is enabled
-* Internet: to submit/fetch [crowd sourced restrictions](http://updates.faircode.eu/xprivacy)
-* Storage: to export settings to the SD card (only [pro version](http://www.faircode.eu/xprivacy/))
+* Internet: to submit/fetch [crowd sourced restrictions](http://crowd.xprivacy.eu/)
+* Storage: to export settings to the SD card (only [pro version](http://www.xprivacy.eu/))
 
 If you don't like this, you can always restrict XPrivacy itself ...
 
@@ -428,7 +430,7 @@ Reboot.
 Yes, you can, for example with [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup),
 but you can only restore into the same environment (device/ROM).
 Exporting/importing settings will work across devices/ROMs.
-To export/import settings you will need the [pro version](http://www.faircode.eu/xprivacy/).
+To export/import settings you will need the [pro version](http://www.xprivacy.eu/).
 
 <a name="FAQ10"></a>
 **(10) Which functions are exactly restricted?**
@@ -470,7 +472,7 @@ The right order for ROM updates is:
 If you skip the XPrivacy import/clear/export steps some system applications can have the wrong restrictions,
 because the uid's of these applications might have been changed.
 
-For export/importing XPrivacy data you need [pro version](http://www.faircode.eu/xprivacy/).
+For export/importing XPrivacy data you need [pro version](http://www.xprivacy.eu/).
 
 <a name="FAQ16"></a>
 **(16) Can I restrict an application with root access?**
@@ -529,7 +531,7 @@ It is possible to backup the application and the data,
 but you can restore it onto the same environment (device/ROM) only.
 This is because Android assigns different uid's to the same applications on different devices.
 Exporting settings on one device and importing settings onto another device will work,
-but this requires the [pro version](http://www.faircode.eu/xprivacy/).
+but this requires the [pro version](http://www.xprivacy.eu/).
 If you want to backup the exported settings, they are in the folder *.xprivacy* on the SD card.
 
 <a name="FAQ25"></a>
@@ -541,7 +543,7 @@ The function exceptions only apply when the data category is restricted.
 <a name="FAQ26"></a>
 **(26) How can I export/import my settings?**
 
-For this you need the [pro version](http://www.faircode.eu/xprivacy/).
+For this you need the [pro version](http://www.xprivacy.eu/).
 Exported settings are stored in the folder *.xprivacy* in the file *XPrivacy.xml*.
 You can copy this file to the same place on a second device.
 When importing, settings are only applied to applications that exist on the second device.
@@ -561,12 +563,9 @@ The idea is that everything should appear as normal as possible to an applicatio
 <a name="FAQ29"></a>
 **(29) How about multi-user support?**
 
-The XPrivacy engine works deep within Android and has no information about users.
 Each application is identified by a *uid* and all restrictions are based on this unique identifier.
-Each user has his own set of applications.
-Each user can manage the restrictions for the applications available to him/her.
-If Android uses the same uid for an application that two users share,
-both users can manage the restrictions for this application.
+Each user has his/her own set of applications, which are identified by separate uids.
+So, each user can manage the restrictions for the applications available to him/her.
 
 <a name="FAQ30"></a>
 **(30) Why is the location search in the settings disabled?**
@@ -663,7 +662,7 @@ but be aware that this might cause instability on some ROMs.
 The [pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro)
 is in the Play store on request of some early XPrivacy users.
 In the beginning there was just one pro feature: export/import of all restrictions and settings.
-In a later stage fetching [crowd sourced restrictions](http://updates.faircode.eu/xprivacy)
+In a later stage fetching [crowd sourced restrictions](http://crowd.xprivacy.eu/)
 were added as a pro feature.
 Processing of the crowd sourced restrictions requires a big server which has to be paid for.
 The low price of the pro enabler, don't forget Google takes already 30%,
@@ -830,6 +829,7 @@ Using Eclipse:
 * Close Eclipse and copy the project from the temporary location over the imported project
 	* Make sure you copy all hidden files
 * Add the Xposed library to the build path as described [here](https://github.com/rovo89/XposedBridge/wiki/Development-tutorial#making-the-project-an-xposed-module)
+* Add the Google Play services library as decribed [here](https://developer.android.com/google/play-services/setup.html)
 
 Testing:
 
@@ -837,7 +837,7 @@ Testing:
 * [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 * [SIM Card](https://play.google.com/store/apps/details?id=com.gsmdev.simcard)
 
-Serious contributors do not have to donate for the [pro version](http://www.faircode.eu/xprivacy/).
+Serious contributors do not have to donate for the [pro version](http://www.xprivacy.eu/).
 New translations are considered as a serious contribution, but translating a few lines of text is not.
 
 License

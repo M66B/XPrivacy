@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">सिर्फ Android वर्शन 4.0+ के लिये</string>
     <string name="app_version" formatted="false">XPrivacy वर्शन: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework वर्शन: %d</string>
-    <string name="app_copyright">सर्वाधिकार \u00A9 2013-2014 द्वारा M. Bokhorst (M66B)</string>
+    <string name="app_copyright">सर्वाधिकार \u00A9 2013–2014 द्वारा M. Bokhorst (M66B)</string>
     <string name="menu_usage">उपयोग</string>
     <string name="menu_refresh">पुन: करे</string>
     <string name="menu_settings">सेटिंग्स</string>
@@ -20,11 +20,11 @@
     <string name="menu_about">जानकारी</string>
     <string name="menu_help">मदद</string>
     <string name="menu_all">प्रत्येक</string>
-    <string name="menu_restriction_all">Toggle restrictions</string>
-    <string name="menu_clear_all">Clear all</string>
-    <string name="menu_restrict_all">Restrict all</string>
+    <string name="menu_restriction_all">प्रतिबंध toggle करे</string>
+    <string name="menu_clear_all">सब clear करे</string>
+    <string name="menu_restrict_all">सब प्रतिबंध करे</string>
     <string name="menu_clear_usage">Clear</string>
-    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_usage_all">फिल्टर toggle करे</string>
     <string name="menu_apply">टेम्पलेट लागू करें</string>
     <string name="menu_clear">साफ़ करे</string>
     <string name="menu_app_launch">चालू करे</string>
@@ -32,25 +32,25 @@
     <string name="menu_app_store">Play Store</string>
     <string name="menu_app_kill">Kill</string>
     <string name="menu_accounts">अनुमति के लिए खातों को चुने</string>
-    <string name="menu_applications">Select applications to allow</string>
+    <string name="menu_applications">अनुमति के लिए applications को चुने</string>
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
-    <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_tutorial">शिक्षा</string>
     <string name="msg_new">नया</string>
     <string name="msg_update">अद्यतन</string>
     <string name="msg_licensed" formatted="false">अधिकारी: %s</string>
     <string name="msg_loading">लोडिंग</string>
-    <string name="msg_applying">Applying</string>
-    <string name="msg_applied">Template applied</string>
-    <string name="msg_saved_to" formatted="false">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_applying">लागु हो रहा हैं</string>
+    <string name="msg_applied">टेम्पलेट लागु हो गया</string>
+    <string name="msg_saved_to" formatted="false">%s मे save हो गया</string>
+    <string name="msg_no_restrictions">कोई प्रतिबंध नहीं मिला</string>
     <string name="msg_sure">क्या आप निश्चित हैं?</string>
     <string name="msg_done">हो गया</string>
     <string name="msg_reboot">साधन पुनरारंभ करना आवश्यक</string>
     <string name="msg_random_now">अटपटा करे</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">उपयोग पर अटपटा करें</string>
     <string name="msg_random_boot">रिबूट के पश्चात अटपटा करे</string>
-    <string name="msg_usage">Updating usage data</string>
-    <string name="msg_restart">Application restart required</string>
+    <string name="msg_usage">उपयोग डेटा update हो रहा हैं</string>
+    <string name="msg_restart">application पुनःप्रारंभ जरुरी</string>
     <string name="msg_first"><b>XPrivacy बनाने मैं बहुत ख्याल रखा गया है,
 किन्तु वह सभी साधन और सभी application के लिए बरोबर चलेगा उसकी गारंटी देना असंभव है।
 \n\nइसका उपयोग पूरी तरह से आपके अपने जोखिम पर है।</b>\n\nलाइसेंस को भी पढ़े:</string>
@@ -76,9 +76,9 @@
     <string name="restrict_shell">Shell (आदेश, superuser)</string>
     <string name="restrict_system">सिस्टम (इन्सटाल्ड apps)</string>
     <string name="restrict_view">View (ब्राउज़र)</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">श्रेणियाँ</string>
     <string name="title_restrict">प्रतिबंधित करने के लिए मार्क करे:</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">फिल्टर्स</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">१ सक्रिय फिल्टर</item>
@@ -91,7 +91,7 @@
     <string name="title_frestricted">प्रतिबंध पर फिल्टर करे</string>
     <string name="title_fuser">उपयोगकर्ता की Applications पर फिल्टर करे</string>
     <string name="title_fsystem">सिस्टम की Applications पर फिल्टर करे</string>
-    <string name="title_fnot">Negate</string>
+    <string name="title_fnot">नकारे</string>
     <string name="title_sort_by">Sort by</string>
 
     <string-array name="title_smodes">
@@ -110,36 +110,36 @@
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">फ़ोन संख्या</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_adid">विज्ञापन ID</string>
     <string name="settings_country">देश</string>
     <string name="settings_operator">ऑपरेटर</string>
     <string name="settings_subscriber">ग्राहक क्रमांक</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
-    <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
+    <string name="settings_general">सामान्य</string>
+    <string name="settings_fake_data">नकली डेटा</string>
+    <string name="settings_global">सार्वत्रिक नकली डेटा का  उपयोग करे</string>
+    <string name="settings_notify">अद्यतन सुचना</string>
+    <string name="settings_usage">Android उपयोग डेटा (पुनःप्रारंभ जरुरी)</string>
     <string name="settings_log">Debug log (पुनरारंभ जरूरी)</string>
-    <string name="settings_expert">Expert mode</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_expert">विशेषज्ञ mode</string>
+    <string name="settings_dangerous">खतरनाक कार्य प्रतिबंधित करे</string>
+    <string name="settings_confidence">अधिकतम विश्वसनीय fetch अंतराल</string>
+    <string name="settings_experimental">प्रायोगिक कार्य (पुनःप्रारंभ जरुरी)</string>
     <string name="help_application">Application</string>
     <string name="help_internet">इंटरनेट की अनुमति है</string>
     <string name="help_granted">Android की अनुमति है</string>
     <string name="help_used">इस डेटा का उपयोग किया है</string>
     <string name="help_frozen">अक्षम किया गया है</string>
     <string name="help_dangerous">खतरनाक है</string>
-    <string name="help_half">partly restricted</string>
-    <string name="help_attention">restrictions need attention</string>
-    <string name="help_restricted">restrictions are changed</string>
-    <string name="help_shared">restrictions are submitted</string>
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="help_half">आंशिक प्रतिबंध</string>
+    <string name="help_attention">प्रतिबंध पर ध्यान आवश्यक</string>
+    <string name="help_restricted">प्रतिबंध बदले गए</string>
+    <string name="help_shared">प्रतिबंध submit हो गए</string>
+    <string name="tutorial_mainheader">प्रतिबन्ध के लिए श्रेणी चुने; प्रत्यक्ष app को फ़िल्टर के साथ चुने</string>
+    <string name="tutorial_mainlist">App कि चुनी गयी श्रेणी को प्रतिबंधित करने के लिए checkbox tap करे\n
+\nप्रतिबंधित श्रेणी के लिए Apps को खाली या नकली डेटा दिया जायेगा\n
+\nविस्तृत प्रतिबन्ध व settings के लिए app icon को tap करे</string>
+    <string name="tutorial_detailsheader">अधिक कार्य के लिए app icon को tap करे</string>
+    <string name="tutorial_detailslist">प्रतिबंधित श्रेणी के अपवाद देखने के लिए down arrow को tap करे</string>
 
 </resources>
