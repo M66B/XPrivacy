@@ -579,7 +579,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void selectRestriction(int pos) {
 		if (mAppAdapter != null) {
-			String restrictionName = (pos == 0 ? null : mSortedRestrictions.get(pos - 1)); // sorted, non-l
+			String restrictionName = (pos == 0 ? null : mSortedRestrictions.get(pos - 1)); // sorted,
+																							// non-l
 			mAppAdapter.setRestrictionName(restrictionName);
 			applyFilter();
 		}

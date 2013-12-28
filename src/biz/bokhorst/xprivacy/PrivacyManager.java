@@ -217,14 +217,16 @@ public class PrivacyManager {
 		return new ArrayList<String>(Arrays.asList(cRestrictionNames));
 	}
 
+	// Map of restrictions sorted by localized name
 	public static TreeMap<String, String> getLocalizedRestrictions(Context context) {
-		// Locale respecting sorter
 		Collator collator = Collator.getInstance(Locale.getDefault());
-		// Map of restrictions sorted by localized name
-		TreeMap<String, String> restrictions = new TreeMap<String, String>(collator);
-		for (String restriction : getRestrictions())
-			restrictions.put(getLocalizedName(context, restriction), restriction);
-		return restrictions;
+		TreeMap<String, String> tmRestriction = new TreeMap<String, String>(collator);
+		String packageName = PrivacyManager.class.getPackage().getName();
+		for (String restrictionName : getRestrictions()) {
+			int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
+			tmRestriction.put(stringId == 0 ? restrictionName : context.getString(stringId), restrictionName);
+		}
+		return tmRestriction;
 	}
 
 	public static MethodDescription getMethod(String restrictionName, String methodName) {
@@ -234,12 +236,6 @@ public class PrivacyManager {
 			return (pos < 0 ? null : mMethod.get(restrictionName).get(pos));
 		} else
 			return null;
-	}
-
-	public static String getLocalizedName(Context context, String restrictionName) {
-		String packageName = PrivacyManager.class.getPackage().getName();
-		int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
-		return (stringId == 0 ? null : context.getString(stringId));
 	}
 
 	public static List<MethodDescription> getMethods(String restrictionName) {
