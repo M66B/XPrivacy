@@ -16,6 +16,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed clearing existing restrictions on import, thanks @[jpeg729](https://github.com/jpeg729)
 * Experimental functions enabled by default
 * Sorted localized restriction categories, thanks @[jpeg729](https://github.com/jpeg729)
+* Themed tri-state check boxes, thanks @[jpeg729](https://github.com/jpeg729)
 * Added location restriction for Google Play services ([issue](https://github.com/M66B/XPrivacy/issues/1011))
 * Added Tagalog translation
 * Updated Chinese translations
