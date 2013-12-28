@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class PackageChange extends BroadcastReceiver {
 
@@ -26,6 +27,9 @@ public class PackageChange extends BroadcastReceiver {
 				boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
 				NotificationManager notificationManager = (NotificationManager) context
 						.getSystemService(Context.NOTIFICATION_SERVICE);
+
+				Util.log(null, Log.INFO, "Package change action=" + intent.getAction() + " replacing=" + replacing
+						+ " uid=" + uid);
 
 				// Check action
 				if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
