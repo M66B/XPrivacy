@@ -246,11 +246,6 @@ public class ActivityApp extends Activity {
 	}
 
 	@Override
-	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-	}
-
-	@Override
 	protected void onResume() {
 		super.onResume();
 		if (mPrivacyListAdapter != null)

@@ -360,6 +360,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	@Override
+	protected void onNewIntent(Intent intent) {
+		// Do nothing
+	}
+
+	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		if (mPackageChangeReceiver != null)
