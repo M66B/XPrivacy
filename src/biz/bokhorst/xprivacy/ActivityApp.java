@@ -1334,7 +1334,10 @@ public class ActivityApp extends Activity {
 						holder.ctvMethodName.setText(String.format("%s (%s)", md.getName(), sLastUsage));
 					}
 					holder.ctvMethodName.setEnabled(parentRestricted);
-					holder.imgUsed.setVisibility(lastUsage == 0 ? View.INVISIBLE : View.VISIBLE);
+					holder.imgUsed.setImageResource(Util.getThemed(ActivityApp.this,
+							md.hasNoUsageData() ? R.attr.icon_used_grayed : R.attr.icon_used));
+					holder.imgUsed
+							.setVisibility(lastUsage == 0 && !md.hasNoUsageData() ? View.INVISIBLE : View.VISIBLE);
 					holder.ctvMethodName.setTypeface(null, lastUsage == 0 ? Typeface.NORMAL : Typeface.BOLD_ITALIC);
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 					holder.ctvMethodName.setChecked(restricted);

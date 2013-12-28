@@ -1288,6 +1288,10 @@ public class PrivacyManager {
 			return mRestart;
 		}
 
+		public boolean hasNoUsageData() {
+			return isRestartRequired();
+		}
+
 		public String[] getPermissions() {
 			return mPermissions;
 		}

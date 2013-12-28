@@ -8,6 +8,7 @@
     <attr name="icon_info" format="reference" />
     <attr name="icon_internet" format="reference" />
     <attr name="icon_used" format="reference" />
+    <attr name="icon_used_grayed" format="reference" />
     <attr name="icon_system" format="reference" />
     <attr name="icon_user" format="reference" />
     <attr name="icon_user_system" format="reference" />
