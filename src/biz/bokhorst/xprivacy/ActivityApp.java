@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -198,7 +199,7 @@ public class ActivityApp extends Activity {
 		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, restrictionName, methodName);
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 		if (restrictionName != null) {
-			int groupPosition = new ArrayList<String>(PrivacyManager.getLocalizedRestrictions(this).values())
+			int groupPosition = new ArrayList<String>(PrivacyManager.getRestrictions(this).values())
 					.indexOf(restrictionName);
 			lvRestriction.expandGroup(groupPosition);
 			lvRestriction.setSelectedGroup(groupPosition);
@@ -1024,7 +1025,7 @@ public class ActivityApp extends Activity {
 			boolean fPermission = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
 					PrivacyManager.cSettingFPermission, false, false);
 
-			for (String rRestrictionName : PrivacyManager.getLocalizedRestrictions(ActivityApp.this).values()) {
+			for (String rRestrictionName : PrivacyManager.getRestrictions(ActivityApp.this).values()) {
 				boolean isUsed = (PrivacyManager.getUsed(ActivityApp.this, mAppInfo.getUid(), rRestrictionName, null) > 0);
 				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
 						rRestrictionName);
@@ -1210,8 +1211,9 @@ public class ActivityApp extends Activity {
 			});
 
 			// Display localized name
-			String title = (String) PrivacyManager.getLocalizedRestrictions(ActivityApp.this).navigableKeySet()
-					.toArray()[groupPosition];
+			TreeMap<String, String> tmRestriction = PrivacyManager.getRestrictions(ActivityApp.this);
+			int index = new ArrayList<String>(tmRestriction.values()).indexOf(restrictionName);
+			String title = (String) tmRestriction.navigableKeySet().toArray()[index];
 			holder.tvName.setText(title);
 
 			// Display restriction

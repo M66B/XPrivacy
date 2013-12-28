@@ -218,7 +218,7 @@ public class PrivacyManager {
 	}
 
 	// Map of restrictions sorted by localized name
-	public static TreeMap<String, String> getLocalizedRestrictions(Context context) {
+	public static TreeMap<String, String> getRestrictions(Context context) {
 		Collator collator = Collator.getInstance(Locale.getDefault());
 		TreeMap<String, String> tmRestriction = new TreeMap<String, String>(collator);
 		String packageName = PrivacyManager.class.getPackage().getName();

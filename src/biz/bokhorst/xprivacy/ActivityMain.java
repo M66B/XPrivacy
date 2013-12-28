@@ -139,8 +139,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_pro)));
 
 		// Get localized restriction name
-		List<String> listRestrictionName = new ArrayList<String>(PrivacyManager.getLocalizedRestrictions(this)
-				.navigableKeySet());
+		List<String> listRestrictionName = new ArrayList<String>(PrivacyManager.getRestrictions(this).navigableKeySet());
 		listRestrictionName.add(0, getString(R.string.menu_all));
 
 		// Build spinner adapter
@@ -156,7 +155,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				int position = spRestriction.getSelectedItemPosition();
 				if (position != AdapterView.INVALID_POSITION) {
 					String query = (position == 0 ? "restrictions" : (String) PrivacyManager
-							.getLocalizedRestrictions(ActivityMain.this).values().toArray()[position - 1]);
+							.getRestrictions(ActivityMain.this).values().toArray()[position - 1]);
 					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 					infoIntent.setData(Uri.parse(cXUrl + "#" + query));
 					startActivity(infoIntent);
@@ -577,7 +576,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void selectRestriction(int pos) {
 		if (mAppAdapter != null) {
-			String restrictionName = (pos == 0 ? null : (String) PrivacyManager.getLocalizedRestrictions(this).values()
+			String restrictionName = (pos == 0 ? null : (String) PrivacyManager.getRestrictions(this).values()
 					.toArray()[pos - 1]);
 			mAppAdapter.setRestrictionName(restrictionName);
 			applyFilter();
@@ -700,7 +699,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionTemplate() {
 		// Get restriction categories
-		TreeMap<String, String> tmRestriction = PrivacyManager.getLocalizedRestrictions(this);
+		TreeMap<String, String> tmRestriction = PrivacyManager.getRestrictions(this);
 		List<String> listRestrictionName = new ArrayList<String>(tmRestriction.navigableKeySet());
 		final List<String> listLocalizedTitle = new ArrayList<String>(tmRestriction.values());
 
