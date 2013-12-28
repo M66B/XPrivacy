@@ -60,15 +60,25 @@ public class PackageChange extends BroadcastReceiver {
 						PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
 								PendingIntent.FLAG_UPDATE_CURRENT);
 
+						// Build result intent settings
+						Intent resultIntentSettings = new Intent(Intent.ACTION_MAIN);
+						resultIntentSettings.putExtra(ActivityApp.cUid, uid);
+						resultIntentSettings.putExtra(ActivityApp.cAction, ActivityApp.cActionSettings);
+						resultIntentSettings.setClass(context.getApplicationContext(), ActivityApp.class);
+
+						// Build pending intent settings
+						PendingIntent pendingIntentSettings = PendingIntent.getActivity(context, uid - 10000,
+								resultIntentSettings, PendingIntent.FLAG_UPDATE_CURRENT);
+
 						// Build result intent clear
 						Intent resultIntentClear = new Intent(Intent.ACTION_MAIN);
 						resultIntentClear.putExtra(ActivityApp.cUid, uid);
-						resultIntentClear.putExtra(ActivityApp.cActionClear, true);
+						resultIntentClear.putExtra(ActivityApp.cAction, ActivityApp.cActionClear);
 						resultIntentClear.setClass(context.getApplicationContext(), ActivityApp.class);
 
 						// Build pending intent clear
-						PendingIntent pendingIntentClear = PendingIntent.getActivity(context, -uid, resultIntentClear,
-								PendingIntent.FLAG_UPDATE_CURRENT);
+						PendingIntent pendingIntentClear = PendingIntent.getActivity(context, uid + 10000,
+								resultIntentClear, PendingIntent.FLAG_UPDATE_CURRENT);
 
 						// Title
 						String title = String.format("%s %s %s",
@@ -86,11 +96,15 @@ public class PackageChange extends BroadcastReceiver {
 						notificationBuilder.setContentIntent(pendingIntent);
 						notificationBuilder.setWhen(System.currentTimeMillis());
 						notificationBuilder.setAutoCancel(true);
-						notificationBuilder.addAction(R.drawable.cross_holo_dark,
+
+						// Actions
+						notificationBuilder.addAction(android.R.drawable.ic_menu_edit,
+								context.getString(R.string.menu_app_settings), pendingIntentSettings);
+						notificationBuilder.addAction(android.R.drawable.ic_menu_delete,
 								context.getString(R.string.menu_clear), pendingIntentClear);
-						Notification notification = notificationBuilder.build();
 
 						// Notify
+						Notification notification = notificationBuilder.build();
 						notificationManager.notify(appInfo.getUid(), notification);
 					}
 

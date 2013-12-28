@@ -11,6 +11,8 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Notify action for application settings ([issue](https://github.com/M66B/XPrivacy/issues/955))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.11.1 TEST**
@@ -21,7 +23,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Experimental functions enabled by default
 * Sorted localized restriction categories, thanks @[jpeg729](https://github.com/jpeg729)
 * Themed tri-state check boxes, thanks @[jpeg729](https://github.com/jpeg729)
-* Added location restriction for Google Play services ([issue](https://github.com/M66B/XPrivacy/issues/1011))
+* Added location restrictions for Google Play services ([issue](https://github.com/M66B/XPrivacy/issues/1011))
 * Added Tagalog translation
 * Updated Chinese translations
 * Updated German translation

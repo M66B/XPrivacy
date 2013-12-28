@@ -85,7 +85,9 @@ public class ActivityApp extends Activity {
 	public static final String cUid = "Uid";
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
+	public static final String cAction = "Action";
 	public static final String cActionClear = "Clear";
+	public static final String cActionSettings = "Settings";
 
 	private static final int ACTIVITY_FETCH = 1;
 
@@ -238,11 +240,14 @@ public class ActivityApp extends Activity {
 		((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
 		((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
 
-		// Clear
-		if (extras.containsKey(cActionClear)) {
+		// Process actions
+		if (extras.containsKey(cAction)) {
 			NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.cancel(mAppInfo.getUid());
-			optionClear();
+			if (extras.getString(cAction).equals(cActionClear))
+				optionClear();
+			else if (extras.getString(cAction).equals(cActionSettings))
+				optionSettings();
 		}
 	}
 
@@ -356,7 +361,7 @@ public class ActivityApp extends Activity {
 			optionContacts();
 			return true;
 		case R.id.menu_settings:
-			SettingsDialog.edit(ActivityApp.this, mAppInfo);
+			optionSettings();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -370,7 +375,7 @@ public class ActivityApp extends Activity {
 			optionLaunch(item.getGroupId());
 			return true;
 		case MENU_SETTINGS:
-			optionSettings(item.getGroupId());
+			optionAppSettings(item.getGroupId());
 			return true;
 		case MENU_KILL:
 			optionKill(item.getGroupId());
@@ -583,12 +588,16 @@ public class ActivityApp extends Activity {
 		}
 	}
 
+	private void optionSettings() {
+		SettingsDialog.edit(ActivityApp.this, mAppInfo);
+	}
+
 	private void optionLaunch(int which) {
 		Intent intentLaunch = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName().get(which));
 		startActivity(intentLaunch);
 	}
 
-	private void optionSettings(int which) {
+	private void optionAppSettings(int which) {
 		Intent intentSettings = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
 				Uri.parse("package:" + mAppInfo.getPackageName().get(which)));
 		startActivity(intentSettings);
