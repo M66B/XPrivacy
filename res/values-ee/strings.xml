@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">See rakendus on ainult android 4.0+\'le </string>
     <string name="app_version" formatted="false">XPrivacy versioon: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed raamistiku versioon: %d</string>
-    <string name="app_copyright">Autoriõigus \u00A9 2013-2014 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Autoriõigus \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Kasutus</string>
     <string name="menu_refresh">Värskenda</string>
     <string name="menu_settings">Seaded</string>

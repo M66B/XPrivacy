@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">सिर्फ Android वर्शन 4.0+ के लिये</string>
     <string name="app_version" formatted="false">XPrivacy वर्शन: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed framework वर्शन: %d</string>
-    <string name="app_copyright">सर्वाधिकार \u00A9 2013-2014 द्वारा M. Bokhorst (M66B)</string>
+    <string name="app_copyright">सर्वाधिकार \u00A9 2013–2014 द्वारा M. Bokhorst (M66B)</string>
     <string name="menu_usage">उपयोग</string>
     <string name="menu_refresh">पुन: करे</string>
     <string name="menu_settings">सेटिंग्स</string>

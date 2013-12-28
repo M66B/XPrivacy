@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Nur für Android-Version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy Version: %s (%d)</string>
     <string name="app_xversion" formatted="false">Xposed Framework Version: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013-2014 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Aktivitätslog</string>
     <string name="menu_refresh">Aktualisieren</string>
     <string name="menu_settings">Einstellungen</string>
