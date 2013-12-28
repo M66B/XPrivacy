@@ -13,6 +13,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Fixed getting restrictions for multi-user environments ([issue](https://github.com/M66B/XPrivacy/issues/357))
 * Fixed restricting internet and storage for multi-user environments ([issue](https://github.com/M66B/XPrivacy/issues/357))
+* Fixed clearing existing restrictions on import, thanks @[jpeg729](https://github.com/jpeg729)
 * Experimental functions enabled by default
 * Added location restriction for Google Play services ([issue](https://github.com/M66B/XPrivacy/issues/1011))
 * Updated German translation
