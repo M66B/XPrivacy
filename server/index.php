@@ -52,6 +52,10 @@
 		// Store/update settings
 		if (empty($action) || $action == 'submit') {
 			// Validate
+			if (empty($data->android_id)) {
+				echo json_encode(array('ok' => false, 'error' => 'Android ID missing'));
+				exit();
+			}
 			if (empty($data->package_name)) {
 				echo json_encode(array('ok' => false, 'error' => 'Package name missing'));
 				exit();
@@ -72,7 +76,7 @@
 				$data->package_name = array($data->package_name);
 
 			if (!empty($data->package_version))
-				$data->package_version_name = $data->package_version; // compatibility
+				$data->package_version_name = $data->package_version; // legacy
 
 			if (empty($data->package_version_name))
 				$data->package_version_name = array('');
@@ -134,7 +138,7 @@
 					$sql .= " restriction, method, restricted, allowed, used) VALUES ";
 					$sql .= "('" . $data->android_id . "'";
 					$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
-					$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : $db->real_escape_string($data->xprivacy_version)) . "";
+					$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : (int)$data->xprivacy_version) . "";
 					$sql .= ",'" . $db->real_escape_string($data->package_name[$i]) . "'";
 					$sql .= ",'" . ($i < count($data->package_version_name) ? $db->real_escape_string($data->package_version_name[$i]) : '') . "'";
 					$sql .= "," . ($i < count($data->package_version_code) ? (int)$data->package_version_code[$i] : 0);
@@ -405,7 +409,7 @@
 					<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
 					With a <a href="http://www.xprivacy.eu/">Pro license</a> you can fetch submitted restriction settings.<br />
-					There are currently <?php echo number_format($total, 0, '.', ','); ?> restriction settings
+					There are currently <?php echo number_format($total, 0, '.', ','); ?> rules
 					for <?php echo number_format($count, 0, '.', ',') ?> applications submitted.
 				</p>
 			</div>
