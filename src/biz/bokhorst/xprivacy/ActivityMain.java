@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -1066,7 +1067,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private List<ApplicationInfoEx> mListApp;
 		private String mRestrictionName;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		private Integer mFilterOpId = 0;
+		private AtomicInteger mFilterRunning = new AtomicInteger(0);
 
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
@@ -1096,12 +1097,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint) {
+				int filterRunning = mFilterRunning.addAndGet(1);
 				FilterResults results = new FilterResults();
-				int filterOpId;
-
-				synchronized (mFilterOpId) {
-					filterOpId = ++mFilterOpId;
-				}
 
 				// Get arguments
 				String[] components = ((String) constraint).split("\\n");
@@ -1119,8 +1116,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				int max = AppListAdapter.this.mListApp.size();
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListApp) {
-					// If another filter op has started, stop short
-					if (filterOpId != mFilterOpId)
+					// Check if another filter has been started
+					if (filterRunning != mFilterRunning.get())
 						return null;
 
 					// Send progress info to main activity
