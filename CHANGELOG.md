@@ -9,7 +9,7 @@ Changelog
 
 Test and beta releases will have experimental functions enabled by default.
 
-**Experimental features**
+**Experimental functions**
 
 * Kill applications
 * Auto flush restriction/settings cache
