@@ -50,7 +50,7 @@ public class Util {
 
 	public static void log(XHook hook, int priority, String msg) {
 		// Check if logging enabled
-		if (Process.myUid() != 0 && !mLogDetermined) {
+		if (Process.myUid() > 0 && !mLogDetermined) {
 			mLog = false;
 			mLogDetermined = true;
 			mLog = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingLog, false, false);
