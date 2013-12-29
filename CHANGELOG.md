@@ -21,7 +21,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Version 1.11.2 TEST**
 
 * Fixed disarranged categories ([issue](https://github.com/M66B/XPrivacy/issues/1033))
-* Fixed race conditions in list views (resulting in some strange glitches sometimes)
+* Fixed race conditions in list views (resulting in strange glitches sometimes)
 * Fixed reloading when navigating up ([issue](https://github.com/M66B/XPrivacy/issues/1034))
 * Fixed multiple filters running simultaneously, thanks @[jpeg729](https://github.com/jpeg729) ([issue](https://github.com/M66B/XPrivacy/issues/1036))
 * Notify action for application settings ([issue](https://github.com/M66B/XPrivacy/issues/955))
