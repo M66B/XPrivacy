@@ -283,6 +283,7 @@ Limitations
 * Due to a custom implementation the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
 * You cannot restrict the Android ID used for submitting restrictions (only [pro version](http://www.xprivacy.eu/))
 * There is no usage data for isolated processes (a new concept in Android 4.4)
+* Native libraries can bypass the Android APIs and thus circumvent XPrivacy. You can prevent native libraries from loading in the category *Shell*, functions *load* and *loadLibrary*.
 
 Compatibility
 -------------
