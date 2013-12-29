@@ -1067,7 +1067,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private List<ApplicationInfoEx> mListApp;
 		private String mRestrictionName;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		private AtomicInteger mFilterRunning = new AtomicInteger(0);
+		private AtomicInteger mFiltersRunning = new AtomicInteger(0);
 
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
@@ -1097,7 +1097,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint) {
-				int filterRunning = mFilterRunning.addAndGet(1);
+				int filtersRunning = mFiltersRunning.addAndGet(1);
 				FilterResults results = new FilterResults();
 
 				// Get arguments
@@ -1117,7 +1117,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListApp) {
 					// Check if another filter has been started
-					if (filterRunning != mFilterRunning.get())
+					if (filtersRunning != mFiltersRunning.get())
 						return null;
 
 					// Send progress info to main activity
