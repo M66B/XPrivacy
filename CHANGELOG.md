@@ -9,6 +9,11 @@ Changelog
 
 Test and beta releases will have experimental functions enabled by default.
 
+**Experimental features**
+
+* Kill applications
+* Auto flush restriction/settings cache
+
 **Next release**
 
 * Fixed disarranged categories ([issue](https://github.com/M66B/XPrivacy/issues/1033))

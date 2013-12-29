@@ -424,6 +424,8 @@ Use your favorite search engine to find one.
 
 Reboot.
 
+Note that this will erase your pro license file too.
+
 <a name="FAQ6"></a>
 **(6) Can I backup XPrivacy and settings?**
 
@@ -535,7 +537,7 @@ but this requires the [pro version](http://www.xprivacy.eu/).
 If you want to backup the exported settings, they are in the folder *.xprivacy* on the SD card.
 
 <a name="FAQ25"></a>
-**(25) Why doesn't undoing a data category restriction disable the function exceptions too?**
+**(25) Why doesn't clearing a data category restriction clear the function exceptions too?**
 
 If you accidentally undo a data category restriction all the function exception would be lost.
 The function exceptions only apply when the data category is restricted.
@@ -563,9 +565,7 @@ The idea is that everything should appear as normal as possible to an applicatio
 <a name="FAQ29"></a>
 **(29) How about multi-user support?**
 
-Each application is identified by a *uid* and all restrictions are based on this unique identifier.
-Each user has his/her own set of applications, which are identified by separate uids.
-So, each user can manage the restrictions for the applications available to him/her.
+Additional users can install and use XPrivacy like the primary user.
 
 <a name="FAQ30"></a>
 **(30) Why is the location search in the settings disabled?**
@@ -613,9 +613,9 @@ No, because I don't consider this as privacy sensitive data (=able to identify y
 I am happy to add new restrictions for data that is really privacy sensitive.
 
 <a name="FAQ36"></a>
-**(36) What does expert mode?**
+**(36) What are the experimental functions?**
 
-Expert mode disables the dangerous restrictions warning and enables some advanced settings.
+See the [change log](https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md)
 
 <a name="FAQ37"></a>
 **(37) Does XPrivacy work with SELinux (Fort Knox) ?**
@@ -623,11 +623,9 @@ Expert mode disables the dangerous restrictions warning and enables some advance
 Yes.
 
 <a name="FAQ38"></a>
-**(38) What is 'Android usage data' and 'Extra usage data' ?**
+**(38) What is 'Android usage data'?**
 
 The setting *Android usage data* enables sending more usage data for Android itself (uid=1000).
-
-The setting *Extra usage data* enables sending more usage data for all applications.
 
 Enabling these settings can cause instability and/or decrease performance on some devices.
 
@@ -649,12 +647,6 @@ Some/all is determined as follows:
 
 Be aware that by default categories and functions are filtered by permission,
 so you may not see all of them. The check box state is independent of this.
-
-<a name="FAQ40"></a>
-**(40) How can I get usage data for all applications?**
-
-Try enabling the setting *Extra usage data* from the main menu,
-but be aware that this might cause instability on some ROMs.
 
 <a name="FAQ41"></a>
 **(41) Why are not all pro features available with the pro enabler?**
@@ -695,6 +687,18 @@ XPrivacy can also restrict access to the Linux shell (including superuser),
 to prevent native binaries from running.
 
 You can find the restrictions in the *Shell* category.
+
+<a name="FAQ44"></a>
+**(44) I see data usage without Android permissions!**
+
+A lot of functions do not require Android permissions, so this is quite normal.
+Sometimes an application tries to use a function which it doesn't have Android permission for.
+Since XPrivacy mostly runs before the function is run, this will be registered.
+
+If you filter on permissions and an application tried to use a function without having these permissions,
+the application will still be shown.
+
+If you think a function should have permissions, while XPrivacy shows not, please report this.
 
 Support
 -------
