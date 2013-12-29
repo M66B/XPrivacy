@@ -67,7 +67,7 @@ public class ActivityShare extends Activity {
 	public static final String ACTION_IMPORT = "biz.bokhorst.xprivacy.action.IMPORT";
 	public static final String ACTION_FETCH = "biz.bokhorst.xprivacy.action.FETCH";
 
-	public static final int TIMEOUT_MILLISEC = 30000;
+	public static final int TIMEOUT_MILLISEC = 45000;
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
