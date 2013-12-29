@@ -21,6 +21,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed reloading when navigating up ([issue](https://github.com/M66B/XPrivacy/issues/1034))
 * Notify action for application settings ([issue](https://github.com/M66B/XPrivacy/issues/955))
 * Display grayed usage data icon for methods with no usage data ([issue](https://github.com/M66B/XPrivacy/issues/878))
+* Prevent applications from bypassing Android APIs by directly calling the binder
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
