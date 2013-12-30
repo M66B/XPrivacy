@@ -53,6 +53,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -1048,6 +1049,7 @@ public class ActivityApp extends Activity {
 		private class GroupViewHolder {
 			private View row;
 			private int position;
+			private boolean busy;
 			public ImageView imgIndicator;
 			public ImageView imgUsed;
 			public ImageView imgGranted;
@@ -1059,6 +1061,7 @@ public class ActivityApp extends Activity {
 			public GroupViewHolder(View theRow, int thePosition) {
 				row = theRow;
 				position = thePosition;
+				busy = false;
 				imgIndicator = (ImageView) row.findViewById(R.id.imgIndicator);
 				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
@@ -1162,19 +1165,29 @@ public class ActivityApp extends Activity {
 						}
 					});
 				}
+				holder.busy = false;
 			}
 		}
 
 		@Override
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-			GroupViewHolder holder;
+			GroupViewHolder holder = null;
+
+			if (convertView != null) {
+				holder = (GroupViewHolder) convertView.getTag();
+				if (holder.busy) {
+					convertView = null;
+					Util.log(null, Log.WARN, "View holder busy @" + holder.position);
+				} else {
+					holder.busy = true;
+					holder.position = groupPosition;
+				}
+			}
+
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.restrictionentry, null);
 				holder = new GroupViewHolder(convertView, groupPosition);
 				convertView.setTag(holder);
-			} else {
-				holder = (GroupViewHolder) convertView.getTag();
-				holder.position = groupPosition;
 			}
 
 			// Get entry
@@ -1266,6 +1279,7 @@ public class ActivityApp extends Activity {
 
 		private class ChildViewHolder {
 			private View row;
+			private boolean busy;
 			private int groupPosition;
 			private int childPosition;
 			public ImageView imgUsed;
@@ -1276,6 +1290,7 @@ public class ActivityApp extends Activity {
 				row = theRow;
 				groupPosition = gPosition;
 				childPosition = cPosition;
+				busy = true;
 				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
@@ -1359,21 +1374,31 @@ public class ActivityApp extends Activity {
 						}
 					});
 				}
+				holder.busy = false;
 			}
 		}
 
 		@Override
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 				ViewGroup parent) {
-			ChildViewHolder holder;
+			ChildViewHolder holder = null;
+
+			if (convertView != null) {
+				holder = (ChildViewHolder) convertView.getTag();
+				if (holder.busy) {
+					convertView = null;
+					Util.log(null, Log.WARN, "View holder busy @" + holder.groupPosition + "/" + holder.childPosition);
+				} else {
+					holder.busy = true;
+					holder.groupPosition = groupPosition;
+					holder.childPosition = childPosition;
+				}
+			}
+
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.restrictionchild, null);
 				holder = new ChildViewHolder(convertView, groupPosition, childPosition);
 				convertView.setTag(holder);
-			} else {
-				holder = (ChildViewHolder) convertView.getTag();
-				holder.groupPosition = groupPosition;
-				holder.childPosition = childPosition;
 			}
 
 			// Get entry

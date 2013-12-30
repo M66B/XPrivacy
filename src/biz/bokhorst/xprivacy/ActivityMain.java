@@ -1224,6 +1224,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private class ViewHolder {
 			private View row;
 			private int position;
+			private boolean busy;
 			public View vwState;
 			public ImageView imgIcon;
 			public ImageView imgUsed;
@@ -1237,6 +1238,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			public ViewHolder(View theRow, int thePosition) {
 				row = theRow;
 				position = thePosition;
+				busy = false;
 				vwState = (View) row.findViewById(R.id.vwState);
 				imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
 				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
@@ -1315,6 +1317,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					else
 						holder.vwState.setBackgroundColor(getResources().getColor(
 								Util.getThemed(ActivityMain.this, R.attr.color_state_restricted)));
+
+					// Display icon
+					holder.imgIcon.setImageDrawable(xAppInfo.getIcon(ActivityMain.this));
+					holder.imgIcon.setVisibility(View.VISIBLE);
 
 					// Display usage
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
@@ -1433,24 +1439,34 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						}
 					});
 				}
+				holder.busy = false;
 			}
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder;
+			ViewHolder holder = null;
+
+			if (convertView != null) {
+				holder = (ViewHolder) convertView.getTag();
+				if (holder.busy) {
+					convertView = null;
+					Util.log(null, Log.WARN, "View holder busy @" + holder.position);
+				} else {
+					holder.busy = true;
+					holder.position = position;
+				}
+			}
+
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.mainentry, null);
 				holder = new ViewHolder(convertView, position);
 				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-				holder.position = position;
 			}
 
 			// Get info
 			final ApplicationInfoEx xAppInfo = getItem(holder.position);
-			holder.imgIcon.setImageDrawable(xAppInfo.getIcon(convertView.getContext()));
+			holder.imgIcon.setVisibility(View.INVISIBLE);
 
 			// Set background color
 			if (xAppInfo.isSystem())
