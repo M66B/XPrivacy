@@ -15,6 +15,7 @@ For interested developers:
 * Manage packages for services, providers, etc
 * Close app view when packages removed
 * Better XBinder magic
+* Update screenshots
 
 * Split settings file?
 * Remove indeterminate progress indicator?
