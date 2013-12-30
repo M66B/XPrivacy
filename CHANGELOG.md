@@ -17,7 +17,8 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Fixed scroll lag on slower devices
-* Fixed displaying wrong information in scroll lists
+* Fixed displaying wrong information in scroll lists sometimes
+* Fixed settings not sticking in first three minutes ([issue](https://github.com/M66B/XPrivacy/issues/1042))
 * Updated Polish translation
 * Updated Spanish translation
 

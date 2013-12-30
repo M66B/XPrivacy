@@ -423,6 +423,10 @@ public class PrivacyManager {
 		if (context == null)
 			return false;
 
+		String self = PrivacyManager.class.getPackage().getName();
+		if (self.equals(context.getPackageName()))
+			return true;
+
 		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs)
 			return false;
 
