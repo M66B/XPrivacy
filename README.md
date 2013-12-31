@@ -607,6 +607,7 @@ No, because these OS'es are to closed to implement something like XPrivacy.
 * Wi-Fi settings
 * Bluetooth settings
 * Shortcuts
+* Starting other applications
 * Android version
 * Vibration
 
