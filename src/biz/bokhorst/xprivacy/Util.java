@@ -367,6 +367,8 @@ public class Util {
 	private static SparseArray<String> mPidPkg = new SparseArray<String>();
 
 	public static String getPackageNameByPid(int pid) {
+		// This doesn't work for all processes!
+
 		synchronized (mPidPkg) {
 			String pkg = mPidPkg.get(pid);
 			if (pkg != null)
