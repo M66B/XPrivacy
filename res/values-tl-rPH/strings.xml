@@ -1,99 +1,98 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Ang Xposed framework version %d+ ay hindi naka-install</string>
-    <string name="app_notenabled">Ang XPrivacy ay walang gana sa Xposed installer</string>
-    <string name="app_wrongandroid">Para lang sa Android version 4.0.3+</string>
-    <string name="app_version" formatted="false">XPrivacy version: %s (%d)</string>
-    <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
-    <string name="app_copyright">Ang karapatan \u00A9 2013-2014 nito ay pag-aari ni M. Bokhorst (M66B)</string>
-    <string name="menu_usage">Impormasyon tungkol sa datang nagamit</string>
-    <string name="menu_refresh">Paulitin ang naka-takdang impormasyon</string>
-    <string name="menu_settings">Palitan ang settings</string>
-    <string name="menu_template">Naka-handang restriksyon</string>
-    <string name="menu_report">Ipaalam kung may isyu</string>
-    <string name="menu_export">Iluwas ang iyong mga naka-takdang restriksyon</string>
-    <string name="menu_import">Iangkat ang mga dating restriksyon</string>
-    <string name="menu_submit">Mag-submit ng restriksyon</string>
-    <string name="menu_fetch">Kumuha ng restriksyon</string>
+    <string name="app_notxposed" formatted="false">Ang Xposed framework na salin %d+ ay hindi nakalagay sa iyong kagamitan</string>
+    <string name="app_notenabled">Ang XPrivacy ay hindi gumagana sa Xposed na installer</string>
+    <string name="app_wrongandroid">Para lang sa Android na salin 4.0.3+</string>
+    <string name="app_version" formatted="false">XPrivacy na salin: %s (%d)</string>
+    <string name="app_xversion" formatted="false">Xposed framework na salin: %d</string>
+    <string name="app_copyright">Ang karapatan \u00A9 2013–2014 nito ay pag-aari ni M. Bokhorst (M66B)</string>
+    <string name="menu_usage">Kaalaman tungkol sa mga pahintulot na nagamit</string>
+    <string name="menu_refresh">Paulitin ang nakatakdang kaalaman</string>
+    <string name="menu_settings">Palitan ang paglalagay</string>
+    <string name="menu_template">Nakahandang paghihigpit</string>
+    <string name="menu_report">Ipaalam kung mayroon mang suliranin</string>
+    <string name="menu_export">Iluwas ang iyong nakatakdang paghihigpit</string>
+    <string name="menu_import">Iangkat ang dating paghihigpit</string>
+    <string name="menu_submit">Ipasa ang iyong paghihigpit</string>
+    <string name="menu_fetch">Kumuha nang nakatakdang paghihigpit</string>
     <string name="menu_theme">Palitan ang tema</string>
-    <string name="menu_pro">Pro version</string>
-    <string name="menu_about">Tungkolin</string>
-    <string name="menu_help">Basahin ang tulong</string>
-    <string name="menu_all">Lahat</string>
-    <string name="menu_restriction_all">Bigyan ng lahat o walang restriksyon</string>
-    <string name="menu_clear_all">Alisin lahat ng restriksyon</string>
-    <string name="menu_restrict_all">I-restrik lahat</string>
-    <string name="menu_clear_usage">Alisin ang nagamit</string>
-    <string name="menu_usage_all">Bigyan ng lahat o walang Filter</string>
-    <string name="menu_apply">Itakda ang mga naka-handang restriksyon</string>
-    <string name="menu_clear">Alisin</string>
-    <string name="menu_app_launch">Buksan</string>
-    <string name="menu_app_settings">Palitan ang settings</string>
+    <string name="menu_pro">Salin na Pro</string>
+    <string name="menu_about">Tungkulin</string>
+    <string name="menu_help">Bumasa ng tulong</string>
+    <string name="menu_all">Kalahatan</string>
+    <string name="menu_restriction_all">Bigyan ng lahat o walang paghihigpit</string>
+    <string name="menu_clear_all">Burahin lahat ng paghihigpit</string>
+    <string name="menu_restrict_all">Pahigpitan lahat</string>
+    <string name="menu_clear_usage">Burahin lahat nang nakatakdang kaalaman at ukol sa mga pahintulot na nagamit</string>
+    <string name="menu_usage_all">Ipakita sa lahat ng may pahintulot o sa mga may pahigpit lamang</string>
+    <string name="menu_apply">Itakda ang nakahandang paghihigpit</string>
+    <string name="menu_clear">Burahin lahat</string>
+    <string name="menu_app_launch">Buksan at paumpisahan</string>
+    <string name="menu_app_settings">Palitan ang paglalagay</string>
     <string name="menu_app_store">Pumunta sa Play Store</string>
     <string name="menu_app_kill">Puksain</string>
     <string name="menu_accounts">Piliin ang mga Accounts na may pahintulot</string>
     <string name="menu_applications">Piliin ang mga Applications na may pahintulot</string>
     <string name="menu_contacts">Piliin ang mga Contacts na may pahintulot</string>
-    <string name="menu_tutorial">Tutoryal</string>
+    <string name="menu_tutorial">Sangguni</string>
     <string name="msg_new">Bago</string>
-    <string name="msg_update">Update</string>
-    <string name="msg_licensed" formatted="false">Naka-lisensya kay: %s</string>
+    <string name="msg_update">Pabaguhin</string>
+    <string name="msg_licensed" formatted="false">Nakalisensya kay: %s</string>
     <string name="msg_loading">Naglo-load</string>
     <string name="msg_applying">Tinatakda</string>
-    <string name="msg_applied">Naka-handang restriksyon ay ngayon nakatakda</string>
-    <string name="msg_saved_to" formatted="false">Naka-save sa %s</string>
-    <string name="msg_no_restrictions">Walang restriksyon na natagpuan</string>
-    <string name="msg_sure">Sigurado ba?</string>
+    <string name="msg_applied">Nakahandang paghihigpit ay ngayon na nakatakda</string>
+    <string name="msg_saved_to" formatted="false">Nailagay sa %s</string>
+    <string name="msg_no_restrictions">Walang nakatakdang paghihigpit na natagpuan</string>
+    <string name="msg_sure">Tiyak ka na ba?</string>
     <string name="msg_done">Tapos na</string>
-    <string name="msg_reboot">Kailangan i-umpisa ang iyong kagamitan</string>
-    <string name="msg_random_now">Palit-palitan ang mga restriksyon ngayon na</string>
-    <string name="msg_random_access">Palit-palitan ang mga restriksyon sa paggamit</string>
-    <string name="msg_random_boot">Palit-palitan ang mga restriksyon sa unang gamit</string>
-    <string name="msg_usage">Ina-update ang impormasyon tungkol sa datang nagamit</string>
-    <string name="msg_restart">Kailangan i-umpisa ang Application</string>
-    <string name="msg_first"><b>Malaking pag-aalaga ang ginampanan sa pagka-buo at sa pagsu-suri ng XPrivacy,
-pero sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bilang sa mga isa\'t-isang aplikasyon. 
-\n\nAng pag-gamit nito ay buong nasa iyong pagbaka-sakali.</b>
-\n\nBasahin din ang kanyang lisensya:</string>
+    <string name="msg_reboot">Kailangan paumpisahin muli ang iyong kagamitan</string>
+    <string name="msg_random_now">Palit-palitan ang mga paghihigpit sa ngayon na</string>
+    <string name="msg_random_access">Palit-palitan ang mga paghihigpit sa kusang paggamit</string>
+    <string name="msg_random_boot">Palit-palitan ang mga paghihigpit sa unang paggamit</string>
+    <string name="msg_usage">Pinababago ang kaalaman tungkol sa mga pahintulot na nagamit</string>
+    <string name="msg_restart">Kailangan paumpisahin muli ang Application</string>
+    <string name="msg_first"><b>Malaking pag-aalaga ang ginampanan sa pagkabuo at sa pagsusuri ng XPrivacy,
+    ngunit sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bawat sa isa't isang aplikasyon. 
+\n\nAng paggamit nito ay ganap na nasa sa iyong pagbabakasakali.</b>\n\nAlamin din ang kanyang lisensiya at sangguni dito sa:</string>
     <string name="restrict_accounts">Mga Accounts (Google, Facebook, at iba pa)</string>
-    <string name="restrict_browser">Sa Browser (bookmarks/history)</string>
+    <string name="restrict_browser">Sa Browser (mga bookmarks/history)</string>
     <string name="restrict_calendar">Sa Kalendaryo</string>
-    <string name="restrict_calling">Sa Pagtawag (telepono, SMS, MMS)</string>
+    <string name="restrict_calling">Sa Pagtawag (sa telepono, SMS, MMS)</string>
     <string name="restrict_clipboard">Sa Clipboard</string>
     <string name="restrict_contacts">Mga Contacts</string>
     <string name="restrict_dictionary">Sa Diksyonaryo (ng gumagamit)</string>
     <string name="restrict_email">Sa E-mail</string>
-    <string name="restrict_identification">Pagkaka-kilanlan (ng iyong kagamitan)</string>
+    <string name="restrict_identification">Pagkakakilanlan (ng iyong kagamitan)</string>
     <string name="restrict_internet">Sa Internet</string>
-    <string name="restrict_location">Ang iyong Lokasyon (fine/coarse)</string>
+    <string name="restrict_location">Sa iyong Lugar (fine/coarse)</string>
     <string name="restrict_media">Sa Media (pagtinig, larawan, bidyo)</string>
-    <string name="restrict_messages">Mga Mensahe (SMS, MMS)</string>
+    <string name="restrict_messages">Sa iyong mga Mensahe (SMS, MMS)</string>
     <string name="restrict_network">Sa Network (mga address)</string>
-    <string name="restrict_notifications">Mga Notipikasyon</string>
+    <string name="restrict_notifications">Mga Abiso</string>
     <string name="restrict_overlay">Sa Overlay</string>
-    <string name="restrict_phone">Telepono (ID, mga numero, mga tawag)</string>
+    <string name="restrict_phone">Telepono (ID, sa mga numero, sa mga tawag)</string>
     <string name="restrict_sensors">Mga Sensors</string>
     <string name="restrict_storage">Sa Storage (medya, SD card)</string>
     <string name="restrict_shell">Sa Shell (commands, superuser)</string>
-    <string name="restrict_system">Sa Sistema (mga na-install na apps)</string>
-    <string name="restrict_view">Pahintulot na Tignan (ng Browser)</string>
-    <string name="title_categories">Mga Kategorya</string>
-    <string name="title_restrict">Lagyan ng check para i-restrikto:</string>
+    <string name="restrict_system">Sa System (ukol sa nailagay mong Apps)</string>
+    <string name="restrict_view">Pahintulot sa Pagpapakita (ng Browser)</string>
+    <string name="title_categories">Mga Pangkat</string>
+    <string name="title_restrict">Lagyan ng Check para pahigpitan:</string>
     <string name="title_filters">Mga Filters</string>
 
     <plurals name="title_active_filters">
-        <item quantity="one">Mga Filters: Iisa naka-aktiba</item>
-        <item quantity="other">Mga Filters: %d ang naka-aktiba</item>
+        <item quantity="one">Mga Filters: Iisa ang nakatakdang gumagana</item>
+        <item quantity="other">Mga Filters: %d ang nakatakdang gumagana</item>
     </plurals>
 
-    <string name="title_fused">Bigyan ng Filter at ipakita lamang sa mga Data Usage</string>
-    <string name="title_finternet">Bigyan ng Filter at ipakita lamang sa mga Internet Access</string>
-    <string name="title_fpermission">Bigyan ng Filter at ipakita lamang sa mga Permission</string>
-    <string name="title_frestricted">Bigyan ng Filter at ipakita lamang sa mga Restricted</string>
-    <string name="title_fuser">Bigyan ng Filter at ipakita lamang sa mga User Applications</string>
-    <string name="title_fsystem">Bigyan ng Filter at ipakita lamang sa mga System Applications</string>
-    <string name="title_fnot">Baliktarin</string>
-    <string name="settings_serial">Ang Seryal#</string>
+    <string name="title_fused">Bigyan ng Filter at ipakita lamang sa mga Kaalaman na Nagamit</string>
+    <string name="title_finternet">Bigyan ng Filter at ipakita lamang sa Pagdaan ng Internet</string>
+    <string name="title_fpermission">Bigyan ng Filter at ipakita lamang sa mga may Pahintulot</string>
+    <string name="title_frestricted">Bigyan ng Filter at ipakita lamang sa mga may Paghihigpit</string>
+    <string name="title_fuser">Bigyan ng Filter at ipakita lamang sa iyong mga User Applications</string>
+    <string name="title_fsystem">Bigyan ng Filter at ipakita lamang sa iyong mga System Applications</string>
+    <string name="title_fnot">Pagbaliktarin</string>
+    <string name="settings_serial">Ang iyong Seryal#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longhitud</string>
     <string name="settings_mac">MAC address</string>
@@ -102,34 +101,34 @@ pero sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng
     <string name="settings_id">Android ID</string>
     <string name="settings_adid">Advertisement ID</string>
     <string name="settings_country">Bansa</string>
-    <string name="settings_operator">Opereytor ng iyong telepono</string>
+    <string name="settings_operator">Tagapamahala ng iyong telepono</string>
     <string name="settings_subscriber">Subscriber ID</string>
-    <string name="settings_ua">User agent</string>
-    <string name="settings_general">General</string>
-    <string name="settings_fake_data">Pekeng impormasyon</string>
-    <string name="settings_global">Gamitin ang global na pekeng impormasyon</string>
-    <string name="settings_notify">I-update ang mga notipikasyon</string>
-    <string name="settings_usage">Usage data ng Android (kailangan i-umpisa)</string>
-    <string name="settings_log">Debug log (kailangan ng i-umpisa)</string>
-    <string name="settings_expert">Gamitin sa Expert mode</string>
-    <string name="settings_dangerous">I-restrik mga may panganib na tungkulin</string>
-    <string name="settings_confidence">Pinaka-mataas na confidence interval na puwedeng kunin</string>
-    <string name="settings_experimental">Mga Eksperimentong tungkulin (kailangan i-umpisa)</string>
-    <string name="help_application">Aplikasyon</string>
-    <string name="help_internet">may Internet na permiso</string>
-    <string name="help_granted">may Android na permiso</string>
-    <string name="help_used">nagamit niya nitong data</string>
-    <string name="help_frozen">ay walang gana</string>
-    <string name="help_dangerous">may panganib, magkakaroon ng problema pag ini-restrikto</string>
-    <string name="help_half">dilahat may restrikto</string>
-    <string name="help_attention">mga restrikto kailangan tignan</string>
-    <string name="help_restricted">mga restrikto ay naiba</string>
-    <string name="help_shared">mga restrikto ay nai-submit</string>
-    <string name="tutorial_mainheader">Pumili ng kategorya na i-restrik; piliin ang nakalantad na apps gamit ng filters</string>
-    <string name="tutorial_mainlist">Lagyan ng check sa kanang gilid para i-restrik ang naka-piling kategorya sa kanya-kanyang app
-\n\nAng mga Apps ay mabi-bigyan ng wala o pekeng impormasyon sa mga nai-restriktong kategorya
-\n\nPindutin ang App icon sa kaliwang gilid para matignan ang detalye sa kanyang restriksyon at settings</string>
-    <string name="tutorial_detailsheader">Pindutin ang App icon sa kaliwang gilid para sa iba pang puwedeng aksyon</string>
-    <string name="tutorial_detailslist">Pindutin ang down arrow sa kaliwang gilid para makita ang laman ng kategorya na mayroon o walang restrikto</string>
+    <string name="settings_ua">Pagkakakilanlan ng iyong Browser</string>
+    <string name="settings_general">Pangkalahatan</string>
+    <string name="settings_fake_data">Pekeng kaalaman</string>
+    <string name="settings_global">Gamitin ang panlahat na pekeng kaalaman</string>
+    <string name="settings_notify">Baguhin ang mga abiso</string>
+    <string name="settings_usage">Kaalaman na nagamit ng Android (kailangan muling paumpisahin ang iyong kagamitan)</string>
+    <string name="settings_log">Ipakita kaalaman ukol sa Debug (kailangan muling paumpisahin ang iyong kagamitan)</string>
+    <string name="settings_expert">Gamitin XPrivacy sa sanay na paraan</string>
+    <string name="settings_dangerous">Pahigpitan mga may panganib na tungkulin</string>
+    <string name="settings_confidence">Pinakamataas na Confidence Interval na puwedeng kunin</string>
+    <string name="settings_experimental">Gamiti mga hindi pa tiyak na tungkulin (kailangan muling paumpisahin ang iyong kagamitan)</string>
+    <string name="help_application">Mga Applications</string>
+    <string name="help_internet">may Internet na pahintulot</string>
+    <string name="help_granted">may Android na pahintulot</string>
+    <string name="help_used">nagamit niya nitong kaalaman</string>
+    <string name="help_frozen">ay winalang gana</string>
+    <string name="help_dangerous">may panganib, magkakaroon ng problema kapag iyong hinigpitan</string>
+    <string name="help_half">mayroon paghihigpit</string>
+    <string name="help_attention">mga paghihigpit ay kailangan tingnan</string>
+    <string name="help_restricted">mga paghihigpit ay naiba</string>
+    <string name="help_shared">mga paghihigpit ay naipasa</string>
+    <string name="tutorial_mainheader">Pumili ng pangkat na pahihigpitan; piliin ang lalantad na iyong apps gamit ang mga pagpipilian na Filter</string>
+    <string name="tutorial_mainlist">Sa tuwing app, lagyan ng Check sa kanang gilid para pahigpitan ang napiling pangkat
+\n\nSa gayon ay ang mga Apps mabibigyan ng wala o pekeng impormasyon ayon sa mga nahigpitan na pangkat
+\n\nPindutin ang App icon sa kaliwang gilid para matignan mabuti tungkol sa kanyang paghihigpit at paglalagay</string>
+    <string name="tutorial_detailsheader">Pindutin ang App icon sa kaliwang gilid para sa iba pang puwedeng mapalitan na paglalagay</string>
+    <string name="tutorial_detailslist">Pindutin ang down arrow sa kaliwang gilid para makita ang laman ng pangkat na mayroon o walang paghihigpit</string>
 
 </resources>
