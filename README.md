@@ -725,7 +725,10 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 
 **One bug report / feature request per issue please!**
 
-**Do not use my personal or XDA e-mail for bug reports and feature requests.**
+**Do not use my personal or XDA e-mail for bug reports, feature requests or questions.**
+
+It is okay to use my personal or XDA e-mail for things that cannot be shared in public,
+such as security reports.
 
 Changelog
 ---------
