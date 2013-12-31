@@ -120,6 +120,7 @@
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>
     <string name="help_used">je uporabljal te podatke</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">je onemogočen</string>
     <string name="help_dangerous">je nevaren</string>
     <string name="help_half">delno omejeno</string>

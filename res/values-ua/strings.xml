@@ -119,6 +119,7 @@
     <string name="help_internet">запитує доступ до Інтернету</string>
     <string name="help_granted">має дозвол Android</string>
     <string name="help_used">дані вже використовувались</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">вимкнено</string>
     <string name="help_dangerous">зміна дозволів небезпечна</string>
     <string name="help_half">частково заборонено</string>

@@ -118,6 +118,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="help_internet">har internetbehörighet</string>
     <string name="help_granted">har Android-behörighet</string>
     <string name="help_used">har använt denna data</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">is inaktiverad</string>
     <string name="help_dangerous">är farlig</string>
     <string name="help_half">partly restricted</string>

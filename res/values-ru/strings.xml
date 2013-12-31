@@ -119,6 +119,7 @@
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>
     <string name="help_used">данные уже использовались</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">отключено</string>
     <string name="help_dangerous">изменение разрешений опасно</string>
     <string name="help_half">частично запрещено</string>

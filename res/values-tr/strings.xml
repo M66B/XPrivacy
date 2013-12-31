@@ -117,6 +117,7 @@
     <string name="help_internet">internet izni var</string>
     <string name="help_granted">Android izni var</string>
     <string name="help_used">bu izni kullandı</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">uygulama devredışı</string>
     <string name="help_dangerous">tehlikeli izin</string>
     <string name="help_half">partly restricted</string>

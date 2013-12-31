@@ -118,6 +118,7 @@
     <string name="help_internet">لديه صلاحية الوصول للإنترنت</string>
     <string name="help_granted">لديه صلاحية أندرويد</string>
     <string name="help_used">يستخدم هذه البيانات</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">مُعطل</string>
     <string name="help_dangerous">خطير</string>
     <string name="help_half">تقييد جزئي</string>

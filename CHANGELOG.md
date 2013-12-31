@@ -16,6 +16,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Added grayed usage data icon to help
 * Updated Chinese translation
 * Updated Tagalog translation
 

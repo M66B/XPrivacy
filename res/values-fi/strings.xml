@@ -117,6 +117,7 @@
     <string name="help_internet">on internet käyttöoikeus</string>
     <string name="help_granted">on Android käyttöoikeus</string>
     <string name="help_used">on käyttänyt tätä dataa</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">on disabloitu</string>
     <string name="help_dangerous">on vaarallinen, rajoitus voi aiheuttaa ongelmia</string>
     <string name="help_half">partly restricted</string>

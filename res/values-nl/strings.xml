@@ -49,7 +49,7 @@
     <string name="msg_random_now">Willekeurig</string>
     <string name="msg_random_access">Willekeurig bij gebruik</string>
     <string name="msg_random_boot">Willekeurig na herstart</string>
-    <string name="msg_usage">Bijwerken van gegevensgebruik</string>
+    <string name="msg_usage">Bijwerken van gebruiksgegevens</string>
     <string name="msg_restart">Applicatie herstart vereist</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
@@ -118,6 +118,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="help_internet">heeft internet rechten</string>
     <string name="help_granted">heeft Android rechten</string>
     <string name="help_used">heeft deze gegevens gebruikt</string>
+    <string name="help_used_grayed">geen gebruiksgegevens beschikbaar</string>
     <string name="help_frozen">is uitgezet</string>
     <string name="help_dangerous">is gevaarlijk</string>
     <string name="help_half">is gedeeltelijk beperkt</string>

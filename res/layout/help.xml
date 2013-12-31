@@ -26,6 +26,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="48dip"
+            android:drawableLeft="?attr/icon_used_grayed"
+            android:drawablePadding="6dip"
+            android:gravity="center_vertical"
+            android:text="@string/help_used_grayed"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dip"
             android:drawableLeft="?attr/icon_granted"
             android:drawablePadding="6dip"
             android:gravity="center_vertical"

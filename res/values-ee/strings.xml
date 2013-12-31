@@ -118,6 +118,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="help_internet">on interneti kasutamise luba</string>
     <string name="help_granted">on Android luba</string>
     <string name="help_used">on kasutanud seda andmeside tüüpi</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">on välja lülitatud</string>
     <string name="help_dangerous">On ohtlik</string>
     <string name="help_half">partly restricted</string>

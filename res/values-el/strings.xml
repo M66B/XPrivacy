@@ -118,6 +118,7 @@
     <string name="help_internet">έχει άδεια internet</string>
     <string name="help_granted">έχει άδεια Android</string>
     <string name="help_used">έχει χρησιμοποιήσει αυτά τα δεδομένα</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">είναι απενεργοποιημένη</string>
     <string name="help_dangerous">είναι επικίνδυνη</string>
     <string name="help_half">partly restricted</string>

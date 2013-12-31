@@ -118,6 +118,7 @@
     <string name="help_internet">इंटरनेट की अनुमति है</string>
     <string name="help_granted">Android की अनुमति है</string>
     <string name="help_used">इस डेटा का उपयोग किया है</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">अक्षम किया गया है</string>
     <string name="help_dangerous">खतरनाक है</string>
     <string name="help_half">आंशिक प्रतिबंध</string>

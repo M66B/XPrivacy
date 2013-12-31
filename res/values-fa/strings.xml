@@ -120,6 +120,7 @@
     <string name="help_internet">مجوز استفاده از اینترنت را دارد</string>
     <string name="help_granted">مجوز اندروید را دارد</string>
     <string name="help_used">از این داده استفاده کرده است</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">غیر فعال است</string>
     <string name="help_dangerous">خطرناک است</string>
     <string name="help_half">partly restricted</string>

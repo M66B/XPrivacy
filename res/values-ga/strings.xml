@@ -118,6 +118,7 @@
     <string name="help_internet">Tá cead idirlín</string>
     <string name="help_granted">Tá cead Android</string>
     <string name="help_used">Tá úsáid na sonraí seo</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">faoi mhíchumas</string>
     <string name="help_dangerous">contúirteacha</string>
     <string name="help_half">partly restricted</string>

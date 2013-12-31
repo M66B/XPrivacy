@@ -118,6 +118,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="help_internet">Internet engedély</string>
     <string name="help_granted">Android engedély</string>
     <string name="help_used">Használta ezt az adatot</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">Ki van kapcsolva</string>
     <string name="help_dangerous">Veszélyes</string>
     <string name="help_half">részben korlátozott</string>

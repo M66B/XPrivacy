@@ -119,6 +119,7 @@
     <string name="help_internet">ma dostęp do internetu</string>
     <string name="help_granted">ma dostęp do uprawnień Androida</string>
     <string name="help_used">wykorzystała dane</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">jest wyłączona</string>
     <string name="help_dangerous">niebezpieczne uprawnienie, ograniczenie może spowodować problemy</string>
     <string name="help_half">częściowo ograniczona</string>

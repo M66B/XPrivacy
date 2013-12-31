@@ -118,6 +118,7 @@
     <string name="help_internet">may Internet na pahintulot</string>
     <string name="help_granted">may Android na pahintulot</string>
     <string name="help_used">nagamit niya nitong kaalaman</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">ay winalang gana</string>
     <string name="help_dangerous">may panganib, magkakaroon ng problema kapag iyong hinigpitan</string>
     <string name="help_half">mayroon paghihigpit</string>

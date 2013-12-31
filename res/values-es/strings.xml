@@ -118,6 +118,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="help_internet">Tiene acceso a Internet</string>
     <string name="help_granted">Tiene permisos Android</string>
     <string name="help_used">Ha usado estos datos</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">Esta deshabilitado</string>
     <string name="help_dangerous">Es peligroso, restringirlo puede causar problemas</string>
     <string name="help_half">Restringido parcialmente</string>

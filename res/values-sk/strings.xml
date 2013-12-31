@@ -119,6 +119,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>
     <string name="help_used">používala tieto dáta</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">je zakázaná</string>
     <string name="help_dangerous">je nebezpečná</string>
     <string name="help_half">čiastočne obmedzené</string>

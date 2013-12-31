@@ -116,6 +116,7 @@
     <string name="help_internet">表示有網際網路權限</string>
     <string name="help_granted">表示有手機權限</string>
     <string name="help_used">表示app曾取得過資訊</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">表示app已凍結/停用</string>
     <string name="help_dangerous">不建議限制</string>
     <string name="help_half">只有限制部分權限</string>

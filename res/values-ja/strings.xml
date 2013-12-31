@@ -118,6 +118,7 @@
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はアンドロイドの権限を持っています</string>
     <string name="help_used">はそのデータを使用しています</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">は無効になっています</string>
     <string name="help_dangerous">はプライバシーに危険です</string>
     <string name="help_half">部分的に制限されました</string>

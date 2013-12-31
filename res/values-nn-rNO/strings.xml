@@ -116,6 +116,7 @@
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>
     <string name="help_used">har benyttet denne typen av data</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">er deaktivert</string>
     <string name="help_dangerous">er farlig</string>
     <string name="help_half">delvis blokkert</string>

@@ -118,6 +118,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="help_internet">има дозволу за Интернет</string>
     <string name="help_granted">има дозволу за Андроид</string>
     <string name="help_used">је користио ове податке</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">is disabled</string>
     <string name="help_dangerous">је опасан</string>
     <string name="help_half">partly restricted</string>

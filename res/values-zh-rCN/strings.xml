@@ -118,6 +118,7 @@
     <string name="help_internet">应用含有联网权限</string>
     <string name="help_granted">应用已申请的权限（ Androidmanifest 中表明）</string>
     <string name="help_used">应用曾使用的权限</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">应用已被冻结/停用</string>
     <string name="help_dangerous">可能导致应用异常的权限</string>
     <string name="help_half">已限制部分权限</string>

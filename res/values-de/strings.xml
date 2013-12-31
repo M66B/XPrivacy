@@ -118,6 +118,7 @@
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>
     <string name="help_used">hat diese Daten benutzt</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">ist deaktiviert</string>
     <string name="help_dangerous">Beschränkung bedenklich (eventueller App-Absturz)</string>
     <string name="help_half">teilweise beschränkt</string>

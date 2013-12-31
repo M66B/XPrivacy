@@ -118,6 +118,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>
     <string name="help_used">a utilisé ces données</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">est désactivée</string>
     <string name="help_dangerous">est dangereuse, restreindre peut causer des problèmes</string>
     <string name="help_half">partiellement restreinte</string>
