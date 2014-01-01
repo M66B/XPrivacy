@@ -525,7 +525,7 @@ public class ActivityShare extends Activity {
 				// Process applications
 				for (ApplicationInfoEx appInfo : lstApp) {
 					mProgressCurrent++;
-					if (!appInfo.isSystem() || params[0] != null) {
+					if (!appInfo.isSystem() || params[0] != 0) {
 						publishProgress(appInfo.getPackageName().get(0), Integer.toString(mProgressCurrent));
 
 						JSONArray appName = new JSONArray();
