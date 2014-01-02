@@ -478,7 +478,7 @@ because the uid's of these applications might have been changed.
 For export/importing XPrivacy data you need [pro version](http://www.xprivacy.eu/).
 
 <a name="FAQ16"></a>
-**(16) Can I restrict an application with root access?**
+**(16) Can I restrict root access?**
 
 Yes, you can by restricting su shell access.
 
@@ -700,7 +700,13 @@ Since XPrivacy mostly runs before the function is run, this will be registered.
 If you filter on permissions and an application tried to use a function without having these permissions,
 the application will still be shown.
 
-If you think a function should have permissions, while XPrivacy shows not, please report this.
+If you think a function requires permissions, while XPrivacy shows not, please report this.
+
+<a name="FAQ45"></a>
+**(45) How can I restrict the hardware MAC address? the external IP address?**
+
+You can restrict the MAC address and IP address for an application,
+but you cannot change your hardware MAC address nor your external IP address with XPrivacy.
 
 Support
 -------
