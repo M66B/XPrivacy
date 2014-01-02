@@ -329,7 +329,6 @@ public class SettingsDialog {
 
 			// Application specific settings
 			cbNotify.setChecked(notify);
-			cbGlobal.setChecked(global);
 		}
 
 		cbSerial.setChecked(serial.equals(PrivacyManager.cValueRandom));
@@ -383,6 +382,9 @@ public class SettingsDialog {
 		etUa.setText(PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingUa, "", false));
 
 		cbRandom.setChecked(random);
+
+		if (uid != 0)
+			cbGlobal.setChecked(global);
 
 		// Handle search
 		btnSearch.setOnClickListener(new View.OnClickListener() {
