@@ -704,10 +704,19 @@ the application will still be shown.
 If you think a function requires permissions, while XPrivacy shows not, please report this.
 
 <a name="FAQ45"></a>
-**(45) How can I restrict the hardware MAC address? the external IP address?**
+**(45) How can I restrict the hardware/external MAC/IP/IMEI address/number?**
 
-You can restrict the MAC address and IP address for an application,
-but you cannot change your hardware MAC address nor your external IP address with XPrivacy.
+You can restrict the IP and MAC addresses and IMEI number for any application.
+
+The external IP is assigned by your provider and can thus not be changed.
+You could use a [VPN](http://en.wikipedia.org/wiki/Virtual_private_network)
+or [TOR](http://en.wikipedia.org/wiki/Tor_(anonymity_network)) to hide your external IP to a certain extend.
+
+The hardware MAC address can be changed on some devices,
+but this is device dependent and can only be done on driver or kernel level.
+XPrivacy works only on Android level and device independent.
+
+The same applies to the IMEI number, with as additional problem legal issues in most countries.
 
 Support
 -------
