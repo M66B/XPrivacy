@@ -279,7 +279,6 @@
 		<meta name="description" content="XPrivacy">
 		<meta name="author" content="M66B">
 		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<link rel="shortcut icon" href="http://www.faircode.eu/favicon.ico" type="image/x-icon" />
 		<style type="text/css">
 			body { padding-left: 5px; padding-right: 5px; }
 			th, tr, td { padding: 0px !important; }
