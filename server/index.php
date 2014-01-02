@@ -76,9 +76,7 @@
 			}
 
 			// Fixes
-			if (empty($data->protocol_version))
-				$data->protocol_version = 0;
-			if ($data->protocol_version <= 3)
+			if (empty($data->protocol_version) || $data->protocol_version <= 3)
 				$data->android_id = md5($data->android_id);
 
 			if (empty($data->application_name))
