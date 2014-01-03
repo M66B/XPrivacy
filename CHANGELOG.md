@@ -17,6 +17,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Fixed disabling application settings when using global settings ([issue](https://github.com/M66B/XPrivacy/issues/1050))
+* Updated Vietnamese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
