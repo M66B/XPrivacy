@@ -120,21 +120,27 @@
 						$empty = false;
 
 					$found = false;
-					foreach ($index['HOOK'] as $hookidx) {
-						$category = $vals[$hookidx]['attributes']['RESTRICTION'];
-						$method = $vals[$hookidx]['attributes']['METHOD'];
-						if ($restriction->restriction == $category &&
-							(empty($restriction->method) || $restriction->method == $method)) {
-							$found = true;
-							break;
+
+					// Legacy
+					if ($restriction->restriction == 'location' && $restriction->method == 'connect')
+						$found = true;
+
+					if (!$found)
+						foreach ($index['HOOK'] as $hookidx) {
+							$category = $vals[$hookidx]['attributes']['RESTRICTION'];
+							$method = $vals[$hookidx]['attributes']['METHOD'];
+							if ($restriction->restriction == $category &&
+								(empty($restriction->method) || $restriction->method == $method)) {
+								$found = true;
+								break;
+							}
 						}
-					}
 
 					if (!$found) {
 						$name = $restriction->restriction . '/' . $restriction->method;
-						log_error('submit: restrictions unknown: ' . $name , $my_email, $data);
-						echo json_encode(array('ok' => false, 'error' => 'Restrictions unknown: ' . $name));
-						exit();
+						log_error('submit: restriction unknown: ' . $name , $my_email, $data);
+						//echo json_encode(array('ok' => false, 'error' => 'Restriction unknown: ' . $name));
+						//exit();
 					}
 				}
 			}
