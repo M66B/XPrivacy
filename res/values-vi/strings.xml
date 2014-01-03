@@ -117,7 +117,7 @@
     <string name="help_internet">có quyền truy cập mạng</string>
     <string name="help_granted">có quyền của hệ điều hành</string>
     <string name="help_used">đã sử dụng dữ liệu này</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_used_grayed">không có thông tin sử dụng dữ liệu</string>
     <string name="help_frozen">đã được tắt</string>
     <string name="help_dangerous">nguy hiểm, hạn chế có thể gây lỗi</string>
     <string name="help_half">đã hạn chế một phần</string>
