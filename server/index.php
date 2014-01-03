@@ -107,16 +107,39 @@
 				exit();
 			}
 
-			// Check if restrictions
+			// Check restrictions
 			$empty = true;
-			if (!empty($data->settings))
-				foreach ($data->settings as $restriction)
-					if ($restriction->restricted) {
+			if (!empty($data->settings)) {
+				$xml = file_get_contents ('meta.xml');
+				$parser = xml_parser_create();
+				xml_parse_into_struct($parser, $xml, $vals, $index);
+				xml_parser_free($parser);
+
+				foreach ($data->settings as $restriction) {
+					if ($restriction->restricted)
 						$empty = false;
-						break;
+
+					$found = false;
+					foreach ($index['HOOK'] as $hookidx) {
+						$category = $vals[$hookidx]['attributes']['RESTRICTION'];
+						$method = $vals[$hookidx]['attributes']['METHOD'];
+						if ($restriction->restriction == $category &&
+							(empty($restriction->method) || $restriction->method == $method)) {
+							$found = true;
+							break;
+						}
 					}
+
+					if (!$found) {
+						$name = $restriction->restriction . '/' . $restriction->method;
+						log_error('submit: restrictions unknown: ' . $name , $my_email, $data);
+						echo json_encode(array('ok' => false, 'error' => 'Restrictions unknown: ' . $name));
+						exit();
+					}
+				}
+			}
 			if ($empty) {
-				log_error('submit: restrictions missing', $my_email, $data);
+				// log_error('submit: restrictions missing', $my_email, $data);
 				echo json_encode(array('ok' => false, 'error' => 'Restrictions missing'));
 				exit();
 			}
