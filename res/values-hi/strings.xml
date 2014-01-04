@@ -132,5 +132,6 @@
 \nविस्तृत प्रतिबन्ध व settings के लिए app icon को tap करे</string>
     <string name="tutorial_detailsheader">अधिक कार्य के लिए app icon को tap करे</string>
     <string name="tutorial_detailslist">प्रतिबंधित श्रेणी के अपवाद देखने के लिए down arrow को tap करे</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

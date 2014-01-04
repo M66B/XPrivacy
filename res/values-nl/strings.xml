@@ -132,5 +132,6 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
 \nKlik op het app icoon voor gedetailleerde beperkingen en instellingen</string>
     <string name="tutorial_detailsheader">Klik op het app icoon voor meer akties</string>
     <string name="tutorial_detailslist">Klik op de pijl naar beneden voor functie-uitzonderingen</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

@@ -132,5 +132,6 @@
 \n\nPindutin ang App icon sa kaliwang gilid para matignan mabuti tungkol sa kanyang paghihigpit at paglalagay</string>
     <string name="tutorial_detailsheader">Pindutin ang App icon sa kaliwang gilid para sa iba pang puwedeng mapalitan na paglalagay</string>
     <string name="tutorial_detailslist">Pindutin ang down arrow sa kaliwang gilid para makita ang laman ng pangkat na mayroon o walang paghihigpit</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

@@ -132,5 +132,6 @@
 \nإلمس ايقونة التطبيق لتفاصيل القيود والإعدادات</string>
     <string name="tutorial_detailsheader">انقر على أيقونة التطبيق لمزيد من الإجراءات</string>
     <string name="tutorial_detailslist">انقر على السهم المتجه لأسفل لرؤية الوظائف الإستثنائية في الفئة المُقيدة</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

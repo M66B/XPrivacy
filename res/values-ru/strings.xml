@@ -133,5 +133,6 @@
 \nТапните по иконке приложения, чтобы увидеть подробные разрешения и настройки</string>
     <string name="tutorial_detailsheader">Тапните по иконке приложения для дополнительных действий</string>
     <string name="tutorial_detailslist">Тапните по стрелке, чтобы увидеть отдельные функции и их разрешения в категории</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

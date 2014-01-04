@@ -133,5 +133,6 @@
 \nНатисніть іконку програми для детальних обмежень та налаштувань</string>
     <string name="tutorial_detailsheader">Натисніть іконку програми для додаткових дій</string>
     <string name="tutorial_detailslist">Натисніть стрілку, щоб побачити окремі функціі та обмеження в категоріі</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

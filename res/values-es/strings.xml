@@ -132,5 +132,6 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
 \nPulsa el icono de la aplicación para ver las restricciones detalladas y algunas opciones</string>
     <string name="tutorial_detailsheader">Pulsa el icono de la aplicación para ver más opciones</string>
     <string name="tutorial_detailslist">Pulsa una flecha para ver las funciones que engloba la categoría</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

@@ -132,5 +132,6 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
 \nAppuyer sur l’icône de l’appli pour les restrictions détaillées et les paramètres</string>
     <string name="tutorial_detailsheader">Appuyer sur l’icône pour plus d’actions</string>
     <string name="tutorial_detailslist">Appuyer sur la flèche vers les bas pour voir les exceptions d’une catégorie de restrictions</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

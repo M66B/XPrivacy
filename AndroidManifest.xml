@@ -14,7 +14,7 @@
 
     <permission
         android:name="biz.bokhorst.xprivacy.MANAGE_PACKAGES"
-        android:description="@string/app_name"
+        android:description="@string/permission_manage"
         android:label="@string/app_name"
         android:protectionLevel="dangerous" />
 

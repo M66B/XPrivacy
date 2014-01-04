@@ -133,5 +133,6 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
 \nKliknite na ikonu aplikácie pre podrobné obmedzenia a nastavenia</string>
     <string name="tutorial_detailsheader">Kliknite na ikonu aplikácie pre viac akcií</string>
     <string name="tutorial_detailslist">Kliknite na šípku nadol pre zobrazenie funkčných výnimiek pre kategóriu obmedzení</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

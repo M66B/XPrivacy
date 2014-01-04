@@ -134,5 +134,6 @@
 \nTapni ikono aplikacije za podrobnejšo omejevanje in nastavljanje</string>
     <string name="tutorial_detailsheader">Tapni ikono aplikacije za več možnosti</string>
     <string name="tutorial_detailslist">Tapni puščico navzdol za pregled izjem funkcij v omejeni kategoriji</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

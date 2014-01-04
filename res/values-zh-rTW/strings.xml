@@ -130,5 +130,6 @@
      \n點選APP圖示可針對該APP做細部規則設定</string>
     <string name="tutorial_detailsheader">點選APP圖示顯示進階動作選單</string>
     <string name="tutorial_detailslist">點選﹀符號可編輯更細部的權限設定</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

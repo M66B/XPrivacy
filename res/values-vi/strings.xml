@@ -131,5 +131,6 @@
 \nChọn vào biểu tượng của ứng dụng để xem chi tiết các thiết lập và các sự hạn chế</string>
     <string name="tutorial_detailsheader">Chọn vào biểu tượng của ứng dụng để sử dụng các chức năng khác</string>
     <string name="tutorial_detailslist">Chọn vào mũi tên xuống để xem các hàm ngoại lệ của danh mục hạn chế</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

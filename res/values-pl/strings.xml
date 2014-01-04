@@ -133,5 +133,6 @@
 \nTapnij ikonę aplikacji aby uzyskać dostęp do szczegółowych ograniczeń i ustawień</string>
     <string name="tutorial_detailsheader">Tapnij na ikone aplikacji po więcej akcji</string>
     <string name="tutorial_detailslist">Tapnij na strzałkę w dół aby zobaczyć wyjątki ograniczeń w danej kategorii</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

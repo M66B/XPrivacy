@@ -132,5 +132,6 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
 \nKattintson az alkalmazás ikonjára további korlátozásokhoz vagy beállításokhoz</string>
     <string name="tutorial_detailsheader">Kattintson az alkalmazás ikonjára további műveletekhez</string>
     <string name="tutorial_detailslist">Kattintson a lefe nyílra, hogy lássa a korlátozott kategóriák kivételeit</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>
