@@ -53,7 +53,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -1049,7 +1048,6 @@ public class ActivityApp extends Activity {
 		private class GroupViewHolder {
 			private View row;
 			private int position;
-			private boolean busy;
 			public ImageView imgIndicator;
 			public ImageView imgUsed;
 			public ImageView imgGranted;
@@ -1061,7 +1059,6 @@ public class ActivityApp extends Activity {
 			public GroupViewHolder(View theRow, int thePosition) {
 				row = theRow;
 				position = thePosition;
-				busy = false;
 				imgIndicator = (ImageView) row.findViewById(R.id.imgIndicator);
 				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
@@ -1089,7 +1086,7 @@ public class ActivityApp extends Activity {
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				if (holder.position == position && restrictionName != null) {
+				if (restrictionName != null) {
 					// Get info
 					used = (PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
@@ -1108,7 +1105,7 @@ public class ActivityApp extends Activity {
 
 			@Override
 			protected void onPostExecute(Object result) {
-				if (result != null) {
+				if (holder.position == position && result != null) {
 					// Set data
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
@@ -1165,29 +1162,19 @@ public class ActivityApp extends Activity {
 						}
 					});
 				}
-				holder.busy = false;
 			}
 		}
 
 		@Override
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-			GroupViewHolder holder = null;
-
-			if (convertView != null) {
-				holder = (GroupViewHolder) convertView.getTag();
-				if (holder.busy) {
-					convertView = null;
-					Util.log(null, Log.WARN, "View holder busy @" + holder.position);
-				} else {
-					holder.busy = true;
-					holder.position = groupPosition;
-				}
-			}
-
+			GroupViewHolder holder;
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.restrictionentry, null);
 				holder = new GroupViewHolder(convertView, groupPosition);
 				convertView.setTag(holder);
+			} else {
+				holder = (GroupViewHolder) convertView.getTag();
+				holder.position = groupPosition;
 			}
 
 			// Get entry
@@ -1279,7 +1266,6 @@ public class ActivityApp extends Activity {
 
 		private class ChildViewHolder {
 			private View row;
-			private boolean busy;
 			private int groupPosition;
 			private int childPosition;
 			public ImageView imgUsed;
@@ -1290,7 +1276,6 @@ public class ActivityApp extends Activity {
 				row = theRow;
 				groupPosition = gPosition;
 				childPosition = cPosition;
-				busy = true;
 				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
@@ -1317,8 +1302,7 @@ public class ActivityApp extends Activity {
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition
-						&& restrictionName != null) {
+				if (restrictionName != null) {
 					// Get info
 					md = (PrivacyManager.MethodDescription) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsed(holder.row.getContext(), mAppInfo.getUid(), restrictionName,
@@ -1336,7 +1320,7 @@ public class ActivityApp extends Activity {
 
 			@Override
 			protected void onPostExecute(Object result) {
-				if (result != null) {
+				if (holder.groupPosition == groupPosition && holder.childPosition == childPosition && result != null) {
 					// Set data
 					if (lastUsage > 0) {
 						CharSequence sLastUsage = DateUtils.getRelativeTimeSpanString(lastUsage, new Date().getTime(),
@@ -1374,31 +1358,21 @@ public class ActivityApp extends Activity {
 						}
 					});
 				}
-				holder.busy = false;
 			}
 		}
 
 		@Override
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 				ViewGroup parent) {
-			ChildViewHolder holder = null;
-
-			if (convertView != null) {
-				holder = (ChildViewHolder) convertView.getTag();
-				if (holder.busy) {
-					convertView = null;
-					Util.log(null, Log.WARN, "View holder busy @" + holder.groupPosition + "/" + holder.childPosition);
-				} else {
-					holder.busy = true;
-					holder.groupPosition = groupPosition;
-					holder.childPosition = childPosition;
-				}
-			}
-
+			ChildViewHolder holder;
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.restrictionchild, null);
 				holder = new ChildViewHolder(convertView, groupPosition, childPosition);
 				convertView.setTag(holder);
+			} else {
+				holder = (ChildViewHolder) convertView.getTag();
+				holder.groupPosition = groupPosition;
+				holder.childPosition = childPosition;
 			}
 
 			// Get entry
