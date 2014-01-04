@@ -21,6 +21,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed check marks not visible with some themes ([issue](https://github.com/M66B/XPrivacy/issues/1057))
 * Updated Chinese translation
 * Updated Dutch translation
+* Updated Slovak translation
 * Updated Vietnamese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
