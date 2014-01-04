@@ -4,6 +4,7 @@
     <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Inštalátori Xposed</string>
     <string name="app_wrongandroid">Len pre Android 4.0+</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Verzia frameworku Xposed: %d</string>
     <string name="app_copyright">Autorské práva \u00A9 2013–2014 od M. Bokhorst (M66B)</string>
     <string name="menu_usage">Využitie dát</string>
