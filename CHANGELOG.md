@@ -16,6 +16,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.11.6 BETA**
+
 * Fixed disabling application settings when using global settings ([issue](https://github.com/M66B/XPrivacy/issues/1050))
 * Fixed display issues and scroll lag ([issue](https://github.com/M66B/XPrivacy/issues/1049)) ([issue](https://github.com/M66B/XPrivacy/issues/1059))
 * Fixed check marks not visible with some themes ([issue](https://github.com/M66B/XPrivacy/issues/1057))
@@ -23,8 +27,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Updated Dutch translation
 * Updated Slovak translation
 * Updated Vietnamese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.11.5 BETA**
 
