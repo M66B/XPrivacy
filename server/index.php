@@ -108,7 +108,6 @@
 			}
 
 			// Check restrictions
-			$empty = true;
 			if (!empty($data->settings)) {
 				$xml = file_get_contents ('meta.xml');
 				$parser = xml_parser_create();
@@ -116,9 +115,6 @@
 				xml_parser_free($parser);
 
 				foreach ($data->settings as $restriction) {
-					if ($restriction->restricted)
-						$empty = false;
-
 					$found = false;
 
 					// Legacy
@@ -148,11 +144,6 @@
 						//exit();
 					}
 				}
-			}
-			if ($empty) {
-				// log_error('submit: restrictions missing', $my_email, $data);
-				echo json_encode(array('ok' => false, 'error' => 'Restrictions missing'));
-				exit();
 			}
 
 			// Process application
