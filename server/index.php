@@ -122,8 +122,13 @@
 					$found = false;
 
 					// Legacy
-					if ($restriction->restriction == 'location' && $restriction->method == 'connect')
-						$found = true;
+					if (!empty($restriction->method))
+						if ($restriction->restriction == 'location' && $restriction->method == 'connect')
+							$found = true;
+						else if ($restriction->restriction == 'view' && $restriction->method == 'getDefaultUserAgentForLocale')
+							$found = true;
+						else if ($restriction->restriction == 'nfc' && $restriction->method == 'getDefaultAdapter')
+							$found = true;
 
 					if (!$found)
 						foreach ($index['HOOK'] as $hookidx) {
@@ -312,6 +317,7 @@
 			body { padding-left: 5px; padding-right: 5px; }
 			th, tr, td { padding: 0px !important; }
 			.page-header { margin-top: 0; }
+			.action { margin-right: 20px; }
 		</style>
 	</head>
 	<body>
@@ -433,6 +439,7 @@
 					}
 ?>
 					<h2><?php echo htmlentities(implode(', ', $application_names), ENT_COMPAT, 'UTF-8'); ?></h2>
+
 					<p style="font-size: smaller;">
 <?php
 					for ($i = 0; $i < count($package_names); $i++) {
@@ -441,9 +448,6 @@
 						echo htmlentities($package_versions[$i]) . ' ';
 					}
 ?>
-					</p>
-					<p>
-						<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
 					</p>
 <?php
 				}
@@ -480,7 +484,15 @@
 				}
 				else {
 ?>
-					<p><a href="#" id="details">Show details</a></p>
+					<div class="page-header">
+						<p>
+							<span class="glyphicon glyphicon-file"></span>
+							<a class="action" href="#" id="details">Show details</a>
+							<span class="glyphicon glyphicon-comment"></span>
+							<a class="action" href="http://forum.faircode.eu/forums/forum/xprivacy/?package_name=<?php echo urlencode($package_name); ?>" target="_blank">Discussion</a>
+							<a class="action" href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank"><img src="https://www.gstatic.com/android/market_images/web/play_logo_x2.png" style="width:142px; height:30px" alt="Play store" /></a>
+						</p>
+					</div>
 					<p style="font-size: smaller;">Rows marked with a <span style="background: lightgray;">grey background</span> will be restricted when fetched;
 					<strong>bold text</strong> means data was used</p>
 <?php
