@@ -403,16 +403,16 @@ public class Util {
 		Bitmap[] bitmap = new Bitmap[3];
 
 		// Get highlight color
-		TypedArray arrayColor1 = context.getTheme().obtainStyledAttributes(
-				new int[] { android.R.attr.colorActivatedHighlight });
-		int highlightColor = arrayColor1.getColor(0, 0xFF00FF);
-		arrayColor1.recycle();
+		TypedArray ta1 = context.getTheme()
+				.obtainStyledAttributes(new int[] { android.R.attr.colorActivatedHighlight });
+		int highlightColor = ta1.getColor(0, 0xFF00FF);
+		ta1.recycle();
 
 		// Get off check box
-		TypedArray ta1 = context.getTheme().obtainStyledAttributes(
+		TypedArray ta2 = context.getTheme().obtainStyledAttributes(
 				new int[] { android.R.attr.listChoiceIndicatorMultiple });
-		Drawable off = ta1.getDrawable(0);
-		ta1.recycle();
+		Drawable off = ta2.getDrawable(0);
+		ta2.recycle();
 		off.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
 
 		// Get check mark

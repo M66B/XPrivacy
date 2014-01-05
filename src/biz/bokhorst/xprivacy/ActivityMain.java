@@ -20,9 +20,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -1065,9 +1067,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private class AppListAdapter extends ArrayAdapter<ApplicationInfoEx> {
 		private Context mContext;
 		private List<ApplicationInfoEx> mListApp;
+		private List<ApplicationInfoEx> mListAppSelected = new ArrayList<ApplicationInfoEx>();
 		private String mRestrictionName;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		private AtomicInteger mFiltersRunning = new AtomicInteger(0);
+		private int mHighlightColor;
+		private Drawable mBackground;
 
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
@@ -1076,6 +1081,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mListApp = new ArrayList<ApplicationInfoEx>();
 			mListApp.addAll(objects);
 			mRestrictionName = initialRestrictionName;
+
+			TypedArray ta1 = context.getTheme().obtainStyledAttributes(
+					new int[] { android.R.attr.colorLongPressedHighlight });
+			mHighlightColor = ta1.getColor(0, 0xFF00FF);
+			ta1.recycle();
+
+			TypedArray ta2 = context.getTheme().obtainStyledAttributes(new int[] { android.R.attr.background });
+			mBackground = ta2.getDrawable(0);
+			ta2.recycle();
 		}
 
 		public void setRestrictionName(String restrictionName) {
@@ -1303,6 +1317,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 
 			@Override
+			@SuppressLint("NewApi")
+			@SuppressWarnings("deprecation")
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && result != null) {
 					// Display state
@@ -1343,6 +1359,35 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					else
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 					holder.imgCBName.setVisibility(View.VISIBLE);
+
+					// Display selection
+					if (mListAppSelected.contains(xAppInfo))
+						holder.row.setBackgroundColor(mHighlightColor);
+					else {
+						if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+							holder.row.setBackgroundDrawable(mBackground);
+						else
+							holder.row.setBackground(mBackground);
+					}
+					holder.rlName.setOnLongClickListener(new View.OnLongClickListener() {
+						@Override
+						public boolean onLongClick(View view) {
+							if (mListAppSelected.contains(xAppInfo))
+								mListAppSelected.remove(xAppInfo);
+							else
+								mListAppSelected.add(xAppInfo);
+
+							if (mListAppSelected.contains(xAppInfo))
+								holder.row.setBackgroundColor(mHighlightColor);
+							else {
+								if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+									holder.row.setBackgroundDrawable(mBackground);
+								else
+									holder.row.setBackground(mBackground);
+							}
+							return true;
+						}
+					});
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
@@ -1441,6 +1486,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		@Override
+		@SuppressLint("NewApi")
+		@SuppressWarnings("deprecation")
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
@@ -1484,6 +1531,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
 			holder.imgCBName.setVisibility(View.INVISIBLE);
+			if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+				holder.row.setBackgroundDrawable(mBackground);
+			else
+				holder.row.setBackground(mBackground);
 
 			// Async update
 			new HolderTask(position, holder, xAppInfo).executeOnExecutor(mExecutor, (Object) null);
