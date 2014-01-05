@@ -490,7 +490,7 @@
 							<a class="action" href="#" id="details">Show details</a>
 							<span class="glyphicon glyphicon-comment"></span>
 							<a class="action" href="http://forum.faircode.eu/forums/forum/xprivacy/?package_name=<?php echo urlencode($package_name); ?>" target="_blank">Discussion</a>
-							<a class="action" href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank"><img src="https://www.gstatic.com/android/market_images/web/play_logo_x2.png" style="width:142px; height:30px" alt="Play store" /></a>
+							<a class="action" href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank"><img src="play_logo_x2.png" style="width:95px; height:20px" alt="Play store" /></a>
 						</p>
 					</div>
 					<p style="font-size: smaller;">Rows marked with a <span style="background: lightgray;">grey background</span> will be restricted when fetched;
