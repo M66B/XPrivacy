@@ -1072,7 +1072,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		private AtomicInteger mFiltersRunning = new AtomicInteger(0);
 		private int mHighlightColor;
-		private Drawable mBackground;
 
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
@@ -1086,10 +1085,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					new int[] { android.R.attr.colorLongPressedHighlight });
 			mHighlightColor = ta1.getColor(0, 0xFF00FF);
 			ta1.recycle();
-
-			TypedArray ta2 = context.getTheme().obtainStyledAttributes(new int[] { android.R.attr.background });
-			mBackground = ta2.getDrawable(0);
-			ta2.recycle();
 		}
 
 		public void setRestrictionName(String restrictionName) {
@@ -1317,8 +1312,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 
 			@Override
-			@SuppressLint("NewApi")
-			@SuppressWarnings("deprecation")
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && result != null) {
 					// Display state
@@ -1363,12 +1356,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Display selection
 					if (mListAppSelected.contains(xAppInfo))
 						holder.row.setBackgroundColor(mHighlightColor);
-					else {
-						if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-							holder.row.setBackgroundDrawable(mBackground);
-						else
-							holder.row.setBackground(mBackground);
-					}
+					else
+						holder.row.setBackgroundColor(Color.TRANSPARENT);
+
 					holder.rlName.setOnLongClickListener(new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View view) {
@@ -1379,12 +1369,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 							if (mListAppSelected.contains(xAppInfo))
 								holder.row.setBackgroundColor(mHighlightColor);
-							else {
-								if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-									holder.row.setBackgroundDrawable(mBackground);
-								else
-									holder.row.setBackground(mBackground);
-							}
+							else
+								holder.row.setBackgroundColor(Color.TRANSPARENT);
+
 							return true;
 						}
 					});
@@ -1486,8 +1473,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		@Override
-		@SuppressLint("NewApi")
-		@SuppressWarnings("deprecation")
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
@@ -1505,10 +1490,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Set background color
 			if (xAppInfo.isSystem())
-				holder.row.setBackgroundColor(getResources().getColor(
+				holder.rlName.setBackgroundColor(getResources().getColor(
 						Util.getThemed(ActivityMain.this, R.attr.color_dangerous)));
 			else
-				holder.row.setBackgroundColor(Color.TRANSPARENT);
+				holder.rlName.setBackgroundColor(Color.TRANSPARENT);
 
 			// Handle details click
 			holder.imgIcon.setOnClickListener(new View.OnClickListener() {
@@ -1531,10 +1516,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
 			holder.imgCBName.setVisibility(View.INVISIBLE);
-			if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-				holder.row.setBackgroundDrawable(mBackground);
-			else
-				holder.row.setBackground(mBackground);
 
 			// Async update
 			new HolderTask(position, holder, xAppInfo).executeOnExecutor(mExecutor, (Object) null);
