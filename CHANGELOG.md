@@ -16,6 +16,11 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Updated simplified Chinese translation
+* Updated traditional Chinese translation
+* Updated French translation
+* Updated Lithuanian translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.11.6 BETA**

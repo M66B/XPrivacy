@@ -4,7 +4,7 @@
     <string name="app_notenabled">尚未於 Xposed installer 啟用 XPrivacy</string>
     <string name="app_wrongandroid">僅支援版本 Android 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
-    <string name="app_description">The ultimate privacy manager</string>
+    <string name="app_description">超強隱私管理工具，絕讚好評發售中!!</string>
     <string name="app_xversion" formatted="false">Xposed framework 版本: %d</string>
     <string name="app_copyright">版權所有 \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">操作記錄</string>
@@ -17,21 +17,21 @@
     <string name="menu_submit">上傳規則</string>
     <string name="menu_fetch">擷取規則</string>
     <string name="menu_theme">更換背景</string>
-    <string name="menu_pro">升級專業版</string>
+    <string name="menu_pro">專業版</string>
     <string name="menu_about">關於</string>
     <string name="menu_help">說明</string>
     <string name="menu_all">所有程式</string>
     <string name="menu_restriction_all">套用預設規則</string>
     <string name="menu_clear_all">清除全部</string>
     <string name="menu_restrict_all">限制全部</string>
-    <string name="menu_clear_usage">Clear</string>
+    <string name="menu_clear_usage">清除記錄</string>
     <string name="menu_usage_all">切換顯示限制項目</string>
     <string name="menu_apply">套用預設規則</string>
     <string name="menu_clear">清空</string>
     <string name="menu_app_launch">執行</string>
     <string name="menu_app_settings">應用程式資訊</string>
     <string name="menu_app_store">Play 商店</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">強制停止</string>
     <string name="menu_accounts">設定允許之帳戶</string>
     <string name="menu_applications">設定允許之app</string>
     <string name="menu_contacts">設定允許之聯絡人</string>
@@ -117,7 +117,7 @@
     <string name="help_internet">表示有網際網路權限</string>
     <string name="help_granted">表示有手機權限</string>
     <string name="help_used">表示app曾取得過資訊</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_used_grayed">目前無操作記錄</string>
     <string name="help_frozen">表示app已凍結/停用</string>
     <string name="help_dangerous">不建議限制</string>
     <string name="help_half">只有限制部分權限</string>
@@ -130,6 +130,6 @@
      \n點選APP圖示可針對該APP做細部規則設定</string>
     <string name="tutorial_detailsheader">點選APP圖示顯示進階動作選單</string>
     <string name="tutorial_detailslist">點選﹀符號可編輯更細部的權限設定</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="permission_manage">管理/強制停止app</string>
 
 </resources>

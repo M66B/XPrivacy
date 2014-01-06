@@ -4,7 +4,7 @@
     <string name="app_notenabled">XPrivacy n\'est pas activé dans l\'installateur Xposed</string>
     <string name="app_wrongandroid">Uniquement pour Android 4.0 et ultérieur</string>
     <string name="app_version" formatted="false">Version XPrivacy : %s (%d)</string>
-    <string name="app_description">The ultimate privacy manager</string>
+    <string name="app_description">Le gestionnaire de vie privée ultime</string>
     <string name="app_xversion" formatted="false">Version de l\'environnement Xposed : %d</string>
     <string name="app_copyright">Droits d\'auteur : M. Bokhorst (M66B) \u00A9 2013–2014 </string>
     <string name="menu_usage">Usage</string>
@@ -21,17 +21,17 @@
     <string name="menu_about">À propos</string>
     <string name="menu_help">Aide</string>
     <string name="menu_all">Tous</string>
-    <string name="menu_restriction_all">Toggle restrictions</string>
+    <string name="menu_restriction_all">Inverser restrictions</string>
     <string name="menu_clear_all">Tout effacer</string>
     <string name="menu_restrict_all">Tout restreindre</string>
-    <string name="menu_clear_usage">Clear</string>
-    <string name="menu_usage_all">Basculer tout/restreintes uniquement</string>
+    <string name="menu_clear_usage">Effacer</string>
+    <string name="menu_usage_all">Basculer toutes/restreintes</string>
     <string name="menu_apply">Appliquer le modèle</string>
     <string name="menu_clear">Effacer</string>
     <string name="menu_app_launch">Lancer</string>
     <string name="menu_app_settings">Infos sur l\'application</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">Tuer</string>
     <string name="menu_accounts">Choisir les comptes à autoriser</string>
     <string name="menu_applications">Choisir les applis à autoriser</string>
     <string name="menu_contacts">Choisir les contacts à autoriser</string>
@@ -41,7 +41,7 @@
     <string name="msg_licensed" formatted="false">Autorisé à : %s</string>
     <string name="msg_loading">Chargement</string>
     <string name="msg_applying">Filtrage en cours</string>
-    <string name="msg_applied">Template applied</string>
+    <string name="msg_applied">Template appliquée</string>
     <string name="msg_saved_to" formatted="false">Sauvé dans %s</string>
     <string name="msg_no_restrictions">Pas de restriction trouvée</string>
     <string name="msg_sure">Êtes-vous certain ?</string>
@@ -109,29 +109,29 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_fake_data">Fausses données</string>
     <string name="settings_global">Utiliser les valeurs globales</string>
     <string name="settings_notify">Notifications de MàJ</string>
-    <string name="settings_usage">Activer usage log (redémarrage nécessaire)</string>
-    <string name="settings_log">Debug log (redémarrage nécessaire)</string>
+    <string name="settings_usage">Activer usage log (redémarrage requis)</string>
+    <string name="settings_log">Debug log (redémarrage requis)</string>
     <string name="settings_expert">Mode expert</string>
     <string name="settings_dangerous">Restreindre fonctions dangereuses</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_confidence">Intervalle de confiance maximum</string>
+    <string name="settings_experimental">Fonctions expérimentales (redémarrage requis)</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>
     <string name="help_used">a utilisé ces données</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_used_grayed">pas de donnée d\'usage disponible</string>
     <string name="help_frozen">est désactivée</string>
     <string name="help_dangerous">est dangereuse, restreindre peut causer des problèmes</string>
     <string name="help_half">partiellement restreinte</string>
     <string name="help_attention">des restrictions ont besoin d\'attention</string>
     <string name="help_restricted">des restrictions sont changées</string>
-    <string name="help_shared">des restrictions sont envoyées</string>
+    <string name="help_shared">les restrictions sont envoyées</string>
     <string name="tutorial_mainheader">Choisir la catégorie à restreindre; choisir les applis à afficher avec les filtres</string>
-    <string name="tutorial_mainlist">Appuyer sur une case à cocher pour restreindre la catégorie choisie pour l’appli\n
+    <string name="tutorial_mainlist">Cocher une case pour restreindre la catégorie choisie pour l’appli\n
 \nL’appli sera dupée par des données vides ou modifiées\n
 \nAppuyer sur l’icône de l’appli pour les restrictions détaillées et les paramètres</string>
     <string name="tutorial_detailsheader">Appuyer sur l’icône pour plus d’actions</string>
     <string name="tutorial_detailslist">Appuyer sur la flèche vers les bas pour voir les exceptions d’une catégorie de restrictions</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="permission_manage">Gérer les applications, y compris les tuer</string>
 
 </resources>
