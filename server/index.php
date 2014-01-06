@@ -125,6 +125,8 @@
 							$found = true;
 						else if ($restriction->restriction == 'nfc' && $restriction->method == 'getDefaultAdapter')
 							$found = true;
+						else if ($restriction->restriction == 'view' && $restriction->method == 'WebView.constructor')
+							$found = true;
 
 					if (!$found)
 						foreach ($index['HOOK'] as $hookidx) {
