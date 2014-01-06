@@ -29,7 +29,7 @@
     <string name="menu_apply">套用默认权限模板</string>
     <string name="menu_clear">清除所有权限限制</string>
     <string name="menu_app_launch">启动应用</string>
-    <string name="menu_app_settings">设置模拟信息</string>
+    <string name="menu_app_settings">模拟设置</string>
     <string name="menu_app_store">Play 商店</string>
     <string name="menu_app_kill">强制停止当前应用</string>
     <string name="menu_accounts">选择允许访问的帐号</string>
@@ -132,7 +132,7 @@
 \n点击应用图标以查看详细权限限制规则和设置</string>
     <string name="tutorial_detailsheader">点击应用图标以查看更多操作</string>
     <string name="tutorial_detailslist">点击左侧向下的箭头以查看该类别的子权限</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="permission_manage">管理应用程序，包括强行停止</string>
 
 </resources>
 
