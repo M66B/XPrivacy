@@ -24,7 +24,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -1234,6 +1233,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			private View row;
 			private int position;
 			public View vwState;
+			public LinearLayout llAppType;
 			public ImageView imgIcon;
 			public ImageView imgUsed;
 			public ImageView imgGranted;
@@ -1247,6 +1247,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				row = theRow;
 				position = thePosition;
 				vwState = (View) row.findViewById(R.id.vwState);
+				llAppType = (LinearLayout) row.findViewById(R.id.llAppType);
 				imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
 				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
@@ -1314,6 +1315,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			@Override
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && result != null) {
+					// Set background color
+					if (xAppInfo.isSystem())
+						holder.llAppType.setBackgroundColor(getResources().getColor(
+								Util.getThemed(ActivityMain.this, R.attr.color_dangerous)));
+					else
+						holder.llAppType.setBackgroundColor(Color.TRANSPARENT);
+
 					// Display state
 					if (state == STATE_ATTENTION)
 						holder.vwState.setBackgroundColor(getResources().getColor(
@@ -1486,14 +1494,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Get info
 			final ApplicationInfoEx xAppInfo = getItem(holder.position);
-			holder.imgIcon.setVisibility(View.INVISIBLE);
-
-			// Set background color
-			if (xAppInfo.isSystem())
-				holder.rlName.setBackgroundColor(getResources().getColor(
-						Util.getThemed(ActivityMain.this, R.attr.color_dangerous)));
-			else
-				holder.rlName.setBackgroundColor(Color.TRANSPARENT);
 
 			// Handle details click
 			holder.imgIcon.setOnClickListener(new View.OnClickListener() {
@@ -1508,7 +1508,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			});
 
 			// Set data
+			holder.row.setBackgroundColor(Color.TRANSPARENT);
 			holder.vwState.setBackgroundColor(Color.TRANSPARENT);
+			holder.llAppType.setBackgroundColor(Color.TRANSPARENT);
+			holder.imgIcon.setVisibility(View.INVISIBLE);
 			holder.tvName.setText(xAppInfo.toString());
 			holder.tvName.setTypeface(null, Typeface.NORMAL);
 			holder.imgUsed.setVisibility(View.INVISIBLE);
