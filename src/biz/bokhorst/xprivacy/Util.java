@@ -420,6 +420,10 @@ public class Util {
 		checkmark.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
 		checkmark.setColorFilter(highlightColor, Mode.SRC_ATOP);
 
+		// Get check mark outline
+		Drawable checkmarkOutline = context.getResources().getDrawable(R.drawable.checkmark_outline);
+		checkmarkOutline.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
+
 		// Create off check box
 		bitmap[0] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
 		Canvas canvas0 = new Canvas(bitmap[0]);
@@ -442,6 +446,7 @@ public class Util {
 		Canvas canvas2 = new Canvas(bitmap[2]);
 		off.draw(canvas2);
 		checkmark.draw(canvas2);
+		checkmarkOutline.draw(canvas2);
 
 		return bitmap;
 	}
