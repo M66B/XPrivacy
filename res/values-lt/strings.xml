@@ -32,11 +32,11 @@
     <string name="menu_app_launch">Paleisti</string>
     <string name="menu_app_settings">Programos informacija</string>
     <string name="menu_app_store">Google play</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">Nutraukti veikimą</string>
     <string name="menu_accounts">Leisti pažymėtas paskyras</string>
     <string name="menu_applications">Leisti pažymėtas programas</string>
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>
-    <string name="menu_tutorial">Instukcija</string>
+    <string name="menu_tutorial">Instrukcija</string>
     <string name="msg_new">Naujas</string>
     <string name="msg_update">Atnaujinta</string>
     <string name="msg_licensed" formatted="false">licencija: %s</string>
@@ -110,29 +110,29 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_fake_data">Netikri duomenys</string>
     <string name="settings_global">Naudoti globalius netikrus duomenis</string>
     <string name="settings_notify">Atnaujinimų Pranesimas</string>
-    <string name="settings_usage">Android duomenų naudojimas (reikia paleisti iš naujo)</string>
-    <string name="settings_log">DEBUG žurnalas (reikia paleisti iš naujo)</string>
+    <string name="settings_usage">Android duomenų naudojimas (Perkrauti prietaisą)</string>
+    <string name="settings_log">DEBUG žurnalas (Perkrauti prietaisą)</string>
     <string name="settings_expert">Eksperto režimas</string>
     <string name="settings_dangerous">Apriboti pavojingas funkcijas</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_confidence">maksimalaus pasitikėjimo gavimo intervalas</string>
+    <string name="settings_experimental">Eksperimentinės funkcijos (Perkrauti prietaisą)</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
     <string name="help_granted">Android leidimai</string>
     <string name="help_used">Privačių duomenų leidimai</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_used_grayed">Nepalaikomi duomenų leidimai</string>
     <string name="help_frozen">Išjungtų programų leidimai</string>
-    <string name="help_dangerous">Pavojingi leidimai, apribojus, gali sukelti problemų</string>
-    <string name="help_half">Iš dalies apribota</string>
-    <string name="help_attention">Ribojimams reikia skirti daugiau dėmesio</string>
-    <string name="help_restricted">Ribojimai yra pakeisti</string>
-    <string name="help_shared">Ribojimai yra pateikti</string>
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="help_dangerous">Pavojingi ribojimai, gali sukelti problemų</string>
+    <string name="help_half">Dalinai riboti leidimai</string>
+    <string name="help_attention">Leidimams skirti dėmesį</string>
+    <string name="help_restricted">Leidimai yra pakeisti</string>
+    <string name="help_shared">Leidimai yra pateikti</string>
+    <string name="tutorial_mainheader">Pasirinkite kategoriją ribojimams; pasirinkti matomas programas su filtrais</string>
+    <string name="tutorial_mainlist">Bakstelėkite žymės langelį apriboti pasirinktą kategoriją\n
+\nProgramos bus įtrauktos ribojimų kategorijas\n
+\nBakstelėkite piktogramą išsamiems ribojimams ir parametrams</string>
+    <string name="tutorial_detailsheader">Bakstelėkite ant piktogramos papildomiems veiksmams</string>
+    <string name="tutorial_detailslist">Paspauskite rodyklę žemyn, kad pamatytumėte funkcijų kategorijas</string>
+    <string name="permission_manage">Valdyti programas, įskaitant nutrauktus veikimus</string>
 
 </resources>
