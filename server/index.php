@@ -127,6 +127,12 @@
 							$found = true;
 						else if ($restriction->restriction == 'view' && $restriction->method == 'WebView.constructor')
 							$found = true;
+						else if ($restriction->restriction == 'view' && $restriction->method == 'addView')
+							$found = true;
+						else if ($restriction->restriction == 'view' && $restriction->method == 'removeView')
+							$found = true;
+						else if ($restriction->restriction == 'view' && $restriction->method == 'updateViewLayout')
+							$found = true;
 
 					if (!$found)
 						foreach ($index['HOOK'] as $hookidx) {
