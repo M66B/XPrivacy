@@ -1230,9 +1230,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				for (int i = 0; i < this.getCount(); i++)
 					if (!mListAppSelected.contains(this.getItem(i)))
 						mListAppSelected.add(this.getItem(i));
-			} else {
+			} else
 				mListAppSelected.clear();
-			}
 
 			this.showStats();
 			this.notifyDataSetChanged();

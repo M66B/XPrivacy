@@ -160,12 +160,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// Location client
-		if (!PrivacyManager.cTestVersion)
-			try {
-				Class.forName("com.google.android.gms.location.LocationClient", false, lpparam.classLoader);
-				hookAll(XLocationClient.getInstances(), lpparam.classLoader);
-			} catch (Throwable ex) {
-			}
+		try {
+			Class.forName("com.google.android.gms.location.LocationClient", false, lpparam.classLoader);
+			hookAll(XLocationClient.getInstances(), lpparam.classLoader);
+		} catch (Throwable ex) {
+		}
 	}
 
 	private static boolean mAccountManagerHooked = false;
