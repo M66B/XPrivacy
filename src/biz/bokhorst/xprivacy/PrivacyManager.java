@@ -430,9 +430,8 @@ public class PrivacyManager {
 		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs)
 			return false;
 
-		if (!PrivacyManager.cTestVersion)
-			if (isIsolated(Process.myUid()))
-				return false;
+		if (isIsolated(Process.myUid()))
+			return false;
 
 		if (Util.getAppId(Process.myUid()) == cAndroidUid)
 			if (!PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false))
