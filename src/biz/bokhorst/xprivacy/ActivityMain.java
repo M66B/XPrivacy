@@ -1207,6 +1207,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				if (!mListAppSelected.contains(this.getItem(i)))
 					mListAppSelected.add(this.getItem(i));
 			}
+			this.notifyDataSetChanged();
 		}
 
 		@Override
