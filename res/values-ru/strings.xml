@@ -46,8 +46,8 @@
     <string name="msg_saved_to" formatted="false">Сохранено в %s</string>
     <string name="msg_no_restrictions">Не найдено разрешений</string>
     <string name="msg_sure">Вы уверены?</string>
-    <string name="msg_select">You must select some applications first</string>
-    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Требуется перезагрузка</string>
     <string name="msg_random_now">Случайные значения</string>

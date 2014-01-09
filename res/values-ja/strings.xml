@@ -46,8 +46,8 @@
     <string name="msg_saved_to" formatted="false">%sに保存されました</string>
     <string name="msg_no_restrictions">制限などは見つかりませんでした</string>
     <string name="msg_sure">続行しますか</string>
-    <string name="msg_select">You must select some applications first</string>
-    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">終了</string>
     <string name="msg_reboot">再起動して下さい</string>
     <string name="msg_random_now">ランダム化</string>

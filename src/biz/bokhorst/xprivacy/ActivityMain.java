@@ -835,7 +835,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionSubmit() {
-		if (mAppAdapter.getSelected().size() <= 3) {
+		if (mAppAdapter.getSelected().size() <= ActivityShare.cSubmitLimit) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(getString(R.string.menu_submit));
 			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
@@ -865,7 +865,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		} else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(getString(R.string.app_name));
-			alertDialogBuilder.setMessage(getString(R.string.msg_submit));
+			alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit));
 			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 				@Override

@@ -46,8 +46,8 @@
     <string name="msg_saved_to" formatted="false">حُفِظت في  %s</string>
     <string name="msg_no_restrictions">لا توجد قيود</string>
     <string name="msg_sure">هل أنت متأكد ؟</string>
-    <string name="msg_select">You must select some applications first</string>
-    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">إنتهى</string>
     <string name="msg_reboot">يحتاج إعادة تشغيل</string>
     <string name="msg_random_now">عشوائي</string>
