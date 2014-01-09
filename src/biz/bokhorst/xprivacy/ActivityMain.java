@@ -1234,7 +1234,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				mListAppSelected.clear();
 			}
 
+			this.showStats();
 			this.notifyDataSetChanged();
+		}
+
+		public void showStats() {
+			TextView tvStats = (TextView) findViewById(R.id.tvStats);
+			String stats = String.format("%d/%d", this.getCount(), mListAppAll.size());
+			if (mListAppSelected.size() > 0)
+				stats += String.format(" (%d)", mListAppSelected.size());
+			tvStats.setText(stats);
 		}
 
 		@Override
@@ -1350,7 +1359,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
 					pbFilter.setVisibility(ProgressBar.GONE);
 					tvStats.setVisibility(TextView.VISIBLE);
-					tvStats.setText(results.count + "/" + AppListAdapter.this.mListAppAll.size());
 
 					Intent progressIntent = new Intent(ActivityShare.cProgressReport);
 					progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.title_restrict));
@@ -1368,6 +1376,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						addAll((ArrayList<ApplicationInfoEx>) results.values);
 						notifyDataSetChanged();
 					}
+					AppListAdapter.this.showStats();
 				}
 			}
 		}
@@ -1523,6 +1532,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							else
 								holder.row.setBackgroundColor(Color.TRANSPARENT);
 
+							AppListAdapter.this.showStats();
 							return true;
 						}
 					});
