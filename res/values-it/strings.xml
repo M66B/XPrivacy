@@ -47,6 +47,7 @@
     <string name="msg_no_restrictions">Nessuna restrizione trovata</string>
     <string name="msg_sure">Sei sicuro?</string>
     <string name="msg_select">You must select some applications first</string>
+    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
     <string name="msg_done">Fatto</string>
     <string name="msg_reboot">Riavvio richiesto</string>
     <string name="msg_random_now">Generazione casuale</string>

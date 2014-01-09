@@ -47,6 +47,7 @@
     <string name="msg_no_restrictions">कोई प्रतिबंध नहीं मिला</string>
     <string name="msg_sure">क्या आप निश्चित हैं?</string>
     <string name="msg_select">You must select some applications first</string>
+    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
     <string name="msg_done">हो गया</string>
     <string name="msg_reboot">साधन पुनरारंभ करना आवश्यक</string>
     <string name="msg_random_now">अटपटा करे</string>

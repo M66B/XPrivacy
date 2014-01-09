@@ -47,6 +47,7 @@
     <string name="msg_no_restrictions">Không có thông tin hạn chế nào được tìm thấy</string>
     <string name="msg_sure">Bạn có chắc không?</string>
     <string name="msg_select">You must select some applications first</string>
+    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
     <string name="msg_done">Xong</string>
     <string name="msg_reboot">Yêu cầu khởi động lại thiết bị</string>
     <string name="msg_random_now">Tạo thông tin ngẫu nhiên</string>

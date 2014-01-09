@@ -835,32 +835,46 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionSubmit() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(R.string.menu_submit));
-		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				sharingStart();
-				if (mAppAdapter != null) {
-					List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
-					int[] uid = new int[listAppInfo.size()];
-					for (int pos = 0; pos < listAppInfo.size(); pos++)
-						uid[pos] = listAppInfo.get(pos).getUid();
-					Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
-					intent.putExtra(ActivityShare.cUidList, uid);
-					startActivityForResult(intent, ACTIVITY_SUBMIT);
+		if (mAppAdapter.getSelected().size() <= 3) {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.menu_submit));
+			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					sharingStart();
+					if (mAppAdapter != null) {
+						List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
+						int[] uid = new int[listAppInfo.size()];
+						for (int pos = 0; pos < listAppInfo.size(); pos++)
+							uid[pos] = listAppInfo.get(pos).getUid();
+						Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
+						intent.putExtra(ActivityShare.cUidList, uid);
+						startActivityForResult(intent, ACTIVITY_SUBMIT);
+					}
 				}
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+			});
+			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		} else {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.app_name));
+			alertDialogBuilder.setMessage(getString(R.string.msg_submit));
+			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		}
 	}
 
 	private void optionFetch() {
@@ -1202,11 +1216,24 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 
 		public void selectAllVisible() {
-			// Add all visible apps not yet selected to the selection
+			// Look through the visible apps to figure out what to do
+			boolean addThem = false;
 			for (int i = 0; i < this.getCount(); i++) {
-				if (!mListAppSelected.contains(this.getItem(i)))
-					mListAppSelected.add(this.getItem(i));
+				if (!mListAppSelected.contains(this.getItem(i))) {
+					addThem = true;
+					break;
+				}
 			}
+
+			if (addThem) {
+				// Add the visible apps not already selected
+				for (int i = 0; i < this.getCount(); i++)
+					if (!mListAppSelected.contains(this.getItem(i)))
+						mListAppSelected.add(this.getItem(i));
+			} else {
+				mListAppSelected.clear();
+			}
+
 			this.notifyDataSetChanged();
 		}
 

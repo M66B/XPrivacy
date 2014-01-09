@@ -47,6 +47,7 @@
     <string name="msg_no_restrictions">Ingen restriksjoner funnet</string>
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_select">You must select some applications first</string>
+    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
     <string name="msg_done">Ferdig</string>
     <string name="msg_reboot">Omstart nødvendig</string>
     <string name="msg_random_now">Tilfeldige verdier</string>

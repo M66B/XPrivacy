@@ -47,6 +47,7 @@
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_sure">Jste si jistý?</string>
     <string name="msg_select">You must select some applications first</string>
+    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadován restart zařízení</string>
     <string name="msg_random_now">Náhodné hodnoty</string>

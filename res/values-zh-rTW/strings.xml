@@ -47,6 +47,7 @@
     <string name="msg_no_restrictions">找不到限制規則</string>
     <string name="msg_sure">確定執行操作?</string>
     <string name="msg_select">You must select some applications first</string>
+    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">需要重新啟動</string>
     <string name="msg_random_now">亂數</string>

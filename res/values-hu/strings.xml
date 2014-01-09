@@ -47,6 +47,7 @@
     <string name="msg_no_restrictions">Nem található korlátozás</string>
     <string name="msg_sure">Biztos benne?</string>
     <string name="msg_select">You must select some applications first</string>
+    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
     <string name="msg_done">Kész</string>
     <string name="msg_reboot">Újraindítás szükséges</string>
     <string name="msg_random_now">Véletlenszerűsítés</string>

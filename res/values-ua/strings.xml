@@ -47,6 +47,7 @@
     <string name="msg_no_restrictions">Не знайдено обмежень</string>
     <string name="msg_sure">Ви впевнені?</string>
     <string name="msg_select">You must select some applications first</string>
+    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Необхідне перезавантаження пристрою</string>
     <string name="msg_random_now">Випадкові значення</string>

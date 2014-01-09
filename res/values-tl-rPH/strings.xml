@@ -47,6 +47,7 @@
     <string name="msg_no_restrictions">Walang nakatakdang paghihigpit na natagpuan</string>
     <string name="msg_sure">Tiyak ka na ba?</string>
     <string name="msg_select">You must select some applications first</string>
+    <string name="msg_submit">You cannot submit restrictions for more than three applications at a time</string>
     <string name="msg_done">Tapos na</string>
     <string name="msg_reboot">Kailangan paumpisahin muli ang iyong kagamitan</string>
     <string name="msg_random_now">Palit-palitan ang mga paghihigpit sa ngayon na</string>
