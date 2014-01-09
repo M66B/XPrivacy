@@ -36,6 +36,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Log load
 		Util.log(null, Log.INFO, String.format("Load %s", startupParam.modulePath));
 
+		// Activity manager service
+		if (PrivacyManager.cTestVersion)
+			hookAll(XActivityManagerService.getInstances());
+
 		// App widget manager
 		hookAll(XAppWidgetManager.getInstances());
 
