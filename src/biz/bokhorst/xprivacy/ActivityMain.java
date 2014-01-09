@@ -661,8 +661,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private void optionAll() {
 		// Check if some restricted
 		boolean some = false;
-		for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
-			ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
+		for (ApplicationInfoEx xAppInfo : mAppAdapter.getSelected(false)) {
 			for (boolean restricted : PrivacyManager.getRestricted(ActivityMain.this, xAppInfo.getUid(),
 					mAppAdapter.getRestrictionName()))
 				if (restricted) {
@@ -1011,10 +1010,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			boolean someRestricted = params[0];
 
 			// Apply action
+			int pos = 0;
 			boolean restart = false;
-			for (int pos = 0; pos < mAppAdapter.getCount(); pos++) {
-				publishProgress(pos, mAppAdapter.getCount());
-				ApplicationInfoEx xAppInfo = mAppAdapter.getItem(pos);
+			List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected(false);
+			for (ApplicationInfoEx xAppInfo : listAppInfo) {
+				publishProgress(pos++, listAppInfo.size());
 				if (mAppAdapter.getRestrictionName() == null && someRestricted)
 					restart = PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid()) || restart;
 				else if (mAppAdapter.getRestrictionName() == null) {
@@ -1065,7 +1065,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@SuppressLint("DefaultLocale")
 	private class AppListAdapter extends ArrayAdapter<ApplicationInfoEx> {
 		private Context mContext;
-		private List<ApplicationInfoEx> mListApp;
+		private List<ApplicationInfoEx> mListAppAll;
 		private List<ApplicationInfoEx> mListAppSelected = new ArrayList<ApplicationInfoEx>();
 		private String mRestrictionName;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -1076,8 +1076,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				String initialRestrictionName) {
 			super(context, resource, objects);
 			mContext = context;
-			mListApp = new ArrayList<ApplicationInfoEx>();
-			mListApp.addAll(objects);
+			mListAppAll = new ArrayList<ApplicationInfoEx>();
+			mListAppAll.addAll(objects);
 			mRestrictionName = initialRestrictionName;
 
 			TypedArray ta1 = context.getTheme().obtainStyledAttributes(
@@ -1092,6 +1092,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		public String getRestrictionName() {
 			return mRestrictionName;
+		}
+
+		public List<ApplicationInfoEx> getSelected(boolean selectedOnly) {
+			if (mListAppSelected.size() == 0)
+				return (selectedOnly ? new ArrayList<ApplicationInfoEx>() : mListAppAll);
+			else
+				return mListAppSelected;
 		}
 
 		@Override
@@ -1121,9 +1128,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 				// Match applications
 				int current = 0;
-				int max = AppListAdapter.this.mListApp.size();
+				int max = AppListAdapter.this.mListAppAll.size();
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
-				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListApp) {
+				for (ApplicationInfoEx xAppInfo : AppListAdapter.this.mListAppAll) {
 					// Check if another filter has been started
 					if (filtersRunning != mFiltersRunning.get())
 						return null;
@@ -1207,7 +1214,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
 					pbFilter.setVisibility(ProgressBar.GONE);
 					tvStats.setVisibility(TextView.VISIBLE);
-					tvStats.setText(results.count + "/" + AppListAdapter.this.mListApp.size());
+					tvStats.setText(results.count + "/" + AppListAdapter.this.mListAppAll.size());
 
 					Intent progressIntent = new Intent(ActivityShare.cProgressReport);
 					progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.title_restrict));
