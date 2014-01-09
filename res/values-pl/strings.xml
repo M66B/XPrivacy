@@ -20,6 +20,7 @@
     <string name="menu_pro">Wersja Pro</string>
     <string name="menu_about">O programie</string>
     <string name="menu_help">Pomoc</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Wszystko</string>
     <string name="menu_restriction_all">Przełącz restrykcje</string>
     <string name="menu_clear_all">Wyczyść wszystko</string>
@@ -45,6 +46,7 @@
     <string name="msg_saved_to" formatted="false">Zapisane do %s</string>
     <string name="msg_no_restrictions">Nie znaleziono ograniczeń</string>
     <string name="msg_sure">Czy jesteś pewny/a?</string>
+    <string name="msg_select">You must select some applications first</string>
     <string name="msg_done">Gotowe</string>
     <string name="msg_reboot">Wymagany restart</string>
     <string name="msg_random_now">Losuj</string>

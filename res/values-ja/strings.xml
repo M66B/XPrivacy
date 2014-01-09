@@ -20,6 +20,7 @@
     <string name="menu_pro">プロバージョンを購入</string>
     <string name="menu_about">アプリの情報</string>
     <string name="menu_help">ヘルプ</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">全て</string>
     <string name="menu_restriction_all">制限の身に切り替え</string>
     <string name="menu_clear_all">Clear all</string>
@@ -45,6 +46,7 @@
     <string name="msg_saved_to" formatted="false">%sに保存されました</string>
     <string name="msg_no_restrictions">制限などは見つかりませんでした</string>
     <string name="msg_sure">続行しますか</string>
+    <string name="msg_select">You must select some applications first</string>
     <string name="msg_done">終了</string>
     <string name="msg_reboot">再起動して下さい</string>
     <string name="msg_random_now">ランダム化</string>

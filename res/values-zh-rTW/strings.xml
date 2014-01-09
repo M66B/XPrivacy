@@ -20,6 +20,7 @@
     <string name="menu_pro">專業版</string>
     <string name="menu_about">關於</string>
     <string name="menu_help">說明</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">所有程式</string>
     <string name="menu_restriction_all">套用預設規則</string>
     <string name="menu_clear_all">清除全部</string>
@@ -45,6 +46,7 @@
     <string name="msg_saved_to" formatted="false">已儲存至 %s</string>
     <string name="msg_no_restrictions">找不到限制規則</string>
     <string name="msg_sure">確定執行操作?</string>
+    <string name="msg_select">You must select some applications first</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">需要重新啟動</string>
     <string name="msg_random_now">亂數</string>

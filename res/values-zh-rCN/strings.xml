@@ -20,6 +20,7 @@
     <string name="menu_pro">捐赠/升级到专业版</string>
     <string name="menu_about">关于</string>
     <string name="menu_help">帮助</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">全部权限</string>
     <string name="menu_restriction_all">全选/不选列表中的应用</string>
     <string name="menu_clear_all">清除全部限制</string>
@@ -45,6 +46,7 @@
     <string name="msg_saved_to" formatted="false">保存到%s</string>
     <string name="msg_no_restrictions">没有找到权限限制规则</string>
     <string name="msg_sure">是否确定？</string>
+    <string name="msg_select">You must select some applications first</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">XPrivacy 需要在重启后才能生效</string>
     <string name="msg_random_now">生成随机数值</string>

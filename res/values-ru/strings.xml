@@ -20,6 +20,7 @@
     <string name="menu_pro">Pro-версия</string>
     <string name="menu_about">О программе</string>
     <string name="menu_help">Помощь</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Выделить все</string>
     <string name="menu_restriction_all">Переключить разрешения</string>
     <string name="menu_clear_all">Очистить все</string>
@@ -45,6 +46,7 @@
     <string name="msg_saved_to" formatted="false">Сохранено в %s</string>
     <string name="msg_no_restrictions">Не найдено разрешений</string>
     <string name="msg_sure">Вы уверены?</string>
+    <string name="msg_select">You must select some applications first</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Требуется перезагрузка</string>
     <string name="msg_random_now">Случайные значения</string>

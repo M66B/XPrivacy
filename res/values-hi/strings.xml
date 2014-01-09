@@ -20,6 +20,7 @@
     <string name="menu_pro">उन्नत वर्शन</string>
     <string name="menu_about">जानकारी</string>
     <string name="menu_help">मदद</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">प्रत्येक</string>
     <string name="menu_restriction_all">प्रतिबंध toggle करे</string>
     <string name="menu_clear_all">सब clear करे</string>
@@ -45,6 +46,7 @@
     <string name="msg_saved_to" formatted="false">%s मे save हो गया</string>
     <string name="msg_no_restrictions">कोई प्रतिबंध नहीं मिला</string>
     <string name="msg_sure">क्या आप निश्चित हैं?</string>
+    <string name="msg_select">You must select some applications first</string>
     <string name="msg_done">हो गया</string>
     <string name="msg_reboot">साधन पुनरारंभ करना आवश्यक</string>
     <string name="msg_random_now">अटपटा करे</string>

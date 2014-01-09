@@ -20,6 +20,7 @@
     <string name="menu_pro">Versione Pro</string>
     <string name="menu_about">Riguardo a</string>
     <string name="menu_help">Aiuto</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Tutto</string>
     <string name="menu_restriction_all">Imposta restrizioni</string>
     <string name="menu_clear_all">Deseleziona tutto</string>
@@ -45,6 +46,7 @@
     <string name="msg_saved_to" formatted="false">Salvato su %s</string>
     <string name="msg_no_restrictions">Nessuna restrizione trovata</string>
     <string name="msg_sure">Sei sicuro?</string>
+    <string name="msg_select">You must select some applications first</string>
     <string name="msg_done">Fatto</string>
     <string name="msg_reboot">Riavvio richiesto</string>
     <string name="msg_random_now">Generazione casuale</string>

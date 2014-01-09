@@ -20,6 +20,7 @@
     <string name="menu_pro">Pro-version</string>
     <string name="menu_about">Om</string>
     <string name="menu_help">Hjälp</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Alla</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
@@ -45,6 +46,7 @@
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_sure">Är du säker?</string>
+    <string name="msg_select">You must select some applications first</string>
     <string name="msg_done">Klar</string>
     <string name="msg_reboot">Omstart krävs</string>
     <string name="msg_random_now">Slumpa</string>
