@@ -60,7 +60,7 @@ public class ActivityShare extends Activity {
 	private LocalBroadcastManager mBroadcastManager;
 
 	public static final String cFileName = "FileName";
-	public static final String cUid = "Uid";
+	public static final String cUidList = "UidList";
 	public static final String cErrorMessage = "ErrorMessage";
 	public static final String BASE_URL = "http://crowd.xprivacy.eu/";
 	public static final String cProgressReport = "ProgressReport";
@@ -97,35 +97,33 @@ public class ActivityShare extends Activity {
 		if (Util.hasProLicense(this) != null) {
 			// Import
 			if (getIntent().getAction().equals(ACTION_IMPORT)) {
-				String fileName = (extras.containsKey(cFileName) ? extras.getString(cFileName) : getFileName(false));
-				ImportTask importTask = new ImportTask();
-				importTask.executeOnExecutor(mExecutor, new File(fileName));
+				String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
+						: getFileName(false));
+				new ImportTask().executeOnExecutor(mExecutor, new File(fileName));
 			}
 
 			// Export
 			else if (getIntent().getAction().equals(ACTION_EXPORT)) {
-				String fileName = (extras.containsKey(cFileName) ? extras.getString(cFileName) : getFileName(false));
-				ExportTask exportTask = new ExportTask();
-				exportTask.executeOnExecutor(mExecutor, new File(fileName));
+				String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
+						: getFileName(false));
+				new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
 			}
 
 			// Fetch
 			else if (getIntent().getAction().equals(ACTION_FETCH)) {
-				int uid = 0;
-				if (extras != null && extras.containsKey(cUid))
-					uid = extras.getInt(cUid);
-				FetchTask fetchTask = new FetchTask();
-				fetchTask.executeOnExecutor(mExecutor, uid);
+				if (extras != null && extras.containsKey(cUidList)) {
+					int[] uid = extras.getIntArray(cUidList);
+					new FetchTask().executeOnExecutor(mExecutor, uid);
+				}
 			}
 		}
 
 		// Submit
 		if (getIntent().getAction().equals(ACTION_SUBMIT)) {
-			int uid = 0;
-			if (extras != null && extras.containsKey(cUid))
-				uid = extras.getInt(cUid);
-			SubmitTask submitTask = new SubmitTask();
-			submitTask.executeOnExecutor(mExecutor, uid);
+			if (extras != null && extras.containsKey(cUidList)) {
+				int[] uid = extras.getIntArray(cUidList);
+				new SubmitTask().executeOnExecutor(mExecutor, uid);
+			}
 		}
 	}
 
@@ -510,22 +508,19 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	private class FetchTask extends AsyncTask<Integer, String, String> {
+	private class FetchTask extends AsyncTask<int[], String, String> {
 		private int mProgressMax;
 		private int mProgressCurrent;
 
 		@Override
 		@SuppressLint("DefaultLocale")
-		protected String doInBackground(Integer... params) {
+		protected String doInBackground(int[]... params) {
 			try {
 				// Get data
-				List<ApplicationInfoEx> lstApp;
-				if (params[0] == 0)
-					lstApp = ApplicationInfoEx.getXApplicationList(ActivityShare.this, null);
-				else {
-					lstApp = new ArrayList<ApplicationInfoEx>();
-					lstApp.add(new ApplicationInfoEx(ActivityShare.this, params[0]));
-				}
+				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
+				for (int uid : params[0])
+					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
+
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 				String[] license = Util.getProLicense();
 				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -540,7 +535,7 @@ public class ActivityShare extends Activity {
 				// Process applications
 				for (ApplicationInfoEx appInfo : lstApp) {
 					mProgressCurrent++;
-					if (!appInfo.isSystem() || params[0] != 0) {
+					if (!appInfo.isSystem() || lstApp.size() == 1) {
 						publishProgress(appInfo.getPackageName().get(0), Integer.toString(mProgressCurrent));
 
 						JSONArray appName = new JSONArray();
@@ -659,21 +654,17 @@ public class ActivityShare extends Activity {
 	}
 
 	@SuppressLint("DefaultLocale")
-	private class SubmitTask extends AsyncTask<Integer, String, String> {
+	private class SubmitTask extends AsyncTask<int[], String, String> {
 		private int mProgressMax;
 		private int mProgressCurrent;
 
 		@Override
-		protected String doInBackground(Integer... params) {
+		protected String doInBackground(int[]... params) {
 			try {
 				// Get data
-				List<ApplicationInfoEx> lstApp;
-				if (params[0] == 0)
-					lstApp = ApplicationInfoEx.getXApplicationList(ActivityShare.this, null);
-				else {
-					lstApp = new ArrayList<ApplicationInfoEx>();
-					lstApp.add(new ApplicationInfoEx(ActivityShare.this, params[0]));
-				}
+				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
+				for (int uid : params[0])
+					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
 
 				// Initialize progress
 				mProgressMax = lstApp.size();

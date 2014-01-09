@@ -56,7 +56,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityApp extends Activity {
-
 	private int mThemeId;
 	private ApplicationInfoEx mAppInfo = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
@@ -500,8 +499,9 @@ public class ActivityApp extends Activity {
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				int[] uid = new int[] { mAppInfo.getUid() };
 				Intent intent = new Intent("biz.bokhorst.xprivacy.action.SUBMIT");
-				intent.putExtra(ActivityShare.cUid, mAppInfo.getUid());
+				intent.putExtra(ActivityShare.cUidList, uid);
 				startActivityForResult(intent, ACTIVITY_SUBMIT);
 			}
 		});
@@ -527,8 +527,9 @@ public class ActivityApp extends Activity {
 			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
+					int[] uid = new int[] { mAppInfo.getUid() };
 					Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
-					intent.putExtra(ActivityShare.cUid, mAppInfo.getUid());
+					intent.putExtra(ActivityShare.cUidList, uid);
 					startActivityForResult(intent, ACTIVITY_FETCH);
 				}
 			});

@@ -83,7 +83,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int ACTIVITY_EXPORT = 1;
 	private static final int ACTIVITY_IMPORT = 2;
 	private static final int ACTIVITY_IMPORT_SELECT = 3;
-	private static final int ACTIVITY_FETCH = 4;
+	private static final int ACTIVITY_SUBMIT = 4;
+	private static final int ACTIVITY_FETCH = 5;
 
 	private static final int LICENSED = 0x0100;
 	private static final int NOT_LICENSED = 0x0231;
@@ -476,6 +477,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					Util.bug(null, ex);
 				}
 
+		} else if (requestCode == ACTIVITY_SUBMIT) {
+			// Fetch
+			sharingDone();
+			if (mAppAdapter != null)
+				mAppAdapter.notifyDataSetChanged(); // Update state
+
+			String errorMessage = null;
+			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
+				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
+
+			String text = String.format("%s: %s", getString(R.string.menu_submit),
+					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
+			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+			toast.show();
+
 		} else if (requestCode == ACTIVITY_FETCH) {
 			// Fetch
 			sharingDone();
@@ -491,6 +507,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
 			toast.show();
 		}
+
 	}
 
 	@Override
@@ -508,6 +525,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		menu.findItem(R.id.menu_all).setEnabled(!mBatchOpRunning);
 		menu.findItem(R.id.menu_export).setEnabled(pro && mounted && !mBatchOpRunning);
 		menu.findItem(R.id.menu_import).setEnabled(pro && mounted && !mBatchOpRunning);
+		menu.findItem(R.id.menu_submit).setEnabled(
+				!mBatchOpRunning && mAppAdapter != null && mAppAdapter.getSelected(true).size() > 0);
 		menu.findItem(R.id.menu_fetch).setEnabled(!mBatchOpRunning);
 		menu.findItem(R.id.menu_pro).setVisible(!pro);
 
@@ -544,6 +563,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				return true;
 			case R.id.menu_import:
 				optionImport();
+				return true;
+			case R.id.menu_submit:
+				optionSubmit();
 				return true;
 			case R.id.menu_fetch:
 				optionFetch();
@@ -659,42 +681,46 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	// Options
 
 	private void optionAll() {
-		// Check if some restricted
-		boolean some = false;
-		for (ApplicationInfoEx xAppInfo : mAppAdapter.getSelected(false)) {
-			for (boolean restricted : PrivacyManager.getRestricted(ActivityMain.this, xAppInfo.getUid(),
-					mAppAdapter.getRestrictionName()))
-				if (restricted) {
-					some = true;
+		if (mAppAdapter != null) {
+			// Check if some restricted
+			boolean some = false;
+			for (ApplicationInfoEx xAppInfo : mAppAdapter.getSelected(false)) {
+				for (boolean restricted : PrivacyManager.getRestricted(ActivityMain.this, xAppInfo.getUid(),
+						mAppAdapter.getRestrictionName()))
+					if (restricted) {
+						some = true;
+						break;
+					}
+				if (some)
 					break;
-				}
-			if (some)
-				break;
-		}
-		final boolean someRestricted = some;
+			}
+			final boolean someRestricted = some;
 
-		// Are you sure?
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(someRestricted ? R.string.menu_clear_all : R.string.menu_restrict_all));
-		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				if (mAppAdapter != null) {
-					mBatchOpRunning = true;
-					invalidateOptionsMenu();
-					new ToggleTask().executeOnExecutor(mExecutor, someRestricted);
+			// Are you sure?
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder
+					.setTitle(getString(someRestricted ? R.string.menu_clear_all : R.string.menu_restrict_all));
+			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if (mAppAdapter != null) {
+						mBatchOpRunning = true;
+						invalidateOptionsMenu();
+						new ToggleTask().executeOnExecutor(mExecutor, someRestricted);
+					}
 				}
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+			});
+			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		}
 	}
 
 	private void optionUsage() {
@@ -775,6 +801,35 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
+	private void optionSubmit() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle(getString(R.string.menu_submit));
+		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				sharingStart();
+				if (mAppAdapter != null) {
+					List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected(true);
+					int[] uid = new int[listAppInfo.size()];
+					for (int pos = 0; pos < listAppInfo.size(); pos++)
+						uid[pos] = listAppInfo.get(pos).getUid();
+					Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
+					intent.putExtra(ActivityShare.cUidList, uid);
+					startActivityForResult(intent, ACTIVITY_SUBMIT);
+				}
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
 	private void optionFetch() {
 		if (Util.getProLicense() == null) {
 			// Redirect to pro page
@@ -789,8 +844,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					sharingStart();
-					Intent intent = new Intent(ActivityShare.ACTION_FETCH);
-					startActivityForResult(intent, ACTIVITY_FETCH);
+					if (mAppAdapter != null) {
+						List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected(false);
+						int[] uid = new int[listAppInfo.size()];
+						for (int pos = 0; pos < listAppInfo.size(); pos++)
+							uid[pos] = listAppInfo.get(pos).getUid();
+						Intent intent = new Intent(ActivityShare.ACTION_FETCH);
+						intent.putExtra(ActivityShare.cUidList, uid);
+						startActivityForResult(intent, ACTIVITY_FETCH);
+					}
 				}
 			});
 			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
@@ -1010,21 +1072,23 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			boolean someRestricted = params[0];
 
 			// Apply action
-			int pos = 0;
 			boolean restart = false;
-			List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected(false);
-			for (ApplicationInfoEx xAppInfo : listAppInfo) {
-				publishProgress(pos++, listAppInfo.size());
-				if (mAppAdapter.getRestrictionName() == null && someRestricted)
-					restart = PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid()) || restart;
-				else if (mAppAdapter.getRestrictionName() == null) {
-					for (String restrictionName : PrivacyManager.getRestrictions())
+			if (mAppAdapter != null) {
+				int pos = 0;
+				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected(false);
+				for (ApplicationInfoEx xAppInfo : listAppInfo) {
+					publishProgress(pos++, listAppInfo.size());
+					if (mAppAdapter.getRestrictionName() == null && someRestricted)
+						restart = PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid()) || restart;
+					else if (mAppAdapter.getRestrictionName() == null) {
+						for (String restrictionName : PrivacyManager.getRestrictions())
+							restart = PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
+									restrictionName, null, !someRestricted) || restart;
+					} else
 						restart = PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-								restrictionName, null, !someRestricted) || restart;
-				} else
-					restart = PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-							mAppAdapter.getRestrictionName(), null, !someRestricted)
-							|| restart;
+								mAppAdapter.getRestrictionName(), null, !someRestricted)
+								|| restart;
+				}
 			}
 
 			return restart;

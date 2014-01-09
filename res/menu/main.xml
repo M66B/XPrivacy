@@ -22,6 +22,9 @@
         android:id="@+id/menu_import"
         android:title="@string/menu_import"/>
     <item
+        android:id="@+id/menu_submit"
+        android:title="@string/menu_submit"/>
+    <item
         android:id="@+id/menu_fetch"
         android:title="@string/menu_fetch"/>
     <item

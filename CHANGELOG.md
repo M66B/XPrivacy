@@ -17,7 +17,8 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Sharper check marks, thanks @[jpeg729](https://github.com/jpeg729)
-* Toggle (clear/set) selected
+* Toggle (clear/set) selected applications
+* Fetch/submit selected applications
 * Updated simplified Chinese translation
 * Updated traditional Chinese translation
 * Updated French translation
