@@ -3,8 +3,6 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
-
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XActivityManagerService extends XHook {
@@ -16,7 +14,7 @@ public class XActivityManagerService extends XHook {
 	}
 
 	public String getClassName() {
-		return "om.android.server.am.ActivityManagerService";
+		return "com.android.server.am.ActivityManagerService";
 	}
 
 	public boolean isVisible() {
@@ -41,8 +39,6 @@ public class XActivityManagerService extends XHook {
 			String caller = (String) param.args[0];
 			if ("getContentProvider".equals(caller))
 				param.setResult(null);
-			else
-				Util.log(this, Log.WARN, "enforceNotIsolatedCaller(" + caller + ")");
 		}
 	}
 
