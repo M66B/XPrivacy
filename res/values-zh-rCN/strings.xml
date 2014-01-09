@@ -20,14 +20,14 @@
     <string name="menu_pro">捐赠/升级到专业版</string>
     <string name="menu_about">关于</string>
     <string name="menu_help">帮助</string>
-    <string name="menu_select_all">Select all</string>
+    <string name="menu_select_all">选择全部</string>
     <string name="menu_all">全部权限</string>
     <string name="menu_restriction_all">全选/不选列表中的应用</string>
     <string name="menu_clear_all">清除全部限制</string>
     <string name="menu_restrict_all">限制所有权限</string>
     <string name="menu_clear_usage">清除权限使用记录</string>
     <string name="menu_usage_all">过滤器开关</string>
-    <string name="menu_apply">套用默认权限模板</string>
+    <string name="menu_apply">应用默认权限模板</string>
     <string name="menu_clear">清除所有权限限制</string>
     <string name="menu_app_launch">启动应用</string>
     <string name="menu_app_settings">模拟设置</string>
@@ -42,12 +42,12 @@
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
     <string name="msg_applying">正在应用过滤器…</string>
-    <string name="msg_applied">已套用模版</string>
+    <string name="msg_applied">已应用模版</string>
     <string name="msg_saved_to" formatted="false">保存到%s</string>
     <string name="msg_no_restrictions">没有找到权限限制规则</string>
     <string name="msg_sure">是否确定？</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">请选择一些应用程序</string>
+    <string name="msg_limit">请不要选择%d个以上应用程序</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">XPrivacy 需要在重启后才能生效</string>
     <string name="msg_random_now">生成随机数值</string>
