@@ -1,5 +1,8 @@
 package biz.bokhorst.xprivacy;
 
+import android.os.Process;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +39,12 @@ public class XActivityManagerService extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.enforceNotIsolatedCaller) {
-			String caller = (String) param.args[0];
-			if ("getContentProvider".equals(caller))
-				param.setResult(null);
+			if (PrivacyManager.isIsolated(Process.myUid())) {
+				String caller = (String) param.args[0];
+				Util.log(this, Log.WARN, "enforceNotIsolatedCaller(" + caller + ") uid=" + Process.myUid());
+				if ("getContentProvider".equals(caller))
+					param.setResult(null);
+			}
 		}
 	}
 
