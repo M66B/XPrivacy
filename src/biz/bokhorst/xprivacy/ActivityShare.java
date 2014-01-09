@@ -97,9 +97,10 @@ public class ActivityShare extends Activity {
 		if (Util.hasProLicense(this) != null) {
 			// Import
 			if (getIntent().getAction().equals(ACTION_IMPORT)) {
+				int[] uid = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 				String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
 						: getFileName(false));
-				new ImportTask().executeOnExecutor(mExecutor, new File(fileName));
+				new ImportTask().executeOnExecutor(mExecutor, new File(fileName), uid);
 			}
 
 			// Export
@@ -275,15 +276,19 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	private class ImportTask extends AsyncTask<File, String, String> {
+	private class ImportTask extends AsyncTask<Object, String, String> {
 		private File mFile;
 		private int mProgressMax;
 		private int mProgressCurrent;
 
 		@Override
-		protected String doInBackground(File... params) {
+		protected String doInBackground(Object... params) {
 			try {
-				mFile = params[0];
+				mFile = (File) params[0];
+
+				List<Integer> listUidSelected = new ArrayList<Integer>();
+				for (int uid : (int[]) params[1])
+					listUidSelected.add(uid);
 
 				// Parse XML
 				Util.log(null, Log.INFO, "Importing " + mFile);
@@ -292,7 +297,7 @@ public class ActivityShare extends Activity {
 				try {
 					fis = new FileInputStream(mFile);
 					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
-					ImportHandler importHandler = new ImportHandler();
+					ImportHandler importHandler = new ImportHandler(listUidSelected);
 					xmlReader.setContentHandler(importHandler);
 					xmlReader.parse(new InputSource(fis));
 					mapPackage = importHandler.getPackageMap();
@@ -371,12 +376,17 @@ public class ActivityShare extends Activity {
 	}
 
 	private class ImportHandler extends DefaultHandler {
+		private List<Integer> mListUidSelected;
 		private SparseArray<String> mMapId = new SparseArray<String>();
 		private Map<String, Integer> mMapUid = new HashMap<String, Integer>();
 		private Map<String, Map<String, List<MethodDescription>>> mMapPackage = new HashMap<String, Map<String, List<MethodDescription>>>();
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 		private int mProgress = 0;
 		private List<Integer> mImportedIds = new ArrayList<Integer>();
+
+		public ImportHandler(List<Integer> listUidSelected) {
+			mListUidSelected = listUidSelected;
+		}
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -409,7 +419,7 @@ public class ActivityShare extends Activity {
 						PrivacyManager.setSetting(null, ActivityShare.this, 0, name, value);
 					else { // Application setting
 						int uid = getUid(Integer.parseInt(id));
-						if (uid >= 0)
+						if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid))
 							PrivacyManager.setSetting(null, ActivityShare.this, uid, name, value);
 					}
 				} else if (qName.equals("Package")) {
@@ -439,18 +449,17 @@ public class ActivityShare extends Activity {
 
 					// Get uid
 					int uid = getUid(id);
-
-					// Progress report and pre-import cleanup
-					if (!mImportedIds.contains(id)) {
-						mImportedIds.add(id);
-						reportProgress(id);
-						if (uid >= 0)
+					if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
+						// Progress report and pre-import cleanup
+						if (!mImportedIds.contains(id)) {
+							mImportedIds.add(id);
+							reportProgress(id);
 							PrivacyManager.deleteRestrictions(ActivityShare.this, uid);
-					}
+						}
 
-					if (uid >= 0)
 						PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName, methodName,
 								restricted);
+					}
 				} else
 					Util.log(null, Log.ERROR, "Unknown element name=" + qName);
 			} catch (Throwable ex) {

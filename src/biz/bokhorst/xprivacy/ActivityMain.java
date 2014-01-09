@@ -470,9 +470,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					String fileName = dataIntent.getData().getPath();
 					fileName = fileName.replace("/document/primary:", Environment.getExternalStorageDirectory()
 							.getAbsolutePath() + File.separatorChar);
-					Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
-					intent.putExtra(ActivityShare.cFileName, fileName);
-					startActivityForResult(intent, ACTIVITY_IMPORT);
+					startImport(fileName);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
@@ -794,11 +792,24 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			chooseFile.setDataAndType(uri, "text/xml");
 			Intent intent = Intent.createChooser(chooseFile, getString(R.string.app_name));
 			startActivityForResult(intent, ACTIVITY_IMPORT_SELECT);
-		} else {
-			Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
-			intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(false));
-			startActivityForResult(intent, ACTIVITY_IMPORT);
+		} else
+			startImport(ActivityShare.getFileName(false));
+	}
+
+	private void startImport(String fileName) {
+		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
+		intent.putExtra(ActivityShare.cFileName, fileName);
+		int[] uid;
+		if (mAppAdapter == null)
+			uid = new int[0];
+		else {
+			List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected(true);
+			uid = new int[listAppInfo.size()];
+			for (int pos = 0; pos < listAppInfo.size(); pos++)
+				uid[pos] = listAppInfo.get(pos).getUid();
+			intent.putExtra(ActivityShare.cUidList, uid);
 		}
+		startActivityForResult(intent, ACTIVITY_IMPORT);
 	}
 
 	private void optionSubmit() {
