@@ -68,7 +68,7 @@ public class ActivityShare extends Activity {
 	public static final String cProgressValue = "ProgressValue";
 	public static final String cProgressMax = "ProgressMax";
 
-	public static final int cSubmitLimit = 3;
+	public static final int cSubmitLimit = 10;
 
 	public static final String ACTION_EXPORT = "biz.bokhorst.xprivacy.action.EXPORT";
 	public static final String ACTION_IMPORT = "biz.bokhorst.xprivacy.action.IMPORT";
