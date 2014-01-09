@@ -37,15 +37,19 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xmlpull.v1.XmlSerializer;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -67,6 +71,7 @@ public class ActivityShare extends Activity {
 	public static final String ACTION_EXPORT = "biz.bokhorst.xprivacy.action.EXPORT";
 	public static final String ACTION_IMPORT = "biz.bokhorst.xprivacy.action.IMPORT";
 	public static final String ACTION_FETCH = "biz.bokhorst.xprivacy.action.FETCH";
+	public static final String ACTION_SUBMIT = "biz.bokhorst.xprivacy.action.SUBMIT";
 
 	public static final int TIMEOUT_MILLISEC = 45000;
 
@@ -86,11 +91,10 @@ public class ActivityShare extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Bundle extras = getIntent().getExtras();
+		mBroadcastManager = LocalBroadcastManager.getInstance(this);
+
 		if (Util.hasProLicense(this) != null) {
-			Bundle extras = getIntent().getExtras();
-
-			mBroadcastManager = LocalBroadcastManager.getInstance(this);
-
 			// Import
 			if (getIntent().getAction().equals(ACTION_IMPORT)) {
 				String fileName = (extras.containsKey(cFileName) ? extras.getString(cFileName) : getFileName(false));
@@ -99,20 +103,29 @@ public class ActivityShare extends Activity {
 			}
 
 			// Export
-			if (getIntent().getAction().equals(ACTION_EXPORT)) {
+			else if (getIntent().getAction().equals(ACTION_EXPORT)) {
 				String fileName = (extras.containsKey(cFileName) ? extras.getString(cFileName) : getFileName(false));
 				ExportTask exportTask = new ExportTask();
 				exportTask.executeOnExecutor(mExecutor, new File(fileName));
 			}
 
 			// Fetch
-			if (getIntent().getAction().equals(ACTION_FETCH)) {
+			else if (getIntent().getAction().equals(ACTION_FETCH)) {
 				int uid = 0;
 				if (extras != null && extras.containsKey(cUid))
 					uid = extras.getInt(cUid);
 				FetchTask fetchTask = new FetchTask();
 				fetchTask.executeOnExecutor(mExecutor, uid);
 			}
+		}
+
+		// Submit
+		if (getIntent().getAction().equals(ACTION_SUBMIT)) {
+			int uid = 0;
+			if (extras != null && extras.containsKey(cUid))
+				uid = extras.getInt(cUid);
+			SubmitTask submitTask = new SubmitTask();
+			submitTask.executeOnExecutor(mExecutor, uid);
 		}
 	}
 
@@ -520,7 +533,7 @@ public class ActivityShare extends Activity {
 				String confidence = PrivacyManager.getSetting(null, ActivityShare.this, 0,
 						PrivacyManager.cSettingConfidence, "", false);
 
-				// Set some numbers for the progress bar
+				// Initialize progress
 				mProgressMax = lstApp.size();
 				mProgressCurrent = 0;
 
@@ -639,6 +652,211 @@ public class ActivityShare extends Activity {
 			// Send progress info to main activity
 			Intent progressIntent = new Intent(cProgressReport);
 			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_fetch), text));
+			progressIntent.putExtra(cProgressMax, mProgressMax);
+			progressIntent.putExtra(cProgressValue, progress);
+			mBroadcastManager.sendBroadcast(progressIntent);
+		}
+	}
+
+	@SuppressLint("DefaultLocale")
+	private class SubmitTask extends AsyncTask<Integer, String, String> {
+		private int mProgressMax;
+		private int mProgressCurrent;
+
+		@Override
+		protected String doInBackground(Integer... params) {
+			try {
+				// Get data
+				List<ApplicationInfoEx> lstApp;
+				if (params[0] == 0)
+					lstApp = ApplicationInfoEx.getXApplicationList(ActivityShare.this, null);
+				else {
+					lstApp = new ArrayList<ApplicationInfoEx>();
+					lstApp.add(new ApplicationInfoEx(ActivityShare.this, params[0]));
+				}
+
+				// Initialize progress
+				mProgressMax = lstApp.size();
+				mProgressCurrent = 0;
+
+				for (ApplicationInfoEx appInfo : lstApp) {
+					// Update progess
+					mProgressCurrent++;
+					publishProgress(appInfo.getPackageName().get(0), Integer.toString(mProgressCurrent));
+
+					// Check if any account allowed
+					boolean allowedAccounts = false;
+					AccountManager accountManager = AccountManager.get(ActivityShare.this);
+					for (Account account : accountManager.getAccounts()) {
+						String sha1 = Util.sha1(account.name + account.type);
+						boolean allowed = PrivacyManager.getSettingBool(null, ActivityShare.this, 0,
+								String.format("Account.%d.%s", appInfo.getUid(), sha1), false, false);
+						if (allowed) {
+							allowedAccounts = true;
+							break;
+						}
+					}
+
+					// Check if any application allowed
+					boolean allowedApplications = false;
+					for (ApplicationInfoEx aAppInfo : ApplicationInfoEx.getXApplicationList(ActivityShare.this, null))
+						for (String packageName : aAppInfo.getPackageName()) {
+							boolean allowed = PrivacyManager.getSettingBool(null, ActivityShare.this, 0,
+									String.format("Application.%d.%s", aAppInfo.getUid(), packageName), false, false);
+							if (allowed) {
+								allowedApplications = true;
+								break;
+							}
+						}
+
+					// Check if any contact allowed
+					boolean allowedContacts = false;
+					Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
+							new String[] { ContactsContract.Contacts._ID }, null, null, null);
+					if (cursor != null)
+						try {
+							while (cursor.moveToNext()) {
+								long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+								boolean allowed = PrivacyManager.getSettingBool(null, ActivityShare.this, 0,
+										String.format("Contact.%d.%d", appInfo.getUid(), id), false, false);
+								if (allowed) {
+									allowedContacts = true;
+									break;
+								}
+							}
+						} finally {
+							cursor.close();
+						}
+
+					// Encode restrictions
+					JSONArray jSettings = new JSONArray();
+					for (String restrictionName : PrivacyManager.getRestrictions()) {
+						boolean restricted = PrivacyManager.getRestricted(null, ActivityShare.this, appInfo.getUid(),
+								restrictionName, null, false, false);
+						// Category
+						long used = PrivacyManager.getUsed(ActivityShare.this, appInfo.getUid(), restrictionName, null);
+						JSONObject jRestriction = new JSONObject();
+						jRestriction.put("restriction", restrictionName);
+						jRestriction.put("restricted", restricted);
+						jRestriction.put("used", used);
+						if (restrictionName.equals(PrivacyManager.cAccounts))
+							jRestriction.put("allowed", allowedAccounts ? 1 : 0);
+						else if (restrictionName.equals(PrivacyManager.cSystem))
+							jRestriction.put("allowed", allowedApplications ? 1 : 0);
+						else if (restrictionName.equals(PrivacyManager.cContacts))
+							jRestriction.put("allowed", allowedContacts ? 1 : 0);
+						jSettings.put(jRestriction);
+
+						// Methods
+						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
+							boolean mRestricted = restricted
+									&& PrivacyManager.getRestricted(null, ActivityShare.this, appInfo.getUid(),
+											restrictionName, md.getName(), false, false);
+							long mUsed = PrivacyManager.getUsed(ActivityShare.this, appInfo.getUid(), restrictionName,
+									md.getName());
+							JSONObject jMethod = new JSONObject();
+							jMethod.put("restriction", restrictionName);
+							jMethod.put("method", md.getName());
+							jMethod.put("restricted", mRestricted);
+							jMethod.put("used", mUsed);
+							jSettings.put(jMethod);
+						}
+					}
+
+					// Get data
+					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+					String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
+
+					JSONArray appName = new JSONArray();
+					for (String name : appInfo.getApplicationName())
+						appName.put(name);
+
+					JSONArray pkgName = new JSONArray();
+					for (String name : appInfo.getPackageName())
+						pkgName.put(name);
+
+					JSONArray pkgVersionName = new JSONArray();
+					for (String version : appInfo.getPackageVersionName(ActivityShare.this))
+						pkgVersionName.put(version);
+
+					JSONArray pkgVersionCode = new JSONArray();
+					for (Integer version : appInfo.getPackageVersionCode(ActivityShare.this))
+						pkgVersionCode.put((int) version);
+
+					// Encode package
+					JSONObject jRoot = new JSONObject();
+					jRoot.put("protocol_version", 4);
+					jRoot.put("android_id", Util.md5(android_id).toLowerCase());
+					jRoot.put("android_sdk", Build.VERSION.SDK_INT);
+					jRoot.put("xprivacy_version", pInfo.versionCode);
+					jRoot.put("application_name", appName);
+					jRoot.put("package_name", pkgName);
+					jRoot.put("package_version_name", pkgVersionName);
+					jRoot.put("package_version_code", pkgVersionCode);
+					jRoot.put("settings", jSettings);
+
+					// Submit
+					HttpParams httpParams = new BasicHttpParams();
+					HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+					HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+					HttpClient httpclient = new DefaultHttpClient(httpParams);
+
+					HttpPost httpost = new HttpPost(ActivityShare.BASE_URL + "?format=json&action=submit");
+					httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+					httpost.setHeader("Accept", "application/json");
+					httpost.setHeader("Content-type", "application/json");
+					HttpResponse response = httpclient.execute(httpost);
+					StatusLine statusLine = response.getStatusLine();
+
+					if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+						// Succeeded
+						ByteArrayOutputStream out = new ByteArrayOutputStream();
+						response.getEntity().writeTo(out);
+						out.close();
+						JSONObject status = new JSONObject(out.toString("UTF-8"));
+						if (status.getBoolean("ok")) {
+							// Mark as shared
+							PrivacyManager.setSetting(null, ActivityShare.this, appInfo.getUid(),
+									PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_SHARED));
+						} else
+							throw new Exception(status.getString("error"));
+					} else {
+						// Failed
+						response.getEntity().getContent().close();
+						throw new IOException(statusLine.getReasonPhrase());
+					}
+				}
+				return null;
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return ex.getMessage();
+			}
+		}
+
+		@Override
+		protected void onProgressUpdate(String... values) {
+			int progress = 0;
+			if (values.length > 1)
+				progress = Integer.parseInt(values[1]);
+			notify(values[0], true, progress);
+			super.onProgressUpdate(values);
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			notify(result == null ? getString(R.string.msg_done) : result, false, 0);
+
+			Intent intent = new Intent();
+			intent.putExtra(cErrorMessage, result);
+			setResult(result == null ? 0 : 1, intent);
+			finish();
+			super.onPostExecute(result);
+		}
+
+		private void notify(String text, boolean ongoing, int progress) {
+			// Send progress info to main activity
+			Intent progressIntent = new Intent(cProgressReport);
+			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_submit), text));
 			progressIntent.putExtra(cProgressMax, mProgressMax);
 			progressIntent.putExtra(cProgressValue, progress);
 			mBroadcastManager.sendBroadcast(progressIntent);

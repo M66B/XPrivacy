@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,22 +11,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -35,7 +20,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
@@ -44,11 +28,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.Settings.Secure;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
@@ -88,6 +70,7 @@ public class ActivityApp extends Activity {
 	public static final String cActionSettings = "Settings";
 
 	private static final int ACTIVITY_FETCH = 1;
+	private static final int ACTIVITY_SUBMIT = 2;
 
 	private static final int MENU_LAUNCH = 1;
 	private static final int MENU_SETTINGS = 2;
@@ -392,6 +375,15 @@ public class ActivityApp extends Activity {
 					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
 			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
 			toast.show();
+		} else if (requestCode == ACTIVITY_SUBMIT) {
+			String errorMessage = null;
+			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
+				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
+
+			String text = String.format("%s: %s", getString(R.string.menu_submit),
+					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
+			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+			toast.show();
 		}
 	}
 
@@ -508,8 +500,9 @@ public class ActivityApp extends Activity {
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				SubmitTask submitTask = new SubmitTask();
-				submitTask.executeOnExecutor(mExecutor, mAppInfo);
+				Intent intent = new Intent("biz.bokhorst.xprivacy.action.SUBMIT");
+				intent.putExtra(ActivityShare.cUid, mAppInfo.getUid());
+				startActivityForResult(intent, ACTIVITY_SUBMIT);
 			}
 		});
 		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
@@ -831,168 +824,6 @@ public class ActivityApp extends Activity {
 			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
 
-			super.onPostExecute(result);
-		}
-	}
-
-	@SuppressLint("DefaultLocale")
-	private class SubmitTask extends AsyncTask<ApplicationInfoEx, Object, String> {
-		@Override
-		protected String doInBackground(ApplicationInfoEx... params) {
-			try {
-				// Check if any account allowed
-				boolean allowedAccounts = false;
-				AccountManager accountManager = AccountManager.get(ActivityApp.this);
-				for (Account account : accountManager.getAccounts()) {
-					String sha1 = Util.sha1(account.name + account.type);
-					boolean allowed = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
-							String.format("Account.%d.%s", mAppInfo.getUid(), sha1), false, false);
-					if (allowed) {
-						allowedAccounts = true;
-						break;
-					}
-				}
-
-				// Check if any application allowed
-				boolean allowedApplications = false;
-				for (ApplicationInfoEx appInfo : ApplicationInfoEx.getXApplicationList(ActivityApp.this, null))
-					for (String packageName : appInfo.getPackageName()) {
-						boolean allowed = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
-								String.format("Application.%d.%s", mAppInfo.getUid(), packageName), false, false);
-						if (allowed) {
-							allowedApplications = true;
-							break;
-						}
-					}
-
-				// Check if any contact allowed
-				boolean allowedContacts = false;
-				Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
-						new String[] { ContactsContract.Contacts._ID }, null, null, null);
-				if (cursor != null)
-					try {
-						while (cursor.moveToNext()) {
-							long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-							boolean allowed = PrivacyManager.getSettingBool(null, ActivityApp.this, 0,
-									String.format("Contact.%d.%d", mAppInfo.getUid(), id), false, false);
-							if (allowed) {
-								allowedContacts = true;
-								break;
-							}
-						}
-					} finally {
-						cursor.close();
-					}
-
-				// Encode restrictions
-				int uid = params[0].getUid();
-				JSONArray jSettings = new JSONArray();
-				for (String restrictionName : PrivacyManager.getRestrictions()) {
-					boolean restricted = PrivacyManager.getRestricted(null, ActivityApp.this, uid, restrictionName,
-							null, false, false);
-					// Category
-					long used = PrivacyManager.getUsed(ActivityApp.this, uid, restrictionName, null);
-					JSONObject jRestriction = new JSONObject();
-					jRestriction.put("restriction", restrictionName);
-					jRestriction.put("restricted", restricted);
-					jRestriction.put("used", used);
-					if (restrictionName.equals(PrivacyManager.cAccounts))
-						jRestriction.put("allowed", allowedAccounts ? 1 : 0);
-					else if (restrictionName.equals(PrivacyManager.cSystem))
-						jRestriction.put("allowed", allowedApplications ? 1 : 0);
-					else if (restrictionName.equals(PrivacyManager.cContacts))
-						jRestriction.put("allowed", allowedContacts ? 1 : 0);
-					jSettings.put(jRestriction);
-
-					// Methods
-					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
-						boolean mRestricted = restricted
-								&& PrivacyManager.getRestricted(null, ActivityApp.this, uid, restrictionName,
-										md.getName(), false, false);
-						long mUsed = PrivacyManager.getUsed(ActivityApp.this, uid, restrictionName, md.getName());
-						JSONObject jMethod = new JSONObject();
-						jMethod.put("restriction", restrictionName);
-						jMethod.put("method", md.getName());
-						jMethod.put("restricted", mRestricted);
-						jMethod.put("used", mUsed);
-						jSettings.put(jMethod);
-					}
-				}
-
-				// Get data
-				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-				String android_id = Secure.getString(ActivityApp.this.getContentResolver(), Secure.ANDROID_ID);
-
-				JSONArray appName = new JSONArray();
-				for (String name : params[0].getApplicationName())
-					appName.put(name);
-
-				JSONArray pkgName = new JSONArray();
-				for (String name : params[0].getPackageName())
-					pkgName.put(name);
-
-				JSONArray pkgVersionName = new JSONArray();
-				for (String version : params[0].getPackageVersionName(ActivityApp.this))
-					pkgVersionName.put(version);
-
-				JSONArray pkgVersionCode = new JSONArray();
-				for (Integer version : params[0].getPackageVersionCode(ActivityApp.this))
-					pkgVersionCode.put((int) version);
-
-				// Encode package
-				JSONObject jRoot = new JSONObject();
-				jRoot.put("protocol_version", 4);
-				jRoot.put("android_id", Util.md5(android_id).toLowerCase());
-				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
-				jRoot.put("xprivacy_version", pInfo.versionCode);
-				jRoot.put("application_name", appName);
-				jRoot.put("package_name", pkgName);
-				jRoot.put("package_version_name", pkgVersionName);
-				jRoot.put("package_version_code", pkgVersionCode);
-				jRoot.put("settings", jSettings);
-
-				// Submit
-				HttpParams httpParams = new BasicHttpParams();
-				HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
-				HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
-				HttpClient httpclient = new DefaultHttpClient(httpParams);
-
-				HttpPost httpost = new HttpPost(ActivityShare.BASE_URL + "?format=json&action=submit");
-				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
-				httpost.setHeader("Accept", "application/json");
-				httpost.setHeader("Content-type", "application/json");
-				HttpResponse response = httpclient.execute(httpost);
-				StatusLine statusLine = response.getStatusLine();
-
-				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-					// Succeeded
-					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					response.getEntity().writeTo(out);
-					out.close();
-					JSONObject status = new JSONObject(out.toString("UTF-8"));
-					if (status.getBoolean("ok")) {
-						// Mark as shared
-						PrivacyManager.setSetting(null, ActivityApp.this, mAppInfo.getUid(),
-								PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_SHARED));
-						return getString(R.string.msg_done);
-					} else
-						return status.getString("error");
-				} else {
-					// Failed
-					response.getEntity().getContent().close();
-					return statusLine.getReasonPhrase();
-				}
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				return ex.toString();
-			}
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			Toast toast = Toast.makeText(ActivityApp.this,
-					String.format("%s: %s", getString(R.string.menu_submit), result), Toast.LENGTH_LONG);
-			toast.show();
 			super.onPostExecute(result);
 		}
 	}
