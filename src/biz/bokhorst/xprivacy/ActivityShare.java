@@ -129,7 +129,7 @@ public class ActivityShare extends Activity {
 					new SubmitTask().executeOnExecutor(mExecutor, uid);
 				} else {
 					Intent intent = new Intent();
-					intent.putExtra(cErrorMessage, getString(R.string.msg_limit, ActivityShare.cSubmitLimit));
+					intent.putExtra(cErrorMessage, getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
 					setResult(1, intent);
 					finish();
 				}
