@@ -4,6 +4,7 @@
     <string name="app_notenabled">Az XPrivacy nincs engedélyezve az Xposed telepítőben</string>
     <string name="app_wrongandroid">Csak Android 4.0 felett</string>
     <string name="app_version" formatted="false">XPrivacy verzió: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed keretrendszer verzió: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 M. Bokhorst (M66B)</string>
     <string name="menu_usage">Használat</string>
@@ -131,5 +132,6 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
 \nKattintson az alkalmazás ikonjára további korlátozásokhoz vagy beállításokhoz</string>
     <string name="tutorial_detailsheader">Kattintson az alkalmazás ikonjára további műveletekhez</string>
     <string name="tutorial_detailslist">Kattintson a lefe nyílra, hogy lássa a korlátozott kategóriák kivételeit</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

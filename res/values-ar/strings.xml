@@ -4,6 +4,7 @@
     <string name="app_notenabled">لم يتم تفعيل XPrivacy</string>
     <string name="app_wrongandroid">فقط لأندرويد نسخة 4.0+</string>
     <string name="app_version" formatted="false">نسخة XPrivacy : %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">إطار  Xposed نسخة : %d</string>
     <string name="app_copyright">حقوق الطبع \u00A9 2013–2014 ل M. Bokhorst (M66B)</string>
     <string name="menu_usage">الإستخدام</string>
@@ -131,5 +132,6 @@
 \nإلمس ايقونة التطبيق لتفاصيل القيود والإعدادات</string>
     <string name="tutorial_detailsheader">انقر على أيقونة التطبيق لمزيد من الإجراءات</string>
     <string name="tutorial_detailslist">انقر على السهم المتجه لأسفل لرؤية الوظائف الإستثنائية في الفئة المُقيدة</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

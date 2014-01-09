@@ -1,8 +1,6 @@
 <resources>
 
-    <attr name="icon_checked" format="reference" />
-    <attr name="icon_check_off" format="reference" />
-    <attr name="icon_checked_box" format="reference" />
+    <attr name="icon_restricted" format="reference" />
     <attr name="icon_granted" format="reference" />
     <attr name="icon_help" format="reference" />
     <attr name="icon_info" format="reference" />

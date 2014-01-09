@@ -182,7 +182,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dip"
-            android:choiceMode="multipleChoice"
+            android:choiceMode="none"
             android:paddingRight="6dip"
             android:scrollbarStyle="insideInset" />
 

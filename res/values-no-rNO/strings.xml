@@ -4,6 +4,7 @@
     <string name="app_notenabled">XPrivacy er ikke frigitt i Xposed installasjon</string>
     <string name="app_wrongandroid">Kun for Android versjon 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013–2014</string>
     <string name="menu_usage">Databruk</string>
@@ -130,5 +131,6 @@
 </string>
     <string name="tutorial_detailsheader">Trykk på app ikonet for å få flere valg/aksjoner</string>
     <string name="tutorial_detailslist">Trykk på pilene som viser ned for å se funksjonene innen en kategorie</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

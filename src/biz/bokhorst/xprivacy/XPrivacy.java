@@ -36,6 +36,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Log load
 		Util.log(null, Log.INFO, String.format("Load %s", startupParam.modulePath));
 
+		// Activity manager service
+		if (PrivacyManager.cTestVersion)
+			hookAll(XActivityManagerService.getInstances());
+
 		// App widget manager
 		hookAll(XAppWidgetManager.getInstances());
 
@@ -74,6 +78,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// IO bridge
 		hookAll(XIoBridge.getInstances());
+
+		// Location manager service
+		if (PrivacyManager.cTestVersion)
+			hookAll(XLocationManagerService.getInstances());
 
 		// Media recorder
 		hookAll(XMediaRecorder.getInstances());
@@ -156,11 +164,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// Location client
-		try {
-			Class.forName("com.google.android.gms.location.LocationClient", false, lpparam.classLoader);
-			hookAll(XLocationClient.getInstances(), lpparam.classLoader);
-		} catch (Throwable ex) {
-		}
+		if (!PrivacyManager.cTestVersion)
+			try {
+				Class.forName("com.google.android.gms.location.LocationClient", false, lpparam.classLoader);
+				hookAll(XLocationClient.getInstances(), lpparam.classLoader);
+			} catch (Throwable ex) {
+			}
 	}
 
 	private static boolean mAccountManagerHooked = false;
@@ -210,10 +219,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		} else if (name.equals(Context.LOCATION_SERVICE)) {
 			// Location manager
-			if (!mLocationManagerHooked) {
-				hookAll(XLocationManager.getInstances(instance));
-				mLocationManagerHooked = true;
-			}
+			if (!PrivacyManager.cTestVersion)
+				if (!mLocationManagerHooked) {
+					hookAll(XLocationManager.getInstances(instance));
+					mLocationManagerHooked = true;
+				}
 		} else if (name.equals(Context.SENSOR_SERVICE)) {
 			// Sensor manager
 			if (!mSensorManagerHooked) {

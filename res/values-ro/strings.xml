@@ -4,6 +4,7 @@
     <string name="app_notenabled">XPrivacy nu este bifat in Xposed installer</string>
     <string name="app_wrongandroid">Only for Android version 4.0+</string>
     <string name="app_version" formatted="false">versiunea XPrivacy: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">versiunea Xposed framework: %d</string>
     <string name="app_copyright">Drepturi de autor rezervate \u00A9 2013–2014 M. Bokhorst (M66B)</string>
     <string name="menu_usage">Usage</string>
@@ -131,5 +132,6 @@ however it is impossible to guarantee it will work flawless on each and every de
 \nTap the app icon for detailed restrictions and settings</string>
     <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
     <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

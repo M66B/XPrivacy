@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
-    android:versionCode="226"
-    android:versionName="1.11.5" >
+    android:versionCode="227"
+    android:versionName="1.11.6" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -14,7 +14,7 @@
 
     <permission
         android:name="biz.bokhorst.xprivacy.MANAGE_PACKAGES"
-        android:description="@string/app_name"
+        android:description="@string/permission_manage"
         android:label="@string/app_name"
         android:protectionLevel="dangerous" />
 
@@ -42,7 +42,7 @@
             android:value="42+" />
         <meta-data
             android:name="xposeddescription"
-            android:value="The ultimate privacy manager" />
+            android:value="@string/app_description" />
 
         <!-- Google Play services -->
         <meta-data
@@ -99,6 +99,7 @@
                 <action android:name="biz.bokhorst.xprivacy.action.IMPORT" />
                 <action android:name="biz.bokhorst.xprivacy.action.EXPORT" />
                 <action android:name="biz.bokhorst.xprivacy.action.FETCH" />
+                <action android:name="biz.bokhorst.xprivacy.action.SUBMIT" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

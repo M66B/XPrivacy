@@ -4,6 +4,7 @@
     <string name="app_notenabled">XPrivacy ist im Xposed Installer nicht aktiviert</string>
     <string name="app_wrongandroid">Nur für Android-Version 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy Version: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed Framework Version: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Aktivitätslog</string>
@@ -131,5 +132,6 @@
 \nTippen Sie auf das App-Icon für detaillierte Beschränkungen und Einstellungen</string>
     <string name="tutorial_detailsheader">Tippen Sie auf das App-Icon für weitere Aktionen</string>
     <string name="tutorial_detailslist">Tippen Sie auf den Pfeil, um die Ausnahmen-Funktionen von einer beschränkten Kategorie zu sehen</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>
