@@ -534,20 +534,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	public boolean onOptionsItemSelected(MenuItem item) {
 		try {
 			// Show a dialog if the option needs a selection to work on
-			if (mAppAdapter != null && mAppAdapter.getSelected().size() <= 0 &&
-					(item.getItemId() == R.id.menu_all ||
-					item.getItemId() == R.id.menu_import ||
-					item.getItemId() == R.id.menu_fetch ||
-					item.getItemId() == R.id.menu_submit)) {
+			int id = item.getItemId();
+			if ((id == R.id.menu_all || id == R.id.menu_import || id == R.id.menu_fetch || id == R.id.menu_submit)
+					&& mAppAdapter != null && mAppAdapter.getSelected().size() <= 0) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 				alertDialogBuilder.setTitle(R.string.app_name);
 				alertDialogBuilder.setMessage(getString(R.string.msg_select));
 				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-					}
-				});
+				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
 				AlertDialog alertDialog = alertDialogBuilder.create();
 				alertDialog.show();
 				return true;
@@ -855,11 +854,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					}
 				}
 			});
-			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-				}
-			});
+			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
 			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
 		} else {
