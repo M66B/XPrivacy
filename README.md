@@ -611,6 +611,7 @@ No, because these OS'es are to closed to implement something like XPrivacy.
 * Starting other applications
 * Android version
 * Vibration
+* Checks for root
 
 No, because I don't consider this as privacy sensitive data (=able to identify you and collect data about you).
 I am happy to add new restrictions for data that is really privacy sensitive.

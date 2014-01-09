@@ -20,6 +20,7 @@
     <string name="menu_pro">Έκδοση Pro</string>
     <string name="menu_about">Σχετικά</string>
     <string name="menu_help">Βοήθεια</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Όλα</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
@@ -45,6 +46,8 @@
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_sure">Είστε σίγουρος;</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Τέλος</string>
     <string name="msg_reboot">Απαιτείται επανεκκίνηση</string>
     <string name="msg_random_now">Τυχαία διεύθυνση</string>

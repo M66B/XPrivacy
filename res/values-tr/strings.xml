@@ -20,6 +20,7 @@
     <string name="menu_pro">Pro versiyon</string>
     <string name="menu_about">Hakkında</string>
     <string name="menu_help">Yardım</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Tümü</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
@@ -45,6 +46,8 @@
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_sure">Emin misin?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Bitti</string>
     <string name="msg_reboot">Yeniden başlatma gerekli</string>
     <string name="msg_random_now">Rasgele Oluştur</string>

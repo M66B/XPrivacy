@@ -20,6 +20,7 @@
     <string name="menu_pro">Pro-версія</string>
     <string name="menu_about">Про програму</string>
     <string name="menu_help">Допомога</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Виділити все</string>
     <string name="menu_restriction_all">Переключити довзоли</string>
     <string name="menu_clear_all">Очистити всі</string>
@@ -45,6 +46,8 @@
     <string name="msg_saved_to" formatted="false">Збережено в %s</string>
     <string name="msg_no_restrictions">Не знайдено обмежень</string>
     <string name="msg_sure">Ви впевнені?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Необхідне перезавантаження пристрою</string>
     <string name="msg_random_now">Випадкові значення</string>

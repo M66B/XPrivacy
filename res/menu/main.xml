@@ -7,6 +7,11 @@
         android:showAsAction="always"
         android:title="@string/menu_help"/>
     <item
+        android:id="@+id/menu_select_all"
+        android:icon="@drawable/icon_select_all"
+        android:showAsAction="always"
+        android:title="@string/menu_select_all"/>
+    <item
         android:id="@+id/menu_tutorial"
         android:title="@string/menu_tutorial"/>
     <item
@@ -21,6 +26,9 @@
     <item
         android:id="@+id/menu_import"
         android:title="@string/menu_import"/>
+    <item
+        android:id="@+id/menu_submit"
+        android:title="@string/menu_submit"/>
     <item
         android:id="@+id/menu_fetch"
         android:title="@string/menu_fetch"/>

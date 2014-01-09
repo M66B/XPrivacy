@@ -16,8 +16,16 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Sharper check marks, thanks @[jpeg729](https://github.com/jpeg729)
+* Select/clear all visible/invisible action, thanks @[jpeg729](https://github.com/jpeg729)
+* Toggle (clear/set) selected applications
+* Fetch/submit selected applications
+* Import selected applications
+* Better location restrictions
+* Updated simplified Chinese translation
 * Updated traditional Chinese translation
 * Updated French translation
+* Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

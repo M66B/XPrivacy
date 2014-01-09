@@ -20,6 +20,7 @@
     <string name="menu_pro">Професионална версия</string>
     <string name="menu_about">Относно</string>
     <string name="menu_help">Help</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Всички</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
@@ -45,6 +46,8 @@
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_sure">Сигурни ли сте?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Нужно е рестартиране</string>
     <string name="msg_random_now">Randomize</string>
