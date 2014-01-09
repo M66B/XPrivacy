@@ -22,6 +22,7 @@
     <string name="menu_pro">ورژن پرو</string>
     <string name="menu_about">درباره ی نرم افزار</string>
     <string name="menu_help">راهنما</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">همه</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
@@ -47,6 +48,8 @@
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_sure">آبااطمینان دارید؟</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">انحام شد</string>
     <string name="msg_reboot">لازم است دستگاه خاموش و روشن گردد</string>
     <string name="msg_random_now">رندم سازی</string>

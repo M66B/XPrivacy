@@ -68,6 +68,8 @@ public class ActivityShare extends Activity {
 	public static final String cProgressValue = "ProgressValue";
 	public static final String cProgressMax = "ProgressMax";
 
+	public static final int cSubmitLimit = 3;
+
 	public static final String ACTION_EXPORT = "biz.bokhorst.xprivacy.action.EXPORT";
 	public static final String ACTION_IMPORT = "biz.bokhorst.xprivacy.action.IMPORT";
 	public static final String ACTION_FETCH = "biz.bokhorst.xprivacy.action.FETCH";
@@ -123,7 +125,14 @@ public class ActivityShare extends Activity {
 		if (getIntent().getAction().equals(ACTION_SUBMIT)) {
 			if (extras != null && extras.containsKey(cUidList)) {
 				int[] uid = extras.getIntArray(cUidList);
-				new SubmitTask().executeOnExecutor(mExecutor, uid);
+				if (uid.length <= cSubmitLimit) {
+					new SubmitTask().executeOnExecutor(mExecutor, uid);
+				} else {
+					Intent intent = new Intent();
+					intent.putExtra(cErrorMessage, getString(R.string.msg_limit, ActivityShare.cSubmitLimit));
+					setResult(1, intent);
+					finish();
+				}
 			}
 		}
 	}

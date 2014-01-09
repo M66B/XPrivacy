@@ -20,6 +20,7 @@
     <string name="menu_pro">Pro versjon</string>
     <string name="menu_about">Om</string>
     <string name="menu_help">Hjelp</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Alle</string>
     <string name="menu_restriction_all">Skift restriksjoner</string>
     <string name="menu_clear_all">Nullstill alt</string>
@@ -45,6 +46,8 @@
     <string name="msg_saved_to" formatted="false">Lagre till %s</string>
     <string name="msg_no_restrictions">Ingen restriksjoner funnet</string>
     <string name="msg_sure">Er du sikker?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Ferdig</string>
     <string name="msg_reboot">Omstart nødvendig</string>
     <string name="msg_random_now">Tilfeldige verdier</string>

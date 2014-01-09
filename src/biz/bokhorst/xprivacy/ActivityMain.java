@@ -523,8 +523,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		menu.findItem(R.id.menu_all).setEnabled(!mBatchOpRunning);
 		menu.findItem(R.id.menu_export).setEnabled(pro && mounted && !mBatchOpRunning);
 		menu.findItem(R.id.menu_import).setEnabled(pro && mounted && !mBatchOpRunning);
-		menu.findItem(R.id.menu_submit).setEnabled(
-				!mBatchOpRunning && mAppAdapter != null && mAppAdapter.getSelected(true).size() > 0);
+		menu.findItem(R.id.menu_submit).setEnabled(!mBatchOpRunning);
 		menu.findItem(R.id.menu_fetch).setEnabled(!mBatchOpRunning);
 		menu.findItem(R.id.menu_pro).setVisible(!pro);
 
@@ -534,9 +533,32 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		try {
+			// Show a dialog if the option needs a selection to work on
+			if (mAppAdapter != null && mAppAdapter.getSelected().size() <= 0 &&
+					(item.getItemId() == R.id.menu_all ||
+					item.getItemId() == R.id.menu_import ||
+					item.getItemId() == R.id.menu_fetch ||
+					item.getItemId() == R.id.menu_submit)) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle(R.string.app_name);
+				alertDialogBuilder.setMessage(getString(R.string.msg_select));
+				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+				return true;
+			}
+
 			switch (item.getItemId()) {
 			case R.id.menu_help:
 				optionHelp();
+				return true;
+			case R.id.menu_select_all:
+				optionSelectAll();
 				return true;
 			case R.id.menu_tutorial:
 				optionTutorial();
@@ -682,7 +704,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (mAppAdapter != null) {
 			// Check if some restricted
 			boolean some = false;
-			for (ApplicationInfoEx xAppInfo : mAppAdapter.getSelected(false)) {
+			for (ApplicationInfoEx xAppInfo : mAppAdapter.getSelected()) {
 				for (boolean restricted : PrivacyManager.getRestricted(ActivityMain.this, xAppInfo.getUid(),
 						mAppAdapter.getRestrictionName()))
 					if (restricted) {
@@ -803,7 +825,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (mAppAdapter == null)
 			uid = new int[0];
 		else {
-			List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected(true);
+			List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
 			uid = new int[listAppInfo.size()];
 			for (int pos = 0; pos < listAppInfo.size(); pos++)
 				uid[pos] = listAppInfo.get(pos).getUid();
@@ -813,32 +835,46 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionSubmit() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(R.string.menu_submit));
-		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				sharingStart();
-				if (mAppAdapter != null) {
-					List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected(true);
-					int[] uid = new int[listAppInfo.size()];
-					for (int pos = 0; pos < listAppInfo.size(); pos++)
-						uid[pos] = listAppInfo.get(pos).getUid();
-					Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
-					intent.putExtra(ActivityShare.cUidList, uid);
-					startActivityForResult(intent, ACTIVITY_SUBMIT);
+		if (mAppAdapter.getSelected().size() <= ActivityShare.cSubmitLimit) {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.menu_submit));
+			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					sharingStart();
+					if (mAppAdapter != null) {
+						List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
+						int[] uid = new int[listAppInfo.size()];
+						for (int pos = 0; pos < listAppInfo.size(); pos++)
+							uid[pos] = listAppInfo.get(pos).getUid();
+						Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
+						intent.putExtra(ActivityShare.cUidList, uid);
+						startActivityForResult(intent, ACTIVITY_SUBMIT);
+					}
 				}
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+			});
+			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		} else {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.app_name));
+			alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit));
+			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		}
 	}
 
 	private void optionFetch() {
@@ -856,7 +892,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				public void onClick(DialogInterface dialog, int which) {
 					sharingStart();
 					if (mAppAdapter != null) {
-						List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected(false);
+						List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
 						int[] uid = new int[listAppInfo.size()];
 						for (int pos = 0; pos < listAppInfo.size(); pos++)
 							uid[pos] = listAppInfo.get(pos).getUid();
@@ -940,6 +976,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		imgHelpHalf.setImageBitmap(mCheck[1]);
 		dialog.setCancelable(true);
 		dialog.show();
+	}
+
+	private void optionSelectAll() {
+		// Select all visible apps
+		if (mAppAdapter != null)
+			mAppAdapter.selectAllVisible();
 	}
 
 	private void optionTutorial() {
@@ -1086,7 +1128,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			boolean restart = false;
 			if (mAppAdapter != null) {
 				int pos = 0;
-				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected(false);
+				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
 				for (ApplicationInfoEx xAppInfo : listAppInfo) {
 					publishProgress(pos++, listAppInfo.size());
 					if (mAppAdapter.getRestrictionName() == null && someRestricted)
@@ -1169,11 +1211,30 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			return mRestrictionName;
 		}
 
-		public List<ApplicationInfoEx> getSelected(boolean selectedOnly) {
-			if (mListAppSelected.size() == 0)
-				return (selectedOnly ? new ArrayList<ApplicationInfoEx>() : mListAppAll);
-			else
-				return mListAppSelected;
+		public List<ApplicationInfoEx> getSelected() {
+			return mListAppSelected;
+		}
+
+		public void selectAllVisible() {
+			// Look through the visible apps to figure out what to do
+			boolean addThem = false;
+			for (int i = 0; i < this.getCount(); i++) {
+				if (!mListAppSelected.contains(this.getItem(i))) {
+					addThem = true;
+					break;
+				}
+			}
+
+			if (addThem) {
+				// Add the visible apps not already selected
+				for (int i = 0; i < this.getCount(); i++)
+					if (!mListAppSelected.contains(this.getItem(i)))
+						mListAppSelected.add(this.getItem(i));
+			} else {
+				mListAppSelected.clear();
+			}
+
+			this.notifyDataSetChanged();
 		}
 
 		@Override

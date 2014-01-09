@@ -25,6 +25,7 @@
     <string name="menu_pro">Pro version</string>
     <string name="menu_about">About</string>
     <string name="menu_help">Help</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">All</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
@@ -50,6 +51,8 @@
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_sure">Are you sure?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Done</string>
     <string name="msg_reboot">Device restart required</string>
     <string name="msg_random_now">Randomize now</string>

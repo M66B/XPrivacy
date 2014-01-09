@@ -20,6 +20,7 @@
     <string name="menu_pro">Salin na Pro</string>
     <string name="menu_about">Tungkulin</string>
     <string name="menu_help">Bumasa ng tulong</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Kalahatan</string>
     <string name="menu_restriction_all">Bigyan ng lahat o walang paghihigpit</string>
     <string name="menu_clear_all">Burahin lahat ng paghihigpit</string>
@@ -45,6 +46,8 @@
     <string name="msg_saved_to" formatted="false">Nailagay sa %s</string>
     <string name="msg_no_restrictions">Walang nakatakdang paghihigpit na natagpuan</string>
     <string name="msg_sure">Tiyak ka na ba?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Tapos na</string>
     <string name="msg_reboot">Kailangan paumpisahin muli ang iyong kagamitan</string>
     <string name="msg_random_now">Palit-palitan ang mga paghihigpit sa ngayon na</string>
