@@ -16,6 +16,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.11.7 TEST**
+
 * Sharper check marks, thanks @[jpeg729](https://github.com/jpeg729)
 * Select/clear all visible/invisible action, thanks @[jpeg729](https://github.com/jpeg729)
 * Toggle (clear/set) selected applications
@@ -26,8 +30,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Updated traditional Chinese translation
 * Updated French translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.11.6 BETA**
 
