@@ -55,9 +55,14 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
+import android.view.WindowManager;
 
 public class ActivityShare extends Activity {
 	private LocalBroadcastManager mBroadcastManager;
+
+	private int mThemeId;
+
+	private int[] mUids;
 
 	public static final String cFileName = "FileName";
 	public static final String cUidList = "UidList";
@@ -94,15 +99,35 @@ public class ActivityShare extends Activity {
 		super.onCreate(savedInstanceState);
 
 		Bundle extras = getIntent().getExtras();
+		mUids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
+
+		// TODO check whether we need a ui, if not, leave the theme declared in the manifest
+		// TODO if action is EXPORT we don't really need a ui because it is so fast
+		//if (extras.containsKey(cProvideUi) && !getIntent().getAction().equals(ACTION_EXPORT)) {
+			// Set theme
+			String themeName = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingTheme, "", false);
+			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
+			setTheme(mThemeId);
+
+			// Set layout
+			setContentView(R.layout.sharelist);
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+			setTitle(getString(R.string.app_name));
+		//}
+
 		mBroadcastManager = LocalBroadcastManager.getInstance(this);
+
+		// TODO populate list
+		// TODO if action is EXPORT, disable ok button and get on with it
+		// TODO else wait for ok before proceeding
 
 		if (Util.hasProLicense(this) != null) {
 			// Import
 			if (getIntent().getAction().equals(ACTION_IMPORT)) {
-				int[] uid = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 				String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
 						: getFileName(false));
-				new ImportTask().executeOnExecutor(mExecutor, new File(fileName), uid);
+				new ImportTask().executeOnExecutor(mExecutor, new File(fileName), mUids);
+				setTitle(getString(R.string.menu_import));
 			}
 
 			// Export
@@ -110,23 +135,24 @@ public class ActivityShare extends Activity {
 				String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
 						: getFileName(false));
 				new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
+				setTitle(getString(R.string.menu_export));
 			}
 
 			// Fetch
 			else if (getIntent().getAction().equals(ACTION_FETCH)) {
-				if (extras != null && extras.containsKey(cUidList)) {
-					int[] uid = extras.getIntArray(cUidList);
-					new FetchTask().executeOnExecutor(mExecutor, uid);
+				if (mUids.length > 0) {
+					new FetchTask().executeOnExecutor(mExecutor, mUids);
+					setTitle(getString(R.string.menu_fetch));
 				}
 			}
 		}
 
 		// Submit
 		if (getIntent().getAction().equals(ACTION_SUBMIT)) {
-			if (extras != null && extras.containsKey(cUidList)) {
-				int[] uid = extras.getIntArray(cUidList);
-				if (uid.length <= cSubmitLimit) {
-					new SubmitTask().executeOnExecutor(mExecutor, uid);
+			if (mUids.length > 0) {
+				if (mUids.length <= cSubmitLimit) {
+					new SubmitTask().executeOnExecutor(mExecutor, mUids);
+					setTitle(getString(R.string.menu_submit));
 				} else {
 					Intent intent = new Intent();
 					intent.putExtra(cErrorMessage, getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
