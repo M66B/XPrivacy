@@ -18,6 +18,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Fixed restricting locations acquired using Google Play services
 * Fixed maximum number count message for submit and increased maximum to ten
+* Enable Android usage data by default
 * Updated Polish translation
 * Updated simplified Chinese translation
 * Updated Slovak translation

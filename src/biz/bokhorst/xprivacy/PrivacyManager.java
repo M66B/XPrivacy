@@ -434,7 +434,7 @@ public class PrivacyManager {
 			return false;
 
 		if (Util.getAppId(Process.myUid()) == cAndroidUid)
-			if (!PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, false, false))
+			if (!PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, true, false))
 				return false;
 
 		return true;
