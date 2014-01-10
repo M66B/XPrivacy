@@ -1,11 +1,11 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Verzia frameworku Xposed %d+ nie je nainštalovaná</string>
-    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Inštalátori Xposed</string>
+    <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
+    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed Inštalátori</string>
     <string name="app_wrongandroid">Len pre Android 4.0+</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
     <string name="app_description">Správca súkromia</string>
-    <string name="app_xversion" formatted="false">Verzia frameworku Xposed: %d</string>
+    <string name="app_xversion" formatted="false">Verzia Xposed frameworku: %d</string>
     <string name="app_copyright">Autorské práva \u00A9 2013–2014 od M. Bokhorst (M66B)</string>
     <string name="menu_usage">Využitie dát</string>
     <string name="menu_refresh">Obnoviť</string>
@@ -20,7 +20,7 @@
     <string name="menu_pro">Pro verzia</string>
     <string name="menu_about">O aplikácii</string>
     <string name="menu_help">Pomocník</string>
-    <string name="menu_select_all">Select all</string>
+    <string name="menu_select_all">Vybrať všetky</string>
     <string name="menu_all">Všetko</string>
     <string name="menu_restriction_all">Prepnúť obmedzenia</string>
     <string name="menu_clear_all">Vymazať všetky</string>
@@ -46,8 +46,8 @@
     <string name="msg_saved_to" formatted="false">Uložené do %s</string>
     <string name="msg_no_restrictions">Nenájdené žiadne obmedzenia</string>
     <string name="msg_sure">Ste si istí?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Prosím, vyberte nejaké aplikácie</string>
+    <string name="msg_limit">Prosím, vyberte menej než %d aplikácií</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadovaný reštart zariadenia</string>
     <string name="msg_random_now">Náhodné hodnoty</string>
@@ -131,7 +131,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="help_restricted">obmedzenia sú zmenené</string>
     <string name="help_shared">obmedzenia sú odoslané</string>
     <string name="tutorial_mainheader">Vyberte kategóriu na obmedzenie; vyberte viditeľné aplikácie pomocou filtrov</string>
-    <string name="tutorial_mainlist">Kliknite na zaškrtávacie pole ore obmedzenie vybranej kategórie pre aplikáciu\n
+    <string name="tutorial_mainlist">Kliknite na zaškrtávacie pole pre obmedzenie vybranej kategórie pre aplikáciu\n
 \nAplikácie budú kŕmené prázdnymi alebo falošnými údaje pri obmedzených kategóriách\n
 \nKliknite na ikonu aplikácie pre podrobné obmedzenia a nastavenia</string>
     <string name="tutorial_detailsheader">Kliknite na ikonu aplikácie pre viac akcií</string>
