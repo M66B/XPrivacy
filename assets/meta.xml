@@ -71,17 +71,6 @@
     <Hook restriction="internet" method="isConnectedOrConnecting" sdk="14" />
     <Hook restriction="internet" method="getConnectionInfo" sdk="14" />
 
-    <Hook restriction="location" method="addNmeaListener" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
-    <Hook restriction="location" method="addProximityAlert" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
-    <Hook restriction="location" method="getLastKnownLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
-    <Hook restriction="location" method="getProviders" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
-    <Hook restriction="location" method="isProviderEnabled" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
-    <Hook restriction="location" method="removeUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
-    <Hook restriction="location" method="requestLocationUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
-    <Hook restriction="location" method="requestSingleUpdate" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
-    <Hook restriction="location" method="sendExtraCommand" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />
-    <Hook restriction="location" method="addGeofence" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="17" />
-    <Hook restriction="location" method="getLastLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="17" />
     <Hook restriction="location" method="disableLocationUpdates" permissions="CONTROL_LOCATION_UPDATES" sdk="14" />
     <Hook restriction="location" method="enableLocationUpdates" permissions="CONTROL_LOCATION_UPDATES" sdk="14" />
     <Hook restriction="location" method="getCellLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="14" />

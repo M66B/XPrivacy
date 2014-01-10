@@ -76,8 +76,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XIoBridge.getInstances());
 
 		// Location manager service
-		if (PrivacyManager.cTestVersion)
-			hookAll(XLocationManagerService.getInstances());
+		hookAll(XLocationManagerService.getInstances());
 
 		// Media recorder
 		hookAll(XMediaRecorder.getInstances());
@@ -172,7 +171,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static boolean mBluetoothAdapterHooked = false;
 	private static boolean mClipboardManagerHooked = false;
 	private static boolean mConnectivityManagerHooked = false;
-	private static boolean mLocationManagerHooked = false;
 	private static boolean mSensorManagerHooked = false;
 	private static boolean mTelephonyManagerHooked = false;
 	private static boolean mWindowManagerHooked = false;
@@ -212,13 +210,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				hookAll(XConnectivityManager.getInstances(instance));
 				mConnectivityManagerHooked = true;
 			}
-		} else if (name.equals(Context.LOCATION_SERVICE)) {
-			// Location manager
-			if (!PrivacyManager.cTestVersion)
-				if (!mLocationManagerHooked) {
-					hookAll(XLocationManager.getInstances(instance));
-					mLocationManagerHooked = true;
-				}
 		} else if (name.equals(Context.SENSOR_SERVICE)) {
 			// Sensor manager
 			if (!mSensorManagerHooked) {
