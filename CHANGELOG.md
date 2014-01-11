@@ -19,6 +19,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed restricting locations acquired using Google Play services
 * Fixed maximum number count message for submit and increased maximum to ten
 * Fixed location listener casting
+* Added restricting for Motorola's contact provider *blur*, thanks @[liudongmiao](https://github.com/liudongmiao)
 * Enable Android usage data by default
 * Updated German translation
 * Updated Polish translation
