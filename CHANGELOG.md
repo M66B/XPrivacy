@@ -16,6 +16,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.11.8 BETA**
+
 * Fixed restricting locations acquired using Google Play services
 * Fixed maximum number count message for submit and increased maximum to ten
 * Fixed location listener casting ([issue](https://github.com/M66B/XPrivacy/issues/1094))
@@ -23,9 +27,13 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed force close from update notification for removed application ([issue](https://github.com/M66B/XPrivacy/issues/51))
 * Added restriction for Motorola's contact provider *blur*, thanks @[liudongmiao](https://github.com/liudongmiao)
 * Updated minimum API version numbers, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Updated XML utils to KitKat version
 * Restore application state color from imported settings ([issue](https://github.com/M66B/XPrivacy/issues/1065))
 * Added import from the application view ([issue](https://github.com/M66B/XPrivacy/issues/1096))
 * Enable Android usage data by default
+* Added restriction for [getDefaultAdapter](http://developer.android.com/reference/android/nfc/NfcAdapter.html#getDefaultAdapter\(android.content.Context\)), thanks @[liudongmiao](https://github.com/liudongmiao)
+* Disable XPrivacy view restrictions on XPrivacy view actions
+* Improved debug logging (read settings file, build application list)
 * Updated German translation
 * Updated Polish translation
 * Updated simplified Chinese translation
