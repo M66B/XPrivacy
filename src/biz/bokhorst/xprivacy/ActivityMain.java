@@ -465,10 +465,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				sharingDone();
 			else if (dataIntent != null)
 				try {
-					String fileName = dataIntent.getData().getPath();
-					fileName = fileName.replace("/document/primary:", Environment.getExternalStorageDirectory()
-							.getAbsolutePath() + File.separatorChar);
-					startImport(fileName);
+					startImport(dataIntent.getData().getPath());
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
@@ -815,6 +812,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void startImport(String fileName) {
+		fileName = fileName.replace("/document/primary:", Environment.getExternalStorageDirectory().getAbsolutePath()
+				+ File.separatorChar);
+
 		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
 		intent.putExtra(ActivityShare.cFileName, fileName);
 		int[] uid;

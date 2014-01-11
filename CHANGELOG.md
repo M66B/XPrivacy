@@ -20,7 +20,8 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed maximum number count message for submit and increased maximum to ten
 * Fixed location listener casting
 * Added restricting for Motorola's contact provider *blur*, thanks @[liudongmiao](https://github.com/liudongmiao)
-* Restore application state color from settings ([issue](https://github.com/M66B/XPrivacy/issues/1065))
+* Restore application state color from imported settings ([issue](https://github.com/M66B/XPrivacy/issues/1065))
+* Added import from the application view ([issue](https://github.com/M66B/XPrivacy/issues/1096))
 * Enable Android usage data by default
 * Updated German translation
 * Updated Polish translation
