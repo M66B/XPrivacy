@@ -276,7 +276,7 @@ public class SettingsDialog {
 		boolean log = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingLog, false, false);
 		boolean dangerous = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingDangerous, false,
 				false);
-		boolean usage = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingAndroidUsage, false,
+		boolean usage = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingAndroidUsage, true,
 				false);
 		boolean experimental = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExperimental,
 				PrivacyManager.cTestVersion, false);

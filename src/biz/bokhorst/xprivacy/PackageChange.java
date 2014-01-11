@@ -39,7 +39,7 @@ public class PackageChange extends BroadcastReceiver {
 					// Default deny new user apps
 					if (!replacing) {
 						// Delete any existing restrictions
-						PrivacyManager.deleteRestrictions(context, uid);
+						PrivacyManager.deleteRestrictions(context, uid, true);
 						PrivacyManager.deleteSettings(context, uid);
 						PrivacyManager.deleteUsage(context, uid);
 
@@ -48,7 +48,7 @@ public class PackageChange extends BroadcastReceiver {
 							for (String restrictionName : PrivacyManager.getRestrictions()) {
 								String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 								if (PrivacyManager.getSettingBool(null, context, 0, templateName, true, false))
-									PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true);
+									PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true, true);
 							}
 					}
 
@@ -142,7 +142,7 @@ public class PackageChange extends BroadcastReceiver {
 								// Disable identification//proc
 								for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
 									PrivacyManager.setRestricted(null, context, aInfo.uid,
-											PrivacyManager.cIdentification, "/proc", false);
+											PrivacyManager.cIdentification, "/proc", false, true);
 							}
 
 							// Version 1.7.4+
@@ -151,9 +151,9 @@ public class PackageChange extends BroadcastReceiver {
 								// location/getProviders,isProviderEnabled
 								for (ApplicationInfo aInfo : pm.getInstalledApplications(0)) {
 									PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cLocation,
-											"getProviders", false);
+											"getProviders", false, true);
 									PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cLocation,
-											"isProviderEnabled", false);
+											"isProviderEnabled", false, true);
 								}
 							}
 
@@ -162,7 +162,7 @@ public class PackageChange extends BroadcastReceiver {
 								// Disable identification//system/build.prop
 								for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
 									PrivacyManager.setRestricted(null, context, aInfo.uid,
-											PrivacyManager.cIdentification, "/system/build.prop", false);
+											PrivacyManager.cIdentification, "/system/build.prop", false, true);
 
 								// Select user applications
 								PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingFSystem,
@@ -186,7 +186,7 @@ public class PackageChange extends BroadcastReceiver {
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed
 					notificationManager.cancel(uid);
-					PrivacyManager.deleteRestrictions(context, uid);
+					PrivacyManager.deleteRestrictions(context, uid, true);
 					PrivacyManager.deleteSettings(context, uid);
 					PrivacyManager.deleteUsage(context, uid);
 				}

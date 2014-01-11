@@ -23,22 +23,25 @@ public class XNfcAdapter extends XHook {
 	}
 
 	private enum Methods {
-		getNfcAdapter
+		getDefaultAdapter, getNfcAdapter
 	};
 
+	// public static NfcAdapter getDefaultAdapter()
+	// public static NfcAdapter getDefaultAdapter(Context context)
 	// public static synchronized NfcAdapter getNfcAdapter(Context context)
 	// frameworks/base/core/java/android/nfc/NfcAdapter.java
 	// http://developer.android.com/reference/android/nfc/NfcAdapter.html
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XNfcAdapter(Methods.getDefaultAdapter, PrivacyManager.cNfc));
 		listHook.add(new XNfcAdapter(Methods.getNfcAdapter, PrivacyManager.cNfc));
 		return listHook;
 	}
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (mMethod == Methods.getNfcAdapter) {
+		if (mMethod == Methods.getDefaultAdapter || mMethod == Methods.getNfcAdapter) {
 			if (isRestricted(param))
 				param.setResult(null);
 		} else

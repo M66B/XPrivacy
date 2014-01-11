@@ -356,14 +356,15 @@ public class ActivityShare extends Activity {
 						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
 
 						// Reset existing restrictions
-						PrivacyManager.deleteRestrictions(ActivityShare.this, uid);
+						PrivacyManager.deleteRestrictions(ActivityShare.this, uid, true);
 
 						// Set imported restrictions
 						for (String restrictionName : mapPackage.get(packageName).keySet()) {
-							PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName, null, true);
+							PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName, null, true,
+									true);
 							for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(restrictionName))
 								PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName,
-										md.getMethodName(), md.isRestricted());
+										md.getMethodName(), md.isRestricted(), true);
 						}
 					} catch (NameNotFoundException ex) {
 						Util.log(null, Log.WARN, "Not found package=" + packageName);
@@ -489,11 +490,11 @@ public class ActivityShare extends Activity {
 						if (!mImportedIds.contains(id)) {
 							mImportedIds.add(id);
 							reportProgress(id);
-							PrivacyManager.deleteRestrictions(ActivityShare.this, uid);
+							PrivacyManager.deleteRestrictions(ActivityShare.this, uid, false);
 						}
 
 						PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName, methodName,
-								restricted);
+								restricted, false);
 					}
 				} else
 					Util.log(null, Log.ERROR, "Unknown element name=" + qName);
@@ -632,7 +633,7 @@ public class ActivityShare extends Activity {
 								JSONArray settings = status.getJSONArray("settings");
 								if (settings.length() > 0) {
 									// Delete existing restrictions
-									PrivacyManager.deleteRestrictions(ActivityShare.this, appInfo.getUid());
+									PrivacyManager.deleteRestrictions(ActivityShare.this, appInfo.getUid(), true);
 
 									// Set fetched restrictions
 									for (int i = 0; i < settings.length(); i++) {
@@ -645,8 +646,9 @@ public class ActivityShare extends Activity {
 										if (methodName == null || restricted)
 											if (methodName == null
 													|| PrivacyManager.getMethod(restrictionName, methodName) != null)
-												PrivacyManager.setRestricted(null, ActivityShare.this,
-														appInfo.getUid(), restrictionName, methodName, restricted);
+												PrivacyManager
+														.setRestricted(null, ActivityShare.this, appInfo.getUid(),
+																restrictionName, methodName, restricted, true);
 									}
 								} else
 									publishProgress(getString(R.string.msg_no_restrictions),

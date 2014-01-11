@@ -50,6 +50,13 @@
 			exit();
 		}
 
+		// Check XPrivacy version
+		if (empty($data->xprivacy_version) || (int)$data->xprivacy_version < 219) {
+			//log_error('json: XPrivacy version: ' . $data->xprivacy_version, $my_email, $data);
+			echo json_encode(array('ok' => false, 'error' => 'Please upgrade to at least XPrivacy version 1.11'));
+			exit();
+		}
+
 		// Connect to database
 		$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 		if ($db->connect_errno) {
@@ -121,9 +128,30 @@
 					if (!empty($restriction->method))
 						if ($restriction->restriction == 'location' && $restriction->method == 'connect')
 							$found = true;
-						else if ($restriction->restriction == 'view' && $restriction->method == 'getDefaultUserAgentForLocale')
+						else if ($restriction->restriction == 'location' && $restriction->method == 'addNmeaListener')
 							$found = true;
-						else if ($restriction->restriction == 'nfc' && $restriction->method == 'getDefaultAdapter')
+						else if ($restriction->restriction == 'location' && $restriction->method == 'addProximityAlert')
+							$found = true;
+						else if ($restriction->restriction == 'location' && $restriction->method == 'getLastKnownLocation')
+							$found = true;
+						else if ($restriction->restriction == 'location' && $restriction->method == 'getProviders')
+							$found = true;
+						else if ($restriction->restriction == 'location' && $restriction->method == 'isProviderEnabled')
+							$found = true;
+						else if ($restriction->restriction == 'location' && $restriction->method == 'removeUpdates')
+							$found = true;
+						else if ($restriction->restriction == 'location' && $restriction->method == 'requestLocationUpdates')
+							$found = true;
+						else if ($restriction->restriction == 'location' && $restriction->method == 'requestSingleUpdate')
+							$found = true;
+						else if ($restriction->restriction == 'location' && $restriction->method == 'sendExtraCommand')
+							$found = true;
+						else if ($restriction->restriction == 'location' && $restriction->method == 'addGeofence')
+							$found = true;
+						else if ($restriction->restriction == 'location' && $restriction->method == 'getLastLocation')
+							$found = true;
+
+						else if ($restriction->restriction == 'view' && $restriction->method == 'getDefaultUserAgentForLocale')
 							$found = true;
 						else if ($restriction->restriction == 'view' && $restriction->method == 'WebView.constructor')
 							$found = true;

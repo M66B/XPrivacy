@@ -18,6 +18,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseArray;
 
 @SuppressLint("DefaultLocale")
@@ -35,7 +36,10 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	public ApplicationInfoEx(Context context, int uid) throws NameNotFoundException {
 		mMapAppInfo = new TreeMap<String, ApplicationInfo>();
 		PackageManager pm = context.getPackageManager();
-		for (String packageName : pm.getPackagesForUid(uid)) {
+		String[] packages = pm.getPackagesForUid(uid);
+		if (packages == null)
+			throw new NameNotFoundException();
+		for (String packageName : packages) {
 			ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
 			mMapAppInfo.put(pm.getApplicationLabel(appInfo).toString(), appInfo);
 		}
@@ -55,10 +59,14 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			try {
 				if (dialog != null)
 					dialog.setProgress(app + 1);
-				ApplicationInfoEx appInfo = new ApplicationInfoEx(context, listAppInfo.get(app).uid);
-				if (mapApp.get(appInfo.getUid()) == null) {
-					mapApp.put(appInfo.getUid(), appInfo);
-					listApp.add(appInfo);
+
+				ApplicationInfo appInfo = listAppInfo.get(app);
+				Util.log(null, Log.INFO, "package=" + appInfo.packageName + " uid=" + appInfo.uid);
+
+				ApplicationInfoEx appInfoEx = new ApplicationInfoEx(context, appInfo.uid);
+				if (mapApp.get(appInfoEx.getUid()) == null) {
+					mapApp.put(appInfoEx.getUid(), appInfoEx);
+					listApp.add(appInfoEx);
 				}
 			} catch (NameNotFoundException ex) {
 				Util.bug(null, ex);

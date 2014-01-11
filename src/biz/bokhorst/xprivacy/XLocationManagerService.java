@@ -14,7 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.location.LocationListener;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
@@ -127,7 +126,7 @@ public class XLocationManagerService extends XHook {
 		// public void requestLocationUpdates(LocationRequest request,
 		// ILocationListener listener, PendingIntent intent, String packageName)
 		if (param.args.length > 1 && param.args[1] != null) {
-			if (!(param.args[1] instanceof XILocationListener)) {
+			if (param.args[1] instanceof ILocationListener && !(param.args[1] instanceof XILocationListener)) {
 				ILocationListener listener = (ILocationListener) param.args[1];
 				if (listener != null) {
 					XILocationListener xListener = new XILocationListener(listener);
@@ -146,8 +145,8 @@ public class XLocationManagerService extends XHook {
 		// public void removeUpdates(ILocationListener listener, PendingIntent
 		// intent, String packageName)
 		if (param.args.length > 0 && param.args[0] != null
-				&& LocationListener.class.isAssignableFrom(param.args[0].getClass())) {
-			LocationListener listener = (LocationListener) param.args[0];
+				&& ILocationListener.class.isAssignableFrom(param.args[0].getClass())) {
+			ILocationListener listener = (ILocationListener) param.args[0];
 			synchronized (mListener) {
 				XILocationListener xlistener = mListener.get(listener);
 				if (xlistener == null)
