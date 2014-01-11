@@ -35,7 +35,10 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	public ApplicationInfoEx(Context context, int uid) throws NameNotFoundException {
 		mMapAppInfo = new TreeMap<String, ApplicationInfo>();
 		PackageManager pm = context.getPackageManager();
-		for (String packageName : pm.getPackagesForUid(uid)) {
+		String[] packages = pm.getPackagesForUid(uid);
+		if (packages == null)
+			throw new NameNotFoundException();
+		for (String packageName : packages) {
 			ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
 			mMapAppInfo.put(pm.getApplicationLabel(appInfo).toString(), appInfo);
 		}

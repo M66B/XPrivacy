@@ -20,6 +20,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed maximum number count message for submit and increased maximum to ten
 * Fixed location listener casting ([issue](https://github.com/M66B/XPrivacy/issues/1094))
 * Fixed reading settings file in some situations ([issue](https://github.com/M66B/XPrivacy/issues/1094))
+* Fixed force close from update notification for removed application ([issue](https://github.com/M66B/XPrivacy/issues/51))
 * Added restriction for Motorola's contact provider *blur*, thanks @[liudongmiao](https://github.com/liudongmiao)
 * Updated minimum API version numbers, thanks @[liudongmiao](https://github.com/liudongmiao)
 * Restore application state color from imported settings ([issue](https://github.com/M66B/XPrivacy/issues/1065))
