@@ -28,14 +28,13 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	private long mLastModified;
 	private long mFileSize;
 
+	private static int cMaxTries = 10;
+	private static int cTryWaitMs = 50;
+
 	public SharedPreferencesEx(File prefFile) {
 		mFile = prefFile;
 		mBackupFile = makeBackupFile(prefFile);
 		startLoadFromDisk();
-	}
-
-	public SharedPreferencesEx(String packageName) {
-		this(packageName, packageName + "_preferences");
 	}
 
 	public SharedPreferencesEx(String packageName, String prefFileName) {
@@ -62,7 +61,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void loadFromDiskLocked() {
 		int tries = 0;
-		while (!mLoaded && (mFile.exists() || mBackupFile.exists()) && ++tries < 10) {
+		while (++tries <= cMaxTries && !mLoaded && (mFile.exists() || mBackupFile.exists())) {
 			if (mFile.exists() && mFile.canRead() && !mBackupFile.exists()) {
 				Map map = null;
 				long lastModified = mFile.lastModified();
@@ -72,15 +71,15 @@ public final class SharedPreferencesEx implements SharedPreferences {
 					str = new BufferedInputStream(new FileInputStream(mFile), 16 * 1024);
 					map = XmlUtils.readMapXml(str);
 				} catch (Throwable ex) {
-					Util.bug(null, ex);
+					Util.log(null, Log.WARN, "Error reading " + mFile + ": " + ex);
 				} finally {
 					if (str != null) {
 						try {
 							str.close();
 						} catch (RuntimeException rethrown) {
 							throw rethrown;
-						} catch (Throwable ignored) {
-							Util.bug(null, ignored);
+						} catch (Throwable ex) {
+							Util.log(null, Log.WARN, "Error closing " + mFile + ": " + ex);
 						}
 					}
 				}
@@ -92,14 +91,18 @@ public final class SharedPreferencesEx implements SharedPreferences {
 					notifyAll();
 				}
 			}
+
 			if (!mLoaded)
 				try {
-					Thread.sleep(200);
-					Util.log(null, Log.WARN, "Load " + mFile + " try " + tries);
+					if (tries < cMaxTries)
+						Thread.sleep(cTryWaitMs);
+					Util.log(null, Log.WARN, "Load " + mFile + " try=" + tries + " exists=" + mFile.exists()
+							+ " readable=" + mFile.canRead() + " backup=" + mBackupFile.exists());
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
 		}
+
 		if (!mLoaded) {
 			mLoaded = true;
 			mMap = new HashMap<String, Object>();
