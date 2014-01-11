@@ -28,8 +28,8 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	private long mLastModified;
 	private long mFileSize;
 
-	private static int cTryMaxCount = 10;
-	private static int cTryWaitMs = 50;
+	private static int cTryMaxCount = 25;
+	private static int cTryWaitMs = 100;
 
 	public SharedPreferencesEx(File prefFile) {
 		mFile = prefFile;
