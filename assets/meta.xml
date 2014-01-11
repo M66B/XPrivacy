@@ -13,7 +13,7 @@
     <Hook restriction="accounts" method="getTokenWithNotificationGoogle" permissions="GET_ACCOUNTS" sdk="10" />
 
     <Hook restriction="browser" method="BrowserProvider" permissions="READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH" sdk="10" />
-    <Hook restriction="browser" method="BrowserProvider2" permissions="READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH" sdk="10" />
+    <Hook restriction="browser" method="BrowserProvider2" permissions="READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH" sdk="14" />
 
     <Hook restriction="calendar" method="CalendarProvider2" permissions="READ_CALENDAR" sdk="10" />
 
@@ -110,7 +110,7 @@
     <Hook restriction="messages" method="SmsProvider" permissions="READ_SMS" sdk="10" />
     <Hook restriction="messages" method="MmsProvider" permissions="READ_SMS" sdk="10" />
     <Hook restriction="messages" method="MmsSmsProvider" permissions="READ_SMS" sdk="10" />
-    <Hook restriction="messages" method="VoicemailContentProvider" permissions="READ_WRITE_ALL_VOICEMAIL" sdk="10" />
+    <Hook restriction="messages" method="VoicemailContentProvider" permissions="READ_WRITE_ALL_VOICEMAIL" sdk="14" />
     <Hook restriction="messages" method="android.intent.action.DATA_SMS_RECEIVED" permissions="RECEIVE_SMS" sdk="19" />
     <Hook restriction="messages" method="android.provider.Telephony.SMS_RECEIVED" permissions="RECEIVE_SMS" sdk="19" />
     <Hook restriction="messages" method="android.provider.Telephony.WAP_PUSH_RECEIVED" permissions="RECEIVE_WAP_PUSH" sdk="19" />
@@ -126,7 +126,7 @@
     <Hook restriction="network" method="getScanResults" permissions="ACCESS_WIFI_STATE" sdk="10" />
     <Hook restriction="network" method="getWifiApConfiguration" permissions="ACCESS_WIFI_STATE" sdk="10" />
 
-    <Hook restriction="nfc" method="getNfcAdapter" permissions="NFC" sdk="10" />
+    <Hook restriction="nfc" method="getNfcAdapter" permissions="NFC" sdk="14" />
     <Hook restriction="nfc" method="android.nfc.action.ADAPTER_STATE_CHANGED" permissions="NFC" sdk="18" />
     <Hook restriction="nfc" method="android.nfc.action.NDEF_DISCOVERED" permissions="NFC" sdk="10" />
     <Hook restriction="nfc" method="android.nfc.action.TAG_DISCOVERED" permissions="NFC" sdk="10" />
@@ -141,12 +141,12 @@
     <Hook restriction="overlay" method="updateViewLayout" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
 
     <Hook restriction="phone" method="getDeviceId" permissions="READ_PHONE_STATE" sdk="10" />
-    <Hook restriction="phone" method="getIsimDomain" permissions="READ_PHONE_STATE" sdk="10" />
-    <Hook restriction="phone" method="getIsimImpi" permissions="READ_PHONE_STATE" sdk="10" />
-    <Hook restriction="phone" method="getIsimImpu" permissions="READ_PHONE_STATE" sdk="10" />
+    <Hook restriction="phone" method="getIsimDomain" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getIsimImpi" permissions="READ_PHONE_STATE" sdk="14" />
+    <Hook restriction="phone" method="getIsimImpu" permissions="READ_PHONE_STATE" sdk="14" />
     <Hook restriction="phone" method="getLine1AlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
     <Hook restriction="phone" method="getLine1Number" permissions="READ_PHONE_STATE" sdk="10" />
-    <Hook restriction="phone" method="getMsisdn" permissions="READ_PHONE_STATE" sdk="10" />
+    <Hook restriction="phone" method="getMsisdn" permissions="READ_PHONE_STATE" sdk="14" />
     <Hook restriction="phone" method="getSimSerialNumber" permissions="READ_PHONE_STATE" sdk="10" />
     <Hook restriction="phone" method="getSubscriberId" permissions="READ_PHONE_STATE" sdk="10" />
     <Hook restriction="phone" method="getVoiceMailAlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
