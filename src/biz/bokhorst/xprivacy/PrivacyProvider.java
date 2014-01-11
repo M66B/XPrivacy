@@ -504,7 +504,7 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	public static void flush() {
-		Util.log(null, Log.WARN, "Flush uid=" + Binder.getCallingUid());
+		Util.log(null, Log.INFO, "Flush uid=" + Binder.getCallingUid());
 		synchronized (mFallbackRestrictionLock) {
 			mFallbackRestrictions = null;
 		}
