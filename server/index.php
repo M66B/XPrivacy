@@ -50,6 +50,13 @@
 			exit();
 		}
 
+		// Check XPrivacy version
+		if (empty($data->xprivacy_version) || (int)$data->xprivacy_version < 219) {
+			log_error('json: XPrivacy version: ' . $data->xprivacy_version, $my_email, $data);
+			echo json_encode(array('ok' => false, 'error' => 'Please upgrade to at least XPrivacy version 1.11'));
+			exit();
+		}
+
 		// Connect to database
 		$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 		if ($db->connect_errno) {
