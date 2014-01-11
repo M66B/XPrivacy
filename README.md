@@ -285,6 +285,8 @@ Limitations
 * There is no usage data for isolated processes (a new concept in Android 4.4)
 * Native libraries can bypass the Android APIs and thus circumvent XPrivacy. You can prevent native libraries from loading in the category *Shell*, functions *load* and *loadLibrary*.
 * It is not possible to restrict hardware MAC addresses or the external IP address
+* You cannot restrict *storage* for XPrivacy, because it is needed for reading the pro license file
+* You cannot restrict *view* for XPrivacy, because it is needed to open links to the crowd sourced restrictions server
 
 Compatibility
 -------------
