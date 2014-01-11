@@ -20,7 +20,7 @@
     <string name="menu_pro">Wersja Pro</string>
     <string name="menu_about">O programie</string>
     <string name="menu_help">Pomoc</string>
-    <string name="menu_select_all">Select all</string>
+    <string name="menu_select_all">Wybierz wszystko</string>
     <string name="menu_all">Wszystko</string>
     <string name="menu_restriction_all">Przełącz restrykcje</string>
     <string name="menu_clear_all">Wyczyść wszystko</string>
@@ -32,7 +32,7 @@
     <string name="menu_app_launch">Uruchom</string>
     <string name="menu_app_settings">Ustawienia</string>
     <string name="menu_app_store">Sklep Play</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">Zabij</string>
     <string name="menu_accounts">Wybierz dozwolone konta</string>
     <string name="menu_applications">Wybierz dozwolone aplikacje</string>
     <string name="menu_contacts">Wybierz dozwolone kontakty</string>
@@ -46,8 +46,8 @@
     <string name="msg_saved_to" formatted="false">Zapisane do %s</string>
     <string name="msg_no_restrictions">Nie znaleziono ograniczeń</string>
     <string name="msg_sure">Czy jesteś pewny/a?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Proszę wyberz jakieś aplikacje</string>
+    <string name="msg_limit">Proszę wybierz mniej niż %d aplikacji</string>
     <string name="msg_done">Gotowe</string>
     <string name="msg_reboot">Wymagany restart</string>
     <string name="msg_random_now">Losuj</string>
@@ -123,10 +123,10 @@
     <string name="help_internet">ma dostęp do internetu</string>
     <string name="help_granted">ma dostęp do uprawnień Androida</string>
     <string name="help_used">wykorzystała dane</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_used_grayed">brak informacji o użyciu danych</string>
     <string name="help_frozen">jest wyłączona</string>
     <string name="help_dangerous">niebezpieczne uprawnienie, ograniczenie może spowodować problemy</string>
-    <string name="help_half">częściowo ograniczona</string>
+    <string name="help_half">częściowo ograniczone</string>
     <string name="help_attention">ograniczenia wymagają sprawdzenia</string>
     <string name="help_restricted">ograniczenia się zmieniły</string>
     <string name="help_shared">ogrniczenia zostały wysłane</string>
@@ -136,6 +136,6 @@
 \nTapnij ikonę aplikacji aby uzyskać dostęp do szczegółowych ograniczeń i ustawień</string>
     <string name="tutorial_detailsheader">Tapnij na ikone aplikacji po więcej akcji</string>
     <string name="tutorial_detailslist">Tapnij na strzałkę w dół aby zobaczyć wyjątki ograniczeń w danej kategorii</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="permission_manage">Zarządzaj aplikacjami, włącznie z zabijaniem</string>
 
 </resources>

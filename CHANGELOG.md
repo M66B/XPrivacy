@@ -16,6 +16,21 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Fixed restricting locations acquired using Google Play services
+* Fixed maximum number count message for submit and increased maximum to ten
+* Fixed location listener casting
+* Added restricting for Motorola's contact provider *blur*, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Restore application state color from settings ([issue](https://github.com/M66B/XPrivacy/issues/1065))
+* Enable Android usage data by default
+* Updated German translation
+* Updated Polish translation
+* Updated simplified Chinese translation
+* Updated Slovak translation
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.11.7 TEST**
+
 * Sharper check marks, thanks @[jpeg729](https://github.com/jpeg729)
 * Select/clear all visible/invisible action, thanks @[jpeg729](https://github.com/jpeg729)
 * Toggle (clear/set) selected applications
@@ -26,8 +41,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Updated traditional Chinese translation
 * Updated French translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.11.6 BETA**
 

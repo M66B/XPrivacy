@@ -92,6 +92,18 @@ public class XContentProvider extends XHook {
 					"com.android.providers.contacts.VoicemailContentProvider"));
 		}
 
+		// Contacts provider of Motorola's Blur
+		else if (packageName.equals("com.motorola.blur.providers.contacts")) {
+			String[] uris = new String[] { "contacts/contacts", "contacts/data", "contacts/raw_contacts",
+					"contacts/phone_lookup", "contacts/profile" };
+			for (String uri : uris)
+				listHook.add(new XContentProvider(PrivacyManager.cContacts, "ContactsProvider2",
+						"com.android.providers.contacts.ContactsProvider2", "content://com.android." + uri));
+
+			listHook.add(new XContentProvider(PrivacyManager.cPhone, "BlurCallLogProvider",
+					"com.motorola.blur.providers.contacts.BlurCallLogProvider"));
+		}
+
 		// E-mail provider
 		else if (packageName.equals("com.android.email"))
 			listHook.add(new XContentProvider(PrivacyManager.cEMail, "EMailProvider",

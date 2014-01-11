@@ -865,7 +865,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		} else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(getString(R.string.app_name));
-			alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit));
+			alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
 			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 				@Override
@@ -1132,14 +1132,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				for (ApplicationInfoEx xAppInfo : listAppInfo) {
 					publishProgress(pos++, listAppInfo.size());
 					if (mAppAdapter.getRestrictionName() == null && someRestricted)
-						restart = PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid()) || restart;
+						restart = PrivacyManager.deleteRestrictions(ActivityMain.this, xAppInfo.getUid(), true)
+								|| restart;
 					else if (mAppAdapter.getRestrictionName() == null) {
 						for (String restrictionName : PrivacyManager.getRestrictions())
 							restart = PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-									restrictionName, null, !someRestricted) || restart;
+									restrictionName, null, !someRestricted, true) || restart;
 					} else
 						restart = PrivacyManager.setRestricted(null, ActivityMain.this, xAppInfo.getUid(),
-								mAppAdapter.getRestrictionName(), null, !someRestricted)
+								mAppAdapter.getRestrictionName(), null, !someRestricted, true)
 								|| restart;
 				}
 			}
@@ -1230,9 +1231,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				for (int i = 0; i < this.getCount(); i++)
 					if (!mListAppSelected.contains(this.getItem(i)))
 						mListAppSelected.add(this.getItem(i));
-			} else {
+			} else
 				mListAppSelected.clear();
-			}
 
 			this.showStats();
 			this.notifyDataSetChanged();
@@ -1562,7 +1562,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 											public void onClick(DialogInterface dialog, int which) {
 												// Update restriction
 												boolean restart = PrivacyManager.deleteRestrictions(view.getContext(),
-														xAppInfo.getUid());
+														xAppInfo.getUid(), true);
 
 												// Update visible state
 												holder.imgCBName.setImageBitmap(mCheck[0]); // Off
@@ -1590,7 +1590,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								boolean restart = false;
 								for (String restrictionName : listRestriction)
 									restart = PrivacyManager.setRestricted(null, view.getContext(), xAppInfo.getUid(),
-											restrictionName, null, !someRestricted) || restart;
+											restrictionName, null, !someRestricted, true) || restart;
 
 								// Update all/some restricted
 								allRestricted = true;
