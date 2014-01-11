@@ -123,10 +123,8 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(View view) {
 				// Packages can be selected on the web site
-				Intent infoIntent = new Intent(Intent.ACTION_VIEW);
-				infoIntent.setData(Uri.parse(String.format(ActivityShare.BASE_URL + "?package_name=%s", mAppInfo
-						.getPackageName().get(0))));
-				startActivity(infoIntent);
+				Util.viewUri(ActivityApp.this, Uri.parse(String.format(ActivityShare.BASE_URL + "?package_name=%s",
+						mAppInfo.getPackageName().get(0))));
 			}
 		});
 
@@ -517,8 +515,7 @@ public class ActivityApp extends Activity {
 	private void optionFetch() {
 		if (Util.getProLicense() == null) {
 			// Redirect to pro page
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
-			startActivity(browserIntent);
+			Util.viewUri(this, ActivityMain.cProUri);
 		} else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(getString(R.string.menu_fetch));
@@ -552,8 +549,7 @@ public class ActivityApp extends Activity {
 	private void optionApplications() {
 		if (Util.getProLicense() == null) {
 			// Redirect to pro page
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
-			startActivity(browserIntent);
+			Util.viewUri(this, ActivityMain.cProUri);
 		} else {
 			ApplicationsTask appsTask = new ApplicationsTask();
 			appsTask.executeOnExecutor(mExecutor, (Object) null);
@@ -563,8 +559,7 @@ public class ActivityApp extends Activity {
 	private void optionContacts() {
 		if (Util.getProLicense() == null) {
 			// Redirect to pro page
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, ActivityMain.cProUri);
-			startActivity(browserIntent);
+			Util.viewUri(this, ActivityMain.cProUri);
 		} else {
 			ContactsTask contactsTask = new ContactsTask();
 			contactsTask.executeOnExecutor(mExecutor, (Object) null);
@@ -608,9 +603,7 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionStore(int which) {
-		Intent intentStore = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
-				+ mAppInfo.getPackageName().get(which)));
-		startActivity(intentStore);
+		Util.viewUri(this, Uri.parse("market://details?id=" + mAppInfo.getPackageName().get(which)));
 	}
 
 	// Tasks
@@ -1033,9 +1026,7 @@ public class ActivityApp extends Activity {
 			holder.imgInfo.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					Intent infoIntent = new Intent(Intent.ACTION_VIEW);
-					infoIntent.setData(Uri.parse(ActivityMain.cXUrl + "#" + restrictionName));
-					startActivity(infoIntent);
+					Util.viewUri(ActivityApp.this, Uri.parse(ActivityMain.cXUrl + "#" + restrictionName));
 				}
 			});
 

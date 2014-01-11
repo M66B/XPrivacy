@@ -33,6 +33,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
@@ -280,6 +281,15 @@ public class Util {
 			log(null, Log.WARN, ex.toString());
 		}
 		return false;
+	}
+
+	public static void viewUri(Context context, Uri uri) {
+		// Disable view restriction
+		PrivacyManager.setRestricted(null, context, Process.myUid(), PrivacyManager.cView, null, false, false);
+
+		Intent infoIntent = new Intent(Intent.ACTION_VIEW);
+		infoIntent.setData(uri);
+		context.startActivity(infoIntent);
 	}
 
 	private static byte[] hex2bytes(String hex) {
