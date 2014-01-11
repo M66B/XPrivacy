@@ -127,6 +127,7 @@
     <Hook restriction="network" method="getWifiApConfiguration" permissions="ACCESS_WIFI_STATE" sdk="10" />
 
     <Hook restriction="nfc" method="getNfcAdapter" permissions="NFC" sdk="14" />
+    <Hook restriction="nfc" method="getDefaultAdapter" permissions="NFC" sdk="10" />
     <Hook restriction="nfc" method="android.nfc.action.ADAPTER_STATE_CHANGED" permissions="NFC" sdk="18" />
     <Hook restriction="nfc" method="android.nfc.action.NDEF_DISCOVERED" permissions="NFC" sdk="10" />
     <Hook restriction="nfc" method="android.nfc.action.TAG_DISCOVERED" permissions="NFC" sdk="10" />
