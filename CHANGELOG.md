@@ -20,6 +20,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed maximum number count message for submit and increased maximum to ten
 * Fixed location listener casting
 * Enable Android usage data by default
+* Updated German translation
 * Updated Polish translation
 * Updated simplified Chinese translation
 * Updated Slovak translation
