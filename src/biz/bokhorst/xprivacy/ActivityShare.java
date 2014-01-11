@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
-
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpResponse;
@@ -41,10 +40,13 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,17 +57,32 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class ActivityShare extends Activity {
 	private LocalBroadcastManager mBroadcastManager;
-
 	private int mThemeId;
-
 	private int[] mUids;
+	private AppListAdapter mAppAdapter;
+	private int mCurrent;
+
+	private static final int STATE_WAITING = 0;
+	private static final int STATE_RUNNING = 1;
+	private static final int STATE_SUCCESS = 2;
+	private static final int STATE_FAILURE = 3;
 
 	public static final String cFileName = "FileName";
 	public static final String cUidList = "UidList";
+	public static final String cInteractive = "Interactive";
 	public static final String cErrorMessage = "ErrorMessage";
 	public static final String BASE_URL = "http://crowd.xprivacy.eu/";
 	public static final String cProgressReport = "ProgressReport";
@@ -98,12 +115,15 @@ public class ActivityShare extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Bundle extras = getIntent().getExtras();
+		final Bundle extras = getIntent().getExtras();
 		mUids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 
-		// TODO check whether we need a ui, if not, leave the theme declared in the manifest
-		// TODO if action is EXPORT we don't really need a ui because it is so fast
-		//if (extras.containsKey(cProvideUi) && !getIntent().getAction().equals(ACTION_EXPORT)) {
+		mBroadcastManager = LocalBroadcastManager.getInstance(this);
+
+		final String action = getIntent().getAction();
+
+		// check whether we need a ui, if not, leave the theme declared in the manifest
+		if (extras.containsKey(cInteractive)) {
 			// Set theme
 			String themeName = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingTheme, "", false);
 			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
@@ -113,57 +133,245 @@ public class ActivityShare extends Activity {
 			setContentView(R.layout.sharelist);
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 			setTitle(getString(R.string.app_name));
-		//}
 
-		mBroadcastManager = LocalBroadcastManager.getInstance(this);
-
-		// TODO populate list
-		// TODO if action is EXPORT, disable ok button and get on with it
-		// TODO else wait for ok before proceeding
-
-		if (Util.hasProLicense(this) != null) {
-			// Import
-			if (getIntent().getAction().equals(ACTION_IMPORT)) {
-				String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-						: getFileName(false));
-				new ImportTask().executeOnExecutor(mExecutor, new File(fileName), mUids);
-				setTitle(getString(R.string.menu_import));
-			}
-
-			// Export
-			else if (getIntent().getAction().equals(ACTION_EXPORT)) {
-				String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-						: getFileName(false));
-				new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
-				setTitle(getString(R.string.menu_export));
-			}
-
-			// Fetch
-			else if (getIntent().getAction().equals(ACTION_FETCH)) {
-				if (mUids.length > 0) {
-					new FetchTask().executeOnExecutor(mExecutor, mUids);
-					setTitle(getString(R.string.menu_fetch));
+			if (action.equals(ACTION_IMPORT) || action.equals(ACTION_FETCH)) {
+				if (Util.hasProLicense(this) == null) {
+					// TODO it might be nice to show this in a WebView
+					Util.viewUri(this, ActivityMain.cProUri);
+					// I hope this doesn't interfere with the viewing
+					finish();
 				}
+			} else {
+				// Start task to get app list
+				AppListTask appListTask = new AppListTask();
+				appListTask.executeOnExecutor(mExecutor, mUids);
+			}
+		} else {
+			// If action is EXPORT, do it
+			String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
+					: getFileName(false));
+			new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
+			setTitle(getString(R.string.menu_export));
+		}
+
+		// Set button actions
+		final Button btnOk = (Button) findViewById(R.id.btnOk);
+		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
+		
+		btnOk.setOnClickListener(new Button.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				// TODO change ok button text to "Abort" and disable the cancel button
+				btnOk.setEnabled(false);
+				btnCancel.setEnabled(false);
+
+				// Import
+				if (action.equals(ACTION_IMPORT)) {
+					String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
+							: getFileName(false));
+					new ImportTask().executeOnExecutor(mExecutor, new File(fileName), mUids);
+					setTitle(getString(R.string.menu_import));
+				}
+
+				// Export
+				else if (action.equals(ACTION_EXPORT)) {
+					String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
+							: getFileName(false));
+					new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
+					setTitle(getString(R.string.menu_export));
+				}
+
+				// Fetch
+				else if (action.equals(ACTION_FETCH)) {
+					if (mUids.length > 0) {
+						new FetchTask().executeOnExecutor(mExecutor, mUids);
+						setTitle(getString(R.string.menu_fetch));
+					}
+				}
+
+				// Submit
+				else if (action.equals(ACTION_SUBMIT)) {
+					if (mUids.length > 0) {
+						if (mUids.length <= cSubmitLimit) {
+							new SubmitTask().executeOnExecutor(mExecutor, mUids);
+							setTitle(getString(R.string.menu_submit));
+						} else {
+							Intent intent = new Intent();
+							intent.putExtra(cErrorMessage, getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
+							setResult(1, intent);
+							finish();
+						}
+					}
+				}
+			}
+		});
+
+		btnOk.setOnClickListener(new Button.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+	}
+
+	// App info and share state
+
+	private class AppHolder {
+		public int state = STATE_WAITING;
+		public ApplicationInfoEx appInfo;
+		public String errorMessage = "";
+
+		public AppHolder(int uid) throws NameNotFoundException {
+			appInfo = new ApplicationInfoEx(ActivityShare.this, uid);
+		}
+	}
+
+	// Adapters
+
+	@SuppressLint("DefaultLocale")
+	private class AppListAdapter extends ArrayAdapter<AppHolder> {
+		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+		public AppListAdapter(Context context, int resource, List<AppHolder> objects) {
+			super(context, resource, objects);
+			this.addAll(objects);
+		}
+
+		public void showStats() {
+			TextView tvStats = (TextView) findViewById(R.id.tvStats);
+			String stats = String.format("%d/%d", mCurrent, this.getCount());
+			tvStats.setText(stats);
+		}
+
+		private class ViewHolder {
+			private View row;
+			private int position;
+			public ImageView imgIcon;
+			public TextView tvName;
+			public ImageView imgResult;
+			public ProgressBar pbRunning;
+			public TextView tvError;
+
+			public ViewHolder(View theRow, int thePosition) {
+				row = theRow;
+				position = thePosition;
+				imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
+				tvName = (TextView) row.findViewById(R.id.tvName);
+				imgResult = (ImageView) row.findViewById(R.id.imgResult);
+				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
+				tvError = (TextView) row.findViewById(R.id.tvError);
 			}
 		}
 
-		// Submit
-		if (getIntent().getAction().equals(ACTION_SUBMIT)) {
-			if (mUids.length > 0) {
-				if (mUids.length <= cSubmitLimit) {
-					new SubmitTask().executeOnExecutor(mExecutor, mUids);
-					setTitle(getString(R.string.menu_submit));
-				} else {
-					Intent intent = new Intent();
-					intent.putExtra(cErrorMessage, getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
-					setResult(1, intent);
-					finish();
-				}
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder holder;
+			if (convertView == null) {
+				convertView = mInflater.inflate(R.layout.mainentry, null);
+				holder = new ViewHolder(convertView, position);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+				holder.position = position;
 			}
+
+			// Get info
+			final AppHolder xApp = getItem(holder.position);
+
+			// Set background color
+			if (xApp.appInfo.isSystem())
+				holder.row.setBackgroundColor(getResources().getColor(
+						Util.getThemed(ActivityShare.this, R.attr.color_dangerous)));
+			else
+				holder.row.setBackgroundColor(Color.TRANSPARENT);
+
+			// Display icon
+			holder.imgIcon.setImageDrawable(xApp.appInfo.getIcon(ActivityShare.this));
+			holder.imgIcon.setVisibility(View.VISIBLE);
+
+			// Set app name
+			holder.tvName.setText(xApp.appInfo.toString());
+
+			// Show app share state
+			switch (xApp.state) {
+			case STATE_WAITING:
+				holder.imgResult.setVisibility(View.GONE);
+				holder.pbRunning.setVisibility(View.GONE);
+				holder.tvError.setText("");
+				break;
+			case STATE_RUNNING:
+				holder.imgResult.setVisibility(View.GONE);
+				holder.pbRunning.setVisibility(View.VISIBLE);
+				holder.tvError.setText("");
+				break;
+			case STATE_SUCCESS:
+				// TODO holder.imgResult.setDrawableResource(R.drawable.share_success);
+				holder.imgResult.setVisibility(View.VISIBLE);
+				holder.pbRunning.setVisibility(View.GONE);
+				holder.tvError.setText("");
+				break;
+			case STATE_FAILURE:
+				// TODO holder.imgResult.setDrawableResource(R.drawable.share_failure);
+				holder.imgResult.setVisibility(View.VISIBLE);
+				holder.pbRunning.setVisibility(View.GONE);
+				holder.tvError.setText(xApp.errorMessage);
+				break;
+			}
+
+			return convertView;
 		}
 	}
 
 	// Tasks
+
+	private class AppListTask extends AsyncTask<int[], Integer, List<AppHolder>> {
+		private ProgressDialog mProgressDialog;
+
+		@Override
+		protected List<AppHolder> doInBackground(int[]... params) {
+			List<AppHolder> apps = new ArrayList<AppHolder>();
+			for (int i = 0; i < params[0].length; i++) {
+				try {
+					apps.add(new AppHolder(params[0][i]));
+				} catch (NameNotFoundException ex) {
+					// Skip this app
+				}
+			}
+
+			return apps;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			// Show progress dialog
+			ListView lvShare = (ListView) findViewById(R.id.lvShare);
+			mProgressDialog = new ProgressDialog(lvShare.getContext());
+			mProgressDialog.setMessage(getString(R.string.msg_loading));
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			mProgressDialog.setProgressNumberFormat(null);
+			mProgressDialog.setCancelable(false);
+			mProgressDialog.show();
+		}
+
+		@Override
+		protected void onPostExecute(List<AppHolder> listApp) {
+			super.onPostExecute(listApp);
+
+			// Display app list
+			mAppAdapter = new AppListAdapter(ActivityShare.this, R.layout.shareentry, listApp);
+			ListView lvShare = (ListView) findViewById(R.id.lvShare);
+			lvShare.setAdapter(mAppAdapter);
+
+			// Dismiss progress dialog
+			try {
+				mProgressDialog.dismiss();
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		}
+	}
 
 	private class ExportTask extends AsyncTask<File, String, String> {
 		private File mFile;
