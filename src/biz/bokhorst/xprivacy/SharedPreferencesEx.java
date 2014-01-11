@@ -64,12 +64,12 @@ public final class SharedPreferencesEx implements SharedPreferences {
 		while (++tries <= cTryMaxCount && !mLoaded && (mFile.exists() || mBackupFile.exists())) {
 			// Log retry
 			if (tries > 1)
-				Util.log(null, Log.WARN, "Load " + mFile + " try=" + tries + " exists=" + mFile.exists() + " readable="
+				Log.w("XPrivacy", "Load " + mFile + " try=" + tries + " exists=" + mFile.exists() + " readable="
 						+ mFile.canRead() + " backup=" + mBackupFile.exists());
 
 			// Last try: use backup file
 			if (tries == cTryMaxCount && mBackupFile.exists()) {
-				Util.log(null, Log.WARN, "Using " + mBackupFile);
+				Log.w("XPrivacy", "Using " + mBackupFile);
 				if (mFile.exists())
 					mFile.delete();
 				mBackupFile.renameTo(mFile);
@@ -85,7 +85,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 					str = new BufferedInputStream(new FileInputStream(mFile), 16 * 1024);
 					map = XmlUtils.readMapXml(str);
 				} catch (Throwable ex) {
-					Util.log(null, Log.WARN, "Error reading " + mFile + ": " + ex);
+					Log.w("XPrivacy", "Error reading " + mFile + ": " + ex);
 				} finally {
 					if (str != null) {
 						try {
@@ -93,7 +93,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 						} catch (RuntimeException rethrown) {
 							throw rethrown;
 						} catch (Throwable ex) {
-							Util.log(null, Log.WARN, "Error closing " + mFile + ": " + ex);
+							Log.w("XPrivacy", "Error closing " + mFile + ": " + ex);
 						}
 					}
 				}
@@ -117,8 +117,11 @@ public final class SharedPreferencesEx implements SharedPreferences {
 
 		// File not read
 		if (!mLoaded) {
-			// Not loaded: try to load again on next access
-			Util.log(null, Log.ERROR, "File not loaded: " + mFile);
+			if (tries >= cTryMaxCount)
+				// Not loaded: try to load again on next access
+				Log.e("XPrivacy", "File not loaded: " + mFile);
+			else
+				mLoaded = true;
 			mMap = new HashMap<String, Object>();
 			notifyAll();
 		}
