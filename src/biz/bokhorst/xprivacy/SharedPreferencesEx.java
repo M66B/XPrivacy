@@ -28,7 +28,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	private long mLastModified;
 	private long mFileSize;
 
-	private static int cMaxTries = 10;
+	private static int cTryMaxCount = 10;
 	private static int cTryWaitMs = 50;
 
 	public SharedPreferencesEx(File prefFile) {
@@ -61,7 +61,21 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void loadFromDiskLocked() {
 		int tries = 0;
-		while (++tries <= cMaxTries && !mLoaded && (mFile.exists() || mBackupFile.exists())) {
+		while (++tries <= cTryMaxCount && !mLoaded && (mFile.exists() || mBackupFile.exists())) {
+			// Log retry
+			if (tries > 1)
+				Util.log(null, Log.WARN, "Load " + mFile + " try=" + tries + " exists=" + mFile.exists() + " readable="
+						+ mFile.canRead() + " backup=" + mBackupFile.exists());
+
+			// Last try: use backup file
+			if (tries == cTryMaxCount && mBackupFile.exists()) {
+				Util.log(null, Log.WARN, "Using " + mBackupFile);
+				if (mFile.exists())
+					mFile.delete();
+				mBackupFile.renameTo(mFile);
+			}
+
+			// Read file if possible
 			if (mFile.exists() && mFile.canRead() && !mBackupFile.exists()) {
 				Map map = null;
 				long lastModified = mFile.lastModified();
@@ -92,19 +106,19 @@ public final class SharedPreferencesEx implements SharedPreferences {
 				}
 			}
 
-			if (!mLoaded)
+			// Wait for next try
+			if (!mLoaded && tries < cTryMaxCount)
 				try {
-					if (tries < cMaxTries)
-						Thread.sleep(cTryWaitMs);
-					Util.log(null, Log.WARN, "Load " + mFile + " try=" + tries + " exists=" + mFile.exists()
-							+ " readable=" + mFile.canRead() + " backup=" + mBackupFile.exists());
+					Thread.sleep(cTryWaitMs);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
 		}
 
+		// File not read
 		if (!mLoaded) {
-			mLoaded = true;
+			// Not loaded: try to load again on next access
+			Util.log(null, Log.ERROR, "File not loaded: " + mFile);
 			mMap = new HashMap<String, Object>();
 			notifyAll();
 		}
@@ -125,23 +139,23 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	}
 
 	private boolean hasFileChanged() {
-		if (!mFile.canRead() || mBackupFile.exists()) {
+		// canRead returns false for non existing files
+		if (!mFile.canRead() || mBackupFile.exists())
 			return true;
-		}
+
 		long lastModified = mFile.lastModified();
 		long fileSize = mFile.length();
 		synchronized (this) {
-			return mLastModified != lastModified || mFileSize != fileSize;
+			return (mLastModified != lastModified || mFileSize != fileSize);
 		}
 	}
 
 	private void awaitLoadedLocked() {
-		while (!mLoaded) {
+		while (!mLoaded)
 			try {
 				wait();
 			} catch (InterruptedException unused) {
 			}
-		}
 	}
 
 	@Override
@@ -229,5 +243,4 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
 		throw new UnsupportedOperationException("listeners are not supported in this implementation");
 	}
-
 }
