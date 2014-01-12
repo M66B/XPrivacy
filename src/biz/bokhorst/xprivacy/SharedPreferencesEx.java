@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+// Based on:
 // https://github.com/rovo89/XposedBridge/blob/master/src/de/robv/android/xposed/XSharedPreferences.java
 
 import java.io.BufferedInputStream;
@@ -28,8 +29,8 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	private long mLastModified;
 	private long mFileSize;
 
-	private static int cTryMaxCount = 25;
-	private static int cTryWaitMs = 100;
+	private static int cTryMaxCount = 50;
+	private static int cTryWaitMs = 200;
 
 	public SharedPreferencesEx(File prefFile) {
 		mFile = prefFile;
@@ -67,14 +68,6 @@ public final class SharedPreferencesEx implements SharedPreferences {
 				Log.w("XPrivacy", "Load " + mFile + " try=" + tries + " exists=" + mFile.exists() + " readable="
 						+ mFile.canRead() + " backup=" + mBackupFile.exists());
 
-			// Last try: use backup file
-			if (tries == cTryMaxCount && mBackupFile.exists()) {
-				Log.w("XPrivacy", "Using " + mBackupFile);
-				if (mFile.exists())
-					mFile.delete();
-				mBackupFile.renameTo(mFile);
-			}
-
 			// Read file if possible
 			if (mFile.exists() && mFile.canRead() && !mBackupFile.exists()) {
 				Map map = null;
@@ -98,6 +91,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 					}
 				}
 				if (map != null) {
+					Log.i("XPrivacy", "Loaded " + mFile);
 					mLoaded = true;
 					mMap = map;
 					mLastModified = lastModified;
@@ -119,7 +113,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 		if (!mLoaded) {
 			if (tries >= cTryMaxCount)
 				// Not loaded: try to load again on next access
-				Log.e("XPrivacy", "File not loaded: " + mFile);
+				Log.e("XPrivacy", "Not loaded " + mFile);
 			else
 				mLoaded = true;
 			mMap = new HashMap<String, Object>();
