@@ -17,6 +17,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Fixed defaced values for get network operator/sim info
+* Fixed phone state listener cast errors
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

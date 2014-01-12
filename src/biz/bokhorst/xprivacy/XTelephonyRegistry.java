@@ -6,20 +6,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import com.android.internal.telephony.IPhoneStateListener;
-
 import android.content.Context;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.telephony.CellInfo;
-import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
+import com.android.internal.telephony.IPhoneStateListener;
 
+import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XTelephonyRegistry extends XHook {
@@ -68,33 +66,34 @@ public class XTelephonyRegistry extends XHook {
 	}
 
 	private void replacePhoneStateListener(MethodHookParam param) throws Throwable {
-		if (param.args.length > 2 && param.args[1] != null) {
-			IPhoneStateListener listener = (IPhoneStateListener) param.args[1];
-			int event = (Integer) param.args[2];
-			if (listener != null)
-				if (isRestricted(param)) {
-					if (event == PhoneStateListener.LISTEN_NONE) {
-						// Remove
-						synchronized (mListener) {
-							XIPhoneStateListener xlistener = mListener.get(listener);
-							if (xlistener == null)
-								Util.log(this, Log.WARN, "Not found count=" + mListener.size());
-							else {
-								param.args[1] = xlistener;
-								mListener.remove(listener);
+		if (param.args.length > 2 && param.args[1] != null)
+			if (param.args[1] instanceof IPhoneStateListener && !(param.args[1] instanceof XIPhoneStateListener)) {
+				IPhoneStateListener listener = (IPhoneStateListener) param.args[1];
+				int event = (Integer) param.args[2];
+				if (listener != null)
+					if (isRestricted(param)) {
+						if (event == android.telephony.PhoneStateListener.LISTEN_NONE) {
+							// Remove
+							synchronized (mListener) {
+								XIPhoneStateListener xlistener = mListener.get(listener);
+								if (xlistener == null)
+									Util.log(this, Log.WARN, "Not found count=" + mListener.size());
+								else {
+									param.args[1] = xlistener;
+									mListener.remove(listener);
+								}
 							}
+						} else {
+							// Replace
+							XIPhoneStateListener xListener = new XIPhoneStateListener(listener);
+							synchronized (mListener) {
+								mListener.put(listener, xListener);
+								Util.log(this, Log.INFO, "Added count=" + mListener.size());
+							}
+							param.args[1] = xListener;
 						}
-					} else {
-						// Replace
-						XIPhoneStateListener xListener = new XIPhoneStateListener(listener);
-						synchronized (mListener) {
-							mListener.put(listener, xListener);
-							Util.log(this, Log.INFO, "Added count=" + mListener.size());
-						}
-						param.args[1] = xListener;
 					}
-				}
-		}
+			}
 	}
 
 	@Override
