@@ -126,7 +126,6 @@ public class ActivityShare extends Activity {
 		mBroadcastManager = LocalBroadcastManager.getInstance(this);
 
 		final String action = getIntent().getAction();
-		Util.log(null, Log.WARN, "interactive "+extras.getBoolean(cInteractive));
 
 		// check whether we need a ui, if not, leave the theme declared in the manifest
 		if (extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false)) {
@@ -157,6 +156,8 @@ public class ActivityShare extends Activity {
 				@Override
 				public void onClick(View v) {
 					btnOk.setEnabled(false);
+
+					int[] uids = mAppAdapter.getUids();
 
 					// Import
 					if (action.equals(ACTION_IMPORT)) {
@@ -202,7 +203,8 @@ public class ActivityShare extends Activity {
 				@Override
 				public void onClick(View v) {
 					if (mRunning) {
-						// TODO signal abort and show a Toast
+						mAbort = true;
+						Toast.makeText(ActivityShare.this, "Aborting", Toast.LENGTH_SHORT).show(); // TODO string resource
 					} else {
 						finish();
 					}
@@ -213,8 +215,8 @@ public class ActivityShare extends Activity {
 			ListView lvShare = (ListView) findViewById(R.id.lvShare);
 			registerForContextMenu(lvShare);
 
-		} else {
-			// If action is EXPORT, do it
+		} else if (action.equals(ACTION_EXPORT)) {
+			// No ui requested so just get on with it
 			String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
 					: getFileName(false));
 			new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
@@ -237,7 +239,6 @@ public class ActivityShare extends Activity {
 			// remove app from list
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 			mAppAdapter.remove(mAppAdapter.getItem(info.position));
-			// TODO remove from mUids too
 
 			if (mAppAdapter.getCount() < cSubmitLimit + 1 && getTitle().equals(getString(R.string.menu_submit))) {
 					Button btnOk = (Button) findViewById(R.id.btnOk);
@@ -269,6 +270,16 @@ public class ActivityShare extends Activity {
 
 		public AppListAdapter(Context context, int resource, List<AppHolder> objects) {
 			super(context, resource, objects);
+			// TODO sort according to preferences
+			// TODO add sort options to actionbar just like in ActivityMain
+		}
+
+		public int[] getUids() {
+			int[] uids = new int[this.getCount()];
+			for (int i = 0; i < this.getCount(); i++) {
+				uids[i] = this.getItem(i).appInfo.getUid();
+			}
+			return uids;
 		}
 
 		private class ViewHolder {
@@ -361,7 +372,6 @@ public class ActivityShare extends Activity {
 		@Override
 		protected List<AppHolder> doInBackground(int[]... params) {
 			List<AppHolder> apps = new ArrayList<AppHolder>();
-			Util.log(null, Log.WARN, "getting list "+params[0].length);
 			for (int i = 0; i < params[0].length; i++) {
 				try {
 					apps.add(new AppHolder(params[0][i]));
@@ -392,7 +402,6 @@ public class ActivityShare extends Activity {
 			super.onPostExecute(listApp);
 
 			// Display app list
-			Util.log(null, Log.WARN, "got apps "+listApp.size());
 			mAppAdapter = new AppListAdapter(ActivityShare.this, R.layout.shareentry, listApp);
 			ListView lvShare = (ListView) findViewById(R.id.lvShare);
 			lvShare.setAdapter(mAppAdapter);
