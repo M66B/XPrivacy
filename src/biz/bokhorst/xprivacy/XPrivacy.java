@@ -323,7 +323,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 
 			// Check if found
-			if (hookSet.isEmpty()) {
+			if (hookSet.isEmpty() && !hookClass.getName().startsWith("com.google.android.gms.")) {
 				String message = String.format("%s: method not found: %s.%s", AndroidAppHelper.currentPackageName(),
 						hookClass.getName(), hook.getMethodName());
 				Util.log(hook, Log.ERROR, message);
