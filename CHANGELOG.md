@@ -16,19 +16,23 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.11.9 TEST**
+
 * Fixed usage data with a dot in the name
 * Added an easter egg (don't ask)
 * Added cell location restrictions within the phone process
 * Added phone/network type restrictions with the phone process
-* Added phone property restrictions
-* Added phone registry restrictions
-* Added phone sub info restrictions
+* Added phone property restrictions (static phone info)
+* Added phone registry restrictions (phone state listener)
+* Added phone sub info restrictions (volatile phone info)
 * Write warnings and errors to a new private log file
 * Suppressing com.google.android.gms.* method errors
 * Increase retry count for reading settings files
 * Updated Tagalog translation
 
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+Replacing the location and phone restrictions is ready for testing now.
 
 **Version 1.11.8 BETA**
 

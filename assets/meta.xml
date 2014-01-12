@@ -97,7 +97,6 @@
 	<Hook restriction="location" method="Srv.getCellLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="10" />
 	<Hook restriction="location" method="Srv.getNeighboringCellInfo" permissions="ACCESS_COARSE_UPDATES,ACCESS_FINE_LOCATION" sdk="10" />
 
-	<Hook restriction="location" method="listen" permissions="READ_PHONE_STATE,ACCESS_COARSE_LOCATION" sdk="10" />
 	<Hook restriction="location" method="Srv.listen" permissions="READ_PHONE_STATE,ACCESS_COARSE_LOCATION" sdk="10" />
 
 	<Hook restriction="media" method="startRecording" permissions="RECORD_AUDIO" sdk="10" />
@@ -145,27 +144,6 @@
 	<Hook restriction="overlay" method="removeView" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
 	<Hook restriction="overlay" method="updateViewLayout" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
 
-	<Hook restriction="phone" method="getDeviceId" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getGroupIdLevel1" permissions="READ_PHONE_STATE" sdk="18" />
-	<Hook restriction="phone" method="getIsimDomain" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="14" />
-	<Hook restriction="phone" method="getIsimImpi" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="14" />
-	<Hook restriction="phone" method="getIsimImpu" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="14" />
-	<Hook restriction="phone" method="getLine1AlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getLine1Number" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getMsisdn" permissions="READ_PHONE_STATE" sdk="14" />
-	<Hook restriction="phone" method="getSimSerialNumber" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getSubscriberId" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getVoiceMailAlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getVoiceMailNumber" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="listen" permissions="READ_PHONE_STATE,ACCESS_COARSE_LOCATION" sdk="10" />
-	<Hook restriction="phone" method="getNetworkCountryIso" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getNetworkOperator" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getNetworkOperatorName" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getNetworkType" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getPhoneType" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getSimCountryIso" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getSimOperator" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getSimOperatorName" permissions="" sdk="10" />
 	<Hook restriction="phone" method="android.intent.action.NEW_OUTGOING_CALL" permissions="PROCESS_OUTGOING_CALLS" sdk="10" />
 	<Hook restriction="phone" method="android.intent.action.PHONE_STATE" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="TelephonyProvider" permissions="WRITE_APN_SETTINGS" sdk="10" />

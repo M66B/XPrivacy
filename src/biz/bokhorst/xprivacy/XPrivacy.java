@@ -151,6 +151,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Phone interface manager
 		if ("com.android.phone".equals(lpparam.packageName)) {
+			Util.log(null, Log.WARN, "Hooking " + lpparam.packageName);
 			hookAll(XPhoneInterfaceManager.getInstances(), lpparam.classLoader);
 			hookAll(XPhoneSubInfo.getInstances(), lpparam.classLoader);
 		}
