@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,6 +17,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,15 +67,57 @@ public class Util {
 				Log.println(priority, "XPrivacy", msg);
 			else
 				Log.println(priority, String.format("XPrivacy/%s", hook.getClass().getSimpleName()), msg);
+
+		if (priority != Log.DEBUG && priority != Log.INFO)
+			logData(hook, priority, msg);
 	}
 
 	public static void bug(XHook hook, Throwable ex) {
-		log(hook, Log.ERROR, ex.toString() + " uid=" + Process.myUid());
-		ex.printStackTrace();
+		log(hook, Log.ERROR, ex.toString() + " uid=" + Process.myUid() + "\n" + Log.getStackTraceString(ex));
 	}
 
 	public static void logStack(XHook hook) {
 		log(hook, Log.INFO, Log.getStackTraceString(new Exception("StackTrace")));
+	}
+
+	public static File getDataFile() {
+		return new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
+				+ Util.class.getPackage().getName() + File.separator + "log.txt");
+	}
+
+	public static void clearData() {
+		getDataFile().delete();
+	}
+
+	@SuppressLint("SimpleDateFormat")
+	private static void logData(XHook hook, int priority, String message) {
+		String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
+		String prio;
+		if (priority == Log.WARN)
+			prio = "W";
+		else if (priority == Log.ERROR)
+			prio = "E";
+		else
+			prio = Integer.toString(priority);
+		String tag = (hook == null ? "XPrivacy" : String.format("XPrivacy/%s", hook.getClass().getSimpleName()));
+
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(getDataFile(), true);
+			fw.write(String.format("%s %s/%s: %s\n", time, prio, tag, message));
+			fw.flush();
+		} catch (Throwable ex) {
+			Util.bug(hook, ex);
+		} finally {
+			if (fw != null)
+				try {
+					fw.close();
+					getDataFile().setReadable(true, false);
+					getDataFile().setWritable(true, false);
+				} catch (Throwable ex) {
+					Util.bug(hook, ex);
+				}
+		}
 	}
 
 	public static int getXposedAppProcessVersion() {

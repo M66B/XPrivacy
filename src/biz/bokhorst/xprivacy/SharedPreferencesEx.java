@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+// Based on:
 // https://github.com/rovo89/XposedBridge/blob/master/src/de/robv/android/xposed/XSharedPreferences.java
 
 import java.io.BufferedInputStream;
@@ -28,8 +29,8 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	private long mLastModified;
 	private long mFileSize;
 
-	private static int cTryMaxCount = 25;
-	private static int cTryWaitMs = 100;
+	private static int cTryMaxCount = 50;
+	private static int cTryWaitMs = 200;
 
 	public SharedPreferencesEx(File prefFile) {
 		mFile = prefFile;
@@ -64,16 +65,8 @@ public final class SharedPreferencesEx implements SharedPreferences {
 		while (++tries <= cTryMaxCount && !mLoaded && (mFile.exists() || mBackupFile.exists())) {
 			// Log retry
 			if (tries > 1)
-				Log.w("XPrivacy", "Load " + mFile + " try=" + tries + " exists=" + mFile.exists() + " readable="
+				Util.log(null, Log.WARN, "Load " + mFile + " try=" + tries + " exists=" + mFile.exists() + " readable="
 						+ mFile.canRead() + " backup=" + mBackupFile.exists());
-
-			// Last try: use backup file
-			if (tries == cTryMaxCount && mBackupFile.exists()) {
-				Log.w("XPrivacy", "Using " + mBackupFile);
-				if (mFile.exists())
-					mFile.delete();
-				mBackupFile.renameTo(mFile);
-			}
 
 			// Read file if possible
 			if (mFile.exists() && mFile.canRead() && !mBackupFile.exists()) {
@@ -85,7 +78,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 					str = new BufferedInputStream(new FileInputStream(mFile), 16 * 1024);
 					map = XmlUtils.readMapXml(str);
 				} catch (Throwable ex) {
-					Log.w("XPrivacy", "Error reading " + mFile + ": " + ex);
+					Util.log(null, Log.WARN, "Error reading " + mFile + ": " + ex);
 				} finally {
 					if (str != null) {
 						try {
@@ -93,11 +86,12 @@ public final class SharedPreferencesEx implements SharedPreferences {
 						} catch (RuntimeException rethrown) {
 							throw rethrown;
 						} catch (Throwable ex) {
-							Log.w("XPrivacy", "Error closing " + mFile + ": " + ex);
+							Util.log(null, Log.WARN, "Error closing " + mFile + ": " + ex);
 						}
 					}
 				}
 				if (map != null) {
+					Util.log(null, Log.INFO, "Loaded " + mFile);
 					mLoaded = true;
 					mMap = map;
 					mLastModified = lastModified;
@@ -119,7 +113,7 @@ public final class SharedPreferencesEx implements SharedPreferences {
 		if (!mLoaded) {
 			if (tries >= cTryMaxCount)
 				// Not loaded: try to load again on next access
-				Log.e("XPrivacy", "File not loaded: " + mFile);
+				Util.log(null, Log.ERROR, "Not loaded " + mFile);
 			else
 				mLoaded = true;
 			mMap = new HashMap<String, Object>();
