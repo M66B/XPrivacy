@@ -20,6 +20,12 @@ Test and beta releases will have experimental functions enabled by default.
 * Added an easter egg (don't ask)
 * Added cell location restrictions within the phone process
 * Added phone/network type restrictions with the phone process
+* Added phone property restrictions
+* Added phone registry restrictions
+* Added phone sub info restrictions
+* Write warnings and errors to a new private log file
+* Suppressing com.google.android.gms.* method errors
+* Increase retry count for reading settings files
 * Updated Tagalog translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
