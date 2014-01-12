@@ -76,7 +76,7 @@ public class Util {
 		log(hook, Log.INFO, Log.getStackTraceString(new Exception("StackTrace")));
 	}
 
-	private static File getDataFile() {
+	public static File getDataFile() {
 		return new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
 				+ Util.class.getPackage().getName() + File.separator + "log.txt");
 	}
@@ -101,6 +101,7 @@ public class Util {
 			if (fw != null)
 				try {
 					fw.close();
+					getDataFile().setReadable(true, false);
 					getDataFile().setWritable(true, false);
 				} catch (Throwable ex) {
 					Util.bug(hook, ex);

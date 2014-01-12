@@ -298,7 +298,7 @@ public class Requirements {
 		sendSupportInfo(sb.toString(), context);
 	}
 
-	private static void sendSupportInfo(String text, Context context) {
+	public static void sendSupportInfo(String text, Context context) {
 		String xversion = null;
 		try {
 			PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -317,6 +317,7 @@ public class Requirements {
 		sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
 		sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy support info");
 		sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
+		sendEmail.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(Util.getDataFile()));
 		try {
 			context.startActivity(sendEmail);
 		} catch (Throwable ex) {

@@ -74,6 +74,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private String mSharingState = null;
 	private Handler mHandler = new Handler();
 	private Runnable mTimerRunnable = null;
+	private int mEasterEgg;
 
 	public static final int STATE_ATTENTION = 0;
 	public static final int STATE_RESTRICTED = 1;
@@ -275,9 +276,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		});
 
+		// Easter egg
+		mEasterEgg = 0;
+		TextView tvState = (TextView) findViewById(R.id.tvState);
+		tvState.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (++mEasterEgg == 7) {
+					mEasterEgg = 0;
+					Requirements.sendSupportInfo("", ActivityMain.this);
+				}
+			}
+		});
+
 		// Handle post share operation done message
 		if (mSharingState != null) {
-			TextView tvState = (TextView) findViewById(R.id.tvState);
 			tvState.setText(mSharingState);
 			mSharingState = null;
 		}
