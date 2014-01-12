@@ -113,6 +113,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// System properties
 		hookAll(XSystemProperties.getInstances());
 
+		// Telephony registry
+		hookAll(XTelephonyRegistry.getInstances());
+
 		// Thread
 		hookAll(XThread.getInstances());
 

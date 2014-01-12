@@ -114,6 +114,8 @@ public class XTelephonyManager extends XHook {
 		listHook.add(new XTelephonyManager(Methods.getSubscriberId, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getVoiceMailAlphaTag, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getVoiceMailNumber, PrivacyManager.cPhone, className));
+
+		listHook.add(new XTelephonyManager(Methods.listen, PrivacyManager.cLocation, className));
 		listHook.add(new XTelephonyManager(Methods.listen, PrivacyManager.cPhone, className));
 
 		// No permissions required

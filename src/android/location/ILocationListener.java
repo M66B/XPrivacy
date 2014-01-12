@@ -5,9 +5,9 @@ import android.os.Bundle;
 public interface ILocationListener extends android.os.IInterface {
 	void onLocationChanged(Location location);
 
-	void onProviderDisabled(String provider);
+	void onStatusChanged(String provider, int status, Bundle extras);
 
 	void onProviderEnabled(String provider);
 
-	void onStatusChanged(String provider, int status, Bundle extras);
+	void onProviderDisabled(String provider);
 }

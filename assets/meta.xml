@@ -102,6 +102,9 @@
 	<Hook restriction="location" method="Srv.getCellLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="10" />
 	<Hook restriction="location" method="Srv.getNeighboringCellInfo" permissions="ACCESS_COARSE_UPDATES,ACCESS_FINE_LOCATION" sdk="10" />
 
+	<Hook restriction="location" method="listen" permissions="READ_PHONE_STATE,ACCESS_COARSE_LOCATION" sdk="10" />
+	<Hook restriction="location" method="Srv.listen" permissions="READ_PHONE_STATE,ACCESS_COARSE_LOCATION" sdk="10" />
+
 	<Hook restriction="media" method="startRecording" permissions="RECORD_AUDIO" sdk="10" />
 	<Hook restriction="media" method="setPreviewCallback" permissions="CAMERA" sdk="10" />
 	<Hook restriction="media" method="setPreviewCallbackWithBuffer" permissions="CAMERA" sdk="10" />
@@ -159,7 +162,7 @@
 	<Hook restriction="phone" method="getSubscriberId" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="getVoiceMailAlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="getVoiceMailNumber" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="listen" permissions="READ_PHONE_STATE" sdk="10" />
+	<Hook restriction="phone" method="listen" permissions="READ_PHONE_STATE,ACCESS_COARSE_LOCATION" sdk="10" />
 	<Hook restriction="phone" method="getNetworkCountryIso" permissions="" sdk="10" />
 	<Hook restriction="phone" method="getNetworkOperator" permissions="" sdk="10" />
 	<Hook restriction="phone" method="getNetworkOperatorName" permissions="" sdk="10" />
@@ -196,6 +199,8 @@
 	<Hook restriction="phone" method="Srv.getSubscriberId" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="Srv.getVoiceMailAlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="Srv.getVoiceMailNumber" permissions="READ_PHONE_STATE" sdk="10" />
+
+	<Hook restriction="phone" method="Srv.listen" permissions="READ_PHONE_STATE,ACCESS_COARSE_LOCATION" sdk="10" />
 
 	<Hook restriction="sensors" method="getDefaultSensor" permissions="" sdk="3" />
 	<Hook restriction="sensors" method="getSensorList" permissions="" sdk="3" />
