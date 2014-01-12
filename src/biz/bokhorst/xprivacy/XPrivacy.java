@@ -229,7 +229,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		} else if (name.equals(Context.TELEPHONY_SERVICE)) {
 			// Telephony manager
-			if (!mTelephonyManagerHooked) {
+			if (!PrivacyManager.cTestVersion && !mTelephonyManagerHooked) {
 				hookAll(XTelephonyManager.getInstances(instance));
 				mTelephonyManagerHooked = true;
 			}
