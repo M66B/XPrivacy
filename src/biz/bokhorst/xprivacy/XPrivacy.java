@@ -23,6 +23,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.XC_MethodHook;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
+@SuppressLint("DefaultLocale")
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// @formatter:off
@@ -34,6 +35,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	@SuppressLint("InlinedApi")
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		// Log load
+		Util.clearData();
 		Util.log(null, Log.INFO, String.format("Load %s", startupParam.modulePath));
 
 		// App widget manager
@@ -288,11 +290,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Find class
 			Class<?> hookClass = findClass(hook.getClassName(), classLoader);
 			if (hookClass == null) {
-				Util.log(
-						hook,
-						Log.WARN,
-						String.format("%s: class not found: %s", AndroidAppHelper.currentPackageName(),
-								hook.getClassName()));
+				String message = String.format("%s: class not found: %s", AndroidAppHelper.currentPackageName(),
+						hook.getClassName());
+				Util.logData(hook, Log.WARN, message);
 				return;
 			}
 
@@ -315,11 +315,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			// Check if found
 			if (hookSet.isEmpty()) {
-				Util.log(
-						hook,
-						Log.WARN,
-						String.format("%s: method not found: %s.%s", AndroidAppHelper.currentPackageName(),
-								hookClass.getName(), hook.getMethodName()));
+				String message = String.format("%s: method not found: %s.%s", AndroidAppHelper.currentPackageName(),
+						hookClass.getName(), hook.getMethodName());
+				Util.logData(hook, Log.WARN, message);
 				return;
 			}
 
@@ -331,12 +329,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				String restrictionName = hook.getRestrictionName();
 				if (className.equals(methodName))
 					methodName = "constructor";
-				Util.log(hook, Log.INFO, String.format("%s: hooked %s.%s/%s (%d)", packageName, className, methodName,
-						restrictionName, hookSet.size()));
+				String message = String.format("%s: hooked %s.%s/%s (%d)", packageName, className, methodName,
+						restrictionName, hookSet.size());
+				Util.logData(hook, Log.INFO, message);
 				break;
 			}
 		} catch (Throwable ex) {
-			Util.bug(null, ex);
+			Util.bugData(null, ex);
 		}
 	}
 }

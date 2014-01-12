@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -73,6 +74,43 @@ public class Util {
 
 	public static void logStack(XHook hook) {
 		log(hook, Log.INFO, Log.getStackTraceString(new Exception("StackTrace")));
+	}
+
+	private static File getDataFile() {
+		return new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
+				+ Util.class.getPackage().getName() + File.separator + "log.txt");
+	}
+
+	public static void clearData() {
+		getDataFile().delete();
+	}
+
+	public static void logData(XHook hook, int priority, String message) {
+		log(hook, priority, message);
+
+		String tag = (hook == null ? "XPrivacy" : String.format("XPrivacy/%s", hook.getClass().getSimpleName()));
+
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(getDataFile(), true);
+			fw.write(String.format("%s: %s\n", tag, message));
+			fw.flush();
+		} catch (Throwable ex) {
+			Util.bug(hook, ex);
+		} finally {
+			if (fw != null)
+				try {
+					fw.close();
+					getDataFile().setWritable(true, false);
+				} catch (Throwable ex) {
+					Util.bug(hook, ex);
+				}
+		}
+	}
+
+	public static void bugData(XHook hook, Throwable ex) {
+		logData(hook, Log.ERROR, ex.toString() + " uid=" + Process.myUid());
+		ex.printStackTrace();
 	}
 
 	public static int getXposedAppProcessVersion() {
