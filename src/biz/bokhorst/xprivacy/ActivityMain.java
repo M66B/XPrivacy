@@ -1247,11 +1247,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Send progress info to main activity
 					current++;
 					if (!mBatchOpRunning && current % 5 == 0) {
-						Intent progressIntent = new Intent(ActivityShare.cProgressReport);
-						progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.msg_applying));
-						progressIntent.putExtra(ActivityShare.cProgressMax, max);
-						progressIntent.putExtra(ActivityShare.cProgressValue, current);
-						LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
+						final int position = current;
+						final int maximum = max;
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								setProgress(getString(R.string.msg_applying), position, maximum);
+							}
+						});
 					}
 
 					// Get if name contains
@@ -1324,11 +1327,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					pbFilter.setVisibility(ProgressBar.GONE);
 					tvStats.setVisibility(TextView.VISIBLE);
 
-					Intent progressIntent = new Intent(ActivityShare.cProgressReport);
-					progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.title_restrict));
-					progressIntent.putExtra(ActivityShare.cProgressMax, 1);
-					progressIntent.putExtra(ActivityShare.cProgressValue, 0);
-					LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							setProgress(getString(R.string.title_restrict), 0, 1);
+						}
+					});
 
 					// Adjust progress state width
 					RelativeLayout.LayoutParams tvStateLayout = (RelativeLayout.LayoutParams) tvState.getLayoutParams();
@@ -1670,10 +1674,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (max == 0)
 			max = 1;
 		mProgress = (int) ((float) mProgressWidth) * progress / max;
-		updateProgress();
-	}
 
-	private void updateProgress() {
 		View vProgressFull = (View) findViewById(R.id.vProgressFull);
 		vProgressFull.getLayoutParams().width = mProgress;
 	}

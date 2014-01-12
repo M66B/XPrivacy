@@ -5,6 +5,19 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
+    <View
+        android:id="@+id/vProgressEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="3dip"
+        android:layout_marginBottom="-3dip"
+        android:background="@android:color/colorTransparent" />
+
+    <View
+        android:id="@+id/vProgressFull"
+        android:layout_width="0dip"
+        android:layout_height="3dip"
+        android:background="?android:attr/colorActivatedHighlight" />
+
     <LinearLayout
         android:id="@+id/llButtons"
         android:layout_width="match_parent"

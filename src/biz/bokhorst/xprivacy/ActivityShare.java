@@ -76,9 +76,11 @@ public class ActivityShare extends Activity {
 	private LocalBroadcastManager mBroadcastManager;
 	private int mThemeId;
 	private AppListAdapter mAppAdapter;
-	private int mCurrent;
+	private int mProgressMax;
+	private int mProgressCurrent;
 	private boolean mRunning = false;
 	private boolean mAbort = false;
+	private int mProgressWidth;
 
 	private static final int STATE_WAITING = 0;
 	private static final int STATE_RUNNING = 1;
@@ -127,7 +129,7 @@ public class ActivityShare extends Activity {
 
 		final String action = getIntent().getAction();
 
-		// check whether we need a ui, if not, leave the theme declared in the manifest
+		// Check whether we need a ui, if not, leave the theme declared in the manifest
 		if (extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false)) {
 			// Set theme
 			String themeName = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingTheme, "", false);
@@ -158,6 +160,7 @@ public class ActivityShare extends Activity {
 					btnOk.setEnabled(false);
 
 					int[] uids = mAppAdapter.getUids();
+					mProgressMax = mAppAdapter.getCount();
 
 					// Import
 					if (action.equals(ACTION_IMPORT)) {
@@ -216,7 +219,9 @@ public class ActivityShare extends Activity {
 			registerForContextMenu(lvShare);
 
 		} else if (action.equals(ACTION_EXPORT)) {
-			// No ui requested so just get on with it
+			// Set theme to NoDisplay
+			setTheme(android.R.style.Theme_NoDisplay);
+			// Get on with exporting
 			String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
 					: getFileName(false));
 			new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
@@ -417,10 +422,10 @@ public class ActivityShare extends Activity {
 
 	private class ExportTask extends AsyncTask<File, String, String> {
 		private File mFile;
-		private int mProgressCurrent = 0;
 
 		@Override
 		protected String doInBackground(File... params) {
+			mProgressCurrent = 0;
 			try {
 				// Serialize
 				mFile = params[0];
@@ -563,8 +568,6 @@ public class ActivityShare extends Activity {
 
 	private class ImportTask extends AsyncTask<Object, String, String> {
 		private File mFile;
-		private int mProgressMax;
-		private int mProgressCurrent;
 
 		@Override
 		protected String doInBackground(Object... params) {
@@ -632,32 +635,14 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			int progress = 0;
-			if (values.length > 1)
-				progress = Integer.parseInt(values[1]);
-			notify(values[0], true, progress);
+			setProgress();
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result == null ? getString(R.string.msg_done) : result, false, 0);
-
-			Intent intent = new Intent();
-			intent.putExtra(cFileName, mFile.getAbsolutePath());
-			intent.putExtra(cErrorMessage, result);
-			setResult(result == null ? 0 : 1, intent);
-			finish();
+			setProgress();
 			super.onPostExecute(result);
-		}
-
-		private void notify(String text, boolean ongoing, int progress) {
-			// Send progress info to main activity
-			Intent progressIntent = new Intent(cProgressReport);
-			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_import), text));
-			progressIntent.putExtra(cProgressMax, mProgressMax);
-			progressIntent.putExtra(cProgressValue, progress);
-			mBroadcastManager.sendBroadcast(progressIntent);
 		}
 	}
 
@@ -793,19 +778,11 @@ public class ActivityShare extends Activity {
 		}
 
 		private void reportProgress(int id) {
-			// Send progress info to main activity
-			Intent progressIntent = new Intent(cProgressReport);
-			progressIntent.putExtra(cProgressMessage,
-					String.format("%s: %s", getString(R.string.menu_import), mMapId.get(id)));
-			progressIntent.putExtra(cProgressMax, mMapId.size());
-			progressIntent.putExtra(cProgressValue, ++mProgress);
-			mBroadcastManager.sendBroadcast(progressIntent);
+			setProgress();
 		}
 	}
 
 	private class FetchTask extends AsyncTask<int[], String, String> {
-		private int mProgressMax;
-		private int mProgressCurrent;
 
 		@Override
 		@SuppressLint("DefaultLocale")
@@ -921,31 +898,14 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			int progress = 0;
-			if (values.length > 1)
-				progress = Integer.parseInt(values[1]);
-			notify(values[0], true, progress);
+			setProgress();
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result == null ? getString(R.string.msg_done) : result, false, 0);
-
-			Intent intent = new Intent();
-			intent.putExtra(cErrorMessage, result);
-			setResult(result == null ? 0 : 1, intent);
-			finish();
+			setProgress();
 			super.onPostExecute(result);
-		}
-
-		private void notify(String text, boolean ongoing, int progress) {
-			// Send progress info to main activity
-			Intent progressIntent = new Intent(cProgressReport);
-			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_fetch), text));
-			progressIntent.putExtra(cProgressMax, mProgressMax);
-			progressIntent.putExtra(cProgressValue, progress);
-			mBroadcastManager.sendBroadcast(progressIntent);
 		}
 	}
 
@@ -1122,35 +1082,34 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onProgressUpdate(String... values) {
-			int progress = 0;
-			if (values.length > 1)
-				progress = Integer.parseInt(values[1]);
-			notify(values[0], true, progress);
+			setProgress();
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result == null ? getString(R.string.msg_done) : result, false, 0);
-
-			Intent intent = new Intent();
-			intent.putExtra(cErrorMessage, result);
-			setResult(result == null ? 0 : 1, intent);
-			finish();
+			setProgress();
 			super.onPostExecute(result);
-		}
-
-		private void notify(String text, boolean ongoing, int progress) {
-			// Send progress info to main activity
-			Intent progressIntent = new Intent(cProgressReport);
-			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_submit), text));
-			progressIntent.putExtra(cProgressMax, mProgressMax);
-			progressIntent.putExtra(cProgressValue, progress);
-			mBroadcastManager.sendBroadcast(progressIntent);
 		}
 	}
 
 	// Helper methods
+
+	public void setProgress() {
+		// Set up the progress bar
+		if (mProgressWidth == 0) {
+			final View vProgressEmpty = (View) findViewById(R.id.vProgressEmpty);
+			mProgressWidth = vProgressEmpty.getMeasuredWidth();
+		}
+		// Display stuff
+		int max = mProgressMax;
+		if (max == 0)
+			max = 1;
+		int width = (int) ((float) mProgressWidth) * mProgressCurrent / max;
+
+		View vProgressFull = (View) findViewById(R.id.vProgressFull);
+		vProgressFull.getLayoutParams().width = width;
+	}
 
 	public static String getFileName(boolean multiple) {
 		File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
