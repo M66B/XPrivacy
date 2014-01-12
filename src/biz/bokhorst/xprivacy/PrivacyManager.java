@@ -427,7 +427,7 @@ public class PrivacyManager {
 		if (self.equals(context.getPackageName()))
 			return true;
 
-		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs)
+		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs / ("hammerhead".equals(Build.PRODUCT) ? 6 : 1))
 			return false;
 
 		if (isIsolated(Process.myUid()))
@@ -778,7 +778,7 @@ public class PrivacyManager {
 
 		// Use fallback
 		if (fallback)
-			value = PrivacyProvider.getSettingFallback(name, defaultValue);
+			value = PrivacyProvider.getSettingFallback(name, defaultValue, true);
 
 		// Default value
 		if (value == null)

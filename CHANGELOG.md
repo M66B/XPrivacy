@@ -16,7 +16,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Added an easter egg
+* Fixed usage data with a dot in the name
+* Added an easter egg (don't ask)
+* Added cell location restrictions within the phone process
+* Added phone/network type restrictions with the phone process
 * Updated Tagalog translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

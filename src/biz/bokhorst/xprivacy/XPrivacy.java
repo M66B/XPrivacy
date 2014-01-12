@@ -146,25 +146,29 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Providers
 		hookAll(XContentProvider.getInstances(lpparam.packageName), lpparam.classLoader);
 
+		// Phone interface manager
+		if ("com.android.phone".equals(lpparam.packageName))
+			hookAll(XPhoneInterfaceManager.getInstances(), lpparam.classLoader);
+
 		// Advertising Id
 		try {
 			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, lpparam.classLoader);
 			hookAll(XAdvertisingIdClientInfo.getInstances(), lpparam.classLoader);
-		} catch (Throwable ex) {
+		} catch (Throwable ignored) {
 		}
 
 		// Google auth
 		try {
 			Class.forName("com.google.android.gms.auth.GoogleAuthUtil", false, lpparam.classLoader);
 			hookAll(XGoogleAuthUtil.getInstances(), lpparam.classLoader);
-		} catch (Throwable ex) {
+		} catch (Throwable ignored) {
 		}
 
 		// Location client
 		try {
 			Class.forName("com.google.android.gms.location.LocationClient", false, lpparam.classLoader);
 			hookAll(XLocationClient.getInstances(), lpparam.classLoader);
-		} catch (Throwable ex) {
+		} catch (Throwable ignored) {
 		}
 	}
 
@@ -292,7 +296,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			if (hookClass == null) {
 				String message = String.format("%s: class not found: %s", AndroidAppHelper.currentPackageName(),
 						hook.getClassName());
-				Util.log(hook, Log.WARN, message);
+				Util.log(hook, Log.ERROR, message);
 				return;
 			}
 
@@ -317,7 +321,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			if (hookSet.isEmpty()) {
 				String message = String.format("%s: method not found: %s.%s", AndroidAppHelper.currentPackageName(),
 						hookClass.getName(), hook.getMethodName());
-				Util.log(hook, Log.WARN, message);
+				Util.log(hook, Log.ERROR, message);
 				return;
 			}
 
@@ -331,7 +335,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					methodName = "constructor";
 				String message = String.format("%s: hooked %s.%s/%s (%d)", packageName, className, methodName,
 						restrictionName, hookSet.size());
-				Util.log(hook, Log.WARN, message);
+				Util.log(hook, Log.INFO, message);
 				break;
 			}
 		} catch (Throwable ex) {
