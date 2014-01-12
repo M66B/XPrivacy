@@ -1294,6 +1294,7 @@ public class PrivacyManager {
 			return mRestart;
 		}
 
+		@SuppressLint("FieldGetter")
 		public boolean hasNoUsageData() {
 			return isRestartRequired();
 		}
