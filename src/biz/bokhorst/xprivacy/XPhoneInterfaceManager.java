@@ -45,18 +45,6 @@ public class XPhoneInterfaceManager extends XHook {
 	// public int getActivePhoneType()
 
 	// TODO:
-	// * IPhoneSubInfo public String getDeviceId()
-	// * IPhoneSubInfo public String getGroupIdLevel1()
-	// * IPhoneSubInfo public public String getIsimDomain()
-	// * IPhoneSubInfo public public String getIsimImpi()
-	// * IPhoneSubInfo public public String[] getIsimImpu()
-	// * IPhoneSubInfo public public String getLine1AlphaTag()
-	// * IPhoneSubInfo public public String getLine1Number()
-	// * IPhoneSubInfo public public String getMsisdn()
-	// * IPhoneSubInfo public String getSimSerialNumber()
-	// * IPhoneSubInfo public String getSubscriberId()
-	// * IPhoneSubInfo public String getVoiceMailAlphaTag()
-	// * IPhoneSubInfo public String getVoiceMailNumber()
 	// * ITelephonyRegistry public void listen(PhoneStateListener listener, int events)
 	
 	// platform/packages/services/Telephony/src/com/android/phone/PhoneInterfaceManager.java

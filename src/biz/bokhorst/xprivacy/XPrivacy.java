@@ -147,8 +147,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XContentProvider.getInstances(lpparam.packageName), lpparam.classLoader);
 
 		// Phone interface manager
-		if ("com.android.phone".equals(lpparam.packageName))
+		if ("com.android.phone".equals(lpparam.packageName)) {
 			hookAll(XPhoneInterfaceManager.getInstances(), lpparam.classLoader);
+			hookAll(XPhoneSubInfo.getInstances(), lpparam.classLoader);
+		}
 
 		// Advertising Id
 		try {

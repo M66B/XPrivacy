@@ -926,7 +926,7 @@ public class PrivacyManager {
 					+ getSetting(null, null, uid, cSettingMnc, "01", true);
 		if (name.equals("getSimOperatorName"))
 			return getSetting(null, null, uid, cSettingOperator, cDeface, true);
-		if (name.equals("getSimSerialNumber"))
+		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber"))
 			return getSetting(null, null, uid, cSettingIccId, null, true);
 
 		if (name.equals("getSubscriberId")) { // IMSI for a GSM phone
