@@ -19,8 +19,8 @@
     <string name="menu_theme">Palitan ang tema</string>
     <string name="menu_pro">Salin na Pro</string>
     <string name="menu_about">Tungkulin</string>
-    <string name="menu_help">Bumasa ng tulong</string>
-    <string name="menu_select_all">Select all</string>
+    <string name="menu_help">Anong Kahulugan</string>
+    <string name="menu_select_all">Piliin lahat</string>
     <string name="menu_all">Kalahatan</string>
     <string name="menu_restriction_all">Bigyan ng lahat o walang paghihigpit</string>
     <string name="menu_clear_all">Burahin lahat ng paghihigpit</string>
@@ -46,8 +46,8 @@
     <string name="msg_saved_to" formatted="false">Nailagay sa %s</string>
     <string name="msg_no_restrictions">Walang nakatakdang paghihigpit na natagpuan</string>
     <string name="msg_sure">Tiyak ka na ba?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Mamili po muna sa iyong mga applications na ibibilang</string>
+    <string name="msg_limit">Mamili lang po ng mas kaunti sa %d na applications</string>
     <string name="msg_done">Tapos na</string>
     <string name="msg_reboot">Kailangan paumpisahin muli ang iyong kagamitan</string>
     <string name="msg_random_now">Palit-palitan ang mga paghihigpit sa ngayon na</string>
@@ -56,7 +56,7 @@
     <string name="msg_usage">Pinababago ang kaalaman tungkol sa mga pahintulot na nagamit</string>
     <string name="msg_restart">Kailangan paumpisahin muli ang Application</string>
     <string name="msg_first"><b>Malaking pag-aalaga ang ginampanan sa pagkabuo at sa pagsusuri ng XPrivacy,
-    ngunit sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bawat sa isa\'t isang aplikasyon. 
+    ngunit sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bawat sa isa't isang aplikasyon. 
 \n\nAng paggamit nito ay ganap na nasa sa iyong pagbabakasakali.</b>\n\nAlamin din ang kanyang lisensiya at sangguni dito sa:</string>
     <string name="restrict_accounts">Mga Accounts (Google, Facebook, at iba pa)</string>
     <string name="restrict_browser">Sa Browser (mga bookmarks/history)</string>
@@ -117,12 +117,12 @@
     <string name="settings_expert">Gamitin XPrivacy sa sanay na paraan</string>
     <string name="settings_dangerous">Pahigpitan mga may panganib na tungkulin</string>
     <string name="settings_confidence">Pinakamataas na Confidence Interval na puwedeng kunin</string>
-    <string name="settings_experimental">Gamiti mga hindi pa tiyak na tungkulin (kailangan muling paumpisahin ang iyong kagamitan)</string>
+    <string name="settings_experimental">Gamitin mga hindi pa tiyak na tungkulin (kailangan muling paumpisahin ang iyong kagamitan)</string>
     <string name="help_application">Mga Applications</string>
     <string name="help_internet">may Internet na pahintulot</string>
     <string name="help_granted">may Android na pahintulot</string>
     <string name="help_used">nagamit niya nitong kaalaman</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_used_grayed">walang kaalaman tungkol sa mga pahintulot na nagamit ang mayroon</string>
     <string name="help_frozen">ay winalang gana</string>
     <string name="help_dangerous">may panganib, magkakaroon ng problema kapag iyong hinigpitan</string>
     <string name="help_half">mayroon paghihigpit</string>
@@ -135,6 +135,6 @@
 \n\nPindutin ang App icon sa kaliwang gilid para matignan mabuti tungkol sa kanyang paghihigpit at paglalagay</string>
     <string name="tutorial_detailsheader">Pindutin ang App icon sa kaliwang gilid para sa iba pang puwedeng mapalitan na paglalagay</string>
     <string name="tutorial_detailslist">Pindutin ang down arrow sa kaliwang gilid para makita ang laman ng pangkat na mayroon o walang paghihigpit</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="permission_manage">Pangasiwaan para sa iyong mga applications, pati ang kanyang pagkapuksa</string>
 
 </resources>
