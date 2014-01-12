@@ -123,8 +123,6 @@ public class XLocationManagerService extends XHook {
 	}
 
 	private void replaceLocationListener(MethodHookParam param) throws Throwable {
-		// public void requestLocationUpdates(LocationRequest request,
-		// ILocationListener listener, PendingIntent intent, String packageName)
 		if (param.args.length > 1 && param.args[1] != null) {
 			if (param.args[1] instanceof ILocationListener && !(param.args[1] instanceof XILocationListener)) {
 				ILocationListener listener = (ILocationListener) param.args[1];
@@ -142,22 +140,20 @@ public class XLocationManagerService extends XHook {
 	}
 
 	private void removeLocationListener(MethodHookParam param) {
-		// public void removeUpdates(ILocationListener listener, PendingIntent
-		// intent, String packageName)
-		if (param.args.length > 0 && param.args[0] != null
-				&& ILocationListener.class.isAssignableFrom(param.args[0].getClass())) {
-			ILocationListener listener = (ILocationListener) param.args[0];
-			synchronized (mListener) {
-				XILocationListener xlistener = mListener.get(listener);
-				if (xlistener == null)
-					Util.log(this, Log.WARN, "Not found count=" + mListener.size());
-				else {
-					param.args[0] = xlistener;
-					mListener.remove(listener);
+		if (param.args.length > 0 && param.args[0] != null)
+			if (ILocationListener.class.isAssignableFrom(param.args[0].getClass())) {
+				ILocationListener listener = (ILocationListener) param.args[0];
+				synchronized (mListener) {
+					XILocationListener xlistener = mListener.get(listener);
+					if (xlistener == null)
+						Util.log(this, Log.WARN, "Not found count=" + mListener.size());
+					else {
+						param.args[0] = xlistener;
+						mListener.remove(listener);
+					}
 				}
-			}
-		} else
-			param.setResult(null);
+			} else
+				param.setResult(null);
 	}
 
 	private class XILocationListener implements ILocationListener {
