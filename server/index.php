@@ -116,62 +116,71 @@
 
 			// Check restrictions
 			if (!empty($data->settings)) {
-				$xml = file_get_contents ('meta.xml');
-				$parser = xml_parser_create();
-				xml_parse_into_struct($parser, $xml, $vals, $index);
-				xml_parser_free($parser);
+				//$xml = file_get_contents ('meta.xml');
+				//$parser = xml_parser_create();
+				//xml_parse_into_struct($parser, $xml, $vals, $index);
+				//xml_parser_free($parser);
 
 				foreach ($data->settings as $restriction) {
 					$found = false;
 
-					// Legacy
-					if (!empty($restriction->method))
-						if ($restriction->restriction == 'location' && $restriction->method == 'connect')
-							$found = true;
-						else if ($restriction->restriction == 'location' && $restriction->method == 'addNmeaListener')
-							$found = true;
-						else if ($restriction->restriction == 'location' && $restriction->method == 'addProximityAlert')
-							$found = true;
-						else if ($restriction->restriction == 'location' && $restriction->method == 'getLastKnownLocation')
-							$found = true;
-						else if ($restriction->restriction == 'location' && $restriction->method == 'getProviders')
-							$found = true;
-						else if ($restriction->restriction == 'location' && $restriction->method == 'isProviderEnabled')
-							$found = true;
-						else if ($restriction->restriction == 'location' && $restriction->method == 'removeUpdates')
-							$found = true;
-						else if ($restriction->restriction == 'location' && $restriction->method == 'requestLocationUpdates')
-							$found = true;
-						else if ($restriction->restriction == 'location' && $restriction->method == 'requestSingleUpdate')
-							$found = true;
-						else if ($restriction->restriction == 'location' && $restriction->method == 'sendExtraCommand')
-							$found = true;
-						else if ($restriction->restriction == 'location' && $restriction->method == 'addGeofence')
-							$found = true;
-						else if ($restriction->restriction == 'location' && $restriction->method == 'getLastLocation')
-							$found = true;
+					if ($restriction->restriction == 'accounts')
+						$found = true;
+					else if ($restriction->restriction == 'browser')
+						$found = true;
+					else if ($restriction->restriction == 'calendar')
+						$found = true;
+					else if ($restriction->restriction == 'calling')
+						$found = true;
+					else if ($restriction->restriction == 'clipboard')
+						$found = true;
+					else if ($restriction->restriction == 'contacts')
+						$found = true;
+					else if ($restriction->restriction == 'dictionary')
+						$found = true;
+					else if ($restriction->restriction == 'email')
+						$found = true;
+					else if ($restriction->restriction == 'identification')
+						$found = true;
+					else if ($restriction->restriction == 'internet')
+						$found = true;
+					else if ($restriction->restriction == 'location')
+						$found = true;
+					else if ($restriction->restriction == 'media')
+						$found = true;
+					else if ($restriction->restriction == 'messages')
+						$found = true;
+					else if ($restriction->restriction == 'network')
+						$found = true;
+					else if ($restriction->restriction == 'nfc')
+						$found = true;
+					else if ($restriction->restriction == 'notifications')
+						$found = true;
+					else if ($restriction->restriction == 'overlay')
+						$found = true;
+					else if ($restriction->restriction == 'phone')
+						$found = true;
+					else if ($restriction->restriction == 'sensors')
+						$found = true;
+					else if ($restriction->restriction == 'shell')
+						$found = true;
+					else if ($restriction->restriction == 'storage')
+						$found = true;
+					else if ($restriction->restriction == 'system')
+						$found = true;
+					else if ($restriction->restriction == 'view')
+						$found = true;
 
-						else if ($restriction->restriction == 'view' && $restriction->method == 'getDefaultUserAgentForLocale')
-							$found = true;
-						else if ($restriction->restriction == 'view' && $restriction->method == 'WebView.constructor')
-							$found = true;
-						else if ($restriction->restriction == 'view' && $restriction->method == 'addView')
-							$found = true;
-						else if ($restriction->restriction == 'view' && $restriction->method == 'removeView')
-							$found = true;
-						else if ($restriction->restriction == 'view' && $restriction->method == 'updateViewLayout')
-							$found = true;
-
-					if (!$found)
-						foreach ($index['HOOK'] as $hookidx) {
-							$category = $vals[$hookidx]['attributes']['RESTRICTION'];
-							$method = $vals[$hookidx]['attributes']['METHOD'];
-							if ($restriction->restriction == $category &&
-								(empty($restriction->method) || $restriction->method == $method)) {
-								$found = true;
-								break;
-							}
-						}
+					//if (!$found)
+					//	foreach ($index['HOOK'] as $hookidx) {
+					//		$category = $vals[$hookidx]['attributes']['RESTRICTION'];
+					//		$method = $vals[$hookidx]['attributes']['METHOD'];
+					//		if ($restriction->restriction == $category &&
+					//			(empty($restriction->method) || $restriction->method == $method)) {
+					//			$found = true;
+					//			break;
+					//		}
+					//	}
 
 					if (!$found) {
 						$name = $restriction->restriction . '/' . $restriction->method;
