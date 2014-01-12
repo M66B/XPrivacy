@@ -176,6 +176,14 @@
 	<Hook restriction="phone" method="Srv.getDataNetworkType" permissions="" sdk="10" />
 	<Hook restriction="phone" method="Srv.getActivePhoneType" permissions="" sdk="10" />
 
+	<Hook restriction="phone" method="gsm.operator.iso-country" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.operator.numeric" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.operator.alpha" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.current.phone-type" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.sim.operator.iso-country" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.sim.operator.numeric" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.sim.operator.alpha" permissions="" sdk="10" />
+
 	<Hook restriction="sensors" method="getDefaultSensor" permissions="" sdk="3" />
 	<Hook restriction="sensors" method="getSensorList" permissions="" sdk="3" />
 

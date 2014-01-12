@@ -44,7 +44,7 @@ public abstract class XHook {
 		return mMethodName;
 	}
 
-	private String getSpecifier() {
+	public String getSpecifier() {
 		return (mSpecifier == null ? mMethodName : mSpecifier);
 	}
 

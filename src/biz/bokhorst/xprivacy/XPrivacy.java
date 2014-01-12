@@ -333,8 +333,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				String restrictionName = hook.getRestrictionName();
 				if (className.equals(methodName))
 					methodName = "constructor";
-				String message = String.format("%s: hooked %s.%s/%s (%d)", packageName, className, methodName,
-						restrictionName, hookSet.size());
+				String message = String.format("%s: hooked %s.%s for %s/%s (%d)", packageName, className, methodName,
+						restrictionName, hook.getSpecifier(), hookSet.size());
 				Util.log(hook, Log.INFO, message);
 				break;
 			}
