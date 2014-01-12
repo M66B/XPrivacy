@@ -434,8 +434,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		} else if (requestCode == ACTIVITY_EXPORT) {
 			// Export
-			sharingDone();
-
 			String fileName = null;
 			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cFileName))
 				fileName = dataIntent.getStringExtra(ActivityShare.cFileName);
@@ -460,7 +458,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		} else if (requestCode == ACTIVITY_IMPORT) {
 			// Import
-			sharingDone();
 			ActivityMain.this.recreate();
 
 			String errorMessage = null;
@@ -475,7 +472,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		} else if (requestCode == ACTIVITY_IMPORT_SELECT) {
 			// Import select
 			if (resultCode == RESULT_CANCELED)
-				sharingDone();
+				;// Do nothing
 			else if (dataIntent != null)
 				try {
 					startImport(dataIntent.getData().getPath());
@@ -484,11 +481,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 
 		} else if (requestCode == ACTIVITY_SUBMIT) {
-			// Fetch
-			sharingDone();
-			if (mAppAdapter != null)
-				mAppAdapter.notifyDataSetChanged(); // Update state
-
+			// Submit
 			String errorMessage = null;
 			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
 				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
@@ -500,7 +493,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		} else if (requestCode == ACTIVITY_FETCH) {
 			// Fetch
-			sharingDone();
 			if (mAppAdapter != null)
 				mAppAdapter.notifyDataSetChanged();
 
@@ -799,19 +791,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionExport() {
-		sharingStart();
-
 		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
 		file.setType("file/*");
 		boolean multiple = Util.isIntentAvailable(ActivityMain.this, file);
 		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
 		intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(multiple));
-		startActivityForResult(intent, ACTIVITY_EXPORT);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		startActivity(intent);
 	}
 
 	private void optionImport() {
-		sharingStart();
-
 		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
 		file.setType("file/*");
 		if (Util.isIntentAvailable(ActivityMain.this, file)) {
@@ -830,6 +819,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
 		intent.putExtra(ActivityShare.cFileName, fileName);
+		intent.putExtra(ActivityShare.cInteractive, true);
 		int[] uid;
 		if (mAppAdapter == null)
 			uid = new int[0];
@@ -840,38 +830,21 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				uid[pos] = listAppInfo.get(pos).getUid();
 			intent.putExtra(ActivityShare.cUidList, uid);
 		}
-		startActivityForResult(intent, ACTIVITY_IMPORT);
+		startActivity(intent);
 	}
 
 	private void optionSubmit() {
 		if (mAppAdapter.getSelected().size() <= ActivityShare.cSubmitLimit) {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.menu_submit));
-			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					sharingStart();
-					if (mAppAdapter != null) {
-						List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
-						int[] uid = new int[listAppInfo.size()];
-						for (int pos = 0; pos < listAppInfo.size(); pos++)
-							uid[pos] = listAppInfo.get(pos).getUid();
-						Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
-						intent.putExtra(ActivityShare.cUidList, uid);
-						startActivityForResult(intent, ACTIVITY_SUBMIT);
-					}
-				}
-			});
-			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
+			if (mAppAdapter != null) {
+				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
+				int[] uid = new int[listAppInfo.size()];
+				for (int pos = 0; pos < listAppInfo.size(); pos++)
+					uid[pos] = listAppInfo.get(pos).getUid();
+				Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
+				intent.putExtra(ActivityShare.cUidList, uid);
+				intent.putExtra(ActivityShare.cInteractive, true);
+				startActivity(intent);
+			}
 		} else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(getString(R.string.app_name));
@@ -892,33 +865,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Redirect to pro page
 			Util.viewUri(this, cProUri);
 		} else {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.menu_fetch));
-			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					sharingStart();
-					if (mAppAdapter != null) {
-						List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
-						int[] uid = new int[listAppInfo.size()];
-						for (int pos = 0; pos < listAppInfo.size(); pos++)
-							uid[pos] = listAppInfo.get(pos).getUid();
-						Intent intent = new Intent(ActivityShare.ACTION_FETCH);
-						intent.putExtra(ActivityShare.cUidList, uid);
-						startActivityForResult(intent, ACTIVITY_FETCH);
-					}
-				}
-			});
-			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
+			if (mAppAdapter != null) {
+				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
+				int[] uid = new int[listAppInfo.size()];
+				for (int pos = 0; pos < listAppInfo.size(); pos++)
+					uid[pos] = listAppInfo.get(pos).getUid();
+				Intent intent = new Intent(ActivityShare.ACTION_FETCH);
+				intent.putExtra(ActivityShare.cUidList, uid);
+				intent.putExtra(ActivityShare.cInteractive, true);
+				startActivity(intent);
+			}
 		}
 	}
 
@@ -1689,20 +1645,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	// Share operations progress listener
-
-	private void sharingStart() {
-		mBatchOpRunning = true;
-		invalidateOptionsMenu();
-	}
-
-	private void sharingDone() {
-		// Re-enable menu items
-		mBatchOpRunning = false;
-		invalidateOptionsMenu();
-		// Keep done message for after UI recreation
-		TextView tvState = (TextView) findViewById(R.id.tvState);
-		mSharingState = (String) tvState.getText();
-	}
 
 	private BroadcastReceiver progressListener = new BroadcastReceiver() {
 		@Override

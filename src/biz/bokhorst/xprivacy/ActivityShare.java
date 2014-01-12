@@ -57,23 +57,28 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ActivityShare extends Activity {
 	private LocalBroadcastManager mBroadcastManager;
 	private int mThemeId;
-	private int[] mUids;
 	private AppListAdapter mAppAdapter;
 	private int mCurrent;
+	private boolean mRunning = false;
+	private boolean mAbort = false;
 
 	private static final int STATE_WAITING = 0;
 	private static final int STATE_RUNNING = 1;
@@ -90,7 +95,7 @@ public class ActivityShare extends Activity {
 	public static final String cProgressValue = "ProgressValue";
 	public static final String cProgressMax = "ProgressMax";
 
-	public static final int cSubmitLimit = 10;
+	public static final int cSubmitLimit = 2;
 
 	public static final String ACTION_EXPORT = "biz.bokhorst.xprivacy.action.EXPORT";
 	public static final String ACTION_IMPORT = "biz.bokhorst.xprivacy.action.IMPORT";
@@ -116,14 +121,15 @@ public class ActivityShare extends Activity {
 		super.onCreate(savedInstanceState);
 
 		final Bundle extras = getIntent().getExtras();
-		mUids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
+		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 
 		mBroadcastManager = LocalBroadcastManager.getInstance(this);
 
 		final String action = getIntent().getAction();
+		Util.log(null, Log.WARN, "interactive "+extras.getBoolean(cInteractive));
 
 		// check whether we need a ui, if not, leave the theme declared in the manifest
-		if (extras.containsKey(cInteractive)) {
+		if (extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false)) {
 			// Set theme
 			String themeName = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingTheme, "", false);
 			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
@@ -135,17 +141,78 @@ public class ActivityShare extends Activity {
 			setTitle(getString(R.string.app_name));
 
 			if (action.equals(ACTION_IMPORT) || action.equals(ACTION_FETCH)) {
-				if (Util.hasProLicense(this) == null) {
-					// TODO it might be nice to show this in a WebView
-					Util.viewUri(this, ActivityMain.cProUri);
-					// I hope this doesn't interfere with the viewing
+				if (Util.hasProLicense(this) == null)
 					finish();
-				}
-			} else {
-				// Start task to get app list
-				AppListTask appListTask = new AppListTask();
-				appListTask.executeOnExecutor(mExecutor, mUids);
 			}
+
+			// Start task to get app list
+			AppListTask appListTask = new AppListTask();
+			appListTask.executeOnExecutor(mExecutor, uids);
+
+			// Set button actions
+			final Button btnOk = (Button) findViewById(R.id.btnOk);
+			final Button btnCancel = (Button) findViewById(R.id.btnCancel);
+			
+			btnOk.setOnClickListener(new Button.OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					btnOk.setEnabled(false);
+
+					// Import
+					if (action.equals(ACTION_IMPORT)) {
+						String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
+								: getFileName(false));
+						new ImportTask().executeOnExecutor(mExecutor, new File(fileName), uids);
+						setTitle(getString(R.string.menu_import));
+					}
+
+					// Export
+					else if (action.equals(ACTION_EXPORT)) {
+						String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
+								: getFileName(false));
+						new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
+						setTitle(getString(R.string.menu_export));
+					}
+
+					// Fetch
+					else if (action.equals(ACTION_FETCH)) {
+						if (uids.length > 0) {
+							new FetchTask().executeOnExecutor(mExecutor, uids);
+							setTitle(getString(R.string.menu_fetch));
+						}
+					}
+
+					// Submit
+					else if (action.equals(ACTION_SUBMIT)) {
+						if (uids.length > 0) {
+							if (uids.length <= cSubmitLimit) {
+								new SubmitTask().executeOnExecutor(mExecutor, uids);
+								setTitle(getString(R.string.menu_submit));
+							} else {
+								String message = getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1);
+								Toast.makeText(ActivityShare.this, message, Toast.LENGTH_SHORT).show();
+								btnOk.setEnabled(false);
+							}
+						}
+					}
+				}
+			});
+
+			btnCancel.setOnClickListener(new Button.OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					if (mRunning) {
+						// TODO signal abort and show a Toast
+					} else {
+						finish();
+					}
+				}
+			});
+
+			// Allow users to remove apps from list
+			ListView lvShare = (ListView) findViewById(R.id.lvShare);
+			registerForContextMenu(lvShare);
+
 		} else {
 			// If action is EXPORT, do it
 			String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
@@ -153,65 +220,33 @@ public class ActivityShare extends Activity {
 			new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
 			setTitle(getString(R.string.menu_export));
 		}
+	}
 
-		// Set button actions
-		final Button btnOk = (Button) findViewById(R.id.btnOk);
-		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
-		
-		btnOk.setOnClickListener(new Button.OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				// TODO change ok button text to "Abort" and disable the cancel button
-				btnOk.setEnabled(false);
-				btnCancel.setEnabled(false);
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
 
-				// Import
-				if (action.equals(ACTION_IMPORT)) {
-					String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-							: getFileName(false));
-					new ImportTask().executeOnExecutor(mExecutor, new File(fileName), mUids);
-					setTitle(getString(R.string.menu_import));
-				}
+		if (v.getId() == R.id.lvShare) {
+			menu.add("Exclude"); // TODO string resource
+		}
+	}
 
-				// Export
-				else if (action.equals(ACTION_EXPORT)) {
-					String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-							: getFileName(false));
-					new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
-					setTitle(getString(R.string.menu_export));
-				}
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		if (!mRunning && item.getTitle().equals("Exclude")) { // TODO string resource
+			// remove app from list
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+			mAppAdapter.remove(mAppAdapter.getItem(info.position));
+			// TODO remove from mUids too
 
-				// Fetch
-				else if (action.equals(ACTION_FETCH)) {
-					if (mUids.length > 0) {
-						new FetchTask().executeOnExecutor(mExecutor, mUids);
-						setTitle(getString(R.string.menu_fetch));
-					}
-				}
-
-				// Submit
-				else if (action.equals(ACTION_SUBMIT)) {
-					if (mUids.length > 0) {
-						if (mUids.length <= cSubmitLimit) {
-							new SubmitTask().executeOnExecutor(mExecutor, mUids);
-							setTitle(getString(R.string.menu_submit));
-						} else {
-							Intent intent = new Intent();
-							intent.putExtra(cErrorMessage, getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
-							setResult(1, intent);
-							finish();
-						}
-					}
-				}
+			if (mAppAdapter.getCount() < cSubmitLimit + 1 && getTitle().equals(getString(R.string.menu_submit))) {
+					Button btnOk = (Button) findViewById(R.id.btnOk);
+					btnOk.setEnabled(true);
 			}
-		});
-
-		btnOk.setOnClickListener(new Button.OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+			return true;
+		} else {
+			return super.onContextItemSelected(item);
+		}
 	}
 
 	// App info and share state
@@ -219,7 +254,7 @@ public class ActivityShare extends Activity {
 	private class AppHolder {
 		public int state = STATE_WAITING;
 		public ApplicationInfoEx appInfo;
-		public String errorMessage = "";
+		public String message = null;
 
 		public AppHolder(int uid) throws NameNotFoundException {
 			appInfo = new ApplicationInfoEx(ActivityShare.this, uid);
@@ -234,13 +269,6 @@ public class ActivityShare extends Activity {
 
 		public AppListAdapter(Context context, int resource, List<AppHolder> objects) {
 			super(context, resource, objects);
-			this.addAll(objects);
-		}
-
-		public void showStats() {
-			TextView tvStats = (TextView) findViewById(R.id.tvStats);
-			String stats = String.format("%d/%d", mCurrent, this.getCount());
-			tvStats.setText(stats);
 		}
 
 		private class ViewHolder {
@@ -250,16 +278,16 @@ public class ActivityShare extends Activity {
 			public TextView tvName;
 			public ImageView imgResult;
 			public ProgressBar pbRunning;
-			public TextView tvError;
+			public TextView tvMessage;
 
 			public ViewHolder(View theRow, int thePosition) {
 				row = theRow;
 				position = thePosition;
 				imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
-				tvName = (TextView) row.findViewById(R.id.tvName);
+				tvName = (TextView) row.findViewById(R.id.tvApp);
 				imgResult = (ImageView) row.findViewById(R.id.imgResult);
 				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
-				tvError = (TextView) row.findViewById(R.id.tvError);
+				tvMessage = (TextView) row.findViewById(R.id.tvMessage);
 			}
 		}
 
@@ -267,7 +295,7 @@ public class ActivityShare extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.mainentry, null);
+				convertView = mInflater.inflate(R.layout.shareentry, null);
 				holder = new ViewHolder(convertView, position);
 				convertView.setTag(holder);
 			} else {
@@ -293,28 +321,31 @@ public class ActivityShare extends Activity {
 			holder.tvName.setText(xApp.appInfo.toString());
 
 			// Show app share state
+			holder.tvMessage.setText("");
 			switch (xApp.state) {
 			case STATE_WAITING:
-				holder.imgResult.setVisibility(View.GONE);
-				holder.pbRunning.setVisibility(View.GONE);
-				holder.tvError.setText("");
+				holder.imgResult.setVisibility(View.INVISIBLE);
+				holder.pbRunning.setVisibility(View.INVISIBLE);
 				break;
 			case STATE_RUNNING:
-				holder.imgResult.setVisibility(View.GONE);
+				holder.imgResult.setVisibility(View.INVISIBLE);
 				holder.pbRunning.setVisibility(View.VISIBLE);
-				holder.tvError.setText("");
+				if (xApp.message != null)
+					holder.tvMessage.setText(xApp.message);
 				break;
 			case STATE_SUCCESS:
 				// TODO holder.imgResult.setDrawableResource(R.drawable.share_success);
 				holder.imgResult.setVisibility(View.VISIBLE);
-				holder.pbRunning.setVisibility(View.GONE);
-				holder.tvError.setText("");
+				holder.pbRunning.setVisibility(View.INVISIBLE);
+				if (xApp.message != null)
+					holder.tvMessage.setText(xApp.message);
 				break;
 			case STATE_FAILURE:
 				// TODO holder.imgResult.setDrawableResource(R.drawable.share_failure);
 				holder.imgResult.setVisibility(View.VISIBLE);
-				holder.pbRunning.setVisibility(View.GONE);
-				holder.tvError.setText(xApp.errorMessage);
+				holder.pbRunning.setVisibility(View.INVISIBLE);
+				if (xApp.message != null)
+					holder.tvMessage.setText(xApp.message);
 				break;
 			}
 
@@ -330,11 +361,12 @@ public class ActivityShare extends Activity {
 		@Override
 		protected List<AppHolder> doInBackground(int[]... params) {
 			List<AppHolder> apps = new ArrayList<AppHolder>();
+			Util.log(null, Log.WARN, "getting list "+params[0].length);
 			for (int i = 0; i < params[0].length; i++) {
 				try {
 					apps.add(new AppHolder(params[0][i]));
 				} catch (NameNotFoundException ex) {
-					// Skip this app
+					Util.bug(null, ex);
 				}
 			}
 
@@ -360,6 +392,7 @@ public class ActivityShare extends Activity {
 			super.onPostExecute(listApp);
 
 			// Display app list
+			Util.log(null, Log.WARN, "got apps "+listApp.size());
 			mAppAdapter = new AppListAdapter(ActivityShare.this, R.layout.shareentry, listApp);
 			ListView lvShare = (ListView) findViewById(R.id.lvShare);
 			lvShare.setAdapter(mAppAdapter);
