@@ -292,7 +292,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			if (hookClass == null) {
 				String message = String.format("%s: class not found: %s", AndroidAppHelper.currentPackageName(),
 						hook.getClassName());
-				Util.logData(hook, Log.WARN, message);
+				Util.log(hook, Log.WARN, message);
 				return;
 			}
 
@@ -317,7 +317,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			if (hookSet.isEmpty()) {
 				String message = String.format("%s: method not found: %s.%s", AndroidAppHelper.currentPackageName(),
 						hookClass.getName(), hook.getMethodName());
-				Util.logData(hook, Log.WARN, message);
+				Util.log(hook, Log.WARN, message);
 				return;
 			}
 
@@ -331,11 +331,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					methodName = "constructor";
 				String message = String.format("%s: hooked %s.%s/%s (%d)", packageName, className, methodName,
 						restrictionName, hookSet.size());
-				Util.logData(hook, Log.INFO, message);
+				Util.log(hook, Log.WARN, message);
 				break;
 			}
 		} catch (Throwable ex) {
-			Util.bugData(null, ex);
+			Util.bug(null, ex);
 		}
 	}
 }
