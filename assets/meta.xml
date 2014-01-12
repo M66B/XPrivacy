@@ -46,8 +46,8 @@
 	<Hook restriction="identification" method="%macaddr" permissions="" sdk="10" />
 	<Hook restriction="identification" method="%serialno" permissions="" sdk="10" />
 	<Hook restriction="identification" method="%cid" permissions="" sdk="10" />
-	<Hook restriction="identification" method="/proc" dangerous="true" permissions="" sdk="10" />
-	<Hook restriction="identification" method="/system/build.prop" dangerous="true" permissions="" sdk="10" />
+	<Hook restriction="identification" method="/proc" dangerous="true" from="1.7" permissions="" sdk="10" />
+	<Hook restriction="identification" method="/system/build.prop" dangerous="true" from="1.9.9" permissions="" sdk="10" />
 	<Hook restriction="identification" method="/sys/block/.../cid" permissions="" sdk="10" />
 	<Hook restriction="identification" method="/sys/class/.../cid" permissions="" sdk="10" />
 	<Hook restriction="identification" method="AdvertisingId" permissions="" sdk="10" />
@@ -71,11 +71,6 @@
 	<Hook restriction="internet" method="isConnectedOrConnecting" sdk="10" />
 	<Hook restriction="internet" method="getConnectionInfo" sdk="10" />
 
-	<Hook restriction="location" method="disableLocationUpdates" permissions="CONTROL_LOCATION_UPDATES" sdk="10" />
-	<Hook restriction="location" method="enableLocationUpdates" permissions="CONTROL_LOCATION_UPDATES" sdk="10" />
-	<Hook restriction="location" method="getCellLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="10" />
-	<Hook restriction="location" method="getNeighboringCellInfo" permissions="ACCESS_COARSE_UPDATES,ACCESS_FINE_LOCATION" sdk="10" />
-	<Hook restriction="location" method="getAllCellInfo" permissions="ACCESS_COARSE_UPDATES,ACCESS_FINE_LOCATION" sdk="17" />
 	<Hook restriction="location" method="getScanResults" dangerous="true" permissions="ACCESS_WIFI_STATE" sdk="10" />
 
 	<Hook restriction="location" method="GMS.addGeofences" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
@@ -87,10 +82,10 @@
 
 	<Hook restriction="location" method="Srv.addGpsStatusListener" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.getLastLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
-	<Hook restriction="location" method="Srv.getProviders" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
-	<Hook restriction="location" method="Srv.getAllProviders" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
-	<Hook restriction="location" method="Srv.getBestProvider" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
-	<Hook restriction="location" method="Srv.isProviderEnabled" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+	<Hook restriction="location" method="Srv.getProviders" dangerous="true" from="1.11.8" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+	<Hook restriction="location" method="Srv.getAllProviders" dangerous="true" from="1.11.8" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+	<Hook restriction="location" method="Srv.getBestProvider" dangerous="true" from="1.11.8" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+	<Hook restriction="location" method="Srv.isProviderEnabled" dangerous="true" from="1.11.8" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.removeUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.requestGeofence" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.requestLocationUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />

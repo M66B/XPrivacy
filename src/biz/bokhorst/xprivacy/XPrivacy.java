@@ -182,8 +182,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static boolean mBluetoothAdapterHooked = false;
 	private static boolean mClipboardManagerHooked = false;
 	private static boolean mConnectivityManagerHooked = false;
+	// NFC manager
 	private static boolean mSensorManagerHooked = false;
-	private static boolean mTelephonyManagerHooked = false;
 	private static boolean mWindowManagerHooked = false;
 	private static boolean mWiFiManagerHooked = false;
 
@@ -226,12 +226,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			if (!mSensorManagerHooked) {
 				hookAll(XSensorManager.getInstances(instance));
 				mSensorManagerHooked = true;
-			}
-		} else if (name.equals(Context.TELEPHONY_SERVICE)) {
-			// Telephony manager
-			if (!PrivacyManager.cTestVersion && !mTelephonyManagerHooked) {
-				hookAll(XTelephonyManager.getInstances(instance));
-				mTelephonyManagerHooked = true;
 			}
 		} else if (name.equals(Context.WINDOW_SERVICE)) {
 			// Window manager

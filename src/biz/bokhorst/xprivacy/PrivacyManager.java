@@ -173,6 +173,7 @@ public class PrivacyManager {
 				String restart = attributes.getValue("restart");
 				String permissions = attributes.getValue("permissions");
 				int sdk = (attributes.getValue("sdk") == null ? 0 : Integer.parseInt(attributes.getValue("sdk")));
+				String from = attributes.getValue("from");
 
 				// Add meta data
 				if (Build.VERSION.SDK_INT >= sdk) {
@@ -180,7 +181,7 @@ public class PrivacyManager {
 					boolean restartRequired = (restart == null ? false : Boolean.parseBoolean(restart));
 					String[] permission = (permissions == null ? null : permissions.split(","));
 					MethodDescription md = new MethodDescription(restrictionName, methodName, danger, restartRequired,
-							permission, sdk);
+							permission, sdk, from == null ? null : new Version(from));
 
 					if (!mMethod.containsKey(restrictionName))
 						mMethod.put(restrictionName, new ArrayList<MethodDescription>());
@@ -1262,6 +1263,7 @@ public class PrivacyManager {
 		private boolean mRestart;
 		private String[] mPermissions;
 		private int mSdk;
+		private Version mFrom;
 
 		public MethodDescription(String restrictionName, String methodName) {
 			mRestrictionName = restrictionName;
@@ -1269,13 +1271,14 @@ public class PrivacyManager {
 		}
 
 		public MethodDescription(String restrictionName, String methodName, boolean dangerous, boolean restart,
-				String[] permissions, int sdk) {
+				String[] permissions, int sdk, Version from) {
 			mRestrictionName = restrictionName;
 			mMethodName = methodName;
 			mDangerous = dangerous;
 			mRestart = restart;
 			mPermissions = permissions;
 			mSdk = sdk;
+			mFrom = from;
 		}
 
 		public String getRestrictionName() {
@@ -1307,6 +1310,10 @@ public class PrivacyManager {
 			return mSdk;
 		}
 
+		public Version getFrom() {
+			return mFrom;
+		}
+
 		@Override
 		public int hashCode() {
 			return (mRestrictionName.hashCode() ^ mMethodName.hashCode());
@@ -1322,6 +1329,11 @@ public class PrivacyManager {
 		public int compareTo(MethodDescription another) {
 			int x = mRestrictionName.compareTo(another.mRestrictionName);
 			return (x == 0 ? mMethodName.compareTo(another.mMethodName) : x);
+		}
+
+		@Override
+		public String toString() {
+			return String.format("%s/%s", mRestrictionName, mMethodName);
 		}
 	}
 
