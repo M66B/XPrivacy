@@ -23,7 +23,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed usage data with a dot in the name
 * Added an easter egg (don't ask)
 * Added cell location restrictions within the phone process
-* Added phone/network type restrictions with the phone process
+* Added phone/network type restrictions within the phone process
 * Added phone property restrictions (static phone info)
 * Added phone registry restrictions (phone state listener)
 * Added phone sub info restrictions (volatile phone info)
