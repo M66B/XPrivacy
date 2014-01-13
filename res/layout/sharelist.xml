@@ -19,6 +19,14 @@
         android:layout_alignParentLeft="true"
         android:background="?android:attr/colorActivatedHighlight" />
 
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vShareProgressFull"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/llButtons"
         android:layout_width="match_parent"
@@ -47,7 +55,7 @@
         android:id="@+id/lvShare"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/vShareProgressFull"
+        android:layout_below="@id/tvDescription"
         android:layout_above="@id/llButtons" />
 
 </RelativeLayout>

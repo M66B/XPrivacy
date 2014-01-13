@@ -78,8 +78,10 @@ import android.widget.Toast;
 public class ActivityShare extends Activity {
 	private int mThemeId;
 	private AppListAdapter mAppAdapter;
+	private Map<Integer, AppHolder> mAppsByUid;
 	private boolean mRunning = false;
 	private boolean mAbort = false;
+	private int mProgressCurrent;
 	private int mProgressWidth = 0;
 
 	private static final int STATE_WAITING = 0;
@@ -152,10 +154,17 @@ public class ActivityShare extends Activity {
 					finish();
 			}
 
+			final String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
+					: getFileName(false));
+
 			// Start task to get app list, but not if action is EXPORT
 			if (!action.equals(ACTION_EXPORT)) {
 				AppListTask appListTask = new AppListTask();
 				appListTask.executeOnExecutor(mExecutor, uids);
+			} else {
+				TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+				tvDescription.setText("Backup all settings to " + fileName);
+				tvDescription.setVisibility(View.VISIBLE);
 			}
 
 			// Set button actions
@@ -173,15 +182,11 @@ public class ActivityShare extends Activity {
 
 					// Import
 					if (action.equals(ACTION_IMPORT)) {
-						String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-								: getFileName(false));
 						new ImportTask().executeOnExecutor(mExecutor, new File(fileName), uids);
 					}
 
 					// Export
 					else if (action.equals(ACTION_EXPORT)) {
-						String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-								: getFileName(false));
 						new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
 					}
 
@@ -282,9 +287,13 @@ public class ActivityShare extends Activity {
 	@SuppressLint("DefaultLocale")
 	private class AppListAdapter extends ArrayAdapter<AppHolder> {
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		private List<AppHolder> mAppsWaiting;
+		private List<AppHolder> mAppsDone;
 
 		public AppListAdapter(Context context, int resource, List<AppHolder> objects) {
 			super(context, resource, objects);
+			mAppsWaiting.addAll(objects);
+			mAppsDone = new ArrayList<AppHolder>();
 			// TODO sort according to preferences
 			// TODO add sort options to actionbar just like in ActivityMain
 		}
@@ -295,6 +304,23 @@ public class ActivityShare extends Activity {
 				uids[i] = this.getItem(i).appInfo.getUid();
 			}
 			return uids;
+		}
+
+		public void setState(int uid, int state) {
+			AppHolder app = mAppsByUid.get(uid);
+			// Make sure apps done or in progress are listed first
+			// All operations except importing, treat the apps in the listed order
+			if (getTitle().equals(getString(R.string.menu_import))) {
+				mAppsWaiting.remove(app);
+				mAppsDone.add(app);
+				this.setNotifyOnChange(false);
+				this.clear();
+				this.addAll(mAppsDone);
+				this.addAll(mAppsWaiting);
+			}
+			// Set state for this app
+			app.state = state;
+			notifyDataSetChanged();
 		}
 
 		private class ViewHolder {
@@ -394,7 +420,10 @@ public class ActivityShare extends Activity {
 			// We should probably add a Toast in those cases. "Adding all non-system apps" or "Adding all apps" 
 			for (int i = 0; i < params[0].length; i++) {
 				try {
-					apps.add(new AppHolder(params[0][i]));
+					int uid = params[0][i];
+					AppHolder app = new AppHolder(uid);
+					apps.add(app);
+					mAppsByUid.put(uid, app);
 				} catch (NameNotFoundException ex) {
 					Util.bug(null, ex);
 				}
@@ -437,7 +466,6 @@ public class ActivityShare extends Activity {
 
 	private class ExportTask extends AsyncTask<File, Integer, String> {
 		private File mFile;
-		private int mProgressCurrent;
 
 		@Override
 		protected String doInBackground(File... params) {
@@ -565,7 +593,6 @@ public class ActivityShare extends Activity {
 
 	private class ImportTask extends AsyncTask<Object, Integer, String> {
 		private File mFile;
-		private int mProgressCurrent;
 
 		@Override
 		protected String doInBackground(Object... params) {
@@ -794,7 +821,6 @@ public class ActivityShare extends Activity {
 	}
 
 	private class FetchTask extends AsyncTask<int[], Integer, String> {
-		private int mProgressCurrent;
 
 		@Override
 		@SuppressLint("DefaultLocale")
@@ -927,7 +953,6 @@ public class ActivityShare extends Activity {
 
 	@SuppressLint("DefaultLocale")
 	private class SubmitTask extends AsyncTask<int[], Integer, String> {
-		private int mProgressCurrent;
 
 		@Override
 		protected String doInBackground(int[]... params) {
