@@ -20,7 +20,7 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XLocationManagerService extends XHook {
 	private Methods mMethod;
-	private static final Map<ILocationListener, XILocationListener> mListener = new WeakHashMap<ILocationListener, XILocationListener>();
+	private static final Map<IBinder, XILocationListener> mListener = new WeakHashMap<IBinder, XILocationListener>();
 
 	private XLocationManagerService(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), String.format("Srv.%s", method.name()));
@@ -123,37 +123,39 @@ public class XLocationManagerService extends XHook {
 	}
 
 	private void replaceLocationListener(MethodHookParam param) throws Throwable {
-		if (param.args.length > 1 && param.args[1] != null) {
-			if (param.args[1] instanceof ILocationListener && !(param.args[1] instanceof XILocationListener)) {
+		if (param.args.length > 1 && param.args[1] != null)
+			if (param.args[1] instanceof ILocationListener) {
+				// Replace
 				ILocationListener listener = (ILocationListener) param.args[1];
-				if (listener != null) {
-					XILocationListener xListener = new XILocationListener(listener);
-					synchronized (mListener) {
-						mListener.put(listener, xListener);
-						Util.log(this, Log.INFO, "Added count=" + mListener.size());
-					}
-					param.args[1] = xListener;
+				XILocationListener xListener = new XILocationListener(listener);
+				synchronized (mListener) {
+					mListener.put(listener.asBinder(), xListener);
+					Util.log(this, Log.WARN, "Added class=" + listener.getClass().getName() + " method=" + param.method
+							+ " count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 				}
-			}
-		} else
-			param.setResult(null);
+				param.args[1] = xListener;
+			} else
+				Util.log(this, Log.WARN, "Unexpected method=" + param.method + " uid=" + Binder.getCallingUid());
 	}
 
 	private void removeLocationListener(MethodHookParam param) {
 		if (param.args.length > 0 && param.args[0] != null)
-			if (ILocationListener.class.isAssignableFrom(param.args[0].getClass())) {
+			if (param.args[0] instanceof ILocationListener) {
 				ILocationListener listener = (ILocationListener) param.args[0];
 				synchronized (mListener) {
-					XILocationListener xlistener = mListener.get(listener);
+					XILocationListener xlistener = mListener.get(listener.asBinder());
 					if (xlistener == null)
-						Util.log(this, Log.WARN, "Not found count=" + mListener.size());
+						Util.log(this, Log.WARN, "Unknown class=" + listener.getClass().getName() + " method="
+								+ param.method + " count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 					else {
 						param.args[0] = xlistener;
-						mListener.remove(listener);
+						mListener.remove(listener.asBinder());
+						Util.log(this, Log.WARN, "Removed class=" + listener.getClass().getName() + " method="
+								+ param.method + " count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 					}
 				}
 			} else
-				param.setResult(null);
+				Util.log(this, Log.WARN, "Unexpected method=" + param.method + " uid=" + Binder.getCallingUid());
 	}
 
 	private class XILocationListener implements ILocationListener {

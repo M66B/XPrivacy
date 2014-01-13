@@ -22,7 +22,7 @@ import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XTelephonyRegistry extends XHook {
 	private Methods mMethod;
-	private static final Map<IPhoneStateListener, XIPhoneStateListener> mListener = new WeakHashMap<IPhoneStateListener, XIPhoneStateListener>();
+	private static final Map<IBinder, XIPhoneStateListener> mListener = new WeakHashMap<IBinder, XIPhoneStateListener>();
 
 	private XTelephonyRegistry(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), String.format("Srv.%s", method.name()));
@@ -59,42 +59,46 @@ public class XTelephonyRegistry extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (mMethod == Methods.listen)
-			replacePhoneStateListener(param);
-		else
+		if (mMethod == Methods.listen) {
+			if (isRestricted(param))
+				replacePhoneStateListener(param);
+		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	private void replacePhoneStateListener(MethodHookParam param) throws Throwable {
 		if (param.args.length > 2 && param.args[1] != null)
-			if (!(param.args[1] instanceof XIPhoneStateListener))
-				if (param.args[1] instanceof IPhoneStateListener) {
-					if (isRestricted(param)) {
-						int event = (Integer) param.args[2];
-						IPhoneStateListener listener = (IPhoneStateListener) param.args[1];
-						if (event == android.telephony.PhoneStateListener.LISTEN_NONE) {
-							// Remove
-							synchronized (mListener) {
-								XIPhoneStateListener xlistener = mListener.get(listener);
-								if (xlistener == null)
-									Util.log(this, Log.WARN, "Not found count=" + mListener.size());
-								else {
-									param.args[1] = xlistener;
-									mListener.remove(listener);
-								}
-							}
-						} else {
-							// Replace
-							XIPhoneStateListener xListener = new XIPhoneStateListener(listener);
-							synchronized (mListener) {
-								mListener.put(listener, xListener);
-								Util.log(this, Log.INFO, "Added count=" + mListener.size());
-							}
-							param.args[1] = xListener;
+			if (param.args[1] instanceof IPhoneStateListener) {
+				int event = (Integer) param.args[2];
+				IPhoneStateListener listener = (IPhoneStateListener) param.args[1];
+				if (event == android.telephony.PhoneStateListener.LISTEN_NONE) {
+					// Remove
+					synchronized (mListener) {
+						XIPhoneStateListener xlistener = mListener.get(listener.asBinder());
+						if (xlistener == null)
+							Util.log(this, Log.WARN, "Unknown class=" + listener.getClass().getName() + " method="
+									+ param.method + " count=" + mListener.size() + " uid=" + Binder.getCallingUid());
+						else {
+							param.args[1] = xlistener;
+							mListener.remove(listener.asBinder());
+							Util.log(this, Log.WARN, "Removed class=" + listener.getClass().getName() + " method="
+									+ param.method + " count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 						}
 					}
-				} else
-					Util.log(this, Log.WARN, "method=" + param.method);
+				} else {
+					// Replace
+					if (!(param.args[1] instanceof XIPhoneStateListener)) {
+						XIPhoneStateListener xListener = new XIPhoneStateListener(listener);
+						synchronized (mListener) {
+							mListener.put(listener.asBinder(), xListener);
+							Util.log(this, Log.WARN, "Added class=" + listener.getClass().getName() + " method="
+									+ param.method + " count=" + mListener.size() + " uid=" + Binder.getCallingUid());
+						}
+						param.args[1] = xListener;
+					}
+				}
+			} else
+				Util.log(this, Log.WARN, "Unexpected method=" + param.method + " uid=" + Binder.getCallingUid());
 	}
 
 	@Override
