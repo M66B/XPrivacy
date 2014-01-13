@@ -81,7 +81,7 @@ public class Util {
 	}
 
 	public static void logStack(XHook hook) {
-		log(hook, Log.INFO, Log.getStackTraceString(new Exception("StackTrace")));
+		log(hook, Log.WARN, Log.getStackTraceString(new Exception("StackTrace")));
 	}
 
 	public static File getDataFile() {

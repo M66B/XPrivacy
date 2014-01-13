@@ -283,10 +283,10 @@ public class PrivacyManager {
 
 			if (usage)
 				if (methodName == null || methodName.equals("")) {
-					Util.log(hook, Log.WARN, "method empty");
+					Util.log(hook, Log.WARN, "Method empty");
 					Util.logStack(hook);
 				} else if (getMethods(restrictionName).indexOf(new MethodDescription(restrictionName, methodName)) < 0)
-					Util.log(hook, Log.WARN, "unknown method=" + methodName);
+					Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
 			// Check cache
 			String keyCache = String.format("%d.%s.%s", uid, restrictionName, methodName);

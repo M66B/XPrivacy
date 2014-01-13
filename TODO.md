@@ -11,6 +11,7 @@ For interested developers:
 * Secure usage data
 * Manage packages for services, providers, etc
 * Close app view when packages removed
+* Hook location intents
 
 * Split settings file?
 * Remove indeterminate progress indicator?

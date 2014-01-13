@@ -16,6 +16,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Fixed restricting locations for some Android versions ([issue](https://github.com/M66B/XPrivacy/issues/1102))
 * Fixed removing location and phone state listener
 * Fixed fake value for sim operator name
 

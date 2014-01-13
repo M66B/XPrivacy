@@ -1,26 +1,30 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
 import android.content.Context;
-import android.location.ILocationListener;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.IBinder;
+import android.os.IInterface;
+import android.os.Process;
 import android.util.Log;
 
+import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XLocationManagerService extends XHook {
 	private Methods mMethod;
-	private static final Map<IBinder, XILocationListener> mListener = new WeakHashMap<IBinder, XILocationListener>();
+	private static boolean mHooked = false;
+	private static Map<IBinder, Integer> mListenerUid = new WeakHashMap<IBinder, Integer>();
 
 	private XLocationManagerService(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), String.format("Srv.%s", method.name()));
@@ -68,7 +72,7 @@ public class XLocationManagerService extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(final MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.addGpsStatusListener) {
 			if (isRestricted(param))
 				param.setResult(false);
@@ -76,11 +80,62 @@ public class XLocationManagerService extends XHook {
 			if (isRestricted(param))
 				param.setResult(null);
 		} else if (mMethod == Methods.removeUpdates) {
-			if (isRestricted(param))
-				removeLocationListener(param);
+			if (param.args.length > 0 && param.args[0] != null) {
+				IBinder binder = ((IInterface) param.args[0]).asBinder();
+				synchronized (mListenerUid) {
+					if (mListenerUid.containsKey(binder))
+						mListenerUid.remove(binder);
+					else
+						Util.log(this, Log.WARN, "Remove: listener not found");
+				}
+			}
 		} else if (mMethod == Methods.requestLocationUpdates) {
-			if (isRestricted(param))
-				replaceLocationListener(param);
+			if (param.args.length > 1 && param.args[1] != null) {
+				if (param.args[1].getClass().getName().startsWith("android.location.ILocationListener")) {
+					int uid = Binder.getCallingUid();
+					IBinder binder = ((IInterface) param.args[1]).asBinder();
+					synchronized (mListenerUid) {
+						mListenerUid.put(binder, uid);
+					}
+
+					if (!mHooked) {
+						hookOnLocationChanged(param);
+						mHooked = true;
+					}
+				}
+			} else if (param.args.length > 2 && param.args[2] != null) {
+				// TODO: hook intent
+				if (isRestricted(param))
+					param.setResult(null);
+			}
+		}
+	}
+
+	private void hookOnLocationChanged(final MethodHookParam param) {
+		try {
+			Method on = param.args[1].getClass().getDeclaredMethod("onLocationChanged", Location.class);
+			XposedBridge.hookMethod(on, new XC_MethodHook() {
+				@Override
+				protected void beforeHookedMethod(MethodHookParam onparam) throws Throwable {
+					int uid = 0;
+					IBinder binder = ((IInterface) onparam.thisObject).asBinder();
+					synchronized (mListenerUid) {
+						if (mListenerUid.containsKey(binder))
+							uid = mListenerUid.get(binder);
+						else
+							Util.log(XLocationManagerService.this, Log.WARN, "Get: listener not found");
+					}
+
+					if (uid > 0 && onparam.args.length > 0 && onparam.args[0] != null) {
+						Location location = (Location) onparam.args[0];
+						if (location != null && isRestricted(param, uid))
+							onparam.args[0] = PrivacyManager.getDefacedLocation(uid, location);
+					}
+				}
+			});
+			Util.log(this, Log.WARN, "Hooked " + on + " uid=" + Process.myUid());
+		} catch (Throwable ex) {
+			Util.bug(this, ex);
 		}
 	}
 
@@ -90,9 +145,8 @@ public class XLocationManagerService extends XHook {
 				&& mMethod != Methods.removeUpdates && mMethod != Methods.requestLocationUpdates)
 			if (mMethod == Methods.getLastLocation) {
 				Location location = (Location) param.getResult();
-				if (location != null)
-					if (isRestricted(param))
-						param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
+				if (location != null && isRestricted(param))
+					param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
 			} else if (mMethod == Methods.isProviderEnabled) {
 				if (isRestricted(param))
 					param.setResult(false);
@@ -111,85 +165,18 @@ public class XLocationManagerService extends XHook {
 
 	@Override
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
+		int uid = Binder.getCallingUid();
+		return isRestricted(param, uid);
+	}
+
+	private boolean isRestricted(MethodHookParam param, int uid) throws Throwable {
 		Context context = null;
 		try {
 			Field fieldContext = findField(param.thisObject.getClass(), "mContext");
 			context = (Context) fieldContext.get(param.thisObject);
 		} catch (Throwable ex) {
-			// Not all location managers do have a context
+			Util.bug(this, ex);
 		}
-		int uid = Binder.getCallingUid();
 		return getRestricted(context, uid, true);
-	}
-
-	private void replaceLocationListener(MethodHookParam param) throws Throwable {
-		if (param.args.length > 1 && param.args[1] != null)
-			if (param.args[1] instanceof ILocationListener) {
-				// Replace
-				ILocationListener listener = (ILocationListener) param.args[1];
-				XILocationListener xListener = new XILocationListener(listener);
-				synchronized (mListener) {
-					mListener.put(listener.asBinder(), xListener);
-					Util.log(this, Log.INFO, "Added class=" + listener.getClass().getName() + " method=" + param.method
-							+ " count=" + mListener.size() + " uid=" + Binder.getCallingUid());
-				}
-				param.args[1] = xListener;
-			} else
-				Util.log(this, Log.WARN, "Unexpected method=" + param.method + " uid=" + Binder.getCallingUid());
-	}
-
-	private void removeLocationListener(MethodHookParam param) {
-		if (param.args.length > 0 && param.args[0] != null)
-			if (param.args[0] instanceof ILocationListener) {
-				ILocationListener listener = (ILocationListener) param.args[0];
-				synchronized (mListener) {
-					XILocationListener xlistener = mListener.get(listener.asBinder());
-					if (xlistener == null)
-						Util.log(this, Log.WARN, "Unknown class=" + listener.getClass().getName() + " method="
-								+ param.method + " count=" + mListener.size() + " uid=" + Binder.getCallingUid());
-					else {
-						param.args[0] = xlistener;
-						mListener.remove(listener.asBinder());
-						Util.log(this, Log.INFO, "Removed class=" + listener.getClass().getName() + " method="
-								+ param.method + " count=" + mListener.size() + " uid=" + Binder.getCallingUid());
-					}
-				}
-			} else
-				Util.log(this, Log.WARN, "Unexpected method=" + param.method + " uid=" + Binder.getCallingUid());
-	}
-
-	private class XILocationListener implements ILocationListener {
-
-		private ILocationListener mLocationListener;
-
-		public XILocationListener(ILocationListener locationListener) {
-			mLocationListener = locationListener;
-		}
-
-		@Override
-		public void onLocationChanged(Location location) {
-			mLocationListener.onLocationChanged(location == null ? location : PrivacyManager.getDefacedLocation(
-					Binder.getCallingUid(), location));
-		}
-
-		@Override
-		public void onProviderDisabled(String provider) {
-			mLocationListener.onProviderDisabled(provider);
-		}
-
-		@Override
-		public void onProviderEnabled(String provider) {
-			mLocationListener.onProviderEnabled(provider);
-		}
-
-		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-			mLocationListener.onStatusChanged(provider, status, extras);
-		}
-
-		@Override
-		public IBinder asBinder() {
-			return mLocationListener.asBinder();
-		}
 	}
 }
