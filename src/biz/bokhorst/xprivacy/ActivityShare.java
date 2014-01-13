@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -20,6 +21,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
@@ -28,6 +30,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -444,10 +447,10 @@ public class ActivityShare extends Activity {
 				mFile = params[0];
 				Util.log(null, Log.INFO, "Exporting " + mFile);
 
-				FileOutputStream fos = new FileOutputStream(mFile);
+				FileOutputStream fos = new FileOutputStream(mFile); // FileNotFoundException
 				try {
 					XmlSerializer serializer = Xml.newSerializer();
-					serializer.setOutput(fos, "UTF-8");
+					serializer.setOutput(fos, "UTF-8"); // IOException, IllegalArgumentException, IllegalStateException
 					serializer.startDocument(null, Boolean.valueOf(true));
 					serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 					serializer.startTag(null, "XPrivacy");
@@ -455,7 +458,6 @@ public class ActivityShare extends Activity {
 					// Progress
 					Util.log(null, Log.INFO, "Exporting settings");
 					Runnable progress = new Runnable() {
-
 						@Override
 						public void run() {
 							// This should be called exactly 100 times
@@ -538,7 +540,13 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.getMessage();
+				// IOException, IllegalArgumentException, IllegalStateException
+				if (ex instanceof FileNotFoundException)
+					return "Cannot create file";
+				else if (ex instanceof IOException)
+					return "Error writing to file";
+				else
+					return ex.getMessage();
 			}
 		}
 
@@ -550,7 +558,6 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO short informative error messages, e.g. "Error writing to file"
 			done(result);
 			super.onPostExecute(result);
 		}
@@ -584,11 +591,11 @@ public class ActivityShare extends Activity {
 				FileInputStream fis = null;
 				Map<String, Map<String, List<ImportHandler.MethodDescription>>> mapPackage;
 				try {
-					fis = new FileInputStream(mFile);
+					fis = new FileInputStream(mFile); // FileNotFoundException
 					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
 					ImportHandler importHandler = new ImportHandler(listUidSelected, progress);
 					xmlReader.setContentHandler(importHandler);
-					xmlReader.parse(new InputSource(fis));
+					xmlReader.parse(new InputSource(fis)); // IOException, SAXException
 					mapPackage = importHandler.getPackageMap();
 				} finally {
 					if (fis != null)
@@ -629,7 +636,15 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.getMessage();
+				// FileNotFoundException, IOException, SAXException
+				if (ex instanceof FileNotFoundException)
+					return "File not found";
+				else if (ex instanceof IOException)
+					return "Error reading file";
+				else if (ex instanceof SAXException)
+					return "File is damaged";
+				else
+					return ex.getMessage();
 			}
 		}
 
@@ -641,7 +656,6 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO short informative error messages, e.g. "File not found", "Error opening file"
 			done(result);
 			super.onPostExecute(result);
 		}
@@ -662,7 +676,7 @@ public class ActivityShare extends Activity {
 		}
 
 		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) {
 			try {
 				if (qName.equals("XPrivacy")) {
 					// Ignore
@@ -789,11 +803,12 @@ public class ActivityShare extends Activity {
 				// Get data
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (int uid : params[0])
-					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
+					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid)); // NameNotFoundException
+					// This error probably should be caught here. TODO
 
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 				String[] license = Util.getProLicense();
-				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0); // NameNotFoundException
 
 				String confidence = PrivacyManager.getSetting(null, ActivityShare.this, 0,
 						PrivacyManager.cSettingConfidence, "", false);
@@ -820,7 +835,7 @@ public class ActivityShare extends Activity {
 
 						// Encode package
 						JSONObject jRoot = new JSONObject();
-						jRoot.put("protocol_version", 4);
+						jRoot.put("protocol_version", 4); // JSONException
 						jRoot.put("android_id", Util.md5(android_id).toLowerCase());
 						jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 						jRoot.put("xprivacy_version", pXPrivacyInfo.versionCode);
@@ -838,29 +853,29 @@ public class ActivityShare extends Activity {
 						HttpClient httpclient = new DefaultHttpClient(httpParams);
 
 						HttpPost httpost = new HttpPost(BASE_URL + "?format=json&action=fetch");
-						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8"))); // UnsupportedEncodingException
 						httpost.setHeader("Accept", "application/json");
 						httpost.setHeader("Content-type", "application/json");
-						HttpResponse response = httpclient.execute(httpost);
+						HttpResponse response = httpclient.execute(httpost); // ClientProtocolException
 						StatusLine statusLine = response.getStatusLine();
 
 						if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
 							// Succeeded
 							ByteArrayOutputStream out = new ByteArrayOutputStream();
-							response.getEntity().writeTo(out);
-							out.close();
+							response.getEntity().writeTo(out); // IOException
+							out.close(); // IOException
 
 							// Deserialize
-							JSONObject status = new JSONObject(out.toString("UTF-8"));
-							if (status.getBoolean("ok")) {
-								JSONArray settings = status.getJSONArray("settings");
+							JSONObject status = new JSONObject(out.toString("UTF-8")); // UnsupportedEncodingException
+							if (status.getBoolean("ok")) { // JSONException
+								JSONArray settings = status.getJSONArray("settings"); // JSONException
 								if (settings.length() > 0) {
 									// Delete existing restrictions
 									PrivacyManager.deleteRestrictions(ActivityShare.this, appInfo.getUid(), true);
 
 									// Set fetched restrictions
 									for (int i = 0; i < settings.length(); i++) {
-										JSONObject entry = settings.getJSONObject(i);
+										JSONObject entry = settings.getJSONObject(i); // JSONException
 										String restrictionName = entry.getString("restriction");
 										String methodName = entry.has("method") ? entry.getString("method") : null;
 										int voted_restricted = entry.getInt("restricted");
@@ -876,18 +891,24 @@ public class ActivityShare extends Activity {
 								} else
 									;// Mark that app as failed
 							} else
-								throw new Exception(status.getString("error"));
+								throw new Exception(status.getString("error")); // JSONException, Exception
 						} else {
 							// Failed
-							response.getEntity().getContent().close();
-							throw new IOException(statusLine.getReasonPhrase());
+							response.getEntity().getContent().close(); // IOException
+							throw new IOException(statusLine.getReasonPhrase()); // IOException
 						}
 					}
 				}
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.getMessage();
+				// NameNotFoundException, JSONException, UnsupportedEncodingException, IOException, ClientProtocolException, Exception
+				if (ex instanceof IOException || ex instanceof ClientProtocolException)
+					return "Error connecting to server";
+				else if (ex instanceof JSONException)
+					return "Bad data received";
+				else
+					return ex.getMessage();
 			}
 		}
 
@@ -899,7 +920,6 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO short informative error messages, e.g. "Connection to server failed"
 			done(result);
 			super.onPostExecute(result);
 		}
@@ -915,7 +935,8 @@ public class ActivityShare extends Activity {
 				// Get data
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (int uid : params[0])
-					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
+					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid)); // NameNotFoundException
+					// Catch this error here? TODO
 
 				// Initialize progress
 				mProgressCurrent = 0;
@@ -928,7 +949,7 @@ public class ActivityShare extends Activity {
 					boolean allowedAccounts = false;
 					AccountManager accountManager = AccountManager.get(ActivityShare.this);
 					for (Account account : accountManager.getAccounts()) {
-						String sha1 = Util.sha1(account.name + account.type);
+						String sha1 = Util.sha1(account.name + account.type); // UnsupportedEncodingException
 						boolean allowed = PrivacyManager.getSettingBool(null, ActivityShare.this, 0,
 								String.format("Account.%d.%s", appInfo.getUid(), sha1), false, false);
 						if (allowed) {
@@ -976,7 +997,7 @@ public class ActivityShare extends Activity {
 						// Category
 						long used = PrivacyManager.getUsed(ActivityShare.this, appInfo.getUid(), restrictionName, null);
 						JSONObject jRestriction = new JSONObject();
-						jRestriction.put("restriction", restrictionName);
+						jRestriction.put("restriction", restrictionName); // JSONException
 						jRestriction.put("restricted", restricted);
 						jRestriction.put("used", used);
 						if (restrictionName.equals(PrivacyManager.cAccounts))
@@ -995,7 +1016,7 @@ public class ActivityShare extends Activity {
 							long mUsed = PrivacyManager.getUsed(ActivityShare.this, appInfo.getUid(), restrictionName,
 									md.getName());
 							JSONObject jMethod = new JSONObject();
-							jMethod.put("restriction", restrictionName);
+							jMethod.put("restriction", restrictionName); // JSONException
 							jMethod.put("method", md.getName());
 							jMethod.put("restricted", mRestricted);
 							jMethod.put("used", mUsed);
@@ -1004,7 +1025,7 @@ public class ActivityShare extends Activity {
 					}
 
 					// Get data
-					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0); // NameNotFoundException
 					String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 
 					JSONArray appName = new JSONArray();
@@ -1025,7 +1046,7 @@ public class ActivityShare extends Activity {
 
 					// Encode package
 					JSONObject jRoot = new JSONObject();
-					jRoot.put("protocol_version", 4);
+					jRoot.put("protocol_version", 4); // JSONException
 					jRoot.put("android_id", Util.md5(android_id).toLowerCase());
 					jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 					jRoot.put("xprivacy_version", pInfo.versionCode);
@@ -1042,34 +1063,38 @@ public class ActivityShare extends Activity {
 					HttpClient httpclient = new DefaultHttpClient(httpParams);
 
 					HttpPost httpost = new HttpPost(ActivityShare.BASE_URL + "?format=json&action=submit");
-					httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+					httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8"))); // UnsupportedEncodingException
 					httpost.setHeader("Accept", "application/json");
 					httpost.setHeader("Content-type", "application/json");
-					HttpResponse response = httpclient.execute(httpost);
+					HttpResponse response = httpclient.execute(httpost); // ClientProtocolException
 					StatusLine statusLine = response.getStatusLine();
 
 					if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
 						// Succeeded
 						ByteArrayOutputStream out = new ByteArrayOutputStream();
-						response.getEntity().writeTo(out);
+						response.getEntity().writeTo(out); // IOException
 						out.close();
-						JSONObject status = new JSONObject(out.toString("UTF-8"));
-						if (status.getBoolean("ok")) {
+						JSONObject status = new JSONObject(out.toString("UTF-8")); // UnsupportedEncodingException
+						if (status.getBoolean("ok")) { // JSONException
 							// Mark as shared
 							PrivacyManager.setSetting(null, ActivityShare.this, appInfo.getUid(),
 									PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_SHARED));
 						} else
-							throw new Exception(status.getString("error"));
+							throw new Exception(status.getString("error")); // JSONException, Exception
 					} else {
 						// Failed
-						response.getEntity().getContent().close();
+						response.getEntity().getContent().close(); // IOException
 						throw new IOException(statusLine.getReasonPhrase());
 					}
 				}
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.getMessage();
+				// NameNotFoundException, UnsupportedEncodingException, JSONException, ClientProtocolException, IOException, Exception
+				if (ex instanceof ClientProtocolException || ex instanceof IOException)
+					return "Error connecting to server";
+				else
+					return ex.getMessage();
 			}
 		}
 
@@ -1081,7 +1106,6 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO short informative error messages, e.g. "Connection to server failed"
 			done(result);
 			super.onPostExecute(result);
 		}
@@ -1103,10 +1127,15 @@ public class ActivityShare extends Activity {
 
 		View vShareProgressFull = (View) findViewById(R.id.vShareProgressFull);
 		vShareProgressFull.getLayoutParams().width = width;
+		vShareProgressFull.invalidate();
 	}
 
 	private void done(String result) {
-		// TODO check result string and display toast with error
+		// Check result string and display toast with error
+		// TODO it might be better to put this in a dialog box asking whether to send debugging info
+		if (result != null)
+			Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+		// Reset progress bar
 		blueStreakOfProgress(0, 1);
 		mRunning = false;
 		// Change ok button to "Close"
@@ -1119,6 +1148,11 @@ public class ActivityShare extends Activity {
 				finish();
 			}
 		});
+		// Remove cancel button
+		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
+		btnCancel.setVisibility(View.GONE);
+		// TODO a nice touch would be to make the cancel button open the main list with only the failed apps in view.
+		// I'm not sure what text to put on it though; "Examine failed" might do, if it isn't too long.
 	}
 
 	public static String getFileName(boolean multiple) {
