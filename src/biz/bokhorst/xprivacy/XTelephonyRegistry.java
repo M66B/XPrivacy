@@ -69,7 +69,6 @@ public class XTelephonyRegistry extends XHook {
 					int event = (Integer) param.args[2];
 					if (event == android.telephony.PhoneStateListener.LISTEN_NONE) {
 						// Remove listener
-						Util.log(this, Log.WARN, "remove");
 						synchronized (mListenerUid) {
 							if (mListenerUid.containsKey(binder))
 								mListenerUid.remove(binder);
@@ -79,7 +78,6 @@ public class XTelephonyRegistry extends XHook {
 					} else {
 						// Add listener
 						int uid = Binder.getCallingUid();
-						Util.log(this, Log.WARN, "put uid=" + uid);
 						synchronized (mListenerUid) {
 							mListenerUid.put(binder, uid);
 						}
@@ -130,11 +128,9 @@ public class XTelephonyRegistry extends XHook {
 						else
 							Util.log(XTelephonyRegistry.this, Log.WARN, "Get: listener not found");
 					}
-					Util.log(XTelephonyRegistry.this, Log.WARN, "get uid=" + uid);
 
 					// Restrict
 					if (uid > 0) {
-						Util.log(XTelephonyRegistry.this, Log.WARN, methodName);
 						if (methodName.equals("onCallStateChanged")) {
 							if (onparam.args.length > 1 && onparam.args[1] != null)
 								if (isRestricted(param, uid))
