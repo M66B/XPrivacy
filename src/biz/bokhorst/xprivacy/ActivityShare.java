@@ -287,10 +287,22 @@ public class ActivityShare extends Activity {
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		private List<AppHolder> mAppsWaiting;
 		private List<AppHolder> mAppsDone;
-		private Runnable changeNotifier = new Runnable() {
+		private ChangeNotifier changeNotifier = new ChangeNotifier();
+
+		private class ChangeNotifier implements Runnable {
+			int mScrollTo = -1;
+
 			@Override
 			public void run() {
 				notifyDataSetChanged();
+				if (mScrollTo >= 0) {
+					ListView lvShare = (ListView) findViewById(R.id.lvShare);
+					lvShare.smoothScrollToPosition(mScrollTo);
+				}
+			}
+
+			public void setScrollTo(int position) {
+				mScrollTo = position;
 			}
 		};
 
@@ -315,8 +327,7 @@ public class ActivityShare extends Activity {
 			AppHolder app = mAppsByUid.get(uid);
 			// Make sure apps done or in progress are listed first
 			// All operations except importing treat the apps in the listed order
-			if (getTitle().equals(getString(R.string.menu_import)) && mAppsWaiting.contains(uid)) {
-				// This should keep the original ordering
+			if (getTitle().equals(getString(R.string.menu_import)) && mAppsWaiting.contains(app)) {
 				mAppsWaiting.remove(app);
 				mAppsDone.add(app);
 				this.setNotifyOnChange(false);
@@ -326,6 +337,7 @@ public class ActivityShare extends Activity {
 			}
 			// Set state for this app
 			app.state = state;
+			changeNotifier.setScrollTo(mAppAdapter.getPosition(app));
 			runOnUiThread(changeNotifier);
 		}
 
