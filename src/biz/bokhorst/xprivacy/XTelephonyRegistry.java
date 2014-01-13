@@ -81,7 +81,7 @@ public class XTelephonyRegistry extends XHook {
 						else {
 							param.args[1] = xlistener;
 							mListener.remove(listener.asBinder());
-							Util.log(this, Log.WARN, "Removed class=" + listener.getClass().getName() + " method="
+							Util.log(this, Log.INFO, "Removed class=" + listener.getClass().getName() + " method="
 									+ param.method + " count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 						}
 					}
@@ -91,7 +91,7 @@ public class XTelephonyRegistry extends XHook {
 						XIPhoneStateListener xListener = new XIPhoneStateListener(listener);
 						synchronized (mListener) {
 							mListener.put(listener.asBinder(), xListener);
-							Util.log(this, Log.WARN, "Added class=" + listener.getClass().getName() + " method="
+							Util.log(this, Log.INFO, "Added class=" + listener.getClass().getName() + " method="
 									+ param.method + " count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 						}
 						param.args[1] = xListener;
