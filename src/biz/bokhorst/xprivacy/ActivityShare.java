@@ -45,7 +45,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
@@ -56,7 +55,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
@@ -78,7 +76,7 @@ import android.widget.Toast;
 public class ActivityShare extends Activity {
 	private int mThemeId;
 	private AppListAdapter mAppAdapter;
-	private Map<Integer, AppHolder> mAppsByUid;
+	private SparseArray<AppHolder> mAppsByUid;
 	private boolean mRunning = false;
 	private boolean mAbort = false;
 	private int mProgressCurrent;
@@ -289,9 +287,16 @@ public class ActivityShare extends Activity {
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		private List<AppHolder> mAppsWaiting;
 		private List<AppHolder> mAppsDone;
+		private Runnable changeNotifier = new Runnable() {
+			@Override
+			public void run() {
+				notifyDataSetChanged();
+			}
+		};
 
 		public AppListAdapter(Context context, int resource, List<AppHolder> objects) {
 			super(context, resource, objects);
+			mAppsWaiting = new ArrayList<AppHolder>();
 			mAppsWaiting.addAll(objects);
 			mAppsDone = new ArrayList<AppHolder>();
 			// TODO sort according to preferences
@@ -309,8 +314,9 @@ public class ActivityShare extends Activity {
 		public void setState(int uid, int state) {
 			AppHolder app = mAppsByUid.get(uid);
 			// Make sure apps done or in progress are listed first
-			// All operations except importing, treat the apps in the listed order
-			if (getTitle().equals(getString(R.string.menu_import))) {
+			// All operations except importing treat the apps in the listed order
+			if (getTitle().equals(getString(R.string.menu_import)) && mAppsWaiting.contains(uid)) {
+				// This should keep the original ordering
 				mAppsWaiting.remove(app);
 				mAppsDone.add(app);
 				this.setNotifyOnChange(false);
@@ -320,7 +326,7 @@ public class ActivityShare extends Activity {
 			}
 			// Set state for this app
 			app.state = state;
-			notifyDataSetChanged();
+			runOnUiThread(changeNotifier);
 		}
 
 		private class ViewHolder {
@@ -386,14 +392,14 @@ public class ActivityShare extends Activity {
 					holder.tvMessage.setText(xApp.message);
 				break;
 			case STATE_SUCCESS:
-				// TODO holder.imgResult.setDrawableResource(R.drawable.share_success);
+				holder.imgResult.setBackgroundResource(R.drawable.share_success);
 				holder.imgResult.setVisibility(View.VISIBLE);
 				holder.pbRunning.setVisibility(View.INVISIBLE);
 				if (xApp.message != null)
 					holder.tvMessage.setText(xApp.message);
 				break;
 			case STATE_FAILURE:
-				// TODO holder.imgResult.setDrawableResource(R.drawable.share_failure);
+				holder.imgResult.setBackgroundResource(R.drawable.share_failure);
 				holder.imgResult.setVisibility(View.VISIBLE);
 				holder.pbRunning.setVisibility(View.INVISIBLE);
 				if (xApp.message != null)
@@ -413,6 +419,7 @@ public class ActivityShare extends Activity {
 		@Override
 		protected List<AppHolder> doInBackground(int[]... params) {
 			List<AppHolder> apps = new ArrayList<AppHolder>();
+			mAppsByUid = new SparseArray<AppHolder>();
 			// TODO what if uids.length is zero? Which will only happen via Tasker etc.
 			// We can't really ask Tasker to provide a list of uids, and someone might want to trigger an import for all apps.
 			// - If action is IMPORT we should probably add all apps
@@ -700,7 +707,7 @@ public class ActivityShare extends Activity {
 		private Map<String, Map<String, List<MethodDescription>>> mMapPackage = new HashMap<String, Map<String, List<MethodDescription>>>();
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 		private Runnable mProgress;
-		private List<Integer> mImportedIds = new ArrayList<Integer>();
+		private List<Integer> mImportedUids = new ArrayList<Integer>();
 
 		public ImportHandler(List<Integer> listUidSelected, Runnable progress) {
 			mListUidSelected = listUidSelected;
@@ -769,8 +776,15 @@ public class ActivityShare extends Activity {
 					int uid = getUid(id);
 					if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
 						// Progress report and pre-import cleanup
-						if (!mImportedIds.contains(id)) {
-							mImportedIds.add(id);
+						if (!mImportedUids.contains(uid)) {
+							// Mark the app we have just imported as a success
+							if (mImportedUids.size() > 0) {
+								int lastUid = mImportedUids.get(mImportedUids.size() - 1);
+								mAppAdapter.setState(lastUid, STATE_SUCCESS);
+							}
+							// Mark the next one as in progress
+							mImportedUids.add(uid);
+							mAppAdapter.setState(uid, STATE_RUNNING);
 							runOnUiThread(mProgress);
 							PrivacyManager.deleteRestrictions(ActivityShare.this, uid, false);
 						}
@@ -782,6 +796,17 @@ public class ActivityShare extends Activity {
 					Util.log(null, Log.ERROR, "Unknown element name=" + qName);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) {
+			if (qName.equals("XPrivacy")) {
+				// Mark the last app imported as a success
+				if (mImportedUids.size() > 0) {
+					int lastUid = mImportedUids.get(mImportedUids.size() - 1);
+					mAppAdapter.setState(lastUid, STATE_SUCCESS);
+				}
 			}
 		}
 
@@ -851,6 +876,7 @@ public class ActivityShare extends Activity {
 				for (ApplicationInfoEx appInfo : lstApp) {
 					publishProgress(++mProgressCurrent, lstApp.size() + 1);
 					if (!appInfo.isSystem() || lstApp.size() == 1) {
+						mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING);
 
 						JSONArray appName = new JSONArray();
 						for (String name : appInfo.getApplicationName())
@@ -919,12 +945,15 @@ public class ActivityShare extends Activity {
 														.setRestricted(null, ActivityShare.this, appInfo.getUid(),
 																restrictionName, methodName, restricted, true);
 									}
+
+									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS);
 								} else
-									;// Mark that app as failed
+									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
 							} else
 								throw new Exception(status.getString("error")); // JSONException, Exception
 						} else {
 							// Failed
+							mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
 							response.getEntity().getContent().close(); // IOException
 							throw new IOException(statusLine.getReasonPhrase()); // IOException
 						}
@@ -974,6 +1003,7 @@ public class ActivityShare extends Activity {
 				for (ApplicationInfoEx appInfo : lstApp) {
 					// Update progess
 					publishProgress(++mProgressCurrent, lstApp.size() + 1);
+					mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING);
 
 					// Check if any account allowed
 					boolean allowedAccounts = false;
@@ -1109,10 +1139,14 @@ public class ActivityShare extends Activity {
 							// Mark as shared
 							PrivacyManager.setSetting(null, ActivityShare.this, appInfo.getUid(),
 									PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_SHARED));
-						} else
+							mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS);
+						} else {
+							mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
 							throw new Exception(status.getString("error")); // JSONException, Exception
+						}
 					} else {
 						// Failed
+						mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
 						response.getEntity().getContent().close(); // IOException
 						throw new IOException(statusLine.getReasonPhrase());
 					}
