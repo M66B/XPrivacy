@@ -65,7 +65,8 @@ public class XLocationManagerService extends XHook {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods loc : Methods.values())
 			if (loc != Methods.requestGeofence)
-				listHook.add(new XLocationManagerService(loc, PrivacyManager.cLocation));
+				listHook.add(new XLocationManagerService(loc, loc == Methods.removeUpdates ? null
+						: PrivacyManager.cLocation));
 		listHook.add(new XLocationManagerService(Methods.requestGeofence, PrivacyManager.cLocation,
 				Build.VERSION_CODES.JELLY_BEAN_MR1));
 		return listHook;
