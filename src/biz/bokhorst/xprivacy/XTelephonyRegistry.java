@@ -67,11 +67,11 @@ public class XTelephonyRegistry extends XHook {
 
 	private void replacePhoneStateListener(MethodHookParam param) throws Throwable {
 		if (param.args.length > 2 && param.args[1] != null)
-			if (param.args[1] instanceof IPhoneStateListener && !(param.args[1] instanceof XIPhoneStateListener)) {
-				IPhoneStateListener listener = (IPhoneStateListener) param.args[1];
-				int event = (Integer) param.args[2];
-				if (listener != null)
+			if (!(param.args[1] instanceof XIPhoneStateListener))
+				if (param.args[1] instanceof IPhoneStateListener) {
 					if (isRestricted(param)) {
+						int event = (Integer) param.args[2];
+						IPhoneStateListener listener = (IPhoneStateListener) param.args[1];
 						if (event == android.telephony.PhoneStateListener.LISTEN_NONE) {
 							// Remove
 							synchronized (mListener) {
@@ -93,7 +93,8 @@ public class XTelephonyRegistry extends XHook {
 							param.args[1] = xListener;
 						}
 					}
-			}
+				} else
+					Util.log(this, Log.WARN, "method=" + param.method);
 	}
 
 	@Override
