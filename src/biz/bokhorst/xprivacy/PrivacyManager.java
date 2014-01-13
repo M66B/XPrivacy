@@ -927,7 +927,7 @@ public class PrivacyManager {
 			// MCC+MNC: test network
 			return getSetting(null, null, uid, cSettingMcc, "001", true)
 					+ getSetting(null, null, uid, cSettingMnc, "01", true);
-		if (name.equals("getSimOperatorName") || name.equals("gsm.operator.alpha"))
+		if (name.equals("getSimOperatorName") || name.equals("gsm.sim.operator.alpha"))
 			return getSetting(null, null, uid, cSettingOperator, cDeface, true);
 		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber"))
 			return getSetting(null, null, uid, cSettingIccId, null, true);
