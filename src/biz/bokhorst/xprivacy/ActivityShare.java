@@ -73,14 +73,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityShare extends Activity {
-	private LocalBroadcastManager mBroadcastManager;
 	private int mThemeId;
 	private AppListAdapter mAppAdapter;
-	private int mProgressMax;
-	private int mProgressCurrent;
 	private boolean mRunning = false;
 	private boolean mAbort = false;
-	private int mProgressWidth;
+	private int mProgressWidth = 0;
 
 	private static final int STATE_WAITING = 0;
 	private static final int STATE_RUNNING = 1;
@@ -125,8 +122,6 @@ public class ActivityShare extends Activity {
 		final Bundle extras = getIntent().getExtras();
 		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 
-		mBroadcastManager = LocalBroadcastManager.getInstance(this);
-
 		final String action = getIntent().getAction();
 
 		// Check whether we need a ui, if not, leave the theme declared in the manifest
@@ -136,38 +131,48 @@ public class ActivityShare extends Activity {
 			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 			setTheme(mThemeId);
 
-			// Set layout
+			// Set layout and title
 			setContentView(R.layout.sharelist);
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-			setTitle(getString(R.string.app_name));
+
+			if (action.equals(ACTION_IMPORT))
+				setTitle(getString(R.string.menu_import));
+			else if (action.equals(ACTION_EXPORT))
+				setTitle(getString(R.string.menu_export));
+			else if (action.equals(ACTION_FETCH))
+				setTitle(getString(R.string.menu_fetch));
+			else if (action.equals(ACTION_SUBMIT))
+				setTitle(getString(R.string.menu_submit));
 
 			if (action.equals(ACTION_IMPORT) || action.equals(ACTION_FETCH)) {
 				if (Util.hasProLicense(this) == null)
 					finish();
 			}
 
-			// Start task to get app list
-			AppListTask appListTask = new AppListTask();
-			appListTask.executeOnExecutor(mExecutor, uids);
+			// Start task to get app list, but not if action is EXPORT
+			if (!action.equals(ACTION_EXPORT)) {
+				AppListTask appListTask = new AppListTask();
+				appListTask.executeOnExecutor(mExecutor, uids);
+			}
 
 			// Set button actions
 			final Button btnOk = (Button) findViewById(R.id.btnOk);
 			final Button btnCancel = (Button) findViewById(R.id.btnCancel);
 			
 			btnOk.setOnClickListener(new Button.OnClickListener(){
+
 				@Override
 				public void onClick(View v) {
 					btnOk.setEnabled(false);
 
-					int[] uids = mAppAdapter.getUids();
-					mProgressMax = mAppAdapter.getCount();
+					// If action is EXPORT mAppAdapter hasn't been initialised
+					int[] uids = mAppAdapter == null ? new int[0] : mAppAdapter.getUids();
 
 					// Import
 					if (action.equals(ACTION_IMPORT)) {
 						String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
 								: getFileName(false));
 						new ImportTask().executeOnExecutor(mExecutor, new File(fileName), uids);
-						setTitle(getString(R.string.menu_import));
 					}
 
 					// Export
@@ -175,14 +180,12 @@ public class ActivityShare extends Activity {
 						String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
 								: getFileName(false));
 						new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
-						setTitle(getString(R.string.menu_export));
 					}
 
 					// Fetch
 					else if (action.equals(ACTION_FETCH)) {
 						if (uids.length > 0) {
 							new FetchTask().executeOnExecutor(mExecutor, uids);
-							setTitle(getString(R.string.menu_fetch));
 						}
 					}
 
@@ -191,13 +194,17 @@ public class ActivityShare extends Activity {
 						if (uids.length > 0) {
 							if (uids.length <= cSubmitLimit) {
 								new SubmitTask().executeOnExecutor(mExecutor, uids);
-								setTitle(getString(R.string.menu_submit));
 							} else {
 								String message = getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1);
 								Toast.makeText(ActivityShare.this, message, Toast.LENGTH_SHORT).show();
 								btnOk.setEnabled(false);
 							}
 						}
+					}
+
+					// Unknown action
+					else {
+						Util.log(null, Log.WARN, "Unknown share action: " + action);
 					}
 				}
 			});
@@ -377,6 +384,11 @@ public class ActivityShare extends Activity {
 		@Override
 		protected List<AppHolder> doInBackground(int[]... params) {
 			List<AppHolder> apps = new ArrayList<AppHolder>();
+			// TODO what if uids.length is zero? Which will only happen via Tasker etc.
+			// We can't really ask Tasker to provide a list of uids, and someone might want to trigger an import for all apps.
+			// - If action is IMPORT we should probably add all apps
+			// - If action is FETCH we should probably add all non-system apps
+			// We should probably add a Toast in those cases. "Adding all non-system apps" or "Adding all apps" 
 			for (int i = 0; i < params[0].length; i++) {
 				try {
 					apps.add(new AppHolder(params[0][i]));
@@ -420,8 +432,9 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	private class ExportTask extends AsyncTask<File, String, String> {
+	private class ExportTask extends AsyncTask<File, Integer, String> {
 		private File mFile;
+		private int mProgressCurrent;
 
 		@Override
 		protected String doInBackground(File... params) {
@@ -440,14 +453,13 @@ public class ActivityShare extends Activity {
 					serializer.startTag(null, "XPrivacy");
 
 					// Progress
-					publishProgress(getString(R.string.msg_loading));
 					Util.log(null, Log.INFO, "Exporting settings");
 					Runnable progress = new Runnable() {
+
 						@Override
 						public void run() {
 							// This should be called exactly 100 times
-							publishProgress(getString(R.string.msg_loading), Integer.toString(++mProgressCurrent),
-									"100");
+							publishProgress(++mProgressCurrent, 100);
 						}
 					};
 
@@ -501,11 +513,9 @@ public class ActivityShare extends Activity {
 					List<PrivacyManager.RestrictionDesc> listRestriction = PrivacyManager.getRestricted(
 							ActivityShare.this, progress);
 
-					mProgressCurrent = 0;
 					for (PrivacyManager.RestrictionDesc restrictionDesc : listRestriction) {
 						if ((++mProgressCurrent % (listRestriction.size() / 10 + 1)) == 0)
-							publishProgress(getString(R.string.menu_export), Integer.toString(mProgressCurrent),
-									Integer.toString(listRestriction.size()));
+							publishProgress(mProgressCurrent, listRestriction.size() + 1);
 						serializer.startTag(null, "Restriction");
 						serializer.attribute(null, "Id", Integer.toString(restrictionDesc.uid));
 						serializer.attribute(null, "Name", restrictionDesc.restrictionName);
@@ -533,41 +543,22 @@ public class ActivityShare extends Activity {
 		}
 
 		@Override
-		protected void onProgressUpdate(String... values) {
-			int progress = 0;
-			int max = 1;
-			if (values.length > 2) {
-				progress = Integer.parseInt(values[1]);
-				max = Integer.parseInt(values[2]);
-			}
-			notify(values[0], true, progress, max);
+		protected void onProgressUpdate(Integer... values) {
+			blueStreakOfProgress(values[0], values[1]);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result == null ? getString(R.string.msg_done) : null, false, 0, 1);
-
-			Intent intent = new Intent();
-			intent.putExtra(cFileName, mFile.getAbsolutePath());
-			intent.putExtra(cErrorMessage, result);
-			setResult(result == null ? 0 : 1, intent);
-			finish();
+			// TODO short informative error messages, e.g. "Error writing to file"
+			done(result);
 			super.onPostExecute(result);
-		}
-
-		private void notify(String text, boolean ongoing, int progress, int max) {
-			// Send progress info to main activity
-			Intent progressIntent = new Intent(cProgressReport);
-			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_export), text));
-			progressIntent.putExtra(cProgressMax, max);
-			progressIntent.putExtra(cProgressValue, progress);
-			mBroadcastManager.sendBroadcast(progressIntent);
 		}
 	}
 
-	private class ImportTask extends AsyncTask<Object, String, String> {
+	private class ImportTask extends AsyncTask<Object, Integer, String> {
 		private File mFile;
+		private int mProgressCurrent;
 
 		@Override
 		protected String doInBackground(Object... params) {
@@ -578,6 +569,16 @@ public class ActivityShare extends Activity {
 				for (int uid : (int[]) params[1])
 					listUidSelected.add(uid);
 
+				// Progress
+				mProgressCurrent = 0;
+				final int max = listUidSelected.size();
+				Runnable progress = new Runnable() {
+					@Override
+					public void run() {
+						publishProgress(++mProgressCurrent, max);
+					}
+				};
+
 				// Parse XML
 				Util.log(null, Log.INFO, "Importing " + mFile);
 				FileInputStream fis = null;
@@ -585,7 +586,7 @@ public class ActivityShare extends Activity {
 				try {
 					fis = new FileInputStream(mFile);
 					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
-					ImportHandler importHandler = new ImportHandler(listUidSelected);
+					ImportHandler importHandler = new ImportHandler(listUidSelected, progress);
 					xmlReader.setContentHandler(importHandler);
 					xmlReader.parse(new InputSource(fis));
 					mapPackage = importHandler.getPackageMap();
@@ -595,14 +596,13 @@ public class ActivityShare extends Activity {
 				}
 
 				// Progress
-				mProgressMax = mapPackage.size();
-				mProgressCurrent = 0;
+				int progressMax = mapPackage.size();
 
 				// Process result (legacy)
 				for (String packageName : mapPackage.keySet()) {
 					mProgressCurrent++;
 					try {
-						publishProgress(packageName, Integer.toString(mProgressCurrent));
+						publishProgress(mProgressCurrent, progressMax + 1);
 						Util.log(null, Log.INFO, "Importing " + packageName);
 
 						// Get uid
@@ -634,14 +634,15 @@ public class ActivityShare extends Activity {
 		}
 
 		@Override
-		protected void onProgressUpdate(String... values) {
-			setProgress();
+		protected void onProgressUpdate(Integer... values) {
+			blueStreakOfProgress(values[0], values[1]);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			setProgress();
+			// TODO short informative error messages, e.g. "File not found", "Error opening file"
+			done(result);
 			super.onPostExecute(result);
 		}
 	}
@@ -652,11 +653,12 @@ public class ActivityShare extends Activity {
 		private Map<String, Integer> mMapUid = new HashMap<String, Integer>();
 		private Map<String, Map<String, List<MethodDescription>>> mMapPackage = new HashMap<String, Map<String, List<MethodDescription>>>();
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-		private int mProgress = 0;
+		private Runnable mProgress;
 		private List<Integer> mImportedIds = new ArrayList<Integer>();
 
-		public ImportHandler(List<Integer> listUidSelected) {
+		public ImportHandler(List<Integer> listUidSelected, Runnable progress) {
 			mListUidSelected = listUidSelected;
+			mProgress = progress;
 		}
 
 		@Override
@@ -664,7 +666,6 @@ public class ActivityShare extends Activity {
 			try {
 				if (qName.equals("XPrivacy")) {
 					// Ignore
-					mProgress = 0;
 				} else if (qName.equals("PackageInfo")) {
 					// Package info
 					int id = Integer.parseInt(attributes.getValue("Id"));
@@ -724,7 +725,7 @@ public class ActivityShare extends Activity {
 						// Progress report and pre-import cleanup
 						if (!mImportedIds.contains(id)) {
 							mImportedIds.add(id);
-							reportProgress(id);
+							runOnUiThread(mProgress);
 							PrivacyManager.deleteRestrictions(ActivityShare.this, uid, false);
 						}
 
@@ -776,13 +777,10 @@ public class ActivityShare extends Activity {
 				return mRestricted;
 			}
 		}
-
-		private void reportProgress(int id) {
-			setProgress();
-		}
 	}
 
-	private class FetchTask extends AsyncTask<int[], String, String> {
+	private class FetchTask extends AsyncTask<int[], Integer, String> {
+		private int mProgressCurrent;
 
 		@Override
 		@SuppressLint("DefaultLocale")
@@ -801,14 +799,12 @@ public class ActivityShare extends Activity {
 						PrivacyManager.cSettingConfidence, "", false);
 
 				// Initialize progress
-				mProgressMax = lstApp.size();
 				mProgressCurrent = 0;
 
 				// Process applications
 				for (ApplicationInfoEx appInfo : lstApp) {
-					mProgressCurrent++;
+					publishProgress(++mProgressCurrent, lstApp.size() + 1);
 					if (!appInfo.isSystem() || lstApp.size() == 1) {
-						publishProgress(appInfo.getPackageName().get(0), Integer.toString(mProgressCurrent));
 
 						JSONArray appName = new JSONArray();
 						for (String name : appInfo.getApplicationName())
@@ -878,8 +874,7 @@ public class ActivityShare extends Activity {
 																restrictionName, methodName, restricted, true);
 									}
 								} else
-									publishProgress(getString(R.string.msg_no_restrictions),
-											Integer.toString(mProgressCurrent));
+									;// Mark that app as failed
 							} else
 								throw new Exception(status.getString("error"));
 						} else {
@@ -897,21 +892,21 @@ public class ActivityShare extends Activity {
 		}
 
 		@Override
-		protected void onProgressUpdate(String... values) {
-			setProgress();
+		protected void onProgressUpdate(Integer... values) {
+			blueStreakOfProgress(values[0], values[1]);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			setProgress();
+			// TODO short informative error messages, e.g. "Connection to server failed"
+			done(result);
 			super.onPostExecute(result);
 		}
 	}
 
 	@SuppressLint("DefaultLocale")
-	private class SubmitTask extends AsyncTask<int[], String, String> {
-		private int mProgressMax;
+	private class SubmitTask extends AsyncTask<int[], Integer, String> {
 		private int mProgressCurrent;
 
 		@Override
@@ -923,13 +918,11 @@ public class ActivityShare extends Activity {
 					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
 
 				// Initialize progress
-				mProgressMax = lstApp.size();
 				mProgressCurrent = 0;
 
 				for (ApplicationInfoEx appInfo : lstApp) {
 					// Update progess
-					mProgressCurrent++;
-					publishProgress(appInfo.getPackageName().get(0), Integer.toString(mProgressCurrent));
+					publishProgress(++mProgressCurrent, lstApp.size() + 1);
 
 					// Check if any account allowed
 					boolean allowedAccounts = false;
@@ -1081,34 +1074,51 @@ public class ActivityShare extends Activity {
 		}
 
 		@Override
-		protected void onProgressUpdate(String... values) {
-			setProgress();
+		protected void onProgressUpdate(Integer... values) {
+			blueStreakOfProgress(values[0], values[1]);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			setProgress();
+			// TODO short informative error messages, e.g. "Connection to server failed"
+			done(result);
 			super.onPostExecute(result);
 		}
 	}
 
 	// Helper methods
 
-	public void setProgress() {
+	private void blueStreakOfProgress(Integer current, Integer max) {
 		// Set up the progress bar
 		if (mProgressWidth == 0) {
-			final View vProgressEmpty = (View) findViewById(R.id.vProgressEmpty);
-			mProgressWidth = vProgressEmpty.getMeasuredWidth();
+			final View vShareProgressEmpty = (View) findViewById(R.id.vShareProgressEmpty);
+			mProgressWidth = vShareProgressEmpty.getMeasuredWidth();
 		}
 		// Display stuff
-		int max = mProgressMax;
 		if (max == 0)
 			max = 1;
-		int width = (int) ((float) mProgressWidth) * mProgressCurrent / max;
+		int width = (int) ((float) mProgressWidth) * current / max;
+		Util.log(null, Log.WARN, "Progress width " + width);
 
-		View vProgressFull = (View) findViewById(R.id.vProgressFull);
-		vProgressFull.getLayoutParams().width = width;
+		View vShareProgressFull = (View) findViewById(R.id.vShareProgressFull);
+		vShareProgressFull.getLayoutParams().width = width;
+	}
+
+	private void done(String result) {
+		// TODO check result string and display toast with error
+		blueStreakOfProgress(0, 1);
+		mRunning = false;
+		// Change ok button to "Close"
+		final Button btnOk = (Button) findViewById(R.id.btnOk);
+		btnOk.setText("Close"); // TODO string resource
+		btnOk.setEnabled(true);
+		btnOk.setOnClickListener(new Button.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 
 	public static String getFileName(boolean multiple) {

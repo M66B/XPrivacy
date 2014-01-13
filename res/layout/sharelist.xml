@@ -6,16 +6,17 @@
     android:orientation="vertical" >
 
     <View
-        android:id="@+id/vProgressEmpty"
+        android:id="@+id/vShareProgressEmpty"
         android:layout_width="match_parent"
         android:layout_height="3dip"
-        android:layout_marginBottom="-3dip"
-        android:background="@android:color/colorTransparent" />
+        android:layout_alignParentTop="true" />
 
     <View
-        android:id="@+id/vProgressFull"
-        android:layout_width="0dip"
+        android:id="@+id/vShareProgressFull"
+        android:layout_width="100dip"
         android:layout_height="3dip"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
         android:background="?android:attr/colorActivatedHighlight" />
 
     <LinearLayout
@@ -46,7 +47,7 @@
         android:id="@+id/lvShare"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/vShareProgressFull"
         android:layout_above="@id/llButtons" />
 
 </RelativeLayout>
