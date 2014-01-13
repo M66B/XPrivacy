@@ -62,7 +62,7 @@ public class ActivityShare extends Activity {
 	public static final String cFileName = "FileName";
 	public static final String cUidList = "UidList";
 	public static final String cErrorMessage = "ErrorMessage";
-	public static final String BASE_URL = "http://crowd.xprivacy.eu/";
+	public static final String BASE_URL = "https://crowd.xprivacy.eu/";
 	public static final String cProgressReport = "ProgressReport";
 	public static final String cProgressMessage = "ProgressMessage";
 	public static final String cProgressValue = "ProgressValue";
