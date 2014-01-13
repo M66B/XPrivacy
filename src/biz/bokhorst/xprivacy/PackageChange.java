@@ -131,56 +131,28 @@ public class PackageChange extends BroadcastReceiver {
 						// Notify
 						notificationManager.notify(0, notification);
 
-						// Upgrade
+						// Get old version
 						PackageManager pm = context.getPackageManager();
+						PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
 						Version sVersion = new Version(PrivacyManager.getSetting(null, context, 0,
 								PrivacyManager.cSettingVersion, "0.0", false));
 
-						if (sVersion.compareTo(new Version("0.0")) != 0) {
-							// Version 1.7+
-							if (sVersion.compareTo(new Version("1.7")) < 0) {
-								// Disable identification//proc
-								for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
-									PrivacyManager.setRestricted(null, context, aInfo.uid,
-											PrivacyManager.cIdentification, "/proc", false, true);
-							}
+						// Upgrade
+						if (sVersion.compareTo(new Version("0.0")) != 0)
+							Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version "
+									+ pInfo.versionName);
+						for (String restrictionName : PrivacyManager.getRestrictions())
+							for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName))
+								if (md.getFrom() != null)
+									if (sVersion.compareTo(md.getFrom()) < 0) {
+										Util.log(null, Log.WARN, "Upgrading " + md);
+										for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
+											PrivacyManager.setRestricted(null, context, aInfo.uid,
+													md.getRestrictionName(), md.getName(), false, true);
+									} else
+										Util.log(null, Log.WARN, "No upgrade needed for " + md);
 
-							// Version 1.7.4+
-							if (sVersion.compareTo(new Version("1.7.4")) < 0) {
-								// Disable
-								// location/getProviders,isProviderEnabled
-								for (ApplicationInfo aInfo : pm.getInstalledApplications(0)) {
-									PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cLocation,
-											"getProviders", false, true);
-									PrivacyManager.setRestricted(null, context, aInfo.uid, PrivacyManager.cLocation,
-											"isProviderEnabled", false, true);
-								}
-							}
-
-							// Version 1.9.9+
-							if (sVersion.compareTo(new Version("1.9.9")) < 0) {
-								// Disable identification//system/build.prop
-								for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
-									PrivacyManager.setRestricted(null, context, aInfo.uid,
-											PrivacyManager.cIdentification, "/system/build.prop", false, true);
-
-								// Select user applications
-								PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingFSystem,
-										Boolean.toString(false));
-								PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingFUser,
-										Boolean.toString(true));
-							}
-
-							// Version 1.10.27+
-							if (sVersion.compareTo(new Version("1.10.27")) < 0) {
-								PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingDangerous,
-										PrivacyManager.getSetting(null, context, 0, "Expert", Boolean.toString(false),
-												false));
-							}
-						}
-
-						// Update stored version
-						PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
+						// Set new version
 						PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {

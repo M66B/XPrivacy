@@ -224,7 +224,7 @@ public class PrivacyProvider extends ContentProvider {
 					if (prefName.startsWith(COL_USED)) {
 						String[] prefParts = prefName.split("\\.");
 						int rUid = Integer.parseInt(prefParts[1]);
-						String rMethodName = prefParts[2];
+						String rMethodName = prefName.substring(prefParts[0].length() + 1 + prefParts[1].length() + 1);
 						getUsage(rUid, eRestrictionName, rMethodName, cursor);
 					}
 			}
@@ -470,35 +470,42 @@ public class PrivacyProvider extends ContentProvider {
 		}
 	}
 
-	public static String getSettingFallback(String name, String defaultValue) {
+	public static String getSettingFallback(String name, String defaultValue, boolean log) {
 		try {
 			long now = new Date().getTime();
 			File file = new File(getPrefFileName(PREF_SETTINGS));
 			if (!file.exists())
-				Util.log(null, Log.INFO, "Not found file=" + file.getAbsolutePath());
+				if (log)
+					Util.log(null, Log.INFO, "Not found file=" + file.getAbsolutePath());
 
 			synchronized (mFallbackSettingsLock) {
 				// Initial load
 				if (mFallbackSettings == null) {
 					mFallbackSettings = new SharedPreferencesEx(file);
 					mFallbackSettingsTime = now;
-					long ms = System.currentTimeMillis() - now;
-					Util.log(null, Log.INFO, "Load fallback settings uid=" + Binder.getCallingUid() + " " + ms + " ms");
+					if (log) {
+						long ms = System.currentTimeMillis() - now;
+						Util.log(null, Log.INFO, "Load fallback settings uid=" + Binder.getCallingUid() + " " + ms
+								+ " ms");
+					}
 				}
 
 				// Get update
 				if (mFallbackSettingsTime + PrivacyManager.cSettingCacheTimeoutMs < now) {
 					mFallbackSettings.reload();
 					mFallbackSettingsTime = now;
-					long ms = System.currentTimeMillis() - now;
-					Util.log(null, Log.INFO, "Reload fallback settings uid=" + Binder.getCallingUid() + " " + ms
-							+ " ms");
+					if (log) {
+						long ms = System.currentTimeMillis() - now;
+						Util.log(null, Log.INFO, "Reload fallback settings uid=" + Binder.getCallingUid() + " " + ms
+								+ " ms");
+					}
 				}
 			}
 
 			return mFallbackSettings.getString(getSettingPref(name), defaultValue);
 		} catch (Throwable ex) {
-			Util.bug(null, ex);
+			if (log)
+				Util.bug(null, ex);
 			return defaultValue;
 		}
 	}

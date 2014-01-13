@@ -46,8 +46,8 @@
 	<Hook restriction="identification" method="%macaddr" permissions="" sdk="10" />
 	<Hook restriction="identification" method="%serialno" permissions="" sdk="10" />
 	<Hook restriction="identification" method="%cid" permissions="" sdk="10" />
-	<Hook restriction="identification" method="/proc" dangerous="true" permissions="" sdk="10" />
-	<Hook restriction="identification" method="/system/build.prop" dangerous="true" permissions="" sdk="10" />
+	<Hook restriction="identification" method="/proc" dangerous="true" from="1.7" permissions="" sdk="10" />
+	<Hook restriction="identification" method="/system/build.prop" dangerous="true" from="1.9.9" permissions="" sdk="10" />
 	<Hook restriction="identification" method="/sys/block/.../cid" permissions="" sdk="10" />
 	<Hook restriction="identification" method="/sys/class/.../cid" permissions="" sdk="10" />
 	<Hook restriction="identification" method="AdvertisingId" permissions="" sdk="10" />
@@ -71,11 +71,6 @@
 	<Hook restriction="internet" method="isConnectedOrConnecting" sdk="10" />
 	<Hook restriction="internet" method="getConnectionInfo" sdk="10" />
 
-	<Hook restriction="location" method="disableLocationUpdates" permissions="CONTROL_LOCATION_UPDATES" sdk="10" />
-	<Hook restriction="location" method="enableLocationUpdates" permissions="CONTROL_LOCATION_UPDATES" sdk="10" />
-	<Hook restriction="location" method="getCellLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="10" />
-	<Hook restriction="location" method="getNeighboringCellInfo" permissions="ACCESS_COARSE_UPDATES" sdk="10" />
-	<Hook restriction="location" method="getAllCellInfo" permissions="ACCESS_COARSE_UPDATES" sdk="17" />
 	<Hook restriction="location" method="getScanResults" dangerous="true" permissions="ACCESS_WIFI_STATE" sdk="10" />
 
 	<Hook restriction="location" method="GMS.addGeofences" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
@@ -87,14 +82,22 @@
 
 	<Hook restriction="location" method="Srv.addGpsStatusListener" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.getLastLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
-	<Hook restriction="location" method="Srv.getProviders" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
-	<Hook restriction="location" method="Srv.getAllProviders" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
-	<Hook restriction="location" method="Srv.getBestProvider" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
-	<Hook restriction="location" method="Srv.isProviderEnabled" dangerous="true" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+	<Hook restriction="location" method="Srv.getProviders" dangerous="true" from="1.11.8" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+	<Hook restriction="location" method="Srv.getAllProviders" dangerous="true" from="1.11.8" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+	<Hook restriction="location" method="Srv.getBestProvider" dangerous="true" from="1.11.8" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+	<Hook restriction="location" method="Srv.isProviderEnabled" dangerous="true" from="1.11.8" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.removeUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.requestGeofence" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.requestLocationUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.sendExtraCommand" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
+
+	<Hook restriction="location" method="Srv.disableLocationUpdates" permissions="CONTROL_LOCATION_UPDATES" sdk="10" />
+	<Hook restriction="location" method="Srv.enableLocationUpdates" permissions="CONTROL_LOCATION_UPDATES" sdk="10" />
+	<Hook restriction="location" method="Srv.getAllCellInfo" permissions="ACCESS_COARSE_UPDATES,ACCESS_FINE_LOCATION" sdk="17" />
+	<Hook restriction="location" method="Srv.getCellLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="10" />
+	<Hook restriction="location" method="Srv.getNeighboringCellInfo" permissions="ACCESS_COARSE_UPDATES,ACCESS_FINE_LOCATION" sdk="10" />
+
+	<Hook restriction="location" method="Srv.listen" permissions="READ_PHONE_STATE,ACCESS_COARSE_LOCATION" sdk="10" />
 
 	<Hook restriction="media" method="startRecording" permissions="RECORD_AUDIO" sdk="10" />
 	<Hook restriction="media" method="setPreviewCallback" permissions="CAMERA" sdk="10" />
@@ -141,31 +144,36 @@
 	<Hook restriction="overlay" method="removeView" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
 	<Hook restriction="overlay" method="updateViewLayout" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
 
-	<Hook restriction="phone" method="getDeviceId" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getIsimDomain" permissions="READ_PHONE_STATE" sdk="14" />
-	<Hook restriction="phone" method="getIsimImpi" permissions="READ_PHONE_STATE" sdk="14" />
-	<Hook restriction="phone" method="getIsimImpu" permissions="READ_PHONE_STATE" sdk="14" />
-	<Hook restriction="phone" method="getLine1AlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getLine1Number" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getMsisdn" permissions="READ_PHONE_STATE" sdk="14" />
-	<Hook restriction="phone" method="getSimSerialNumber" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getSubscriberId" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getVoiceMailAlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getVoiceMailNumber" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="listen" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getNetworkCountryIso" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getNetworkOperator" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getNetworkOperatorName" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getNetworkType" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getPhoneType" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getSimCountryIso" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getSimOperator" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getSimOperatorName" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getGroupIdLevel1" permissions="READ_PHONE_STATE" sdk="18" />
 	<Hook restriction="phone" method="android.intent.action.NEW_OUTGOING_CALL" permissions="PROCESS_OUTGOING_CALLS" sdk="10" />
 	<Hook restriction="phone" method="android.intent.action.PHONE_STATE" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="TelephonyProvider" permissions="WRITE_APN_SETTINGS" sdk="10" />
 	<Hook restriction="phone" method="CallLogProvider" permissions="READ_CALL_LOG" sdk="10" />
+
+	<Hook restriction="phone" method="Srv.getDataNetworkType" permissions="" sdk="10" />
+	<Hook restriction="phone" method="Srv.getActivePhoneType" permissions="" sdk="10" />
+
+	<Hook restriction="phone" method="gsm.operator.iso-country" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.operator.numeric" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.operator.alpha" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.current.phone-type" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.sim.operator.iso-country" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.sim.operator.numeric" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.sim.operator.alpha" permissions="" sdk="10" />
+
+	<Hook restriction="phone" method="Srv.getDeviceId" permissions="READ_PHONE_STATE" sdk="10" />
+	<Hook restriction="phone" method="Srv.getGroupIdLevel1" permissions="READ_PHONE_STATE" sdk="18" />
+	<Hook restriction="phone" method="Srv.getIccSerialNumber" permissions="READ_PHONE_STATE" sdk="10" />
+	<Hook restriction="phone" method="Srv.getIsimDomain" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="14" />
+	<Hook restriction="phone" method="Srv.getIsimImpi" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="14" />
+	<Hook restriction="phone" method="Srv.getIsimImpu" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="14" />
+	<Hook restriction="phone" method="Srv.getLine1AlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
+	<Hook restriction="phone" method="Srv.getLine1Number" permissions="READ_PHONE_STATE" sdk="10" />
+	<Hook restriction="phone" method="Srv.getMsisdn" permissions="READ_PHONE_STATE" sdk="14" />
+	<Hook restriction="phone" method="Srv.getSubscriberId" permissions="READ_PHONE_STATE" sdk="10" />
+	<Hook restriction="phone" method="Srv.getVoiceMailAlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
+	<Hook restriction="phone" method="Srv.getVoiceMailNumber" permissions="READ_PHONE_STATE" sdk="10" />
+
+	<Hook restriction="phone" method="Srv.listen" permissions="READ_PHONE_STATE,ACCESS_COARSE_LOCATION" sdk="10" />
 
 	<Hook restriction="sensors" method="getDefaultSensor" permissions="" sdk="3" />
 	<Hook restriction="sensors" method="getSensorList" permissions="" sdk="3" />

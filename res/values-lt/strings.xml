@@ -21,7 +21,7 @@
     <string name="menu_pro">Pro versija aktyvi</string>
     <string name="menu_about">Apie</string>
     <string name="menu_help">Pagalba</string>
-    <string name="menu_select_all">Select all</string>
+    <string name="menu_select_all">Pažymėti viską</string>
     <string name="menu_all">Visos</string>
     <string name="menu_restriction_all">Išvalyti visus ribojimus</string>
     <string name="menu_clear_all">Išvalyti viską</string>
@@ -47,8 +47,8 @@
     <string name="msg_saved_to" formatted="false">Išsaugomi %s</string>
     <string name="msg_no_restrictions">Nerasta ribojimų</string>
     <string name="msg_sure">Įsitikinę?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Prašome pasirinkti keletą programų</string>
+    <string name="msg_limit">Prašome pasirinkti mažiau nei %d programų</string>
     <string name="msg_done">Atlikta</string>
     <string name="msg_reboot">Reikia perkrauti prietaisą</string>
     <string name="msg_random_now">Atsitiktiniai duomenys</string>

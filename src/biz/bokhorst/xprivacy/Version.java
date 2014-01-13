@@ -27,4 +27,9 @@ public class Version implements Comparable<Version> {
 		}
 		return 0;
 	}
+
+	@Override
+	public String toString() {
+		return mVersion;
+	}
 }

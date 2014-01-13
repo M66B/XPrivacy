@@ -91,7 +91,6 @@ public final class SharedPreferencesEx implements SharedPreferences {
 					}
 				}
 				if (map != null) {
-					Util.log(null, Log.INFO, "Loaded " + mFile);
 					mLoaded = true;
 					mMap = map;
 					mLastModified = lastModified;

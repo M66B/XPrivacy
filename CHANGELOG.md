@@ -16,10 +16,33 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Added an easter egg
-* Updated Tagalog translation
+* Fixed restricting locations for some Android versions ([issue](https://github.com/M66B/XPrivacy/issues/1102))
+* Fixed removing location and phone state listener
+* Fixed fake value for sim operator name
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.11.10 TEST**
+
+* Fixed fake values for get network operator/sim info
+* Fixed phone state listener cast errors
+* Updated Lithuanian translation
+
+**Version 1.11.9 TEST**
+
+* Fixed usage data with a dot in the name
+* Added an easter egg (don't ask)
+* Added cell location restrictions within the phone process
+* Added phone/network type restrictions within the phone process
+* Added phone property restrictions (static phone info)
+* Added phone registry restrictions (phone state listener)
+* Added phone sub info restrictions (volatile phone info)
+* Write warnings and errors to a new private log file
+* Suppressing com.google.android.gms.* method errors
+* Increase retry count for reading settings files
+* Updated Tagalog translation
+
+Replacing the location and phone restrictions is ready for testing now.
 
 **Version 1.11.8 BETA**
 

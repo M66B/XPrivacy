@@ -173,6 +173,7 @@ public class PrivacyManager {
 				String restart = attributes.getValue("restart");
 				String permissions = attributes.getValue("permissions");
 				int sdk = (attributes.getValue("sdk") == null ? 0 : Integer.parseInt(attributes.getValue("sdk")));
+				String from = attributes.getValue("from");
 
 				// Add meta data
 				if (Build.VERSION.SDK_INT >= sdk) {
@@ -180,7 +181,7 @@ public class PrivacyManager {
 					boolean restartRequired = (restart == null ? false : Boolean.parseBoolean(restart));
 					String[] permission = (permissions == null ? null : permissions.split(","));
 					MethodDescription md = new MethodDescription(restrictionName, methodName, danger, restartRequired,
-							permission, sdk);
+							permission, sdk, from == null ? null : new Version(from));
 
 					if (!mMethod.containsKey(restrictionName))
 						mMethod.put(restrictionName, new ArrayList<MethodDescription>());
@@ -282,10 +283,10 @@ public class PrivacyManager {
 
 			if (usage)
 				if (methodName == null || methodName.equals("")) {
-					Util.log(hook, Log.WARN, "method empty");
+					Util.log(hook, Log.WARN, "Method empty");
 					Util.logStack(hook);
 				} else if (getMethods(restrictionName).indexOf(new MethodDescription(restrictionName, methodName)) < 0)
-					Util.log(hook, Log.WARN, "unknown method=" + methodName);
+					Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
 			// Check cache
 			String keyCache = String.format("%d.%s.%s", uid, restrictionName, methodName);
@@ -427,7 +428,7 @@ public class PrivacyManager {
 		if (self.equals(context.getPackageName()))
 			return true;
 
-		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs)
+		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs / ("hammerhead".equals(Build.PRODUCT) ? 6 : 1))
 			return false;
 
 		if (isIsolated(Process.myUid()))
@@ -778,7 +779,7 @@ public class PrivacyManager {
 
 		// Use fallback
 		if (fallback)
-			value = PrivacyProvider.getSettingFallback(name, defaultValue);
+			value = PrivacyProvider.getSettingFallback(name, defaultValue, true);
 
 		// Default value
 		if (value == null)
@@ -905,28 +906,30 @@ public class PrivacyManager {
 		if (name.equals("getIsimImpu"))
 			return null;
 
-		if (name.equals("getNetworkCountryIso")) {
+		if (name.equals("getNetworkCountryIso") || name.equals("gsm.operator.iso-country")) {
 			// ISO country code
 			String value = getSetting(null, null, uid, cSettingCountry, "XX", true);
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
-		if (name.equals("getNetworkOperator")) // MCC+MNC: test network
+		if (name.equals("getNetworkOperator") || name.equals("gsm.operator.numeric"))
+			// MCC+MNC: test network
 			return getSetting(null, null, uid, cSettingMcc, "001", true)
 					+ getSetting(null, null, uid, cSettingMnc, "01", true);
-		if (name.equals("getNetworkOperatorName"))
+		if (name.equals("getNetworkOperatorName") || name.equals("gsm.operator.alpha"))
 			return getSetting(null, null, uid, cSettingOperator, cDeface, true);
 
-		if (name.equals("getSimCountryIso")) {
+		if (name.equals("getSimCountryIso") || name.equals("gsm.sim.operator.iso-country")) {
 			// ISO country code
 			String value = getSetting(null, null, uid, cSettingCountry, "XX", true);
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
-		if (name.equals("getSimOperator")) // MCC+MNC: test network
+		if (name.equals("getSimOperator") || name.equals("gsm.sim.operator.numeric"))
+			// MCC+MNC: test network
 			return getSetting(null, null, uid, cSettingMcc, "001", true)
 					+ getSetting(null, null, uid, cSettingMnc, "01", true);
-		if (name.equals("getSimOperatorName"))
+		if (name.equals("getSimOperatorName") || name.equals("gsm.sim.operator.alpha"))
 			return getSetting(null, null, uid, cSettingOperator, cDeface, true);
-		if (name.equals("getSimSerialNumber"))
+		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber"))
 			return getSetting(null, null, uid, cSettingIccId, null, true);
 
 		if (name.equals("getSubscriberId")) { // IMSI for a GSM phone
@@ -1262,6 +1265,7 @@ public class PrivacyManager {
 		private boolean mRestart;
 		private String[] mPermissions;
 		private int mSdk;
+		private Version mFrom;
 
 		public MethodDescription(String restrictionName, String methodName) {
 			mRestrictionName = restrictionName;
@@ -1269,13 +1273,14 @@ public class PrivacyManager {
 		}
 
 		public MethodDescription(String restrictionName, String methodName, boolean dangerous, boolean restart,
-				String[] permissions, int sdk) {
+				String[] permissions, int sdk, Version from) {
 			mRestrictionName = restrictionName;
 			mMethodName = methodName;
 			mDangerous = dangerous;
 			mRestart = restart;
 			mPermissions = permissions;
 			mSdk = sdk;
+			mFrom = from;
 		}
 
 		public String getRestrictionName() {
@@ -1307,6 +1312,10 @@ public class PrivacyManager {
 			return mSdk;
 		}
 
+		public Version getFrom() {
+			return mFrom;
+		}
+
 		@Override
 		public int hashCode() {
 			return (mRestrictionName.hashCode() ^ mMethodName.hashCode());
@@ -1322,6 +1331,11 @@ public class PrivacyManager {
 		public int compareTo(MethodDescription another) {
 			int x = mRestrictionName.compareTo(another.mRestrictionName);
 			return (x == 0 ? mMethodName.compareTo(another.mMethodName) : x);
+		}
+
+		@Override
+		public String toString() {
+			return String.format("%s/%s", mRestrictionName, mMethodName);
 		}
 	}
 

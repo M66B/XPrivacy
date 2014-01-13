@@ -634,24 +634,28 @@ public class ActivityShare extends Activity {
 
 				// Process result (legacy)
 				for (String packageName : mapPackage.keySet()) {
-					mProgressCurrent++;
 					try {
-						publishProgress(mProgressCurrent, progressMax + 1);
-						Util.log(null, Log.INFO, "Importing " + packageName);
+						publishProgress(++mProgressCurrent, progressMax + 1);
 
 						// Get uid
 						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
 
-						// Reset existing restrictions
-						PrivacyManager.deleteRestrictions(ActivityShare.this, uid, true);
+						if (listUidSelected.size() == 0 || listUidSelected.contains(uid)) {
+							Util.log(null, Log.INFO, "Importing " + packageName);
+							mAppAdapter.setState(uid, STATE_RUNNING);
 
-						// Set imported restrictions
-						for (String restrictionName : mapPackage.get(packageName).keySet()) {
-							PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName, null, true,
-									true);
-							for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(restrictionName))
-								PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName,
-										md.getMethodName(), md.isRestricted(), true);
+							// Reset existing restrictions
+							PrivacyManager.deleteRestrictions(ActivityShare.this, uid, true);
+
+							// Set imported restrictions
+							for (String restrictionName : mapPackage.get(packageName).keySet()) {
+								PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName, null, true,
+										true);
+								for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(restrictionName))
+									PrivacyManager.setRestricted(null, ActivityShare.this, uid, restrictionName,
+											md.getMethodName(), md.isRestricted(), true);
+							}
+							mAppAdapter.setState(uid, STATE_SUCCESS);
 						}
 					} catch (NameNotFoundException ex) {
 						Util.log(null, Log.WARN, "Not found package=" + packageName);
@@ -683,6 +687,7 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
+			// TODO mark failed the apps that weren't found
 			done(result);
 			super.onPostExecute(result);
 		}

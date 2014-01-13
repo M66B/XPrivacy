@@ -56,9 +56,13 @@ public class Util {
 	public static void log(XHook hook, int priority, String msg) {
 		// Check if logging enabled
 		if (Process.myUid() > 0 && !mLogDetermined) {
-			mLog = false;
 			mLogDetermined = true;
-			mLog = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingLog, false, false);
+			try {
+				mLog = Boolean.parseBoolean(PrivacyProvider.getSettingFallback(PrivacyManager.cSettingLog,
+						Boolean.toString(false), false));
+			} catch (Throwable ignored) {
+				mLog = false;
+			}
 		}
 
 		// Log if enabled
@@ -77,7 +81,7 @@ public class Util {
 	}
 
 	public static void logStack(XHook hook) {
-		log(hook, Log.INFO, Log.getStackTraceString(new Exception("StackTrace")));
+		log(hook, Log.WARN, Log.getStackTraceString(new Exception("StackTrace")));
 	}
 
 	public static File getDataFile() {
@@ -86,7 +90,11 @@ public class Util {
 	}
 
 	public static void clearData() {
-		getDataFile().delete();
+		File dataFile = getDataFile();
+		dataFile.delete();
+		logData(null, Log.WARN, "Start " + Build.PRODUCT);
+		dataFile.setReadable(true, false);
+		dataFile.setWritable(true, false);
 	}
 
 	@SuppressLint("SimpleDateFormat")

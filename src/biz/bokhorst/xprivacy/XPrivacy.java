@@ -13,6 +13,7 @@ import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Process;
+import android.os.SystemClock;
 import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -113,6 +114,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// System properties
 		hookAll(XSystemProperties.getInstances());
 
+		// Telephony registry
+		hookAll(XTelephonyRegistry.getInstances());
+
 		// Thread
 		hookAll(XThread.getInstances());
 
@@ -146,25 +150,32 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Providers
 		hookAll(XContentProvider.getInstances(lpparam.packageName), lpparam.classLoader);
 
+		// Phone interface manager
+		if ("com.android.phone".equals(lpparam.packageName)) {
+			Util.log(null, Log.WARN, "Hooking " + lpparam.packageName);
+			hookAll(XPhoneInterfaceManager.getInstances(), lpparam.classLoader);
+			hookAll(XPhoneSubInfo.getInstances(), lpparam.classLoader);
+		}
+
 		// Advertising Id
 		try {
 			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, lpparam.classLoader);
 			hookAll(XAdvertisingIdClientInfo.getInstances(), lpparam.classLoader);
-		} catch (Throwable ex) {
+		} catch (Throwable ignored) {
 		}
 
 		// Google auth
 		try {
 			Class.forName("com.google.android.gms.auth.GoogleAuthUtil", false, lpparam.classLoader);
 			hookAll(XGoogleAuthUtil.getInstances(), lpparam.classLoader);
-		} catch (Throwable ex) {
+		} catch (Throwable ignored) {
 		}
 
 		// Location client
 		try {
 			Class.forName("com.google.android.gms.location.LocationClient", false, lpparam.classLoader);
 			hookAll(XLocationClient.getInstances(), lpparam.classLoader);
-		} catch (Throwable ex) {
+		} catch (Throwable ignored) {
 		}
 	}
 
@@ -173,8 +184,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static boolean mBluetoothAdapterHooked = false;
 	private static boolean mClipboardManagerHooked = false;
 	private static boolean mConnectivityManagerHooked = false;
+	// NFC manager
 	private static boolean mSensorManagerHooked = false;
-	private static boolean mTelephonyManagerHooked = false;
 	private static boolean mWindowManagerHooked = false;
 	private static boolean mWiFiManagerHooked = false;
 
@@ -217,12 +228,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			if (!mSensorManagerHooked) {
 				hookAll(XSensorManager.getInstances(instance));
 				mSensorManagerHooked = true;
-			}
-		} else if (name.equals(Context.TELEPHONY_SERVICE)) {
-			// Telephony manager
-			if (!mTelephonyManagerHooked) {
-				hookAll(XTelephonyManager.getInstances(instance));
-				mTelephonyManagerHooked = true;
 			}
 		} else if (name.equals(Context.WINDOW_SERVICE)) {
 			// Window manager
@@ -292,7 +297,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			if (hookClass == null) {
 				String message = String.format("%s: class not found: %s", AndroidAppHelper.currentPackageName(),
 						hook.getClassName());
-				Util.log(hook, Log.WARN, message);
+				Util.log(hook, Log.ERROR, message);
 				return;
 			}
 
@@ -314,25 +319,20 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 
 			// Check if found
-			if (hookSet.isEmpty()) {
+			if (hookSet.isEmpty() && !hookClass.getName().startsWith("com.google.android.gms.")) {
 				String message = String.format("%s: method not found: %s.%s", AndroidAppHelper.currentPackageName(),
 						hookClass.getName(), hook.getMethodName());
-				Util.log(hook, Log.WARN, message);
+				Util.log(hook, Log.ERROR, message);
 				return;
 			}
 
 			// Log
 			for (XC_MethodHook.Unhook unhook : hookSet) {
 				String packageName = AndroidAppHelper.currentPackageName();
-				String className = unhook.getHookedMethod().getDeclaringClass().getName();
-				String methodName = unhook.getHookedMethod().getName();
 				String restrictionName = hook.getRestrictionName();
-				if (className.equals(methodName))
-					methodName = "constructor";
-				String message = String.format("%s: hooked %s.%s/%s (%d)", packageName, className, methodName,
-						restrictionName, hookSet.size());
-				Util.log(hook, Log.WARN, message);
-				break;
+				String message = String.format("%s: hooked %s for %s/%s uid=%d", packageName, unhook.getHookedMethod(),
+						restrictionName, hook.getSpecifier(), Process.myUid());
+				Util.log(hook, SystemClock.elapsedRealtime() < 60 * 1000 ? Log.WARN : Log.INFO, message);
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
