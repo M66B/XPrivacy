@@ -13,7 +13,6 @@ import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Process;
-import android.os.SystemClock;
 import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -332,7 +331,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				String restrictionName = hook.getRestrictionName();
 				String message = String.format("%s: hooked %s for %s/%s uid=%d", packageName, unhook.getHookedMethod(),
 						restrictionName, hook.getSpecifier(), Process.myUid());
-				Util.log(hook, SystemClock.elapsedRealtime() < 60 * 1000 ? Log.WARN : Log.INFO, message);
+				Util.log(hook, Log.INFO, message);
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);

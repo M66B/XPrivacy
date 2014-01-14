@@ -86,7 +86,6 @@
 	<Hook restriction="location" method="Srv.getAllProviders" dangerous="true" from="1.11.8" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.getBestProvider" dangerous="true" from="1.11.8" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.isProviderEnabled" dangerous="true" from="1.11.8" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
-	<Hook restriction="location" method="Srv.removeUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.requestGeofence" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.requestLocationUpdates" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />
 	<Hook restriction="location" method="Srv.sendExtraCommand" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" />

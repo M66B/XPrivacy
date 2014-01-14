@@ -348,7 +348,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="XPrivacy">
 		<meta name="author" content="M66B">
-		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<style type="text/css">
 			body { padding-left: 5px; padding-right: 5px; }
 			th, tr, td { padding: 0px !important; }
@@ -695,8 +695,8 @@
 ?>
 		</div>
 
-		<script src="http://code.jquery.com/jquery.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 		<script>
 			jQuery(document).ready(function($) {
 				$('#details').click(function() {
@@ -710,7 +710,7 @@
 			});
 		</script>
 		<!-- Piwik -->
-		<script type="text/javascript">
+		<!--script type="text/javascript">
 		  var _paq = _paq || [];
 		  _paq.push(["trackPageView"]);
 		  _paq.push(["enableLinkTracking"]);
@@ -722,7 +722,7 @@
 			var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
 			g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
 		  })();
-		</script>
+		</script-->
 		<!-- End Piwik Code -->
 	</body>
 </html>

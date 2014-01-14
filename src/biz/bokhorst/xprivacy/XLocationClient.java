@@ -65,9 +65,11 @@ public class XLocationClient extends XHook {
 		} else if (mMethod == Methods.getLastLocation) {
 			// Do nothing
 		} else if (mMethod == Methods.removeLocationUpdates) {
-			removeLocationListener(param);
+			if (isRestricted(param))
+				removeLocationListener(param);
 		} else if (mMethod == Methods.requestLocationUpdates) {
-			replaceLocationListener(param);
+			if (isRestricted(param))
+				replaceLocationListener(param);
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
@@ -78,9 +80,8 @@ public class XLocationClient extends XHook {
 			// Do nothing
 		} else if (mMethod == Methods.getLastLocation) {
 			Location location = (Location) param.getResult();
-			if (location != null)
-				if (isRestricted(param))
-					param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
+			if (location != null && isRestricted(param))
+				param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
 		} else if (mMethod == Methods.removeLocationUpdates) {
 			// Do nothing
 		} else if (mMethod == Methods.requestLocationUpdates) {
@@ -134,8 +135,9 @@ public class XLocationClient extends XHook {
 
 		@Override
 		public void onLocationChanged(Location location) {
-			mLocationListener.onLocationChanged(location == null ? location : PrivacyManager.getDefacedLocation(
-					Binder.getCallingUid(), location));
+			if (location != null)
+				location = PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location);
+			mLocationListener.onLocationChanged(location);
 		}
 	}
 }

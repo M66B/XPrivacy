@@ -16,11 +16,18 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Fixed restricting locations for some Android versions ([issue](https://github.com/M66B/XPrivacy/issues/1102))
-* Fixed removing location and phone state listener
-* Fixed fake value for sim operator name
+* Use secure connection for [submitting and fetching restrictions](https://crowd.xprivacy.eu/))
+* Skip upgrade for dangerous functions
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.11.11 TEST**
+
+* Fixed restricting locations for some Android versions ([issue](https://github.com/M66B/XPrivacy/issues/1102))
+* Fixed restricting incoming phone number for some Android versions
+* Fixed removing location and phone state listener
+* Fixed location client always restricting locations
+* Fixed fake value for SIM (ICC) operator name
 
 **Version 1.11.10 TEST**
 
