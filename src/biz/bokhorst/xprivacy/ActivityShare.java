@@ -157,15 +157,28 @@ public class ActivityShare extends Activity {
 
 			final String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
 					: getFileName(false));
+			// TODO if there is a file chooser, launch it
+			// TODO add result receiver
 
 			// Start task to get app list, but not if action is EXPORT
 			if (!action.equals(ACTION_EXPORT)) {
 				AppListTask appListTask = new AppListTask();
 				appListTask.executeOnExecutor(mExecutor, uids);
-			} else {
-				TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+			}
+
+			TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+			View llDescription = findViewById(R.id.llDescription);
+			if (action.equals(ACTION_EXPORT)) {
 				tvDescription.setText("Backup all settings to " + fileName);
-				tvDescription.setVisibility(View.VISIBLE);
+				llDescription.setVisibility(View.VISIBLE);
+			} else if (action.equals(ACTION_IMPORT)) {
+				tvDescription.setText("Import settings from " + fileName);
+				llDescription.setVisibility(View.VISIBLE);
+				//if (file picker available) {
+					Button btnChange = (Button) findViewById(R.id.btnChange);
+					btnChange.setVisibility(View.VISIBLE);
+					// TODO onclick listener to launch file picker
+				//}
 			}
 
 			// Set button actions

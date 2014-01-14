@@ -19,13 +19,30 @@
         android:layout_alignParentLeft="true"
         android:background="?android:attr/colorActivatedHighlight" />
 
-    <TextView
-        android:id="@+id/tvDescription"
+    <LinearLayout
+        android:id="@+id/llDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_below="@id/vShareProgressFull"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:visibility="gone" />
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <Button
+            android:id="@+id/btnChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Choose"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/llButtons"
@@ -55,7 +72,7 @@
         android:id="@+id/lvShare"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tvDescription"
+        android:layout_below="@id/llDescription"
         android:layout_above="@id/llButtons" />
 
 </RelativeLayout>
