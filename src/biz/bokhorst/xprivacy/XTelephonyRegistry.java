@@ -9,6 +9,7 @@ import java.util.WeakHashMap;
 
 import android.content.Context;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.IInterface;
@@ -85,7 +86,8 @@ public class XTelephonyRegistry extends XHook {
 						// Hook
 						if (!mHookedLocation && "location".equals(getRestrictionName())) {
 							hookOn(param, "onCellLocationChanged");
-							hookOn(param, "onCellInfoChanged");
+							if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+								hookOn(param, "onCellInfoChanged");
 							mHookedLocation = true;
 						}
 
