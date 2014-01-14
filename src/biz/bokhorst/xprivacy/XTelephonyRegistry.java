@@ -96,7 +96,8 @@ public class XTelephonyRegistry extends XHook {
 							mHookedPhone = true;
 						}
 					}
-				}
+				} else
+					Util.log(this, Log.WARN, "Not hooking class=" + param.args[1].getClass().getName());
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

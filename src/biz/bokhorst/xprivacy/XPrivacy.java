@@ -322,6 +322,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				String message = String.format("%s: method not found: %s.%s", AndroidAppHelper.currentPackageName(),
 						hookClass.getName(), hook.getMethodName());
 				Util.log(hook, Log.ERROR, message);
+				for (Method declared : hookClass.getDeclaredMethods())
+					Util.log(hook, Log.ERROR, "method=" + declared);
 				return;
 			}
 

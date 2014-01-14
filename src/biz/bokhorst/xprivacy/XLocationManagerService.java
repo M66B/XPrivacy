@@ -58,7 +58,7 @@ public class XLocationManagerService extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		addGpsStatusListener, getLastLocation, getProviders, getAllProviders, getBestProvider, isProviderEnabled, removeUpdates, requestGeofence, requestLocationUpdates, sendExtraCommand
+		addGpsStatusListener, getLastLocation, getLastKnownLocation, getProviders, getAllProviders, getBestProvider, isProviderEnabled, removeUpdates, requestGeofence, requestLocationUpdates, sendExtraCommand
 	};
 
 	public static List<XHook> getInstances() {
@@ -107,7 +107,8 @@ public class XLocationManagerService extends XHook {
 						hookOnLocationChanged(param);
 						mHooked = true;
 					}
-				}
+				} else
+					Util.log(this, Log.WARN, "Not hooking class=" + param.args[1].getClass().getName());
 			} else if (param.args.length > 2 && param.args[2] != null) {
 				// TODO: hook intent
 				if (isRestricted(param))
@@ -152,7 +153,7 @@ public class XLocationManagerService extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod != Methods.addGpsStatusListener && mMethod != Methods.requestGeofence
 				&& mMethod != Methods.removeUpdates && mMethod != Methods.requestLocationUpdates)
-			if (mMethod == Methods.getLastLocation) {
+			if (mMethod == Methods.getLastLocation || mMethod == Methods.getLastKnownLocation) {
 				Location location = (Location) param.getResult();
 				if (location != null && isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
