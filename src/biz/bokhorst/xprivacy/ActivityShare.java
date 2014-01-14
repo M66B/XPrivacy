@@ -6,8 +6,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.Collator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +57,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
@@ -270,13 +273,18 @@ public class ActivityShare extends Activity {
 
 	// App info and share state
 
-	private class AppHolder {
+	private class AppHolder implements Comparable<AppHolder> {
 		public int state = STATE_WAITING;
 		public ApplicationInfoEx appInfo;
 		public String message = null;
 
 		public AppHolder(int uid) throws NameNotFoundException {
 			appInfo = new ApplicationInfoEx(ActivityShare.this, uid);
+		}
+
+		@Override
+		public int compareTo(AppHolder other) {
+			return this.appInfo.compareTo(other.appInfo);
 		}
 	}
 
@@ -285,7 +293,7 @@ public class ActivityShare extends Activity {
 	@SuppressLint("DefaultLocale")
 	private class AppListAdapter extends ArrayAdapter<AppHolder> {
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		private List<AppHolder> mAppsWaiting;
+		public List<AppHolder> mAppsWaiting;
 		private List<AppHolder> mAppsDone;
 		private ChangeNotifier changeNotifier = new ChangeNotifier();
 
@@ -311,8 +319,6 @@ public class ActivityShare extends Activity {
 			mAppsWaiting = new ArrayList<AppHolder>();
 			mAppsWaiting.addAll(objects);
 			mAppsDone = new ArrayList<AppHolder>();
-			// TODO sort according to preferences
-			// TODO add sort options to actionbar just like in ActivityMain
 		}
 
 		public int[] getUids() {
@@ -334,6 +340,8 @@ public class ActivityShare extends Activity {
 				this.clear();
 				this.addAll(mAppsDone);
 				this.addAll(mAppsWaiting);
+				// If I separate out the app currently in progress, I could sort the done ones in the same way as the waiting ones were.
+				// We'd then have in order: a sorted list of the done apps, mAppCurrent, then all the waiting apps in order
 			}
 			// Set state for this app
 			app.state = state;
@@ -448,6 +456,9 @@ public class ActivityShare extends Activity {
 				}
 			}
 
+			Collections.sort(apps);
+			// TODO sort according to preferences
+			// TODO add sort options to actionbar just like in ActivityMain
 			return apps;
 		}
 
@@ -706,7 +717,10 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO mark failed the apps that weren't found
+			// Mark as failed the apps that weren't found
+			for (AppHolder app : mAppAdapter.mAppsWaiting)
+				app.state = STATE_FAILURE;
+			mAppAdapter.notifyDataSetChanged();
 			done(result);
 			super.onPostExecute(result);
 		}
