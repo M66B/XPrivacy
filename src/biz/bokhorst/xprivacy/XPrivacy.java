@@ -77,9 +77,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// IO bridge
 		hookAll(XIoBridge.getInstances());
 
-		// Location manager service
-		hookAll(XLocationManagerService.getInstances());
-
 		// Media recorder
 		hookAll(XMediaRecorder.getInstances());
 
@@ -112,9 +109,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// System properties
 		hookAll(XSystemProperties.getInstances());
-
-		// Telephony registry
-		hookAll(XTelephonyRegistry.getInstances());
 
 		// Thread
 		hookAll(XThread.getInstances());
@@ -149,13 +143,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Providers
 		hookAll(XContentProvider.getInstances(lpparam.packageName), lpparam.classLoader);
 
-		// Phone interface manager
-		if ("com.android.phone".equals(lpparam.packageName)) {
-			Util.log(null, Log.WARN, "Hooking " + lpparam.packageName);
-			hookAll(XPhoneInterfaceManager.getInstances(), lpparam.classLoader);
-			hookAll(XPhoneSubInfo.getInstances(), lpparam.classLoader);
-		}
-
 		// Advertising Id
 		try {
 			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, lpparam.classLoader);
@@ -183,8 +170,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static boolean mBluetoothAdapterHooked = false;
 	private static boolean mClipboardManagerHooked = false;
 	private static boolean mConnectivityManagerHooked = false;
-	// NFC manager
+	private static boolean mLocationManagerHooked = false;
 	private static boolean mSensorManagerHooked = false;
+	private static boolean mTelephonyManagerHooked = false;
 	private static boolean mWindowManagerHooked = false;
 	private static boolean mWiFiManagerHooked = false;
 
@@ -222,11 +210,23 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				hookAll(XConnectivityManager.getInstances(instance));
 				mConnectivityManagerHooked = true;
 			}
+		} else if (name.equals(Context.LOCATION_SERVICE)) {
+			// Location manager
+			if (!mLocationManagerHooked) {
+				hookAll(XLocationManager.getInstances(instance));
+				mLocationManagerHooked = true;
+			}
 		} else if (name.equals(Context.SENSOR_SERVICE)) {
 			// Sensor manager
 			if (!mSensorManagerHooked) {
 				hookAll(XSensorManager.getInstances(instance));
 				mSensorManagerHooked = true;
+			}
+		} else if (name.equals(Context.TELEPHONY_SERVICE)) {
+			// Telephony manager
+			if (!mTelephonyManagerHooked) {
+				hookAll(XTelephonyManager.getInstances(instance));
+				mTelephonyManagerHooked = true;
 			}
 		} else if (name.equals(Context.WINDOW_SERVICE)) {
 			// Window manager
