@@ -141,16 +141,20 @@ public class PackageChange extends BroadcastReceiver {
 						if (sVersion.compareTo(new Version("0.0")) != 0) {
 							Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version "
 									+ pInfo.versionName);
-							for (String restrictionName : PrivacyManager.getRestrictions())
-								for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName))
-									if (md.getFrom() != null)
-										if (sVersion.compareTo(md.getFrom()) < 0) {
-											Util.log(null, Log.WARN, "Upgrading " + md);
-											for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
-												PrivacyManager.setRestricted(null, context, aInfo.uid,
-														md.getRestrictionName(), md.getName(), false, true);
-										} else
-											Util.log(null, Log.WARN, "No upgrade needed for " + md);
+							boolean dangerous = PrivacyManager.getSettingBool(null, context, 0,
+									PrivacyManager.cSettingDangerous, false, false);
+							if (!dangerous)
+								for (String restrictionName : PrivacyManager.getRestrictions())
+									for (PrivacyManager.MethodDescription md : PrivacyManager
+											.getMethods(restrictionName))
+										if (md.isDangerous() && md.getFrom() != null)
+											if (sVersion.compareTo(md.getFrom()) < 0) {
+												Util.log(null, Log.WARN, "Upgrading " + md);
+												for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
+													PrivacyManager.setRestricted(null, context, aInfo.uid,
+															md.getRestrictionName(), md.getName(), false, true);
+											} else
+												Util.log(null, Log.WARN, "No upgrade needed for " + md);
 						}
 
 						// Set new version
