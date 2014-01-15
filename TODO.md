@@ -14,6 +14,7 @@ For interested developers:
 * Hook location intents
 * More efficient implementation of XSystemProperties
 * Hook more package manager methods (which return info about one package)
+* Check http://developer.android.com/reference/android/nfc/NfcManager.html
 
 * Split settings file?
 * Remove indeterminate progress indicator?

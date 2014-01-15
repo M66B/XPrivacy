@@ -27,7 +27,7 @@ public class XSmsManager extends XHook {
 	// public void sendMultipartTextMessage(String destinationAddress, String scAddress, ArrayList<String> parts, ArrayList<PendingIntent> sentIntents, ArrayList<PendingIntent> deliveryIntents)
 	// public void sendTextMessage(String destinationAddress, String scAddress, String text, PendingIntent sentIntent, PendingIntent deliveryIntent)
 	// frameworks/base/telephony/java/android/telephony/SmsManager.java
-	// http://developer.android.com/reference/android/telephony/gsm/SmsManager.html
+	// http://developer.android.com/reference/android/telephony/SmsManager.html
 
 	// @formatter:on
 

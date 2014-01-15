@@ -17,9 +17,9 @@
 
 	<Hook restriction="calendar" method="CalendarProvider2" permissions="READ_CALENDAR" sdk="10" />
 
-	<Hook restriction="calling" method="sendDataMessage" permissions="SEND_SMS" sdk="10" />
-	<Hook restriction="calling" method="sendMultipartTextMessage" permissions="SEND_SMS" sdk="10" />
-	<Hook restriction="calling" method="sendTextMessage" permissions="SEND_SMS" sdk="10" />
+	<Hook restriction="calling" method="sendDataMessage" permissions="SEND_SMS" sdk="4" />
+	<Hook restriction="calling" method="sendMultipartTextMessage" permissions="SEND_SMS" sdk="4" />
+	<Hook restriction="calling" method="sendTextMessage" permissions="SEND_SMS" sdk="4" />
 	<Hook restriction="calling" method="android.intent.action.RESPOND_VIA_MESSAGE" permissions="SEND_RESPOND_VIA_MESSAGE" sdk="18" />
 	<Hook restriction="calling" method="android.intent.action.CALL" permissions="CALL_PHONE" sdk="10" />
 
@@ -202,11 +202,12 @@
 	<Hook restriction="system" method="queryIntentContentProviders" dangerous="true" from="1.11.14" permissions="" sdk="19" />
 	<Hook restriction="system" method="queryIntentServices" dangerous="true" permissions="" sdk="1" />
 
+	<Hook restriction="system" method="getInstalledProviders" dangerous="true" permissions="" sdk="3" />
+
 	<Hook restriction="system" method="getRecentTasks" dangerous="true" permissions="GET_TASKS" sdk="10" />
 	<Hook restriction="system" method="getRunningAppProcesses" dangerous="true" permissions="GET_TASKS" sdk="10" />
 	<Hook restriction="system" method="getRunningServices" dangerous="true" permissions="GET_TASKS" sdk="10" />
 	<Hook restriction="system" method="getRunningTasks" dangerous="true" permissions="GET_TASKS" sdk="10" />
-	<Hook restriction="system" method="getInstalledProviders" dangerous="true" permissions="" sdk="10" />
 
 	<Hook restriction="system" method="android.intent.action.PACKAGE_ADDED" dangerous="true" permissions="" sdk="10" />
 	<Hook restriction="system" method="android.intent.action.PACKAGE_REPLACED" dangerous="true" permissions="" sdk="10" />
