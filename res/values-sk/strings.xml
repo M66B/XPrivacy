@@ -108,7 +108,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_country">Krajina</string>
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
-    <string name="settings_ua">Užívateľský agent</string>
+    <string name="settings_ua">Používateľský agent</string>
     <string name="settings_general">Všeobecné</string>
     <string name="settings_fake_data">Falošné údaje</string>
     <string name="settings_global">Použiť globálne falošné údaje</string>
@@ -119,7 +119,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_dangerous">Obmedziť nebezpečné funkcie</string>
     <string name="settings_confidence">Maximálny interval spoľahlivosti sťahovania</string>
     <string name="settings_experimental">Experimentálne funkcie (vyžadovaný reštart)</string>
-    <string name="settings_https">Use secure connections</string>
+    <string name="settings_https">Použiť zabezpečené pripojenie</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>
