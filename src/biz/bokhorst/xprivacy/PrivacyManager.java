@@ -140,6 +140,7 @@ public class PrivacyManager {
 	private static Map<String, CRestriction> mRestrictionCache = new HashMap<String, CRestriction>();
 	private static Map<String, CSetting> mSettingsCache = new HashMap<String, CSetting>();
 	private static Map<UsageData, UsageData> mUsageQueue = new LinkedHashMap<UsageData, UsageData>();
+	private static IPrivacyService mPrivacyClient = null;
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -271,20 +272,6 @@ public class PrivacyManager {
 		try {
 			long start = System.currentTimeMillis();
 
-			// Try privacy service
-			IPrivacyService privacyService = PrivacyManager.getPrivacyService();
-			if (privacyService == null)
-				Util.log(hook, Log.WARN, "No privacy provider uid=" + uid + " restriction=" + restrictionName + "/"
-						+ methodName);
-			else
-				try {
-					return privacyService.getRestricted(uid, restrictionName, methodName);
-				} catch (Throwable ex) {
-					Util.log(hook, Log.ERROR, "No privacy provider uid=" + uid + " restriction=" + restrictionName
-							+ "/" + methodName);
-					Util.bug(hook, ex);
-				}
-
 			// Check uid
 			if (uid <= 0) {
 				Util.log(hook, Log.WARN, "uid <= 0");
@@ -371,8 +358,26 @@ public class PrivacyManager {
 
 			// Use fallback
 			if (fallback) {
+				// Use privacy service
+				boolean service = false;
+				mPrivacyClient = PrivacyManager.getPrivacyClient();
+				if (mPrivacyClient == null)
+					Util.log(hook, Log.WARN, "No privacy provider uid=" + uid + " restriction=" + restrictionName + "/"
+							+ methodName);
+				else
+					try {
+						restricted = mPrivacyClient.getRestricted(uid, restrictionName, methodName);
+						service = true;
+					} catch (Throwable ex) {
+						mPrivacyClient = null;
+						Util.log(hook, Log.ERROR, "No privacy provider uid=" + uid + " restriction=" + restrictionName
+								+ "/" + methodName);
+						Util.bug(hook, ex);
+					}
+
 				// Fallback
-				restricted = PrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
+				if (!service)
+					restricted = PrivacyProvider.getRestrictedFallback(hook, uid, restrictionName, methodName);
 
 				// Queue usage data
 				if (usage) {
@@ -1239,7 +1244,7 @@ public class PrivacyManager {
 		}
 	}
 
-	public static IPrivacyService getPrivacyService() {
+	public static IPrivacyService getPrivacyClient() {
 		try {
 			// public static IBinder getService(String name)
 			Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
