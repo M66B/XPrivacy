@@ -16,6 +16,9 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Better method for hooking the bluetooth manager
+* Better method for hooking the package manager
+* Hook *getPackagesForUid*, *getPackagesHoldingPermissions* (JellyBean MR2) and *queryIntentContentProviders* (Kitkat)
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

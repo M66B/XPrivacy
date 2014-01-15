@@ -58,9 +58,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Application
 		hookAll(XApplication.getInstances());
 
-		// Application package manager
-		hookAll(XApplicationPackageManager.getInstances());
-
 		// Audio record
 		hookAll(XAudioRecord.getInstances());
 
@@ -184,6 +181,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static boolean mClipboardManagerHooked = false;
 	private static boolean mConnectivityManagerHooked = false;
 	private static boolean mLocationManagerHooked = false;
+	private static boolean mPackageManagerHooked = false;
 	private static boolean mSensorManagerHooked = false;
 	private static boolean mTelephonyManagerHooked = false;
 	private static boolean mWindowManagerHooked = false;
@@ -222,6 +220,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			if (!mLocationManagerHooked) {
 				hookAll(XLocationManager.getInstances(instance));
 				mLocationManagerHooked = true;
+			}
+		} else if (name.equals("PackageManager")) {
+			// Package manager
+			if (!mPackageManagerHooked) {
+				hookAll(XPackageManager.getInstances(instance));
+				mPackageManagerHooked = true;
 			}
 		} else if (name.equals(Context.SENSOR_SERVICE)) {
 			// Sensor manager

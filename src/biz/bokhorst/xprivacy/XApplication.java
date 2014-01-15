@@ -160,6 +160,7 @@ public class XApplication extends XHook {
 
 		@Override
 		public void uncaughtException(Thread thread, Throwable ex) {
+			// TODO: remove after implementing privacy service
 			try {
 				Util.log(mHook, Log.WARN, "Uncaught exception uid=" + Process.myUid() + ": " + ex);
 				PrivacyManager.sendUsageData(null, mContext);

@@ -150,12 +150,15 @@ public class XActivity extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.getSystemService) {
+			// TODO: check if this hook is needed
 			if (param.args.length > 0 && param.args[0] != null) {
+				String name = (String) param.args[0];
 				Object instance = param.getResult();
-				if (instance != null)
-					XPrivacy.handleGetSystemService(this, (String) param.args[0], instance);
+				if (name != null && instance != null)
+					XPrivacy.handleGetSystemService(this, name, instance);
 			}
 		} else if (mMethod == Methods.onDestroy || mMethod == Methods.onPause) {
+			// TODO: remove after implementing privacy service
 			try {
 				PrivacyManager.sendUsageData(this, (Context) param.thisObject);
 			} catch (Throwable ex) {

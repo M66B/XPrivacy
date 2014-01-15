@@ -13,6 +13,7 @@ For interested developers:
 * Close app view when packages removed
 * Hook location intents
 * More efficient implementation of XSystemProperties
+* Hook more package manager methods (which return info about one package)
 
 * Split settings file?
 * Remove indeterminate progress indicator?

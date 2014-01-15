@@ -44,6 +44,7 @@ public class XService extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.onDestroy) {
+			// TODO: remove after implementing privacy service
 			Util.log(this, Log.INFO, "Service destroyed uid=" + Process.myUid());
 			try {
 				PrivacyManager.sendUsageData(this, (Context) param.thisObject);

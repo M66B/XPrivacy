@@ -190,19 +190,24 @@
 	<Hook restriction="storage" method="sdcard" dangerous="true" restart="true" permissions="READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE" sdk="10" />
 	<Hook restriction="storage" method="getExternalStorageState" sdk="10" />
 
+	<Hook restriction="system" method="getInstalledApplications" dangerous="true" permissions="" sdk="1" />
+	<Hook restriction="system" method="getInstalledPackages" dangerous="true" permissions="" sdk="1" />
+	<Hook restriction="system" method="getPackagesForUid" dangerous="true" from="1.11.14" permissions="" sdk="1" />
+	<Hook restriction="system" method="getPackagesHoldingPermissions" dangerous="true" from="1.11.14" permissions="" sdk="1" />
+	<Hook restriction="system" method="getPreferredPackages" dangerous="true" permissions="" sdk="1" />
+	<Hook restriction="system" method="queryBroadcastReceivers" dangerous="true" permissions="" sdk="1" />
+	<Hook restriction="system" method="queryContentProviders" dangerous="true" permissions="" sdk="1" />
+	<Hook restriction="system" method="queryIntentActivities" dangerous="true" permissions="" sdk="1" />
+	<Hook restriction="system" method="queryIntentActivityOptions" dangerous="true" permissions="" sdk="1" />
+	<Hook restriction="system" method="queryIntentContentProviders" dangerous="true" from="1.11.14" permissions="" sdk="19" />
+	<Hook restriction="system" method="queryIntentServices" dangerous="true" permissions="" sdk="1" />
+
 	<Hook restriction="system" method="getRecentTasks" dangerous="true" permissions="GET_TASKS" sdk="10" />
 	<Hook restriction="system" method="getRunningAppProcesses" dangerous="true" permissions="GET_TASKS" sdk="10" />
 	<Hook restriction="system" method="getRunningServices" dangerous="true" permissions="GET_TASKS" sdk="10" />
 	<Hook restriction="system" method="getRunningTasks" dangerous="true" permissions="GET_TASKS" sdk="10" />
 	<Hook restriction="system" method="getInstalledProviders" dangerous="true" permissions="" sdk="10" />
-	<Hook restriction="system" method="getInstalledApplications" dangerous="true" permissions="" sdk="10" />
-	<Hook restriction="system" method="getInstalledPackages" dangerous="true" permissions="" sdk="10" />
-	<Hook restriction="system" method="getPreferredPackages" dangerous="true" permissions="" sdk="10" />
-	<Hook restriction="system" method="queryBroadcastReceivers" dangerous="true" permissions="" sdk="10" />
-	<Hook restriction="system" method="queryContentProviders" dangerous="true" permissions="" sdk="10" />
-	<Hook restriction="system" method="queryIntentActivities" dangerous="true" permissions="" sdk="10" />
-	<Hook restriction="system" method="queryIntentActivityOptions" dangerous="true" permissions="" sdk="10" />
-	<Hook restriction="system" method="queryIntentServices" dangerous="true" permissions="" sdk="10" />
+
 	<Hook restriction="system" method="android.intent.action.PACKAGE_ADDED" dangerous="true" permissions="" sdk="10" />
 	<Hook restriction="system" method="android.intent.action.PACKAGE_REPLACED" dangerous="true" permissions="" sdk="10" />
 	<Hook restriction="system" method="android.intent.action.PACKAGE_RESTARTED" dangerous="true" permissions="" sdk="10" />

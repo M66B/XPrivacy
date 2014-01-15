@@ -31,6 +31,7 @@ public class XBinder extends XHook {
 		"android.location.ILocationManager",
 		// TODO: sensor
 		"com.android.internal.telephony.ITelephonyRegistry",
+		"android.content.pm.IPackageManager",
 		"com.android.internal.telephony.IPhoneSubInfo",
 		"android.view.IWindowManager",
 		"android.net.wifi.IWifiManager"
