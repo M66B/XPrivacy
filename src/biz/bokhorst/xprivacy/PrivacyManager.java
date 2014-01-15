@@ -271,13 +271,17 @@ public class PrivacyManager {
 		try {
 			long start = System.currentTimeMillis();
 
+			// Try privacy service
 			IPrivacyService privacyService = PrivacyManager.getPrivacyService();
 			if (privacyService == null)
-				Util.log(hook, Log.WARN, "No privacy provider");
+				Util.log(hook, Log.WARN, "No privacy provider uid=" + uid + " restriction=" + restrictionName + "/"
+						+ methodName);
 			else
 				try {
 					return privacyService.getRestricted(uid, restrictionName, methodName);
 				} catch (Throwable ex) {
+					Util.log(hook, Log.ERROR, "No privacy provider uid=" + uid + " restriction=" + restrictionName
+							+ "/" + methodName);
 					Util.bug(hook, ex);
 				}
 
