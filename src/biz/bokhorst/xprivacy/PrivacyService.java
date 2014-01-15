@@ -1,13 +1,18 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
 import java.lang.reflect.Method;
 
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
 public class PrivacyService {
 	private static String cServiceName = "xprivacy";
+	private static SQLiteDatabase mDatabase = null;
 
 	public static void register() {
 		try {
@@ -37,6 +42,8 @@ public class PrivacyService {
 		@Override
 		public boolean getRestricted(String hookName, int uid, String restrictionName, String methodName,
 				boolean usage, boolean useCache) throws RemoteException {
+			if (mDatabase == null)
+				mDatabase = getDatabase();
 			return PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
 		}
 
@@ -55,5 +62,32 @@ public class PrivacyService {
 		@Override
 		public void setSetting(String hookName, int uid, String settingName, String value) throws RemoteException {
 		}
+
 	};
+
+	private static SQLiteDatabase getDatabase() {
+		try {
+			File dbFile = new File(Environment.getDataDirectory() + File.separator + "xprivacy" + File.separator
+					+ "xprivacy.db");
+			dbFile.getParentFile().mkdirs();
+			SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
+			if (db.needUpgrade(1))
+				try {
+					db.beginTransaction();
+					// http://www.sqlite.org/lang_createtable.html
+					db.execSQL("CREATE TABLE restriction (uid INTEGER, restriction TEXT, method TEXT, restricted INTEGER)");
+					db.execSQL("CREATE TABLE setting (uid INTEGER, name TEXT, value TEXT)");
+					db.execSQL("CREATE TABLE usage (uid INTEGER, restriction TEXT, method TEXT, time INTEGER, restricted INTEGER)");
+					db.setVersion(1);
+					db.setTransactionSuccessful();
+					Util.log(null, Log.WARN, "Database created");
+				} finally {
+					db.endTransaction();
+				}
+			return db;
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return null;
+		}
+	}
 }
