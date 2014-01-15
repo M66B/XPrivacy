@@ -95,7 +95,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int ERROR_INVALID_PACKAGE_NAME = 0x102;
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
-	public static final Uri cProUri = Uri.parse("https://www.xprivacy.eu/");
+	public static final Uri cProUri = Uri.parse("http://www.xprivacy.eu/");
 	public static final String cXUrl = "https://github.com/M66B/XPrivacy?mobile=0";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
