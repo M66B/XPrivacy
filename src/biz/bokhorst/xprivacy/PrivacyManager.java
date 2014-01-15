@@ -301,7 +301,7 @@ public class PrivacyManager {
 						else {
 							long ms = System.currentTimeMillis() - start;
 							logRestriction(hook, context, uid, "get", restrictionName, methodName,
-									entry.isRestricted(), true, ms);
+									entry.isRestricted(), true, false, ms);
 							return entry.isRestricted();
 						}
 					}
@@ -354,16 +354,19 @@ public class PrivacyManager {
 				}
 
 			// Use fallback
+			boolean service = false;
 			if (fallback) {
 				// Use privacy service
-				boolean service = false;
-				mPrivacyClient = PrivacyService.getClient();
+				if (mPrivacyClient == null)
+					mPrivacyClient = PrivacyService.getClient();
 				if (mPrivacyClient == null)
 					Util.log(hook, Log.WARN, "No privacy provider uid=" + uid + " restriction=" + restrictionName + "/"
 							+ methodName);
 				else
 					try {
-						restricted = mPrivacyClient.getRestricted(uid, restrictionName, methodName);
+						String hookName = (hook == null ? null : hook.getClass().getSimpleName());
+						restricted = mPrivacyClient.getRestricted(hookName, uid, restrictionName, methodName, usage,
+								useCache);
 						service = true;
 					} catch (Throwable ex) {
 						mPrivacyClient = null;
@@ -397,7 +400,7 @@ public class PrivacyManager {
 
 			// Result
 			long ms = System.currentTimeMillis() - start;
-			logRestriction(hook, context, uid, "get", restrictionName, methodName, restricted, false, ms);
+			logRestriction(hook, context, uid, "get", restrictionName, methodName, restricted, false, service, ms);
 			return restricted;
 		} catch (Throwable ex) {
 			// Failsafe
@@ -539,7 +542,7 @@ public class PrivacyManager {
 			Util.log(hook, Log.INFO, "Error updating restriction=" + restrictionName);
 
 		// Result
-		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, 0);
+		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, false, 0);
 
 		// Mark as restricted
 		if (restricted && changeState)
@@ -798,8 +801,28 @@ public class PrivacyManager {
 		}
 
 		// Use fallback
-		if (fallback)
-			value = PrivacyProvider.getSettingFallback(name, defaultValue, true);
+		boolean service = false;
+		if (fallback) {
+			// Use privacy service
+			if (mPrivacyClient == null)
+				mPrivacyClient = PrivacyService.getClient();
+			if (mPrivacyClient == null)
+				Util.log(hook, Log.WARN, "No privacy provider setting=" + name);
+			else
+				try {
+					String hookName = (hook == null ? null : hook.getClass().getSimpleName());
+					value = mPrivacyClient.getSetting(hookName, -1, name, defaultValue, useCache);
+					service = true;
+				} catch (Throwable ex) {
+					mPrivacyClient = null;
+					Util.log(hook, Log.ERROR, "No privacy provider setting=" + name);
+					Util.bug(hook, ex);
+				}
+
+			// Fallback
+			if (!service)
+				value = PrivacyProvider.getSettingFallback(name, defaultValue, true);
+		}
 
 		// Default value
 		if (value == null)
@@ -815,11 +838,8 @@ public class PrivacyManager {
 		}
 
 		long ms = System.currentTimeMillis() - start;
-		Util.log(
-				hook,
-				Log.INFO,
-				String.format("get setting %s=%s%s%s", name, value, (fallback ? " (file)" : ""), (ms > 1 ? " " + ms
-						+ " ms" : "")));
+		Util.log(hook, Log.INFO, String.format("get setting %s=%s%s%s", name, value, (service ? " (service)"
+				: fallback ? " (file)" : ""), (ms > 1 ? " " + ms + " ms" : "")));
 		return value;
 	}
 
@@ -1180,11 +1200,11 @@ public class PrivacyManager {
 	private static void logRestriction(
 			XHook hook, Context context,
 			int uid, String prefix, String restrictionName, String methodName,
-			boolean restricted, boolean cached, long ms) {
+			boolean restricted, boolean cached, boolean service, long ms) {
 		Util.log(hook, Log.INFO, String.format("%s %d/%s %s=%srestricted%s%s",
 				prefix, uid, methodName, restrictionName,
 				(restricted ? "" : "!"),
-				(cached ? " (cached)" : (context == null ? " (file)" : "")),
+				(cached ? " (cached)" : (service ? " (service)" : context == null ? " (file)" : "")),
 				(ms > 1 ? " " + ms + " ms" : "")));
 	}
 	// @formatter:on

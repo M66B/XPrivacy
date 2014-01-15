@@ -35,13 +35,25 @@ public class PrivacyService {
 
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
 		@Override
-		public boolean getRestricted(int uid, String restrictionName, String methodName) throws RemoteException {
+		public boolean getRestricted(String hookName, int uid, String restrictionName, String methodName,
+				boolean usage, boolean useCache) throws RemoteException {
 			return PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
 		}
 
 		@Override
-		public String getSetting(String name, String defaultValue) throws RemoteException {
+		public String getSetting(String hookName, int uid, String name, String defaultValue, boolean useCache)
+				throws RemoteException {
 			return PrivacyProvider.getSettingFallback(name, defaultValue, true);
+		}
+
+		@Override
+		public boolean setRestricted(String hook, int uid, String restrictionName, String methodName, boolean restricted)
+				throws RemoteException {
+			return false;
+		}
+
+		@Override
+		public void setSetting(String hookName, int uid, String settingName, String value) throws RemoteException {
 		}
 	};
 }
