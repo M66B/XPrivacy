@@ -2,9 +2,12 @@ package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.net.InterfaceAddress;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,14 +17,16 @@ import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.os.Build;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class Requirements {
 
 	public static void check(final Context context) {
 		// Check Android version
-		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH
-				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
+		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR1
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR2
@@ -113,6 +118,8 @@ public class Requirements {
 			alertDialog.show();
 		}
 
+		// TODO: account manager
+
 		// Check activity manager
 		if (!checkField(context.getSystemService(Context.ACTIVITY_SERVICE), "mContext", Context.class))
 			reportClass(context.getSystemService(Context.ACTIVITY_SERVICE).getClass(), context);
@@ -125,7 +132,7 @@ public class Requirements {
 			} catch (NoSuchMethodException ex) {
 				reportClass(clazz, context);
 			}
-		} catch (Throwable ex) {
+		} catch (ClassNotFoundException ex) {
 			sendSupportInfo(ex.toString(), context);
 		}
 
@@ -134,10 +141,10 @@ public class Requirements {
 			Class<?> clazz = Class.forName("android.app.ActivityThread$ReceiverData");
 			if (!checkField(clazz, "intent"))
 				reportClass(clazz, context);
-		} catch (Throwable ex) {
+		} catch (ClassNotFoundException ex) {
 			try {
 				reportClass(Class.forName("android.app.ActivityThread"), context);
-			} catch (Throwable exex) {
+			} catch (ClassNotFoundException exex) {
 				sendSupportInfo(exex.toString(), context);
 			}
 		}
@@ -170,7 +177,7 @@ public class Requirements {
 			} catch (NoSuchMethodException ex) {
 				reportClass(clazz, context);
 			}
-		} catch (Throwable ex) {
+		} catch (ClassNotFoundException ex) {
 			sendSupportInfo(ex.toString(), context);
 		}
 
@@ -180,6 +187,36 @@ public class Requirements {
 			Runtime.class.getDeclaredMethod("loadLibrary", String.class, ClassLoader.class);
 		} catch (NoSuchMethodException ex) {
 			reportClass(Runtime.class, context);
+		}
+
+		// Check service manager
+		try {
+			Class<?> clazz = Class.forName("android.os.ServiceManager");
+			try {
+				// public static String[] listServices()
+				// public static IBinder checkService(String name)
+				Method listServices = clazz.getDeclaredMethod("listServices");
+				Method checkService = clazz.getDeclaredMethod("checkService", String.class);
+
+				// Get services
+				List<String> listService = new ArrayList<String>();
+				for (String service : (String[]) listServices.invoke(null)) {
+					IBinder binder = (IBinder) checkService.invoke(null, service);
+					String serviceName = binder.getInterfaceDescriptor();
+					if (!"".equals(serviceName))
+						listService.add(serviceName);
+				}
+				for (String service : XBinder.cListService) {
+					if (!listService.contains(service))
+						sendSupportInfo(TextUtils.join("\r\n", listService), context);
+				}
+			} catch (NoSuchMethodException ex) {
+				reportClass(clazz, context);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		} catch (ClassNotFoundException ex) {
+			sendSupportInfo(ex.toString(), context);
 		}
 
 		// Check telephony manager
@@ -200,10 +237,10 @@ public class Requirements {
 				Class<?> clazz = Class.forName("android.net.wifi.WifiSsid");
 				try {
 					clazz.getDeclaredMethod("createFromAsciiEncoded", String.class);
-				} catch (NoSuchMethodError ex) {
+				} catch (NoSuchMethodException ex) {
 					reportClass(clazz, context);
 				}
-			} catch (Throwable ex) {
+			} catch (ClassNotFoundException ex) {
 				sendSupportInfo(ex.toString(), context);
 			}
 
@@ -225,7 +262,7 @@ public class Requirements {
 					field = superClass.getDeclaredField(fieldName);
 					field.setAccessible(true);
 					break;
-				} catch (Throwable ex) {
+				} catch (NoSuchFieldException ex) {
 					superClass = superClass.getSuperclass();
 				}
 
@@ -244,7 +281,7 @@ public class Requirements {
 		try {
 			clazz.getDeclaredField(fieldName);
 			return true;
-		} catch (Throwable ex) {
+		} catch (NoSuchFieldException ex) {
 			return false;
 		}
 	}
@@ -308,7 +345,7 @@ public class Requirements {
 
 		StringBuilder sb = new StringBuilder(text);
 		sb.insert(0, "\r\n");
-		sb.insert(0, String.format("Model: %s\r\n", android.os.Build.MODEL));
+		sb.insert(0, String.format("Model: %s (%s)\r\n", Build.MODEL, Build.PRODUCT));
 		sb.insert(0, String.format("Android SDK int: %d\r\n", Build.VERSION.SDK_INT));
 		sb.insert(0, String.format("XPrivacy version: %s\r\n", xversion));
 
