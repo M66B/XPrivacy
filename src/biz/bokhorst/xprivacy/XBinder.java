@@ -21,8 +21,6 @@ public class XBinder extends XHook {
 	private static boolean mMagical = false;
 	private static int FLAG_XPRIVACY = 0x000000A0;
 	private static int BITS_MAGIC = 16;
-	private static boolean cEnabled = true;
-	private static boolean cRestrict = false;
 
 	// @formatter:off
 	public static List<String> cListService = Arrays.asList(new String[] {
@@ -69,10 +67,8 @@ public class XBinder extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		if (cEnabled) {
-			listHook.add(new XBinder(Methods.execTransact, null)); // Binder
-			listHook.add(new XBinder(Methods.transact, null)); // BinderProxy
-		}
+		listHook.add(new XBinder(Methods.execTransact, null)); // Binder
+		listHook.add(new XBinder(Methods.transact, null)); // BinderProxy
 		return listHook;
 	}
 
@@ -113,7 +109,7 @@ public class XBinder extends XHook {
 					String name = binder.getInterfaceDescriptor();
 					if (cListService.contains(name)) {
 						Util.log(this, Log.WARN, "restrict name=" + name + " uid=" + uid + " my=" + Process.myUid());
-						if (cRestrict) {
+						if (PrivacyManager.getRestricted(this, null, uid, PrivacyManager.cSystem, "IPC", true, true)) {
 							// Get reply parcel
 							Parcel reply = null;
 							try {

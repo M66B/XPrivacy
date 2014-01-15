@@ -2,7 +2,6 @@ package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.net.InterfaceAddress;
@@ -18,7 +17,6 @@ import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.os.Build;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
 
