@@ -20,7 +20,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Version 1.11.12 BETA**
 
-* Use secure connection for [submitting and fetching restrictions](https://crowd.xprivacy.eu/))
+* Use secure connection for [submitting and fetching restrictions](https://crowd.xprivacy.eu/)
 * Skip upgrade for dangerous functions
 * Restored original location and telephony restrictions
 
