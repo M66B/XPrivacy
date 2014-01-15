@@ -40,13 +40,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// System server
 		try {
-			Class<?> cSystemServer = findClass("com.android.server.ServerThread", null);
-			Method mMain = cSystemServer.getDeclaredMethod("initAndLoop");
+			Class<?> cSystemServer = findClass("com.android.server.SystemServer", null);
+			Method mMain = cSystemServer.getDeclaredMethod("main", String[].class);
 			XposedBridge.hookMethod(mMain, new XC_MethodHook() {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					PrivacyManager.registerPrivacyService();
-					Util.log(null, Log.WARN, "Privacy service registered");
+					PrivacyService.register();
 				}
 			});
 		} catch (Throwable ex) {
