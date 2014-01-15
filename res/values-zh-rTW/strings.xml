@@ -116,6 +116,7 @@
     <string name="settings_dangerous">關閉高風險功能</string>
     <string name="settings_confidence">最大擷取信賴區間</string>
     <string name="settings_experimental">實驗性功能 (需重新啟動)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">程式</string>
     <string name="help_internet">表示有網際網路權限</string>
     <string name="help_granted">表示有手機權限</string>

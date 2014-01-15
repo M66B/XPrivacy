@@ -118,6 +118,7 @@
     <string name="settings_dangerous">खतरनाक कार्य प्रतिबंधित करे</string>
     <string name="settings_confidence">अधिकतम विश्वसनीय fetch अंतराल</string>
     <string name="settings_experimental">प्रायोगिक कार्य (पुनःप्रारंभ जरुरी)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Application</string>
     <string name="help_internet">इंटरनेट की अनुमति है</string>
     <string name="help_granted">Android की अनुमति है</string>

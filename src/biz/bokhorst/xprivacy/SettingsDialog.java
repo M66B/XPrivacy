@@ -42,6 +42,7 @@ public class SettingsDialog {
 		final CheckBox cbDangerous = (CheckBox) dlgSettings.findViewById(R.id.cbDangerous);
 		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
 		final CheckBox cbExperimental = (CheckBox) dlgSettings.findViewById(R.id.cbExperimental);
+		final CheckBox cbHttps = (CheckBox) dlgSettings.findViewById(R.id.cbHttps);
 		final LinearLayout llConfidence = (LinearLayout) dlgSettings.findViewById(R.id.llConfidence);
 		final EditText etConfidence = (EditText) dlgSettings.findViewById(R.id.etConfidence);
 		final CheckBox cbGlobal = (CheckBox) dlgSettings.findViewById(R.id.cbGlobal);
@@ -93,11 +94,13 @@ public class SettingsDialog {
 				cbDangerous.setEnabled(isChecked);
 				cbUsage.setEnabled(isChecked);
 				cbExperimental.setEnabled(isChecked);
+				cbHttps.setEnabled(isChecked);
 				etConfidence.setEnabled(isChecked);
 				if (!isChecked) {
 					cbDangerous.setChecked(false);
 					cbUsage.setChecked(false);
 					cbExperimental.setChecked(false);
+					cbHttps.setChecked(true);
 					etConfidence.setText("");
 				}
 			}
@@ -280,8 +283,9 @@ public class SettingsDialog {
 				false);
 		boolean experimental = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingExperimental,
 				PrivacyManager.cTestVersion, false);
+		boolean https = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingHttps, true, false);
 		String confidence = PrivacyManager.getSetting(null, context, uid, PrivacyManager.cSettingConfidence, "", false);
-		final boolean expert = (dangerous || usage || experimental || !"".equals(confidence));
+		final boolean expert = (dangerous || usage || experimental || !https || !"".equals(confidence));
 		boolean global = (PrivacyManager.getAppSetting(null, context, uid, PrivacyManager.cSettingSerial, null, false) == null);
 		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
 
@@ -311,11 +315,14 @@ public class SettingsDialog {
 				cbDangerous.setChecked(dangerous);
 				cbUsage.setChecked(usage);
 				cbExperimental.setChecked(experimental);
+				cbHttps.setChecked(https);
 				etConfidence.setText(confidence);
 			} else {
 				cbDangerous.setEnabled(false);
 				cbUsage.setEnabled(false);
 				cbExperimental.setEnabled(false);
+				cbHttps.setEnabled(false);
+				cbHttps.setChecked(true);
 				etConfidence.setEnabled(false);
 			}
 		} else {
@@ -325,6 +332,7 @@ public class SettingsDialog {
 			cbDangerous.setVisibility(View.GONE);
 			cbUsage.setVisibility(View.GONE);
 			cbExperimental.setVisibility(View.GONE);
+			cbHttps.setVisibility(View.GONE);
 			llConfidence.setVisibility(View.GONE);
 
 			// Application specific settings
@@ -493,6 +501,8 @@ public class SettingsDialog {
 							Boolean.toString(cbUsage.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingExperimental,
 							Boolean.toString(cbExperimental.isChecked()));
+					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingHttps,
+							Boolean.toString(cbHttps.isChecked()));
 					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingConfidence, etConfidence
 							.getText().toString());
 				} else {

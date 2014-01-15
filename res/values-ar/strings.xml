@@ -118,6 +118,7 @@
     <string name="settings_dangerous">تقييد الوظائف الخطيرة</string>
     <string name="settings_confidence">الحد الأقصى لجلب فترة الثقة</string>
     <string name="settings_experimental">وظائف تجريبية</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">التطبيق</string>
     <string name="help_internet">لديه صلاحية الوصول للإنترنت</string>
     <string name="help_granted">لديه صلاحية أندرويد</string>

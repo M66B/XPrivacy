@@ -117,6 +117,7 @@
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Uygulama</string>
     <string name="help_internet">internet izni var</string>
     <string name="help_granted">Android izni var</string>

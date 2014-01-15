@@ -41,6 +41,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -62,7 +63,8 @@ public class ActivityShare extends Activity {
 	public static final String cFileName = "FileName";
 	public static final String cUidList = "UidList";
 	public static final String cErrorMessage = "ErrorMessage";
-	public static final String BASE_URL = "https://crowd.xprivacy.eu/";
+	public static final String HTTP_BASE_URL = "http://crowd.xprivacy.eu/";
+	public static final String HTTPS_BASE_URL = "https://crowd.xprivacy.eu/";
 	public static final String cProgressReport = "ProgressReport";
 	public static final String cProgressMessage = "ProgressMessage";
 	public static final String cProgressValue = "ProgressValue";
@@ -588,7 +590,7 @@ public class ActivityShare extends Activity {
 						HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 						HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-						HttpPost httpost = new HttpPost(BASE_URL + "?format=json&action=fetch");
+						HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=fetch");
 						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 						httpost.setHeader("Accept", "application/json");
 						httpost.setHeader("Content-type", "application/json");
@@ -812,7 +814,7 @@ public class ActivityShare extends Activity {
 					HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
 					HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-					HttpPost httpost = new HttpPost(ActivityShare.BASE_URL + "?format=json&action=submit");
+					HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=submit");
 					httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 					httpost.setHeader("Accept", "application/json");
 					httpost.setHeader("Content-type", "application/json");
@@ -875,6 +877,13 @@ public class ActivityShare extends Activity {
 	}
 
 	// Helper methods
+
+	public static String getBaseURL(Context context) {
+		if (PrivacyManager.getSettingBool(null, context, 0, PrivacyManager.cSettingHttps, true, true))
+			return HTTPS_BASE_URL;
+		else
+			return HTTP_BASE_URL;
+	}
 
 	public static String getFileName(boolean multiple) {
 		File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator

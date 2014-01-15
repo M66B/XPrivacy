@@ -118,6 +118,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_dangerous">Restreindre fonctions dangereuses</string>
     <string name="settings_confidence">Intervalle de confiance maximum</string>
     <string name="settings_experimental">Fonctions expérimentales (redémarrage requis)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>

@@ -118,6 +118,7 @@
     <string name="settings_dangerous">Beschränke "bedenkliche" Funktionen</string>
     <string name="settings_confidence">Maximaler "runterladen" Konfidenzintervall</string>
     <string name="settings_experimental">Experimentelle Funktionen (Neustart erforderlich)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>

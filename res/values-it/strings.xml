@@ -118,6 +118,7 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="settings_dangerous">Limita funzioni pericolose</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Applicazione</string>
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>

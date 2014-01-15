@@ -114,6 +114,7 @@ public class PrivacyManager {
 	public final static String cSettingRandom = "Random@boot";
 	public final static String cSettingState = "State";
 	public final static String cSettingConfidence = "Confidence";
+	public final static String cSettingHttps = "Https";
 	public final static String cSettingTemplate = "Template";
 
 	// Special value names

@@ -119,6 +119,7 @@
     <string name="settings_dangerous">Заборона небезпечних функцій</string>
     <string name="settings_confidence">Максимальний інтервал отримання конфіденційних даних</string>
     <string name="settings_experimental">Експериментальні функціі (потрібне перезавантаження)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Програма</string>
     <string name="help_internet">запитує доступ до Інтернету</string>
     <string name="help_granted">має дозвол Android</string>

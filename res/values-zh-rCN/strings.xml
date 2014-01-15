@@ -118,6 +118,7 @@
     <string name="settings_dangerous">限制可能导致应用异常的权限</string>
     <string name="settings_confidence">最大采样置信区间</string>
     <string name="settings_experimental">实验性功能</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">请输入应用名称</string>
     <string name="help_internet">应用含有网络访问权限</string>
     <string name="help_granted">应用已经含有这种权限</string>
