@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.os.Binder;
@@ -18,10 +19,26 @@ public class XBinder extends XHook {
 
 	private static byte mMagic = 0;
 	private static boolean mMagical = false;
-	private static int FLAG_XPRIVACY = 0x00000010;
+	private static int FLAG_XPRIVACY = 0x000000A0;
 	private static int BITS_MAGIC = 16;
 	private static boolean cEnabled = true;
 	private static boolean cRestrict = false;
+
+	// @formatter:off
+	public static List<String> cListService = Arrays.asList(new String[] {
+		"android.accounts.IAccountManager",
+		"android.app.IActivityManager",
+		"android.bluetooth.IBluetoothManager",
+		"android.content.IClipboard",
+		"android.net.IConnectivityManager",
+		"android.location.ILocationManager",
+		// TODO: sensor
+		"com.android.internal.telephony.ITelephonyRegistry",
+		"com.android.internal.telephony.IPhoneSubInfo",
+		"android.view.IWindowManager",
+		"android.net.wifi.IWifiManager"
+	});
+	// @formatter:on
 
 	private XBinder(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), null);
@@ -94,7 +111,7 @@ public class XBinder extends XHook {
 					// Get interface name
 					Binder binder = (Binder) param.thisObject;
 					String name = binder.getInterfaceDescriptor();
-					if ("android.location.ILocationManager".equals(name)) {
+					if (cListService.contains(name)) {
 						Util.log(this, Log.WARN, "restrict name=" + name + " uid=" + uid + " my=" + Process.myUid());
 						if (cRestrict) {
 							// Get reply parcel
