@@ -20,7 +20,7 @@ public class XBinder extends XHook {
 	private static boolean mMagical = false;
 	private static int FLAG_XPRIVACY = 0x00000010;
 	private static int BITS_MAGIC = 16;
-	private static boolean cEnabled = false;
+	private static boolean cEnabled = true;
 	private static boolean cRestrict = false;
 
 	private XBinder(Methods method, String restrictionName) {
@@ -72,7 +72,7 @@ public class XBinder extends XHook {
 	private void markIPC(MethodHookParam param) {
 		int flags = (Integer) param.args[3];
 		if (flags != 0 && flags != IBinder.FLAG_ONEWAY)
-			Log.w("XPrivacy/XBinder", "flags=" + Integer.toHexString(flags));
+			Util.log(this, Log.WARN, "flags=" + Integer.toHexString(flags));
 		flags |= FLAG_XPRIVACY;
 		flags |= getMagic() << BITS_MAGIC;
 		param.args[3] = flags;
@@ -90,38 +90,39 @@ public class XBinder extends XHook {
 		try {
 			if (Process.myUid() > 0) {
 				int uid = Binder.getCallingUid();
-				if ((flagged || magic != getMagic()) && PrivacyManager.isApplication(uid)) {
-					// Application bypassed API
+				if (PrivacyManager.isApplication(uid) && !(flagged && magic == getMagic())) {
+					// Get interface name
 					Binder binder = (Binder) param.thisObject;
 					String name = binder.getInterfaceDescriptor();
-					Log.w("XPrivacy/XBinder", "restrict name=" + name + " uid=" + uid + " my=" + Process.myUid());
+					if ("android.location.ILocationManager".equals(name)) {
+						Util.log(this, Log.WARN, "restrict name=" + name + " uid=" + uid + " my=" + Process.myUid());
+						if (cRestrict) {
+							// Get reply parcel
+							Parcel reply = null;
+							try {
+								// static protected final Parcel obtain(int obj)
+								// frameworks/base/core/java/android/os/Parcel.java
+								Method methodObtain = Parcel.class.getDeclaredMethod("obtain", int.class);
+								methodObtain.setAccessible(true);
+								reply = (Parcel) methodObtain.invoke(null, param.args[2]);
+							} catch (NoSuchMethodException ex) {
+								Util.bug(this, ex);
+							}
 
-					if (cRestrict) {
-						// Get reply parcel
-						Parcel reply = null;
-						try {
-							// static protected final Parcel obtain(int obj)
-							// frameworks/base/core/java/android/os/Parcel.java
-							Method methodObtain = Parcel.class.getDeclaredMethod("obtain", int.class);
-							methodObtain.setAccessible(true);
-							reply = (Parcel) methodObtain.invoke(null, param.args[2]);
-						} catch (NoSuchMethodException ex) {
-							Util.bug(null, ex);
+							// Block IPC
+							if (reply == null)
+								Util.log(this, Log.ERROR, "reply is null uid=" + uid);
+							else {
+								reply.setDataPosition(0);
+								reply.writeException(new SecurityException("XPrivacy"));
+							}
+							param.setResult(true);
 						}
-
-						// Block IPC
-						if (reply == null)
-							Log.w("XPrivacy/XBinder", "reply is null uid=" + uid);
-						else {
-							reply.setDataPosition(0);
-							reply.writeException(new SecurityException("XPrivacy"));
-						}
-						param.setResult(true);
 					}
 				}
 			}
 		} catch (Throwable ex) {
-			Log.e("XPrivacy/XBinder", ex.toString());
+			Util.bug(this, ex);
 		}
 	}
 
