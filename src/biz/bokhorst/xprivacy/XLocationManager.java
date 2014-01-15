@@ -111,9 +111,8 @@ public class XLocationManager extends XHook {
 					param.setResult(false);
 			} else if (mMethod == Methods.getLastLocation || mMethod == Methods.getLastKnownLocation) {
 				Location location = (Location) param.getResult();
-				if (location != null)
-					if (isRestricted(param))
-						param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
+				if (location != null && isRestricted(param))
+					param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
 			} else if (mMethod == Methods.getProviders) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(new ArrayList<String>());
@@ -146,12 +145,12 @@ public class XLocationManager extends XHook {
 					XLocationListener xListener = new XLocationListener(listener);
 					synchronized (mListener) {
 						mListener.put(listener, xListener);
-						Util.log(this, Log.INFO, "Added count=" + mListener.size());
+						Util.log(this, Log.INFO, "Added count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 					}
 					param.args[arg] = xListener;
 				}
 			}
-		} else
+		} else // Intent
 			param.setResult(null);
 	}
 
@@ -162,18 +161,17 @@ public class XLocationManager extends XHook {
 			synchronized (mListener) {
 				XLocationListener xlistener = mListener.get(listener);
 				if (xlistener == null)
-					Util.log(this, Log.WARN, "Not found count=" + mListener.size());
+					Util.log(this, Log.WARN, "Not found count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 				else {
 					param.args[0] = xlistener;
 					mListener.remove(listener);
 				}
 			}
-		} else
+		} else // Intent
 			param.setResult(null);
 	}
 
 	private class XLocationListener implements LocationListener {
-
 		private LocationListener mLocationListener;
 
 		public XLocationListener(LocationListener locationListener) {
