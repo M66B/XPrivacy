@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.text.Collator;
@@ -39,7 +40,9 @@ import android.database.Cursor;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Build;
+import android.os.IBinder;
 import android.os.Process;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -267,6 +270,16 @@ public class PrivacyManager {
 			String methodName, boolean usage, boolean useCache) {
 		try {
 			long start = System.currentTimeMillis();
+
+			IPrivacyService privacyService = PrivacyManager.getPrivacyService();
+			if (privacyService == null)
+				Util.log(hook, Log.WARN, "No privacy provider");
+			else
+				try {
+					return privacyService.getRestricted(uid, restrictionName, methodName);
+				} catch (Throwable ex) {
+					Util.bug(hook, ex);
+				}
 
 			// Check uid
 			if (uid <= 0) {
@@ -1208,6 +1221,43 @@ public class PrivacyManager {
 		}
 		return false;
 	}
+
+	// Service
+
+	public static void registerPrivacyService() {
+		try {
+			// public static void addService(String name, IBinder service)
+			Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
+			Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
+			mAddService.invoke(null, "xprivacy", mPrivacyService);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
+
+	public static IPrivacyService getPrivacyService() {
+		try {
+			// public static IBinder getService(String name)
+			Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
+			Method mGetService = cServiceManager.getDeclaredMethod("getService", String.class);
+			return IPrivacyService.Stub.asInterface((IBinder) mGetService.invoke(null, "xprivacy"));
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return null;
+		}
+	}
+
+	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
+		@Override
+		public boolean getRestricted(int uid, String restrictionName, String methodName) throws RemoteException {
+			return PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
+		}
+
+		@Override
+		public String getSetting(String name, String defaultValue) throws RemoteException {
+			return PrivacyProvider.getSettingFallback(name, defaultValue, true);
+		}
+	};
 
 	// Helper classes
 
