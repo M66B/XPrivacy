@@ -26,7 +26,6 @@ public class XBinder extends XHook {
 	public static List<String> cListService = Arrays.asList(new String[] {
 		"android.accounts.IAccountManager",
 		"android.app.IActivityManager",
-		"android.bluetooth.IBluetoothManager",
 		"android.content.IClipboard",
 		"android.net.IConnectivityManager",
 		"android.location.ILocationManager",

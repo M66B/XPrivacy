@@ -116,8 +116,8 @@
 	<Hook restriction="messages" method="android.provider.Telephony.SMS_RECEIVED" permissions="RECEIVE_SMS" sdk="19" />
 	<Hook restriction="messages" method="android.provider.Telephony.WAP_PUSH_RECEIVED" permissions="RECEIVE_WAP_PUSH" sdk="19" />
 
-	<Hook restriction="network" method="getAddress" permissions="BLUETOOTH" sdk="10" />
-	<Hook restriction="network" method="getBondedDevices" permissions="BLUETOOTH" sdk="10" />
+	<Hook restriction="network" method="getAddress" permissions="BLUETOOTH" sdk="5" />
+	<Hook restriction="network" method="getBondedDevices" permissions="BLUETOOTH" sdk="5" />
 	<Hook restriction="network" method="getHardwareAddress" permissions="ACCESS_NETWORK_STATE" sdk="10" />
 	<Hook restriction="network" method="getInetAddresses" permissions="ACCESS_NETWORK_STATE" sdk="10" />
 	<Hook restriction="network" method="getInterfaceAddresses" permissions="ACCESS_NETWORK_STATE" sdk="10" />

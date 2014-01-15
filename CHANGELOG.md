@@ -22,7 +22,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Version 1.11.13 EXPERIMENTAL**
 
-* Experimental: restriction for direct interprocess communication (System/IPC)
+* Experimental: restriction for direct inter-process communication (System/IPC)
 * Experimental: new, faster way of getting restrictions/settings
 
 **Version 1.11.12 BETA**
@@ -48,7 +48,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Version 1.11.9 TEST**
 
 * Fixed usage data with a dot in the name
-* Added an easter egg (don't ask)
+* Added an Easter egg (don't ask)
 * Added cell location restrictions within the phone process
 * Added phone/network type restrictions within the phone process
 * Added phone property restrictions (static phone info)

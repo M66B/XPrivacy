@@ -181,7 +181,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	private static boolean mAccountManagerHooked = false;
 	private static boolean mActivityManagerHooked = false;
-	private static boolean mBluetoothAdapterHooked = false;
 	private static boolean mClipboardManagerHooked = false;
 	private static boolean mConnectivityManagerHooked = false;
 	private static boolean mLocationManagerHooked = false;
@@ -205,12 +204,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			if (!mActivityManagerHooked) {
 				hookAll(XActivityManager.getInstances(instance));
 				mActivityManagerHooked = true;
-			}
-		} else if (name.equals(Context.BLUETOOTH_SERVICE)) {
-			// Bluetooth adapter
-			if (!mBluetoothAdapterHooked) {
-				hookAll(XBluetoothAdapter.getInstances(instance));
-				mBluetoothAdapterHooked = true;
 			}
 		} else if (name.equals(Context.CLIPBOARD_SERVICE)) {
 			// Clipboard manager
@@ -337,7 +330,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						hookClass.getName(), hook.getMethodName());
 				Util.log(hook, Log.ERROR, message);
 				for (Method declared : hookClass.getDeclaredMethods())
-					Util.log(hook, Log.ERROR, "method=" + declared);
+					Util.log(hook, Log.ERROR, "Declared method=" + declared);
 				return;
 			}
 
