@@ -2,8 +2,10 @@ package biz.bokhorst.xprivacy;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
@@ -206,6 +208,41 @@ public class PrivacyService {
 		}
 
 		@Override
+		public List<ParcelableUsageData> getAllUsage(int uid) throws RemoteException {
+			List<ParcelableUsageData> result = new ArrayList<ParcelableUsageData>();
+			try {
+				getDatabase();
+
+				Cursor cursor;
+				if (uid == 0)
+					cursor = mDatabase.query("usage", new String[] { "uid", "restriction", "method", "restricted",
+							"time" }, null, new String[] {}, null, null, null);
+				else
+					cursor = mDatabase.query("usage", new String[] { "uid", "restriction", "method", "restricted",
+							"time" }, "uid=?", new String[] { Integer.toString(uid) }, null, null, null);
+				if (cursor == null)
+					Util.log(null, Log.WARN, "Database cursor null (usage data)");
+				else
+					try {
+						while (cursor.moveToNext()) {
+							ParcelableUsageData data = new ParcelableUsageData();
+							data.uid = cursor.getInt(0);
+							data.restrictionName = cursor.getString(1);
+							data.methodName = cursor.getString(2);
+							data.restricted = (cursor.getInt(3) > 0);
+							data.time = cursor.getLong(4);
+							result.add(data);
+						}
+					} finally {
+						cursor.close();
+					}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+			return result;
+		}
+
+		@Override
 		public void deleteUsage(int uid) throws RemoteException {
 			try {
 				enforcePermission();
@@ -313,7 +350,6 @@ public class PrivacyService {
 				Util.bug(null, ex);
 			}
 		}
-
 	};
 
 	public static void enforcePermission() {

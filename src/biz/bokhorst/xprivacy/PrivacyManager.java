@@ -421,19 +421,15 @@ public class PrivacyManager {
 
 	public static List<UsageData> getUsed(Context context, int uid) {
 		List<UsageData> listUsage = new ArrayList<UsageData>();
-		if (uid == 0) {
-			List<Integer> listUid = new ArrayList<Integer>();
-			for (PackageInfo pInfo : context.getPackageManager().getInstalledPackages(0))
-				if (!listUid.contains(pInfo.applicationInfo.uid)) {
-					listUid.add(pInfo.applicationInfo.uid);
-					listUsage.addAll(getUsed(context, pInfo.applicationInfo.uid));
-				}
-		} else {
-			for (String restrictionName : PrivacyManager.getRestrictions())
-				for (MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
-					long usage = getUsed(uid, restrictionName, md.getName());
-					listUsage.add(new UsageData(uid, restrictionName, md.getName(), usage > 0, Math.abs(usage)));
-				}
+		try {
+			List<ParcelableUsageData> data = PrivacyService.getClient().getAllUsage(uid);
+			for (Object obj : data) {
+				ParcelableUsageData usage = (ParcelableUsageData) obj;
+				listUsage.add(new UsageData(usage.uid, usage.restrictionName, usage.methodName, usage.restricted,
+						usage.time));
+			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
 		}
 		Collections.sort(listUsage);
 		return listUsage;
@@ -492,7 +488,7 @@ public class PrivacyManager {
 			}
 
 		long ms = System.currentTimeMillis() - start;
-		if (!willExpire)
+		if (!willExpire && !PrivacyManager.cSettingLog.equals(name))
 			if (ms > 1)
 				Util.log(hook, Log.INFO,
 						String.format("get setting %s=%s%s %d ms", name, value, (cached ? " (cached)" : ""), ms));
