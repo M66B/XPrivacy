@@ -154,6 +154,19 @@ public class PrivacyService {
 		}
 
 		@Override
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		public List getRestrictionList(int uid, String restrictionName) throws RemoteException {
+			List result = new ArrayList();
+			if (restrictionName == null)
+				for (String sRestrictionName : PrivacyManager.getRestrictions())
+					result.add(getRestriction(uid, sRestrictionName, null, false));
+			else
+				for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName))
+					result.add(getRestriction(uid, restrictionName, md.getName(), false));
+			return result;
+		}
+
+		@Override
 		public void deleteRestrictions(int uid) throws RemoteException {
 			try {
 				enforcePermission();
@@ -208,7 +221,7 @@ public class PrivacyService {
 		}
 
 		@Override
-		public List<ParcelableUsageData> getAllUsage(int uid) throws RemoteException {
+		public List<ParcelableUsageData> getUsageList(int uid) throws RemoteException {
 			List<ParcelableUsageData> result = new ArrayList<ParcelableUsageData>();
 			try {
 				getDatabase();

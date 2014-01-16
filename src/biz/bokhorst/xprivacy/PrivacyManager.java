@@ -388,14 +388,15 @@ public class PrivacyManager {
 		return restart;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static List<Boolean> getRestricted(int uid, String restrictionName) {
 		List<Boolean> listRestricted = new ArrayList<Boolean>();
-		if (restrictionName == null)
-			for (String sRestrictionName : PrivacyManager.getRestrictions())
-				listRestricted.add(getRestricted(null, uid, sRestrictionName, null, false, false));
-		else {
-			for (MethodDescription md : getMethods(restrictionName))
-				listRestricted.add(getRestricted(null, uid, restrictionName, md.getName(), false, false));
+		try {
+			List data = PrivacyService.getClient().getRestrictionList(uid, restrictionName);
+			for (Object obj : data)
+				listRestricted.add((Boolean) obj);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
 		}
 		return listRestricted;
 	}
@@ -422,7 +423,7 @@ public class PrivacyManager {
 	public static List<UsageData> getUsed(Context context, int uid) {
 		List<UsageData> listUsage = new ArrayList<UsageData>();
 		try {
-			List<ParcelableUsageData> data = PrivacyService.getClient().getAllUsage(uid);
+			List<ParcelableUsageData> data = PrivacyService.getClient().getUsageList(uid);
 			for (Object obj : data) {
 				ParcelableUsageData usage = (ParcelableUsageData) obj;
 				listUsage.add(new UsageData(usage.uid, usage.restrictionName, usage.methodName, usage.restricted,
