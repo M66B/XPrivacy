@@ -127,6 +127,8 @@ public class PrivacyManager {
 	// Static data
 	private static Map<String, List<MethodDescription>> mMethod = new LinkedHashMap<String, List<MethodDescription>>();
 	private static Map<String, List<MethodDescription>> mPermission = new LinkedHashMap<String, List<MethodDescription>>();
+	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
+	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
 	static {
 		// Scan meta data
@@ -252,19 +254,20 @@ public class PrivacyManager {
 	public static boolean getRestricted(final XHook hook, int uid, String restrictionName, String methodName,
 			boolean usage, boolean useCache) {
 		long start = System.currentTimeMillis();
+		boolean restricted = false;
 
 		// Check uid
 		if (uid <= 0) {
 			Util.log(hook, Log.WARN, "uid <= 0");
 			Util.logStack(hook);
-			return false;
+			return restricted;
 		}
 
 		// Check restriction
 		if (restrictionName == null || restrictionName.equals("")) {
 			Util.log(hook, Log.WARN, "restriction empty method=" + methodName);
 			Util.logStack(hook);
-			return false;
+			return restricted;
 		}
 
 		// Check usage
@@ -276,22 +279,44 @@ public class PrivacyManager {
 					&& getMethods(restrictionName).indexOf(new MethodDescription(restrictionName, methodName)) < 0)
 				Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
-		// Get restricted
-		boolean restricted = false;
-		try {
-			restricted = PrivacyService.getClient().getRestriction(uid, restrictionName, methodName, usage);
-		} catch (Throwable ex) {
-			Util.bug(hook, ex);
-		}
+		// Check cache
+		boolean cached = false;
+		CRestriction key = new CRestriction(uid, restrictionName, methodName);
+		if (useCache)
+			synchronized (mRestrictionCache) {
+				if (mRestrictionCache.containsKey(key)) {
+					CRestriction entry = mRestrictionCache.get(key);
+					if (!entry.isExpired()) {
+						cached = true;
+						restricted = entry.isRestricted();
+					}
+				}
+			}
+
+		// Get restriction
+		if (!cached)
+			try {
+				restricted = PrivacyService.getClient().getRestriction(uid, restrictionName, methodName, usage);
+
+				// Add to cache
+				synchronized (mRestrictionCache) {
+					key.setRestricted(restricted);
+					if (mRestrictionCache.containsKey(key))
+						mRestrictionCache.remove(key);
+					mRestrictionCache.put(key, key);
+				}
+			} catch (Throwable ex) {
+				Util.bug(hook, ex);
+			}
 
 		// Result
 		long ms = System.currentTimeMillis() - start;
 		if (ms > 1)
-			Util.log(hook, Log.INFO, String.format("get %d/%s %s=%srestricted %d ms", uid, methodName, restrictionName,
-					(restricted ? "" : "!"), ms));
+			Util.log(hook, Log.INFO, String.format("get %d/%s %s=%srestricted%s %d ms", uid, methodName,
+					restrictionName, (restricted ? "" : "!"), (cached ? " (cached)" : ""), ms));
 		else
-			Util.log(hook, Log.INFO, String.format("get %d/%s %s=%srestricted", uid, methodName, restrictionName,
-					(restricted ? "" : "!")));
+			Util.log(hook, Log.INFO, String.format("get %d/%s %s=%srestricted%s", uid, methodName, restrictionName,
+					(restricted ? "" : "!"), (cached ? " (cached)" : "")));
 
 		return restricted;
 	}
@@ -431,21 +456,49 @@ public class PrivacyManager {
 
 	public static String getSetting(XHook hook, int uid, String name, String defaultValue, boolean useCache) {
 		long start = System.currentTimeMillis();
-
 		String value = null;
-		try {
-			value = PrivacyService.getClient().getSetting(Math.abs(uid), name, defaultValue);
-			if (value == null && uid > 0)
-				value = PrivacyService.getClient().getSetting(0, name, defaultValue);
-		} catch (Throwable ex) {
-			Util.bug(hook, ex);
-		}
+
+		// Check cache
+		boolean cached = false;
+		boolean willExpire = false;
+		CSetting key = new CSetting(uid, name);
+		if (useCache)
+			synchronized (mSettingsCache) {
+				if (mSettingsCache.containsKey(key)) {
+					CSetting entry = mSettingsCache.get(key);
+					if (!entry.isExpired()) {
+						cached = true;
+						value = entry.getValue();
+						willExpire = entry.willExpire();
+					}
+				}
+			}
+
+		// Get settings
+		if (!cached)
+			try {
+				value = PrivacyService.getClient().getSetting(Math.abs(uid), name, defaultValue);
+				if (value == null && uid > 0)
+					value = PrivacyService.getClient().getSetting(0, name, defaultValue);
+
+				// Add to cache
+				key.setValue(value);
+				synchronized (mSettingsCache) {
+					if (mSettingsCache.containsKey(key))
+						mSettingsCache.remove(key);
+					mSettingsCache.put(key, key);
+				}
+			} catch (Throwable ex) {
+				Util.bug(hook, ex);
+			}
 
 		long ms = System.currentTimeMillis() - start;
-		if (ms > 1)
-			Util.log(hook, Log.INFO, String.format("get setting %s=%s %d ms", name, value, ms));
-		else
-			Util.log(hook, Log.INFO, String.format("get setting %s=%s", name, value));
+		if (!willExpire)
+			if (ms > 1)
+				Util.log(hook, Log.INFO,
+						String.format("get setting %s=%s%s %d ms", name, value, (cached ? " (cached)" : ""), ms));
+			else
+				Util.log(hook, Log.INFO, String.format("get setting %s=%s%s", name, value, (cached ? " (cached)" : "")));
 
 		return value;
 	}
@@ -849,6 +902,99 @@ public class PrivacyManager {
 	}
 
 	// Helper classes
+
+	private static class CRestriction {
+		private long mTimestamp;
+		private int mUid;
+		private String mRestrictionName;
+		private String mMethodName;
+		private boolean mRestricted;
+
+		public CRestriction(int uid, String restrictionName, String methodName) {
+			mTimestamp = new Date().getTime();
+			mUid = uid;
+			mRestrictionName = restrictionName;
+			mMethodName = methodName;
+			mRestricted = false;
+		}
+
+		public void setRestricted(boolean restricted) {
+			mRestricted = restricted;
+		}
+
+		public boolean isExpired() {
+			return (mTimestamp + cRestrictionCacheTimeoutMs < new Date().getTime());
+		}
+
+		public boolean isRestricted() {
+			return mRestricted;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			CRestriction other = (CRestriction) obj;
+			return (this.mUid == other.mUid && this.mRestrictionName.equals(other.mRestrictionName)
+					&& this.mMethodName == null ? other.mMethodName == null : this.mMethodName
+					.equals(other.mMethodName));
+		}
+
+		@Override
+		public int hashCode() {
+			int hash = mUid ^ mRestrictionName.hashCode();
+			if (mMethodName != null)
+				hash = hash ^ mMethodName.hashCode();
+			return hash;
+		}
+	}
+
+	private static class CSetting {
+		private long mTimestamp;
+		private int mUid;
+		private String mName;
+		private String mValue;
+
+		public CSetting(int uid, String name) {
+			mTimestamp = new Date().getTime();
+			mUid = uid;
+			mName = name;
+			mValue = null;
+		}
+
+		public void setValue(String value) {
+			mValue = value;
+		}
+
+		public boolean willExpire() {
+			if (mUid == 0) {
+				if (mName.equals(PrivacyManager.cSettingVersion))
+					return false;
+				if (mName.equals(PrivacyManager.cSettingAndroidUsage))
+					return false;
+				if (mName.equals(PrivacyManager.cSettingExperimental))
+					return false;
+			}
+			return true;
+		}
+
+		public boolean isExpired() {
+			return (willExpire() ? (mTimestamp + cSettingCacheTimeoutMs < new Date().getTime()) : false);
+		}
+
+		public String getValue() {
+			return mValue;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			CSetting other = (CSetting) obj;
+			return (this.mUid == other.mUid && this.mName.equals(other.mName));
+		}
+
+		@Override
+		public int hashCode() {
+			return mUid ^ mName.hashCode();
+		}
+	}
 
 	public static class MethodDescription implements Comparable<MethodDescription> {
 		private String mRestrictionName;
