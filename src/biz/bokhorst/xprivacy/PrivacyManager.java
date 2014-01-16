@@ -137,7 +137,6 @@ public class PrivacyManager {
 	private static Map<String, CRestriction> mRestrictionCache = new HashMap<String, CRestriction>();
 	private static Map<String, CSetting> mSettingsCache = new HashMap<String, CSetting>();
 	private static Map<UsageData, UsageData> mUsageQueue = new LinkedHashMap<UsageData, UsageData>();
-	private static IPrivacyService mPrivacyClient = null;
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -357,23 +356,14 @@ public class PrivacyManager {
 			boolean service = false;
 			if (fallback) {
 				// Use privacy service
-				if (mPrivacyClient == null)
-					mPrivacyClient = PrivacyService.getClient();
-				if (mPrivacyClient == null)
-					Util.log(hook, Log.WARN, "No privacy provider uid=" + uid + " restriction=" + restrictionName + "/"
-							+ methodName);
-				else
-					try {
-						String hookName = (hook == null ? null : hook.getClass().getSimpleName());
-						restricted = mPrivacyClient.getRestricted(hookName, uid, restrictionName, methodName, usage,
-								useCache);
-						service = true;
-					} catch (Throwable ex) {
-						mPrivacyClient = null;
-						Util.log(hook, Log.ERROR, "No privacy provider uid=" + uid + " restriction=" + restrictionName
-								+ "/" + methodName);
-						Util.bug(hook, ex);
-					}
+				try {
+					String hookName = (hook == null ? null : hook.getClass().getSimpleName());
+					restricted = PrivacyService.getClient().getRestricted(hookName, uid, restrictionName, methodName,
+							usage, useCache);
+					service = true;
+				} catch (Throwable ex) {
+					Util.bug(hook, ex);
+				}
 
 				// Fallback
 				if (!service)
@@ -449,7 +439,7 @@ public class PrivacyManager {
 
 		String self = PrivacyManager.class.getPackage().getName();
 		if (self.equals(context.getPackageName()))
-			return true;
+			return false;
 
 		if (SystemClock.elapsedRealtime() < cUseProviderAfterMs / ("hammerhead".equals(Build.PRODUCT) ? 6 : 1))
 			return false;
@@ -461,7 +451,7 @@ public class PrivacyManager {
 			if (!PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingAndroidUsage, true, false))
 				return false;
 
-		return true;
+		return false;
 	}
 
 	public static void sendUsageData(final XHook hook, Context context) {
@@ -540,6 +530,12 @@ public class PrivacyManager {
 		values.put(PrivacyProvider.COL_RESTRICTED, Boolean.toString(restricted));
 		if (contentResolver.update(PrivacyProvider.URI_RESTRICTION, values, restrictionName, null) <= 0)
 			Util.log(hook, Log.INFO, "Error updating restriction=" + restrictionName);
+
+		try {
+			PrivacyService.getClient().setRestricted(null, uid, restrictionName, methodName, restricted);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
 
 		// Result
 		logRestriction(hook, context, uid, "set", restrictionName, methodName, restricted, false, false, 0);
@@ -804,20 +800,13 @@ public class PrivacyManager {
 		boolean service = false;
 		if (fallback) {
 			// Use privacy service
-			if (mPrivacyClient == null)
-				mPrivacyClient = PrivacyService.getClient();
-			if (mPrivacyClient == null)
-				Util.log(hook, Log.WARN, "No privacy provider setting=" + name);
-			else
-				try {
-					String hookName = (hook == null ? null : hook.getClass().getSimpleName());
-					value = mPrivacyClient.getSetting(hookName, -1, name, defaultValue, useCache);
-					service = true;
-				} catch (Throwable ex) {
-					mPrivacyClient = null;
-					Util.log(hook, Log.ERROR, "No privacy provider setting=" + name);
-					Util.bug(hook, ex);
-				}
+			try {
+				String hookName = (hook == null ? null : hook.getClass().getSimpleName());
+				value = PrivacyService.getClient().getSetting(hookName, -1, name, defaultValue, useCache);
+				service = true;
+			} catch (Throwable ex) {
+				Util.bug(hook, ex);
+			}
 
 			// Fallback
 			if (!service)

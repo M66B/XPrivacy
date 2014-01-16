@@ -2,6 +2,13 @@ package biz.bokhorst.xprivacy;
 
 interface IPrivacyService {
 
+	void setRestricted(
+		in String hookName,
+		in int uid,
+		in String restrictionName,
+		in String methodName,
+		in boolean restricted);
+
 	boolean getRestricted(
 		in String hookName,
 		in int uid,
@@ -10,12 +17,11 @@ interface IPrivacyService {
 		boolean usage,
 		in boolean useCache);
 
-	boolean setRestricted(
-		in String hook,
+	void setSetting(
+		in String hookName,
 		in int uid,
-		in String restrictionName,
-		in String methodName,
-		in boolean restricted);
+		in String settingName,
+		in String value);
 
 	String getSetting(
 		in String hookName,
@@ -23,10 +29,4 @@ interface IPrivacyService {
 		in String name,
 		in String defaultValue,
 		in boolean useCache);
-
-	void setSetting(
-		in String hookName,
-		in int uid,
-		in String settingName,
-		in String value);
 }
