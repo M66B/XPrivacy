@@ -272,7 +272,8 @@ public class PrivacyManager {
 			if (methodName == null || methodName.equals("")) {
 				Util.log(hook, Log.WARN, "Method empty");
 				Util.logStack(hook);
-			} else if (getMethods(restrictionName).indexOf(new MethodDescription(restrictionName, methodName)) < 0)
+			} else if (PrivacyManager.cTestVersion
+					&& getMethods(restrictionName).indexOf(new MethodDescription(restrictionName, methodName)) < 0)
 				Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
 		// Get restricted
@@ -310,11 +311,6 @@ public class PrivacyManager {
 			Util.bug(null, ex);
 		}
 
-		// Mark as restricted
-		if (restricted && changeState)
-			PrivacyManager.setSetting(hook, uid, PrivacyManager.cSettingState,
-					Integer.toString(ActivityMain.STATE_RESTRICTED));
-
 		// Make exceptions for dangerous methods
 		boolean dangerous = PrivacyManager.getSettingBool(hook, 0, PrivacyManager.cSettingDangerous, false, false);
 		if (methodName == null)
@@ -324,7 +320,12 @@ public class PrivacyManager {
 						PrivacyManager.setRestricted(hook, uid, restrictionName, md.getName(), dangerous, changeState);
 			}
 
-		// Check restart
+		// Mark state as restricted
+		if (restricted && changeState)
+			PrivacyManager.setSetting(hook, uid, PrivacyManager.cSettingState,
+					Integer.toString(ActivityMain.STATE_RESTRICTED));
+
+		// Check if restart required
 		if (methodName == null) {
 			for (MethodDescription md : getMethods(restrictionName))
 				if (md.isRestartRequired() && !(restricted && !dangerous && md.isDangerous()))
@@ -363,23 +364,11 @@ public class PrivacyManager {
 		return restart;
 	}
 
-	public static boolean getRestricted(XHook hook, int uid, String permission) {
-		boolean allRestricted = false;
-		if (mPermission.containsKey(permission)) {
-			allRestricted = true;
-			for (MethodDescription md : mPermission.get(permission)) {
-				boolean restricted = getRestricted(hook, uid, md.getRestrictionName(), md.getName(), false, true);
-				allRestricted = allRestricted && restricted;
-			}
-		}
-		return allRestricted;
-	}
-
 	public static List<Boolean> getRestricted(int uid, String restrictionName) {
 		List<Boolean> listRestricted = new ArrayList<Boolean>();
 		if (restrictionName == null)
 			for (String sRestrictionName : PrivacyManager.getRestrictions())
-				listRestricted.addAll(getRestricted(uid, sRestrictionName));
+				listRestricted.add(getRestricted(null, uid, sRestrictionName, null, false, true));
 		else {
 			for (MethodDescription md : getMethods(restrictionName))
 				listRestricted.add(getRestricted(null, uid, restrictionName, md.getName(), false, true));
@@ -409,8 +398,12 @@ public class PrivacyManager {
 	public static List<UsageData> getUsed(Context context, int uid) {
 		List<UsageData> listUsage = new ArrayList<UsageData>();
 		if (uid == 0) {
+			List<Integer> listUid = new ArrayList<Integer>();
 			for (PackageInfo pInfo : context.getPackageManager().getInstalledPackages(0))
-				listUsage.addAll(getUsed(context, pInfo.applicationInfo.uid));
+				if (!listUid.contains(pInfo.applicationInfo.uid)) {
+					listUid.add(pInfo.applicationInfo.uid);
+					listUsage.addAll(getUsed(context, pInfo.applicationInfo.uid));
+				}
 		} else {
 			for (String restrictionName : PrivacyManager.getRestrictions())
 				for (MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
