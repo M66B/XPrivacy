@@ -44,6 +44,8 @@ public class PrivacyService {
 	}
 
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
+		// TODO: transactions
+
 		@Override
 		public void setRestricted(String hookName, int uid, String restrictionName, String methodName,
 				boolean restricted) throws RemoteException {
@@ -69,8 +71,8 @@ public class PrivacyService {
 		}
 
 		@Override
-		public boolean getRestricted(String hookName, int uid, String restrictionName, String methodName,
-				boolean usage, boolean useCache) throws RemoteException {
+		public boolean getRestricted(String hookName, int uid, String restrictionName, String methodName, boolean usage)
+				throws RemoteException {
 			boolean restricted = false;
 			try {
 				getDatabase();
@@ -79,7 +81,7 @@ public class PrivacyService {
 						"uid=? AND restriction=? AND method=?", new String[] { Integer.toString(uid), restrictionName,
 								methodName == null ? "" : methodName }, null, null, null);
 				if (cursor == null)
-					Util.log(null, Log.WARN, "Database cursor null");
+					Util.log(null, Log.WARN, "Database cursor null (restriction)");
 				else
 					try {
 						if (cursor.moveToNext()) {
@@ -108,18 +110,51 @@ public class PrivacyService {
 		}
 
 		@Override
-		public String getSetting(String hookName, int uid, String name, String defaultValue, boolean useCache)
-				throws RemoteException {
+		public void setSetting(String hookName, int uid, String name, String value) throws RemoteException {
 			try {
-				return PrivacyProvider.getSettingFallback(name, defaultValue, true);
+				getDatabase();
+
+				// Create record
+				ContentValues values = new ContentValues();
+				values.put("uid", uid);
+				values.put("name", name);
+				values.put("value", value);
+
+				// Insert/update record
+				mDatabase.insertWithOnConflict("setting", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
+				Util.log(null, Log.WARN, "Service set hook=" + hookName + " uid=" + uid + " " + name + "=" + value);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return null;
+				// throw new RemoteException(ex.toString());
 			}
 		}
 
 		@Override
-		public void setSetting(String hookName, int uid, String settingName, String value) throws RemoteException {
+		public String getSetting(String hookName, int uid, String name, String defaultValue) throws RemoteException {
+			String value = null;
+			try {
+				getDatabase();
+
+				Cursor cursor = mDatabase.query("setting", new String[] { "value" }, "uid=? AND name=?", new String[] {
+						Integer.toString(uid), name }, null, null, null);
+				if (cursor == null)
+					Util.log(null, Log.WARN, "Database cursor null (setting)");
+				else
+					try {
+						if (cursor.moveToNext()) {
+							value = cursor.getString(0);
+							Util.log(null, Log.WARN, "Service get hook=" + hookName + " uid=" + uid + " " + name + "="
+									+ value);
+						} else
+							value = defaultValue;
+					} finally {
+						cursor.close();
+					}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+			return value;
 		}
 	};
 

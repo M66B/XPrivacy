@@ -359,7 +359,7 @@ public class PrivacyManager {
 				try {
 					String hookName = (hook == null ? null : hook.getClass().getSimpleName());
 					restricted = PrivacyService.getClient().getRestricted(hookName, uid, restrictionName, methodName,
-							usage, useCache);
+							usage);
 					service = true;
 				} catch (Throwable ex) {
 					Util.bug(hook, ex);
@@ -532,7 +532,8 @@ public class PrivacyManager {
 			Util.log(hook, Log.INFO, "Error updating restriction=" + restrictionName);
 
 		try {
-			PrivacyService.getClient().setRestricted(null, uid, restrictionName, methodName, restricted);
+			String hookName = (hook == null ? null : hook.getClass().getSimpleName());
+			PrivacyService.getClient().setRestricted(hookName, uid, restrictionName, methodName, restricted);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -715,28 +716,44 @@ public class PrivacyManager {
 
 	// Settings
 
-	public static boolean getSettingBool(XHook hook, Context context, int uid, String settingName,
-			boolean defaultValue, boolean useCache) {
-		return Boolean.parseBoolean(getSetting(hook, context, uid, settingName, Boolean.toString(defaultValue),
-				useCache));
+	public static boolean getSettingBool(XHook hook, Context context, int uid, String name, boolean defaultValue,
+			boolean useCache) {
+		return Boolean.parseBoolean(getSetting(hook, context, uid, name, Boolean.toString(defaultValue), useCache));
 	}
 
-	public static String getSetting(XHook hook, Context context, int uid, String settingName, String defaultValue,
+	public static String getSetting(XHook hook, Context context, int uid, String name, String defaultValue,
 			boolean useCache) {
+
+		// Use privacy service
+		try {
+			String hookName = (hook == null ? null : hook.getClass().getSimpleName());
+			return PrivacyService.getClient().getSetting(hookName, uid, name, defaultValue);
+		} catch (Throwable ex) {
+			Util.bug(hook, ex);
+		}
+
 		if (uid == 0)
-			return getSetting(hook, context, settingName, defaultValue, useCache);
+			return getSetting(hook, context, name, defaultValue, useCache);
 		else {
-			String setting = getSetting(hook, context, String.format("%s.%d", settingName, uid), null, useCache);
+			String setting = getSetting(hook, context, String.format("%s.%d", name, uid), null, useCache);
 			if (setting == null)
-				return getSetting(hook, context, settingName, defaultValue, useCache);
+				return getSetting(hook, context, name, defaultValue, useCache);
 			else
 				return setting;
 		}
 	}
 
-	public static String getAppSetting(XHook hook, Context context, int uid, String settingName, String defaultValue,
+	public static String getAppSetting(XHook hook, Context context, int uid, String name, String defaultValue,
 			boolean useCache) {
-		return getSetting(hook, context, String.format("%s.%d", settingName, uid), null, useCache);
+		// Use privacy service
+		try {
+			String hookName = (hook == null ? null : hook.getClass().getSimpleName());
+			return PrivacyService.getClient().getSetting(hookName, uid, name, defaultValue);
+		} catch (Throwable ex) {
+			Util.bug(hook, ex);
+		}
+
+		return getSetting(hook, context, String.format("%s.%d", name, uid), null, useCache);
 	}
 
 	private static String getSetting(XHook hook, Context context, String name, String defaultValue, boolean useCache) {
@@ -797,21 +814,8 @@ public class PrivacyManager {
 		}
 
 		// Use fallback
-		boolean service = false;
-		if (fallback) {
-			// Use privacy service
-			try {
-				String hookName = (hook == null ? null : hook.getClass().getSimpleName());
-				value = PrivacyService.getClient().getSetting(hookName, -1, name, defaultValue, useCache);
-				service = true;
-			} catch (Throwable ex) {
-				Util.bug(hook, ex);
-			}
-
-			// Fallback
-			if (!service)
-				value = PrivacyProvider.getSettingFallback(name, defaultValue, true);
-		}
+		if (fallback)
+			value = PrivacyProvider.getSettingFallback(name, defaultValue, true);
 
 		// Default value
 		if (value == null)
@@ -827,8 +831,11 @@ public class PrivacyManager {
 		}
 
 		long ms = System.currentTimeMillis() - start;
-		Util.log(hook, Log.INFO, String.format("get setting %s=%s%s%s", name, value, (service ? " (service)"
-				: fallback ? " (file)" : ""), (ms > 1 ? " " + ms + " ms" : "")));
+		Util.log(
+				hook,
+				Log.INFO,
+				String.format("get setting %s=%s%s%s", name, value, (fallback ? " (file)" : ""), (ms > 1 ? " " + ms
+						+ " ms" : "")));
 		return value;
 	}
 
@@ -841,6 +848,13 @@ public class PrivacyManager {
 		if (contentResolver.update(PrivacyProvider.URI_SETTING, values, sName, null) <= 0)
 			Util.log(hook, Log.INFO, "Error updating setting=" + sName);
 		Util.log(hook, Log.INFO, String.format("set setting %s=%s", sName, value));
+
+		try {
+			String hookName = (hook == null ? null : hook.getClass().getSimpleName());
+			PrivacyService.getClient().setSetting(hookName, uid, settingName, value);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
 
 		// Flush caches
 		XApplication.manage(context, uid, XApplication.cActionFlushCache);
