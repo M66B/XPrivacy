@@ -117,8 +117,6 @@ public class Requirements {
 			alertDialog.show();
 		}
 
-		// TODO: account manager
-
 		// Check activity thread
 		try {
 			Class<?> clazz = Class.forName("android.app.ActivityThread");

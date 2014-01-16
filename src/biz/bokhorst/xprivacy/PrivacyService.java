@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -20,6 +22,7 @@ import android.util.Log;
 public class PrivacyService {
 	private static IPrivacyService mClient = null;
 	private static SQLiteDatabase mDatabase = null;
+	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 	private static String cServiceName = "xprivacy";
 
@@ -90,8 +93,8 @@ public class PrivacyService {
 		}
 
 		@Override
-		public boolean getRestriction(int uid, String restrictionName, String methodName, boolean usage)
-				throws RemoteException {
+		public boolean getRestriction(final int uid, final String restrictionName, final String methodName,
+				final boolean usage) throws RemoteException {
 			boolean restricted = false;
 			try {
 				getDatabase();
@@ -125,27 +128,30 @@ public class PrivacyService {
 
 				// Log usage
 				if (usage) {
-					// TODO: run in thread
+					final boolean sRestricted = restricted;
+					mExecutor.execute(new Runnable() {
+						public void run() {
+							// Category
+							ContentValues cvalues = new ContentValues();
+							cvalues.put("uid", uid);
+							cvalues.put("restriction", restrictionName);
+							cvalues.put("method", "");
+							cvalues.put("restricted", sRestricted);
+							cvalues.put("time", new Date().getTime());
+							mDatabase.insertWithOnConflict("usage", null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
 
-					// Category
-					ContentValues cvalues = new ContentValues();
-					cvalues.put("uid", uid);
-					cvalues.put("restriction", restrictionName);
-					cvalues.put("method", "");
-					cvalues.put("restricted", restricted);
-					cvalues.put("time", new Date().getTime());
-					mDatabase.insertWithOnConflict("usage", null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
-
-					// Method
-					if (methodName != null) {
-						ContentValues mvalues = new ContentValues();
-						mvalues.put("uid", uid);
-						mvalues.put("restriction", restrictionName);
-						mvalues.put("method", methodName);
-						mvalues.put("restricted", restricted);
-						mvalues.put("time", new Date().getTime());
-						mDatabase.insertWithOnConflict("usage", null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
-					}
+							// Method
+							if (methodName != null) {
+								ContentValues mvalues = new ContentValues();
+								mvalues.put("uid", uid);
+								mvalues.put("restriction", restrictionName);
+								mvalues.put("method", methodName);
+								mvalues.put("restricted", sRestricted);
+								mvalues.put("time", new Date().getTime());
+								mDatabase.insertWithOnConflict("usage", null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
+							}
+						}
+					});
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
