@@ -148,12 +148,13 @@ public class PackageChange extends BroadcastReceiver {
 											.getMethods(restrictionName))
 										if (md.isDangerous() && md.getFrom() != null)
 											if (sVersion.compareTo(md.getFrom()) < 0) {
-												Util.log(null, Log.WARN, "Upgrading " + md);
+												Util.log(null, Log.WARN, "Upgrading " + md + " from=" + md.getFrom());
 												for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
 													PrivacyManager.setRestricted(null, aInfo.uid,
 															md.getRestrictionName(), md.getName(), false, true);
 											} else
-												Util.log(null, Log.WARN, "No upgrade needed for " + md);
+												Util.log(null, Log.WARN,
+														"No upgrade needed for " + md + " from=" + md.getFrom());
 						}
 
 						// Set new version
