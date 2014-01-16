@@ -9,6 +9,7 @@ import java.util.Map;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -21,10 +22,9 @@ public class PrivacyService {
 	private static String cServiceName = "xprivacy";
 
 	// TODO: define table/column names
-	// TODO: caching (if needed)
-	// TODO: security
 	// TODO: transactions?
 	// TODO: convert shared preferences
+	// TODO: error handling (no client, remote exception)
 
 	public static void register() {
 		try {
@@ -59,6 +59,7 @@ public class PrivacyService {
 		public void setRestriction(int uid, String restrictionName, String methodName, boolean restricted)
 				throws RemoteException {
 			try {
+				enforcePermission();
 				getDatabase();
 
 				// Create category record
@@ -153,6 +154,7 @@ public class PrivacyService {
 		@Override
 		public void deleteRestrictions(int uid) throws RemoteException {
 			try {
+				enforcePermission();
 				getDatabase();
 				mDatabase.beginTransaction();
 				try {
@@ -206,6 +208,7 @@ public class PrivacyService {
 		@Override
 		public void deleteUsage(int uid) throws RemoteException {
 			try {
+				enforcePermission();
 				getDatabase();
 				mDatabase.beginTransaction();
 				try {
@@ -225,6 +228,7 @@ public class PrivacyService {
 		@Override
 		public void setSetting(int uid, String name, String value) throws RemoteException {
 			try {
+				enforcePermission();
 				getDatabase();
 
 				// Create record
@@ -295,6 +299,7 @@ public class PrivacyService {
 		@Override
 		public void deleteSettings(int uid) throws RemoteException {
 			try {
+				enforcePermission();
 				getDatabase();
 				mDatabase.beginTransaction();
 				try {
@@ -310,6 +315,13 @@ public class PrivacyService {
 		}
 
 	};
+
+	public static void enforcePermission() {
+		String self = PrivacyService.class.getPackage().getName();
+		String calling = Util.getPackageNameByPid(Binder.getCallingPid());
+		if (!self.equals(calling))
+			throw new SecurityException("self=" + self + " calling=" + calling);
+	}
 
 	private static void getDatabase() {
 		if (mDatabase == null) {

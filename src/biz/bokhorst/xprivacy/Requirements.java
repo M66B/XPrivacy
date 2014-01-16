@@ -202,9 +202,17 @@ public class Requirements {
 			sendSupportInfo(ex.toString(), context);
 		}
 
+		// Check privacy client
 		try {
 			if (PrivacyService.getClient() == null)
 				throw new InvalidParameterException();
+		} catch (Throwable ex) {
+			sendSupportInfo(ex.toString(), context);
+		}
+
+		// Check enforce permission
+		try {
+			PrivacyService.enforcePermission();
 		} catch (Throwable ex) {
 			sendSupportInfo(ex.toString(), context);
 		}
