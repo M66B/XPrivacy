@@ -5,7 +5,6 @@ For interested developers:
 
 * [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-* Import should clear app settings
 * Reconsider *largeHeap*
 
 * Accessibility: *android:labelFor="..."*

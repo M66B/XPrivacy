@@ -179,9 +179,15 @@ public class ActivityShare extends Activity {
 						serializer.endTag(null, "Setting");
 					}
 
+					// Build list of distinct uids
+					List<Integer> listUid = new ArrayList<Integer>();
+					for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
+						if (!listUid.contains(pInfo.applicationInfo.uid))
+							listUid.add(pInfo.applicationInfo.uid);
+
 					// Process application settings
-					for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0)) {
-						Map<String, String> mapSetting = PrivacyManager.getSettings(pInfo.applicationInfo.uid);
+					for (int uid : listUid) {
+						Map<String, String> mapSetting = PrivacyManager.getSettings(uid);
 						for (String name : mapSetting.keySet()) {
 							// Bind accounts/contacts to same device
 							if (name.startsWith("Account.") || name.startsWith("Contact.")
@@ -191,7 +197,7 @@ public class ActivityShare extends Activity {
 
 							// Serialize setting
 							serializer.startTag(null, "Setting");
-							serializer.attribute(null, "Id", Integer.toString(pInfo.applicationInfo.uid));
+							serializer.attribute(null, "Id", Integer.toString(uid));
 							serializer.attribute(null, "Name", name);
 							serializer.attribute(null, "Value", mapSetting.get(name));
 							serializer.endTag(null, "Setting");
@@ -199,24 +205,26 @@ public class ActivityShare extends Activity {
 					}
 
 					// Process restrictions
-					for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0)) {
+					for (int uid : listUid) {
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
 							// Category
+							boolean crestricted = PrivacyManager.getRestricted(null, uid, restrictionName, null, false,
+									false);
 							serializer.startTag(null, "Restriction");
-							serializer.attribute(null, "Id", Integer.toString(pInfo.applicationInfo.uid));
+							serializer.attribute(null, "Id", Integer.toString(uid));
 							serializer.attribute(null, "Name", restrictionName);
-							serializer.attribute(null, "Restricted", Boolean.toString(PrivacyManager.getRestricted(
-									null, pInfo.applicationInfo.uid, restrictionName, null, false, false)));
+							serializer.attribute(null, "Restricted", Boolean.toString(crestricted));
 							serializer.endTag(null, "Restriction");
 
 							// Methods
 							for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
+								boolean mrestricted = PrivacyManager.getRestricted(null, uid, restrictionName,
+										md.getName(), false, false);
 								serializer.startTag(null, "Restriction");
-								serializer.attribute(null, "Id", Integer.toString(pInfo.applicationInfo.uid));
+								serializer.attribute(null, "Id", Integer.toString(uid));
 								serializer.attribute(null, "Name", restrictionName);
 								serializer.attribute(null, "Method", md.getName());
-								serializer.attribute(null, "Restricted", Boolean.toString(PrivacyManager.getRestricted(
-										null, pInfo.applicationInfo.uid, restrictionName, md.getName(), false, false)));
+								serializer.attribute(null, "Restricted", Boolean.toString(mrestricted));
 								serializer.endTag(null, "Restriction");
 							}
 						}
@@ -379,7 +387,8 @@ public class ActivityShare extends Activity {
 		private Map<String, Map<String, List<MethodDescription>>> mMapPackage = new HashMap<String, Map<String, List<MethodDescription>>>();
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 		private int mProgress = 0;
-		private List<Integer> mImportedIds = new ArrayList<Integer>();
+		private List<Integer> mListSettingId = new ArrayList<Integer>();
+		private List<Integer> mListRestrictionId = new ArrayList<Integer>();
 
 		public ImportHandler(List<Integer> listUidSelected) {
 			mListUidSelected = listUidSelected;
@@ -389,7 +398,7 @@ public class ActivityShare extends Activity {
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			try {
 				if (qName.equals("XPrivacy")) {
-					// Ignore
+					// Root
 					mProgress = 0;
 				} else if (qName.equals("PackageInfo")) {
 					// Package info
@@ -403,21 +412,35 @@ public class ActivityShare extends Activity {
 					String value = attributes.getValue("Value");
 
 					// Import accounts/contacts only for same device
+					// TODO: define constants
 					if (name.startsWith("Account.") || name.startsWith("Contact.") || name.startsWith("RawContact."))
 						if (name.endsWith("." + android_id))
 							name = name.replace("." + android_id, "");
 						else
 							return;
 
-					if (id == null) { // Legacy
+					if (id == null) {
+						// Legacy
 						Util.log(null, Log.WARN, "Legacy " + name + "=" + value);
 						PrivacyManager.setSetting(null, 0, name, value);
-					} else if ("".equals(id)) // Global setting
+					} else if ("".equals(id))
+						// Global setting
+						// TODO: clear global settings
 						PrivacyManager.setSetting(null, 0, name, value);
-					else { // Application setting
-						int uid = getUid(Integer.parseInt(id));
-						if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid))
+					else {
+						// Application setting
+						int iid = Integer.parseInt(id);
+						int uid = getUid(iid);
+						if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
+							// Clear existing settings
+							if (!mListSettingId.contains(iid)) {
+								mListSettingId.add(iid);
+								PrivacyManager.deleteSettings(uid);
+							}
+
+							// Set setting
 							PrivacyManager.setSetting(null, uid, name, value);
+						}
 					}
 				} else if (qName.equals("Package")) {
 					// Restriction (legacy)
@@ -447,13 +470,14 @@ public class ActivityShare extends Activity {
 					// Get uid
 					int uid = getUid(id);
 					if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
-						// Progress report and pre-import cleanup
-						if (!mImportedIds.contains(id)) {
-							mImportedIds.add(id);
+						// Clear existing restrictions
+						if (!mListRestrictionId.contains(id)) {
+							mListRestrictionId.add(id);
 							reportProgress(id);
 							PrivacyManager.deleteRestrictions(uid, false);
 						}
 
+						// Set restriction
 						PrivacyManager.setRestricted(null, uid, restrictionName, methodName, restricted, false);
 					}
 				} else
