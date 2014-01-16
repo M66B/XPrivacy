@@ -80,9 +80,6 @@ public class PrivacyService {
 					mvalues.put("restricted", !restricted);
 					mDatabase.insertWithOnConflict("restriction", null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
 				}
-
-				Util.log(null, Log.WARN, "Service set uid=" + uid + " restriction=" + restrictionName + "/"
-						+ methodName + "=" + restricted);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				// throw new RemoteException(ex.toString());
@@ -122,9 +119,6 @@ public class PrivacyService {
 						mcursor.close();
 					}
 				}
-
-				Util.log(null, Log.WARN, "Service get uid=" + uid + " restriction=" + restrictionName + "/"
-						+ methodName + "=" + restricted);
 
 				// Log usage
 				if (usage) {
@@ -217,7 +211,7 @@ public class PrivacyService {
 				try {
 					mDatabase.delete("usage", "uid=?", new String[] { Integer.toString(uid) });
 					mDatabase.setTransactionSuccessful();
-					Util.log(null, Log.WARN, "Usage deleted uid=" + uid);
+					Util.log(null, Log.WARN, "Usage data deleted uid=" + uid);
 				} finally {
 					mDatabase.endTransaction();
 				}
@@ -241,8 +235,6 @@ public class PrivacyService {
 
 				// Insert/update record
 				mDatabase.insertWithOnConflict("setting", null, values, SQLiteDatabase.CONFLICT_REPLACE);
-
-				Util.log(null, Log.WARN, "Service set uid=" + uid + " " + name + "=" + value);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				// throw new RemoteException(ex.toString());
@@ -265,7 +257,6 @@ public class PrivacyService {
 							value = cursor.getString(0);
 							if (value.equals("") && defaultValue != null)
 								value = defaultValue;
-							Util.log(null, Log.WARN, "Service get uid=" + uid + " " + name + "=" + value);
 						} else
 							value = defaultValue;
 					} finally {
@@ -339,7 +330,7 @@ public class PrivacyService {
 					db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method)");
 					db.setVersion(1);
 					db.setTransactionSuccessful();
-					Util.log(null, Log.WARN, "Privacy database created");
+					Util.log(null, Log.WARN, "Privacy database created version=" + db.getVersion());
 				} finally {
 					db.endTransaction();
 				}
