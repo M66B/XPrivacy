@@ -299,6 +299,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Licensing
 		checkLicense();
 
+		// Meta data
+		try {
+			PrivacyProvider.writeMetaData(this);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+
 		// Listen for package add/remove
 		IntentFilter iff = new IntentFilter();
 		iff.addAction(Intent.ACTION_PACKAGE_ADDED);

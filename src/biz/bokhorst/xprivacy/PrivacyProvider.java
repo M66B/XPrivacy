@@ -76,7 +76,7 @@ public class PrivacyProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		try {
-			writeMetaData();
+			writeMetaData(getContext());
 			convertRestrictions();
 			convertSettings();
 			fixFilePermissions();
@@ -576,10 +576,10 @@ public class PrivacyProvider extends ContentProvider {
 		return settingKey.substring(COL_SETTING.length() + 1);
 	}
 
-	private void writeMetaData() throws IOException, FileNotFoundException {
+	public static void writeMetaData(Context context) throws IOException, FileNotFoundException {
 		File out = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
 		Util.log(null, Log.INFO, "Writing meta=" + out.getAbsolutePath());
-		InputStream is = getContext().getAssets().open("meta.xml");
+		InputStream is = context.getAssets().open("meta.xml");
 		OutputStream os = new FileOutputStream(out.getAbsolutePath());
 		byte[] buffer = new byte[1024];
 		int read;
