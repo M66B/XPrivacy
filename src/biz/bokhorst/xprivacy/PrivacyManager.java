@@ -392,10 +392,10 @@ public class PrivacyManager {
 		List<Boolean> listRestricted = new ArrayList<Boolean>();
 		if (restrictionName == null)
 			for (String sRestrictionName : PrivacyManager.getRestrictions())
-				listRestricted.add(getRestricted(null, uid, sRestrictionName, null, false, true));
+				listRestricted.add(getRestricted(null, uid, sRestrictionName, null, false, false));
 		else {
 			for (MethodDescription md : getMethods(restrictionName))
-				listRestricted.add(getRestricted(null, uid, restrictionName, md.getName(), false, true));
+				listRestricted.add(getRestricted(null, uid, restrictionName, md.getName(), false, false));
 		}
 		return listRestricted;
 	}
