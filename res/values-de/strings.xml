@@ -53,7 +53,6 @@
     <string name="msg_random_now">Zufallswerte erzeugen</string>
     <string name="msg_random_access">Zufallswerte bei Neustart</string>
     <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
-    <string name="msg_usage">Aktualisiere Usage-Data</string>
     <string name="msg_restart">App-Neustart erforderlich</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
 \ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.

@@ -1,13 +1,8 @@
 package biz.bokhorst.xprivacy;
 
-import static de.robv.android.xposed.XposedHelpers.findField;
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.ContentResolver;
-import android.content.Context;
 import android.os.Binder;
 import android.provider.Settings;
 import android.util.Log;
@@ -59,26 +54,5 @@ public class XSettingsSecure extends XHook {
 					param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "ANDROID_ID"));
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
-	}
-
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = null;
-		if (param.args.length > 0) {
-			ContentResolver contentResolver = (ContentResolver) param.args[0];
-			try {
-				Field fieldContext = findField(ContentResolver.class, "mContext");
-				context = (Context) fieldContext.get(contentResolver);
-			} catch (Throwable ex) {
-				Util.bug(this, ex);
-			}
-		}
-
-		if (context != null && context.getPackageName() != null
-				&& context.getPackageName().equals(XSettingsSecure.class.getPackage().getName()))
-			return false;
-
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
 	}
 }

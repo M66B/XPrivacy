@@ -1,30 +1,15 @@
 package biz.bokhorst.xprivacy;
 
 interface IPrivacyService {
+	void setRestriction(int uid, String restrictionName, String methodName, boolean restricted);
+	boolean getRestriction(int uid, String restrictionName, String methodName, boolean usage);
+	void deleteRestrictions(int uid);
 
-	void setRestricted(
-		in String hookName,
-		in int uid,
-		in String restrictionName,
-		in String methodName,
-		in boolean restricted);
+	long getUsage(int uid, String restrictionName, String methodName);
+	void deleteUsage(int uid);
 
-	boolean getRestricted(
-		in String hookName,
-		in int uid,
-		in String restrictionName,
-		in String methodName,
-		boolean usage);
-
-	void setSetting(
-		in String hookName,
-		in int uid,
-		in String name,
-		in String value);
-
-	String getSetting(
-		in String hookName,
-		in int uid,
-		in String name,
-		in String defaultValue);
+	void setSetting(int uid, String name, String value);
+	String getSetting(int uid, String name, String defaultValue);
+	Map getSettings(int uid);
+	void deleteSettings(int uid);
 }

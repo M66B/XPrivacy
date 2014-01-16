@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.content.ContentProvider;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
@@ -198,11 +196,11 @@ public class XContentProvider extends XHook {
 							// Check if can be copied
 							boolean copy = false;
 							if (id >= 0)
-								copy = PrivacyManager.getSettingBool(this, null, 0,
-										String.format("Contact.%d.%d", Binder.getCallingUid(), id), false, true);
+								copy = PrivacyManager.getSettingBool(this, Binder.getCallingUid(),
+										String.format("Contact.%d", id), false, true);
 							if (!copy && rawid >= 0)
-								copy = PrivacyManager.getSettingBool(this, null, 0,
-										String.format("RawContact.%d.%d", Binder.getCallingUid(), rawid), false, true);
+								copy = PrivacyManager.getSettingBool(this, Binder.getCallingUid(),
+										String.format("RawContact.%d", rawid), false, true);
 
 							// Conditionally copy row
 							if (copy)
@@ -266,13 +264,5 @@ public class XContentProvider extends XHook {
 		} catch (Throwable ex) {
 			Util.bug(this, ex);
 		}
-	}
-
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		ContentProvider contentProvider = (ContentProvider) param.thisObject;
-		Context context = contentProvider.getContext();
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
 	}
 }

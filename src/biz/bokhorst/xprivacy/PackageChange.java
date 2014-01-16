@@ -39,23 +39,22 @@ public class PackageChange extends BroadcastReceiver {
 					// Default deny new user apps
 					if (!replacing) {
 						// Delete any existing restrictions
-						PrivacyManager.deleteRestrictions(context, uid, true);
-						PrivacyManager.deleteSettings(context, uid);
-						PrivacyManager.deleteUsage(context, uid);
+						PrivacyManager.deleteRestrictions(uid, true);
+						PrivacyManager.deleteSettings(uid);
+						PrivacyManager.deleteUsage(uid);
 
 						// Restrict new non-system apps
 						if (!appInfo.isSystem())
 							for (String restrictionName : PrivacyManager.getRestrictions()) {
 								String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-								if (PrivacyManager.getSettingBool(null, context, 0, templateName, true, false))
-									PrivacyManager.setRestricted(null, context, uid, restrictionName, null, true, true);
+								if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
+									PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true);
 							}
 					}
 
 					// New/update notification
 					if (!replacing
-							|| PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingNotify, true,
-									false)) {
+							|| PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingNotify, true, false)) {
 						Intent resultIntent = new Intent(Intent.ACTION_MAIN);
 						resultIntent.putExtra(ActivityApp.cUid, uid);
 						resultIntent.setClass(context.getApplicationContext(), ActivityApp.class);
@@ -113,7 +112,7 @@ public class PackageChange extends BroadcastReceiver {
 					}
 
 					// Mark as new/changed
-					PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingState,
+					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingState,
 							Integer.toString(ActivityMain.STATE_ATTENTION));
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
 					// Notify reboot required
@@ -134,14 +133,14 @@ public class PackageChange extends BroadcastReceiver {
 						// Get old version
 						PackageManager pm = context.getPackageManager();
 						PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
-						Version sVersion = new Version(PrivacyManager.getSetting(null, context, 0,
+						Version sVersion = new Version(PrivacyManager.getSetting(null, 0,
 								PrivacyManager.cSettingVersion, "0.0", false));
 
 						// Upgrade
 						if (sVersion.compareTo(new Version("0.0")) != 0) {
 							Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version "
 									+ pInfo.versionName);
-							boolean dangerous = PrivacyManager.getSettingBool(null, context, 0,
+							boolean dangerous = PrivacyManager.getSettingBool(null, 0,
 									PrivacyManager.cSettingDangerous, false, false);
 							if (!dangerous)
 								for (String restrictionName : PrivacyManager.getRestrictions())
@@ -151,21 +150,21 @@ public class PackageChange extends BroadcastReceiver {
 											if (sVersion.compareTo(md.getFrom()) < 0) {
 												Util.log(null, Log.WARN, "Upgrading " + md);
 												for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
-													PrivacyManager.setRestricted(null, context, aInfo.uid,
+													PrivacyManager.setRestricted(null, aInfo.uid,
 															md.getRestrictionName(), md.getName(), false, true);
 											} else
 												Util.log(null, Log.WARN, "No upgrade needed for " + md);
 						}
 
 						// Set new version
-						PrivacyManager.setSetting(null, context, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed
 					notificationManager.cancel(uid);
-					PrivacyManager.deleteRestrictions(context, uid, true);
-					PrivacyManager.deleteSettings(context, uid);
-					PrivacyManager.deleteUsage(context, uid);
+					PrivacyManager.deleteRestrictions(uid, true);
+					PrivacyManager.deleteSettings(uid);
+					PrivacyManager.deleteUsage(uid);
 				}
 			}
 		} catch (Throwable ex) {

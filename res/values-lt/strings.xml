@@ -54,7 +54,6 @@
     <string name="msg_random_now">Atsitiktiniai duomenys</string>
     <string name="msg_random_access">Atsitiktiniai duomenys prieeigai</string>
     <string name="msg_random_boot">Atsitiktiniai duomenys po perkrovimo</string>
-    <string name="msg_usage">Atnaujinamas duomenų naudojimas</string>
     <string name="msg_restart">Programą reikia perkrauti</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.

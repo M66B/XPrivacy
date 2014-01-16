@@ -1,15 +1,11 @@
 package biz.bokhorst.xprivacy;
 
-import static de.robv.android.xposed.XposedHelpers.findField;
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Binder;
 import android.os.Build;
 import android.util.Log;
-import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.ProviderInfo;
@@ -97,19 +93,6 @@ public class XPackageManager extends XHook {
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = null;
-		try {
-			Field fieldContext = findField(param.thisObject.getClass(), "mContext");
-			context = (Context) fieldContext.get(param.thisObject);
-		} catch (Throwable ex) {
-			Util.bug(this, ex);
-		}
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
-	}
-
 	private List<ApplicationInfo> filterApplicationInfo(List<ApplicationInfo> original) {
 		ArrayList<ApplicationInfo> result = new ArrayList<ApplicationInfo>();
 		for (ApplicationInfo appInfo : original)
@@ -143,7 +126,7 @@ public class XPackageManager extends XHook {
 	}
 
 	public static boolean isPackageAllowed(String packageName) {
-		return PrivacyManager.getSettingBool(null, null, 0,
-				String.format("Application.%d.%s", Binder.getCallingUid(), packageName), false, true);
+		return PrivacyManager.getSettingBool(null, Binder.getCallingUid(),
+				String.format("Application.%s", packageName), false, true);
 	}
 }

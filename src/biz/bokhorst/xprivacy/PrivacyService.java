@@ -3,6 +3,8 @@ package biz.bokhorst.xprivacy;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -17,6 +19,12 @@ public class PrivacyService {
 	private static SQLiteDatabase mDatabase = null;
 
 	private static String cServiceName = "xprivacy";
+
+	// TODO: define table/column names
+	// TODO: caching (if needed)
+	// TODO: security
+	// TODO: transactions?
+	// TODO: convert shared preferences
 
 	public static void register() {
 		try {
@@ -44,26 +52,37 @@ public class PrivacyService {
 	}
 
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
-		// TODO: transactions
+
+		// Restrictions
 
 		@Override
-		public void setRestricted(String hookName, int uid, String restrictionName, String methodName,
-				boolean restricted) throws RemoteException {
+		public void setRestriction(int uid, String restrictionName, String methodName, boolean restricted)
+				throws RemoteException {
 			try {
 				getDatabase();
 
-				// Create record
-				ContentValues values = new ContentValues();
-				values.put("uid", uid);
-				values.put("restriction", restrictionName);
-				values.put("method", methodName == null ? "" : methodName);
-				values.put("restricted", restricted);
+				// Create category record
+				if (methodName == null || restricted) {
+					ContentValues cvalues = new ContentValues();
+					cvalues.put("uid", uid);
+					cvalues.put("restriction", restrictionName);
+					cvalues.put("method", "");
+					cvalues.put("restricted", restricted);
+					mDatabase.insertWithOnConflict("restriction", null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
+				}
 
-				// Insert/update record
-				mDatabase.insertWithOnConflict("restriction", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+				// Create method record
+				if (methodName != null) {
+					ContentValues mvalues = new ContentValues();
+					mvalues.put("uid", uid);
+					mvalues.put("restriction", restrictionName);
+					mvalues.put("method", methodName);
+					mvalues.put("restricted", !restricted);
+					mDatabase.insertWithOnConflict("restriction", null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
+				}
 
-				Util.log(null, Log.WARN, "Service set hook=" + hookName + " uid=" + uid + " restriction="
-						+ restrictionName + "/" + methodName + "=" + restricted);
+				Util.log(null, Log.WARN, "Service set uid=" + uid + " restriction=" + restrictionName + "/"
+						+ methodName + "=" + restricted);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				// throw new RemoteException(ex.toString());
@@ -71,27 +90,41 @@ public class PrivacyService {
 		}
 
 		@Override
-		public boolean getRestricted(String hookName, int uid, String restrictionName, String methodName, boolean usage)
+		public boolean getRestriction(int uid, String restrictionName, String methodName, boolean usage)
 				throws RemoteException {
 			boolean restricted = false;
 			try {
 				getDatabase();
 
-				Cursor cursor = mDatabase.query("restriction", new String[] { "restricted" },
+				Cursor ccursor = mDatabase.query("restriction", new String[] { "restricted" },
 						"uid=? AND restriction=? AND method=?", new String[] { Integer.toString(uid), restrictionName,
-								methodName == null ? "" : methodName }, null, null, null);
-				if (cursor == null)
+								"" }, null, null, null);
+				if (ccursor == null)
 					Util.log(null, Log.WARN, "Database cursor null (restriction)");
 				else
 					try {
-						if (cursor.moveToNext()) {
-							restricted = (cursor.getInt(0) > 0);
-							Util.log(null, Log.WARN, "Service get hook=" + hookName + " uid=" + uid + " restriction="
-									+ restrictionName + "/" + methodName + "=" + restricted);
-						}
+						if (ccursor.moveToNext())
+							restricted = (ccursor.getInt(0) > 0);
 					} finally {
-						cursor.close();
+						ccursor.close();
 					}
+
+				if (restricted && methodName != null) {
+					Cursor mcursor = mDatabase.query("restriction", new String[] { "restricted" },
+							"uid=? AND restriction=? AND method=?", new String[] { Integer.toString(uid),
+									restrictionName, methodName }, null, null, null);
+					try {
+						// Check method exception
+						if (mcursor.moveToNext())
+							if (mcursor.getInt(0) > 0)
+								restricted = false;
+					} finally {
+						mcursor.close();
+					}
+				}
+
+				Util.log(null, Log.WARN, "Service get uid=" + uid + " restriction=" + restrictionName + "/"
+						+ methodName + "=" + restricted);
 
 				// Log usage
 				if (usage) {
@@ -110,7 +143,79 @@ public class PrivacyService {
 		}
 
 		@Override
-		public void setSetting(String hookName, int uid, String name, String value) throws RemoteException {
+		public void deleteRestrictions(int uid) throws RemoteException {
+			try {
+				getDatabase();
+				mDatabase.beginTransaction();
+				try {
+					mDatabase.delete("restriction", "uid=?", new String[] { Integer.toString(uid) });
+					mDatabase.setTransactionSuccessful();
+					Util.log(null, Log.WARN, "Restrictions deleted uid=" + uid);
+				} finally {
+					mDatabase.endTransaction();
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		}
+
+		// Usage
+
+		@Override
+		public long getUsage(int uid, String restrictionName, String methodName) throws RemoteException {
+			long lastUsage = 0;
+			boolean restricted = false;
+			try {
+				getDatabase();
+
+				Cursor cursor;
+				if (methodName == null)
+					cursor = mDatabase.query("usage", new String[] { "restricted", "time" }, "uid=? AND restriction=?",
+							new String[] { Integer.toString(uid), restrictionName }, null, null, null);
+				else
+					cursor = mDatabase.query("usage", new String[] { "restricted", "time" },
+							"uid=? AND restriction=? AND method=?", new String[] { Integer.toString(uid),
+									restrictionName, methodName }, null, null, null);
+				if (cursor == null)
+					Util.log(null, Log.WARN, "Database cursor null (usage)");
+				else
+					try {
+						while (cursor.moveToNext()) {
+							restricted = (restricted || cursor.getInt(0) > 0);
+							long usage = cursor.getLong(1);
+							if (usage > lastUsage)
+								lastUsage = usage;
+						}
+					} finally {
+						cursor.close();
+					}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+			return lastUsage * (restricted ? 1 : -1);
+		}
+
+		@Override
+		public void deleteUsage(int uid) throws RemoteException {
+			try {
+				getDatabase();
+				mDatabase.beginTransaction();
+				try {
+					mDatabase.delete("usage", "uid=?", new String[] { Integer.toString(uid) });
+					mDatabase.setTransactionSuccessful();
+					Util.log(null, Log.WARN, "Usage deleted uid=" + uid);
+				} finally {
+					mDatabase.endTransaction();
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		}
+
+		// Settings
+
+		@Override
+		public void setSetting(int uid, String name, String value) throws RemoteException {
 			try {
 				getDatabase();
 
@@ -123,7 +228,7 @@ public class PrivacyService {
 				// Insert/update record
 				mDatabase.insertWithOnConflict("setting", null, values, SQLiteDatabase.CONFLICT_REPLACE);
 
-				Util.log(null, Log.WARN, "Service set hook=" + hookName + " uid=" + uid + " " + name + "=" + value);
+				Util.log(null, Log.WARN, "Service set uid=" + uid + " " + name + "=" + value);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				// throw new RemoteException(ex.toString());
@@ -131,7 +236,7 @@ public class PrivacyService {
 		}
 
 		@Override
-		public String getSetting(String hookName, int uid, String name, String defaultValue) throws RemoteException {
+		public String getSetting(int uid, String name, String defaultValue) throws RemoteException {
 			String value = null;
 			try {
 				getDatabase();
@@ -144,8 +249,9 @@ public class PrivacyService {
 					try {
 						if (cursor.moveToNext()) {
 							value = cursor.getString(0);
-							Util.log(null, Log.WARN, "Service get hook=" + hookName + " uid=" + uid + " " + name + "="
-									+ value);
+							if (value.equals("") && defaultValue != null)
+								value = defaultValue;
+							Util.log(null, Log.WARN, "Service get uid=" + uid + " " + name + "=" + value);
 						} else
 							value = defaultValue;
 					} finally {
@@ -156,6 +262,48 @@ public class PrivacyService {
 			}
 			return value;
 		}
+
+		@Override
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		public Map getSettings(int uid) throws RemoteException {
+			Map mapName = new HashMap();
+			try {
+				getDatabase();
+
+				Cursor cursor = mDatabase.query("setting", new String[] { "name", "value" }, "uid=?",
+						new String[] { Integer.toString(uid) }, null, null, null);
+				if (cursor == null)
+					Util.log(null, Log.WARN, "Database cursor null (settings)");
+				else
+					try {
+						while (cursor.moveToNext())
+							mapName.put(cursor.getString(0), cursor.getString(1));
+					} finally {
+						cursor.close();
+					}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+			return mapName;
+		}
+
+		@Override
+		public void deleteSettings(int uid) throws RemoteException {
+			try {
+				getDatabase();
+				mDatabase.beginTransaction();
+				try {
+					mDatabase.delete("setting", "uid=?", new String[] { Integer.toString(uid) });
+					mDatabase.setTransactionSuccessful();
+					Util.log(null, Log.WARN, "Settings deleted uid=" + uid);
+				} finally {
+					mDatabase.endTransaction();
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		}
+
 	};
 
 	private static void getDatabase() {

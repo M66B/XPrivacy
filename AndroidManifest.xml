@@ -132,15 +132,6 @@
                 <action android:name="android.app.action.ACTION_DEVICE_ADMIN_DISABLED" />
             </intent-filter>
         </receiver>
-
-        <provider
-            android:name=".PrivacyProvider"
-            android:authorities="biz.bokhorst.xprivacy.provider"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":provider"
-            android:syncable="false" >
-        </provider>
     </application>
 
 </manifest>

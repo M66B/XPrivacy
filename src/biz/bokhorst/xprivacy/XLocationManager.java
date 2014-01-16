@@ -1,12 +1,10 @@
 package biz.bokhorst.xprivacy;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import android.content.Context;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Build;
@@ -15,7 +13,6 @@ import android.util.Log;
 import android.location.LocationListener;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XLocationManager extends XHook {
 	private Methods mMethod;
@@ -123,19 +120,6 @@ public class XLocationManager extends XHook {
 				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = null;
-		try {
-			Field fieldContext = findField(param.thisObject.getClass(), "mContext");
-			context = (Context) fieldContext.get(param.thisObject);
-		} catch (Throwable ex) {
-			// Not all location managers do have a context
-		}
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
-	}
-
 	private void replaceLocationListener(MethodHookParam param, int arg) throws Throwable {
 		if (param.args.length > arg && param.args[arg] != null
 				&& LocationListener.class.isAssignableFrom(param.args[arg].getClass())) {
@@ -150,7 +134,8 @@ public class XLocationManager extends XHook {
 					param.args[arg] = xListener;
 				}
 			}
-		} else // Intent
+		} else
+			// Intent
 			param.setResult(null);
 	}
 
@@ -167,7 +152,8 @@ public class XLocationManager extends XHook {
 					mListener.remove(listener);
 				}
 			}
-		} else // Intent
+		} else
+			// Intent
 			param.setResult(null);
 	}
 

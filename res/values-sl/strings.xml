@@ -53,7 +53,6 @@
     <string name="msg_random_now">Naključni podatki</string>
     <string name="msg_random_access">Naključni podatki ob dostopu</string>
     <string name="msg_random_boot">Naključni podatki ob zagonu</string>
-    <string name="msg_usage">Posodabljam uporabo podatkov</string>
     <string name="msg_restart">Potreben je ponoven zagon aplikacije</string>
     <string name="msg_first"><b>Za razvoj in preizkušanje programa XPrivacy je bilo vloženo veliko truda, vendar pa
     je nemogoče zagotoviti brezhibno delovanje na vsaki napravi in za vsak program.\n\nUporaba programa je na lastno

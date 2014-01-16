@@ -109,9 +109,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Runtime
 		hookAll(XRuntime.getInstances());
 
-		// Service
-		hookAll(XService.getInstances());
-
 		// Settings secure
 		hookAll(XSettingsSecure.getInstances());
 
@@ -120,9 +117,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// System properties
 		hookAll(XSystemProperties.getInstances());
-
-		// Thread
-		hookAll(XThread.getInstances());
 
 		// Web view
 		hookAll(XWebView.getInstances());
@@ -146,8 +140,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// Build SERIAL
-		if (PrivacyManager.getRestricted(null, null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", true,
-				false))
+		if (PrivacyManager.getRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", true, false))
 			XposedHelpers.setStaticObjectField(Build.class, "SERIAL",
 					PrivacyManager.getDefacedProp(Process.myUid(), "SERIAL"));
 

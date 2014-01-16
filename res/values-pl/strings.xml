@@ -53,7 +53,6 @@
     <string name="msg_random_now">Losuj</string>
     <string name="msg_random_access">Losuj podczas dostępu</string>
     <string name="msg_random_boot">Losuj po restarcie</string>
-    <string name="msg_usage">Aktualizacja danych użycia</string>
     <string name="msg_restart">Wymagany restart aplikacji</string>
     <string name="msg_first"><b>Dołożyliśmy wszelkich starań podczas programowania i testów XPrivacy.
     Jednak nie możemy zagwarantować, że będzie on działać bezbłędnie na każdym urządzeniu oraz z każdą aplikacją.

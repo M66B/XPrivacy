@@ -53,7 +53,6 @@
     <string name="msg_random_now">Palit-palitan ang mga paghihigpit sa ngayon na</string>
     <string name="msg_random_access">Palit-palitan ang mga paghihigpit sa kusang paggamit</string>
     <string name="msg_random_boot">Palit-palitan ang mga paghihigpit sa unang paggamit</string>
-    <string name="msg_usage">Pinababago ang kaalaman tungkol sa mga pahintulot na nagamit</string>
     <string name="msg_restart">Kailangan paumpisahin muli ang Application</string>
     <string name="msg_first"><b>Malaking pag-aalaga ang ginampanan sa pagkabuo at sa pagsusuri ng XPrivacy,
     ngunit sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bawat sa isa\'t isang aplikasyon. 

@@ -59,7 +59,7 @@ public class ActivityUsage extends Activity {
 		super.onCreate(savedInstanceState);
 
 		// Set theme
-		String themeName = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingTheme, "", false);
+		String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
 		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 		setTheme(mThemeId);
 
@@ -132,7 +132,7 @@ public class ActivityUsage extends Activity {
 			usageTask.executeOnExecutor(mExecutor, (Object) null);
 			return true;
 		case R.id.menu_clear:
-			PrivacyManager.deleteUsage(this, mUid);
+			PrivacyManager.deleteUsage(mUid);
 			usageTask = new UsageTask();
 			usageTask.executeOnExecutor(mExecutor, (Object) null);
 			return true;

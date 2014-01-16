@@ -53,7 +53,6 @@
     <string name="msg_random_now">生成随机数值</string>
     <string name="msg_random_access">访问时随机生成数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
-    <string name="msg_usage">正在更新用量统计数据…</string>
     <string name="msg_restart">需要重启应用使规则生效</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。

@@ -53,7 +53,6 @@
     <string name="msg_random_now">Tạo thông tin ngẫu nhiên</string>
     <string name="msg_random_access">Tạo thông tin ngẫu nhiên lúc truy cập</string>
     <string name="msg_random_boot">Tạo thông tin ngẫu nhiên khi khởi động</string>
-    <string name="msg_usage">Đang cập nhật mức sử dụng dữ liệu</string>
     <string name="msg_restart">Yêu cầu khởi động lại ứng dụng</string>
     <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ hoạt động trơn tru trên mọi thiết bị cũng như với mọi ứng dụng.
 \n\nBạn tự chịu trách nhiệm khi sử dụng ứng dụng này.</b>\n\nXem thêm về bản quyền:</string>

@@ -53,7 +53,6 @@
     <string name="msg_random_now">अटपटा करे</string>
     <string name="msg_random_access">उपयोग पर अटपटा करें</string>
     <string name="msg_random_boot">रिबूट के पश्चात अटपटा करे</string>
-    <string name="msg_usage">उपयोग डेटा update हो रहा हैं</string>
     <string name="msg_restart">application पुनःप्रारंभ जरुरी</string>
     <string name="msg_first"><b>XPrivacy बनाने मैं बहुत ख्याल रखा गया है,
 किन्तु वह सभी साधन और सभी application के लिए बरोबर चलेगा उसकी गारंटी देना असंभव है।

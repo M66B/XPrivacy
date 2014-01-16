@@ -53,7 +53,6 @@
     <string name="msg_random_now">Náhodné hodnoty</string>
     <string name="msg_random_access">Náhodné hodnoty po prístupe</string>
     <string name="msg_random_boot">Náhodné hodnoty pri štarte zariadenia</string>
-    <string name="msg_usage">Aktualizácia dát využitia</string>
     <string name="msg_restart">Vyžadovaný reštart aplikácie</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.

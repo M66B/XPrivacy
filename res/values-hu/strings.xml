@@ -53,7 +53,6 @@
     <string name="msg_random_now">Véletlenszerűsítés</string>
     <string name="msg_random_access">Véletlenszerűsítés hozzáféréskor</string>
     <string name="msg_random_boot">Véletlenszerűsítés boot után</string>
-    <string name="msg_usage">Használati adat frissítése</string>
     <string name="msg_restart">Az alkalmazás újraindítása szükséges</string>
     <string name="msg_first"><b>Az XPrivacy fejlesztése és tesztelése nagy gondossággal történik,
 de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön és az összes alkalmazással.

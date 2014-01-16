@@ -53,7 +53,6 @@
     <string name="msg_random_now">Generazione casuale</string>
     <string name="msg_random_access">Generazione casuale all\'accesso</string>
     <string name="msg_random_boot">Generazione casuale all\'avvio</string>
-    <string name="msg_usage">Aggiornamento dati di utilizzo</string>
     <string name="msg_restart">Richiesto riavvio dell\'applicazione</string>
     <string name="msg_first"><b>XPrivacy è stato testato e sviluppato con cura,
 ma è impossibile garantire che funzionerà in modo impeccabile su ogni dispositivo e per ogni applicazione.

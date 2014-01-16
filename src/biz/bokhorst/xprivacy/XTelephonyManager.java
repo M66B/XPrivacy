@@ -1,12 +1,10 @@
 package biz.bokhorst.xprivacy;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
 import android.telephony.CellLocation;
@@ -19,8 +17,6 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
-import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XTelephonyManager extends XHook {
 	private Methods mMethod;
@@ -192,49 +188,6 @@ public class XTelephonyManager extends XHook {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), mMethod.name()));
 			}
-	}
-
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = null;
-
-		// No context for static methods
-		if (param.thisObject != null) {
-			// TelephonyManager
-			boolean found = false;
-			try {
-				Field fieldContext = findField(param.thisObject.getClass(), "sContext");
-				context = (Context) fieldContext.get(param.thisObject);
-				found = true;
-			} catch (NoSuchFieldError ex) {
-			} catch (Throwable ex) {
-				Util.bug(this, ex);
-			}
-
-			// MultiSimTelephonyManager
-			if (!found)
-				try {
-					Field fieldContext = findField(param.thisObject.getClass(), "mContext");
-					context = (Context) fieldContext.get(param.thisObject);
-					found = true;
-				} catch (NoSuchFieldError ex) {
-				} catch (Throwable ex) {
-					Util.bug(this, ex);
-				}
-
-			// Duos
-			if (!found)
-				try {
-					Field fieldContext = findField(param.thisObject.getClass(), "sContextDuos");
-					context = (Context) fieldContext.get(param.thisObject);
-					found = true;
-				} catch (Throwable ex) {
-					Util.bug(this, ex);
-				}
-		}
-
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
 	}
 
 	private class XPhoneStateListener extends PhoneStateListener {

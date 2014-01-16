@@ -53,7 +53,6 @@
     <string name="msg_random_now">Selección aleatoria</string>
     <string name="msg_random_access">Inventar al acceder</string>
     <string name="msg_random_boot">Inventar en el arranque</string>
-    <string name="msg_usage">Actualizando uso de datos</string>
     <string name="msg_restart">Reinicio de aplicación requerido</string>
     <string name="msg_first"><b>Se ha puesto mucho cuidado en el desarrollo y pruebas de XPrivacy,
 sin embargo no puedo garantizar que funcione sin ningún fallo para cada dispositivo y aplicación.

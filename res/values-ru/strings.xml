@@ -53,7 +53,6 @@
     <string name="msg_random_now">Случайные значения</string>
     <string name="msg_random_access">Случайные значения при запросе</string>
     <string name="msg_random_boot">Случайные значения после перезагрузки</string>
-    <string name="msg_usage">Обновление данных об использовании</string>
     <string name="msg_restart">Требуется перезапуск приложения</string>
     <string name="msg_first"><b>Большое внимание было уделено разработке и тестированию XPrivacy, 
 однако нельзя гарантировать, что оно будет работать безупречно на всех устройствах и со всеми приложениями.
