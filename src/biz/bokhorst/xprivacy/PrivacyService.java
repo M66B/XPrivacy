@@ -128,13 +128,27 @@ public class PrivacyService {
 
 				// Log usage
 				if (usage) {
-					ContentValues values = new ContentValues();
-					values.put("uid", uid);
-					values.put("restriction", restrictionName);
-					values.put("method", methodName == null ? "" : methodName);
-					values.put("restricted", restricted);
-					values.put("time", new Date().getTime());
-					mDatabase.insertWithOnConflict("usage", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+					// TODO: run in thread
+
+					// Category
+					ContentValues cvalues = new ContentValues();
+					cvalues.put("uid", uid);
+					cvalues.put("restriction", restrictionName);
+					cvalues.put("method", "");
+					cvalues.put("restricted", restricted);
+					cvalues.put("time", new Date().getTime());
+					mDatabase.insertWithOnConflict("usage", null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
+
+					// Method
+					if (methodName != null) {
+						ContentValues mvalues = new ContentValues();
+						mvalues.put("uid", uid);
+						mvalues.put("restriction", restrictionName);
+						mvalues.put("method", methodName);
+						mvalues.put("restricted", restricted);
+						mvalues.put("time", new Date().getTime());
+						mDatabase.insertWithOnConflict("usage", null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
