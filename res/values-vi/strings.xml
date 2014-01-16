@@ -110,7 +110,6 @@
     <string name="settings_fake_data">Dữ liệu giả</string>
     <string name="settings_global">Sử dụng dữ liệu giả chung</string>
     <string name="settings_notify">Cập nhật thông báo</string>
-    <string name="settings_usage">Mức sử dụng dữ liệu hệ thống (cần khởi động lại)</string>
     <string name="settings_log">Nhật ký lỗi (cần khởi động lại)</string>
     <string name="settings_expert">Chế độ nâng cao</string>
     <string name="settings_dangerous">Hạn chế các chức năng nguy hiểm</string>

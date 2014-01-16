@@ -70,13 +70,6 @@
                 android:text="@string/settings_dangerous" />
 
             <CheckBox
-                android:id="@+id/cbUsage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dip"
-                android:text="@string/settings_usage" />
-
-            <CheckBox
                 android:id="@+id/cbExperimental"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

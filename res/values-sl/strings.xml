@@ -113,7 +113,6 @@
     <string name="settings_fake_data">Lažni podatki</string>
     <string name="settings_global">Uporabi lažne podatke globalo</string>
     <string name="settings_notify">Obvestila ob posodobitvi</string>
-    <string name="settings_usage">Uporaba podatkov Android (zahtevan ponovni zagon)</string>
     <string name="settings_log">Beleženje za razvijalce (zahteva ponovni zagon)</string>
     <string name="settings_expert">Način za strokovnjake</string>
     <string name="settings_dangerous">Omeji nevarne funkcije</string>

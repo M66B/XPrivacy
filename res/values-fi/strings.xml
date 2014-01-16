@@ -110,7 +110,6 @@
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Päivitä ilmoitukset</string>
-    <string name="settings_usage">Androidin käyttötiedot (vaatii uudelleenkäynnistyksen)</string>
     <string name="settings_log">Debuggaus logi (vaatii uudelleenkäynnistyksen)</string>
     <string name="settings_expert">Expert tila</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

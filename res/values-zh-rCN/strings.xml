@@ -111,7 +111,6 @@
     <string name="settings_fake_data">模拟信息</string>
     <string name="settings_global">使用全局模拟信息</string>
     <string name="settings_notify">通知栏提示</string>
-    <string name="settings_usage">Android 应用用量统计数据（需要重启）</string>
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
     <string name="settings_dangerous">限制可能导致应用异常的权限</string>

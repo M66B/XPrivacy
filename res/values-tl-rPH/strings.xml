@@ -111,7 +111,6 @@
     <string name="settings_fake_data">Pekeng kaalaman</string>
     <string name="settings_global">Gamitin ang panlahat na pekeng kaalaman</string>
     <string name="settings_notify">Baguhin ang mga abiso</string>
-    <string name="settings_usage">Kaalaman na nagamit ng Android (kailangan muling paumpisahin ang iyong kagamitan)</string>
     <string name="settings_log">Ipakita kaalaman ukol sa Debug (kailangan muling paumpisahin ang iyong kagamitan)</string>
     <string name="settings_expert">Gamitin XPrivacy sa sanay na paraan</string>
     <string name="settings_dangerous">Pahigpitan mga may panganib na tungkulin</string>

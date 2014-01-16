@@ -102,7 +102,6 @@ public class PrivacyManager {
 	public final static String cSettingNotify = "Notify";
 	public final static String cSettingLog = "Log";
 	public final static String cSettingDangerous = "Dangerous";
-	public final static String cSettingAndroidUsage = "AndroidUsage";
 	public final static String cSettingExperimental = "Experimental";
 	public final static String cSettingRandom = "Random@boot";
 	public final static String cSettingState = "State";
@@ -968,7 +967,7 @@ public class PrivacyManager {
 			if (mUid == 0) {
 				if (mName.equals(PrivacyManager.cSettingVersion))
 					return false;
-				if (mName.equals(PrivacyManager.cSettingAndroidUsage))
+				if (mName.equals(PrivacyManager.cSettingLog))
 					return false;
 				if (mName.equals(PrivacyManager.cSettingExperimental))
 					return false;

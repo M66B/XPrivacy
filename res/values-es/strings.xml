@@ -111,7 +111,6 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="settings_fake_data">Datos falsos</string>
     <string name="settings_global">Usa datos falsos globales</string>
     <string name="settings_notify">Notificaciones de actualización</string>
-    <string name="settings_usage">Bloquear datos del sistema Android(uid=1000) (requiere reinicio)</string>
     <string name="settings_log">Registro de depuración (requiere inicio)</string>
     <string name="settings_expert">Modo experto</string>
     <string name="settings_dangerous">Denegar funciones peligrosas</string>
