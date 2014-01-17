@@ -27,6 +27,9 @@ public class PrivacyService {
 	private static SQLiteDatabase mDatabase = null;
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
+	private static SQLiteStatement stmtGetRestriction = null;
+	private static SQLiteStatement stmtGetSetting = null;
+
 	private static int cCurrentVersion = 1;
 	private static String cServiceName = "xprivacy";
 	private static String cTableRestriction = "restriction";
@@ -71,8 +74,6 @@ public class PrivacyService {
 
 		return mClient;
 	}
-
-	private static SQLiteStatement stmtGetRestriction = null;
 
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
 
@@ -122,36 +123,40 @@ public class PrivacyService {
 			try {
 				getDatabase();
 
-				// Precompile statement
+				// Precompile statement when needed
 				if (stmtGetRestriction == null) {
 					String sql = "SELECT restricted FROM " + cTableRestriction
 							+ " WHERE uid=? AND restriction=? AND method=?";
 					stmtGetRestriction = mDatabase.compileStatement(sql);
 				}
 
+				// Execute statement
 				mDatabase.beginTransaction();
 				try {
-
 					try {
-						stmtGetRestriction.clearBindings();
-						stmtGetRestriction.bindLong(1, uid);
-						stmtGetRestriction.bindString(2, restrictionName);
-						stmtGetRestriction.bindString(3, "");
-						restricted = (stmtGetRestriction.simpleQueryForLong() > 0);
+						synchronized (stmtGetRestriction) {
+							stmtGetRestriction.clearBindings();
+							stmtGetRestriction.bindLong(1, uid);
+							stmtGetRestriction.bindString(2, restrictionName);
+							stmtGetRestriction.bindString(3, "");
+							restricted = (stmtGetRestriction.simpleQueryForLong() > 0);
+						}
 					} catch (SQLiteDoneException ignored) {
-
+						restricted = false;
 					}
 
 					if (restricted && methodName != null)
 						try {
-							stmtGetRestriction.clearBindings();
-							stmtGetRestriction.bindLong(1, uid);
-							stmtGetRestriction.bindString(2, restrictionName);
-							stmtGetRestriction.bindString(3, methodName);
-							if (stmtGetRestriction.simpleQueryForLong() > 0)
-								restricted = false;
+							synchronized (stmtGetRestriction) {
+								stmtGetRestriction.clearBindings();
+								stmtGetRestriction.bindLong(1, uid);
+								stmtGetRestriction.bindString(2, restrictionName);
+								stmtGetRestriction.bindString(3, methodName);
+								if (stmtGetRestriction.simpleQueryForLong() > 0)
+									restricted = false;
+							}
 						} catch (SQLiteDoneException ignored) {
-
+							// no change
 						}
 
 					mDatabase.setTransactionSuccessful();
@@ -351,21 +356,30 @@ public class PrivacyService {
 			try {
 				getDatabase();
 
-				Cursor cursor = mDatabase.query(cTableSetting, new String[] { "value" }, "uid=? AND name=?",
-						new String[] { Integer.toString(uid), name }, null, null, null);
-				if (cursor == null)
-					Util.log(null, Log.WARN, "Database cursor null (setting)");
-				else
+				// Precompile statement when needed
+				if (stmtGetSetting == null) {
+					String sql = "SELECT value FROM " + cTableSetting + " WHERE uid=? AND name=?";
+					stmtGetSetting = mDatabase.compileStatement(sql);
+				}
+
+				// Execute statement
+				mDatabase.beginTransaction();
+				try {
 					try {
-						if (cursor.moveToNext()) {
-							value = cursor.getString(0);
-							if (value.equals("") && defaultValue != null)
-								value = defaultValue;
-						} else
-							value = defaultValue;
-					} finally {
-						cursor.close();
+						synchronized (stmtGetSetting) {
+							stmtGetSetting.clearBindings();
+							stmtGetSetting.bindLong(1, uid);
+							stmtGetSetting.bindString(2, name);
+							value = stmtGetSetting.simpleQueryForString();
+						}
+					} catch (SQLiteDoneException ignored) {
+						value = defaultValue;
 					}
+
+					mDatabase.setTransactionSuccessful();
+				} finally {
+					mDatabase.endTransaction();
+				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return defaultValue;
