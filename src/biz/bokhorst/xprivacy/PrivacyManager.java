@@ -131,23 +131,27 @@ public class PrivacyManager {
 
 	static {
 		// Scan meta data
-		try {
-			File in = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
-			Util.log(null, Log.INFO, "Reading meta=" + in.getAbsolutePath());
-			FileInputStream fis = null;
+		int uid = Process.myUid();
+		int pid = Process.myPid();
+		String self = PrivacyManager.class.getPackage().getName();
+		if (uid == cAndroidUid || self.equals(Util.getPackageNameByPid(pid)))
 			try {
-				fis = new FileInputStream(in);
-				XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
-				MetaHandler metaHandler = new MetaHandler();
-				xmlReader.setContentHandler(metaHandler);
-				xmlReader.parse(new InputSource(fis));
-			} finally {
-				if (fis != null)
-					fis.close();
+				File in = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
+				Util.log(null, Log.INFO, "Reading meta=" + in.getAbsolutePath());
+				FileInputStream fis = null;
+				try {
+					fis = new FileInputStream(in);
+					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
+					MetaHandler metaHandler = new MetaHandler();
+					xmlReader.setContentHandler(metaHandler);
+					xmlReader.parse(new InputSource(fis));
+				} finally {
+					if (fis != null)
+						fis.close();
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
 			}
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
 	}
 
 	private static class MetaHandler extends DefaultHandler {
