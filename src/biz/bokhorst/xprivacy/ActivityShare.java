@@ -322,8 +322,8 @@ public class ActivityShare extends Activity {
 			mAppAdapter.remove(mAppAdapter.getItem(info.position));
 
 			if (mAppAdapter.getCount() < cSubmitLimit + 1 && getTitle().equals(getString(R.string.menu_submit))) {
-					Button btnOk = (Button) findViewById(R.id.btnOk);
-					btnOk.setEnabled(true);
+				Button btnOk = (Button) findViewById(R.id.btnOk);
+				btnOk.setEnabled(true);
 			}
 			return true;
 		} else {

@@ -61,6 +61,11 @@
             android:layout_weight="1"
             android:text="@android:string/cancel" />
 
+        <View
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
+
         <Button style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/btnOk"
             android:layout_width="0dip"
@@ -70,11 +75,18 @@
             android:text="@android:string/ok" />
     </LinearLayout>
 
+    <View
+        android:id="@+id/vBorder"
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_above="@id/llButtons"
+        android:background="@android:color/darker_gray" />
+
     <ListView
         android:id="@+id/lvShare"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/llDescription"
-        android:layout_above="@id/llButtons" />
+        android:layout_above="@id/vBorder"
+        android:layout_below="@id/llDescription" />
 
 </RelativeLayout>
