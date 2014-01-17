@@ -1173,7 +1173,7 @@ public class ActivityApp extends Activity {
 				if (restrictionName != null) {
 					// Get info
 					md = (PrivacyManager.MethodDescription) getChild(groupPosition, childPosition);
-					lastUsage = PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName());
+					lastUsage = Math.abs(PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName()));
 					parentRestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null,
 							false, false);
 					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(), md);
