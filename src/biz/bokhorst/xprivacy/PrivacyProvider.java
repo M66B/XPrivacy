@@ -1,11 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -68,7 +64,6 @@ public class PrivacyProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		try {
-			writeMetaData(getContext());
 			convertRestrictions();
 			convertSettings();
 			fixFilePermissions();
@@ -479,21 +474,6 @@ public class PrivacyProvider extends ContentProvider {
 
 	private static String getSettingName(String settingKey) {
 		return settingKey.substring(COL_SETTING.length() + 1);
-	}
-
-	public static void writeMetaData(Context context) throws IOException, FileNotFoundException {
-		File out = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
-		Util.log(null, Log.WARN, "Writing meta=" + out.getAbsolutePath());
-		InputStream is = context.getAssets().open("meta.xml");
-		OutputStream os = new FileOutputStream(out.getAbsolutePath());
-		byte[] buffer = new byte[1024];
-		int read;
-		while ((read = is.read(buffer)) != -1)
-			os.write(buffer, 0, read);
-		is.close();
-		os.flush();
-		os.close();
-		out.setReadable(true, false);
 	}
 
 	private void convertRestrictions() throws IOException {

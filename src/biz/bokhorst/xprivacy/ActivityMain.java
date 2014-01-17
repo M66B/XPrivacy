@@ -71,8 +71,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mProgress = 0;
 	private boolean mBatchOpRunning = false;
 	private String mSharingState = null;
-	private Handler mHandler = new Handler();
-	private Runnable mTimerRunnable = null;
 	private int mEasterEgg;
 
 	public static final int STATE_ATTENTION = 0;
@@ -116,234 +114,249 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	};
 
+	private BroadcastReceiver mProgressReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// String action = intent.getAction();
+			String message = intent.getStringExtra(ActivityShare.cProgressMessage);
+			int progress = intent.getIntExtra(ActivityShare.cProgressValue, 0);
+			int max = intent.getIntExtra(ActivityShare.cProgressMax, 1);
+			setProgress(message, progress, max);
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Salt should be the same when exporting/importing
-		String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, null, false);
-		if (salt == null) {
-			salt = Build.SERIAL;
-			if (salt == null)
-				salt = "";
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSalt, salt);
-		}
+		// Check privacy service client
+		if (!Util.isXposedEnabled() || !PrivacyManager.hasMetaData() || PrivacyService.getClient() == null) {
+			setContentView(R.layout.reboot);
+			Requirements.check(this);
+			PrivacyManager.writeMetaData(this);
+			mPackageChangeReceiver = null;
+			mProgressReceiver = null;
+		} else {
+			// Salt should be the same when exporting/importing
+			String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, null, false);
+			if (salt == null) {
+				salt = Build.SERIAL;
+				if (salt == null)
+					salt = "";
+				PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSalt, salt);
+			}
 
-		// Set theme
-		String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
-		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
-		setTheme(mThemeId);
+			// Set theme
+			String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
+			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
+			setTheme(mThemeId);
 
-		// Set layout
-		setContentView(R.layout.mainlist);
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+			// Set layout
+			setContentView(R.layout.mainlist);
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-		if (Util.getProLicense() != null)
-			setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_pro)));
+			if (Util.getProLicense() != null)
+				setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_pro)));
 
-		// Get localized restriction name
-		List<String> listRestrictionName = new ArrayList<String>(PrivacyManager.getRestrictions(this).navigableKeySet());
-		listRestrictionName.add(0, getString(R.string.menu_all));
+			// Get localized restriction name
+			List<String> listRestrictionName = new ArrayList<String>(PrivacyManager.getRestrictions(this)
+					.navigableKeySet());
+			listRestrictionName.add(0, getString(R.string.menu_all));
 
-		// Build spinner adapter
-		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
-		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spAdapter.addAll(listRestrictionName);
+			// Build spinner adapter
+			SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
+			spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spAdapter.addAll(listRestrictionName);
 
-		// Handle info
-		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
-		imgInfo.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				int position = spRestriction.getSelectedItemPosition();
-				if (position != AdapterView.INVALID_POSITION) {
-					String query = (position == 0 ? "restrictions" : (String) PrivacyManager
-							.getRestrictions(ActivityMain.this).values().toArray()[position - 1]);
-					Util.viewUri(ActivityMain.this, Uri.parse(cXUrl + "#" + query));
+			// Handle info
+			ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
+			imgInfo.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					int position = spRestriction.getSelectedItemPosition();
+					if (position != AdapterView.INVALID_POSITION) {
+						String query = (position == 0 ? "restrictions" : (String) PrivacyManager
+								.getRestrictions(ActivityMain.this).values().toArray()[position - 1]);
+						Util.viewUri(ActivityMain.this, Uri.parse(cXUrl + "#" + query));
+					}
 				}
-			}
-		});
+			});
 
-		// Setup spinner
-		spRestriction = (Spinner) findViewById(R.id.spRestriction);
-		spRestriction.setAdapter(spAdapter);
-		spRestriction.setOnItemSelectedListener(this);
+			// Setup spinner
+			spRestriction = (Spinner) findViewById(R.id.spRestriction);
+			spRestriction.setAdapter(spAdapter);
+			spRestriction.setOnItemSelectedListener(this);
 
-		// Setup name filter
-		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
-		etFilter.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				String text = etFilter.getText().toString();
-				ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
-				imgClear.setImageDrawable(getResources().getDrawable(
-						Util.getThemed(ActivityMain.this, text.equals("") ? R.attr.icon_clear_grayed
-								: R.attr.icon_clear)));
-				applyFilter();
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-		});
-
-		ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
-		imgClear.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				etFilter.setText("");
-			}
-		});
-
-		// Setup used filter
-		boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
-		CheckBox cFbUsed = (CheckBox) findViewById(R.id.cbFUsed);
-		cFbUsed.setChecked(fUsed);
-		cFbUsed.setOnCheckedChangeListener(this);
-
-		// Setup internet filter
-		boolean fInternet = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFInternet, false, false);
-		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
-		cbFInternet.setChecked(fInternet);
-		cbFInternet.setOnCheckedChangeListener(this);
-
-		// Setup restriction filter
-		boolean fRestriction = PrivacyManager
-				.getSettingBool(null, 0, PrivacyManager.cSettingFRestriction, false, false);
-		CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
-		cbFRestriction.setChecked(fRestriction);
-		cbFRestriction.setOnCheckedChangeListener(this);
-
-		boolean fRestrictionNot = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFRestrictionNot, false,
-				false);
-		CheckBox cbFRestrictionNot = (CheckBox) findViewById(R.id.cbFRestrictionNot);
-		cbFRestrictionNot.setChecked(fRestrictionNot);
-		cbFRestrictionNot.setOnCheckedChangeListener(this);
-
-		// Setup permission filter
-		boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, true, false);
-		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
-		cbFPermission.setChecked(fPermission);
-		cbFPermission.setOnCheckedChangeListener(this);
-
-		// Setup user filter
-		boolean fUser = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUser, true, false);
-		final CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
-		cbFUser.setChecked(fUser);
-		cbFUser.setOnCheckedChangeListener(this);
-
-		// Setup system filter
-		boolean fSystem = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFSystem, false, false);
-		final CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
-		cbFSystem.setChecked(fSystem);
-		cbFSystem.setOnCheckedChangeListener(this);
-
-		// Hide filters
-		if (savedInstanceState != null && savedInstanceState.containsKey("Filters"))
-			mFiltersHidden = !savedInstanceState.getBoolean("Filters");
-		toggleFiltersVisibility();
-
-		// Hide categories
-		if (savedInstanceState != null && savedInstanceState.containsKey("Categories"))
-			mCategoriesHidden = !savedInstanceState.getBoolean("Categories");
-		toggleCategoriesVisibility();
-
-		// Handle toggle filters visibility
-		TextView tvFilterDetail = (TextView) findViewById(R.id.tvFilterDetail);
-		tvFilterDetail.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				toggleFiltersVisibility();
-			}
-		});
-
-		// Handle toggle categories visibility
-		TextView tvCategoryDetail = (TextView) findViewById(R.id.tvCategoryDetail);
-		tvCategoryDetail.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				toggleCategoriesVisibility();
-			}
-		});
-
-		// Easter egg
-		mEasterEgg = 0;
-		TextView tvState = (TextView) findViewById(R.id.tvState);
-		tvState.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (++mEasterEgg == 7) {
-					mEasterEgg = 0;
-					Requirements.sendSupportInfo("", ActivityMain.this);
+			// Setup name filter
+			final EditText etFilter = (EditText) findViewById(R.id.etFilter);
+			etFilter.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					String text = etFilter.getText().toString();
+					ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
+					imgClear.setImageDrawable(getResources().getDrawable(
+							Util.getThemed(ActivityMain.this, text.equals("") ? R.attr.icon_clear_grayed
+									: R.attr.icon_clear)));
+					applyFilter();
 				}
+
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				}
+
+				@Override
+				public void afterTextChanged(Editable s) {
+				}
+			});
+
+			ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
+			imgClear.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					etFilter.setText("");
+				}
+			});
+
+			// Setup used filter
+			boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
+			CheckBox cFbUsed = (CheckBox) findViewById(R.id.cbFUsed);
+			cFbUsed.setChecked(fUsed);
+			cFbUsed.setOnCheckedChangeListener(this);
+
+			// Setup internet filter
+			boolean fInternet = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFInternet, false, false);
+			CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
+			cbFInternet.setChecked(fInternet);
+			cbFInternet.setOnCheckedChangeListener(this);
+
+			// Setup restriction filter
+			boolean fRestriction = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFRestriction, false,
+					false);
+			CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
+			cbFRestriction.setChecked(fRestriction);
+			cbFRestriction.setOnCheckedChangeListener(this);
+
+			boolean fRestrictionNot = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFRestrictionNot,
+					false, false);
+			CheckBox cbFRestrictionNot = (CheckBox) findViewById(R.id.cbFRestrictionNot);
+			cbFRestrictionNot.setChecked(fRestrictionNot);
+			cbFRestrictionNot.setOnCheckedChangeListener(this);
+
+			// Setup permission filter
+			boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, true,
+					false);
+			CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
+			cbFPermission.setChecked(fPermission);
+			cbFPermission.setOnCheckedChangeListener(this);
+
+			// Setup user filter
+			boolean fUser = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUser, true, false);
+			final CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
+			cbFUser.setChecked(fUser);
+			cbFUser.setOnCheckedChangeListener(this);
+
+			// Setup system filter
+			boolean fSystem = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFSystem, false, false);
+			final CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
+			cbFSystem.setChecked(fSystem);
+			cbFSystem.setOnCheckedChangeListener(this);
+
+			// Hide filters
+			if (savedInstanceState != null && savedInstanceState.containsKey("Filters"))
+				mFiltersHidden = !savedInstanceState.getBoolean("Filters");
+			toggleFiltersVisibility();
+
+			// Hide categories
+			if (savedInstanceState != null && savedInstanceState.containsKey("Categories"))
+				mCategoriesHidden = !savedInstanceState.getBoolean("Categories");
+			toggleCategoriesVisibility();
+
+			// Handle toggle filters visibility
+			TextView tvFilterDetail = (TextView) findViewById(R.id.tvFilterDetail);
+			tvFilterDetail.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					toggleFiltersVisibility();
+				}
+			});
+
+			// Handle toggle categories visibility
+			TextView tvCategoryDetail = (TextView) findViewById(R.id.tvCategoryDetail);
+			tvCategoryDetail.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					toggleCategoriesVisibility();
+				}
+			});
+
+			// Easter egg
+			mEasterEgg = 0;
+			TextView tvState = (TextView) findViewById(R.id.tvState);
+			tvState.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (++mEasterEgg == 7) {
+						mEasterEgg = 0;
+						Requirements.sendSupportInfo("", ActivityMain.this);
+					}
+				}
+			});
+
+			// Handle post share operation done message
+			if (mSharingState != null) {
+				tvState.setText(mSharingState);
+				mSharingState = null;
 			}
-		});
 
-		// Handle post share operation done message
-		if (mSharingState != null) {
-			tvState.setText(mSharingState);
-			mSharingState = null;
-		}
+			// Start task to get app list
+			AppListTask appListTask = new AppListTask();
+			appListTask.executeOnExecutor(mExecutor, (Object) null);
 
-		// Start task to get app list
-		AppListTask appListTask = new AppListTask();
-		appListTask.executeOnExecutor(mExecutor, (Object) null);
+			// Check environment
+			Requirements.check(this);
 
-		// Check environment
-		Requirements.check(this);
+			// Licensing
+			checkLicense();
 
-		// Licensing
-		checkLicense();
+			// Listen for package add/remove
+			IntentFilter iff = new IntentFilter();
+			iff.addAction(Intent.ACTION_PACKAGE_ADDED);
+			iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
+			iff.addDataScheme("package");
+			registerReceiver(mPackageChangeReceiver, iff);
 
-		// Meta data
-		try {
-			PrivacyProvider.writeMetaData(this);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
+			// Listen for progress reports
+			IntentFilter filter = new IntentFilter();
+			filter.addAction(ActivityShare.cProgressReport);
+			LocalBroadcastManager.getInstance(this).registerReceiver(mProgressReceiver, filter);
 
-		// Listen for package add/remove
-		IntentFilter iff = new IntentFilter();
-		iff.addAction(Intent.ACTION_PACKAGE_ADDED);
-		iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
-		iff.addDataScheme("package");
-		registerReceiver(mPackageChangeReceiver, iff);
-
-		// Listen for progress reports
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(ActivityShare.cProgressReport);
-		LocalBroadcastManager.getInstance(this).registerReceiver(progressListener, filter);
-
-		// First run
-		if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFirstRun, true, false)) {
-			optionAbout();
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
-		}
-
-		// Build tri-state check box images
-		mCheck = Util.getTriStateCheckBox(this);
-
-		// Tutorial
-		if (!PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingTutorialMain, false, false)) {
-			((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
-			((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
-		}
-		View.OnClickListener listener = new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				ViewParent parent = view.getParent();
-				while (!parent.getClass().equals(RelativeLayout.class))
-					parent = parent.getParent();
-				((View) parent).setVisibility(View.GONE);
-				PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTutorialMain, Boolean.TRUE.toString());
+			// First run
+			if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFirstRun, true, false)) {
+				optionAbout();
+				PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
 			}
-		};
-		((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
-		((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
+
+			// Build tri-state check box images
+			mCheck = Util.getTriStateCheckBox(this);
+
+			// Tutorial
+			if (!PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingTutorialMain, false, false)) {
+				((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
+				((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
+			}
+			View.OnClickListener listener = new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					ViewParent parent = view.getParent();
+					while (!parent.getClass().equals(RelativeLayout.class))
+						parent = parent.getParent();
+					((View) parent).setVisibility(View.GONE);
+					PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTutorialMain, Boolean.TRUE.toString());
+				}
+			};
+			((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
+			((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
+		}
 	}
 
 	@Override
@@ -370,9 +383,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		super.onDestroy();
 		if (mPackageChangeReceiver != null)
 			unregisterReceiver(mPackageChangeReceiver);
-		LocalBroadcastManager.getInstance(this).unregisterReceiver(progressListener);
-		if (mTimerRunnable != null)
-			mHandler.removeCallbacks(mTimerRunnable);
+		if (mProgressReceiver != null)
+			LocalBroadcastManager.getInstance(this).unregisterReceiver(mProgressReceiver);
 	}
 
 	@Override
@@ -505,9 +517,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main, menu);
-		return true;
+		if (PrivacyService.getClient() == null)
+			return false;
+		else {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.main, menu);
+			return true;
+		}
 	}
 
 	@Override
@@ -1679,17 +1695,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		TextView tvState = (TextView) findViewById(R.id.tvState);
 		mSharingState = (String) tvState.getText();
 	}
-
-	private BroadcastReceiver progressListener = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			// String action = intent.getAction();
-			String message = intent.getStringExtra(ActivityShare.cProgressMessage);
-			int progress = intent.getIntExtra(ActivityShare.cProgressValue, 0);
-			int max = intent.getIntExtra(ActivityShare.cProgressMax, 1);
-			setProgress(message, progress, max);
-		}
-	};
 
 	private void setProgress(String text, int progress, int max) {
 		// Set up the progress bar

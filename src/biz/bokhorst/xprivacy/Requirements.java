@@ -52,8 +52,6 @@ public class Requirements {
 		if (xVersion < PrivacyManager.cXposedAppProcessMinVersion) {
 			String msg = String.format(context.getString(R.string.app_notxposed),
 					PrivacyManager.cXposedAppProcessMinVersion);
-			Util.log(null, Log.WARN, msg);
-
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
 			alertDialogBuilder.setMessage(msg);
@@ -73,12 +71,9 @@ public class Requirements {
 
 		// Check if XPrivacy is enabled
 		if (!Util.isXposedEnabled()) {
-			String msg = context.getString(R.string.app_notenabled);
-			Util.log(null, Log.WARN, msg);
-
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
-			alertDialogBuilder.setMessage(msg);
+			alertDialogBuilder.setMessage(context.getString(R.string.app_notenabled));
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
@@ -97,12 +92,9 @@ public class Requirements {
 		// Check pro enabler
 		Version version = Util.getProEnablerVersion(context);
 		if (version != null && !Util.isValidProEnablerVersion(version)) {
-			String msg = context.getString(R.string.app_wrongenabler);
-			Util.log(null, Log.WARN, msg);
-
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
-			alertDialogBuilder.setMessage(msg);
+			alertDialogBuilder.setMessage(context.getString(R.string.app_wrongenabler));
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
@@ -144,7 +136,7 @@ public class Requirements {
 
 		// Check interface address
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
-				|| PrivacyManager.getDefacedProp(0, "InetAddress") == null)
+				|| (PrivacyService.getClient() != null && PrivacyManager.getDefacedProp(0, "InetAddress") == null))
 			reportClass(InterfaceAddress.class, context);
 
 		// Check package manager service

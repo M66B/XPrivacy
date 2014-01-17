@@ -2,6 +2,9 @@ package biz.bokhorst.xprivacy;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -124,30 +127,68 @@ public class PrivacyManager {
 	public final static int cUseProviderAfterMs = 3 * 60 * 1000;
 
 	// Static data
-	private static Map<String, List<MethodDescription>> mMethod = new LinkedHashMap<String, List<MethodDescription>>();
-	private static Map<String, List<MethodDescription>> mPermission = new LinkedHashMap<String, List<MethodDescription>>();
+	private static boolean mMetaData = false;
+	private static Map<String, List<MethodDescription>> mMethod;
+	private static Map<String, List<MethodDescription>> mPermission;
 	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
 	static {
-		// Scan meta data
+		readMetaData();
+	}
+
+	public static void writeMetaData(Context context) {
+		// Write meta data
+		// TODO: find a way to get the meta data without context
 		try {
-			File in = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
-			Util.log(null, Log.INFO, "Reading meta=" + in.getAbsolutePath());
-			FileInputStream fis = null;
-			try {
-				fis = new FileInputStream(in);
-				XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
-				MetaHandler metaHandler = new MetaHandler();
-				xmlReader.setContentHandler(metaHandler);
-				xmlReader.parse(new InputSource(fis));
-			} finally {
-				if (fis != null)
-					fis.close();
-			}
+			File out = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
+			Util.log(null, Log.WARN, "Writing meta=" + out.getAbsolutePath());
+			InputStream is = context.getAssets().open("meta.xml");
+			OutputStream os = new FileOutputStream(out.getAbsolutePath());
+			byte[] buffer = new byte[1024];
+			int read;
+			while ((read = is.read(buffer)) != -1)
+				os.write(buffer, 0, read);
+			is.close();
+			os.flush();
+			os.close();
+			out.setReadable(true, false);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
+	}
+
+	public static void readMetaData() {
+		// Reset meta data
+		mMethod = new LinkedHashMap<String, List<MethodDescription>>();
+		mPermission = new LinkedHashMap<String, List<MethodDescription>>();
+
+		// Read meta data
+		try {
+			File in = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
+			if (in.exists()) {
+				Util.log(null, Log.INFO, "Reading meta=" + in.getAbsolutePath());
+				FileInputStream fis = null;
+				try {
+					fis = new FileInputStream(in);
+					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
+					MetaHandler metaHandler = new MetaHandler();
+					xmlReader.setContentHandler(metaHandler);
+					xmlReader.parse(new InputSource(fis));
+					mMetaData = true;
+				} finally {
+					if (fis != null)
+						fis.close();
+				}
+			} else
+				Util.log(null, Log.WARN, "Not found meta=" + in.getAbsolutePath());
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
+
+	public static boolean hasMetaData() {
+		return mMetaData;
 	}
 
 	private static class MetaHandler extends DefaultHandler {
@@ -197,7 +238,7 @@ public class PrivacyManager {
 	// Meta data
 
 	public static void registerMethod(String restrictionName, String methodName, int sdk) {
-		if (restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
+		if (hasMetaData() && restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
 			if (!mMethod.containsKey(restrictionName)
 					|| !mMethod.get(restrictionName).contains(new MethodDescription(restrictionName, methodName)))
 				Util.log(null, Log.WARN, "Missing method " + methodName);
@@ -473,9 +514,14 @@ public class PrivacyManager {
 		// Get settings
 		if (!cached)
 			try {
-				value = PrivacyService.getClient().getSetting(Math.abs(uid), name, defaultValue);
-				if (value == null && uid > 0)
-					value = PrivacyService.getClient().getSetting(0, name, defaultValue);
+				IPrivacyService client = PrivacyService.getClient();
+				if (client == null)
+					value = defaultValue;
+				else {
+					value = client.getSetting(Math.abs(uid), name, defaultValue);
+					if (value == null && uid > 0)
+						value = client.getSetting(0, name, defaultValue);
+				}
 
 				// Add to cache
 				key.setValue(value);
@@ -485,7 +531,6 @@ public class PrivacyManager {
 					mSettingsCache.put(key, key);
 				}
 			} catch (Throwable ex) {
-				value = defaultValue;
 				Util.bug(hook, ex);
 			}
 
