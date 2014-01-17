@@ -3,7 +3,6 @@ package biz.bokhorst.xprivacy;
 import biz.bokhorst.xprivacy.ParcelableUsageData;
 
 interface IPrivacyService {
-	String ping(String pong);
 	int getVersion();
 
 	void setRestriction(int uid, String restrictionName, String methodName, boolean restricted);

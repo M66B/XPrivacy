@@ -188,8 +188,6 @@ public class Requirements {
 		if (Util.isXposedEnabled()) {
 			try {
 				PrivacyService.enforcePermission();
-				if (!PrivacyService.getClient().ping("xprivacy").equals("xprivacy"))
-					throw new InvalidParameterException();
 			} catch (Throwable ex) {
 				sendSupportInfo(ex.toString(), context);
 			}

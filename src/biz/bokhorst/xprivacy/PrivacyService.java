@@ -30,7 +30,6 @@ public class PrivacyService {
 	private static String cTableUsage = "usage";
 	private static String cTableSetting = "setting";
 
-
 	// TODO: define column names
 	// TODO: transactions?
 
@@ -65,11 +64,6 @@ public class PrivacyService {
 	}
 
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
-
-		@Override
-		public String ping(String pong) {
-			return pong;
-		}
 
 		@Override
 		public int getVersion() throws RemoteException {
