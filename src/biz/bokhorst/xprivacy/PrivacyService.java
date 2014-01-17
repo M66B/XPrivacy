@@ -168,12 +168,17 @@ public class PrivacyService {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		public List getRestrictionList(int uid, String restrictionName) throws RemoteException {
 			List result = new ArrayList();
-			if (restrictionName == null)
-				for (String sRestrictionName : PrivacyManager.getRestrictions())
-					result.add(getRestriction(uid, sRestrictionName, null, false));
-			else
-				for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName))
-					result.add(getRestriction(uid, restrictionName, md.getName(), false));
+			try {
+				enforcePermission();
+				if (restrictionName == null)
+					for (String sRestrictionName : PrivacyManager.getRestrictions())
+						result.add(getRestriction(uid, sRestrictionName, null, false));
+				else
+					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName))
+						result.add(getRestriction(uid, restrictionName, md.getName(), false));
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 			return result;
 		}
 
@@ -202,6 +207,7 @@ public class PrivacyService {
 			long lastUsage = 0;
 			boolean restricted = false;
 			try {
+				enforcePermission();
 				getDatabase();
 
 				Cursor cursor;
@@ -235,6 +241,7 @@ public class PrivacyService {
 		public List<ParcelableUsageData> getUsageList(int uid) throws RemoteException {
 			List<ParcelableUsageData> result = new ArrayList<ParcelableUsageData>();
 			try {
+				enforcePermission();
 				getDatabase();
 
 				Cursor cursor;
@@ -338,6 +345,7 @@ public class PrivacyService {
 		public Map getSettings(int uid) throws RemoteException {
 			Map mapName = new HashMap();
 			try {
+				enforcePermission();
 				getDatabase();
 
 				Cursor cursor = mDatabase.query("setting", new String[] { "name", "value" }, "uid=?",
