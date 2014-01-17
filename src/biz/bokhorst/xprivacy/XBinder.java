@@ -29,7 +29,7 @@ public class XBinder extends XHook {
 		"android.content.IClipboard",
 		"android.net.IConnectivityManager",
 		"android.location.ILocationManager",
-		// TODO: sensor
+		// TODO: sensor interface
 		"com.android.internal.telephony.ITelephonyRegistry",
 		"android.content.pm.IPackageManager",
 		"com.android.internal.telephony.IPhoneSubInfo",
@@ -109,7 +109,7 @@ public class XBinder extends XHook {
 					String name = binder.getInterfaceDescriptor();
 					if (cListService.contains(name)) {
 						Util.log(this, Log.WARN, "restrict name=" + name + " uid=" + uid + " my=" + Process.myUid());
-						if (PrivacyManager.getRestricted(this, uid, PrivacyManager.cSystem, "IPC", true, true)) {
+						if (PrivacyManager.getRestricted(this, uid, PrivacyManager.cIPC, name, true, true)) {
 							// Get reply parcel
 							Parcel reply = null;
 							try {

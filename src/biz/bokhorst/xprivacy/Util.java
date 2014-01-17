@@ -91,39 +91,46 @@ public class Util {
 	public static void clearData() {
 		File dataFile = getDataFile();
 		dataFile.delete();
-		logData(null, Log.WARN, "Start " + Build.PRODUCT);
-		dataFile.setReadable(true, false);
-		dataFile.setWritable(true, false);
+		try {
+			dataFile.createNewFile();
+			logData(null, Log.WARN, "Start " + Build.PRODUCT);
+			dataFile.setReadable(true, false);
+			dataFile.setWritable(true, false);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
 	}
 
 	@SuppressLint("SimpleDateFormat")
 	private static void logData(XHook hook, int priority, String message) {
-		String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
-		String prio;
-		if (priority == Log.WARN)
-			prio = "W";
-		else if (priority == Log.ERROR)
-			prio = "E";
-		else
-			prio = Integer.toString(priority);
-		String tag = (hook == null ? "XPrivacy" : String.format("XPrivacy/%s", hook.getClass().getSimpleName()));
+		if (getDataFile().exists()) {
+			String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
+			String prio;
+			if (priority == Log.WARN)
+				prio = "W";
+			else if (priority == Log.ERROR)
+				prio = "E";
+			else
+				prio = Integer.toString(priority);
+			String tag = (hook == null ? "XPrivacy" : String.format("XPrivacy/%s", hook.getClass().getSimpleName()));
 
-		FileWriter fw = null;
-		try {
-			fw = new FileWriter(getDataFile(), true);
-			fw.write(String.format("%s %s/%s: %s\n", time, prio, tag, message));
-			fw.flush();
-		} catch (Throwable ex) {
-			Util.bug(hook, ex);
-		} finally {
-			if (fw != null)
-				try {
-					fw.close();
-					getDataFile().setReadable(true, false);
-					getDataFile().setWritable(true, false);
-				} catch (Throwable ex) {
-					Util.bug(hook, ex);
-				}
+			FileWriter fw = null;
+			try {
+				fw = new FileWriter(getDataFile(), true);
+				fw.write(String.format("%s %s/%s: %s\n", time, prio, tag, message));
+				fw.flush();
+			} catch (Throwable ex) {
+				Util.bug(hook, ex);
+			} finally {
+				if (fw != null)
+					try {
+						fw.close();
+						getDataFile().setReadable(true, false);
+						getDataFile().setWritable(true, false);
+					} catch (Throwable ex) {
+						Util.bug(hook, ex);
+					}
+			}
 		}
 	}
 

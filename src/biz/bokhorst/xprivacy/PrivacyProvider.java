@@ -1,11 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -68,9 +64,8 @@ public class PrivacyProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		try {
-			writeMetaData(getContext());
-			convertRestrictions();
-			convertSettings();
+			convertRestrictions(getContext());
+			convertSettings(getContext());
 			fixFilePermissions();
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -278,7 +273,7 @@ public class PrivacyProvider extends ContentProvider {
 			int uid = values.getAsInteger(COL_UID);
 			String methodName = values.getAsString(COL_METHOD);
 			boolean restricted = Boolean.parseBoolean(values.getAsString(COL_RESTRICTED));
-			updateRestriction(uid, restrictionName, methodName, !restricted);
+			updateRestriction(getContext(), uid, restrictionName, methodName, !restricted);
 
 			return 1; // rows
 		} else if (sUriMatcher.match(uri) == TYPE_USAGE) {
@@ -317,9 +312,10 @@ public class PrivacyProvider extends ContentProvider {
 		throw new IllegalArgumentException(uri.toString());
 	}
 
-	private void updateRestriction(int uid, String restrictionName, String methodName, boolean allowed) {
+	private static void updateRestriction(Context context, int uid, String restrictionName, String methodName,
+			boolean allowed) {
 		// Update restriction
-		SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION + "." + uid,
+		SharedPreferences prefs = context.getSharedPreferences(PREF_RESTRICTION + "." + uid,
 				Context.MODE_WORLD_READABLE);
 		SharedPreferences.Editor editor = prefs.edit();
 		if (methodName == null || !allowed)
@@ -481,28 +477,13 @@ public class PrivacyProvider extends ContentProvider {
 		return settingKey.substring(COL_SETTING.length() + 1);
 	}
 
-	public static void writeMetaData(Context context) throws IOException, FileNotFoundException {
-		File out = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
-		Util.log(null, Log.WARN, "Writing meta=" + out.getAbsolutePath());
-		InputStream is = context.getAssets().open("meta.xml");
-		OutputStream os = new FileOutputStream(out.getAbsolutePath());
-		byte[] buffer = new byte[1024];
-		int read;
-		while ((read = is.read(buffer)) != -1)
-			os.write(buffer, 0, read);
-		is.close();
-		os.flush();
-		os.close();
-		out.setReadable(true, false);
-	}
-
-	private void convertRestrictions() throws IOException {
+	private static void convertRestrictions(Context context) throws IOException {
 		File source = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "shared_prefs"
 				+ File.separator + "biz.bokhorst.xprivacy.provider.xml");
 		File backup = new File(source.getAbsoluteFile() + ".orig");
 		if (source.exists() && !backup.exists()) {
 			Util.log(null, Log.INFO, "Converting restrictions");
-			SharedPreferences prefs = getContext().getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
+			SharedPreferences prefs = context.getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
 			for (String key : prefs.getAll().keySet()) {
 				String[] component = key.split("\\.");
 				if (key.startsWith(COL_RESTRICTED)) {
@@ -511,13 +492,13 @@ public class PrivacyProvider extends ContentProvider {
 					List<String> listRestriction = new ArrayList<String>(Arrays.asList(value.split(",")));
 					listRestriction.remove(0);
 					for (String uid : listRestriction)
-						updateRestriction(Integer.parseInt(uid), restrictionName, null, false);
+						updateRestriction(context, Integer.parseInt(uid), restrictionName, null, false);
 				} else if (key.startsWith(COL_METHOD)) {
 					int uid = Integer.parseInt(component[1]);
 					String restrictionName = component[2];
 					String methodName = component[3];
 					boolean value = prefs.getBoolean(key, false);
-					updateRestriction(uid, restrictionName, methodName, value);
+					updateRestriction(context, uid, restrictionName, methodName, value);
 				} else
 					Util.log(null, Log.WARN, "Unknown key=" + key);
 			}
@@ -528,8 +509,8 @@ public class PrivacyProvider extends ContentProvider {
 		}
 	}
 
-	private void convertSettings() throws IOException {
-		SharedPreferences prefs = getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
+	private static void convertSettings(Context context) throws IOException {
+		SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
 		SharedPreferences.Editor editor = prefs.edit();
 		for (String key : prefs.getAll().keySet())
 			try {
@@ -541,5 +522,103 @@ public class PrivacyProvider extends ContentProvider {
 
 		editor.commit();
 		setPrefFileReadable(PREF_SETTINGS);
+	}
+
+	public static void migrateRestrictions(Context context) {
+		try {
+			// Legacy restrictions
+			convertRestrictions(context);
+
+			// Process applications restrictions
+			PackageManager pm = context.getPackageManager();
+			for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA)) {
+				File prefFile = new File(getPrefFileName(PREF_RESTRICTION, appInfo.uid));
+				if (prefFile.exists()) {
+					Util.log(null, Log.WARN, "Migrating " + prefFile);
+
+					SharedPreferences prefs = context.getSharedPreferences(PREF_RESTRICTION + "." + appInfo.uid,
+							Context.MODE_WORLD_READABLE);
+
+					// Process restrictions
+					for (String restrictionName : PrivacyManager.getRestrictions())
+						if (getRestricted(restrictionName, null, prefs)) {
+							// Category
+							PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName, null, true);
+							Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name="
+									+ restrictionName);
+
+							// Exceptions
+							for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
+								boolean restricted = getRestricted(restrictionName, md.getName(), prefs);
+								if (!restricted || md.isDangerous()) {
+									PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName,
+											md.getName(), restricted);
+									Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name="
+											+ restrictionName + " method=" + md.getName());
+								}
+							}
+						}
+
+					prefFile.renameTo(new File(prefFile + ".migrated"));
+				}
+			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
+
+	public static void migrateSettings(Context context) {
+		try {
+			// Process settings
+			File prefFile = new File(getPrefFileName(PREF_SETTINGS));
+			if (prefFile.exists()) {
+				Util.log(null, Log.WARN, "Migrating " + prefFile);
+
+				// Legacy settings
+				convertSettings(context);
+
+				SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
+				for (String settingKey : prefs.getAll().keySet())
+					try {
+						int uid = 0;
+						String name = getSettingName(settingKey);
+						String value = prefs.getString(settingKey, null);
+						String[] component = name.split("\\.");
+						if (name.startsWith(PrivacyManager.cSettingAccount)
+								|| name.startsWith(PrivacyManager.cSettingApplication)
+								|| name.startsWith(PrivacyManager.cSettingContact)
+								|| name.startsWith(PrivacyManager.cSettingRawContact)) {
+							try {
+								// name.uid.key
+								uid = Integer.parseInt(component[1]);
+								name = component[0];
+								for (int i = 2; i < component.length; i++)
+									name += "." + component[i];
+							} catch (NumberFormatException ignored) {
+								// Initial uid/name will be used
+							}
+						} else if (component.length > 1) {
+							try {
+								// name.x.y.z.uid
+								uid = Integer.parseInt(component[component.length - 1]);
+								name = component[0];
+								for (int i = 1; i < component.length - 1; i++)
+									name += "." + component[i];
+							} catch (NumberFormatException ignored) {
+								// Initial uid/name will be used
+							}
+						}
+						PrivacyService.getClient().setSetting(uid, name, value);
+						Util.log(null, Log.WARN, "Migrate setting=" + getSettingName(settingKey) + " uid=" + uid
+								+ " name=" + name + " value=" + value);
+					} catch (Throwable ex) {
+						// Legacy boolean
+					}
+
+				prefFile.renameTo(new File(prefFile + ".migrated"));
+			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
 	}
 }

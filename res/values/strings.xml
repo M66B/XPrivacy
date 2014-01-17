@@ -78,6 +78,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="restrict_email">E-mail</string>
     <string name="restrict_identification">Identification (device)</string>
     <string name="restrict_internet">Internet</string>
+    <string name="restrict_ipc" translatable="false">IPC</string>
     <string name="restrict_location">Location (fine/coarse)</string>
     <string name="restrict_media">Media (audio, photo, video)</string>
     <string name="restrict_messages">Messages (SMS, MMS)</string>

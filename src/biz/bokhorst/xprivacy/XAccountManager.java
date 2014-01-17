@@ -167,7 +167,7 @@ public class XAccountManager extends XHook {
 	private boolean isAccountAllowed(String accountName, String accountType, int uid) {
 		try {
 			String sha1 = Util.sha1(accountName + accountType);
-			if (PrivacyManager.getSettingBool(this, uid, String.format("Account.%s", sha1), false, true))
+			if (PrivacyManager.getSettingBool(this, uid, PrivacyManager.cSettingAccount + sha1, false, true))
 				return true;
 		} catch (Throwable ex) {
 			Util.bug(this, ex);
