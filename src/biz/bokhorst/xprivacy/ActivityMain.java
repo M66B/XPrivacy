@@ -131,12 +131,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		PrivacyProvider.migrateRestrictions(this);
 		PrivacyProvider.migrateSettings(this);
+		PrivacyManager.writeMetaData(this);
 
 		// Check privacy service client
 		if (!Util.isXposedEnabled() || !PrivacyManager.hasMetaData() || PrivacyService.getClient() == null) {
 			setContentView(R.layout.reboot);
 			Requirements.check(this);
-			PrivacyManager.writeMetaData(this);
 			mPackageChangeReceiver = null;
 			mProgressReceiver = null;
 		} else {
