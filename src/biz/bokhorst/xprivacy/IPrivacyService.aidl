@@ -4,6 +4,7 @@ import biz.bokhorst.xprivacy.ParcelableUsageData;
 
 interface IPrivacyService {
 	String ping(String pong);
+	int getVersion();
 
 	void setRestriction(int uid, String restrictionName, String methodName, boolean restricted);
 	boolean getRestriction(int uid, String restrictionName, String methodName, boolean usage);

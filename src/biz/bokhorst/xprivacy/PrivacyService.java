@@ -24,10 +24,12 @@ public class PrivacyService {
 	private static SQLiteDatabase mDatabase = null;
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
+	private static int cCurrentVersion = 1;
 	private static String cServiceName = "xprivacy";
 	private static String cTableRestriction = "restriction";
 	private static String cTableUsage = "usage";
 	private static String cTableSetting = "setting";
+
 
 	// TODO: define column names
 	// TODO: transactions?
@@ -52,7 +54,11 @@ public class PrivacyService {
 				Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
 				Method mGetService = cServiceManager.getDeclaredMethod("getService", String.class);
 				mClient = IPrivacyService.Stub.asInterface((IBinder) mGetService.invoke(null, cServiceName));
+				if (mClient != null)
+					if (PrivacyService.getClient().getVersion() != cCurrentVersion)
+						mClient = null;
 			} catch (Throwable ex) {
+				mClient = null;
 				Util.bug(null, ex);
 			}
 		return mClient;
@@ -63,6 +69,11 @@ public class PrivacyService {
 		@Override
 		public String ping(String pong) {
 			return pong;
+		}
+
+		@Override
+		public int getVersion() throws RemoteException {
+			return cCurrentVersion;
 		}
 
 		// Restrictions
