@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -80,11 +79,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	public static final int STATE_SHARED = 2;
 
 	private static final int ACTIVITY_LICENSE = 0;
-	private static final int ACTIVITY_EXPORT = 1;
-	private static final int ACTIVITY_IMPORT = 2;
-	private static final int ACTIVITY_IMPORT_SELECT = 3;
-	private static final int ACTIVITY_SUBMIT = 4;
-	private static final int ACTIVITY_FETCH = 5;
+	private static final int ACTIVITY_EXPORT = 1; // TODO remove
+	private static final int ACTIVITY_IMPORT = 2; // remove
+	private static final int ACTIVITY_SUBMIT = 4; // remove
+	private static final int ACTIVITY_FETCH = 5; // remove
 
 	private static final int LICENSED = 0x0100;
 	private static final int NOT_LICENSED = 0x0231;
@@ -419,7 +417,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 			}
 
-		} else if (requestCode == ACTIVITY_EXPORT) {
+		} else if (requestCode == ACTIVITY_EXPORT) { // TODO remove
+			Util.log(null, Log.ERROR, "Should never see this");
 			// Export
 			String fileName = null;
 			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cFileName))
@@ -443,7 +442,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								dataIntent.getStringExtra(ActivityShare.cFileName))));
 			}
 
-		} else if (requestCode == ACTIVITY_IMPORT) {
+		} else if (requestCode == ACTIVITY_IMPORT) { // TODO remove
+			Util.log(null, Log.ERROR, "Should never see this");
 			// Import
 			ActivityMain.this.recreate();
 
@@ -456,18 +456,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
 			toast.show();
 
-		} else if (requestCode == ACTIVITY_IMPORT_SELECT) {
-			// Import select
-			if (resultCode == RESULT_CANCELED)
-				;// Do nothing
-			else if (dataIntent != null)
-				try {
-					startImport(dataIntent.getData().getPath());
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
-
-		} else if (requestCode == ACTIVITY_SUBMIT) {
+		} else if (requestCode == ACTIVITY_SUBMIT) { // TODO remove
+			Util.log(null, Log.ERROR, "Should never see this");
 			// Submit
 			String errorMessage = null;
 			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
@@ -478,7 +468,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
 			toast.show();
 
-		} else if (requestCode == ACTIVITY_FETCH) {
+		} else if (requestCode == ACTIVITY_FETCH) { // TODO remove
+			Util.log(null, Log.ERROR, "Should never see this");
 			// Fetch
 			if (mAppAdapter != null)
 				mAppAdapter.notifyDataSetChanged();
@@ -781,24 +772,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionImport() {
-		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
-		file.setType("file/*");
-		if (Util.isIntentAvailable(ActivityMain.this, file)) {
-			Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-			Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/.xprivacy/");
-			chooseFile.setDataAndType(uri, "text/xml");
-			Intent intent = Intent.createChooser(chooseFile, getString(R.string.app_name));
-			startActivityForResult(intent, ACTIVITY_IMPORT_SELECT);
-		} else
-			startImport(ActivityShare.getFileName(false));
-	}
-
-	private void startImport(String fileName) {
-		fileName = fileName.replace("/document/primary:", Environment.getExternalStorageDirectory().getAbsolutePath()
-				+ File.separatorChar);
-
 		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
-		intent.putExtra(ActivityShare.cFileName, fileName);
 		intent.putExtra(ActivityShare.cInteractive, true);
 		int[] uid;
 		if (mAppAdapter == null)

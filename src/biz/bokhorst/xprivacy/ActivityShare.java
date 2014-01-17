@@ -46,14 +46,17 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
 import android.util.Log;
@@ -82,11 +85,14 @@ public class ActivityShare extends Activity {
 	private boolean mAbort = false;
 	private int mProgressCurrent;
 	private int mProgressWidth = 0;
+	private String mFileName;
 
 	private static final int STATE_WAITING = 0;
 	private static final int STATE_RUNNING = 1;
 	private static final int STATE_SUCCESS = 2;
 	private static final int STATE_FAILURE = 3;
+
+	private static final int ACTIVITY_IMPORT_SELECT = 0;
 
 	public static final String cFileName = "FileName";
 	public static final String cUidList = "UidList";
@@ -136,10 +142,11 @@ public class ActivityShare extends Activity {
 			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 			setTheme(mThemeId);
 
-			// Set layout and title
+			// Set layout
 			setContentView(R.layout.sharelist);
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+			// Set title
 			if (action.equals(ACTION_IMPORT))
 				setTitle(getString(R.string.menu_import));
 			else if (action.equals(ACTION_EXPORT))
@@ -149,15 +156,12 @@ public class ActivityShare extends Activity {
 			else if (action.equals(ACTION_SUBMIT))
 				setTitle(getString(R.string.menu_submit));
 
+			// Licence check
+			// TODO make sure this works with external intents
 			if (action.equals(ACTION_IMPORT) || action.equals(ACTION_FETCH)) {
 				if (Util.hasProLicense(this) == null)
 					finish();
 			}
-
-			final String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-					: getFileName(false));
-			// TODO if there is a file chooser, launch it
-			// TODO add result receiver
 
 			// Start task to get app list, but not if action is EXPORT
 			if (!action.equals(ACTION_EXPORT)) {
@@ -165,19 +169,42 @@ public class ActivityShare extends Activity {
 				appListTask.executeOnExecutor(mExecutor, uids);
 			}
 
+			// Import/export filename
+			mFileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
+					: getFileName(false));
+
 			TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
 			View llDescription = findViewById(R.id.llDescription);
 			if (action.equals(ACTION_EXPORT)) {
-				tvDescription.setText("Backup all settings to " + fileName);
+				// Show export filename
+				tvDescription.setText("Backup all settings to " + mFileName); // TODO string resource
 				llDescription.setVisibility(View.VISIBLE);
+
 			} else if (action.equals(ACTION_IMPORT)) {
-				tvDescription.setText("Import settings from " + fileName);
+				if (mFileName.equals(getFileName(false))) {
+					// Check availability of a file chooser
+					Intent file = new Intent(Intent.ACTION_GET_CONTENT);
+					file.setType("file/*");
+					if (Util.isIntentAvailable(ActivityShare.this, file)) {
+
+						// Launch file chooser
+						fileChooser();
+
+						// Show file choose button
+						Button btnChange = (Button) findViewById(R.id.btnChange);
+						btnChange.setVisibility(View.VISIBLE);
+						btnChange.setOnClickListener(new Button.OnClickListener(){
+							@Override
+							public void onClick(View v) {
+								fileChooser();
+							}
+						});
+					}
+				}
+
+				// Show import filename
+				tvDescription.setText("Import settings from " + mFileName); // TODO string resource
 				llDescription.setVisibility(View.VISIBLE);
-				//if (file picker available) {
-					Button btnChange = (Button) findViewById(R.id.btnChange);
-					btnChange.setVisibility(View.VISIBLE);
-					// TODO onclick listener to launch file picker
-				//}
 			}
 
 			// Set button actions
@@ -190,17 +217,17 @@ public class ActivityShare extends Activity {
 				public void onClick(View v) {
 					btnOk.setEnabled(false);
 
-					// If action is EXPORT mAppAdapter hasn't been initialised
+					// mAppAdapter might not be initialised
 					int[] uids = mAppAdapter == null ? new int[0] : mAppAdapter.getUids();
 
 					// Import
 					if (action.equals(ACTION_IMPORT)) {
-						new ImportTask().executeOnExecutor(mExecutor, new File(fileName), uids);
+						new ImportTask().executeOnExecutor(mExecutor, new File(mFileName), uids);
 					}
 
 					// Export
 					else if (action.equals(ACTION_EXPORT)) {
-						new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
+						new ExportTask().executeOnExecutor(mExecutor, new File(mFileName));
 					}
 
 					// Fetch
@@ -253,7 +280,25 @@ public class ActivityShare extends Activity {
 			String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
 					: getFileName(false));
 			new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
-			setTitle(getString(R.string.menu_export));
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent dataIntent) {
+		super.onActivityResult(requestCode, resultCode, dataIntent);
+
+		if (requestCode == ACTIVITY_IMPORT_SELECT) {
+			// Import select
+			if (resultCode == RESULT_CANCELED)
+				;// Do nothing
+			else if (dataIntent != null)
+				try {
+					mFileName = dataIntent.getData().getPath();
+					TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+					tvDescription.setText("Import settings from " + mFileName); // TODO string resource
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
 		}
 	}
 
@@ -621,9 +666,9 @@ public class ActivityShare extends Activity {
 				Util.bug(null, ex);
 				// IOException, IllegalArgumentException, IllegalStateException
 				if (ex instanceof FileNotFoundException)
-					return "Cannot create file";
+					return "Cannot create file"; // TODO String resource
 				else if (ex instanceof IOException)
-					return "Error writing to file";
+					return "Error writing to file"; // TODO String resource
 				else
 					return ex.getMessage();
 			}
@@ -719,11 +764,11 @@ public class ActivityShare extends Activity {
 				Util.bug(null, ex);
 				// FileNotFoundException, IOException, SAXException
 				if (ex instanceof FileNotFoundException)
-					return "File not found";
+					return "File not found"; // TODO string resource
 				else if (ex instanceof IOException)
-					return "Error reading file";
+					return "Error reading file"; // TODO string resource
 				else if (ex instanceof SAXException)
-					return "File is damaged";
+					return "File is damaged"; // TODO string resource
 				else
 					return ex.getMessage();
 			}
@@ -1275,6 +1320,14 @@ public class ActivityShare extends Activity {
 		btnCancel.setVisibility(View.GONE);
 		// TODO a nice touch would be to make the cancel button open the main list with only the failed apps in view.
 		// I'm not sure what text to put on it though; "Examine failed" might do, if it isn't too long.
+	}
+
+	public void fileChooser() {
+		Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+		Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/.xprivacy/");
+		chooseFile.setDataAndType(uri, "text/xml");
+		Intent intent = Intent.createChooser(chooseFile, getString(R.string.app_name));
+		startActivityForResult(intent, ACTIVITY_IMPORT_SELECT);
 	}
 
 	public static String getBaseURL(Context context) {
