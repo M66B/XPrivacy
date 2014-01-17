@@ -71,6 +71,17 @@
 	<Hook restriction="internet" method="isConnectedOrConnecting" sdk="10" />
 	<Hook restriction="internet" method="getConnectionInfo" sdk="10" />
 
+	<Hook restriction="ipc" method="android.accounts.IAccountManager" dangerous="true" from="1.11.13" permissions="" sdk="1" />
+	<Hook restriction="ipc" method="android.app.IActivityManager" dangerous="true" from="1.11.13" permissions="" sdk="1" />
+	<Hook restriction="ipc" method="android.content.IClipboard" dangerous="true" from="1.11.13" permissions="" sdk="1" />
+	<Hook restriction="ipc" method="android.net.IConnectivityManager" dangerous="true" from="1.11.13" permissions="" sdk="1" />
+	<Hook restriction="ipc" method="android.location.ILocationManager" dangerous="true" from="1.11.13" permissions="" sdk="1" />
+	<Hook restriction="ipc" method="com.android.internal.telephony.ITelephonyRegistry" dangerous="true" from="1.11.13" permissions="" sdk="1" />
+	<Hook restriction="ipc" method="android.content.pm.IPackageManager" dangerous="true" from="1.11.13" permissions="" sdk="1" />
+	<Hook restriction="ipc" method="com.android.internal.telephony.IPhoneSubInfo" dangerous="true" from="1.11.13" permissions="" sdk="1" />
+	<Hook restriction="ipc" method="android.view.IWindowManager" dangerous="true" from="1.11.13" permissions="" sdk="1" />
+	<Hook restriction="ipc" method="android.net.wifi.IWifiManager" dangerous="true" from="1.11.13" permissions="" sdk="1" />
+
 	<Hook restriction="location" method="addNmeaListener" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="10" />
 	<Hook restriction="location" method="addProximityAlert" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="10" />
 	<Hook restriction="location" method="getLastKnownLocation" permissions="ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION" sdk="10" />
@@ -222,7 +233,6 @@
 	<Hook restriction="system" method="android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE" dangerous="true" permissions="" sdk="10" />
 	<Hook restriction="system" method="android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE" dangerous="true" permissions="" sdk="10" />
 	<Hook restriction="system" method="ApplicationsProvider" permissions="" sdk="10" />
-	<Hook restriction="system" method="IPC" dangerous="true" from="1.11.13" permissions="" sdk="1" />
 
 	<Hook restriction="view" method="loadUrl" permissions="" sdk="1" />
 	<Hook restriction="view" method="WebView" permissions="" sdk="1" />

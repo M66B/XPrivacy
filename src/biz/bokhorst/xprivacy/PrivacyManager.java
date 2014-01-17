@@ -51,6 +51,7 @@ public class PrivacyManager {
 	public static final String cEMail = "email";
 	public static final String cIdentification = "identification";
 	public static final String cInternet = "internet";
+	public static final String cIPC = "ipc";
 	public static final String cLocation = "location";
 	public static final String cMedia = "media";
 	public static final String cMessages = "messages";
@@ -67,7 +68,7 @@ public class PrivacyManager {
 
 	// This should correspond with the above definitions
 	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
-			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cLocation, cMedia, cMessages,
+			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cIPC, cLocation, cMedia, cMessages,
 			cNetwork, cNfc, cNotifications, cOverlay, cPhone, cSensors, cShell, cStorage, cSystem, cView };
 
 	// Setting names

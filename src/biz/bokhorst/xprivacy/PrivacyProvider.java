@@ -595,6 +595,7 @@ public class PrivacyProvider extends ContentProvider {
 								for (int i = 2; i < component.length; i++)
 									name += "." + component[i];
 							} catch (NumberFormatException ignored) {
+								// Initial uid/name will be used
 							}
 						} else if (component.length > 1) {
 							try {
@@ -604,6 +605,7 @@ public class PrivacyProvider extends ContentProvider {
 								for (int i = 1; i < component.length - 1; i++)
 									name += "." + component[i];
 							} catch (NumberFormatException ignored) {
+								// Initial uid/name will be used
 							}
 						}
 						PrivacyService.getClient().setSetting(uid, name, value);

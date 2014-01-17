@@ -206,7 +206,6 @@ public class PrivacyService {
 		@Override
 		public long getUsage(int uid, String restrictionName, String methodName) throws RemoteException {
 			long lastUsage = 0;
-			boolean restricted = false;
 			try {
 				enforcePermission();
 				getDatabase();
