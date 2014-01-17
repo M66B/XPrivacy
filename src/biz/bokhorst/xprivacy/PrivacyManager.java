@@ -770,7 +770,7 @@ public class PrivacyManager {
 
 		if (name.equals("ANDROID_ID")) {
 			long v = r.nextLong();
-			return Long.toHexString(v).toUpperCase();
+			return Long.toHexString(v);
 		}
 
 		if (name.equals("ISO3166")) {

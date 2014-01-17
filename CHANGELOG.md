@@ -19,6 +19,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Better method for hooking the bluetooth manager
 * Better method for hooking the package manager
 * Hook *getPackagesForUid*, *getPackagesHoldingPermissions* (JellyBean MR2) and *queryIntentContentProviders* (Kitkat)
+* Lower case randomized Android ID
 * Updated Arabic translation
 * Updated Chinese translation
 * Updated Lithuanian translation
