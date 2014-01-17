@@ -4,7 +4,7 @@
     <string name="app_notenabled">XPrivacy chưa được kích hoạt trong Xposed installer</string>
     <string name="app_wrongandroid">Chỉ hỗ trợ Android 4.0+</string>
     <string name="app_version" formatted="false">XPrivacy phiên bản: %s (%d)</string>
-    <string name="app_description">The ultimate privacy manager</string>
+    <string name="app_description">Ứng dụng quản lý thông tin riêng tư tối đa</string>
     <string name="app_xversion" formatted="false">Xposed framework phiên bản: %d</string>
     <string name="app_copyright">Bản quyền \u00A9 2013–2014 thuộc về M. Bokhorst (M66B)</string>
     <string name="menu_usage">Sử dụng</string>
@@ -20,7 +20,7 @@
     <string name="menu_pro">Phiên bản Pro</string>
     <string name="menu_about">Giới thiệu</string>
     <string name="menu_help">Trợ giúp</string>
-    <string name="menu_select_all">Select all</string>
+    <string name="menu_select_all">Chọn tất cả</string>
     <string name="menu_all">Tất cả</string>
     <string name="menu_restriction_all">Thay đổi các sự hạn chế</string>
     <string name="menu_clear_all">Xóa tất cả</string>
@@ -46,8 +46,8 @@
     <string name="msg_saved_to" formatted="false">Đã được lưu vào %s</string>
     <string name="msg_no_restrictions">Không có thông tin hạn chế nào được tìm thấy</string>
     <string name="msg_sure">Bạn có chắc không?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Vui lòng chọn một vài ứng dụng</string>
+    <string name="msg_limit">Vui lòng chọn ít hơn %d ứng dụng</string>
     <string name="msg_done">Xong</string>
     <string name="msg_reboot">Yêu cầu khởi động lại thiết bị</string>
     <string name="msg_random_now">Tạo thông tin ngẫu nhiên</string>
@@ -115,7 +115,7 @@
     <string name="settings_dangerous">Hạn chế các chức năng nguy hiểm</string>
     <string name="settings_confidence">Tối đa khoảng thời gian lấy về các thiết lập</string>
     <string name="settings_experimental">Các chức năng thử nghiệm (Yêu cầu khởi động lại)</string>
-    <string name="settings_https">Use secure connections</string>
+    <string name="settings_https">Sử dụng các kết nối được bảo mật</string>
     <string name="help_application">Ứng dụng</string>
     <string name="help_internet">có quyền truy cập mạng</string>
     <string name="help_granted">có quyền của hệ điều hành</string>
@@ -133,6 +133,6 @@
 \nChọn vào biểu tượng của ứng dụng để xem chi tiết các thiết lập và các sự hạn chế</string>
     <string name="tutorial_detailsheader">Chọn vào biểu tượng của ứng dụng để sử dụng các chức năng khác</string>
     <string name="tutorial_detailslist">Chọn vào mũi tên xuống để xem các hàm ngoại lệ của danh mục hạn chế</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="permission_manage">Quản lý các ứng dụng, bao gồm tắt ứng dụng</string>
 
 </resources>
