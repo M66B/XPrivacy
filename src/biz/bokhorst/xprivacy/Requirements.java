@@ -162,14 +162,6 @@ public class Requirements {
 			sendSupportInfo(ex.toString(), context);
 		}
 
-		// Check runtime
-		try {
-			Runtime.class.getDeclaredMethod("load", String.class, ClassLoader.class);
-			Runtime.class.getDeclaredMethod("loadLibrary", String.class, ClassLoader.class);
-		} catch (NoSuchMethodException ex) {
-			reportClass(Runtime.class, context);
-		}
-
 		// Check service manager
 		try {
 			Class<?> clazz = Class.forName("android.os.ServiceManager");
@@ -201,18 +193,14 @@ public class Requirements {
 		}
 
 		// Check privacy client
-		try {
-			if (PrivacyService.getClient() == null)
-				throw new InvalidParameterException();
-		} catch (Throwable ex) {
-			sendSupportInfo(ex.toString(), context);
-		}
-
-		// Check enforce permission
-		try {
-			PrivacyService.enforcePermission();
-		} catch (Throwable ex) {
-			sendSupportInfo(ex.toString(), context);
+		if (Util.isXposedEnabled()) {
+			try {
+				PrivacyService.enforcePermission();
+				if (!PrivacyService.getClient().ping("xprivacy").equals("xprivacy"))
+					throw new InvalidParameterException();
+			} catch (Throwable ex) {
+				sendSupportInfo(ex.toString(), context);
+			}
 		}
 
 		// Check wifi info

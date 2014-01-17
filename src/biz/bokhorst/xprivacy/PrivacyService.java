@@ -58,6 +58,11 @@ public class PrivacyService {
 
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
 
+		@Override
+		public String ping(String pong) {
+			return pong;
+		}
+
 		// Restrictions
 
 		@Override
