@@ -1318,9 +1318,11 @@ public class ActivityShare extends Activity {
 		// TODO it might be better to put this in a dialog box asking whether to send debugging info
 		if (result != null)
 			Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+
 		// Reset progress bar
 		blueStreakOfProgress(0, 1);
 		mRunning = false;
+
 		// Change ok button to "Close"
 		final Button btnOk = (Button) findViewById(R.id.btnOk);
 		btnOk.setText(getString(R.string.menu_close));
@@ -1331,9 +1333,12 @@ public class ActivityShare extends Activity {
 				finish();
 			}
 		});
-		// Remove cancel button
+
+		// Remove cancel button and separator
 		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
+		final View vBorder = findViewById(R.id.vBorder);
 		btnCancel.setVisibility(View.GONE);
+		vBorder.setVisibility(View.GONE);
 		// TODO a nice touch would be to make the cancel button open the main list with only the failed apps in view.
 		// I'm not sure what text to put on it though; "Examine failed" might do, if it isn't too long.
 	}
