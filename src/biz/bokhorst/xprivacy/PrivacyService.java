@@ -213,19 +213,17 @@ public class PrivacyService {
 
 				Cursor cursor;
 				if (methodName == null)
-					cursor = mDatabase.query("usage", new String[] { "restricted", "time" }, "uid=? AND restriction=?",
-							new String[] { Integer.toString(uid), restrictionName }, null, null, null);
+					cursor = mDatabase.query("usage", new String[] { "time" }, "uid=? AND restriction=?", new String[] {
+							Integer.toString(uid), restrictionName }, null, null, null);
 				else
-					cursor = mDatabase.query("usage", new String[] { "restricted", "time" },
-							"uid=? AND restriction=? AND method=?", new String[] { Integer.toString(uid),
-									restrictionName, methodName }, null, null, null);
+					cursor = mDatabase.query("usage", new String[] { "time" }, "uid=? AND restriction=? AND method=?",
+							new String[] { Integer.toString(uid), restrictionName, methodName }, null, null, null);
 				if (cursor == null)
 					Util.log(null, Log.WARN, "Database cursor null (usage)");
 				else
 					try {
 						while (cursor.moveToNext()) {
-							restricted = (restricted || cursor.getInt(0) > 0);
-							long usage = cursor.getLong(1);
+							long usage = cursor.getLong(0);
 							if (usage > lastUsage)
 								lastUsage = usage;
 						}
@@ -235,7 +233,7 @@ public class PrivacyService {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
-			return lastUsage * (restricted ? 1 : -1);
+			return lastUsage;
 		}
 
 		@Override
