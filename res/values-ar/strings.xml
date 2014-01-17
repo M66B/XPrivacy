@@ -4,7 +4,7 @@
     <string name="app_notenabled">لم يتم تفعيل XPrivacy</string>
     <string name="app_wrongandroid">فقط لأندرويد نسخة 4.0+</string>
     <string name="app_version" formatted="false">نسخة XPrivacy : %s (%d)</string>
-    <string name="app_description">The ultimate privacy manager</string>
+    <string name="app_description">مدير الخصوصية الرئيسي</string>
     <string name="app_xversion" formatted="false">إطار  Xposed نسخة : %d</string>
     <string name="app_copyright">حقوق الطبع \u00A9 2013–2014 ل M. Bokhorst (M66B)</string>
     <string name="menu_usage">الإستخدام</string>
@@ -20,7 +20,7 @@
     <string name="menu_pro">النسخة الكاملة</string>
     <string name="menu_about">عن التطبيق</string>
     <string name="menu_help">مساعدة</string>
-    <string name="menu_select_all">Select all</string>
+    <string name="menu_select_all">إختر الكل</string>
     <string name="menu_all">تحديد الكل</string>
     <string name="menu_restriction_all">تبديل القيود</string>
     <string name="menu_clear_all">مسح الكل</string>
@@ -32,7 +32,7 @@
     <string name="menu_app_launch">تشغيل التطبيق</string>
     <string name="menu_app_settings">إعدادات التطبيق</string>
     <string name="menu_app_store">متجر قوقل</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">إغلاق</string>
     <string name="menu_applications">إختر التطبيقات التي تود تمكينها</string>
     <string name="menu_accounts">إختر الحسابات التي تود تمكينها</string>
     <string name="menu_contacts">إختر الأسماء التي تود تمكينها</string>
@@ -46,14 +46,13 @@
     <string name="msg_saved_to" formatted="false">حُفِظت في  %s</string>
     <string name="msg_no_restrictions">لا توجد قيود</string>
     <string name="msg_sure">هل أنت متأكد ؟</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">فضلاَ إختر بعض التطبيقات</string>
+    <string name="msg_limit">الرجاء إختر تطبيقات أقل من %d </string>
     <string name="msg_done">إنتهى</string>
     <string name="msg_reboot">يحتاج إعادة تشغيل</string>
     <string name="msg_random_now">عشوائي</string>
     <string name="msg_random_access">عشوائية الوصول</string>
     <string name="msg_random_boot">عشوائي بعد الإقلاع</string>
-    <string name="msg_usage">تحديث بيانات المستخدم</string>
     <string name="msg_restart">التطبيق يتطلب إعادة التشغيل</string>
     <string name="msg_first"><b>بُذلت عناية كبيرة لتطوير وإختبار XPrivacy,
 ومع ذلك فإنه من المستحيل ضمان أنه سيعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
@@ -112,17 +111,17 @@
     <string name="settings_fake_data">بيانات وهمية</string>
     <string name="settings_global">إستخدام بيانات وهمية عامة</string>
     <string name="settings_notify">تحديث الإشعارات</string>
-    <string name="settings_usage">بيانات إستخدام الأندرويد (يتطلب إعادة التشغيل)</string>
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
     <string name="settings_expert">وضع الخبراء</string>
     <string name="settings_dangerous">تقييد الوظائف الخطيرة</string>
     <string name="settings_confidence">الحد الأقصى لجلب فترة الثقة</string>
     <string name="settings_experimental">وظائف تجريبية</string>
+    <string name="settings_https">إستخدم الإتصال الآمن</string>
     <string name="help_application">التطبيق</string>
     <string name="help_internet">لديه صلاحية الوصول للإنترنت</string>
     <string name="help_granted">لديه صلاحية أندرويد</string>
     <string name="help_used">يستخدم هذه البيانات</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_used_grayed">لا توجد بيانات إستخدام متاحة</string>
     <string name="help_frozen">مُعطل</string>
     <string name="help_dangerous">خطير</string>
     <string name="help_half">تقييد جزئي</string>
@@ -135,6 +134,6 @@
 \nإلمس ايقونة التطبيق لتفاصيل القيود والإعدادات</string>
     <string name="tutorial_detailsheader">انقر على أيقونة التطبيق لمزيد من الإجراءات</string>
     <string name="tutorial_detailslist">انقر على السهم المتجه لأسفل لرؤية الوظائف الإستثنائية في الفئة المُقيدة</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="permission_manage">إدارة التطبيقات, متضمناَ الإغلاق</string>
 
 </resources>

@@ -53,7 +53,6 @@
     <string name="msg_random_now">अटपटा करे</string>
     <string name="msg_random_access">उपयोग पर अटपटा करें</string>
     <string name="msg_random_boot">रिबूट के पश्चात अटपटा करे</string>
-    <string name="msg_usage">उपयोग डेटा update हो रहा हैं</string>
     <string name="msg_restart">application पुनःप्रारंभ जरुरी</string>
     <string name="msg_first"><b>XPrivacy बनाने मैं बहुत ख्याल रखा गया है,
 किन्तु वह सभी साधन और सभी application के लिए बरोबर चलेगा उसकी गारंटी देना असंभव है।
@@ -112,12 +111,12 @@
     <string name="settings_fake_data">नकली डेटा</string>
     <string name="settings_global">सार्वत्रिक नकली डेटा का  उपयोग करे</string>
     <string name="settings_notify">अद्यतन सुचना</string>
-    <string name="settings_usage">Android उपयोग डेटा (पुनःप्रारंभ जरुरी)</string>
     <string name="settings_log">Debug log (पुनरारंभ जरूरी)</string>
     <string name="settings_expert">विशेषज्ञ mode</string>
     <string name="settings_dangerous">खतरनाक कार्य प्रतिबंधित करे</string>
     <string name="settings_confidence">अधिकतम विश्वसनीय fetch अंतराल</string>
     <string name="settings_experimental">प्रायोगिक कार्य (पुनःप्रारंभ जरुरी)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Application</string>
     <string name="help_internet">इंटरनेट की अनुमति है</string>
     <string name="help_granted">Android की अनुमति है</string>

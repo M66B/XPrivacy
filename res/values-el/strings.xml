@@ -53,7 +53,6 @@
     <string name="msg_random_now">Τυχαία διεύθυνση</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Τυχαία διεύθυνση μετά την εκκίνηση</string>
-    <string name="msg_usage">Updating usage data</string>
     <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>Μεγάλη προσοχή έχει ληφθεί για την ανάπτυξη και δοκιμή του XPrivacy,
 ωστόσο, είναι αδύνατο να εγγυηθεί ότι θα λειτουργήσει άψογα σε κάθε συσκευή και για κάθε εφαρμογή.
@@ -112,12 +111,12 @@
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Εφαρμογή</string>
     <string name="help_internet">έχει άδεια internet</string>
     <string name="help_granted">έχει άδεια Android</string>

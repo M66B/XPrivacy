@@ -53,7 +53,6 @@
     <string name="msg_random_now">Palit-palitan ang mga paghihigpit sa ngayon na</string>
     <string name="msg_random_access">Palit-palitan ang mga paghihigpit sa kusang paggamit</string>
     <string name="msg_random_boot">Palit-palitan ang mga paghihigpit sa unang paggamit</string>
-    <string name="msg_usage">Pinababago ang kaalaman tungkol sa mga pahintulot na nagamit</string>
     <string name="msg_restart">Kailangan paumpisahin muli ang Application</string>
     <string name="msg_first"><b>Malaking pag-aalaga ang ginampanan sa pagkabuo at sa pagsusuri ng XPrivacy,
     ngunit sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bawat sa isa\'t isang aplikasyon. 
@@ -112,12 +111,12 @@
     <string name="settings_fake_data">Pekeng kaalaman</string>
     <string name="settings_global">Gamitin ang panlahat na pekeng kaalaman</string>
     <string name="settings_notify">Baguhin ang mga abiso</string>
-    <string name="settings_usage">Kaalaman na nagamit ng Android (kailangan muling paumpisahin ang iyong kagamitan)</string>
     <string name="settings_log">Ipakita kaalaman ukol sa Debug (kailangan muling paumpisahin ang iyong kagamitan)</string>
     <string name="settings_expert">Gamitin XPrivacy sa sanay na paraan</string>
     <string name="settings_dangerous">Pahigpitan mga may panganib na tungkulin</string>
     <string name="settings_confidence">Pinakamataas na Confidence Interval na puwedeng kunin</string>
     <string name="settings_experimental">Gamitin mga hindi pa tiyak na tungkulin (kailangan muling paumpisahin ang iyong kagamitan)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Mga Applications</string>
     <string name="help_internet">may Internet na pahintulot</string>
     <string name="help_granted">may Android na pahintulot</string>

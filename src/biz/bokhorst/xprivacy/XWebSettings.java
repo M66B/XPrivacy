@@ -3,7 +3,6 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
 import android.util.Log;
@@ -59,8 +58,7 @@ public class XWebSettings extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.getDefaultUserAgent) {
 			int uid = Binder.getCallingUid();
-			Context context = (param.args.length > 0 ? (Context) param.args[0] : null);
-			if (getRestricted(context, uid, true)) {
+			if (getRestricted(uid, true)) {
 				String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 				param.setResult(ua);
 			}

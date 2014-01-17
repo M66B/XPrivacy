@@ -4,7 +4,7 @@
 
 	$min_diff = 0.50;
 	$max_confidence = 0.35;
-	$max_packages = 64;
+	$max_packages = 72;
 
 	function confidence($restricted, $not_restricted) {
 		// Agresti-Coull Interval
@@ -709,20 +709,5 @@
 				});
 			});
 		</script>
-		<!-- Piwik -->
-		<!--script type="text/javascript">
-		  var _paq = _paq || [];
-		  _paq.push(["trackPageView"]);
-		  _paq.push(["enableLinkTracking"]);
-
-		  (function() {
-			var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.bokhorst.biz/";
-			_paq.push(["setTrackerUrl", u+"piwik.php"]);
-			_paq.push(["setSiteId", "15"]);
-			var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
-			g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-		  })();
-		</script-->
-		<!-- End Piwik Code -->
 	</body>
 </html>

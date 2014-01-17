@@ -3,8 +3,6 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
-import android.os.Binder;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -51,14 +49,5 @@ public class XNfcAdapter extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		// Do nothing
-	}
-
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = null;
-		if (param.args.length > 0)
-			context = (Context) param.args[0];
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
 	}
 }

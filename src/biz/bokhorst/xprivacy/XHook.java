@@ -1,14 +1,11 @@
 package biz.bokhorst.xprivacy;
 
-import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
-import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public abstract class XHook {
-
 	private String mRestrictionName;
 	private String mMethodName;
 	private String mSpecifier;
@@ -62,26 +59,14 @@ public abstract class XHook {
 
 	protected boolean isRestricted(MethodHookParam param, String methodName) throws Throwable {
 		int uid = Binder.getCallingUid();
-		return PrivacyManager.getRestricted(this, null, uid, mRestrictionName, methodName, true, true);
+		return PrivacyManager.getRestricted(this, uid, mRestrictionName, methodName, true, true);
 	}
 
-	protected boolean getRestricted(Context context, int uid, boolean usage) throws Throwable {
-		return PrivacyManager.getRestricted(this, context, uid, mRestrictionName, getSpecifier(), usage, true);
+	protected boolean getRestricted(int uid, boolean usage) throws Throwable {
+		return PrivacyManager.getRestricted(this, uid, mRestrictionName, getSpecifier(), usage, true);
 	}
 
-	protected boolean getRestricted(Context context, int uid, String methodName, boolean usage) throws Throwable {
-		return PrivacyManager.getRestricted(this, context, uid, mRestrictionName, methodName, usage, true);
-	}
-
-	protected void info(String message) {
-		Util.log(this, Log.INFO, message);
-	}
-
-	protected void warning(String message) {
-		Util.log(this, Log.WARN, message);
-	}
-
-	protected void error(String message) {
-		Util.log(this, Log.ERROR, message);
+	protected boolean getRestricted(int uid, String methodName, boolean usage) throws Throwable {
+		return PrivacyManager.getRestricted(this, uid, mRestrictionName, methodName, usage, true);
 	}
 }

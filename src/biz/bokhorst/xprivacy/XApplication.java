@@ -20,7 +20,6 @@ public class XApplication extends XHook {
 
 	public static String cAction = "Action";
 	public static String cActionKillProcess = "Kill";
-	public static String cActionFlushCache = "Flush";
 
 	public static String ACTION_MANAGE_PACKAGE = "biz.bokhorst.xprivacy.ACTION_MANAGE_PACKAGE";
 	public static String PERMISSION_MANAGE_PACKAGES = "biz.bokhorst.xprivacy.MANAGE_PACKAGES";
@@ -59,18 +58,11 @@ public class XApplication extends XHook {
 		if (mMethod == Methods.onCreate) {
 			Application app = (Application) param.thisObject;
 
-			// Install uncaught exception handler
-			Thread.UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-			if (!(defaultHandler instanceof XUncaughtExceptionHandler)) {
-				Util.log(this, Log.INFO, "Installing XUncaughtExceptionHandler uid=" + Process.myUid());
-				Thread.setDefaultUncaughtExceptionHandler(new XUncaughtExceptionHandler(this, app, defaultHandler));
-			}
-
 			// Install receiver for package management
 			int uid = Process.myUid();
 			if (Util.getAppId(uid) != PrivacyManager.cAndroidUid && !PrivacyManager.isIsolated(uid)) {
-				boolean experimental = PrivacyManager.getSettingBool(null, null, 0,
-						PrivacyManager.cSettingExperimental, PrivacyManager.cTestVersion, true);
+				boolean experimental = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
+						PrivacyManager.cTestVersion, true);
 				if (experimental && !mReceiverInstalled)
 					try {
 						mReceiverInstalled = true;
@@ -98,7 +90,7 @@ public class XApplication extends XHook {
 	}
 
 	public static void manage(Context context, String packageName, String action) {
-		boolean experimental = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingExperimental,
+		boolean experimental = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
 				PrivacyManager.cTestVersion, true);
 		if (experimental) {
 			Util.log(null, Log.INFO, "Manage package=" + packageName + " action=" + action);
@@ -115,10 +107,7 @@ public class XApplication extends XHook {
 	}
 
 	private class Receiver extends BroadcastReceiver {
-		private Application mApplication;
-
 		public Receiver(Application app) {
-			mApplication = app;
 		}
 
 		@Override
@@ -128,45 +117,11 @@ public class XApplication extends XHook {
 				Util.log(null, Log.INFO, "Managing uid=" + Process.myUid() + " action=" + action);
 				if (cActionKillProcess.equals(action))
 					android.os.Process.killProcess(Process.myPid());
-				else if (cActionFlushCache.equals(action))
-					PrivacyManager.flush(mApplication, Process.myUid());
 				else
 					Util.log(null, Log.WARN, "Unknown management action=" + action);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
-		}
-	}
-
-	public static class XUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
-		private XHook mHook;
-		private Context mContext;
-		private Thread.UncaughtExceptionHandler mDefaultHandler;
-
-		public XUncaughtExceptionHandler(XHook hook, Context context, Thread.UncaughtExceptionHandler defaultHandler) {
-			mHook = hook;
-			mContext = context;
-			mDefaultHandler = defaultHandler;
-		}
-
-		public Thread.UncaughtExceptionHandler getDefaultHandler() {
-			return mDefaultHandler;
-		}
-
-		public void setDefaultHandler(Thread.UncaughtExceptionHandler handler) {
-			Util.log(mHook, Log.INFO, "Setting new default handler uid=" + Process.myUid());
-			mDefaultHandler = handler;
-		}
-
-		@Override
-		public void uncaughtException(Thread thread, Throwable ex) {
-			try {
-				Util.log(mHook, Log.WARN, "Uncaught exception uid=" + Process.myUid() + ": " + ex);
-				PrivacyManager.sendUsageData(null, mContext);
-			} catch (Throwable exex) {
-				Util.bug(mHook, exex);
-			}
-			mDefaultHandler.uncaughtException(thread, ex);
 		}
 	}
 }

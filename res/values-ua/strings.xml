@@ -53,7 +53,6 @@
     <string name="msg_random_now">Випадкові значення</string>
     <string name="msg_random_access">Випадкові значення при запиті</string>
     <string name="msg_random_boot">Випадкові значення після перезавантаження</string>
-    <string name="msg_usage">Оновлення даних використання</string>
     <string name="msg_restart">Необхідне перезавантаження</string>
     <string name="msg_first"><b>Велика увага була приділена розробці та тестуванню XPrivacy, 
 але не можна гарантувати, що вона буде працювати бездоганно на всіх пристроях та зі всімома програмами.
@@ -113,12 +112,12 @@
     <string name="settings_fake_data">Фальшиві дані</string>
     <string name="settings_global">Використовувати загальні фальшиві дані</string>
     <string name="settings_notify">Оновити сповіщення</string>
-    <string name="settings_usage">Андроид - данные об использовании (требует перезапуска)</string>
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Експертний режим</string>
     <string name="settings_dangerous">Заборона небезпечних функцій</string>
     <string name="settings_confidence">Максимальний інтервал отримання конфіденційних даних</string>
     <string name="settings_experimental">Експериментальні функціі (потрібне перезавантаження)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Програма</string>
     <string name="help_internet">запитує доступ до Інтернету</string>
     <string name="help_granted">має дозвол Android</string>

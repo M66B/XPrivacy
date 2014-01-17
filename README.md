@@ -847,7 +847,6 @@ Current translations:
 Restrict new data:
 
 * Find the package/class/method that exposes the data (look into the Android documentation/sources)
-* Figure out a way to get a context (see existing code for examples)
 * Create a class that extends [XHook](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XHook.java)
 * Hook the method in [XPrivacy](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java)
 * Write a before and/or after method to restrict the data

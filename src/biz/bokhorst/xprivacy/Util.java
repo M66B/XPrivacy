@@ -58,8 +58,7 @@ public class Util {
 		if (Process.myUid() > 0 && !mLogDetermined) {
 			mLogDetermined = true;
 			try {
-				mLog = Boolean.parseBoolean(PrivacyProvider.getSettingFallback(PrivacyManager.cSettingLog,
-						Boolean.toString(false), false));
+				mLog = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingLog, false, true);
 			} catch (Throwable ignored) {
 				mLog = false;
 			}
@@ -168,7 +167,7 @@ public class Util {
 				return "";
 
 			// Disable storage restriction
-			PrivacyManager.setRestricted(null, context, Process.myUid(), PrivacyManager.cStorage, null, false, false);
+			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
 
 			// Get license
 			String[] license = getProLicense();
@@ -338,7 +337,7 @@ public class Util {
 
 	public static void viewUri(Context context, Uri uri) {
 		// Disable view restriction
-		PrivacyManager.setRestricted(null, context, Process.myUid(), PrivacyManager.cView, null, false, false);
+		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);
 
 		Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 		infoIntent.setData(uri);
@@ -385,7 +384,7 @@ public class Util {
 
 	public static String sha1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		// SHA1
-		String salt = PrivacyManager.getSetting(null, null, 0, PrivacyManager.cSettingSalt, "", true);
+		String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, "", true);
 		MessageDigest digest = MessageDigest.getInstance("SHA-1");
 		byte[] bytes = (text + salt).getBytes("UTF-8");
 		digest.update(bytes, 0, bytes.length);

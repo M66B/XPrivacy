@@ -53,7 +53,6 @@
     <string name="msg_random_now">Randomize now</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randamaigh tar éis tosaithe</string>
-    <string name="msg_usage">Updating usage data</string>
     <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>cúram mór aire do a fhorbairt agus a thástáil XPrivacy,
 áfach, go bhfuil sé dodhéanta a ráthú go mbeidh sé obair flawless ar gach gléas agus do gach agus gach iarratas.
@@ -112,12 +111,12 @@
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">logáil Debug (Éilíonn atosú)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Iarratais</string>
     <string name="help_internet">Tá cead idirlín</string>
     <string name="help_granted">Tá cead Android</string>

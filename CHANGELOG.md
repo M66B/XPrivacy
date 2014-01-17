@@ -16,10 +16,27 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Use secure connection for [submitting and fetching restrictions](https://crowd.xprivacy.eu/))
-* Skip upgrade for dangerous functions
+* Better method for hooking the bluetooth manager
+* Better method for hooking the package manager
+* Hook *getPackagesForUid*, *getPackagesHoldingPermissions* (JellyBean MR2) and *queryIntentContentProviders* (Kitkat)
+* Updated Arabic translation
+* Updated Chinese translation
+* Updated Lithuanian translation
+* Updated Slovak translation
+* Updated Vietnamese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.11.13 EXPERIMENTAL**
+
+* Experimental: restriction for direct inter-process communication (System/IPC)
+* Experimental: new, faster way of getting restrictions/settings
+
+**Version 1.11.12 BETA**
+
+* Use secure connection for [submitting and fetching restrictions](https://crowd.xprivacy.eu/)
+* Skip upgrade for dangerous functions
+* Restored original location and telephony restrictions
 
 **Version 1.11.11 TEST**
 
@@ -38,7 +55,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Version 1.11.9 TEST**
 
 * Fixed usage data with a dot in the name
-* Added an easter egg (don't ask)
+* Added an Easter egg (don't ask)
 * Added cell location restrictions within the phone process
 * Added phone/network type restrictions within the phone process
 * Added phone property restrictions (static phone info)

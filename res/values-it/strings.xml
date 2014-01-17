@@ -53,7 +53,6 @@
     <string name="msg_random_now">Generazione casuale</string>
     <string name="msg_random_access">Generazione casuale all\'accesso</string>
     <string name="msg_random_boot">Generazione casuale all\'avvio</string>
-    <string name="msg_usage">Aggiornamento dati di utilizzo</string>
     <string name="msg_restart">Richiesto riavvio dell\'applicazione</string>
     <string name="msg_first"><b>XPrivacy è stato testato e sviluppato con cura,
 ma è impossibile garantire che funzionerà in modo impeccabile su ogni dispositivo e per ogni applicazione.
@@ -112,12 +111,12 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="settings_fake_data">Dati falsi</string>
     <string name="settings_global">Usa dati falsi globali</string>
     <string name="settings_notify">Aggiorna notifiche</string>
-    <string name="settings_usage">Utilizzo dati di Android (richiede riavvio)</string>
     <string name="settings_log">Debug log (richiede riavvio)</string>
     <string name="settings_expert">Modalità esperto</string>
     <string name="settings_dangerous">Limita funzioni pericolose</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Applicazione</string>
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>

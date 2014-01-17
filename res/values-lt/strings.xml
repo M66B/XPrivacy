@@ -54,7 +54,6 @@
     <string name="msg_random_now">Atsitiktiniai duomenys</string>
     <string name="msg_random_access">Atsitiktiniai duomenys prieeigai</string>
     <string name="msg_random_boot">Atsitiktiniai duomenys po perkrovimo</string>
-    <string name="msg_usage">Atnaujinamas duomenų naudojimas</string>
     <string name="msg_restart">Programą reikia perkrauti</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
@@ -113,12 +112,12 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_fake_data">Netikri duomenys</string>
     <string name="settings_global">Naudoti globalius netikrus duomenis</string>
     <string name="settings_notify">Atnaujinimų Pranesimas</string>
-    <string name="settings_usage">Android duomenų naudojimas (Perkrauti prietaisą)</string>
     <string name="settings_log">DEBUG žurnalas (Perkrauti prietaisą)</string>
     <string name="settings_expert">Eksperto režimas</string>
     <string name="settings_dangerous">Apriboti pavojingas funkcijas</string>
     <string name="settings_confidence">maksimalaus pasitikėjimo gavimo intervalas</string>
     <string name="settings_experimental">Eksperimentinės funkcijos (Perkrauti prietaisą)</string>
+    <string name="settings_https">Naudojamas saugus ryšys</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
     <string name="help_granted">Android leidimai</string>

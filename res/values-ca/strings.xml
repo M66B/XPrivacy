@@ -53,7 +53,6 @@
     <string name="msg_random_now">Genera aleatòriament</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Genera aleatòriament després d\'arrencar</string>
-    <string name="msg_usage">Updating usage data</string>
     <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>S\'ha tingut molta cura desenvolupant i provant XPrivacy, però és impossible garantir que funcionarà perfectament a tots els dispositius i per a totes les aplicacions.\n\nUtilitzeu-lo sota el vostre propi risc.</b>\n\nVegeu també la llicència:</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc.)</string>
@@ -110,12 +109,12 @@
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Registre de depuració (cal reiniciar)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Aplicació</string>
     <string name="help_internet">té permís d\'Internet</string>
     <string name="help_granted">té permisos d\'Android</string>

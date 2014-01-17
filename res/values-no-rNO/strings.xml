@@ -53,7 +53,6 @@
     <string name="msg_random_now">Tilfeldige verdier</string>
     <string name="msg_random_access">Tilfeldige verdier ved tilgang</string>
     <string name="msg_random_boot">Tilfeldige verdier etter omstart</string>
-    <string name="msg_usage">Oppdaterer databruk</string>
     <string name="msg_restart">Omstart av appen nødvendig</string>
     <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
@@ -110,12 +109,12 @@
     <string name="settings_fake_data">Forfalsket data</string>
     <string name="settings_global">Bruk forfalsket data globalt</string>
     <string name="settings_notify">Oppdater varslinger</string>
-    <string name="settings_usage">Android data bruk (omstart nødvendig)</string>
     <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
     <string name="settings_expert">Ekspert modus</string>
     <string name="settings_dangerous">Blokker farlige funksjoner</string>
     <string name="settings_confidence">Maksimalt konfidensintervall for å hente restriksjoner</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">App</string>
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>

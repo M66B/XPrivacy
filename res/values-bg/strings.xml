@@ -53,7 +53,6 @@
     <string name="msg_random_now">Randomize</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randomize after boot</string>
-    <string name="msg_usage">Updating usage data</string>
     <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>XPrivacy е разработен и тестван с голямо внимание,
 но е невъзможно да се гарантира безпроблемна работа на всякакви устройства при всякакви приложения.
@@ -112,12 +111,12 @@
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">има разрешение за интернет</string>
     <string name="help_granted">има разрешение в Android</string>

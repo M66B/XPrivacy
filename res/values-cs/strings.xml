@@ -53,7 +53,6 @@
     <string name="msg_random_now">Náhodné hodnoty</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Generovat náhodné hodnoty při spuštění zařízení</string>
-    <string name="msg_usage">Updating usage data</string>
     <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>Vývoj a testování aplikace XPrivacy probíhaly s maximální možnou péčí,
 nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a se všemi aplikacemi.
@@ -113,12 +112,12 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Ukládat ladící záznam (vyžaduje restart)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Aplikace</string>
     <string name="help_internet">má oprávnění k Internetu</string>
     <string name="help_granted">má Android oprávnění</string>

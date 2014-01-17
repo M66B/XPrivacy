@@ -56,14 +56,6 @@ public class PrivacyProvider extends ContentProvider {
 	private static final int TYPE_USAGE = 2;
 	private static final int TYPE_SETTING = 3;
 
-	private static Object mFallbackRestrictionLock = new Object();
-	private static Object mFallbackSettingsLock = new Object();
-	private static int mFallbackRestrictionsUid = 0;
-	private static long mFallbackRestrictionsTime = 0;
-	private static long mFallbackSettingsTime = 0;
-	private static SharedPreferencesEx mFallbackRestrictions = null;
-	private static SharedPreferencesEx mFallbackSettings = null;
-
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 	static {
@@ -76,7 +68,7 @@ public class PrivacyProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		try {
-			writeMetaData();
+			writeMetaData(getContext());
 			convertRestrictions();
 			convertSettings();
 			fixFilePermissions();
@@ -433,93 +425,6 @@ public class PrivacyProvider extends ContentProvider {
 		return rows;
 	}
 
-	// The following methods are used as fallback, when:
-	// - there is no context (Java threads)
-	// - the content provider cannot be queried (PackageManagerService)
-
-	public static boolean getRestrictedFallback(XHook hook, int uid, String restrictionName, String methodName) {
-		try {
-			long now = new Date().getTime();
-			File file = new File(getPrefFileName(PREF_RESTRICTION, uid));
-			if (!file.exists())
-				Util.log(null, Log.INFO, "Not found file=" + file.getAbsolutePath());
-
-			synchronized (mFallbackRestrictionLock) {
-				if (mFallbackRestrictions == null || mFallbackRestrictionsUid != uid) {
-					// Initial load
-					mFallbackRestrictions = new SharedPreferencesEx(file);
-					mFallbackRestrictionsUid = uid;
-					mFallbackRestrictionsTime = now;
-					long ms = System.currentTimeMillis() - now;
-					Util.log(null, Log.INFO, "Load fallback restrictions uid=" + uid + "/" + mFallbackRestrictionsUid
-							+ " " + ms + " ms");
-				} else if (mFallbackRestrictionsTime + PrivacyManager.cRestrictionCacheTimeoutMs < now) {
-					// Check update
-					mFallbackRestrictions.reload();
-					mFallbackRestrictionsUid = uid;
-					mFallbackRestrictionsTime = now;
-					long ms = System.currentTimeMillis() - now;
-					Util.log(null, Log.INFO, "Reload fallback restrictions uid=" + uid + " " + ms + " ms");
-				}
-			}
-
-			return getRestricted(restrictionName, methodName, mFallbackRestrictions);
-		} catch (Throwable ex) {
-			Util.bug(hook, ex);
-			return false;
-		}
-	}
-
-	public static String getSettingFallback(String name, String defaultValue, boolean log) {
-		try {
-			long now = new Date().getTime();
-			File file = new File(getPrefFileName(PREF_SETTINGS));
-			if (!file.exists())
-				if (log)
-					Util.log(null, Log.INFO, "Not found file=" + file.getAbsolutePath());
-
-			synchronized (mFallbackSettingsLock) {
-				// Initial load
-				if (mFallbackSettings == null) {
-					mFallbackSettings = new SharedPreferencesEx(file);
-					mFallbackSettingsTime = now;
-					if (log) {
-						long ms = System.currentTimeMillis() - now;
-						Util.log(null, Log.INFO, "Load fallback settings uid=" + Binder.getCallingUid() + " " + ms
-								+ " ms");
-					}
-				}
-
-				// Get update
-				if (mFallbackSettingsTime + PrivacyManager.cSettingCacheTimeoutMs < now) {
-					mFallbackSettings.reload();
-					mFallbackSettingsTime = now;
-					if (log) {
-						long ms = System.currentTimeMillis() - now;
-						Util.log(null, Log.INFO, "Reload fallback settings uid=" + Binder.getCallingUid() + " " + ms
-								+ " ms");
-					}
-				}
-			}
-
-			return mFallbackSettings.getString(getSettingPref(name), defaultValue);
-		} catch (Throwable ex) {
-			if (log)
-				Util.bug(null, ex);
-			return defaultValue;
-		}
-	}
-
-	public static void flush() {
-		Util.log(null, Log.INFO, "Flush uid=" + Binder.getCallingUid());
-		synchronized (mFallbackRestrictionLock) {
-			mFallbackRestrictions = null;
-		}
-		synchronized (mFallbackSettingsLock) {
-			mFallbackSettings = null;
-		}
-	}
-
 	// Helper methods
 
 	private void enforcePermission() throws SecurityException {
@@ -576,10 +481,10 @@ public class PrivacyProvider extends ContentProvider {
 		return settingKey.substring(COL_SETTING.length() + 1);
 	}
 
-	private void writeMetaData() throws IOException, FileNotFoundException {
+	public static void writeMetaData(Context context) throws IOException, FileNotFoundException {
 		File out = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
-		Util.log(null, Log.INFO, "Writing meta=" + out.getAbsolutePath());
-		InputStream is = getContext().getAssets().open("meta.xml");
+		Util.log(null, Log.WARN, "Writing meta=" + out.getAbsolutePath());
+		InputStream is = context.getAssets().open("meta.xml");
 		OutputStream os = new FileOutputStream(out.getAbsolutePath());
 		byte[] buffer = new byte[1024];
 		int read;

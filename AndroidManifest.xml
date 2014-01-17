@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
-    android:versionCode="232"
-    android:versionName="1.11.11" >
+    android:versionCode="234"
+    android:versionName="1.11.13" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -131,15 +131,6 @@
                 <action android:name="android.app.action.ACTION_DEVICE_ADMIN_DISABLED" />
             </intent-filter>
         </receiver>
-
-        <provider
-            android:name=".PrivacyProvider"
-            android:authorities="biz.bokhorst.xprivacy.provider"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":provider"
-            android:syncable="false" >
-        </provider>
     </application>
 
 </manifest>

@@ -53,7 +53,6 @@
     <string name="msg_random_now">生成随机数值</string>
     <string name="msg_random_access">访问时随机生成数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
-    <string name="msg_usage">正在更新用量统计数据…</string>
     <string name="msg_restart">需要重启应用使规则生效</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
@@ -112,12 +111,12 @@
     <string name="settings_fake_data">模拟信息</string>
     <string name="settings_global">使用全局模拟信息</string>
     <string name="settings_notify">通知栏提示</string>
-    <string name="settings_usage">Android 应用用量统计数据（需要重启）</string>
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
     <string name="settings_dangerous">限制可能导致应用异常的权限</string>
     <string name="settings_confidence">最大采样置信区间</string>
     <string name="settings_experimental">实验性功能</string>
+    <string name="settings_https">使用安全连接(https)</string>
     <string name="help_application">请输入应用名称</string>
     <string name="help_internet">应用含有网络访问权限</string>
     <string name="help_granted">应用已经含有这种权限</string>

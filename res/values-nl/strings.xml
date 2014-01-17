@@ -53,7 +53,6 @@
     <string name="msg_random_now">Willekeurig</string>
     <string name="msg_random_access">Willekeurig bij gebruik</string>
     <string name="msg_random_boot">Willekeurig na herstart</string>
-    <string name="msg_usage">Bijwerken van gebruiksgegevens</string>
     <string name="msg_restart">Applicatie herstart vereist</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
@@ -112,12 +111,12 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_fake_data">Nepgegevens</string>
     <string name="settings_global">Gebruik globale nep gegevens</string>
     <string name="settings_notify">Bijgewerkt notificaties</string>
-    <string name="settings_usage">Android gebruiksgegevens (herstart vereist)</string>
     <string name="settings_log">Debug log (herstart vereist)</string>
     <string name="settings_expert">Expertmodus</string>
     <string name="settings_dangerous">Beperk gevaarlijke functies</string>
     <string name="settings_confidence">Maximum betrouwbaarheidsinterval voor ophalen</string>
     <string name="settings_experimental">Experimentele functies (herstart vereist)</string>
+    <string name="settings_https">Gebruik veilige verbindingen</string>
     <string name="help_application">Applicatie</string>
     <string name="help_internet">heeft internet rechten</string>
     <string name="help_granted">heeft Android rechten</string>

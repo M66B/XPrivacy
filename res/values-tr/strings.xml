@@ -53,7 +53,6 @@
     <string name="msg_random_now">Rasgele Oluştur</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Cihaz yeniden başlatılınca tekrar rasgele oluştur</string>
-    <string name="msg_usage">Updating usage data</string>
     <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>Xprivacy titizlikle geliştirilmiş ve test edilmiştir, ancak her cihazda veya her uygulamada kusursuz çalışacağını garantilemek imkansızdır.
 \n\nKullanım riski tamamen size aittir.</b>\n\nAyrıca lisansa bakınız:</string>
@@ -111,12 +110,12 @@
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Hata ayıklama modu (Yeniden başlatma gerekir)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Uygulama</string>
     <string name="help_internet">internet izni var</string>
     <string name="help_granted">Android izni var</string>

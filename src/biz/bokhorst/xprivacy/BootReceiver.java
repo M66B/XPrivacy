@@ -52,32 +52,23 @@ public class BootReceiver extends BroadcastReceiver {
 	}
 
 	private void randomizeSettings(Context context, int uid) {
-		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
+		boolean random = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingRandom, false, false);
 		if (random) {
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude,
-					PrivacyManager.getRandomProp("LAT"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude,
-					PrivacyManager.getRandomProp("LON"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSerial,
-					PrivacyManager.getRandomProp("SERIAL"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMac,
-					PrivacyManager.getRandomProp("MAC"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingPhone,
-					PrivacyManager.getRandomProp("PHONE"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingImei,
-					PrivacyManager.getRandomProp("IMEI"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingId,
-					PrivacyManager.getRandomProp("ANDROID_ID"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingGsfId,
-					PrivacyManager.getRandomProp("GSF_ID"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAdId,
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT"));
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLongitude, PrivacyManager.getRandomProp("LON"));
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingSerial, PrivacyManager.getRandomProp("SERIAL"));
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC"));
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingPhone, PrivacyManager.getRandomProp("PHONE"));
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI"));
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingId, PrivacyManager.getRandomProp("ANDROID_ID"));
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingGsfId, PrivacyManager.getRandomProp("GSF_ID"));
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingAdId,
 					PrivacyManager.getRandomProp("AdvertisingId"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingCountry,
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingCountry,
 					PrivacyManager.getRandomProp("ISO3166"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSubscriber,
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingSubscriber,
 					PrivacyManager.getRandomProp("SubscriberId"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSSID,
-					PrivacyManager.getRandomProp("SSID"));
+			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID"));
 		}
 	}
 }

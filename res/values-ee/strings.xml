@@ -53,7 +53,6 @@
     <string name="msg_random_now">Juhuslik</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Juhuslikusta pärast käivitamist</string>
-    <string name="msg_usage">Updating usage data</string>
     <string name="msg_restart">Application restart required</string>
     <string name="msg_first"><b>Palju vaeva on nähtud Xprivacy arendamisel ja testimisel,
 kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
@@ -112,12 +111,12 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">Silumislogi (nõuab restarti)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
     <string name="help_application">Rakendus</string>
     <string name="help_internet">on interneti kasutamise luba</string>
     <string name="help_granted">on Android luba</string>
