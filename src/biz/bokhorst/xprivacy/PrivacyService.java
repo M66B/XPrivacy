@@ -13,6 +13,8 @@ import java.util.concurrent.Executors;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDoneException;
+import android.database.sqlite.SQLiteStatement;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
@@ -32,7 +34,8 @@ public class PrivacyService {
 	private static String cTableSetting = "setting";
 
 	// TODO: define column names
-	// TODO: transactions?
+	// TODO: transactions
+	// TODO: use precompiled statements
 
 	public static void register() {
 		try {
@@ -68,6 +71,8 @@ public class PrivacyService {
 
 		return mClient;
 	}
+
+	private static SQLiteStatement stmtGetRestriction = null;
 
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
 
@@ -117,31 +122,41 @@ public class PrivacyService {
 			try {
 				getDatabase();
 
-				Cursor ccursor = mDatabase.query(cTableRestriction, new String[] { "restricted" },
-						"uid=? AND restriction=? AND method=?", new String[] { Integer.toString(uid), restrictionName,
-								"" }, null, null, null);
-				if (ccursor == null)
-					Util.log(null, Log.WARN, "Database cursor null (restriction)");
-				else
+				// Precompile statement
+				if (stmtGetRestriction == null) {
+					String sql = "SELECT restricted FROM " + cTableRestriction
+							+ " WHERE uid=? AND restriction=? AND method=?";
+					stmtGetRestriction = mDatabase.compileStatement(sql);
+				}
+
+				mDatabase.beginTransaction();
+				try {
+
 					try {
-						if (ccursor.moveToNext())
-							restricted = (ccursor.getInt(0) > 0);
-					} finally {
-						ccursor.close();
+						stmtGetRestriction.clearBindings();
+						stmtGetRestriction.bindLong(1, uid);
+						stmtGetRestriction.bindString(2, restrictionName);
+						stmtGetRestriction.bindString(3, "");
+						restricted = (stmtGetRestriction.simpleQueryForLong() > 0);
+					} catch (SQLiteDoneException ignored) {
+
 					}
 
-				if (restricted && methodName != null) {
-					Cursor mcursor = mDatabase.query(cTableRestriction, new String[] { "restricted" },
-							"uid=? AND restriction=? AND method=?", new String[] { Integer.toString(uid),
-									restrictionName, methodName }, null, null, null);
-					try {
-						// Check method exception
-						if (mcursor.moveToNext())
-							if (mcursor.getInt(0) > 0)
+					if (restricted && methodName != null)
+						try {
+							stmtGetRestriction.clearBindings();
+							stmtGetRestriction.bindLong(1, uid);
+							stmtGetRestriction.bindString(2, restrictionName);
+							stmtGetRestriction.bindString(3, methodName);
+							if (stmtGetRestriction.simpleQueryForLong() > 0)
 								restricted = false;
-					} finally {
-						mcursor.close();
-					}
+						} catch (SQLiteDoneException ignored) {
+
+						}
+
+					mDatabase.setTransactionSuccessful();
+				} finally {
+					mDatabase.endTransaction();
 				}
 
 				// Log usage
