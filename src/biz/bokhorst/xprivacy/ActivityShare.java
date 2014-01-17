@@ -210,22 +210,26 @@ public class ActivityShare extends Activity {
 							// Category
 							boolean crestricted = PrivacyManager.getRestricted(null, uid, restrictionName, null, false,
 									false);
-							serializer.startTag(null, "Restriction");
-							serializer.attribute(null, "Id", Integer.toString(uid));
-							serializer.attribute(null, "Name", restrictionName);
-							serializer.attribute(null, "Restricted", Boolean.toString(crestricted));
-							serializer.endTag(null, "Restriction");
-
-							// Methods
-							for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
-								boolean mrestricted = PrivacyManager.getRestricted(null, uid, restrictionName,
-										md.getName(), false, false);
+							if (crestricted) {
 								serializer.startTag(null, "Restriction");
 								serializer.attribute(null, "Id", Integer.toString(uid));
 								serializer.attribute(null, "Name", restrictionName);
-								serializer.attribute(null, "Method", md.getName());
-								serializer.attribute(null, "Restricted", Boolean.toString(mrestricted));
+								serializer.attribute(null, "Restricted", Boolean.toString(crestricted));
 								serializer.endTag(null, "Restriction");
+
+								// Methods
+								for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
+									boolean mrestricted = PrivacyManager.getRestricted(null, uid, restrictionName,
+											md.getName(), false, false);
+									if (!mrestricted || md.isDangerous()) {
+										serializer.startTag(null, "Restriction");
+										serializer.attribute(null, "Id", Integer.toString(uid));
+										serializer.attribute(null, "Name", restrictionName);
+										serializer.attribute(null, "Method", md.getName());
+										serializer.attribute(null, "Restricted", Boolean.toString(mrestricted));
+										serializer.endTag(null, "Restriction");
+									}
+								}
 							}
 						}
 					}
