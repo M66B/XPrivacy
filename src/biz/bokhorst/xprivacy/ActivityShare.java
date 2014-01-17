@@ -321,6 +321,7 @@ public class ActivityShare extends Activity {
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 			mAppAdapter.remove(mAppAdapter.getItem(info.position));
 
+			// Check submit limit
 			if (mAppAdapter.getCount() < cSubmitLimit + 1 && getTitle().equals(getString(R.string.menu_submit))) {
 				Button btnOk = (Button) findViewById(R.id.btnOk);
 				btnOk.setEnabled(true);
@@ -744,15 +745,19 @@ public class ActivityShare extends Activity {
 							mAppAdapter.setState(uid, STATE_RUNNING);
 
 							// Reset existing restrictions
-							PrivacyManager.deleteRestrictions(uid, true);
+							boolean restart = PrivacyManager.deleteRestrictions(uid, true);
 
 							// Set imported restrictions
 							for (String restrictionName : mapPackage.get(packageName).keySet()) {
-								PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true);
+								restart = PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true)
+										|| restart;
 								for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(restrictionName))
-									PrivacyManager.setRestricted(null, uid, restrictionName, md.getMethodName(),
-											md.isRestricted(), true);
+									restart = PrivacyManager.setRestricted(null, uid, restrictionName, md.getMethodName(),
+											md.isRestricted(), true) || restart;
 							}
+
+							if (restart)
+								mAppsByUid.get(uid).message = getString(R.string.msg_restart);
 							mAppAdapter.setState(uid, STATE_SUCCESS);
 						}
 					} catch (NameNotFoundException ex) {
@@ -803,6 +808,7 @@ public class ActivityShare extends Activity {
 		private Runnable mProgress;
 		private List<Integer> mListSettingId = new ArrayList<Integer>();
 		private List<Integer> mListRestrictionUid = new ArrayList<Integer>();
+		private List<Integer> mListRestartUid = new ArrayList<Integer>();
 
 		public ImportHandler(List<Integer> listUidSelected, Runnable progress) {
 			mListUidSelected = listUidSelected;
@@ -895,11 +901,14 @@ public class ActivityShare extends Activity {
 							mListRestrictionUid.add(uid);
 							mAppAdapter.setState(uid, STATE_RUNNING);
 							runOnUiThread(mProgress);
-							PrivacyManager.deleteRestrictions(uid, false);
+							if (PrivacyManager.deleteRestrictions(uid, false))
+								mListRestartUid.add(uid);
 						}
 
 						// Set restriction
-						PrivacyManager.setRestricted(null, uid, restrictionName, methodName, restricted, false);
+						if (PrivacyManager.setRestricted(null, uid, restrictionName, methodName, restricted, false) && 
+								!mListRestartUid.contains(uid))
+							mListRestartUid.add(uid);
 					}
 				} else
 					Util.log(null, Log.ERROR, "Unknown element name=" + qName);
@@ -916,6 +925,9 @@ public class ActivityShare extends Activity {
 					int lastUid = mListRestrictionUid.get(mListRestrictionUid.size() - 1);
 					mAppAdapter.setState(lastUid, STATE_SUCCESS);
 				}
+				// Restart notifications
+				for (int uid : mListRestartUid)
+					mAppsByUid.get(uid).message = getString(R.string.msg_restart);
 			}
 		}
 
@@ -1036,7 +1048,7 @@ public class ActivityShare extends Activity {
 								JSONArray settings = status.getJSONArray("settings"); // JSONException
 								if (settings.length() > 0) {
 									// Delete existing restrictions
-									PrivacyManager.deleteRestrictions(appInfo.getUid(), true);
+									boolean restart = PrivacyManager.deleteRestrictions(appInfo.getUid(), true);
 
 									// Set fetched restrictions
 									for (int i = 0; i < settings.length(); i++) {
@@ -1049,10 +1061,12 @@ public class ActivityShare extends Activity {
 										if (methodName == null || restricted)
 											if (methodName == null
 													|| PrivacyManager.getMethod(restrictionName, methodName) != null)
-												PrivacyManager.setRestricted(null, appInfo.getUid(), restrictionName,
-														methodName, restricted, true);
+												restart = PrivacyManager.setRestricted(null, appInfo.getUid(), restrictionName,
+														methodName, restricted, true) || restart;
 									}
 
+									if (restart)
+										mAppsByUid.get(appInfo.getUid()).message = getString(R.string.msg_restart);
 									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS);
 								} else
 									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
@@ -1071,9 +1085,9 @@ public class ActivityShare extends Activity {
 				Util.bug(null, ex);
 				// NameNotFoundException, JSONException, UnsupportedEncodingException, IOException, ClientProtocolException, Exception
 				if (ex instanceof IOException || ex instanceof ClientProtocolException)
-					return "Error connecting to server";
+					return "Error connecting to server"; // TODO string resource
 				else if (ex instanceof JSONException)
-					return "Bad data received";
+					return "Bad data received"; // TODO string resource
 				else
 					return ex.getMessage();
 			}
@@ -1262,7 +1276,7 @@ public class ActivityShare extends Activity {
 				Util.bug(null, ex);
 				// NameNotFoundException, UnsupportedEncodingException, JSONException, ClientProtocolException, IOException, Exception
 				if (ex instanceof ClientProtocolException || ex instanceof IOException)
-					return "Error connecting to server";
+					return "Error connecting to server"; // TODO string resource
 				else
 					return ex.getMessage();
 			}
