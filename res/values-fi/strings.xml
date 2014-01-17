@@ -37,6 +37,12 @@
     <string name="menu_applications">Valitse sallittavat applikaatiot</string>
     <string name="menu_contacts">Valitse sallittavat kontaktit</string>
     <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="menu_choose">Choose</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_export">Backup all settings to %s</string>
+    <string name="msg_import">Import settings from %s</string>
     <string name="msg_new">Uusi</string>
     <string name="msg_update">Päivitä</string>
     <string name="msg_licensed" formatted="false">Lisensoitu: %s</string>

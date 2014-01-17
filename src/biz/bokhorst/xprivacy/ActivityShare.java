@@ -56,7 +56,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
 import android.util.Log;
@@ -157,7 +156,7 @@ public class ActivityShare extends Activity {
 				setTitle(getString(R.string.menu_submit));
 
 			// Licence check
-			// TODO make sure this works with external intents
+			// TODO fix pro enabler detection
 			if (action.equals(ACTION_IMPORT) || action.equals(ACTION_FETCH)) {
 				if (Util.hasProLicense(this) == null)
 					finish();
@@ -177,7 +176,7 @@ public class ActivityShare extends Activity {
 			View llDescription = findViewById(R.id.llDescription);
 			if (action.equals(ACTION_EXPORT)) {
 				// Show export filename
-				tvDescription.setText("Backup all settings to " + mFileName); // TODO string resource
+				tvDescription.setText(getString(R.string.msg_export, mFileName));
 				llDescription.setVisibility(View.VISIBLE);
 
 			} else if (action.equals(ACTION_IMPORT)) {
@@ -203,7 +202,7 @@ public class ActivityShare extends Activity {
 				}
 
 				// Show import filename
-				tvDescription.setText("Import settings from " + mFileName); // TODO string resource
+				tvDescription.setText(getString(R.string.msg_import, mFileName));
 				llDescription.setVisibility(View.VISIBLE);
 			}
 
@@ -222,17 +221,20 @@ public class ActivityShare extends Activity {
 
 					// Import
 					if (action.equals(ACTION_IMPORT)) {
+						mRunning = true;
 						new ImportTask().executeOnExecutor(mExecutor, new File(mFileName), uids);
 					}
 
 					// Export
 					else if (action.equals(ACTION_EXPORT)) {
+						mRunning = true;
 						new ExportTask().executeOnExecutor(mExecutor, new File(mFileName));
 					}
 
 					// Fetch
 					else if (action.equals(ACTION_FETCH)) {
 						if (uids.length > 0) {
+							mRunning = true;
 							new FetchTask().executeOnExecutor(mExecutor, uids);
 						}
 					}
@@ -241,6 +243,7 @@ public class ActivityShare extends Activity {
 					else if (action.equals(ACTION_SUBMIT)) {
 						if (uids.length > 0) {
 							if (uids.length <= cSubmitLimit) {
+								mRunning = true;
 								new SubmitTask().executeOnExecutor(mExecutor, uids);
 							} else {
 								String message = getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1);
@@ -262,7 +265,7 @@ public class ActivityShare extends Activity {
 				public void onClick(View v) {
 					if (mRunning) {
 						mAbort = true;
-						Toast.makeText(ActivityShare.this, "Aborting", Toast.LENGTH_SHORT).show(); // TODO string resource
+						Toast.makeText(ActivityShare.this, getString(R.string.msg_abort), Toast.LENGTH_SHORT).show();
 					} else {
 						finish();
 					}
@@ -295,7 +298,7 @@ public class ActivityShare extends Activity {
 				try {
 					mFileName = dataIntent.getData().getPath();
 					TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
-					tvDescription.setText("Import settings from " + mFileName); // TODO string resource
+					tvDescription.setText(getString(R.string.msg_import, mFileName));
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
@@ -307,13 +310,13 @@ public class ActivityShare extends Activity {
 		super.onCreateContextMenu(menu, v, menuInfo);
 
 		if (v.getId() == R.id.lvShare) {
-			menu.add("Exclude"); // TODO string resource
+			menu.add(getString(R.string.menu_exclude));
 		}
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		if (!mRunning && item.getTitle().equals("Exclude")) { // TODO string resource
+		if (!mRunning && item.getTitle().equals(getString(R.string.menu_exclude))) {
 			// remove app from list
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 			mAppAdapter.remove(mAppAdapter.getItem(info.position));
@@ -1290,7 +1293,6 @@ public class ActivityShare extends Activity {
 		if (max == 0)
 			max = 1;
 		int width = (int) ((float) mProgressWidth) * current / max;
-		Util.log(null, Log.WARN, "Progress width " + width);
 
 		View vShareProgressFull = (View) findViewById(R.id.vShareProgressFull);
 		vShareProgressFull.getLayoutParams().width = width;
@@ -1307,7 +1309,7 @@ public class ActivityShare extends Activity {
 		mRunning = false;
 		// Change ok button to "Close"
 		final Button btnOk = (Button) findViewById(R.id.btnOk);
-		btnOk.setText("Close"); // TODO string resource
+		btnOk.setText(getString(R.string.menu_close));
 		btnOk.setEnabled(true);
 		btnOk.setOnClickListener(new Button.OnClickListener(){
 			@Override

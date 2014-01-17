@@ -37,6 +37,12 @@
     <string name="menu_applications">अनुमति के लिए applications को चुने</string>
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
     <string name="menu_tutorial">शिक्षा</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="menu_choose">Choose</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_export">Backup all settings to %s</string>
+    <string name="msg_import">Import settings from %s</string>
     <string name="msg_new">नया</string>
     <string name="msg_update">अद्यतन</string>
     <string name="msg_licensed" formatted="false">अधिकारी: %s</string>
