@@ -17,6 +17,7 @@ import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.StrictMode;
 import android.util.Log;
 
 public class PrivacyService {
@@ -39,7 +40,7 @@ public class PrivacyService {
 			Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
 			Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
 			mAddService.invoke(null, cServiceName, mPrivacyService);
-			Util.log(null, Log.WARN, "Privacy service registered");
+			Util.log(null, Log.WARN, "Privacy service registered name=" + cServiceName);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -60,6 +61,11 @@ public class PrivacyService {
 				mClient = null;
 				Util.bug(null, ex);
 			}
+
+		// Disable strict mode
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder(StrictMode.getThreadPolicy()).permitDiskReads()
+				.permitDiskWrites().build());
+
 		return mClient;
 	}
 
