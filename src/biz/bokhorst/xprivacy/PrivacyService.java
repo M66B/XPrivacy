@@ -25,11 +25,13 @@ public class PrivacyService {
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 	private static String cServiceName = "xprivacy";
+	private static String cTableRestriction = "restriction";
+	private static String cTableUsage = "usage";
+	private static String cTableSetting = "setting";
 
-	// TODO: define table/column names
+	// TODO: define column names
 	// TODO: transactions?
-	// TODO: convert shared preferences
-	// TODO: error handling (no client, remote exception)
+	// TODO: error handling (remote exception)
 
 	public static void register() {
 		try {
@@ -80,7 +82,7 @@ public class PrivacyService {
 					cvalues.put("restriction", restrictionName);
 					cvalues.put("method", "");
 					cvalues.put("restricted", restricted);
-					mDatabase.insertWithOnConflict("restriction", null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
+					mDatabase.insertWithOnConflict(cTableRestriction, null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
 				}
 
 				// Create method record
@@ -90,7 +92,7 @@ public class PrivacyService {
 					mvalues.put("restriction", restrictionName);
 					mvalues.put("method", methodName);
 					mvalues.put("restricted", !restricted);
-					mDatabase.insertWithOnConflict("restriction", null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
+					mDatabase.insertWithOnConflict(cTableRestriction, null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -105,7 +107,7 @@ public class PrivacyService {
 			try {
 				getDatabase();
 
-				Cursor ccursor = mDatabase.query("restriction", new String[] { "restricted" },
+				Cursor ccursor = mDatabase.query(cTableRestriction, new String[] { "restricted" },
 						"uid=? AND restriction=? AND method=?", new String[] { Integer.toString(uid), restrictionName,
 								"" }, null, null, null);
 				if (ccursor == null)
@@ -119,7 +121,7 @@ public class PrivacyService {
 					}
 
 				if (restricted && methodName != null) {
-					Cursor mcursor = mDatabase.query("restriction", new String[] { "restricted" },
+					Cursor mcursor = mDatabase.query(cTableRestriction, new String[] { "restricted" },
 							"uid=? AND restriction=? AND method=?", new String[] { Integer.toString(uid),
 									restrictionName, methodName }, null, null, null);
 					try {
@@ -190,7 +192,7 @@ public class PrivacyService {
 				getDatabase();
 				mDatabase.beginTransaction();
 				try {
-					mDatabase.delete("restriction", "uid=?", new String[] { Integer.toString(uid) });
+					mDatabase.delete(cTableRestriction, "uid=?", new String[] { Integer.toString(uid) });
 					mDatabase.setTransactionSuccessful();
 					Util.log(null, Log.WARN, "Restrictions deleted uid=" + uid);
 				} finally {
@@ -212,11 +214,12 @@ public class PrivacyService {
 
 				Cursor cursor;
 				if (methodName == null)
-					cursor = mDatabase.query("usage", new String[] { "time" }, "uid=? AND restriction=?", new String[] {
-							Integer.toString(uid), restrictionName }, null, null, null);
+					cursor = mDatabase.query(cTableUsage, new String[] { "time" }, "uid=? AND restriction=?",
+							new String[] { Integer.toString(uid), restrictionName }, null, null, null);
 				else
-					cursor = mDatabase.query("usage", new String[] { "time" }, "uid=? AND restriction=? AND method=?",
-							new String[] { Integer.toString(uid), restrictionName, methodName }, null, null, null);
+					cursor = mDatabase.query(cTableUsage, new String[] { "time" },
+							"uid=? AND restriction=? AND method=?", new String[] { Integer.toString(uid),
+									restrictionName, methodName }, null, null, null);
 				if (cursor == null)
 					Util.log(null, Log.WARN, "Database cursor null (usage)");
 				else
@@ -244,10 +247,10 @@ public class PrivacyService {
 
 				Cursor cursor;
 				if (uid == 0)
-					cursor = mDatabase.query("usage", new String[] { "uid", "restriction", "method", "restricted",
+					cursor = mDatabase.query(cTableUsage, new String[] { "uid", "restriction", "method", "restricted",
 							"time" }, null, new String[] {}, null, null, null);
 				else
-					cursor = mDatabase.query("usage", new String[] { "uid", "restriction", "method", "restricted",
+					cursor = mDatabase.query(cTableUsage, new String[] { "uid", "restriction", "method", "restricted",
 							"time" }, "uid=?", new String[] { Integer.toString(uid) }, null, null, null);
 				if (cursor == null)
 					Util.log(null, Log.WARN, "Database cursor null (usage data)");
@@ -278,7 +281,7 @@ public class PrivacyService {
 				getDatabase();
 				mDatabase.beginTransaction();
 				try {
-					mDatabase.delete("usage", "uid=?", new String[] { Integer.toString(uid) });
+					mDatabase.delete(cTableUsage, "uid=?", new String[] { Integer.toString(uid) });
 					mDatabase.setTransactionSuccessful();
 					Util.log(null, Log.WARN, "Usage data deleted uid=" + uid);
 				} finally {
@@ -304,7 +307,7 @@ public class PrivacyService {
 				values.put("value", value);
 
 				// Insert/update record
-				mDatabase.insertWithOnConflict("setting", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+				mDatabase.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				// throw new RemoteException(ex.toString());
@@ -317,8 +320,8 @@ public class PrivacyService {
 			try {
 				getDatabase();
 
-				Cursor cursor = mDatabase.query("setting", new String[] { "value" }, "uid=? AND name=?", new String[] {
-						Integer.toString(uid), name }, null, null, null);
+				Cursor cursor = mDatabase.query(cTableSetting, new String[] { "value" }, "uid=? AND name=?",
+						new String[] { Integer.toString(uid), name }, null, null, null);
 				if (cursor == null)
 					Util.log(null, Log.WARN, "Database cursor null (setting)");
 				else
@@ -346,7 +349,7 @@ public class PrivacyService {
 				enforcePermission();
 				getDatabase();
 
-				Cursor cursor = mDatabase.query("setting", new String[] { "name", "value" }, "uid=?",
+				Cursor cursor = mDatabase.query(cTableSetting, new String[] { "name", "value" }, "uid=?",
 						new String[] { Integer.toString(uid) }, null, null, null);
 				if (cursor == null)
 					Util.log(null, Log.WARN, "Database cursor null (settings)");
@@ -370,7 +373,7 @@ public class PrivacyService {
 				getDatabase();
 				mDatabase.beginTransaction();
 				try {
-					mDatabase.delete("setting", "uid=?", new String[] { Integer.toString(uid) });
+					mDatabase.delete(cTableSetting, "uid=?", new String[] { Integer.toString(uid) });
 					mDatabase.setTransactionSuccessful();
 					Util.log(null, Log.WARN, "Settings deleted uid=" + uid);
 				} finally {
