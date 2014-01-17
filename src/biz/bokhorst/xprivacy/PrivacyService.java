@@ -31,7 +31,6 @@ public class PrivacyService {
 
 	// TODO: define column names
 	// TODO: transactions?
-	// TODO: error handling (remote exception)
 
 	public static void register() {
 		try {
@@ -96,7 +95,7 @@ public class PrivacyService {
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				// throw new RemoteException(ex.toString());
+				throw new RemoteException(ex.toString());
 			}
 		}
 
@@ -163,6 +162,7 @@ public class PrivacyService {
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+				return false;
 			}
 			return restricted;
 		}
@@ -181,6 +181,7 @@ public class PrivacyService {
 						result.add(getRestriction(uid, restrictionName, md.getName(), false));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
 			}
 			return result;
 		}
@@ -200,6 +201,7 @@ public class PrivacyService {
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
 			}
 		}
 
@@ -234,6 +236,7 @@ public class PrivacyService {
 					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
 			}
 			return lastUsage;
 		}
@@ -270,6 +273,7 @@ public class PrivacyService {
 					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
 			}
 			return result;
 		}
@@ -289,6 +293,7 @@ public class PrivacyService {
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
 			}
 		}
 
@@ -310,7 +315,7 @@ public class PrivacyService {
 				mDatabase.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				// throw new RemoteException(ex.toString());
+				throw new RemoteException(ex.toString());
 			}
 		}
 
@@ -337,6 +342,7 @@ public class PrivacyService {
 					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+				return defaultValue;
 			}
 			return value;
 		}
@@ -362,6 +368,7 @@ public class PrivacyService {
 					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
 			}
 			return mapName;
 		}
@@ -381,6 +388,7 @@ public class PrivacyService {
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
 			}
 		}
 	};
