@@ -46,6 +46,7 @@ public class PrivacyService {
 	public static IPrivacyService getClient() {
 		if (mClient == null)
 			try {
+				// TODO: retries to get privacy client?
 				// public static IBinder getService(String name)
 				Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
 				Method mGetService = cServiceManager.getDeclaredMethod("getService", String.class);

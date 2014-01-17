@@ -485,6 +485,7 @@ public class PrivacyManager {
 					mSettingsCache.put(key, key);
 				}
 			} catch (Throwable ex) {
+				value = defaultValue;
 				Util.bug(hook, ex);
 			}
 
