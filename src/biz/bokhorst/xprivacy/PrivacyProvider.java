@@ -550,15 +550,16 @@ public class PrivacyProvider extends ContentProvider {
 							// Exceptions
 							for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
 								boolean restricted = getRestricted(restrictionName, md.getName(), prefs);
-								if (!restricted || md.isDangerous())
+								if (!restricted || md.isDangerous()) {
 									PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName,
 											md.getName(), restricted);
-								Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name="
-										+ restrictionName + " method=" + md.getName());
+									Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name="
+											+ restrictionName + " method=" + md.getName());
+								}
 							}
 						}
 
-					// prefFile.renameTo(new File(prefFile + ".migrated"));
+					prefFile.renameTo(new File(prefFile + ".migrated"));
 				}
 			}
 		} catch (Throwable ex) {
@@ -583,11 +584,24 @@ public class PrivacyProvider extends ContentProvider {
 						String name = getSettingName(settingKey);
 						String value = prefs.getString(settingKey, null);
 						String[] component = name.split("\\.");
-						if (component.length > 1) {
+						if (name.startsWith(PrivacyManager.cSettingAccount)
+								|| name.startsWith(PrivacyManager.cSettingApplication)
+								|| name.startsWith(PrivacyManager.cSettingContact)
+								|| name.startsWith(PrivacyManager.cSettingRawContact)) {
 							try {
+								// name.uid.key
+								uid = Integer.parseInt(component[1]);
+								name = component[0];
+								for (int i = 2; i < component.length; i++)
+									name += "." + component[i];
+							} catch (NumberFormatException ignored) {
+							}
+						} else if (component.length > 1) {
+							try {
+								// name.x.y.z.uid
 								uid = Integer.parseInt(component[component.length - 1]);
 								name = component[0];
-								for (int i = 1; i < component.length - 2; i++)
+								for (int i = 1; i < component.length - 1; i++)
 									name += "." + component[i];
 							} catch (NumberFormatException ignored) {
 							}
@@ -599,7 +613,7 @@ public class PrivacyProvider extends ContentProvider {
 						// Legacy boolean
 					}
 
-				// prefFile.renameTo(new File(prefFile + ".migrated"));
+				prefFile.renameTo(new File(prefFile + ".migrated"));
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);

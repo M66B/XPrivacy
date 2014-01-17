@@ -190,8 +190,9 @@ public class ActivityShare extends Activity {
 						Map<String, String> mapSetting = PrivacyManager.getSettings(uid);
 						for (String name : mapSetting.keySet()) {
 							// Bind accounts/contacts to same device
-							if (name.startsWith("Account.") || name.startsWith("Contact.")
-									|| name.startsWith("RawContact.")) {
+							if (name.startsWith(PrivacyManager.cSettingAccount)
+									|| name.startsWith(PrivacyManager.cSettingContact)
+									|| name.startsWith(PrivacyManager.cSettingRawContact)) {
 								name += "." + android_id;
 							}
 
@@ -416,8 +417,9 @@ public class ActivityShare extends Activity {
 					String value = attributes.getValue("Value");
 
 					// Import accounts/contacts only for same device
-					// TODO: define constants
-					if (name.startsWith("Account.") || name.startsWith("Contact.") || name.startsWith("RawContact."))
+					if (name.startsWith(PrivacyManager.cSettingAccount)
+							|| name.startsWith(PrivacyManager.cSettingContact)
+							|| name.startsWith(PrivacyManager.cSettingRawContact))
 						if (name.endsWith("." + android_id))
 							name = name.replace("." + android_id, "");
 						else
@@ -713,7 +715,7 @@ public class ActivityShare extends Activity {
 					for (Account account : accountManager.getAccounts()) {
 						String sha1 = Util.sha1(account.name + account.type);
 						boolean allowed = PrivacyManager.getSettingBool(null, appInfo.getUid(),
-								String.format("Account.%s", sha1), false, false);
+								PrivacyManager.cSettingAccount + sha1, false, false);
 						if (allowed) {
 							allowedAccounts = true;
 							break;
@@ -725,7 +727,7 @@ public class ActivityShare extends Activity {
 					for (ApplicationInfoEx aAppInfo : ApplicationInfoEx.getXApplicationList(ActivityShare.this, null))
 						for (String packageName : aAppInfo.getPackageName()) {
 							boolean allowed = PrivacyManager.getSettingBool(null, aAppInfo.getUid(),
-									String.format("Application.%s", packageName), false, false);
+									PrivacyManager.cSettingApplication + packageName, false, false);
 							if (allowed) {
 								allowedApplications = true;
 								break;
@@ -741,7 +743,7 @@ public class ActivityShare extends Activity {
 							while (cursor.moveToNext()) {
 								long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 								boolean allowed = PrivacyManager.getSettingBool(null, appInfo.getUid(),
-										String.format("Contact.%d", id), false, false);
+										PrivacyManager.cSettingContact + id, false, false);
 								if (allowed) {
 									allowedContacts = true;
 									break;
