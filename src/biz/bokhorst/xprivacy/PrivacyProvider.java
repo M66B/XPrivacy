@@ -569,13 +569,13 @@ public class PrivacyProvider extends ContentProvider {
 
 	public static void migrateSettings(Context context) {
 		try {
-			// Legacy settings
-			convertSettings(context);
-
 			// Process settings
 			File prefFile = new File(getPrefFileName(PREF_SETTINGS));
 			if (prefFile.exists()) {
 				Util.log(null, Log.WARN, "Migrating " + prefFile);
+
+				// Legacy settings
+				convertSettings(context);
 
 				SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
 				for (String settingKey : prefs.getAll().keySet())
