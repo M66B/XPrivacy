@@ -122,7 +122,8 @@ public class PackageChange extends BroadcastReceiver {
 					// Notify reboot required
 					String packageName = inputUri.getSchemeSpecificPart();
 					if (packageName.equals(context.getPackageName())) {
-						// Update meta
+						// Update meta data
+						PrivacyManager.writeMetaData(context);
 						PrivacyManager.readMetaData();
 
 						// Build notification

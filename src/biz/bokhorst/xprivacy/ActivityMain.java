@@ -129,9 +129,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Migrate restrictions and settings
 		PrivacyProvider.migrateRestrictions(this);
 		PrivacyProvider.migrateSettings(this);
+
+		// Update meta data
 		PrivacyManager.writeMetaData(this);
+		PrivacyManager.readMetaData();
 
 		// Check privacy service client
 		if (!Util.isXposedEnabled() || !PrivacyManager.hasMetaData() || PrivacyService.getClient() == null) {
