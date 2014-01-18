@@ -177,11 +177,14 @@ public class ActivityShare extends Activity {
 					// Process global settings
 					Map<String, String> mapGlobalSetting = PrivacyManager.getSettings(0);
 					for (String name : mapGlobalSetting.keySet()) {
+						String value = mapGlobalSetting.get(name);
+
 						// Serialize setting
 						serializer.startTag(null, "Setting");
 						serializer.attribute(null, "Id", "");
 						serializer.attribute(null, "Name", name);
-						serializer.attribute(null, "Value", mapGlobalSetting.get(name));
+						if (value != null)
+							serializer.attribute(null, "Value", value);
 						serializer.endTag(null, "Setting");
 					}
 
@@ -193,8 +196,8 @@ public class ActivityShare extends Activity {
 
 					// Process application settings
 					for (int uid : listUid) {
-						Map<String, String> mapSetting = PrivacyManager.getSettings(uid);
-						for (String name : mapSetting.keySet()) {
+						Map<String, String> mapAppSetting = PrivacyManager.getSettings(uid);
+						for (String name : mapAppSetting.keySet()) {
 							// Bind accounts/contacts to same device
 							if (name.startsWith(PrivacyManager.cSettingAccount)
 									|| name.startsWith(PrivacyManager.cSettingContact)
@@ -202,11 +205,14 @@ public class ActivityShare extends Activity {
 								name += "." + android_id;
 							}
 
+							String value = mapAppSetting.get(name);
+
 							// Serialize setting
 							serializer.startTag(null, "Setting");
 							serializer.attribute(null, "Id", Integer.toString(uid));
 							serializer.attribute(null, "Name", name);
-							serializer.attribute(null, "Value", mapSetting.get(name));
+							if (value != null)
+								serializer.attribute(null, "Value", value);
 							serializer.endTag(null, "Setting");
 						}
 					}
