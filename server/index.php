@@ -144,6 +144,8 @@
 						$found = true;
 					else if ($restriction->restriction == 'internet')
 						$found = true;
+					else if ($restriction->restriction == 'ipc')
+						$found = true;
 					else if ($restriction->restriction == 'location')
 						$found = true;
 					else if ($restriction->restriction == 'media')
