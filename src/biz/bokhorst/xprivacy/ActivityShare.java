@@ -41,7 +41,9 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -56,6 +58,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
+import android.widget.Toast;
 
 public class ActivityShare extends Activity {
 	private LocalBroadcastManager mBroadcastManager;
@@ -71,6 +74,7 @@ public class ActivityShare extends Activity {
 	public static final String cProgressMax = "ProgressMax";
 
 	public static final int cSubmitLimit = 10;
+	public static final int cProtocolVersion = 4;
 
 	public static final String ACTION_EXPORT = "biz.bokhorst.xprivacy.action.EXPORT";
 	public static final String ACTION_IMPORT = "biz.bokhorst.xprivacy.action.IMPORT";
@@ -586,7 +590,7 @@ public class ActivityShare extends Activity {
 
 						// Encode package
 						JSONObject jRoot = new JSONObject();
-						jRoot.put("protocol_version", 4);
+						jRoot.put("protocol_version", cProtocolVersion);
 						jRoot.put("android_id", Util.md5(android_id).toLowerCase());
 						jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 						jRoot.put("xprivacy_version", pXPrivacyInfo.versionCode);
@@ -809,7 +813,7 @@ public class ActivityShare extends Activity {
 
 					// Encode package
 					JSONObject jRoot = new JSONObject();
-					jRoot.put("protocol_version", 4);
+					jRoot.put("protocol_version", cProtocolVersion);
 					jRoot.put("android_id", Util.md5(android_id).toLowerCase());
 					jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 					jRoot.put("xprivacy_version", pInfo.versionCode);
@@ -842,8 +846,12 @@ public class ActivityShare extends Activity {
 							// Mark as shared
 							PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingState,
 									Integer.toString(ActivityMain.STATE_SHARED));
-						} else
+						} else {
+							// Mark as unregistered
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered,
+									Boolean.toString(false));
 							throw new Exception(status.getString("error"));
+						}
 					} else {
 						// Failed
 						response.getEntity().getContent().close();
@@ -884,6 +892,108 @@ public class ActivityShare extends Activity {
 			progressIntent.putExtra(cProgressMax, mProgressMax);
 			progressIntent.putExtra(cProgressValue, progress);
 			mBroadcastManager.sendBroadcast(progressIntent);
+		}
+	}
+
+	public static boolean registerDevice(final Context context) {
+		if (!PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingRegistered, false, false)) {
+			// Get accounts
+			final List<Account> listAccount = new ArrayList<Account>();
+			List<CharSequence> listName = new ArrayList<CharSequence>();
+			for (Account account : AccountManager.get(context).getAccounts())
+				if ("com.google".equals(account.type)) {
+					listAccount.add(account);
+					listName.add(String.format("%s (%s)", account.name, account.type));
+				}
+
+			// Build dialog
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+			alertDialogBuilder.setTitle(context.getString(R.string.msg_register));
+			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
+			alertDialogBuilder.setSingleChoiceItems(listName.toArray(new CharSequence[0]), -1,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Account account = listAccount.get(which);
+							new RegisterTask(context).executeOnExecutor(mExecutor, account.name);
+						}
+					});
+			alertDialogBuilder.setPositiveButton(context.getString(R.string.msg_done),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// Do nothing
+						}
+					});
+
+			// Show dialog
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+
+			return false;
+		}
+		return true;
+	}
+
+	@SuppressLint("DefaultLocale")
+	private static class RegisterTask extends AsyncTask<String, String, String> {
+		private Context mContext;
+
+		public RegisterTask(Context context) {
+			mContext = context;
+		}
+
+		protected String doInBackground(String... params) {
+			try {
+				String android_id = Secure.getString(mContext.getContentResolver(), Secure.ANDROID_ID);
+
+				// Encode message
+				JSONObject jRoot = new JSONObject();
+				jRoot.put("protocol_version", cProtocolVersion);
+				jRoot.put("email", params[0]);
+				jRoot.put("android_id", Util.md5(android_id).toLowerCase());
+
+				// Submit
+				HttpParams httpParams = new BasicHttpParams();
+				HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+				HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+				HttpClient httpclient = new DefaultHttpClient(httpParams);
+
+				HttpPost httpost = new HttpPost(getBaseURL(null) + "device?format=json&action=register");
+				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+				httpost.setHeader("Accept", "application/json");
+				httpost.setHeader("Content-type", "application/json");
+				HttpResponse response = httpclient.execute(httpost);
+				StatusLine statusLine = response.getStatusLine();
+
+				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+					// Succeeded
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					response.getEntity().writeTo(out);
+					out.close();
+					JSONObject status = new JSONObject(out.toString("UTF-8"));
+					if (status.getBoolean("ok")) {
+						// Mark as registered
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered, Boolean.toString(true));
+						return null;
+					} else
+						throw new Exception(status.getString("error"));
+				} else {
+					// Failed
+					response.getEntity().getContent().close();
+					throw new IOException(statusLine.getReasonPhrase());
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return ex.getMessage();
+			}
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			String message = (result == null ? mContext.getString(R.string.msg_registered) : result);
+			Toast toast = Toast.makeText(mContext, message, Toast.LENGTH_LONG);
+			toast.show();
 		}
 	}
 

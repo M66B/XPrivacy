@@ -847,46 +847,50 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionSubmit() {
-		if (mAppAdapter.getSelected().size() <= ActivityShare.cSubmitLimit) {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.menu_submit));
-			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					sharingStart();
-					if (mAppAdapter != null) {
-						List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
-						int[] uid = new int[listAppInfo.size()];
-						for (int pos = 0; pos < listAppInfo.size(); pos++)
-							uid[pos] = listAppInfo.get(pos).getUid();
-						Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
-						intent.putExtra(ActivityShare.cUidList, uid);
-						startActivityForResult(intent, ACTIVITY_SUBMIT);
-					}
-				}
-			});
-			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
-		} else {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.app_name));
-			alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
-			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-				}
-			});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
+		if (ActivityShare.registerDevice(this)) {
+			if (mAppAdapter.getSelected().size() <= ActivityShare.cSubmitLimit) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle(getString(R.string.menu_submit));
+				alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								sharingStart();
+								if (mAppAdapter != null) {
+									List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
+									int[] uid = new int[listAppInfo.size()];
+									for (int pos = 0; pos < listAppInfo.size(); pos++)
+										uid[pos] = listAppInfo.get(pos).getUid();
+									Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
+									intent.putExtra(ActivityShare.cUidList, uid);
+									startActivityForResult(intent, ACTIVITY_SUBMIT);
+								}
+							}
+						});
+				alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			} else {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle(getString(R.string.app_name));
+				alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
+				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			}
 		}
 	}
 

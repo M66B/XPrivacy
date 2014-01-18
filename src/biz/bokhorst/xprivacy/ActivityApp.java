@@ -544,26 +544,29 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionSubmit() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(R.string.menu_submit));
-		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				int[] uid = new int[] { mAppInfo.getUid() };
-				Intent intent = new Intent("biz.bokhorst.xprivacy.action.SUBMIT");
-				intent.putExtra(ActivityShare.cUidList, uid);
-				startActivityForResult(intent, ACTIVITY_SUBMIT);
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+		if (ActivityShare.registerDevice(this)) {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.menu_submit));
+			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					int[] uid = new int[] { mAppInfo.getUid() };
+					Intent intent = new Intent("biz.bokhorst.xprivacy.action.SUBMIT");
+					intent.putExtra(ActivityShare.cUidList, uid);
+					startActivityForResult(intent, ACTIVITY_SUBMIT);
+				}
+			});
+			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		}
 	}
 
 	private void optionFetch() {

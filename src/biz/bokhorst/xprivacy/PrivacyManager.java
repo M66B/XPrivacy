@@ -111,6 +111,7 @@ public class PrivacyManager {
 	public final static String cSettingState = "State";
 	public final static String cSettingConfidence = "Confidence";
 	public final static String cSettingHttps = "Https";
+	public final static String cSettingRegistered = "Registered";
 
 	public final static String cSettingTemplate = "Template";
 	public final static String cSettingAccount = "Account.";
