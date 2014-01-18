@@ -162,7 +162,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			setContentView(R.layout.mainlist);
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-			if (Util.getProLicense() != null)
+			if (Util.hasProLicense(this) != null)
 				setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_pro)));
 
 			// Get localized restriction name
@@ -535,7 +535,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		boolean pro = (Util.hasProLicense(this) != null);
+		boolean pro = (Util.isProEnabled() || Util.hasProLicense(this) != null);
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
 		menu.findItem(R.id.menu_all).setEnabled(!mBatchOpRunning);
@@ -895,7 +895,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionFetch() {
-		if (Util.getProLicense() == null) {
+		if (Util.hasProLicense(this) == null) {
 			// Redirect to pro page
 			Util.viewUri(this, cProUri);
 		} else {
@@ -1731,7 +1731,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	// Helper methods
 
 	private void checkLicense() {
-		if (Util.hasProLicense(this) == null) {
+		if (!Util.isProEnabled() && Util.hasProLicense(this) == null)
 			if (Util.isProEnablerInstalled(this))
 				try {
 					Util.log(null, Log.INFO, "Licensing: check");
@@ -1739,6 +1739,5 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
-		}
 	}
 }

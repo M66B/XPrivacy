@@ -167,17 +167,17 @@ public class Util {
 		mPro = enabled;
 	}
 
+	public static boolean isProEnabled() {
+		return mPro;
+	}
+
 	public static String hasProLicense(Context context) {
 		try {
-			// Pro enabled
-			if (mPro)
-				return "";
-
 			// Disable storage restriction
 			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
 
 			// Get license
-			String[] license = getProLicense();
+			String[] license = getProLicenseUnchecked();
 			if (license == null)
 				return null;
 			String name = license[0];
@@ -247,7 +247,7 @@ public class Util {
 		return dataDir;
 	}
 
-	public static String[] getProLicense() {
+	public static String[] getProLicenseUnchecked() {
 		// Get license file name
 		String storageDir = Environment.getExternalStorageDirectory().getAbsolutePath();
 		File licenseFile = new File(storageDir + File.separator + LICENSE_FILE_NAME);

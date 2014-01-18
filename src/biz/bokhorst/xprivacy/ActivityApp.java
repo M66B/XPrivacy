@@ -570,7 +570,7 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionFetch() {
-		if (Util.getProLicense() == null) {
+		if (Util.hasProLicense(this) == null) {
 			// Redirect to pro page
 			Util.viewUri(this, ActivityMain.cProUri);
 		} else {
@@ -604,7 +604,7 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionApplications() {
-		if (Util.getProLicense() == null) {
+		if (Util.hasProLicense(this) == null) {
 			// Redirect to pro page
 			Util.viewUri(this, ActivityMain.cProUri);
 		} else {
@@ -614,7 +614,7 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionContacts() {
-		if (Util.getProLicense() == null) {
+		if (Util.hasProLicense(this) == null) {
 			// Redirect to pro page
 			Util.viewUri(this, ActivityMain.cProUri);
 		} else {

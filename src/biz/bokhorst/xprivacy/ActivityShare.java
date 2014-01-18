@@ -102,7 +102,7 @@ public class ActivityShare extends Activity {
 		Bundle extras = getIntent().getExtras();
 		mBroadcastManager = LocalBroadcastManager.getInstance(this);
 
-		if (Util.hasProLicense(this) != null) {
+		if (Util.isProEnabled() || Util.hasProLicense(this) != null) {
 			// Import
 			if (getIntent().getAction().equals(ACTION_IMPORT)) {
 				int[] uid = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
@@ -117,9 +117,11 @@ public class ActivityShare extends Activity {
 						: getFileName(false));
 				new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
 			}
+		}
 
+		if (Util.hasProLicense(this) != null) {
 			// Fetch
-			else if (getIntent().getAction().equals(ACTION_FETCH)) {
+			if (getIntent().getAction().equals(ACTION_FETCH)) {
 				if (extras != null && extras.containsKey(cUidList)) {
 					int[] uid = extras.getIntArray(cUidList);
 					new FetchTask().executeOnExecutor(mExecutor, uid);
@@ -560,7 +562,7 @@ public class ActivityShare extends Activity {
 				for (int uid : params[0])
 					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
 
-				String[] license = Util.getProLicense();
+				String[] license = Util.getProLicenseUnchecked();
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 
@@ -792,7 +794,7 @@ public class ActivityShare extends Activity {
 					}
 
 					// Get data
-					String[] license = Util.getProLicense();
+					String[] license = Util.getProLicenseUnchecked();
 					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 					String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 
