@@ -560,8 +560,8 @@ public class ActivityShare extends Activity {
 				for (int uid : params[0])
 					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
 
-				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 				String[] license = Util.getProLicense();
+				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 
 				String confidence = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingConfidence, "", false);
@@ -792,6 +792,7 @@ public class ActivityShare extends Activity {
 					}
 
 					// Get data
+					String[] license = Util.getProLicense();
 					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 					String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 
@@ -822,6 +823,10 @@ public class ActivityShare extends Activity {
 					jRoot.put("package_version_name", pkgVersionName);
 					jRoot.put("package_version_code", pkgVersionCode);
 					jRoot.put("settings", jSettings);
+					if (license != null) {
+						jRoot.put("email", license[1]);
+						jRoot.put("signature", license[2]);
+					}
 
 					// Submit
 					HttpParams httpParams = new BasicHttpParams();
@@ -896,7 +901,8 @@ public class ActivityShare extends Activity {
 	}
 
 	public static boolean registerDevice(final Context context) {
-		if (!PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingRegistered, false, false)) {
+		if (Util.hasProLicense(context) == null
+				&& !PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingRegistered, false, false)) {
 			// Get accounts
 			final List<Account> listAccount = new ArrayList<Account>();
 			List<CharSequence> listName = new ArrayList<CharSequence>();
