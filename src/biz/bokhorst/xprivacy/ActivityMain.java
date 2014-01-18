@@ -141,13 +141,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mProgressReceiver = null;
 		} else {
 			// Migrate restrictions and settings
-			try {
-				PrivacyProvider.migrateRestrictions(this);
-				PrivacyProvider.migrateSettings(this);
-				PrivacyService.getClient().migrated();
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+						PrivacyProvider.migrateRestrictions(ActivityMain.this);
+						PrivacyProvider.migrateSettings(ActivityMain.this);
+						PrivacyService.getClient().migrated();
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+					}
+				}
+			}).start();
 
 			// Salt should be the same when exporting/importing
 			String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, null, false);
