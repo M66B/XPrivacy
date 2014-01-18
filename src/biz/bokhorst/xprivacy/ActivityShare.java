@@ -337,20 +337,24 @@ public class ActivityShare extends Activity {
 					mProgressCurrent++;
 					try {
 						publishProgress(packageName, Integer.toString(mProgressCurrent));
-						Util.log(null, Log.INFO, "Importing " + packageName);
 
 						// Get uid
 						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
 
-						// Reset existing restrictions
-						PrivacyManager.deleteRestrictions(uid, true);
+						if (listUidSelected.size() == 0 || listUidSelected.contains(uid)) {
+							Util.log(null, Log.INFO, "Importing " + packageName);
 
-						// Set imported restrictions
-						for (String restrictionName : mapPackage.get(packageName).keySet()) {
-							PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true);
-							for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(restrictionName))
-								PrivacyManager.setRestricted(null, uid, restrictionName, md.getMethodName(),
-										md.isRestricted(), true);
+							// Reset existing restrictions
+							PrivacyManager.deleteRestrictions(uid, true);
+
+							// Set imported restrictions
+							for (String restrictionName : mapPackage.get(packageName).keySet()) {
+								PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true);
+								for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(
+										restrictionName))
+									PrivacyManager.setRestricted(null, uid, restrictionName, md.getMethodName(),
+											md.isRestricted(), true);
+							}
 						}
 					} catch (NameNotFoundException ex) {
 						Util.log(null, Log.WARN, "Not found package=" + packageName);
