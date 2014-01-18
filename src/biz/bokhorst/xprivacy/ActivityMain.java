@@ -129,10 +129,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Migrate restrictions and settings
-		PrivacyProvider.migrateRestrictions(this);
-		PrivacyProvider.migrateSettings(this);
-
 		// Update meta data
 		PrivacyManager.writeMetaData(this);
 		PrivacyManager.readMetaData();
@@ -144,6 +140,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mPackageChangeReceiver = null;
 			mProgressReceiver = null;
 		} else {
+			// Migrate restrictions and settings
+			try {
+				PrivacyProvider.migrateRestrictions(this);
+				PrivacyProvider.migrateSettings(this);
+				PrivacyService.getClient().migrated();
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+
 			// Salt should be the same when exporting/importing
 			String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, null, false);
 			if (salt == null) {

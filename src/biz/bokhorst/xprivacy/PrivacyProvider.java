@@ -678,6 +678,8 @@ public class PrivacyProvider extends ContentProvider {
 						int uid = 0;
 						String name = getSettingName(settingKey);
 						String value = prefs.getString(settingKey, null);
+
+						// Decode setting
 						String[] component = name.split("\\.");
 						if (name.startsWith(PrivacyManager.cSettingAccount)
 								|| name.startsWith(PrivacyManager.cSettingApplication)
@@ -703,6 +705,8 @@ public class PrivacyProvider extends ContentProvider {
 								// Initial uid/name will be used
 							}
 						}
+
+						// Set
 						PrivacyService.getClient().setSetting(uid, name, value);
 						Util.log(null, Log.WARN, "Migrate setting=" + getSettingName(settingKey) + " uid=" + uid
 								+ " name=" + name + " value=" + value);
