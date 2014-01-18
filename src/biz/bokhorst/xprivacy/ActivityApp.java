@@ -366,6 +366,7 @@ public class ActivityApp extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent dataIntent) {
 		super.onActivityResult(requestCode, resultCode, dataIntent);
+		// TODO remove. This code never runs, we don't use startActivityForResult anymore.
 		if (requestCode == ACTIVITY_IMPORT) {
 			// Import
 			ActivityApp.this.recreate();
@@ -378,15 +379,6 @@ public class ActivityApp extends Activity {
 					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
 			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
 			toast.show();
-
-		} else if (requestCode == ACTIVITY_IMPORT_SELECT) {
-			// Import select
-			if (resultCode != RESULT_CANCELED && dataIntent != null)
-				try {
-					startImport(dataIntent.getData().getPath());
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
 
 		} else if (requestCode == ACTIVITY_FETCH) {
 			// Fetch
@@ -520,50 +512,19 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionImport() {
-		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
-		file.setType("file/*");
-		if (Util.isIntentAvailable(ActivityApp.this, file)) {
-			Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-			Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/.xprivacy/");
-			chooseFile.setDataAndType(uri, "text/xml");
-			Intent intent = Intent.createChooser(chooseFile, getString(R.string.app_name));
-			startActivityForResult(intent, ACTIVITY_IMPORT_SELECT);
-		} else
-			startImport(ActivityShare.getFileName(false));
-	}
-
-	private void startImport(String fileName) {
-		fileName = fileName.replace("/document/primary:", Environment.getExternalStorageDirectory().getAbsolutePath()
-				+ File.separatorChar);
-
 		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
-		intent.putExtra(ActivityShare.cFileName, fileName);
 		int[] uid = new int[] { mAppInfo.getUid() };
 		intent.putExtra(ActivityShare.cUidList, uid);
-		startActivityForResult(intent, ACTIVITY_IMPORT);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		startActivity(intent);
 	}
 
 	private void optionSubmit() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(R.string.menu_submit));
-		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				int[] uid = new int[] { mAppInfo.getUid() };
-				Intent intent = new Intent("biz.bokhorst.xprivacy.action.SUBMIT");
-				intent.putExtra(ActivityShare.cUidList, uid);
-				startActivityForResult(intent, ACTIVITY_SUBMIT);
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+		int[] uid = new int[] { mAppInfo.getUid() };
+		Intent intent = new Intent("biz.bokhorst.xprivacy.action.SUBMIT");
+		intent.putExtra(ActivityShare.cUidList, uid);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		startActivity(intent);
 	}
 
 	private void optionFetch() {
@@ -571,27 +532,11 @@ public class ActivityApp extends Activity {
 			// Redirect to pro page
 			Util.viewUri(this, ActivityMain.cProUri);
 		} else {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.menu_fetch));
-			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					int[] uid = new int[] { mAppInfo.getUid() };
-					Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
-					intent.putExtra(ActivityShare.cUidList, uid);
-					startActivityForResult(intent, ACTIVITY_FETCH);
-				}
-			});
-			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
+			int[] uid = new int[] { mAppInfo.getUid() };
+			Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
+			intent.putExtra(ActivityShare.cUidList, uid);
+			intent.putExtra(ActivityShare.cInteractive, true);
+			startActivity(intent);
 		}
 	}
 
