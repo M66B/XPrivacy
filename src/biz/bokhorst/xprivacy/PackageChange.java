@@ -17,7 +17,7 @@ import android.util.Log;
 public class PackageChange extends BroadcastReceiver {
 
 	@Override
-	public void onReceive(Context context, Intent intent) {
+	public void onReceive(final Context context, Intent intent) {
 		// Check privacy service client
 		if (PrivacyService.getClient() == null)
 			return;
@@ -138,35 +138,12 @@ public class PackageChange extends BroadcastReceiver {
 						// Notify
 						notificationManager.notify(0, notification);
 
-						// Get old version
-						PackageManager pm = context.getPackageManager();
-						PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
-						Version sVersion = new Version(PrivacyManager.getSetting(null, 0,
-								PrivacyManager.cSettingVersion, "0.0", false));
-
-						// Upgrade
-						if (sVersion.compareTo(new Version("0.0")) != 0) {
-							Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version "
-									+ pInfo.versionName);
-							boolean dangerous = PrivacyManager.getSettingBool(null, 0,
-									PrivacyManager.cSettingDangerous, false, false);
-							if (!dangerous)
-								for (String restrictionName : PrivacyManager.getRestrictions())
-									for (PrivacyManager.MethodDescription md : PrivacyManager
-											.getMethods(restrictionName))
-										if (md.isDangerous() && md.getFrom() != null)
-											if (sVersion.compareTo(md.getFrom()) < 0) {
-												Util.log(null, Log.WARN, "Upgrading " + md + " from=" + md.getFrom());
-												for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
-													PrivacyManager.setRestricted(null, aInfo.uid,
-															md.getRestrictionName(), md.getName(), false, true);
-											} else
-												Util.log(null, Log.WARN,
-														"No upgrade needed for " + md + " from=" + md.getFrom());
-						}
-
-						// Set new version
-						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
+						// Upgrade restrictions
+						new Thread(new Runnable() {
+							public void run() {
+								upgradeRestrictions(context);
+							}
+						}).start();
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed
@@ -176,6 +153,56 @@ public class PackageChange extends BroadcastReceiver {
 					PrivacyManager.deleteUsage(uid);
 				}
 			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
+
+	private void upgradeRestrictions(Context context) {
+		try {
+			// Get old version
+			PackageManager pm = context.getPackageManager();
+			PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
+			Version sVersion = new Version(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingVersion, "0.0",
+					false));
+
+			// Upgrade
+			if (sVersion.compareTo(new Version("0.0")) != 0) {
+				Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version "
+						+ pInfo.versionName);
+				boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false,
+						false);
+
+				// All packages
+				for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
+					for (String restrictionName : PrivacyManager.getRestrictions())
+						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName))
+							if (md.getFrom() != null)
+								if (sVersion.compareTo(md.getFrom()) < 0) {
+									// Disable new dangerous restrictions
+									if (!dangerous && md.isDangerous()) {
+										Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom()
+												+ " pkg=" + aInfo.packageName);
+										PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(),
+												md.getName(), false, true);
+									}
+
+									// Restrict replaced methods
+									if (md.getReplaces() != null)
+										if (PrivacyManager.getRestricted(null, aInfo.uid, md.getRestrictionName(),
+												md.getReplaces(), false, false)) {
+											Util.log(null, Log.WARN, "Replaced " + md.getReplaces() + " by " + md
+													+ " from=" + md.getFrom() + " pkg=" + aInfo.packageName);
+											PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(),
+													md.getName(), true, true);
+										}
+								}
+
+				Util.log(null, Log.WARN, "Upgrade done");
+			}
+
+			// Set new version
+			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}

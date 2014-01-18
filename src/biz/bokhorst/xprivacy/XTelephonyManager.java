@@ -52,15 +52,9 @@ public class XTelephonyManager extends XHook {
 	// public String getLine1Number()
 	// public String getMsisdn()
 	// public List<NeighboringCellInfo> getNeighboringCellInfo()
-	// public String getNetworkCountryIso()
-	// public String getNetworkOperator()
-	// public String getNetworkOperatorName()
 	// public int getNetworkType()
 	// public int getPhoneType()
 	// public static int getPhoneType(int networkMode)
-	// public String getSimCountryIso()
-	// public String getSimOperator()
-	// public String getSimOperatorName()
 	// public String getSimSerialNumber()
 	// public String getSubscriberId()
 	// public String getVoiceMailAlphaTag()
@@ -77,9 +71,8 @@ public class XTelephonyManager extends XHook {
 		getIsimDomain, getIsimImpi, getIsimImpu,
 		getLine1AlphaTag, getLine1Number, getMsisdn,
 		getNeighboringCellInfo,
-		getNetworkCountryIso, getNetworkOperator, getNetworkOperatorName,
 		getNetworkType, getPhoneType,
-		getSimCountryIso, getSimOperator, getSimOperatorName, getSimSerialNumber,
+		getSimSerialNumber,
 		getSubscriberId,
 		getVoiceMailAlphaTag, getVoiceMailNumber,
 		listen
@@ -115,14 +108,8 @@ public class XTelephonyManager extends XHook {
 		listHook.add(new XTelephonyManager(Methods.listen, PrivacyManager.cPhone, className));
 
 		// No permissions required
-		listHook.add(new XTelephonyManager(Methods.getNetworkCountryIso, PrivacyManager.cPhone, className));
-		listHook.add(new XTelephonyManager(Methods.getNetworkOperator, PrivacyManager.cPhone, className));
-		listHook.add(new XTelephonyManager(Methods.getNetworkOperatorName, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getNetworkType, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getPhoneType, PrivacyManager.cPhone, className));
-		listHook.add(new XTelephonyManager(Methods.getSimCountryIso, PrivacyManager.cPhone, className));
-		listHook.add(new XTelephonyManager(Methods.getSimOperator, PrivacyManager.cPhone, className));
-		listHook.add(new XTelephonyManager(Methods.getSimOperatorName, PrivacyManager.cPhone, className));
 
 		return listHook;
 	}

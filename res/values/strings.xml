@@ -64,7 +64,9 @@
     <string name="msg_random_now">Randomize now</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randomize on boot</string>
-    <string name="msg_restart">Application restart required</string>
+    <string name="msg_restart">Restart required</string>
+    <string name="msg_register" translatable="false">Register device</string>
+    <string name="msg_registered" translatable="false">Check your e-mail to activate your device</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawlessly on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
