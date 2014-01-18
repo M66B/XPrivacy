@@ -16,15 +16,19 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.1 EXPERIMENTAL**
+
+* **Redesigned restriction/settings engine/database**
+	* Existing settings will be migrated automatically
+	* No more missing and always up-to-date usage data
+	* Less processor and memory usage
+	* New features possible
 * Better method for hooking the bluetooth manager
 * Better method for hooking the package manager
 * Hook *getPackagesForUid*, *getPackagesHoldingPermissions* (JellyBean MR2) and *queryIntentContentProviders* (Kitkat)
 * Lower case randomized Android ID
-* Redesigned restriction/settings engine/database
-	* Existing restrictions/settings will be migrated automatically
-	* No more missing usage data
-	* Always up-to-date usage data
-	* Less processor and memory usage
 * Simple registration procedure for submitting restrictions
 * Moved IPC to separate category
 * Replaced *getNetwork...* and *getSim...* by system property restrictions
@@ -34,8 +38,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Updated Lithuanian translation
 * Updated Slovak translation
 * Updated Vietnamese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.11.13 EXPERIMENTAL**
 
