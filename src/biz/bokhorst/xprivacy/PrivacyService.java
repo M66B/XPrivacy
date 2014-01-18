@@ -133,10 +133,6 @@ public class PrivacyService {
 				// No persmissions required
 				final SQLiteDatabase db = getDatabase();
 
-				// Fallback
-				if (db.getVersion() == 1)
-					return PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
-
 				// Precompile statement when needed
 				if (stmtGetRestriction == null) {
 					String sql = "SELECT restricted FROM " + cTableRestriction
@@ -177,6 +173,10 @@ public class PrivacyService {
 				} finally {
 					db.endTransaction();
 				}
+
+				// Fallback
+				if (restricted == false && db.getVersion() == 1)
+					restricted = PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
 
 				// Log usage
 				if (usage) {
