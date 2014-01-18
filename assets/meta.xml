@@ -154,12 +154,12 @@
 	<Hook restriction="overlay" method="updateViewLayout" permissions="SYSTEM_ALERT_WINDOW" sdk="1" />
 
 	<Hook restriction="phone" method="getDeviceId" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getIsimDomain" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getIsimImpi" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getIsimImpu" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="10" />
+	<Hook restriction="phone" method="getIsimDomain" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="14" />
+	<Hook restriction="phone" method="getIsimImpi" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="14" />
+	<Hook restriction="phone" method="getIsimImpu" permissions="READ_PRIVILEGED_PHONE_STATE" sdk="14" />
 	<Hook restriction="phone" method="getLine1AlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="getLine1Number" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getMsisdn" permissions="READ_PHONE_STATE" sdk="10" />
+	<Hook restriction="phone" method="getMsisdn" permissions="READ_PHONE_STATE" sdk="14" />
 	<Hook restriction="phone" method="getSimSerialNumber" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="getSubscriberId" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="getVoiceMailAlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
