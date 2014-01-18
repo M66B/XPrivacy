@@ -185,7 +185,10 @@
 					//	}
 
 					if (!$found) {
-						$name = $restriction->restriction . '/' . $restriction->method;
+						if (empty($restriction->method))
+							$name = $restriction->restriction;
+						else
+							$name = $restriction->restriction . '/' . $restriction->method;
 						log_error('submit: restriction unknown: ' . $name , $my_email, $data);
 						//echo json_encode(array('ok' => false, 'error' => 'Restriction unknown: ' . $name));
 						//exit();
