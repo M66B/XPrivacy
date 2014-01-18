@@ -69,7 +69,14 @@ public class Requirements {
 		}
 
 		// Check if XPrivacy is enabled
-		if (!Util.isXposedEnabled()) {
+		if (Util.isXposedEnabled()) {
+			// Check privacy client
+			try {
+				PrivacyService.enforcePermission();
+			} catch (Throwable ex) {
+				sendSupportInfo(ex.toString(), context);
+			}
+		} else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
 			alertDialogBuilder.setMessage(context.getString(R.string.app_notenabled));
@@ -170,10 +177,17 @@ public class Requirements {
 					if (!"".equals(serviceName))
 						listService.add(serviceName);
 				}
-				for (String service : XBinder.cListService) {
+
+				// Check services
+				List<String> listMissing = new ArrayList<String>();
+				for (String service : XBinder.cListService)
 					if (!listService.contains(service))
-						sendSupportInfo(TextUtils.join("\r\n", listService), context);
-				}
+						listMissing.add(service);
+
+				// Check result
+				if (listMissing.size() > 0)
+					sendSupportInfo("Missing:\r\n" + TextUtils.join("\r\n", listMissing) + "\r\n\r\nAvailable:\r\n"
+							+ TextUtils.join("\r\n", listService), context);
 			} catch (NoSuchMethodException ex) {
 				reportClass(clazz, context);
 			} catch (Throwable ex) {
@@ -181,15 +195,6 @@ public class Requirements {
 			}
 		} catch (ClassNotFoundException ex) {
 			sendSupportInfo(ex.toString(), context);
-		}
-
-		// Check privacy client
-		if (Util.isXposedEnabled()) {
-			try {
-				PrivacyService.enforcePermission();
-			} catch (Throwable ex) {
-				sendSupportInfo(ex.toString(), context);
-			}
 		}
 
 		// Check wifi info
