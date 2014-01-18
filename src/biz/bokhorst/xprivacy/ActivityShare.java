@@ -275,9 +275,8 @@ public class ActivityShare extends Activity {
 			});
 
 			// Check device registration for submissions
-			if (action.equals(ACTION_SUBMIT) && !registerDevice(this)) {
-				btnOk.setEnabled(false);
-			}
+			if (action.equals(ACTION_SUBMIT))
+				btnOk.setEnabled(registerDevice(this));
 
 			// Allow users to remove apps from list
 			ListView lvShare = (ListView) findViewById(R.id.lvShare);
@@ -294,9 +293,13 @@ public class ActivityShare extends Activity {
 	}
 
 	protected void onResume() {
-		if (!mRunning && getTitle().equals(ACTION_SUBMIT))
-		// Check again for registration
-		final Button btnOk = (Button) findViewById(R.id.btnOk);
+		if (!mRunning && getTitle().equals(ACTION_SUBMIT)) {
+			// Check again for registration
+			final Button btnOk = (Button) findViewById(R.id.btnOk);
+			// If the registration has not been completed, this will ask again.
+			// I find that not quite ideal from a users point of view, but I suppose it will do.
+			btnOk.setEnabled(registerDevice(this));
+		}
 	}
 
 	@Override
