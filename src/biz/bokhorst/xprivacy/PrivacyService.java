@@ -176,7 +176,7 @@ public class PrivacyService {
 
 				// Fallback
 				if (restricted == false && db.getVersion() == 1)
-					return PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
+					restricted = PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
 
 				// Log usage
 				if (usage) {
