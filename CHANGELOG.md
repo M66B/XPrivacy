@@ -27,6 +27,7 @@ Test and beta releases will have experimental functions enabled by default.
 	* Less processor and memory usage
 * Simple registration procedure for submitting restrictions
 * Moved IPC to separate category
+* Replaced *getNetwork...* and *getSim...* by system property restrictions
 * Upgrade settings in separate thread
 * Updated Arabic translation
 * Updated Chinese translation

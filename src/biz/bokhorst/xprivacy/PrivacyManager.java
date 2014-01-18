@@ -212,6 +212,7 @@ public class PrivacyManager {
 				String permissions = attributes.getValue("permissions");
 				int sdk = (attributes.getValue("sdk") == null ? 0 : Integer.parseInt(attributes.getValue("sdk")));
 				String from = attributes.getValue("from");
+				String replaces = attributes.getValue("replaces");
 
 				// Add meta data
 				if (Build.VERSION.SDK_INT >= sdk) {
@@ -219,7 +220,7 @@ public class PrivacyManager {
 					boolean restartRequired = (restart == null ? false : Boolean.parseBoolean(restart));
 					String[] permission = (permissions == null ? null : permissions.split(","));
 					MethodDescription md = new MethodDescription(restrictionName, methodName, danger, restartRequired,
-							permission, sdk, from == null ? null : new Version(from));
+							permission, sdk, from == null ? null : new Version(from), replaces);
 
 					if (!mMethod.containsKey(restrictionName))
 						mMethod.put(restrictionName, new ArrayList<MethodDescription>());
@@ -642,26 +643,26 @@ public class PrivacyManager {
 		if (name.equals("getIsimImpu"))
 			return null;
 
-		if (name.equals("getNetworkCountryIso") || name.equals("gsm.operator.iso-country")) {
+		if (name.equals("gsm.operator.iso-country")) {
 			// ISO country code
 			String value = getSetting(null, uid, cSettingCountry, "XX", true);
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
-		if (name.equals("getNetworkOperator") || name.equals("gsm.operator.numeric"))
+		if (name.equals("gsm.operator.numeric"))
 			// MCC+MNC: test network
 			return getSetting(null, uid, cSettingMcc, "001", true) + getSetting(null, uid, cSettingMnc, "01", true);
-		if (name.equals("getNetworkOperatorName") || name.equals("gsm.operator.alpha"))
+		if (name.equals("gsm.operator.alpha"))
 			return getSetting(null, uid, cSettingOperator, cDeface, true);
 
-		if (name.equals("getSimCountryIso") || name.equals("gsm.sim.operator.iso-country")) {
+		if (name.equals("gsm.sim.operator.iso-country")) {
 			// ISO country code
 			String value = getSetting(null, uid, cSettingCountry, "XX", true);
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
-		if (name.equals("getSimOperator") || name.equals("gsm.sim.operator.numeric"))
+		if (name.equals("gsm.sim.operator.numeric"))
 			// MCC+MNC: test network
 			return getSetting(null, uid, cSettingMcc, "001", true) + getSetting(null, uid, cSettingMnc, "01", true);
-		if (name.equals("getSimOperatorName") || name.equals("gsm.sim.operator.alpha"))
+		if (name.equals("gsm.sim.operator.alpha"))
 			return getSetting(null, uid, cSettingOperator, cDeface, true);
 		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber"))
 			return getSetting(null, uid, cSettingIccId, null, true);
@@ -1053,6 +1054,7 @@ public class PrivacyManager {
 		private String[] mPermissions;
 		private int mSdk;
 		private Version mFrom;
+		private String mReplaces;
 
 		public MethodDescription(String restrictionName, String methodName) {
 			mRestrictionName = restrictionName;
@@ -1060,7 +1062,7 @@ public class PrivacyManager {
 		}
 
 		public MethodDescription(String restrictionName, String methodName, boolean dangerous, boolean restart,
-				String[] permissions, int sdk, Version from) {
+				String[] permissions, int sdk, Version from, String replaces) {
 			mRestrictionName = restrictionName;
 			mMethodName = methodName;
 			mDangerous = dangerous;
@@ -1068,6 +1070,7 @@ public class PrivacyManager {
 			mPermissions = permissions;
 			mSdk = sdk;
 			mFrom = from;
+			mReplaces = replaces;
 		}
 
 		public String getRestrictionName() {
@@ -1101,6 +1104,10 @@ public class PrivacyManager {
 
 		public Version getFrom() {
 			return mFrom;
+		}
+
+		public String getReplaces() {
+			return mReplaces;
 		}
 
 		@Override

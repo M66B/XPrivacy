@@ -165,27 +165,21 @@
 	<Hook restriction="phone" method="getVoiceMailAlphaTag" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="getVoiceMailNumber" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="listen" permissions="READ_PHONE_STATE" sdk="10" />
-	<Hook restriction="phone" method="getNetworkCountryIso" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getNetworkOperator" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getNetworkOperatorName" permissions="" sdk="10" />
 	<Hook restriction="phone" method="getNetworkType" permissions="" sdk="10" />
 	<Hook restriction="phone" method="getPhoneType" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getSimCountryIso" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getSimOperator" permissions="" sdk="10" />
-	<Hook restriction="phone" method="getSimOperatorName" permissions="" sdk="10" />
 	<Hook restriction="phone" method="getGroupIdLevel1" permissions="READ_PHONE_STATE" sdk="18" />
 	<Hook restriction="phone" method="android.intent.action.NEW_OUTGOING_CALL" permissions="PROCESS_OUTGOING_CALLS" sdk="10" />
 	<Hook restriction="phone" method="android.intent.action.PHONE_STATE" permissions="READ_PHONE_STATE" sdk="10" />
 	<Hook restriction="phone" method="TelephonyProvider" permissions="WRITE_APN_SETTINGS" sdk="10" />
 	<Hook restriction="phone" method="CallLogProvider" permissions="READ_CALL_LOG" sdk="10" />
 
-	<Hook restriction="phone" method="gsm.operator.iso-country" permissions="" sdk="10" />
-	<Hook restriction="phone" method="gsm.operator.numeric" permissions="" sdk="10" />
-	<Hook restriction="phone" method="gsm.operator.alpha" permissions="" sdk="10" />
-	<Hook restriction="phone" method="gsm.current.phone-type" permissions="" sdk="10" />
-	<Hook restriction="phone" method="gsm.sim.operator.iso-country" permissions="" sdk="10" />
-	<Hook restriction="phone" method="gsm.sim.operator.numeric" permissions="" sdk="10" />
-	<Hook restriction="phone" method="gsm.sim.operator.alpha" permissions="" sdk="10" />
+	<Hook restriction="phone" method="gsm.operator.iso-country" permissions="" from="1.99.1" replaces="getNetworkCountryIso" sdk="10" />
+	<Hook restriction="phone" method="gsm.operator.numeric" permissions="" from="1.99.1" replaces="getNetworkOperator" sdk="10" />
+	<Hook restriction="phone" method="gsm.operator.alpha" permissions="" from="1.99.1" replaces="getNetworkOperatorName" sdk="10" />
+	<Hook restriction="phone" method="gsm.current.phone-type" permissions="" from="1.99.1" replaces="" sdk="10" />
+	<Hook restriction="phone" method="gsm.sim.operator.iso-country" permissions="" from="1.99.1" replaces="getSimCountryIso" sdk="10" />
+	<Hook restriction="phone" method="gsm.sim.operator.numeric" permissions="" from="1.99.1" replaces="getSimOperator" sdk="10" />
+	<Hook restriction="phone" method="gsm.sim.operator.alpha" permissions="" from="1.99.1" replaces="getSimOperatorName" sdk="10" />
 
 	<Hook restriction="sensors" method="getDefaultSensor" permissions="" sdk="3" />
 	<Hook restriction="sensors" method="getSensorList" permissions="" sdk="3" />

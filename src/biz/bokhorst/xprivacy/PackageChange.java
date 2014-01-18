@@ -172,17 +172,33 @@ public class PackageChange extends BroadcastReceiver {
 						+ pInfo.versionName);
 				boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false,
 						false);
-				if (!dangerous)
+
+				// All packages
+				for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
 					for (String restrictionName : PrivacyManager.getRestrictions())
 						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName))
-							if (md.isDangerous() && md.getFrom() != null)
+							if (md.getFrom() != null)
 								if (sVersion.compareTo(md.getFrom()) < 0) {
-									Util.log(null, Log.WARN, "Upgrading " + md + " from=" + md.getFrom());
-									for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
+									// Disable new dangerous restrictions
+									if (!dangerous && md.isDangerous()) {
+										Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom()
+												+ " pkg=" + aInfo.packageName);
 										PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(),
 												md.getName(), false, true);
-								} else
-									Util.log(null, Log.WARN, "No upgrade needed for " + md + " from=" + md.getFrom());
+									}
+
+									// Restrict replaced methods
+									if (md.getReplaces() != null)
+										if (PrivacyManager.getRestricted(null, aInfo.uid, md.getRestrictionName(),
+												md.getReplaces(), false, false)) {
+											Util.log(null, Log.WARN, "Replaced " + md.getReplaces() + " by " + md
+													+ " from=" + md.getFrom() + " pkg=" + aInfo.packageName);
+											PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(),
+													md.getName(), true, true);
+										}
+								}
+
+				Util.log(null, Log.WARN, "Upgrade done");
 			}
 
 			// Set new version
