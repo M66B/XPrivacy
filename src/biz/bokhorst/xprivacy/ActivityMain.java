@@ -73,6 +73,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private String mSharingState = null;
 	private int mEasterEgg;
 
+	private Handler mProHandler = new Handler();
+
 	public static final int STATE_ATTENTION = 0;
 	public static final int STATE_RESTRICTED = 1;
 	public static final int STATE_SHARED = 2;
@@ -446,7 +448,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					toast.show();
 				} else if (reason == RETRY) {
 					Util.setPro(false);
-					new Handler().postDelayed(new Runnable() {
+					mProHandler.postDelayed(new Runnable() {
 						@Override
 						public void run() {
 							checkLicense();
