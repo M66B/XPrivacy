@@ -84,6 +84,7 @@ public class BootReceiver extends BroadcastReceiver {
 		try {
 			// Disable some restrictions for self
 			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "/proc", false, false);
+			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIPC, null, false, false);
 			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
 			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);
 

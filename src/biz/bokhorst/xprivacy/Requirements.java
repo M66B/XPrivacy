@@ -167,12 +167,12 @@ public class Requirements {
 				// public static String[] listServices()
 				// public static IBinder checkService(String name)
 				Method listServices = clazz.getDeclaredMethod("listServices");
-				Method checkService = clazz.getDeclaredMethod("checkService", String.class);
+				Method getService = clazz.getDeclaredMethod("getService", String.class);
 
 				// Get services
 				List<String> listService = new ArrayList<String>();
 				for (String service : (String[]) listServices.invoke(null)) {
-					IBinder binder = (IBinder) checkService.invoke(null, service);
+					IBinder binder = (IBinder) getService.invoke(null, service);
 					String serviceName = binder.getInterfaceDescriptor();
 					if (!"".equals(serviceName))
 						listService.add(serviceName);
