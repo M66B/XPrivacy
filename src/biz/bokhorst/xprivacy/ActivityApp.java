@@ -900,8 +900,7 @@ public class ActivityApp extends Activity {
 
 			for (String rRestrictionName : PrivacyManager.getRestrictions(ActivityApp.this).values()) {
 				boolean isUsed = (PrivacyManager.getUsed(mAppInfo.getUid(), rRestrictionName, null) > 0);
-				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
-						rRestrictionName);
+				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, rRestrictionName);
 				if (mSelectedRestrictionName != null
 						|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
 					mRestrictions.add(rRestrictionName);
@@ -968,8 +967,7 @@ public class ActivityApp extends Activity {
 				if (restrictionName != null) {
 					// Get info
 					used = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, null) != 0);
-					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
-							restrictionName);
+					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo, restrictionName);
 
 					// Get all dangerous
 					for (PrivacyManager.Hook hook : PrivacyManager.getHooks(restrictionName))
@@ -1107,8 +1105,7 @@ public class ActivityApp extends Activity {
 				String restrictionName = mRestrictions.get(groupPosition);
 				for (PrivacyManager.Hook md : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
 					boolean isUsed = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName()) > 0);
-					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
-							md);
+					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
 					if (mSelectedMethodName != null
 							|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
 						listMethod.add(md);
@@ -1182,7 +1179,7 @@ public class ActivityApp extends Activity {
 					lastUsage = PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName());
 					parentRestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null,
 							false, false);
-					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(), md);
+					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo, md);
 					restricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, md.getName(),
 							false, false);
 

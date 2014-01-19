@@ -25,6 +25,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Process;
 import android.util.Log;
+import android.util.SparseArray;
 
 public class PrivacyManager {
 	// This should correspond with restrict_<name> in strings.xml
@@ -125,6 +126,8 @@ public class PrivacyManager {
 	private static Map<String, List<Hook>> mPermission = new LinkedHashMap<String, List<Hook>>();
 	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
+	public static SparseArray<Map<String, Boolean>> mPermissionRestrictionCache = new SparseArray<Map<String, Boolean>>();
+	public static SparseArray<Map<Hook, Boolean>> mPermissionHookCache = new SparseArray<Map<Hook, Boolean>>();
 
 	// Meta data
 
@@ -834,22 +837,38 @@ public class PrivacyManager {
 		return (uid >= FIRST_ISOLATED_UID && uid <= LAST_ISOLATED_UID);
 	}
 
-	public static boolean hasPermission(Context context, List<String> listPackageName, String restrictionName) {
-		return hasPermission(context, listPackageName, PrivacyManager.getPermissions(restrictionName));
+	public static boolean hasPermission(Context context, ApplicationInfoEx appInfo, String restrictionName) {
+		int uid = appInfo.getUid();
+		if (mPermissionRestrictionCache.get(uid) == null)
+			mPermissionRestrictionCache.append(uid, new HashMap<String, Boolean>());
+		if (!mPermissionRestrictionCache.get(uid).containsKey(restrictionName)) {
+			boolean permission = hasPermission(context, appInfo.getPackageName(),
+					PrivacyManager.getPermissions(restrictionName));
+			mPermissionRestrictionCache.get(uid).put(restrictionName, permission);
+		}
+		return mPermissionRestrictionCache.get(uid).get(restrictionName);
 	}
 
-	public static boolean hasPermission(Context context, List<String> listPackageName, Hook md) {
-		List<String> listPermission = (md.getPermissions() == null ? null : Arrays.asList(md.getPermissions()));
-		return hasPermission(context, listPackageName, listPermission);
+	public static boolean hasPermission(Context context, ApplicationInfoEx appInfo, Hook md) {
+		int uid = appInfo.getUid();
+		if (mPermissionHookCache.get(uid) == null)
+			mPermissionHookCache.append(uid, new HashMap<Hook, Boolean>());
+		if (!mPermissionHookCache.get(uid).containsKey(md)) {
+
+			List<String> listPermission = (md.getPermissions() == null ? null : Arrays.asList(md.getPermissions()));
+			boolean permission = hasPermission(context, appInfo.getPackageName(), listPermission);
+			mPermissionHookCache.get(uid).put(md, permission);
+		}
+		return mPermissionHookCache.get(uid).get(md);
 	}
 
 	@SuppressLint("DefaultLocale")
-	private static boolean hasPermission(Context context, List<String> listPackageName, List<String> listPermission) {
+	private static boolean hasPermission(Context context, List<String> listPackage, List<String> listPermission) {
 		try {
 			if (listPermission == null || listPermission.size() == 0 || listPermission.contains(""))
 				return true;
 			PackageManager pm = context.getPackageManager();
-			for (String packageName : listPackageName) {
+			for (String packageName : listPackage) {
 				PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
 				if (pInfo != null && pInfo.requestedPermissions != null)
 					for (String rPermission : pInfo.requestedPermissions)

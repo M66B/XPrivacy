@@ -1326,7 +1326,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					if (fPermission)
 						if (mRestrictionName == null)
 							permission = true;
-						else if (PrivacyManager.hasPermission(mContext, xAppInfo.getPackageName(), mRestrictionName)
+						else if (PrivacyManager.hasPermission(mContext, xAppInfo, mRestrictionName)
 								|| PrivacyManager.getUsed(xAppInfo.getUid(), mRestrictionName, null) > 0)
 							permission = true;
 
@@ -1447,8 +1447,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					// Get if granted
 					if (mRestrictionName != null)
-						if (!PrivacyManager.hasPermission(holder.row.getContext(), xAppInfo.getPackageName(),
-								mRestrictionName))
+						if (!PrivacyManager.hasPermission(holder.row.getContext(), xAppInfo, mRestrictionName))
 							granted = false;
 
 					// Get restrictions
