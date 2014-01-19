@@ -619,7 +619,8 @@ public class PrivacyProvider extends ContentProvider {
 		setPrefFileReadable(PREF_SETTINGS);
 	}
 
-	public static void migrateRestrictions(Context context) {
+	public static boolean migrateRestrictions(Context context) {
+		boolean migrated = false;
 		try {
 			// Legacy restrictions
 			convertRestrictions(context);
@@ -638,6 +639,7 @@ public class PrivacyProvider extends ContentProvider {
 					for (String restrictionName : PrivacyManager.getRestrictions())
 						if (getRestricted(restrictionName, null, prefs)) {
 							// Category
+							migrated = true;
 							PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName, null, true);
 							Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name="
 									+ restrictionName);
@@ -660,9 +662,11 @@ public class PrivacyProvider extends ContentProvider {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
+		return migrated;
 	}
 
-	public static void migrateSettings(Context context) {
+	public static boolean migrateSettings(Context context) {
+		boolean migrated = false;
 		try {
 			// Process settings
 			File prefFile = new File(getPrefFileName(PREF_SETTINGS));
@@ -707,6 +711,7 @@ public class PrivacyProvider extends ContentProvider {
 						}
 
 						// Set
+						migrated = true;
 						PrivacyService.getClient().setSetting(uid, name, value);
 						Util.log(null, Log.WARN, "Migrate setting=" + getSettingName(settingKey) + " uid=" + uid
 								+ " name=" + name + " value=" + value);
@@ -719,5 +724,6 @@ public class PrivacyProvider extends ContentProvider {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
+		return migrated;
 	}
 }
