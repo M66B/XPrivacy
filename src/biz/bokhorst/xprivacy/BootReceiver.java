@@ -12,23 +12,28 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class BootReceiver extends BroadcastReceiver {
+	private static Thread mMigrateThread;
+	private static Thread mRandomizeThread;
+
 	@Override
 	public void onReceive(final Context context, Intent bootIntent) {
 		// Migrate settings
-		new Thread(new Runnable() {
+		mMigrateThread = new Thread(new Runnable() {
 			public void run() {
 				migrate(context);
 			}
-		}).start();
+		});
+		mMigrateThread.start();
 
 		// Randomize settings
-		new Thread(new Runnable() {
+		mRandomizeThread = new Thread(new Runnable() {
 			public void run() {
 				randomizeSettings(context, 0);
 				for (ApplicationInfo aInfo : context.getPackageManager().getInstalledApplications(0))
 					randomizeSettings(context, aInfo.uid);
 			}
-		}).start();
+		});
+		mRandomizeThread.start();
 
 		// Check if Xposed enabled
 		if (Util.isXposedEnabled())
@@ -85,7 +90,8 @@ public class BootReceiver extends BroadcastReceiver {
 			// Disable some restrictions for self
 			PrivacyManager.setRestricted(null, PrivacyManager.cAndroidUid, PrivacyManager.cIdentification, "/proc",
 					false, false);
-			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "getString", false, false);
+			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "getString", false,
+					false);
 			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIPC, null, false, false);
 			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
 			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);

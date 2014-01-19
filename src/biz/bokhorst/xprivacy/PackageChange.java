@@ -19,6 +19,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 public class PackageChange extends BroadcastReceiver {
+	private static Thread mUpgradeThread;
 
 	@Override
 	@SuppressLint("NewApi")
@@ -158,12 +159,14 @@ public class PackageChange extends BroadcastReceiver {
 						notificationManager.notify(0, notification);
 
 						// Upgrade restrictions
-						if (PrivacyService.getClient() != null)
-							new Thread(new Runnable() {
+						if (PrivacyService.getClient() != null) {
+							mUpgradeThread = new Thread(new Runnable() {
 								public void run() {
 									upgradeRestrictions(context);
 								}
-							}).start();
+							});
+							mUpgradeThread.start();
+						}
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed

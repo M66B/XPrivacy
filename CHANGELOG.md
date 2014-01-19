@@ -22,6 +22,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed deleting all usage data
 * Replaced Play service library by local interface definition (smaller application size)
 * Removed obsolete restriction GMS.connect
+* Guarantee migrate, upgrade, randomize threads keep running
 
 **Version 1.99.4 EXPERIMENTAL**
 
