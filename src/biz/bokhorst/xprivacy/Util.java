@@ -173,9 +173,6 @@ public class Util {
 
 	public static String hasProLicense(Context context) {
 		try {
-			// Disable storage restriction
-			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
-
 			// Get license
 			String[] license = getProLicenseUnchecked();
 			if (license == null)
@@ -343,9 +340,6 @@ public class Util {
 	}
 
 	public static void viewUri(Context context, Uri uri) {
-		// Disable view restriction
-		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);
-
 		Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 		infoIntent.setData(uri);
 		context.startActivity(infoIntent);

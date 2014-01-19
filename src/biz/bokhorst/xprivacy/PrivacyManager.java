@@ -377,6 +377,15 @@ public class PrivacyManager {
 			return false;
 		}
 
+		// Prevent some restrictions for self
+		if (uid == Process.myUid())
+			if (PrivacyManager.cIdentification.equals(restrictionName) && "/proc".equals(methodName))
+				return false;
+			else if (PrivacyManager.cStorage.equals(restrictionName))
+				return false;
+			else if (PrivacyManager.cView.equals(restrictionName))
+				return false;
+
 		// Set restriction
 		try {
 			PrivacyService.getClient().setRestriction(uid, restrictionName, methodName, restricted);
