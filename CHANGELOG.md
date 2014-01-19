@@ -16,15 +16,17 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Removed restriction *getPackagesForUid*
-* Migrate on boot completed and display notification migration completed
-* Attempt to fix security exception
-* Moved meta.xml to Meta class
-* Cache permissions
-* Optimized usage data getting (solves performance problems)
-* Use inbox style notifications ([issue](https://github.com/M66B/XPrivacy/issues/1112))
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.2 EXPERIMENTAL**
+
+* Removed restriction *getPackagesForUid*
+* Migrate on boot completed event and display notification migration completed
+* Attempt to fix security exception (based on received support info)
+* Moved meta.xml to Meta class
+* Cache permissions for better performance
+* Optimized usage data getting (should solve most of the performance issue)
+* Use inbox style notifications ([issue](https://github.com/M66B/XPrivacy/issues/1112))
 
 **Version 1.99.1 EXPERIMENTAL**
 
