@@ -16,6 +16,8 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Option to register device on custom e-mail address
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.2 EXPERIMENTAL**

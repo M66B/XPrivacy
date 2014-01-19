@@ -58,6 +58,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class ActivityShare extends Activity {
@@ -916,27 +917,31 @@ public class ActivityShare extends Activity {
 		if (Util.hasProLicense(context) == null
 				&& !PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingRegistered, false, false)) {
 			// Get accounts
-			final List<Account> listAccount = new ArrayList<Account>();
-			List<CharSequence> listName = new ArrayList<CharSequence>();
+			String email = null;
 			for (Account account : AccountManager.get(context).getAccounts())
 				if ("com.google".equals(account.type)) {
-					listAccount.add(account);
-					listName.add(String.format("%s (%s)", account.name, account.type));
+					email = account.name;
+					break;
 				}
 
 			// Build dialog
+			final EditText input = new EditText(context);
+			if (email != null)
+				input.setText(email);
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(context.getString(R.string.msg_register));
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
-			alertDialogBuilder.setSingleChoiceItems(listName.toArray(new CharSequence[0]), -1,
+			alertDialogBuilder.setView(input);
+			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Account account = listAccount.get(which);
-							new RegisterTask(context).executeOnExecutor(mExecutor, account.name);
+							String email = input.getText().toString();
+							if (!"".equals(email))
+								new RegisterTask(context).executeOnExecutor(mExecutor, email);
 						}
 					});
-			alertDialogBuilder.setPositiveButton(context.getString(R.string.msg_done),
+			alertDialogBuilder.setNegativeButton(context.getString(android.R.string.cancel),
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
