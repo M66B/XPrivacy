@@ -98,7 +98,6 @@ public class Meta {
 		listHook.add(new PrivacyManager.Hook("location", "getScanResults", true, false, "ACCESS_WIFI_STATE", 10, null, null));
 		listHook.add(new PrivacyManager.Hook("location", "listen", false, false, "ACCESS_COARSE_LOCATION", 10, null, null));
 		listHook.add(new PrivacyManager.Hook("location", "GMS.addGeofences", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
-		listHook.add(new PrivacyManager.Hook("location", "GMS.connect", true, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
 		listHook.add(new PrivacyManager.Hook("location", "GMS.getLastLocation", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
 		listHook.add(new PrivacyManager.Hook("location", "GMS.removeGeofences", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
 		listHook.add(new PrivacyManager.Hook("location", "GMS.removeLocationUpdates", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
