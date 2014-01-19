@@ -293,16 +293,21 @@ public class PrivacyManager {
 			return false;
 		}
 
-		// Prevent some restrictions for self
-		if (uid == Process.myUid())
+		// Prevent some restrictions for Android
+		if (uid == PrivacyManager.cAndroidUid)
 			if (PrivacyManager.cIdentification.equals(restrictionName) && "/proc".equals(methodName))
 				return false;
-			else if (PrivacyManager.cIPC.equals(restrictionName))
+
+		// Prevent some restrictions for self
+		if (uid == Process.myUid())
+			if (PrivacyManager.cIdentification.equals(restrictionName) && "getString".equals(methodName))
 				return false;
-			else if (PrivacyManager.cStorage.equals(restrictionName))
-				return false;
-			else if (PrivacyManager.cView.equals(restrictionName))
-				return false;
+		if (PrivacyManager.cIPC.equals(restrictionName))
+			return false;
+		else if (PrivacyManager.cStorage.equals(restrictionName))
+			return false;
+		else if (PrivacyManager.cView.equals(restrictionName))
+			return false;
 
 		// Set restriction
 		try {

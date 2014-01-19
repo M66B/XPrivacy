@@ -83,7 +83,9 @@ public class BootReceiver extends BroadcastReceiver {
 	private void migrate(final Context context) {
 		try {
 			// Disable some restrictions for self
-			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "/proc", false, false);
+			PrivacyManager.setRestricted(null, PrivacyManager.cAndroidUid, PrivacyManager.cIdentification, "/proc",
+					false, false);
+			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "getString", false, false);
 			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIPC, null, false, false);
 			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
 			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);
