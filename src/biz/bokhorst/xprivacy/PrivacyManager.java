@@ -1,10 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -21,14 +16,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.UUID;
-
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -134,119 +121,45 @@ public class PrivacyManager {
 	public final static int cUseProviderAfterMs = 3 * 60 * 1000;
 
 	// Static data
-	private static boolean mMetaData = false;
-	private static Map<String, List<Hook>> mMethod;
-	private static Map<String, List<Hook>> mPermission;
+	private static Map<String, List<Hook>> mMethod = new LinkedHashMap<String, List<Hook>>();
+	private static Map<String, List<Hook>> mPermission = new LinkedHashMap<String, List<Hook>>();
 	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
-	static {
-		readMetaData();
-	}
-
-	public static void writeMetaData(Context context) {
-		// Write meta data
-		// TODO: find a way to get the meta data without context
-		try {
-			File out = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
-			Util.log(null, Log.WARN, "Writing meta=" + out.getAbsolutePath());
-			InputStream is = context.getAssets().open("meta.xml");
-			OutputStream os = new FileOutputStream(out.getAbsolutePath());
-			byte[] buffer = new byte[1024];
-			int read;
-			while ((read = is.read(buffer)) != -1)
-				os.write(buffer, 0, read);
-			is.close();
-			os.flush();
-			os.close();
-			out.setReadable(true, false);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-	}
-
-	public static void readMetaData() {
-		// Reset meta data
-		mMethod = new LinkedHashMap<String, List<Hook>>();
-		mPermission = new LinkedHashMap<String, List<Hook>>();
-
-		// Read meta data
-		try {
-			File in = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
-			if (in.exists()) {
-				Util.log(null, Log.INFO, "Reading meta=" + in.getAbsolutePath());
-				FileInputStream fis = null;
-				try {
-					fis = new FileInputStream(in);
-					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
-					MetaHandler metaHandler = new MetaHandler();
-					xmlReader.setContentHandler(metaHandler);
-					xmlReader.parse(new InputSource(fis));
-					mMetaData = true;
-				} finally {
-					if (fis != null)
-						fis.close();
-				}
-			} else
-				Util.log(null, Log.WARN, "Not found meta=" + in.getAbsolutePath());
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-	}
-
-	public static boolean hasMetaData() {
-		return mMetaData;
-	}
-
-	private static class MetaHandler extends DefaultHandler {
-		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			if (qName.equals("Meta"))
-				;
-			else if (qName.equals("Hook")) {
-				// Get meta data
-				String restrictionName = attributes.getValue("restriction");
-				String methodName = attributes.getValue("method");
-				String dangerous = attributes.getValue("dangerous");
-				String restart = attributes.getValue("restart");
-				String permissions = attributes.getValue("permissions");
-				int sdk = (attributes.getValue("sdk") == null ? 0 : Integer.parseInt(attributes.getValue("sdk")));
-				String from = attributes.getValue("from");
-				String replaces = attributes.getValue("replaces");
-
-				// Add meta data
-				if (Build.VERSION.SDK_INT >= sdk) {
-					boolean danger = (dangerous == null ? false : Boolean.parseBoolean(dangerous));
-					boolean restartRequired = (restart == null ? false : Boolean.parseBoolean(restart));
-					String[] permission = (permissions == null ? null : permissions.split(","));
-					Hook md = new Hook(restrictionName, methodName, danger, restartRequired, permission, sdk,
-							from == null ? null : new Version(from), replaces);
-
-					if (!mMethod.containsKey(restrictionName))
-						mMethod.put(restrictionName, new ArrayList<Hook>());
-
-					if (!mMethod.get(restrictionName).contains(methodName))
-						mMethod.get(restrictionName).add(md);
-
-					if (permission != null)
-						for (String perm : permission)
-							if (!perm.equals("")) {
-								String aPermission = (perm.contains(".") ? perm : "android.permission." + perm);
-								if (!mPermission.containsKey(aPermission))
-									mPermission.put(aPermission, new ArrayList<Hook>());
-								if (!mPermission.get(aPermission).contains(md))
-									mPermission.get(aPermission).add(md);
-							}
-				}
-			} else
-				Util.log(null, Log.WARN, "Unknown element=" + qName);
-		}
-	}
-
 	// Meta data
 
+	static {
+		List<String> listRestriction = getRestrictions();
+
+		for (Hook hook : Meta.get())
+			if (Build.VERSION.SDK_INT >= hook.getSdk()) {
+				String restrictionName = hook.getRestrictionName();
+
+				// Check restriction
+				if (!listRestriction.contains(restrictionName))
+					Util.log(null, Log.WARN, "Not found restriction=" + restrictionName);
+
+				// Enlist method
+				if (!mMethod.containsKey(restrictionName))
+					mMethod.put(restrictionName, new ArrayList<Hook>());
+				mMethod.get(restrictionName).add(hook);
+
+				// Enlist permissions
+				String[] permissions = hook.getPermissions();
+				if (permissions != null)
+					for (String perm : permissions)
+						if (!perm.equals("")) {
+							String aPermission = (perm.contains(".") ? perm : "android.permission." + perm);
+							if (!mPermission.containsKey(aPermission))
+								mPermission.put(aPermission, new ArrayList<Hook>());
+							if (!mPermission.get(aPermission).contains(hook))
+								mPermission.get(aPermission).add(hook);
+						}
+			}
+	}
+
 	public static void registerMethod(String restrictionName, String methodName, int sdk) {
-		if (hasMetaData() && restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
+		if (restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
 			if (!mMethod.containsKey(restrictionName)
 					|| !mMethod.get(restrictionName).contains(new Hook(restrictionName, methodName)))
 				Util.log(null, Log.WARN, "Missing method " + methodName);
@@ -1070,15 +983,15 @@ public class PrivacyManager {
 			mMethodName = methodName;
 		}
 
-		public Hook(String restrictionName, String methodName, boolean dangerous, boolean restart,
-				String[] permissions, int sdk, Version from, String replaces) {
+		public Hook(String restrictionName, String methodName, boolean dangerous, boolean restart, String permissions,
+				int sdk, String from, String replaces) {
 			mRestrictionName = restrictionName;
 			mMethodName = methodName;
 			mDangerous = dangerous;
 			mRestart = restart;
-			mPermissions = permissions;
+			mPermissions = (permissions == null ? null : permissions.split(","));
 			mSdk = sdk;
-			mFrom = from;
+			mFrom = (from == null ? null : new Version(from));
 			mReplaces = replaces;
 		}
 

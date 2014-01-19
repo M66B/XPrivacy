@@ -131,13 +131,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// Update meta data
-		PrivacyManager.writeMetaData(this);
-		PrivacyManager.readMetaData();
-
 		// Check privacy service client
-		if (!Util.isXposedEnabled() || !PrivacyManager.hasMetaData() || PrivacyService.getClient() == null) {
+		if (!Util.isXposedEnabled() || PrivacyService.getClient() == null) {
 			setContentView(R.layout.reboot);
 			Requirements.check(this);
 			mPackageChangeReceiver = null;
