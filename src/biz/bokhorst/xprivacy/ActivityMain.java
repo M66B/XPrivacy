@@ -1598,12 +1598,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								// Update restriction
 								boolean restart = false;
 								boolean crestricted = false;
-								for (String restrictionName : listRestriction) {
-									crestricted = PrivacyManager.getRestricted(null, xAppInfo.getUid(),
-											restrictionName, null, false, false) || crestricted;
+								for (String restrictionName : listRestriction)
+									crestricted = crestricted
+											|| PrivacyManager.getRestricted(null, xAppInfo.getUid(), restrictionName,
+													null, false, false);
+								for (String restrictionName : listRestriction)
 									restart = PrivacyManager.setRestricted(null, xAppInfo.getUid(), restrictionName,
 											null, !crestricted, true) || restart;
-								}
 
 								// Update all/some restricted
 								allRestricted = true;
