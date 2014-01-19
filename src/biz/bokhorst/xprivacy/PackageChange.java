@@ -23,10 +23,6 @@ public class PackageChange extends BroadcastReceiver {
 	@Override
 	@SuppressLint("NewApi")
 	public void onReceive(final Context context, Intent intent) {
-		// Check privacy service client
-		if (PrivacyService.getClient() == null)
-			return;
-
 		try {
 			// Check uri
 			Uri inputUri = Uri.parse(intent.getDataString());
@@ -46,19 +42,25 @@ public class PackageChange extends BroadcastReceiver {
 					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
 
 					// Default deny new user apps
-					if (!replacing) {
-						// Delete any existing restrictions
-						PrivacyManager.deleteRestrictions(uid, true);
-						PrivacyManager.deleteSettings(uid);
-						PrivacyManager.deleteUsage(uid);
+					if (PrivacyService.getClient() != null) {
+						if (!replacing) {
+							// Delete existing restrictions
+							PrivacyManager.deleteRestrictions(uid, true);
+							PrivacyManager.deleteSettings(uid);
+							PrivacyManager.deleteUsage(uid);
 
-						// Restrict new non-system apps
-						if (!appInfo.isSystem())
-							for (String restrictionName : PrivacyManager.getRestrictions()) {
-								String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-								if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
-									PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true);
-							}
+							// Restrict new non-system apps
+							if (!appInfo.isSystem())
+								for (String restrictionName : PrivacyManager.getRestrictions()) {
+									String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
+									if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
+										PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true);
+								}
+						}
+
+						// Mark as new/changed
+						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingState,
+								Integer.toString(ActivityMain.STATE_ATTENTION));
 					}
 
 					// New/update notification
@@ -139,10 +141,6 @@ public class PackageChange extends BroadcastReceiver {
 						Notification notification = notificationBuilder.build();
 						notificationManager.notify(appInfo.getUid(), notification);
 					}
-
-					// Mark as new/changed
-					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingState,
-							Integer.toString(ActivityMain.STATE_ATTENTION));
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
 					// Notify reboot required
 					String packageName = inputUri.getSchemeSpecificPart();
@@ -160,18 +158,23 @@ public class PackageChange extends BroadcastReceiver {
 						notificationManager.notify(0, notification);
 
 						// Upgrade restrictions
-						new Thread(new Runnable() {
-							public void run() {
-								upgradeRestrictions(context);
-							}
-						}).start();
+						if (PrivacyService.getClient() != null)
+							new Thread(new Runnable() {
+								public void run() {
+									upgradeRestrictions(context);
+								}
+							}).start();
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed
 					notificationManager.cancel(uid);
-					PrivacyManager.deleteRestrictions(uid, true);
-					PrivacyManager.deleteSettings(uid);
-					PrivacyManager.deleteUsage(uid);
+
+					// Delete restrictions
+					if (PrivacyService.getClient() != null) {
+						PrivacyManager.deleteRestrictions(uid, true);
+						PrivacyManager.deleteSettings(uid);
+						PrivacyManager.deleteUsage(uid);
+					}
 				}
 			}
 		} catch (Throwable ex) {

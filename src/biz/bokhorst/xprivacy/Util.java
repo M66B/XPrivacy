@@ -43,7 +43,6 @@ import android.os.Process;
 import android.os.UserHandle;
 import android.util.Base64;
 import android.util.Log;
-import android.util.SparseArray;
 import android.util.TypedValue;
 
 public class Util {
@@ -426,8 +425,6 @@ public class Util {
 		in.close();
 		out.close();
 	}
-
-	private static SparseArray<String> mPidPkg = new SparseArray<String>();
 
 	public static Bitmap[] getTriStateCheckBox(Context context) {
 		Bitmap[] bitmap = new Bitmap[3];
