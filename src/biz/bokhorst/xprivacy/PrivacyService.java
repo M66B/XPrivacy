@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
@@ -25,6 +26,7 @@ import android.os.StrictMode.ThreadPolicy;
 import android.util.Log;
 
 public class PrivacyService {
+	private static int mXPrivacyUid = 0;
 	private static IPrivacyService mClient = null;
 	private static SQLiteDatabase mDatabase = null;
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -35,7 +37,7 @@ public class PrivacyService {
 	private static SQLiteStatement stmtGetUsageMethod = null;
 
 	private static int cCurrentVersion = 1;
-	private static String cServiceName = "xprivacy236";
+	private static String cServiceName = "xprivacy237";
 	private static String cTableRestriction = "restriction";
 	private static String cTableUsage = "usage";
 	private static String cTableSetting = "setting";
@@ -80,9 +82,23 @@ public class PrivacyService {
 
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
 
+		// Management
+
 		@Override
 		public int getVersion() throws RemoteException {
 			return cCurrentVersion;
+		}
+
+		@Override
+		public void migrated() throws RemoteException {
+			SQLiteDatabase db = getDatabase();
+			if (db.getVersion() < 2)
+				db.setVersion(2);
+		}
+
+		@Override
+		public void check() throws RemoteException {
+			enforcePermission();
 		}
 
 		// Restrictions
@@ -515,20 +531,34 @@ public class PrivacyService {
 				throw new RemoteException(ex.toString());
 			}
 		}
-
-		@Override
-		public void migrated() throws RemoteException {
-			SQLiteDatabase db = getDatabase();
-			if (db.getVersion() < 2)
-				db.setVersion(2);
-		}
 	};
 
-	public static void enforcePermission() {
-		String self = PrivacyService.class.getPackage().getName();
-		String calling = Util.getPackageNameByPid(Binder.getCallingPid());
-		if (!self.equals(calling))
-			throw new SecurityException("self=" + self + " calling=" + calling);
+	private static void enforcePermission() {
+		int uid = Binder.getCallingUid();
+		if (mXPrivacyUid == 0) {
+			Context context = getContext();
+			String[] packages = context.getPackageManager().getPackagesForUid(uid);
+			String self = PrivacyService.class.getPackage().getName();
+			String calling = (packages.length > 0 ? packages[0] : null);
+			if (self.equals(calling))
+				mXPrivacyUid = uid;
+			else
+				throw new SecurityException("self=" + self + " calling=" + calling);
+		} else if (uid != mXPrivacyUid)
+			throw new SecurityException("uid=" + mXPrivacyUid + " calling=" + uid);
+	}
+
+	private static Context getContext() {
+		// public static ActivityManagerService self()
+		// frameworks/base/services/java/com/android/server/am/ActivityManagerService.java
+		try {
+			Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
+			Object am = cam.getMethod("self").invoke(null);
+			return (Context) cam.getDeclaredField("mContext").get(am);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return null;
+		}
 	}
 
 	private static SQLiteDatabase getDatabase() {

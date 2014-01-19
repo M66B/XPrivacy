@@ -72,7 +72,8 @@ public class Requirements {
 		if (Util.isXposedEnabled()) {
 			// Check privacy client
 			try {
-				PrivacyService.enforcePermission();
+				if (PrivacyService.getClient() != null)
+					PrivacyService.getClient().check();
 			} catch (Throwable ex) {
 				sendSupportInfo(ex.toString(), context);
 			}
