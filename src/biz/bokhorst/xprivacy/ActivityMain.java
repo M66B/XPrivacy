@@ -30,7 +30,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Process;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -138,9 +137,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mPackageChangeReceiver = null;
 			mProgressReceiver = null;
 		} else {
-			// Migrate restrictions and settings
-			migrate();
-
 			// Salt should be the same when exporting/importing
 			String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, null, false);
 			if (salt == null) {
@@ -1736,36 +1732,5 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
-	}
-
-	private void migrate() {
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					// Disable some restrictions for self
-					PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "/proc", false,
-							false);
-					PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
-					PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);
-
-					// Migrate xml settings files
-					boolean migrated = false;
-					migrated = migrated || PrivacyProvider.migrateRestrictions(ActivityMain.this);
-					migrated = migrated || PrivacyProvider.migrateSettings(ActivityMain.this);
-					PrivacyService.getClient().migrated();
-
-					// Show message
-					ActivityMain.this.runOnUiThread(new Runnable() {
-						public void run() {
-							Toast toast = Toast.makeText(ActivityMain.this, getString(R.string.msg_migrated),
-									Toast.LENGTH_LONG);
-							toast.show();
-						}
-					});
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
-			}
-		}).start();
 	}
 }

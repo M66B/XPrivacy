@@ -7,18 +7,26 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.os.Process;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 public class BootReceiver extends BroadcastReceiver {
 	@Override
-	public void onReceive(Context context, Intent bootIntent) {
-		// Randomize settings
-		final Context fContext = context;
+	public void onReceive(final Context context, Intent bootIntent) {
+		// Migrate settings
 		new Thread(new Runnable() {
 			public void run() {
-				randomizeSettings(fContext, 0);
-				for (ApplicationInfo aInfo : fContext.getPackageManager().getInstalledApplications(0))
-					randomizeSettings(fContext, aInfo.uid);
+				migrate(context);
+			}
+		}).start();
+
+		// Randomize settings
+		new Thread(new Runnable() {
+			public void run() {
+				randomizeSettings(context, 0);
+				for (ApplicationInfo aInfo : context.getPackageManager().getInstalledApplications(0))
+					randomizeSettings(context, aInfo.uid);
 			}
 		}).start();
 
@@ -69,6 +77,39 @@ public class BootReceiver extends BroadcastReceiver {
 			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingSubscriber,
 					PrivacyManager.getRandomProp("SubscriberId"));
 			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID"));
+		}
+	}
+
+	private void migrate(final Context context) {
+		try {
+			// Disable some restrictions for self
+			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "/proc", false, false);
+			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
+			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);
+
+			// Migrate xml settings files
+			boolean migrated = PrivacyProvider.migrateRestrictions(context);
+			migrated = PrivacyProvider.migrateSettings(context) || migrated;
+			PrivacyService.getClient().migrated();
+			Util.log(null, Log.WARN, "Migration complete");
+
+			// Build notification
+			if (migrated) {
+				NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+				notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+				notificationBuilder.setContentTitle(context.getString(R.string.app_name));
+				notificationBuilder.setContentText(context.getString(R.string.msg_migrated));
+				notificationBuilder.setWhen(System.currentTimeMillis());
+				notificationBuilder.setAutoCancel(true);
+				Notification notification = notificationBuilder.build();
+
+				// Display notification
+				NotificationManager notificationManager = (NotificationManager) context
+						.getSystemService(Context.NOTIFICATION_SERVICE);
+				notificationManager.notify(99, notification);
+			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
 		}
 	}
 }

@@ -17,8 +17,9 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Removed restriction *getPackagesForUid*
-* Run migration in background and added message *migration complete*
+* Migrate on boot completed and display notification migration completed
 * Attempt to fix security exception
+* Moved meta.xml to Meta class
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
