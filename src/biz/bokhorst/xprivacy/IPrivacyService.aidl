@@ -11,7 +11,7 @@ interface IPrivacyService {
 	List getRestrictionList(int uid, String restrictionName);
 	void deleteRestrictions(int uid);
 
-	long getUsage(int uid, String restrictionName, String methodName);
+	long getUsage(int uid, in List restrictionName, String methodName);
 	List<ParcelableUsageData> getUsageList(int uid);
 	void deleteUsage(int uid);
 

@@ -377,21 +377,19 @@ public class PrivacyManager {
 
 	// Usage
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static long getUsed(int uid, String restrictionName, String methodName) {
-		long lastUsage = 0;
 		try {
+			List listRestriction = new ArrayList();
 			if (restrictionName == null)
-				for (String sRestrictionName : PrivacyManager.getRestrictions()) {
-					long usage = getUsed(uid, sRestrictionName, null);
-					if (usage > lastUsage)
-						lastUsage = usage;
-				}
+				listRestriction.addAll(PrivacyManager.getRestrictions());
 			else
-				lastUsage = PrivacyService.getClient().getUsage(uid, restrictionName, methodName);
+				listRestriction.add(restrictionName);
+			return PrivacyService.getClient().getUsage(uid, listRestriction, methodName);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
+			return 0;
 		}
-		return lastUsage;
 	}
 
 	public static List<UsageData> getUsed(Context context, int uid) {

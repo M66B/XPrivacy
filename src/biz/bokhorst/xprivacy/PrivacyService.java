@@ -31,9 +31,11 @@ public class PrivacyService {
 
 	private static SQLiteStatement stmtGetRestriction = null;
 	private static SQLiteStatement stmtGetSetting = null;
+	private static SQLiteStatement stmtGetUsageRestriction = null;
+	private static SQLiteStatement stmtGetUsageMethod = null;
 
 	private static int cCurrentVersion = 1;
-	private static String cServiceName = "xprivacy";
+	private static String cServiceName = "xprivacy236";
 	private static String cTableRestriction = "restriction";
 	private static String cTableUsage = "usage";
 	private static String cTableSetting = "setting";
@@ -264,33 +266,48 @@ public class PrivacyService {
 		// Usage
 
 		@Override
-		public long getUsage(int uid, String restrictionName, String methodName) throws RemoteException {
+		@SuppressWarnings("rawtypes")
+		public long getUsage(int uid, List restrictionNames, String methodName) throws RemoteException {
 			long lastUsage = 0;
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
 
+				// Precompile statement when needed
+				if (stmtGetUsageRestriction == null) {
+					String sql = "SELECT MAX(time) FROM " + cTableUsage + " WHERE uid=? AND restriction=?";
+					stmtGetUsageRestriction = db.compileStatement(sql);
+				}
+				if (stmtGetUsageMethod == null) {
+					String sql = "SELECT MAX(time) FROM " + cTableUsage + " WHERE uid=? AND restriction=? AND method=?";
+					stmtGetUsageMethod = db.compileStatement(sql);
+				}
+
 				db.beginTransaction();
 				try {
-					Cursor cursor;
-					if (methodName == null)
-						cursor = db.query(cTableUsage, new String[] { "time" }, "uid=? AND restriction=?",
-								new String[] { Integer.toString(uid), restrictionName }, null, null, null);
-					else
-						cursor = db.query(cTableUsage, new String[] { "time" }, "uid=? AND restriction=? AND method=?",
-								new String[] { Integer.toString(uid), restrictionName, methodName }, null, null, null);
-					if (cursor == null)
-						Util.log(null, Log.WARN, "Database cursor null (usage)");
-					else
-						try {
-							while (cursor.moveToNext()) {
-								long usage = cursor.getLong(0);
-								if (usage > lastUsage)
-									lastUsage = usage;
+					for (Object restrictionName : restrictionNames) {
+						if (methodName == null)
+							try {
+								synchronized (stmtGetUsageRestriction) {
+									stmtGetUsageRestriction.clearBindings();
+									stmtGetUsageRestriction.bindLong(1, uid);
+									stmtGetUsageRestriction.bindString(2, (String) restrictionName);
+									lastUsage = stmtGetUsageRestriction.simpleQueryForLong();
+								}
+							} catch (SQLiteDoneException ignored) {
 							}
-						} finally {
-							cursor.close();
-						}
+						else
+							try {
+								synchronized (stmtGetUsageMethod) {
+									stmtGetUsageMethod.clearBindings();
+									stmtGetUsageMethod.bindLong(1, uid);
+									stmtGetUsageMethod.bindString(2, (String) restrictionName);
+									stmtGetUsageMethod.bindString(3, methodName);
+									lastUsage = stmtGetUsageMethod.simpleQueryForLong();
+								}
+							} catch (SQLiteDoneException ignored) {
+							}
+					}
 
 					db.setTransactionSuccessful();
 				} finally {
