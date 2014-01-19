@@ -159,10 +159,13 @@ public class ActivityShare extends Activity {
 				setTitle(getString(R.string.menu_submit));
 
 			// Licence check
-			if (action.equals(ACTION_IMPORT) && (!Util.isProEnabled() || Util.hasProLicense(this) == null))
+			if (action.equals(ACTION_IMPORT) && !Util.isProEnabled() && Util.hasProLicense(this) == null) {
+				Util.log(null, Log.WARN, "No licence found allowing importation");
 				finish();
-			else if (action.equals(ACTION_FETCH) && Util.hasProLicense(this) == null)
-					finish();
+			} else if (action.equals(ACTION_FETCH) && Util.hasProLicense(this) == null) {
+				Util.log(null, Log.WARN, "No licence found allowing fetching");
+				finish();
+			}
 
 			// App list
 			ListView lvShare = (ListView) findViewById(R.id.lvShare);
@@ -211,9 +214,13 @@ public class ActivityShare extends Activity {
 				llDescription.setVisibility(View.VISIBLE);
 			}
 
-			// Set button actions
+			// Buttons
 			final Button btnOk = (Button) findViewById(R.id.btnOk);
 			final Button btnCancel = (Button) findViewById(R.id.btnCancel);
+
+			// Check device registration for submissions
+			if (action.equals(ACTION_SUBMIT))
+				btnOk.setEnabled(registerDevice(this));
 			
 			btnOk.setOnClickListener(new Button.OnClickListener() {
 
@@ -276,10 +283,6 @@ public class ActivityShare extends Activity {
 				}
 			});
 
-			// Check device registration for submissions
-			if (action.equals(ACTION_SUBMIT))
-				btnOk.setEnabled(registerDevice(this));
-
 		} else if (action.equals(ACTION_EXPORT)) {
 			// Set theme to NoDisplay
 			mThemeId = android.R.style.Theme_NoDisplay;
@@ -293,7 +296,7 @@ public class ActivityShare extends Activity {
 
 	protected void onResume() {
 		super.onResume();
-		if (!mRunning && getTitle().equals(ACTION_SUBMIT)) {
+		if (!mRunning && getTitle().equals(getString(R.string.menu_submit))) {
 			// Check again for registration
 			final Button btnOk = (Button) findViewById(R.id.btnOk);
 			// If the registration has not been completed, this will ask again.
