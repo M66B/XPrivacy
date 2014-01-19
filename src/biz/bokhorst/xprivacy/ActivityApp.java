@@ -1096,7 +1096,7 @@ public class ActivityApp extends Activity {
 			return convertView;
 		}
 
-		private List<PrivacyManager.Hook> getMethodDescriptions(int groupPosition) {
+		private List<PrivacyManager.Hook> getHooks(int groupPosition) {
 			if (!mHook.containsKey(groupPosition)) {
 				boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
 				boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, false,
@@ -1117,7 +1117,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public Object getChild(int groupPosition, int childPosition) {
-			return getMethodDescriptions(groupPosition).get(childPosition);
+			return getHooks(groupPosition).get(childPosition);
 		}
 
 		@Override
@@ -1127,7 +1127,7 @@ public class ActivityApp extends Activity {
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return getMethodDescriptions(groupPosition).size();
+			return getHooks(groupPosition).size();
 		}
 
 		@Override
@@ -1224,6 +1224,23 @@ public class ActivityApp extends Activity {
 							if (restart)
 								Toast.makeText(view.getContext(), getString(R.string.msg_restart), Toast.LENGTH_SHORT)
 										.show();
+						}
+					});
+
+					// Listen for long press
+					holder.ctvMethodName.setOnLongClickListener(new View.OnLongClickListener() {
+						@Override
+						public boolean onLongClick(View view) {
+							md.toggleDangerous();
+
+							// Reset background color
+							if (md.isDangerous())
+								holder.row.setBackgroundColor(getResources().getColor(
+										Util.getThemed(ActivityApp.this, R.attr.color_dangerous)));
+							else
+								holder.row.setBackgroundColor(Color.TRANSPARENT);
+
+							return true;
 						}
 					});
 				}
