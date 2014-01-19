@@ -62,6 +62,7 @@
             android:text="@android:string/cancel" />
 
         <View
+            android:id="@+id/vButtonSeparator"
             android:layout_width="1dip"
             android:layout_height="match_parent"
             android:background="@android:color/darker_gray" />

@@ -1443,6 +1443,7 @@ public class ActivityShare extends Activity {
 	// Helper methods
 
 	private void blueStreakOfProgress(Integer current, Integer max) {
+		Util.log(null, Log.WARN, "Progress " + current + "/" + max);
 		// Set up the progress bar
 		if (mProgressWidth == 0) {
 			final View vShareProgressEmpty = (View) findViewById(R.id.vShareProgressEmpty);
@@ -1481,9 +1482,9 @@ public class ActivityShare extends Activity {
 
 		// Remove cancel button and separator
 		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
-		final View vBorder = findViewById(R.id.vBorder);
+		final View vButtonSeparator = findViewById(R.id.vButtonSeparator);
 		btnCancel.setVisibility(View.GONE);
-		vBorder.setVisibility(View.GONE);
+		vButtonSeparator.setVisibility(View.GONE);
 		// TODO a nice touch would be to make the cancel button open the main list with only the failed apps in view.
 		// I'm not sure what text to put on it though; "Examine failed" might do, if it isn't too long.
 	}
