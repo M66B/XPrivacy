@@ -15,10 +15,12 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Fixed deleting all usage data
-* Replace Play service library by local interface definition (smaller application size)
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.5 EXPERIMENTAL**
+
+* Fixed deleting all usage data
+* Replaced Play service library by local interface definition (smaller application size)
 
 **Version 1.99.4 EXPERIMENTAL**
 
