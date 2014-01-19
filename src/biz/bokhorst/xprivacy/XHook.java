@@ -16,7 +16,7 @@ public abstract class XHook {
 		mMethodName = methodName;
 		mSpecifier = specifier;
 		mSdk = Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1;
-		PrivacyManager.registerMethod(restrictionName, getSpecifier(), mSdk);
+		PrivacyManager.registerHook(restrictionName, getSpecifier(), mSdk);
 	}
 
 	protected XHook(String restrictionName, String methodName, String specifier, int sdk) {
@@ -24,7 +24,7 @@ public abstract class XHook {
 		mMethodName = methodName;
 		mSpecifier = specifier;
 		mSdk = sdk;
-		PrivacyManager.registerMethod(restrictionName, getSpecifier(), sdk);
+		PrivacyManager.registerHook(restrictionName, getSpecifier(), sdk);
 	}
 
 	public boolean isVisible() {

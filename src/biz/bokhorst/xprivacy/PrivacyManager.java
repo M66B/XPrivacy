@@ -158,7 +158,7 @@ public class PrivacyManager {
 			}
 	}
 
-	public static void registerMethod(String restrictionName, String methodName, int sdk) {
+	public static void registerHook(String restrictionName, String methodName, int sdk) {
 		if (restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
 			if (!mMethod.containsKey(restrictionName)
 					|| !mMethod.get(restrictionName).contains(new Hook(restrictionName, methodName)))
@@ -181,7 +181,7 @@ public class PrivacyManager {
 		return tmRestriction;
 	}
 
-	public static Hook getMethod(String restrictionName, String methodName) {
+	public static Hook getHook(String restrictionName, String methodName) {
 		if (mMethod.containsKey(restrictionName)) {
 			Hook md = new Hook(restrictionName, methodName);
 			int pos = mMethod.get(restrictionName).indexOf(md);
@@ -190,7 +190,7 @@ public class PrivacyManager {
 			return null;
 	}
 
-	public static List<Hook> getMethods(String restrictionName) {
+	public static List<Hook> getHooks(String restrictionName) {
 		List<Hook> listMethod = new ArrayList<Hook>();
 		List<Hook> listMethodOrig = mMethod.get(restrictionName);
 		if (listMethodOrig != null)
@@ -202,7 +202,7 @@ public class PrivacyManager {
 
 	public static List<String> getPermissions(String restrictionName) {
 		List<String> listPermission = new ArrayList<String>();
-		for (Hook md : getMethods(restrictionName))
+		for (Hook md : getHooks(restrictionName))
 			if (md.getPermissions() != null)
 				for (String permission : md.getPermissions())
 					if (!listPermission.contains(permission))
@@ -237,7 +237,7 @@ public class PrivacyManager {
 				Util.log(hook, Log.WARN, "Method empty");
 				Util.logStack(hook);
 			} else if (PrivacyManager.cTestVersion
-					&& getMethods(restrictionName).indexOf(new Hook(restrictionName, methodName)) < 0)
+					&& getHooks(restrictionName).indexOf(new Hook(restrictionName, methodName)) < 0)
 				Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
 		// Check cache
@@ -310,7 +310,7 @@ public class PrivacyManager {
 		boolean dangerous = PrivacyManager.getSettingBool(hook, 0, PrivacyManager.cSettingDangerous, false, false);
 		if (methodName == null)
 			if (restricted && !dangerous) {
-				for (Hook md : getMethods(restrictionName))
+				for (Hook md : getHooks(restrictionName))
 					if (md.isDangerous())
 						PrivacyManager.setRestricted(hook, uid, restrictionName, md.getName(), dangerous, changeState);
 			}
@@ -322,19 +322,19 @@ public class PrivacyManager {
 
 		// Check if restart required
 		if (methodName == null) {
-			for (Hook md : getMethods(restrictionName))
+			for (Hook md : getHooks(restrictionName))
 				if (md.isRestartRequired() && !(restricted && !dangerous && md.isDangerous()))
 					return true;
 			return false;
 		} else
-			return getMethod(restrictionName, methodName).isRestartRequired();
+			return getHook(restrictionName, methodName).isRestartRequired();
 	}
 
 	public static boolean deleteRestrictions(int uid, boolean changeState) {
 		// Check if restart required
 		boolean restart = false;
 		for (String restrictionName : getRestrictions()) {
-			for (Hook md : getMethods(restrictionName))
+			for (Hook md : getHooks(restrictionName))
 				if (getRestricted(null, uid, restrictionName, md.getName(), false, false))
 					if (md.isRestartRequired()) {
 						restart = true;

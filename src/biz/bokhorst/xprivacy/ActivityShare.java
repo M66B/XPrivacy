@@ -231,7 +231,7 @@ public class ActivityShare extends Activity {
 								serializer.endTag(null, "Restriction");
 
 								// Methods
-								for (PrivacyManager.Hook md : PrivacyManager.getMethods(restrictionName)) {
+								for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName)) {
 									boolean mrestricted = PrivacyManager.getRestricted(null, uid, restrictionName,
 											md.getName(), false, false);
 									if (!mrestricted || md.isDangerous()) {
@@ -650,7 +650,7 @@ public class ActivityShare extends Activity {
 										boolean restricted = (voted_restricted > voted_not_restricted);
 										if (methodName == null || restricted)
 											if (methodName == null
-													|| PrivacyManager.getMethod(restrictionName, methodName) != null)
+													|| PrivacyManager.getHook(restrictionName, methodName) != null)
 												PrivacyManager.setRestricted(null, appInfo.getUid(), restrictionName,
 														methodName, restricted, true);
 									}
@@ -789,7 +789,7 @@ public class ActivityShare extends Activity {
 						jSettings.put(jRestriction);
 
 						// Methods
-						for (PrivacyManager.Hook md : PrivacyManager.getMethods(restrictionName)) {
+						for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName)) {
 							boolean mRestricted = restricted
 									&& PrivacyManager.getRestricted(null, appInfo.getUid(), restrictionName,
 											md.getName(), false, false);

@@ -1524,6 +1524,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					else
 						holder.row.setBackgroundColor(Color.TRANSPARENT);
 
+					// Listen for multiple select
 					holder.rlName.setOnLongClickListener(new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View view) {
@@ -1553,7 +1554,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								allRestricted = (allRestricted && restricted);
 								someRestricted = (someRestricted || restricted);
 							}
-
 							// Process click
 							if (mRestrictionName == null && someRestricted) {
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);

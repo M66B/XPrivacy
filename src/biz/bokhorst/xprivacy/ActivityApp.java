@@ -188,7 +188,7 @@ public class ActivityApp extends Activity {
 			lvRestriction.expandGroup(groupPosition);
 			lvRestriction.setSelectedGroup(groupPosition);
 			if (methodName != null) {
-				int childPosition = PrivacyManager.getMethods(restrictionName).indexOf(
+				int childPosition = PrivacyManager.getHooks(restrictionName).indexOf(
 						new PrivacyManager.Hook(restrictionName, methodName));
 				lvRestriction.setSelectedChild(groupPosition, childPosition, true);
 			}
@@ -953,6 +953,7 @@ public class ActivityApp extends Activity {
 			private String restrictionName;
 			private boolean used;
 			private boolean permission;
+			private boolean allDangerous = true;
 			private boolean allRestricted = true;
 			private boolean someRestricted = false;
 
@@ -969,6 +970,11 @@ public class ActivityApp extends Activity {
 					used = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
 							restrictionName);
+
+					for (PrivacyManager.Hook hook : PrivacyManager.getHooks(restrictionName))
+						allDangerous = allDangerous && hook.isDangerous();
+					if (PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null, false, false))
+						someRestricted = allDangerous;
 
 					for (boolean restricted : PrivacyManager.getRestricted(mAppInfo.getUid(), restrictionName)) {
 						allRestricted = (allRestricted && restricted);
@@ -1001,18 +1007,13 @@ public class ActivityApp extends Activity {
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							// Get all/some restricted
-							boolean allRestricted = true;
-							boolean someRestricted = false;
-							for (boolean restricted : PrivacyManager.getRestricted(mAppInfo.getUid(), restrictionName)) {
-								allRestricted = (allRestricted && restricted);
-								someRestricted = (someRestricted || restricted);
-							}
+							boolean crestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(),
+									restrictionName, null, false, false);
 							boolean restart = PrivacyManager.setRestricted(null, mAppInfo.getUid(), restrictionName,
-									null, !someRestricted, true);
+									null, !crestricted, true);
 
 							// Update all/some restricted
-							allRestricted = true;
+							allRestricted = (crestricted ? allDangerous : true);
 							someRestricted = false;
 							for (boolean restricted : PrivacyManager.getRestricted(mAppInfo.getUid(), restrictionName)) {
 								allRestricted = (allRestricted && restricted);
@@ -1102,7 +1103,7 @@ public class ActivityApp extends Activity {
 						false);
 				List<PrivacyManager.Hook> listMethod = new ArrayList<PrivacyManager.Hook>();
 				String restrictionName = mRestrictions.get(groupPosition);
-				for (PrivacyManager.Hook md : PrivacyManager.getMethods((String) getGroup(groupPosition))) {
+				for (PrivacyManager.Hook md : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
 					boolean isUsed = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName()) > 0);
 					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo.getPackageName(),
 							md);

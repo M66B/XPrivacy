@@ -231,7 +231,7 @@ public class PrivacyService {
 					for (String sRestrictionName : PrivacyManager.getRestrictions())
 						result.add(getRestriction(uid, sRestrictionName, null, false));
 				else
-					for (PrivacyManager.Hook md : PrivacyManager.getMethods(restrictionName))
+					for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName))
 						result.add(getRestriction(uid, restrictionName, md.getName(), false));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
