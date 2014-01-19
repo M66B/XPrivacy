@@ -1,8 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.List;
-
-import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,7 +10,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,7 +18,6 @@ public class PackageChange extends BroadcastReceiver {
 	private static Thread mUpgradeThread;
 
 	@Override
-	@SuppressLint("NewApi")
 	public void onReceive(final Context context, Intent intent) {
 		try {
 			// Check uri
@@ -96,38 +91,18 @@ public class PackageChange extends BroadcastReceiver {
 								resultIntentClear, PendingIntent.FLAG_UPDATE_CURRENT);
 
 						// Title
-						String title = null;
-						NotificationCompat.InboxStyle inboxStyle = null;
-						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-							inboxStyle = new NotificationCompat.InboxStyle();
-							inboxStyle.setBigContentTitle(context.getString(replacing ? R.string.msg_update
-									: R.string.msg_new));
-
-							List<String> names = appInfo.getApplicationName();
-							List<String> versions = appInfo.getPackageVersionName(context);
-							for (int i = 0; i < Math.min(4, names.size()); i++)
-								inboxStyle.addLine(String.format("%s %s", names.get(i), versions.get(i)));
-							if (names.size() > 4)
-								inboxStyle.addLine("...");
-
-							inboxStyle.setSummaryText(context.getString(R.string.msg_applied));
-						} else {
-							title = String.format("%s %s %s",
-									context.getString(replacing ? R.string.msg_update : R.string.msg_new),
-									TextUtils.join(", ", appInfo.getApplicationName()),
-									TextUtils.join(", ", appInfo.getPackageVersionName(context)));
-							if (!replacing)
-								title = String.format("%s %s", title, context.getString(R.string.msg_applied));
-						}
+						String title = String.format("%s %s %s",
+								context.getString(replacing ? R.string.msg_update : R.string.msg_new),
+								TextUtils.join(", ", appInfo.getApplicationName()),
+								TextUtils.join(", ", appInfo.getPackageVersionName(context)));
+						if (!replacing)
+							title = String.format("%s %s", title, context.getString(R.string.msg_applied));
 
 						// Build notification
 						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
 						notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 						notificationBuilder.setContentTitle(context.getString(R.string.app_name));
-						if (title != null)
-							notificationBuilder.setContentText(title);
-						if (inboxStyle != null)
-							notificationBuilder.setStyle(inboxStyle);
+						notificationBuilder.setContentText(title);
 						notificationBuilder.setContentIntent(pendingIntent);
 						notificationBuilder.setWhen(System.currentTimeMillis());
 						notificationBuilder.setAutoCancel(true);

@@ -46,7 +46,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Cache permissions for better performance
 * Optimized usage data getting (should solve most of the performance issue)
 * Half check box for restricted IPC category (special case)
-* Use inbox style notifications ([issue](https://github.com/M66B/XPrivacy/issues/1112))
 
 **Version 1.99.1 EXPERIMENTAL**
 
