@@ -307,7 +307,7 @@ public class PrivacyService {
 									stmtGetUsageRestriction.clearBindings();
 									stmtGetUsageRestriction.bindLong(1, uid);
 									stmtGetUsageRestriction.bindString(2, (String) restrictionName);
-									lastUsage = stmtGetUsageRestriction.simpleQueryForLong();
+									lastUsage = Math.max(lastUsage, stmtGetUsageRestriction.simpleQueryForLong());
 								}
 							} catch (SQLiteDoneException ignored) {
 							}
@@ -318,7 +318,7 @@ public class PrivacyService {
 									stmtGetUsageMethod.bindLong(1, uid);
 									stmtGetUsageMethod.bindString(2, (String) restrictionName);
 									stmtGetUsageMethod.bindString(3, methodName);
-									lastUsage = stmtGetUsageMethod.simpleQueryForLong();
+									lastUsage = Math.max(lastUsage, stmtGetUsageMethod.simpleQueryForLong());
 								}
 							} catch (SQLiteDoneException ignored) {
 							}

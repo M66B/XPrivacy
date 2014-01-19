@@ -166,6 +166,9 @@ For easy usage, data is restricted by category:
 	* revoke access to the internet
 	* return fake disconnected state
 	* return fake supplicant disconnected state
+<a name="IPC"></a>
+* IPC
+	* Direct inter process calls
 <a name="location"></a>
 * Location
 	* return a random or set location (also for Google Play services)
@@ -283,7 +286,7 @@ Limitations
 * Due to a custom implementation the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
 * You cannot restrict the Android ID used for submitting restrictions (only [pro version](http://www.xprivacy.eu/))
 * It is not possible to restrict hardware MAC addresses or the external IP address
-* You cannot restrict *IPC for XPrivacy, because it is needed for internal checks
+* You cannot restrict *IPC* for XPrivacy, because it is needed for internal checks
 * You cannot restrict *storage* for XPrivacy, because it is needed for reading the pro license file
 * You cannot restrict *view* for XPrivacy, because it is needed to open links to the crowd sourced restrictions server
 
