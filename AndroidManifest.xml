@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
-    android:versionCode="235"
-    android:versionName="1.99.1" >
+    android:versionCode="239"
+    android:versionName="1.99.5" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -43,11 +43,6 @@
         <meta-data
             android:name="xposeddescription"
             android:value="@string/app_description" />
-
-        <!-- Google Play services -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
 
         <!-- Samsung multi window support -->
         <meta-data

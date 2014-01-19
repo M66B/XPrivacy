@@ -12,11 +12,41 @@ Test and beta releases will have experimental functions enabled by default.
 **Experimental functions**
 
 * Kill applications
-* Auto flush restriction/settings cache
 
 **Next release**
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.5 EXPERIMENTAL**
+
+* Fixed deleting all usage data
+* Replaced Play service library by local interface definition (smaller application size)
+* Removed obsolete restriction GMS.connect
+* Guarantee migrate, upgrade, randomize threads keep running
+
+**Version 1.99.4 EXPERIMENTAL**
+
+* Fixed usage data in application list
+* Fixed setting *IPC*, *Storage* and *View* restrictions
+
+**Version 1.99.3 EXPERIMENTAL**
+
+* Fixed security exception reported with support info
+* Fixed restart required notification
+* Option to register device on custom e-mail address
+* Restored restrictions *getNetwork...* and *getSim...* ([issue](https://github.com/M66B/XPrivacy/issues/1125))
+* User defined dangerous functions, long press a function name to toggle ([issue](https://github.com/M66B/XPrivacy/issues/869))
+
+**Version 1.99.2 EXPERIMENTAL**
+
+* Removed restriction *getPackagesForUid*
+* Migrate on boot completed event and display notification migration completed
+* Attempt to fix security exception (based on received support info)
+* Moved meta.xml to Meta class
+* Cache permissions for better performance
+* Optimized usage data getting (should solve most of the performance issue)
+* Half check box for restricted IPC category (special case)
+* Use inbox style notifications ([issue](https://github.com/M66B/XPrivacy/issues/1112))
 
 **Version 1.99.1 EXPERIMENTAL**
 
@@ -27,7 +57,7 @@ Test and beta releases will have experimental functions enabled by default.
 	* New features possible
 * Better method for hooking the bluetooth manager
 * Better method for hooking the package manager
-* Hook *getPackagesForUid*, *getPackagesHoldingPermissions* (JellyBean MR2) and *queryIntentContentProviders* (Kitkat)
+* Added restriction for *getPackagesForUid*, *getPackagesHoldingPermissions* (JellyBean MR2) and *queryIntentContentProviders* (Kitkat)
 * Lower case randomized Android ID
 * Simple registration procedure for submitting restrictions
 * Moved IPC to separate category

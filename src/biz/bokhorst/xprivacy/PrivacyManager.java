@@ -1,10 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -22,14 +17,6 @@ import java.util.Random;
 import java.util.TreeMap;
 import java.util.UUID;
 
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -38,6 +25,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Process;
 import android.util.Log;
+import android.util.SparseArray;
 
 public class PrivacyManager {
 	// This should correspond with restrict_<name> in strings.xml
@@ -134,121 +122,49 @@ public class PrivacyManager {
 	public final static int cUseProviderAfterMs = 3 * 60 * 1000;
 
 	// Static data
-	private static boolean mMetaData = false;
-	private static Map<String, List<MethodDescription>> mMethod;
-	private static Map<String, List<MethodDescription>> mPermission;
+	private static Map<String, List<Hook>> mMethod = new LinkedHashMap<String, List<Hook>>();
+	private static Map<String, List<Hook>> mPermission = new LinkedHashMap<String, List<Hook>>();
 	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
-
-	static {
-		readMetaData();
-	}
-
-	public static void writeMetaData(Context context) {
-		// Write meta data
-		// TODO: find a way to get the meta data without context
-		try {
-			File out = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
-			Util.log(null, Log.WARN, "Writing meta=" + out.getAbsolutePath());
-			InputStream is = context.getAssets().open("meta.xml");
-			OutputStream os = new FileOutputStream(out.getAbsolutePath());
-			byte[] buffer = new byte[1024];
-			int read;
-			while ((read = is.read(buffer)) != -1)
-				os.write(buffer, 0, read);
-			is.close();
-			os.flush();
-			os.close();
-			out.setReadable(true, false);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-	}
-
-	public static void readMetaData() {
-		// Reset meta data
-		mMethod = new LinkedHashMap<String, List<MethodDescription>>();
-		mPermission = new LinkedHashMap<String, List<MethodDescription>>();
-
-		// Read meta data
-		try {
-			File in = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "meta.xml");
-			if (in.exists()) {
-				Util.log(null, Log.INFO, "Reading meta=" + in.getAbsolutePath());
-				FileInputStream fis = null;
-				try {
-					fis = new FileInputStream(in);
-					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
-					MetaHandler metaHandler = new MetaHandler();
-					xmlReader.setContentHandler(metaHandler);
-					xmlReader.parse(new InputSource(fis));
-					mMetaData = true;
-				} finally {
-					if (fis != null)
-						fis.close();
-				}
-			} else
-				Util.log(null, Log.WARN, "Not found meta=" + in.getAbsolutePath());
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-	}
-
-	public static boolean hasMetaData() {
-		return mMetaData;
-	}
-
-	private static class MetaHandler extends DefaultHandler {
-		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			if (qName.equals("Meta"))
-				;
-			else if (qName.equals("Hook")) {
-				// Get meta data
-				String restrictionName = attributes.getValue("restriction");
-				String methodName = attributes.getValue("method");
-				String dangerous = attributes.getValue("dangerous");
-				String restart = attributes.getValue("restart");
-				String permissions = attributes.getValue("permissions");
-				int sdk = (attributes.getValue("sdk") == null ? 0 : Integer.parseInt(attributes.getValue("sdk")));
-				String from = attributes.getValue("from");
-				String replaces = attributes.getValue("replaces");
-
-				// Add meta data
-				if (Build.VERSION.SDK_INT >= sdk) {
-					boolean danger = (dangerous == null ? false : Boolean.parseBoolean(dangerous));
-					boolean restartRequired = (restart == null ? false : Boolean.parseBoolean(restart));
-					String[] permission = (permissions == null ? null : permissions.split(","));
-					MethodDescription md = new MethodDescription(restrictionName, methodName, danger, restartRequired,
-							permission, sdk, from == null ? null : new Version(from), replaces);
-
-					if (!mMethod.containsKey(restrictionName))
-						mMethod.put(restrictionName, new ArrayList<MethodDescription>());
-
-					if (!mMethod.get(restrictionName).contains(methodName))
-						mMethod.get(restrictionName).add(md);
-
-					if (permission != null)
-						for (String perm : permission)
-							if (!perm.equals("")) {
-								String aPermission = (perm.contains(".") ? perm : "android.permission." + perm);
-								if (!mPermission.containsKey(aPermission))
-									mPermission.put(aPermission, new ArrayList<MethodDescription>());
-								if (!mPermission.get(aPermission).contains(md))
-									mPermission.get(aPermission).add(md);
-							}
-				}
-			} else
-				Util.log(null, Log.WARN, "Unknown element=" + qName);
-		}
-	}
+	public static SparseArray<Map<String, Boolean>> mPermissionRestrictionCache = new SparseArray<Map<String, Boolean>>();
+	public static SparseArray<Map<Hook, Boolean>> mPermissionHookCache = new SparseArray<Map<Hook, Boolean>>();
 
 	// Meta data
 
-	public static void registerMethod(String restrictionName, String methodName, int sdk) {
-		if (hasMetaData() && restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
+	static {
+		List<String> listRestriction = getRestrictions();
+
+		for (Hook hook : Meta.get())
+			if (Build.VERSION.SDK_INT >= hook.getSdk()) {
+				String restrictionName = hook.getRestrictionName();
+
+				// Check restriction
+				if (!listRestriction.contains(restrictionName))
+					Util.log(null, Log.WARN, "Not found restriction=" + restrictionName);
+
+				// Enlist method
+				if (!mMethod.containsKey(restrictionName))
+					mMethod.put(restrictionName, new ArrayList<Hook>());
+				mMethod.get(restrictionName).add(hook);
+
+				// Enlist permissions
+				String[] permissions = hook.getPermissions();
+				if (permissions != null)
+					for (String perm : permissions)
+						if (!perm.equals("")) {
+							String aPermission = (perm.contains(".") ? perm : "android.permission." + perm);
+							if (!mPermission.containsKey(aPermission))
+								mPermission.put(aPermission, new ArrayList<Hook>());
+							if (!mPermission.get(aPermission).contains(hook))
+								mPermission.get(aPermission).add(hook);
+						}
+			}
+	}
+
+	public static void registerHook(String restrictionName, String methodName, int sdk) {
+		if (restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
 			if (!mMethod.containsKey(restrictionName)
-					|| !mMethod.get(restrictionName).contains(new MethodDescription(restrictionName, methodName)))
+					|| !mMethod.get(restrictionName).contains(new Hook(restrictionName, methodName)))
 				Util.log(null, Log.WARN, "Missing method " + methodName);
 		}
 	}
@@ -268,18 +184,18 @@ public class PrivacyManager {
 		return tmRestriction;
 	}
 
-	public static MethodDescription getMethod(String restrictionName, String methodName) {
+	public static Hook getHook(String restrictionName, String methodName) {
 		if (mMethod.containsKey(restrictionName)) {
-			MethodDescription md = new MethodDescription(restrictionName, methodName);
+			Hook md = new Hook(restrictionName, methodName);
 			int pos = mMethod.get(restrictionName).indexOf(md);
 			return (pos < 0 ? null : mMethod.get(restrictionName).get(pos));
 		} else
 			return null;
 	}
 
-	public static List<MethodDescription> getMethods(String restrictionName) {
-		List<MethodDescription> listMethod = new ArrayList<MethodDescription>();
-		List<MethodDescription> listMethodOrig = mMethod.get(restrictionName);
+	public static List<Hook> getHooks(String restrictionName) {
+		List<Hook> listMethod = new ArrayList<Hook>();
+		List<Hook> listMethodOrig = mMethod.get(restrictionName);
 		if (listMethodOrig != null)
 			listMethod.addAll(listMethodOrig);
 		// null can happen when upgrading
@@ -289,7 +205,7 @@ public class PrivacyManager {
 
 	public static List<String> getPermissions(String restrictionName) {
 		List<String> listPermission = new ArrayList<String>();
-		for (MethodDescription md : getMethods(restrictionName))
+		for (Hook md : getHooks(restrictionName))
 			if (md.getPermissions() != null)
 				for (String permission : md.getPermissions())
 					if (!listPermission.contains(permission))
@@ -324,7 +240,7 @@ public class PrivacyManager {
 				Util.log(hook, Log.WARN, "Method empty");
 				Util.logStack(hook);
 			} else if (PrivacyManager.cTestVersion
-					&& getMethods(restrictionName).indexOf(new MethodDescription(restrictionName, methodName)) < 0)
+					&& getHooks(restrictionName).indexOf(new Hook(restrictionName, methodName)) < 0)
 				Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
 		// Check cache
@@ -377,6 +293,23 @@ public class PrivacyManager {
 			return false;
 		}
 
+		// Prevent some restrictions for Android
+		if (uid == PrivacyManager.cAndroidUid)
+			if (PrivacyManager.cIdentification.equals(restrictionName) && "/proc".equals(methodName))
+				return false;
+
+		// Prevent some restrictions for self
+		if (uid == Process.myUid()) {
+			if (PrivacyManager.cIdentification.equals(restrictionName) && "getString".equals(methodName))
+				return false;
+			if (PrivacyManager.cIPC.equals(restrictionName))
+				return false;
+			else if (PrivacyManager.cStorage.equals(restrictionName))
+				return false;
+			else if (PrivacyManager.cView.equals(restrictionName))
+				return false;
+		}
+
 		// Set restriction
 		try {
 			PrivacyService.getClient().setRestriction(uid, restrictionName, methodName, restricted);
@@ -388,7 +321,7 @@ public class PrivacyManager {
 		boolean dangerous = PrivacyManager.getSettingBool(hook, 0, PrivacyManager.cSettingDangerous, false, false);
 		if (methodName == null)
 			if (restricted && !dangerous) {
-				for (MethodDescription md : getMethods(restrictionName))
+				for (Hook md : getHooks(restrictionName))
 					if (md.isDangerous())
 						PrivacyManager.setRestricted(hook, uid, restrictionName, md.getName(), dangerous, changeState);
 			}
@@ -400,19 +333,19 @@ public class PrivacyManager {
 
 		// Check if restart required
 		if (methodName == null) {
-			for (MethodDescription md : getMethods(restrictionName))
+			for (Hook md : getHooks(restrictionName))
 				if (md.isRestartRequired() && !(restricted && !dangerous && md.isDangerous()))
 					return true;
 			return false;
 		} else
-			return getMethod(restrictionName, methodName).isRestartRequired();
+			return getHook(restrictionName, methodName).isRestartRequired();
 	}
 
 	public static boolean deleteRestrictions(int uid, boolean changeState) {
 		// Check if restart required
 		boolean restart = false;
 		for (String restrictionName : getRestrictions()) {
-			for (MethodDescription md : getMethods(restrictionName))
+			for (Hook md : getHooks(restrictionName))
 				if (getRestricted(null, uid, restrictionName, md.getName(), false, false))
 					if (md.isRestartRequired()) {
 						restart = true;
@@ -452,21 +385,19 @@ public class PrivacyManager {
 
 	// Usage
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static long getUsed(int uid, String restrictionName, String methodName) {
-		long lastUsage = 0;
 		try {
+			List listRestriction = new ArrayList();
 			if (restrictionName == null)
-				for (String sRestrictionName : PrivacyManager.getRestrictions()) {
-					long usage = getUsed(uid, sRestrictionName, null);
-					if (usage > lastUsage)
-						lastUsage = usage;
-				}
+				listRestriction.addAll(PrivacyManager.getRestrictions());
 			else
-				lastUsage = PrivacyService.getClient().getUsage(uid, restrictionName, methodName);
+				listRestriction.add(restrictionName);
+			return PrivacyService.getClient().getUsage(uid, listRestriction, methodName);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
+			return 0;
 		}
-		return lastUsage;
 	}
 
 	public static List<UsageData> getUsed(Context context, int uid) {
@@ -643,27 +574,28 @@ public class PrivacyManager {
 		if (name.equals("getIsimImpu"))
 			return null;
 
-		if (name.equals("gsm.operator.iso-country")) {
+		if (name.equals("getNetworkCountryIso") || name.equals("gsm.operator.iso-country")) {
 			// ISO country code
 			String value = getSetting(null, uid, cSettingCountry, "XX", true);
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
-		if (name.equals("gsm.operator.numeric"))
+		if (name.equals("getNetworkOperator") || name.equals("gsm.operator.numeric"))
 			// MCC+MNC: test network
 			return getSetting(null, uid, cSettingMcc, "001", true) + getSetting(null, uid, cSettingMnc, "01", true);
-		if (name.equals("gsm.operator.alpha"))
+		if (name.equals("getNetworkOperatorName") || name.equals("gsm.operator.alpha"))
 			return getSetting(null, uid, cSettingOperator, cDeface, true);
 
-		if (name.equals("gsm.sim.operator.iso-country")) {
+		if (name.equals("getSimCountryIso") || name.equals("gsm.sim.operator.iso-country")) {
 			// ISO country code
 			String value = getSetting(null, uid, cSettingCountry, "XX", true);
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
-		if (name.equals("gsm.sim.operator.numeric"))
+		if (name.equals("getSimOperator") || name.equals("gsm.sim.operator.numeric"))
 			// MCC+MNC: test network
 			return getSetting(null, uid, cSettingMcc, "001", true) + getSetting(null, uid, cSettingMnc, "01", true);
-		if (name.equals("gsm.sim.operator.alpha"))
+		if (name.equals("getSimOperatorName") || name.equals("gsm.sim.operator.alpha"))
 			return getSetting(null, uid, cSettingOperator, cDeface, true);
+
 		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber"))
 			return getSetting(null, uid, cSettingIccId, null, true);
 
@@ -912,22 +844,38 @@ public class PrivacyManager {
 		return (uid >= FIRST_ISOLATED_UID && uid <= LAST_ISOLATED_UID);
 	}
 
-	public static boolean hasPermission(Context context, List<String> listPackageName, String restrictionName) {
-		return hasPermission(context, listPackageName, PrivacyManager.getPermissions(restrictionName));
+	public static boolean hasPermission(Context context, ApplicationInfoEx appInfo, String restrictionName) {
+		int uid = appInfo.getUid();
+		if (mPermissionRestrictionCache.get(uid) == null)
+			mPermissionRestrictionCache.append(uid, new HashMap<String, Boolean>());
+		if (!mPermissionRestrictionCache.get(uid).containsKey(restrictionName)) {
+			boolean permission = hasPermission(context, appInfo.getPackageName(),
+					PrivacyManager.getPermissions(restrictionName));
+			mPermissionRestrictionCache.get(uid).put(restrictionName, permission);
+		}
+		return mPermissionRestrictionCache.get(uid).get(restrictionName);
 	}
 
-	public static boolean hasPermission(Context context, List<String> listPackageName, MethodDescription md) {
-		List<String> listPermission = (md.getPermissions() == null ? null : Arrays.asList(md.getPermissions()));
-		return hasPermission(context, listPackageName, listPermission);
+	public static boolean hasPermission(Context context, ApplicationInfoEx appInfo, Hook md) {
+		int uid = appInfo.getUid();
+		if (mPermissionHookCache.get(uid) == null)
+			mPermissionHookCache.append(uid, new HashMap<Hook, Boolean>());
+		if (!mPermissionHookCache.get(uid).containsKey(md)) {
+
+			List<String> listPermission = (md.getPermissions() == null ? null : Arrays.asList(md.getPermissions()));
+			boolean permission = hasPermission(context, appInfo.getPackageName(), listPermission);
+			mPermissionHookCache.get(uid).put(md, permission);
+		}
+		return mPermissionHookCache.get(uid).get(md);
 	}
 
 	@SuppressLint("DefaultLocale")
-	private static boolean hasPermission(Context context, List<String> listPackageName, List<String> listPermission) {
+	private static boolean hasPermission(Context context, List<String> listPackage, List<String> listPermission) {
 		try {
 			if (listPermission == null || listPermission.size() == 0 || listPermission.contains(""))
 				return true;
 			PackageManager pm = context.getPackageManager();
-			for (String packageName : listPackageName) {
+			for (String packageName : listPackage) {
 				PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
 				if (pInfo != null && pInfo.requestedPermissions != null)
 					for (String rPermission : pInfo.requestedPermissions)
@@ -1046,7 +994,7 @@ public class PrivacyManager {
 		}
 	}
 
-	public static class MethodDescription implements Comparable<MethodDescription> {
+	public static class Hook implements Comparable<Hook> {
 		private String mRestrictionName;
 		private String mMethodName;
 		private boolean mDangerous;
@@ -1056,20 +1004,20 @@ public class PrivacyManager {
 		private Version mFrom;
 		private String mReplaces;
 
-		public MethodDescription(String restrictionName, String methodName) {
+		public Hook(String restrictionName, String methodName) {
 			mRestrictionName = restrictionName;
 			mMethodName = methodName;
 		}
 
-		public MethodDescription(String restrictionName, String methodName, boolean dangerous, boolean restart,
-				String[] permissions, int sdk, Version from, String replaces) {
+		public Hook(String restrictionName, String methodName, boolean dangerous, boolean restart, String permissions,
+				int sdk, String from, String replaces) {
 			mRestrictionName = restrictionName;
 			mMethodName = methodName;
 			mDangerous = dangerous;
 			mRestart = restart;
-			mPermissions = permissions;
+			mPermissions = (permissions == null ? null : permissions.split(","));
 			mSdk = sdk;
-			mFrom = from;
+			mFrom = (from == null ? null : new Version(from));
 			mReplaces = replaces;
 		}
 
@@ -1082,7 +1030,13 @@ public class PrivacyManager {
 		}
 
 		public boolean isDangerous() {
-			return mDangerous;
+			String name = String.format("%s.%s", cSettingDangerous, this.getName());
+			return getSettingBool(null, 0, name, mDangerous, false);
+		}
+
+		public void toggleDangerous() {
+			String name = String.format("%s.%s", cSettingDangerous, this.getName());
+			setSetting(null, 0, name, Boolean.toString(!isDangerous()));
 		}
 
 		public boolean isRestartRequired() {
@@ -1117,12 +1071,12 @@ public class PrivacyManager {
 
 		@Override
 		public boolean equals(Object obj) {
-			MethodDescription other = (MethodDescription) obj;
+			Hook other = (Hook) obj;
 			return (mRestrictionName.equals(other.mRestrictionName) && mMethodName.equals(other.mMethodName));
 		}
 
 		@Override
-		public int compareTo(MethodDescription another) {
+		public int compareTo(Hook another) {
 			int x = mRestrictionName.compareTo(another.mRestrictionName);
 			return (x == 0 ? mMethodName.compareTo(another.mMethodName) : x);
 		}

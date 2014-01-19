@@ -166,6 +166,9 @@ For easy usage, data is restricted by category:
 	* revoke access to the internet
 	* return fake disconnected state
 	* return fake supplicant disconnected state
+<a name="IPC"></a>
+* IPC
+	* Direct inter process calls
 <a name="location"></a>
 * Location
 	* return a random or set location (also for Google Play services)
@@ -275,8 +278,6 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
-* Usage data is not always up-to-date and complete; switching from/to an application will mostly update the usage data
-* Internet (inet) and storage (media, sdcard) usage is assumed as soon as an application with corresponding permissions has been started
 * /proc and system properties cannot be restricted for Android (serial number, IMEI, MAC address, etc)
 * Phone number cannot be restricted for the standard phone application
 * Internet and storage can only be restricted for applications/providers/services started by the Android package manager
@@ -284,9 +285,8 @@ Limitations
 * Due to a bug in Chromium the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Due to a custom implementation the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
 * You cannot restrict the Android ID used for submitting restrictions (only [pro version](http://www.xprivacy.eu/))
-* There is no usage data for isolated processes (a new concept in Android 4.4)
-* Native libraries can bypass the Android APIs and thus circumvent XPrivacy. You can prevent native libraries from loading in the category *Shell*, functions *load* and *loadLibrary*.
 * It is not possible to restrict hardware MAC addresses or the external IP address
+* You cannot restrict *IPC* for XPrivacy, because it is needed for internal checks
 * You cannot restrict *storage* for XPrivacy, because it is needed for reading the pro license file
 * You cannot restrict *view* for XPrivacy, because it is needed to open links to the crowd sourced restrictions server
 

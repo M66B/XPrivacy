@@ -76,6 +76,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class ActivityShare extends Activity {
@@ -676,7 +677,7 @@ public class ActivityShare extends Activity {
 								serializer.endTag(null, "Restriction");
 
 								// Methods
-								for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
+								for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName)) {
 									boolean mrestricted = PrivacyManager.getRestricted(null, uid, restrictionName,
 											md.getName(), false, false);
 									if (!mrestricted || md.isDangerous()) {
@@ -1102,7 +1103,7 @@ public class ActivityShare extends Activity {
 										boolean restricted = (voted_restricted > voted_not_restricted);
 										if (methodName == null || restricted)
 											if (methodName == null
-													|| PrivacyManager.getMethod(restrictionName, methodName) != null)
+													|| PrivacyManager.getHook(restrictionName, methodName) != null)
 												restart = PrivacyManager.setRestricted(null, appInfo.getUid(), restrictionName,
 														methodName, restricted, true) || restart;
 									}
@@ -1232,7 +1233,7 @@ public class ActivityShare extends Activity {
 						jSettings.put(jRestriction);
 
 						// Methods
-						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
+						for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName)) {
 							boolean mRestricted = restricted
 									&& PrivacyManager.getRestricted(null, appInfo.getUid(), restrictionName,
 											md.getName(), false, false);
@@ -1349,27 +1350,31 @@ public class ActivityShare extends Activity {
 		if (Util.hasProLicense(context) == null
 				&& !PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingRegistered, false, false)) {
 			// Get accounts
-			final List<Account> listAccount = new ArrayList<Account>();
-			List<CharSequence> listName = new ArrayList<CharSequence>();
+			String email = null;
 			for (Account account : AccountManager.get(context).getAccounts())
 				if ("com.google".equals(account.type)) {
-					listAccount.add(account);
-					listName.add(String.format("%s (%s)", account.name, account.type));
+					email = account.name;
+					break;
 				}
 
 			// Build dialog
+			final EditText input = new EditText(context);
+			if (email != null)
+				input.setText(email);
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(context.getString(R.string.msg_register));
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
-			alertDialogBuilder.setSingleChoiceItems(listName.toArray(new CharSequence[0]), -1,
+			alertDialogBuilder.setView(input);
+			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Account account = listAccount.get(which);
-							new RegisterTask(context).executeOnExecutor(mExecutor, account.name);
+							String email = input.getText().toString();
+							if (!"".equals(email))
+								new RegisterTask(context).executeOnExecutor(mExecutor, email);
 						}
 					});
-			alertDialogBuilder.setPositiveButton(context.getString(R.string.msg_done),
+			alertDialogBuilder.setNegativeButton(context.getString(android.R.string.cancel),
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {

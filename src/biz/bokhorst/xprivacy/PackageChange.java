@@ -1,5 +1,8 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.List;
+
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,18 +13,17 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
 public class PackageChange extends BroadcastReceiver {
+	private static Thread mUpgradeThread;
 
 	@Override
+	@SuppressLint("NewApi")
 	public void onReceive(final Context context, Intent intent) {
-		// Check privacy service client
-		if (PrivacyService.getClient() == null)
-			return;
-
 		try {
 			// Check uri
 			Uri inputUri = Uri.parse(intent.getDataString());
@@ -41,19 +43,25 @@ public class PackageChange extends BroadcastReceiver {
 					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
 
 					// Default deny new user apps
-					if (!replacing) {
-						// Delete any existing restrictions
-						PrivacyManager.deleteRestrictions(uid, true);
-						PrivacyManager.deleteSettings(uid);
-						PrivacyManager.deleteUsage(uid);
+					if (PrivacyService.getClient() != null) {
+						if (!replacing) {
+							// Delete existing restrictions
+							PrivacyManager.deleteRestrictions(uid, true);
+							PrivacyManager.deleteSettings(uid);
+							PrivacyManager.deleteUsage(uid);
 
-						// Restrict new non-system apps
-						if (!appInfo.isSystem())
-							for (String restrictionName : PrivacyManager.getRestrictions()) {
-								String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-								if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
-									PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true);
-							}
+							// Restrict new non-system apps
+							if (!appInfo.isSystem())
+								for (String restrictionName : PrivacyManager.getRestrictions()) {
+									String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
+									if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
+										PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true);
+								}
+						}
+
+						// Mark as new/changed
+						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingState,
+								Integer.toString(ActivityMain.STATE_ATTENTION));
 					}
 
 					// New/update notification
@@ -88,18 +96,38 @@ public class PackageChange extends BroadcastReceiver {
 								resultIntentClear, PendingIntent.FLAG_UPDATE_CURRENT);
 
 						// Title
-						String title = String.format("%s %s %s",
-								context.getString(replacing ? R.string.msg_update : R.string.msg_new),
-								TextUtils.join(", ", appInfo.getApplicationName()),
-								TextUtils.join(", ", appInfo.getPackageVersionName(context)));
-						if (!replacing)
-							title = String.format("%s %s", title, context.getString(R.string.msg_applied));
+						String title = null;
+						NotificationCompat.InboxStyle inboxStyle = null;
+						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+							inboxStyle = new NotificationCompat.InboxStyle();
+							inboxStyle.setBigContentTitle(context.getString(replacing ? R.string.msg_update
+									: R.string.msg_new));
+
+							List<String> names = appInfo.getApplicationName();
+							List<String> versions = appInfo.getPackageVersionName(context);
+							for (int i = 0; i < Math.min(4, names.size()); i++)
+								inboxStyle.addLine(String.format("%s %s", names.get(i), versions.get(i)));
+							if (names.size() > 4)
+								inboxStyle.addLine("...");
+
+							inboxStyle.setSummaryText(context.getString(R.string.msg_applied));
+						} else {
+							title = String.format("%s %s %s",
+									context.getString(replacing ? R.string.msg_update : R.string.msg_new),
+									TextUtils.join(", ", appInfo.getApplicationName()),
+									TextUtils.join(", ", appInfo.getPackageVersionName(context)));
+							if (!replacing)
+								title = String.format("%s %s", title, context.getString(R.string.msg_applied));
+						}
 
 						// Build notification
 						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
 						notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 						notificationBuilder.setContentTitle(context.getString(R.string.app_name));
-						notificationBuilder.setContentText(title);
+						if (title != null)
+							notificationBuilder.setContentText(title);
+						if (inboxStyle != null)
+							notificationBuilder.setStyle(inboxStyle);
 						notificationBuilder.setContentIntent(pendingIntent);
 						notificationBuilder.setWhen(System.currentTimeMillis());
 						notificationBuilder.setAutoCancel(true);
@@ -114,18 +142,10 @@ public class PackageChange extends BroadcastReceiver {
 						Notification notification = notificationBuilder.build();
 						notificationManager.notify(appInfo.getUid(), notification);
 					}
-
-					// Mark as new/changed
-					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingState,
-							Integer.toString(ActivityMain.STATE_ATTENTION));
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
 					// Notify reboot required
 					String packageName = inputUri.getSchemeSpecificPart();
 					if (packageName.equals(context.getPackageName())) {
-						// Update meta data
-						PrivacyManager.writeMetaData(context);
-						PrivacyManager.readMetaData();
-
 						// Build notification
 						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
 						notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
@@ -139,18 +159,25 @@ public class PackageChange extends BroadcastReceiver {
 						notificationManager.notify(0, notification);
 
 						// Upgrade restrictions
-						new Thread(new Runnable() {
-							public void run() {
-								upgradeRestrictions(context);
-							}
-						}).start();
+						if (PrivacyService.getClient() != null) {
+							mUpgradeThread = new Thread(new Runnable() {
+								public void run() {
+									upgradeRestrictions(context);
+								}
+							});
+							mUpgradeThread.start();
+						}
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed
 					notificationManager.cancel(uid);
-					PrivacyManager.deleteRestrictions(uid, true);
-					PrivacyManager.deleteSettings(uid);
-					PrivacyManager.deleteUsage(uid);
+
+					// Delete restrictions
+					if (PrivacyService.getClient() != null) {
+						PrivacyManager.deleteRestrictions(uid, true);
+						PrivacyManager.deleteSettings(uid);
+						PrivacyManager.deleteUsage(uid);
+					}
 				}
 			}
 		} catch (Throwable ex) {
@@ -176,7 +203,7 @@ public class PackageChange extends BroadcastReceiver {
 				// All packages
 				for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
 					for (String restrictionName : PrivacyManager.getRestrictions())
-						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName))
+						for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName))
 							if (md.getFrom() != null)
 								if (sVersion.compareTo(md.getFrom()) < 0) {
 									// Disable new dangerous restrictions

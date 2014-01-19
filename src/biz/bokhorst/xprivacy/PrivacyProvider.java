@@ -141,7 +141,7 @@ public class PrivacyProvider extends ContentProvider {
 						cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, null, true });
 
 						// Exceptions
-						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
+						for (PrivacyManager.Hook md : PrivacyManager.getHooks(eRestrictionName)) {
 							boolean restricted = getRestricted(eRestrictionName, md.getName(), prefs);
 							if (!restricted || md.isDangerous())
 								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getName(), restricted });
@@ -158,7 +158,7 @@ public class PrivacyProvider extends ContentProvider {
 				for (String eRestrictionName : listRestrictionName) {
 					boolean eRestricted = getRestricted(eRestrictionName, null, prefs);
 					cursor.addRow(new Object[] { uid, eRestrictionName, null, Boolean.toString(eRestricted) });
-					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
+					for (PrivacyManager.Hook md : PrivacyManager.getHooks(eRestrictionName)) {
 						eRestricted = getRestricted(eRestrictionName, md.getName(), prefs);
 						cursor.addRow(new Object[] { uid, eRestrictionName, md.getName(), Boolean.toString(eRestricted) });
 					}
@@ -227,7 +227,7 @@ public class PrivacyProvider extends ContentProvider {
 			// Selected restrictions/methods
 			for (String eRestrictionName : listRestriction)
 				if (methodName == null)
-					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName))
+					for (PrivacyManager.Hook md : PrivacyManager.getHooks(eRestrictionName))
 						getUsage(uid, eRestrictionName, md.getName(), cursor);
 				else
 					getUsage(uid, eRestrictionName, methodName, cursor);
@@ -619,7 +619,8 @@ public class PrivacyProvider extends ContentProvider {
 		setPrefFileReadable(PREF_SETTINGS);
 	}
 
-	public static void migrateRestrictions(Context context) {
+	public static boolean migrateRestrictions(Context context) {
+		boolean migrated = false;
 		try {
 			// Legacy restrictions
 			convertRestrictions(context);
@@ -638,12 +639,13 @@ public class PrivacyProvider extends ContentProvider {
 					for (String restrictionName : PrivacyManager.getRestrictions())
 						if (getRestricted(restrictionName, null, prefs)) {
 							// Category
+							migrated = true;
 							PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName, null, true);
 							Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name="
 									+ restrictionName);
 
 							// Exceptions
-							for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
+							for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName)) {
 								boolean restricted = getRestricted(restrictionName, md.getName(), prefs);
 								if (!restricted || md.isDangerous()) {
 									PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName,
@@ -660,9 +662,11 @@ public class PrivacyProvider extends ContentProvider {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
+		return migrated;
 	}
 
-	public static void migrateSettings(Context context) {
+	public static boolean migrateSettings(Context context) {
+		boolean migrated = false;
 		try {
 			// Process settings
 			File prefFile = new File(getPrefFileName(PREF_SETTINGS));
@@ -707,6 +711,7 @@ public class PrivacyProvider extends ContentProvider {
 						}
 
 						// Set
+						migrated = true;
 						PrivacyService.getClient().setSetting(uid, name, value);
 						Util.log(null, Log.WARN, "Migrate setting=" + getSettingName(settingKey) + " uid=" + uid
 								+ " name=" + name + " value=" + value);
@@ -719,5 +724,6 @@ public class PrivacyProvider extends ContentProvider {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
+		return migrated;
 	}
 }

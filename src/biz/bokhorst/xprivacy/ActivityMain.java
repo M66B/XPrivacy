@@ -72,6 +72,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private String mSharingState = null;
 	private int mEasterEgg;
 
+	private Handler mProHandler = new Handler();
+
 	public static final int STATE_ATTENTION = 0;
 	public static final int STATE_RESTRICTED = 1;
 	public static final int STATE_SHARED = 2;
@@ -126,27 +128,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// Update meta data
-		PrivacyManager.writeMetaData(this);
-		PrivacyManager.readMetaData();
-
 		// Check privacy service client
-		if (!Util.isXposedEnabled() || !PrivacyManager.hasMetaData() || PrivacyService.getClient() == null) {
+		if (!Util.isXposedEnabled() || PrivacyService.getClient() == null) {
 			setContentView(R.layout.reboot);
 			Requirements.check(this);
 			mPackageChangeReceiver = null;
 			mProgressReceiver = null;
 		} else {
-			// Migrate restrictions and settings
-			try {
-				PrivacyProvider.migrateRestrictions(this);
-				PrivacyProvider.migrateSettings(this);
-				PrivacyService.getClient().migrated();
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
-
 			// Salt should be the same when exporting/importing
 			String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, null, false);
 			if (salt == null) {
@@ -432,7 +420,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					toast.show();
 				} else if (reason == RETRY) {
 					Util.setPro(false);
-					new Handler().postDelayed(new Runnable() {
+					mProHandler.postDelayed(new Runnable() {
 						@Override
 						public void run() {
 							checkLicense();
@@ -1267,7 +1255,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					if (fPermission)
 						if (mRestrictionName == null)
 							permission = true;
-						else if (PrivacyManager.hasPermission(mContext, xAppInfo.getPackageName(), mRestrictionName)
+						else if (PrivacyManager.hasPermission(mContext, xAppInfo, mRestrictionName)
 								|| PrivacyManager.getUsed(xAppInfo.getUid(), mRestrictionName, null) > 0)
 							permission = true;
 
@@ -1367,6 +1355,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			private boolean used;
 			private boolean granted = true;
 			private List<String> listRestriction;
+			private boolean allDangerous = true;
 			private boolean allRestricted = true;
 			private boolean someRestricted = false;
 
@@ -1388,8 +1377,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					// Get if granted
 					if (mRestrictionName != null)
-						if (!PrivacyManager.hasPermission(holder.row.getContext(), xAppInfo.getPackageName(),
-								mRestrictionName))
+						if (!PrivacyManager.hasPermission(holder.row.getContext(), xAppInfo, mRestrictionName))
 							granted = false;
 
 					// Get restrictions
@@ -1398,6 +1386,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					else {
 						listRestriction = new ArrayList<String>();
 						listRestriction.add(mRestrictionName);
+					}
+
+					// Get all dangerous
+					if (mRestrictionName == null)
+						allDangerous = false;
+					else {
+						for (PrivacyManager.Hook hook : PrivacyManager.getHooks(mRestrictionName))
+							allDangerous = allDangerous && hook.isDangerous();
+						if (PrivacyManager.getRestricted(null, xAppInfo.getUid(), mRestrictionName, null, false, false))
+							someRestricted = allDangerous;
 					}
 
 					// Get all/some restricted
@@ -1466,6 +1464,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					else
 						holder.row.setBackgroundColor(Color.TRANSPARENT);
 
+					// Listen for multiple select
 					holder.rlName.setOnLongClickListener(new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View view) {
@@ -1488,14 +1487,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(final View view) {
-							// Get all/some restricted
-							boolean allRestricted = true;
-							boolean someRestricted = false;
-							for (boolean restricted : PrivacyManager.getRestricted(xAppInfo.getUid(), mRestrictionName)) {
-								allRestricted = (allRestricted && restricted);
-								someRestricted = (someRestricted || restricted);
-							}
-
 							// Process click
 							if (mRestrictionName == null && someRestricted) {
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
@@ -1509,6 +1500,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 												// Update restriction
 												boolean restart = PrivacyManager.deleteRestrictions(xAppInfo.getUid(),
 														true);
+												allRestricted = false;
+												someRestricted = false;
 
 												// Update visible state
 												holder.imgCBName.setImageBitmap(mCheck[0]); // Off
@@ -1534,13 +1527,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							} else {
 								// Update restriction
 								boolean restart = false;
+								boolean crestricted = false;
+								for (String restrictionName : listRestriction)
+									crestricted = crestricted
+											|| PrivacyManager.getRestricted(null, xAppInfo.getUid(), restrictionName,
+													null, false, false);
 								for (String restrictionName : listRestriction)
 									restart = PrivacyManager.setRestricted(null, xAppInfo.getUid(), restrictionName,
-											null, !someRestricted, true) || restart;
+											null, !crestricted, true) || restart;
 
 								// Update all/some restricted
 								allRestricted = true;
-								someRestricted = false;
+								someRestricted = (!crestricted ? allDangerous : false);
 								for (boolean restricted : PrivacyManager.getRestricted(xAppInfo.getUid(),
 										mRestrictionName)) {
 									allRestricted = (allRestricted && restricted);

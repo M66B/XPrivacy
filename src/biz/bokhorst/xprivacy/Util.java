@@ -43,7 +43,6 @@ import android.os.Process;
 import android.os.UserHandle;
 import android.util.Base64;
 import android.util.Log;
-import android.util.SparseArray;
 import android.util.TypedValue;
 
 public class Util {
@@ -173,9 +172,6 @@ public class Util {
 
 	public static String hasProLicense(Context context) {
 		try {
-			// Disable storage restriction
-			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
-
 			// Get license
 			String[] license = getProLicenseUnchecked();
 			if (license == null)
@@ -343,9 +339,6 @@ public class Util {
 	}
 
 	public static void viewUri(Context context, Uri uri) {
-		// Disable view restriction
-		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);
-
 		Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 		infoIntent.setData(uri);
 		context.startActivity(infoIntent);
@@ -431,41 +424,6 @@ public class Util {
 			out.write(buf, 0, len);
 		in.close();
 		out.close();
-	}
-
-	private static SparseArray<String> mPidPkg = new SparseArray<String>();
-
-	public static String getPackageNameByPid(int pid) {
-		// This doesn't work for all processes!
-
-		synchronized (mPidPkg) {
-			String pkg = mPidPkg.get(pid);
-			if (pkg != null)
-				return pkg;
-		}
-
-		String pkg = null;
-		try {
-			byte[] buffer = new byte[256];
-			File cmdLineFile = new File(String.format("/proc/%d/cmdline", pid));
-			FileInputStream is = new FileInputStream(cmdLineFile);
-			int len = is.read(buffer);
-			is.close();
-
-			int i = 0;
-			while (i < len && buffer[i] != 0)
-				i++;
-			pkg = new String(buffer, 0, i);
-		} catch (Throwable ex) {
-			pkg = ex.getMessage();
-		}
-
-		synchronized (mPidPkg) {
-			if (mPidPkg.indexOfKey(pid) < 0)
-				mPidPkg.put(pid, pkg);
-		}
-
-		return pkg;
 	}
 
 	public static Bitmap[] getTriStateCheckBox(Context context) {

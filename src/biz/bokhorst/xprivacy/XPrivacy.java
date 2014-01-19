@@ -40,6 +40,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// System server
 		try {
+			// frameworks/base/services/java/com/android/server/SystemServer.java
 			Class<?> cSystemServer = findClass("com.android.server.SystemServer", null);
 			Method mMain = cSystemServer.getDeclaredMethod("main", String[].class);
 			XposedBridge.hookMethod(mMain, new XC_MethodHook() {
