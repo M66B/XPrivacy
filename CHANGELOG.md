@@ -22,6 +22,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Moved meta.xml to Meta class
 * Cache permissions
 * Optimized usage data getting (solves performance problems)
+* Use inbox style notifications ([issue](https://github.com/M66B/XPrivacy/issues/1112))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
