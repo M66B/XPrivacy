@@ -197,7 +197,6 @@
 
 	<Hook restriction="system" method="getInstalledApplications" dangerous="true" permissions="" sdk="1" />
 	<Hook restriction="system" method="getInstalledPackages" dangerous="true" permissions="" sdk="1" />
-	<Hook restriction="system" method="getPackagesForUid" dangerous="true" from="1.99.1" permissions="" sdk="1" />
 	<Hook restriction="system" method="getPackagesHoldingPermissions" dangerous="true" from="1.99.1" permissions="" sdk="1" />
 	<Hook restriction="system" method="getPreferredPackages" dangerous="true" permissions="" sdk="1" />
 	<Hook restriction="system" method="queryBroadcastReceivers" dangerous="true" permissions="" sdk="1" />

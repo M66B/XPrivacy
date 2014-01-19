@@ -16,6 +16,8 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Removed restriction *getPackagesForUid*
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.1 EXPERIMENTAL**
@@ -27,7 +29,7 @@ Test and beta releases will have experimental functions enabled by default.
 	* New features possible
 * Better method for hooking the bluetooth manager
 * Better method for hooking the package manager
-* Hook *getPackagesForUid*, *getPackagesHoldingPermissions* (JellyBean MR2) and *queryIntentContentProviders* (Kitkat)
+* Added restriction for *getPackagesForUid*, *getPackagesHoldingPermissions* (JellyBean MR2) and *queryIntentContentProviders* (Kitkat)
 * Lower case randomized Android ID
 * Simple registration procedure for submitting restrictions
 * Moved IPC to separate category
