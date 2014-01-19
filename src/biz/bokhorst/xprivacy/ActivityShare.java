@@ -293,6 +293,7 @@ public class ActivityShare extends Activity {
 	}
 
 	protected void onResume() {
+		super.onResume();
 		if (!mRunning && getTitle().equals(ACTION_SUBMIT)) {
 			// Check again for registration
 			final Button btnOk = (Button) findViewById(R.id.btnOk);
@@ -584,6 +585,7 @@ public class ActivityShare extends Activity {
 
 				FileOutputStream fos = new FileOutputStream(mFile); // FileNotFoundException
 				try {
+					long start = System.currentTimeMillis();
 					// Start serialization
 					XmlSerializer serializer = Xml.newSerializer();
 					serializer.setOutput(fos, "UTF-8"); // IOException, IllegalArgumentException, IllegalStateException
@@ -601,6 +603,7 @@ public class ActivityShare extends Activity {
 						}
 					};
 
+					Util.log(null, Log.WARN, "ExportTime: "+(System.currentTimeMillis()-start));
 					// Process package map
 					for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0)) {
 						serializer.startTag(null, "PackageInfo");
@@ -609,6 +612,7 @@ public class ActivityShare extends Activity {
 						serializer.endTag(null, "PackageInfo");
 					}
 
+					Util.log(null, Log.WARN, "ExportTime: "+(System.currentTimeMillis()-start));
 					// Process global settings
 					Map<String, String> mapGlobalSetting = PrivacyManager.getSettings(0);
 					for (String name : mapGlobalSetting.keySet()) {
@@ -623,12 +627,14 @@ public class ActivityShare extends Activity {
 						serializer.endTag(null, "Setting");
 					}
 
+					Util.log(null, Log.WARN, "ExportTime: "+(System.currentTimeMillis()-start));
 					// Build list of distinct uids
 					List<Integer> listUid = new ArrayList<Integer>();
 					for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
 						if (!listUid.contains(pInfo.applicationInfo.uid))
 							listUid.add(pInfo.applicationInfo.uid);
 
+					Util.log(null, Log.WARN, "ExportTime: "+(System.currentTimeMillis()-start));
 					// Process application settings
 					for (int uid : listUid) {
 						Map<String, String> mapAppSetting = PrivacyManager.getSettings(uid);
@@ -652,6 +658,7 @@ public class ActivityShare extends Activity {
 						}
 					}
 
+					Util.log(null, Log.WARN, "ExportTime: "+(System.currentTimeMillis()-start));
 					// Process restrictions
 					for (int uid : listUid) {
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
@@ -682,10 +689,12 @@ public class ActivityShare extends Activity {
 						}
 					}
 
+					Util.log(null, Log.WARN, "ExportTime: "+(System.currentTimeMillis()-start));
 					// End serialization
 					serializer.endTag(null, "XPrivacy");
 					serializer.endDocument();
 					serializer.flush();
+					Util.log(null, Log.WARN, "ExportTime: "+(System.currentTimeMillis()-start));
 				} finally {
 					fos.close();
 				}
