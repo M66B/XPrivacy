@@ -221,8 +221,7 @@ public class ActivityShare extends Activity {
 				public void onClick(View v) {
 					btnOk.setEnabled(false);
 
-					// mAppAdapter might not be initialised
-					int[] uids = mAppAdapter == null ? new int[0] : mAppAdapter.getUids();
+					int[] uids = mAppAdapter.getUids();
 
 					// Import
 					if (action.equals(ACTION_IMPORT)) {
@@ -233,7 +232,7 @@ public class ActivityShare extends Activity {
 					// Export
 					else if (action.equals(ACTION_EXPORT)) {
 						mRunning = true;
-						new ExportTask().executeOnExecutor(mExecutor, new File(mFileName));
+						new ExportTask().executeOnExecutor(mExecutor, new File(mFileName), uids);
 					}
 
 					// Fetch
@@ -520,7 +519,7 @@ public class ActivityShare extends Activity {
 			List<AppHolder> apps = new ArrayList<AppHolder>();
 			mAppsByUid = new SparseArray<AppHolder>();
 
-			if (uids.length > 0 && !getTitle().equals(R.string.menu_export)) {
+			if (uids.length > 0 && !getTitle().equals(getString(R.string.menu_export))) {
 				for (int i = 0; i < uids.length; i++) {
 					try {
 						int uid = uids[i];
@@ -538,8 +537,9 @@ public class ActivityShare extends Activity {
 					if (mAppsByUid.get(pInfo.applicationInfo.uid) == null) {
 						try {
 							AppHolder app = new AppHolder(pInfo.applicationInfo.uid);
-							if (getTitle().equals(R.string.menu_fetch) && !app.appInfo.isSystem()) {
+							if (getTitle().equals(getString(R.string.menu_fetch)) && app.appInfo.isSystem()) {
 								// Skip system apps for fetch without a uid list
+							} else {
 								apps.add(app);
 								mAppsByUid.put(pInfo.applicationInfo.uid, app);
 							}
