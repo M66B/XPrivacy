@@ -148,9 +148,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						migrated = migrated || PrivacyProvider.migrateRestrictions(ActivityMain.this);
 						migrated = migrated || PrivacyProvider.migrateSettings(ActivityMain.this);
 						PrivacyService.getClient().migrated();
-						Toast toast = Toast.makeText(ActivityMain.this, getString(R.string.msg_migrated),
-								Toast.LENGTH_LONG);
-						toast.show();
+						ActivityMain.this.runOnUiThread(new Runnable() {
+							public void run() {
+								Toast toast = Toast.makeText(ActivityMain.this, getString(R.string.msg_migrated),
+										Toast.LENGTH_LONG);
+								toast.show();
+							}
+						});
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
 					}
