@@ -568,27 +568,28 @@ public class PrivacyManager {
 		if (name.equals("getIsimImpu"))
 			return null;
 
-		if (name.equals("gsm.operator.iso-country")) {
+		if (name.equals("getNetworkCountryIso") || name.equals("gsm.operator.iso-country")) {
 			// ISO country code
 			String value = getSetting(null, uid, cSettingCountry, "XX", true);
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
-		if (name.equals("gsm.operator.numeric"))
+		if (name.equals("getNetworkOperator") || name.equals("gsm.operator.numeric"))
 			// MCC+MNC: test network
 			return getSetting(null, uid, cSettingMcc, "001", true) + getSetting(null, uid, cSettingMnc, "01", true);
-		if (name.equals("gsm.operator.alpha"))
+		if (name.equals("getNetworkOperatorName") || name.equals("gsm.operator.alpha"))
 			return getSetting(null, uid, cSettingOperator, cDeface, true);
 
-		if (name.equals("gsm.sim.operator.iso-country")) {
+		if (name.equals("getSimCountryIso") || name.equals("gsm.sim.operator.iso-country")) {
 			// ISO country code
 			String value = getSetting(null, uid, cSettingCountry, "XX", true);
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
-		if (name.equals("gsm.sim.operator.numeric"))
+		if (name.equals("getSimOperator") || name.equals("gsm.sim.operator.numeric"))
 			// MCC+MNC: test network
 			return getSetting(null, uid, cSettingMcc, "001", true) + getSetting(null, uid, cSettingMnc, "01", true);
-		if (name.equals("gsm.sim.operator.alpha"))
+		if (name.equals("getSimOperatorName") || name.equals("gsm.sim.operator.alpha"))
 			return getSetting(null, uid, cSettingOperator, cDeface, true);
+
 		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber"))
 			return getSetting(null, uid, cSettingIccId, null, true);
 
