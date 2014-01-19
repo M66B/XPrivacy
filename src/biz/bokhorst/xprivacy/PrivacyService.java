@@ -41,7 +41,6 @@ public class PrivacyService {
 	private static String cTableSetting = "setting";
 
 	// TODO: define column names
-	// TODO: use precompiled statements
 
 	public static void register() {
 		try {
@@ -194,7 +193,7 @@ public class PrivacyService {
 								cvalues.put("method", "");
 								cvalues.put("restricted", sRestricted);
 								cvalues.put("time", new Date().getTime());
-								db.insertWithOnConflict("usage", null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
+								db.insertWithOnConflict(cTableUsage, null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
 
 								// Method
 								if (methodName != null) {
@@ -204,7 +203,7 @@ public class PrivacyService {
 									mvalues.put("method", methodName);
 									mvalues.put("restricted", sRestricted);
 									mvalues.put("time", new Date().getTime());
-									db.insertWithOnConflict("usage", null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
+									db.insertWithOnConflict(cTableUsage, null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
 								}
 								db.setTransactionSuccessful();
 							} catch (Throwable ex) {
