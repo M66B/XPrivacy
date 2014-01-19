@@ -176,7 +176,7 @@ public class PackageChange extends BroadcastReceiver {
 				// All packages
 				for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
 					for (String restrictionName : PrivacyManager.getRestrictions())
-						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName))
+						for (PrivacyManager.Hook md : PrivacyManager.getMethods(restrictionName))
 							if (md.getFrom() != null)
 								if (sVersion.compareTo(md.getFrom()) < 0) {
 									// Disable new dangerous restrictions

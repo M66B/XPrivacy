@@ -141,7 +141,7 @@ public class PrivacyProvider extends ContentProvider {
 						cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, null, true });
 
 						// Exceptions
-						for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
+						for (PrivacyManager.Hook md : PrivacyManager.getMethods(eRestrictionName)) {
 							boolean restricted = getRestricted(eRestrictionName, md.getName(), prefs);
 							if (!restricted || md.isDangerous())
 								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getName(), restricted });
@@ -158,7 +158,7 @@ public class PrivacyProvider extends ContentProvider {
 				for (String eRestrictionName : listRestrictionName) {
 					boolean eRestricted = getRestricted(eRestrictionName, null, prefs);
 					cursor.addRow(new Object[] { uid, eRestrictionName, null, Boolean.toString(eRestricted) });
-					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName)) {
+					for (PrivacyManager.Hook md : PrivacyManager.getMethods(eRestrictionName)) {
 						eRestricted = getRestricted(eRestrictionName, md.getName(), prefs);
 						cursor.addRow(new Object[] { uid, eRestrictionName, md.getName(), Boolean.toString(eRestricted) });
 					}
@@ -227,7 +227,7 @@ public class PrivacyProvider extends ContentProvider {
 			// Selected restrictions/methods
 			for (String eRestrictionName : listRestriction)
 				if (methodName == null)
-					for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(eRestrictionName))
+					for (PrivacyManager.Hook md : PrivacyManager.getMethods(eRestrictionName))
 						getUsage(uid, eRestrictionName, md.getName(), cursor);
 				else
 					getUsage(uid, eRestrictionName, methodName, cursor);
@@ -645,7 +645,7 @@ public class PrivacyProvider extends ContentProvider {
 									+ restrictionName);
 
 							// Exceptions
-							for (PrivacyManager.MethodDescription md : PrivacyManager.getMethods(restrictionName)) {
+							for (PrivacyManager.Hook md : PrivacyManager.getMethods(restrictionName)) {
 								boolean restricted = getRestricted(restrictionName, md.getName(), prefs);
 								if (!restricted || md.isDangerous()) {
 									PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName,
