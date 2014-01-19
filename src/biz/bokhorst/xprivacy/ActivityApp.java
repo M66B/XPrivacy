@@ -971,11 +971,13 @@ public class ActivityApp extends Activity {
 					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo.getPackageName(),
 							restrictionName);
 
+					// Get all dangerous
 					for (PrivacyManager.Hook hook : PrivacyManager.getHooks(restrictionName))
 						allDangerous = allDangerous && hook.isDangerous();
 					if (PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null, false, false))
 						someRestricted = allDangerous;
 
+					// Get all/some restricted
 					for (boolean restricted : PrivacyManager.getRestricted(mAppInfo.getUid(), restrictionName)) {
 						allRestricted = (allRestricted && restricted);
 						someRestricted = (someRestricted || restricted);
@@ -1013,8 +1015,8 @@ public class ActivityApp extends Activity {
 									null, !crestricted, true);
 
 							// Update all/some restricted
-							allRestricted = (crestricted ? allDangerous : true);
-							someRestricted = false;
+							allRestricted = true;
+							someRestricted = (!crestricted ? allDangerous : false);
 							for (boolean restricted : PrivacyManager.getRestricted(mAppInfo.getUid(), restrictionName)) {
 								allRestricted = (allRestricted && restricted);
 								someRestricted = (someRestricted || restricted);
