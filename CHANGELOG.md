@@ -17,6 +17,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Option to register device on custom e-mail address
+* Restored restrictions *getNetwork...* and *getSim...* ([issue](https://github.com/M66B/XPrivacy/issues/1125))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
