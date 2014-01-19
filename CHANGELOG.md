@@ -19,6 +19,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed security exception reported with support info
 * Fixed restart required notification
 * Option to register device on custom e-mail address
+* User defined dangerous functions, long press a function name to toggle ([issue](https://github.com/M66B/XPrivacy/issues/869))
 * Restored restrictions *getNetwork...* and *getSim...* ([issue](https://github.com/M66B/XPrivacy/issues/1125))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

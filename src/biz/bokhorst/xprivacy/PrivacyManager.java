@@ -1029,7 +1029,13 @@ public class PrivacyManager {
 		}
 
 		public boolean isDangerous() {
-			return mDangerous;
+			String name = String.format("%s.%s", cSettingDangerous, this.getName());
+			return getSettingBool(null, 0, name, mDangerous, false);
+		}
+
+		public void toggleDangerous() {
+			String name = String.format("%s.%s", cSettingDangerous, this.getName());
+			setSetting(null, 0, name, Boolean.toString(!isDangerous()));
 		}
 
 		public boolean isRestartRequired() {
