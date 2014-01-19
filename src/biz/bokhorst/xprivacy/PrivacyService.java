@@ -387,7 +387,10 @@ public class PrivacyService {
 
 				db.beginTransaction();
 				try {
-					db.delete(cTableUsage, "uid=?", new String[] { Integer.toString(uid) });
+					if (uid == 0)
+						db.delete(cTableUsage, null, new String[] {});
+					else
+						db.delete(cTableUsage, "uid=?", new String[] { Integer.toString(uid) });
 					Util.log(null, Log.WARN, "Usage data deleted uid=" + uid);
 
 					db.setTransactionSuccessful();
