@@ -164,10 +164,13 @@ public class ActivityShare extends Activity {
 			else if (action.equals(ACTION_FETCH) && Util.hasProLicense(this) == null)
 					finish();
 
-			// Start task to get app list, but not if action is EXPORT
+			// App list
+			ListView lvShare = (ListView) findViewById(R.id.lvShare);
+			AppListTask appListTask = new AppListTask();
+			appListTask.executeOnExecutor(mExecutor, uids);
 			if (!action.equals(ACTION_EXPORT)) {
-				AppListTask appListTask = new AppListTask();
-				appListTask.executeOnExecutor(mExecutor, uids);
+				// Allow users to remove apps from list
+				registerForContextMenu(lvShare);
 			}
 
 			// Import/export filename
@@ -277,10 +280,6 @@ public class ActivityShare extends Activity {
 			// Check device registration for submissions
 			if (action.equals(ACTION_SUBMIT))
 				btnOk.setEnabled(registerDevice(this));
-
-			// Allow users to remove apps from list
-			ListView lvShare = (ListView) findViewById(R.id.lvShare);
-			registerForContextMenu(lvShare);
 
 		} else if (action.equals(ACTION_EXPORT)) {
 			// Set theme to NoDisplay
@@ -517,22 +516,37 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected List<AppHolder> doInBackground(int[]... params) {
+			int[] uids = params[0];
 			List<AppHolder> apps = new ArrayList<AppHolder>();
 			mAppsByUid = new SparseArray<AppHolder>();
-			// TODO what if uids.length is zero? Which will only happen via Tasker etc.
-			// We can't really ask Tasker to provide a list of uids, and someone might want to trigger an import for all apps.
-			// - If action is IMPORT we should probably add all apps
-			// - If action is FETCH we should probably add all non-system apps
-			// We should probably add a Toast in those cases. "Adding all non-system apps" or "Adding all apps" 
-			for (int i = 0; i < params[0].length; i++) {
-				try {
-					int uid = params[0][i];
-					AppHolder app = new AppHolder(uid);
-					apps.add(app);
-					mAppsByUid.put(uid, app);
-				} catch (NameNotFoundException ex) {
-					Util.bug(null, ex);
+
+			if (uids.length > 0 && !getTitle().equals(R.string.menu_export)) {
+				for (int i = 0; i < uids.length; i++) {
+					try {
+						int uid = uids[i];
+						AppHolder app = new AppHolder(uid);
+						apps.add(app);
+						mAppsByUid.put(uid, app);
+					} catch (NameNotFoundException ex) {
+						Util.bug(null, ex);
+					}
 				}
+			} else {
+				// Get a list of all apps unless fetching, in which case, get all user apps
+				// Maybe we should add a Toast. "Adding all non-system apps" or "Adding all apps"
+				for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
+					if (mAppsByUid.get(pInfo.applicationInfo.uid) == null) {
+						try {
+							AppHolder app = new AppHolder(pInfo.applicationInfo.uid);
+							if (getTitle().equals(R.string.menu_fetch) && !app.appInfo.isSystem()) {
+								// Skip system apps for fetch without a uid list
+								apps.add(app);
+								mAppsByUid.put(pInfo.applicationInfo.uid, app);
+							}
+						} catch (NameNotFoundException ex) {
+							Util.bug(null, ex);
+						}
+					}
 			}
 
 			Collections.sort(apps);
@@ -573,14 +587,19 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	private class ExportTask extends AsyncTask<File, Integer, String> {
+	private class ExportTask extends AsyncTask<Object, Integer, String> {
 		private File mFile;
 
 		@Override
-		protected String doInBackground(File... params) {
+		protected String doInBackground(Object... params) {
 			mProgressCurrent = 0;
 			try {
-				mFile = params[0];
+				mFile = (File) params[0];
+
+				List<Integer> listUid = new ArrayList<Integer>();
+				for (int uid : (int[]) params[1])
+					listUid.add(uid);
+
 				Util.log(null, Log.INFO, "Exporting " + mFile);
 				String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 
@@ -592,16 +611,6 @@ public class ActivityShare extends Activity {
 					serializer.startDocument(null, Boolean.valueOf(true));
 					serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 					serializer.startTag(null, "XPrivacy");
-
-					// Progress
-					Util.log(null, Log.INFO, "Exporting settings");
-					Runnable progress = new Runnable() {
-						@Override
-						public void run() {
-							// This should be called exactly 100 times
-							publishProgress(++mProgressCurrent, 100);
-						}
-					};
 
 					// Process package map
 					for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0)) {
@@ -624,12 +633,6 @@ public class ActivityShare extends Activity {
 							serializer.attribute(null, "Value", value);
 						serializer.endTag(null, "Setting");
 					}
-
-					// Build list of distinct uids
-					List<Integer> listUid = new ArrayList<Integer>();
-					for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
-						if (!listUid.contains(pInfo.applicationInfo.uid))
-							listUid.add(pInfo.applicationInfo.uid);
 
 					// Process application settings
 					for (int uid : listUid) {
@@ -657,6 +660,7 @@ public class ActivityShare extends Activity {
 					// Process restrictions
 					for (int uid : listUid) {
 						publishProgress(++mProgressCurrent, listUid.size() + 1);
+						mAppAdapter.setState(uid, STATE_RUNNING);
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
 							// Category
 							boolean crestricted = PrivacyManager.getRestricted(null, uid, restrictionName, null, false,
@@ -683,6 +687,7 @@ public class ActivityShare extends Activity {
 								}
 							}
 						}
+						mAppAdapter.setState(uid, STATE_SUCCESS);
 					}
 
 					// End serialization
@@ -737,7 +742,7 @@ public class ActivityShare extends Activity {
 
 				// Progress
 				mProgressCurrent = 0;
-				final int max = listUidSelected.size();
+				final int max = listUidSelected.size() + 1;
 				Runnable progress = new Runnable() {
 					@Override
 					public void run() {
@@ -1443,7 +1448,6 @@ public class ActivityShare extends Activity {
 	// Helper methods
 
 	private void blueStreakOfProgress(Integer current, Integer max) {
-		Util.log(null, Log.WARN, "Progress " + current + "/" + max);
 		// Set up the progress bar
 		if (mProgressWidth == 0) {
 			final View vShareProgressEmpty = (View) findViewById(R.id.vShareProgressEmpty);
