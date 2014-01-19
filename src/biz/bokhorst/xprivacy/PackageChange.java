@@ -36,6 +36,7 @@ public class PackageChange extends BroadcastReceiver {
 				if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
 					// Get data
 					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
+					String packageName = inputUri.getSchemeSpecificPart();
 
 					// Default deny new user apps
 					if (PrivacyService.getClient() != null) {
@@ -93,8 +94,8 @@ public class PackageChange extends BroadcastReceiver {
 						// Title
 						String title = String.format("%s %s %s",
 								context.getString(replacing ? R.string.msg_update : R.string.msg_new),
-								TextUtils.join(", ", appInfo.getApplicationName()),
-								TextUtils.join(", ", appInfo.getPackageVersionName(context)));
+								appInfo.getApplicationName(packageName),
+								appInfo.getPackageVersionName(context, packageName));
 						if (!replacing)
 							title = String.format("%s %s", title, context.getString(R.string.msg_applied));
 
