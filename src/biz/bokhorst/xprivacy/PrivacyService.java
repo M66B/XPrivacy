@@ -540,6 +540,8 @@ public class PrivacyService {
 		int uid = Binder.getCallingUid();
 		if (mXPrivacyUid == 0) {
 			Context context = getContext();
+			if (context == null)
+				throw new SecurityException("Context is null");
 			String[] packages = context.getPackageManager().getPackagesForUid(uid);
 			String self = PrivacyService.class.getPackage().getName();
 			String calling = (packages.length > 0 ? packages[0] : null);
