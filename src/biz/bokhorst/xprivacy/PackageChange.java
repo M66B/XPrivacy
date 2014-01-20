@@ -1,28 +1,18 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.List;
-
-import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
 public class PackageChange extends BroadcastReceiver {
-	private static Thread mUpgradeThread;
-
 	@Override
-	@SuppressLint("NewApi")
 	public void onReceive(final Context context, Intent intent) {
 		try {
 			// Check uri
@@ -41,6 +31,7 @@ public class PackageChange extends BroadcastReceiver {
 				if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
 					// Get data
 					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
+					String packageName = inputUri.getSchemeSpecificPart();
 
 					// Default deny new user apps
 					if (PrivacyService.getClient() != null) {
@@ -96,38 +87,18 @@ public class PackageChange extends BroadcastReceiver {
 								resultIntentClear, PendingIntent.FLAG_UPDATE_CURRENT);
 
 						// Title
-						String title = null;
-						NotificationCompat.InboxStyle inboxStyle = null;
-						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-							inboxStyle = new NotificationCompat.InboxStyle();
-							inboxStyle.setBigContentTitle(context.getString(replacing ? R.string.msg_update
-									: R.string.msg_new));
-
-							List<String> names = appInfo.getApplicationName();
-							List<String> versions = appInfo.getPackageVersionName(context);
-							for (int i = 0; i < Math.min(4, names.size()); i++)
-								inboxStyle.addLine(String.format("%s %s", names.get(i), versions.get(i)));
-							if (names.size() > 4)
-								inboxStyle.addLine("...");
-
-							inboxStyle.setSummaryText(context.getString(R.string.msg_applied));
-						} else {
-							title = String.format("%s %s %s",
-									context.getString(replacing ? R.string.msg_update : R.string.msg_new),
-									TextUtils.join(", ", appInfo.getApplicationName()),
-									TextUtils.join(", ", appInfo.getPackageVersionName(context)));
-							if (!replacing)
-								title = String.format("%s %s", title, context.getString(R.string.msg_applied));
-						}
+						String title = String.format("%s %s %s",
+								context.getString(replacing ? R.string.msg_update : R.string.msg_new),
+								appInfo.getApplicationName(packageName),
+								appInfo.getPackageVersionName(context, packageName));
+						if (!replacing)
+							title = String.format("%s %s", title, context.getString(R.string.msg_applied));
 
 						// Build notification
 						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
 						notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 						notificationBuilder.setContentTitle(context.getString(R.string.app_name));
-						if (title != null)
-							notificationBuilder.setContentText(title);
-						if (inboxStyle != null)
-							notificationBuilder.setStyle(inboxStyle);
+						notificationBuilder.setContentText(title);
 						notificationBuilder.setContentIntent(pendingIntent);
 						notificationBuilder.setWhen(System.currentTimeMillis());
 						notificationBuilder.setAutoCancel(true);
@@ -146,6 +117,12 @@ public class PackageChange extends BroadcastReceiver {
 					// Notify reboot required
 					String packageName = inputUri.getSchemeSpecificPart();
 					if (packageName.equals(context.getPackageName())) {
+						// Start package update
+						Intent changeIntent = new Intent();
+						changeIntent.setClass(context, UpdateService.class);
+						changeIntent.putExtra(UpdateService.cAction, UpdateService.cActionChange);
+						context.startService(changeIntent);
+
 						// Build notification
 						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
 						notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
@@ -156,17 +133,7 @@ public class PackageChange extends BroadcastReceiver {
 						Notification notification = notificationBuilder.build();
 
 						// Notify
-						notificationManager.notify(0, notification);
-
-						// Upgrade restrictions
-						if (PrivacyService.getClient() != null) {
-							mUpgradeThread = new Thread(new Runnable() {
-								public void run() {
-									upgradeRestrictions(context);
-								}
-							});
-							mUpgradeThread.start();
-						}
+						notificationManager.notify(Util.NOTIFY_RESTART, notification);
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed
@@ -180,56 +147,6 @@ public class PackageChange extends BroadcastReceiver {
 					}
 				}
 			}
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-	}
-
-	private void upgradeRestrictions(Context context) {
-		try {
-			// Get old version
-			PackageManager pm = context.getPackageManager();
-			PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
-			Version sVersion = new Version(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingVersion, "0.0",
-					false));
-
-			// Upgrade
-			if (sVersion.compareTo(new Version("0.0")) != 0) {
-				Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version "
-						+ pInfo.versionName);
-				boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false,
-						false);
-
-				// All packages
-				for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
-					for (String restrictionName : PrivacyManager.getRestrictions())
-						for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName))
-							if (md.getFrom() != null)
-								if (sVersion.compareTo(md.getFrom()) < 0) {
-									// Disable new dangerous restrictions
-									if (!dangerous && md.isDangerous()) {
-										Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom()
-												+ " pkg=" + aInfo.packageName);
-										PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(),
-												md.getName(), false, true);
-									}
-
-									// Restrict replaced methods
-									if (md.getReplaces() != null)
-										if (PrivacyManager.getRestricted(null, aInfo.uid, md.getRestrictionName(),
-												md.getReplaces(), false, false)) {
-											Util.log(null, Log.WARN, "Replaced " + md.getReplaces() + " by " + md
-													+ " from=" + md.getFrom() + " pkg=" + aInfo.packageName);
-											PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(),
-													md.getName(), true, true);
-										}
-								}
-
-				Util.log(null, Log.WARN, "Upgrade done");
-			}
-
-			// Set new version
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}

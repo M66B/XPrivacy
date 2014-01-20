@@ -52,6 +52,12 @@ public class Util {
 	private static Version MIN_PRO_VERSION = new Version("1.12");
 	private static String LICENSE_FILE_NAME = "XPrivacy_license.txt";
 
+	public static int NOTIFY_RESTART = 0;
+	public static int NOTIFY_NOTXPOSED = 1;
+	public static int NOTIFY_UPGRADING = 2;
+	public static int NOTIFY_MIGRATING = 3;
+	public static int NOTIFY_RANDOMIZING = 4;
+
 	public static void log(XHook hook, int priority, String msg) {
 		// Check if logging enabled
 		if (Process.myUid() > 0 && !mLogDetermined) {
