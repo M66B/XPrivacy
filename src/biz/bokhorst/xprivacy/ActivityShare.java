@@ -681,6 +681,9 @@ public class ActivityShare extends Activity {
 
 					// Process restrictions
 					for (int uid : listUid) {
+						if (mAbort)
+							throw new Exception("Abort");
+
 						publishProgress(++mProgressCurrent, listUid.size() + 1);
 						if (mThemeId != android.R.style.Theme_NoDisplay)
 							mAppAdapter.setState(uid, STATE_RUNNING);
@@ -727,12 +730,16 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				// IOException, IllegalArgumentException, IllegalStateException
+				// IOException, IllegalArgumentException, IllegalStateException, Exception
 				if (ex instanceof FileNotFoundException)
 					return "Cannot create file"; // TODO String resource
 				else if (ex instanceof IOException)
 					return "Error writing to file"; // TODO String resource
-				else
+				else if (ex instanceof Exception && ex.getMessage().equals("Abort")) {
+					// Delete file
+					mFile.delete();
+					return "File deleted"; // TODO String resource
+				} else
 					return ex.getMessage();
 			}
 		}
@@ -799,6 +806,9 @@ public class ActivityShare extends Activity {
 
 				// Process result (legacy)
 				for (String packageName : mapPackage.keySet()) {
+					if (mAbort)
+						throw new Exception("Abort");
+
 					try {
 						publishProgress(++mProgressCurrent, progressMax + 1);
 
@@ -843,6 +853,8 @@ public class ActivityShare extends Activity {
 					return "Error reading file"; // TODO string resource
 				else if (ex instanceof SAXException)
 					return "File is damaged"; // TODO string resource
+				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
+					return null;
 				else
 					return ex.getMessage();
 			}
@@ -1061,6 +1073,9 @@ public class ActivityShare extends Activity {
 
 				// Process applications
 				for (ApplicationInfoEx appInfo : lstApp) {
+					if (mAbort)
+						throw new Exception("Abort");
+
 					publishProgress(++mProgressCurrent, lstApp.size() + 1);
 					if (!appInfo.isSystem() || lstApp.size() == 1) {
 						mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING);
@@ -1155,6 +1170,8 @@ public class ActivityShare extends Activity {
 					return "Error connecting to server"; // TODO string resource
 				else if (ex instanceof JSONException)
 					return "Bad data received"; // TODO string resource
+				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
+					return null;
 				else
 					return ex.getMessage();
 			}
@@ -1189,6 +1206,9 @@ public class ActivityShare extends Activity {
 				mProgressCurrent = 0;
 
 				for (ApplicationInfoEx appInfo : lstApp) {
+					if (mAbort)
+						throw new Exception("Abort");
+
 					// Update progess
 					publishProgress(++mProgressCurrent, lstApp.size() + 1);
 					mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING);
@@ -1352,6 +1372,8 @@ public class ActivityShare extends Activity {
 				// NameNotFoundException, UnsupportedEncodingException, JSONException, ClientProtocolException, IOException, Exception
 				if (ex instanceof ClientProtocolException || ex instanceof IOException)
 					return "Error connecting to server"; // TODO string resource
+				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
+					return null;
 				else
 					return ex.getMessage();
 			}
