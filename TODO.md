@@ -11,6 +11,7 @@ For interested developers:
 	* Only show installed applications for secondary users
 	* Only allow restrictions for applications installed by secondary users
 	* Only import/export for applications installed by secondary users
+* Document XPrivacy navigation (menu's, presses, long presses) on GitHub
 
 * Accessibility: *android:labelFor="..."*
 * Secure usage data
