@@ -60,6 +60,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
@@ -887,6 +888,8 @@ public class ActivityShare extends Activity {
 		private List<Integer> mListSettingId = new ArrayList<Integer>();
 		private List<Integer> mListRestrictionUid = new ArrayList<Integer>();
 		private List<Integer> mListRestartUid = new ArrayList<Integer>();
+		private List<Integer> mListSkippingUid = new ArrayList<Integer>();
+		private boolean mAborting = false;
 
 		public ImportHandler(List<Integer> listUidSelected, Runnable progress) {
 			mListUidSelected = listUidSelected;
@@ -896,6 +899,9 @@ public class ActivityShare extends Activity {
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) {
 			try {
+				if (mAbort)
+					mAborting = true;
+
 				if (qName.equals("XPrivacy")) {
 					// Root
 				} else if (qName.equals("PackageInfo")) {
@@ -930,6 +936,14 @@ public class ActivityShare extends Activity {
 						// Application setting
 						int iid = Integer.parseInt(id);
 						int uid = getUid(iid);
+
+						if (mAborting && !mListRestrictionUid.contains(uid) && !mListSettingId.contains(iid)) {
+							if (!mListSkippingUid.contains(uid))
+								mListSkippingUid.add(uid);
+							Util.log(null, Log.WARN, "Skipping setting for uid=" + uid);
+							return; // This app hasn't yet begun to be imported, so skip it
+						} // TODO a better approach would be to cache these and apply them when restrictions start to be found
+
 						if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
 							// Clear existing settings
 							if (!mListSettingId.contains(iid)) {
@@ -968,6 +982,15 @@ public class ActivityShare extends Activity {
 
 					// Get uid
 					int uid = getUid(id);
+
+					if (mAborting && !mListRestrictionUid.contains(uid) && !mListSettingId.contains(id)) {
+						// TODO make this work for backups that import all the settings first
+						if (!mListSkippingUid.contains(uid))
+							mListSkippingUid.add(uid);
+						Util.log(null, Log.WARN, "Skipping restriction for uid=" + uid);
+						return; // This app hasn't begun to be imported, so skip it
+					}
+
 					if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
 						// Progress report and pre-import cleanup
 						if (!mListRestrictionUid.contains(uid)) {
@@ -1007,6 +1030,17 @@ public class ActivityShare extends Activity {
 				// Restart notifications
 				for (int uid : mListRestartUid)
 					mAppsByUid.get(uid).message = getString(R.string.msg_restart);
+				// Checks
+				if (mListRestrictionUid.size() + mListSkippingUid.size() != mListUidSelected.size() - mAppAdapter.mAppsWaiting.size() &&
+						!(mListSettingId.size() == mListUidSelected.size() ||
+						  mListSettingId.size() + mListSkippingUid.size() == mListUidSelected.size() - mAppAdapter.mAppsWaiting.size())) {
+					Util.log(null, Log.ERROR, "Import list sizes possible mismatch");
+					Util.log(null, Log.ERROR, "Selected (" + mListUidSelected.size() + ") " + TextUtils.join(", ", mListUidSelected));
+					Util.log(null, Log.ERROR, "Settings (" + mListSettingId.size() + ") " + TextUtils.join(", ", mListSettingId));
+					Util.log(null, Log.ERROR, "Restricted (" + mListRestrictionUid.size() + ") " + TextUtils.join(", ", mListRestrictionUid));
+					Util.log(null, Log.ERROR, "Skipped (" + mListSkippingUid.size() + ") " + TextUtils.join(", ", mListSkippingUid));
+				} else
+					Util.log(null, Log.WARN, "Import list sizes matched");
 			}
 		}
 
