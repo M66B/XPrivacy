@@ -670,7 +670,7 @@ public class PrivacyProvider extends ContentProvider {
 					try {
 						int uid = 0;
 						String name = getSettingName(settingKey);
-						String value = prefs.getString(settingKey, null);
+						String value = prefs.getString(settingKey, "");
 
 						// Decode setting
 						String[] component = name.split("\\.");

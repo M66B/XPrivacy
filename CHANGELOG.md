@@ -19,6 +19,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed export progress, thanks @[jpeg729](https://github.com/jpeg729)
 * Update service with progress notifications for migration, randomization and upgrade
 * Allow secondary users to set restrictions
+* Fixed some settings not migrated correctly ([issue](https://github.com/M66B/XPrivacy/issues/1127))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
