@@ -1447,7 +1447,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					// Get if granted
 					if (mRestrictionName != null)
-						if (!PrivacyManager.hasPermission(holder.row.getContext(), xAppInfo, mRestrictionName))
+						if (!PrivacyManager.hasPermission(ActivityMain.this, xAppInfo, mRestrictionName))
 							granted = false;
 
 					// Get restrictions
@@ -1634,13 +1634,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 									PrivacyManager.cSettingState, "1", false));
 							if (state == STATE_ATTENTION)
 								holder.vwState.setBackgroundColor(getResources().getColor(
-										Util.getThemed(holder.row.getContext(), R.attr.color_state_attention)));
+										Util.getThemed(ActivityMain.this, R.attr.color_state_attention)));
 							else if (state == STATE_SHARED)
 								holder.vwState.setBackgroundColor(getResources().getColor(
-										Util.getThemed(holder.row.getContext(), R.attr.color_state_shared)));
+										Util.getThemed(ActivityMain.this, R.attr.color_state_shared)));
 							else
 								holder.vwState.setBackgroundColor(getResources().getColor(
-										Util.getThemed(holder.row.getContext(), R.attr.color_state_restricted)));
+										Util.getThemed(ActivityMain.this, R.attr.color_state_restricted)));
 						}
 					});
 				}

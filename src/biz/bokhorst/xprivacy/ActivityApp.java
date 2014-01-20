@@ -974,7 +974,7 @@ public class ActivityApp extends Activity {
 				if (restrictionName != null) {
 					// Get info
 					used = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, null) != 0);
-					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo, restrictionName);
+					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
 
 					// Get all dangerous
 					for (PrivacyManager.Hook hook : PrivacyManager.getHooks(restrictionName))
@@ -1186,7 +1186,7 @@ public class ActivityApp extends Activity {
 					lastUsage = PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName());
 					parentRestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null,
 							false, false);
-					permission = PrivacyManager.hasPermission(holder.row.getContext(), mAppInfo, md);
+					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
 					restricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, md.getName(),
 							false, false);
 

@@ -257,7 +257,7 @@ public class ActivityUsage extends Activity {
 			protected Object doInBackground(Object... params) {
 				if (usageData != null) {
 					try {
-						PackageManager pm = holder.row.getContext().getPackageManager();
+						PackageManager pm = ActivityUsage.this.getPackageManager();
 						String[] packages = pm.getPackagesForUid(usageData.getUid());
 						if (packages != null && packages.length > 0) {
 							ApplicationInfo app = pm.getApplicationInfo(packages[0], 0);
