@@ -6,6 +6,11 @@ For interested developers:
 * [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 * Reconsider *largeHeap*
+* Open to reset user selected dangerous methods
+* Better multi-user support:
+	* Only show installed applications for secondary users
+	* Only allow restrictions for applications installed by secondary users
+	* Only import/export for applications installed by secondary users
 
 * Accessibility: *android:labelFor="..."*
 * Secure usage data

@@ -18,6 +18,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Corrected app name and version in update notifications, thanks @[jpeg729](https://github.com/jpeg729) ([issue](https://github.com/M66B/XPrivacy/issues/1112))
 * Fixed export progress, thanks @[jpeg729](https://github.com/jpeg729)
 * Update service with progress notifications for migration, randomization and upgrade
+* Allow secondary users to set restrictions
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

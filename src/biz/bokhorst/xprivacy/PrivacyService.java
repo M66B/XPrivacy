@@ -537,7 +537,7 @@ public class PrivacyService {
 	};
 
 	private static void enforcePermission() {
-		int uid = Binder.getCallingUid();
+		int uid = Util.getAppId(Binder.getCallingUid());
 		if (mXPrivacyUid == 0) {
 			Context context = getContext();
 			if (context == null)
@@ -550,7 +550,7 @@ public class PrivacyService {
 			else
 				throw new SecurityException("self=" + self + " calling=" + calling);
 		} else if (uid != mXPrivacyUid)
-			throw new SecurityException("uid=" + mXPrivacyUid + " calling=" + uid);
+			throw new SecurityException("uid=" + mXPrivacyUid + " calling=" + Binder.getCallingUid());
 	}
 
 	private static Context getContext() {
