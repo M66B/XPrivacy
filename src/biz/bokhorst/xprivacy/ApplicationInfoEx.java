@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import android.annotation.SuppressLint;
@@ -81,6 +82,13 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return new ArrayList<String>(mMapAppInfo.navigableKeySet());
 	}
 
+	public String getApplicationName(String packageName) {
+		for (Entry<String, ApplicationInfo> entry : mMapAppInfo.entrySet())
+			if (entry.getValue().packageName.equals(packageName))
+				return entry.getKey();
+		return null;
+	}
+
 	public List<String> getPackageName() {
 		List<String> listPackageName = new ArrayList<String>();
 		for (ApplicationInfo appInfo : mMapAppInfo.values())
@@ -107,6 +115,19 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 				listVersionName.add(ex.getMessage());
 			}
 		return listVersionName;
+	}
+
+	public String getPackageVersionName(Context context, String packageName) {
+		try {
+			getPackageInfo(context, packageName);
+			String version = mMapPkgInfo.get(packageName).versionName;
+			if (version == null)
+				return "???";
+			else
+				return version;
+		} catch (NameNotFoundException ex) {
+			return ex.getMessage();
+		}
 	}
 
 	public List<Integer> getPackageVersionCode(Context context) {
