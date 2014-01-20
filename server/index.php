@@ -297,6 +297,7 @@
 
 			// Get restrictions
 			$settings = Array();
+			$empty = true;
 			$sql = "SELECT restriction, method";
 			$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 			$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
@@ -312,6 +313,8 @@
 					$ci = confidence($row->restricted, $row->not_restricted);
 					$diff = $row->restricted / ($row->restricted + $row->not_restricted);
 					$restrict = ($ci < $max_ci && $diff > $min_diff && $row->allowed <= $row->not_allowed);
+					if ($restrict)
+						$empty = false;
 
 					$entry = Array();
 					$entry['restriction'] = $row->restriction;
@@ -328,7 +331,10 @@
 			}
 
 			// Send reponse
-			echo json_encode(array('ok' => $ok, 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
+			if ($empty)
+				echo json_encode(array('ok' => false, 'error' => 'No restrictions available', 'settings' => $settings));
+			else
+				echo json_encode(array('ok' => $ok, 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
 			exit();
 		}
 		else {
