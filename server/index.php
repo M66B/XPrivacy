@@ -331,7 +331,7 @@
 			}
 
 			// Send reponse
-			if ($empty)
+			if ($ok && $empty)
 				echo json_encode(array('ok' => false, 'error' => 'No restrictions available', 'settings' => $settings));
 			else
 				echo json_encode(array('ok' => $ok, 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
