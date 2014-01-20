@@ -54,6 +54,11 @@
     <string name="msg_random_access">Véletlenszerűsítés hozzáféréskor</string>
     <string name="msg_random_boot">Véletlenszerűsítés boot után</string>
     <string name="msg_restart">Az alkalmazás újraindítása szükséges</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>Az XPrivacy fejlesztése és tesztelése nagy gondossággal történik,
 de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön és az összes alkalmazással.
 \n\nCsak saját felelősségre.</b>\n\nNézze meg a licenszet is:</string>

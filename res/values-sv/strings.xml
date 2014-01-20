@@ -54,6 +54,11 @@
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Slumpa efter uppstart</string>
     <string name="msg_restart">Application restart required</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>XPrivacy utvecklas och testas med stor omsorg.
 Det är emellertid omöjligt att garantera att appen fungerar på alla enheter och appar.
 \n\nAnvänding sker helt på egen risk.</b>\n\nSe också licensen:</string>

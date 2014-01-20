@@ -54,6 +54,11 @@
     <string name="msg_random_access">उपयोग पर अटपटा करें</string>
     <string name="msg_random_boot">रिबूट के पश्चात अटपटा करे</string>
     <string name="msg_restart">application पुनःप्रारंभ जरुरी</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>XPrivacy बनाने मैं बहुत ख्याल रखा गया है,
 किन्तु वह सभी साधन और सभी application के लिए बरोबर चलेगा उसकी गारंटी देना असंभव है।
 \n\nइसका उपयोग पूरी तरह से आपके अपने जोखिम पर है।</b>\n\nलाइसेंस को भी पढ़े:</string>

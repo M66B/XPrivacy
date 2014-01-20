@@ -55,6 +55,11 @@
     <string name="msg_random_access">Atsitiktiniai duomenys prieeigai</string>
     <string name="msg_random_boot">Atsitiktiniai duomenys po perkrovimo</string>
     <string name="msg_restart">Programą reikia perkrauti</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
 \n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>

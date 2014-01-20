@@ -54,6 +54,11 @@
     <string name="msg_random_access">Losuj podczas dostępu</string>
     <string name="msg_random_boot">Losuj po restarcie</string>
     <string name="msg_restart">Wymagany restart aplikacji</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>Dołożyliśmy wszelkich starań podczas programowania i testów XPrivacy.
     Jednak nie możemy zagwarantować, że będzie on działać bezbłędnie na każdym urządzeniu oraz z każdą aplikacją.
 \n\nUżywasz go całkowicie na własne ryzyko.</b>\n\nZobacz też licencję:</string>

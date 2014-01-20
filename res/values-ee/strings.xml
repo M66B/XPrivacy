@@ -54,6 +54,11 @@
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Juhuslikusta pärast käivitamist</string>
     <string name="msg_restart">Application restart required</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>Palju vaeva on nähtud Xprivacy arendamisel ja testimisel,
 kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
 \n\nKasuta ainult omal vastutusel.</b>\n\nSee also the license:</string>

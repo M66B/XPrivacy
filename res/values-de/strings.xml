@@ -54,6 +54,11 @@
     <string name="msg_random_access">Zufallswerte bei Neustart</string>
     <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
     <string name="msg_restart">App-Neustart erforderlich</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
 \ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
 \n\nVerwenden Sie XPrivacy ausschließlich auf Ihr eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>

@@ -54,6 +54,11 @@
     <string name="msg_random_access">アプリにアクセスされたとき、バリューをランダム化する</string>
     <string name="msg_random_boot">端末を起動時にランダム化する</string>
     <string name="msg_restart">Application restart required</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>XPrivacyは細心の注意をして開発･テストしていますが、
 どの端末、どのアプリでも動作するという保証はありません。
 \n\n自己責任でお使いください。</b>\n\nライセンスの詳細はこちら:</string>

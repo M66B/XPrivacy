@@ -54,6 +54,11 @@
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randamaigh tar éis tosaithe</string>
     <string name="msg_restart">Application restart required</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>cúram mór aire do a fhorbairt agus a thástáil XPrivacy,
 áfach, go bhfuil sé dodhéanta a ráthú go mbeidh sé obair flawless ar gach gléas agus do gach agus gach iarratas.
 \n\nBain úsáid as ar do phriacal féin.</b>\n\nFéach freisin an ceadúnas:</string>

@@ -54,6 +54,11 @@
     <string name="msg_random_access">访问时随机生成数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
     <string name="msg_restart">需要重启应用使规则生效</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>

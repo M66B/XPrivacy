@@ -54,6 +54,11 @@
     <string name="msg_random_access">Palit-palitan ang mga paghihigpit sa kusang paggamit</string>
     <string name="msg_random_boot">Palit-palitan ang mga paghihigpit sa unang paggamit</string>
     <string name="msg_restart">Kailangan paumpisahin muli ang Application</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>Malaking pag-aalaga ang ginampanan sa pagkabuo at sa pagsusuri ng XPrivacy,
     ngunit sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bawat sa isa\'t isang aplikasyon. 
 \n\nAng paggamit nito ay ganap na nasa sa iyong pagbabakasakali.</b>\n\nAlamin din ang kanyang lisensiya at sangguni dito sa:</string>

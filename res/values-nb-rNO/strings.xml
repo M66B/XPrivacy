@@ -54,6 +54,11 @@
     <string name="msg_random_access">Tilfeldige verdier ved tilgang</string>
     <string name="msg_random_boot">Tilfeldige verdier etter omstart</string>
     <string name="msg_restart">Omstart av appen nødvendig</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>

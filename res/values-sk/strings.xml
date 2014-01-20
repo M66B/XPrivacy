@@ -54,6 +54,11 @@
     <string name="msg_random_access">Náhodné hodnoty po prístupe</string>
     <string name="msg_random_boot">Náhodné hodnoty pri štarte zariadenia</string>
     <string name="msg_restart">Vyžadovaný reštart aplikácie</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>

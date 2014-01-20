@@ -54,6 +54,11 @@
     <string name="msg_random_access">Naključni podatki ob dostopu</string>
     <string name="msg_random_boot">Naključni podatki ob zagonu</string>
     <string name="msg_restart">Potreben je ponoven zagon aplikacije</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>Za razvoj in preizkušanje programa XPrivacy je bilo vloženo veliko truda, vendar pa
     je nemogoče zagotoviti brezhibno delovanje na vsaki napravi in za vsak program.\n\nUporaba programa je na lastno
     odgovornost</b>\n\nPreberite si tudi licenco:</string>

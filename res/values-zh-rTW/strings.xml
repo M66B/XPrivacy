@@ -54,6 +54,11 @@
     <string name="msg_random_access">存取資訊時進行亂數</string>
     <string name="msg_random_boot">重新啟動後進行亂數</string>
     <string name="msg_restart">需要重新啓動程式</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用\n\n請自行承擔使用XPrivacy的可能風險。</b>\n\n請參閱說明文件：</string>
     <string name="restrict_accounts">帳戶 (Google, Facebook, etc)</string>
     <string name="restrict_browser">瀏覽器 (書籤, 記錄)</string>
