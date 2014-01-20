@@ -524,7 +524,9 @@ public class ActivityShare extends Activity {
 			mAppsByUid = new SparseArray<AppHolder>();
 
 			if (uids.length > 0 && !getTitle().equals(getString(R.string.menu_export))) {
+				mProgressDialog.setMax(uids.length);
 				for (int i = 0; i < uids.length; i++) {
+					mProgressDialog.setProgress(i);
 					try {
 						int uid = uids[i];
 						AppHolder app = new AppHolder(uid);
@@ -536,8 +538,11 @@ public class ActivityShare extends Activity {
 				}
 			} else {
 				// Get a list of all apps unless fetching, in which case, get all user apps
-				// Maybe we should add a Toast. "Adding all non-system apps" or "Adding all apps"
-				for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
+				List<PackageInfo> pList = getPackageManager().getInstalledPackages(0);
+				mProgressDialog.setMax(pList.size());
+				int current = 0;
+				for (PackageInfo pInfo : pList) {
+					mProgressDialog.setProgress(++current);
 					if (mAppsByUid.get(pInfo.applicationInfo.uid) == null) {
 						try {
 							AppHolder app = new AppHolder(pInfo.applicationInfo.uid);
@@ -551,6 +556,7 @@ public class ActivityShare extends Activity {
 							Util.bug(null, ex);
 						}
 					}
+				}
 			}
 
 			Collections.sort(apps);
