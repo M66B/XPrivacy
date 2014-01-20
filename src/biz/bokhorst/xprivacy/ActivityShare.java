@@ -288,10 +288,17 @@ public class ActivityShare extends Activity {
 			// Set theme to NoDisplay
 			mThemeId = android.R.style.Theme_NoDisplay;
 			setTheme(mThemeId);
+
+			// Build list of distinct uids
+			List<Integer> listUid = new ArrayList<Integer>();
+			for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
+			if (!listUid.contains(pInfo.applicationInfo.uid))
+			listUid.add(pInfo.applicationInfo.uid);
+
 			// Get on with exporting
 			String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
 					: getFileName(false));
-			new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
+			new ExportTask().executeOnExecutor(mExecutor, new File(fileName), listUid);
 		}
 	}
 
@@ -606,9 +613,14 @@ public class ActivityShare extends Activity {
 			try {
 				mFile = (File) params[0];
 
-				List<Integer> listUid = new ArrayList<Integer>();
-				for (int uid : (int[]) params[1])
-					listUid.add(uid);
+				List<Integer> listUid;
+				if (params[1] instanceof List) {
+					listUid = (List<Integer>) params[1];
+				} else {
+					listUid = new ArrayList<Integer>();
+					for (int uid : (int[]) params[1])
+						listUid.add(uid);
+				}
 
 				Util.log(null, Log.INFO, "Exporting " + mFile);
 				String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
@@ -670,7 +682,8 @@ public class ActivityShare extends Activity {
 					// Process restrictions
 					for (int uid : listUid) {
 						publishProgress(++mProgressCurrent, listUid.size() + 1);
-						mAppAdapter.setState(uid, STATE_RUNNING);
+						if (mThemeId != android.R.style.Theme_NoDisplay)
+							mAppAdapter.setState(uid, STATE_RUNNING);
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
 							// Category
 							boolean crestricted = PrivacyManager.getRestricted(null, uid, restrictionName, null, false,
@@ -697,7 +710,8 @@ public class ActivityShare extends Activity {
 								}
 							}
 						}
-						mAppAdapter.setState(uid, STATE_SUCCESS);
+						if (mThemeId != android.R.style.Theme_NoDisplay)
+							mAppAdapter.setState(uid, STATE_SUCCESS);
 					}
 
 					// End serialization
@@ -727,6 +741,8 @@ public class ActivityShare extends Activity {
 		protected void onProgressUpdate(Integer... values) {
 			if (mThemeId != android.R.style.Theme_NoDisplay)
 				blueStreakOfProgress(values[0], values[1]);
+			else
+				Util.log(null, Log.WARN, "Exporting progress " + values[0] + "/" + values[1]);
 			super.onProgressUpdate(values);
 		}
 
@@ -734,6 +750,8 @@ public class ActivityShare extends Activity {
 		protected void onPostExecute(String result) {
 			if (mThemeId != android.R.style.Theme_NoDisplay)
 				done(result);
+			else
+				finish();
 			super.onPostExecute(result);
 		}
 	}
