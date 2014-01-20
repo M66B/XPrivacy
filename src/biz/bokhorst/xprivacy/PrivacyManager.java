@@ -452,9 +452,12 @@ public class PrivacyManager {
 				if (client == null)
 					value = defaultValue;
 				else {
-					value = client.getSetting(Math.abs(uid), name, defaultValue);
-					if (value == null && uid > 0)
-						value = client.getSetting(0, name, defaultValue);
+					value = client.getSetting(Math.abs(uid), name, null);
+					if (value == null)
+						if (uid > 0)
+							value = client.getSetting(0, name, defaultValue);
+						else
+							return defaultValue;
 				}
 
 				// Add to cache
