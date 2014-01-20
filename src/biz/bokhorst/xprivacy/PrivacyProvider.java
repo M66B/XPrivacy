@@ -22,6 +22,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Process;
+import android.os.RemoteException;
 import android.util.Log;
 
 @SuppressWarnings("deprecation")
@@ -619,62 +620,50 @@ public class PrivacyProvider extends ContentProvider {
 		setPrefFileReadable(PREF_SETTINGS);
 	}
 
-	public static boolean migrateRestrictions(Context context) {
-		boolean migrated = false;
-		try {
-			// Legacy restrictions
-			convertRestrictions(context);
+	// Migration
 
-			// Process applications restrictions
-			PackageManager pm = context.getPackageManager();
-			for (ApplicationInfo appInfo : pm.getInstalledApplications(PackageManager.GET_META_DATA)) {
-				File prefFile = new File(getPrefFileName(PREF_RESTRICTION, appInfo.uid));
-				if (prefFile.exists()) {
-					Util.log(null, Log.WARN, "Migrating " + prefFile);
-
-					SharedPreferences prefs = context.getSharedPreferences(PREF_RESTRICTION + "." + appInfo.uid,
-							Context.MODE_WORLD_READABLE);
-
-					// Process restrictions
-					for (String restrictionName : PrivacyManager.getRestrictions())
-						if (getRestricted(restrictionName, null, prefs)) {
-							// Category
-							migrated = true;
-							PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName, null, true);
-							Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name="
-									+ restrictionName);
-
-							// Exceptions
-							for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName)) {
-								boolean restricted = getRestricted(restrictionName, md.getName(), prefs);
-								if (!restricted || md.isDangerous()) {
-									PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName,
-											md.getName(), restricted);
-									Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name="
-											+ restrictionName + " method=" + md.getName());
-								}
-							}
-						}
-
-					prefFile.renameTo(new File(prefFile + ".migrated"));
-				}
-			}
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-		return migrated;
+	public static void migrateLegacy(Context context) throws IOException {
+		convertSettings(context);
+		convertRestrictions(context);
 	}
 
-	public static boolean migrateSettings(Context context) {
-		boolean migrated = false;
+	public static void migrateApp(Context context, ApplicationInfo appInfo) throws RemoteException {
+		File prefFile = new File(getPrefFileName(PREF_RESTRICTION, appInfo.uid));
+		if (prefFile.exists()) {
+			Util.log(null, Log.WARN, "Migrating " + prefFile);
+
+			SharedPreferences prefs = context.getSharedPreferences(PREF_RESTRICTION + "." + appInfo.uid,
+					Context.MODE_WORLD_READABLE);
+
+			// Process restrictions
+			for (String restrictionName : PrivacyManager.getRestrictions())
+				if (getRestricted(restrictionName, null, prefs)) {
+					// Category
+					PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName, null, true);
+					Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name=" + restrictionName);
+
+					// Exceptions
+					for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName)) {
+						boolean restricted = getRestricted(restrictionName, md.getName(), prefs);
+						if (!restricted || md.isDangerous()) {
+							PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName, md.getName(),
+									restricted);
+							Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name="
+									+ restrictionName + " method=" + md.getName());
+						}
+					}
+				}
+
+			prefFile.renameTo(new File(prefFile + ".migrated"));
+		}
+	}
+
+	public static void migrateSettings(Context context) {
 		try {
 			// Process settings
 			File prefFile = new File(getPrefFileName(PREF_SETTINGS));
 			if (prefFile.exists()) {
 				Util.log(null, Log.WARN, "Migrating " + prefFile);
-
-				// Legacy settings
-				convertSettings(context);
 
 				SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
 				for (String settingKey : prefs.getAll().keySet())
@@ -711,7 +700,6 @@ public class PrivacyProvider extends ContentProvider {
 						}
 
 						// Set
-						migrated = true;
 						PrivacyService.getClient().setSetting(uid, name, value);
 						Util.log(null, Log.WARN, "Migrate setting=" + getSettingName(settingKey) + " uid=" + uid
 								+ " name=" + name + " value=" + value);
@@ -724,6 +712,5 @@ public class PrivacyProvider extends ContentProvider {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
-		return migrated;
 	}
 }

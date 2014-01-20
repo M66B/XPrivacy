@@ -54,9 +54,7 @@ public class Util {
 
 	public static int NOTIFY_RESTART = 0;
 	public static int NOTIFY_NOTXPOSED = 1;
-	public static int NOTIFY_UPGRADING = 2;
-	public static int NOTIFY_MIGRATING = 3;
-	public static int NOTIFY_RANDOMIZING = 4;
+	public static int NOTIFY_UPDATE = 2;
 
 	public static void log(XHook hook, int priority, String msg) {
 		// Check if logging enabled

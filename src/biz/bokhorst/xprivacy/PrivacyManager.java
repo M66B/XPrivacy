@@ -293,11 +293,6 @@ public class PrivacyManager {
 			return false;
 		}
 
-		// Prevent some restrictions for Android
-		if (uid == PrivacyManager.cAndroidUid)
-			if (PrivacyManager.cIdentification.equals(restrictionName) && "/proc".equals(methodName))
-				return false;
-
 		// Prevent some restrictions for self
 		if (uid == Process.myUid()) {
 			if (PrivacyManager.cIdentification.equals(restrictionName) && "getString".equals(methodName))

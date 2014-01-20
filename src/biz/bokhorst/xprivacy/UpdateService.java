@@ -1,5 +1,9 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -8,8 +12,10 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Process;
+import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -28,38 +34,35 @@ public class UpdateService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Bundle extras = intent.getExtras();
-		if (extras.containsKey(cAction))
+		if (extras.containsKey(cAction)) {
+			// Start foreground service
+			NotificationCompat.Builder builder = new NotificationCompat.Builder(UpdateService.this);
+			builder.setSmallIcon(R.drawable.ic_launcher);
+			builder.setContentTitle(UpdateService.this.getString(R.string.app_name));
+			builder.setWhen(System.currentTimeMillis());
+			builder.setAutoCancel(false);
+			builder.setOngoing(true);
+			Notification notification = builder.build();
+			startForeground(Util.NOTIFY_UPDATE, notification);
+
+			// Check action
 			if (cActionBoot.equals(extras.getString(cAction))) {
 				// Boot received
 				mBootThread = new Thread(new Runnable() {
-					public void run() { // Build notification
-						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
-								getApplicationContext());
-						notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-						notificationBuilder.setContentTitle(getApplicationContext().getString(R.string.app_name));
-						notificationBuilder.setContentText(String.format(
-								getApplicationContext().getString(R.string.msg_migrating), "0 %"));
-						notificationBuilder.setWhen(System.currentTimeMillis());
-						notificationBuilder.setAutoCancel(true);
-						Notification notification = notificationBuilder.build();
-
+					public void run() {
 						// Migrate settings
 						try {
-							Util.log(null, Log.WARN, "Start fg");
-							startForeground(Util.NOTIFY_MIGRATING, notification);
-							migrate(getApplicationContext());
-							Thread.sleep(5 * 1000);
-							Util.log(null, Log.WARN, "End fg");
-							stopForeground(true);
+							migrate(UpdateService.this);
 						} catch (Throwable ex) {
 							Util.bug(null, ex);
 						}
 
 						// Randomize settings
-						randomizeSettings(getApplicationContext(), 0);
-						for (ApplicationInfo aInfo : getApplicationContext().getPackageManager()
-								.getInstalledApplications(0))
-							randomizeSettings(getApplicationContext(), aInfo.uid);
+						try {
+							randomize(UpdateService.this);
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						}
 					}
 				});
 				mBootThread.start();
@@ -70,25 +73,8 @@ public class UpdateService extends IntentService {
 					mChangeThread = new Thread(new Runnable() {
 						// Upgrade restrictions
 						public void run() {
-							// Build notification
-							NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
-									getApplicationContext());
-							notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-							notificationBuilder.setContentTitle(getApplicationContext().getString(R.string.app_name));
-							notificationBuilder.setContentText(String.format(
-									getApplicationContext().getString(R.string.msg_upgrading), "0 %"));
-							notificationBuilder.setWhen(System.currentTimeMillis());
-							notificationBuilder.setAutoCancel(true);
-							Notification notification = notificationBuilder.build();
-
 							try {
-								// https://code.google.com/p/android/issues/detail?id=21635
-								Util.log(null, Log.WARN, "Start fg");
-								startForeground(Util.NOTIFY_UPGRADING, notification);
-								upgradeRestrictions(getApplicationContext());
-								Thread.sleep(5 * 1000);
-								Util.log(null, Log.WARN, "End fg");
-								stopForeground(true);
+								upgrade(UpdateService.this);
 							} catch (Throwable ex) {
 								Util.bug(null, ex);
 							}
@@ -97,6 +83,69 @@ public class UpdateService extends IntentService {
 					mChangeThread.start();
 				}
 			}
+
+			// End forground service
+			stopForeground(true);
+		}
+	}
+
+	private void migrate(final Context context) throws IOException, RemoteException {
+		// Check if something to do
+		boolean work = false;
+		File prefs = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "shared_prefs");
+		for (File file : prefs.listFiles())
+			if (!file.getName().startsWith("biz.bokhorst.xprivacy.provider.usage.") && file.getName().endsWith(".xml")) {
+				work = true;
+				break;
+			}
+
+		// Perform migration
+		if (work) {
+			Util.log(null, Log.WARN, "Migration");
+			String format = context.getString(R.string.msg_migrating);
+			notifyProgress(context, format, 0);
+
+			// Convert legacy settings
+			PrivacyProvider.migrateLegacy(context);
+
+			// Migrate settings
+			PrivacyProvider.migrateSettings(context);
+
+			// Migrate restrictions
+			List<ApplicationInfo> listAppInfo = context.getPackageManager().getInstalledApplications(
+					PackageManager.GET_META_DATA);
+			for (int i = 0; i < listAppInfo.size(); i++) {
+				PrivacyProvider.migrateApp(context, listAppInfo.get(i));
+				notifyProgress(context, format, 100 * (i + 1) / listAppInfo.size());
+			}
+
+			Util.log(null, Log.WARN, "Migration complete");
+		}
+
+		// Use settings/restrictions
+		PrivacyService.getClient().migrated();
+
+		// Disable some restrictions for self
+		// TODO: multi-user
+		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "getString", false, false);
+		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIPC, null, false, false);
+		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
+		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);
+	}
+
+	private void randomize(Context context) {
+		Util.log(null, Log.WARN, "Randomization");
+		String format = context.getString(R.string.msg_randomizing);
+		notifyProgress(context, format, 0);
+
+		randomizeSettings(context, 0);
+
+		List<ApplicationInfo> listAppInfo = context.getPackageManager().getInstalledApplications(0);
+		for (int i = 0; i < listAppInfo.size(); i++) {
+			randomizeSettings(context, listAppInfo.get(i).uid);
+			notifyProgress(context, format, 100 * (i + 1) / listAppInfo.size());
+		}
+		Util.log(null, Log.WARN, "Randomization complete");
 	}
 
 	private void randomizeSettings(Context context, int uid) {
@@ -120,91 +169,75 @@ public class UpdateService extends IntentService {
 		}
 	}
 
-	private void migrate(final Context context) {
-		try {
-			// Disable some restrictions for self
-			PrivacyManager.setRestricted(null, PrivacyManager.cAndroidUid, PrivacyManager.cIdentification, "/proc",
-					false, false);
-			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "getString", false,
-					false);
-			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIPC, null, false, false);
-			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
-			PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);
+	private void upgradeApp(Version sVersion, boolean dangerous, ApplicationInfo aInfo) {
+		for (String restrictionName : PrivacyManager.getRestrictions())
+			for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName))
+				if (md.getFrom() != null)
+					if (sVersion.compareTo(md.getFrom()) < 0) {
+						// Disable new dangerous restrictions
+						if (!dangerous && md.isDangerous()) {
+							Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom() + " pkg="
+									+ aInfo.packageName);
+							PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(), md.getName(), false,
+									true);
+						}
 
-			// Migrate xml settings files
-			boolean migrated = PrivacyProvider.migrateRestrictions(context);
-			migrated = PrivacyProvider.migrateSettings(context) || migrated;
-			PrivacyService.getClient().migrated();
-			Util.log(null, Log.WARN, "Migration complete");
-
-			// Build notification
-			if (migrated) {
-				NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
-				notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-				notificationBuilder.setContentTitle(context.getString(R.string.app_name));
-				notificationBuilder.setContentText(context.getString(R.string.msg_migrated));
-				notificationBuilder.setWhen(System.currentTimeMillis());
-				notificationBuilder.setAutoCancel(true);
-				Notification notification = notificationBuilder.build();
-
-				// Display notification
-				NotificationManager notificationManager = (NotificationManager) context
-						.getSystemService(Context.NOTIFICATION_SERVICE);
-				notificationManager.notify(99, notification);
-			}
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-	}
-
-	private void upgradeRestrictions(Context context) {
-		try {
-			// Get old version
-			PackageManager pm = context.getPackageManager();
-			PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
-			Version sVersion = new Version(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingVersion, "0.0",
-					false));
-
-			// Upgrade
-			if (sVersion.compareTo(new Version("0.0")) != 0) {
-				Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version "
-						+ pInfo.versionName);
-				boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false,
-						false);
-
-				// All packages
-				for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
-					for (String restrictionName : PrivacyManager.getRestrictions())
-						for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName))
-							if (md.getFrom() != null)
-								if (sVersion.compareTo(md.getFrom()) < 0) {
-									// Disable new dangerous restrictions
-									if (!dangerous && md.isDangerous()) {
-										Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom()
+						// Restrict replaced methods
+						if (md.getReplaces() != null)
+							if (PrivacyManager.getRestricted(null, aInfo.uid, md.getRestrictionName(),
+									md.getReplaces(), false, false)) {
+								Util.log(null, Log.WARN,
+										"Replaced " + md.getReplaces() + " by " + md + " from=" + md.getFrom()
 												+ " pkg=" + aInfo.packageName);
-										PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(),
-												md.getName(), false, true);
-									}
-
-									// Restrict replaced methods
-									if (md.getReplaces() != null)
-										if (PrivacyManager.getRestricted(null, aInfo.uid, md.getRestrictionName(),
-												md.getReplaces(), false, false)) {
-											Util.log(null, Log.WARN, "Replaced " + md.getReplaces() + " by " + md
-													+ " from=" + md.getFrom() + " pkg=" + aInfo.packageName);
-											PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(),
-													md.getName(), true, true);
-										}
-								}
-
-				Util.log(null, Log.WARN, "Upgrade done");
-			}
-
-			// Set new version
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
+								PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(), md.getName(),
+										true, true);
+							}
+					}
 	}
 
+	private void upgrade(Context context) throws NameNotFoundException {
+		// Get old version
+		PackageManager pm = context.getPackageManager();
+		PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
+		Version sVersion = new Version(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingVersion, "0.0", false));
+
+		// Upgrade
+		if (sVersion.compareTo(new Version("0.0")) != 0) {
+			Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version " + pInfo.versionName);
+			String format = context.getString(R.string.msg_upgrading);
+			notifyProgress(context, format, 0);
+
+			boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false, false);
+
+			// All packages
+			List<ApplicationInfo> listAppInfo = context.getPackageManager().getInstalledApplications(0);
+			for (int i = 0; i < listAppInfo.size(); i++) {
+				upgradeApp(sVersion, dangerous, listAppInfo.get(i));
+				notifyProgress(context, format, 100 * (i + 1) / listAppInfo.size());
+			}
+
+			Util.log(null, Log.WARN, "Upgrade complete");
+		}
+
+		// Set new version
+		PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
+	}
+
+	private void notifyProgress(Context context, String format, int percent) {
+		NotificationManager notificationManager = (NotificationManager) context
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+		if (percent < 100) {
+			// Build notification
+			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+			notificationBuilder.setContentTitle(context.getString(R.string.app_name));
+			notificationBuilder.setContentText(String.format(format, String.format("%d %%", percent)));
+			notificationBuilder.setOngoing(true);
+			notificationBuilder.setWhen(System.currentTimeMillis());
+			Notification notification = notificationBuilder.build();
+			notificationManager.notify(Util.NOTIFY_UPDATE, notification);
+		} else
+			// Cancel notification
+			notificationManager.cancel(Util.NOTIFY_UPDATE);
+	}
 }
