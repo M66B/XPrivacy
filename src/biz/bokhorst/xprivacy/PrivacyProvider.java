@@ -629,7 +629,8 @@ public class PrivacyProvider extends ContentProvider {
 
 	public static void migrateApp(Context context, ApplicationInfo appInfo) throws RemoteException {
 		File prefFile = new File(getPrefFileName(PREF_RESTRICTION, appInfo.uid));
-		if (prefFile.exists()) {
+		File migratedFile = new File(prefFile + ".migrated");
+		if (prefFile.exists() && !migratedFile.exists()) {
 			Util.log(null, Log.WARN, "Migrating " + prefFile);
 
 			SharedPreferences prefs = context.getSharedPreferences(PREF_RESTRICTION + "." + appInfo.uid,
@@ -654,7 +655,7 @@ public class PrivacyProvider extends ContentProvider {
 					}
 				}
 
-			prefFile.renameTo(new File(prefFile + ".migrated"));
+			prefFile.renameTo(migratedFile);
 		}
 	}
 
@@ -662,7 +663,8 @@ public class PrivacyProvider extends ContentProvider {
 		try {
 			// Process settings
 			File prefFile = new File(getPrefFileName(PREF_SETTINGS));
-			if (prefFile.exists()) {
+			File migratedFile = new File(prefFile + ".migrated");
+			if (prefFile.exists() && !migratedFile.exists()) {
 				Util.log(null, Log.WARN, "Migrating " + prefFile);
 
 				SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
@@ -707,7 +709,7 @@ public class PrivacyProvider extends ContentProvider {
 						// Legacy boolean
 					}
 
-				prefFile.renameTo(new File(prefFile + ".migrated"));
+				prefFile.renameTo(migratedFile);
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);

@@ -94,7 +94,8 @@ public class UpdateService extends IntentService {
 		boolean work = false;
 		File prefs = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "shared_prefs");
 		for (File file : prefs.listFiles())
-			if (!file.getName().startsWith("biz.bokhorst.xprivacy.provider.usage.") && file.getName().endsWith(".xml")) {
+			if (!file.getName().startsWith("biz.bokhorst.xprivacy.provider.usage.") && file.getName().endsWith(".xml")
+					&& !new File(file + ".migrated").exists()) {
 				work = true;
 				break;
 			}
