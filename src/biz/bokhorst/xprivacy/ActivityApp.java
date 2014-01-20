@@ -288,10 +288,8 @@ public class ActivityApp extends Activity {
 			appMenu.add(i, MENU_SETTINGS, Menu.NONE, getString(R.string.menu_app_settings));
 
 			// Kill
-			boolean experimental = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
-					PrivacyManager.cTestVersion, true);
 			MenuItem kill = appMenu.add(i, MENU_KILL, Menu.NONE, getString(R.string.menu_app_kill));
-			kill.setVisible(experimental);
+			kill.setVisible(PrivacyManager.isApplication(mAppInfo.getUid()));
 
 			// Play store
 			MenuItem store = appMenu.add(i, MENU_STORE, Menu.NONE, getString(R.string.menu_app_store));

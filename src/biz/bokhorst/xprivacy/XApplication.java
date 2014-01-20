@@ -59,20 +59,15 @@ public class XApplication extends XHook {
 			Application app = (Application) param.thisObject;
 
 			// Install receiver for package management
-			int uid = Process.myUid();
-			if (Util.getAppId(uid) != PrivacyManager.cAndroidUid && !PrivacyManager.isIsolated(uid)) {
-				boolean experimental = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
-						PrivacyManager.cTestVersion, true);
-				if (experimental && !mReceiverInstalled)
-					try {
-						mReceiverInstalled = true;
-						Util.log(this, Log.INFO, "Installing receiver uid=" + Process.myUid());
-						app.registerReceiver(new Receiver(app), new IntentFilter(ACTION_MANAGE_PACKAGE),
-								PERMISSION_MANAGE_PACKAGES, null);
-					} catch (Throwable ex) {
-						Util.bug(this, ex);
-					}
-			}
+			if (!mReceiverInstalled)
+				try {
+					mReceiverInstalled = true;
+					Util.log(this, Log.INFO, "Installing receiver uid=" + Process.myUid());
+					app.registerReceiver(new Receiver(app), new IntentFilter(ACTION_MANAGE_PACKAGE),
+							PERMISSION_MANAGE_PACKAGES, null);
+				} catch (Throwable ex) {
+					Util.bug(this, ex);
+				}
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
@@ -90,20 +85,16 @@ public class XApplication extends XHook {
 	}
 
 	public static void manage(Context context, String packageName, String action) {
-		boolean experimental = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
-				PrivacyManager.cTestVersion, true);
-		if (experimental) {
-			Util.log(null, Log.INFO, "Manage package=" + packageName + " action=" + action);
-			if (packageName == null && XApplication.cActionKillProcess.equals(action)) {
-				Util.log(null, Log.WARN, "Kill all");
-				return;
-			}
-			Intent manageIntent = new Intent(XApplication.ACTION_MANAGE_PACKAGE);
-			manageIntent.putExtra(XApplication.cAction, action);
-			if (packageName != null)
-				manageIntent.setPackage(packageName);
-			context.sendBroadcast(manageIntent);
+		Util.log(null, Log.INFO, "Manage package=" + packageName + " action=" + action);
+		if (packageName == null && XApplication.cActionKillProcess.equals(action)) {
+			Util.log(null, Log.WARN, "Kill all");
+			return;
 		}
+		Intent manageIntent = new Intent(XApplication.ACTION_MANAGE_PACKAGE);
+		manageIntent.putExtra(XApplication.cAction, action);
+		if (packageName != null)
+			manageIntent.setPackage(packageName);
+		context.sendBroadcast(manageIntent);
 	}
 
 	private class Receiver extends BroadcastReceiver {

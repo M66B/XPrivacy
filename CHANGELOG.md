@@ -11,7 +11,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Experimental functions**
 
-* Kill applications
+* Currently none
 
 **Next release**
 
@@ -20,6 +20,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Update service with progress notifications for migration, randomization and upgrade
 * Allow secondary users to set restrictions
 * Fixed some settings not migrated correctly ([issue](https://github.com/M66B/XPrivacy/issues/1127))
+* Kill application is not experimental anymore
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
