@@ -94,137 +94,142 @@ public class ActivityApp extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// Check privacy service client
+		if (PrivacyService.getClient() == null)
+			setContentView(R.layout.reboot);
+		else {
+			// Set theme
+			String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
+			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
+			setTheme(mThemeId);
 
-		// Set theme
-		String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
-		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
-		setTheme(mThemeId);
+			// Set layout
+			setContentView(R.layout.restrictionlist);
 
-		// Set layout
-		setContentView(R.layout.restrictionlist);
+			// Get arguments
+			Bundle extras = getIntent().getExtras();
+			int uid = extras.getInt(cUid);
+			String restrictionName = (extras.containsKey(cRestrictionName) ? extras.getString(cRestrictionName) : null);
+			String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
 
-		// Get arguments
-		Bundle extras = getIntent().getExtras();
-		int uid = extras.getInt(cUid);
-		String restrictionName = (extras.containsKey(cRestrictionName) ? extras.getString(cRestrictionName) : null);
-		String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
-
-		// Get app info
-		try {
-			mAppInfo = new ApplicationInfoEx(this, uid);
-		} catch (NameNotFoundException ignored) {
-			finish();
-			return;
-		}
-
-		// Set title
-		setTitle(String.format("%s - %s", getString(R.string.app_name),
-				TextUtils.join(", ", mAppInfo.getApplicationName())));
-
-		// Handle info click
-		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
-		imgInfo.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				// Packages can be selected on the web site
-				Util.viewUri(ActivityApp.this, Uri.parse(String.format(ActivityShare.getBaseURL(ActivityApp.this)
-						+ "?package_name=%s", mAppInfo.getPackageName().get(0))));
+			// Get app info
+			try {
+				mAppInfo = new ApplicationInfoEx(this, uid);
+			} catch (NameNotFoundException ignored) {
+				finish();
+				return;
 			}
-		});
 
-		// Display app name
-		TextView tvAppName = (TextView) findViewById(R.id.tvApp);
-		tvAppName.setText(mAppInfo.toString());
+			// Set title
+			setTitle(String.format("%s - %s", getString(R.string.app_name),
+					TextUtils.join(", ", mAppInfo.getApplicationName())));
 
-		// Background color
-		if (mAppInfo.isSystem()) {
-			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
-			llInfo.setBackgroundColor(getResources().getColor(Util.getThemed(this, R.attr.color_dangerous)));
-		}
+			// Handle info click
+			ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
+			imgInfo.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// Packages can be selected on the web site
+					Util.viewUri(ActivityApp.this, Uri.parse(String.format(ActivityShare.getBaseURL(ActivityApp.this)
+							+ "?package_name=%s", mAppInfo.getPackageName().get(0))));
+				}
+			});
 
-		// Display app icon
-		final ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
-		imgIcon.setImageDrawable(mAppInfo.getIcon(this));
+			// Display app name
+			TextView tvAppName = (TextView) findViewById(R.id.tvApp);
+			tvAppName.setText(mAppInfo.toString());
 
-		// Handle icon click
-		imgIcon.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				openContextMenu(imgIcon);
+			// Background color
+			if (mAppInfo.isSystem()) {
+				LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
+				llInfo.setBackgroundColor(getResources().getColor(Util.getThemed(this, R.attr.color_dangerous)));
 			}
-		});
 
-		// Add context menu to icon
-		registerForContextMenu(imgIcon);
+			// Display app icon
+			final ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
+			imgIcon.setImageDrawable(mAppInfo.getIcon(this));
 
-		// Check if internet access
-		if (!mAppInfo.hasInternet(this)) {
-			ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
-			imgInternet.setVisibility(View.INVISIBLE);
-		}
+			// Handle icon click
+			imgIcon.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					openContextMenu(imgIcon);
+				}
+			});
 
-		// Check if frozen
-		if (!mAppInfo.isFrozen(this)) {
-			ImageView imgFrozen = (ImageView) findViewById(R.id.imgFrozen);
-			imgFrozen.setVisibility(View.INVISIBLE);
-		}
+			// Add context menu to icon
+			registerForContextMenu(imgIcon);
 
-		// Display version
-		TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
-		tvVersion.setText(TextUtils.join(", ", mAppInfo.getPackageVersionName(this)));
-
-		// Display package name
-		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
-		tvPackageName.setText(TextUtils.join(", ", mAppInfo.getPackageName()));
-
-		// Fill privacy list view adapter
-		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
-		lvRestriction.setGroupIndicator(null);
-		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, restrictionName, methodName);
-		lvRestriction.setAdapter(mPrivacyListAdapter);
-		if (restrictionName != null) {
-			int groupPosition = new ArrayList<String>(PrivacyManager.getRestrictions(this).values())
-					.indexOf(restrictionName);
-			lvRestriction.expandGroup(groupPosition);
-			lvRestriction.setSelectedGroup(groupPosition);
-			if (methodName != null) {
-				int childPosition = PrivacyManager.getHooks(restrictionName).indexOf(
-						new PrivacyManager.Hook(restrictionName, methodName));
-				lvRestriction.setSelectedChild(groupPosition, childPosition, true);
+			// Check if internet access
+			if (!mAppInfo.hasInternet(this)) {
+				ImageView imgInternet = (ImageView) findViewById(R.id.imgInternet);
+				imgInternet.setVisibility(View.INVISIBLE);
 			}
-		}
 
-		// Up navigation
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-		mCheck = Util.getTriStateCheckBox(this);
-
-		// Tutorial
-		if (!PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingTutorialDetails, false, false)) {
-			((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
-			((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
-		}
-		View.OnClickListener listener = new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				ViewParent parent = view.getParent();
-				while (!parent.getClass().equals(RelativeLayout.class))
-					parent = parent.getParent();
-				((View) parent).setVisibility(View.GONE);
-				PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTutorialDetails, Boolean.TRUE.toString());
+			// Check if frozen
+			if (!mAppInfo.isFrozen(this)) {
+				ImageView imgFrozen = (ImageView) findViewById(R.id.imgFrozen);
+				imgFrozen.setVisibility(View.INVISIBLE);
 			}
-		};
-		((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
-		((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
 
-		// Process actions
-		if (extras.containsKey(cAction)) {
-			NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.cancel(mAppInfo.getUid());
-			if (extras.getString(cAction).equals(cActionClear))
-				optionClear();
-			else if (extras.getString(cAction).equals(cActionSettings))
-				optionSettings();
+			// Display version
+			TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
+			tvVersion.setText(TextUtils.join(", ", mAppInfo.getPackageVersionName(this)));
+
+			// Display package name
+			TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
+			tvPackageName.setText(TextUtils.join(", ", mAppInfo.getPackageName()));
+
+			// Fill privacy list view adapter
+			final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
+			lvRestriction.setGroupIndicator(null);
+			mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, restrictionName,
+					methodName);
+			lvRestriction.setAdapter(mPrivacyListAdapter);
+			if (restrictionName != null) {
+				int groupPosition = new ArrayList<String>(PrivacyManager.getRestrictions(this).values())
+						.indexOf(restrictionName);
+				lvRestriction.expandGroup(groupPosition);
+				lvRestriction.setSelectedGroup(groupPosition);
+				if (methodName != null) {
+					int childPosition = PrivacyManager.getHooks(restrictionName).indexOf(
+							new PrivacyManager.Hook(restrictionName, methodName));
+					lvRestriction.setSelectedChild(groupPosition, childPosition, true);
+				}
+			}
+
+			// Up navigation
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+
+			mCheck = Util.getTriStateCheckBox(this);
+
+			// Tutorial
+			if (!PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingTutorialDetails, false, false)) {
+				((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
+				((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
+			}
+			View.OnClickListener listener = new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					ViewParent parent = view.getParent();
+					while (!parent.getClass().equals(RelativeLayout.class))
+						parent = parent.getParent();
+					((View) parent).setVisibility(View.GONE);
+					PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTutorialDetails, Boolean.TRUE.toString());
+				}
+			};
+			((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
+			((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
+
+			// Process actions
+			if (extras.containsKey(cAction)) {
+				NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+				notificationManager.cancel(mAppInfo.getUid());
+				if (extras.getString(cAction).equals(cActionClear))
+					optionClear();
+				else if (extras.getString(cAction).equals(cActionSettings))
+					optionSettings();
+			}
 		}
 	}
 
@@ -237,9 +242,13 @@ public class ActivityApp extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.app, menu);
-		return true;
+		if (PrivacyService.getClient() == null)
+			return false;
+		else {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.app, menu);
+			return true;
+		}
 	}
 
 	@Override
