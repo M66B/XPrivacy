@@ -54,11 +54,11 @@
     <string name="msg_random_access">Willekeurig bij gebruik</string>
     <string name="msg_random_boot">Willekeurig na herstart</string>
     <string name="msg_restart">Applicatie herstart vereist</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_migrating" formatted="false">Migrating %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
-    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_register">Registreer uw apparaat a.u.b.</string>
+    <string name="msg_registered">Controleer uw e-mail om uw apparaat te activeren</string>
+    <string name="msg_migrating" formatted="false">Migratie %s</string>
+    <string name="msg_randomizing" formatted="false">Willekeurig %s</string>
+    <string name="msg_upgrading" formatted="false">Bijwerken %s</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
 \n\nGebruik is geheel op eigen risico.</b>\n\nZie ook de licentie:</string>
