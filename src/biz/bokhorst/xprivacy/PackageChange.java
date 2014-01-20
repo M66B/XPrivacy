@@ -9,9 +9,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -19,8 +16,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 public class PackageChange extends BroadcastReceiver {
-	private static Thread mUpgradeThread;
-
 	@Override
 	@SuppressLint("NewApi")
 	public void onReceive(final Context context, Intent intent) {
@@ -146,6 +141,12 @@ public class PackageChange extends BroadcastReceiver {
 					// Notify reboot required
 					String packageName = inputUri.getSchemeSpecificPart();
 					if (packageName.equals(context.getPackageName())) {
+						// Start package update
+						Intent changeIntent = new Intent();
+						changeIntent.setClass(context, UpdateService.class);
+						changeIntent.putExtra(UpdateService.cAction, UpdateService.cActionChange);
+						context.startService(changeIntent);
+
 						// Build notification
 						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
 						notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
@@ -156,17 +157,7 @@ public class PackageChange extends BroadcastReceiver {
 						Notification notification = notificationBuilder.build();
 
 						// Notify
-						notificationManager.notify(0, notification);
-
-						// Upgrade restrictions
-						if (PrivacyService.getClient() != null) {
-							mUpgradeThread = new Thread(new Runnable() {
-								public void run() {
-									upgradeRestrictions(context);
-								}
-							});
-							mUpgradeThread.start();
-						}
+						notificationManager.notify(Util.NOTIFY_RESTART, notification);
 					}
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
 					// Package removed
@@ -180,56 +171,6 @@ public class PackageChange extends BroadcastReceiver {
 					}
 				}
 			}
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-	}
-
-	private void upgradeRestrictions(Context context) {
-		try {
-			// Get old version
-			PackageManager pm = context.getPackageManager();
-			PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
-			Version sVersion = new Version(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingVersion, "0.0",
-					false));
-
-			// Upgrade
-			if (sVersion.compareTo(new Version("0.0")) != 0) {
-				Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version "
-						+ pInfo.versionName);
-				boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false,
-						false);
-
-				// All packages
-				for (ApplicationInfo aInfo : pm.getInstalledApplications(0))
-					for (String restrictionName : PrivacyManager.getRestrictions())
-						for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName))
-							if (md.getFrom() != null)
-								if (sVersion.compareTo(md.getFrom()) < 0) {
-									// Disable new dangerous restrictions
-									if (!dangerous && md.isDangerous()) {
-										Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom()
-												+ " pkg=" + aInfo.packageName);
-										PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(),
-												md.getName(), false, true);
-									}
-
-									// Restrict replaced methods
-									if (md.getReplaces() != null)
-										if (PrivacyManager.getRestricted(null, aInfo.uid, md.getRestrictionName(),
-												md.getReplaces(), false, false)) {
-											Util.log(null, Log.WARN, "Replaced " + md.getReplaces() + " by " + md
-													+ " from=" + md.getFrom() + " pkg=" + aInfo.packageName);
-											PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(),
-													md.getName(), true, true);
-										}
-								}
-
-				Util.log(null, Log.WARN, "Upgrade done");
-			}
-
-			// Set new version
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}

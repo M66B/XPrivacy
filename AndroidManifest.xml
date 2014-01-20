@@ -127,6 +127,10 @@
                 <action android:name="android.app.action.ACTION_DEVICE_ADMIN_DISABLED" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".UpdateService"
+            android:enabled="true" />
     </application>
 
 </manifest>

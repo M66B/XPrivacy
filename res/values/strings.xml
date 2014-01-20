@@ -61,7 +61,10 @@
     <string name="msg_restart">Restart required</string>
     <string name="msg_register" translatable="false">Register device</string>
     <string name="msg_registered" translatable="false">Check your e-mail to activate your device</string>
+    <string name="msg_migrating" formatted="false" translatable="false">Migrating %s</string>
     <string name="msg_migrated" translatable="false">Migration complete</string>
+    <string name="msg_randomizing" formatted="false" translatable="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false" translatable="false">Upgrading %s</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawlessly on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
