@@ -59,7 +59,7 @@ public class XApplication extends XHook {
 			Application app = (Application) param.thisObject;
 
 			// Install receiver for package management
-			if (!mReceiverInstalled)
+			if (PrivacyManager.isApplication(Process.myUid()) && !mReceiverInstalled)
 				try {
 					mReceiverInstalled = true;
 					Util.log(this, Log.INFO, "Installing receiver uid=" + Process.myUid());
