@@ -37,12 +37,12 @@
     <string name="menu_applications">Apps für Zugriff freigeben</string>
     <string name="menu_contacts">Kontakte für Zugriff freigeben</string>
     <string name="menu_tutorial">Tutorial</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
-    <string name="menu_choose">Choose</string>
-    <string name="msg_abort">Aborting</string>
-    <string name="msg_export">Backup all settings to %s</string>
-    <string name="msg_import">Import settings from %s</string>
+    <string name="menu_exclude">Ausschließen</string>
+    <string name="menu_close">Schließen</string>
+    <string name="menu_choose">Wählen</string>
+    <string name="msg_abort">Abbrechen</string>
+    <string name="msg_export">Sichere alle Einstellungen nach %s</string>
+    <string name="msg_import">Importiert alle Einstellungen von %s</string>
     <string name="msg_new">Neu</string>
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Lizenziert für: %s</string>
@@ -60,12 +60,12 @@
     <string name="msg_random_access">Zufallswerte bei Neustart</string>
     <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
     <string name="msg_restart">App-Neustart erforderlich</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_migrating" formatted="false">Migrating %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_register">Bitte registrieren Sie ihr Gerät</string>
+    <string name="msg_registered">Überprüfen Sie ihre E-Mails zum aktivieren Ihres Geräts</string>
+    <string name="msg_migrating" formatted="false">Migriere %s</string>
+    <string name="msg_randomizing" formatted="false">Zufall-Erzeigung %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_migrated">Migration complete</string>
+    <string name="msg_migrated">Migratieon vollständig</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
 \ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
 \n\nVerwenden Sie XPrivacy ausschließlich auf Ihr eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>
@@ -128,7 +128,7 @@
     <string name="settings_dangerous">Beschränke "bedenkliche" Funktionen</string>
     <string name="settings_confidence">Maximaler "runterladen" Konfidenzintervall</string>
     <string name="settings_experimental">Experimentelle Funktionen (Neustart erforderlich)</string>
-    <string name="settings_https">Use secure connections</string>
+    <string name="settings_https">Benutze sichere Verbindung</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>
