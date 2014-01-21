@@ -180,10 +180,10 @@ public class ActivityShare extends Activity {
 			ListView lvShare = (ListView) findViewById(R.id.lvShare);
 			AppListTask appListTask = new AppListTask();
 			appListTask.executeOnExecutor(mExecutor, uids);
-			if (!action.equals(ACTION_EXPORT)) {
-				// Allow users to remove apps from list
+
+			// Allow users to remove apps from list
+			if (!action.equals(ACTION_EXPORT))
 				registerForContextMenu(lvShare);
-			}
 
 			// Import/export filename
 			mFileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
@@ -202,7 +202,6 @@ public class ActivityShare extends Activity {
 					Intent file = new Intent(Intent.ACTION_GET_CONTENT);
 					file.setType("file/*");
 					if (Util.isIntentAvailable(ActivityShare.this, file)) {
-
 						// Launch file chooser
 						fileChooser();
 
@@ -232,7 +231,6 @@ public class ActivityShare extends Activity {
 				btnOk.setEnabled(registerDevice(this));
 
 			btnOk.setOnClickListener(new Button.OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					btnOk.setEnabled(false);
@@ -274,9 +272,8 @@ public class ActivityShare extends Activity {
 					}
 
 					// Unknown action
-					else {
+					else
 						Util.log(null, Log.WARN, "Unknown share action: " + action);
-					}
 				}
 			});
 
@@ -286,9 +283,8 @@ public class ActivityShare extends Activity {
 					if (mRunning) {
 						mAbort = true;
 						Toast.makeText(ActivityShare.this, getString(R.string.msg_abort), Toast.LENGTH_SHORT).show();
-					} else {
+					} else
 						finish();
-					}
 				}
 			});
 
@@ -315,9 +311,6 @@ public class ActivityShare extends Activity {
 		if (!mRunning && mActionId == R.string.menu_submit) {
 			// Check again for registration
 			final Button btnOk = (Button) findViewById(R.id.btnOk);
-			// If the registration has not been completed, this will ask again.
-			// I find that not quite ideal from a users point of view, but I
-			// suppose it will do.
 			btnOk.setEnabled(registerDevice(this));
 		}
 	}
@@ -344,7 +337,6 @@ public class ActivityShare extends Activity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-
 		if (v.getId() == R.id.lvShare)
 			menu.addSubMenu(Menu.NONE, R.string.menu_exclude, Menu.NONE, R.string.menu_exclude);
 	}
@@ -442,6 +434,7 @@ public class ActivityShare extends Activity {
 				// We'd then have in order: a sorted list of the done apps,
 				// mAppCurrent, then all the waiting apps in order
 			}
+
 			// Set state for this app
 			app.state = state;
 			changeNotifier.setScrollTo(mAppAdapter.getPosition(app));
@@ -555,8 +548,8 @@ public class ActivityShare extends Activity {
 					}
 				}
 			} else {
-				// Get a list of all apps unless fetching, in which case, get
-				// all user apps
+				// Get a list of all apps
+				// unless fetching, in which case, get all user apps
 				List<PackageInfo> pList = getPackageManager().getInstalledPackages(0);
 				mProgressDialog.setMax(pList.size());
 				int current = 0;
@@ -579,8 +572,8 @@ public class ActivityShare extends Activity {
 			}
 
 			Collections.sort(apps);
-			// TODO sort according to preferences
-			// TODO add sort options to actionbar just like in ActivityMain
+			// TODO: sort according to preferences
+			// TODO: add sort options to actionbar just like in ActivityMain
 			return apps;
 		}
 
@@ -642,9 +635,9 @@ public class ActivityShare extends Activity {
 				try {
 					// Start serialization
 					XmlSerializer serializer = Xml.newSerializer();
-					serializer.setOutput(fos, "UTF-8"); // IOException,
-														// IllegalArgumentException,
-														// IllegalStateException
+					serializer.setOutput(fos, "UTF-8");
+					// IOException, IllegalArgumentException,
+					// IllegalStateException
 					serializer.startDocument(null, Boolean.valueOf(true));
 					serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 					serializer.startTag(null, "XPrivacy");
@@ -745,16 +738,16 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				// IOException, IllegalArgumentException, IllegalStateException,
-				// Exception
+				// IOException, IllegalArgumentException
+				// IllegalStateException, Exception
 				if (ex instanceof FileNotFoundException)
-					return "Cannot create file"; // TODO String resource
+					return "Cannot create file"; // TODO: String resource
 				else if (ex instanceof IOException)
-					return "Error writing to file"; // TODO String resource
+					return "Error writing to file"; // TODO: String resource
 				else if (ex instanceof Exception && ex.getMessage().equals("Abort")) {
 					// Delete file
 					mFile.delete();
-					return "File deleted"; // TODO String resource
+					return "File deleted"; // TODO: String resource
 				} else
 					return ex.getMessage();
 			}
@@ -810,8 +803,8 @@ public class ActivityShare extends Activity {
 					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
 					ImportHandler importHandler = new ImportHandler(listUidSelected, progress);
 					xmlReader.setContentHandler(importHandler);
-					xmlReader.parse(new InputSource(fis)); // IOException,
-															// SAXException
+					xmlReader.parse(new InputSource(fis));
+					// IOException, SAXException
 					mapPackage = importHandler.getPackageMap();
 				} finally {
 					if (fis != null)
@@ -866,11 +859,11 @@ public class ActivityShare extends Activity {
 				Util.bug(null, ex);
 				// FileNotFoundException, IOException, SAXException
 				if (ex instanceof FileNotFoundException)
-					return "File not found"; // TODO string resource
+					return "File not found"; // TODO: string resource
 				else if (ex instanceof IOException)
-					return "Error reading file"; // TODO string resource
+					return "Error reading file"; // TODO: string resource
 				else if (ex instanceof SAXException)
-					return "File is damaged"; // TODO string resource
+					return "File is damaged"; // TODO: string resource
 				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
 					return null;
 				else
@@ -958,10 +951,12 @@ public class ActivityShare extends Activity {
 							if (!mListSkippingUid.contains(uid))
 								mListSkippingUid.add(uid);
 							Util.log(null, Log.WARN, "Skipping setting for uid=" + uid);
-							return; // This app hasn't yet begun to be imported,
-									// so skip it
-						} // TODO a better approach would be to cache these and
-							// apply them when restrictions start to be found
+							return;
+							// This app hasn't yet begun to be imported
+							// so skip it
+						}
+						// TODO: a better approach would be to cache these
+						// and apply them when restrictions start to be found
 
 						if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
 							// Clear existing settings
@@ -1003,13 +998,13 @@ public class ActivityShare extends Activity {
 					int uid = getUid(id);
 
 					if (mAborting && !mListRestrictionUid.contains(uid) && !mListSettingId.contains(id)) {
-						// TODO make this work for backups that import all the
-						// settings first
+						// TODO: make this work for backups
+						// that import all the settings first
 						if (!mListSkippingUid.contains(uid))
 							mListSkippingUid.add(uid);
 						Util.log(null, Log.WARN, "Skipping restriction for uid=" + uid);
-						return; // This app hasn't begun to be imported, so skip
-								// it
+						return;
+						// This app hasn't begun to be imported, so skip it
 					}
 
 					if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
@@ -1020,6 +1015,7 @@ public class ActivityShare extends Activity {
 								int lastUid = mListRestrictionUid.get(mListRestrictionUid.size() - 1);
 								mAppAdapter.setState(lastUid, STATE_SUCCESS);
 							}
+
 							// Mark the next one as in progress
 							mListRestrictionUid.add(uid);
 							mAppAdapter.setState(uid, STATE_RUNNING);
@@ -1048,9 +1044,11 @@ public class ActivityShare extends Activity {
 					int lastUid = mListRestrictionUid.get(mListRestrictionUid.size() - 1);
 					mAppAdapter.setState(lastUid, STATE_SUCCESS);
 				}
+
 				// Restart notifications
 				for (int uid : mListRestartUid)
 					mAppsByUid.get(uid).message = getString(R.string.msg_restart);
+
 				// Checks
 				if (mListRestrictionUid.size() + mListSkippingUid.size() != mListUidSelected.size()
 						- mAppAdapter.mAppsWaiting.size()
@@ -1122,13 +1120,14 @@ public class ActivityShare extends Activity {
 				// Get data
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (int uid : params[0])
-					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid)); // NameNotFoundException
-				// This error probably should be caught here. TODO
+					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
+				// NameNotFoundException
+				// TODO: This error probably should be caught here
 
 				String[] license = Util.getProLicenseUnchecked();
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
-				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0); // NameNotFoundException
-
+				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				// NameNotFoundException
 				String confidence = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingConfidence, "", false);
 
 				// Initialize progress
@@ -1216,8 +1215,8 @@ public class ActivityShare extends Activity {
 								} else
 									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
 							} else
-								throw new Exception(status.getString("error")); // JSONException,
-																				// Exception
+								throw new Exception(status.getString("error"));
+							// JSONException, Exception
 						} else {
 							// Failed
 							mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
@@ -1233,9 +1232,10 @@ public class ActivityShare extends Activity {
 				// UnsupportedEncodingException, IOException,
 				// ClientProtocolException, Exception
 				if (ex instanceof IOException || ex instanceof ClientProtocolException)
-					return "Error connecting to server"; // TODO string resource
+					return "Error connecting to server";
+				// TODO: string resource
 				else if (ex instanceof JSONException)
-					return "Bad data received"; // TODO string resource
+					return "Bad data received"; // TODO: string resource
 				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
 					return null;
 				else
@@ -1265,8 +1265,8 @@ public class ActivityShare extends Activity {
 				// Get data
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (int uid : params[0])
-					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid)); // NameNotFoundException
-				// Catch this error here? TODO
+					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
+				// TODO: Catch NameNotFoundException here?
 
 				// Initialize progress
 				mProgressCurrent = 0;
@@ -1423,8 +1423,8 @@ public class ActivityShare extends Activity {
 							// Mark as unregistered
 							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered,
 									Boolean.toString(false));
-							throw new Exception(status.getString("error")); // JSONException,
-																			// Exception
+							throw new Exception(status.getString("error"));
+							// JSONException, Exception
 						}
 					} else {
 						// Failed
@@ -1440,7 +1440,8 @@ public class ActivityShare extends Activity {
 				// JSONException, ClientProtocolException, IOException,
 				// Exception
 				if (ex instanceof ClientProtocolException || ex instanceof IOException)
-					return "Error connecting to server"; // TODO string resource
+					return "Error connecting to server";
+				// TODO: string resource
 				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
 					return null;
 				else
@@ -1588,8 +1589,8 @@ public class ActivityShare extends Activity {
 
 	private void done(String result) {
 		// Check result string and display toast with error
-		// TODO it might be better to put this in a dialog box asking whether to
-		// send debugging info
+		// TODO: it might be better to put this in a dialog box asking whether
+		// to send debugging info
 		if (result != null)
 			Toast.makeText(this, result, Toast.LENGTH_LONG).show();
 
@@ -1613,7 +1614,7 @@ public class ActivityShare extends Activity {
 		final View vButtonSeparator = findViewById(R.id.vButtonSeparator);
 		btnCancel.setVisibility(View.GONE);
 		vButtonSeparator.setVisibility(View.GONE);
-		// TODO a nice touch would be to make the cancel button open the main
+		// TODO: a nice touch would be to make the cancel button open the main
 		// list with only the failed apps in view.
 		// I'm not sure what text to put on it though; "Examine failed" might
 		// do, if it isn't too long.
