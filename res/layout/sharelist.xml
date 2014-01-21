@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
 
     <View
         android:id="@+id/vShareProgressEmpty"
@@ -15,24 +18,24 @@
         android:id="@+id/vShareProgressFull"
         android:layout_width="0dip"
         android:layout_height="3dip"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:background="?android:attr/colorActivatedHighlight" />
 
     <LinearLayout
         android:id="@+id/llDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/vShareProgressFull"
+        android:orientation="horizontal"
         android:visibility="gone" >
 
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-	        android:layout_marginLeft="8dp"
-	        android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -43,18 +46,19 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/menu_choose"
             android:visibility="gone" />
-
     </LinearLayout>
 
-    <LinearLayout style="?android:attr/buttonBarButtonStyle"
+    <LinearLayout
         android:id="@+id/llButtons"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
 
-        <Button style="?android:attr/buttonBarButtonStyle"
+        <Button
             android:id="@+id/btnCancel"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -67,8 +71,9 @@
             android:layout_height="match_parent"
             android:background="@android:color/darker_gray" />
 
-        <Button style="?android:attr/buttonBarButtonStyle"
+        <Button
             android:id="@+id/btnOk"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

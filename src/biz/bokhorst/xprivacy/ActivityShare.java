@@ -139,7 +139,6 @@ public class ActivityShare extends Activity {
 
 		final Bundle extras = getIntent().getExtras();
 		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
-
 		final String action = getIntent().getAction();
 
 		// Check whether we need a ui
