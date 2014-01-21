@@ -200,32 +200,37 @@ public class PrivacyService {
 					final boolean sRestricted = restricted;
 					mExecutor.execute(new Runnable() {
 						public void run() {
-							db.beginTransaction();
 							try {
-								// Category
-								ContentValues cvalues = new ContentValues();
-								cvalues.put("uid", uid);
-								cvalues.put("restriction", restrictionName);
-								cvalues.put("method", "");
-								cvalues.put("restricted", sRestricted);
-								cvalues.put("time", new Date().getTime());
-								db.insertWithOnConflict(cTableUsage, null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
+								db.beginTransaction();
+								try {
+									// Category
+									ContentValues cvalues = new ContentValues();
+									cvalues.put("uid", uid);
+									cvalues.put("restriction", restrictionName);
+									cvalues.put("method", "");
+									cvalues.put("restricted", sRestricted);
+									cvalues.put("time", new Date().getTime());
+									db.insertWithOnConflict(cTableUsage, null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
 
-								// Method
-								if (methodName != null) {
-									ContentValues mvalues = new ContentValues();
-									mvalues.put("uid", uid);
-									mvalues.put("restriction", restrictionName);
-									mvalues.put("method", methodName);
-									mvalues.put("restricted", sRestricted);
-									mvalues.put("time", new Date().getTime());
-									db.insertWithOnConflict(cTableUsage, null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
+									// Method
+									if (methodName != null) {
+										ContentValues mvalues = new ContentValues();
+										mvalues.put("uid", uid);
+										mvalues.put("restriction", restrictionName);
+										mvalues.put("method", methodName);
+										mvalues.put("restricted", sRestricted);
+										mvalues.put("time", new Date().getTime());
+										db.insertWithOnConflict(cTableUsage, null, mvalues,
+												SQLiteDatabase.CONFLICT_REPLACE);
+									}
+									db.setTransactionSuccessful();
+								} catch (Throwable ex) {
+									Util.bug(null, ex);
+								} finally {
+									db.endTransaction();
 								}
-								db.setTransactionSuccessful();
 							} catch (Throwable ex) {
 								Util.bug(null, ex);
-							} finally {
-								db.endTransaction();
 							}
 						}
 					});
