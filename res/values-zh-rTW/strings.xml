@@ -37,6 +37,12 @@
     <string name="menu_applications">設定允許之app</string>
     <string name="menu_contacts">設定允許之聯絡人</string>
     <string name="menu_tutorial">說明</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="menu_choose">Choose</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_export">Backup all settings to %s</string>
+    <string name="msg_import">Import settings from %s</string>
     <string name="msg_new">已安裝</string>
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">授權給: %s</string>

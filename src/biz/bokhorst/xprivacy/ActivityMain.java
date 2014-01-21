@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -80,11 +79,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	public static final int STATE_SHARED = 2;
 
 	private static final int ACTIVITY_LICENSE = 0;
-	private static final int ACTIVITY_EXPORT = 1;
-	private static final int ACTIVITY_IMPORT = 2;
-	private static final int ACTIVITY_IMPORT_SELECT = 3;
-	private static final int ACTIVITY_SUBMIT = 4;
-	private static final int ACTIVITY_FETCH = 5;
+	private static final int ACTIVITY_EXPORT = 1; // TODO remove
+	private static final int ACTIVITY_IMPORT = 2; // remove
+	private static final int ACTIVITY_SUBMIT = 4; // remove
+	private static final int ACTIVITY_FETCH = 5; // remove
 
 	private static final int LICENSED = 0x0100;
 	private static final int NOT_LICENSED = 0x0231;
@@ -431,10 +429,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 			}
 
-		} else if (requestCode == ACTIVITY_EXPORT) {
+		} else if (requestCode == ACTIVITY_EXPORT) { // TODO remove
+			Util.log(null, Log.ERROR, "Should never see this");
 			// Export
-			sharingDone();
-
 			String fileName = null;
 			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cFileName))
 				fileName = dataIntent.getStringExtra(ActivityShare.cFileName);
@@ -457,9 +454,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								dataIntent.getStringExtra(ActivityShare.cFileName))));
 			}
 
-		} else if (requestCode == ACTIVITY_IMPORT) {
+		} else if (requestCode == ACTIVITY_IMPORT) { // TODO remove
+			Util.log(null, Log.ERROR, "Should never see this");
 			// Import
-			sharingDone();
 			ActivityMain.this.recreate();
 
 			String errorMessage = null;
@@ -471,23 +468,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
 			toast.show();
 
-		} else if (requestCode == ACTIVITY_IMPORT_SELECT) {
-			// Import select
-			if (resultCode == RESULT_CANCELED)
-				sharingDone();
-			else if (dataIntent != null)
-				try {
-					startImport(dataIntent.getData().getPath());
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
-
-		} else if (requestCode == ACTIVITY_SUBMIT) {
-			// Fetch
-			sharingDone();
-			if (mAppAdapter != null)
-				mAppAdapter.notifyDataSetChanged(); // Update state
-
+		} else if (requestCode == ACTIVITY_SUBMIT) { // TODO remove
+			Util.log(null, Log.ERROR, "Should never see this");
+			// Submit
 			String errorMessage = null;
 			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
 				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
@@ -497,9 +480,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
 			toast.show();
 
-		} else if (requestCode == ACTIVITY_FETCH) {
+		} else if (requestCode == ACTIVITY_FETCH) { // TODO remove
+			Util.log(null, Log.ERROR, "Should never see this");
 			// Fetch
-			sharingDone();
 			if (mAppAdapter != null)
 				mAppAdapter.notifyDataSetChanged();
 
@@ -795,37 +778,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionExport() {
-		sharingStart();
-
 		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
 		file.setType("file/*");
 		boolean multiple = Util.isIntentAvailable(ActivityMain.this, file);
 		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
 		intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(multiple));
-		startActivityForResult(intent, ACTIVITY_EXPORT);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		startActivity(intent);
 	}
 
 	private void optionImport() {
-		sharingStart();
-
-		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
-		file.setType("file/*");
-		if (Util.isIntentAvailable(ActivityMain.this, file)) {
-			Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-			Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/.xprivacy/");
-			chooseFile.setDataAndType(uri, "text/xml");
-			Intent intent = Intent.createChooser(chooseFile, getString(R.string.app_name));
-			startActivityForResult(intent, ACTIVITY_IMPORT_SELECT);
-		} else
-			startImport(ActivityShare.getFileName(false));
-	}
-
-	private void startImport(String fileName) {
-		fileName = fileName.replace("/document/primary:", Environment.getExternalStorageDirectory().getAbsolutePath()
-				+ File.separatorChar);
-
 		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
-		intent.putExtra(ActivityShare.cFileName, fileName);
+		intent.putExtra(ActivityShare.cInteractive, true);
 		int[] uid;
 		if (mAppAdapter == null)
 			uid = new int[0];
@@ -836,54 +800,33 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				uid[pos] = listAppInfo.get(pos).getUid();
 			intent.putExtra(ActivityShare.cUidList, uid);
 		}
-		startActivityForResult(intent, ACTIVITY_IMPORT);
+		startActivity(intent);
 	}
 
 	private void optionSubmit() {
-		if (ActivityShare.registerDevice(this)) {
-			if (mAppAdapter.getSelected().size() <= ActivityShare.cSubmitLimit) {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-				alertDialogBuilder.setTitle(getString(R.string.menu_submit));
-				alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								sharingStart();
-								if (mAppAdapter != null) {
-									List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
-									int[] uid = new int[listAppInfo.size()];
-									for (int pos = 0; pos < listAppInfo.size(); pos++)
-										uid[pos] = listAppInfo.get(pos).getUid();
-									Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
-									intent.putExtra(ActivityShare.cUidList, uid);
-									startActivityForResult(intent, ACTIVITY_SUBMIT);
-								}
-							}
-						});
-				alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-							}
-						});
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-			} else {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-				alertDialogBuilder.setTitle(getString(R.string.app_name));
-				alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
-				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-							}
-						});
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
+		if (mAppAdapter.getSelected().size() <= ActivityShare.cSubmitLimit) {
+			if (mAppAdapter != null) {
+				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
+				int[] uid = new int[listAppInfo.size()];
+				for (int pos = 0; pos < listAppInfo.size(); pos++)
+					uid[pos] = listAppInfo.get(pos).getUid();
+				Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
+				intent.putExtra(ActivityShare.cUidList, uid);
+				intent.putExtra(ActivityShare.cInteractive, true);
+				startActivity(intent);
 			}
+		} else {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.app_name));
+			alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
+			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
 		}
 	}
 
@@ -892,33 +835,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			// Redirect to pro page
 			Util.viewUri(this, cProUri);
 		} else {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.menu_fetch));
-			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					sharingStart();
-					if (mAppAdapter != null) {
-						List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
-						int[] uid = new int[listAppInfo.size()];
-						for (int pos = 0; pos < listAppInfo.size(); pos++)
-							uid[pos] = listAppInfo.get(pos).getUid();
-						Intent intent = new Intent(ActivityShare.ACTION_FETCH);
-						intent.putExtra(ActivityShare.cUidList, uid);
-						startActivityForResult(intent, ACTIVITY_FETCH);
-					}
-				}
-			});
-			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
+			if (mAppAdapter != null) {
+				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
+				int[] uid = new int[listAppInfo.size()];
+				for (int pos = 0; pos < listAppInfo.size(); pos++)
+					uid[pos] = listAppInfo.get(pos).getUid();
+				Intent intent = new Intent(ActivityShare.ACTION_FETCH);
+				intent.putExtra(ActivityShare.cUidList, uid);
+				intent.putExtra(ActivityShare.cInteractive, true);
+				startActivity(intent);
+			}
 		}
 	}
 
@@ -1290,11 +1216,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Send progress info to main activity
 					current++;
 					if (!mBatchOpRunning && current % 5 == 0) {
-						Intent progressIntent = new Intent(ActivityShare.cProgressReport);
-						progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.msg_applying));
-						progressIntent.putExtra(ActivityShare.cProgressMax, max);
-						progressIntent.putExtra(ActivityShare.cProgressValue, current);
-						LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
+						final int position = current;
+						final int maximum = max;
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								setProgress(getString(R.string.msg_applying), position, maximum);
+							}
+						});
 					}
 
 					// Get if name contains
@@ -1366,11 +1295,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					pbFilter.setVisibility(ProgressBar.GONE);
 					tvStats.setVisibility(TextView.VISIBLE);
 
-					Intent progressIntent = new Intent(ActivityShare.cProgressReport);
-					progressIntent.putExtra(ActivityShare.cProgressMessage, getString(R.string.title_restrict));
-					progressIntent.putExtra(ActivityShare.cProgressMax, 1);
-					progressIntent.putExtra(ActivityShare.cProgressValue, 0);
-					LocalBroadcastManager.getInstance(ActivityMain.this).sendBroadcast(progressIntent);
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							setProgress(getString(R.string.title_restrict), 0, 1);
+						}
+					});
 
 					// Adjust progress state width
 					RelativeLayout.LayoutParams tvStateLayout = (RelativeLayout.LayoutParams) tvState.getLayoutParams();
@@ -1696,20 +1626,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	// Share operations progress listener
 
-	private void sharingStart() {
-		mBatchOpRunning = true;
-		invalidateOptionsMenu();
-	}
-
-	private void sharingDone() {
-		// Re-enable menu items
-		mBatchOpRunning = false;
-		invalidateOptionsMenu();
-		// Keep done message for after UI recreation
-		TextView tvState = (TextView) findViewById(R.id.tvState);
-		mSharingState = (String) tvState.getText();
-	}
-
 	private void setProgress(String text, int progress, int max) {
 		// Set up the progress bar
 		if (mProgressWidth == 0) {
@@ -1723,10 +1639,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (max == 0)
 			max = 1;
 		mProgress = (int) ((float) mProgressWidth) * progress / max;
-		updateProgress();
-	}
 
-	private void updateProgress() {
 		View vProgressFull = (View) findViewById(R.id.vProgressFull);
 		vProgressFull.getLayoutParams().width = mProgress;
 	}

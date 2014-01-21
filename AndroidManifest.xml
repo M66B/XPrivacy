@@ -88,8 +88,7 @@
                 android:value="biz.bokhorst.xprivacy.ActivityMain" />
         </activity>
         <activity
-            android:name=".ActivityShare"
-            android:theme="@android:style/Theme.NoDisplay" >
+            android:name=".ActivityShare" >
             <intent-filter>
                 <action android:name="biz.bokhorst.xprivacy.action.IMPORT" />
                 <action android:name="biz.bokhorst.xprivacy.action.EXPORT" />

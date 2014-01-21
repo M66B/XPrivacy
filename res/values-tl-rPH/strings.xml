@@ -37,6 +37,12 @@
     <string name="menu_applications">Piliin ang mga Applications na may pahintulot</string>
     <string name="menu_contacts">Piliin ang mga Contacts na may pahintulot</string>
     <string name="menu_tutorial">Sangguni</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="menu_choose">Choose</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_export">Backup all settings to %s</string>
+    <string name="msg_import">Import settings from %s</string>
     <string name="msg_new">Bago</string>
     <string name="msg_update">Pabaguhin</string>
     <string name="msg_licensed" formatted="false">Nakalisensya kay: %s</string>

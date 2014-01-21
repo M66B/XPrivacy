@@ -3,10 +3,12 @@ package biz.bokhorst.xprivacy;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,12 +17,12 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
-
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
@@ -29,6 +31,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -41,6 +44,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -48,24 +52,54 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
-import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class ActivityShare extends Activity {
-	private LocalBroadcastManager mBroadcastManager;
+	private int mThemeId;
+	private AppListAdapter mAppAdapter;
+	private SparseArray<AppHolder> mAppsByUid;
+	private boolean mRunning = false;
+	private boolean mAbort = false;
+	private int mProgressCurrent;
+	private int mProgressWidth = 0;
+	private String mFileName;
+
+	private static final int STATE_WAITING = 0;
+	private static final int STATE_RUNNING = 1;
+	private static final int STATE_SUCCESS = 2;
+	private static final int STATE_FAILURE = 3;
+
+	private static final int ACTIVITY_IMPORT_SELECT = 0;
 
 	public static final String cFileName = "FileName";
 	public static final String cUidList = "UidList";
+	public static final String cInteractive = "Interactive";
 	public static final String cErrorMessage = "ErrorMessage";
 	public static final String HTTP_BASE_URL = "http://crowd.xprivacy.eu/";
 	public static final String HTTPS_BASE_URL = "https://crowd.xprivacy.eu/";
@@ -100,69 +134,503 @@ public class ActivityShare extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Bundle extras = getIntent().getExtras();
-		mBroadcastManager = LocalBroadcastManager.getInstance(this);
+		final Bundle extras = getIntent().getExtras();
+		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 
-		if (Util.isProEnabled() || Util.hasProLicense(this) != null) {
-			// Import
-			if (getIntent().getAction().equals(ACTION_IMPORT)) {
-				int[] uid = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
-				String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-						: getFileName(false));
-				new ImportTask().executeOnExecutor(mExecutor, new File(fileName), uid);
+		final String action = getIntent().getAction();
+
+		// Check whether we need a ui, if not, leave the theme declared in the manifest
+		if (extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false)) {
+			// Set theme
+			String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
+			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
+			setTheme(mThemeId);
+
+			// Set layout
+			setContentView(R.layout.sharelist);
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+			// Set title
+			if (action.equals(ACTION_IMPORT))
+				setTitle(getString(R.string.menu_import));
+			else if (action.equals(ACTION_EXPORT))
+				setTitle(getString(R.string.menu_export));
+			else if (action.equals(ACTION_FETCH))
+				setTitle(getString(R.string.menu_fetch));
+			else if (action.equals(ACTION_SUBMIT))
+				setTitle(getString(R.string.menu_submit));
+
+			// Licence check
+			if (action.equals(ACTION_IMPORT) && !Util.isProEnabled() && Util.hasProLicense(this) == null) {
+				Util.log(null, Log.WARN, "No licence found allowing importation");
+				finish();
+			} else if (action.equals(ACTION_FETCH) && Util.hasProLicense(this) == null) {
+				Util.log(null, Log.WARN, "No licence found allowing fetching");
+				finish();
 			}
 
-			// Export
-			else if (getIntent().getAction().equals(ACTION_EXPORT)) {
-				String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-						: getFileName(false));
-				new ExportTask().executeOnExecutor(mExecutor, new File(fileName));
+			// App list
+			ListView lvShare = (ListView) findViewById(R.id.lvShare);
+			AppListTask appListTask = new AppListTask();
+			appListTask.executeOnExecutor(mExecutor, uids);
+			if (!action.equals(ACTION_EXPORT)) {
+				// Allow users to remove apps from list
+				registerForContextMenu(lvShare);
+			}
+
+			// Import/export filename
+			mFileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
+					: getFileName(false));
+
+			TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+			View llDescription = findViewById(R.id.llDescription);
+			if (action.equals(ACTION_EXPORT)) {
+				// Show export filename
+				tvDescription.setText(getString(R.string.msg_export, mFileName));
+				llDescription.setVisibility(View.VISIBLE);
+
+			} else if (action.equals(ACTION_IMPORT)) {
+				if (mFileName.equals(getFileName(false))) {
+					// Check availability of a file chooser
+					Intent file = new Intent(Intent.ACTION_GET_CONTENT);
+					file.setType("file/*");
+					if (Util.isIntentAvailable(ActivityShare.this, file)) {
+
+						// Launch file chooser
+						fileChooser();
+
+						// Show file choose button
+						Button btnChange = (Button) findViewById(R.id.btnChange);
+						btnChange.setVisibility(View.VISIBLE);
+						btnChange.setOnClickListener(new Button.OnClickListener(){
+							@Override
+							public void onClick(View v) {
+								fileChooser();
+							}
+						});
+					}
+				}
+
+				// Show import filename
+				tvDescription.setText(getString(R.string.msg_import, mFileName));
+				llDescription.setVisibility(View.VISIBLE);
+			}
+
+			// Buttons
+			final Button btnOk = (Button) findViewById(R.id.btnOk);
+			final Button btnCancel = (Button) findViewById(R.id.btnCancel);
+
+			// Check device registration for submissions
+			if (action.equals(ACTION_SUBMIT))
+				btnOk.setEnabled(registerDevice(this));
+			
+			btnOk.setOnClickListener(new Button.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					btnOk.setEnabled(false);
+
+					int[] uids = mAppAdapter.getUids();
+
+					// Import
+					if (action.equals(ACTION_IMPORT)) {
+						mRunning = true;
+						new ImportTask().executeOnExecutor(mExecutor, new File(mFileName), uids);
+					}
+
+					// Export
+					else if (action.equals(ACTION_EXPORT)) {
+						mRunning = true;
+						new ExportTask().executeOnExecutor(mExecutor, new File(mFileName), uids);
+					}
+
+					// Fetch
+					else if (action.equals(ACTION_FETCH)) {
+						if (uids.length > 0) {
+							mRunning = true;
+							new FetchTask().executeOnExecutor(mExecutor, uids);
+						}
+					}
+
+					// Submit
+					else if (action.equals(ACTION_SUBMIT)) {
+						if (uids.length > 0) {
+							if (uids.length <= cSubmitLimit) {
+								mRunning = true;
+								new SubmitTask().executeOnExecutor(mExecutor, uids);
+							} else {
+								String message = getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1);
+								Toast.makeText(ActivityShare.this, message, Toast.LENGTH_SHORT).show();
+								btnOk.setEnabled(false);
+							}
+						}
+					}
+
+					// Unknown action
+					else {
+						Util.log(null, Log.WARN, "Unknown share action: " + action);
+					}
+				}
+			});
+
+			btnCancel.setOnClickListener(new Button.OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					if (mRunning) {
+						mAbort = true;
+						Toast.makeText(ActivityShare.this, getString(R.string.msg_abort), Toast.LENGTH_SHORT).show();
+					} else {
+						finish();
+					}
+				}
+			});
+
+		} else if (action.equals(ACTION_EXPORT)) {
+			// Set theme to NoDisplay
+			mThemeId = android.R.style.Theme_NoDisplay;
+			setTheme(mThemeId);
+
+			// Build list of distinct uids
+			List<Integer> listUid = new ArrayList<Integer>();
+			for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
+			if (!listUid.contains(pInfo.applicationInfo.uid))
+			listUid.add(pInfo.applicationInfo.uid);
+
+			// Get on with exporting
+			String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
+					: getFileName(false));
+			new ExportTask().executeOnExecutor(mExecutor, new File(fileName), listUid);
+		}
+	}
+
+	protected void onResume() {
+		super.onResume();
+		if (!mRunning && getTitle().equals(getString(R.string.menu_submit))) {
+			// Check again for registration
+			final Button btnOk = (Button) findViewById(R.id.btnOk);
+			// If the registration has not been completed, this will ask again.
+			// I find that not quite ideal from a users point of view, but I suppose it will do.
+			btnOk.setEnabled(registerDevice(this));
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent dataIntent) {
+		super.onActivityResult(requestCode, resultCode, dataIntent);
+
+		if (requestCode == ACTIVITY_IMPORT_SELECT) {
+			// Import select
+			if (resultCode == RESULT_CANCELED)
+				;// Do nothing
+			else if (dataIntent != null)
+				try {
+					mFileName = dataIntent.getData().getPath();
+					TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+					tvDescription.setText(getString(R.string.msg_import, mFileName));
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+		}
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		if (v.getId() == R.id.lvShare) {
+			menu.add(getString(R.string.menu_exclude));
+		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		if (!mRunning && item.getTitle().equals(getString(R.string.menu_exclude))) {
+			// remove app from list
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+			mAppAdapter.remove(mAppAdapter.getItem(info.position));
+
+			// Check submit limit
+			if (mAppAdapter.getCount() < cSubmitLimit + 1 && getTitle().equals(getString(R.string.menu_submit))) {
+				Button btnOk = (Button) findViewById(R.id.btnOk);
+				btnOk.setEnabled(true);
+			}
+			return true;
+		} else {
+			return super.onContextItemSelected(item);
+		}
+	}
+
+	// App info and share state
+
+	private class AppHolder implements Comparable<AppHolder> {
+		public int state = STATE_WAITING;
+		public ApplicationInfoEx appInfo;
+		public String message = null;
+
+		public AppHolder(int uid) throws NameNotFoundException {
+			appInfo = new ApplicationInfoEx(ActivityShare.this, uid);
+		}
+
+		@Override
+		public int compareTo(AppHolder other) {
+			return this.appInfo.compareTo(other.appInfo);
+		}
+	}
+
+	// Adapters
+
+	@SuppressLint("DefaultLocale")
+	private class AppListAdapter extends ArrayAdapter<AppHolder> {
+		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		public List<AppHolder> mAppsWaiting;
+		private List<AppHolder> mAppsDone;
+		private ChangeNotifier changeNotifier = new ChangeNotifier();
+
+		private class ChangeNotifier implements Runnable {
+			int mScrollTo = -1;
+
+			@Override
+			public void run() {
+				notifyDataSetChanged();
+				if (mScrollTo >= 0) {
+					ListView lvShare = (ListView) findViewById(R.id.lvShare);
+					lvShare.smoothScrollToPosition(mScrollTo);
+				}
+			}
+
+			public void setScrollTo(int position) {
+				mScrollTo = position;
+			}
+		};
+
+		public AppListAdapter(Context context, int resource, List<AppHolder> objects) {
+			super(context, resource, objects);
+			mAppsWaiting = new ArrayList<AppHolder>();
+			mAppsWaiting.addAll(objects);
+			mAppsDone = new ArrayList<AppHolder>();
+		}
+
+		public int[] getUids() {
+			int[] uids = new int[this.getCount()];
+			for (int i = 0; i < this.getCount(); i++) {
+				uids[i] = this.getItem(i).appInfo.getUid();
+			}
+			return uids;
+		}
+
+		public void setState(int uid, int state) {
+			AppHolder app = mAppsByUid.get(uid);
+			// Make sure apps done or in progress are listed first
+			// All operations except importing treat the apps in the listed order
+			if (getTitle().equals(getString(R.string.menu_import)) && mAppsWaiting.contains(app)) {
+				mAppsWaiting.remove(app);
+				mAppsDone.add(app);
+				this.setNotifyOnChange(false);
+				this.clear();
+				this.addAll(mAppsDone);
+				this.addAll(mAppsWaiting);
+				// If I separate out the app currently in progress, I could sort the done ones in the same way as the waiting ones were.
+				// We'd then have in order: a sorted list of the done apps, mAppCurrent, then all the waiting apps in order
+			}
+			// Set state for this app
+			app.state = state;
+			changeNotifier.setScrollTo(mAppAdapter.getPosition(app));
+			runOnUiThread(changeNotifier);
+		}
+
+		private class ViewHolder {
+			private View row;
+			private int position;
+			public ImageView imgIcon;
+			public TextView tvName;
+			public ImageView imgResult;
+			public ProgressBar pbRunning;
+			public TextView tvMessage;
+
+			public ViewHolder(View theRow, int thePosition) {
+				row = theRow;
+				position = thePosition;
+				imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
+				tvName = (TextView) row.findViewById(R.id.tvApp);
+				imgResult = (ImageView) row.findViewById(R.id.imgResult);
+				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
+				tvMessage = (TextView) row.findViewById(R.id.tvMessage);
 			}
 		}
 
-		if (Util.hasProLicense(this) != null) {
-			// Fetch
-			if (getIntent().getAction().equals(ACTION_FETCH)) {
-				if (extras != null && extras.containsKey(cUidList)) {
-					int[] uid = extras.getIntArray(cUidList);
-					new FetchTask().executeOnExecutor(mExecutor, uid);
-				}
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder holder;
+			if (convertView == null) {
+				convertView = mInflater.inflate(R.layout.shareentry, null);
+				holder = new ViewHolder(convertView, position);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+				holder.position = position;
 			}
-		}
 
-		// Submit
-		if (getIntent().getAction().equals(ACTION_SUBMIT)) {
-			if (extras != null && extras.containsKey(cUidList)) {
-				int[] uid = extras.getIntArray(cUidList);
-				if (uid.length <= cSubmitLimit) {
-					new SubmitTask().executeOnExecutor(mExecutor, uid);
-				} else {
-					Intent intent = new Intent();
-					intent.putExtra(cErrorMessage, getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
-					setResult(1, intent);
-					finish();
-				}
+			// Get info
+			final AppHolder xApp = getItem(holder.position);
+
+			// Set background color
+			if (xApp.appInfo.isSystem())
+				holder.row.setBackgroundColor(getResources().getColor(
+						Util.getThemed(ActivityShare.this, R.attr.color_dangerous)));
+			else
+				holder.row.setBackgroundColor(Color.TRANSPARENT);
+
+			// Display icon
+			holder.imgIcon.setImageDrawable(xApp.appInfo.getIcon(ActivityShare.this));
+			holder.imgIcon.setVisibility(View.VISIBLE);
+
+			// Set app name
+			holder.tvName.setText(xApp.appInfo.toString());
+
+			// Show app share state
+			holder.tvMessage.setText("");
+			switch (xApp.state) {
+			case STATE_WAITING:
+				holder.imgResult.setVisibility(View.INVISIBLE);
+				holder.pbRunning.setVisibility(View.INVISIBLE);
+				break;
+			case STATE_RUNNING:
+				holder.imgResult.setVisibility(View.INVISIBLE);
+				holder.pbRunning.setVisibility(View.VISIBLE);
+				if (xApp.message != null)
+					holder.tvMessage.setText(xApp.message);
+				break;
+			case STATE_SUCCESS:
+				holder.imgResult.setBackgroundResource(R.drawable.share_success);
+				holder.imgResult.setVisibility(View.VISIBLE);
+				holder.pbRunning.setVisibility(View.INVISIBLE);
+				if (xApp.message != null)
+					holder.tvMessage.setText(xApp.message);
+				break;
+			case STATE_FAILURE:
+				holder.imgResult.setBackgroundResource(R.drawable.share_failure);
+				holder.imgResult.setVisibility(View.VISIBLE);
+				holder.pbRunning.setVisibility(View.INVISIBLE);
+				if (xApp.message != null)
+					holder.tvMessage.setText(xApp.message);
+				break;
 			}
+
+			return convertView;
 		}
 	}
 
 	// Tasks
 
-	private class ExportTask extends AsyncTask<File, String, String> {
+	private class AppListTask extends AsyncTask<int[], Integer, List<AppHolder>> {
+		private ProgressDialog mProgressDialog;
+
+		@Override
+		protected List<AppHolder> doInBackground(int[]... params) {
+			int[] uids = params[0];
+			List<AppHolder> apps = new ArrayList<AppHolder>();
+			mAppsByUid = new SparseArray<AppHolder>();
+
+			if (uids.length > 0 && !getTitle().equals(getString(R.string.menu_export))) {
+				mProgressDialog.setMax(uids.length);
+				for (int i = 0; i < uids.length; i++) {
+					mProgressDialog.setProgress(i);
+					try {
+						int uid = uids[i];
+						AppHolder app = new AppHolder(uid);
+						apps.add(app);
+						mAppsByUid.put(uid, app);
+					} catch (NameNotFoundException ex) {
+						Util.bug(null, ex);
+					}
+				}
+			} else {
+				// Get a list of all apps unless fetching, in which case, get all user apps
+				List<PackageInfo> pList = getPackageManager().getInstalledPackages(0);
+				mProgressDialog.setMax(pList.size());
+				int current = 0;
+				for (PackageInfo pInfo : pList) {
+					mProgressDialog.setProgress(++current);
+					if (mAppsByUid.get(pInfo.applicationInfo.uid) == null) {
+						try {
+							AppHolder app = new AppHolder(pInfo.applicationInfo.uid);
+							if (getTitle().equals(getString(R.string.menu_fetch)) && app.appInfo.isSystem()) {
+								// Skip system apps for fetch without a uid list
+							} else {
+								apps.add(app);
+								mAppsByUid.put(pInfo.applicationInfo.uid, app);
+							}
+						} catch (NameNotFoundException ex) {
+							Util.bug(null, ex);
+						}
+					}
+				}
+			}
+
+			Collections.sort(apps);
+			// TODO sort according to preferences
+			// TODO add sort options to actionbar just like in ActivityMain
+			return apps;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			// Show progress dialog
+			ListView lvShare = (ListView) findViewById(R.id.lvShare);
+			mProgressDialog = new ProgressDialog(lvShare.getContext());
+			mProgressDialog.setMessage(getString(R.string.msg_loading));
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			mProgressDialog.setProgressNumberFormat(null);
+			mProgressDialog.setCancelable(false);
+			mProgressDialog.show();
+		}
+
+		@Override
+		protected void onPostExecute(List<AppHolder> listApp) {
+			super.onPostExecute(listApp);
+
+			// Display app list
+			mAppAdapter = new AppListAdapter(ActivityShare.this, R.layout.shareentry, listApp);
+			ListView lvShare = (ListView) findViewById(R.id.lvShare);
+			lvShare.setAdapter(mAppAdapter);
+
+			// Dismiss progress dialog
+			try {
+				mProgressDialog.dismiss();
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		}
+	}
+
+	private class ExportTask extends AsyncTask<Object, Integer, String> {
 		private File mFile;
 
 		@Override
-		protected String doInBackground(File... params) {
+		protected String doInBackground(Object... params) {
+			mProgressCurrent = 0;
 			try {
-				mFile = params[0];
+				mFile = (File) params[0];
+
+				List<Integer> listUid;
+				if (params[1] instanceof List) {
+					listUid = (List<Integer>) params[1];
+				} else {
+					listUid = new ArrayList<Integer>();
+					for (int uid : (int[]) params[1])
+						listUid.add(uid);
+				}
+
 				Util.log(null, Log.INFO, "Exporting " + mFile);
 				String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 
-				FileOutputStream fos = new FileOutputStream(mFile);
+				FileOutputStream fos = new FileOutputStream(mFile); // FileNotFoundException
 				try {
 					// Start serialization
 					XmlSerializer serializer = Xml.newSerializer();
-					serializer.setOutput(fos, "UTF-8");
+					serializer.setOutput(fos, "UTF-8"); // IOException, IllegalArgumentException, IllegalStateException
 					serializer.startDocument(null, Boolean.valueOf(true));
 					serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 					serializer.startTag(null, "XPrivacy");
@@ -189,12 +657,6 @@ public class ActivityShare extends Activity {
 						serializer.endTag(null, "Setting");
 					}
 
-					// Build list of distinct uids
-					List<Integer> listUid = new ArrayList<Integer>();
-					for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
-						if (!listUid.contains(pInfo.applicationInfo.uid))
-							listUid.add(pInfo.applicationInfo.uid);
-
 					// Process application settings
 					for (int uid : listUid) {
 						Map<String, String> mapAppSetting = PrivacyManager.getSettings(uid);
@@ -220,6 +682,12 @@ public class ActivityShare extends Activity {
 
 					// Process restrictions
 					for (int uid : listUid) {
+						if (mAbort)
+							throw new Exception("Abort");
+
+						publishProgress(++mProgressCurrent, listUid.size() + 1);
+						if (mThemeId != android.R.style.Theme_NoDisplay)
+							mAppAdapter.setState(uid, STATE_RUNNING);
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
 							// Category
 							boolean crestricted = PrivacyManager.getRestricted(null, uid, restrictionName, null, false,
@@ -246,6 +714,8 @@ public class ActivityShare extends Activity {
 								}
 							}
 						}
+						if (mThemeId != android.R.style.Theme_NoDisplay)
+							mAppAdapter.setState(uid, STATE_SUCCESS);
 					}
 
 					// End serialization
@@ -261,48 +731,41 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.getMessage();
+				// IOException, IllegalArgumentException, IllegalStateException, Exception
+				if (ex instanceof FileNotFoundException)
+					return "Cannot create file"; // TODO String resource
+				else if (ex instanceof IOException)
+					return "Error writing to file"; // TODO String resource
+				else if (ex instanceof Exception && ex.getMessage().equals("Abort")) {
+					// Delete file
+					mFile.delete();
+					return "File deleted"; // TODO String resource
+				} else
+					return ex.getMessage();
 			}
 		}
 
 		@Override
-		protected void onProgressUpdate(String... values) {
-			int progress = 0;
-			int max = 1;
-			if (values.length > 2) {
-				progress = Integer.parseInt(values[1]);
-				max = Integer.parseInt(values[2]);
-			}
-			notify(values[0], true, progress, max);
+		protected void onProgressUpdate(Integer... values) {
+			if (mThemeId != android.R.style.Theme_NoDisplay)
+				blueStreakOfProgress(values[0], values[1]);
+			else
+				Util.log(null, Log.WARN, "Exporting progress " + values[0] + "/" + values[1]);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result == null ? getString(R.string.msg_done) : null, false, 0, 1);
-
-			Intent intent = new Intent();
-			intent.putExtra(cFileName, mFile.getAbsolutePath());
-			intent.putExtra(cErrorMessage, result);
-			setResult(result == null ? 0 : 1, intent);
-			finish();
+			if (mThemeId != android.R.style.Theme_NoDisplay)
+				done(result);
+			else
+				finish();
 			super.onPostExecute(result);
-		}
-
-		private void notify(String text, boolean ongoing, int progress, int max) {
-			// Send progress info to main activity
-			Intent progressIntent = new Intent(cProgressReport);
-			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_export), text));
-			progressIntent.putExtra(cProgressMax, max);
-			progressIntent.putExtra(cProgressValue, progress);
-			mBroadcastManager.sendBroadcast(progressIntent);
 		}
 	}
 
-	private class ImportTask extends AsyncTask<Object, String, String> {
+	private class ImportTask extends AsyncTask<Object, Integer, String> {
 		private File mFile;
-		private int mProgressMax;
-		private int mProgressCurrent;
 
 		@Override
 		protected String doInBackground(Object... params) {
@@ -313,16 +776,26 @@ public class ActivityShare extends Activity {
 				for (int uid : (int[]) params[1])
 					listUidSelected.add(uid);
 
+				// Progress
+				mProgressCurrent = 0;
+				final int max = listUidSelected.size() + 1;
+				Runnable progress = new Runnable() {
+					@Override
+					public void run() {
+						publishProgress(++mProgressCurrent, max);
+					}
+				};
+
 				// Parse XML
 				Util.log(null, Log.INFO, "Importing " + mFile);
 				FileInputStream fis = null;
 				Map<String, Map<String, List<ImportHandler.MethodDescription>>> mapPackage;
 				try {
-					fis = new FileInputStream(mFile);
+					fis = new FileInputStream(mFile); // FileNotFoundException
 					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
-					ImportHandler importHandler = new ImportHandler(listUidSelected);
+					ImportHandler importHandler = new ImportHandler(listUidSelected, progress);
 					xmlReader.setContentHandler(importHandler);
-					xmlReader.parse(new InputSource(fis));
+					xmlReader.parse(new InputSource(fis)); // IOException, SAXException
 					mapPackage = importHandler.getPackageMap();
 				} finally {
 					if (fis != null)
@@ -330,32 +803,39 @@ public class ActivityShare extends Activity {
 				}
 
 				// Progress
-				mProgressMax = mapPackage.size();
-				mProgressCurrent = 0;
+				int progressMax = mapPackage.size();
 
 				// Process result (legacy)
 				for (String packageName : mapPackage.keySet()) {
-					mProgressCurrent++;
+					if (mAbort)
+						throw new Exception("Abort");
+
 					try {
-						publishProgress(packageName, Integer.toString(mProgressCurrent));
+						publishProgress(++mProgressCurrent, progressMax + 1);
 
 						// Get uid
 						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
 
 						if (listUidSelected.size() == 0 || listUidSelected.contains(uid)) {
 							Util.log(null, Log.INFO, "Importing " + packageName);
+							mAppAdapter.setState(uid, STATE_RUNNING);
 
 							// Reset existing restrictions
-							PrivacyManager.deleteRestrictions(uid, true);
+							boolean restart = PrivacyManager.deleteRestrictions(uid, true);
 
 							// Set imported restrictions
 							for (String restrictionName : mapPackage.get(packageName).keySet()) {
-								PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true);
+								restart = PrivacyManager.setRestricted(null, uid, restrictionName,
+										null, true, true) || restart;
 								for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(
 										restrictionName))
-									PrivacyManager.setRestricted(null, uid, restrictionName, md.getMethodName(),
-											md.isRestricted(), true);
+									restart = PrivacyManager.setRestricted(null, uid, restrictionName,
+											md.getMethodName(), md.isRestricted(), true) || restart;
 							}
+
+							if (restart)
+								mAppsByUid.get(uid).message = getString(R.string.msg_restart);
+							mAppAdapter.setState(uid, STATE_SUCCESS);
 						}
 					} catch (NameNotFoundException ex) {
 						Util.log(null, Log.WARN, "Not found package=" + packageName);
@@ -367,38 +847,34 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.getMessage();
+				// FileNotFoundException, IOException, SAXException
+				if (ex instanceof FileNotFoundException)
+					return "File not found"; // TODO string resource
+				else if (ex instanceof IOException)
+					return "Error reading file"; // TODO string resource
+				else if (ex instanceof SAXException)
+					return "File is damaged"; // TODO string resource
+				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
+					return null;
+				else
+					return ex.getMessage();
 			}
 		}
 
 		@Override
-		protected void onProgressUpdate(String... values) {
-			int progress = 0;
-			if (values.length > 1)
-				progress = Integer.parseInt(values[1]);
-			notify(values[0], true, progress);
+		protected void onProgressUpdate(Integer... values) {
+			blueStreakOfProgress(values[0], values[1]);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result == null ? getString(R.string.msg_done) : result, false, 0);
-
-			Intent intent = new Intent();
-			intent.putExtra(cFileName, mFile.getAbsolutePath());
-			intent.putExtra(cErrorMessage, result);
-			setResult(result == null ? 0 : 1, intent);
-			finish();
+			// Mark as failed the apps that weren't found
+			for (AppHolder app : mAppAdapter.mAppsWaiting)
+				app.state = STATE_FAILURE;
+			mAppAdapter.notifyDataSetChanged();
+			done(result);
 			super.onPostExecute(result);
-		}
-
-		private void notify(String text, boolean ongoing, int progress) {
-			// Send progress info to main activity
-			Intent progressIntent = new Intent(cProgressReport);
-			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_import), text));
-			progressIntent.putExtra(cProgressMax, mProgressMax);
-			progressIntent.putExtra(cProgressValue, progress);
-			mBroadcastManager.sendBroadcast(progressIntent);
 		}
 	}
 
@@ -408,20 +884,26 @@ public class ActivityShare extends Activity {
 		private Map<String, Integer> mMapUid = new HashMap<String, Integer>();
 		private Map<String, Map<String, List<MethodDescription>>> mMapPackage = new HashMap<String, Map<String, List<MethodDescription>>>();
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-		private int mProgress = 0;
+		private Runnable mProgress;
 		private List<Integer> mListSettingId = new ArrayList<Integer>();
-		private List<Integer> mListRestrictionId = new ArrayList<Integer>();
+		private List<Integer> mListRestrictionUid = new ArrayList<Integer>();
+		private List<Integer> mListRestartUid = new ArrayList<Integer>();
+		private List<Integer> mListSkippingUid = new ArrayList<Integer>();
+		private boolean mAborting = false;
 
-		public ImportHandler(List<Integer> listUidSelected) {
+		public ImportHandler(List<Integer> listUidSelected, Runnable progress) {
 			mListUidSelected = listUidSelected;
+			mProgress = progress;
 		}
 
 		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) {
 			try {
+				if (mAbort)
+					mAborting = true;
+
 				if (qName.equals("XPrivacy")) {
 					// Root
-					mProgress = 0;
 				} else if (qName.equals("PackageInfo")) {
 					// Package info
 					int id = Integer.parseInt(attributes.getValue("Id"));
@@ -454,6 +936,14 @@ public class ActivityShare extends Activity {
 						// Application setting
 						int iid = Integer.parseInt(id);
 						int uid = getUid(iid);
+
+						if (mAborting && !mListRestrictionUid.contains(uid) && !mListSettingId.contains(iid)) {
+							if (!mListSkippingUid.contains(uid))
+								mListSkippingUid.add(uid);
+							Util.log(null, Log.WARN, "Skipping setting for uid=" + uid);
+							return; // This app hasn't yet begun to be imported, so skip it
+						} // TODO a better approach would be to cache these and apply them when restrictions start to be found
+
 						if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
 							// Clear existing settings
 							if (!mListSettingId.contains(iid)) {
@@ -492,21 +982,65 @@ public class ActivityShare extends Activity {
 
 					// Get uid
 					int uid = getUid(id);
+
+					if (mAborting && !mListRestrictionUid.contains(uid) && !mListSettingId.contains(id)) {
+						// TODO make this work for backups that import all the settings first
+						if (!mListSkippingUid.contains(uid))
+							mListSkippingUid.add(uid);
+						Util.log(null, Log.WARN, "Skipping restriction for uid=" + uid);
+						return; // This app hasn't begun to be imported, so skip it
+					}
+
 					if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
-						// Clear existing restrictions
-						if (!mListRestrictionId.contains(id)) {
-							mListRestrictionId.add(id);
-							reportProgress(id);
-							PrivacyManager.deleteRestrictions(uid, false);
+						// Progress report and pre-import cleanup
+						if (!mListRestrictionUid.contains(uid)) {
+							// Mark the app we have just imported as a success
+							if (mListRestrictionUid.size() > 0) {
+								int lastUid = mListRestrictionUid.get(mListRestrictionUid.size() - 1);
+								mAppAdapter.setState(lastUid, STATE_SUCCESS);
+							}
+							// Mark the next one as in progress
+							mListRestrictionUid.add(uid);
+							mAppAdapter.setState(uid, STATE_RUNNING);
+							runOnUiThread(mProgress);
+							if (PrivacyManager.deleteRestrictions(uid, false))
+								mListRestartUid.add(uid);
 						}
 
 						// Set restriction
-						PrivacyManager.setRestricted(null, uid, restrictionName, methodName, restricted, false);
+						if (PrivacyManager.setRestricted(null, uid, restrictionName, methodName, restricted, false) && 
+								!mListRestartUid.contains(uid))
+							mListRestartUid.add(uid);
 					}
 				} else
 					Util.log(null, Log.ERROR, "Unknown element name=" + qName);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) {
+			if (qName.equals("XPrivacy")) {
+				// EOF Mark the last app imported as a success
+				if (mListRestrictionUid.size() > 0) {
+					int lastUid = mListRestrictionUid.get(mListRestrictionUid.size() - 1);
+					mAppAdapter.setState(lastUid, STATE_SUCCESS);
+				}
+				// Restart notifications
+				for (int uid : mListRestartUid)
+					mAppsByUid.get(uid).message = getString(R.string.msg_restart);
+				// Checks
+				if (mListRestrictionUid.size() + mListSkippingUid.size() != mListUidSelected.size() - mAppAdapter.mAppsWaiting.size() &&
+						!(mListSettingId.size() == mListUidSelected.size() ||
+						  mListSettingId.size() + mListSkippingUid.size() == mListUidSelected.size() - mAppAdapter.mAppsWaiting.size())) {
+					Util.log(null, Log.ERROR, "Import list sizes possible mismatch");
+					Util.log(null, Log.ERROR, "Selected (" + mListUidSelected.size() + ") " + TextUtils.join(", ", mListUidSelected));
+					Util.log(null, Log.ERROR, "Settings (" + mListSettingId.size() + ") " + TextUtils.join(", ", mListSettingId));
+					Util.log(null, Log.ERROR, "Restricted (" + mListRestrictionUid.size() + ") " + TextUtils.join(", ", mListRestrictionUid));
+					Util.log(null, Log.ERROR, "Skipped (" + mListSkippingUid.size() + ") " + TextUtils.join(", ", mListSkippingUid));
+				} else
+					Util.log(null, Log.WARN, "Import list sizes matched");
 			}
 		}
 
@@ -548,21 +1082,9 @@ public class ActivityShare extends Activity {
 				return mRestricted;
 			}
 		}
-
-		private void reportProgress(int id) {
-			// Send progress info to main activity
-			Intent progressIntent = new Intent(cProgressReport);
-			progressIntent.putExtra(cProgressMessage,
-					String.format("%s: %s", getString(R.string.menu_import), mMapId.get(id)));
-			progressIntent.putExtra(cProgressMax, mMapId.size());
-			progressIntent.putExtra(cProgressValue, ++mProgress);
-			mBroadcastManager.sendBroadcast(progressIntent);
-		}
 	}
 
-	private class FetchTask extends AsyncTask<int[], String, String> {
-		private int mProgressMax;
-		private int mProgressCurrent;
+	private class FetchTask extends AsyncTask<int[], Integer, String> {
 
 		@Override
 		@SuppressLint("DefaultLocale")
@@ -571,23 +1093,26 @@ public class ActivityShare extends Activity {
 				// Get data
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (int uid : params[0])
-					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
+					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid)); // NameNotFoundException
+					// This error probably should be caught here. TODO
 
 				String[] license = Util.getProLicenseUnchecked();
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
-				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0); // NameNotFoundException
 
 				String confidence = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingConfidence, "", false);
 
 				// Initialize progress
-				mProgressMax = lstApp.size();
 				mProgressCurrent = 0;
 
 				// Process applications
 				for (ApplicationInfoEx appInfo : lstApp) {
-					mProgressCurrent++;
+					if (mAbort)
+						throw new Exception("Abort");
+
+					publishProgress(++mProgressCurrent, lstApp.size() + 1);
 					if (!appInfo.isSystem() || lstApp.size() == 1) {
-						publishProgress(appInfo.getPackageName().get(0), Integer.toString(mProgressCurrent));
+						mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING);
 
 						JSONArray appName = new JSONArray();
 						for (String name : appInfo.getApplicationName())
@@ -603,7 +1128,7 @@ public class ActivityShare extends Activity {
 
 						// Encode package
 						JSONObject jRoot = new JSONObject();
-						jRoot.put("protocol_version", cProtocolVersion);
+						jRoot.put("protocol_version", cProtocolVersion); // JSONException
 						jRoot.put("android_id", Util.md5(android_id).toLowerCase());
 						jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 						jRoot.put("xprivacy_version", pXPrivacyInfo.versionCode);
@@ -621,29 +1146,29 @@ public class ActivityShare extends Activity {
 						HttpClient httpclient = new DefaultHttpClient(httpParams);
 
 						HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=fetch");
-						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8"))); // UnsupportedEncodingException
 						httpost.setHeader("Accept", "application/json");
 						httpost.setHeader("Content-type", "application/json");
-						HttpResponse response = httpclient.execute(httpost);
+						HttpResponse response = httpclient.execute(httpost); // ClientProtocolException
 						StatusLine statusLine = response.getStatusLine();
 
 						if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
 							// Succeeded
 							ByteArrayOutputStream out = new ByteArrayOutputStream();
-							response.getEntity().writeTo(out);
-							out.close();
+							response.getEntity().writeTo(out); // IOException
+							out.close(); // IOException
 
 							// Deserialize
-							JSONObject status = new JSONObject(out.toString("UTF-8"));
-							if (status.getBoolean("ok")) {
-								JSONArray settings = status.getJSONArray("settings");
+							JSONObject status = new JSONObject(out.toString("UTF-8")); // UnsupportedEncodingException
+							if (status.getBoolean("ok")) { // JSONException
+								JSONArray settings = status.getJSONArray("settings"); // JSONException
 								if (settings.length() > 0) {
 									// Delete existing restrictions
-									PrivacyManager.deleteRestrictions(appInfo.getUid(), true);
+									boolean restart = PrivacyManager.deleteRestrictions(appInfo.getUid(), true);
 
 									// Set fetched restrictions
 									for (int i = 0; i < settings.length(); i++) {
-										JSONObject entry = settings.getJSONObject(i);
+										JSONObject entry = settings.getJSONObject(i); // JSONException
 										String restrictionName = entry.getString("restriction");
 										String methodName = entry.has("method") ? entry.getString("method") : null;
 										int voted_restricted = entry.getInt("restricted");
@@ -652,62 +1177,55 @@ public class ActivityShare extends Activity {
 										if (methodName == null || restricted)
 											if (methodName == null
 													|| PrivacyManager.getHook(restrictionName, methodName) != null)
-												PrivacyManager.setRestricted(null, appInfo.getUid(), restrictionName,
-														methodName, restricted, true);
+												restart = PrivacyManager.setRestricted(null, appInfo.getUid(), restrictionName,
+														methodName, restricted, true) || restart;
 									}
+
+									if (restart)
+										mAppsByUid.get(appInfo.getUid()).message = getString(R.string.msg_restart);
+									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS);
 								} else
-									publishProgress(getString(R.string.msg_no_restrictions),
-											Integer.toString(mProgressCurrent));
+									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
 							} else
-								throw new Exception(status.getString("error"));
+								throw new Exception(status.getString("error")); // JSONException, Exception
 						} else {
 							// Failed
-							response.getEntity().getContent().close();
-							throw new IOException(statusLine.getReasonPhrase());
+							mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
+							response.getEntity().getContent().close(); // IOException
+							throw new IOException(statusLine.getReasonPhrase()); // IOException
 						}
 					}
 				}
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.getMessage();
+				// NameNotFoundException, JSONException, UnsupportedEncodingException, IOException, ClientProtocolException, Exception
+				if (ex instanceof IOException || ex instanceof ClientProtocolException)
+					return "Error connecting to server"; // TODO string resource
+				else if (ex instanceof JSONException)
+					return "Bad data received"; // TODO string resource
+				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
+					return null;
+				else
+					return ex.getMessage();
 			}
 		}
 
 		@Override
-		protected void onProgressUpdate(String... values) {
-			int progress = 0;
-			if (values.length > 1)
-				progress = Integer.parseInt(values[1]);
-			notify(values[0], true, progress);
+		protected void onProgressUpdate(Integer... values) {
+			blueStreakOfProgress(values[0], values[1]);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result == null ? getString(R.string.msg_done) : result, false, 0);
-
-			Intent intent = new Intent();
-			intent.putExtra(cErrorMessage, result);
-			setResult(result == null ? 0 : 1, intent);
-			finish();
+			done(result);
 			super.onPostExecute(result);
-		}
-
-		private void notify(String text, boolean ongoing, int progress) {
-			// Send progress info to main activity
-			Intent progressIntent = new Intent(cProgressReport);
-			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_fetch), text));
-			progressIntent.putExtra(cProgressMax, mProgressMax);
-			progressIntent.putExtra(cProgressValue, progress);
-			mBroadcastManager.sendBroadcast(progressIntent);
 		}
 	}
 
 	@SuppressLint("DefaultLocale")
-	private class SubmitTask extends AsyncTask<int[], String, String> {
-		private int mProgressMax;
-		private int mProgressCurrent;
+	private class SubmitTask extends AsyncTask<int[], Integer, String> {
 
 		@Override
 		protected String doInBackground(int[]... params) {
@@ -715,22 +1233,25 @@ public class ActivityShare extends Activity {
 				// Get data
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (int uid : params[0])
-					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
+					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid)); // NameNotFoundException
+					// Catch this error here? TODO
 
 				// Initialize progress
-				mProgressMax = lstApp.size();
 				mProgressCurrent = 0;
 
 				for (ApplicationInfoEx appInfo : lstApp) {
+					if (mAbort)
+						throw new Exception("Abort");
+
 					// Update progess
-					mProgressCurrent++;
-					publishProgress(appInfo.getPackageName().get(0), Integer.toString(mProgressCurrent));
+					publishProgress(++mProgressCurrent, lstApp.size() + 1);
+					mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING);
 
 					// Check if any account allowed
 					boolean allowedAccounts = false;
 					AccountManager accountManager = AccountManager.get(ActivityShare.this);
 					for (Account account : accountManager.getAccounts()) {
-						String sha1 = Util.sha1(account.name + account.type);
+						String sha1 = Util.sha1(account.name + account.type); // UnsupportedEncodingException
 						boolean allowed = PrivacyManager.getSettingBool(null, appInfo.getUid(),
 								PrivacyManager.cSettingAccount + sha1, false, false);
 						if (allowed) {
@@ -778,7 +1299,7 @@ public class ActivityShare extends Activity {
 						// Category
 						long used = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, null);
 						JSONObject jRestriction = new JSONObject();
-						jRestriction.put("restriction", restrictionName);
+						jRestriction.put("restriction", restrictionName); // JSONException
 						jRestriction.put("restricted", restricted);
 						jRestriction.put("used", used);
 						if (restrictionName.equals(PrivacyManager.cAccounts))
@@ -796,7 +1317,7 @@ public class ActivityShare extends Activity {
 											md.getName(), false, false);
 							long mUsed = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, md.getName());
 							JSONObject jMethod = new JSONObject();
-							jMethod.put("restriction", restrictionName);
+							jMethod.put("restriction", restrictionName); // JSONException
 							jMethod.put("method", md.getName());
 							jMethod.put("restricted", mRestricted);
 							jMethod.put("used", mUsed);
@@ -806,7 +1327,7 @@ public class ActivityShare extends Activity {
 
 					// Get data
 					String[] license = Util.getProLicenseUnchecked();
-					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0); // NameNotFoundException
 					String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 
 					JSONArray appName = new JSONArray();
@@ -827,7 +1348,7 @@ public class ActivityShare extends Activity {
 
 					// Encode package
 					JSONObject jRoot = new JSONObject();
-					jRoot.put("protocol_version", cProtocolVersion);
+					jRoot.put("protocol_version", cProtocolVersion); // JSONException
 					jRoot.put("android_id", Util.md5(android_id).toLowerCase());
 					jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 					jRoot.put("xprivacy_version", pInfo.versionCode);
@@ -848,68 +1369,60 @@ public class ActivityShare extends Activity {
 					HttpClient httpclient = new DefaultHttpClient(httpParams);
 
 					HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=submit");
-					httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+					httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8"))); // UnsupportedEncodingException
 					httpost.setHeader("Accept", "application/json");
 					httpost.setHeader("Content-type", "application/json");
-					HttpResponse response = httpclient.execute(httpost);
+					HttpResponse response = httpclient.execute(httpost); // ClientProtocolException
 					StatusLine statusLine = response.getStatusLine();
 
 					if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
 						// Succeeded
 						ByteArrayOutputStream out = new ByteArrayOutputStream();
-						response.getEntity().writeTo(out);
+						response.getEntity().writeTo(out); // IOException
 						out.close();
-						JSONObject status = new JSONObject(out.toString("UTF-8"));
-						if (status.getBoolean("ok")) {
+						JSONObject status = new JSONObject(out.toString("UTF-8")); // UnsupportedEncodingException
+						if (status.getBoolean("ok")) { // JSONException
 							// Mark as shared
 							PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingState,
 									Integer.toString(ActivityMain.STATE_SHARED));
+							mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS);
 						} else {
+							mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
 							// Mark as unregistered
 							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered,
 									Boolean.toString(false));
-							throw new Exception(status.getString("error"));
+							throw new Exception(status.getString("error")); // JSONException, Exception
 						}
 					} else {
 						// Failed
-						response.getEntity().getContent().close();
+						mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
+						response.getEntity().getContent().close(); // IOException
 						throw new IOException(statusLine.getReasonPhrase());
 					}
 				}
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.getMessage();
+				// NameNotFoundException, UnsupportedEncodingException, JSONException, ClientProtocolException, IOException, Exception
+				if (ex instanceof ClientProtocolException || ex instanceof IOException)
+					return "Error connecting to server"; // TODO string resource
+				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
+					return null;
+				else
+					return ex.getMessage();
 			}
 		}
 
 		@Override
-		protected void onProgressUpdate(String... values) {
-			int progress = 0;
-			if (values.length > 1)
-				progress = Integer.parseInt(values[1]);
-			notify(values[0], true, progress);
+		protected void onProgressUpdate(Integer... values) {
+			blueStreakOfProgress(values[0], values[1]);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			notify(result == null ? getString(R.string.msg_done) : result, false, 0);
-
-			Intent intent = new Intent();
-			intent.putExtra(cErrorMessage, result);
-			setResult(result == null ? 0 : 1, intent);
-			finish();
+			done(result);
 			super.onPostExecute(result);
-		}
-
-		private void notify(String text, boolean ongoing, int progress) {
-			// Send progress info to main activity
-			Intent progressIntent = new Intent(cProgressReport);
-			progressIntent.putExtra(cProgressMessage, String.format("%s: %s", getString(R.string.menu_submit), text));
-			progressIntent.putExtra(cProgressMax, mProgressMax);
-			progressIntent.putExtra(cProgressValue, progress);
-			mBroadcastManager.sendBroadcast(progressIntent);
 		}
 	}
 
@@ -1021,6 +1534,60 @@ public class ActivityShare extends Activity {
 	}
 
 	// Helper methods
+
+	private void blueStreakOfProgress(Integer current, Integer max) {
+		// Set up the progress bar
+		if (mProgressWidth == 0) {
+			final View vShareProgressEmpty = (View) findViewById(R.id.vShareProgressEmpty);
+			mProgressWidth = vShareProgressEmpty.getMeasuredWidth();
+		}
+		// Display stuff
+		if (max == 0)
+			max = 1;
+		int width = (int) ((float) mProgressWidth) * current / max;
+
+		View vShareProgressFull = (View) findViewById(R.id.vShareProgressFull);
+		vShareProgressFull.getLayoutParams().width = width;
+		vShareProgressFull.invalidate();
+	}
+
+	private void done(String result) {
+		// Check result string and display toast with error
+		// TODO it might be better to put this in a dialog box asking whether to send debugging info
+		if (result != null)
+			Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+
+		// Reset progress bar
+		blueStreakOfProgress(0, 1);
+		mRunning = false;
+
+		// Change ok button to "Close"
+		final Button btnOk = (Button) findViewById(R.id.btnOk);
+		btnOk.setText(getString(R.string.menu_close));
+		btnOk.setEnabled(true);
+		btnOk.setOnClickListener(new Button.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
+		// Remove cancel button and separator
+		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
+		final View vButtonSeparator = findViewById(R.id.vButtonSeparator);
+		btnCancel.setVisibility(View.GONE);
+		vButtonSeparator.setVisibility(View.GONE);
+		// TODO a nice touch would be to make the cancel button open the main list with only the failed apps in view.
+		// I'm not sure what text to put on it though; "Examine failed" might do, if it isn't too long.
+	}
+
+	public void fileChooser() {
+		Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+		Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/.xprivacy/");
+		chooseFile.setDataAndType(uri, "text/xml");
+		Intent intent = Intent.createChooser(chooseFile, getString(R.string.app_name));
+		startActivityForResult(intent, ACTIVITY_IMPORT_SELECT);
+	}
 
 	public static String getBaseURL(Context context) {
 		if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingHttps, true, true))

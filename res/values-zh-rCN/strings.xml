@@ -37,6 +37,12 @@
     <string name="menu_applications">选择允许访问的应用</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
     <string name="menu_tutorial">界面功能指引</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="menu_choose">Choose</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_export">Backup all settings to %s</string>
+    <string name="msg_import">Import settings from %s</string>
     <string name="msg_new">新应用</string>
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
