@@ -145,16 +145,12 @@ public class Requirements {
 		try {
 			Class<?> clazz = Class.forName("android.os.FileUtils");
 			try {
-				clazz.getDeclaredMethod("setPermissions");
+				clazz.getDeclaredMethod("setPermissions", String.class, int.class, int.class, int.class);
 			} catch (NoSuchMethodException ex) {
 				reportClass(clazz, context);
 			}
 		} catch (ClassNotFoundException ex) {
-			try {
-				reportClass(Class.forName("android.os.FileUtils"), context);
-			} catch (ClassNotFoundException exex) {
-				sendSupportInfo(exex.toString(), context);
-			}
+			sendSupportInfo(ex.toString(), context);
 		}
 
 		// Check interface address
