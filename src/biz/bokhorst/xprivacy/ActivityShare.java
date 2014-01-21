@@ -507,14 +507,14 @@ public class ActivityShare extends Activity {
 					holder.tvMessage.setText(xApp.message);
 				break;
 			case STATE_SUCCESS:
-				holder.imgResult.setBackgroundResource(R.drawable.share_success);
+				holder.imgResult.setBackgroundResource(R.drawable.btn_check_buttonless_on);
 				holder.imgResult.setVisibility(View.VISIBLE);
 				holder.pbRunning.setVisibility(View.INVISIBLE);
 				if (xApp.message != null)
 					holder.tvMessage.setText(xApp.message);
 				break;
 			case STATE_FAILURE:
-				holder.imgResult.setBackgroundResource(R.drawable.share_failure);
+				holder.imgResult.setBackgroundResource(R.drawable.indicator_input_error);
 				holder.imgResult.setVisibility(View.VISIBLE);
 				holder.pbRunning.setVisibility(View.INVISIBLE);
 				if (xApp.message != null)
@@ -886,8 +886,7 @@ public class ActivityShare extends Activity {
 		private SparseArray<Map<String, String>> mSettings = new SparseArray<Map<String, String>>();
 		private List<Integer> mListRestrictionUid = new ArrayList<Integer>();
 		private List<Integer> mListRestartUid = new ArrayList<Integer>();
-		private List<Integer> mListSkippingUid = new ArrayList<Integer>();
-		private boolean mAborting = false;
+		private List<Integer> mListAbortedUid = new ArrayList<Integer>();
 
 		public ImportHandler(List<Integer> listUidSelected, Runnable progress) {
 			mListUidSelected = listUidSelected;
@@ -897,9 +896,6 @@ public class ActivityShare extends Activity {
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) {
 			try {
-				if (mAbort)
-					mAborting = true;
-
 				if (qName.equals("XPrivacy")) {
 					// Root
 				} else if (qName.equals("PackageInfo")) {
@@ -979,10 +975,10 @@ public class ActivityShare extends Activity {
 					if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
 
 						// Check whether we should abort
-						if (mAborting && !mListRestrictionUid.contains(uid)) {
+						if (mAbort && !mListRestrictionUid.contains(uid)) {
 							// This app hasn't begun to be imported, so skip it
-							if (!mListSkippingUid.contains(uid))
-								mListSkippingUid.add(uid);
+							if (!mListAbortedUid.contains(uid))
+								mListAbortedUid.add(uid);
 							Util.log(null, Log.INFO, "Skipping restriction for uid=" + uid);
 							return;
 						}
@@ -1053,7 +1049,7 @@ public class ActivityShare extends Activity {
 							"Imported (" + mListRestrictionUid.size() + ") "
 									+ TextUtils.join(", ", mListRestrictionUid));
 					Util.log(null, Log.ERROR,
-							"Skipped (" + mListSkippingUid.size() + ") " + TextUtils.join(", ", mListSkippingUid));
+							"Skipped (" + mListAbortedUid.size() + ") " + TextUtils.join(", ", mListAbortedUid));
 					Util.log(null, Log.ERROR, "Skipped or Not found (" + mAppAdapter.mAppsWaiting.size() + ") "
 							+ TextUtils.join(", ", listWaitingUid));
 				} else

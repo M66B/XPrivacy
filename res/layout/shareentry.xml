@@ -25,8 +25,8 @@
 
     <ImageView
         android:id="@+id/imgResult"
-        android:layout_width="?android:attr/listPreferredItemHeightSmall"
-        android:layout_height="?android:attr/listPreferredItemHeightSmall"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/help_application"
