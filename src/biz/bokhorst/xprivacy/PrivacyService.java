@@ -161,11 +161,8 @@ public class PrivacyService {
 				CRestriction key = new CRestriction(uid, restrictionName, methodName);
 				synchronized (mRestrictionCache) {
 					if (mRestrictionCache.containsKey(key)) {
-						CRestriction entry = mRestrictionCache.get(key);
-						if (!entry.isExpired()) {
-							cached = true;
-							restricted = entry.isRestricted();
-						}
+						cached = true;
+						restricted = mRestrictionCache.get(key).isRestricted();
 					}
 				}
 
@@ -491,11 +488,8 @@ public class PrivacyService {
 				// Check cache
 				CSetting key = new CSetting(uid, name);
 				synchronized (mSettingsCache) {
-					if (mSettingsCache.containsKey(key)) {
-						CSetting entry = mSettingsCache.get(key);
-						if (!entry.isExpired())
-							return entry.getValue();
-					}
+					if (mSettingsCache.containsKey(key))
+						return mSettingsCache.get(key).getValue();
 				}
 
 				// No persmissions required
