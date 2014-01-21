@@ -325,7 +325,9 @@ public class ActivityShare extends Activity {
 				;// Do nothing
 			else if (dataIntent != null)
 				try {
-					mFileName = dataIntent.getData().getPath();
+					String fileName = dataIntent.getData().getPath();
+					mFileName = fileName.replace("/document/primary:", Environment.getExternalStorageDirectory()
+							.getAbsolutePath() + File.separatorChar);
 					TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
 					tvDescription.setText(getString(R.string.msg_import, mFileName));
 				} catch (Throwable ex) {
@@ -772,8 +774,7 @@ public class ActivityShare extends Activity {
 					Intent intent = new Intent(android.content.Intent.ACTION_SEND);
 					intent.setType("text/xml");
 					intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + mFileName));
-					startActivity(Intent.createChooser(
-							intent,
+					startActivity(Intent.createChooser(intent,
 							String.format(getString(R.string.msg_saved_to), mFileName)));
 				}
 			} else {
@@ -964,7 +965,8 @@ public class ActivityShare extends Activity {
 									mSettings.put(uid, new HashMap<String, String>());
 								mSettings.get(uid).put(name, value);
 							} else {
-								// This apps cached settings have already been applied,
+								// This apps cached settings
+								// have already been applied,
 								// so add this one directly
 								PrivacyManager.setSetting(null, uid, name, value);
 							}
@@ -1061,15 +1063,23 @@ public class ActivityShare extends Activity {
 				// Checks
 				if (mListUidSelected.size() - mListRestrictionUid.size() != mAppAdapter.mAppsWaiting.size()) {
 
-					List<Integer> listWaitingUid = new ArrayList<Integer>();;
+					List<Integer> listWaitingUid = new ArrayList<Integer>();
+					;
 					for (AppHolder app : mAppAdapter.mAppsWaiting)
 						listWaitingUid.add(app.appInfo.getUid());
 
 					Util.log(null, Log.ERROR, "Import list sizes possible mismatch");
-					Util.log(null, Log.ERROR, "Selected (" + mListUidSelected.size() + ") " + TextUtils.join(", ", mListUidSelected));
-					Util.log(null, Log.ERROR, "Imported (" + mListRestrictionUid.size() + ") " + TextUtils.join(", ", mListRestrictionUid));
-					Util.log(null, Log.ERROR, "Skipped (" + mListSkippingUid.size() + ") " + TextUtils.join(", ", mListSkippingUid));
-					Util.log(null, Log.ERROR, "Skipped or Not found (" + mAppAdapter.mAppsWaiting.size() + ") " + TextUtils.join(", ", listWaitingUid));
+					Util.log(null, Log.ERROR,
+							"Selected (" + mListUidSelected.size() + ") " + TextUtils.join(", ", mListUidSelected));
+					Util.log(
+							null,
+							Log.ERROR,
+							"Imported (" + mListRestrictionUid.size() + ") "
+									+ TextUtils.join(", ", mListRestrictionUid));
+					Util.log(null, Log.ERROR,
+							"Skipped (" + mListSkippingUid.size() + ") " + TextUtils.join(", ", mListSkippingUid));
+					Util.log(null, Log.ERROR, "Skipped or Not found (" + mAppAdapter.mAppsWaiting.size() + ") "
+							+ TextUtils.join(", ", listWaitingUid));
 				} else
 					Util.log(null, Log.INFO, "Import list sizes matched");
 			}
