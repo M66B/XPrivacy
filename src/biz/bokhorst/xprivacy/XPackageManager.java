@@ -122,7 +122,7 @@ public class XPackageManager extends XHook {
 	}
 
 	public static boolean isPackageAllowed(String packageName) {
-		return PrivacyManager.getSettingBool(null, Binder.getCallingUid(), PrivacyManager.cSettingApplication
-				+ packageName, false, true);
+		int uid = Binder.getCallingUid();
+		return PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingApplication + packageName, false, true);
 	}
 }

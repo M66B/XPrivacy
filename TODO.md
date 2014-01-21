@@ -13,6 +13,7 @@ For interested developers:
 	* Only import/export for applications installed by secondary users
 * Document XPrivacy navigation (menu's, presses, long presses) on GitHub
 
+* Better *sh* and *su* command detection
 * Accessibility: *android:labelFor="..."*
 * Secure usage data
 * Close app view when packages removed

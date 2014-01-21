@@ -523,13 +523,13 @@ and detailed firewall rules can only be applied within the Linux kernel.
 <a name="FAQ21"></a>
 **(21) I get 'Unable to parse package'**
 
-This means the downloaded apk is corrupt.
+This means the downloaded apk file is corrupt.
 Try disabling your popup blocker or download using another computer.
 
 <a name="FAQ22"></a>
 **(22) How can I make a logcat?**
 
-Enable logging using the settings menu and see [here](http://forum.xda-developers.com/showthread.php?t=1726238).
+Enable debug logging using the settings menu and see [here](http://forum.xda-developers.com/showthread.php?t=1726238).
 
 <a name="FAQ23"></a>
 **(23) Where are the settings of XPrivacy stored?**
@@ -630,15 +630,6 @@ See the [change log](https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md)
 
 Yes.
 
-<a name="FAQ38"></a>
-**(38) What is 'Android usage data'?**
-
-The setting *Android usage data* enables sending more usage data for Android itself (uid=1000).
-
-Enabling these settings can cause instability and/or decrease performance on some devices.
-
-Usage data = orange triangles.
-
 <a name="FAQ39"></a>
 **(39) How does the tri-state check box work?**
 
@@ -686,7 +677,7 @@ Help others by submitting your working restrictions.
 In general, due to the architecture of Android (isolated virtual machines),
 any call to native libraries and binaries is through Java
 and can thus be restricted by XPrivacy.
-As far known any route to a native library or binary is covered by XPrivacy.
+As far as known any route to a native library or binary is covered by XPrivacy.
 
 XPrivacy cannot hook into native libraries, but can prevent native libraries from loading.
 This could break applications, like Facebook, but can prevent malware from doing its work.
@@ -695,6 +686,8 @@ XPrivacy can also restrict access to the Linux shell (including superuser),
 to prevent native binaries from running.
 
 You can find the restrictions in the *Shell* category.
+
+Version 2.0+ has protection against direct interprocess communication (IPC).
 
 <a name="FAQ44"></a>
 **(44) I see data usage without Android permissions!**
