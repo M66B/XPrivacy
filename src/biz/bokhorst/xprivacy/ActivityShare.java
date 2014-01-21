@@ -757,10 +757,21 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
-			if (mThemeId != android.R.style.Theme_NoDisplay)
+			if (mThemeId != android.R.style.Theme_NoDisplay) {
 				done(result);
-			else
+
+				// Share
+				if (result == null) {
+					Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+					intent.setType("text/xml");
+					intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + mFileName));
+					startActivity(Intent.createChooser(
+							intent,
+							String.format(getString(R.string.msg_saved_to), mFileName)));
+				}
+			} else {
 				finish();
+			}
 			super.onPostExecute(result);
 		}
 	}
