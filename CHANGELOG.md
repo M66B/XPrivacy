@@ -21,6 +21,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Allowed secondary users to set restrictions
 * Fixed some settings not migrated correctly ([issue](https://github.com/M66B/XPrivacy/issues/1127))
 * Kill application is not experimental anymore and can kill applications only
+* Moved privacy database to application data folder ([issue](https://github.com/M66B/XPrivacy/issues/1129))
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

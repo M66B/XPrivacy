@@ -419,6 +419,17 @@ public class Util {
 		return (packageManager.queryIntentActivities(intent, PackageManager.GET_ACTIVITIES).size() > 0);
 	}
 
+	public static void setPermission(String path, int mode, int uid, int gid) {
+		try {
+			Class<?> fileUtils = Class.forName("android.os.FileUtils");
+			Method setPermissions = fileUtils
+					.getMethod("setPermissions", String.class, int.class, int.class, int.class);
+			setPermissions.invoke(null, path, mode, uid, gid);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
+
 	public static void copy(File src, File dst) throws IOException {
 		InputStream in = new FileInputStream(src);
 		OutputStream out = new FileOutputStream(dst);

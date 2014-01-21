@@ -545,9 +545,9 @@ public class PrivacyProvider extends ContentProvider {
 	public static void fixFilePermissions() {
 		File folder = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "shared_prefs");
 		folder.setReadable(true, false);
-		File list[] = folder.listFiles();
-		if (list != null)
-			for (File file : list)
+		File[] files = folder.listFiles();
+		if (files != null)
+			for (File file : files)
 				if (file.getName().startsWith("biz.bokhorst.xprivacy.provider.") && file.getName().endsWith(".xml")
 						&& !file.getName().contains(".usage."))
 					file.setReadable(true, false);

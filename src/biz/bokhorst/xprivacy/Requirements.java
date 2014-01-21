@@ -141,6 +141,22 @@ public class Requirements {
 			}
 		}
 
+		// Check file utils
+		try {
+			Class<?> clazz = Class.forName("android.os.FileUtils");
+			try {
+				clazz.getDeclaredMethod("setPermissions");
+			} catch (NoSuchMethodException ex) {
+				reportClass(clazz, context);
+			}
+		} catch (ClassNotFoundException ex) {
+			try {
+				reportClass(Class.forName("android.os.FileUtils"), context);
+			} catch (ClassNotFoundException exex) {
+				sendSupportInfo(exex.toString(), context);
+			}
+		}
+
 		// Check interface address
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
 				|| (PrivacyService.getClient() != null && PrivacyManager.getDefacedProp(0, "InetAddress") == null))

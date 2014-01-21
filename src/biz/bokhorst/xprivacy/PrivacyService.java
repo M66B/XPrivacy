@@ -566,11 +566,36 @@ public class PrivacyService {
 		}
 	}
 
+	private static File getDbFile() {
+		return new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
+				+ PrivacyService.class.getPackage().getName() + File.separator + "xprivacy.db");
+	}
+
+	public static void setupDatebase() {
+		try {
+			// Set folder permission
+			Util.setPermission(getDbFile().getParentFile().getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
+
+			// Move database from experimental location
+			File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
+			if (folder.exists()) {
+				File[] files = folder.listFiles();
+				if (files != null)
+					for (File file : files) {
+						File target = new File(getDbFile().getParentFile() + File.separator + file.getName());
+						Util.log(null, Log.WARN, "Moving " + file + " to " + target);
+						file.renameTo(target);
+					}
+				folder.delete();
+			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
+
 	private static SQLiteDatabase getDatabase() {
 		if (mDatabase == null) {
-			File dbFile = new File(Environment.getDataDirectory() + File.separator + "xprivacy" + File.separator
-					+ "xprivacy.db");
-			dbFile.getParentFile().mkdirs();
+			File dbFile = getDbFile();
 			SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
 			if (db.needUpgrade(1)) {
 				db.beginTransaction();

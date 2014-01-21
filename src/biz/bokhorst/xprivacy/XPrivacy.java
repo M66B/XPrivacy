@@ -38,6 +38,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		Util.clearData();
 		Util.log(null, Log.INFO, String.format("Load %s", startupParam.modulePath));
 
+		PrivacyService.setupDatebase();
+
 		// System server
 		try {
 			// frameworks/base/services/java/com/android/server/SystemServer.java
