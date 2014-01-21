@@ -59,6 +59,7 @@
     <string name="msg_migrating" formatted="false">Migrating %s</string>
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_migrated">Migration complete</string>
     <string name="msg_first"><b>Palju vaeva on nähtud Xprivacy arendamisel ja testimisel,
 kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
 \n\nKasuta ainult omal vastutusel.</b>\n\nSee also the license:</string>

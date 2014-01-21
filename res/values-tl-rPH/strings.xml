@@ -59,6 +59,7 @@
     <string name="msg_migrating" formatted="false">Migrating %s</string>
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_migrated">Migration complete</string>
     <string name="msg_first"><b>Malaking pag-aalaga ang ginampanan sa pagkabuo at sa pagsusuri ng XPrivacy,
     ngunit sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bawat sa isa\'t isang aplikasyon. 
 \n\nAng paggamit nito ay ganap na nasa sa iyong pagbabakasakali.</b>\n\nAlamin din ang kanyang lisensiya at sangguni dito sa:</string>

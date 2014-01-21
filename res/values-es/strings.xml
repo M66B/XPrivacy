@@ -59,6 +59,7 @@
     <string name="msg_migrating" formatted="false">Migrating %s</string>
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_migrated">Migration complete</string>
     <string name="msg_first"><b>Se ha puesto mucho cuidado en el desarrollo y pruebas de XPrivacy,
 sin embargo no puedo garantizar que funcione sin ningún fallo para cada dispositivo y aplicación.
 \n\nÚselo bajo su responsabilidad.</b>\n\nVéase también el permiso:</string>

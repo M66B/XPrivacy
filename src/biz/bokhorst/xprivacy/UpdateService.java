@@ -24,8 +24,11 @@ public class UpdateService extends IntentService {
 	private static Thread mBootThread;
 
 	public static String cAction = "Action";
-	public static String cActionBoot = "ActionBoot";
-	public static String cActionChange = "ActionChange";
+	public static String cActionBoot = "Boot";
+	public static String cActionChange = "Change";
+	public static String cActionDone = "Done";
+	public static String cStatus = "Status";
+	public static String cStatusMigrated = "Migrated";
 
 	public UpdateService() {
 		super("xprivacy-update");
@@ -50,19 +53,30 @@ public class UpdateService extends IntentService {
 				// Boot received
 				mBootThread = new Thread(new Runnable() {
 					public void run() {
+						boolean migrated = false;
+
 						// Migrate settings
 						try {
-							migrate(UpdateService.this);
+							migrated = migrate(UpdateService.this);
 						} catch (Throwable ex) {
 							Util.bug(null, ex);
 						}
 
 						// Randomize settings
-						try {
-							randomize(UpdateService.this);
-						} catch (Throwable ex) {
-							Util.bug(null, ex);
-						}
+						if (!migrated)
+							try {
+								randomize(UpdateService.this);
+							} catch (Throwable ex) {
+								Util.bug(null, ex);
+							}
+
+						// Signal completion
+						Intent completedIntent = new Intent();
+						completedIntent.setClass(UpdateService.this, UpdateService.class);
+						completedIntent.putExtra(UpdateService.cAction, UpdateService.cActionDone);
+						if (migrated)
+							completedIntent.putExtra(UpdateService.cStatus, UpdateService.cStatusMigrated);
+						UpdateService.this.startService(completedIntent);
 					}
 				});
 				mBootThread.start();
@@ -78,18 +92,39 @@ public class UpdateService extends IntentService {
 							} catch (Throwable ex) {
 								Util.bug(null, ex);
 							}
+
+							// Signal completion
+							Intent completedIntent = new Intent();
+							completedIntent.setClass(UpdateService.this, UpdateService.class);
+							completedIntent.putExtra(UpdateService.cAction, UpdateService.cActionDone);
+							UpdateService.this.startService(completedIntent);
+
 						}
 					});
 					mChangeThread.start();
 				}
 			}
 
-			// End forground service
-			stopForeground(true);
+			else if (cActionDone.equals(extras.getString(cAction))) {
+				// End foreground service
+				stopForeground(true);
+
+				// Report migration complete
+				if (extras.containsKey(cStatus) && cStatusMigrated.equals(extras.getString(cStatus))) {
+					NotificationManager notificationManager = (NotificationManager) UpdateService.this
+							.getSystemService(Context.NOTIFICATION_SERVICE);
+					builder.setContentText(UpdateService.this.getString(R.string.msg_migrated));
+					builder.setOngoing(false);
+					builder.setAutoCancel(true);
+					builder.setWhen(System.currentTimeMillis());
+					notification = builder.build();
+					notificationManager.notify(Util.NOTIFY_UPDATE, notification);
+				}
+			}
 		}
 	}
 
-	private void migrate(final Context context) throws IOException, RemoteException {
+	private boolean migrate(final Context context) throws IOException, RemoteException {
 		// Check if something to do
 		boolean work = false;
 		File prefs = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "shared_prefs");
@@ -132,6 +167,8 @@ public class UpdateService extends IntentService {
 		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIPC, null, false, false);
 		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
 		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);
+
+		return work;
 	}
 
 	private void randomize(Context context) {
@@ -227,18 +264,14 @@ public class UpdateService extends IntentService {
 	private void notifyProgress(Context context, String format, int percent) {
 		NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
-		if (percent < 100) {
-			// Build notification
-			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
-			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-			notificationBuilder.setContentTitle(context.getString(R.string.app_name));
-			notificationBuilder.setContentText(String.format(format, String.format("%d %%", percent)));
-			notificationBuilder.setOngoing(true);
-			notificationBuilder.setWhen(System.currentTimeMillis());
-			Notification notification = notificationBuilder.build();
-			notificationManager.notify(Util.NOTIFY_UPDATE, notification);
-		} else
-			// Cancel notification
-			notificationManager.cancel(Util.NOTIFY_UPDATE);
+		// Build notification
+		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+		notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+		notificationBuilder.setContentTitle(context.getString(R.string.app_name));
+		notificationBuilder.setContentText(String.format(format, String.format("%d %%", percent)));
+		notificationBuilder.setOngoing(true);
+		notificationBuilder.setWhen(System.currentTimeMillis());
+		Notification notification = notificationBuilder.build();
+		notificationManager.notify(Util.NOTIFY_UPDATE, notification);
 	}
 }

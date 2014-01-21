@@ -59,6 +59,7 @@
     <string name="msg_migrating" formatted="false">Migrating %s</string>
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_migrated">Migration complete</string>
     <string name="msg_first"><b>Xprivacy titizlikle geliştirilmiş ve test edilmiştir, ancak her cihazda veya her uygulamada kusursuz çalışacağını garantilemek imkansızdır.
 \n\nKullanım riski tamamen size aittir.</b>\n\nAyrıca lisansa bakınız:</string>
     <string name="restrict_accounts">Hesaplar (Google, Facebook, vb)</string>

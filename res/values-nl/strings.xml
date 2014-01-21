@@ -59,6 +59,7 @@
     <string name="msg_migrating" formatted="false">Migratie %s</string>
     <string name="msg_randomizing" formatted="false">Willekeurig %s</string>
     <string name="msg_upgrading" formatted="false">Bijwerken %s</string>
+    <string name="msg_migrated">Migratie gereed</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
 \n\nGebruik is geheel op eigen risico.</b>\n\nZie ook de licentie:</string>

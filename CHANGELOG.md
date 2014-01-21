@@ -17,10 +17,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Corrected app name and version in update notifications, thanks @[jpeg729](https://github.com/jpeg729) ([issue](https://github.com/M66B/XPrivacy/issues/1112))
 * Fixed export progress, thanks @[jpeg729](https://github.com/jpeg729)
-* Update service with progress notifications for migration, randomization and upgrade
-* Allow secondary users to set restrictions
+* Added update service with progress notifications for migration, randomization and upgrade
+* Allowed secondary users to set restrictions
 * Fixed some settings not migrated correctly ([issue](https://github.com/M66B/XPrivacy/issues/1127))
-* Kill application is not experimental anymore
+* Kill application is not experimental anymore and can kill applications only
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

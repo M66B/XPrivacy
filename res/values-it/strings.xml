@@ -59,6 +59,7 @@
     <string name="msg_migrating" formatted="false">Migrating %s</string>
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_migrated">Migration complete</string>
     <string name="msg_first"><b>XPrivacy è stato testato e sviluppato con cura,
 ma è impossibile garantire che funzionerà in modo impeccabile su ogni dispositivo e per ogni applicazione.
 \n\nUsalo a tuo rischio.</b>\n\nLeggi la licenza:</string>
