@@ -578,8 +578,13 @@ public class PrivacyService {
 
 	public static void setupDatebase() {
 		try {
-			// Set folder permission
+			// Set file permission
 			Util.setPermission(getDbFile().getParentFile().getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
+			if (getDbFile().exists())
+				Util.setPermission(getDbFile().getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
+			File journal = new File(getDbFile() + "-journal");
+			if (journal.exists())
+				Util.setPermission(journal.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
 
 			// Move database from experimental location
 			File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
