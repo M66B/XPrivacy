@@ -23,7 +23,11 @@ Test and beta releases will have experimental functions enabled by default.
 * Kill application is not experimental anymore and can kill applications only
 * Moved privacy database to application data folder ([issue](https://github.com/M66B/XPrivacy/issues/1129))
 * Added dialog for export, import, submit, fetch, big thanks @[jpeg729](https://github.com/jpeg729)
+* Updated Arabic translation
 * Updated Dutch translation
+* Updated German translation
+* Updated Lithuanian translation
+* Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
