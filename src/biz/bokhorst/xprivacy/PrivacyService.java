@@ -42,6 +42,7 @@ public class PrivacyService {
 	private static String cTableUsage = "usage";
 	private static String cTableSetting = "setting";
 
+	private static boolean mUseCache = false;
 	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
@@ -49,6 +50,11 @@ public class PrivacyService {
 
 	public static void register() {
 		try {
+			// http://stackoverflow.com/questions/2630158/detect-application-heap-size-in-android
+			int memoryClass = (int) (Runtime.getRuntime().maxMemory() / 1024L / 1024L);
+			mUseCache = (memoryClass >= 64);
+			Util.log(null, Log.WARN, "Memory class=" + memoryClass);
+
 			// public static void addService(String name, IBinder service)
 			Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
 			Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
@@ -216,11 +222,13 @@ public class PrivacyService {
 						restricted = PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
 
 					// Add to cache
-					synchronized (mRestrictionCache) {
+					if (mUseCache) {
 						key.setRestricted(restricted);
-						if (mRestrictionCache.containsKey(key))
-							mRestrictionCache.remove(key);
-						mRestrictionCache.put(key, key);
+						synchronized (mRestrictionCache) {
+							if (mRestrictionCache.containsKey(key))
+								mRestrictionCache.remove(key);
+							mRestrictionCache.put(key, key);
+						}
 					}
 				}
 
@@ -530,11 +538,13 @@ public class PrivacyService {
 				}
 
 				// Add to cache
-				key.setValue(value);
-				synchronized (mSettingsCache) {
-					if (mSettingsCache.containsKey(key))
-						mSettingsCache.remove(key);
-					mSettingsCache.put(key, key);
+				if (mUseCache) {
+					key.setValue(value);
+					synchronized (mSettingsCache) {
+						if (mSettingsCache.containsKey(key))
+							mSettingsCache.remove(key);
+						mSettingsCache.put(key, key);
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);

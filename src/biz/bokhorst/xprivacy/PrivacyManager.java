@@ -262,8 +262,8 @@ public class PrivacyManager {
 				restricted = PrivacyService.getClient().getRestriction(uid, restrictionName, methodName, usage);
 
 				// Add to cache
+				key.setRestricted(restricted);
 				synchronized (mRestrictionCache) {
-					key.setRestricted(restricted);
 					if (mRestrictionCache.containsKey(key))
 						mRestrictionCache.remove(key);
 					mRestrictionCache.put(key, key);
