@@ -84,7 +84,7 @@ import android.widget.Toast;
 
 public class ActivityShare extends Activity {
 	private int mThemeId;
-	private int mActionId = -1;
+	private int mActionId;
 	private AppListAdapter mAppAdapter;
 	private SparseArray<AppHolder> mAppsByUid;
 	private boolean mRunning = false;
@@ -118,6 +118,8 @@ public class ActivityShare extends Activity {
 	public static final String ACTION_IMPORT = "biz.bokhorst.xprivacy.action.IMPORT";
 	public static final String ACTION_FETCH = "biz.bokhorst.xprivacy.action.FETCH";
 	public static final String ACTION_SUBMIT = "biz.bokhorst.xprivacy.action.SUBMIT";
+	public static final String ACTION_TOGGLE = "biz.bokhorst.xprivacy.action.TOGGLE";
+	// TODO: move toggle to this activity
 
 	public static final int TIMEOUT_MILLISEC = 45000;
 
@@ -137,9 +139,27 @@ public class ActivityShare extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Get data
 		final Bundle extras = getIntent().getExtras();
-		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 		final String action = getIntent().getAction();
+		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
+
+		// Licence check
+		if (action.equals(ACTION_IMPORT) && !Util.isProEnabled() && Util.hasProLicense(this) == null) {
+			Util.log(null, Log.WARN, "No licence found allowing importation");
+			finish();
+			return;
+		} else if (action.equals(ACTION_FETCH) && Util.hasProLicense(this) == null) {
+			Util.log(null, Log.WARN, "No licence found allowing fetching");
+			finish();
+			return;
+		}
+
+		// Registration check
+		if (!registerDevice(this)) {
+			finish();
+			return;
+		}
 
 		// Check whether we need a ui
 		if (extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false)) {
@@ -165,15 +185,9 @@ public class ActivityShare extends Activity {
 			} else if (action.equals(ACTION_SUBMIT)) {
 				mActionId = R.string.menu_submit;
 				setTitle(getString(R.string.menu_submit));
-			}
-
-			// Licence check
-			if (action.equals(ACTION_IMPORT) && !Util.isProEnabled() && Util.hasProLicense(this) == null) {
-				Util.log(null, Log.WARN, "No licence found allowing importation");
+			} else {
 				finish();
-			} else if (action.equals(ACTION_FETCH) && Util.hasProLicense(this) == null) {
-				Util.log(null, Log.WARN, "No licence found allowing fetching");
-				finish();
+				return;
 			}
 
 			// App list
@@ -182,54 +196,46 @@ public class ActivityShare extends Activity {
 			appListTask.executeOnExecutor(mExecutor, uids);
 
 			// Allow users to remove apps from list
-			if (!action.equals(ACTION_EXPORT))
-				registerForContextMenu(lvShare);
+			// TODO: replace by swipe left/right
+			registerForContextMenu(lvShare);
 
 			// Import/export filename
-			mFileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-					: getFileName(false));
+			if (action.equals(ACTION_EXPORT) || action.equals(ACTION_IMPORT)) {
+				// Check for availability of sharing intent
+				Intent file = new Intent(Intent.ACTION_GET_CONTENT);
+				file.setType("file/*");
+				boolean hasIntent = Util.isIntentAvailable(ActivityShare.this, file);
 
-			TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
-			View llDescription = findViewById(R.id.llDescription);
-			if (action.equals(ACTION_EXPORT)) {
-				// Show export filename
-				tvDescription.setText(getString(R.string.msg_export, mFileName));
-				llDescription.setVisibility(View.VISIBLE);
+				// Get file name
+				if (action.equals(ACTION_EXPORT))
+					mFileName = getFileName(hasIntent);
+				else
+					mFileName = (hasIntent ? null : getFileName(false));
+				if (mFileName == null) {
+					fileChooser();
 
-			} else if (action.equals(ACTION_IMPORT)) {
-				if (mFileName.equals(getFileName(false))) {
-					// Check availability of a file chooser
-					Intent file = new Intent(Intent.ACTION_GET_CONTENT);
-					file.setType("file/*");
-					if (Util.isIntentAvailable(ActivityShare.this, file)) {
-						// Launch file chooser
-						fileChooser();
-
-						// Show file choose button
-						Button btnChange = (Button) findViewById(R.id.btnChange);
-						btnChange.setVisibility(View.VISIBLE);
-						btnChange.setOnClickListener(new Button.OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								fileChooser();
-							}
-						});
-					}
-				}
-
-				// Show import filename
-				tvDescription.setText(getString(R.string.msg_import, mFileName));
-				llDescription.setVisibility(View.VISIBLE);
+					// Show file choose button
+					Button btnChange = (Button) findViewById(R.id.btnChange);
+					btnChange.setVisibility(View.VISIBLE);
+					btnChange.setOnClickListener(new Button.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							fileChooser();
+						}
+					});
+				} else
+					showFileName();
 			}
 
-			// Buttons
+			// Reference buttons
 			final Button btnOk = (Button) findViewById(R.id.btnOk);
 			final Button btnCancel = (Button) findViewById(R.id.btnCancel);
 
-			// Check device registration for submissions
-			if (action.equals(ACTION_SUBMIT))
-				btnOk.setEnabled(registerDevice(this));
+			// Enable ok (showFileName does this for export/import)
+			if (action.equals(ACTION_SUBMIT) || action.equals(ACTION_FETCH))
+				btnOk.setEnabled(true);
 
+			// Listen for ok
 			btnOk.setOnClickListener(new Button.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -277,6 +283,7 @@ public class ActivityShare extends Activity {
 				}
 			});
 
+			// Listen for cancel
 			btnCancel.setOnClickListener(new Button.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -289,7 +296,7 @@ public class ActivityShare extends Activity {
 			});
 
 		} else if (action.equals(ACTION_EXPORT)) {
-			// Set theme to NoDisplay
+			// Be the invisible man ;-)
 			mThemeId = android.R.style.Theme_NoDisplay;
 			setTheme(mThemeId);
 
@@ -306,34 +313,28 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	protected void onResume() {
-		super.onResume();
-		if (!mRunning && mActionId == R.string.menu_submit) {
-			// Check again for registration
-			final Button btnOk = (Button) findViewById(R.id.btnOk);
-			btnOk.setEnabled(registerDevice(this));
-		}
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent dataIntent) {
 		super.onActivityResult(requestCode, resultCode, dataIntent);
 
 		if (requestCode == ACTIVITY_IMPORT_SELECT) {
 			// Import select
-			if (resultCode == RESULT_CANCELED)
-				;// Do nothing
-			else if (dataIntent != null)
-				try {
-					String fileName = dataIntent.getData().getPath();
-					mFileName = fileName.replace("/document/primary:", Environment.getExternalStorageDirectory()
-							.getAbsolutePath() + File.separatorChar);
-					TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
-					tvDescription.setText(getString(R.string.msg_import, mFileName));
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
+			if (resultCode != RESULT_CANCELED && dataIntent != null) {
+				String fileName = dataIntent.getData().getPath();
+				mFileName = fileName.replace("/document/primary:", Environment.getExternalStorageDirectory()
+						.getAbsolutePath() + File.separatorChar);
+				showFileName();
+			}
 		}
+	}
+
+	private void showFileName() {
+		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+		View llDescription = findViewById(R.id.llDescription);
+		tvDescription.setText(getString(R.string.msg_import, mFileName));
+		llDescription.setVisibility(View.VISIBLE);
+		Button btnOk = (Button) findViewById(R.id.btnOk);
+		btnOk.setEnabled(true);
 	}
 
 	@Override
@@ -536,40 +537,15 @@ public class ActivityShare extends Activity {
 			List<AppHolder> apps = new ArrayList<AppHolder>();
 			mAppsByUid = new SparseArray<AppHolder>();
 
-			if (uids.length > 0 && mActionId != R.string.menu_export) {
-				mProgressDialog.setMax(uids.length);
-				for (int i = 0; i < uids.length; i++) {
-					mProgressDialog.setProgress(i);
-					try {
-						int uid = uids[i];
-						AppHolder app = new AppHolder(uid);
-						apps.add(app);
-						mAppsByUid.put(uid, app);
-					} catch (NameNotFoundException ex) {
-						Util.bug(null, ex);
-					}
-				}
-			} else {
-				// Get a list of all apps
-				// unless fetching, in which case, get all user apps
-				List<PackageInfo> pList = getPackageManager().getInstalledPackages(0);
-				mProgressDialog.setMax(pList.size());
-				int current = 0;
-				for (PackageInfo pInfo : pList) {
-					mProgressDialog.setProgress(++current);
-					if (mAppsByUid.get(pInfo.applicationInfo.uid) == null) {
-						try {
-							AppHolder app = new AppHolder(pInfo.applicationInfo.uid);
-							if (mActionId == R.string.menu_fetch && app.appInfo.isSystem()) {
-								// Skip system apps for fetch without a uid list
-							} else {
-								apps.add(app);
-								mAppsByUid.put(pInfo.applicationInfo.uid, app);
-							}
-						} catch (NameNotFoundException ex) {
-							Util.bug(null, ex);
-						}
-					}
+			mProgressDialog.setMax(uids.length);
+			for (int i = 0; i < uids.length; i++) {
+				mProgressDialog.setProgress(i);
+				try {
+					AppHolder app = new AppHolder(uids[i]);
+					apps.add(app);
+					mAppsByUid.put(uids[i], app);
+				} catch (NameNotFoundException ex) {
+					Util.bug(null, ex);
 				}
 			}
 
@@ -1126,7 +1102,6 @@ public class ActivityShare extends Activity {
 	}
 
 	private class FetchTask extends AsyncTask<int[], Integer, String> {
-
 		@Override
 		@SuppressLint("DefaultLocale")
 		protected String doInBackground(int[]... params) {
@@ -1272,7 +1247,6 @@ public class ActivityShare extends Activity {
 
 	@SuppressLint("DefaultLocale")
 	private class SubmitTask extends AsyncTask<int[], Integer, String> {
-
 		@Override
 		protected String doInBackground(int[]... params) {
 			try {

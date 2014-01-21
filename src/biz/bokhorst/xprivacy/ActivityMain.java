@@ -74,6 +74,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private Handler mProHandler = new Handler();
 
+	public static int cAppAll = 1;
+	public static int cAppNone = 2;
+	public static int cAppUser = 3;
+
 	public static final int STATE_ATTENTION = 0;
 	public static final int STATE_RESTRICTED = 1;
 	public static final int STATE_SHARED = 2;
@@ -455,25 +459,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		try {
-			// Show a dialog if the option needs a selection to work on
-			int id = item.getItemId();
-			if ((id == R.id.menu_all || id == R.id.menu_import || id == R.id.menu_fetch || id == R.id.menu_submit)
-					&& mAppAdapter != null && mAppAdapter.getSelected().size() <= 0) {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-				alertDialogBuilder.setTitle(R.string.app_name);
-				alertDialogBuilder.setMessage(getString(R.string.msg_select));
-				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-							}
-						});
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-				return true;
-			}
-
 			switch (item.getItemId()) {
 			case R.id.menu_help:
 				optionHelp();
@@ -618,7 +603,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (mAppAdapter != null) {
 			// Check if some restricted
 			boolean some = false;
-			for (ApplicationInfoEx xAppInfo : mAppAdapter.getSelected()) {
+			for (ApplicationInfoEx xAppInfo : mAppAdapter.getSelectedOrVisible(0)) {
 				for (boolean restricted : PrivacyManager.getRestricted(xAppInfo.getUid(),
 						mAppAdapter.getRestrictionName()))
 					if (restricted) {
@@ -706,55 +691,58 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionExport() {
-		Intent file = new Intent(Intent.ACTION_GET_CONTENT);
-		file.setType("file/*");
-		boolean multiple = Util.isIntentAvailable(ActivityMain.this, file);
 		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
-		intent.putExtra(ActivityShare.cFileName, ActivityShare.getFileName(multiple));
 		intent.putExtra(ActivityShare.cInteractive, true);
+		intent.putExtra(ActivityShare.cUidList,
+				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(cAppAll));
 		startActivity(intent);
 	}
 
 	private void optionImport() {
 		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
 		intent.putExtra(ActivityShare.cInteractive, true);
-		int[] uid;
-		if (mAppAdapter == null)
-			uid = new int[0];
-		else {
-			List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
-			uid = new int[listAppInfo.size()];
-			for (int pos = 0; pos < listAppInfo.size(); pos++)
-				uid[pos] = listAppInfo.get(pos).getUid();
-			intent.putExtra(ActivityShare.cUidList, uid);
-		}
+		intent.putExtra(ActivityShare.cUidList,
+				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
 		startActivity(intent);
 	}
 
 	private void optionSubmit() {
-		if (mAppAdapter.getSelected().size() <= ActivityShare.cSubmitLimit) {
-			if (mAppAdapter != null) {
-				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
-				int[] uid = new int[listAppInfo.size()];
-				for (int pos = 0; pos < listAppInfo.size(); pos++)
-					uid[pos] = listAppInfo.get(pos).getUid();
-				Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
-				intent.putExtra(ActivityShare.cUidList, uid);
-				intent.putExtra(ActivityShare.cInteractive, true);
-				startActivity(intent);
-			}
-		} else {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle(getString(R.string.app_name));
-			alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
-			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
+		if (ActivityShare.registerDevice(this)) {
+			int[] uid = (mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(cAppNone));
+			if (uid.length == 0) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle(R.string.app_name);
+				alertDialogBuilder.setMessage(getString(R.string.msg_select));
+				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			} else if (uid.length <= ActivityShare.cSubmitLimit) {
+				if (mAppAdapter != null) {
+					Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
+					intent.putExtra(ActivityShare.cInteractive, true);
+					intent.putExtra(ActivityShare.cUidList, uid);
+					startActivity(intent);
 				}
-			});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
+			} else {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle(getString(R.string.app_name));
+				alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
+				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			}
 		}
 	}
 
@@ -764,13 +752,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			Util.viewUri(this, cProUri);
 		} else {
 			if (mAppAdapter != null) {
-				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
-				int[] uid = new int[listAppInfo.size()];
-				for (int pos = 0; pos < listAppInfo.size(); pos++)
-					uid[pos] = listAppInfo.get(pos).getUid();
+
 				Intent intent = new Intent(ActivityShare.ACTION_FETCH);
-				intent.putExtra(ActivityShare.cUidList, uid);
 				intent.putExtra(ActivityShare.cInteractive, true);
+				intent.putExtra(ActivityShare.cUidList,
+						mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(cAppUser));
 				startActivity(intent);
 			}
 		}
@@ -990,7 +976,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			boolean restart = false;
 			if (mAppAdapter != null) {
 				int pos = 0;
-				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelected();
+				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelectedOrVisible(0);
 				for (ApplicationInfoEx xAppInfo : listAppInfo) {
 					publishProgress(pos++, listAppInfo.size());
 					if (mAppAdapter.getRestrictionName() == null && someRestricted)
@@ -1073,8 +1059,33 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			return mRestrictionName;
 		}
 
-		public List<ApplicationInfoEx> getSelected() {
-			return mListAppSelected;
+		public List<ApplicationInfoEx> getSelectedOrVisible(int flags) {
+			if (mListAppSelected.size() > 0)
+				return mListAppSelected;
+			else {
+				if (flags == cAppAll)
+					return mListAppAll;
+				else {
+					List<ApplicationInfoEx> listApp = new ArrayList<ApplicationInfoEx>();
+					if (flags == cAppUser) {
+						for (ApplicationInfoEx appInfo : mListAppAll)
+							if (!appInfo.isSystem())
+								listApp.add(appInfo);
+					} else if (flags != cAppNone) {
+						for (int i = 0; i < this.getCount(); i++)
+							listApp.add(this.getItem(i));
+					}
+					return listApp;
+				}
+			}
+		}
+
+		public int[] getSelectedOrVisibleUid(int flags) {
+			List<ApplicationInfoEx> listAppInfo = getSelectedOrVisible(flags);
+			int[] uid = new int[listAppInfo.size()];
+			for (int pos = 0; pos < listAppInfo.size(); pos++)
+				uid[pos] = listAppInfo.get(pos).getUid();
+			return uid;
 		}
 
 		public void selectAllVisible() {

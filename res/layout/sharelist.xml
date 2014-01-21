@@ -78,6 +78,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
+            android:enabled="false"
+            android:persistent="true"
             android:text="@android:string/ok" />
     </LinearLayout>
 

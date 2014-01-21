@@ -87,13 +87,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="biz.bokhorst.xprivacy.ActivityMain" />
         </activity>
-        <activity
-            android:name=".ActivityShare" >
+        <activity android:name=".ActivityShare" >
             <intent-filter>
                 <action android:name="biz.bokhorst.xprivacy.action.IMPORT" />
                 <action android:name="biz.bokhorst.xprivacy.action.EXPORT" />
                 <action android:name="biz.bokhorst.xprivacy.action.FETCH" />
                 <action android:name="biz.bokhorst.xprivacy.action.SUBMIT" />
+                <action android:name="biz.bokhorst.xprivacy.action.TOGGLE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
