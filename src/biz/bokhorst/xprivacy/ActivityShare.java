@@ -195,13 +195,8 @@ public class ActivityShare extends Activity {
 						if (!listUid.contains(pInfo.applicationInfo.uid))
 							listUid.add(pInfo.applicationInfo.uid);
 
-					// Process settings and restrictions per app
-					int progressMax = listUid.size() + 1;
-					int progressCurrent = 0;
+					// Process application settings
 					for (int uid : listUid) {
-						publishProgress("Uid=" + uid, Integer.toString(++progressCurrent), Integer.toString(progressMax));
-
-						// Process application settings
 						Map<String, String> mapAppSetting = PrivacyManager.getSettings(uid);
 						for (String name : mapAppSetting.keySet()) {
 							// Bind accounts/contacts to same device
@@ -221,8 +216,10 @@ public class ActivityShare extends Activity {
 								serializer.attribute(null, "Value", value);
 							serializer.endTag(null, "Setting");
 						}
+					}
 
-						// Process restrictions
+					// Process restrictions
+					for (int uid : listUid) {
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
 							// Category
 							boolean crestricted = PrivacyManager.getRestricted(null, uid, restrictionName, null, false,
