@@ -74,10 +74,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private Handler mProHandler = new Handler();
 
-	public static int cAppAll = 1;
-	public static int cAppNone = 2;
-	public static int cAppUser = 3;
-
 	public static final int STATE_ATTENTION = 0;
 	public static final int STATE_RESTRICTED = 1;
 	public static final int STATE_SHARED = 2;
@@ -694,7 +690,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
 		intent.putExtra(ActivityShare.cInteractive, true);
 		intent.putExtra(ActivityShare.cUidList,
-				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(cAppAll));
+				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(AppListAdapter.cSelectAppAll));
 		startActivity(intent);
 	}
 
@@ -708,7 +704,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionSubmit() {
 		if (ActivityShare.registerDevice(this)) {
-			int[] uid = (mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(cAppNone));
+			int[] uid = (mAppAdapter == null ? new int[0] : mAppAdapter
+					.getSelectedOrVisibleUid(AppListAdapter.cSelectAppNone));
 			if (uid.length == 0) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 				alertDialogBuilder.setTitle(R.string.app_name);
@@ -755,8 +752,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 				Intent intent = new Intent(ActivityShare.ACTION_FETCH);
 				intent.putExtra(ActivityShare.cInteractive, true);
-				intent.putExtra(ActivityShare.cUidList,
-						mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(cAppUser));
+				intent.putExtra(
+						ActivityShare.cUidList,
+						mAppAdapter == null ? new int[0] : mAppAdapter
+								.getSelectedOrVisibleUid(AppListAdapter.cSelectAppUser));
 				startActivity(intent);
 			}
 		}
@@ -1037,6 +1036,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		private AtomicInteger mFiltersRunning = new AtomicInteger(0);
 		private int mHighlightColor;
 
+		public final static int cSelectAppAll = 1;
+		public final static int cSelectAppNone = 2;
+		public final static int cSelectAppUser = 3;
+
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
 			super(context, resource, objects);
@@ -1063,15 +1066,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			if (mListAppSelected.size() > 0)
 				return mListAppSelected;
 			else {
-				if (flags == cAppAll)
+				if (flags == cSelectAppAll)
 					return mListAppAll;
 				else {
 					List<ApplicationInfoEx> listApp = new ArrayList<ApplicationInfoEx>();
-					if (flags == cAppUser) {
+					if (flags == cSelectAppUser) {
 						for (ApplicationInfoEx appInfo : mListAppAll)
 							if (!appInfo.isSystem())
 								listApp.add(appInfo);
-					} else if (flags != cAppNone) {
+					} else if (flags != cSelectAppNone) {
 						for (int i = 0; i < this.getCount(); i++)
 							listApp.add(this.getItem(i));
 					}
