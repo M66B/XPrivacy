@@ -476,11 +476,13 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionSubmit() {
-		int[] uid = new int[] { mAppInfo.getUid() };
-		Intent intent = new Intent("biz.bokhorst.xprivacy.action.SUBMIT");
-		intent.putExtra(ActivityShare.cUidList, uid);
-		intent.putExtra(ActivityShare.cInteractive, true);
-		startActivity(intent);
+		if (ActivityShare.registerDevice(this)) {
+			int[] uid = new int[] { mAppInfo.getUid() };
+			Intent intent = new Intent("biz.bokhorst.xprivacy.action.SUBMIT");
+			intent.putExtra(ActivityShare.cUidList, uid);
+			intent.putExtra(ActivityShare.cInteractive, true);
+			startActivity(intent);
+		}
 	}
 
 	private void optionFetch() {

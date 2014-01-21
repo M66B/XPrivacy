@@ -156,7 +156,7 @@ public class ActivityShare extends Activity {
 		}
 
 		// Registration check
-		if (!registerDevice(this)) {
+		if (action.equals(ACTION_SUBMIT) && !registerDevice(this)) {
 			finish();
 			return;
 		}
