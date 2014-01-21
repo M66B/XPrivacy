@@ -67,6 +67,7 @@ import android.util.SparseArray;
 import android.util.Xml;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +84,7 @@ import android.widget.Toast;
 
 public class ActivityShare extends Activity {
 	private int mThemeId;
+	private int mActionId = -1;
 	private AppListAdapter mAppAdapter;
 	private SparseArray<AppHolder> mAppsByUid;
 	private boolean mRunning = false;
@@ -140,7 +142,7 @@ public class ActivityShare extends Activity {
 
 		final String action = getIntent().getAction();
 
-		// Check whether we need a ui, if not, leave the theme declared in the manifest
+		// Check whether we need a ui
 		if (extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false)) {
 			// Set theme
 			String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
@@ -152,14 +154,19 @@ public class ActivityShare extends Activity {
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 			// Set title
-			if (action.equals(ACTION_IMPORT))
+			if (action.equals(ACTION_IMPORT)) {
+				mActionId = R.string.menu_import;
 				setTitle(getString(R.string.menu_import));
-			else if (action.equals(ACTION_EXPORT))
+			} else if (action.equals(ACTION_EXPORT)) {
+				mActionId = R.string.menu_export;
 				setTitle(getString(R.string.menu_export));
-			else if (action.equals(ACTION_FETCH))
+			} else if (action.equals(ACTION_FETCH)) {
+				mActionId = R.string.menu_fetch;
 				setTitle(getString(R.string.menu_fetch));
-			else if (action.equals(ACTION_SUBMIT))
+			} else if (action.equals(ACTION_SUBMIT)) {
+				mActionId = R.string.menu_submit;
 				setTitle(getString(R.string.menu_submit));
+			}
 
 			// Licence check
 			if (action.equals(ACTION_IMPORT) && !Util.isProEnabled() && Util.hasProLicense(this) == null) {
@@ -203,7 +210,7 @@ public class ActivityShare extends Activity {
 						// Show file choose button
 						Button btnChange = (Button) findViewById(R.id.btnChange);
 						btnChange.setVisibility(View.VISIBLE);
-						btnChange.setOnClickListener(new Button.OnClickListener(){
+						btnChange.setOnClickListener(new Button.OnClickListener() {
 							@Override
 							public void onClick(View v) {
 								fileChooser();
@@ -224,7 +231,7 @@ public class ActivityShare extends Activity {
 			// Check device registration for submissions
 			if (action.equals(ACTION_SUBMIT))
 				btnOk.setEnabled(registerDevice(this));
-			
+
 			btnOk.setOnClickListener(new Button.OnClickListener() {
 
 				@Override
@@ -274,7 +281,7 @@ public class ActivityShare extends Activity {
 				}
 			});
 
-			btnCancel.setOnClickListener(new Button.OnClickListener(){
+			btnCancel.setOnClickListener(new Button.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					if (mRunning) {
@@ -294,8 +301,8 @@ public class ActivityShare extends Activity {
 			// Build list of distinct uids
 			List<Integer> listUid = new ArrayList<Integer>();
 			for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
-			if (!listUid.contains(pInfo.applicationInfo.uid))
-			listUid.add(pInfo.applicationInfo.uid);
+				if (!listUid.contains(pInfo.applicationInfo.uid))
+					listUid.add(pInfo.applicationInfo.uid);
 
 			// Get on with exporting
 			String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
@@ -306,11 +313,12 @@ public class ActivityShare extends Activity {
 
 	protected void onResume() {
 		super.onResume();
-		if (!mRunning && getTitle().equals(getString(R.string.menu_submit))) {
+		if (!mRunning && mActionId == R.string.menu_submit) {
 			// Check again for registration
 			final Button btnOk = (Button) findViewById(R.id.btnOk);
 			// If the registration has not been completed, this will ask again.
-			// I find that not quite ideal from a users point of view, but I suppose it will do.
+			// I find that not quite ideal from a users point of view, but I
+			// suppose it will do.
 			btnOk.setEnabled(registerDevice(this));
 		}
 	}
@@ -338,20 +346,19 @@ public class ActivityShare extends Activity {
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 
-		if (v.getId() == R.id.lvShare) {
-			menu.add(getString(R.string.menu_exclude));
-		}
+		if (v.getId() == R.id.lvShare)
+			menu.addSubMenu(Menu.NONE, R.string.menu_exclude, Menu.NONE, R.string.menu_exclude);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		if (!mRunning && item.getTitle().equals(getString(R.string.menu_exclude))) {
+		if (!mRunning && item.getItemId() == R.string.menu_exclude) {
 			// remove app from list
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 			mAppAdapter.remove(mAppAdapter.getItem(info.position));
 
 			// Check submit limit
-			if (mAppAdapter.getCount() < cSubmitLimit + 1 && getTitle().equals(getString(R.string.menu_submit))) {
+			if (mAppAdapter.getCount() < cSubmitLimit + 1 && mActionId == R.string.menu_submit) {
 				Button btnOk = (Button) findViewById(R.id.btnOk);
 				btnOk.setEnabled(true);
 			}
@@ -422,16 +429,19 @@ public class ActivityShare extends Activity {
 		public void setState(int uid, int state) {
 			AppHolder app = mAppsByUid.get(uid);
 			// Make sure apps done or in progress are listed first
-			// All operations except importing treat the apps in the listed order
-			if (getTitle().equals(getString(R.string.menu_import)) && mAppsWaiting.contains(app)) {
+			// All operations except importing treat the apps in the listed
+			// order
+			if (mActionId == R.string.menu_import && mAppsWaiting.contains(app)) {
 				mAppsWaiting.remove(app);
 				mAppsDone.add(app);
 				this.setNotifyOnChange(false);
 				this.clear();
 				this.addAll(mAppsDone);
 				this.addAll(mAppsWaiting);
-				// If I separate out the app currently in progress, I could sort the done ones in the same way as the waiting ones were.
-				// We'd then have in order: a sorted list of the done apps, mAppCurrent, then all the waiting apps in order
+				// If I separate out the app currently in progress, I could sort
+				// the done ones in the same way as the waiting ones were.
+				// We'd then have in order: a sorted list of the done apps,
+				// mAppCurrent, then all the waiting apps in order
 			}
 			// Set state for this app
 			app.state = state;
@@ -532,7 +542,7 @@ public class ActivityShare extends Activity {
 			List<AppHolder> apps = new ArrayList<AppHolder>();
 			mAppsByUid = new SparseArray<AppHolder>();
 
-			if (uids.length > 0 && !getTitle().equals(getString(R.string.menu_export))) {
+			if (uids.length > 0 && mActionId != R.string.menu_export) {
 				mProgressDialog.setMax(uids.length);
 				for (int i = 0; i < uids.length; i++) {
 					mProgressDialog.setProgress(i);
@@ -546,7 +556,8 @@ public class ActivityShare extends Activity {
 					}
 				}
 			} else {
-				// Get a list of all apps unless fetching, in which case, get all user apps
+				// Get a list of all apps unless fetching, in which case, get
+				// all user apps
 				List<PackageInfo> pList = getPackageManager().getInstalledPackages(0);
 				mProgressDialog.setMax(pList.size());
 				int current = 0;
@@ -555,7 +566,7 @@ public class ActivityShare extends Activity {
 					if (mAppsByUid.get(pInfo.applicationInfo.uid) == null) {
 						try {
 							AppHolder app = new AppHolder(pInfo.applicationInfo.uid);
-							if (getTitle().equals(getString(R.string.menu_fetch)) && app.appInfo.isSystem()) {
+							if (mActionId == R.string.menu_fetch && app.appInfo.isSystem()) {
 								// Skip system apps for fetch without a uid list
 							} else {
 								apps.add(app);
@@ -610,6 +621,7 @@ public class ActivityShare extends Activity {
 		private File mFile;
 
 		@Override
+		@SuppressWarnings("unchecked")
 		protected String doInBackground(Object... params) {
 			mProgressCurrent = 0;
 			try {
@@ -631,7 +643,9 @@ public class ActivityShare extends Activity {
 				try {
 					// Start serialization
 					XmlSerializer serializer = Xml.newSerializer();
-					serializer.setOutput(fos, "UTF-8"); // IOException, IllegalArgumentException, IllegalStateException
+					serializer.setOutput(fos, "UTF-8"); // IOException,
+														// IllegalArgumentException,
+														// IllegalStateException
 					serializer.startDocument(null, Boolean.valueOf(true));
 					serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 					serializer.startTag(null, "XPrivacy");
@@ -732,7 +746,8 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				// IOException, IllegalArgumentException, IllegalStateException, Exception
+				// IOException, IllegalArgumentException, IllegalStateException,
+				// Exception
 				if (ex instanceof FileNotFoundException)
 					return "Cannot create file"; // TODO String resource
 				else if (ex instanceof IOException)
@@ -807,7 +822,8 @@ public class ActivityShare extends Activity {
 					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
 					ImportHandler importHandler = new ImportHandler(listUidSelected, progress);
 					xmlReader.setContentHandler(importHandler);
-					xmlReader.parse(new InputSource(fis)); // IOException, SAXException
+					xmlReader.parse(new InputSource(fis)); // IOException,
+															// SAXException
 					mapPackage = importHandler.getPackageMap();
 				} finally {
 					if (fis != null)
@@ -837,12 +853,13 @@ public class ActivityShare extends Activity {
 
 							// Set imported restrictions
 							for (String restrictionName : mapPackage.get(packageName).keySet()) {
-								restart = PrivacyManager.setRestricted(null, uid, restrictionName,
-										null, true, true) || restart;
+								restart = PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true)
+										|| restart;
 								for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(
 										restrictionName))
 									restart = PrivacyManager.setRestricted(null, uid, restrictionName,
-											md.getMethodName(), md.isRestricted(), true) || restart;
+											md.getMethodName(), md.isRestricted(), true)
+											|| restart;
 							}
 
 							if (restart)
@@ -1024,8 +1041,8 @@ public class ActivityShare extends Activity {
 						}
 
 						// Set restriction
-						if (PrivacyManager.setRestricted(null, uid, restrictionName, methodName, restricted, false) && 
-								!mListRestartUid.contains(uid))
+						if (PrivacyManager.setRestricted(null, uid, restrictionName, methodName, restricted, false)
+								&& !mListRestartUid.contains(uid))
 							mListRestartUid.add(uid);
 					}
 				} else
@@ -1113,7 +1130,7 @@ public class ActivityShare extends Activity {
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (int uid : params[0])
 					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid)); // NameNotFoundException
-					// This error probably should be caught here. TODO
+				// This error probably should be caught here. TODO
 
 				String[] license = Util.getProLicenseUnchecked();
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
@@ -1196,8 +1213,8 @@ public class ActivityShare extends Activity {
 										if (methodName == null || restricted)
 											if (methodName == null
 													|| PrivacyManager.getHook(restrictionName, methodName) != null)
-												restart = PrivacyManager.setRestricted(null, appInfo.getUid(), restrictionName,
-														methodName, restricted, true) || restart;
+												restart = PrivacyManager.setRestricted(null, appInfo.getUid(),
+														restrictionName, methodName, restricted, true) || restart;
 									}
 
 									if (restart)
@@ -1206,7 +1223,8 @@ public class ActivityShare extends Activity {
 								} else
 									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
 							} else
-								throw new Exception(status.getString("error")); // JSONException, Exception
+								throw new Exception(status.getString("error")); // JSONException,
+																				// Exception
 						} else {
 							// Failed
 							mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
@@ -1218,7 +1236,9 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				// NameNotFoundException, JSONException, UnsupportedEncodingException, IOException, ClientProtocolException, Exception
+				// NameNotFoundException, JSONException,
+				// UnsupportedEncodingException, IOException,
+				// ClientProtocolException, Exception
 				if (ex instanceof IOException || ex instanceof ClientProtocolException)
 					return "Error connecting to server"; // TODO string resource
 				else if (ex instanceof JSONException)
@@ -1253,7 +1273,7 @@ public class ActivityShare extends Activity {
 				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
 				for (int uid : params[0])
 					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid)); // NameNotFoundException
-					// Catch this error here? TODO
+				// Catch this error here? TODO
 
 				// Initialize progress
 				mProgressCurrent = 0;
@@ -1410,7 +1430,8 @@ public class ActivityShare extends Activity {
 							// Mark as unregistered
 							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered,
 									Boolean.toString(false));
-							throw new Exception(status.getString("error")); // JSONException, Exception
+							throw new Exception(status.getString("error")); // JSONException,
+																			// Exception
 						}
 					} else {
 						// Failed
@@ -1422,7 +1443,9 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				// NameNotFoundException, UnsupportedEncodingException, JSONException, ClientProtocolException, IOException, Exception
+				// NameNotFoundException, UnsupportedEncodingException,
+				// JSONException, ClientProtocolException, IOException,
+				// Exception
 				if (ex instanceof ClientProtocolException || ex instanceof IOException)
 					return "Error connecting to server"; // TODO string resource
 				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
@@ -1572,7 +1595,8 @@ public class ActivityShare extends Activity {
 
 	private void done(String result) {
 		// Check result string and display toast with error
-		// TODO it might be better to put this in a dialog box asking whether to send debugging info
+		// TODO it might be better to put this in a dialog box asking whether to
+		// send debugging info
 		if (result != null)
 			Toast.makeText(this, result, Toast.LENGTH_LONG).show();
 
@@ -1584,7 +1608,7 @@ public class ActivityShare extends Activity {
 		final Button btnOk = (Button) findViewById(R.id.btnOk);
 		btnOk.setText(getString(R.string.menu_close));
 		btnOk.setEnabled(true);
-		btnOk.setOnClickListener(new Button.OnClickListener(){
+		btnOk.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
@@ -1596,8 +1620,10 @@ public class ActivityShare extends Activity {
 		final View vButtonSeparator = findViewById(R.id.vButtonSeparator);
 		btnCancel.setVisibility(View.GONE);
 		vButtonSeparator.setVisibility(View.GONE);
-		// TODO a nice touch would be to make the cancel button open the main list with only the failed apps in view.
-		// I'm not sure what text to put on it though; "Examine failed" might do, if it isn't too long.
+		// TODO a nice touch would be to make the cancel button open the main
+		// list with only the failed apps in view.
+		// I'm not sure what text to put on it though; "Examine failed" might
+		// do, if it isn't too long.
 	}
 
 	public void fileChooser() {
