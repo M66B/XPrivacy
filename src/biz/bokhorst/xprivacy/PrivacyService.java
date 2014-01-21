@@ -42,6 +42,9 @@ public class PrivacyService {
 	private static String cTableUsage = "usage";
 	private static String cTableSetting = "setting";
 
+	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
+	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
+
 	// TODO: define column names
 
 	public static void register() {
@@ -136,6 +139,12 @@ public class PrivacyService {
 				} finally {
 					db.endTransaction();
 				}
+
+				// Clear cache
+				// TODO: more granular clear
+				synchronized (mRestrictionCache) {
+					mRestrictionCache.clear();
+				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
@@ -147,53 +156,76 @@ public class PrivacyService {
 				final boolean usage) throws RemoteException {
 			boolean restricted = false;
 			try {
-				// No persmissions required
-				final SQLiteDatabase db = getDatabase();
-
-				// Precompile statement when needed
-				if (stmtGetRestriction == null) {
-					String sql = "SELECT restricted FROM " + cTableRestriction
-							+ " WHERE uid=? AND restriction=? AND method=?";
-					stmtGetRestriction = db.compileStatement(sql);
+				// Check cache
+				boolean cached = false;
+				CRestriction key = new CRestriction(uid, restrictionName, methodName);
+				synchronized (mRestrictionCache) {
+					if (mRestrictionCache.containsKey(key)) {
+						CRestriction entry = mRestrictionCache.get(key);
+						if (!entry.isExpired()) {
+							cached = true;
+							restricted = entry.isRestricted();
+						}
+					}
 				}
 
-				// Execute statement
-				db.beginTransaction();
-				try {
-					try {
-						synchronized (stmtGetRestriction) {
-							stmtGetRestriction.clearBindings();
-							stmtGetRestriction.bindLong(1, uid);
-							stmtGetRestriction.bindString(2, restrictionName);
-							stmtGetRestriction.bindString(3, "");
-							restricted = (stmtGetRestriction.simpleQueryForLong() > 0);
-						}
-					} catch (SQLiteDoneException ignored) {
-						restricted = false;
+				if (!cached) {
+					// No permissions required
+					SQLiteDatabase db = getDatabase();
+
+					// Precompile statement when needed
+					if (stmtGetRestriction == null) {
+						String sql = "SELECT restricted FROM " + cTableRestriction
+								+ " WHERE uid=? AND restriction=? AND method=?";
+						stmtGetRestriction = db.compileStatement(sql);
 					}
 
-					if (restricted && methodName != null)
+					// Execute statement
+					db.beginTransaction();
+					try {
 						try {
 							synchronized (stmtGetRestriction) {
 								stmtGetRestriction.clearBindings();
 								stmtGetRestriction.bindLong(1, uid);
 								stmtGetRestriction.bindString(2, restrictionName);
-								stmtGetRestriction.bindString(3, methodName);
-								if (stmtGetRestriction.simpleQueryForLong() > 0)
-									restricted = false;
+								stmtGetRestriction.bindString(3, "");
+								restricted = (stmtGetRestriction.simpleQueryForLong() > 0);
 							}
 						} catch (SQLiteDoneException ignored) {
-							// no change
+							restricted = false;
 						}
 
-					db.setTransactionSuccessful();
-				} finally {
-					db.endTransaction();
-				}
+						if (restricted && methodName != null)
+							try {
+								synchronized (stmtGetRestriction) {
+									stmtGetRestriction.clearBindings();
+									stmtGetRestriction.bindLong(1, uid);
+									stmtGetRestriction.bindString(2, restrictionName);
+									stmtGetRestriction.bindString(3, methodName);
+									if (stmtGetRestriction.simpleQueryForLong() > 0)
+										restricted = false;
+								}
+							} catch (SQLiteDoneException ignored) {
+								// no change
+							}
 
-				// Fallback
-				if (restricted == false && db.getVersion() == 1)
-					restricted = PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
+						db.setTransactionSuccessful();
+					} finally {
+						db.endTransaction();
+					}
+
+					// Fallback
+					if (restricted == false && db.getVersion() == 1)
+						restricted = PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
+
+					// Add to cache
+					synchronized (mRestrictionCache) {
+						key.setRestricted(restricted);
+						if (mRestrictionCache.containsKey(key))
+							mRestrictionCache.remove(key);
+						mRestrictionCache.put(key, key);
+					}
+				}
 
 				// Log usage
 				if (usage) {
@@ -201,6 +233,8 @@ public class PrivacyService {
 					mExecutor.execute(new Runnable() {
 						public void run() {
 							try {
+								SQLiteDatabase db = getDatabase();
+
 								db.beginTransaction();
 								try {
 									// Category
@@ -253,7 +287,7 @@ public class PrivacyService {
 					for (String sRestrictionName : PrivacyManager.getRestrictions())
 						result.add(getRestriction(uid, sRestrictionName, null, false));
 				else
-					for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName))
+					for (Hook md : PrivacyManager.getHooks(restrictionName))
 						result.add(getRestriction(uid, restrictionName, md.getName(), false));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -276,6 +310,12 @@ public class PrivacyService {
 					db.setTransactionSuccessful();
 				} finally {
 					db.endTransaction();
+				}
+
+				// Clear cache
+				// TODO: more granular clear
+				synchronized (mRestrictionCache) {
+					mRestrictionCache.clear();
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -432,6 +472,11 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 
+				// Clear cache
+				// TODO: more granular clear
+				synchronized (mSettingsCache) {
+					mSettingsCache.clear();
+				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
@@ -443,6 +488,16 @@ public class PrivacyService {
 		public String getSetting(int uid, String name, String defaultValue) throws RemoteException {
 			String value = null;
 			try {
+				// Check cache
+				CSetting key = new CSetting(uid, name);
+				synchronized (mSettingsCache) {
+					if (mSettingsCache.containsKey(key)) {
+						CSetting entry = mSettingsCache.get(key);
+						if (!entry.isExpired())
+							return entry.getValue();
+					}
+				}
+
 				// No persmissions required
 				SQLiteDatabase db = getDatabase();
 
@@ -478,6 +533,14 @@ public class PrivacyService {
 					db.setTransactionSuccessful();
 				} finally {
 					db.endTransaction();
+				}
+
+				// Add to cache
+				key.setValue(value);
+				synchronized (mSettingsCache) {
+					if (mSettingsCache.containsKey(key))
+						mSettingsCache.remove(key);
+					mSettingsCache.put(key, key);
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -533,6 +596,12 @@ public class PrivacyService {
 					db.setTransactionSuccessful();
 				} finally {
 					db.endTransaction();
+				}
+
+				// Clear cache
+				// TODO: more granular clear
+				synchronized (mSettingsCache) {
+					mSettingsCache.clear();
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);

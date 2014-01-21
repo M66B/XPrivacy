@@ -6,16 +6,15 @@ For interested developers:
 * [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 * Reconsider *largeHeap*
-* Open to reset user selected dangerous methods
+* Option to reset user selected dangerous methods
 * Better multi-user support:
 	* Only show installed applications for secondary users
 	* Only allow restrictions for applications installed by secondary users
 	* Only import/export for applications installed by secondary users
 * Document XPrivacy navigation (menu's, presses, long presses) on GitHub
-
 * Better *sh* and *su* command detection
 * Accessibility: *android:labelFor="..."*
-* Secure usage data
+* Secure usage data (how?)
 * Close app view when packages removed
 * Hook location intents
 * More efficient implementation of XSystemProperties

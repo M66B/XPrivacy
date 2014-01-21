@@ -685,7 +685,7 @@ public class ActivityShare extends Activity {
 								serializer.endTag(null, "Restriction");
 
 								// Methods
-								for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName)) {
+								for (Hook md : PrivacyManager.getHooks(restrictionName)) {
 									boolean mrestricted = PrivacyManager.getRestricted(null, uid, restrictionName,
 											md.getName(), false, false);
 									if (!mrestricted || md.isDangerous()) {
@@ -1327,7 +1327,7 @@ public class ActivityShare extends Activity {
 						jSettings.put(jRestriction);
 
 						// Methods
-						for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName)) {
+						for (Hook md : PrivacyManager.getHooks(restrictionName)) {
 							boolean mRestricted = restricted
 									&& PrivacyManager.getRestricted(null, appInfo.getUid(), restrictionName,
 											md.getName(), false, false);

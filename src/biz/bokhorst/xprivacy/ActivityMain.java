@@ -1334,7 +1334,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					if (mRestrictionName == null)
 						allDangerous = false;
 					else {
-						for (PrivacyManager.Hook hook : PrivacyManager.getHooks(mRestrictionName))
+						for (Hook hook : PrivacyManager.getHooks(mRestrictionName))
 							allDangerous = allDangerous && hook.isDangerous();
 						if (PrivacyManager.getRestricted(null, xAppInfo.getUid(), mRestrictionName, null, false, false))
 							someRestricted = allDangerous;

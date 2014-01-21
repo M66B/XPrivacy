@@ -186,7 +186,7 @@ public class ActivityApp extends Activity {
 				lvRestriction.setSelectedGroup(groupPosition);
 				if (methodName != null) {
 					int childPosition = PrivacyManager.getHooks(restrictionName).indexOf(
-							new PrivacyManager.Hook(restrictionName, methodName));
+							new Hook(restrictionName, methodName));
 					lvRestriction.setSelectedChild(groupPosition, childPosition, true);
 				}
 			}
@@ -783,7 +783,7 @@ public class ActivityApp extends Activity {
 		private String mSelectedRestrictionName;
 		private String mSelectedMethodName;
 		private List<String> mRestrictions;
-		private HashMap<Integer, List<PrivacyManager.Hook>> mHook;
+		private HashMap<Integer, List<Hook>> mHook;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, String selectedRestrictionName,
@@ -792,7 +792,7 @@ public class ActivityApp extends Activity {
 			mSelectedRestrictionName = selectedRestrictionName;
 			mSelectedMethodName = selectedMethodName;
 			mRestrictions = new ArrayList<String>();
-			mHook = new LinkedHashMap<Integer, List<PrivacyManager.Hook>>();
+			mHook = new LinkedHashMap<Integer, List<Hook>>();
 
 			boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
 			boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, false,
@@ -870,7 +870,7 @@ public class ActivityApp extends Activity {
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
 
 					// Get all dangerous
-					for (PrivacyManager.Hook hook : PrivacyManager.getHooks(restrictionName))
+					for (Hook hook : PrivacyManager.getHooks(restrictionName))
 						allDangerous = allDangerous && hook.isDangerous();
 					if (PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null, false, false))
 						someRestricted = allDangerous;
@@ -996,14 +996,14 @@ public class ActivityApp extends Activity {
 			return convertView;
 		}
 
-		private List<PrivacyManager.Hook> getHooks(int groupPosition) {
+		private List<Hook> getHooks(int groupPosition) {
 			if (!mHook.containsKey(groupPosition)) {
 				boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
 				boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, false,
 						false);
-				List<PrivacyManager.Hook> listMethod = new ArrayList<PrivacyManager.Hook>();
+				List<Hook> listMethod = new ArrayList<Hook>();
 				String restrictionName = mRestrictions.get(groupPosition);
-				for (PrivacyManager.Hook md : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
+				for (Hook md : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
 					boolean isUsed = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName()) > 0);
 					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
 					if (mSelectedMethodName != null
@@ -1058,7 +1058,7 @@ public class ActivityApp extends Activity {
 			private int childPosition;
 			private ChildViewHolder holder;
 			private String restrictionName;
-			private PrivacyManager.Hook md;
+			private Hook md;
 			private long lastUsage;
 			private boolean parentRestricted;
 			private boolean permission;
@@ -1075,7 +1075,7 @@ public class ActivityApp extends Activity {
 			protected Object doInBackground(Object... params) {
 				if (restrictionName != null) {
 					// Get info
-					md = (PrivacyManager.Hook) getChild(groupPosition, childPosition);
+					md = (Hook) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName());
 					parentRestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null,
 							false, false);
@@ -1163,7 +1163,7 @@ public class ActivityApp extends Activity {
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
-			final PrivacyManager.Hook md = (PrivacyManager.Hook) getChild(groupPosition, childPosition);
+			final Hook md = (Hook) getChild(groupPosition, childPosition);
 
 			// Set background color
 			if (md.isDangerous())

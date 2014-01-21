@@ -211,7 +211,7 @@ public class UpdateService extends IntentService {
 
 	private void upgradeApp(Version sVersion, boolean dangerous, ApplicationInfo aInfo) {
 		for (String restrictionName : PrivacyManager.getRestrictions())
-			for (PrivacyManager.Hook md : PrivacyManager.getHooks(restrictionName))
+			for (Hook md : PrivacyManager.getHooks(restrictionName))
 				if (md.getFrom() != null)
 					if (sVersion.compareTo(md.getFrom()) < 0) {
 						// Disable new dangerous restrictions
