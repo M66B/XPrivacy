@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,7 +29,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
@@ -69,11 +67,6 @@ public class ActivityApp extends Activity {
 	public static final String cAction = "Action";
 	public static final String cActionClear = "Clear";
 	public static final String cActionSettings = "Settings";
-
-	private static final int ACTIVITY_IMPORT = 1;
-	private static final int ACTIVITY_IMPORT_SELECT = 2;
-	private static final int ACTIVITY_FETCH = 3;
-	private static final int ACTIVITY_SUBMIT = 4;
 
 	private static final int MENU_LAUNCH = 1;
 	private static final int MENU_SETTINGS = 2;
@@ -370,50 +363,6 @@ public class ActivityApp extends Activity {
 		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent dataIntent) {
-		super.onActivityResult(requestCode, resultCode, dataIntent);
-		// TODO remove. This code never runs, we don't use startActivityForResult anymore.
-		if (requestCode == ACTIVITY_IMPORT) {
-			// Import
-			ActivityApp.this.recreate();
-
-			String errorMessage = null;
-			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
-				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
-
-			String text = String.format("%s: %s", getString(R.string.menu_import),
-					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
-			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-			toast.show();
-
-		} else if (requestCode == ACTIVITY_FETCH) {
-			// Fetch
-			if (mPrivacyListAdapter != null)
-				mPrivacyListAdapter.notifyDataSetChanged();
-
-			String errorMessage = null;
-			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
-				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
-
-			String text = String.format("%s: %s", getString(R.string.menu_fetch),
-					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
-			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-			toast.show();
-
-		} else if (requestCode == ACTIVITY_SUBMIT) {
-			// Submit
-			String errorMessage = null;
-			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
-				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
-
-			String text = String.format("%s: %s", getString(R.string.menu_submit),
-					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
-			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-			toast.show();
-		}
-	}
-
 	// Options
 
 	private void optionHelp() {
@@ -527,7 +476,6 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionSubmit() {
-		//if (ActivityShare.registerDevice(this)) {
 		int[] uid = new int[] { mAppInfo.getUid() };
 		Intent intent = new Intent("biz.bokhorst.xprivacy.action.SUBMIT");
 		intent.putExtra(ActivityShare.cUidList, uid);

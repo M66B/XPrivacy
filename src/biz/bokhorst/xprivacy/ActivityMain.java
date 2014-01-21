@@ -79,11 +79,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	public static final int STATE_SHARED = 2;
 
 	private static final int ACTIVITY_LICENSE = 0;
-	private static final int ACTIVITY_EXPORT = 1; // TODO remove
-	private static final int ACTIVITY_IMPORT = 2; // remove
-	private static final int ACTIVITY_SUBMIT = 4; // remove
-	private static final int ACTIVITY_FETCH = 5; // remove
-
 	private static final int LICENSED = 0x0100;
 	private static final int NOT_LICENSED = 0x0231;
 	private static final int RETRY = 0x0123;
@@ -428,74 +423,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					}, 30 * 1000);
 				}
 			}
-
-		} else if (requestCode == ACTIVITY_EXPORT) { // TODO remove
-			Util.log(null, Log.ERROR, "Should never see this");
-			// Export
-			String fileName = null;
-			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cFileName))
-				fileName = dataIntent.getStringExtra(ActivityShare.cFileName);
-
-			String errorMessage = null;
-			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
-				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
-
-			Toast toast = Toast.makeText(this, errorMessage == null ? fileName : errorMessage, Toast.LENGTH_LONG);
-			toast.show();
-
-			// Share
-			if (errorMessage == null) {
-				Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-				intent.setType("text/xml");
-				intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + fileName));
-				startActivity(Intent.createChooser(
-						intent,
-						String.format(getString(R.string.msg_saved_to),
-								dataIntent.getStringExtra(ActivityShare.cFileName))));
-			}
-
-		} else if (requestCode == ACTIVITY_IMPORT) { // TODO remove
-			Util.log(null, Log.ERROR, "Should never see this");
-			// Import
-			ActivityMain.this.recreate();
-
-			String errorMessage = null;
-			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
-				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
-
-			String text = String.format("%s: %s", getString(R.string.menu_import),
-					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
-			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-			toast.show();
-
-		} else if (requestCode == ACTIVITY_SUBMIT) { // TODO remove
-			Util.log(null, Log.ERROR, "Should never see this");
-			// Submit
-			String errorMessage = null;
-			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
-				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
-
-			String text = String.format("%s: %s", getString(R.string.menu_submit),
-					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
-			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-			toast.show();
-
-		} else if (requestCode == ACTIVITY_FETCH) { // TODO remove
-			Util.log(null, Log.ERROR, "Should never see this");
-			// Fetch
-			if (mAppAdapter != null)
-				mAppAdapter.notifyDataSetChanged();
-
-			String errorMessage = null;
-			if (dataIntent != null && dataIntent.hasExtra(ActivityShare.cErrorMessage))
-				errorMessage = dataIntent.getStringExtra(ActivityShare.cErrorMessage);
-
-			String text = String.format("%s: %s", getString(R.string.menu_fetch),
-					errorMessage == null ? getString(R.string.msg_done) : errorMessage);
-			Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-			toast.show();
 		}
-
 	}
 
 	@Override
