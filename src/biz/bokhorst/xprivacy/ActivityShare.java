@@ -658,8 +658,16 @@ public class ActivityShare extends Activity {
 						serializer.endTag(null, "Setting");
 					}
 
-					// Process application settings
+					// Process application settings and restrictions
 					for (int uid : listUid) {
+						if (mAbort)
+							throw new Exception("Abort");
+
+						publishProgress(++mProgressCurrent, listUid.size() + 1);
+						if (mThemeId != android.R.style.Theme_NoDisplay)
+							mAppAdapter.setState(uid, STATE_RUNNING);
+
+						// Process application settings
 						Map<String, String> mapAppSetting = PrivacyManager.getSettings(uid);
 						for (String name : mapAppSetting.keySet()) {
 							// Bind accounts/contacts to same device
@@ -679,16 +687,8 @@ public class ActivityShare extends Activity {
 								serializer.attribute(null, "Value", value);
 							serializer.endTag(null, "Setting");
 						}
-					}
 
-					// Process restrictions
-					for (int uid : listUid) {
-						if (mAbort)
-							throw new Exception("Abort");
-
-						publishProgress(++mProgressCurrent, listUid.size() + 1);
-						if (mThemeId != android.R.style.Theme_NoDisplay)
-							mAppAdapter.setState(uid, STATE_RUNNING);
+						// Process restrictions
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
 							// Category
 							boolean crestricted = PrivacyManager.getRestricted(null, uid, restrictionName, null, false,
