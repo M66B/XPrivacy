@@ -596,46 +596,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	// Options
 
 	private void optionAll() {
-		if (mAppAdapter != null) {
-			// Check if some restricted
-			boolean some = false;
-			for (ApplicationInfoEx xAppInfo : mAppAdapter.getSelectedOrVisible(0)) {
-				for (boolean restricted : PrivacyManager.getRestricted(xAppInfo.getUid(),
-						mAppAdapter.getRestrictionName()))
-					if (restricted) {
-						some = true;
-						break;
-					}
-				if (some)
-					break;
-			}
-			final boolean someRestricted = some;
-
-			// Are you sure?
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder
-					.setTitle(getString(someRestricted ? R.string.menu_clear_all : R.string.menu_restrict_all));
-			alertDialogBuilder.setMessage(getString(R.string.msg_sure));
-			alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					if (mAppAdapter != null) {
-						mBatchOpRunning = true;
-						invalidateOptionsMenu();
-						new ToggleTask().executeOnExecutor(mExecutor, someRestricted);
-					}
-				}
-			});
-			alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
-		}
+		Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		intent.putExtra(ActivityShare.cUidList,
+				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
+		intent.putExtra(ActivityShare.cRestriction, mAppAdapter.getRestrictionName());
+		startActivity(intent);
 	}
 
 	private void optionUsage() {
@@ -963,58 +929,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Restore state
 			ActivityMain.this.selectRestriction(spRestriction.getSelectedItemPosition());
-		}
-	}
-
-	private class ToggleTask extends AsyncTask<Boolean, Integer, Boolean> {
-		@Override
-		protected Boolean doInBackground(Boolean... params) {
-			boolean someRestricted = params[0];
-
-			// Apply action
-			boolean restart = false;
-			if (mAppAdapter != null) {
-				int pos = 0;
-				List<ApplicationInfoEx> listAppInfo = mAppAdapter.getSelectedOrVisible(0);
-				for (ApplicationInfoEx xAppInfo : listAppInfo) {
-					publishProgress(pos++, listAppInfo.size());
-					if (mAppAdapter.getRestrictionName() == null && someRestricted)
-						restart = PrivacyManager.deleteRestrictions(xAppInfo.getUid(), true) || restart;
-					else if (mAppAdapter.getRestrictionName() == null) {
-						for (String restrictionName : PrivacyManager.getRestrictions())
-							restart = PrivacyManager.setRestricted(null, xAppInfo.getUid(), restrictionName, null,
-									!someRestricted, true) || restart;
-					} else
-						restart = PrivacyManager.setRestricted(null, xAppInfo.getUid(),
-								mAppAdapter.getRestrictionName(), null, !someRestricted, true)
-								|| restart;
-				}
-			}
-
-			return restart;
-		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			setProgress(getString(R.string.msg_applying), values[0], values[1]);
-		}
-
-		@Override
-		protected void onPostExecute(Boolean restart) {
-			// Refresh
-			setProgress(getString(R.string.title_restrict), 0, 1);
-			mAppAdapter.notifyDataSetChanged();
-			mBatchOpRunning = false;
-			invalidateOptionsMenu();
-
-			// Notify
-			if (restart)
-				Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
-			else
-				Toast.makeText(
-						ActivityMain.this,
-						String.format("%s: %s", getString(R.string.menu_restriction_all), getString(R.string.msg_done)),
-						Toast.LENGTH_SHORT).show();
 		}
 	}
 

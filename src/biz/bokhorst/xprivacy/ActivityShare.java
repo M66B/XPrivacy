@@ -92,6 +92,7 @@ public class ActivityShare extends Activity {
 	private int mProgressCurrent;
 	private int mProgressWidth = 0;
 	private String mFileName;
+	public boolean mSomeRestricted = false;
 
 	private static final int STATE_WAITING = 0;
 	private static final int STATE_RUNNING = 1;
@@ -102,6 +103,7 @@ public class ActivityShare extends Activity {
 
 	public static final String cFileName = "FileName";
 	public static final String cUidList = "UidList";
+	public static final String cRestriction = "Restriction";
 	public static final String cInteractive = "Interactive";
 	public static final String cErrorMessage = "ErrorMessage";
 	public static final String HTTP_BASE_URL = "http://crowd.xprivacy.eu/";
@@ -119,7 +121,6 @@ public class ActivityShare extends Activity {
 	public static final String ACTION_FETCH = "biz.bokhorst.xprivacy.action.FETCH";
 	public static final String ACTION_SUBMIT = "biz.bokhorst.xprivacy.action.SUBMIT";
 	public static final String ACTION_TOGGLE = "biz.bokhorst.xprivacy.action.TOGGLE";
-	// TODO: move toggle to this activity
 
 	public static final int TIMEOUT_MILLISEC = 45000;
 
@@ -143,6 +144,7 @@ public class ActivityShare extends Activity {
 		final Bundle extras = getIntent().getExtras();
 		final String action = getIntent().getAction();
 		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
+		final String restriction = (extras != null ? extras.getString(cRestriction) : null);
 
 		// Licence check
 		if (action.equals(ACTION_IMPORT) && !Util.isProEnabled() && Util.hasProLicense(this) == null) {
@@ -173,7 +175,10 @@ public class ActivityShare extends Activity {
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 			// Set title
-			if (action.equals(ACTION_IMPORT)) {
+			if (action.equals(ACTION_TOGGLE)) {
+				mActionId = R.string.menu_restriction_all;
+				setTitle(getString(R.string.menu_restriction_all));
+			} else if (action.equals(ACTION_IMPORT)) {
 				mActionId = R.string.menu_import;
 				setTitle(getString(R.string.menu_import));
 			} else if (action.equals(ACTION_EXPORT)) {
@@ -193,7 +198,7 @@ public class ActivityShare extends Activity {
 			// App list
 			ListView lvShare = (ListView) findViewById(R.id.lvShare);
 			AppListTask appListTask = new AppListTask();
-			appListTask.executeOnExecutor(mExecutor, uids);
+			appListTask.executeOnExecutor(mExecutor, uids, restriction);
 
 			// Allow users to remove apps from list
 			// TODO: replace by swipe left/right
@@ -232,7 +237,7 @@ public class ActivityShare extends Activity {
 			final Button btnCancel = (Button) findViewById(R.id.btnCancel);
 
 			// Enable ok (showFileName does this for export/import)
-			if (action.equals(ACTION_SUBMIT) || action.equals(ACTION_FETCH))
+			if (action.equals(ACTION_SUBMIT) || action.equals(ACTION_FETCH) || action.equals(ACTION_TOGGLE))
 				btnOk.setEnabled(true);
 
 			// Listen for ok
@@ -241,25 +246,29 @@ public class ActivityShare extends Activity {
 				public void onClick(View v) {
 					btnOk.setEnabled(false);
 
-					int[] uids = mAppAdapter.getUids();
+					// Toggle
+					if (action.equals(ACTION_TOGGLE)) {
+						mRunning = true;
+						new ToggleTask().executeOnExecutor(mExecutor, restriction);
+					}
 
 					// Import
 					if (action.equals(ACTION_IMPORT)) {
 						mRunning = true;
-						new ImportTask().executeOnExecutor(mExecutor, new File(mFileName), uids);
+						new ImportTask().executeOnExecutor(mExecutor, new File(mFileName));
 					}
 
 					// Export
 					else if (action.equals(ACTION_EXPORT)) {
 						mRunning = true;
-						new ExportTask().executeOnExecutor(mExecutor, new File(mFileName), uids);
+						new ExportTask().executeOnExecutor(mExecutor, new File(mFileName));
 					}
 
 					// Fetch
 					else if (action.equals(ACTION_FETCH)) {
 						if (uids.length > 0) {
 							mRunning = true;
-							new FetchTask().executeOnExecutor(mExecutor, uids);
+							new FetchTask().executeOnExecutor(mExecutor);
 						}
 					}
 
@@ -268,7 +277,7 @@ public class ActivityShare extends Activity {
 						if (uids.length > 0) {
 							if (uids.length <= cSubmitLimit) {
 								mRunning = true;
-								new SubmitTask().executeOnExecutor(mExecutor, uids);
+								new SubmitTask().executeOnExecutor(mExecutor);
 							} else {
 								String message = getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1);
 								Toast.makeText(ActivityShare.this, message, Toast.LENGTH_SHORT).show();
@@ -412,12 +421,20 @@ public class ActivityShare extends Activity {
 			mAppsDone = new ArrayList<AppHolder>();
 		}
 
-		public int[] getUids() {
-			int[] uids = new int[this.getCount()];
+		public List<Integer> getUids() {
+			List<Integer> uids = new ArrayList<Integer>();
 			for (int i = 0; i < this.getCount(); i++) {
-				uids[i] = this.getItem(i).appInfo.getUid();
+				uids.add(this.getItem(i).appInfo.getUid());
 			}
 			return uids;
+		}
+
+		public List<ApplicationInfoEx> getListAppInfo() {
+			List<ApplicationInfoEx> apps = new ArrayList<ApplicationInfoEx>();
+			for (int i = 0; i < this.getCount(); i++) {
+				apps.add(this.getItem(i).appInfo);
+			}
+			return apps;
 		}
 
 		public void setState(int uid, int state) {
@@ -528,15 +545,17 @@ public class ActivityShare extends Activity {
 
 	// Tasks
 
-	private class AppListTask extends AsyncTask<int[], Integer, List<AppHolder>> {
+	private class AppListTask extends AsyncTask<Object, Integer, List<AppHolder>> {
 		private ProgressDialog mProgressDialog;
 
 		@Override
-		protected List<AppHolder> doInBackground(int[]... params) {
-			int[] uids = params[0];
+		protected List<AppHolder> doInBackground(Object... params) {
+			int[] uids = (int[]) params[0];
+			String restriction = (String) params[1];
 			List<AppHolder> apps = new ArrayList<AppHolder>();
 			mAppsByUid = new SparseArray<AppHolder>();
 
+			boolean some = false;
 			mProgressDialog.setMax(uids.length);
 			for (int i = 0; i < uids.length; i++) {
 				mProgressDialog.setProgress(i);
@@ -544,9 +563,23 @@ public class ActivityShare extends Activity {
 					AppHolder app = new AppHolder(uids[i]);
 					apps.add(app);
 					mAppsByUid.put(uids[i], app);
+
+					// If toggling, check if some restricted
+					if (mActionId == R.string.menu_restriction_all)
+						for (boolean restricted : PrivacyManager.getRestricted(uids[i], restriction))
+							if (restricted) {
+								some = true;
+								break;
+							}
+
 				} catch (NameNotFoundException ex) {
 					Util.bug(null, ex);
 				}
+			}
+			if (mActionId == R.string.menu_restriction_all) {
+				mSomeRestricted = some;
+				mActionId = some ? R.string.menu_clear_all : R.string.menu_restrict_all;
+				Util.log(null, Log.WARN, "Toggle means clear=" + some);
 			}
 
 			Collections.sort(apps);
@@ -584,6 +617,66 @@ public class ActivityShare extends Activity {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
+
+			// If toggling, set title
+			if (mActionId == R.string.menu_clear_all || mActionId == R.string.menu_restrict_all)
+				ActivityShare.this.setTitle(getString(mActionId));
+		}
+	}
+
+	private class ToggleTask extends AsyncTask<String, Integer, String> {
+		@Override
+		protected String doInBackground(String... params) {
+			try {
+				// Get data
+				List<Integer> lstUid = mAppAdapter.getUids();
+				final String restriction = params[0];
+
+				// Initialize progress
+				mProgressCurrent = 0;
+
+				for (Integer uid : lstUid) {
+					if (mAbort)
+						throw new Exception("Abort");
+
+					// Update progess
+					publishProgress(++mProgressCurrent, lstUid.size() + 1);
+					mAppAdapter.setState(uid, STATE_RUNNING);
+
+					boolean restart = false;
+					if (restriction == null && mSomeRestricted)
+						restart = PrivacyManager.deleteRestrictions(uid, true) || restart;
+					else if (restriction == null) {
+						for (String restrictionName : PrivacyManager.getRestrictions())
+							restart = PrivacyManager.setRestricted(null, uid, restrictionName, null, !mSomeRestricted,
+									true) || restart;
+					} else
+						restart = PrivacyManager.setRestricted(null, uid, restriction, null, !mSomeRestricted, true)
+								|| restart;
+
+					if (restart)
+						mAppsByUid.get(uid).message = getString(R.string.msg_restart);
+					mAppAdapter.setState(uid, STATE_SUCCESS);
+				}
+				return null;
+			} catch (Throwable ex) {
+				if (ex instanceof Exception && ex.getMessage().equals("Abort"))
+					return null;
+				else
+					return ex.getMessage();
+			}
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			blueStreakOfProgress(values[0], values[1]);
+			super.onProgressUpdate(values);
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			done(result);
+			super.onPostExecute(result);
 		}
 	}
 
@@ -599,11 +692,10 @@ public class ActivityShare extends Activity {
 
 				List<Integer> listUid;
 				if (params[1] instanceof List) {
+					// Export without ui
 					listUid = (List<Integer>) params[1];
 				} else {
-					listUid = new ArrayList<Integer>();
-					for (int uid : (int[]) params[1])
-						listUid.add(uid);
+					listUid = mAppAdapter.getUids();
 				}
 
 				Util.log(null, Log.INFO, "Exporting " + mFile);
@@ -760,17 +852,15 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	private class ImportTask extends AsyncTask<Object, Integer, String> {
+	private class ImportTask extends AsyncTask<File, Integer, String> {
 		private File mFile;
 
 		@Override
-		protected String doInBackground(Object... params) {
+		protected String doInBackground(File... params) {
 			try {
 				mFile = (File) params[0];
 
-				List<Integer> listUidSelected = new ArrayList<Integer>();
-				for (int uid : (int[]) params[1])
-					listUidSelected.add(uid);
+				List<Integer> listUidSelected = mAppAdapter.getUids();
 
 				// Progress
 				mProgressCurrent = 0;
@@ -1103,11 +1193,7 @@ public class ActivityShare extends Activity {
 		protected String doInBackground(int[]... params) {
 			try {
 				// Get data
-				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
-				for (int uid : params[0])
-					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
-				// NameNotFoundException
-				// TODO: This error probably should be caught here
+				List<ApplicationInfoEx> lstApp = mAppAdapter.getListAppInfo();
 
 				String[] license = Util.getProLicenseUnchecked();
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
@@ -1247,10 +1333,7 @@ public class ActivityShare extends Activity {
 		protected String doInBackground(int[]... params) {
 			try {
 				// Get data
-				List<ApplicationInfoEx> lstApp = new ArrayList<ApplicationInfoEx>();
-				for (int uid : params[0])
-					lstApp.add(new ApplicationInfoEx(ActivityShare.this, uid));
-				// TODO: Catch NameNotFoundException here?
+				List<ApplicationInfoEx> lstApp = mAppAdapter.getListAppInfo();
 
 				// Initialize progress
 				mProgressCurrent = 0;
