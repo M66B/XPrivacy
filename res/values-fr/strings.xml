@@ -20,7 +20,7 @@
     <string name="menu_pro">Version pro</string>
     <string name="menu_about">À propos</string>
     <string name="menu_help">Aide</string>
-    <string name="menu_select_all">Select all</string>
+    <string name="menu_select_all">Tout sélectionner</string>
     <string name="menu_all">Tous</string>
     <string name="menu_restriction_all">Inverser restrictions</string>
     <string name="menu_clear_all">Tout effacer</string>
@@ -36,22 +36,22 @@
     <string name="menu_accounts">Choisir les comptes à autoriser</string>
     <string name="menu_applications">Choisir les applis à autoriser</string>
     <string name="menu_contacts">Choisir les contacts à autoriser</string>
-    <string name="menu_tutorial">Tutorial</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
-    <string name="msg_abort">Aborting</string>
-    <string name="msg_aborted">Aborted</string>
+    <string name="menu_tutorial">Didacticiel</string>
+    <string name="menu_exclude">Exclure</string>
+    <string name="menu_close">Fermer</string>
+    <string name="msg_abort">Arrêt en cours</string>
+    <string name="msg_aborted">Arrêté</string>
     <string name="msg_new">Nouv. :</string>
     <string name="msg_update">MàJ :</string>
     <string name="msg_licensed" formatted="false">Autorisé à : %s</string>
     <string name="msg_loading">Chargement</string>
-    <string name="msg_applying">Filtrage en cours</string>
+    <string name="msg_applying">Application en cours</string>
     <string name="msg_applied">Template appliquée</string>
     <string name="msg_saved_to" formatted="false">Sauvé dans %s</string>
     <string name="msg_no_restrictions">Pas de restriction trouvée</string>
     <string name="msg_sure">Êtes-vous certain ?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Choisissez quelques applications</string>
+    <string name="msg_limit">Choisissez moins de %d applications</string>
     <string name="msg_done">Effectué</string>
     <string name="msg_reboot">Redémarrage requis</string>
     <string name="msg_random_now">Randomiser maintenant</string>
@@ -60,10 +60,10 @@
     <string name="msg_restart">Redémarrage de l\'application nécessaire</string>
     <string name="msg_register">Please register your device</string>
     <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_migrating" formatted="false">Migrating %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
-    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_migrated">Migration complete</string>
+    <string name="msg_migrating" formatted="false">Migration %s</string>
+    <string name="msg_randomizing" formatted="false">Randomisation %s</string>
+    <string name="msg_upgrading" formatted="false">Mis à jour %s</string>
+    <string name="msg_migrated">Migration complète</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
 \n\nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>
@@ -126,7 +126,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_dangerous">Restreindre fonctions dangereuses</string>
     <string name="settings_confidence">Intervalle de confiance maximum</string>
     <string name="settings_experimental">Fonctions expérimentales (redémarrage requis)</string>
-    <string name="settings_https">Use secure connections</string>
+    <string name="settings_https">Utiliser des connexions sécurisée</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>
