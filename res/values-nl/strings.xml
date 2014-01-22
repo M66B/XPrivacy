@@ -37,13 +37,11 @@
     <string name="menu_applications">Sta applicaties toe</string>
     <string name="menu_contacts">Sta contacten toe</string>
     <string name="menu_tutorial">Zelfstudie</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
-    <string name="menu_choose">Choose</string>
-    <string name="msg_abort">Aborting</string>
-    <string name="msg_aborted">Aborted</string>
-    <string name="msg_export">Backup all settings to %s</string>
-    <string name="msg_import">Import settings from %s</string>
+    <string name="menu_exclude">Sluit uit</string>
+    <string name="menu_close">Sluiten</string>
+    <string name="menu_choose">Kies</string>
+    <string name="msg_abort">Afbreken</string>
+    <string name="msg_aborted">Afgebroken</string>
     <string name="msg_new">Nieuw</string>
     <string name="msg_update">Bijgewerkt</string>
     <string name="msg_licensed" formatted="false">In licentie gegeven aan: %s</string>
@@ -53,8 +51,8 @@
     <string name="msg_saved_to" formatted="false">Bewaard als %s</string>
     <string name="msg_no_restrictions">Geen beperkingen gevonden</string>
     <string name="msg_sure">Zeker weten?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Selecter a.u.b enige applicaties</string>
+    <string name="msg_limit">Selecteer a.u.b. minder dan %d applicaties</string>
     <string name="msg_done">Gereed</string>
     <string name="msg_reboot">Herstart apparaat vereist</string>
     <string name="msg_random_now">Willekeurig</string>

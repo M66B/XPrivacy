@@ -43,8 +43,6 @@
     <string name="menu_choose">Pasirinkti</string>
     <string name="msg_abort">Nutraukti</string>
     <string name="msg_aborted">Aborted</string>
-    <string name="msg_export">Eksportuoti visus nustatymus į %s</string>
-    <string name="msg_import">Importuoti nustatymus iš %s</string>
     <string name="msg_new">Naujas</string>
     <string name="msg_update">Atnaujinta</string>
     <string name="msg_licensed" formatted="false">licencija: %s</string>

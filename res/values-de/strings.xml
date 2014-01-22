@@ -42,8 +42,6 @@
     <string name="menu_choose">Wählen</string>
     <string name="msg_abort">Abbrechen</string>
     <string name="msg_aborted">Aborted</string>
-    <string name="msg_export">Sichere alle Einstellungen nach %s</string>
-    <string name="msg_import">Importiert alle Einstellungen von %s</string>
     <string name="msg_new">Neu</string>
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Lizenziert für: %s</string>

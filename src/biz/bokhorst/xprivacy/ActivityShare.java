@@ -1629,8 +1629,7 @@ public class ActivityShare extends Activity {
 	private void showFileName() {
 		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
 		View llDescription = findViewById(R.id.llDescription);
-		tvDescription.setText(getString(mActionId == R.string.menu_import ? R.string.msg_import : R.string.msg_export,
-				mFileName));
+		tvDescription.setText(".../" + new File(mFileName).getName());
 		llDescription.setVisibility(View.VISIBLE);
 		Button btnOk = (Button) findViewById(R.id.btnOk);
 		btnOk.setEnabled(true);

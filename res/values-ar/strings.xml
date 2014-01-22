@@ -42,8 +42,6 @@
     <string name="menu_choose">إختر</string>
     <string name="msg_abort">إيقاف</string>
     <string name="msg_aborted">Aborted</string>
-    <string name="msg_export">عمل نسخة إحتياطية لجميع الإعدادات في  %s</string>
-    <string name="msg_import">إستيراد الإعدادات من %s</string>
     <string name="msg_new">جديد</string>
     <string name="msg_update">تحديث</string>
     <string name="msg_licensed" formatted="false">مرخص ل: %s</string>

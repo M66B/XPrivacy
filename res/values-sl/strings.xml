@@ -42,8 +42,6 @@
     <string name="menu_choose">Choose</string>
     <string name="msg_abort">Aborting</string>
     <string name="msg_aborted">Aborted</string>
-    <string name="msg_export">Backup all settings to %s</string>
-    <string name="msg_import">Import settings from %s</string>
     <string name="msg_new">Novo</string>
     <string name="msg_update">Posodobitev</string>
     <string name="msg_licensed" formatted="false">Licencirano na: %s</string>
