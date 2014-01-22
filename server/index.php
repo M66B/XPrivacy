@@ -52,7 +52,6 @@
 
 		// Check XPrivacy version
 		if (empty($data->xprivacy_version) || (int)$data->xprivacy_version < 219) {
-			//log_error('json: XPrivacy version: ' . $data->xprivacy_version, $my_email, $data);
 			echo json_encode(array('ok' => false, 'errno' => 102, 'error' => 'Please upgrade to at least XPrivacy version 1.11'));
 			exit();
 		}
@@ -279,7 +278,8 @@
 
 			// Get restrictions
 			$settings = Array();
-			$empty = true;
+			$empty = ($data->xprivacy_version >= 240);
+
 			$sql = "SELECT restriction, method";
 			$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 			$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
