@@ -1086,7 +1086,8 @@ public class ActivityShare extends Activity {
 					mAppAdapter.setMessage(uid, getString(R.string.msg_restart));
 
 				// Abort notification
-				mAppAdapter.setMessage(mListAbortedUid.get(0), getString(R.string.msg_aborted));
+				if (mListAbortedUid.size() > 0)
+					mAppAdapter.setMessage(mListAbortedUid.get(0), getString(R.string.msg_aborted));
 
 				mAppAdapter.notifyDataSetChanged();
 			}
