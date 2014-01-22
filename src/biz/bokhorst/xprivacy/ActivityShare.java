@@ -958,8 +958,10 @@ public class ActivityShare extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			// Mark as failed the apps that weren't found
-			for (AppHolder app : mAppAdapter.mAppsWaiting)
+			for (AppHolder app : mAppAdapter.mAppsWaiting) {
+				app.message = getString(R.string.msg_no_restrictions);
 				app.state = STATE_FAILURE;
+			}
 			mAppAdapter.notifyDataSetChanged();
 			done(result);
 			super.onPostExecute(result);
@@ -1283,11 +1285,29 @@ public class ActivityShare extends Activity {
 									if (restart)
 										mAppsByUid.get(appInfo.getUid()).message = getString(R.string.msg_restart);
 									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS);
-								} else
+								} else {
+									String message = status.getString("error"); // JSONException
+									// Localise and dummify message
+									if (message.equals("No restrictions available"))
+										message = getString(R.string.msg_no_restrictions);
+									else
+										message = getString(R.string.msg_technical_error);
+									mAppsByUid.get(appInfo.getUid()).message = message;
 									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
-							} else
-								throw new Exception(status.getString("error"));
-							// JSONException, Exception
+								}
+							} else {
+								// If no one has ever submitted for an app, we
+								// end up here even though it isn't a serious
+								// error.
+								String message = status.getString("error"); // JSONException
+								// Localise and dummify message
+								if (message.equals("No restrictions available"))
+									message = getString(R.string.msg_no_restrictions);
+								else
+									message = getString(R.string.msg_technical_error);
+								mAppsByUid.get(appInfo.getUid()).message = message;
+								mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
+							}
 						} else {
 							// Failed
 							mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
@@ -1486,12 +1506,17 @@ public class ActivityShare extends Activity {
 									Integer.toString(ActivityMain.STATE_SHARED));
 							mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS);
 						} else {
+							mAppsByUid.get(appInfo.getUid()).message = getString(R.string.msg_technical_error);
 							mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
+
 							// Mark as unregistered
+							// TODO this ought to be done with more discernment
+							// We could have got here because there were too
+							// many
+							// package names, for example
 							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered,
 									Boolean.toString(false));
-							throw new Exception(status.getString("error"));
-							// JSONException, Exception
+							Util.log(null, Log.ERROR, "Submit error: " + status.getString("error")); // JSONException
 						}
 					} else {
 						// Failed

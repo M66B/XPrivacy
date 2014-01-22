@@ -51,6 +51,7 @@
     <string name="msg_applied">Šablóny bola aplikovaná</string>
     <string name="msg_saved_to" formatted="false">Uložené do %s</string>
     <string name="msg_no_restrictions">Nenájdené žiadne obmedzenia</string>
+    <string name="msg_technical_error">Technical error</string>
     <string name="msg_sure">Ste si istý?</string>
     <string name="msg_select">Vyberte prosím nejaké aplikácie</string>
     <string name="msg_limit">Vyberte prosím menej než %d aplikácií</string>

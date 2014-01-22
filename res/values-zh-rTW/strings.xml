@@ -51,6 +51,7 @@
     <string name="msg_applied">已套用預設規則</string>
     <string name="msg_saved_to" formatted="false">已儲存至 %s</string>
     <string name="msg_no_restrictions">找不到限制規則</string>
+    <string name="msg_technical_error">Technical error</string>
     <string name="msg_sure">確定執行操作?</string>
     <string name="msg_select">請選擇應用程式</string>
     <string name="msg_limit">請選擇少於 %d 個應用程式</string>
