@@ -29,6 +29,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Moved privacy database to application data folder ([issue](https://github.com/M66B/XPrivacy/issues/1129))
 * Added dialog for export, import, submit, fetch and toggle, big thanks @[jpeg729](https://github.com/jpeg729)
 * Added caching before restriction database (will only be used if the heap size > 64 MiB)
+* Show half check box for restricted categories with only dangerous functions
 * Updated Arabic translation
 * Updated Dutch translation
 * Updated French translation

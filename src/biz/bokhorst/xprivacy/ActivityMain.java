@@ -1192,7 +1192,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			private boolean used;
 			private boolean granted = true;
 			private List<String> listRestriction;
-			private boolean allDangerous = true;
+			private boolean crestricted;
 			private boolean allRestricted = true;
 			private boolean someRestricted = false;
 
@@ -1225,15 +1225,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						listRestriction.add(mRestrictionName);
 					}
 
-					// Get all dangerous
-					if (mRestrictionName == null)
-						allDangerous = false;
-					else {
-						for (Hook hook : PrivacyManager.getHooks(mRestrictionName))
-							allDangerous = allDangerous && hook.isDangerous();
-						if (PrivacyManager.getRestricted(null, xAppInfo.getUid(), mRestrictionName, null, false, false))
-							someRestricted = allDangerous;
-					}
+					crestricted = false;
+					for (String restrictionName : listRestriction)
+						crestricted = crestricted
+								|| PrivacyManager.getRestricted(null, xAppInfo.getUid(), restrictionName, null, false,
+										false);
 
 					// Get all/some restricted
 					for (boolean restricted : PrivacyManager.getRestricted(xAppInfo.getUid(), mRestrictionName)) {
@@ -1289,7 +1285,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Display restriction
 					if (allRestricted)
 						holder.imgCBName.setImageBitmap(mCheck[2]); // Full
-					else if (someRestricted)
+					else if (someRestricted || crestricted)
 						holder.imgCBName.setImageBitmap(mCheck[1]); // Half
 					else
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
@@ -1363,19 +1359,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								alertDialog.show();
 							} else {
 								// Update restriction
-								boolean restart = false;
-								boolean crestricted = false;
+								crestricted = false;
 								for (String restrictionName : listRestriction)
 									crestricted = crestricted
 											|| PrivacyManager.getRestricted(null, xAppInfo.getUid(), restrictionName,
 													null, false, false);
+								boolean restart = false;
 								for (String restrictionName : listRestriction)
 									restart = PrivacyManager.setRestricted(null, xAppInfo.getUid(), restrictionName,
 											null, !crestricted, true) || restart;
 
 								// Update all/some restricted
 								allRestricted = true;
-								someRestricted = (!crestricted ? allDangerous : false);
+								someRestricted = false;
 								for (boolean restricted : PrivacyManager.getRestricted(xAppInfo.getUid(),
 										mRestrictionName)) {
 									allRestricted = (allRestricted && restricted);
@@ -1385,7 +1381,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								// Update visible state
 								if (allRestricted)
 									holder.imgCBName.setImageBitmap(mCheck[2]); // Full
-								else if (someRestricted)
+								else if (someRestricted || !crestricted)
 									holder.imgCBName.setImageBitmap(mCheck[1]); // Half
 								else
 									holder.imgCBName.setImageBitmap(mCheck[0]); // Off

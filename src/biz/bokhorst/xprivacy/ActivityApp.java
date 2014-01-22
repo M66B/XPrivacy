@@ -852,7 +852,7 @@ public class ActivityApp extends Activity {
 			private String restrictionName;
 			private boolean used;
 			private boolean permission;
-			private boolean allDangerous = true;
+			private boolean crestricted;
 			private boolean allRestricted = true;
 			private boolean someRestricted = false;
 
@@ -868,12 +868,8 @@ public class ActivityApp extends Activity {
 					// Get info
 					used = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
-
-					// Get all dangerous
-					for (Hook hook : PrivacyManager.getHooks(restrictionName))
-						allDangerous = allDangerous && hook.isDangerous();
-					if (PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null, false, false))
-						someRestricted = allDangerous;
+					crestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null, false,
+							false);
 
 					// Get all/some restricted
 					for (boolean restricted : PrivacyManager.getRestricted(mAppInfo.getUid(), restrictionName)) {
@@ -897,7 +893,7 @@ public class ActivityApp extends Activity {
 					// Display restriction
 					if (allRestricted)
 						holder.imgCBName.setImageBitmap(mCheck[2]); // Full
-					else if (someRestricted)
+					else if (someRestricted || crestricted)
 						holder.imgCBName.setImageBitmap(mCheck[1]); // Half
 					else
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
@@ -907,14 +903,15 @@ public class ActivityApp extends Activity {
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							boolean crestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(),
+							crestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(),
 									restrictionName, null, false, false);
+							crestricted = !crestricted;
 							boolean restart = PrivacyManager.setRestricted(null, mAppInfo.getUid(), restrictionName,
-									null, !crestricted, true);
+									null, crestricted, true);
 
 							// Update all/some restricted
 							allRestricted = true;
-							someRestricted = (!crestricted ? allDangerous : false);
+							someRestricted = false;
 							for (boolean restricted : PrivacyManager.getRestricted(mAppInfo.getUid(), restrictionName)) {
 								allRestricted = (allRestricted && restricted);
 								someRestricted = (someRestricted || restricted);
@@ -923,7 +920,7 @@ public class ActivityApp extends Activity {
 							// Display restriction
 							if (allRestricted)
 								holder.imgCBName.setImageBitmap(mCheck[2]); // Full
-							else if (someRestricted)
+							else if (someRestricted || crestricted)
 								holder.imgCBName.setImageBitmap(mCheck[1]); // Half
 							else
 								holder.imgCBName.setImageBitmap(mCheck[0]); // Off
