@@ -1135,9 +1135,6 @@ public class ActivityShare extends Activity {
 				// Process applications
 				for (ApplicationInfoEx appInfo : lstApp)
 					try {
-						if (mAbort)
-							throw new AbortException(ActivityShare.this);
-
 						publishProgress(++mProgressCurrent, lstApp.size() + 1);
 						if (!appInfo.isSystem() || lstApp.size() == 1) {
 							mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING, null);
@@ -1179,6 +1176,9 @@ public class ActivityShare extends Activity {
 							httpost.setHeader("Content-type", "application/json");
 							HttpResponse response = httpclient.execute(httpost);
 							StatusLine statusLine = response.getStatusLine();
+
+							if (mAbort)
+								throw new AbortException(ActivityShare.this);
 
 							if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
 								// Succeeded
