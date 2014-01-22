@@ -146,10 +146,15 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 
-				// Clear cache
-				// TODO: more granular clear
-				synchronized (mRestrictionCache) {
-					mRestrictionCache.clear();
+				// Update cache
+				if (mUseCache) {
+					CRestriction key = new CRestriction(uid, restrictionName, methodName);
+					key.setRestricted(restricted);
+					synchronized (mRestrictionCache) {
+						if (mRestrictionCache.containsKey(key))
+							mRestrictionCache.remove(key);
+						mRestrictionCache.put(key, key);
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -164,11 +169,13 @@ public class PrivacyService {
 			try {
 				// Check cache
 				boolean cached = false;
-				CRestriction key = new CRestriction(uid, restrictionName, methodName);
-				synchronized (mRestrictionCache) {
-					if (mRestrictionCache.containsKey(key)) {
-						cached = true;
-						restricted = mRestrictionCache.get(key).isRestricted();
+				if (mUseCache) {
+					CRestriction key = new CRestriction(uid, restrictionName, methodName);
+					synchronized (mRestrictionCache) {
+						if (mRestrictionCache.containsKey(key)) {
+							cached = true;
+							restricted = mRestrictionCache.get(key).isRestricted();
+						}
 					}
 				}
 
@@ -223,6 +230,7 @@ public class PrivacyService {
 
 					// Add to cache
 					if (mUseCache) {
+						CRestriction key = new CRestriction(uid, restrictionName, methodName);
 						key.setRestricted(restricted);
 						synchronized (mRestrictionCache) {
 							if (mRestrictionCache.containsKey(key))
@@ -318,9 +326,11 @@ public class PrivacyService {
 				}
 
 				// Clear cache
-				// TODO: more granular clear
-				synchronized (mRestrictionCache) {
-					mRestrictionCache.clear();
+				if (mUseCache) {
+					// TODO: more granular clear
+					synchronized (mRestrictionCache) {
+						mRestrictionCache.clear();
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -477,10 +487,15 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 
-				// Clear cache
-				// TODO: more granular clear
-				synchronized (mSettingsCache) {
-					mSettingsCache.clear();
+				// Update cache
+				if (mUseCache) {
+					CSetting key = new CSetting(uid, name);
+					key.setValue(value);
+					synchronized (mSettingsCache) {
+						if (mSettingsCache.containsKey(key))
+							mSettingsCache.remove(key);
+						mSettingsCache.put(key, key);
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -494,10 +509,12 @@ public class PrivacyService {
 			String value = null;
 			try {
 				// Check cache
-				CSetting key = new CSetting(uid, name);
-				synchronized (mSettingsCache) {
-					if (mSettingsCache.containsKey(key))
-						return mSettingsCache.get(key).getValue();
+				if (mUseCache) {
+					CSetting key = new CSetting(uid, name);
+					synchronized (mSettingsCache) {
+						if (mSettingsCache.containsKey(key))
+							return mSettingsCache.get(key).getValue();
+					}
 				}
 
 				// No persmissions required
@@ -539,6 +556,7 @@ public class PrivacyService {
 
 				// Add to cache
 				if (mUseCache) {
+					CSetting key = new CSetting(uid, name);
 					key.setValue(value);
 					synchronized (mSettingsCache) {
 						if (mSettingsCache.containsKey(key))
@@ -603,9 +621,11 @@ public class PrivacyService {
 				}
 
 				// Clear cache
-				// TODO: more granular clear
-				synchronized (mSettingsCache) {
-					mSettingsCache.clear();
+				if (mUseCache) {
+					// TODO: more granular clear
+					synchronized (mSettingsCache) {
+						mSettingsCache.clear();
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
