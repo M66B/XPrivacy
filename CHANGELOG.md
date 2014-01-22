@@ -15,6 +15,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.6 EXPERIMENTAL**
+
 * Corrected application name and version in update notifications, thanks @[jpeg729](https://github.com/jpeg729) ([issue](https://github.com/M66B/XPrivacy/issues/1112))
 * Fixed export progress, thanks @[jpeg729](https://github.com/jpeg729)
 * Added update service with progress notifications for migration, randomization and upgrade
@@ -30,8 +34,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Updated German translation
 * Updated Lithuanian translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.5 EXPERIMENTAL**
 
