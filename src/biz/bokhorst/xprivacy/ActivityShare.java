@@ -340,7 +340,8 @@ public class ActivityShare extends Activity {
 	private void showFileName() {
 		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
 		View llDescription = findViewById(R.id.llDescription);
-		tvDescription.setText(getString(R.string.msg_import, mFileName));
+		tvDescription.setText(getString(mActionId == R.string.menu_import ? R.string.msg_import : R.string.msg_export,
+				mFileName));
 		llDescription.setVisibility(View.VISIBLE);
 		Button btnOk = (Button) findViewById(R.id.btnOk);
 		btnOk.setEnabled(true);
@@ -691,7 +692,7 @@ public class ActivityShare extends Activity {
 				mFile = (File) params[0];
 
 				List<Integer> listUid;
-				if (params[1] instanceof List) {
+				if (params.length > 1 && params[1] instanceof List) {
 					// Export without ui
 					listUid = (List<Integer>) params[1];
 				} else {
@@ -1512,8 +1513,7 @@ public class ActivityShare extends Activity {
 							// Mark as unregistered
 							// TODO this ought to be done with more discernment
 							// We could have got here because there were too
-							// many
-							// package names, for example
+							// many package names, for example
 							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered,
 									Boolean.toString(false));
 							Util.log(null, Log.ERROR, "Submit error: " + status.getString("error")); // JSONException
