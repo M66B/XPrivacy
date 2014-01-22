@@ -914,7 +914,7 @@ public class ActivityShare extends Activity {
 		@Override
 		protected void onPostExecute(Throwable result) {
 			// Mark as failed the apps that weren't found
-			if (result != null && !(result instanceof AbortException)) {
+			if (result == null) {
 				List<AppHolder> listWaiting = new ArrayList<AppHolder>();
 				listWaiting.addAll(mAppAdapter.mAppsWaiting);
 				for (AppHolder app : listWaiting) {
