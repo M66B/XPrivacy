@@ -6,7 +6,9 @@ import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.net.InterfaceAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -183,24 +185,26 @@ public class Requirements {
 				Method getService = clazz.getDeclaredMethod("getService", String.class);
 
 				// Get services
-				List<String> listService = new ArrayList<String>();
+				Map<String, String> mapService = new HashMap<String, String>();
 				for (String service : (String[]) listServices.invoke(null)) {
 					IBinder binder = (IBinder) getService.invoke(null, service);
-					String serviceName = binder.getInterfaceDescriptor();
-					if (!"".equals(serviceName))
-						listService.add(serviceName);
+					mapService.put(service, binder.getInterfaceDescriptor());
 				}
 
 				// Check services
 				List<String> listMissing = new ArrayList<String>();
 				for (String service : XBinder.cListService)
-					if (!listService.contains(service))
+					if (!mapService.containsKey(service))
 						listMissing.add(service);
 
 				// Check result
-				if (listMissing.size() > 0)
+				if (listMissing.size() > 0) {
+					List<String> listService = new ArrayList<String>();
+					for (String service : mapService.keySet())
+						listService.add(String.format("%s: %s", service, mapService.get(service)));
 					sendSupportInfo("Missing:\r\n" + TextUtils.join("\r\n", listMissing) + "\r\n\r\nAvailable:\r\n"
 							+ TextUtils.join("\r\n", listService), context);
+				}
 			} catch (NoSuchMethodException ex) {
 				reportClass(clazz, context);
 			} catch (Throwable ex) {
