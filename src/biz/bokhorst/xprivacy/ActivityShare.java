@@ -1147,6 +1147,9 @@ public class ActivityShare extends Activity {
 					try {
 						publishProgress(++mProgressCurrent, lstApp.size() + 1);
 						if (!appInfo.isSystem() || lstApp.size() == 1) {
+							if (mAbort)
+								throw new AbortException(ActivityShare.this);
+
 							mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING,
 									ActivityShare.this.getString(R.string.menu_fetch));
 
