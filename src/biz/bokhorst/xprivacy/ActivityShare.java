@@ -1235,7 +1235,7 @@ public class ActivityShare extends Activity {
 								} else {
 									int errno = status.getInt("errno");
 									String message = status.getString("error");
-									ServerException ex = new ServerException(errno, message);
+									ServerException ex = new ServerException(ActivityShare.this, errno, message);
 									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
 								}
 							} else {
@@ -1436,7 +1436,7 @@ public class ActivityShare extends Activity {
 							} else {
 								int errno = status.getInt("errno");
 								String message = status.getString("error");
-								ServerException ex = new ServerException(errno, message);
+								ServerException ex = new ServerException(ActivityShare.this, errno, message);
 
 								// Mark as unregistered
 								if (errno == ServerException.cErrorNotActivated) {
@@ -1691,6 +1691,7 @@ public class ActivityShare extends Activity {
 
 	private static class ServerException extends Exception {
 		private int mErrorNo;
+		private Context mContext = null;
 		private static final long serialVersionUID = 1L;
 
 		public final static int cErrorNotActivated = 206;
@@ -1700,9 +1701,17 @@ public class ActivityShare extends Activity {
 			mErrorNo = errorno;
 		}
 
+		public ServerException(Context context, int errorno, String message) {
+			super(message);
+			mErrorNo = errorno;
+			mContext = context;
+		}
+
 		@Override
 		@SuppressLint("DefaultLocale")
 		public String getLocalizedMessage() {
+			if (mErrorNo == 305 && mContext != null)
+				return mContext.getString(R.string.msg_no_restrictions);
 			return String.format("Error %d: %s", mErrorNo, super.getLocalizedMessage());
 			// general:
 			// 'errno' => 101, 'error' => 'Empty request'
