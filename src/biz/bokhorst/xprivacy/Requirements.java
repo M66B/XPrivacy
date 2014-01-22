@@ -196,6 +196,10 @@ public class Requirements {
 				for (String service : XBinder.cListService)
 					if (!mapService.containsKey(service))
 						listMissing.add(service);
+				if (PrivacyManager.cTestVersion)
+					for (String serviceName : XBinder.cListServiceName)
+						if (!mapService.containsValue(serviceName))
+							listMissing.add(serviceName);
 
 				// Check result
 				if (listMissing.size() > 0) {
