@@ -19,11 +19,12 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Version 1.99.6 EXPERIMENTAL**
 
-* Corrected application name and version in update notifications, thanks @[jpeg729](https://github.com/jpeg729) ([issue](https://github.com/M66B/XPrivacy/issues/1112))
 * Fixed export progress, thanks @[jpeg729](https://github.com/jpeg729)
+* Fixed some settings not migrated correctly ([issue](https://github.com/M66B/XPrivacy/issues/1127))
+* Fixed allowing applications for *queryIntentActivities* ([issue](https://github.com/M66B/XPrivacy/issues/1147))
+* Corrected application name and version in update notifications, thanks @[jpeg729](https://github.com/jpeg729) ([issue](https://github.com/M66B/XPrivacy/issues/1112))
 * Added update service with progress notifications for migration, randomization and upgrade
 * Allowed secondary users to set restrictions
-* Fixed some settings not migrated correctly ([issue](https://github.com/M66B/XPrivacy/issues/1127))
 * Kill application is not experimental anymore and can kill applications only
 * Moved privacy database to application data folder ([issue](https://github.com/M66B/XPrivacy/issues/1129))
 * Added dialog for export, import, submit, fetch and toggle, big thanks @[jpeg729](https://github.com/jpeg729)

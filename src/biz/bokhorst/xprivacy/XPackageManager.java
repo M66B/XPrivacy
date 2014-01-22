@@ -99,30 +99,39 @@ public class XPackageManager extends XHook {
 
 	private List<PackageInfo> filterPackageInfo(List<PackageInfo> original) {
 		ArrayList<PackageInfo> result = new ArrayList<PackageInfo>();
-		for (PackageInfo appInfo : original)
-			if (isPackageAllowed(appInfo.packageName))
-				result.add(appInfo);
+		for (PackageInfo pkgInfo : original)
+			if (isPackageAllowed(pkgInfo.packageName))
+				result.add(pkgInfo);
 		return result;
 	}
 
 	private List<ProviderInfo> filterProviderInfo(List<ProviderInfo> original) {
 		ArrayList<ProviderInfo> result = new ArrayList<ProviderInfo>();
-		for (ProviderInfo appInfo : original)
-			if (isPackageAllowed(appInfo.packageName))
-				result.add(appInfo);
+		for (ProviderInfo provInfo : original)
+			if (isPackageAllowed(provInfo.packageName))
+				result.add(provInfo);
 		return result;
 	}
 
 	private List<ResolveInfo> filterResolveInfo(List<ResolveInfo> original) {
 		ArrayList<ResolveInfo> result = new ArrayList<ResolveInfo>();
-		for (ResolveInfo appInfo : original)
-			if (isPackageAllowed(appInfo.resolvePackageName))
-				result.add(appInfo);
+		for (ResolveInfo resInfo : original)
+			if (resInfo.activityInfo != null && resInfo.activityInfo.applicationInfo != null)
+				if (isPackageAllowed(resInfo.activityInfo.applicationInfo.packageName))
+					result.add(resInfo);
 		return result;
 	}
 
 	public static boolean isPackageAllowed(String packageName) {
 		int uid = Binder.getCallingUid();
-		return PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingApplication + packageName, false, true);
+
+		if (packageName == null) {
+			Util.log(null, Log.WARN, "isPackageAllowed uid=" + uid + " package=" + packageName);
+			Util.logStack(null);
+			return false;
+		}
+
+		String name = PrivacyManager.cSettingApplication + packageName;
+		return PrivacyManager.getSettingBool(null, uid, name, false, true);
 	}
 }
