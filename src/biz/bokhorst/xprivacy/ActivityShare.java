@@ -375,19 +375,38 @@ public class ActivityShare extends Activity {
 		private ChangeNotifier changeNotifier = new ChangeNotifier();
 
 		private class ChangeNotifier implements Runnable {
-			int mScrollTo = -1;
+			AppHolder mScrollTo;
 
 			@Override
 			public void run() {
-				notifyDataSetChanged();
-				if (mScrollTo >= 0) {
-					ListView lvShare = (ListView) findViewById(R.id.lvShare);
-					lvShare.smoothScrollToPosition(mScrollTo);
+				if (mScrollTo != null) {
+					int position = mAppAdapter.getPosition(mScrollTo);
+					// Make sure apps done or in progress are listed first
+					// All operations except importing
+					// treat the apps in the listed order
+					if (mActionId == R.string.menu_import && mAppsWaiting.contains(mScrollTo)) {
+						mAppsWaiting.remove(mScrollTo);
+						mAppsDone.add(mScrollTo);
+						mAppAdapter.setNotifyOnChange(false);
+						mAppAdapter.clear();
+						mAppAdapter.addAll(mAppsDone);
+						mAppAdapter.addAll(mAppsWaiting);
+						// If I separate out the app currently in progress, I
+						// could sort the done ones in the same way as the
+						// waiting ones were.
+						// We'd then have in order: a sorted list of the done
+						// apps, mAppCurrent, then all the waiting apps in order
+					}
+					notifyDataSetChanged();
+					if (position >= 0) {
+						ListView lvShare = (ListView) findViewById(R.id.lvShare);
+						lvShare.smoothScrollToPosition(position);
+					}
 				}
 			}
 
-			public void setScrollTo(int position) {
-				mScrollTo = position;
+			public void setScrollTo(AppHolder app) {
+				mScrollTo = app;
 			}
 		};
 
@@ -413,25 +432,8 @@ public class ActivityShare extends Activity {
 		public void setState(int uid, int state, String message) {
 			AppHolder app = mAppsByUid.get(uid);
 			app.message = message;
-			// Make sure apps done or in progress are listed first
-			// All operations except importing
-			// treat the apps in the listed order
-			if (mActionId == R.string.menu_import && mAppsWaiting.contains(app)) {
-				mAppsWaiting.remove(app);
-				mAppsDone.add(app);
-				this.setNotifyOnChange(false);
-				this.clear();
-				this.addAll(mAppsDone);
-				this.addAll(mAppsWaiting);
-				// If I separate out the app currently in progress, I could sort
-				// the done ones in the same way as the waiting ones were.
-				// We'd then have in order: a sorted list of the done apps,
-				// mAppCurrent, then all the waiting apps in order
-			}
-
-			// Set state for this app
 			app.state = state;
-			changeNotifier.setScrollTo(mAppAdapter.getPosition(app));
+			changeNotifier.setScrollTo(app);
 			runOnUiThread(changeNotifier);
 		}
 
