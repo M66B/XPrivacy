@@ -17,7 +17,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 1.99.6 EXPERIMENTAL**
+**Version 1.99.6 TEST**
 
 * Fixed export progress, thanks @[jpeg729](https://github.com/jpeg729)
 * Fixed some settings not migrated correctly ([issue](https://github.com/M66B/XPrivacy/issues/1127))
