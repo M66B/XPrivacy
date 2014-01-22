@@ -26,6 +26,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Added caching before restriction database (will only be used if the heap size > 64 MiB)
 * Updated Arabic translation
 * Updated Dutch translation
+* Updated French translation
 * Updated German translation
 * Updated Lithuanian translation
 * Updated Slovak translation
