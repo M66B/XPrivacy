@@ -29,7 +29,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -109,17 +108,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	};
 
-	private BroadcastReceiver mProgressReceiver = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			// String action = intent.getAction();
-			String message = intent.getStringExtra(ActivityShare.cProgressMessage);
-			int progress = intent.getIntExtra(ActivityShare.cProgressValue, 0);
-			int max = intent.getIntExtra(ActivityShare.cProgressMax, 1);
-			setProgress(message, progress, max);
-		}
-	};
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -128,7 +116,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			setContentView(R.layout.reboot);
 			Requirements.check(this);
 			mPackageChangeReceiver = null;
-			mProgressReceiver = null;
 		} else {
 			// Salt should be the same when exporting/importing
 			String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, null, false);
@@ -318,11 +305,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			iff.addDataScheme("package");
 			registerReceiver(mPackageChangeReceiver, iff);
 
-			// Listen for progress reports
-			IntentFilter filter = new IntentFilter();
-			filter.addAction(ActivityShare.cProgressReport);
-			LocalBroadcastManager.getInstance(this).registerReceiver(mProgressReceiver, filter);
-
 			// First run
 			if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFirstRun, true, false)) {
 				optionAbout();
@@ -376,8 +358,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		super.onDestroy();
 		if (mPackageChangeReceiver != null)
 			unregisterReceiver(mPackageChangeReceiver);
-		if (mProgressReceiver != null)
-			LocalBroadcastManager.getInstance(this).unregisterReceiver(mProgressReceiver);
 	}
 
 	@Override
