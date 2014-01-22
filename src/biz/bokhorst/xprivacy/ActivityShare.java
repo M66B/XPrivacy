@@ -309,7 +309,9 @@ public class ActivityShare extends Activity {
 
 		if (requestCode == ACTIVITY_IMPORT_SELECT) {
 			// Import select
-			if (resultCode != RESULT_CANCELED && dataIntent != null) {
+			if (resultCode == RESULT_CANCELED || dataIntent == null)
+				finish();
+			else {
 				String fileName = dataIntent.getData().getPath();
 				mFileName = fileName.replace("/document/primary:", Environment.getExternalStorageDirectory()
 						.getAbsolutePath() + File.separatorChar);
