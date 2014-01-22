@@ -368,7 +368,7 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <!-- Thin divider -->
+    <!-- Progress -->
 
     <View
         android:id="@+id/vProgressEmpty"

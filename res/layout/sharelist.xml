@@ -11,23 +11,12 @@
 
     <!-- Header -->
 
-    <LinearLayout
-        android:id="@+id/llDescription"
+    <TextView
+        android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="3dip"
-        android:visibility="gone" >
-
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-    </LinearLayout>
+        android:autoLink="web"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <!-- Progress -->
 
@@ -35,13 +24,16 @@
         android:id="@+id/rlProgress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/llDescription" >
+        android:layout_below="@id/tvDescription"
+        android:paddingTop="3dip" >
 
         <View
             android:id="@+id/vShareProgressEmpty"
             android:layout_width="match_parent"
-            android:layout_height="3dip"
-            android:layout_alignParentTop="true" />
+            android:layout_height="1dip"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="-3dip"
+            android:background="@android:color/darker_gray" />
 
         <View
             android:id="@+id/vShareProgressFull"

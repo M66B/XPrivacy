@@ -215,6 +215,9 @@ public class ActivityShare extends Activity {
 					fileChooser();
 				else
 					showFileName();
+			} else {
+				TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+				tvDescription.setText(getBaseURL(ActivityShare.this));
 			}
 
 			// Reference buttons
@@ -1620,9 +1623,7 @@ public class ActivityShare extends Activity {
 
 	private void showFileName() {
 		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
-		View llDescription = findViewById(R.id.llDescription);
 		tvDescription.setText(".../" + new File(mFileName).getName());
-		llDescription.setVisibility(View.VISIBLE);
 		Button btnOk = (Button) findViewById(R.id.btnOk);
 		btnOk.setEnabled(true);
 	}
