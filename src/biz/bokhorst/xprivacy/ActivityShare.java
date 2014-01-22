@@ -211,19 +211,9 @@ public class ActivityShare extends Activity {
 					mFileName = getFileName(hasIntent);
 				else
 					mFileName = (hasIntent ? null : getFileName(false));
-				if (mFileName == null) {
+				if (mFileName == null)
 					fileChooser();
-
-					// Show file choose button
-					Button btnChange = (Button) findViewById(R.id.btnChange);
-					btnChange.setVisibility(View.VISIBLE);
-					btnChange.setOnClickListener(new Button.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							fileChooser();
-						}
-					});
-				} else
+				else
 					showFileName();
 			}
 

@@ -39,7 +39,6 @@
     <string name="menu_tutorial">界面功能指引</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
-    <string name="menu_choose">Choose</string>
     <string name="msg_abort">Aborting</string>
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">新应用</string>

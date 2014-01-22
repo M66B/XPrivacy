@@ -39,7 +39,6 @@
     <string name="menu_tutorial">Zelfstudie</string>
     <string name="menu_exclude">Sluit uit</string>
     <string name="menu_close">Sluiten</string>
-    <string name="menu_choose">Kies</string>
     <string name="msg_abort">Afbreken</string>
     <string name="msg_aborted">Afgebroken</string>
     <string name="msg_new">Nieuw</string>

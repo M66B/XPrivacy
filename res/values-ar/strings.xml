@@ -39,7 +39,6 @@
     <string name="menu_tutorial">تعليمي</string>
     <string name="menu_exclude">إستبعاد</string>
     <string name="menu_close">إغلاق</string>
-    <string name="menu_choose">إختر</string>
     <string name="msg_abort">إيقاف</string>
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">جديد</string>

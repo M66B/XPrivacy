@@ -39,7 +39,6 @@
     <string name="menu_tutorial">Príručka</string>
     <string name="menu_exclude">Vylúčiť</string>
     <string name="menu_close">Zavrieť</string>
-    <string name="menu_choose">Vybrať</string>
     <string name="msg_abort">Rušenie</string>
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Nové</string>
