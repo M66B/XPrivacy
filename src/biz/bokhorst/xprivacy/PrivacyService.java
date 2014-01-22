@@ -13,6 +13,7 @@ import java.util.concurrent.Executors;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
@@ -26,7 +27,7 @@ import android.os.StrictMode.ThreadPolicy;
 import android.util.Log;
 
 public class PrivacyService {
-	private static int mXPrivacyUid = 0;
+	private static int mXUid = -1;
 	private static IPrivacyService mClient = null;
 	private static SQLiteDatabase mDatabase = null;
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -50,16 +51,16 @@ public class PrivacyService {
 
 	public static void register() {
 		try {
-			// http://stackoverflow.com/questions/2630158/detect-application-heap-size-in-android
-			int memoryClass = (int) (Runtime.getRuntime().maxMemory() / 1024L / 1024L);
-			mUseCache = (memoryClass >= 64);
-			Util.log(null, Log.WARN, "Memory class=" + memoryClass);
-
 			// public static void addService(String name, IBinder service)
 			Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
 			Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
 			mAddService.invoke(null, cServiceName, mPrivacyService);
-			Util.log(null, Log.WARN, "Privacy service registered name=" + cServiceName);
+			Util.log(null, Log.WARN, "Service registered name=" + cServiceName);
+
+			// http://stackoverflow.com/questions/2630158/detect-application-heap-size-in-android
+			int memoryClass = (int) (Runtime.getRuntime().maxMemory() / 1024L / 1024L);
+			mUseCache = (memoryClass >= 64);
+			Util.log(null, Log.WARN, "Memory class=" + memoryClass + " cache=" + mUseCache);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -174,6 +175,8 @@ public class PrivacyService {
 					synchronized (mRestrictionCache) {
 						if (mRestrictionCache.containsKey(key)) {
 							cached = true;
+							Util.log(null, Log.INFO, "From cache uid=" + uid + " restriction=" + restrictionName
+									+ " method=" + methodName);
 							restricted = mRestrictionCache.get(key).isRestricted();
 						}
 					}
@@ -512,8 +515,10 @@ public class PrivacyService {
 				if (mUseCache) {
 					CSetting key = new CSetting(uid, name);
 					synchronized (mSettingsCache) {
-						if (mSettingsCache.containsKey(key))
+						if (mSettingsCache.containsKey(key)) {
+							Util.log(null, Log.INFO, "From cache uid=" + uid + " name=" + name);
 							return mSettingsCache.get(key).getValue();
+						}
 					}
 				}
 
@@ -636,19 +641,8 @@ public class PrivacyService {
 
 	private static void enforcePermission() {
 		int uid = Util.getAppId(Binder.getCallingUid());
-		if (mXPrivacyUid == 0) {
-			Context context = getContext();
-			if (context == null)
-				throw new SecurityException("Context is null");
-			String[] packages = context.getPackageManager().getPackagesForUid(uid);
-			String self = PrivacyService.class.getPackage().getName();
-			String calling = (packages.length > 0 ? packages[0] : null);
-			if (self.equals(calling))
-				mXPrivacyUid = uid;
-			else
-				throw new SecurityException("self=" + self + " calling=" + calling);
-		} else if (uid != mXPrivacyUid)
-			throw new SecurityException("uid=" + mXPrivacyUid + " calling=" + Binder.getCallingUid());
+		if (uid != getXUid())
+			throw new SecurityException("uid=" + mXUid + " calling=" + Binder.getCallingUid());
 	}
 
 	private static Context getContext() {
@@ -662,6 +656,21 @@ public class PrivacyService {
 			Util.bug(null, ex);
 			return null;
 		}
+	}
+
+	private static int getXUid() {
+		if (mXUid < 0)
+			try {
+				Context context = getContext();
+				if (context != null) {
+					String self = PrivacyService.class.getPackage().getName();
+					ApplicationInfo xInfo = context.getPackageManager().getApplicationInfo(self, 0);
+					mXUid = xInfo.uid;
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		return mXUid;
 	}
 
 	private static File getDbFile() {
@@ -688,6 +697,7 @@ public class PrivacyService {
 						File target = new File(getDbFile().getParentFile() + File.separator + file.getName());
 						Util.log(null, Log.WARN, "Moving " + file + " to " + target);
 						file.renameTo(target);
+						Util.setPermission(target.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
 					}
 				folder.delete();
 			}
@@ -712,12 +722,12 @@ public class PrivacyService {
 					db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method)");
 					db.setVersion(1);
 					db.setTransactionSuccessful();
-					Util.log(null, Log.WARN, "Privacy database created");
+					Util.log(null, Log.WARN, "Database created");
 				} finally {
 					db.endTransaction();
 				}
 			}
-			Util.log(null, Log.WARN, "Privacy database version=" + db.getVersion());
+			Util.log(null, Log.WARN, "Database version=" + db.getVersion());
 			mDatabase = db;
 		}
 		return mDatabase;

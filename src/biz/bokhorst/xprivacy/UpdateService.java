@@ -189,7 +189,7 @@ public class UpdateService extends IntentService {
 	}
 
 	private void randomizeSettings(Context context, int uid) {
-		boolean random = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingRandom, false, false);
+		boolean random = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingRandom, false, true);
 		if (random) {
 			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT"));
 			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLongitude, PrivacyManager.getRandomProp("LON"));
