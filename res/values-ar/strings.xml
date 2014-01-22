@@ -51,6 +51,7 @@
     <string name="msg_applied">تم تطبيق القالب</string>
     <string name="msg_saved_to" formatted="false">حُفِظت في  %s</string>
     <string name="msg_no_restrictions">لا توجد قيود</string>
+    <string name="msg_technical_error">Technical error</string>
     <string name="msg_sure">هل أنت متأكد ؟</string>
     <string name="msg_select">فضلاَ إختر بعض التطبيقات</string>
     <string name="msg_limit">الرجاء إختر تطبيقات أقل من %d </string>
