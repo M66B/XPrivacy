@@ -914,13 +914,15 @@ public class ActivityShare extends Activity {
 		@Override
 		protected void onPostExecute(Throwable result) {
 			// Mark as failed the apps that weren't found
-			List<AppHolder> listWaiting = new ArrayList<AppHolder>();
-			listWaiting.addAll(mAppAdapter.mAppsWaiting);
-			for (AppHolder app : listWaiting) {
-				mAppAdapter.setState(app.appInfo.getUid(), STATE_FAILURE);
-				mAppAdapter.setMessage(app.appInfo.getUid(), getString(R.string.msg_no_restrictions));
+			if (result != null && !(result instanceof AbortException)) {
+				List<AppHolder> listWaiting = new ArrayList<AppHolder>();
+				listWaiting.addAll(mAppAdapter.mAppsWaiting);
+				for (AppHolder app : listWaiting) {
+					mAppAdapter.setState(app.appInfo.getUid(), STATE_FAILURE);
+					mAppAdapter.setMessage(app.appInfo.getUid(), getString(R.string.msg_no_restrictions));
+				}
+				mAppAdapter.notifyDataSetChanged();
 			}
-			mAppAdapter.notifyDataSetChanged();
 
 			done(result);
 			super.onPostExecute(result);
