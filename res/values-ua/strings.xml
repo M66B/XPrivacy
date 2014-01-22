@@ -64,6 +64,7 @@
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_migrated">Migration complete</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>Велика увага була приділена розробці та тестуванню XPrivacy, 
 але не можна гарантувати, що вона буде працювати бездоганно на всіх пристроях та зі всімома програмами.
 \n\nВикористовуйте виключно на свій страх та ризик.</b>\n\nДив. також ліцензію:</string>

@@ -303,30 +303,49 @@ public class Requirements {
 		sendSupportInfo(sb.toString(), context);
 	}
 
-	public static void sendSupportInfo(String text, Context context) {
-		String xversion = null;
-		try {
-			PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-			xversion = pInfo.versionName;
-		} catch (Throwable ex) {
-		}
+	public static void sendSupportInfo(final String text, final Context context) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setTitle(context.getString(R.string.app_name));
+		alertDialogBuilder.setMessage(context.getString(R.string.msg_support_info));
+		alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int _which) {
+						String xversion = null;
+						try {
+							PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+							xversion = pInfo.versionName;
+						} catch (Throwable ex) {
+						}
 
-		StringBuilder sb = new StringBuilder(text);
-		sb.insert(0, "\r\n");
-		sb.insert(0, String.format("Model: %s (%s)\r\n", Build.MODEL, Build.PRODUCT));
-		sb.insert(0, String.format("Android version: %s (SDK %d)\r\n", Build.VERSION.RELEASE, Build.VERSION.SDK_INT));
-		sb.insert(0, String.format("XPrivacy version: %s\r\n", xversion));
+						StringBuilder sb = new StringBuilder(text);
+						sb.insert(0, "\r\n");
+						sb.insert(0, String.format("Model: %s (%s)\r\n", Build.MODEL, Build.PRODUCT));
+						sb.insert(0, String.format("Android version: %s (SDK %d)\r\n", Build.VERSION.RELEASE,
+								Build.VERSION.SDK_INT));
+						sb.insert(0, String.format("XPrivacy version: %s\r\n", xversion));
 
-		Intent sendEmail = new Intent(Intent.ACTION_SEND);
-		sendEmail.setType("message/rfc822");
-		sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
-		sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy support info");
-		sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
-		sendEmail.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(Util.getDataFile()));
-		try {
-			context.startActivity(sendEmail);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
+						Intent sendEmail = new Intent(Intent.ACTION_SEND);
+						sendEmail.setType("message/rfc822");
+						sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
+						sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy support info");
+						sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
+						sendEmail.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(Util.getDataFile()));
+						try {
+							context.startActivity(sendEmail);
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						}
+					}
+				});
+		alertDialogBuilder.setNegativeButton(context.getString(android.R.string.cancel),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 }
