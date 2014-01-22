@@ -437,6 +437,11 @@ public class ActivityShare extends Activity {
 			runOnUiThread(changeNotifier);
 		}
 
+		public void setState(int uid, int state) {
+			AppHolder app = mAppsByUid.get(uid);
+			app.state = state;
+		}
+
 		public void setMessage(int uid, String message) {
 			AppHolder app = mAppsByUid.get(uid);
 			app.message = message;
@@ -911,8 +916,10 @@ public class ActivityShare extends Activity {
 			// Mark as failed the apps that weren't found
 			List<AppHolder> listWaiting = new ArrayList<AppHolder>();
 			listWaiting.addAll(mAppAdapter.mAppsWaiting);
-			for (AppHolder app : listWaiting)
-				mAppAdapter.setState(app.appInfo.getUid(), STATE_FAILURE, getString(R.string.msg_no_restrictions));
+			for (AppHolder app : listWaiting) {
+				mAppAdapter.setState(app.appInfo.getUid(), STATE_FAILURE);
+				mAppAdapter.setMessage(app.appInfo.getUid(), getString(R.string.msg_no_restrictions));
+			}
 			mAppAdapter.notifyDataSetChanged();
 
 			done(result);
@@ -1075,6 +1082,7 @@ public class ActivityShare extends Activity {
 				// Restart notifications
 				for (int uid : mListRestartUid)
 					mAppAdapter.setMessage(uid, getString(R.string.msg_restart));
+				mAppAdapter.notifyDataSetChanged();
 			}
 		}
 
@@ -1217,8 +1225,8 @@ public class ActivityShare extends Activity {
 								} else {
 									int errno = status.getInt("errno");
 									String message = status.getString("error");
-									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, message);
-									throw new ServerException(errno, message);
+									ServerException ex = new ServerException(errno, message);
+									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
 								}
 							} else {
 								// Failed
@@ -1418,12 +1426,15 @@ public class ActivityShare extends Activity {
 							} else {
 								int errno = status.getInt("errno");
 								String message = status.getString("error");
-								mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, message);
+								ServerException ex = new ServerException(errno, message);
 
 								// Mark as unregistered
-								if (errno == ServerException.cErrorNotActivated)
+								if (errno == ServerException.cErrorNotActivated) {
 									PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered,
 											Boolean.toString(false));
+									throw ex;
+								} else
+									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
 							}
 						} else {
 							// Failed
