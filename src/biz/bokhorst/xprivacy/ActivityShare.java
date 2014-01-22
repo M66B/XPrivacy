@@ -1406,6 +1406,9 @@ public class ActivityShare extends Activity {
 							jRoot.put("signature", license[2]);
 						}
 
+						if (mAbort)
+							throw new AbortException(ActivityShare.this);
+
 						mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING,
 								ActivityShare.this.getString(R.string.menu_submit));
 
