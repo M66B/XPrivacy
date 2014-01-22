@@ -680,14 +680,6 @@ public class PrivacyService {
 
 	public static void setupDatebase() {
 		try {
-			// Set file permission
-			Util.setPermission(getDbFile().getParentFile().getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
-			if (getDbFile().exists())
-				Util.setPermission(getDbFile().getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
-			File journal = new File(getDbFile() + "-journal");
-			if (journal.exists())
-				Util.setPermission(journal.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
-
 			// Move database from experimental location
 			File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
 			if (folder.exists()) {
@@ -697,10 +689,17 @@ public class PrivacyService {
 						File target = new File(getDbFile().getParentFile() + File.separator + file.getName());
 						Util.log(null, Log.WARN, "Moving " + file + " to " + target);
 						file.renameTo(target);
-						Util.setPermission(target.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
 					}
 				folder.delete();
 			}
+
+			// Set file permission
+			Util.setPermission(getDbFile().getParentFile().getAbsolutePath(), 0771, -1, PrivacyManager.cAndroidUid);
+			if (getDbFile().exists())
+				Util.setPermission(getDbFile().getAbsolutePath(), 0770, -1, PrivacyManager.cAndroidUid);
+			File journal = new File(getDbFile() + "-journal");
+			if (journal.exists())
+				Util.setPermission(journal.getAbsolutePath(), 0770, -1, PrivacyManager.cAndroidUid);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -726,6 +725,9 @@ public class PrivacyService {
 				} finally {
 					db.endTransaction();
 				}
+
+				if (dbFile.exists())
+					Util.setPermission(dbFile.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
 			}
 			Util.log(null, Log.WARN, "Database version=" + db.getVersion());
 			mDatabase = db;
