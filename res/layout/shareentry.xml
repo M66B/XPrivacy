@@ -11,7 +11,8 @@
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:contentDescription="@string/help_application" />
+        android:contentDescription="@string/help_application"
+        android:paddingLeft="3dip" />
 
     <TextView
         android:id="@+id/tvApp"
@@ -19,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/imgIcon"
-        android:paddingLeft="3dip"
+        android:paddingLeft="6dip"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
@@ -29,8 +30,8 @@
         android:layout_height="32dip"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginRight="3dip"
         android:contentDescription="@string/help_application"
-        android:paddingRight="6dip"
         android:visibility="invisible" />
 
     <TextView
@@ -50,7 +51,7 @@
         android:layout_height="32dip"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:paddingRight="6dip"
+        android:layout_marginRight="3dip"
         android:visibility="gone" />
 
 </RelativeLayout>

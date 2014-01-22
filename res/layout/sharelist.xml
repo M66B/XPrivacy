@@ -5,29 +5,18 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ActivityShare" >
 
-    <View
-        android:id="@+id/vShareProgressEmpty"
-        android:layout_width="match_parent"
-        android:layout_height="3dip"
-        android:layout_alignParentTop="true" />
-
-    <View
-        android:id="@+id/vShareProgressFull"
-        android:layout_width="0dip"
-        android:layout_height="3dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="?android:attr/colorActivatedHighlight" />
+    <!-- Header -->
 
     <LinearLayout
         android:id="@+id/llDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/vShareProgressFull"
         android:orientation="horizontal"
+        android:paddingBottom="3dip"
         android:visibility="gone" >
 
         <TextView
@@ -47,6 +36,31 @@
             android:text="@string/menu_choose"
             android:visibility="gone" />
     </LinearLayout>
+
+    <!-- Progress -->
+
+    <RelativeLayout
+        android:id="@+id/rlProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llDescription" >
+
+        <View
+            android:id="@+id/vShareProgressEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="3dip"
+            android:layout_alignParentTop="true" />
+
+        <View
+            android:id="@+id/vShareProgressFull"
+            android:layout_width="0dip"
+            android:layout_height="3dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="?android:attr/colorActivatedHighlight" />
+    </RelativeLayout>
+
+    <!-- Footer -->
 
     <LinearLayout
         android:id="@+id/llButtons"
@@ -90,12 +104,15 @@
         android:layout_above="@id/llButtons"
         android:background="@android:color/darker_gray" />
 
+    <!-- What it is all about -->
+
     <ListView
         android:id="@+id/lvShare"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/vBorder"
-        android:layout_below="@id/llDescription"
+        android:layout_below="@id/rlProgress"
+        android:layout_marginTop="6dip"
         android:scrollbarStyle="insideInset" />
 
 </RelativeLayout>
