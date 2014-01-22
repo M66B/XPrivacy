@@ -285,10 +285,6 @@ public class ActivityShare extends Activity {
 							}
 						}
 					}
-
-					// Unknown action
-					else
-						Util.log(null, Log.WARN, "Unknown share action: " + action);
 				}
 			});
 
@@ -337,16 +333,6 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	private void showFileName() {
-		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
-		View llDescription = findViewById(R.id.llDescription);
-		tvDescription.setText(getString(mActionId == R.string.menu_import ? R.string.msg_import : R.string.msg_export,
-				mFileName));
-		llDescription.setVisibility(View.VISIBLE);
-		Button btnOk = (Button) findViewById(R.id.btnOk);
-		btnOk.setEnabled(true);
-	}
-
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
@@ -362,7 +348,7 @@ public class ActivityShare extends Activity {
 			mAppAdapter.remove(mAppAdapter.getItem(info.position));
 
 			// Check submit limit
-			if (mAppAdapter.getCount() < cSubmitLimit + 1 && mActionId == R.string.menu_submit) {
+			if (mActionId == R.string.menu_submit && mAppAdapter.getCount() <= cSubmitLimit) {
 				Button btnOk = (Button) findViewById(R.id.btnOk);
 				btnOk.setEnabled(true);
 			}
@@ -394,8 +380,8 @@ public class ActivityShare extends Activity {
 	@SuppressLint("DefaultLocale")
 	private class AppListAdapter extends ArrayAdapter<AppHolder> {
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		public List<AppHolder> mAppsWaiting;
-		private List<AppHolder> mAppsDone;
+		public List<AppHolder> mAppsWaiting = new ArrayList<AppHolder>();
+		private List<AppHolder> mAppsDone = new ArrayList<AppHolder>();
 		private ChangeNotifier changeNotifier = new ChangeNotifier();
 
 		private class ChangeNotifier implements Runnable {
@@ -417,32 +403,28 @@ public class ActivityShare extends Activity {
 
 		public AppListAdapter(Context context, int resource, List<AppHolder> objects) {
 			super(context, resource, objects);
-			mAppsWaiting = new ArrayList<AppHolder>();
 			mAppsWaiting.addAll(objects);
-			mAppsDone = new ArrayList<AppHolder>();
 		}
 
-		public List<Integer> getUids() {
+		public List<Integer> getListUid() {
 			List<Integer> uids = new ArrayList<Integer>();
-			for (int i = 0; i < this.getCount(); i++) {
+			for (int i = 0; i < this.getCount(); i++)
 				uids.add(this.getItem(i).appInfo.getUid());
-			}
 			return uids;
 		}
 
 		public List<ApplicationInfoEx> getListAppInfo() {
 			List<ApplicationInfoEx> apps = new ArrayList<ApplicationInfoEx>();
-			for (int i = 0; i < this.getCount(); i++) {
+			for (int i = 0; i < this.getCount(); i++)
 				apps.add(this.getItem(i).appInfo);
-			}
 			return apps;
 		}
 
 		public void setState(int uid, int state) {
 			AppHolder app = mAppsByUid.get(uid);
 			// Make sure apps done or in progress are listed first
-			// All operations except importing treat the apps in the listed
-			// order
+			// All operations except importing
+			// treat the apps in the listed order
 			if (mActionId == R.string.menu_import && mAppsWaiting.contains(app)) {
 				mAppsWaiting.remove(app);
 				mAppsDone.add(app);
@@ -577,9 +559,10 @@ public class ActivityShare extends Activity {
 					Util.bug(null, ex);
 				}
 			}
+
 			if (mActionId == R.string.menu_restriction_all) {
 				mSomeRestricted = some;
-				mActionId = some ? R.string.menu_clear_all : R.string.menu_restrict_all;
+				mActionId = (some ? R.string.menu_clear_all : R.string.menu_restrict_all);
 				Util.log(null, Log.WARN, "Toggle means clear=" + some);
 			}
 
@@ -630,7 +613,7 @@ public class ActivityShare extends Activity {
 		protected String doInBackground(String... params) {
 			try {
 				// Get data
-				List<Integer> lstUid = mAppAdapter.getUids();
+				List<Integer> lstUid = mAppAdapter.getListUid();
 				final String restriction = params[0];
 
 				// Initialize progress
@@ -696,7 +679,7 @@ public class ActivityShare extends Activity {
 					// Export without ui
 					listUid = (List<Integer>) params[1];
 				} else {
-					listUid = mAppAdapter.getUids();
+					listUid = mAppAdapter.getListUid();
 				}
 
 				Util.log(null, Log.INFO, "Exporting " + mFile);
@@ -861,7 +844,7 @@ public class ActivityShare extends Activity {
 			try {
 				mFile = (File) params[0];
 
-				List<Integer> listUidSelected = mAppAdapter.getUids();
+				List<Integer> listUidSelected = mAppAdapter.getListUid();
 
 				// Progress
 				mProgressCurrent = 0;
@@ -1348,6 +1331,7 @@ public class ActivityShare extends Activity {
 		}
 	}
 
+
 	@SuppressLint("DefaultLocale")
 	private class SubmitTask extends AsyncTask<int[], Integer, String> {
 		@Override
@@ -1554,6 +1538,7 @@ public class ActivityShare extends Activity {
 		}
 	}
 
+
 	public static boolean registerDevice(final Context context) {
 		if (Util.hasProLicense(context) == null
 				&& !PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingRegistered, false, false)) {
@@ -1661,6 +1646,7 @@ public class ActivityShare extends Activity {
 		}
 	}
 
+
 	// Helper methods
 
 	private void blueStreakOfProgress(Integer current, Integer max) {
@@ -1681,8 +1667,8 @@ public class ActivityShare extends Activity {
 
 	private void done(String result) {
 		// Check result string and display toast with error
-		// TODO: it might be better to put this in a dialog box asking whether
-		// to send debugging info
+		// TODO: it might be better to put this in a dialog box
+		// asking whether to send debugging info
 		if (result != null)
 			Toast.makeText(this, result, Toast.LENGTH_LONG).show();
 
@@ -1719,6 +1705,17 @@ public class ActivityShare extends Activity {
 		Intent intent = Intent.createChooser(chooseFile, getString(R.string.app_name));
 		startActivityForResult(intent, ACTIVITY_IMPORT_SELECT);
 	}
+
+	private void showFileName() {
+		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+		View llDescription = findViewById(R.id.llDescription);
+		tvDescription.setText(getString(mActionId == R.string.menu_import ? R.string.msg_import : R.string.msg_export,
+				mFileName));
+		llDescription.setVisibility(View.VISIBLE);
+		Button btnOk = (Button) findViewById(R.id.btnOk);
+		btnOk.setEnabled(true);
+	}
+
 
 	public static String getBaseURL(Context context) {
 		if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingHttps, true, true))
