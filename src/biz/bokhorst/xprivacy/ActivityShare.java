@@ -1137,7 +1137,8 @@ public class ActivityShare extends Activity {
 					try {
 						publishProgress(++mProgressCurrent, lstApp.size() + 1);
 						if (!appInfo.isSystem() || lstApp.size() == 1) {
-							mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING, null);
+							mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING,
+									ActivityShare.this.getString(R.string.menu_fetch));
 
 							JSONArray appName = new JSONArray();
 							for (String name : appInfo.getApplicationName())
@@ -1179,6 +1180,9 @@ public class ActivityShare extends Activity {
 
 							if (mAbort)
 								throw new AbortException(ActivityShare.this);
+
+							mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING,
+									ActivityShare.this.getString(R.string.msg_applying));
 
 							if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
 								// Succeeded
@@ -1262,7 +1266,8 @@ public class ActivityShare extends Activity {
 
 						// Update progess
 						publishProgress(++mProgressCurrent, lstApp.size() + 1);
-						mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING, null);
+						mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING,
+								ActivityShare.this.getString(R.string.msg_loading));
 
 						// Check if any account allowed
 						boolean allowedAccounts = false;
@@ -1380,6 +1385,9 @@ public class ActivityShare extends Activity {
 							jRoot.put("email", license[1]);
 							jRoot.put("signature", license[2]);
 						}
+
+						mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING,
+								ActivityShare.this.getString(R.string.menu_submit));
 
 						// Submit
 						HttpParams httpParams = new BasicHttpParams();
