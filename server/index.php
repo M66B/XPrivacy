@@ -46,14 +46,14 @@
 		$data = json_decode($body);
 		if (empty($body) || empty($data)) {
 			log_error('json: empty request', $my_email, $data);
-			echo json_encode(array('ok' => false, 'errno' => 1, 'error' => 'Empty request'));
+			echo json_encode(array('ok' => false, 'errno' => 101, 'error' => 'Empty request'));
 			exit();
 		}
 
 		// Check XPrivacy version
 		if (empty($data->xprivacy_version) || (int)$data->xprivacy_version < 219) {
 			//log_error('json: XPrivacy version: ' . $data->xprivacy_version, $my_email, $data);
-			echo json_encode(array('ok' => false, 'errno' => 2, 'error' => 'Please upgrade to at least XPrivacy version 1.11'));
+			echo json_encode(array('ok' => false, 'errno' => 102, 'error' => 'Please upgrade to at least XPrivacy version 1.11'));
 			exit();
 		}
 
@@ -61,7 +61,7 @@
 		$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 		if ($db->connect_errno) {
 			log_error('json: database connect: ' . $db->connect_error, $my_email, $data);
-			echo json_encode(array('ok' => false, 'errno' => 3, 'error' => 'Error connecting to database'));
+			echo json_encode(array('ok' => false, 'errno' => 103, 'error' => 'Error connecting to database'));
 			exit();
 		}
 
@@ -73,12 +73,12 @@
 			// Validate
 			if (empty($data->android_id)) {
 				log_error('submit: Android ID missing', $my_email, $data);
-				echo json_encode(array('ok' => false, 'errno' => 4, 'error' => 'Android ID missing'));
+				echo json_encode(array('ok' => false, 'errno' => 202, 'error' => 'Android ID missing'));
 				exit();
 			}
 			if (empty($data->package_name)) {
 				log_error('submit: package name missing', $my_email, $data);
-				echo json_encode(array('ok' => false, 'errno' => 5, 'error' => 'Package name missing'));
+				echo json_encode(array('ok' => false, 'errno' => 203, 'error' => 'Package name missing'));
 				exit();
 			}
 
@@ -110,7 +110,7 @@
 			// Validate
 			if (count($data->package_name) > $max_packages) {
 				log_error('submit: too many packages count=' . count($data->package_name) . '/' . $max_packages, $my_email, $data);
-				echo json_encode(array('ok' => false, 'errno' => 6, 'error' => 'Too many packages for application'));
+				echo json_encode(array('ok' => false, 'errno' => 204, 'error' => 'Too many packages for application'));
 				exit();
 			}
 
@@ -231,7 +231,7 @@
 				}
 
 			// Send reponse
-			echo json_encode(array('ok' => $ok, 'errno' => ($ok ? 0 : 7), 'error' => ($ok ? '' : 'Error storing restrictions')));
+			echo json_encode(array('ok' => $ok, 'errno' => ($ok ? 0 : 205), 'error' => ($ok ? '' : 'Error storing restrictions')));
 			exit();
 		}
 
@@ -244,14 +244,14 @@
 
 			if (empty($signature) || $signature != $data->signature) {
 				log_error('fetch: not authorized', $my_email, $data);
-				echo json_encode(array('ok' => false, 'errno' => 8, 'error' => 'Not authorized'));
+				echo json_encode(array('ok' => false, 'errno' => 301, 'error' => 'Not authorized'));
 				exit();
 			}
 
 			// Validate
 			if (empty($data->package_name)) {
 				log_error('fetch: package name missing', $my_email, $data);
-				echo json_encode(array('ok' => false, 'errno' => 9, 'error' => 'Package name missing'));
+				echo json_encode(array('ok' => false, 'errno' => 302, 'error' => 'Package name missing'));
 				exit();
 			}
 
@@ -262,7 +262,7 @@
 			// Validate
 			if (count($data->package_name) > $max_packages) {
 				log_error('fetch: too many packages count=' . count($data->package_name) . '/' . $max_packages, $my_email, $data);
-				echo json_encode(array('ok' => false, 'errno' => 10, 'error' => 'Too many packages for application'));
+				echo json_encode(array('ok' => false, 'errno' => 303, 'error' => 'Too many packages for application'));
 				exit();
 			}
 
@@ -314,14 +314,14 @@
 
 			// Send reponse
 			if ($ok && $empty)
-				echo json_encode(array('ok' => false, 'errno' => 11, 'error' => 'No restrictions available', 'settings' => $settings));
+				echo json_encode(array('ok' => false, 'errno' => 304, 'error' => 'No restrictions available', 'settings' => $settings));
 			else
-				echo json_encode(array('ok' => $ok, 'errno' => ($ok ? 0 : 12), 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
+				echo json_encode(array('ok' => $ok, 'errno' => ($ok ? 0 : 305), 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
 			exit();
 		}
 		else {
 			log_error('json: unknown action', $my_email, $data);
-			echo json_encode(array('ok' => false, 'errno' => 13, 'error' => 'Unknown action: ' . $action));
+			echo json_encode(array('ok' => false, 'errno' => 104, 'error' => 'Unknown action: ' . $action));
 			exit();
 		}
 

@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/imgIcon"
-        android:paddingLeft="6dip"
+        android:paddingLeft="3dip"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
@@ -30,6 +30,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/help_application"
+        android:paddingRight="6dip"
         android:visibility="invisible" />
 
     <TextView
@@ -38,16 +39,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/imgResult"
+        android:paddingRight="3dip"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
     <ProgressBar
         android:id="@+id/pbRunning"
         style="?android:attr/progressBarStyleInverse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:paddingRight="6dip"
         android:visibility="gone" />
 
 </RelativeLayout>

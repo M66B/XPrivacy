@@ -3,7 +3,6 @@ package biz.bokhorst.xprivacy;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -23,7 +22,6 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
@@ -32,11 +30,9 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xmlpull.v1.XmlSerializer;
@@ -61,7 +57,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
@@ -420,8 +415,9 @@ public class ActivityShare extends Activity {
 			return apps;
 		}
 
-		public void setState(int uid, int state) {
+		public void setState(int uid, int state, String message) {
 			AppHolder app = mAppsByUid.get(uid);
+			app.message = message;
 			// Make sure apps done or in progress are listed first
 			// All operations except importing
 			// treat the apps in the listed order
@@ -442,6 +438,11 @@ public class ActivityShare extends Activity {
 			app.state = state;
 			changeNotifier.setScrollTo(mAppAdapter.getPosition(app));
 			runOnUiThread(changeNotifier);
+		}
+
+		public void setMessage(int uid, String message) {
+			AppHolder app = mAppsByUid.get(uid);
+			app.message = message;
 		}
 
 		private class ViewHolder {
@@ -494,7 +495,7 @@ public class ActivityShare extends Activity {
 			holder.tvName.setText(xApp.appInfo.toString());
 
 			// Show app share state
-			holder.tvMessage.setText("");
+			holder.tvMessage.setText(xApp.message == null ? "" : xApp.message);
 			switch (xApp.state) {
 			case STATE_WAITING:
 				holder.imgResult.setVisibility(View.INVISIBLE);
@@ -503,22 +504,16 @@ public class ActivityShare extends Activity {
 			case STATE_RUNNING:
 				holder.imgResult.setVisibility(View.INVISIBLE);
 				holder.pbRunning.setVisibility(View.VISIBLE);
-				if (xApp.message != null)
-					holder.tvMessage.setText(xApp.message);
 				break;
 			case STATE_SUCCESS:
 				holder.imgResult.setBackgroundResource(R.drawable.btn_check_buttonless_on);
 				holder.imgResult.setVisibility(View.VISIBLE);
 				holder.pbRunning.setVisibility(View.INVISIBLE);
-				if (xApp.message != null)
-					holder.tvMessage.setText(xApp.message);
 				break;
 			case STATE_FAILURE:
 				holder.imgResult.setBackgroundResource(R.drawable.indicator_input_error);
 				holder.imgResult.setVisibility(View.VISIBLE);
 				holder.pbRunning.setVisibility(View.INVISIBLE);
-				if (xApp.message != null)
-					holder.tvMessage.setText(xApp.message);
 				break;
 			}
 
@@ -608,24 +603,22 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	private class ToggleTask extends AsyncTask<String, Integer, String> {
+	private class ToggleTask extends AsyncTask<String, Integer, Throwable> {
 		@Override
-		protected String doInBackground(String... params) {
-			try {
-				// Get data
-				List<Integer> lstUid = mAppAdapter.getListUid();
-				final String restriction = params[0];
+		protected Throwable doInBackground(String... params) {
+			// Get data
+			mProgressCurrent = 0;
+			List<Integer> lstUid = mAppAdapter.getListUid();
+			final String restriction = params[0];
 
-				// Initialize progress
-				mProgressCurrent = 0;
-
-				for (Integer uid : lstUid) {
+			for (Integer uid : lstUid)
+				try {
 					if (mAbort)
-						throw new Exception("Abort");
+						throw new AbortException();
 
 					// Update progess
 					publishProgress(++mProgressCurrent, lstUid.size() + 1);
-					mAppAdapter.setState(uid, STATE_RUNNING);
+					mAppAdapter.setState(uid, STATE_RUNNING, null);
 
 					boolean restart = false;
 					if (restriction == null && mSomeRestricted)
@@ -638,17 +631,13 @@ public class ActivityShare extends Activity {
 						restart = PrivacyManager.setRestricted(null, uid, restriction, null, !mSomeRestricted, true)
 								|| restart;
 
-					if (restart)
-						mAppsByUid.get(uid).message = getString(R.string.msg_restart);
-					mAppAdapter.setState(uid, STATE_SUCCESS);
+					mAppAdapter.setState(uid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
+				} catch (Throwable ex) {
+					mAppAdapter.setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
+					return ex;
 				}
-				return null;
-			} catch (Throwable ex) {
-				if (ex instanceof Exception && ex.getMessage().equals("Abort"))
-					return null;
-				else
-					return ex.getMessage();
-			}
+
+			return null;
 		}
 
 		@Override
@@ -658,18 +647,18 @@ public class ActivityShare extends Activity {
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(Throwable result) {
 			done(result);
 			super.onPostExecute(result);
 		}
 	}
 
-	private class ExportTask extends AsyncTask<Object, Integer, String> {
+	private class ExportTask extends AsyncTask<Object, Integer, Throwable> {
 		private File mFile;
 
 		@Override
 		@SuppressWarnings("unchecked")
-		protected String doInBackground(Object... params) {
+		protected Throwable doInBackground(Object... params) {
 			mProgressCurrent = 0;
 			try {
 				mFile = (File) params[0];
@@ -685,13 +674,11 @@ public class ActivityShare extends Activity {
 				Util.log(null, Log.INFO, "Exporting " + mFile);
 				String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 
-				FileOutputStream fos = new FileOutputStream(mFile); // FileNotFoundException
+				FileOutputStream fos = new FileOutputStream(mFile);
 				try {
 					// Start serialization
 					XmlSerializer serializer = Xml.newSerializer();
 					serializer.setOutput(fos, "UTF-8");
-					// IOException, IllegalArgumentException,
-					// IllegalStateException
 					serializer.startDocument(null, Boolean.valueOf(true));
 					serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 					serializer.startTag(null, "XPrivacy");
@@ -719,66 +706,70 @@ public class ActivityShare extends Activity {
 					}
 
 					// Process application settings and restrictions
-					for (int uid : listUid) {
-						if (mAbort)
-							throw new Exception("Abort");
+					for (int uid : listUid)
+						try {
+							if (mAbort)
+								throw new AbortException();
 
-						publishProgress(++mProgressCurrent, listUid.size() + 1);
-						if (mThemeId != android.R.style.Theme_NoDisplay)
-							mAppAdapter.setState(uid, STATE_RUNNING);
+							publishProgress(++mProgressCurrent, listUid.size() + 1);
+							if (mThemeId != android.R.style.Theme_NoDisplay)
+								mAppAdapter.setState(uid, STATE_RUNNING, null);
 
-						// Process application settings
-						Map<String, String> mapAppSetting = PrivacyManager.getSettings(uid);
-						for (String name : mapAppSetting.keySet()) {
-							// Bind accounts/contacts to same device
-							if (name.startsWith(PrivacyManager.cSettingAccount)
-									|| name.startsWith(PrivacyManager.cSettingContact)
-									|| name.startsWith(PrivacyManager.cSettingRawContact)) {
-								name += "." + android_id;
+							// Process application settings
+							Map<String, String> mapAppSetting = PrivacyManager.getSettings(uid);
+							for (String name : mapAppSetting.keySet()) {
+								// Bind accounts/contacts to same device
+								if (name.startsWith(PrivacyManager.cSettingAccount)
+										|| name.startsWith(PrivacyManager.cSettingContact)
+										|| name.startsWith(PrivacyManager.cSettingRawContact))
+									name += "." + android_id;
+
+								String value = mapAppSetting.get(name);
+
+								// Serialize setting
+								serializer.startTag(null, "Setting");
+								serializer.attribute(null, "Id", Integer.toString(uid));
+								serializer.attribute(null, "Name", name);
+								if (value != null)
+									serializer.attribute(null, "Value", value);
+								serializer.endTag(null, "Setting");
 							}
 
-							String value = mapAppSetting.get(name);
+							// Process restrictions
+							for (String restrictionName : PrivacyManager.getRestrictions()) {
+								// Category
+								boolean crestricted = PrivacyManager.getRestricted(null, uid, restrictionName, null,
+										false, false);
+								if (crestricted) {
+									serializer.startTag(null, "Restriction");
+									serializer.attribute(null, "Id", Integer.toString(uid));
+									serializer.attribute(null, "Name", restrictionName);
+									serializer.attribute(null, "Restricted", Boolean.toString(crestricted));
+									serializer.endTag(null, "Restriction");
 
-							// Serialize setting
-							serializer.startTag(null, "Setting");
-							serializer.attribute(null, "Id", Integer.toString(uid));
-							serializer.attribute(null, "Name", name);
-							if (value != null)
-								serializer.attribute(null, "Value", value);
-							serializer.endTag(null, "Setting");
-						}
-
-						// Process restrictions
-						for (String restrictionName : PrivacyManager.getRestrictions()) {
-							// Category
-							boolean crestricted = PrivacyManager.getRestricted(null, uid, restrictionName, null, false,
-									false);
-							if (crestricted) {
-								serializer.startTag(null, "Restriction");
-								serializer.attribute(null, "Id", Integer.toString(uid));
-								serializer.attribute(null, "Name", restrictionName);
-								serializer.attribute(null, "Restricted", Boolean.toString(crestricted));
-								serializer.endTag(null, "Restriction");
-
-								// Methods
-								for (Hook md : PrivacyManager.getHooks(restrictionName)) {
-									boolean mrestricted = PrivacyManager.getRestricted(null, uid, restrictionName,
-											md.getName(), false, false);
-									if (!mrestricted || md.isDangerous()) {
-										serializer.startTag(null, "Restriction");
-										serializer.attribute(null, "Id", Integer.toString(uid));
-										serializer.attribute(null, "Name", restrictionName);
-										serializer.attribute(null, "Method", md.getName());
-										serializer.attribute(null, "Restricted", Boolean.toString(mrestricted));
-										serializer.endTag(null, "Restriction");
+									// Methods
+									for (Hook md : PrivacyManager.getHooks(restrictionName)) {
+										boolean mrestricted = PrivacyManager.getRestricted(null, uid, restrictionName,
+												md.getName(), false, false);
+										if (!mrestricted || md.isDangerous()) {
+											serializer.startTag(null, "Restriction");
+											serializer.attribute(null, "Id", Integer.toString(uid));
+											serializer.attribute(null, "Name", restrictionName);
+											serializer.attribute(null, "Method", md.getName());
+											serializer.attribute(null, "Restricted", Boolean.toString(mrestricted));
+											serializer.endTag(null, "Restriction");
+										}
 									}
 								}
 							}
-						}
-						if (mThemeId != android.R.style.Theme_NoDisplay)
-							mAppAdapter.setState(uid, STATE_SUCCESS);
-					}
 
+							if (mThemeId != android.R.style.Theme_NoDisplay)
+								mAppAdapter.setState(uid, STATE_SUCCESS, null);
+						} catch (Throwable ex) {
+							if (mThemeId != android.R.style.Theme_NoDisplay)
+								mAppAdapter.setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
+							throw ex;
+						}
 					// End serialization
 					serializer.endTag(null, "XPrivacy");
 					serializer.endDocument();
@@ -792,18 +783,9 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				// IOException, IllegalArgumentException
-				// IllegalStateException, Exception
-				if (ex instanceof FileNotFoundException)
-					return "Cannot create file"; // TODO: String resource
-				else if (ex instanceof IOException)
-					return "Error writing to file"; // TODO: String resource
-				else if (ex instanceof Exception && ex.getMessage().equals("Abort")) {
-					// Delete file
+				if (mFile.exists())
 					mFile.delete();
-					return "File deleted"; // TODO: String resource
-				} else
-					return ex.getMessage();
+				return ex;
 			}
 		}
 
@@ -811,13 +793,11 @@ public class ActivityShare extends Activity {
 		protected void onProgressUpdate(Integer... values) {
 			if (mThemeId != android.R.style.Theme_NoDisplay)
 				blueStreakOfProgress(values[0], values[1]);
-			else
-				Util.log(null, Log.WARN, "Exporting progress " + values[0] + "/" + values[1]);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(Throwable result) {
 			if (mThemeId != android.R.style.Theme_NoDisplay) {
 				done(result);
 
@@ -829,18 +809,18 @@ public class ActivityShare extends Activity {
 					startActivity(Intent.createChooser(intent,
 							String.format(getString(R.string.msg_saved_to), mFileName)));
 				}
-			} else {
+			} else
 				finish();
-			}
+
 			super.onPostExecute(result);
 		}
 	}
 
-	private class ImportTask extends AsyncTask<File, Integer, String> {
+	private class ImportTask extends AsyncTask<File, Integer, Throwable> {
 		private File mFile;
 
 		@Override
-		protected String doInBackground(File... params) {
+		protected Throwable doInBackground(File... params) {
 			try {
 				mFile = (File) params[0];
 
@@ -861,12 +841,11 @@ public class ActivityShare extends Activity {
 				FileInputStream fis = null;
 				Map<String, Map<String, List<ImportHandler.MethodDescription>>> mapPackage;
 				try {
-					fis = new FileInputStream(mFile); // FileNotFoundException
+					fis = new FileInputStream(mFile);
 					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
 					ImportHandler importHandler = new ImportHandler(listUidSelected, progress);
 					xmlReader.setContentHandler(importHandler);
 					xmlReader.parse(new InputSource(fis));
-					// IOException, SAXException
 					mapPackage = importHandler.getPackageMap();
 				} finally {
 					if (fis != null)
@@ -879,17 +858,18 @@ public class ActivityShare extends Activity {
 				// Process result (legacy)
 				for (String packageName : mapPackage.keySet()) {
 					if (mAbort)
-						throw new Exception("Abort");
+						throw new AbortException();
 
+					int uid = 0;
 					try {
 						publishProgress(++mProgressCurrent, progressMax + 1);
 
 						// Get uid
-						int uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
+						uid = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.uid;
 
 						if (listUidSelected.size() == 0 || listUidSelected.contains(uid)) {
 							Util.log(null, Log.INFO, "Importing " + packageName);
-							mAppAdapter.setState(uid, STATE_RUNNING);
+							mAppAdapter.setState(uid, STATE_RUNNING, null);
 
 							// Reset existing restrictions
 							boolean restart = PrivacyManager.deleteRestrictions(uid, true);
@@ -905,11 +885,11 @@ public class ActivityShare extends Activity {
 											|| restart;
 							}
 
-							if (restart)
-								mAppsByUid.get(uid).message = getString(R.string.msg_restart);
-							mAppAdapter.setState(uid, STATE_SUCCESS);
+							mAppAdapter.setState(uid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
 						}
-					} catch (NameNotFoundException ex) {
+					} catch (Throwable ex) {
+						if (uid > 0)
+							mAppAdapter.setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
 						Util.log(null, Log.WARN, "Not found package=" + packageName);
 					}
 				}
@@ -919,17 +899,7 @@ public class ActivityShare extends Activity {
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				// FileNotFoundException, IOException, SAXException
-				if (ex instanceof FileNotFoundException)
-					return "File not found"; // TODO: string resource
-				else if (ex instanceof IOException)
-					return "Error reading file"; // TODO: string resource
-				else if (ex instanceof SAXException)
-					return "File is damaged"; // TODO: string resource
-				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
-					return null;
-				else
-					return ex.getMessage();
+				return ex;
 			}
 		}
 
@@ -940,13 +910,14 @@ public class ActivityShare extends Activity {
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(Throwable result) {
 			// Mark as failed the apps that weren't found
-			for (AppHolder app : mAppAdapter.mAppsWaiting) {
-				app.message = getString(R.string.msg_no_restrictions);
-				app.state = STATE_FAILURE;
-			}
+			List<AppHolder> listWaiting = new ArrayList<AppHolder>();
+			listWaiting.addAll(mAppAdapter.mAppsWaiting);
+			for (AppHolder app : listWaiting)
+				mAppAdapter.setState(app.appInfo.getUid(), STATE_FAILURE, getString(R.string.msg_no_restrictions));
 			mAppAdapter.notifyDataSetChanged();
+
 			done(result);
 			super.onPostExecute(result);
 		}
@@ -1064,12 +1035,12 @@ public class ActivityShare extends Activity {
 							// Mark the app we have just imported as a success
 							if (mListRestrictionUid.size() > 0) {
 								int lastUid = mListRestrictionUid.get(mListRestrictionUid.size() - 1);
-								mAppAdapter.setState(lastUid, STATE_SUCCESS);
+								mAppAdapter.setState(lastUid, STATE_SUCCESS, null);
 							}
 
 							// Mark the next one as in progress
 							mListRestrictionUid.add(uid);
-							mAppAdapter.setState(uid, STATE_RUNNING);
+							mAppAdapter.setState(uid, STATE_RUNNING, null);
 							runOnUiThread(mProgress);
 
 							// Apply settings
@@ -1098,38 +1069,15 @@ public class ActivityShare extends Activity {
 		@Override
 		public void endElement(String uri, String localName, String qName) {
 			if (qName.equals("XPrivacy")) {
-				// EOF Mark the last app imported as a success
+				// Mark the last app as a success
 				if (mListRestrictionUid.size() > 0) {
 					int lastUid = mListRestrictionUid.get(mListRestrictionUid.size() - 1);
-					mAppAdapter.setState(lastUid, STATE_SUCCESS);
+					mAppAdapter.setState(lastUid, STATE_SUCCESS, null);
 				}
 
 				// Restart notifications
 				for (int uid : mListRestartUid)
-					mAppsByUid.get(uid).message = getString(R.string.msg_restart);
-
-				// Checks
-				if (mListUidSelected.size() - mListRestrictionUid.size() != mAppAdapter.mAppsWaiting.size()) {
-
-					List<Integer> listWaitingUid = new ArrayList<Integer>();
-					;
-					for (AppHolder app : mAppAdapter.mAppsWaiting)
-						listWaitingUid.add(app.appInfo.getUid());
-
-					Util.log(null, Log.ERROR, "Import list sizes possible mismatch");
-					Util.log(null, Log.ERROR,
-							"Selected (" + mListUidSelected.size() + ") " + TextUtils.join(", ", mListUidSelected));
-					Util.log(
-							null,
-							Log.ERROR,
-							"Imported (" + mListRestrictionUid.size() + ") "
-									+ TextUtils.join(", ", mListRestrictionUid));
-					Util.log(null, Log.ERROR,
-							"Skipped (" + mListAbortedUid.size() + ") " + TextUtils.join(", ", mListAbortedUid));
-					Util.log(null, Log.ERROR, "Skipped or Not found (" + mAppAdapter.mAppsWaiting.size() + ") "
-							+ TextUtils.join(", ", listWaitingUid));
-				} else
-					Util.log(null, Log.INFO, "Import list sizes matched");
+					mAppAdapter.setMessage(uid, getString(R.string.msg_restart));
 			}
 		}
 
@@ -1173,31 +1121,238 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	private class FetchTask extends AsyncTask<int[], Integer, String> {
+	private class FetchTask extends AsyncTask<int[], Integer, Throwable> {
 		@Override
 		@SuppressLint("DefaultLocale")
-		protected String doInBackground(int[]... params) {
+		protected Throwable doInBackground(int[]... params) {
 			try {
 				// Get data
 				List<ApplicationInfoEx> lstApp = mAppAdapter.getListAppInfo();
 
 				String[] license = Util.getProLicenseUnchecked();
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
-				PackageInfo pXPrivacyInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-				// NameNotFoundException
+				PackageInfo xInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 				String confidence = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingConfidence, "", false);
 
 				// Initialize progress
 				mProgressCurrent = 0;
 
 				// Process applications
-				for (ApplicationInfoEx appInfo : lstApp) {
-					if (mAbort)
-						throw new Exception("Abort");
+				for (ApplicationInfoEx appInfo : lstApp)
+					try {
+						if (mAbort)
+							throw new AbortException();
 
-					publishProgress(++mProgressCurrent, lstApp.size() + 1);
-					if (!appInfo.isSystem() || lstApp.size() == 1) {
-						mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING);
+						publishProgress(++mProgressCurrent, lstApp.size() + 1);
+						if (!appInfo.isSystem() || lstApp.size() == 1) {
+							mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING, null);
+
+							JSONArray appName = new JSONArray();
+							for (String name : appInfo.getApplicationName())
+								appName.put(name);
+
+							JSONArray pkgName = new JSONArray();
+							for (String name : appInfo.getPackageName())
+								pkgName.put(name);
+
+							JSONArray pkgVersion = new JSONArray();
+							for (String version : appInfo.getPackageVersionName(ActivityShare.this))
+								pkgVersion.put(version);
+
+							// Encode package
+							JSONObject jRoot = new JSONObject();
+							jRoot.put("protocol_version", cProtocolVersion);
+							jRoot.put("android_id", Util.md5(android_id).toLowerCase());
+							jRoot.put("android_sdk", Build.VERSION.SDK_INT);
+							jRoot.put("xprivacy_version", xInfo.versionCode);
+							jRoot.put("application_name", appName);
+							jRoot.put("package_name", pkgName);
+							jRoot.put("package_version", pkgVersion);
+							jRoot.put("email", license[1]);
+							jRoot.put("signature", license[2]);
+							jRoot.put("confidence", confidence);
+
+							// Fetch
+							HttpParams httpParams = new BasicHttpParams();
+							HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+							HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
+							HttpClient httpclient = new DefaultHttpClient(httpParams);
+
+							HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=fetch");
+							httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+							httpost.setHeader("Accept", "application/json");
+							httpost.setHeader("Content-type", "application/json");
+							HttpResponse response = httpclient.execute(httpost);
+							StatusLine statusLine = response.getStatusLine();
+
+							if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+								// Succeeded
+								ByteArrayOutputStream out = new ByteArrayOutputStream();
+								response.getEntity().writeTo(out);
+								out.close();
+
+								// Deserialize
+								JSONObject status = new JSONObject(out.toString("UTF-8"));
+								if (status.getBoolean("ok")) {
+									JSONArray settings = status.getJSONArray("settings");
+									// Delete existing restrictions
+									boolean restart = PrivacyManager.deleteRestrictions(appInfo.getUid(), true);
+
+									// Set fetched restrictions
+									for (int i = 0; i < settings.length(); i++) {
+										JSONObject entry = settings.getJSONObject(i);
+										String restrictionName = entry.getString("restriction");
+										String methodName = entry.has("method") ? entry.getString("method") : null;
+										int voted_restricted = entry.getInt("restricted");
+										int voted_not_restricted = entry.getInt("not_restricted");
+										boolean restricted = (voted_restricted > voted_not_restricted);
+										if (methodName == null || restricted)
+											restart = PrivacyManager.setRestricted(null, appInfo.getUid(),
+													restrictionName, methodName, restricted, true) || restart;
+									}
+
+									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS,
+											restart ? getString(R.string.msg_restart) : null);
+								} else {
+									int errno = status.getInt("errno");
+									String message = status.getString("error");
+									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, message);
+									throw new ServerException(errno, message);
+								}
+							} else {
+								// Failed
+								response.getEntity().getContent().close();
+								throw new IOException(statusLine.getReasonPhrase());
+							}
+						}
+					} catch (Throwable ex) {
+						mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
+						throw ex;
+					}
+				return null;
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return ex;
+			}
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			blueStreakOfProgress(values[0], values[1]);
+			super.onProgressUpdate(values);
+		}
+
+		@Override
+		protected void onPostExecute(Throwable result) {
+			done(result);
+			super.onPostExecute(result);
+		}
+	}
+
+	@SuppressLint("DefaultLocale")
+	private class SubmitTask extends AsyncTask<int[], Integer, Throwable> {
+		@Override
+		protected Throwable doInBackground(int[]... params) {
+			try {
+				// Get data
+				List<ApplicationInfoEx> lstApp = mAppAdapter.getListAppInfo();
+
+				// Initialize progress
+				mProgressCurrent = 0;
+
+				for (ApplicationInfoEx appInfo : lstApp)
+					try {
+						if (mAbort)
+							throw new AbortException();
+
+						// Update progess
+						publishProgress(++mProgressCurrent, lstApp.size() + 1);
+						mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING, null);
+
+						// Check if any account allowed
+						boolean allowedAccounts = false;
+						AccountManager accountManager = AccountManager.get(ActivityShare.this);
+						for (Account account : accountManager.getAccounts()) {
+							String sha1 = Util.sha1(account.name + account.type);
+							boolean allowed = PrivacyManager.getSettingBool(null, appInfo.getUid(),
+									PrivacyManager.cSettingAccount + sha1, false, false);
+							if (allowed) {
+								allowedAccounts = true;
+								break;
+							}
+						}
+
+						// Check if any application allowed
+						boolean allowedApplications = false;
+						for (ApplicationInfoEx aAppInfo : ApplicationInfoEx.getXApplicationList(ActivityShare.this,
+								null))
+							for (String packageName : aAppInfo.getPackageName()) {
+								boolean allowed = PrivacyManager.getSettingBool(null, aAppInfo.getUid(),
+										PrivacyManager.cSettingApplication + packageName, false, false);
+								if (allowed) {
+									allowedApplications = true;
+									break;
+								}
+							}
+
+						// Check if any contact allowed
+						boolean allowedContacts = false;
+						Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
+								new String[] { ContactsContract.Contacts._ID }, null, null, null);
+						if (cursor != null)
+							try {
+								while (cursor.moveToNext()) {
+									long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+									boolean allowed = PrivacyManager.getSettingBool(null, appInfo.getUid(),
+											PrivacyManager.cSettingContact + id, false, false);
+									if (allowed) {
+										allowedContacts = true;
+										break;
+									}
+								}
+							} finally {
+								cursor.close();
+							}
+
+						// Encode restrictions
+						JSONArray jSettings = new JSONArray();
+						for (String restrictionName : PrivacyManager.getRestrictions()) {
+							boolean restricted = PrivacyManager.getRestricted(null, appInfo.getUid(), restrictionName,
+									null, false, false);
+							// Category
+							long used = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, null);
+							JSONObject jRestriction = new JSONObject();
+							jRestriction.put("restriction", restrictionName);
+							jRestriction.put("restricted", restricted);
+							jRestriction.put("used", used);
+							if (restrictionName.equals(PrivacyManager.cAccounts))
+								jRestriction.put("allowed", allowedAccounts ? 1 : 0);
+							else if (restrictionName.equals(PrivacyManager.cSystem))
+								jRestriction.put("allowed", allowedApplications ? 1 : 0);
+							else if (restrictionName.equals(PrivacyManager.cContacts))
+								jRestriction.put("allowed", allowedContacts ? 1 : 0);
+							jSettings.put(jRestriction);
+
+							// Methods
+							for (Hook md : PrivacyManager.getHooks(restrictionName)) {
+								boolean mRestricted = restricted
+										&& PrivacyManager.getRestricted(null, appInfo.getUid(), restrictionName,
+												md.getName(), false, false);
+								long mUsed = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, md.getName());
+								JSONObject jMethod = new JSONObject();
+								jMethod.put("restriction", restrictionName);
+								jMethod.put("method", md.getName());
+								jMethod.put("restricted", mRestricted);
+								jMethod.put("used", mUsed);
+								jSettings.put(jMethod);
+							}
+						}
+
+						// Get data
+						String[] license = Util.getProLicenseUnchecked();
+						PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+						String android_id = Secure
+								.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 
 						JSONArray appName = new JSONArray();
 						for (String name : appInfo.getApplicationName())
@@ -1207,114 +1362,77 @@ public class ActivityShare extends Activity {
 						for (String name : appInfo.getPackageName())
 							pkgName.put(name);
 
-						JSONArray pkgVersion = new JSONArray();
+						JSONArray pkgVersionName = new JSONArray();
 						for (String version : appInfo.getPackageVersionName(ActivityShare.this))
-							pkgVersion.put(version);
+							pkgVersionName.put(version);
+
+						JSONArray pkgVersionCode = new JSONArray();
+						for (Integer version : appInfo.getPackageVersionCode(ActivityShare.this))
+							pkgVersionCode.put((int) version);
 
 						// Encode package
 						JSONObject jRoot = new JSONObject();
-						jRoot.put("protocol_version", cProtocolVersion); // JSONException
+						jRoot.put("protocol_version", cProtocolVersion);
 						jRoot.put("android_id", Util.md5(android_id).toLowerCase());
 						jRoot.put("android_sdk", Build.VERSION.SDK_INT);
-						jRoot.put("xprivacy_version", pXPrivacyInfo.versionCode);
+						jRoot.put("xprivacy_version", pInfo.versionCode);
 						jRoot.put("application_name", appName);
 						jRoot.put("package_name", pkgName);
-						jRoot.put("package_version", pkgVersion);
-						jRoot.put("email", license[1]);
-						jRoot.put("signature", license[2]);
-						jRoot.put("confidence", confidence);
+						jRoot.put("package_version_name", pkgVersionName);
+						jRoot.put("package_version_code", pkgVersionCode);
+						jRoot.put("settings", jSettings);
+						if (license != null) {
+							jRoot.put("email", license[1]);
+							jRoot.put("signature", license[2]);
+						}
 
-						// Fetch
+						// Submit
 						HttpParams httpParams = new BasicHttpParams();
-						HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
-						HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
+						HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+						HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
 						HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-						HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=fetch");
-						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8"))); // UnsupportedEncodingException
+						HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=submit");
+						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 						httpost.setHeader("Accept", "application/json");
 						httpost.setHeader("Content-type", "application/json");
-						HttpResponse response = httpclient.execute(httpost); // ClientProtocolException
+						HttpResponse response = httpclient.execute(httpost);
 						StatusLine statusLine = response.getStatusLine();
 
 						if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
 							// Succeeded
 							ByteArrayOutputStream out = new ByteArrayOutputStream();
-							response.getEntity().writeTo(out); // IOException
-							out.close(); // IOException
-
-							// Deserialize
-							JSONObject status = new JSONObject(out.toString("UTF-8")); // UnsupportedEncodingException
-							if (status.getBoolean("ok")) { // JSONException
-								JSONArray settings = status.getJSONArray("settings"); // JSONException
-								if (settings.length() > 0) {
-									// Delete existing restrictions
-									boolean restart = PrivacyManager.deleteRestrictions(appInfo.getUid(), true);
-
-									// Set fetched restrictions
-									for (int i = 0; i < settings.length(); i++) {
-										JSONObject entry = settings.getJSONObject(i); // JSONException
-										String restrictionName = entry.getString("restriction");
-										String methodName = entry.has("method") ? entry.getString("method") : null;
-										int voted_restricted = entry.getInt("restricted");
-										int voted_not_restricted = entry.getInt("not_restricted");
-										boolean restricted = (voted_restricted > voted_not_restricted);
-										if (methodName == null || restricted)
-											if (methodName == null
-													|| PrivacyManager.getHook(restrictionName, methodName) != null)
-												restart = PrivacyManager.setRestricted(null, appInfo.getUid(),
-														restrictionName, methodName, restricted, true) || restart;
-									}
-
-									if (restart)
-										mAppsByUid.get(appInfo.getUid()).message = getString(R.string.msg_restart);
-									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS);
-								} else {
-									String message = status.getString("error"); // JSONException
-									// Localise and dummify message
-									if (message.equals("No restrictions available"))
-										message = getString(R.string.msg_no_restrictions);
-									else
-										message = getString(R.string.msg_technical_error);
-									mAppsByUid.get(appInfo.getUid()).message = message;
-									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
-								}
+							response.getEntity().writeTo(out);
+							out.close();
+							JSONObject status = new JSONObject(out.toString("UTF-8"));
+							if (status.getBoolean("ok")) {
+								// Mark as shared
+								PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingState,
+										Integer.toString(ActivityMain.STATE_SHARED));
+								mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS, null);
 							} else {
-								// If no one has ever submitted for an app, we
-								// end up here even though it isn't a serious
-								// error.
-								String message = status.getString("error"); // JSONException
-								// Localise and dummify message
-								if (message.equals("No restrictions available"))
-									message = getString(R.string.msg_no_restrictions);
-								else
-									message = getString(R.string.msg_technical_error);
-								mAppsByUid.get(appInfo.getUid()).message = message;
-								mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
+								int errno = status.getInt("errno");
+								String message = status.getString("error");
+								mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, message);
+
+								// Mark as unregistered
+								if (errno == ServerException.cErrorNotActivated)
+									PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered,
+											Boolean.toString(false));
 							}
 						} else {
 							// Failed
-							mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
-							response.getEntity().getContent().close(); // IOException
-							throw new IOException(statusLine.getReasonPhrase()); // IOException
+							response.getEntity().getContent().close();
+							throw new IOException(statusLine.getReasonPhrase());
 						}
+					} catch (Throwable ex) {
+						mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
+						throw ex;
 					}
-				}
 				return null;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				// NameNotFoundException, JSONException,
-				// UnsupportedEncodingException, IOException,
-				// ClientProtocolException, Exception
-				if (ex instanceof IOException || ex instanceof ClientProtocolException)
-					return "Error connecting to server";
-				// TODO: string resource
-				else if (ex instanceof JSONException)
-					return "Bad data received"; // TODO: string resource
-				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
-					return null;
-				else
-					return ex.getMessage();
+				return ex;
 			}
 		}
 
@@ -1325,219 +1443,11 @@ public class ActivityShare extends Activity {
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(Throwable result) {
 			done(result);
 			super.onPostExecute(result);
 		}
 	}
-
-
-	@SuppressLint("DefaultLocale")
-	private class SubmitTask extends AsyncTask<int[], Integer, String> {
-		@Override
-		protected String doInBackground(int[]... params) {
-			try {
-				// Get data
-				List<ApplicationInfoEx> lstApp = mAppAdapter.getListAppInfo();
-
-				// Initialize progress
-				mProgressCurrent = 0;
-
-				for (ApplicationInfoEx appInfo : lstApp) {
-					if (mAbort)
-						throw new Exception("Abort");
-
-					// Update progess
-					publishProgress(++mProgressCurrent, lstApp.size() + 1);
-					mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING);
-
-					// Check if any account allowed
-					boolean allowedAccounts = false;
-					AccountManager accountManager = AccountManager.get(ActivityShare.this);
-					for (Account account : accountManager.getAccounts()) {
-						String sha1 = Util.sha1(account.name + account.type); // UnsupportedEncodingException
-						boolean allowed = PrivacyManager.getSettingBool(null, appInfo.getUid(),
-								PrivacyManager.cSettingAccount + sha1, false, false);
-						if (allowed) {
-							allowedAccounts = true;
-							break;
-						}
-					}
-
-					// Check if any application allowed
-					boolean allowedApplications = false;
-					for (ApplicationInfoEx aAppInfo : ApplicationInfoEx.getXApplicationList(ActivityShare.this, null))
-						for (String packageName : aAppInfo.getPackageName()) {
-							boolean allowed = PrivacyManager.getSettingBool(null, aAppInfo.getUid(),
-									PrivacyManager.cSettingApplication + packageName, false, false);
-							if (allowed) {
-								allowedApplications = true;
-								break;
-							}
-						}
-
-					// Check if any contact allowed
-					boolean allowedContacts = false;
-					Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
-							new String[] { ContactsContract.Contacts._ID }, null, null, null);
-					if (cursor != null)
-						try {
-							while (cursor.moveToNext()) {
-								long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-								boolean allowed = PrivacyManager.getSettingBool(null, appInfo.getUid(),
-										PrivacyManager.cSettingContact + id, false, false);
-								if (allowed) {
-									allowedContacts = true;
-									break;
-								}
-							}
-						} finally {
-							cursor.close();
-						}
-
-					// Encode restrictions
-					JSONArray jSettings = new JSONArray();
-					for (String restrictionName : PrivacyManager.getRestrictions()) {
-						boolean restricted = PrivacyManager.getRestricted(null, appInfo.getUid(), restrictionName,
-								null, false, false);
-						// Category
-						long used = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, null);
-						JSONObject jRestriction = new JSONObject();
-						jRestriction.put("restriction", restrictionName); // JSONException
-						jRestriction.put("restricted", restricted);
-						jRestriction.put("used", used);
-						if (restrictionName.equals(PrivacyManager.cAccounts))
-							jRestriction.put("allowed", allowedAccounts ? 1 : 0);
-						else if (restrictionName.equals(PrivacyManager.cSystem))
-							jRestriction.put("allowed", allowedApplications ? 1 : 0);
-						else if (restrictionName.equals(PrivacyManager.cContacts))
-							jRestriction.put("allowed", allowedContacts ? 1 : 0);
-						jSettings.put(jRestriction);
-
-						// Methods
-						for (Hook md : PrivacyManager.getHooks(restrictionName)) {
-							boolean mRestricted = restricted
-									&& PrivacyManager.getRestricted(null, appInfo.getUid(), restrictionName,
-											md.getName(), false, false);
-							long mUsed = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, md.getName());
-							JSONObject jMethod = new JSONObject();
-							jMethod.put("restriction", restrictionName); // JSONException
-							jMethod.put("method", md.getName());
-							jMethod.put("restricted", mRestricted);
-							jMethod.put("used", mUsed);
-							jSettings.put(jMethod);
-						}
-					}
-
-					// Get data
-					String[] license = Util.getProLicenseUnchecked();
-					PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0); // NameNotFoundException
-					String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
-
-					JSONArray appName = new JSONArray();
-					for (String name : appInfo.getApplicationName())
-						appName.put(name);
-
-					JSONArray pkgName = new JSONArray();
-					for (String name : appInfo.getPackageName())
-						pkgName.put(name);
-
-					JSONArray pkgVersionName = new JSONArray();
-					for (String version : appInfo.getPackageVersionName(ActivityShare.this))
-						pkgVersionName.put(version);
-
-					JSONArray pkgVersionCode = new JSONArray();
-					for (Integer version : appInfo.getPackageVersionCode(ActivityShare.this))
-						pkgVersionCode.put((int) version);
-
-					// Encode package
-					JSONObject jRoot = new JSONObject();
-					jRoot.put("protocol_version", cProtocolVersion); // JSONException
-					jRoot.put("android_id", Util.md5(android_id).toLowerCase());
-					jRoot.put("android_sdk", Build.VERSION.SDK_INT);
-					jRoot.put("xprivacy_version", pInfo.versionCode);
-					jRoot.put("application_name", appName);
-					jRoot.put("package_name", pkgName);
-					jRoot.put("package_version_name", pkgVersionName);
-					jRoot.put("package_version_code", pkgVersionCode);
-					jRoot.put("settings", jSettings);
-					if (license != null) {
-						jRoot.put("email", license[1]);
-						jRoot.put("signature", license[2]);
-					}
-
-					// Submit
-					HttpParams httpParams = new BasicHttpParams();
-					HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
-					HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
-					HttpClient httpclient = new DefaultHttpClient(httpParams);
-
-					HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=submit");
-					httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8"))); // UnsupportedEncodingException
-					httpost.setHeader("Accept", "application/json");
-					httpost.setHeader("Content-type", "application/json");
-					HttpResponse response = httpclient.execute(httpost); // ClientProtocolException
-					StatusLine statusLine = response.getStatusLine();
-
-					if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-						// Succeeded
-						ByteArrayOutputStream out = new ByteArrayOutputStream();
-						response.getEntity().writeTo(out); // IOException
-						out.close();
-						JSONObject status = new JSONObject(out.toString("UTF-8")); // UnsupportedEncodingException
-						if (status.getBoolean("ok")) { // JSONException
-							// Mark as shared
-							PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingState,
-									Integer.toString(ActivityMain.STATE_SHARED));
-							mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS);
-						} else {
-							mAppsByUid.get(appInfo.getUid()).message = getString(R.string.msg_technical_error);
-							mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
-
-							// Mark as unregistered
-							// TODO this ought to be done with more discernment
-							// We could have got here because there were too
-							// many package names, for example
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered,
-									Boolean.toString(false));
-							Util.log(null, Log.ERROR, "Submit error: " + status.getString("error")); // JSONException
-						}
-					} else {
-						// Failed
-						mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE);
-						response.getEntity().getContent().close(); // IOException
-						throw new IOException(statusLine.getReasonPhrase());
-					}
-				}
-				return null;
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				// NameNotFoundException, UnsupportedEncodingException,
-				// JSONException, ClientProtocolException, IOException,
-				// Exception
-				if (ex instanceof ClientProtocolException || ex instanceof IOException)
-					return "Error connecting to server";
-				// TODO: string resource
-				else if (ex instanceof Exception && ex.getMessage().equals("Abort"))
-					return null;
-				else
-					return ex.getMessage();
-			}
-		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			blueStreakOfProgress(values[0], values[1]);
-			super.onProgressUpdate(values);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			done(result);
-			super.onPostExecute(result);
-		}
-	}
-
 
 	public static boolean registerDevice(final Context context) {
 		if (Util.hasProLicense(context) == null
@@ -1585,14 +1495,14 @@ public class ActivityShare extends Activity {
 	}
 
 	@SuppressLint("DefaultLocale")
-	private static class RegisterTask extends AsyncTask<String, String, String> {
+	private static class RegisterTask extends AsyncTask<String, String, Throwable> {
 		private Context mContext;
 
 		public RegisterTask(Context context) {
 			mContext = context;
 		}
 
-		protected String doInBackground(String... params) {
+		protected Throwable doInBackground(String... params) {
 			try {
 				String android_id = Secure.getString(mContext.getContentResolver(), Secure.ANDROID_ID);
 
@@ -1625,8 +1535,11 @@ public class ActivityShare extends Activity {
 						// Mark as registered
 						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered, Boolean.toString(true));
 						return null;
-					} else
-						throw new Exception(status.getString("error"));
+					} else {
+						int errno = status.getInt("errno");
+						String message = status.getString("error");
+						throw new ServerException(errno, message);
+					}
 				} else {
 					// Failed
 					response.getEntity().getContent().close();
@@ -1634,18 +1547,21 @@ public class ActivityShare extends Activity {
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return ex.getMessage();
+				return ex;
 			}
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
-			String message = (result == null ? mContext.getString(R.string.msg_registered) : result);
+		protected void onPostExecute(Throwable result) {
+			String message;
+			if (result == null)
+				message = mContext.getString(R.string.msg_registered);
+			else
+				message = result.getLocalizedMessage();
 			Toast toast = Toast.makeText(mContext, message, Toast.LENGTH_LONG);
 			toast.show();
 		}
 	}
-
 
 	// Helper methods
 
@@ -1665,7 +1581,11 @@ public class ActivityShare extends Activity {
 		vShareProgressFull.invalidate();
 	}
 
-	private void done(String result) {
+	private void done(Throwable ex) {
+		String result = null;
+		if (ex != null && !(ex instanceof AbortException))
+			result = ex.getLocalizedMessage();
+
 		// Check result string and display toast with error
 		// TODO: it might be better to put this in a dialog box
 		// asking whether to send debugging info
@@ -1716,7 +1636,6 @@ public class ActivityShare extends Activity {
 		btnOk.setEnabled(true);
 	}
 
-
 	public static String getBaseURL(Context context) {
 		if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingHttps, true, true))
 			return HTTPS_BASE_URL;
@@ -1735,5 +1654,53 @@ public class ActivityShare extends Activity {
 		} else
 			fileName = "XPrivacy.xml";
 		return new File(folder + File.separator + fileName).getAbsolutePath();
+	}
+
+	// Helper classes
+
+	private static class AbortException extends Exception {
+		private static final long serialVersionUID = 1L;
+
+		public AbortException() {
+			super("Aborted");
+		}
+	}
+
+	private static class ServerException extends Exception {
+		private int mErrorNo;
+		private static final long serialVersionUID = 1L;
+
+		public final static int cErrorNotActivated = 206;
+
+		public ServerException(int errorno, String message) {
+			super(message);
+			mErrorNo = errorno;
+		}
+
+		@Override
+		@SuppressLint("DefaultLocale")
+		public String getLocalizedMessage() {
+			return String.format("Error %d: %s", mErrorNo, super.getLocalizedMessage());
+			// general:
+			// 'errno' => 101, 'error' => 'Empty request'
+			// 'errno' => 102, 'error' => 'Please upgrade to at least ...'
+			// 'errno' => 103, 'error' => 'Error connecting to database'
+			// 'errno' => 104, 'error' => 'Unknown action: ' . $action
+
+			// submit:
+			// 'errno' => 201, 'error' => 'Not authorized'
+			// 'errno' => 202, 'error' => 'Android ID missing'
+			// 'errno' => 203, 'error' => 'Package name missing'
+			// 'errno' => 204, 'error' => 'Too many packages for application'
+			// 'errno' => 205, 'error' => 'Error storing restrictions'
+			// 'errno' => 206, 'error' => 'Device not activated'
+
+			// fetch:
+			// 'errno' => 301, 'error' => 'Not authorized'
+			// 'errno' => 303, 'error' => 'Package name missing'
+			// 'errno' => 304, 'error' => 'Too many packages for application'
+			// 'errno' => 305, 'error' => 'No restrictions available'
+			// 'errno' => 306, 'error' => 'Error retrieving restrictions'
+		}
 	}
 }

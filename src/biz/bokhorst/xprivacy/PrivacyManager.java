@@ -331,8 +331,10 @@ public class PrivacyManager {
 				if (md.isRestartRequired() && !(restricted && !dangerous && md.isDangerous()))
 					return true;
 			return false;
-		} else
-			return getHook(restrictionName, methodName).isRestartRequired();
+		} else {
+			Hook md = getHook(restrictionName, methodName);
+			return (md == null ? false : md.isRestartRequired());
+		}
 	}
 
 	public static boolean deleteRestrictions(int uid, boolean changeState) {
