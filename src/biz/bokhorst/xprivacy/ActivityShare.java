@@ -849,6 +849,9 @@ public class ActivityShare extends Activity {
 					xmlReader.setContentHandler(importHandler);
 					xmlReader.parse(new InputSource(fis));
 					mapPackage = importHandler.getPackageMap();
+
+					if (mAbort)
+						throw new AbortException(ActivityShare.this);
 				} finally {
 					if (fis != null)
 						fis.close();
