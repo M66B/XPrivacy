@@ -41,6 +41,7 @@
     <string name="menu_close">Schließen</string>
     <string name="menu_choose">Wählen</string>
     <string name="msg_abort">Abbrechen</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_export">Sichere alle Einstellungen nach %s</string>
     <string name="msg_import">Importiert alle Einstellungen von %s</string>
     <string name="msg_new">Neu</string>
@@ -51,7 +52,6 @@
     <string name="msg_applied">Template übernommen</string>
     <string name="msg_saved_to" formatted="false">Gespeichert nach %s</string>
     <string name="msg_no_restrictions">Keine Beschränkung gefunden</string>
-    <string name="msg_technical_error">Technical error</string>
     <string name="msg_sure">Sind Sie sicher?</string>
     <string name="msg_select">Bitte wählen Sie einige Apps aus</string>
     <string name="msg_limit">Bitte wählen Sie weniger als %d App(s) aus</string>

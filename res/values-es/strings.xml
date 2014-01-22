@@ -41,6 +41,7 @@
     <string name="menu_close">Close</string>
     <string name="menu_choose">Choose</string>
     <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_export">Backup all settings to %s</string>
     <string name="msg_import">Import settings from %s</string>
     <string name="msg_new">Nuevo</string>
@@ -51,7 +52,6 @@
     <string name="msg_applied">Plantilla aplicada</string>
     <string name="msg_saved_to" formatted="false">Guardado en %s</string>
     <string name="msg_no_restrictions">No se han encontrado restricciones</string>
-    <string name="msg_technical_error">Technical error</string>
     <string name="msg_sure">¿Estas seguro?</string>
     <string name="msg_select">Please select some applications</string>
     <string name="msg_limit">Please select fewer than %d applications</string>

@@ -41,6 +41,7 @@
     <string name="menu_close">Close</string>
     <string name="menu_choose">Choose</string>
     <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_export">Backup all settings to %s</string>
     <string name="msg_import">Import settings from %s</string>
     <string name="msg_new">新应用</string>
@@ -51,7 +52,6 @@
     <string name="msg_applied">已应用模版</string>
     <string name="msg_saved_to" formatted="false">保存到%s</string>
     <string name="msg_no_restrictions">没有找到权限限制规则</string>
-    <string name="msg_technical_error">Technical error</string>
     <string name="msg_sure">是否确定？</string>
     <string name="msg_select">请选择一些应用程序</string>
     <string name="msg_limit">请不要选择%d个以上应用程序</string>

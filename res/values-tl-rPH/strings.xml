@@ -41,6 +41,7 @@
     <string name="menu_close">Close</string>
     <string name="menu_choose">Choose</string>
     <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_export">Backup all settings to %s</string>
     <string name="msg_import">Import settings from %s</string>
     <string name="msg_new">Bago</string>
@@ -51,7 +52,6 @@
     <string name="msg_applied">Nakahandang paghihigpit ay ngayon na nakatakda</string>
     <string name="msg_saved_to" formatted="false">Nailagay sa %s</string>
     <string name="msg_no_restrictions">Walang nakatakdang paghihigpit na natagpuan</string>
-    <string name="msg_technical_error">Technical error</string>
     <string name="msg_sure">Tiyak ka na ba?</string>
     <string name="msg_select">Mamili po muna sa iyong mga applications na ibibilang</string>
     <string name="msg_limit">Mamili lang po ng mas kaunti sa %d na applications</string>

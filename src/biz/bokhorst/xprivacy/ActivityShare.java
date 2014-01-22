@@ -614,7 +614,7 @@ public class ActivityShare extends Activity {
 			for (Integer uid : lstUid)
 				try {
 					if (mAbort)
-						throw new AbortException();
+						throw new AbortException(ActivityShare.this);
 
 					// Update progess
 					publishProgress(++mProgressCurrent, lstUid.size() + 1);
@@ -709,7 +709,7 @@ public class ActivityShare extends Activity {
 					for (int uid : listUid)
 						try {
 							if (mAbort)
-								throw new AbortException();
+								throw new AbortException(ActivityShare.this);
 
 							publishProgress(++mProgressCurrent, listUid.size() + 1);
 							if (mThemeId != android.R.style.Theme_NoDisplay)
@@ -858,7 +858,7 @@ public class ActivityShare extends Activity {
 				// Process result (legacy)
 				for (String packageName : mapPackage.keySet()) {
 					if (mAbort)
-						throw new AbortException();
+						throw new AbortException(ActivityShare.this);
 
 					int uid = 0;
 					try {
@@ -1141,7 +1141,7 @@ public class ActivityShare extends Activity {
 				for (ApplicationInfoEx appInfo : lstApp)
 					try {
 						if (mAbort)
-							throw new AbortException();
+							throw new AbortException(ActivityShare.this);
 
 						publishProgress(++mProgressCurrent, lstApp.size() + 1);
 						if (!appInfo.isSystem() || lstApp.size() == 1) {
@@ -1263,7 +1263,7 @@ public class ActivityShare extends Activity {
 				for (ApplicationInfoEx appInfo : lstApp)
 					try {
 						if (mAbort)
-							throw new AbortException();
+							throw new AbortException(ActivityShare.this);
 
 						// Update progess
 						publishProgress(++mProgressCurrent, lstApp.size() + 1);
@@ -1661,8 +1661,8 @@ public class ActivityShare extends Activity {
 	private static class AbortException extends Exception {
 		private static final long serialVersionUID = 1L;
 
-		public AbortException() {
-			super("Aborted");
+		public AbortException(Context context) {
+			super(context.getString(R.string.msg_aborted));
 		}
 	}
 

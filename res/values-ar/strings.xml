@@ -41,6 +41,7 @@
     <string name="menu_close">إغلاق</string>
     <string name="menu_choose">إختر</string>
     <string name="msg_abort">إيقاف</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_export">عمل نسخة إحتياطية لجميع الإعدادات في  %s</string>
     <string name="msg_import">إستيراد الإعدادات من %s</string>
     <string name="msg_new">جديد</string>
@@ -51,7 +52,6 @@
     <string name="msg_applied">تم تطبيق القالب</string>
     <string name="msg_saved_to" formatted="false">حُفِظت في  %s</string>
     <string name="msg_no_restrictions">لا توجد قيود</string>
-    <string name="msg_technical_error">Technical error</string>
     <string name="msg_sure">هل أنت متأكد ؟</string>
     <string name="msg_select">فضلاَ إختر بعض التطبيقات</string>
     <string name="msg_limit">الرجاء إختر تطبيقات أقل من %d </string>

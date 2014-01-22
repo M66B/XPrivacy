@@ -42,6 +42,7 @@
     <string name="menu_close">Uždaryti</string>
     <string name="menu_choose">Pasirinkti</string>
     <string name="msg_abort">Nutraukti</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_export">Eksportuoti visus nustatymus į %s</string>
     <string name="msg_import">Importuoti nustatymus iš %s</string>
     <string name="msg_new">Naujas</string>
@@ -52,7 +53,6 @@
     <string name="msg_applied">Šablonas pritaikytas</string>
     <string name="msg_saved_to" formatted="false">Išsaugomi %s</string>
     <string name="msg_no_restrictions">Nerasta ribojimų</string>
-    <string name="msg_technical_error">Technical error</string>
     <string name="msg_sure">Įsitikinę?</string>
     <string name="msg_select">Prašome pasirinkti keletą programų</string>
     <string name="msg_limit">Prašome pasirinkti mažiau nei %d programų</string>
