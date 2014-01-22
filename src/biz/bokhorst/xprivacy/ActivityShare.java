@@ -1084,10 +1084,11 @@ public class ActivityShare extends Activity {
 				// Restart notifications
 				for (int uid : mListRestartUid)
 					mAppAdapter.setMessage(uid, getString(R.string.msg_restart));
-				mAppAdapter.notifyDataSetChanged();
 
 				// Abort notification
 				mAppAdapter.setMessage(mListAbortedUid.get(0), getString(R.string.msg_aborted));
+
+				mAppAdapter.notifyDataSetChanged();
 			}
 		}
 
