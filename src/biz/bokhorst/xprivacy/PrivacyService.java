@@ -148,9 +148,15 @@ public class PrivacyService {
 
 				// Clear cache
 				if (mUseCache)
-					// TODO: more granular clear
 					synchronized (mRestrictionCache) {
-						mRestrictionCache.clear();
+						CRestriction key = new CRestriction(uid, restrictionName, null);
+						if (mRestrictionCache.containsKey(key))
+							mRestrictionCache.remove(key);
+						for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
+							key = new CRestriction(uid, restrictionName, hook.getName());
+							if (mRestrictionCache.containsKey(key))
+								mRestrictionCache.remove(key);
+						}
 					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -173,20 +179,11 @@ public class PrivacyService {
 				// Check cache
 				boolean cached = false;
 				if (mUseCache) {
-					CRestriction keyCategory = new CRestriction(uid, restrictionName, null);
-					CRestriction keyMethod = new CRestriction(uid, restrictionName, methodName);
+					CRestriction key = new CRestriction(uid, restrictionName, methodName);
 					synchronized (mRestrictionCache) {
-						// Check category
-						if (mRestrictionCache.containsKey(keyCategory)) {
+						if (mRestrictionCache.containsKey(key)) {
 							cached = true;
-							restricted = mRestrictionCache.get(keyCategory).isRestricted();
-
-							// Check method exception
-							if (restricted && methodName != null)
-								if (mRestrictionCache.containsKey(keyMethod))
-									if (mRestrictionCache.get(keyMethod).isRestricted())
-										restricted = false;
-
+							restricted = mRestrictionCache.get(key).isRestricted();
 							Util.log(null, Log.WARN, "From cache uid=" + uid + " restriction=" + restrictionName + "/"
 									+ methodName);
 						}
@@ -215,41 +212,21 @@ public class PrivacyService {
 								stmtGetRestriction.bindString(3, "");
 								restricted = (stmtGetRestriction.simpleQueryForLong() > 0);
 							}
-
-							// Update cache
-							if (mUseCache) {
-								CRestriction keyCategory = new CRestriction(uid, restrictionName, null);
-								keyCategory.setRestricted(restricted);
-								synchronized (mRestrictionCache) {
-									if (mRestrictionCache.containsKey(keyCategory))
-										mRestrictionCache.remove(keyCategory);
-									mRestrictionCache.put(keyCategory, keyCategory);
-								}
-							}
 						} catch (SQLiteDoneException ignored) {
 							restricted = false;
 						}
 
 						if (restricted && methodName != null)
 							try {
+								boolean mallowed;
 								synchronized (stmtGetRestriction) {
 									stmtGetRestriction.clearBindings();
 									stmtGetRestriction.bindLong(1, uid);
 									stmtGetRestriction.bindString(2, restrictionName);
 									stmtGetRestriction.bindString(3, methodName);
-									if (stmtGetRestriction.simpleQueryForLong() > 0)
+									mallowed = (stmtGetRestriction.simpleQueryForLong() > 0);
+									if (mallowed)
 										restricted = false;
-								}
-
-								// Update cache
-								if (mUseCache) {
-									CRestriction keyMethod = new CRestriction(uid, restrictionName, methodName);
-									keyMethod.setRestricted(!restricted);
-									synchronized (mRestrictionCache) {
-										if (mRestrictionCache.containsKey(keyMethod))
-											mRestrictionCache.remove(keyMethod);
-										mRestrictionCache.put(keyMethod, keyMethod);
-									}
 								}
 							} catch (SQLiteDoneException ignored) {
 								// no change
@@ -263,6 +240,17 @@ public class PrivacyService {
 					// Fallback
 					if (restricted == false && db.getVersion() == 1)
 						restricted = PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
+
+					// Update cache
+					if (mUseCache) {
+						CRestriction key = new CRestriction(uid, restrictionName, methodName);
+						key.setRestricted(restricted);
+						synchronized (mRestrictionCache) {
+							if (mRestrictionCache.containsKey(key))
+								mRestrictionCache.remove(key);
+							mRestrictionCache.put(key, key);
+						}
+					}
 				}
 
 				// Log usage
