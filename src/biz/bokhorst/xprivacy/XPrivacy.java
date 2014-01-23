@@ -299,8 +299,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Find class
 			Class<?> hookClass = findClass(hook.getClassName(), classLoader);
 			if (hookClass == null) {
-				String message = String.format("%s: class not found: %s", AndroidAppHelper.currentPackageName(),
-						hook.getClassName());
+				String packageName = AndroidAppHelper.currentPackageName();
+				String restrictionName = hook.getRestrictionName();
+				String message = String.format("%s: class not found: %s for %s/%s uid=%d", packageName,
+						hook.getClassName(), restrictionName, hook.getSpecifier(), Process.myUid());
 				Util.log(hook, Log.ERROR, message);
 				return;
 			}
@@ -324,8 +326,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			// Check if found
 			if (hookSet.isEmpty() && !hookClass.getName().startsWith("com.google.android.gms.")) {
-				String message = String.format("%s: method not found: %s.%s", AndroidAppHelper.currentPackageName(),
-						hookClass.getName(), hook.getMethodName());
+				String packageName = AndroidAppHelper.currentPackageName();
+				String restrictionName = hook.getRestrictionName();
+				String message = String.format("%s: method not found: %s.%s for %s/%s uid=%d", packageName,
+						hookClass.getName(), hook.getMethodName(), restrictionName, hook.getSpecifier(),
+						Process.myUid());
 				Util.log(hook, Log.ERROR, message);
 				for (Method declared : hookClass.getDeclaredMethods())
 					Util.log(hook, Log.ERROR, "Declared method=" + declared);
