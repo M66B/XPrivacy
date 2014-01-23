@@ -15,12 +15,14 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Batch set restrictions on fetch
-* Added service restriction cache again
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.8 TEST**
+
+* Batch set restrictions on fetch (perfomance)
+* Added service restriction cache again (performance)
 * Updated German translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.7 TEST**
 
