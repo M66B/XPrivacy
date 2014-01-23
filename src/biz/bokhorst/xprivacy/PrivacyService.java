@@ -44,8 +44,8 @@ public class PrivacyService {
 	private static String cTableSetting = "setting";
 
 	private static boolean mUseCache = false;
+	private static Map<CSetting, CSetting> mSettingCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
-	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
 
 	// TODO: define column names
 
@@ -184,8 +184,6 @@ public class PrivacyService {
 						if (mRestrictionCache.containsKey(key)) {
 							cached = true;
 							restricted = mRestrictionCache.get(key).isRestricted();
-							Util.log(null, Log.WARN, "From cache uid=" + uid + " restriction=" + restrictionName + "/"
-									+ methodName);
 						}
 					}
 				}
@@ -500,10 +498,10 @@ public class PrivacyService {
 				if (mUseCache) {
 					CSetting key = new CSetting(uid, name);
 					key.setValue(value);
-					synchronized (mSettingsCache) {
-						if (mSettingsCache.containsKey(key))
-							mSettingsCache.remove(key);
-						mSettingsCache.put(key, key);
+					synchronized (mSettingCache) {
+						if (mSettingCache.containsKey(key))
+							mSettingCache.remove(key);
+						mSettingCache.put(key, key);
 					}
 				}
 			} catch (Throwable ex) {
@@ -520,11 +518,9 @@ public class PrivacyService {
 				// Check cache
 				if (mUseCache) {
 					CSetting key = new CSetting(uid, name);
-					synchronized (mSettingsCache) {
-						if (mSettingsCache.containsKey(key)) {
-							Util.log(null, Log.WARN, "From cache uid=" + uid + " name=" + name);
-							return mSettingsCache.get(key).getValue();
-						}
+					synchronized (mSettingCache) {
+						if (mSettingCache.containsKey(key))
+							return mSettingCache.get(key).getValue();
 					}
 				}
 
@@ -569,10 +565,10 @@ public class PrivacyService {
 				if (mUseCache) {
 					CSetting key = new CSetting(uid, name);
 					key.setValue(value);
-					synchronized (mSettingsCache) {
-						if (mSettingsCache.containsKey(key))
-							mSettingsCache.remove(key);
-						mSettingsCache.put(key, key);
+					synchronized (mSettingCache) {
+						if (mSettingCache.containsKey(key))
+							mSettingCache.remove(key);
+						mSettingCache.put(key, key);
 					}
 				}
 			} catch (Throwable ex) {
@@ -633,8 +629,8 @@ public class PrivacyService {
 
 				// Clear cache
 				if (mUseCache)
-					synchronized (mSettingsCache) {
-						mSettingsCache.clear();
+					synchronized (mSettingCache) {
+						mSettingCache.clear();
 					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
