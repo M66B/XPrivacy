@@ -75,6 +75,7 @@
         </activity>
         <activity
             android:name=".ActivityApp"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".ActivityMain" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -82,12 +83,20 @@
         </activity>
         <activity
             android:name=".ActivityUsage"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".ActivityMain" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="biz.bokhorst.xprivacy.ActivityMain" />
         </activity>
-        <activity android:name=".ActivityShare" >
+        <activity
+            android:name=".ActivityShare"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".ActivityMain" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="biz.bokhorst.xprivacy.ActivityMain" />
+
             <intent-filter>
                 <action android:name="biz.bokhorst.xprivacy.action.IMPORT" />
                 <action android:name="biz.bokhorst.xprivacy.action.EXPORT" />
