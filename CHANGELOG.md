@@ -16,7 +16,9 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Fixed update service dying (hopefully)
-* Fixed toggling restrictions from application list
+* Fixed toggling category restrictions from application list
+* Fixed toggling function restrictions
+* Changed memory class for service settings cache to heap size >= 32MB
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
@@ -31,7 +33,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Kill application is not experimental anymore and can kill applications only
 * Moved privacy database to application data folder ([issue](https://github.com/M66B/XPrivacy/issues/1129))
 * Added dialog for export, import, submit, fetch and toggle, big thanks @[jpeg729](https://github.com/jpeg729)
-* Added caching before restriction database (will only be used if the heap size > 64 MiB)
+* Added caching before restriction database (will only be used if the heap size >= 64 MiB)
 * Show half check box for restricted categories with only dangerous functions
 * Updated Arabic translation
 * Updated Dutch translation

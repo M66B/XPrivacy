@@ -45,7 +45,6 @@ public class PrivacyService {
 
 	private static boolean mUseCache = false;
 	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
-	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
 	// TODO: define column names
 
@@ -59,7 +58,7 @@ public class PrivacyService {
 
 			// http://stackoverflow.com/questions/2630158/detect-application-heap-size-in-android
 			int memoryClass = (int) (Runtime.getRuntime().maxMemory() / 1024L / 1024L);
-			mUseCache = (memoryClass >= 64);
+			mUseCache = (memoryClass >= 32);
 			Util.log(null, Log.WARN, "Memory class=" + memoryClass + " cache=" + mUseCache);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -69,7 +68,6 @@ public class PrivacyService {
 	public static IPrivacyService getClient() {
 		if (mClient == null)
 			try {
-				// TODO: retries to get privacy client?
 				// public static IBinder getService(String name)
 				Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
 				Method mGetService = cServiceManager.getDeclaredMethod("getService", String.class);
@@ -146,17 +144,6 @@ public class PrivacyService {
 				} finally {
 					db.endTransaction();
 				}
-
-				// Update cache
-				if (mUseCache) {
-					CRestriction key = new CRestriction(uid, restrictionName, methodName);
-					key.setRestricted(restricted);
-					synchronized (mRestrictionCache) {
-						if (mRestrictionCache.containsKey(key))
-							mRestrictionCache.remove(key);
-						mRestrictionCache.put(key, key);
-					}
-				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
@@ -168,80 +155,53 @@ public class PrivacyService {
 				final boolean usage) throws RemoteException {
 			boolean restricted = false;
 			try {
-				// Check cache
-				boolean cached = false;
-				if (mUseCache) {
-					CRestriction key = new CRestriction(uid, restrictionName, methodName);
-					synchronized (mRestrictionCache) {
-						if (mRestrictionCache.containsKey(key)) {
-							cached = true;
-							Util.log(null, Log.INFO, "From cache uid=" + uid + " restriction=" + restrictionName
-									+ " method=" + methodName);
-							restricted = mRestrictionCache.get(key).isRestricted();
-						}
-					}
+				// No permissions required
+				SQLiteDatabase db = getDatabase();
+
+				// Precompile statement when needed
+				if (stmtGetRestriction == null) {
+					String sql = "SELECT restricted FROM " + cTableRestriction
+							+ " WHERE uid=? AND restriction=? AND method=?";
+					stmtGetRestriction = db.compileStatement(sql);
 				}
 
-				if (!cached) {
-					// No permissions required
-					SQLiteDatabase db = getDatabase();
-
-					// Precompile statement when needed
-					if (stmtGetRestriction == null) {
-						String sql = "SELECT restricted FROM " + cTableRestriction
-								+ " WHERE uid=? AND restriction=? AND method=?";
-						stmtGetRestriction = db.compileStatement(sql);
+				// Execute statement
+				db.beginTransaction();
+				try {
+					try {
+						synchronized (stmtGetRestriction) {
+							stmtGetRestriction.clearBindings();
+							stmtGetRestriction.bindLong(1, uid);
+							stmtGetRestriction.bindString(2, restrictionName);
+							stmtGetRestriction.bindString(3, "");
+							restricted = (stmtGetRestriction.simpleQueryForLong() > 0);
+						}
+					} catch (SQLiteDoneException ignored) {
+						restricted = false;
 					}
 
-					// Execute statement
-					db.beginTransaction();
-					try {
+					if (restricted && methodName != null)
 						try {
 							synchronized (stmtGetRestriction) {
 								stmtGetRestriction.clearBindings();
 								stmtGetRestriction.bindLong(1, uid);
 								stmtGetRestriction.bindString(2, restrictionName);
-								stmtGetRestriction.bindString(3, "");
-								restricted = (stmtGetRestriction.simpleQueryForLong() > 0);
+								stmtGetRestriction.bindString(3, methodName);
+								if (stmtGetRestriction.simpleQueryForLong() > 0)
+									restricted = false;
 							}
 						} catch (SQLiteDoneException ignored) {
-							restricted = false;
+							// no change
 						}
 
-						if (restricted && methodName != null)
-							try {
-								synchronized (stmtGetRestriction) {
-									stmtGetRestriction.clearBindings();
-									stmtGetRestriction.bindLong(1, uid);
-									stmtGetRestriction.bindString(2, restrictionName);
-									stmtGetRestriction.bindString(3, methodName);
-									if (stmtGetRestriction.simpleQueryForLong() > 0)
-										restricted = false;
-								}
-							} catch (SQLiteDoneException ignored) {
-								// no change
-							}
-
-						db.setTransactionSuccessful();
-					} finally {
-						db.endTransaction();
-					}
-
-					// Fallback
-					if (restricted == false && db.getVersion() == 1)
-						restricted = PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
-
-					// Add to cache
-					if (mUseCache) {
-						CRestriction key = new CRestriction(uid, restrictionName, methodName);
-						key.setRestricted(restricted);
-						synchronized (mRestrictionCache) {
-							if (mRestrictionCache.containsKey(key))
-								mRestrictionCache.remove(key);
-							mRestrictionCache.put(key, key);
-						}
-					}
+					db.setTransactionSuccessful();
+				} finally {
+					db.endTransaction();
 				}
+
+				// Fallback
+				if (restricted == false && db.getVersion() == 1)
+					restricted = PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
 
 				// Log usage
 				if (usage) {
@@ -326,14 +286,6 @@ public class PrivacyService {
 					db.setTransactionSuccessful();
 				} finally {
 					db.endTransaction();
-				}
-
-				// Clear cache
-				if (mUseCache) {
-					// TODO: more granular clear
-					synchronized (mRestrictionCache) {
-						mRestrictionCache.clear();
-					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -626,12 +578,10 @@ public class PrivacyService {
 				}
 
 				// Clear cache
-				if (mUseCache) {
-					// TODO: more granular clear
+				if (mUseCache)
 					synchronized (mSettingsCache) {
 						mSettingsCache.clear();
 					}
-				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
