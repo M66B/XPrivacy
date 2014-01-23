@@ -60,6 +60,7 @@
     <string name="msg_restart">需要重新啓動程式</string>
     <string name="msg_register">Please register your device</string>
     <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_service">Update service running</string>
     <string name="msg_migrating" formatted="false">Migrating %s</string>
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>

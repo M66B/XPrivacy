@@ -61,6 +61,7 @@
     <string name="msg_restart">Programą reikia perkrauti</string>
     <string name="msg_register">Prašome užregistruoti savo įrenginį</string>
     <string name="msg_registered">Patikrinkite savo el. paštą, kad aktyvuoti savo prietaisą</string>
+    <string name="msg_service">Update service running</string>
     <string name="msg_migrating" formatted="false">Migruoti %s</string>
     <string name="msg_randomizing" formatted="false">Kaitalioti %s</string>
     <string name="msg_upgrading" formatted="false">Atnaujinti %s</string>

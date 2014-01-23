@@ -60,6 +60,7 @@
     <string name="msg_restart">App-Neustart erforderlich</string>
     <string name="msg_register">Bitte registrieren Sie ihr Gerät</string>
     <string name="msg_registered">Überprüfen Sie ihre E-Mails zum aktivieren Ihres Geräts</string>
+    <string name="msg_service">Update service running</string>
     <string name="msg_migrating" formatted="false">Migriere %s</string>
     <string name="msg_randomizing" formatted="false">Zufall-Erzeigung %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>

@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -14,12 +14,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Process;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-public class UpdateService extends IntentService {
+public class UpdateService extends Service {
 	private static Thread mChangeThread;
 	private static Thread mBootThread;
 
@@ -30,23 +31,33 @@ public class UpdateService extends IntentService {
 	public static String cStatus = "Status";
 	public static String cStatusMigrated = "Migrated";
 
-	public UpdateService() {
-		super("xprivacy-update");
+	@Override
+	public IBinder onBind(Intent arg0) {
+		return null;
 	}
 
 	@Override
-	protected void onHandleIntent(Intent intent) {
+	public void onTrimMemory(int level) {
+		Util.log(null, Log.WARN, "Service received trim memory level=" + level);
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		// Check action
 		Bundle extras = intent.getExtras();
 		if (extras.containsKey(cAction)) {
+			Util.log(null, Log.WARN, "Service received action=" + extras.getString(cAction) + " flags=" + flags);
+
 			// Start foreground service
 			NotificationCompat.Builder builder = new NotificationCompat.Builder(UpdateService.this);
 			builder.setSmallIcon(R.drawable.ic_launcher);
 			builder.setContentTitle(UpdateService.this.getString(R.string.app_name));
+			builder.setContentText(UpdateService.this.getString(R.string.msg_service));
 			builder.setWhen(System.currentTimeMillis());
 			builder.setAutoCancel(false);
 			builder.setOngoing(true);
 			Notification notification = builder.build();
-			startForeground(Util.NOTIFY_UPDATE, notification);
+			startForeground(Util.NOTIFY_SERVICE, notification);
 
 			// Check action
 			if (cActionBoot.equals(extras.getString(cAction))) {
@@ -106,22 +117,27 @@ public class UpdateService extends IntentService {
 			}
 
 			else if (cActionDone.equals(extras.getString(cAction))) {
-				// End foreground service
-				stopForeground(true);
+				NotificationManager notificationManager = (NotificationManager) UpdateService.this
+						.getSystemService(Context.NOTIFICATION_SERVICE);
 
 				// Report migration complete
 				if (extras.containsKey(cStatus) && cStatusMigrated.equals(extras.getString(cStatus))) {
-					NotificationManager notificationManager = (NotificationManager) UpdateService.this
-							.getSystemService(Context.NOTIFICATION_SERVICE);
 					builder.setContentText(UpdateService.this.getString(R.string.msg_migrated));
 					builder.setOngoing(false);
 					builder.setAutoCancel(true);
 					builder.setWhen(System.currentTimeMillis());
 					notification = builder.build();
 					notificationManager.notify(Util.NOTIFY_UPDATE, notification);
-				}
+				} else
+					notificationManager.cancel(Util.NOTIFY_UPDATE);
+
+				// End service
+				stopForeground(true);
+				stopSelf();
 			}
 		}
+
+		return START_REDELIVER_INTENT;
 	}
 
 	private boolean migrate(final Context context) throws IOException, RemoteException {
