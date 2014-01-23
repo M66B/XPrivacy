@@ -250,7 +250,7 @@
 			// Validate
 			if (empty($data->package_name)) {
 				log_error('fetch: package name missing', $my_email, $data);
-				echo json_encode(array('ok' => false, 'errno' => 302, 'error' => 'Package name missing'));
+				echo json_encode(array('ok' => false, 'errno' => 303, 'error' => 'Package name missing'));
 				exit();
 			}
 
@@ -261,7 +261,7 @@
 			// Validate
 			if (count($data->package_name) > $max_packages) {
 				log_error('fetch: too many packages count=' . count($data->package_name) . '/' . $max_packages, $my_email, $data);
-				echo json_encode(array('ok' => false, 'errno' => 303, 'error' => 'Too many packages for application'));
+				echo json_encode(array('ok' => false, 'errno' => 304, 'error' => 'Too many packages for application'));
 				exit();
 			}
 
@@ -314,9 +314,9 @@
 
 			// Send reponse
 			if ($ok && $empty)
-				echo json_encode(array('ok' => false, 'errno' => 304, 'error' => 'No restrictions available', 'settings' => $settings));
+				echo json_encode(array('ok' => false, 'errno' => 305, 'error' => 'No restrictions available', 'settings' => $settings));
 			else
-				echo json_encode(array('ok' => $ok, 'errno' => ($ok ? 0 : 305), 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
+				echo json_encode(array('ok' => $ok, 'errno' => ($ok ? 0 : 306), 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
 			exit();
 		}
 		else {

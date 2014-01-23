@@ -1711,6 +1711,7 @@ public class ActivityShare extends Activity {
 		private static final long serialVersionUID = 1L;
 
 		public final static int cErrorNotActivated = 206;
+		public final static int cErrorNoRestrictions = 305;
 
 		public ServerException(int errorno, String message) {
 			super(message);
@@ -1726,14 +1727,14 @@ public class ActivityShare extends Activity {
 		@Override
 		@SuppressLint("DefaultLocale")
 		public String getLocalizedMessage() {
-			if (mErrorNo == 305 && mContext != null)
+			if (mErrorNo == cErrorNoRestrictions && mContext != null)
 				return mContext.getString(R.string.msg_no_restrictions);
 			return String.format("Error %d: %s", mErrorNo, super.getLocalizedMessage());
 			// general:
 			// 'errno' => 101, 'error' => 'Empty request'
 			// 'errno' => 102, 'error' => 'Please upgrade to at least ...'
 			// 'errno' => 103, 'error' => 'Error connecting to database'
-			// 'errno' => 104, 'error' => 'Unknown action: ' . $action
+			// 'errno' => 104, 'error' => 'Unknown action: ...'
 
 			// submit:
 			// 'errno' => 201, 'error' => 'Not authorized'
