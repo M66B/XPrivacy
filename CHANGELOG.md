@@ -24,7 +24,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Version 1.99.8 TEST**
 
-* Batch set restrictions on fetch (perfomance)
+* Batch set restrictions on fetch (performance)
 * Added service restriction cache again (performance)
 * Updated German translation
 * Updated Lithuanian translation
