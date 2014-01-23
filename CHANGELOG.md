@@ -15,6 +15,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Batch set restrictions on fetch
 * Updated German translation
 * Updated Lithuanian translation
 

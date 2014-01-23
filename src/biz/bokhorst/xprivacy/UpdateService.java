@@ -181,10 +181,10 @@ public class UpdateService extends Service {
 
 		// Disable some restrictions for self
 		// TODO: multi-user
-		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "getString", false, false);
-		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cIPC, null, false, false);
-		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
-		PrivacyManager.setRestricted(null, Process.myUid(), PrivacyManager.cView, null, false, false);
+		PrivacyManager.setRestriction(null, Process.myUid(), PrivacyManager.cIdentification, "getString", false, false);
+		PrivacyManager.setRestriction(null, Process.myUid(), PrivacyManager.cIPC, null, false, false);
+		PrivacyManager.setRestriction(null, Process.myUid(), PrivacyManager.cStorage, null, false, false);
+		PrivacyManager.setRestriction(null, Process.myUid(), PrivacyManager.cView, null, false, false);
 
 		return work;
 	}
@@ -234,18 +234,18 @@ public class UpdateService extends Service {
 						if (!dangerous && md.isDangerous()) {
 							Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom() + " pkg="
 									+ aInfo.packageName);
-							PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(), md.getName(), false,
+							PrivacyManager.setRestriction(null, aInfo.uid, md.getRestrictionName(), md.getName(), false,
 									true);
 						}
 
 						// Restrict replaced methods
 						if (md.getReplaces() != null)
-							if (PrivacyManager.getRestricted(null, aInfo.uid, md.getRestrictionName(),
+							if (PrivacyManager.getRestriction(null, aInfo.uid, md.getRestrictionName(),
 									md.getReplaces(), false, false)) {
 								Util.log(null, Log.WARN,
 										"Replaced " + md.getReplaces() + " by " + md + " from=" + md.getFrom()
 												+ " pkg=" + aInfo.packageName);
-								PrivacyManager.setRestricted(null, aInfo.uid, md.getRestrictionName(), md.getName(),
+								PrivacyManager.setRestriction(null, aInfo.uid, md.getRestrictionName(), md.getName(),
 										true, true);
 							}
 					}

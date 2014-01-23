@@ -627,10 +627,10 @@ public class ActivityShare extends Activity {
 						restart = PrivacyManager.deleteRestrictions(uid, true) || restart;
 					else if (restriction == null) {
 						for (String restrictionName : PrivacyManager.getRestrictions())
-							restart = PrivacyManager.setRestricted(null, uid, restrictionName, null, !mSomeRestricted,
+							restart = PrivacyManager.setRestriction(null, uid, restrictionName, null, !mSomeRestricted,
 									true) || restart;
 					} else
-						restart = PrivacyManager.setRestricted(null, uid, restriction, null, !mSomeRestricted, true)
+						restart = PrivacyManager.setRestriction(null, uid, restriction, null, !mSomeRestricted, true)
 								|| restart;
 
 					mAppAdapter.setState(uid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
@@ -694,7 +694,7 @@ public class ActivityShare extends Activity {
 					}
 
 					// Process global settings
-					Map<String, String> mapGlobalSetting = PrivacyManager.getSettings(0);
+					Map<String, String> mapGlobalSetting = PrivacyManager.getSettingMap(0);
 					for (String name : mapGlobalSetting.keySet()) {
 						String value = mapGlobalSetting.get(name);
 
@@ -718,7 +718,7 @@ public class ActivityShare extends Activity {
 								mAppAdapter.setState(uid, STATE_RUNNING, null);
 
 							// Process application settings
-							Map<String, String> mapAppSetting = PrivacyManager.getSettings(uid);
+							Map<String, String> mapAppSetting = PrivacyManager.getSettingMap(uid);
 							for (String name : mapAppSetting.keySet()) {
 								// Bind accounts/contacts to same device
 								if (name.startsWith(PrivacyManager.cSettingAccount)
@@ -740,7 +740,7 @@ public class ActivityShare extends Activity {
 							// Process restrictions
 							for (String restrictionName : PrivacyManager.getRestrictions()) {
 								// Category
-								boolean crestricted = PrivacyManager.getRestricted(null, uid, restrictionName, null,
+								boolean crestricted = PrivacyManager.getRestriction(null, uid, restrictionName, null,
 										false, false);
 								if (crestricted) {
 									serializer.startTag(null, "Restriction");
@@ -751,7 +751,7 @@ public class ActivityShare extends Activity {
 
 									// Methods
 									for (Hook md : PrivacyManager.getHooks(restrictionName)) {
-										boolean mrestricted = PrivacyManager.getRestricted(null, uid, restrictionName,
+										boolean mrestricted = PrivacyManager.getRestriction(null, uid, restrictionName,
 												md.getName(), false, false);
 										if (!mrestricted || md.isDangerous()) {
 											serializer.startTag(null, "Restriction");
@@ -881,11 +881,11 @@ public class ActivityShare extends Activity {
 
 							// Set imported restrictions
 							for (String restrictionName : mapPackage.get(packageName).keySet()) {
-								restart = PrivacyManager.setRestricted(null, uid, restrictionName, null, true, true)
+								restart = PrivacyManager.setRestriction(null, uid, restrictionName, null, true, true)
 										|| restart;
 								for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(
 										restrictionName))
-									restart = PrivacyManager.setRestricted(null, uid, restrictionName,
+									restart = PrivacyManager.setRestriction(null, uid, restrictionName,
 											md.getMethodName(), md.isRestricted(), true)
 											|| restart;
 							}
@@ -1064,7 +1064,7 @@ public class ActivityShare extends Activity {
 						}
 
 						// Set restriction
-						if (PrivacyManager.setRestricted(null, uid, restrictionName, methodName, restricted, false)
+						if (PrivacyManager.setRestriction(null, uid, restrictionName, methodName, restricted, false)
 								&& !mListRestartUid.contains(uid))
 							mListRestartUid.add(uid);
 					}
@@ -1224,6 +1224,7 @@ public class ActivityShare extends Activity {
 									boolean restart = PrivacyManager.deleteRestrictions(appInfo.getUid(), true);
 
 									// Set fetched restrictions
+									List<ParcelableRestriction> listRestriction = new ArrayList<ParcelableRestriction>();
 									for (int i = 0; i < settings.length(); i++) {
 										JSONObject entry = settings.getJSONObject(i);
 										String restrictionName = entry.getString("restriction");
@@ -1231,10 +1232,16 @@ public class ActivityShare extends Activity {
 										int voted_restricted = entry.getInt("restricted");
 										int voted_not_restricted = entry.getInt("not_restricted");
 										boolean restricted = (voted_restricted > voted_not_restricted);
-										if (methodName == null || restricted)
-											restart = PrivacyManager.setRestricted(null, appInfo.getUid(),
-													restrictionName, methodName, restricted, true) || restart;
+										if (methodName == null || restricted) {
+											ParcelableRestriction restriction = new ParcelableRestriction();
+											restriction.uid = appInfo.getUid();
+											restriction.restrictionName = restrictionName;
+											restriction.methodName = methodName;
+											restriction.restricted = restricted;
+											listRestriction.add(restriction);
+										}
 									}
+									restart = PrivacyManager.setRestrictionList(listRestriction);
 
 									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS,
 											restart ? getString(R.string.msg_restart) : null);
@@ -1343,7 +1350,7 @@ public class ActivityShare extends Activity {
 						// Encode restrictions
 						JSONArray jSettings = new JSONArray();
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
-							boolean restricted = PrivacyManager.getRestricted(null, appInfo.getUid(), restrictionName,
+							boolean restricted = PrivacyManager.getRestriction(null, appInfo.getUid(), restrictionName,
 									null, false, false);
 							// Category
 							long used = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, null);
@@ -1362,7 +1369,7 @@ public class ActivityShare extends Activity {
 							// Methods
 							for (Hook md : PrivacyManager.getHooks(restrictionName)) {
 								boolean mRestricted = restricted
-										&& PrivacyManager.getRestricted(null, appInfo.getUid(), restrictionName,
+										&& PrivacyManager.getRestriction(null, appInfo.getUid(), restrictionName,
 												md.getName(), false, false);
 								long mUsed = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, md.getName());
 								JSONObject jMethod = new JSONObject();

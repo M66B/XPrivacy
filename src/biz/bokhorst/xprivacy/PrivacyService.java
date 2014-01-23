@@ -38,7 +38,7 @@ public class PrivacyService {
 	private static SQLiteStatement stmtGetUsageMethod = null;
 
 	private static int cCurrentVersion = 1;
-	private static String cServiceName = "xprivacy237";
+	private static String cServiceName = "xprivacy242";
 	private static String cTableRestriction = "restriction";
 	private static String cTableUsage = "usage";
 	private static String cTableSetting = "setting";
@@ -151,6 +151,13 @@ public class PrivacyService {
 		}
 
 		@Override
+		public void setRestrictionList(List<ParcelableRestriction> listRestriction) throws RemoteException {
+			for (ParcelableRestriction restriction : listRestriction)
+				setRestriction(restriction.uid, restriction.restrictionName, restriction.methodName,
+						restriction.restricted);
+		}
+
+		@Override
 		public boolean getRestriction(final int uid, final String restrictionName, final String methodName,
 				final boolean usage) throws RemoteException {
 			boolean restricted = false;
@@ -253,9 +260,8 @@ public class PrivacyService {
 		}
 
 		@Override
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		public List getRestrictionList(int uid, String restrictionName) throws RemoteException {
-			List result = new ArrayList();
+		public List<Boolean> getRestrictionList(int uid, String restrictionName) throws RemoteException {
+			List<Boolean> result = new ArrayList<Boolean>();
 			try {
 				enforcePermission();
 
@@ -296,8 +302,7 @@ public class PrivacyService {
 		// Usage
 
 		@Override
-		@SuppressWarnings("rawtypes")
-		public long getUsage(int uid, List restrictionNames, String methodName) throws RemoteException {
+		public long getUsage(int uid, List<String> listRestrictionName, String methodName) throws RemoteException {
 			long lastUsage = 0;
 			try {
 				enforcePermission();
@@ -315,13 +320,13 @@ public class PrivacyService {
 
 				db.beginTransaction();
 				try {
-					for (Object restrictionName : restrictionNames) {
+					for (String restrictionName : listRestrictionName) {
 						if (methodName == null)
 							try {
 								synchronized (stmtGetUsageRestriction) {
 									stmtGetUsageRestriction.clearBindings();
 									stmtGetUsageRestriction.bindLong(1, uid);
-									stmtGetUsageRestriction.bindString(2, (String) restrictionName);
+									stmtGetUsageRestriction.bindString(2, restrictionName);
 									lastUsage = Math.max(lastUsage, stmtGetUsageRestriction.simpleQueryForLong());
 								}
 							} catch (SQLiteDoneException ignored) {
@@ -331,7 +336,7 @@ public class PrivacyService {
 								synchronized (stmtGetUsageMethod) {
 									stmtGetUsageMethod.clearBindings();
 									stmtGetUsageMethod.bindLong(1, uid);
-									stmtGetUsageMethod.bindString(2, (String) restrictionName);
+									stmtGetUsageMethod.bindString(2, restrictionName);
 									stmtGetUsageMethod.bindString(3, methodName);
 									lastUsage = Math.max(lastUsage, stmtGetUsageMethod.simpleQueryForLong());
 								}
@@ -351,8 +356,8 @@ public class PrivacyService {
 		}
 
 		@Override
-		public List<ParcelableUsageData> getUsageList(int uid) throws RemoteException {
-			List<ParcelableUsageData> result = new ArrayList<ParcelableUsageData>();
+		public List<ParcelableRestriction> getUsageList(int uid) throws RemoteException {
+			List<ParcelableRestriction> result = new ArrayList<ParcelableRestriction>();
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
@@ -371,7 +376,7 @@ public class PrivacyService {
 					else
 						try {
 							while (cursor.moveToNext()) {
-								ParcelableUsageData data = new ParcelableUsageData();
+								ParcelableRestriction data = new ParcelableRestriction();
 								data.uid = cursor.getInt(0);
 								data.restrictionName = cursor.getString(1);
 								data.methodName = cursor.getString(2);
@@ -530,7 +535,7 @@ public class PrivacyService {
 
 		@Override
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		public Map getSettings(int uid) throws RemoteException {
+		public Map getSettingMap(int uid) throws RemoteException {
 			Map mapName = new HashMap();
 			try {
 				enforcePermission();

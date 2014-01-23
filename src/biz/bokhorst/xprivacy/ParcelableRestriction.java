@@ -3,27 +3,27 @@ package biz.bokhorst.xprivacy;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ParcelableUsageData implements Parcelable {
+public class ParcelableRestriction implements Parcelable {
 	public int uid;
 	public String restrictionName;
 	public String methodName;
 	public boolean restricted;
 	public long time;
 
-	public ParcelableUsageData() {
+	public ParcelableRestriction() {
 	}
 
-	public static final Parcelable.Creator<ParcelableUsageData> CREATOR = new Parcelable.Creator<ParcelableUsageData>() {
-		public ParcelableUsageData createFromParcel(Parcel in) {
-			return new ParcelableUsageData(in);
+	public static final Parcelable.Creator<ParcelableRestriction> CREATOR = new Parcelable.Creator<ParcelableRestriction>() {
+		public ParcelableRestriction createFromParcel(Parcel in) {
+			return new ParcelableRestriction(in);
 		}
 
-		public ParcelableUsageData[] newArray(int size) {
-			return new ParcelableUsageData[size];
+		public ParcelableRestriction[] newArray(int size) {
+			return new ParcelableRestriction[size];
 		}
 	};
 
-	private ParcelableUsageData(Parcel in) {
+	private ParcelableRestriction(Parcel in) {
 		readFromParcel(in);
 	}
 

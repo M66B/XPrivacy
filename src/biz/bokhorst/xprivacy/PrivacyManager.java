@@ -7,6 +7,7 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -214,7 +215,7 @@ public class PrivacyManager {
 
 	// Restrictions
 
-	public static boolean getRestricted(final XHook hook, int uid, String restrictionName, String methodName,
+	public static boolean getRestriction(final XHook hook, int uid, String restrictionName, String methodName,
 			boolean usage, boolean useCache) {
 		long start = System.currentTimeMillis();
 		boolean restricted = false;
@@ -284,7 +285,7 @@ public class PrivacyManager {
 		return restricted;
 	}
 
-	public static boolean setRestricted(XHook hook, int uid, String restrictionName, String methodName,
+	public static boolean setRestriction(XHook hook, int uid, String restrictionName, String methodName,
 			boolean restricted, boolean changeState) {
 		// Check uid
 		if (uid == 0) {
@@ -292,17 +293,9 @@ public class PrivacyManager {
 			return false;
 		}
 
-		// Prevent some restrictions for self
-		if (uid == Process.myUid()) {
-			if (PrivacyManager.cIdentification.equals(restrictionName) && "getString".equals(methodName))
-				return false;
-			if (PrivacyManager.cIPC.equals(restrictionName))
-				return false;
-			else if (PrivacyManager.cStorage.equals(restrictionName))
-				return false;
-			else if (PrivacyManager.cView.equals(restrictionName))
-				return false;
-		}
+		// Prevent some restrictions
+		if (!restrictionAlllowed(uid, restrictionName, methodName))
+			return false;
 
 		// Set restriction
 		try {
@@ -317,7 +310,7 @@ public class PrivacyManager {
 			if (restricted && !dangerous) {
 				for (Hook md : getHooks(restrictionName))
 					if (md.isDangerous())
-						PrivacyManager.setRestricted(hook, uid, restrictionName, md.getName(), dangerous, changeState);
+						PrivacyManager.setRestriction(hook, uid, restrictionName, md.getName(), dangerous, changeState);
 			}
 
 		// Mark state as restricted
@@ -326,6 +319,43 @@ public class PrivacyManager {
 					Integer.toString(ActivityMain.STATE_RESTRICTED));
 
 		// Check if restart required
+		return shouldRestart(restrictionName, methodName, restricted);
+	}
+
+	public static boolean setRestrictionList(List<ParcelableRestriction> listRestriction) {
+		boolean restart = false;
+		try {
+			List<ParcelableRestriction> listRestrictionChecked = new ArrayList<ParcelableRestriction>();
+			for (ParcelableRestriction restriction : listRestriction)
+				if (restrictionAlllowed(restriction.uid, restriction.restrictionName, restriction.methodName)) {
+					listRestrictionChecked.add(restriction);
+					restart = restart
+							|| shouldRestart(restriction.restrictionName, restriction.methodName,
+									restriction.restricted);
+				}
+			PrivacyService.getClient().setRestrictionList(listRestrictionChecked);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+		return restart;
+	}
+
+	private static boolean restrictionAlllowed(int uid, String restrictionName, String methodName) {
+		if (uid == Process.myUid()) {
+			if (PrivacyManager.cIdentification.equals(restrictionName) && "getString".equals(methodName))
+				return false;
+			if (PrivacyManager.cIPC.equals(restrictionName))
+				return false;
+			else if (PrivacyManager.cStorage.equals(restrictionName))
+				return false;
+			else if (PrivacyManager.cView.equals(restrictionName))
+				return false;
+		}
+		return true;
+	}
+
+	private static boolean shouldRestart(String restrictionName, String methodName, boolean restricted) {
+		boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false, false);
 		if (methodName == null) {
 			for (Hook md : getHooks(restrictionName))
 				if (md.isRestartRequired() && !(restricted && !dangerous && md.isDangerous()))
@@ -342,7 +372,7 @@ public class PrivacyManager {
 		boolean restart = false;
 		for (String restrictionName : getRestrictions()) {
 			for (Hook md : getHooks(restrictionName))
-				if (getRestricted(null, uid, restrictionName, md.getName(), false, false))
+				if (getRestriction(null, uid, restrictionName, md.getName(), false, false))
 					if (md.isRestartRequired()) {
 						restart = true;
 						break;
@@ -366,25 +396,21 @@ public class PrivacyManager {
 		return restart;
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings("unchecked")
 	public static List<Boolean> getRestricted(int uid, String restrictionName) {
-		List<Boolean> listRestricted = new ArrayList<Boolean>();
 		try {
-			List data = PrivacyService.getClient().getRestrictionList(uid, restrictionName);
-			for (Object obj : data)
-				listRestricted.add((Boolean) obj);
+			return (List<Boolean>) PrivacyService.getClient().getRestrictionList(uid, restrictionName);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
-		return listRestricted;
+		return new ArrayList<Boolean>();
 	}
 
 	// Usage
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static long getUsed(int uid, String restrictionName, String methodName) {
 		try {
-			List listRestriction = new ArrayList();
+			List<String> listRestriction = new ArrayList<String>();
 			if (restrictionName == null)
 				listRestriction.addAll(PrivacyManager.getRestrictions());
 			else
@@ -396,20 +422,27 @@ public class PrivacyManager {
 		}
 	}
 
-	public static List<UsageData> getUsed(Context context, int uid) {
-		List<UsageData> listUsage = new ArrayList<UsageData>();
+	public static List<ParcelableRestriction> getUsed(Context context, int uid) {
+		List<ParcelableRestriction> listUsage = new ArrayList<ParcelableRestriction>();
 		try {
-			List<ParcelableUsageData> data = PrivacyService.getClient().getUsageList(uid);
-			for (Object obj : data) {
-				ParcelableUsageData usage = (ParcelableUsageData) obj;
-				listUsage.add(new UsageData(usage.uid, usage.restrictionName, usage.methodName, usage.restricted,
-						usage.time));
-			}
+			listUsage.addAll(PrivacyService.getClient().getUsageList(uid));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
-		Collections.sort(listUsage);
+		Collections.sort(listUsage, new ParcelableRestrictionCompare());
 		return listUsage;
+	}
+
+	public static class ParcelableRestrictionCompare implements Comparator<ParcelableRestriction> {
+		@Override
+		public int compare(ParcelableRestriction one, ParcelableRestriction another) {
+			if (one.time < another.time)
+				return 1;
+			else if (one.time > another.time)
+				return -1;
+			else
+				return 0;
+		}
 	}
 
 	public static void deleteUsage(int uid) {
@@ -491,17 +524,14 @@ public class PrivacyManager {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	public static Map<String, String> getSettings(int uid) {
-		Map<String, String> result = new HashMap<String, String>();
+	@SuppressWarnings("unchecked")
+	public static Map<String, String> getSettingMap(int uid) {
 		try {
-			Map settings = PrivacyService.getClient().getSettings(uid);
-			for (Object key : settings.keySet())
-				result.put((String) key, (String) settings.get(key));
+			return (Map<String, String>) PrivacyService.getClient().getSettingMap(uid);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
-		return result;
+		return new HashMap<String, String>();
 	}
 
 	public static void deleteSettings(int uid) {

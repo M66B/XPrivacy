@@ -59,14 +59,14 @@ public abstract class XHook {
 
 	protected boolean isRestricted(MethodHookParam param, String methodName) throws Throwable {
 		int uid = Binder.getCallingUid();
-		return PrivacyManager.getRestricted(this, uid, mRestrictionName, methodName, true, true);
+		return PrivacyManager.getRestriction(this, uid, mRestrictionName, methodName, true, true);
 	}
 
 	protected boolean getRestricted(int uid, boolean usage) throws Throwable {
-		return PrivacyManager.getRestricted(this, uid, mRestrictionName, getSpecifier(), usage, true);
+		return PrivacyManager.getRestriction(this, uid, mRestrictionName, getSpecifier(), usage, true);
 	}
 
 	protected boolean getRestricted(int uid, String methodName, boolean usage) throws Throwable {
-		return PrivacyManager.getRestricted(this, uid, mRestrictionName, methodName, usage, true);
+		return PrivacyManager.getRestriction(this, uid, mRestrictionName, methodName, usage, true);
 	}
 }

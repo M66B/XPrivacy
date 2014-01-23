@@ -247,11 +247,11 @@ public class ActivityApp extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// Accounts
-		boolean accountsRestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), PrivacyManager.cAccounts,
+		boolean accountsRestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), PrivacyManager.cAccounts,
 				null, false, false);
-		boolean appsRestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), PrivacyManager.cSystem, null,
+		boolean appsRestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), PrivacyManager.cSystem, null,
 				false, false);
-		boolean contactsRestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), PrivacyManager.cContacts,
+		boolean contactsRestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), PrivacyManager.cContacts,
 				null, false, false);
 
 		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
@@ -391,7 +391,7 @@ public class ActivityApp extends Activity {
 		for (String restrictionName : listRestriction) {
 			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 			if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
-				if (PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null, false, false)) {
+				if (PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName, null, false, false)) {
 					some = true;
 					break;
 				}
@@ -410,7 +410,7 @@ public class ActivityApp extends Activity {
 				for (String restrictionName : listRestriction) {
 					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 					if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
-						restart = PrivacyManager.setRestricted(null, mAppInfo.getUid(), restrictionName, null,
+						restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null,
 								restricted, true) || restart;
 				}
 
@@ -868,7 +868,7 @@ public class ActivityApp extends Activity {
 					// Get info
 					used = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
-					crestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null, false,
+					crestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName, null, false,
 							false);
 
 					// Get all/some restricted
@@ -905,10 +905,10 @@ public class ActivityApp extends Activity {
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							crestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null,
+							crestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName, null,
 									false, false);
 							crestricted = !crestricted;
-							boolean restart = PrivacyManager.setRestricted(null, mAppInfo.getUid(), restrictionName,
+							boolean restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName,
 									null, crestricted, true);
 
 							// Update all/some restricted
@@ -1076,10 +1076,10 @@ public class ActivityApp extends Activity {
 					// Get info
 					md = (Hook) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName());
-					parentRestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null,
+					parentRestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName, null,
 							false, false);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
-					restricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, md.getName(),
+					restricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName, md.getName(),
 							false, false);
 
 					return holder;
@@ -1109,11 +1109,11 @@ public class ActivityApp extends Activity {
 					holder.ctvMethodName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							boolean restricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName,
+							boolean restricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName,
 									md.getName(), false, false);
 							restricted = !restricted;
 							holder.ctvMethodName.setChecked(restricted);
-							boolean restart = PrivacyManager.setRestricted(null, mAppInfo.getUid(), restrictionName,
+							boolean restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName,
 									md.getName(), restricted, true);
 
 							// Refresh display

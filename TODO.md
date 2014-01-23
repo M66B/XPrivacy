@@ -14,7 +14,6 @@ For interested developers:
 * Document XPrivacy navigation (menu's, presses, long presses) on GitHub
 * Better *sh* and *su* command detection
 * Accessibility: *android:labelFor="..."*
-* Secure usage data (how?)
 * Close app view when packages removed
 * Hook location intents
 * More efficient implementation of XSystemProperties

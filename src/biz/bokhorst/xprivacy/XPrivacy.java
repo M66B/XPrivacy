@@ -143,7 +143,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// Build SERIAL
-		if (PrivacyManager.getRestricted(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", true, false))
+		if (PrivacyManager.getRestriction(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", true, false))
 			XposedHelpers.setStaticObjectField(Build.class, "SERIAL",
 					PrivacyManager.getDefacedProp(Process.myUid(), "SERIAL"));
 

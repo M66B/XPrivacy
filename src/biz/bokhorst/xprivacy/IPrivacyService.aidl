@@ -1,6 +1,6 @@
 package biz.bokhorst.xprivacy;
 
-import biz.bokhorst.xprivacy.ParcelableUsageData;
+import biz.bokhorst.xprivacy.ParcelableRestriction;
 
 interface IPrivacyService {
 	int getVersion();
@@ -8,16 +8,17 @@ interface IPrivacyService {
 	void check();
 
 	void setRestriction(int uid, String restrictionName, String methodName, boolean restricted);
+	void setRestrictionList(in List<ParcelableRestriction> listRestriction);
 	boolean getRestriction(int uid, String restrictionName, String methodName, boolean usage);
-	List getRestrictionList(int uid, String restrictionName);
+	List /* Boolean */ getRestrictionList(int uid, String restrictionName);
 	void deleteRestrictions(int uid);
 
-	long getUsage(int uid, in List restrictionName, String methodName);
-	List<ParcelableUsageData> getUsageList(int uid);
+	long getUsage(int uid, in List<String> listRestrictionName, String methodName);
+	List<ParcelableRestriction> getUsageList(int uid);
 	void deleteUsage(int uid);
 
 	void setSetting(int uid, String name, String value);
 	String getSetting(int uid, String name, String defaultValue);
-	Map getSettings(int uid);
+	Map /* String, String */ getSettingMap(int uid);
 	void deleteSettings(int uid);
 }
