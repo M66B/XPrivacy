@@ -331,7 +331,6 @@ public class Requirements {
 						sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
 						sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy support info");
 						sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
-						sendEmail.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(Util.getDataFile()));
 						try {
 							context.startActivity(sendEmail);
 						} catch (Throwable ex) {

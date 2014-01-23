@@ -34,8 +34,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	@SuppressLint("InlinedApi")
 	public void initZygote(StartupParam startupParam) throws Throwable {
-		// Log load
-		Util.clearData();
 		Util.log(null, Log.INFO, String.format("Load %s", startupParam.modulePath));
 
 		PrivacyService.setupDatebase();

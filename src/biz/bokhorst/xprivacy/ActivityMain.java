@@ -69,7 +69,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mProgress = 0;
 	private boolean mBatchOpRunning = false;
 	private String mSharingState = null;
-	private int mEasterEgg;
 
 	private Handler mProHandler = new Handler();
 
@@ -270,21 +269,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 			});
 
-			// Easter egg
-			mEasterEgg = 0;
-			TextView tvState = (TextView) findViewById(R.id.tvState);
-			tvState.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if (++mEasterEgg == 7) {
-						mEasterEgg = 0;
-						Requirements.sendSupportInfo("", ActivityMain.this);
-					}
-				}
-			});
-
 			// Handle post share operation done message
 			if (mSharingState != null) {
+				TextView tvState = (TextView) findViewById(R.id.tvState);
 				tvState.setText(mSharingState);
 				mSharingState = null;
 			}
