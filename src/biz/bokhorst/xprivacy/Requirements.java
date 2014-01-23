@@ -24,6 +24,7 @@ import android.util.Log;
 
 public class Requirements {
 
+	@SuppressWarnings("unchecked")
 	public static void check(final Context context) {
 		// Check Android version
 		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
@@ -75,10 +76,9 @@ public class Requirements {
 			// Check privacy client
 			try {
 				if (PrivacyService.getClient() != null) {
-					@SuppressWarnings("unchecked")
 					List<String> listError = (List<String>) PrivacyService.getClient().check();
 					if (listError.size() > 0)
-						sendSupportInfo(TextUtils.join("\r\n\r\n", listError), context);
+						sendSupportInfo(TextUtils.join("\r\n", listError), context);
 				}
 			} catch (Throwable ex) {
 				sendSupportInfo(ex.toString(), context);
