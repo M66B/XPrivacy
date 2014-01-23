@@ -1193,8 +1193,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			private boolean granted = true;
 			private List<String> listRestriction;
 			private boolean crestricted;
-			private boolean allRestricted = true;
-			private boolean someRestricted = false;
+			private boolean allRestricted;
+			private boolean someRestricted;
 
 			public HolderTask(int thePosition, ViewHolder theHolder, ApplicationInfoEx theAppInfo) {
 				position = thePosition;
@@ -1232,6 +1232,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 										false);
 
 					// Get all/some restricted
+					allRestricted = true;
+					someRestricted = false;
 					for (boolean restricted : PrivacyManager.getRestricted(xAppInfo.getUid(), mRestrictionName)) {
 						allRestricted = (allRestricted && restricted);
 						someRestricted = (someRestricted || restricted);
@@ -1364,10 +1366,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 									crestricted = crestricted
 											|| PrivacyManager.getRestricted(null, xAppInfo.getUid(), restrictionName,
 													null, false, false);
+								crestricted = !crestricted;
+
 								boolean restart = false;
 								for (String restrictionName : listRestriction)
 									restart = PrivacyManager.setRestricted(null, xAppInfo.getUid(), restrictionName,
-											null, !crestricted, true) || restart;
+											null, crestricted, true) || restart;
 
 								// Update all/some restricted
 								allRestricted = true;
@@ -1381,7 +1385,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								// Update visible state
 								if (allRestricted)
 									holder.imgCBName.setImageBitmap(mCheck[2]); // Full
-								else if (someRestricted || !crestricted)
+								else if (someRestricted || crestricted)
 									holder.imgCBName.setImageBitmap(mCheck[1]); // Half
 								else
 									holder.imgCBName.setImageBitmap(mCheck[0]); // Off

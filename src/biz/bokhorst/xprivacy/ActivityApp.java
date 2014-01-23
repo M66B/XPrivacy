@@ -853,8 +853,8 @@ public class ActivityApp extends Activity {
 			private boolean used;
 			private boolean permission;
 			private boolean crestricted;
-			private boolean allRestricted = true;
-			private boolean someRestricted = false;
+			private boolean allRestricted;
+			private boolean someRestricted;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
@@ -872,6 +872,8 @@ public class ActivityApp extends Activity {
 							false);
 
 					// Get all/some restricted
+					allRestricted = true;
+					someRestricted = false;
 					for (boolean restricted : PrivacyManager.getRestricted(mAppInfo.getUid(), restrictionName)) {
 						allRestricted = (allRestricted && restricted);
 						someRestricted = (someRestricted || restricted);
@@ -903,8 +905,8 @@ public class ActivityApp extends Activity {
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							crestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(),
-									restrictionName, null, false, false);
+							crestricted = PrivacyManager.getRestricted(null, mAppInfo.getUid(), restrictionName, null,
+									false, false);
 							crestricted = !crestricted;
 							boolean restart = PrivacyManager.setRestricted(null, mAppInfo.getUid(), restrictionName,
 									null, crestricted, true);
