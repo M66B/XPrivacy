@@ -86,9 +86,13 @@ public class PrivacyService {
 			}
 
 		// Disable disk strict mode
-		ThreadPolicy oldPolicy = StrictMode.getThreadPolicy();
-		ThreadPolicy newpolicy = new ThreadPolicy.Builder(oldPolicy).permitDiskReads().permitDiskWrites().build();
-		StrictMode.setThreadPolicy(newpolicy);
+		try {
+			ThreadPolicy oldPolicy = StrictMode.getThreadPolicy();
+			ThreadPolicy newpolicy = new ThreadPolicy.Builder(oldPolicy).permitDiskReads().permitDiskWrites().build();
+			StrictMode.setThreadPolicy(newpolicy);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
 
 		return mClient;
 	}

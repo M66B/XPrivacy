@@ -141,7 +141,7 @@ public class UpdateService extends Service {
 	}
 
 	private boolean migrate(final Context context) throws IOException, RemoteException {
-		// Check if something to do
+		// Check if work
 		boolean work = false;
 		File prefs = new File(Util.getUserDataDirectory(Process.myUid()) + File.separator + "shared_prefs");
 		File[] files = prefs.listFiles();
@@ -160,18 +160,29 @@ public class UpdateService extends Service {
 			notifyProgress(context, format, 0);
 
 			// Convert legacy settings
-			PrivacyProvider.migrateLegacy(context);
+			try {
+				PrivacyProvider.migrateLegacy(context);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 
 			// Migrate settings
-			PrivacyProvider.migrateSettings(context);
+			try {
+				PrivacyProvider.migrateSettings(context);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 
 			// Migrate restrictions
 			List<ApplicationInfo> listAppInfo = context.getPackageManager().getInstalledApplications(
 					PackageManager.GET_META_DATA);
-			for (int i = 0; i < listAppInfo.size(); i++) {
-				PrivacyProvider.migrateApp(context, listAppInfo.get(i));
-				notifyProgress(context, format, 100 * (i + 1) / listAppInfo.size());
-			}
+			for (int i = 0; i < listAppInfo.size(); i++)
+				try {
+					PrivacyProvider.migrateApp(context, listAppInfo.get(i));
+					notifyProgress(context, format, 100 * (i + 1) / listAppInfo.size());
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
 
 			Util.log(null, Log.WARN, "Migration complete");
 		}
@@ -234,8 +245,8 @@ public class UpdateService extends Service {
 						if (!dangerous && md.isDangerous()) {
 							Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom() + " pkg="
 									+ aInfo.packageName);
-							PrivacyManager.setRestriction(null, aInfo.uid, md.getRestrictionName(), md.getName(), false,
-									true);
+							PrivacyManager.setRestriction(null, aInfo.uid, md.getRestrictionName(), md.getName(),
+									false, true);
 						}
 
 						// Restrict replaced methods

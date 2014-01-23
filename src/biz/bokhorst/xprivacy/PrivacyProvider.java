@@ -660,59 +660,56 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	public static void migrateSettings(Context context) {
-		try {
-			// Process settings
-			File prefFile = new File(getPrefFileName(PREF_SETTINGS));
-			File migratedFile = new File(prefFile + ".migrated");
-			if (prefFile.exists() && !migratedFile.exists()) {
-				Util.log(null, Log.WARN, "Migrating " + prefFile);
+		// Process settings
+		File prefFile = new File(getPrefFileName(PREF_SETTINGS));
+		File migratedFile = new File(prefFile + ".migrated");
+		if (prefFile.exists() && !migratedFile.exists()) {
+			Util.log(null, Log.WARN, "Migrating " + prefFile);
 
-				SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
-				for (String settingKey : prefs.getAll().keySet())
-					try {
-						int uid = 0;
-						String name = getSettingName(settingKey);
-						String value = prefs.getString(settingKey, "");
+			SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
+			for (String settingKey : prefs.getAll().keySet())
+				try {
+					int uid = 0;
+					String name = getSettingName(settingKey);
+					String value = prefs.getString(settingKey, "");
 
-						// Decode setting
-						String[] component = name.split("\\.");
-						if (name.startsWith(PrivacyManager.cSettingAccount)
-								|| name.startsWith(PrivacyManager.cSettingApplication)
-								|| name.startsWith(PrivacyManager.cSettingContact)
-								|| name.startsWith(PrivacyManager.cSettingRawContact)) {
-							try {
-								// name.uid.key
-								uid = Integer.parseInt(component[1]);
-								name = component[0];
-								for (int i = 2; i < component.length; i++)
-									name += "." + component[i];
-							} catch (NumberFormatException ignored) {
-								// Initial uid/name will be used
-							}
-						} else if (component.length > 1) {
-							try {
-								// name.x.y.z.uid
-								uid = Integer.parseInt(component[component.length - 1]);
-								name = component[0];
-								for (int i = 1; i < component.length - 1; i++)
-									name += "." + component[i];
-							} catch (NumberFormatException ignored) {
-								// Initial uid/name will be used
-							}
+					// Decode setting
+					String[] component = name.split("\\.");
+					if (name.startsWith(PrivacyManager.cSettingAccount)
+							|| name.startsWith(PrivacyManager.cSettingApplication)
+							|| name.startsWith(PrivacyManager.cSettingContact)
+							|| name.startsWith(PrivacyManager.cSettingRawContact)) {
+						try {
+							// name.uid.key
+							uid = Integer.parseInt(component[1]);
+							name = component[0];
+							for (int i = 2; i < component.length; i++)
+								name += "." + component[i];
+						} catch (NumberFormatException ignored) {
+							// Initial uid/name will be used
 						}
-
-						// Set
-						PrivacyService.getClient().setSetting(uid, name, value);
-						Util.log(null, Log.WARN, "Migrate setting=" + getSettingName(settingKey) + " uid=" + uid
-								+ " name=" + name + " value=" + value);
-					} catch (Throwable ex) {
-						// Legacy boolean
+					} else if (component.length > 1) {
+						try {
+							// name.x.y.z.uid
+							uid = Integer.parseInt(component[component.length - 1]);
+							name = component[0];
+							for (int i = 1; i < component.length - 1; i++)
+								name += "." + component[i];
+						} catch (NumberFormatException ignored) {
+							// Initial uid/name will be used
+						}
 					}
 
-				prefFile.renameTo(migratedFile);
-			}
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
+					// Set
+					PrivacyService.getClient().setSetting(uid, name, value);
+					Util.log(null, Log.WARN, "Migrate setting=" + getSettingName(settingKey) + " uid=" + uid + " name="
+							+ name + " value=" + value);
+				} catch (Throwable ex) {
+					// Legacy boolean
+					Util.bug(null, ex);
+				}
+
+			prefFile.renameTo(migratedFile);
 		}
 	}
 }
