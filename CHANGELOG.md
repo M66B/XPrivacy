@@ -15,12 +15,14 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Fixed update service dying (hopefully)
-* Fixed toggling category restrictions from application list
-* Fixed toggling function restrictions
-* Changed memory class for service settings cache to heap size >= 32MB
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.7 TEST**
+
+* Attempt to fix update service dying
+* Fixed toggling category restrictions from application list
+* Fixed toggling function restrictions from application details view
+* Changed memory class for service settings cache to heap size >= 32MB
 
 **Version 1.99.6 TEST**
 
