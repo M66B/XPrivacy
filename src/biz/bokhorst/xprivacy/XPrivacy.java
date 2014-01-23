@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,12 +26,19 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 
 @SuppressLint("DefaultLocale")
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
-
-	// @formatter:off
+	private static boolean mAccountManagerHooked = false;
+	private static boolean mActivityManagerHooked = false;
+	private static boolean mClipboardManagerHooked = false;
+	private static boolean mConnectivityManagerHooked = false;
+	private static boolean mLocationManagerHooked = false;
+	private static boolean mPackageManagerHooked = false;
+	private static boolean mSensorManagerHooked = false;
+	private static boolean mTelephonyManagerHooked = false;
+	private static boolean mWindowManagerHooked = false;
+	private static boolean mWiFiManagerHooked = false;
+	private static List<String> mListHookError = new ArrayList<String>();
 
 	// http://developer.android.com/reference/android/Manifest.permission.html
-
-	// @formatter:on
 
 	@SuppressLint("InlinedApi")
 	public void initZygote(StartupParam startupParam) throws Throwable {
@@ -46,7 +54,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			XposedBridge.hookMethod(mMain, new XC_MethodHook() {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					PrivacyService.register();
+					PrivacyService.register(mListHookError);
 				}
 			});
 		} catch (Throwable ex) {
@@ -170,17 +178,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 	}
 
-	private static boolean mAccountManagerHooked = false;
-	private static boolean mActivityManagerHooked = false;
-	private static boolean mClipboardManagerHooked = false;
-	private static boolean mConnectivityManagerHooked = false;
-	private static boolean mLocationManagerHooked = false;
-	private static boolean mPackageManagerHooked = false;
-	private static boolean mSensorManagerHooked = false;
-	private static boolean mTelephonyManagerHooked = false;
-	private static boolean mWindowManagerHooked = false;
-	private static boolean mWiFiManagerHooked = false;
-
 	public static void handleGetSystemService(XHook hook, String name, Object instance) {
 		Util.log(hook, Log.INFO,
 				"getSystemService " + name + "=" + instance.getClass().getName() + " uid=" + Binder.getCallingUid());
@@ -297,12 +294,17 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			};
 
 			// Find class
-			Class<?> hookClass = findClass(hook.getClassName(), classLoader);
-			if (hookClass == null) {
+			Class<?> hookClass;
+			try {
+				hookClass = findClass(hook.getClassName(), classLoader);
+				if (hookClass == null)
+					throw new ClassNotFoundException(hook.getClassName());
+			} catch (Throwable ex) {
 				String packageName = AndroidAppHelper.currentPackageName();
 				String restrictionName = hook.getRestrictionName();
 				String message = String.format("%s: class not found: %s for %s/%s uid=%d", packageName,
 						hook.getClassName(), restrictionName, hook.getSpecifier(), Process.myUid());
+				mListHookError.add(message);
 				Util.log(hook, Log.ERROR, message);
 				return;
 			}
@@ -331,9 +333,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				String message = String.format("%s: method not found: %s.%s for %s/%s uid=%d", packageName,
 						hookClass.getName(), hook.getMethodName(), restrictionName, hook.getSpecifier(),
 						Process.myUid());
+				mListHookError.add(message);
 				Util.log(hook, Log.ERROR, message);
-				for (Method declared : hookClass.getDeclaredMethods())
-					Util.log(hook, Log.ERROR, "Declared method=" + declared);
+				for (Method declared : hookClass.getDeclaredMethods()) {
+					String dMethod = "Declared method=" + declared;
+					Util.log(hook, Log.ERROR, dMethod);
+					mListHookError.add(dMethod);
+				}
 				return;
 			}
 
@@ -347,6 +353,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
+			mListHookError.add(ex.toString());
 		}
 	}
 }

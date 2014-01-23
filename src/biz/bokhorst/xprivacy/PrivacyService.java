@@ -28,9 +28,9 @@ import android.util.Log;
 
 public class PrivacyService {
 	private static int mXUid = -1;
+	private static List<String> mListError;
 	private static IPrivacyService mClient = null;
 	private static SQLiteDatabase mDatabase = null;
-	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 	private static SQLiteStatement stmtGetRestriction = null;
 	private static SQLiteStatement stmtGetSetting = null;
@@ -38,7 +38,7 @@ public class PrivacyService {
 	private static SQLiteStatement stmtGetUsageMethod = null;
 
 	private static int cCurrentVersion = 1;
-	private static String cServiceName = "xprivacy242";
+	private static String cServiceName = "xprivacy243";
 	private static String cTableRestriction = "restriction";
 	private static String cTableUsage = "usage";
 	private static String cTableSetting = "setting";
@@ -47,10 +47,14 @@ public class PrivacyService {
 	private static Map<CSetting, CSetting> mSettingCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
+	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
 	// TODO: define column names
 
-	public static void register() {
+	public static void register(List<String> listError) {
 		try {
+			mListError = listError;
+
 			// public static void addService(String name, IBinder service)
 			Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
 			Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
@@ -106,8 +110,9 @@ public class PrivacyService {
 		}
 
 		@Override
-		public void check() throws RemoteException {
+		public List<String> check() throws RemoteException {
 			enforcePermission();
+			return mListError;
 		}
 
 		// Restrictions

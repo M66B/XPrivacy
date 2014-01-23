@@ -74,8 +74,12 @@ public class Requirements {
 		if (Util.isXposedEnabled()) {
 			// Check privacy client
 			try {
-				if (PrivacyService.getClient() != null)
-					PrivacyService.getClient().check();
+				if (PrivacyService.getClient() != null) {
+					@SuppressWarnings("unchecked")
+					List<String> listError = (List<String>) PrivacyService.getClient().check();
+					if (listError.size() > 0)
+						sendSupportInfo(TextUtils.join("\r\n\r\n", listError), context);
+				}
 			} catch (Throwable ex) {
 				sendSupportInfo(ex.toString(), context);
 			}

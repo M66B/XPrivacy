@@ -5,7 +5,7 @@ import biz.bokhorst.xprivacy.ParcelableRestriction;
 interface IPrivacyService {
 	int getVersion();
 	void migrated();
-	void check();
+	List /* String */ check();
 
 	void setRestriction(int uid, String restrictionName, String methodName, boolean restricted);
 	void setRestrictionList(in List<ParcelableRestriction> listRestriction);
