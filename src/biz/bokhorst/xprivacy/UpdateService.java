@@ -47,6 +47,13 @@ public class UpdateService extends Service {
 			final int action = extras.getInt(cAction);
 			Util.log(null, Log.WARN, "Service received action=" + action + " flags=" + flags);
 
+			// Check service
+			if (PrivacyService.getClient() == null) {
+				Util.log(null, Log.ERROR, "Service not available");
+				stopSelf();
+				return 0;
+			}
+
 			// Start foreground service
 			NotificationCompat.Builder builder = new NotificationCompat.Builder(UpdateService.this);
 			builder.setSmallIcon(R.drawable.ic_launcher);
