@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import biz.bokhorst.xprivacy.ParcelableRestriction;
+import biz.bokhorst.xprivacy.ParcelableSetting;
 
 interface IPrivacyService {
 	int getVersion();
@@ -18,6 +19,7 @@ interface IPrivacyService {
 	void deleteUsage(int uid);
 
 	void setSetting(int uid, String name, String value);
+	void setSettingList(in List<ParcelableSetting> listSetting);
 	String getSetting(int uid, String name, String defaultValue);
 	Map /* String, String */ getSettingMap(int uid);
 	void deleteSettings(int uid);

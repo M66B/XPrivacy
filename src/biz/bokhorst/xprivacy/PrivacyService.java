@@ -576,6 +576,12 @@ public class PrivacyService {
 		}
 
 		@Override
+		public void setSettingList(List<ParcelableSetting> listSetting) throws RemoteException {
+			for (ParcelableSetting setting : listSetting)
+				setSetting(setting.uid, setting.name, setting.value);
+		}
+
+		@Override
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		public Map getSettingMap(int uid) throws RemoteException {
 			Map mapName = new HashMap();
