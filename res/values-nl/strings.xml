@@ -60,7 +60,7 @@
     <string name="msg_restart">Applicatie herstart vereist</string>
     <string name="msg_register">Registreer uw apparaat a.u.b.</string>
     <string name="msg_registered">Controleer uw e-mail om uw apparaat te activeren</string>
-    <string name="msg_service">Update service running</string>
+    <string name="msg_service">Bijwerkdienst actief</string>
     <string name="msg_migrating" formatted="false">Migratie %s</string>
     <string name="msg_randomizing" formatted="false">Willekeurig %s</string>
     <string name="msg_upgrading" formatted="false">Bijwerken %s</string>
