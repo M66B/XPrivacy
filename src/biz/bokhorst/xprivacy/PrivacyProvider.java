@@ -21,9 +21,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.Process;
-import android.os.RemoteException;
 import android.util.Log;
 
 @SuppressWarnings("deprecation")
@@ -623,54 +621,11 @@ public class PrivacyProvider extends ContentProvider {
 		}
 	}
 
-	// Migration
-
-	public static void migrateLegacy(Context context) throws IOException {
-		convertSettings(context);
-		convertRestrictions(context);
-	}
-
-	public static List<Bundle> migrateApplication(Context context, ApplicationInfo appInfo) throws RemoteException {
-		List<Bundle> listWork = new ArrayList<Bundle>();
-
-		File prefFile = new File(getPrefFileName(PREF_RESTRICTION, appInfo.uid));
-		File migratedFile = new File(prefFile + ".migrated");
-		if (prefFile.exists() && !migratedFile.exists()) {
-			Util.log(null, Log.WARN, "Migrating " + prefFile);
-
-			SharedPreferences prefs = context.getSharedPreferences(PREF_RESTRICTION + "." + appInfo.uid,
-					Context.MODE_WORLD_READABLE);
-
-			// Process restrictions
-			for (String restrictionName : PrivacyManager.getRestrictions())
-				if (getRestricted(restrictionName, null, prefs)) {
-					// Category
-					listWork.add(UpdateService.getBundleRestriction(appInfo.uid, restrictionName, null, true));
-
-					// Exceptions
-					for (Hook md : PrivacyManager.getHooks(restrictionName)) {
-						boolean restricted = getRestricted(restrictionName, md.getName(), prefs);
-						if (!restricted || md.isDangerous())
-							listWork.add(UpdateService.getBundleRestriction(appInfo.uid, restrictionName, md.getName(),
-									restricted));
-					}
-				}
-
-			if (listWork.size() > 0)
-				listWork.add(UpdateService.getBundleRename(prefFile, migratedFile));
-		}
-
-		return listWork;
-	}
-
-	public static List<Bundle> migrateSettings(Context context) {
-		// Process settings
-		List<Bundle> listWork = new ArrayList<Bundle>();
-
+	private static void splitSettings(Context context) {
 		File prefFile = new File(getPrefFileName(PREF_SETTINGS));
 		File migratedFile = new File(prefFile + ".migrated");
 		if (prefFile.exists() && !migratedFile.exists()) {
-			Util.log(null, Log.WARN, "Migrating " + prefFile);
+			Util.log(null, Log.WARN, "Splitting " + prefFile);
 
 			SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
 			for (String settingKey : prefs.getAll().keySet())
@@ -688,6 +643,98 @@ public class PrivacyProvider extends ContentProvider {
 						try {
 							// name.uid.key
 							uid = Integer.parseInt(component[1]);
+						} catch (NumberFormatException ignored) {
+							// Initial uid/name will be used
+						}
+					} else if (component.length > 1) {
+						try {
+							// name.x.y.z.uid
+							uid = Integer.parseInt(component[component.length - 1]);
+						} catch (NumberFormatException ignored) {
+							// Initial uid/name will be used
+						}
+					}
+
+					SharedPreferences aprefs = context.getSharedPreferences(PREF_SETTINGS + "." + uid,
+							Context.MODE_WORLD_READABLE);
+					SharedPreferences.Editor editor = aprefs.edit();
+					editor.putString(name, value);
+					editor.commit();
+				} catch (Throwable ex) {
+					// Legacy boolean
+					Util.bug(null, ex);
+				}
+
+			prefFile.renameTo(migratedFile);
+		}
+	}
+
+	// Migration
+
+	public static void migrateLegacy(Context context) throws IOException {
+		convertSettings(context);
+		convertRestrictions(context);
+		splitSettings(context);
+	}
+
+	public static List<ParcelableRestriction> migrateRestrictions(Context context, int uid) {
+		List<ParcelableRestriction> listWork = new ArrayList<ParcelableRestriction>();
+
+		File prefFile = new File(getPrefFileName(PREF_RESTRICTION, uid));
+		File migratedFile = new File(prefFile + ".migrated");
+		if (prefFile.exists() && !migratedFile.exists()) {
+			Util.log(null, Log.WARN, "Migrating " + prefFile);
+
+			SharedPreferences prefs = context.getSharedPreferences(PREF_RESTRICTION + "." + uid,
+					Context.MODE_WORLD_READABLE);
+
+			// Process restrictions
+			for (String restrictionName : PrivacyManager.getRestrictions())
+				if (getRestricted(restrictionName, null, prefs)) {
+					// Category
+					listWork.add(new ParcelableRestriction(uid, restrictionName, null, true));
+
+					// Exceptions
+					for (Hook md : PrivacyManager.getHooks(restrictionName)) {
+						boolean restricted = getRestricted(restrictionName, md.getName(), prefs);
+						if (!restricted || md.isDangerous())
+							listWork.add(new ParcelableRestriction(uid, restrictionName, md.getName(), restricted));
+					}
+				}
+		}
+
+		return listWork;
+	}
+
+	public static void finishMigrateRestrictions(int uid) {
+		File prefFile = new File(getPrefFileName(PREF_RESTRICTION, uid));
+		File migratedFile = new File(prefFile + ".migrated");
+		prefFile.renameTo(migratedFile);
+	}
+
+	public static List<ParcelableSetting> migrateSettings(Context context, int uid) {
+		// Process settings
+		List<ParcelableSetting> listWork = new ArrayList<ParcelableSetting>();
+
+		File prefFile = new File(getPrefFileName(PREF_SETTINGS) + "." + uid);
+		File migratedFile = new File(prefFile + ".migrated");
+		if (prefFile.exists() && !migratedFile.exists()) {
+			Util.log(null, Log.WARN, "Migrating " + prefFile);
+
+			SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
+			for (String settingKey : prefs.getAll().keySet())
+				try {
+					String name = getSettingName(settingKey);
+					String value = prefs.getString(settingKey, "");
+
+					// Decode setting
+					String[] component = name.split("\\.");
+					if (name.startsWith(PrivacyManager.cSettingAccount)
+							|| name.startsWith(PrivacyManager.cSettingApplication)
+							|| name.startsWith(PrivacyManager.cSettingContact)
+							|| name.startsWith(PrivacyManager.cSettingRawContact)) {
+						try {
+							// name.uid.key
 							name = component[0];
 							for (int i = 2; i < component.length; i++)
 								name += "." + component[i];
@@ -697,7 +744,6 @@ public class PrivacyProvider extends ContentProvider {
 					} else if (component.length > 1) {
 						try {
 							// name.x.y.z.uid
-							uid = Integer.parseInt(component[component.length - 1]);
 							name = component[0];
 							for (int i = 1; i < component.length - 1; i++)
 								name += "." + component[i];
@@ -707,16 +753,20 @@ public class PrivacyProvider extends ContentProvider {
 					}
 
 					// Set
-					listWork.add(UpdateService.getBundleSetting(uid, name, value));
+					listWork.add(new ParcelableSetting(uid, name, value));
 				} catch (Throwable ex) {
 					// Legacy boolean
 					Util.bug(null, ex);
 				}
-
-			if (listWork.size() > 0)
-				listWork.add(UpdateService.getBundleRename(prefFile, migratedFile));
 		}
 
 		return listWork;
 	}
+
+	public static void finishMigrateSettings(int uid) {
+		File prefFile = new File(getPrefFileName(PREF_SETTINGS) + "." + uid);
+		File migratedFile = new File(prefFile + ".migrated");
+		prefFile.renameTo(migratedFile);
+	}
+
 }

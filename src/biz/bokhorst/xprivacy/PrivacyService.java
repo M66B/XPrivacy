@@ -14,6 +14,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
@@ -183,6 +184,19 @@ public class PrivacyService {
 		@Override
 		public boolean getRestriction(final int uid, final String restrictionName, final String methodName,
 				final boolean usage) throws RemoteException {
+			if (uid == getXUid()) {
+				if (PrivacyManager.cIdentification.equals(restrictionName) && "getString".equals(methodName))
+					return false;
+				if (PrivacyManager.cIPC.equals(restrictionName))
+					return false;
+				else if (PrivacyManager.cStorage.equals(restrictionName))
+					return false;
+				else if (PrivacyManager.cSystem.equals(restrictionName))
+					return false;
+				else if (PrivacyManager.cView.equals(restrictionName))
+					return false;
+			}
+
 			boolean restricted = false;
 			try {
 				// Check cache
@@ -654,6 +668,8 @@ public class PrivacyService {
 		try {
 			Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
 			Object am = cam.getMethod("self").invoke(null);
+			if (am == null)
+				return null;
 			return (Context) cam.getDeclaredField("mContext").get(am);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -666,9 +682,12 @@ public class PrivacyService {
 			try {
 				Context context = getContext();
 				if (context != null) {
-					String self = PrivacyService.class.getPackage().getName();
-					ApplicationInfo xInfo = context.getPackageManager().getApplicationInfo(self, 0);
-					mXUid = xInfo.uid;
+					PackageManager pm = context.getPackageManager();
+					if (pm != null) {
+						String self = PrivacyService.class.getPackage().getName();
+						ApplicationInfo xInfo = pm.getApplicationInfo(self, 0);
+						mXUid = xInfo.uid;
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);

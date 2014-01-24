@@ -11,6 +11,12 @@ public class ParcelableSetting implements Parcelable {
 	public ParcelableSetting() {
 	}
 
+	public ParcelableSetting(int _uid, String _name, String _value) {
+		uid = _uid;
+		name = _name;
+		value = _value;
+	}
+
 	public static final Parcelable.Creator<ParcelableSetting> CREATOR = new Parcelable.Creator<ParcelableSetting>() {
 		public ParcelableSetting createFromParcel(Parcel in) {
 			return new ParcelableSetting(in);

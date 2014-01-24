@@ -13,6 +13,13 @@ public class ParcelableRestriction implements Parcelable {
 	public ParcelableRestriction() {
 	}
 
+	public ParcelableRestriction(int _uid, String category, String method, boolean _restricted) {
+		uid = _uid;
+		restrictionName = category;
+		methodName = method;
+		restricted = _restricted;
+	}
+
 	public static final Parcelable.Creator<ParcelableRestriction> CREATOR = new Parcelable.Creator<ParcelableRestriction>() {
 		public ParcelableRestriction createFromParcel(Parcel in) {
 			return new ParcelableRestriction(in);

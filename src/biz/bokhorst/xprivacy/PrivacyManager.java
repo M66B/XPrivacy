@@ -293,10 +293,6 @@ public class PrivacyManager {
 			return false;
 		}
 
-		// Prevent some restrictions
-		if (!isRestrictionAlllowed(uid, restrictionName, methodName))
-			return false;
-
 		// Set restriction
 		try {
 			PrivacyService.getClient().setRestriction(uid, restrictionName, methodName, restricted);
@@ -324,36 +320,17 @@ public class PrivacyManager {
 
 	public static boolean setRestrictionList(List<ParcelableRestriction> listRestriction) {
 		boolean restart = false;
-		try {
-			List<ParcelableRestriction> listRestrictionChecked = new ArrayList<ParcelableRestriction>();
-			for (ParcelableRestriction restriction : listRestriction)
-				if (isRestrictionAlllowed(restriction.uid, restriction.restrictionName, restriction.methodName)) {
-					listRestrictionChecked.add(restriction);
+		if (listRestriction.size() > 0)
+			try {
+				for (ParcelableRestriction restriction : listRestriction)
 					restart = restart
 							|| shouldRestart(restriction.restrictionName, restriction.methodName,
 									restriction.restricted);
-				}
-			PrivacyService.getClient().setRestrictionList(listRestrictionChecked);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
+				PrivacyService.getClient().setRestrictionList(listRestriction);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 		return restart;
-	}
-
-	private static boolean isRestrictionAlllowed(int uid, String restrictionName, String methodName) {
-		if (uid == Process.myUid()) {
-			if (PrivacyManager.cIdentification.equals(restrictionName) && "getString".equals(methodName))
-				return false;
-			if (PrivacyManager.cIPC.equals(restrictionName))
-				return false;
-			else if (PrivacyManager.cStorage.equals(restrictionName))
-				return false;
-			else if (PrivacyManager.cSystem.equals(restrictionName))
-				return false;
-			else if (PrivacyManager.cView.equals(restrictionName))
-				return false;
-		}
-		return true;
 	}
 
 	private static boolean shouldRestart(String restrictionName, String methodName, boolean restricted) {
@@ -524,6 +501,15 @@ public class PrivacyManager {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
+	}
+
+	public static void setSettingList(List<ParcelableSetting> listSetting) {
+		if (listSetting.size() > 0)
+			try {
+				PrivacyService.getClient().setSettingList(listSetting);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 	}
 
 	@SuppressWarnings("unchecked")

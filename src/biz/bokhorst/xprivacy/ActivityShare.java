@@ -1232,14 +1232,9 @@ public class ActivityShare extends Activity {
 										int voted_restricted = entry.getInt("restricted");
 										int voted_not_restricted = entry.getInt("not_restricted");
 										boolean restricted = (voted_restricted > voted_not_restricted);
-										if (methodName == null || restricted) {
-											ParcelableRestriction restriction = new ParcelableRestriction();
-											restriction.uid = appInfo.getUid();
-											restriction.restrictionName = restrictionName;
-											restriction.methodName = methodName;
-											restriction.restricted = restricted;
-											listRestriction.add(restriction);
-										}
+										if (methodName == null || restricted)
+											listRestriction.add(new ParcelableRestriction(appInfo.getUid(),
+													restrictionName, methodName, restricted));
 									}
 									restart = PrivacyManager.setRestrictionList(listRestriction);
 

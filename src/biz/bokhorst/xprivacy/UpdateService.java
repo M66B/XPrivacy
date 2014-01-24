@@ -1,6 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Process;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -23,21 +21,7 @@ public class UpdateService extends Service {
 	public static int cActionBoot = 1;
 	public static int cActionUpdated = 2;
 
-	private static String cTodoType = "Type";
-	private static int cTodoSetting = 1;
-	private static int cTodoRestriction = 2;
-	private static int cTodoRename = 3;
-
-	private static String cTodoUid = "Uid";
-	private static String cTodoName = "Name";
-	private static String cTodoValue = "Value";
-	private static String cTodoSource = "Source";
-	private static String cTodoTarget = "Target";
-	private static String cTodoCategory = "Category";
-	private static String cTodoMethod = "Method";
-	private static String cTodoRestricted = "Restricted";
-
-	private static Thread mWorker;
+	private static Thread mWorkerThread;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -75,48 +59,74 @@ public class UpdateService extends Service {
 			startForeground(Util.NOTIFY_SERVICE, notification);
 
 			// Start worker
-			mWorker = new Thread(new Runnable() {
+			mWorkerThread = new Thread(new Runnable() {
 				@Override
 				public void run() {
 					try {
 						// Check action
 						if (action == cActionBoot) {
 							// Boot received
+							List<ApplicationInfo> listApp = UpdateService.this.getPackageManager()
+									.getInstalledApplications(0);
 
-							// Allow some restrictions for self
-							PrivacyManager.setRestriction(null, Process.myUid(), PrivacyManager.cIdentification,
-									"getString", false, false);
-							PrivacyManager.setRestriction(null, Process.myUid(), PrivacyManager.cIPC, null, false,
-									false);
-							PrivacyManager.setRestriction(null, Process.myUid(), PrivacyManager.cStorage, null, false,
-									false);
-							PrivacyManager.setRestriction(null, Process.myUid(), PrivacyManager.cSystem, null, false,
-									false);
-							PrivacyManager.setRestriction(null, Process.myUid(), PrivacyManager.cView, null, false,
-									false);
+							// Start migrate
+							int first = 0;
+							String format = getString(R.string.msg_migrating);
+							PrivacyProvider.migrateLegacy(UpdateService.this);
 
-							// Migrate
-							List<Bundle> listWork = getMigrateWork(UpdateService.this);
-							if (listWork.size() > 0) {
-								String format = getString(R.string.msg_migrating);
-								notifyProgress(UpdateService.this, Util.NOTIFY_MIGRATE, false, format, 0);
-								executeWork(UpdateService.this, listWork, Util.NOTIFY_MIGRATE, format);
+							// Migrate global settings
+							PrivacyManager.setSettingList(PrivacyProvider.migrateSettings(UpdateService.this, 0));
+
+							// Migrate application settings/restrictions
+							for (int i = 1; i <= listApp.size(); i++) {
+								int uid = listApp.get(i - 1).uid;
+								// Settings
+								List<ParcelableSetting> listSetting = PrivacyProvider.migrateSettings(
+										UpdateService.this, uid);
+								PrivacyManager.setSettingList(listSetting);
+								PrivacyProvider.finishMigrateSettings(uid);
+
+								// Restrictions
+								List<ParcelableRestriction> listRestriction = PrivacyProvider.migrateRestrictions(
+										UpdateService.this, uid);
+								PrivacyManager.setRestrictionList(listRestriction);
+								PrivacyProvider.finishMigrateRestrictions(uid);
+
+								if (first == 0)
+									if (listSetting.size() > 0 || listRestriction.size() > 0)
+										first = i;
+								if (first > 0)
+									notifyProgress(UpdateService.this, Util.NOTIFY_MIGRATE, false, format, 100
+											* (i - first) / (listApp.size() - first));
+							}
+
+							// End migrate
+							if (first > 0)
 								notifyProgress(UpdateService.this, Util.NOTIFY_MIGRATE, true, format, 100);
-
-								// Use database
-								PrivacyService.getClient().migrated();
-							} else
-								Util.log(null, Log.WARN, "No migrate work");
+							PrivacyService.getClient().migrated();
 
 							// Randomize
-							listWork = getRandomizeWork(UpdateService.this);
-							if (listWork.size() > 0) {
-								String format = getString(R.string.msg_randomizing);
-								notifyProgress(UpdateService.this, Util.NOTIFY_RANDOMIZE, false, format, 0);
-								executeWork(UpdateService.this, listWork, Util.NOTIFY_RANDOMIZE, format);
+							first = 0;
+							format = getString(R.string.msg_randomizing);
+
+							// Randomize global
+							PrivacyManager.setSettingList(getRandomizeWork(UpdateService.this, 0));
+
+							// Randomize applications
+							for (int i = 1; i <= listApp.size(); i++) {
+								int uid = listApp.get(i - 1).uid;
+								List<ParcelableSetting> listSetting = getRandomizeWork(UpdateService.this, uid);
+								PrivacyManager.setSettingList(listSetting);
+
+								if (first == 0)
+									if (listSetting.size() > 0)
+										first = i;
+								if (first > 0)
+									notifyProgress(UpdateService.this, Util.NOTIFY_RANDOMIZE, false, format, 100
+											* (i - first) / (listApp.size() - first));
+							}
+							if (first > 0)
 								notifyProgress(UpdateService.this, Util.NOTIFY_RANDOMIZE, true, format, 100);
-							} else
-								Util.log(null, Log.WARN, "No randomize work");
 
 							// Done
 							stopForeground(true);
@@ -124,20 +134,42 @@ public class UpdateService extends Service {
 						} else if (action == cActionUpdated) {
 							// Self updated
 
-							// Migrate
-							List<Bundle> listWork = getUpgradeWork(UpdateService.this);
-							if (listWork.size() > 0) {
-								// Upgrade restriction
-								String format = getString(R.string.msg_upgrading);
-								notifyProgress(UpdateService.this, Util.NOTIFY_UPGRADE, false, format, 0);
-								executeWork(UpdateService.this, listWork, Util.NOTIFY_MIGRATE, format);
-								notifyProgress(UpdateService.this, Util.NOTIFY_UPGRADE, true, format, 100);
+							// Get previous version
+							PackageManager pm = UpdateService.this.getPackageManager();
+							PackageInfo pInfo = pm.getPackageInfo(UpdateService.this.getPackageName(), 0);
+							Version sVersion = new Version(PrivacyManager.getSetting(null, 0,
+									PrivacyManager.cSettingVersion, "0.0", false));
 
-								// Update version
-								PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-								PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
-							} else
-								Util.log(null, Log.WARN, "No upgrade work");
+							// Upgrade packages
+							if (sVersion.compareTo(new Version("0.0")) != 0) {
+								Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version "
+										+ pInfo.versionName);
+								boolean dangerous = PrivacyManager.getSettingBool(null, 0,
+										PrivacyManager.cSettingDangerous, false, false);
+								List<ApplicationInfo> listApp = UpdateService.this.getPackageManager()
+										.getInstalledApplications(0);
+
+								int first = 0;
+								String format = getString(R.string.msg_upgrading);
+
+								for (int i = 1; i <= listApp.size(); i++) {
+									int uid = listApp.get(i - 1).uid;
+									List<ParcelableRestriction> listRestriction = getUpgradeWork(sVersion, dangerous,
+											uid);
+									PrivacyManager.setRestrictionList(listRestriction);
+
+									if (first == 0)
+										if (listRestriction.size() > 0)
+											first = i;
+									if (first > 0)
+										notifyProgress(UpdateService.this, Util.NOTIFY_UPGRADE, false, format, 100
+												* (i - first) / (listApp.size() - first));
+								}
+								if (first > 0)
+									notifyProgress(UpdateService.this, Util.NOTIFY_UPGRADE, true, format, 100);
+							}
+
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
 
 							// Done
 							stopForeground(true);
@@ -151,160 +183,68 @@ public class UpdateService extends Service {
 						}
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
+						// Leave service running
 					}
 				}
 			});
-			mWorker.start();
+			mWorkerThread.start();
 		} else
 			Util.log(null, Log.ERROR, "Action missing");
 
 		return START_STICKY;
 	}
 
-	private static List<Bundle> getMigrateWork(Context context) {
-		List<Bundle> listWork = new ArrayList<Bundle>();
-
-		// Convert legacy settings
-		try {
-			PrivacyProvider.migrateLegacy(context);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-
-		// Migrate settings
-		try {
-			listWork.addAll(PrivacyProvider.migrateSettings(context));
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-
-		// Migrate restrictions
-		for (ApplicationInfo appInfo : context.getPackageManager().getInstalledApplications(0))
-			try {
-				listWork.addAll(PrivacyProvider.migrateApplication(context, appInfo));
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
-
-		return listWork;
-	}
-
-	private static List<Bundle> getRandomizeWork(Context context) {
-		List<Bundle> listWork = getRandomizeWork(context, 0);
-		for (ApplicationInfo appInfo : context.getPackageManager().getInstalledApplications(0))
-			listWork.addAll(getRandomizeWork(context, appInfo.uid));
-		return listWork;
-	}
-
-	private static List<Bundle> getRandomizeWork(Context context, int uid) {
-		List<Bundle> listWork = new ArrayList<Bundle>();
+	private static List<ParcelableSetting> getRandomizeWork(Context context, int uid) {
+		List<ParcelableSetting> listWork = new ArrayList<ParcelableSetting>();
 		if (PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingRandom, false, true)) {
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT")));
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingLongitude, PrivacyManager.getRandomProp("LON")));
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingSerial, PrivacyManager.getRandomProp("SERIAL")));
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")));
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingPhone, PrivacyManager.getRandomProp("PHONE")));
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI")));
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingId, PrivacyManager.getRandomProp("ANDROID_ID")));
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingGsfId, PrivacyManager.getRandomProp("GSF_ID")));
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingAdId,
-					PrivacyManager.getRandomProp("AdvertisingId")));
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingCountry, PrivacyManager.getRandomProp("ISO3166")));
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingSubscriber,
-					PrivacyManager.getRandomProp("SubscriberId")));
-			listWork.add(getBundleSetting(uid, PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingLatitude, PrivacyManager
+					.getRandomProp("LAT")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingLongitude, PrivacyManager
+					.getRandomProp("LON")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingSerial, PrivacyManager
+					.getRandomProp("SERIAL")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingPhone, PrivacyManager.getRandomProp("PHONE")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingId, PrivacyManager
+					.getRandomProp("ANDROID_ID")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingGsfId, PrivacyManager
+					.getRandomProp("GSF_ID")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingAdId, PrivacyManager
+					.getRandomProp("AdvertisingId")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingCountry, PrivacyManager
+					.getRandomProp("ISO3166")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingSubscriber, PrivacyManager
+					.getRandomProp("SubscriberId")));
+			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID")));
 		}
 		return listWork;
 	}
 
-	private static List<Bundle> getUpgradeWork(Context context) {
-		List<Bundle> listWork = new ArrayList<Bundle>();
-
-		try {
-			// Get old version
-			PackageManager pm = context.getPackageManager();
-			PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
-			Version sVersion = new Version(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingVersion, "0.0",
-					false));
-
-			// Upgrade packages
-			if (sVersion.compareTo(new Version("0.0")) == 0)
-				PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
-			else {
-				Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version "
-						+ pInfo.versionName);
-				boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false,
-						false);
-				for (ApplicationInfo appInfo : context.getPackageManager().getInstalledApplications(0))
-					listWork.addAll(getUpgradeWork(sVersion, dangerous, appInfo));
-			}
-
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-
-		return listWork;
-	}
-
-	private static List<Bundle> getUpgradeWork(Version sVersion, boolean dangerous, ApplicationInfo aInfo) {
-		List<Bundle> listWork = new ArrayList<Bundle>();
+	private static List<ParcelableRestriction> getUpgradeWork(Version sVersion, boolean dangerous, int uid) {
+		List<ParcelableRestriction> listWork = new ArrayList<ParcelableRestriction>();
 		for (String restrictionName : PrivacyManager.getRestrictions())
 			for (Hook md : PrivacyManager.getHooks(restrictionName))
 				if (md.getFrom() != null)
 					if (sVersion.compareTo(md.getFrom()) < 0) {
 						// Disable new dangerous restrictions
 						if (!dangerous && md.isDangerous()) {
-							Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom() + " pkg="
-									+ aInfo.packageName);
-							listWork.add(getBundleRestriction(aInfo.uid, md.getRestrictionName(), md.getName(), false));
+							Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom() + " uid="
+									+ uid);
+							listWork.add(new ParcelableRestriction(uid, md.getRestrictionName(), md.getName(), false));
 						}
 
 						// Restrict replaced methods
 						if (md.getReplaces() != null)
-							if (PrivacyManager.getRestriction(null, aInfo.uid, md.getRestrictionName(),
-									md.getReplaces(), false, false)) {
+							if (PrivacyManager.getRestriction(null, uid, md.getRestrictionName(), md.getReplaces(),
+									false, false)) {
 								Util.log(null, Log.WARN,
 										"Replaced " + md.getReplaces() + " by " + md + " from=" + md.getFrom()
-												+ " pkg=" + aInfo.packageName);
-								listWork.add(getBundleRestriction(aInfo.uid, md.getRestrictionName(), md.getName(),
-										true));
+												+ " uid=" + uid);
+								listWork.add(new ParcelableRestriction(uid, md.getRestrictionName(), md.getName(), true));
 							}
 					}
 		return listWork;
-	}
-
-	private static void executeWork(Context context, List<Bundle> listTodo, int id, String format) {
-		int pperc = -1;
-		for (int i = 1; i <= listTodo.size(); i++) {
-			Bundle work = listTodo.get(i - 1);
-			int perc = 100 * i / listTodo.size();
-			if (pperc != perc) {
-				pperc = perc;
-				notifyProgress(context, id, false, format, perc);
-			}
-
-			int type = work.getInt(cTodoType);
-			if (type == cTodoSetting) {
-				int uid = work.getInt(cTodoUid);
-				String name = work.getString(cTodoName);
-				String value = work.getString(cTodoValue);
-				PrivacyManager.setSetting(null, uid, name, value);
-
-			} else if (type == cTodoRestriction) {
-				int uid = work.getInt(cTodoUid);
-				String restrictionName = work.getString(cTodoCategory);
-				String methodName = work.getString(cTodoMethod);
-				boolean restricted = work.getBoolean(cTodoRestricted);
-				PrivacyManager.setRestriction(null, uid, restrictionName, methodName, restricted, false);
-
-			} else if (type == cTodoRename) {
-				String source = work.getString(cTodoSource);
-				String target = work.getString(cTodoTarget);
-				new File(source).renameTo(new File(target));
-
-			} else
-				Util.log(null, Log.ERROR, "Unknown work type=" + type);
-		}
 	}
 
 	private static void notifyProgress(Context context, int id, boolean completed, String format, int percentage) {
@@ -322,32 +262,5 @@ public class UpdateService extends Service {
 		builder.setOngoing(!completed);
 		Notification notification = builder.build();
 		notificationManager.notify(id, notification);
-	}
-
-	public static Bundle getBundleRestriction(int uid, String category, String method, boolean restricted) {
-		Bundle bundle = new Bundle();
-		bundle.putInt(UpdateService.cTodoType, cTodoRestriction);
-		bundle.putInt(UpdateService.cTodoUid, uid);
-		bundle.putString(UpdateService.cTodoCategory, category);
-		bundle.putString(UpdateService.cTodoMethod, method);
-		bundle.putBoolean(UpdateService.cTodoRestricted, restricted);
-		return bundle;
-	}
-
-	public static Bundle getBundleSetting(int uid, String name, String value) {
-		Bundle bundle = new Bundle();
-		bundle.putInt(cTodoType, cTodoSetting);
-		bundle.putInt(cTodoUid, uid);
-		bundle.putString(cTodoName, name);
-		bundle.putString(cTodoValue, value);
-		return bundle;
-	}
-
-	public static Bundle getBundleRename(File source, File target) {
-		Bundle bundle = new Bundle();
-		bundle.putInt(UpdateService.cTodoType, UpdateService.cTodoRename);
-		bundle.putString(UpdateService.cTodoSource, source.getAbsolutePath());
-		bundle.putString(UpdateService.cTodoTarget, target.getAbsolutePath());
-		return bundle;
 	}
 }
