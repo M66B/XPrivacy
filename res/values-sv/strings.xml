@@ -64,7 +64,6 @@
     <string name="msg_migrating" formatted="false">Migrating %s</string>
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_migrated">Migration complete</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>XPrivacy utvecklas och testas med stor omsorg.
 Det är emellertid omöjligt att garantera att appen fungerar på alla enheter och appar.

@@ -64,7 +64,6 @@
     <string name="msg_migrating" formatted="false">Migriere %s</string>
     <string name="msg_randomizing" formatted="false">Zufall-Erzeigung %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_migrated">Migration vollständig</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
 \ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.

@@ -725,7 +725,8 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 
-				Util.setPermission(dbFile.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
+				if (dbFile.exists())
+					Util.setPermission(dbFile.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
 			} else if (db.needUpgrade(2)) {
 				// Do nothing, done by migration
 			} else if (db.needUpgrade(3)) {

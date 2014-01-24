@@ -65,7 +65,6 @@
     <string name="msg_migrating" formatted="false">Migruoti %s</string>
     <string name="msg_randomizing" formatted="false">Kaitalioti %s</string>
     <string name="msg_upgrading" formatted="false">Atnaujinti %s</string>
-    <string name="msg_migrated">Migravimas atliktas</string>
     <string name="msg_support_info">Vidinis patikrinimas nepavyko, ar norite siųsti paramos informaciją?</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.

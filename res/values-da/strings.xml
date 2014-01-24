@@ -64,7 +64,6 @@
     <string name="msg_migrating" formatted="false">Migrating %s</string>
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_migrated">Migration complete</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>XPrivacy er grundigt udviklet og testet, dog er det umuligt at garantere, at appen fungerer fejlfrit på alle enheder og for alle apps.\n\nBrug af denne app foregår udelukkende på egen risiko.</b>\n\nSe også licensen:</string>
     <string name="restrict_accounts">Konti (Google, Facebook, osv.)</string>

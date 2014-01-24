@@ -294,7 +294,7 @@ public class PrivacyManager {
 		}
 
 		// Prevent some restrictions
-		if (!restrictionAlllowed(uid, restrictionName, methodName))
+		if (!isRestrictionAlllowed(uid, restrictionName, methodName))
 			return false;
 
 		// Set restriction
@@ -327,7 +327,7 @@ public class PrivacyManager {
 		try {
 			List<ParcelableRestriction> listRestrictionChecked = new ArrayList<ParcelableRestriction>();
 			for (ParcelableRestriction restriction : listRestriction)
-				if (restrictionAlllowed(restriction.uid, restriction.restrictionName, restriction.methodName)) {
+				if (isRestrictionAlllowed(restriction.uid, restriction.restrictionName, restriction.methodName)) {
 					listRestrictionChecked.add(restriction);
 					restart = restart
 							|| shouldRestart(restriction.restrictionName, restriction.methodName,
@@ -340,13 +340,15 @@ public class PrivacyManager {
 		return restart;
 	}
 
-	private static boolean restrictionAlllowed(int uid, String restrictionName, String methodName) {
+	private static boolean isRestrictionAlllowed(int uid, String restrictionName, String methodName) {
 		if (uid == Process.myUid()) {
 			if (PrivacyManager.cIdentification.equals(restrictionName) && "getString".equals(methodName))
 				return false;
 			if (PrivacyManager.cIPC.equals(restrictionName))
 				return false;
 			else if (PrivacyManager.cStorage.equals(restrictionName))
+				return false;
+			else if (PrivacyManager.cSystem.equals(restrictionName))
 				return false;
 			else if (PrivacyManager.cView.equals(restrictionName))
 				return false;

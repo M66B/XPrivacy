@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.Process;
 import android.os.RemoteException;
 import android.util.Log;
@@ -629,7 +630,9 @@ public class PrivacyProvider extends ContentProvider {
 		convertRestrictions(context);
 	}
 
-	public static void migrateApp(Context context, ApplicationInfo appInfo) throws RemoteException {
+	public static List<Bundle> migrateApplication(Context context, ApplicationInfo appInfo) throws RemoteException {
+		List<Bundle> listWork = new ArrayList<Bundle>();
+
 		File prefFile = new File(getPrefFileName(PREF_RESTRICTION, appInfo.uid));
 		File migratedFile = new File(prefFile + ".migrated");
 		if (prefFile.exists() && !migratedFile.exists()) {
@@ -642,27 +645,28 @@ public class PrivacyProvider extends ContentProvider {
 			for (String restrictionName : PrivacyManager.getRestrictions())
 				if (getRestricted(restrictionName, null, prefs)) {
 					// Category
-					PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName, null, true);
-					Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name=" + restrictionName);
+					listWork.add(UpdateService.getBundleRestriction(appInfo.uid, restrictionName, null, true));
 
 					// Exceptions
 					for (Hook md : PrivacyManager.getHooks(restrictionName)) {
 						boolean restricted = getRestricted(restrictionName, md.getName(), prefs);
-						if (!restricted || md.isDangerous()) {
-							PrivacyService.getClient().setRestriction(appInfo.uid, restrictionName, md.getName(),
-									restricted);
-							Util.log(null, Log.WARN, "Migrate restriction uid=" + appInfo.uid + " name="
-									+ restrictionName + " method=" + md.getName());
-						}
+						if (!restricted || md.isDangerous())
+							listWork.add(UpdateService.getBundleRestriction(appInfo.uid, restrictionName, md.getName(),
+									restricted));
 					}
 				}
 
-			prefFile.renameTo(migratedFile);
+			if (listWork.size() > 0)
+				listWork.add(UpdateService.getBundleRename(prefFile, migratedFile));
 		}
+
+		return listWork;
 	}
 
-	public static void migrateSettings(Context context) {
+	public static List<Bundle> migrateSettings(Context context) {
 		// Process settings
+		List<Bundle> listWork = new ArrayList<Bundle>();
+
 		File prefFile = new File(getPrefFileName(PREF_SETTINGS));
 		File migratedFile = new File(prefFile + ".migrated");
 		if (prefFile.exists() && !migratedFile.exists()) {
@@ -703,15 +707,16 @@ public class PrivacyProvider extends ContentProvider {
 					}
 
 					// Set
-					PrivacyService.getClient().setSetting(uid, name, value);
-					Util.log(null, Log.WARN, "Migrate setting=" + getSettingName(settingKey) + " uid=" + uid + " name="
-							+ name + " value=" + value);
+					listWork.add(UpdateService.getBundleSetting(uid, name, value));
 				} catch (Throwable ex) {
 					// Legacy boolean
 					Util.bug(null, ex);
 				}
 
-			prefFile.renameTo(migratedFile);
+			if (listWork.size() > 0)
+				listWork.add(UpdateService.getBundleRename(prefFile, migratedFile));
 		}
+
+		return listWork;
 	}
 }

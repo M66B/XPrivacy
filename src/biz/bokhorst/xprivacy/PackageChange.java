@@ -119,7 +119,7 @@ public class PackageChange extends BroadcastReceiver {
 						// Start package update
 						Intent changeIntent = new Intent();
 						changeIntent.setClass(context, UpdateService.class);
-						changeIntent.putExtra(UpdateService.cAction, UpdateService.cActionChange);
+						changeIntent.putExtra(UpdateService.cAction, UpdateService.cActionUpdated);
 						context.startService(changeIntent);
 
 						// Build notification

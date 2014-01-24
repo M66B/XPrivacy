@@ -64,7 +64,6 @@
     <string name="msg_migrating" formatted="false">Migrovanie %s</string>
     <string name="msg_randomizing" formatted="false">Randomizovanie %s</string>
     <string name="msg_upgrading" formatted="false">Aktualizovanie %s</string>
-    <string name="msg_migrated">Migrácia bola dokončená</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
