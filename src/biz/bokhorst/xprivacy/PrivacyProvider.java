@@ -578,7 +578,7 @@ public class PrivacyProvider extends ContentProvider {
 				+ File.separator + "biz.bokhorst.xprivacy.provider.xml");
 		File backup = new File(source.getAbsoluteFile() + ".orig");
 		if (source.exists() && !backup.exists()) {
-			Util.log(null, Log.INFO, "Converting restrictions");
+			Util.log(null, Log.WARN, "Converting restrictions");
 			SharedPreferences prefs = context.getSharedPreferences(PREF_RESTRICTION, Context.MODE_WORLD_READABLE);
 			for (String key : prefs.getAll().keySet()) {
 				String[] component = key.split("\\.");
@@ -606,18 +606,20 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	private static void convertSettings(Context context) throws IOException {
-		SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
-		SharedPreferences.Editor editor = prefs.edit();
-		for (String key : prefs.getAll().keySet())
-			try {
-				String value = prefs.getString(key, null);
-				if (PrivacyManager.cValueRandomLegacy.equals(value))
-					editor.putString(key, PrivacyManager.cValueRandom);
-			} catch (Throwable ex) {
-			}
+		if (new File(getPrefFileName(PREF_SETTINGS)).exists()) {
+			SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
+			SharedPreferences.Editor editor = prefs.edit();
+			for (String key : prefs.getAll().keySet())
+				try {
+					String value = prefs.getString(key, null);
+					if (PrivacyManager.cValueRandomLegacy.equals(value))
+						editor.putString(key, PrivacyManager.cValueRandom);
+				} catch (Throwable ex) {
+				}
 
-		editor.commit();
-		setPrefFileReadable(PREF_SETTINGS);
+			editor.commit();
+			setPrefFileReadable(PREF_SETTINGS);
+		}
 	}
 
 	// Migration
