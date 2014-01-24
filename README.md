@@ -719,6 +719,12 @@ XPrivacy works only on Android level and device independent.
 
 The same applies to the IMEI number, with as additional problem legal issues in most countries.
 
+<a name="FAQ46"></a>
+**(46) Why do I need to register to submit restrictions?**
+
+This is to prevent a malicious application maker from automatically submitting a lot of *allow* restriction
+to outvote user submitted restrictions.
+
 Support
 -------
 
