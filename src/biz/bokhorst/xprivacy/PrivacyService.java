@@ -261,7 +261,7 @@ public class PrivacyService {
 				}
 
 				// Log usage
-				if (usage) {
+				if (usage && methodName != null) {
 					final boolean sRestricted = restricted;
 					mExecutor.execute(new Runnable() {
 						public void run() {
@@ -270,26 +270,14 @@ public class PrivacyService {
 
 								db.beginTransaction();
 								try {
-									// Category
-									ContentValues cvalues = new ContentValues();
-									cvalues.put("uid", uid);
-									cvalues.put("restriction", restrictionName);
-									cvalues.put("method", "");
-									cvalues.put("restricted", sRestricted);
-									cvalues.put("time", new Date().getTime());
-									db.insertWithOnConflict(cTableUsage, null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
+									ContentValues values = new ContentValues();
+									values.put("uid", uid);
+									values.put("restriction", restrictionName);
+									values.put("method", methodName);
+									values.put("restricted", sRestricted);
+									values.put("time", new Date().getTime());
+									db.insertWithOnConflict(cTableUsage, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 
-									// Method
-									if (methodName != null) {
-										ContentValues mvalues = new ContentValues();
-										mvalues.put("uid", uid);
-										mvalues.put("restriction", restrictionName);
-										mvalues.put("method", methodName);
-										mvalues.put("restricted", sRestricted);
-										mvalues.put("time", new Date().getTime());
-										db.insertWithOnConflict(cTableUsage, null, mvalues,
-												SQLiteDatabase.CONFLICT_REPLACE);
-									}
 									db.setTransactionSuccessful();
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
@@ -731,12 +719,26 @@ public class PrivacyService {
 					db.setVersion(1);
 					db.setTransactionSuccessful();
 					Util.log(null, Log.WARN, "Database created");
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
 				} finally {
 					db.endTransaction();
 				}
 
-				if (dbFile.exists())
-					Util.setPermission(dbFile.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
+				Util.setPermission(dbFile.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
+			} else if (db.needUpgrade(2)) {
+				// Do nothing, done by migration
+			} else if (db.needUpgrade(3)) {
+				db.beginTransaction();
+				try {
+					db.execSQL("DELETE FROM usage WHERE method=''");
+					db.setVersion(3);
+					db.setTransactionSuccessful();
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				} finally {
+					db.endTransaction();
+				}
 			}
 			Util.log(null, Log.WARN, "Database version=" + db.getVersion());
 			mDatabase = db;
