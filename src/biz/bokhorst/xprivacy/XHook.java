@@ -10,6 +10,7 @@ public abstract class XHook {
 	private String mMethodName;
 	private String mSpecifier;
 	private int mSdk;
+	private String mSecret;
 
 	protected XHook(String restrictionName, String methodName, String specifier) {
 		mRestrictionName = restrictionName;
@@ -53,20 +54,32 @@ public abstract class XHook {
 
 	abstract protected void after(MethodHookParam param) throws Throwable;
 
+	public void setSecret(String secret) {
+		mSecret = secret;
+	}
+
+	protected String getSecret() {
+		return mSecret;
+	}
+
 	protected boolean isRestricted(MethodHookParam param) throws Throwable {
 		return isRestricted(param, getSpecifier());
 	}
 
 	protected boolean isRestricted(MethodHookParam param, String methodName) throws Throwable {
 		int uid = Binder.getCallingUid();
-		return PrivacyManager.getRestriction(this, uid, mRestrictionName, methodName, true, true);
+		return PrivacyManager.getRestriction(this, uid, mRestrictionName, methodName, true, true, mSecret);
 	}
 
 	protected boolean getRestricted(int uid, boolean usage) throws Throwable {
-		return PrivacyManager.getRestriction(this, uid, mRestrictionName, getSpecifier(), usage, true);
+		return PrivacyManager.getRestriction(this, uid, mRestrictionName, getSpecifier(), usage, true, mSecret);
 	}
 
 	protected boolean getRestricted(int uid, String methodName, boolean usage) throws Throwable {
-		return PrivacyManager.getRestriction(this, uid, mRestrictionName, methodName, usage, true);
+		return PrivacyManager.getRestriction(this, uid, mRestrictionName, methodName, usage, true, mSecret);
+	}
+
+	protected boolean getRestricted(int uid, String restrictionName, String methodName, boolean usage) throws Throwable {
+		return PrivacyManager.getRestriction(this, uid, restrictionName, methodName, usage, true, mSecret);
 	}
 }

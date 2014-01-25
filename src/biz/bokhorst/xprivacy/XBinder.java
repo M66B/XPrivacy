@@ -112,7 +112,7 @@ public class XBinder extends XHook {
 					String name = binder.getInterfaceDescriptor();
 					if (cListServiceName.contains(name)) {
 						Util.log(this, Log.WARN, "restrict name=" + name + " uid=" + uid + " my=" + Process.myUid());
-						if (PrivacyManager.getRestriction(this, uid, PrivacyManager.cIPC, name, true, true)) {
+						if (getRestricted(uid, PrivacyManager.cIPC, name, true)) {
 							// Get reply parcel
 							Parcel reply = null;
 							try {

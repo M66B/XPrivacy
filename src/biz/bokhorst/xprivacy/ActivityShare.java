@@ -738,7 +738,7 @@ public class ActivityShare extends Activity {
 							for (String restrictionName : PrivacyManager.getRestrictions()) {
 								// Category
 								boolean crestricted = PrivacyManager.getRestriction(null, uid, restrictionName, null,
-										false, false);
+										false, false, null);
 								if (crestricted) {
 									serializer.startTag(null, "Restriction");
 									serializer.attribute(null, "Id", Integer.toString(uid));
@@ -749,7 +749,7 @@ public class ActivityShare extends Activity {
 									// Methods
 									for (Hook md : PrivacyManager.getHooks(restrictionName)) {
 										boolean mrestricted = PrivacyManager.getRestriction(null, uid, restrictionName,
-												md.getName(), false, false);
+												md.getName(), false, false, null);
 										if (!mrestricted || md.isDangerous()) {
 											serializer.startTag(null, "Restriction");
 											serializer.attribute(null, "Id", Integer.toString(uid));
@@ -1343,7 +1343,7 @@ public class ActivityShare extends Activity {
 						JSONArray jSettings = new JSONArray();
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
 							boolean restricted = PrivacyManager.getRestriction(null, appInfo.getUid(), restrictionName,
-									null, false, false);
+									null, false, false, null);
 							// Category
 							long used = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, null);
 							JSONObject jRestriction = new JSONObject();
@@ -1362,7 +1362,7 @@ public class ActivityShare extends Activity {
 							for (Hook md : PrivacyManager.getHooks(restrictionName)) {
 								boolean mRestricted = restricted
 										&& PrivacyManager.getRestriction(null, appInfo.getUid(), restrictionName,
-												md.getName(), false, false);
+												md.getName(), false, false, null);
 								long mUsed = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, md.getName());
 								JSONObject jMethod = new JSONObject();
 								jMethod.put("restriction", restrictionName);

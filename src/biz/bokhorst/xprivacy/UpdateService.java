@@ -246,7 +246,7 @@ public class UpdateService extends Service {
 						// Restrict replaced methods
 						if (md.getReplaces() != null)
 							if (PrivacyManager.getRestriction(null, uid, md.getRestrictionName(), md.getReplaces(),
-									false, false)) {
+									false, false, null)) {
 								Util.log(null, Log.WARN,
 										"Replaced " + md.getReplaces() + " by " + md + " from=" + md.getFrom()
 												+ " uid=" + uid);

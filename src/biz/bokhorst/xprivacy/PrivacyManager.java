@@ -219,7 +219,7 @@ public class PrivacyManager {
 	// Restrictions
 
 	public static boolean getRestriction(final XHook hook, int uid, String restrictionName, String methodName,
-			boolean usage, boolean useCache) {
+			boolean usage, boolean useCache, String secret) {
 		long start = System.currentTimeMillis();
 		boolean restricted = false;
 
@@ -264,7 +264,7 @@ public class PrivacyManager {
 		if (!cached)
 			try {
 				restricted = PrivacyService.getClient().getRestriction(
-						new ParcelableRestriction(uid, restrictionName, methodName, false), usage);
+						new ParcelableRestriction(uid, restrictionName, methodName, false), usage, secret);
 
 				// Add to cache
 				key.setRestricted(restricted);
@@ -366,7 +366,7 @@ public class PrivacyManager {
 		boolean restart = false;
 		for (String restrictionName : getRestrictions()) {
 			for (Hook md : getHooks(restrictionName))
-				if (getRestriction(null, uid, restrictionName, md.getName(), false, false))
+				if (getRestriction(null, uid, restrictionName, md.getName(), false, false, null))
 					if (md.isRestartRequired()) {
 						restart = true;
 						break;

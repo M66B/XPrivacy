@@ -29,6 +29,7 @@ import android.util.Log;
 
 public class PrivacyService {
 	private static int mXUid = -1;
+	private static String mSecret = null;
 	private static List<String> mListError;
 	private static IPrivacyService mClient = null;
 	private static SQLiteDatabase mDatabase = null;
@@ -41,7 +42,7 @@ public class PrivacyService {
 	private static SQLiteStatement stmtGetUsageRestriction = null;
 	private static SQLiteStatement stmtGetUsageMethod = null;
 
-	private static int cCurrentVersion = 244;
+	private static int cCurrentVersion = 245;
 	private static String cServiceName = "xprivacy" + cCurrentVersion;
 	private static String cTableRestriction = "restriction";
 	private static String cTableUsage = "usage";
@@ -55,8 +56,9 @@ public class PrivacyService {
 
 	// TODO: define column names
 
-	public static void register(List<String> listError) {
+	public static void register(List<String> listError, String secret) {
 		try {
+			mSecret = secret;
 			mListError = listError;
 
 			// public static void addService(String name, IBinder service)
@@ -183,7 +185,7 @@ public class PrivacyService {
 		}
 
 		@Override
-		public boolean getRestriction(final ParcelableRestriction restriction, final boolean usage)
+		public boolean getRestriction(final ParcelableRestriction restriction, boolean usage, String secret)
 				throws RemoteException {
 			boolean restricted = false;
 			try {
@@ -197,7 +199,7 @@ public class PrivacyService {
 				}
 
 				// Check for self
-				if (restriction.uid == getXUid()) {
+				if (Util.getAppId(restriction.uid) == getXUid()) {
 					if (PrivacyManager.cIdentification.equals(restriction.restrictionName)
 							&& "getString".equals(restriction.methodName))
 						return false;
@@ -303,33 +305,45 @@ public class PrivacyService {
 
 				// Log usage
 				if (mUsage && usage && restriction.methodName != null) {
-					final boolean sRestricted = restricted;
-					mExecutor.execute(new Runnable() {
-						public void run() {
-							try {
-								SQLiteDatabase db = getDatabase();
+					// Check secret
+					boolean allowed = true;
+					if (Util.getAppId(Binder.getCallingUid()) != getXUid()) {
+						if (mSecret == null || !mSecret.equals(secret)) {
+							allowed = false;
+							Util.log(null, Log.WARN, "Invalid secret");
+						}
+					}
 
-								db.beginTransaction();
+					if (allowed) {
+						final boolean sRestricted = restricted;
+						mExecutor.execute(new Runnable() {
+							public void run() {
 								try {
-									ContentValues values = new ContentValues();
-									values.put("uid", restriction.uid);
-									values.put("restriction", restriction.restrictionName);
-									values.put("method", restriction.methodName);
-									values.put("restricted", sRestricted);
-									values.put("time", new Date().getTime());
-									db.insertWithOnConflict(cTableUsage, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+									SQLiteDatabase db = getDatabase();
 
-									db.setTransactionSuccessful();
+									db.beginTransaction();
+									try {
+										ContentValues values = new ContentValues();
+										values.put("uid", restriction.uid);
+										values.put("restriction", restriction.restrictionName);
+										values.put("method", restriction.methodName);
+										values.put("restricted", sRestricted);
+										values.put("time", new Date().getTime());
+										db.insertWithOnConflict(cTableUsage, null, values,
+												SQLiteDatabase.CONFLICT_REPLACE);
+
+										db.setTransactionSuccessful();
+									} catch (Throwable ex) {
+										Util.bug(null, ex);
+									} finally {
+										db.endTransaction();
+									}
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
-								} finally {
-									db.endTransaction();
 								}
-							} catch (Throwable ex) {
-								Util.bug(null, ex);
 							}
-						}
-					});
+						});
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -348,14 +362,14 @@ public class PrivacyService {
 					for (String sRestrictionName : PrivacyManager.getRestrictions()) {
 						ParcelableRestriction restriction = new ParcelableRestriction(selector.uid, sRestrictionName,
 								null, false);
-						restriction.restricted = getRestriction(restriction, false);
+						restriction.restricted = getRestriction(restriction, false, mSecret);
 						result.add(restriction);
 					}
 				else
 					for (Hook md : PrivacyManager.getHooks(selector.restrictionName)) {
 						ParcelableRestriction restriction = new ParcelableRestriction(selector.uid,
 								selector.restrictionName, md.getName(), false);
-						restriction.restricted = getRestriction(restriction, false);
+						restriction.restricted = getRestriction(restriction, false, mSecret);
 						result.add(restriction);
 					}
 			} catch (Throwable ex) {

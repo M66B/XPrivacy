@@ -6,6 +6,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import android.annotation.SuppressLint;
@@ -26,6 +27,7 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 
 @SuppressLint("DefaultLocale")
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+	private static String mSecret = null;
 	private static boolean mAccountManagerHooked = false;
 	private static boolean mActivityManagerHooked = false;
 	private static boolean mClipboardManagerHooked = false;
@@ -44,6 +46,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		Util.log(null, Log.INFO, String.format("Load %s", startupParam.modulePath));
 
+		// Generate secret
+		mSecret = Long.toHexString(new Random().nextLong());
+
 		PrivacyService.setupDatebase();
 
 		// System server
@@ -54,7 +59,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			XposedBridge.hookMethod(mMain, new XC_MethodHook() {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					PrivacyService.register(mListHookError);
+					PrivacyService.register(mListHookError, mSecret);
 				}
 			});
 		} catch (Throwable ex) {
@@ -62,79 +67,79 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// App widget manager
-		hookAll(XAppWidgetManager.getInstances());
+		hookAll(XAppWidgetManager.getInstances(), mSecret);
 
 		// Application
-		hookAll(XApplication.getInstances());
+		hookAll(XApplication.getInstances(), mSecret);
 
 		// Audio record
-		hookAll(XAudioRecord.getInstances());
+		hookAll(XAudioRecord.getInstances(), mSecret);
 
 		// Binder device
-		hookAll(XBinder.getInstances());
+		hookAll(XBinder.getInstances(), mSecret);
 
 		// Bluetooth adapater
-		hookAll(XBluetoothAdapter.getInstances());
+		hookAll(XBluetoothAdapter.getInstances(), mSecret);
 
 		// Bluetooth device
-		hookAll(XBluetoothDevice.getInstances());
+		hookAll(XBluetoothDevice.getInstances(), mSecret);
 
 		// Camera
-		hookAll(XCamera.getInstances());
+		hookAll(XCamera.getInstances(), mSecret);
 
 		// Context wrapper
-		hookAll(XContextImpl.getInstances());
+		hookAll(XContextImpl.getInstances(), mSecret);
 
 		// Environment
-		hookAll(XEnvironment.getInstances());
+		hookAll(XEnvironment.getInstances(), mSecret);
 
 		// InetAddress
-		hookAll(XInetAddress.getInstances());
+		hookAll(XInetAddress.getInstances(), mSecret);
 
 		// InputDevice
-		hookAll(XInputDevice.getInstances());
+		hookAll(XInputDevice.getInstances(), mSecret);
 
 		// IO bridge
-		hookAll(XIoBridge.getInstances());
+		hookAll(XIoBridge.getInstances(), mSecret);
 
 		// Media recorder
-		hookAll(XMediaRecorder.getInstances());
+		hookAll(XMediaRecorder.getInstances(), mSecret);
 
 		// Network info
-		hookAll(XNetworkInfo.getInstances());
+		hookAll(XNetworkInfo.getInstances(), mSecret);
 
 		// Network interface
-		hookAll(XNetworkInterface.getInstances());
+		hookAll(XNetworkInterface.getInstances(), mSecret);
 
 		// NFC adapter
-		hookAll(XNfcAdapter.getInstances());
+		hookAll(XNfcAdapter.getInstances(), mSecret);
 
 		// Package manager service
-		hookAll(XProcess.getInstances());
+		hookAll(XProcess.getInstances(), mSecret);
 
 		// Process builder
-		hookAll(XProcessBuilder.getInstances());
+		hookAll(XProcessBuilder.getInstances(), mSecret);
 
 		// Runtime
-		hookAll(XRuntime.getInstances());
+		hookAll(XRuntime.getInstances(), mSecret);
 
 		// Settings secure
-		hookAll(XSettingsSecure.getInstances());
+		hookAll(XSettingsSecure.getInstances(), mSecret);
 
 		// SMS manager
-		hookAll(XSmsManager.getInstances());
+		hookAll(XSmsManager.getInstances(), mSecret);
 
 		// System properties
-		hookAll(XSystemProperties.getInstances());
+		hookAll(XSystemProperties.getInstances(), mSecret);
 
 		// Web view
-		hookAll(XWebView.getInstances());
+		hookAll(XWebView.getInstances(), mSecret);
 
 		// Intent receive
-		hookAll(XActivityThread.getInstances());
+		hookAll(XActivityThread.getInstances(), mSecret);
 
 		// Intent send
-		hookAll(XActivity.getInstances());
+		hookAll(XActivity.getInstances(), mSecret);
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
@@ -144,36 +149,37 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
 		if (lpparam.packageName.equals(self)) {
-			hookAll(XUtilHook.getInstances(), lpparam.classLoader);
+			hookAll(XUtilHook.getInstances(), lpparam.classLoader, mSecret);
 			return;
 		}
 
 		// Build SERIAL
-		if (PrivacyManager.getRestriction(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", true, false))
+		if (PrivacyManager.getRestriction(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", true, false,
+				mSecret))
 			XposedHelpers.setStaticObjectField(Build.class, "SERIAL",
 					PrivacyManager.getDefacedProp(Process.myUid(), "SERIAL"));
 
 		// Providers
-		hookAll(XContentProvider.getInstances(lpparam.packageName), lpparam.classLoader);
+		hookAll(XContentProvider.getInstances(lpparam.packageName), lpparam.classLoader, mSecret);
 
 		// Advertising Id
 		try {
 			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, lpparam.classLoader);
-			hookAll(XAdvertisingIdClientInfo.getInstances(), lpparam.classLoader);
+			hookAll(XAdvertisingIdClientInfo.getInstances(), lpparam.classLoader, mSecret);
 		} catch (Throwable ignored) {
 		}
 
 		// Google auth
 		try {
 			Class.forName("com.google.android.gms.auth.GoogleAuthUtil", false, lpparam.classLoader);
-			hookAll(XGoogleAuthUtil.getInstances(), lpparam.classLoader);
+			hookAll(XGoogleAuthUtil.getInstances(), lpparam.classLoader, mSecret);
 		} catch (Throwable ignored) {
 		}
 
 		// Location client
 		try {
 			Class.forName("com.google.android.gms.location.LocationClient", false, lpparam.classLoader);
-			hookAll(XLocationClient.getInstances(), lpparam.classLoader);
+			hookAll(XLocationClient.getInstances(), lpparam.classLoader, mSecret);
 		} catch (Throwable ignored) {
 		}
 	}
@@ -185,84 +191,87 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		if (name.equals(Context.ACCOUNT_SERVICE)) {
 			// Account manager
 			if (!mAccountManagerHooked) {
-				hookAll(XAccountManager.getInstances(instance));
+				hookAll(XAccountManager.getInstances(instance), mSecret);
 				mAccountManagerHooked = true;
 			}
 		} else if (name.equals(Context.ACTIVITY_SERVICE)) {
 			// Activity manager
 			if (!mActivityManagerHooked) {
-				hookAll(XActivityManager.getInstances(instance));
+				hookAll(XActivityManager.getInstances(instance), mSecret);
 				mActivityManagerHooked = true;
 			}
 		} else if (name.equals(Context.CLIPBOARD_SERVICE)) {
 			// Clipboard manager
 			if (!mClipboardManagerHooked) {
-				XPrivacy.hookAll(XClipboardManager.getInstances(instance));
+				XPrivacy.hookAll(XClipboardManager.getInstances(instance), mSecret);
 				mClipboardManagerHooked = true;
 			}
 		} else if (name.equals(Context.CONNECTIVITY_SERVICE)) {
 			// Connectivity manager
 			if (!mConnectivityManagerHooked) {
-				hookAll(XConnectivityManager.getInstances(instance));
+				hookAll(XConnectivityManager.getInstances(instance), mSecret);
 				mConnectivityManagerHooked = true;
 			}
 		} else if (name.equals(Context.LOCATION_SERVICE)) {
 			// Location manager
 			if (!mLocationManagerHooked) {
-				hookAll(XLocationManager.getInstances(instance));
+				hookAll(XLocationManager.getInstances(instance), mSecret);
 				mLocationManagerHooked = true;
 			}
 		} else if (name.equals("PackageManager")) {
 			// Package manager
 			if (!mPackageManagerHooked) {
-				hookAll(XPackageManager.getInstances(instance));
+				hookAll(XPackageManager.getInstances(instance), mSecret);
 				mPackageManagerHooked = true;
 			}
 		} else if (name.equals(Context.SENSOR_SERVICE)) {
 			// Sensor manager
 			if (!mSensorManagerHooked) {
-				hookAll(XSensorManager.getInstances(instance));
+				hookAll(XSensorManager.getInstances(instance), mSecret);
 				mSensorManagerHooked = true;
 			}
 		} else if (name.equals(Context.TELEPHONY_SERVICE)) {
 			// Telephony manager
 			if (!mTelephonyManagerHooked) {
-				hookAll(XTelephonyManager.getInstances(instance));
+				hookAll(XTelephonyManager.getInstances(instance), mSecret);
 				mTelephonyManagerHooked = true;
 			}
 		} else if (name.equals(Context.WINDOW_SERVICE)) {
 			// Window manager
 			if (!mWindowManagerHooked) {
-				XPrivacy.hookAll(XWindowManager.getInstances(instance));
+				XPrivacy.hookAll(XWindowManager.getInstances(instance), mSecret);
 				mWindowManagerHooked = true;
 			}
 		} else if (name.equals(Context.WIFI_SERVICE)) {
 			// WiFi manager
 			if (!mWiFiManagerHooked) {
-				XPrivacy.hookAll(XWifiManager.getInstances(instance));
+				XPrivacy.hookAll(XWifiManager.getInstances(instance), mSecret);
 				mWiFiManagerHooked = true;
 			}
 		}
 	}
 
-	public static void hookAll(List<XHook> listHook) {
+	public static void hookAll(List<XHook> listHook, String secret) {
 		for (XHook hook : listHook)
-			hook(hook);
+			hook(hook, secret);
 	}
 
-	public static void hookAll(List<XHook> listHook, ClassLoader classLoader) {
+	public static void hookAll(List<XHook> listHook, ClassLoader classLoader, String secret) {
 		for (XHook hook : listHook)
-			hook(hook, classLoader);
+			hook(hook, classLoader, secret);
 	}
 
-	private static void hook(XHook hook) {
-		hook(hook, null);
+	private static void hook(XHook hook, String secret) {
+		hook(hook, null, secret);
 	}
 
-	private static void hook(final XHook hook, ClassLoader classLoader) {
+	private static void hook(final XHook hook, ClassLoader classLoader, String secret) {
 		// Check SDK version
 		if (Build.VERSION.SDK_INT < hook.getSdk())
 			return;
+
+		// Provide secret
+		hook.setSecret(secret);
 
 		try {
 			// Create hook method
