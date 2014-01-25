@@ -217,12 +217,12 @@ public class PrivacyService {
 						return false;
 				}
 
-				// Check for system
-				if (!mSystem && !PrivacyManager.isApplication(restriction.uid))
-					return false;
-
-				// Check if restrictions enabled
 				if (usage) {
+					// Check for system
+					if (!mSystem && !PrivacyManager.isApplication(restriction.uid))
+						return false;
+
+					// Check if restrictions enabled
 					boolean enabled = Boolean.parseBoolean(getSetting(new ParcelableSetting(restriction.uid,
 							PrivacyManager.cSettingRestricted, Boolean.toString(true))).value);
 					if (!enabled)
