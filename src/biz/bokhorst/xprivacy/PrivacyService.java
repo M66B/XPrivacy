@@ -331,22 +331,22 @@ public class PrivacyService {
 		}
 
 		@Override
-		public List<ParcelableRestriction> getRestrictionList(int uid, String restrictionName) throws RemoteException {
+		public List<ParcelableRestriction> getRestrictionList(ParcelableRestriction selector) throws RemoteException {
 			List<ParcelableRestriction> result = new ArrayList<ParcelableRestriction>();
 			try {
 				enforcePermission();
 
-				if (restrictionName == null)
+				if (selector.restrictionName == null)
 					for (String sRestrictionName : PrivacyManager.getRestrictions()) {
-						ParcelableRestriction restriction = new ParcelableRestriction(uid, sRestrictionName, null,
-								false);
+						ParcelableRestriction restriction = new ParcelableRestriction(selector.uid, sRestrictionName,
+								null, false);
 						restriction.restricted = getRestriction(restriction, false);
 						result.add(restriction);
 					}
 				else
-					for (Hook md : PrivacyManager.getHooks(restrictionName)) {
-						ParcelableRestriction restriction = new ParcelableRestriction(uid, restrictionName,
-								md.getName(), false);
+					for (Hook md : PrivacyManager.getHooks(selector.restrictionName)) {
+						ParcelableRestriction restriction = new ParcelableRestriction(selector.uid,
+								selector.restrictionName, md.getName(), false);
 						restriction.restricted = getRestriction(restriction, false);
 						result.add(restriction);
 					}
@@ -387,7 +387,7 @@ public class PrivacyService {
 		// Usage
 
 		@Override
-		public long getUsage(int uid, List<ParcelableRestriction> listRestriction) throws RemoteException {
+		public long getUsage(List<ParcelableRestriction> listRestriction) throws RemoteException {
 			long lastUsage = 0;
 			try {
 				enforcePermission();
@@ -410,7 +410,7 @@ public class PrivacyService {
 							try {
 								synchronized (stmtGetUsageRestriction) {
 									stmtGetUsageRestriction.clearBindings();
-									stmtGetUsageRestriction.bindLong(1, uid);
+									stmtGetUsageRestriction.bindLong(1, restriction.uid);
 									stmtGetUsageRestriction.bindString(2, restriction.restrictionName);
 									lastUsage = Math.max(lastUsage, stmtGetUsageRestriction.simpleQueryForLong());
 								}
@@ -420,7 +420,7 @@ public class PrivacyService {
 							try {
 								synchronized (stmtGetUsageMethod) {
 									stmtGetUsageMethod.clearBindings();
-									stmtGetUsageMethod.bindLong(1, uid);
+									stmtGetUsageMethod.bindLong(1, restriction.uid);
 									stmtGetUsageMethod.bindString(2, restriction.restrictionName);
 									stmtGetUsageMethod.bindString(3, restriction.methodName);
 									lastUsage = Math.max(lastUsage, stmtGetUsageMethod.simpleQueryForLong());

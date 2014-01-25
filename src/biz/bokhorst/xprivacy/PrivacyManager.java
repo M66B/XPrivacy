@@ -339,7 +339,8 @@ public class PrivacyManager {
 
 	public static List<ParcelableRestriction> getRestrictionList(int uid, String restrictionName) {
 		try {
-			return PrivacyService.getClient().getRestrictionList(uid, restrictionName);
+			return PrivacyService.getClient().getRestrictionList(
+					new ParcelableRestriction(uid, restrictionName, null, false));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -398,7 +399,7 @@ public class PrivacyManager {
 					listRestriction.add(new ParcelableRestriction(uid, sRestrictionName, methodName, false));
 			else
 				listRestriction.add(new ParcelableRestriction(uid, restrictionName, methodName, false));
-			return PrivacyService.getClient().getUsage(uid, listRestriction);
+			return PrivacyService.getClient().getUsage(listRestriction);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 			return 0;

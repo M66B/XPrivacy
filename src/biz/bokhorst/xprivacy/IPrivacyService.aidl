@@ -11,10 +11,10 @@ interface IPrivacyService {
 	void setRestriction(in ParcelableRestriction restriction);
 	void setRestrictionList(in List<ParcelableRestriction> listRestriction);
 	boolean getRestriction(in ParcelableRestriction restriction, boolean usage);
-	List<ParcelableRestriction> getRestrictionList(int uid, String restrictionName);
+	List<ParcelableRestriction> getRestrictionList(in ParcelableRestriction selector);
 	void deleteRestrictions(int uid);
 
-	long getUsage(int uid, in List<ParcelableRestriction> restriction);
+	long getUsage(in List<ParcelableRestriction> restriction);
 	List<ParcelableRestriction> getUsageList(int uid);
 	void deleteUsage(int uid);
 
