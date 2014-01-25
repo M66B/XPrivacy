@@ -722,7 +722,7 @@ public class PrivacyProvider extends ContentProvider {
 		// Process settings
 		List<ParcelableSetting> listWork = new ArrayList<ParcelableSetting>();
 
-		File prefFile = new File(getPrefFileName(PREF_SETTINGS) + "." + uid);
+		File prefFile = new File(getPrefFileName(PREF_SETTINGS, uid));
 		File migratedFile = new File(prefFile + ".migrated");
 		if (prefFile.exists() && !migratedFile.exists()) {
 			Util.log(null, Log.WARN, "Migrating " + prefFile);
@@ -743,9 +743,8 @@ public class PrivacyProvider extends ContentProvider {
 	}
 
 	public static void finishMigrateSettings(int uid) {
-		File prefFile = new File(getPrefFileName(PREF_SETTINGS) + "." + uid);
+		File prefFile = new File(getPrefFileName(PREF_SETTINGS, uid));
 		File migratedFile = new File(prefFile + ".migrated");
 		prefFile.renameTo(migratedFile);
 	}
-
 }

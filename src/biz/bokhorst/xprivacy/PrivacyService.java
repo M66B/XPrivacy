@@ -538,6 +538,12 @@ public class PrivacyService {
 		}
 
 		@Override
+		public void setSettingList(List<ParcelableSetting> listSetting) throws RemoteException {
+			for (ParcelableSetting setting : listSetting)
+				setSetting(setting.uid, setting.name, setting.value);
+		}
+
+		@Override
 		@SuppressLint("DefaultLocale")
 		public String getSetting(int uid, String name, String defaultValue) throws RemoteException {
 			String value = null;
@@ -603,12 +609,6 @@ public class PrivacyService {
 				return defaultValue;
 			}
 			return value;
-		}
-
-		@Override
-		public void setSettingList(List<ParcelableSetting> listSetting) throws RemoteException {
-			for (ParcelableSetting setting : listSetting)
-				setSetting(setting.uid, setting.name, setting.value);
 		}
 
 		@Override

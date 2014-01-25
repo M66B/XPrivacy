@@ -106,6 +106,8 @@ public class UpdateService extends Service {
 									notifyProgress(UpdateService.this, Util.NOTIFY_MIGRATE, format, 100 * (i - first)
 											/ (listApp.size() - first));
 							}
+							if (first == 0)
+								Util.log(null, Log.WARN, "Nothing to migrate");
 
 							// Complete migration
 							PrivacyService.getClient().migrated();
@@ -130,6 +132,8 @@ public class UpdateService extends Service {
 									notifyProgress(UpdateService.this, Util.NOTIFY_RANDOMIZE, format, 100 * (i - first)
 											/ (listApp.size() - first));
 							}
+							if (first == 0)
+								Util.log(null, Log.WARN, "Nothing to randomize");
 
 							// Done
 							stopForeground(true);
@@ -168,7 +172,10 @@ public class UpdateService extends Service {
 										notifyProgress(UpdateService.this, Util.NOTIFY_UPGRADE, format, 100
 												* (i - first) / (listApp.size() - first));
 								}
-							}
+								if (first == 0)
+									Util.log(null, Log.WARN, "Nothing to upgrade version=" + sVersion);
+							} else
+								Util.log(null, Log.WARN, "Noting to upgrade version=" + sVersion);
 
 							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
 
