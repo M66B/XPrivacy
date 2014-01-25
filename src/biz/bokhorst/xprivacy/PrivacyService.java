@@ -387,7 +387,7 @@ public class PrivacyService {
 		// Usage
 
 		@Override
-		public long getUsage(int uid, List<String> listRestrictionName, String methodName) throws RemoteException {
+		public long getUsage(int uid, List<ParcelableRestriction> listRestriction) throws RemoteException {
 			long lastUsage = 0;
 			try {
 				enforcePermission();
@@ -405,13 +405,13 @@ public class PrivacyService {
 
 				db.beginTransaction();
 				try {
-					for (String restrictionName : listRestrictionName) {
-						if (methodName == null)
+					for (ParcelableRestriction restriction : listRestriction) {
+						if (restriction.methodName == null)
 							try {
 								synchronized (stmtGetUsageRestriction) {
 									stmtGetUsageRestriction.clearBindings();
 									stmtGetUsageRestriction.bindLong(1, uid);
-									stmtGetUsageRestriction.bindString(2, restrictionName);
+									stmtGetUsageRestriction.bindString(2, restriction.restrictionName);
 									lastUsage = Math.max(lastUsage, stmtGetUsageRestriction.simpleQueryForLong());
 								}
 							} catch (SQLiteDoneException ignored) {
@@ -421,8 +421,8 @@ public class PrivacyService {
 								synchronized (stmtGetUsageMethod) {
 									stmtGetUsageMethod.clearBindings();
 									stmtGetUsageMethod.bindLong(1, uid);
-									stmtGetUsageMethod.bindString(2, restrictionName);
-									stmtGetUsageMethod.bindString(3, methodName);
+									stmtGetUsageMethod.bindString(2, restriction.restrictionName);
+									stmtGetUsageMethod.bindString(3, restriction.methodName);
 									lastUsage = Math.max(lastUsage, stmtGetUsageMethod.simpleQueryForLong());
 								}
 							} catch (SQLiteDoneException ignored) {

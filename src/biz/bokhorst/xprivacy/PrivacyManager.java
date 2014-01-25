@@ -392,12 +392,13 @@ public class PrivacyManager {
 
 	public static long getUsed(int uid, String restrictionName, String methodName) {
 		try {
-			List<String> listRestriction = new ArrayList<String>();
+			List<ParcelableRestriction> listRestriction = new ArrayList<ParcelableRestriction>();
 			if (restrictionName == null)
-				listRestriction.addAll(PrivacyManager.getRestrictions());
+				for (String sRestrictionName : PrivacyManager.getRestrictions())
+					listRestriction.add(new ParcelableRestriction(uid, sRestrictionName, methodName, false));
 			else
-				listRestriction.add(restrictionName);
-			return PrivacyService.getClient().getUsage(uid, listRestriction, methodName);
+				listRestriction.add(new ParcelableRestriction(uid, restrictionName, methodName, false));
+			return PrivacyService.getClient().getUsage(uid, listRestriction);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 			return 0;
