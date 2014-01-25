@@ -126,8 +126,7 @@ public class PrivacyService {
 		// Restrictions
 
 		@Override
-		public void setRestriction(int uid, String restrictionName, String methodName, boolean restricted)
-				throws RemoteException {
+		public void setRestriction(ParcelableRestriction restriction) throws RemoteException {
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
@@ -135,22 +134,22 @@ public class PrivacyService {
 				db.beginTransaction();
 				try {
 					// Create category record
-					if (methodName == null || restricted) {
+					if (restriction.methodName == null || restriction.restricted) {
 						ContentValues cvalues = new ContentValues();
-						cvalues.put("uid", uid);
-						cvalues.put("restriction", restrictionName);
+						cvalues.put("uid", restriction.uid);
+						cvalues.put("restriction", restriction.restrictionName);
 						cvalues.put("method", "");
-						cvalues.put("restricted", restricted);
+						cvalues.put("restricted", restriction.restricted);
 						db.insertWithOnConflict(cTableRestriction, null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
 					}
 
 					// Create method record
-					if (methodName != null) {
+					if (restriction.methodName != null) {
 						ContentValues mvalues = new ContentValues();
-						mvalues.put("uid", uid);
-						mvalues.put("restriction", restrictionName);
-						mvalues.put("method", methodName);
-						mvalues.put("restricted", !restricted);
+						mvalues.put("uid", restriction.uid);
+						mvalues.put("restriction", restriction.restrictionName);
+						mvalues.put("method", restriction.methodName);
+						mvalues.put("restricted", !restriction.restricted);
 						db.insertWithOnConflict(cTableRestriction, null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
 					}
 
@@ -162,11 +161,11 @@ public class PrivacyService {
 				// Clear cache
 				if (mUseCache)
 					synchronized (mRestrictionCache) {
-						CRestriction key = new CRestriction(uid, restrictionName, null);
+						CRestriction key = new CRestriction(restriction.uid, restriction.restrictionName, null);
 						if (mRestrictionCache.containsKey(key))
 							mRestrictionCache.remove(key);
-						for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
-							key = new CRestriction(uid, restrictionName, hook.getName());
+						for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName)) {
+							key = new CRestriction(restriction.uid, restriction.restrictionName, hook.getName());
 							if (mRestrictionCache.containsKey(key))
 								mRestrictionCache.remove(key);
 						}
@@ -180,45 +179,47 @@ public class PrivacyService {
 		@Override
 		public void setRestrictionList(List<ParcelableRestriction> listRestriction) throws RemoteException {
 			for (ParcelableRestriction restriction : listRestriction)
-				setRestriction(restriction.uid, restriction.restrictionName, restriction.methodName,
-						restriction.restricted);
+				setRestriction(restriction);
 		}
 
 		@Override
-		public boolean getRestriction(final int uid, final String restrictionName, final String methodName,
-				final boolean usage) throws RemoteException {
+		public boolean getRestriction(final ParcelableRestriction restriction, final boolean usage)
+				throws RemoteException {
 			boolean restricted = false;
 			try {
 				// Cache settings
 				if (!mSettings) {
 					mSettings = true;
-					mUsage = Boolean.parseBoolean(getSetting(0, PrivacyManager.cSettingUsage, Boolean.toString(true)));
-					mSystem = Boolean
-							.parseBoolean(getSetting(0, PrivacyManager.cSettingSystem, Boolean.toString(false)));
+					mUsage = Boolean.parseBoolean(getSetting(new ParcelableSetting(0, PrivacyManager.cSettingUsage,
+							Boolean.toString(true))).value);
+					mSystem = Boolean.parseBoolean(getSetting(new ParcelableSetting(0, PrivacyManager.cSettingSystem,
+							Boolean.toString(false))).value);
 				}
 
 				// Check for self
-				if (uid == getXUid()) {
-					if (PrivacyManager.cIdentification.equals(restrictionName) && "getString".equals(methodName))
+				if (restriction.uid == getXUid()) {
+					if (PrivacyManager.cIdentification.equals(restriction.restrictionName)
+							&& "getString".equals(restriction.methodName))
 						return false;
-					if (PrivacyManager.cIPC.equals(restrictionName))
+					if (PrivacyManager.cIPC.equals(restriction.restrictionName))
 						return false;
-					else if (PrivacyManager.cStorage.equals(restrictionName))
+					else if (PrivacyManager.cStorage.equals(restriction.restrictionName))
 						return false;
-					else if (PrivacyManager.cSystem.equals(restrictionName))
+					else if (PrivacyManager.cSystem.equals(restriction.restrictionName))
 						return false;
-					else if (PrivacyManager.cView.equals(restrictionName))
+					else if (PrivacyManager.cView.equals(restriction.restrictionName))
 						return false;
 				}
 
 				// Check for system
-				if (!mSystem && !PrivacyManager.isApplication(uid))
+				if (!mSystem && !PrivacyManager.isApplication(restriction.uid))
 					return false;
 
 				// Check cache
 				boolean cached = false;
 				if (mUseCache) {
-					CRestriction key = new CRestriction(uid, restrictionName, methodName);
+					CRestriction key = new CRestriction(restriction.uid, restriction.restrictionName,
+							restriction.methodName);
 					synchronized (mRestrictionCache) {
 						if (mRestrictionCache.containsKey(key)) {
 							cached = true;
@@ -244,8 +245,8 @@ public class PrivacyService {
 						try {
 							synchronized (stmtGetRestriction) {
 								stmtGetRestriction.clearBindings();
-								stmtGetRestriction.bindLong(1, uid);
-								stmtGetRestriction.bindString(2, restrictionName);
+								stmtGetRestriction.bindLong(1, restriction.uid);
+								stmtGetRestriction.bindString(2, restriction.restrictionName);
 								stmtGetRestriction.bindString(3, "");
 								restricted = (stmtGetRestriction.simpleQueryForLong() > 0);
 							}
@@ -253,14 +254,14 @@ public class PrivacyService {
 							restricted = false;
 						}
 
-						if (restricted && methodName != null)
+						if (restricted && restriction.methodName != null)
 							try {
 								boolean mallowed;
 								synchronized (stmtGetRestriction) {
 									stmtGetRestriction.clearBindings();
-									stmtGetRestriction.bindLong(1, uid);
-									stmtGetRestriction.bindString(2, restrictionName);
-									stmtGetRestriction.bindString(3, methodName);
+									stmtGetRestriction.bindLong(1, restriction.uid);
+									stmtGetRestriction.bindString(2, restriction.restrictionName);
+									stmtGetRestriction.bindString(3, restriction.methodName);
 									mallowed = (stmtGetRestriction.simpleQueryForLong() > 0);
 									if (mallowed)
 										restricted = false;
@@ -276,11 +277,13 @@ public class PrivacyService {
 
 					// Fallback
 					if (restricted == false && db.getVersion() == 1)
-						restricted = PrivacyProvider.getRestrictedFallback(null, uid, restrictionName, methodName);
+						restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
+								restriction.restrictionName, restriction.methodName);
 
 					// Update cache
 					if (mUseCache) {
-						CRestriction key = new CRestriction(uid, restrictionName, methodName);
+						CRestriction key = new CRestriction(restriction.uid, restriction.restrictionName,
+								restriction.methodName);
 						key.setRestricted(restricted);
 						synchronized (mRestrictionCache) {
 							if (mRestrictionCache.containsKey(key))
@@ -291,7 +294,7 @@ public class PrivacyService {
 				}
 
 				// Log usage
-				if (mUsage && usage && methodName != null) {
+				if (mUsage && usage && restriction.methodName != null) {
 					final boolean sRestricted = restricted;
 					mExecutor.execute(new Runnable() {
 						public void run() {
@@ -301,9 +304,9 @@ public class PrivacyService {
 								db.beginTransaction();
 								try {
 									ContentValues values = new ContentValues();
-									values.put("uid", uid);
-									values.put("restriction", restrictionName);
-									values.put("method", methodName);
+									values.put("uid", restriction.uid);
+									values.put("restriction", restriction.restrictionName);
+									values.put("method", restriction.methodName);
 									values.put("restricted", sRestricted);
 									values.put("time", new Date().getTime());
 									db.insertWithOnConflict(cTableUsage, null, values, SQLiteDatabase.CONFLICT_REPLACE);
@@ -328,17 +331,25 @@ public class PrivacyService {
 		}
 
 		@Override
-		public List<Boolean> getRestrictionList(int uid, String restrictionName) throws RemoteException {
-			List<Boolean> result = new ArrayList<Boolean>();
+		public List<ParcelableRestriction> getRestrictionList(int uid, String restrictionName) throws RemoteException {
+			List<ParcelableRestriction> result = new ArrayList<ParcelableRestriction>();
 			try {
 				enforcePermission();
 
 				if (restrictionName == null)
-					for (String sRestrictionName : PrivacyManager.getRestrictions())
-						result.add(getRestriction(uid, sRestrictionName, null, false));
+					for (String sRestrictionName : PrivacyManager.getRestrictions()) {
+						ParcelableRestriction restriction = new ParcelableRestriction(uid, sRestrictionName, null,
+								false);
+						restriction.restricted = getRestriction(restriction, false);
+						result.add(restriction);
+					}
 				else
-					for (Hook md : PrivacyManager.getHooks(restrictionName))
-						result.add(getRestriction(uid, restrictionName, md.getName(), false));
+					for (Hook md : PrivacyManager.getHooks(restrictionName)) {
+						ParcelableRestriction restriction = new ParcelableRestriction(uid, restrictionName,
+								md.getName(), false);
+						restriction.restricted = getRestriction(restriction, false);
+						result.add(restriction);
+					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
@@ -500,7 +511,7 @@ public class PrivacyService {
 		// Settings
 
 		@Override
-		public void setSetting(int uid, String name, String value) throws RemoteException {
+		public void setSetting(ParcelableSetting setting) throws RemoteException {
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
@@ -509,9 +520,9 @@ public class PrivacyService {
 				try {
 					// Create record
 					ContentValues values = new ContentValues();
-					values.put("uid", uid);
-					values.put("name", name);
-					values.put("value", value);
+					values.put("uid", setting.uid);
+					values.put("name", setting.name);
+					values.put("value", setting.value);
 
 					// Insert/update record
 					db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
@@ -523,8 +534,8 @@ public class PrivacyService {
 
 				// Update cache
 				if (mUseCache) {
-					CSetting key = new CSetting(uid, name);
-					key.setValue(value);
+					CSetting key = new CSetting(setting.uid, setting.name);
+					key.setValue(setting.value);
 					synchronized (mSettingCache) {
 						if (mSettingCache.containsKey(key))
 							mSettingCache.remove(key);
@@ -540,20 +551,21 @@ public class PrivacyService {
 		@Override
 		public void setSettingList(List<ParcelableSetting> listSetting) throws RemoteException {
 			for (ParcelableSetting setting : listSetting)
-				setSetting(setting.uid, setting.name, setting.value);
+				setSetting(setting);
 		}
 
 		@Override
 		@SuppressLint("DefaultLocale")
-		public String getSetting(int uid, String name, String defaultValue) throws RemoteException {
-			String value = null;
+		public ParcelableSetting getSetting(ParcelableSetting setting) throws RemoteException {
 			try {
 				// Check cache
 				if (mUseCache) {
-					CSetting key = new CSetting(uid, name);
+					CSetting key = new CSetting(setting.uid, setting.name);
 					synchronized (mSettingCache) {
-						if (mSettingCache.containsKey(key))
-							return mSettingCache.get(key).getValue();
+						if (mSettingCache.containsKey(key)) {
+							setting.value = mSettingCache.get(key).getValue();
+							return setting;
+						}
 					}
 				}
 
@@ -562,11 +574,13 @@ public class PrivacyService {
 
 				// Fallback
 				if (db.getVersion() == 1) {
-					if (uid == 0)
-						value = PrivacyProvider.getSettingFallback(name, null, false);
-					if (value == null)
-						return PrivacyProvider.getSettingFallback(String.format("%s.%d", name, uid), defaultValue,
-								false);
+					if (setting.uid == 0)
+						setting.value = PrivacyProvider.getSettingFallback(setting.name, null, false);
+					if (setting.value == null) {
+						setting.value = PrivacyProvider.getSettingFallback(
+								String.format("%s.%d", setting.name, setting.uid), setting.value, false);
+						return setting;
+					}
 				}
 
 				// Precompile statement when needed
@@ -581,12 +595,11 @@ public class PrivacyService {
 					try {
 						synchronized (stmtGetSetting) {
 							stmtGetSetting.clearBindings();
-							stmtGetSetting.bindLong(1, uid);
-							stmtGetSetting.bindString(2, name);
-							value = stmtGetSetting.simpleQueryForString();
+							stmtGetSetting.bindLong(1, setting.uid);
+							stmtGetSetting.bindString(2, setting.name);
+							setting.value = stmtGetSetting.simpleQueryForString();
 						}
 					} catch (SQLiteDoneException ignored) {
-						value = defaultValue;
 					}
 
 					db.setTransactionSuccessful();
@@ -596,8 +609,8 @@ public class PrivacyService {
 
 				// Add to cache
 				if (mUseCache) {
-					CSetting key = new CSetting(uid, name);
-					key.setValue(value);
+					CSetting key = new CSetting(setting.uid, setting.name);
+					key.setValue(setting.value);
 					synchronized (mSettingCache) {
 						if (mSettingCache.containsKey(key))
 							mSettingCache.remove(key);
@@ -606,15 +619,14 @@ public class PrivacyService {
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return defaultValue;
+				return setting;
 			}
-			return value;
+			return setting;
 		}
 
 		@Override
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		public Map getSettingMap(int uid) throws RemoteException {
-			Map mapName = new HashMap();
+		public List<ParcelableSetting> getSettingList(int uid) throws RemoteException {
+			List<ParcelableSetting> listSetting = new ArrayList<ParcelableSetting>();
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
@@ -628,7 +640,7 @@ public class PrivacyService {
 					else
 						try {
 							while (cursor.moveToNext())
-								mapName.put(cursor.getString(0), cursor.getString(1));
+								listSetting.add(new ParcelableSetting(uid, cursor.getString(0), cursor.getString(1)));
 						} finally {
 							cursor.close();
 						}
@@ -641,7 +653,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
-			return mapName;
+			return listSetting;
 		}
 
 		@Override

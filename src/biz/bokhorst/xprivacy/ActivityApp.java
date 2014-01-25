@@ -874,9 +874,10 @@ public class ActivityApp extends Activity {
 					// Get all/some restricted
 					allRestricted = true;
 					someRestricted = false;
-					for (boolean restricted : PrivacyManager.getRestricted(mAppInfo.getUid(), restrictionName)) {
-						allRestricted = (allRestricted && restricted);
-						someRestricted = (someRestricted || restricted);
+					for (ParcelableRestriction restriction : PrivacyManager.getRestrictionList(mAppInfo.getUid(),
+							restrictionName)) {
+						allRestricted = (allRestricted && restriction.restricted);
+						someRestricted = (someRestricted || restriction.restricted);
 					}
 
 					return holder;
@@ -914,9 +915,10 @@ public class ActivityApp extends Activity {
 							// Update all/some restricted
 							allRestricted = true;
 							someRestricted = false;
-							for (boolean restricted : PrivacyManager.getRestricted(mAppInfo.getUid(), restrictionName)) {
-								allRestricted = (allRestricted && restricted);
-								someRestricted = (someRestricted || restricted);
+							for (ParcelableRestriction restriction : PrivacyManager.getRestrictionList(
+									mAppInfo.getUid(), restrictionName)) {
+								allRestricted = (allRestricted && restriction.restricted);
+								someRestricted = (someRestricted || restriction.restricted);
 							}
 
 							// Display restriction
@@ -1109,8 +1111,8 @@ public class ActivityApp extends Activity {
 					holder.ctvMethodName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							boolean restricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName,
-									md.getName(), false, false);
+							boolean restricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(),
+									restrictionName, md.getName(), false, false);
 							restricted = !restricted;
 							holder.ctvMethodName.setChecked(restricted);
 							boolean restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName,

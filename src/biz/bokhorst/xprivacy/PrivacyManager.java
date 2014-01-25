@@ -262,7 +262,8 @@ public class PrivacyManager {
 		// Get restriction
 		if (!cached)
 			try {
-				restricted = PrivacyService.getClient().getRestriction(uid, restrictionName, methodName, usage);
+				restricted = PrivacyService.getClient().getRestriction(
+						new ParcelableRestriction(uid, restrictionName, methodName, false), usage);
 
 				// Add to cache
 				key.setRestricted(restricted);
@@ -297,7 +298,8 @@ public class PrivacyManager {
 
 		// Set restriction
 		try {
-			PrivacyService.getClient().setRestriction(uid, restrictionName, methodName, restricted);
+			PrivacyService.getClient().setRestriction(
+					new ParcelableRestriction(uid, restrictionName, methodName, restricted));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -333,6 +335,15 @@ public class PrivacyManager {
 				Util.bug(null, ex);
 			}
 		return restart;
+	}
+
+	public static List<ParcelableRestriction> getRestrictionList(int uid, String restrictionName) {
+		try {
+			return PrivacyService.getClient().getRestrictionList(uid, restrictionName);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+		return new ArrayList<ParcelableRestriction>();
 	}
 
 	private static boolean shouldRestart(String restrictionName, String methodName, boolean restricted) {
@@ -375,16 +386,6 @@ public class PrivacyManager {
 					Integer.toString(ActivityMain.STATE_ATTENTION));
 
 		return restart;
-	}
-
-	@SuppressWarnings("unchecked")
-	public static List<Boolean> getRestricted(int uid, String restrictionName) {
-		try {
-			return (List<Boolean>) PrivacyService.getClient().getRestrictionList(uid, restrictionName);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-		return new ArrayList<Boolean>();
 	}
 
 	// Usage
@@ -467,10 +468,10 @@ public class PrivacyManager {
 				if (client == null)
 					value = defaultValue;
 				else {
-					value = client.getSetting(Math.abs(uid), name, null);
+					value = client.getSetting(new ParcelableSetting(Math.abs(uid), name, null)).value;
 					if (value == null)
 						if (uid > 0)
-							value = client.getSetting(0, name, defaultValue);
+							value = client.getSetting(new ParcelableSetting(0, name, defaultValue)).value;
 						else
 							return defaultValue;
 				}
@@ -499,7 +500,7 @@ public class PrivacyManager {
 
 	public static void setSetting(XHook hook, int uid, String settingName, String value) {
 		try {
-			PrivacyService.getClient().setSetting(uid, settingName, value);
+			PrivacyService.getClient().setSetting(new ParcelableSetting(uid, settingName, value));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -514,14 +515,13 @@ public class PrivacyManager {
 			}
 	}
 
-	@SuppressWarnings("unchecked")
-	public static Map<String, String> getSettingMap(int uid) {
+	public static List<ParcelableSetting> getSettingList(int uid) {
 		try {
-			return (Map<String, String>) PrivacyService.getClient().getSettingMap(uid);
+			return PrivacyService.getClient().getSettingList(uid);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
-		return new HashMap<String, String>();
+		return new ArrayList<ParcelableSetting>();
 	}
 
 	public static void deleteSettings(int uid) {

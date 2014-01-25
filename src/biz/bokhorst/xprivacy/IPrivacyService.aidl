@@ -8,19 +8,19 @@ interface IPrivacyService {
 	void migrated();
 	List /* String */ check();
 
-	void setRestriction(int uid, String restrictionName, String methodName, boolean restricted);
+	void setRestriction(in ParcelableRestriction restriction);
 	void setRestrictionList(in List<ParcelableRestriction> listRestriction);
-	boolean getRestriction(int uid, String restrictionName, String methodName, boolean usage);
-	List /* Boolean */ getRestrictionList(int uid, String restrictionName);
+	boolean getRestriction(in ParcelableRestriction restriction, boolean usage);
+	List<ParcelableRestriction> getRestrictionList(int uid, String restrictionName);
 	void deleteRestrictions(int uid);
 
 	long getUsage(int uid, in List<String> listRestrictionName, String methodName);
 	List<ParcelableRestriction> getUsageList(int uid);
 	void deleteUsage(int uid);
 
-	void setSetting(int uid, String name, String value);
+	void setSetting(in ParcelableSetting setting);
 	void setSettingList(in List<ParcelableSetting> listSetting);
-	String getSetting(int uid, String name, String defaultValue);
-	Map /* String, String */ getSettingMap(int uid);
+	ParcelableSetting getSetting(in ParcelableSetting setting);
+	List<ParcelableSetting> getSettingList(int uid);
 	void deleteSettings(int uid);
 }

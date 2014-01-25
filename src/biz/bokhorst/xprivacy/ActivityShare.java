@@ -531,7 +531,7 @@ public class ActivityShare extends Activity {
 		@Override
 		protected List<AppHolder> doInBackground(Object... params) {
 			int[] uids = (int[]) params[0];
-			String restriction = (String) params[1];
+			String restrictionName = (String) params[1];
 			List<AppHolder> apps = new ArrayList<AppHolder>();
 			mAppsByUid = new SparseArray<AppHolder>();
 
@@ -546,8 +546,9 @@ public class ActivityShare extends Activity {
 
 					// If toggling, check if some restricted
 					if (mActionId == R.string.menu_restriction_all)
-						for (boolean restricted : PrivacyManager.getRestricted(uids[i], restriction))
-							if (restricted) {
+						for (ParcelableRestriction restriction : PrivacyManager.getRestrictionList(uids[i],
+								restrictionName))
+							if (restriction.restricted) {
 								some = true;
 								break;
 							}
@@ -694,16 +695,14 @@ public class ActivityShare extends Activity {
 					}
 
 					// Process global settings
-					Map<String, String> mapGlobalSetting = PrivacyManager.getSettingMap(0);
-					for (String name : mapGlobalSetting.keySet()) {
-						String value = mapGlobalSetting.get(name);
-
+					List<ParcelableSetting> listGlobalSetting = PrivacyManager.getSettingList(0);
+					for (ParcelableSetting setting : listGlobalSetting) {
 						// Serialize setting
 						serializer.startTag(null, "Setting");
 						serializer.attribute(null, "Id", "");
-						serializer.attribute(null, "Name", name);
-						if (value != null)
-							serializer.attribute(null, "Value", value);
+						serializer.attribute(null, "Name", setting.name);
+						if (setting.value != null)
+							serializer.attribute(null, "Value", setting.value);
 						serializer.endTag(null, "Setting");
 					}
 
@@ -718,22 +717,20 @@ public class ActivityShare extends Activity {
 								mAppAdapter.setState(uid, STATE_RUNNING, null);
 
 							// Process application settings
-							Map<String, String> mapAppSetting = PrivacyManager.getSettingMap(uid);
-							for (String name : mapAppSetting.keySet()) {
+							List<ParcelableSetting> listAppSetting = PrivacyManager.getSettingList(uid);
+							for (ParcelableSetting setting : listAppSetting) {
 								// Bind accounts/contacts to same device
-								if (name.startsWith(PrivacyManager.cSettingAccount)
-										|| name.startsWith(PrivacyManager.cSettingContact)
-										|| name.startsWith(PrivacyManager.cSettingRawContact))
-									name += "." + android_id;
-
-								String value = mapAppSetting.get(name);
+								if (setting.name.startsWith(PrivacyManager.cSettingAccount)
+										|| setting.name.startsWith(PrivacyManager.cSettingContact)
+										|| setting.name.startsWith(PrivacyManager.cSettingRawContact))
+									setting.name += "." + android_id;
 
 								// Serialize setting
 								serializer.startTag(null, "Setting");
 								serializer.attribute(null, "Id", Integer.toString(uid));
-								serializer.attribute(null, "Name", name);
-								if (value != null)
-									serializer.attribute(null, "Value", value);
+								serializer.attribute(null, "Name", setting.name);
+								if (setting.value != null)
+									serializer.attribute(null, "Value", setting.value);
 								serializer.endTag(null, "Setting");
 							}
 
