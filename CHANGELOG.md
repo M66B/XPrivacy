@@ -16,6 +16,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Fixed usage data display for restriction categories
+* Fixed a bug in randomizing the GSF ID
 * Rewritten migration process
 * Added setting to enable restriction of system components (Android), default **disabled**
 * Added setting to disable usage data collection, default enabled

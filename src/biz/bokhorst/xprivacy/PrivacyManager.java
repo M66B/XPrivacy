@@ -534,6 +534,7 @@ public class PrivacyManager {
 
 	// Defacing
 
+	@SuppressLint("DefaultLocale")
 	public static Object getDefacedProp(int uid, String name) {
 		// Serial number
 		if (name.equals("SERIAL") || name.equals("%serialno")) {
@@ -636,7 +637,7 @@ public class PrivacyManager {
 				String value = getSetting(null, uid, cSettingGsfId, "DEFACE", true);
 				if (cValueRandom.equals(value))
 					value = getRandomProp(name);
-				gsfid = Long.parseLong(value, 16);
+				gsfid = Long.parseLong(value.toLowerCase(), 16);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
