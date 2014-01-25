@@ -761,32 +761,33 @@ public class PrivacyService {
 	}
 
 	private static File getDbFile() {
-		return new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
-				+ PrivacyService.class.getPackage().getName() + File.separator + "xprivacy.db");
+		return new File(Environment.getDataDirectory() + File.separator + "xprivacy" + File.separator + "xprivacy.db");
 	}
 
 	public static void setupDatebase() {
 		// This is run from Zygote with root permissions
 		try {
-			// Move database from experimental location
-			File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
-			if (folder.exists()) {
-				File[] files = folder.listFiles();
-				if (files != null)
-					for (File file : files) {
-						File target = new File(getDbFile().getParentFile() + File.separator + file.getName());
-						Util.log(null, Log.WARN, "Moving " + file + " to " + target);
-						file.renameTo(target);
-					}
-				folder.delete();
-			}
+			// Create base folder
+			getDbFile().getParentFile().mkdirs();
 
-			// Set application folder permission
+			// Move existing database
+			File source = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
+					+ PrivacyService.class.getPackage().getName() + File.separator + "xprivacy.db");
+			File target = new File(getDbFile().getParentFile() + File.separator + "xprivacy.db");
+			source.renameTo(target);
+			source = new File(source + "-journal");
+			target = new File(target + "-journal");
+			source.renameTo(target);
+
+			// Create database, if needed
+			getDatabase();
+
+			// Set database folder permission
 			// Owner: rwx (untouched)
 			// Group: rwx (set to system)
 			// World: --x
 			File dbFile = getDbFile();
-			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0771, -1, PrivacyManager.cAndroidUid);
+			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0770, -1, PrivacyManager.cAndroidUid);
 
 			// Set database file permissions
 			// Owner: rwx (untouched)
