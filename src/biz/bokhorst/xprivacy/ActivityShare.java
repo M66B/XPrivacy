@@ -1494,14 +1494,17 @@ public class ActivityShare extends Activity {
 					break;
 				}
 
-			// Build dialog
-			final EditText input = new EditText(context);
+			LayoutInflater LayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View view = LayoutInflater.inflate(R.layout.register, null);
+			final EditText input = (EditText) view.findViewById(R.id.etEmail);
 			if (email != null)
 				input.setText(email);
+
+			// Build dialog
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle(context.getString(R.string.msg_register));
+			alertDialogBuilder.setTitle(R.string.msg_register);
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
-			alertDialogBuilder.setView(input);
+			alertDialogBuilder.setView(view);
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -1592,8 +1595,22 @@ public class ActivityShare extends Activity {
 				message = mContext.getString(R.string.msg_registered);
 			else
 				message = result.getLocalizedMessage();
-			Toast toast = Toast.makeText(mContext, message, Toast.LENGTH_LONG);
-			toast.show();
+
+			// Build dialog
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
+			alertDialogBuilder.setTitle(R.string.app_name);
+			alertDialogBuilder.setMessage(message);
+			alertDialogBuilder.setIcon(Util.getThemed(mContext, R.attr.icon_launcher));
+			alertDialogBuilder.setPositiveButton(mContext.getString(android.R.string.ok),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
+
+			// Show dialog
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
 		}
 	}
 
