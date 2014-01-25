@@ -20,6 +20,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Rewritten migration process
 * Added setting to enable restriction of system components (Android), default **disabled**
 * Added setting to disable usage data collection, default enabled
+* Marked IPC functions as not dangerous
 * Updated Dutch translation
 * Updeated Norwegian translation
 * Updated traditional Chinese translation
