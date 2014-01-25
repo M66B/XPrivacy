@@ -15,6 +15,8 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Added a switch to enable/disable all application restrictions
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.10 TEST**

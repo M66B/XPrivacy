@@ -48,10 +48,12 @@ import android.view.Window;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -147,6 +149,18 @@ public class ActivityApp extends Activity {
 				@Override
 				public void onClick(View view) {
 					openContextMenu(imgIcon);
+				}
+			});
+
+			// Display restriction state
+			Switch swEnabled = (Switch) findViewById(R.id.swEnable);
+			swEnabled.setChecked(PrivacyManager.getSettingBool(null, mAppInfo.getUid(),
+					PrivacyManager.cSettingRestricted, true, false));
+			swEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					PrivacyManager.setSetting(null, mAppInfo.getUid(), PrivacyManager.cSettingRestricted,
+							Boolean.toString(isChecked));
 				}
 			});
 

@@ -102,6 +102,7 @@ public class PrivacyManager {
 	public final static String cSettingRegistered = "Registered";
 	public final static String cSettingUsage = "UsageData";
 	public final static String cSettingSystem = "RestrictSystem";
+	public final static String cSettingRestricted = "Retricted";
 
 	public final static String cSettingTemplate = "Template";
 	public final static String cSettingAccount = "Account.";

@@ -215,6 +215,12 @@ public class PrivacyService {
 				if (!mSystem && !PrivacyManager.isApplication(restriction.uid))
 					return false;
 
+				// Check if restrictions enabled
+				boolean enabled = Boolean.parseBoolean(getSetting(new ParcelableSetting(restriction.uid,
+						PrivacyManager.cSettingRestricted, Boolean.toString(true))).value);
+				if (!enabled)
+					return false;
+
 				// Check cache
 				boolean cached = false;
 				if (mUseCache) {
