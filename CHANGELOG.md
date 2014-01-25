@@ -15,6 +15,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.10 TEST**
+
 * Fixed usage data display for restriction categories
 * Fixed a bug in randomizing the GSF ID
 * Rewrote migration process, should solve continues migration and should be faster
@@ -25,8 +29,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Updated Lithuanian translation
 * Updated Norwegian translation
 * Updated traditional Chinese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.9 TEST**
 
