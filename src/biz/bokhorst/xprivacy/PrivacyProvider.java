@@ -643,6 +643,9 @@ public class PrivacyProvider extends ContentProvider {
 						try {
 							// name.uid.key
 							uid = Integer.parseInt(component[1]);
+							name = component[0];
+							for (int i = 2; i < component.length; i++)
+								name += "." + component[i];
 						} catch (NumberFormatException ignored) {
 							// Initial uid/name will be used
 						}
@@ -650,6 +653,9 @@ public class PrivacyProvider extends ContentProvider {
 						try {
 							// name.x.y.z.uid
 							uid = Integer.parseInt(component[component.length - 1]);
+							name = component[0];
+							for (int i = 1; i < component.length - 1; i++)
+								name += "." + component[i];
 						} catch (NumberFormatException ignored) {
 							// Initial uid/name will be used
 						}
@@ -726,33 +732,6 @@ public class PrivacyProvider extends ContentProvider {
 				try {
 					String name = getSettingName(settingKey);
 					String value = prefs.getString(settingKey, "");
-
-					// Decode setting
-					String[] component = name.split("\\.");
-					if (name.startsWith(PrivacyManager.cSettingAccount)
-							|| name.startsWith(PrivacyManager.cSettingApplication)
-							|| name.startsWith(PrivacyManager.cSettingContact)
-							|| name.startsWith(PrivacyManager.cSettingRawContact)) {
-						try {
-							// name.uid.key
-							name = component[0];
-							for (int i = 2; i < component.length; i++)
-								name += "." + component[i];
-						} catch (NumberFormatException ignored) {
-							// Initial uid/name will be used
-						}
-					} else if (component.length > 1) {
-						try {
-							// name.x.y.z.uid
-							name = component[0];
-							for (int i = 1; i < component.length - 1; i++)
-								name += "." + component[i];
-						} catch (NumberFormatException ignored) {
-							// Initial uid/name will be used
-						}
-					}
-
-					// Set
 					listWork.add(new ParcelableSetting(uid, name, value));
 				} catch (Throwable ex) {
 					// Legacy boolean
