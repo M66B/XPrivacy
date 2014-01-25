@@ -766,6 +766,7 @@ public class PrivacyService {
 	}
 
 	public static void setupDatebase() {
+		// This is run from Zygote with root permissions
 		try {
 			// Move database from experimental location
 			File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
@@ -780,11 +781,20 @@ public class PrivacyService {
 				folder.delete();
 			}
 
-			// Set file permission
-			Util.setPermission(getDbFile().getParentFile().getAbsolutePath(), 0771, -1, PrivacyManager.cAndroidUid);
-			if (getDbFile().exists())
-				Util.setPermission(getDbFile().getAbsolutePath(), 0770, -1, PrivacyManager.cAndroidUid);
-			File journal = new File(getDbFile() + "-journal");
+			// Set application folder permission
+			// Owner: rwx (untouched)
+			// Group: rwx (set to system)
+			// World: --x
+			File dbFile = getDbFile();
+			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0771, -1, PrivacyManager.cAndroidUid);
+
+			// Set database file permissions
+			// Owner: rwx (untouched)
+			// Group: rwx (set to system)
+			// World: ---
+			if (dbFile.exists())
+				Util.setPermission(dbFile.getAbsolutePath(), 0770, -1, PrivacyManager.cAndroidUid);
+			File journal = new File(dbFile + "-journal");
 			if (journal.exists())
 				Util.setPermission(journal.getAbsolutePath(), 0770, -1, PrivacyManager.cAndroidUid);
 		} catch (Throwable ex) {
@@ -830,9 +840,6 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 			}
-
-			if (dbFile.exists())
-				Util.setPermission(dbFile.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
 
 			Util.log(null, Log.WARN, "Database version=" + db.getVersion());
 			mDatabase = db;
