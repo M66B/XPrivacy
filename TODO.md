@@ -7,10 +7,6 @@ For interested developers:
 
 * Reconsider *largeHeap*
 * Option to reset user selected dangerous methods
-* Better multi-user support:
-	* Only show installed applications for secondary users
-	* Only allow restrictions for applications installed by secondary users
-	* Only import/export for applications installed by secondary users
 * Document XPrivacy navigation (menu's, presses, long presses) on GitHub
 * Better *sh* and *su* command detection
 * Accessibility: *android:labelFor="..."*
@@ -20,4 +16,3 @@ For interested developers:
 * Hook more package manager methods (which return info about one package)
 * Check http://developer.android.com/reference/android/nfc/NfcManager.html
 * Remove indeterminate progress indicator?
-* Add more requirement tests: check if all hooks succeeded
