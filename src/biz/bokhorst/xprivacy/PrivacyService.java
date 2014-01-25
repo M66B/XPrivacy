@@ -25,6 +25,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class PrivacyService {
@@ -180,6 +181,7 @@ public class PrivacyService {
 
 		@Override
 		public void setRestrictionList(List<ParcelableRestriction> listRestriction) throws RemoteException {
+			// Permission enforced by setRestriction
 			for (ParcelableRestriction restriction : listRestriction)
 				setRestriction(restriction);
 		}
@@ -189,6 +191,8 @@ public class PrivacyService {
 				throws RemoteException {
 			boolean restricted = false;
 			try {
+				// No permissions enforced, but usage data requires a secret
+
 				// Cache settings
 				if (!mSettings) {
 					mSettings = true;
@@ -572,6 +576,7 @@ public class PrivacyService {
 
 		@Override
 		public void setSettingList(List<ParcelableSetting> listSetting) throws RemoteException {
+			// Permission enforced by setSetting
 			for (ParcelableSetting setting : listSetting)
 				setSetting(setting);
 		}
@@ -580,6 +585,8 @@ public class PrivacyService {
 		@SuppressLint("DefaultLocale")
 		public ParcelableSetting getSetting(ParcelableSetting setting) throws RemoteException {
 			try {
+				// No permissions enforced
+
 				// Check cache
 				if (mUseCache) {
 					CSetting key = new CSetting(setting.uid, setting.name);
@@ -707,9 +714,17 @@ public class PrivacyService {
 	};
 
 	private static void enforcePermission() {
-		int uid = Util.getAppId(Binder.getCallingUid());
-		if (uid != getXUid())
-			throw new SecurityException("uid=" + mXUid + " calling=" + Binder.getCallingUid());
+		int callingUid = Util.getAppId(Binder.getCallingUid());
+		if (callingUid != getXUid()) {
+			String callingPkg = null;
+			Context context = getContext();
+			if (context != null) {
+				PackageManager pm = context.getPackageManager();
+				if (pm != null)
+					callingPkg = TextUtils.join(", ", pm.getPackagesForUid(Binder.getCallingUid()));
+			}
+			throw new SecurityException("xuid=" + mXUid + " calling=" + Binder.getCallingUid() + "/" + callingPkg);
+		}
 	}
 
 	private static Context getContext() {
