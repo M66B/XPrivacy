@@ -288,7 +288,10 @@ Limitations
 * It is not possible to restrict hardware MAC addresses or the external IP address
 * You cannot restrict *IPC* for XPrivacy, because it is needed for internal checks
 * You cannot restrict *storage* for XPrivacy, because it is needed for reading the pro license file
+* You cannot restrict *system* fro XPrivacy, because it is needed to get an application list
 * You cannot restrict *view* for XPrivacy, because it is needed to open links to the crowd sourced restrictions server
+
+Please note that you can still restrict accounts and contacts for XPrivacy.
 
 Compatibility
 -------------
