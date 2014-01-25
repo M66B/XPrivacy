@@ -727,7 +727,8 @@ public class PrivacyProvider extends ContentProvider {
 		if (prefFile.exists() && !migratedFile.exists()) {
 			Util.log(null, Log.WARN, "Migrating " + prefFile);
 
-			SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_WORLD_READABLE);
+			SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS + "." + uid,
+					Context.MODE_WORLD_READABLE);
 			for (String settingKey : prefs.getAll().keySet())
 				try {
 					String name = getSettingName(settingKey);

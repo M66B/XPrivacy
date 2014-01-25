@@ -83,6 +83,7 @@ public class UpdateService extends Service {
 
 							// Migrate global settings
 							PrivacyManager.setSettingList(PrivacyProvider.migrateSettings(UpdateService.this, 0));
+							PrivacyProvider.finishMigrateSettings(0);
 
 							// Migrate application settings/restrictions
 							for (int i = 1; i <= listApp.size(); i++) {
