@@ -810,7 +810,7 @@ public class PrivacyManager {
 		}
 
 		if (name.equals("SubscriberId")) {
-			String subscriber = "001";
+			String subscriber = "00101";
 			while (subscriber.length() < 15)
 				subscriber += Character.forDigit(r.nextInt(10), 10);
 			return subscriber;
