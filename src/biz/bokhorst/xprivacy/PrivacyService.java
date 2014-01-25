@@ -785,7 +785,7 @@ public class PrivacyService {
 			// Set database folder permission
 			// Owner: rwx (untouched)
 			// Group: rwx (set to system)
-			// World: --x
+			// World: ---
 			File dbFile = getDbFile();
 			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0770, -1, PrivacyManager.cAndroidUid);
 

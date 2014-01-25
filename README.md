@@ -438,10 +438,10 @@ Note that this will erase your pro license file too.
 <a name="FAQ6"></a>
 **(6) Can I backup XPrivacy and settings?**
 
-Yes, you can, for example with [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup),
-but you can only restore into the same environment (device/ROM).
-
-**Reboot after restoring a backup**
+Since version 1.99 the settings are stored in a database.
+Most backup tools cannot backup this database.
+Even if they could there would be no guarantee the database can be restored,
+since the database is always in use.
 
 Exporting/importing settings will work across devices/ROMs.
 To export/import settings you will need the [pro version](http://www.xprivacy.eu/).
