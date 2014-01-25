@@ -18,7 +18,8 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed usage data display for restriction categories
 * Rewritten migration process
 * Updated Dutch translation
-* Updeate Norwegian translation 
+* Updeated Norwegian translation
+* Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
