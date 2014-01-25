@@ -815,10 +815,9 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 
-				if (dbFile.exists())
-					Util.setPermission(dbFile.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
 			} else if (db.needUpgrade(2)) {
 				// Do nothing, done by migration
+
 			} else if (db.needUpgrade(3)) {
 				db.beginTransaction();
 				try {
@@ -831,6 +830,10 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 			}
+
+			if (dbFile.exists())
+				Util.setPermission(dbFile.getAbsolutePath(), 0775, -1, PrivacyManager.cAndroidUid);
+
 			Util.log(null, Log.WARN, "Database version=" + db.getVersion());
 			mDatabase = db;
 		}
