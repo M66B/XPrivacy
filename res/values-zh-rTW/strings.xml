@@ -37,10 +37,10 @@
     <string name="menu_applications">設定允許之app</string>
     <string name="menu_contacts">設定允許之聯絡人</string>
     <string name="menu_tutorial">說明</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
-    <string name="msg_abort">Aborting</string>
-    <string name="msg_aborted">Aborted</string>
+    <string name="menu_exclude">排除</string>
+    <string name="menu_close">關閉</string>
+    <string name="msg_abort">正在取消...</string>
+    <string name="msg_aborted">已取消</string>
     <string name="msg_new">已安裝</string>
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">授權給: %s</string>
@@ -58,24 +58,26 @@
     <string name="msg_random_access">存取資訊時進行亂數</string>
     <string name="msg_random_boot">重新啟動後進行亂數</string>
     <string name="msg_restart">需要重新啓動程式</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_service">Update service running</string>
-    <string name="msg_migrating" formatted="false">Migrating %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
-    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用\n\n請自行承擔使用XPrivacy的可能風險。</b>\n\n請參閱說明文件：</string>
+    <string name="msg_register">請先註冊您的 Android 裝置</string>
+    <string name="msg_registered">請到信箱驗證啟用您的 Android 裝置</string>
+    <string name="msg_service">更新服務執行中</string>
+    <string name="msg_migrating" formatted="false">正在移植 %s</string>
+    <string name="msg_randomizing" formatted="false">產生亂數 %s</string>
+    <string name="msg_upgrading" formatted="false">正在更新 %s</string>
+    <string name="msg_support_info">發生程式內部錯誤，請問是否傳送錯誤報告?</string>
+    <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用
+    \n\n請自行承擔使用XPrivacy的可能風險。</b>
+    \n\n請參閱說明文件：</string>
     <string name="restrict_accounts">帳戶 (Google, Facebook, etc)</string>
-    <string name="restrict_browser">瀏覽器 (書籤, 記錄)</string>
+    <string name="restrict_browser">瀏覽器資訊 (書籤, 記錄)</string>
     <string name="restrict_calendar">行事曆</string>
     <string name="restrict_calling">通話功能 (撥號, 傳送簡訊)</string>
     <string name="restrict_clipboard">剪貼簿</string>
     <string name="restrict_contacts">聯絡人</string>
     <string name="restrict_dictionary">使用者辭典</string>
     <string name="restrict_email">電子郵件</string>
-    <string name="restrict_identification">手機識別碼 (IMEI, .prop)</string>
-    <string name="restrict_internet">網際網路</string>
+    <string name="restrict_identification">手機識別碼 (Android ID, proc, etc)</string>
+    <string name="restrict_internet">網路功能</string>
     <string name="restrict_location">位置資訊 (精確/粗略)</string>
     <string name="restrict_media">媒體功能 (照相, 錄音, 錄影)</string>
     <string name="restrict_messages">簡訊內容 (SMS, MMS)</string>
@@ -86,8 +88,8 @@
     <string name="restrict_sensors">感應器 (陀螺儀, 指南針)</string>
     <string name="restrict_storage">儲存空間 (媒體檔案, SD卡)</string>
     <string name="restrict_shell">Shell (指令, ROOT指令)</string>
-    <string name="restrict_system">已安裝軟體清單</string>
-    <string name="restrict_view">使用瀏覽器介面</string>
+    <string name="restrict_system">系統資訊 (程式, 服務, etc)</string>
+    <string name="restrict_view">瀏覽器介面</string>
     <string name="title_categories">分類</string>
     <string name="title_restrict">限制項目:</string>
     <string name="title_filters">篩選器</string>
@@ -125,7 +127,7 @@
     <string name="settings_dangerous">關閉高風險功能</string>
     <string name="settings_confidence">最大擷取信賴區間</string>
     <string name="settings_experimental">實驗性功能 (需重新啟動)</string>
-    <string name="settings_https">Use secure connections</string>
+    <string name="settings_https">使用加密連線 (HTTPS)</string>
     <string name="help_application">程式</string>
     <string name="help_internet">表示有網際網路權限</string>
     <string name="help_granted">表示有手機權限</string>
