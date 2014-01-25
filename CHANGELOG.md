@@ -22,7 +22,8 @@ Test and beta releases will have experimental functions enabled by default.
 * Added setting to disable usage data collection, default enabled
 * Marked IPC functions as not dangerous
 * Updated Dutch translation
-* Updeated Norwegian translation
+* Updated Lithuanian translation
+* Updated Norwegian translation
 * Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
