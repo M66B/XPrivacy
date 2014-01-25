@@ -35,13 +35,18 @@ public class ParcelableSetting implements Parcelable {
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeInt(uid);
 		out.writeString(name);
-		out.writeString(value);
+		out.writeInt(value == null ? 1 : 0);
+		if (value != null)
+			out.writeString(value);
 	}
 
 	public void readFromParcel(Parcel in) {
 		uid = in.readInt();
 		name = in.readString();
-		value = in.readString();
+		if (in.readInt() > 0)
+			value = null;
+		else
+			value = in.readString();
 	}
 
 	@Override

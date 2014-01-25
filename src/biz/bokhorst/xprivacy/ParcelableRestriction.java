@@ -38,7 +38,9 @@ public class ParcelableRestriction implements Parcelable {
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeInt(uid);
 		out.writeString(restrictionName);
-		out.writeString(methodName);
+		out.writeInt(methodName == null ? 1 : 0);
+		if (methodName != null)
+			out.writeString(methodName);
 		out.writeInt(restricted ? 1 : 0);
 		out.writeLong(time);
 	}
@@ -46,7 +48,10 @@ public class ParcelableRestriction implements Parcelable {
 	public void readFromParcel(Parcel in) {
 		uid = in.readInt();
 		restrictionName = in.readString();
-		methodName = in.readString();
+		if (in.readInt() > 0)
+			methodName = null;
+		else
+			methodName = in.readString();
 		restricted = (in.readInt() > 0 ? true : false);
 		time = in.readLong();
 	}
