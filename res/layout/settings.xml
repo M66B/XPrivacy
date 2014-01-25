@@ -51,6 +51,12 @@
                 android:text="@string/settings_notify" />
 
             <CheckBox
+                android:id="@+id/cbUsage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_usagedata" />
+
+            <CheckBox
                 android:id="@+id/cbLog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,6 +67,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_expert" />
+
+            <CheckBox
+                android:id="@+id/cbSystem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:text="@string/settings_syscomponents" />
 
             <CheckBox
                 android:id="@+id/cbDangerous"

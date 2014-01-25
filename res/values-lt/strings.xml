@@ -129,6 +129,8 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_confidence">maksimalaus pasitikėjimo gavimo intervalas</string>
     <string name="settings_experimental">Eksperimentinės funkcijos (Perkrauti prietaisą)</string>
     <string name="settings_https">Naudojamas saugus ryšys</string>
+    <string name="settings_syscomponents">Restrict system components (Android)</string>
+    <string name="settings_usagedata">Collect usage data</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
     <string name="help_granted">Android leidimai</string>

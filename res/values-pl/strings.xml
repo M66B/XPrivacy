@@ -129,6 +129,8 @@
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Eksperymentalne funkcje (wymaga restartu)</string>
     <string name="settings_https">Use secure connections</string>
+    <string name="settings_syscomponents">Restrict system components (Android)</string>
+    <string name="settings_usagedata">Collect usage data</string>
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">ma dostęp do internetu</string>
     <string name="help_granted">ma dostęp do uprawnień Androida</string>

@@ -128,6 +128,8 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="settings_https">Use secure connections</string>
+    <string name="settings_syscomponents">Restrict system components (Android)</string>
+    <string name="settings_usagedata">Collect usage data</string>
     <string name="help_application">יישום</string>
     <string name="help_internet">כולל הרשאות גישה לאינטרנט</string>
     <string name="help_granted">כולל הרשאות גישה לאנדרואיד</string>

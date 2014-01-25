@@ -37,8 +37,10 @@ public class SettingsDialog {
 		View vwAppNameBorder = (View) dlgSettings.findViewById(R.id.vwAppNameBorder);
 
 		final CheckBox cbNotify = (CheckBox) dlgSettings.findViewById(R.id.cbNotify);
+		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
 		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
+		final CheckBox cbSystem = (CheckBox) dlgSettings.findViewById(R.id.cbSystem);
 		final CheckBox cbDangerous = (CheckBox) dlgSettings.findViewById(R.id.cbDangerous);
 		final CheckBox cbExperimental = (CheckBox) dlgSettings.findViewById(R.id.cbExperimental);
 		final CheckBox cbHttps = (CheckBox) dlgSettings.findViewById(R.id.cbHttps);
@@ -90,11 +92,13 @@ public class SettingsDialog {
 		cbExpert.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				cbSystem.setEnabled(isChecked);
 				cbDangerous.setEnabled(isChecked);
 				cbExperimental.setEnabled(isChecked);
 				cbHttps.setEnabled(isChecked);
 				etConfidence.setEnabled(isChecked);
 				if (!isChecked) {
+					cbSystem.setChecked(false);
 					cbDangerous.setChecked(false);
 					cbExperimental.setChecked(false);
 					cbHttps.setChecked(true);
@@ -273,13 +277,15 @@ public class SettingsDialog {
 
 		// Get current values
 		boolean notify = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingNotify, true, false);
+		boolean usage = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingUsage, true, false);
 		boolean log = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingLog, false, false);
+		boolean components = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingSystem, false, false);
 		boolean dangerous = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingDangerous, false, false);
 		boolean experimental = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingExperimental,
 				PrivacyManager.cTestVersion, false);
 		boolean https = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingHttps, true, false);
 		String confidence = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingConfidence, "", false);
-		final boolean expert = (dangerous || experimental || !https || !"".equals(confidence));
+		final boolean expert = (components || dangerous || experimental || !https || !"".equals(confidence));
 		boolean global = (PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSerial, null, false) == null);
 		boolean random = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingRandom, false, false);
 
@@ -303,14 +309,17 @@ public class SettingsDialog {
 			cbGlobal.setVisibility(View.GONE);
 
 			// Global settings
+			cbUsage.setChecked(usage);
 			cbLog.setChecked(log);
 			cbExpert.setChecked(expert);
 			if (expert) {
+				cbSystem.setChecked(components);
 				cbDangerous.setChecked(dangerous);
 				cbExperimental.setChecked(experimental);
 				cbHttps.setChecked(https);
 				etConfidence.setText(confidence);
 			} else {
+				cbSystem.setEnabled(false);
 				cbDangerous.setEnabled(false);
 				cbExperimental.setEnabled(false);
 				cbHttps.setEnabled(false);
@@ -319,8 +328,10 @@ public class SettingsDialog {
 			}
 		} else {
 			// Disable global settings
+			cbUsage.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
 			cbExpert.setVisibility(View.GONE);
+			cbSystem.setVisibility(View.GONE);
 			cbDangerous.setVisibility(View.GONE);
 			cbExperimental.setVisibility(View.GONE);
 			cbHttps.setVisibility(View.GONE);
@@ -484,8 +495,12 @@ public class SettingsDialog {
 			public void onClick(View view) {
 				if (uid == 0) {
 					// Global settings
+					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingUsage,
+							Boolean.toString(cbUsage.isChecked()));
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLog,
 							Boolean.toString(cbLog.isChecked()));
+					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingSystem,
+							Boolean.toString(cbSystem.isChecked()));
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingDangerous,
 							Boolean.toString(cbDangerous.isChecked()));
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingExperimental,

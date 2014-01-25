@@ -32,14 +32,17 @@ public class PrivacyService {
 	private static List<String> mListError;
 	private static IPrivacyService mClient = null;
 	private static SQLiteDatabase mDatabase = null;
+	private static boolean mSettings = false;
+	private static boolean mUsage = true;
+	private static boolean mSystem = false;
 
 	private static SQLiteStatement stmtGetRestriction = null;
 	private static SQLiteStatement stmtGetSetting = null;
 	private static SQLiteStatement stmtGetUsageRestriction = null;
 	private static SQLiteStatement stmtGetUsageMethod = null;
 
-	private static int cCurrentVersion = 1;
-	private static String cServiceName = "xprivacy243";
+	private static int cCurrentVersion = 243;
+	private static String cServiceName = "xprivacy" + cCurrentVersion;
 	private static String cTableRestriction = "restriction";
 	private static String cTableUsage = "usage";
 	private static String cTableSetting = "setting";
@@ -184,21 +187,34 @@ public class PrivacyService {
 		@Override
 		public boolean getRestriction(final int uid, final String restrictionName, final String methodName,
 				final boolean usage) throws RemoteException {
-			if (uid == getXUid()) {
-				if (PrivacyManager.cIdentification.equals(restrictionName) && "getString".equals(methodName))
-					return false;
-				if (PrivacyManager.cIPC.equals(restrictionName))
-					return false;
-				else if (PrivacyManager.cStorage.equals(restrictionName))
-					return false;
-				else if (PrivacyManager.cSystem.equals(restrictionName))
-					return false;
-				else if (PrivacyManager.cView.equals(restrictionName))
-					return false;
-			}
-
 			boolean restricted = false;
 			try {
+				// Cache settings
+				if (!mSettings) {
+					mSettings = true;
+					mUsage = Boolean.parseBoolean(getSetting(0, PrivacyManager.cSettingUsage, Boolean.toString(true)));
+					mSystem = Boolean
+							.parseBoolean(getSetting(0, PrivacyManager.cSettingSystem, Boolean.toString(false)));
+				}
+
+				// Check for self
+				if (uid == getXUid()) {
+					if (PrivacyManager.cIdentification.equals(restrictionName) && "getString".equals(methodName))
+						return false;
+					if (PrivacyManager.cIPC.equals(restrictionName))
+						return false;
+					else if (PrivacyManager.cStorage.equals(restrictionName))
+						return false;
+					else if (PrivacyManager.cSystem.equals(restrictionName))
+						return false;
+					else if (PrivacyManager.cView.equals(restrictionName))
+						return false;
+				}
+
+				// Check for system
+				if (!mSystem && !PrivacyManager.isApplication(uid))
+					return false;
+
 				// Check cache
 				boolean cached = false;
 				if (mUseCache) {
@@ -275,7 +291,7 @@ public class PrivacyService {
 				}
 
 				// Log usage
-				if (usage && methodName != null) {
+				if (mUsage && usage && methodName != null) {
 					final boolean sRestricted = restricted;
 					mExecutor.execute(new Runnable() {
 						public void run() {

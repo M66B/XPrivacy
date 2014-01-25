@@ -128,6 +128,8 @@
     <string name="settings_confidence">Pinakamataas na Confidence Interval na puwedeng kunin</string>
     <string name="settings_experimental">Gamitin mga hindi pa tiyak na tungkulin (kailangan muling paumpisahin ang iyong kagamitan)</string>
     <string name="settings_https">Use secure connections</string>
+    <string name="settings_syscomponents">Restrict system components (Android)</string>
+    <string name="settings_usagedata">Collect usage data</string>
     <string name="help_application">Mga Applications</string>
     <string name="help_internet">may Internet na pahintulot</string>
     <string name="help_granted">may Android na pahintulot</string>

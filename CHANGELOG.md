@@ -17,6 +17,8 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Fixed usage data display for restriction categories
 * Rewritten migration process
+* Added setting to enable restriction of system components (Android), default **disabled**
+* Added setting to disable usage data collection, default enabled
 * Updated Dutch translation
 * Updeated Norwegian translation
 * Updated traditional Chinese translation
