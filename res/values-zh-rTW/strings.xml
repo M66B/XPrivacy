@@ -128,8 +128,8 @@
     <string name="settings_confidence">最大擷取信賴區間</string>
     <string name="settings_experimental">實驗性功能 (需重新啟動)</string>
     <string name="settings_https">使用加密連線 (HTTPS)</string>
-    <string name="settings_syscomponents">Restrict system components (Android)</string>
-    <string name="settings_usagedata">Collect usage data</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">程式</string>
     <string name="help_internet">表示有網際網路權限</string>
     <string name="help_granted">表示有手機權限</string>

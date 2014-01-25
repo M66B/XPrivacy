@@ -128,8 +128,8 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_confidence">Intervalle de confiance maximum</string>
     <string name="settings_experimental">Fonctions expérimentales (redémarrage requis)</string>
     <string name="settings_https">Utiliser des connexions sécurisée</string>
-    <string name="settings_syscomponents">Restrict system components (Android)</string>
-    <string name="settings_usagedata">Collect usage data</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>

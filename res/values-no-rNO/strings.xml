@@ -126,8 +126,8 @@
     <string name="settings_confidence">Maksimalt konfidensintervall for å hente restriksjoner</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="settings_https">Use secure connections</string>
-    <string name="settings_syscomponents">Restrict system components (Android)</string>
-    <string name="settings_usagedata">Collect usage data</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">App</string>
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>
