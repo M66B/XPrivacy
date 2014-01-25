@@ -103,13 +103,11 @@ public class UpdateService extends Service {
 									if (listSetting.size() > 0 || listRestriction.size() > 0)
 										first = i;
 								if (first > 0)
-									notifyProgress(UpdateService.this, Util.NOTIFY_MIGRATE, false, format, 100
-											* (i - first) / (listApp.size() - first));
+									notifyProgress(UpdateService.this, Util.NOTIFY_MIGRATE, format, 100 * (i - first)
+											/ (listApp.size() - first));
 							}
 
-							// End migrate
-							if (first > 0)
-								notifyProgress(UpdateService.this, Util.NOTIFY_MIGRATE, true, format, 100);
+							// Complete migration
 							PrivacyService.getClient().migrated();
 
 							// Randomize
@@ -129,11 +127,9 @@ public class UpdateService extends Service {
 									if (listSetting.size() > 0)
 										first = i;
 								if (first > 0)
-									notifyProgress(UpdateService.this, Util.NOTIFY_RANDOMIZE, false, format, 100
-											* (i - first) / (listApp.size() - first));
+									notifyProgress(UpdateService.this, Util.NOTIFY_RANDOMIZE, format, 100 * (i - first)
+											/ (listApp.size() - first));
 							}
-							if (first > 0)
-								notifyProgress(UpdateService.this, Util.NOTIFY_RANDOMIZE, true, format, 100);
 
 							// Done
 							stopForeground(true);
@@ -169,11 +165,9 @@ public class UpdateService extends Service {
 										if (listRestriction.size() > 0)
 											first = i;
 									if (first > 0)
-										notifyProgress(UpdateService.this, Util.NOTIFY_UPGRADE, false, format, 100
+										notifyProgress(UpdateService.this, Util.NOTIFY_UPGRADE, format, 100
 												* (i - first) / (listApp.size() - first));
 								}
-								if (first > 0)
-									notifyProgress(UpdateService.this, Util.NOTIFY_UPGRADE, true, format, 100);
 							}
 
 							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
@@ -254,7 +248,7 @@ public class UpdateService extends Service {
 		return listWork;
 	}
 
-	private static void notifyProgress(Context context, int id, boolean completed, String format, int percentage) {
+	private static void notifyProgress(Context context, int id, String format, int percentage) {
 		String message = String.format(format, String.format("%d %%", percentage));
 		Util.log(null, Log.WARN, message);
 
@@ -265,8 +259,8 @@ public class UpdateService extends Service {
 		builder.setContentTitle(context.getString(R.string.app_name));
 		builder.setContentText(message);
 		builder.setWhen(System.currentTimeMillis());
-		builder.setAutoCancel(completed);
-		builder.setOngoing(!completed);
+		builder.setAutoCancel(percentage == 100);
+		builder.setOngoing(percentage < 100);
 		Notification notification = builder.build();
 		notificationManager.notify(id, notification);
 	}
