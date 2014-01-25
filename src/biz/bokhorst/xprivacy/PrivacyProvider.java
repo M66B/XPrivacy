@@ -729,10 +729,9 @@ public class PrivacyProvider extends ContentProvider {
 
 			SharedPreferences prefs = context.getSharedPreferences(PREF_SETTINGS + "." + uid,
 					Context.MODE_WORLD_READABLE);
-			for (String settingKey : prefs.getAll().keySet())
+			for (String name : prefs.getAll().keySet())
 				try {
-					String name = getSettingName(settingKey);
-					String value = prefs.getString(settingKey, "");
+					String value = prefs.getString(name, "");
 					listWork.add(new ParcelableSetting(uid, name, value));
 				} catch (Throwable ex) {
 					// Legacy boolean
