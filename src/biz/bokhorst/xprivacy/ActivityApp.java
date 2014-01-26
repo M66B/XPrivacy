@@ -383,7 +383,7 @@ public class ActivityApp extends Activity {
 		// Show help
 		Dialog dialog = new Dialog(ActivityApp.this);
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dialog.setTitle(getString(R.string.menu_help));
+		dialog.setTitle(R.string.menu_help);
 		dialog.setContentView(R.layout.help);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
 		ImageView imgHelpHalf = (ImageView) dialog.findViewById(R.id.imgHelpHalf);
@@ -414,7 +414,7 @@ public class ActivityApp extends Activity {
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 		alertDialogBuilder.setTitle(getString(restricted ? R.string.menu_apply : R.string.menu_clear_all));
-		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+		alertDialogBuilder.setMessage(R.string.msg_sure);
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
@@ -448,8 +448,8 @@ public class ActivityApp extends Activity {
 
 	private void optionClear() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-		alertDialogBuilder.setTitle(getString(R.string.menu_clear_all));
-		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+		alertDialogBuilder.setTitle(R.string.menu_clear_all);
+		alertDialogBuilder.setMessage(R.string.msg_sure);
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
@@ -554,8 +554,8 @@ public class ActivityApp extends Activity {
 
 	private void optionKill(final int which) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-		alertDialogBuilder.setTitle(getString(R.string.menu_app_kill));
-		alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+		alertDialogBuilder.setTitle(R.string.menu_app_kill);
+		alertDialogBuilder.setMessage(R.string.msg_sure);
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
@@ -607,7 +607,7 @@ public class ActivityApp extends Activity {
 		protected void onPostExecute(Object result) {
 			// Build dialog
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-			alertDialogBuilder.setTitle(getString(R.string.menu_accounts));
+			alertDialogBuilder.setTitle(R.string.menu_accounts);
 			alertDialogBuilder.setIcon(Util.getThemed(ActivityApp.this, R.attr.icon_launcher));
 			alertDialogBuilder.setMultiChoiceItems(mListAccount.toArray(new CharSequence[0]), mSelection,
 					new DialogInterface.OnMultiChoiceClickListener() {
@@ -679,7 +679,7 @@ public class ActivityApp extends Activity {
 		protected void onPostExecute(Object result) {
 			// Build dialog
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-			alertDialogBuilder.setTitle(getString(R.string.menu_applications));
+			alertDialogBuilder.setTitle(R.string.menu_applications);
 			alertDialogBuilder.setIcon(Util.getThemed(ActivityApp.this, R.attr.icon_launcher));
 			alertDialogBuilder.setMultiChoiceItems(mApp, mSelection, new DialogInterface.OnMultiChoiceClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
@@ -750,7 +750,7 @@ public class ActivityApp extends Activity {
 		protected void onPostExecute(Object result) {
 			// Build dialog
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-			alertDialogBuilder.setTitle(getString(R.string.menu_contacts));
+			alertDialogBuilder.setTitle(R.string.menu_contacts);
 			alertDialogBuilder.setIcon(Util.getThemed(ActivityApp.this, R.attr.icon_launcher));
 			alertDialogBuilder.setMultiChoiceItems(mListContact.toArray(new CharSequence[0]), mSelection,
 					new DialogInterface.OnMultiChoiceClickListener() {

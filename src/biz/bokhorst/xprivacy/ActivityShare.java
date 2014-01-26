@@ -172,19 +172,19 @@ public class ActivityShare extends Activity {
 			// Set title
 			if (action.equals(ACTION_TOGGLE)) {
 				mActionId = R.string.menu_restriction_all;
-				setTitle(getString(R.string.menu_restriction_all));
+				setTitle(R.string.menu_restriction_all);
 			} else if (action.equals(ACTION_IMPORT)) {
 				mActionId = R.string.menu_import;
-				setTitle(getString(R.string.menu_import));
+				setTitle(R.string.menu_import);
 			} else if (action.equals(ACTION_EXPORT)) {
 				mActionId = R.string.menu_export;
-				setTitle(getString(R.string.menu_export));
+				setTitle(R.string.menu_export);
 			} else if (action.equals(ACTION_FETCH)) {
 				mActionId = R.string.menu_fetch;
-				setTitle(getString(R.string.menu_fetch));
+				setTitle(R.string.menu_fetch);
 			} else if (action.equals(ACTION_SUBMIT)) {
 				mActionId = R.string.menu_submit;
-				setTitle(getString(R.string.menu_submit));
+				setTitle(R.string.menu_submit);
 			} else {
 				finish();
 				return;
@@ -602,7 +602,7 @@ public class ActivityShare extends Activity {
 
 			// If toggling, set title
 			if (mActionId == R.string.menu_clear_all || mActionId == R.string.menu_restrict_all)
-				ActivityShare.this.setTitle(getString(mActionId));
+				ActivityShare.this.setTitle(mActionId);
 		}
 	}
 

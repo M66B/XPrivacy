@@ -33,8 +33,8 @@ public class Requirements {
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR2
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.KITKAT) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
-			alertDialogBuilder.setMessage(context.getString(R.string.app_wrongandroid));
+			alertDialogBuilder.setTitle(R.string.app_name);
+			alertDialogBuilder.setMessage(R.string.app_wrongandroid);
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
@@ -55,7 +55,7 @@ public class Requirements {
 			String msg = String.format(context.getString(R.string.app_notxposed),
 					PrivacyManager.cXposedAppProcessMinVersion);
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
+			alertDialogBuilder.setTitle(R.string.app_name);
 			alertDialogBuilder.setMessage(msg);
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
@@ -85,8 +85,8 @@ public class Requirements {
 			}
 		} else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
-			alertDialogBuilder.setMessage(context.getString(R.string.app_notenabled));
+			alertDialogBuilder.setTitle(R.string.app_name);
+			alertDialogBuilder.setMessage(R.string.app_notenabled);
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
@@ -106,8 +106,8 @@ public class Requirements {
 		Version version = Util.getProEnablerVersion(context);
 		if (version != null && !Util.isValidProEnablerVersion(version)) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
-			alertDialogBuilder.setMessage(context.getString(R.string.app_wrongenabler));
+			alertDialogBuilder.setTitle(R.string.app_name);
+			alertDialogBuilder.setMessage(R.string.app_wrongenabler);
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
@@ -263,7 +263,7 @@ public class Requirements {
 		Util.log(null, Log.WARN, msg);
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-		alertDialogBuilder.setTitle(context.getString(R.string.app_name));
+		alertDialogBuilder.setTitle(R.string.app_name);
 		alertDialogBuilder.setMessage(msg);
 		alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
@@ -309,8 +309,8 @@ public class Requirements {
 
 	public static void sendSupportInfo(final String text, final Context context) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-		alertDialogBuilder.setTitle(context.getString(R.string.app_name));
-		alertDialogBuilder.setMessage(context.getString(R.string.msg_support_info));
+		alertDialogBuilder.setTitle(R.string.app_name);
+		alertDialogBuilder.setMessage(R.string.msg_support_info);
 		alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 				new DialogInterface.OnClickListener() {

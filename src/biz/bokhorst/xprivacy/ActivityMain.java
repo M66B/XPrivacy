@@ -595,7 +595,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 		// Build dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(getString(R.string.menu_template));
+		alertDialogBuilder.setTitle(R.string.menu_template);
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setMultiChoiceItems(options, selection, new DialogInterface.OnMultiChoiceClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
@@ -643,7 +643,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			if (uid.length == 0) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 				alertDialogBuilder.setTitle(R.string.app_name);
-				alertDialogBuilder.setMessage(getString(R.string.msg_select));
+				alertDialogBuilder.setMessage(R.string.msg_select);
 				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
 						new DialogInterface.OnClickListener() {
@@ -662,7 +662,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 			} else {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-				alertDialogBuilder.setTitle(getString(R.string.app_name));
+				alertDialogBuilder.setTitle(R.string.app_name);
 				alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
 				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
@@ -715,7 +715,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// About
 		Dialog dlgAbout = new Dialog(this);
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dlgAbout.setTitle(getString(R.string.menu_about));
+		dlgAbout.setTitle(R.string.menu_about);
 		dlgAbout.setContentView(R.layout.about);
 		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
 
@@ -750,7 +750,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Show help
 		Dialog dialog = new Dialog(ActivityMain.this);
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dialog.setTitle(getString(R.string.menu_help));
+		dialog.setTitle(R.string.menu_help);
 		dialog.setContentView(R.layout.help);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
 		ImageView imgHelpHalf = (ImageView) dialog.findViewById(R.id.imgHelpHalf);
@@ -1314,8 +1314,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							// Process click
 							if (mRestrictionName == null && someRestricted) {
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
-								alertDialogBuilder.setTitle(getString(R.string.menu_clear_all));
-								alertDialogBuilder.setMessage(getString(R.string.msg_sure));
+								alertDialogBuilder.setTitle(R.string.menu_clear_all);
+								alertDialogBuilder.setMessage(R.string.msg_sure);
 								alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
 								alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
 										new DialogInterface.OnClickListener() {

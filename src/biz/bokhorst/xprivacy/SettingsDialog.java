@@ -28,7 +28,7 @@ public class SettingsDialog {
 		int themeId = (themeName.equals("Dark") ? R.style.CustomTheme_Dialog : R.style.CustomTheme_Light_Dialog);
 		final Dialog dlgSettings = new Dialog(context, themeId);
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dlgSettings.setTitle(context.getString(R.string.menu_settings));
+		dlgSettings.setTitle(R.string.menu_settings);
 		dlgSettings.setContentView(R.layout.settings);
 		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(context, R.attr.icon_launcher));
 
