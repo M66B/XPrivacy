@@ -8,6 +8,7 @@
         android:id="@+id/tvTime"
         android:layout_width="60dip"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
@@ -32,6 +33,7 @@
         android:id="@+id/tvApp"
         android:layout_width="45dip"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
@@ -39,6 +41,7 @@
         android:id="@+id/tvRestriction"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
