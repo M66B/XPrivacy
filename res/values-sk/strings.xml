@@ -60,7 +60,7 @@
     <string name="msg_restart">Vyžadovaný reštart aplikácie</string>
     <string name="msg_register">Zaregistruje prosím vaše zariadenie</string>
     <string name="msg_registered">Skontrolujte váš e-mail pre aktiváciu vášho zariadenia</string>
-    <string name="msg_service">Aktualizačna služba je spustená</string>
+    <string name="msg_service">Aktualizačná služba je spustená</string>
     <string name="msg_migrating" formatted="false">Migrovanie %s</string>
     <string name="msg_randomizing" formatted="false">Randomizovanie %s</string>
     <string name="msg_upgrading" formatted="false">Aktualizovanie %s</string>
