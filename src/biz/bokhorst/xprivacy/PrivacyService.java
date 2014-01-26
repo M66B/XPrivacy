@@ -768,7 +768,7 @@ public class PrivacyService {
 				+ PrivacyService.class.getPackage().getName() + File.separator + "xprivacy.db");
 	}
 
-	public static void setupDatebase() {
+	public static void setupDatabase() {
 		// This is run from Zygote with root permissions
 		try {
 			File dbFile = getDbFile();

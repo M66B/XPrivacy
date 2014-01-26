@@ -198,11 +198,12 @@ public class Requirements {
 				// Check services
 				List<String> listMissing = new ArrayList<String>();
 				for (String service : XBinder.cListService)
-					if (!mapService.containsKey(service))
+					if (!"iphonesubinfo".equals(service) && !mapService.containsKey(service))
 						listMissing.add(service);
 				if (PrivacyManager.cTestVersion)
 					for (String serviceName : XBinder.cListServiceName)
-						if (!mapService.containsValue(serviceName))
+						if (!"com.android.internal.telephony.IPhoneSubInfo".equals(serviceName)
+								&& !mapService.containsValue(serviceName))
 							listMissing.add(serviceName);
 
 				// Check result
