@@ -299,6 +299,8 @@ Compatibility
 XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat),
 and is reported to work with most Android variants, including stock ROMs.
 
+**Do not use permission "fixing" script or applications, like [Android Tuner](https://play.google.com/store/apps/details?id=ccc71.at.free)**
+
 Installation
 ------------
 

@@ -367,6 +367,7 @@ public class Util {
 
 	public static void setPermission(String path, int mode, int uid, int gid) {
 		try {
+			// frameworks/base/core/java/android/os/FileUtils.java
 			Class<?> fileUtils = Class.forName("android.os.FileUtils");
 			Method setPermissions = fileUtils
 					.getMethod("setPermissions", String.class, int.class, int.class, int.class);
