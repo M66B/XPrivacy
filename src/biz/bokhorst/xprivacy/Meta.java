@@ -82,8 +82,8 @@ public class Meta {
 		listHook.add(new Hook("location", "addNmeaListener", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
 		listHook.add(new Hook("location", "addProximityAlert", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
 		listHook.add(new Hook("location", "getLastKnownLocation", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
-		listHook.add(new Hook("location", "getProviders", true, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
-		listHook.add(new Hook("location", "isProviderEnabled", true, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
+		listHook.add(new Hook("location", "getProviders", true, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, "1.99.1", null));
+		listHook.add(new Hook("location", "isProviderEnabled", true, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, "1.99.1", null));
 		listHook.add(new Hook("location", "removeUpdates", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
 		listHook.add(new Hook("location", "requestLocationUpdates", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
 		listHook.add(new Hook("location", "requestSingleUpdate", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
