@@ -768,15 +768,17 @@ public class PrivacyService {
 	public static void setupDatebase() {
 		// This is run from Zygote with root permissions
 		try {
+			File dbFile = getDbFile();
+
 			// Move database from experimental location
 			File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
 			if (folder.exists()) {
 				File[] files = folder.listFiles();
 				if (files != null)
 					for (File file : files) {
-						File target = new File(getDbFile().getParentFile() + File.separator + file.getName());
-						Util.log(null, Log.WARN, "Moving " + file + " to " + target);
-						file.renameTo(target);
+						File target = new File(dbFile.getParentFile() + File.separator + file.getName());
+						boolean status = file.renameTo(target);
+						Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
 					}
 				folder.delete();
 			}
@@ -784,11 +786,10 @@ public class PrivacyService {
 			// Set application folder permission
 			// Owner: rwx (untouched)
 			// Group: rwx (set to system)
-			// World: ---
-			File dbFile = getDbFile();
+			// World: --x
 			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0771, -1, PrivacyManager.cAndroidUid);
 
-			// Set database file permissions
+			// Set database files permissions
 			// Owner: rwx (untouched)
 			// Group: rwx (set to system)
 			// World: ---

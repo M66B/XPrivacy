@@ -371,6 +371,8 @@ public class Util {
 			Method setPermissions = fileUtils
 					.getMethod("setPermissions", String.class, int.class, int.class, int.class);
 			setPermissions.invoke(null, path, mode, uid, gid);
+			Util.log(null, Log.WARN, "Changed permission path=" + path + " mode=" + Integer.toOctalString(mode)
+					+ " uid=" + uid + " gid=" + gid);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
