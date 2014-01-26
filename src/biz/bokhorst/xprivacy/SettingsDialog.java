@@ -276,7 +276,6 @@ public class SettingsDialog {
 			tvAppName.setText(TextUtils.join(", ", appInfo.getApplicationName()));
 
 		// Get current values
-		boolean notify = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingNotify, true, false);
 		boolean usage = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingUsage, true, false);
 		boolean log = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingLog, false, false);
 		boolean components = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingSystem, false, false);
@@ -286,21 +285,23 @@ public class SettingsDialog {
 		boolean https = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingHttps, true, false);
 		String confidence = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingConfidence, "", false);
 		final boolean expert = (components || dangerous || experimental || !https || !"".equals(confidence));
-		boolean global = (PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSerial, null, false) == null);
-		boolean random = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingRandom, false, false);
 
-		String serial = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingSerial, "", false);
-		String lat = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingLatitude, "", false);
-		String lon = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingLongitude, "", false);
-		String mac = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingMac, "", false);
-		String imei = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingImei, "", false);
-		String phone = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingPhone, "", false);
-		String id = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingId, "", false);
-		String gsfid = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingGsfId, "", false);
-		String adid = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingAdId, "", false);
-		String country = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingCountry, "", false);
-		String subscriber = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingSubscriber, "", false);
-		String ssid = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingSSID, "", false);
+		// Application specific
+		boolean notify = PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingNotify, true, false);
+		boolean global = (PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSerial, null, false) == null);
+		boolean random = PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingRandom, false, false);
+		String serial = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSerial, "", false);
+		String lat = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingLatitude, "", false);
+		String lon = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingLongitude, "", false);
+		String mac = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingMac, "", false);
+		String imei = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingImei, "", false);
+		String phone = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingPhone, "", false);
+		String id = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingId, "", false);
+		String gsfid = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingGsfId, "", false);
+		String adid = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingAdId, "", false);
+		String country = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingCountry, "", false);
+		String subscriber = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSubscriber, "", false);
+		String ssid = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSSID, "", false);
 
 		// Set current values
 		if (uid == 0) {
@@ -384,12 +385,12 @@ public class SettingsDialog {
 		etSubscriber.setEnabled(!cbSubscriber.isChecked());
 		etSSID.setEnabled(!cbSSID.isChecked());
 
-		etIP.setText(PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingIP, "", false));
-		etMcc.setText(PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingMcc, "", false));
-		etMnc.setText(PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingMnc, "", false));
-		etOperator.setText(PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingOperator, "", false));
-		etIccId.setText(PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingIccId, "", false));
-		etUa.setText(PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingUa, "", false));
+		etIP.setText(PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingIP, "", false));
+		etMcc.setText(PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingMcc, "", false));
+		etMnc.setText(PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingMnc, "", false));
+		etOperator.setText(PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingOperator, "", false));
+		etIccId.setText(PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingIccId, "", false));
+		etUa.setText(PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingUa, "", false));
 
 		cbRandom.setChecked(random);
 
