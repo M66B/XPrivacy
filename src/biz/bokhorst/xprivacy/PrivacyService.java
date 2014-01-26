@@ -584,16 +584,17 @@ public class PrivacyService {
 		@Override
 		@SuppressLint("DefaultLocale")
 		public ParcelableSetting getSetting(ParcelableSetting setting) throws RemoteException {
+			ParcelableSetting result = new ParcelableSetting(setting.uid, setting.name, setting.value);
 			try {
 				// No permissions enforced
 
 				// Check cache
-				if (mUseCache) {
+				if (mUseCache && setting.value != null) {
 					CSetting key = new CSetting(setting.uid, setting.name);
 					synchronized (mSettingCache) {
 						if (mSettingCache.containsKey(key)) {
-							setting.value = mSettingCache.get(key).getValue();
-							return setting;
+							result.value = mSettingCache.get(key).getValue();
+							return result;
 						}
 					}
 				}
@@ -604,11 +605,11 @@ public class PrivacyService {
 				// Fallback
 				if (db.getVersion() == 1) {
 					if (setting.uid == 0)
-						setting.value = PrivacyProvider.getSettingFallback(setting.name, null, false);
-					if (setting.value == null) {
-						setting.value = PrivacyProvider.getSettingFallback(
+						result.value = PrivacyProvider.getSettingFallback(setting.name, null, false);
+					if (result.value == null) {
+						result.value = PrivacyProvider.getSettingFallback(
 								String.format("%s.%d", setting.name, setting.uid), setting.value, false);
-						return setting;
+						return result;
 					}
 				}
 
@@ -626,7 +627,9 @@ public class PrivacyService {
 							stmtGetSetting.clearBindings();
 							stmtGetSetting.bindLong(1, setting.uid);
 							stmtGetSetting.bindString(2, setting.name);
-							setting.value = stmtGetSetting.simpleQueryForString();
+							String value = stmtGetSetting.simpleQueryForString();
+							if (value != null)
+								result.value = value;
 						}
 					} catch (SQLiteDoneException ignored) {
 					}
@@ -637,9 +640,9 @@ public class PrivacyService {
 				}
 
 				// Add to cache
-				if (mUseCache) {
+				if (mUseCache && result.value != null) {
 					CSetting key = new CSetting(setting.uid, setting.name);
-					key.setValue(setting.value);
+					key.setValue(result.value);
 					synchronized (mSettingCache) {
 						if (mSettingCache.containsKey(key))
 							mSettingCache.remove(key);
@@ -648,9 +651,9 @@ public class PrivacyService {
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return setting;
+				return result;
 			}
-			return setting;
+			return result;
 		}
 
 		@Override
