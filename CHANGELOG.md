@@ -15,11 +15,13 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.14 TEST**
+
 * Fixed randomize on boot setting being restored ([issue](https://github.com/M66B/XPrivacy/issues/1164))
 * Fixed crash on start in some situations ([issue](https://github.com/M66B/XPrivacy/issues/1168))
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.13 TEST**
 
