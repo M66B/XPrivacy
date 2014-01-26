@@ -44,8 +44,8 @@
     <string name="msg_new">Nové</string>
     <string name="msg_update">Aktualizácia</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
-    <string name="msg_loading">Načítavanie</string>
-    <string name="msg_applying">Aplikovanie</string>
+    <string name="msg_loading">Načítavanie &#8230;</string>
+    <string name="msg_applying">Aplikovanie &#8230;</string>
     <string name="msg_applied">Šablóny bola aplikovaná</string>
     <string name="msg_saved_to" formatted="false">Uložené do %s</string>
     <string name="msg_no_restrictions">Nenájdené žiadne obmedzenia</string>
