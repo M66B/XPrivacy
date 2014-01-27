@@ -16,6 +16,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Fixed empty settings values ([issue](https://github.com/M66B/XPrivacy/issues/1164))
+* Added restriction for *NetworkInfo.getExtraInfo* ([issue](https://github.com/M66B/XPrivacy/issues/1175))
 * Updated German translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

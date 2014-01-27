@@ -64,10 +64,13 @@ public class Meta {
 		listHook.add(new Hook("internet", "getActiveNetworkInfo", true, false, null, 10, null, null));
 		listHook.add(new Hook("internet", "getAllNetworkInfo", false, false, null, 10, null, null));
 		listHook.add(new Hook("internet", "getNetworkInfo", true, false, null, 10, null, null));
-		listHook.add(new Hook("internet", "getDetailedState", false, false, null, 10, null, null));
-		listHook.add(new Hook("internet", "getState", false, false, null, 10, null, null));
-		listHook.add(new Hook("internet", "isConnected", false, false, null, 10, null, null));
-		listHook.add(new Hook("internet", "isConnectedOrConnecting", false, false, null, 10, null, null));
+
+		listHook.add(new Hook("internet", "getDetailedState", false, false, null, 1, null, null));
+		listHook.add(new Hook("internet", "getExtraInfo", false, false, null, 1, null, null));
+		listHook.add(new Hook("internet", "getState", false, false, null, 1, null, null));
+		listHook.add(new Hook("internet", "isConnected", false, false, null, 1, null, null));
+		listHook.add(new Hook("internet", "isConnectedOrConnecting", false, false, null, 1, null, null));
+
 		listHook.add(new Hook("internet", "getConnectionInfo", false, false, null, 10, null, null));
 		listHook.add(new Hook("ipc", "android.accounts.IAccountManager", false, false, "", 1, "1.99.1", null));
 		listHook.add(new Hook("ipc", "android.app.IActivityManager", false, false, "", 1, "1.99.1", null));

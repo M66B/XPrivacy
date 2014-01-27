@@ -164,6 +164,7 @@ For easy usage, data is restricted by category:
 <a name="internet"></a>
 * Internet
 	* revoke access to the internet
+	* return fake extra info
 	* return fake disconnected state
 	* return fake supplicant disconnected state
 <a name="IPC"></a>

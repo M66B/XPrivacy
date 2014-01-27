@@ -706,6 +706,10 @@ public class PrivacyManager {
 		if (name.equals("DeviceDescriptor"))
 			return cDeface;
 
+		// getExtraInfo
+		if (name.equals("ExtraInfo"))
+			return cDeface;
+
 		// Fallback
 		Util.log(null, Log.WARN, "Fallback value name=" + name);
 		return cDeface;
