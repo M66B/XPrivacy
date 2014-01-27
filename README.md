@@ -442,7 +442,7 @@ Note that this will erase your pro license file too.
 **(6) Can I backup XPrivacy restrictions, settings and usage data?**
 
 Yes, you can backup and restore the settings with Titanium backup or similar,
-**on the same device** only.
+but **on the same device** only.
 
 **Be sure** to disable usage data in the main settings and
 reboot before making a backup or your backup might be in an inconsistent state.
@@ -452,7 +452,7 @@ XPrivacy runs within Android itself, which cannot be temporarily frozen by Titan
 
 Also, you **need to** reboot after restoring.
 
-Exporting/importing settings will work across devices/ROMs.
+Exporting/importing settings will work across devices/ROMs.<br>
 To export/import settings you will need the [pro version](http://www.xprivacy.eu/).
 
 See for some more details [here](http://forum.xda-developers.com/showpost.php?p=49799507&postcount=6251).
