@@ -33,9 +33,9 @@
     <string name="menu_app_settings">應用程式資訊</string>
     <string name="menu_app_store">Play 商店</string>
     <string name="menu_app_kill">強制停止</string>
-    <string name="menu_accounts">設定允許之帳戶</string>
-    <string name="menu_applications">設定允許之app</string>
-    <string name="menu_contacts">設定允許之聯絡人</string>
+    <string name="menu_accounts">設定允許存取之帳戶</string>
+    <string name="menu_applications">設定允許存取之app</string>
+    <string name="menu_contacts">設定允許存取之聯絡人</string>
     <string name="menu_tutorial">說明</string>
     <string name="menu_exclude">排除</string>
     <string name="menu_close">關閉</string>
@@ -54,7 +54,7 @@
     <string name="msg_limit">請選擇少於 %d 個應用程式</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">需要重新啟動</string>
-    <string name="msg_random_now">亂數</string>
+    <string name="msg_random_now">執行亂數</string>
     <string name="msg_random_access">存取資訊時進行亂數</string>
     <string name="msg_random_boot">重新啟動後進行亂數</string>
     <string name="msg_restart">需要重新啓動程式</string>
@@ -62,7 +62,7 @@
     <string name="msg_registered">請到信箱驗證啟用您的 Android 裝置</string>
     <string name="msg_service">更新服務執行中</string>
     <string name="msg_migrating" formatted="false">正在移植 %s</string>
-    <string name="msg_randomizing" formatted="false">產生亂數 %s</string>
+    <string name="msg_randomizing" formatted="false">正在產生亂數 %s</string>
     <string name="msg_upgrading" formatted="false">正在更新 %s</string>
     <string name="msg_support_info">發生程式內部錯誤，請問是否傳送錯誤報告?</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用
@@ -128,8 +128,8 @@
     <string name="settings_confidence">最大擷取信賴區間</string>
     <string name="settings_experimental">實驗性功能 (需重新啟動)</string>
     <string name="settings_https">使用加密連線 (HTTPS)</string>
-    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
-    <string name="settings_usagedata">Show application usage data (requires restart)</string>
+    <string name="settings_syscomponents">允許限制系統元件(Android)(需重新啟動)</string>
+    <string name="settings_usagedata">開啟操作記錄(需重新啟動)</string>
     <string name="help_application">程式</string>
     <string name="help_internet">表示有網際網路權限</string>
     <string name="help_granted">表示有手機權限</string>
