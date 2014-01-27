@@ -15,7 +15,7 @@
     <string name="menu_export">Einstellungen exportieren</string>
     <string name="menu_import">Einstellungen importieren</string>
     <string name="menu_submit">Beschränkungen hochladen (Crowd)</string>
-    <string name="menu_fetch">Beschränkungen runterladen (Crowd)</string>
+    <string name="menu_fetch">Beschränkungen herunterladen (Crowd)</string>
     <string name="menu_theme">Theme wechseln</string>
     <string name="menu_pro">Pro-Version</string>
     <string name="menu_about">Über XPrivacy</string>
@@ -51,20 +51,20 @@
     <string name="msg_no_restrictions">Keine Beschränkung gefunden</string>
     <string name="msg_sure">Sind Sie sicher?</string>
     <string name="msg_select">Bitte wählen Sie einige Apps aus</string>
-    <string name="msg_limit">Bitte wählen Sie weniger als %d App(s) aus</string>
+    <string name="msg_limit">Bitte wählen Sie weniger als %d Apps aus</string>
     <string name="msg_done">Fertig</string>
     <string name="msg_reboot">Geräteneustart erforderlich</string>
     <string name="msg_random_now">Zufallswerte erzeugen</string>
-    <string name="msg_random_access">Zufallswerte bei Neustart</string>
+    <string name="msg_random_access">Zufallswerte bei Zugriff</string>
     <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
     <string name="msg_restart">App-Neustart erforderlich</string>
     <string name="msg_register">Bitte registrieren Sie ihr Gerät</string>
-    <string name="msg_registered">Überprüfen Sie ihre E-Mails zum aktivieren Ihres Geräts</string>
-    <string name="msg_service">Update service running</string>
+    <string name="msg_registered">Überprüfen Sie ihre E-Mails um Ihr Gerät zu aktivieren</string>
+    <string name="msg_service">Update Dienst läuft</string>
     <string name="msg_migrating" formatted="false">Migriere %s</string>
     <string name="msg_randomizing" formatted="false">Zufall-Erzeugung %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
+    <string name="msg_support_info">Eine interen Überprüfung ist fehlgeschlagen, möchten Sie die Supportinformationen senden?</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
 \ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
 \n\nVerwenden Sie XPrivacy ausschließlich auf Ihr eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>
@@ -129,18 +129,18 @@
     <string name="settings_experimental">Experimentelle Funktionen (Neustart erforderlich)</string>
     <string name="settings_https">Benutze sichere Verbindung</string>
     <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
-    <string name="settings_usagedata">Show application usage data (requires restart)</string>
+    <string name="settings_usagedata">Zeige App Nutzungsdaten (Neustart erforderlich)</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>
     <string name="help_used">hat diese Daten benutzt</string>
-    <string name="help_used_grayed">keine Usage-Data verfügbar</string>
+    <string name="help_used_grayed">keine Nutzungsdaten verfügbar</string>
     <string name="help_frozen">ist deaktiviert</string>
     <string name="help_dangerous">Beschränkung bedenklich (eventueller App-Absturz)</string>
     <string name="help_half">teilweise beschränkt</string>
-    <string name="help_attention">Beschränkungen bedarfen Beachtung</string>
-    <string name="help_restricted">Beschränkungen werden geändert</string>
-    <string name="help_shared">Beschränkungen werden eingereicht</string>
+    <string name="help_attention">Beschränkungen benötigen Aufmerksamkeit</string>
+    <string name="help_restricted">Beschränkungen wurden geändert</string>
+    <string name="help_shared">Beschränkungen sind eingereicht</string>
     <string name="tutorial_mainheader">Wählen Sie die zu beschränkende Kategorie; wählen Sie anzuzeigende Apps durch die Filter</string>
     <string name="tutorial_mainlist">Tippen Sie auf ein Kontrollkästchen, um die ausgewählte Kategorie für eine App zu beschränken\n
 \nApps werden mit leeren oder gefälschten Daten für die beschränkten Kategorien "gefüttert" \n
