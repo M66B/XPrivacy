@@ -17,9 +17,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
@@ -86,6 +88,15 @@ public class ActivityApp extends Activity {
 			return t;
 		}
 	}
+
+	private BroadcastReceiver mPackageChangeReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
+			if (mAppInfo.getUid() == uid)
+				finish();
+		}
+	};
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -204,6 +215,12 @@ public class ActivityApp extends Activity {
 					lvRestriction.setSelectedChild(groupPosition, childPosition, true);
 				}
 			}
+
+			// Listen for package add/remove
+			IntentFilter iff = new IntentFilter();
+			iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
+			iff.addDataScheme("package");
+			registerReceiver(mPackageChangeReceiver, iff);
 
 			// Up navigation
 			getActionBar().setDisplayHomeAsUpEnabled(true);
