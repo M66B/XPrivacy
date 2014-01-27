@@ -439,7 +439,7 @@ Reboot.
 Note that this will erase your pro license file too.
 
 <a name="FAQ6"></a>
-**(6) Can I backup XPrivacy and settings?**
+**(6) Can I backup XPrivacy restrictions, settings and usage data?**
 
 Yes, you can backup and restore the settings with Titanium backup or similar,
 **on the same device** only.
