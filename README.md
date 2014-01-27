@@ -304,6 +304,8 @@ and is reported to work with most Android variants, including stock ROMs.
 **Do not use permission "fixing" scripts or applications,
 like [Android Tuner](https://play.google.com/store/apps/details?id=ccc71.at.free)**.
 
+XPrivacy from version 1.11.13 is not compatible with LBE Security Master, see [this issue](https://github.com/M66B/XPrivacy/issues/1167).
+
 Installation
 ------------
 
