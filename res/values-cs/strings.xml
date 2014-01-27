@@ -4,9 +4,9 @@
     <string name="app_notenabled">Není povolen modul XPrivacy v Xposed installeru</string>
     <string name="app_wrongandroid">Pouze pro Android verze 4.0+</string>
     <string name="app_version" formatted="false">Verze XPrivacy: %s (%d)</string>
-    <string name="app_description">The ultimate privacy manager</string>
+    <string name="app_description">Ultimátní správce soukromí</string>
     <string name="app_xversion" formatted="false">Verze Xposed frameworku: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2014: M. Bokhorst (M66B)</string>
     <string name="menu_usage">Využití</string>
     <string name="menu_refresh">Obnovit</string>
     <string name="menu_settings">Nastavení</string>
@@ -20,51 +20,51 @@
     <string name="menu_pro">Pro verze</string>
     <string name="menu_about">O aplikaci</string>
     <string name="menu_help">Nápověda</string>
-    <string name="menu_select_all">Select all</string>
+    <string name="menu_select_all">Vybrat vše</string>
     <string name="menu_all">Vše</string>
-    <string name="menu_restriction_all">Toggle restrictions</string>
-    <string name="menu_clear_all">Clear all</string>
-    <string name="menu_restrict_all">Restrict all</string>
-    <string name="menu_clear_usage">Clear</string>
-    <string name="menu_usage_all">Toggle filter</string>
-    <string name="menu_apply">Apply template</string>
-    <string name="menu_clear">Vyčistit</string>
+    <string name="menu_restriction_all">Přepnout omezení</string>
+    <string name="menu_clear_all">Vymazat vše</string>
+    <string name="menu_restrict_all">Omezit vše</string>
+    <string name="menu_clear_usage">Vymazat</string>
+    <string name="menu_usage_all">Přepnout filtr</string>
+    <string name="menu_apply">Použít šablonu</string>
+    <string name="menu_clear">Vymazat</string>
     <string name="menu_app_launch">Spustit</string>
     <string name="menu_app_settings">Informace o aplikaci</string>
     <string name="menu_app_store">Obchod Play</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">Ukončit</string>
     <string name="menu_accounts">Povolené účty aplikace</string>
-    <string name="menu_applications">Select applications to allow</string>
+    <string name="menu_applications">Povolený přístup k aplikacím</string>
     <string name="menu_contacts">Povolené kontakty aplikace</string>
-    <string name="menu_tutorial">Tutorial</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
-    <string name="msg_abort">Aborting</string>
-    <string name="msg_aborted">Aborted</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="menu_tutorial">Příručka</string>
+    <string name="menu_exclude">Vyloučit</string>
+    <string name="menu_close">Zavřít</string>
+    <string name="msg_abort">Probíha přerušení</string>
+    <string name="msg_aborted">Přerušeno</string>
+    <string name="msg_new">Nové</string>
+    <string name="msg_update">Aktualizované</string>
     <string name="msg_licensed" formatted="false">Licencováno na: %s</string>
     <string name="msg_loading">Probíhá načítání</string>
-    <string name="msg_applying">Applying</string>
-    <string name="msg_applied">Template applied</string>
-    <string name="msg_saved_to" formatted="false">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_applying">Probíhá aplikování</string>
+    <string name="msg_applied">Šablona aplikována</string>
+    <string name="msg_saved_to" formatted="false">Uloženo do %s</string>
+    <string name="msg_no_restrictions">Nebyla nalezena žádná omezení</string>
     <string name="msg_sure">Jste si jistý?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Vyberte prosím některé aplikace</string>
+    <string name="msg_limit">Vyberte prosím méně než %d aplikací</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadován restart zařízení</string>
     <string name="msg_random_now">Náhodné hodnoty</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">Generovat náhodné hodnoty při přístupu</string>
     <string name="msg_random_boot">Generovat náhodné hodnoty při spuštění zařízení</string>
-    <string name="msg_restart">Application restart required</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_service">Update service running</string>
-    <string name="msg_migrating" formatted="false">Migrating %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
-    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
+    <string name="msg_restart">Vyžadován restart aplikace</string>
+    <string name="msg_register">Zaregistrujte prosím vaše zařízení</string>
+    <string name="msg_registered">Zkontrolujte váš e-mail pro aktivaci vašeho zařízení</string>
+    <string name="msg_service">Aktualizační služba je spuštěna</string>
+    <string name="msg_migrating" formatted="false">Probíhá migrace %s</string>
+    <string name="msg_randomizing" formatted="false">Probíhá generování náhodných hodnot %s</string>
+    <string name="msg_upgrading" formatted="false">Probíhá upgrade %s</string>
+    <string name="msg_support_info">Vnitřní kontrola selhala, přejete si odeslat informace na podporu?</string>
     <string name="msg_first"><b>Vývoj a testování aplikace XPrivacy probíhaly s maximální možnou péčí,
 nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a se všemi aplikacemi.
 \n\nPoužívejte pouze na vlastní riziko.</b>\n\nLicence aplikace:</string>
@@ -83,16 +83,16 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="restrict_messages">Zprávy (SMS, MMS)</string>
     <string name="restrict_network">Síť (adresace)</string>
     <string name="restrict_notifications">Upozornění</string>
-    <string name="restrict_overlay">Overlay</string>
+    <string name="restrict_overlay">Překrytí</string>
     <string name="restrict_phone">Telefon (ID, čísla, hovory)</string>
-    <string name="restrict_sensors">Sensors</string>
+    <string name="restrict_sensors">Senzory</string>
     <string name="restrict_storage">Úložiště (média, SD karta)</string>
     <string name="restrict_shell">Konzole (příkazy, superuser)</string>
     <string name="restrict_system">Systém (nainstalované aplikace)</string>
     <string name="restrict_view">Zobrazení (v prohlížeči)</string>
-    <string name="title_categories">Categories</string>
+    <string name="title_categories">Kategorie</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
-    <string name="title_filters">Filters</string>
+    <string name="title_filters">Filtry</string>
 
     <plurals name="title_active_filters">
         <item quantity="one">1 aktivní filtr</item>
@@ -100,13 +100,13 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
         <item quantity="other">%d aktivních filtrů</item>
     </plurals>
 
-    <string name="title_fused">Filter on data usage</string>
-    <string name="title_finternet">Filter on internet access</string>
-    <string name="title_fpermission">Filter on permission</string>
-    <string name="title_frestricted">Filter on restricted</string>
-    <string name="title_fsystem">Filter on system applications</string>
-    <string name="title_fuser">Filter on user applications</string>
-    <string name="title_fnot">Negate</string>
+    <string name="title_fused">Filtrovat přístup k datům</string>
+    <string name="title_finternet">Filtrovat přístup k internetu</string>
+    <string name="title_fpermission">Filtrovat oprávnění</string>
+    <string name="title_frestricted">Filtrovat omezení</string>
+    <string name="title_fsystem">Filtrovat systémové aplikace</string>
+    <string name="title_fuser">Filtrovat uživatelské aplikace</string>
+    <string name="title_fnot">Opačně</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zeměpisná šířka</string>
     <string name="settings_lon">Zeměpisná délka</string>
@@ -119,35 +119,35 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
     <string name="settings_ua">Agent prohlížeče</string>
-    <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
-    <string name="settings_notify">Update notifications</string>
+    <string name="settings_general">Všeobecné</string>
+    <string name="settings_fake_data">Falešné údaje</string>
+    <string name="settings_global">Použít globální falešné údaje</string>
+    <string name="settings_notify">Upozorňovat při aktualizacích aplikací</string>
     <string name="settings_log">Ukládat ladící záznam (vyžaduje restart)</string>
-    <string name="settings_expert">Expert mode</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions (requires restart)</string>
-    <string name="settings_https">Use secure connections</string>
-    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
-    <string name="settings_usagedata">Show application usage data (requires restart)</string>
+    <string name="settings_expert">Režim experta</string>
+    <string name="settings_dangerous">Omezovat nebezpečné funkce</string>
+    <string name="settings_confidence">Maximální rozsah spolehlivosti stahování</string>
+    <string name="settings_experimental">Experimentální funkce (vyžaduje restart)</string>
+    <string name="settings_https">Použít zabezpečené připojení</string>
+    <string name="settings_syscomponents">Omezit systémové komponenty (Android) (vyžaduje restart)</string>
+    <string name="settings_usagedata">Zobrazit využítí dat aplikace (vyžaduje restart)</string>
     <string name="help_application">Aplikace</string>
     <string name="help_internet">má oprávnění k Internetu</string>
     <string name="help_granted">má Android oprávnění</string>
     <string name="help_used">přistupovala k těmto datům</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_used_grayed">nemá žádná data využití</string>
     <string name="help_frozen">je zakázaná</string>
     <string name="help_dangerous">je nebezpečná</string>
-    <string name="help_half">partly restricted</string>
-    <string name="help_attention">restrictions need attention</string>
-    <string name="help_restricted">restrictions are changed</string>
-    <string name="help_shared">restrictions are submitted</string>
-    <string name="tutorial_mainheader">Select the category to restrict; choose visible apps with the filters</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="help_half">je částečně omezená</string>
+    <string name="help_attention">má omezení vyžadující pozornost</string>
+    <string name="help_restricted">má změněné omezení</string>
+    <string name="help_shared">má odeslané omezení</string>
+    <string name="tutorial_mainheader">Zvolte kategorii kterou chcete omezit; Pomocí filtrů vyberte zobrazované aplikace</string>
+    <string name="tutorial_mainlist">Pro omezení zvolené kategorie aplikace stiskněte zaškrtávací pole\n
+\nV rámci omezených kategorií aplikace obdrží prázdné nebo falešné údaje\n
+\nPro rozšířené možnosti omezení stiskněte ikonu aplikace</string>
+    <string name="tutorial_detailsheader">Stiskněte ikonu aplikace pro zobrazení dalších akcí</string>
+    <string name="tutorial_detailslist">Stiskněte šipku dolu pro zobrazení vyjímek funkce omezené kategorie</string>
+    <string name="permission_manage">Správa aplikací, včetně možnosti ukončení</string>
 
 </resources>
