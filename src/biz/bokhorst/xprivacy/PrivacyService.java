@@ -56,6 +56,7 @@ public class PrivacyService {
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 	// TODO: define column names
+	// sqlite3 /data/data/biz.bokhorst.xprivacy/xprivacy.db
 
 	public static void register(List<String> listError, String secret) {
 		try {
@@ -544,14 +545,19 @@ public class PrivacyService {
 
 				db.beginTransaction();
 				try {
-					// Create record
-					ContentValues values = new ContentValues();
-					values.put("uid", setting.uid);
-					values.put("name", setting.name);
-					values.put("value", setting.value);
+					if (setting.value == null)
+						db.delete(cTableSetting, "uid=? AND name=?", new String[] { Integer.toString(setting.uid),
+								setting.name });
+					else {
+						// Create record
+						ContentValues values = new ContentValues();
+						values.put("uid", setting.uid);
+						values.put("name", setting.name);
+						values.put("value", setting.value);
 
-					// Insert/update record
-					db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+						// Insert/update record
+						db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+					}
 
 					db.setTransactionSuccessful();
 				} finally {
@@ -837,6 +843,18 @@ public class PrivacyService {
 				try {
 					db.execSQL("DELETE FROM usage WHERE method=''");
 					db.setVersion(3);
+					db.setTransactionSuccessful();
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				} finally {
+					db.endTransaction();
+				}
+
+			} else if (db.needUpgrade(4)) {
+				db.beginTransaction();
+				try {
+					db.execSQL("DELETE FROM setting WHERE value IS NULL");
+					db.setVersion(4);
 					db.setTransactionSuccessful();
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
