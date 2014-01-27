@@ -26,6 +26,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed randomize on boot setting being restored ([issue](https://github.com/M66B/XPrivacy/issues/1164))
 * Fixed crash on start in some situations ([issue](https://github.com/M66B/XPrivacy/issues/1168))
 * Fixed usage data vertical alignment
+* Display application switch state as enabled/disabled in main list
 * Updated Slovak translation
 
 **Version 1.99.13 TEST**

@@ -1178,7 +1178,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			private ApplicationInfoEx xAppInfo = null;
 			private int state;
 			private boolean used;
-			private boolean granted = true;
+			private boolean enabled;
+			private boolean granted;
 			private List<String> listRestriction;
 			private boolean crestricted;
 			private boolean allRestricted;
@@ -1200,7 +1201,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Get if used
 					used = (PrivacyManager.getUsed(xAppInfo.getUid(), mRestrictionName, null) != 0);
 
+					// Get if enabled
+					enabled = PrivacyManager.getSettingBool(null, xAppInfo.getUid(), PrivacyManager.cSettingRestricted,
+							true, false);
+
 					// Get if granted
+					granted = true;
 					if (mRestrictionName != null)
 						if (!PrivacyManager.hasPermission(ActivityMain.this, xAppInfo, mRestrictionName))
 							granted = false;
@@ -1281,6 +1287,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					else
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 					holder.imgCBName.setVisibility(View.VISIBLE);
+
+					// Display enabled state
+					holder.tvName.setEnabled(enabled);
+					holder.imgCBName.setEnabled(enabled);
+					holder.rlName.setEnabled(enabled);
 
 					// Display selection
 					if (mListAppSelected.contains(xAppInfo))
@@ -1442,6 +1453,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
 			holder.imgCBName.setVisibility(View.INVISIBLE);
+			holder.tvName.setEnabled(false);
+			holder.imgCBName.setEnabled(false);
+			holder.rlName.setEnabled(false);
 
 			// Async update
 			new HolderTask(position, holder, xAppInfo).executeOnExecutor(mExecutor, (Object) null);
