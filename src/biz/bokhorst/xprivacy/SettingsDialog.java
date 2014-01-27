@@ -116,9 +116,7 @@ public class SettingsDialog {
 		cbGlobal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				cbRandom.setEnabled(!isChecked);
 				btnClear.setEnabled(!isChecked);
-				btnRandom.setEnabled(!isChecked);
 
 				etSerial.setEnabled(!isChecked);
 				etLat.setEnabled(!isChecked);
@@ -159,34 +157,6 @@ public class SettingsDialog {
 		cbRandom.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				cbSerial.setEnabled(!isChecked);
-				cbLat.setEnabled(!isChecked);
-				cbLon.setEnabled(!isChecked);
-				cbMac.setEnabled(!isChecked);
-				cbImei.setEnabled(!isChecked);
-				cbPhone.setEnabled(!isChecked);
-				cbId.setEnabled(!isChecked);
-				cbGsfId.setEnabled(!isChecked);
-				cbAdId.setEnabled(!isChecked);
-				cbCountry.setEnabled(!isChecked);
-				cbSubscriber.setEnabled(!isChecked);
-				cbSSID.setEnabled(!isChecked);
-
-				etSearch.setEnabled(!isChecked && Geocoder.isPresent());
-				btnSearch.setEnabled(!isChecked && Geocoder.isPresent());
-
-				etSerial.setEnabled(!isChecked);
-				etLat.setEnabled(!isChecked);
-				etLon.setEnabled(!isChecked);
-				etMac.setEnabled(!isChecked);
-				etImei.setEnabled(!isChecked);
-				etPhone.setEnabled(!isChecked);
-				etId.setEnabled(!isChecked);
-				etGsfId.setEnabled(!isChecked);
-				etAdId.setEnabled(!isChecked);
-				etCountry.setEnabled(!isChecked);
-				etSubscriber.setEnabled(!isChecked);
-				etSSID.setEnabled(!isChecked);
 			}
 		});
 
@@ -295,6 +265,8 @@ public class SettingsDialog {
 		// Application specific
 		boolean notify = PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingNotify, true, false);
 		boolean random = PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingRandom, false, false);
+		boolean global = (PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSerial, null, false) == null);
+
 		String serial = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSerial, "", false);
 		String lat = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingLatitude, "", false);
 		String lon = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingLongitude, "", false);
@@ -307,8 +279,6 @@ public class SettingsDialog {
 		String country = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingCountry, "", false);
 		String subscriber = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSubscriber, "", false);
 		String ssid = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSSID, "", false);
-
-		boolean global = (PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSerial, null, false) == null);
 
 		// Set current values
 		if (uid == 0) {
@@ -379,8 +349,8 @@ public class SettingsDialog {
 		etLat.setEnabled(!cbLat.isChecked());
 		etLon.setEnabled(!cbLon.isChecked());
 
-		etSearch.setEnabled(!random && Geocoder.isPresent());
-		btnSearch.setEnabled(!random && Geocoder.isPresent());
+		etSearch.setEnabled(Geocoder.isPresent());
+		btnSearch.setEnabled(Geocoder.isPresent());
 
 		etMac.setEnabled(!cbMac.isChecked());
 		etImei.setEnabled(!cbImei.isChecked());
@@ -441,8 +411,6 @@ public class SettingsDialog {
 		btnClear.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				cbRandom.setChecked(false);
-
 				for (EditText edit : edits)
 					edit.setText("");
 				etSearch.setText("");
@@ -466,6 +434,7 @@ public class SettingsDialog {
 		btnRandom.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				cbGlobal.setChecked(false);
 				etSerial.setText(PrivacyManager.getRandomProp("SERIAL"));
 				etLat.setText(PrivacyManager.getRandomProp("LAT"));
 				etLon.setText(PrivacyManager.getRandomProp("LON"));
@@ -507,7 +476,11 @@ public class SettingsDialog {
 							Boolean.toString(cbNotify.isChecked()));
 				}
 
-				boolean clean = !cbRandom.isChecked();
+				// Random at boot
+				PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingRandom,
+						Boolean.toString(cbRandom.isChecked()));
+
+				boolean clean = true;
 				for (EditText edit : edits)
 					clean = (clean && "".equals(edit.getText().toString()));
 				for (CheckBox box : boxes)
@@ -515,7 +488,6 @@ public class SettingsDialog {
 
 				if (cbGlobal.isChecked() || clean) {
 					// Clear all settings
-					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingRandom, null);
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingSerial, null);
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLatitude, null);
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLongitude, null);
@@ -536,9 +508,6 @@ public class SettingsDialog {
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingUa, null);
 					Util.log(null, Log.WARN, "Cleared all settings uid=" + uid);
 				} else {
-					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingRandom,
-							Boolean.toString(cbRandom.isChecked()));
-
 					// Serial#
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingSerial,
 							cbSerial.isChecked() ? PrivacyManager.cValueRandom : etSerial.getText().toString());
