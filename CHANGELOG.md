@@ -15,7 +15,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Fixed randomize on boot setting being restored (again) ([issue](https://github.com/M66B/XPrivacy/issues/1164))
+* Fixed global application setting not sticking ([issue](https://github.com/M66B/XPrivacy/issues/1164))
 * Updated Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

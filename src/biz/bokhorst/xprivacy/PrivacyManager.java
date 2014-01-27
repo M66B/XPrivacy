@@ -476,7 +476,7 @@ public class PrivacyManager {
 						if (uid > 0)
 							value = client.getSetting(new ParcelableSetting(0, name, defaultValue)).value;
 						else
-							return defaultValue;
+							value = defaultValue;
 				}
 
 				// Add to cache
@@ -493,17 +493,18 @@ public class PrivacyManager {
 		long ms = System.currentTimeMillis() - start;
 		if (!willExpire && !PrivacyManager.cSettingLog.equals(name))
 			if (ms > 1)
-				Util.log(hook, Log.INFO,
-						String.format("get setting %s=%s%s %d ms", name, value, (cached ? " (cached)" : ""), ms));
+				Util.log(hook, Log.INFO, String.format("get setting uid=%d %s=%s%s %d ms", uid, name, value,
+						(cached ? " (cached)" : ""), ms));
 			else
-				Util.log(hook, Log.INFO, String.format("get setting %s=%s%s", name, value, (cached ? " (cached)" : "")));
+				Util.log(hook, Log.INFO,
+						String.format("get setting uid=%d %s=%s%s", uid, name, value, (cached ? " (cached)" : "")));
 
 		return value;
 	}
 
-	public static void setSetting(XHook hook, int uid, String settingName, String value) {
+	public static void setSetting(XHook hook, int uid, String name, String value) {
 		try {
-			PrivacyService.getClient().setSetting(new ParcelableSetting(uid, settingName, value));
+			PrivacyService.getClient().setSetting(new ParcelableSetting(uid, name, value));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
