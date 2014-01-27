@@ -15,11 +15,13 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.15 BETA**
+
 * Fixed global application setting not sticking ([issue](https://github.com/M66B/XPrivacy/issues/1164))
 * Always allow randomization ([issue](https://github.com/M66B/XPrivacy/issues/1159))
 * Updated Chinese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.14 TEST**
 
