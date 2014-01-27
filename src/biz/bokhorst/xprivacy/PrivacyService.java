@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
+import android.os.Process;
 import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
@@ -796,17 +797,17 @@ public class PrivacyService {
 			// Owner: rwx (untouched)
 			// Group: rwx (set to system)
 			// World: --x
-			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0771, -1, PrivacyManager.cAndroidUid);
+			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0771, -1, Process.SYSTEM_UID);
 
 			// Set database files permissions
 			// Owner: rwx (untouched)
 			// Group: rwx (set to system)
 			// World: ---
 			if (dbFile.exists())
-				Util.setPermission(dbFile.getAbsolutePath(), 0770, -1, PrivacyManager.cAndroidUid);
+				Util.setPermission(dbFile.getAbsolutePath(), 0770, -1, Process.SYSTEM_UID);
 			File journal = new File(dbFile + "-journal");
 			if (journal.exists())
-				Util.setPermission(journal.getAbsolutePath(), 0770, -1, PrivacyManager.cAndroidUid);
+				Util.setPermission(journal.getAbsolutePath(), 0770, -1, Process.SYSTEM_UID);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
