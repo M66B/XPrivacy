@@ -51,7 +51,7 @@
     <string name="msg_no_restrictions">Keine Beschränkung gefunden</string>
     <string name="msg_sure">Sind Sie sicher?</string>
     <string name="msg_select">Bitte wählen Sie einige Apps aus</string>
-    <string name="msg_limit">Bitte wählen Sie weniger als %d Apps aus</string>
+    <string name="msg_limit">Bitte wählen Sie weniger als %d App(s) aus</string>
     <string name="msg_done">Fertig</string>
     <string name="msg_reboot">Geräteneustart erforderlich</string>
     <string name="msg_random_now">Zufallswerte erzeugen</string>
