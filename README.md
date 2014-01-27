@@ -157,7 +157,7 @@ For easy usage, data is restricted by category:
 	* return a fake Google services framework ID
 	* return file not found for folder /proc
 	* return a fake Google advertising ID
-	* return a fake system property cid (Card Identification Register)
+	* return a fake system property CID (Card Identification Register)
 	* return file not found for /sys/block/.../cid
 	* return file not found for /sys/class/.../cid
 	* return fake input device descriptor
@@ -279,7 +279,7 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
-* /proc and system properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because it will result in bootloops
+* /proc, CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because it will result in bootloops
 * /proc/self/cmdline will not be restricted by /proc, because it will result in instability
 * Phone number cannot be restricted for the standard phone application
 * Internet and storage can only be restricted for applications/providers/services started by the Android package manager
