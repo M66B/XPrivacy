@@ -278,7 +278,7 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
-* /proc and system properties cannot be restricted for Android (serial number, IMEI, MAC address, etc)
+* /proc and system properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because it will result in bootloops
 * Phone number cannot be restricted for the standard phone application
 * Internet and storage can only be restricted for applications/providers/services started by the Android package manager
 * Due to its static nature [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized on application start and there is no usage data
