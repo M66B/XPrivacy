@@ -3,6 +3,7 @@
     <string name="app_notxposed" formatted="false">Xposed framework versie %d+ is niet geïnstalleerd</string>
     <string name="app_notenabled">XPrivacy is niet ingeschakeld in de Xposed installer</string>
     <string name="app_wrongandroid">Alleen voor Android versie 4.0.3+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is niet verenigbaar met %s</string>
     <string name="app_version" formatted="false">XPrivacy versie: %s (%d)</string>
     <string name="app_description">De ultieme privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed framework versie: %d</string>

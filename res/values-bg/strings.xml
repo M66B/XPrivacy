@@ -3,6 +3,7 @@
     <string name="app_notxposed" formatted="false">Xposed framework версия %d+ не е инсталирана</string>
     <string name="app_notenabled">XPrivacy не е включено в инсталатора на Xposed</string>
     <string name="app_wrongandroid">Приложението е само за Android 4.0+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy версия: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed framework версия: %d</string>

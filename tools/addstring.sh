@@ -1,6 +1,6 @@
 #!/bin/bash
-grep -RIl "\<string name=\"settings_https" res | xargs sed -i -e '/string name="settings_https/a \
-\ \ \ \ <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>'
+grep -RIl "\<string name=\"app_wrongandroid" res | xargs sed -i -e '/string name="app_wrongandroid/a \
+\ \ \ \ <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>'
 
 #grep -RIl "\<string name=\"settings_global" res | xargs sed -i -e '/settings_global/d'
 #grep -RIl "\<string name=\"settings_experimental" res | xargs sed -i -e 's/Experimental features/Experimental functions/g'

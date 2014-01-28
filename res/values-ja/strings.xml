@@ -3,6 +3,7 @@
     <string name="app_notxposed" formatted="false">Xposedフレームワークバージョン %d+ がインストールされていません</string>
     <string name="app_notenabled">XPrivacyがXposedインストーラで有効になっていません</string>
     <string name="app_wrongandroid">Androidバージョン 4.0以降でのみを動作します</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy バージョン: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposedフレームワークバージョン: %d</string>

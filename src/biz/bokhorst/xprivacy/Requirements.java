@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
@@ -23,6 +24,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 public class Requirements {
+	private static String[] cIncompatible = new String[] { "com.lbe.security" };
 
 	@SuppressWarnings("unchecked")
 	public static void check(final Context context) {
@@ -121,6 +123,29 @@ public class Requirements {
 			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
 		}
+
+		// Check incompatible apps
+		for (String packageName : cIncompatible)
+			try {
+				ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
+				String name = context.getPackageManager().getApplicationLabel(appInfo).toString();
+
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+				alertDialogBuilder.setTitle(R.string.app_name);
+				alertDialogBuilder.setMessage(String.format(context.getString(R.string.app_incompatible), name));
+				alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 
 		// Check activity thread
 		try {

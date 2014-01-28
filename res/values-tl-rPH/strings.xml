@@ -3,6 +3,7 @@
     <string name="app_notxposed" formatted="false">Ang Xposed framework na salin %d+ ay hindi nakalagay sa iyong kagamitan</string>
     <string name="app_notenabled">Ang XPrivacy ay hindi gumagana sa Xposed na installer</string>
     <string name="app_wrongandroid">Para lang sa Android na salin 4.0.3+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy na salin: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed framework na salin: %d</string>

@@ -3,6 +3,7 @@
     <string name="app_notxposed" formatted="false">لم يتم تثبيت إطار xposed نسخة %d+</string>
     <string name="app_notenabled">لم يتم تفعيل XPrivacy</string>
     <string name="app_wrongandroid">فقط لأندرويد نسخة 4.0+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">نسخة XPrivacy : %s (%d)</string>
     <string name="app_description">مدير الخصوصية الرئيسي</string>
     <string name="app_xversion" formatted="false">إطار  Xposed نسخة : %d</string>

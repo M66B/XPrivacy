@@ -3,6 +3,7 @@
     <string name="app_notxposed" formatted="false">Xposed framework različice %d+ ni nameščen</string>
     <string name="app_notenabled">XPrivacy ni omogočen v Xposed installer</string>
     <string name="app_wrongandroid">Samo za Android različice 4.0+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy različica: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed framework različica: %d</string>
