@@ -23,16 +23,17 @@ import java.util.regex.Pattern;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
@@ -48,12 +49,22 @@ public class Util {
 	private static Version MIN_PRO_VERSION = new Version("1.12");
 	private static String LICENSE_FILE_NAME = "XPrivacy_license.txt";
 
+	public static int NOTIFY_RESTART = 0;
+	public static int NOTIFY_NOTXPOSED = 1;
+	public static int NOTIFY_SERVICE = 2;
+	public static int NOTIFY_MIGRATE = 3;
+	public static int NOTIFY_RANDOMIZE = 4;
+	public static int NOTIFY_UPGRADE = 5;
+
 	public static void log(XHook hook, int priority, String msg) {
 		// Check if logging enabled
-		if (Process.myUid() != 0 && !mLogDetermined) {
-			mLog = false;
+		if (Process.myUid() > 0 && !mLogDetermined) {
 			mLogDetermined = true;
-			mLog = PrivacyManager.getSettingBool(null, null, 0, PrivacyManager.cSettingLog, false, false);
+			try {
+				mLog = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingLog, false, true);
+			} catch (Throwable ignored) {
+				mLog = false;
+			}
 		}
 
 		// Log if enabled
@@ -65,12 +76,11 @@ public class Util {
 	}
 
 	public static void bug(XHook hook, Throwable ex) {
-		log(hook, Log.ERROR, ex.toString() + " uid=" + Process.myUid());
-		ex.printStackTrace();
+		log(hook, Log.ERROR, ex.toString() + " uid=" + Process.myUid() + "\n" + Log.getStackTraceString(ex));
 	}
 
 	public static void logStack(XHook hook) {
-		log(hook, Log.INFO, Log.getStackTraceString(new Exception("StackTrace")));
+		log(hook, Log.WARN, Log.getStackTraceString(new Exception("StackTrace")));
 	}
 
 	public static int getXposedAppProcessVersion() {
@@ -106,17 +116,14 @@ public class Util {
 		mPro = enabled;
 	}
 
+	public static boolean isProEnabled() {
+		return mPro;
+	}
+
 	public static String hasProLicense(Context context) {
 		try {
-			// Pro enabled
-			if (mPro)
-				return "";
-
-			// Disable storage restriction
-			PrivacyManager.setRestricted(null, context, Process.myUid(), PrivacyManager.cStorage, null, false);
-
 			// Get license
-			String[] license = getProLicense();
+			String[] license = getProLicenseUnchecked();
 			if (license == null)
 				return null;
 			String name = license[0];
@@ -133,7 +140,7 @@ public class Util {
 
 			// Verify license
 			boolean licensed = verifyData(bEmail, bSignature, getPublicKey(context));
-			if (licensed && (isDebuggable(context) || hasValidFingerPrint(context)))
+			if (licensed)
 				Util.log(null, Log.INFO, "Licensing: ok for " + name);
 			else
 				Util.log(null, Log.ERROR, "Licensing: invalid for " + name);
@@ -186,7 +193,7 @@ public class Util {
 		return dataDir;
 	}
 
-	public static String[] getProLicense() {
+	public static String[] getProLicenseUnchecked() {
 		// Get license file name
 		String storageDir = Environment.getExternalStorageDirectory().getAbsolutePath();
 		File licenseFile = new File(storageDir + File.separator + LICENSE_FILE_NAME);
@@ -261,8 +268,7 @@ public class Util {
 
 	public static boolean isProEnablerInstalled(Context context) {
 		Version version = getProEnablerVersion(context);
-		if (version != null && isValidProEnablerVersion(version) && hasValidProEnablerSignature(context)
-				&& hasValidFingerPrint(context)) {
+		if (version != null && isValidProEnablerVersion(version) && hasValidProEnablerSignature(context)) {
 			Util.log(null, Log.INFO, "Licensing: enabler installed");
 			return true;
 		}
@@ -280,6 +286,12 @@ public class Util {
 			log(null, Log.WARN, ex.toString());
 		}
 		return false;
+	}
+
+	public static void viewUri(Context context, Uri uri) {
+		Intent infoIntent = new Intent(Intent.ACTION_VIEW);
+		infoIntent.setData(uri);
+		context.startActivity(infoIntent);
 	}
 
 	private static byte[] hex2bytes(String hex) {
@@ -322,7 +334,7 @@ public class Util {
 
 	public static String sha1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		// SHA1
-		String salt = PrivacyManager.getSetting(null, null, 0, PrivacyManager.cSettingSalt, "", true);
+		String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, "", true);
 		MessageDigest digest = MessageDigest.getInstance("SHA-1");
 		byte[] bytes = (text + salt).getBytes("UTF-8");
 		digest.update(bytes, 0, bytes.length);
@@ -341,36 +353,6 @@ public class Util {
 		return sb.toString();
 	}
 
-	@SuppressLint("DefaultLocale")
-	public static boolean hasValidFingerPrint(Context context) {
-		try {
-			PackageManager pm = context.getPackageManager();
-			String packageName = context.getPackageName();
-			PackageInfo packageInfo = pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
-			byte[] cert = packageInfo.signatures[0].toByteArray();
-			MessageDigest digest = MessageDigest.getInstance("SHA1");
-			byte[] bytes = digest.digest(cert);
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < bytes.length; ++i)
-				sb.append((Integer.toHexString((bytes[i] & 0xFF) | 0x100)).substring(1, 3).toLowerCase());
-			String calculated = sb.toString();
-			String expected = context.getString(R.string.fingerprint);
-			boolean valid = calculated.equals(expected);
-			if (valid)
-				log(null, Log.INFO, "Valid fingerprint");
-			else
-				log(null, Log.ERROR, "Invalid fingerprint calculate=" + calculated + " expected=" + expected);
-			return valid;
-		} catch (Throwable ex) {
-			bug(null, ex);
-			return false;
-		}
-	}
-
-	public static boolean isDebuggable(Context context) {
-		return ((context.getApplicationContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
-	}
-
 	public static boolean containsIgnoreCase(List<String> strings, String value) {
 		for (String string : strings)
 			if (string.equalsIgnoreCase(value))
@@ -381,6 +363,20 @@ public class Util {
 	public static boolean isIntentAvailable(Context context, Intent intent) {
 		PackageManager packageManager = context.getPackageManager();
 		return (packageManager.queryIntentActivities(intent, PackageManager.GET_ACTIVITIES).size() > 0);
+	}
+
+	public static void setPermission(String path, int mode, int uid, int gid) {
+		try {
+			// frameworks/base/core/java/android/os/FileUtils.java
+			Class<?> fileUtils = Class.forName("android.os.FileUtils");
+			Method setPermissions = fileUtils
+					.getMethod("setPermissions", String.class, int.class, int.class, int.class);
+			setPermissions.invoke(null, path, mode, uid, gid);
+			Util.log(null, Log.WARN, "Changed permission path=" + path + " mode=" + Integer.toOctalString(mode)
+					+ " uid=" + uid + " gid=" + gid);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
 	}
 
 	public static void copy(File src, File dst) throws IOException {
@@ -397,36 +393,51 @@ public class Util {
 	public static Bitmap[] getTriStateCheckBox(Context context) {
 		Bitmap[] bitmap = new Bitmap[3];
 
-		int size = 24;
-		int border0 = 4;
-		int border1 = border0 * 2;
-		int border2 = border0;
+		// Get highlight color
+		TypedArray ta1 = context.getTheme()
+				.obtainStyledAttributes(new int[] { android.R.attr.colorActivatedHighlight });
+		int highlightColor = ta1.getColor(0, 0xFF00FF);
+		ta1.recycle();
+
+		// Get off check box
+		TypedArray ta2 = context.getTheme().obtainStyledAttributes(
+				new int[] { android.R.attr.listChoiceIndicatorMultiple });
+		Drawable off = ta2.getDrawable(0);
+		ta2.recycle();
+		off.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
+
+		// Get check mark
+		Drawable checkmark = context.getResources().getDrawable(R.drawable.checkmark);
+		checkmark.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
+		checkmark.setColorFilter(highlightColor, Mode.SRC_ATOP);
+
+		// Get check mark outline
+		Drawable checkmarkOutline = context.getResources().getDrawable(R.drawable.checkmark_outline);
+		checkmarkOutline.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
 
 		// Create off check box
-		bitmap[0] = Bitmap.createBitmap(size, size, Config.ARGB_8888);
+		bitmap[0] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
 		Canvas canvas0 = new Canvas(bitmap[0]);
-		Paint paint0 = new Paint();
-		paint0.setStyle(Paint.Style.STROKE);
-		paint0.setColor(Color.GRAY);
-		paint0.setStrokeWidth(2);
-		canvas0.drawRect(border0, border0, bitmap[0].getWidth() - border0, bitmap[0].getHeight() - border0, paint0);
+		off.draw(canvas0);
 
 		// Create half check box
-		bitmap[1] = Bitmap.createBitmap(bitmap[0].getWidth(), bitmap[0].getHeight(), bitmap[0].getConfig());
+		bitmap[1] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
 		Canvas canvas1 = new Canvas(bitmap[1]);
+		off.draw(canvas1);
 		Paint paint1 = new Paint();
 		paint1.setStyle(Paint.Style.FILL);
-		paint1.setColor(Color.GRAY);
-		canvas1.drawBitmap(bitmap[0], 0, 0, paint1);
-		canvas1.drawRect(border1, border1, bitmap[1].getWidth() - border1, bitmap[1].getHeight() - border1, paint1);
+		paint1.setColor(highlightColor);
+		float wborder = off.getIntrinsicWidth() / 3f;
+		float hborder = off.getIntrinsicHeight() / 3f;
+		canvas1.drawRect(wborder, hborder, off.getIntrinsicWidth() - wborder, off.getIntrinsicHeight() - hborder,
+				paint1);
 
 		// Create full check box
-		bitmap[2] = Bitmap.createBitmap(bitmap[0].getWidth(), bitmap[0].getHeight(), bitmap[0].getConfig());
+		bitmap[2] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
 		Canvas canvas2 = new Canvas(bitmap[2]);
-		canvas2.drawBitmap(bitmap[0], 0, 0, new Paint());
-		Drawable checkmark = context.getResources().getDrawable(getThemed(context, R.attr.icon_checked));
-		checkmark.setBounds(border2, border2, bitmap[2].getWidth() - border2, bitmap[2].getHeight() - border2);
+		off.draw(canvas2);
 		checkmark.draw(canvas2);
+		checkmarkOutline.draw(canvas2);
 
 		return bitmap;
 	}

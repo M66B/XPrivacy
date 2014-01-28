@@ -3,7 +3,9 @@
     <string name="app_notxposed" formatted="false">Xposedフレームワークバージョン %d+ がインストールされていません</string>
     <string name="app_notenabled">XPrivacyがXposedインストーラで有効になっていません</string>
     <string name="app_wrongandroid">Androidバージョン 4.0以降でのみを動作します</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy バージョン: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposedフレームワークバージョン: %d</string>
     <string name="app_copyright">著作権 \u00A9 2013–2014、 M. Bokhorst より(M66B)</string>
     <string name="menu_usage">利用履歴</string>
@@ -19,6 +21,7 @@
     <string name="menu_pro">プロバージョンを購入</string>
     <string name="menu_about">アプリの情報</string>
     <string name="menu_help">ヘルプ</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">全て</string>
     <string name="menu_restriction_all">制限の身に切り替え</string>
     <string name="menu_clear_all">Clear all</string>
@@ -35,6 +38,10 @@
     <string name="menu_applications">許可するアプリを選択</string>
     <string name="menu_contacts">許可する電話の連絡先を選択</string>
     <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">新規</string>
     <string name="msg_update">更新されました</string>
     <string name="msg_licensed" formatted="false">ライセンス先: %s</string>
@@ -44,13 +51,21 @@
     <string name="msg_saved_to" formatted="false">%sに保存されました</string>
     <string name="msg_no_restrictions">制限などは見つかりませんでした</string>
     <string name="msg_sure">続行しますか</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">終了</string>
     <string name="msg_reboot">再起動して下さい</string>
     <string name="msg_random_now">ランダム化</string>
     <string name="msg_random_access">アプリにアクセスされたとき、バリューをランダム化する</string>
     <string name="msg_random_boot">端末を起動時にランダム化する</string>
-    <string name="msg_usage">Updating usage data</string>
     <string name="msg_restart">Application restart required</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_service">Update service running</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>XPrivacyは細心の注意をして開発･テストしていますが、
 どの端末、どのアプリでも動作するという保証はありません。
 \n\n自己責任でお使いください。</b>\n\nライセンスの詳細はこちら:</string>
@@ -117,18 +132,20 @@
     <string name="settings_ua">ユーザーエージェント</string>
     <string name="settings_general">一般的</string>
     <string name="settings_fake_data">フェイクデータ</string>
-    <string name="settings_global">グローバルデータを使用</string>
     <string name="settings_notify">最新の情報に更新</string>
-    <string name="settings_usage">アンドロイド使用状況(再起動が必要)</string>
     <string name="settings_log">デバッグログ(再起動が必要)</string>
     <string name="settings_expert">エキスパートモード</string>
     <string name="settings_dangerous">危険な可能を制限する</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はアンドロイドの権限を持っています</string>
     <string name="help_used">はそのデータを使用しています</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">は無効になっています</string>
     <string name="help_dangerous">はプライバシーに危険です</string>
     <string name="help_half">部分的に制限されました</string>
@@ -141,5 +158,6 @@
 \nTap the app icon for detailed restrictions and settings</string>
     <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
     <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

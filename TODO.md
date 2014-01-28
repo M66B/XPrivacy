@@ -5,19 +5,13 @@ For interested developers:
 
 * [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-* Hook *Service.onCreate* for uncaught exception
-* Replace *ActivityShare* by a [Service](http://developer.android.com/reference/android/app/Service.html) [done](https://github.com/M66B/XPrivacy/pull/937)
-* Prevent parallel filter requests
-* Button or menu to delete usage data (all / per app)
-* Dialogs for all the things in *Requirements.java* (no intents without user consent)
-* Sort localized category lists
-* Themed check boxes
-* Holo check boxes for functions exceptions
-* Move *SubmitTask* to *ActivityShare* (or the replacing service)
-* Update *SharedPreferencesEx* with KitKat changes
-* Import should clear app settings
+* Reconsider *largeHeap*
+* Option to reset user selected dangerous methods
+* Document XPrivacy navigation (menu's, presses, long presses) on GitHub
+* Better *sh* and *su* command detection
 * Accessibility: *android:labelFor="..."*
-* Secure usage data
-
-* Split settings file?
+* Hook location intents
+* More efficient implementation of XIoBridge and XSystemProperties
+* Hook more package manager methods (which return info about one package)
+* Check http://developer.android.com/reference/android/nfc/NfcManager.html
 * Remove indeterminate progress indicator?

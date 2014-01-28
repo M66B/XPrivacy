@@ -3,7 +3,9 @@
     <string name="app_notxposed" formatted="false">Не встановлено Xposed framework версії %d+</string>
     <string name="app_notenabled">Модуль XPrivacy не активован в Xposed installer</string>
     <string name="app_wrongandroid">Тільки для Android версії 4.0 і новіше</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">Версія XPrivacy: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Версія Xposed framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Використання</string>
@@ -19,6 +21,7 @@
     <string name="menu_pro">Pro-версія</string>
     <string name="menu_about">Про програму</string>
     <string name="menu_help">Допомога</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Виділити все</string>
     <string name="menu_restriction_all">Переключити довзоли</string>
     <string name="menu_clear_all">Очистити всі</string>
@@ -35,6 +38,10 @@
     <string name="menu_applications">Оберіть дозволені програми</string>
     <string name="menu_contacts">Оберіть дозволені контакти</string>
     <string name="menu_tutorial">Навчання</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Нове</string>
     <string name="msg_update">Оновити</string>
     <string name="msg_licensed" formatted="false">Власник ліцензіі: %s</string>
@@ -44,13 +51,21 @@
     <string name="msg_saved_to" formatted="false">Збережено в %s</string>
     <string name="msg_no_restrictions">Не знайдено обмежень</string>
     <string name="msg_sure">Ви впевнені?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Необхідне перезавантаження пристрою</string>
     <string name="msg_random_now">Випадкові значення</string>
     <string name="msg_random_access">Випадкові значення при запиті</string>
     <string name="msg_random_boot">Випадкові значення після перезавантаження</string>
-    <string name="msg_usage">Оновлення даних використання</string>
     <string name="msg_restart">Необхідне перезавантаження</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_service">Update service running</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>Велика увага була приділена розробці та тестуванню XPrivacy, 
 але не можна гарантувати, що вона буде працювати бездоганно на всіх пристроях та зі всімома програмами.
 \n\nВикористовуйте виключно на свій страх та ризик.</b>\n\nДив. також ліцензію:</string>
@@ -118,18 +133,20 @@
     <string name="settings_ua">User agent</string>
     <string name="settings_general">Загальне</string>
     <string name="settings_fake_data">Фальшиві дані</string>
-    <string name="settings_global">Використовувати загальні фальшиві дані</string>
     <string name="settings_notify">Оновити сповіщення</string>
-    <string name="settings_usage">Андроид - данные об использовании (требует перезапуска)</string>
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Експертний режим</string>
     <string name="settings_dangerous">Заборона небезпечних функцій</string>
     <string name="settings_confidence">Максимальний інтервал отримання конфіденційних даних</string>
     <string name="settings_experimental">Експериментальні функціі (потрібне перезавантаження)</string>
+    <string name="settings_https">Use secure connections</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">Програма</string>
     <string name="help_internet">запитує доступ до Інтернету</string>
     <string name="help_granted">має дозвол Android</string>
     <string name="help_used">дані вже використовувались</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">вимкнено</string>
     <string name="help_dangerous">зміна дозволів небезпечна</string>
     <string name="help_half">частково заборонено</string>
@@ -142,5 +159,6 @@
 \nНатисніть іконку програми для детальних обмежень та налаштувань</string>
     <string name="tutorial_detailsheader">Натисніть іконку програми для додаткових дій</string>
     <string name="tutorial_detailslist">Натисніть стрілку, щоб побачити окремі функціі та обмеження в категоріі</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

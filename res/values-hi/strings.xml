@@ -3,7 +3,9 @@
     <string name="app_notxposed" formatted="false">Xposed framework का वर्शन %d+ इन्सटाल्ड नहीं हैं</string>
     <string name="app_notenabled">Xposed इनस्टॉलर मैं XPrivacy इनेबल नहीं हैं</string>
     <string name="app_wrongandroid">सिर्फ Android वर्शन 4.0+ के लिये</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy वर्शन: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed framework वर्शन: %d</string>
     <string name="app_copyright">सर्वाधिकार \u00A9 2013–2014 द्वारा M. Bokhorst (M66B)</string>
     <string name="menu_usage">उपयोग</string>
@@ -19,6 +21,7 @@
     <string name="menu_pro">उन्नत वर्शन</string>
     <string name="menu_about">जानकारी</string>
     <string name="menu_help">मदद</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">प्रत्येक</string>
     <string name="menu_restriction_all">प्रतिबंध toggle करे</string>
     <string name="menu_clear_all">सब clear करे</string>
@@ -35,6 +38,10 @@
     <string name="menu_applications">अनुमति के लिए applications को चुने</string>
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
     <string name="menu_tutorial">शिक्षा</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">नया</string>
     <string name="msg_update">अद्यतन</string>
     <string name="msg_licensed" formatted="false">अधिकारी: %s</string>
@@ -44,13 +51,21 @@
     <string name="msg_saved_to" formatted="false">%s मे save हो गया</string>
     <string name="msg_no_restrictions">कोई प्रतिबंध नहीं मिला</string>
     <string name="msg_sure">क्या आप निश्चित हैं?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">हो गया</string>
     <string name="msg_reboot">साधन पुनरारंभ करना आवश्यक</string>
     <string name="msg_random_now">अटपटा करे</string>
     <string name="msg_random_access">उपयोग पर अटपटा करें</string>
     <string name="msg_random_boot">रिबूट के पश्चात अटपटा करे</string>
-    <string name="msg_usage">उपयोग डेटा update हो रहा हैं</string>
     <string name="msg_restart">application पुनःप्रारंभ जरुरी</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_service">Update service running</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>XPrivacy बनाने मैं बहुत ख्याल रखा गया है,
 किन्तु वह सभी साधन और सभी application के लिए बरोबर चलेगा उसकी गारंटी देना असंभव है।
 \n\nइसका उपयोग पूरी तरह से आपके अपने जोखिम पर है।</b>\n\nलाइसेंस को भी पढ़े:</string>
@@ -117,18 +132,20 @@
     <string name="settings_ua">User agent</string>
     <string name="settings_general">सामान्य</string>
     <string name="settings_fake_data">नकली डेटा</string>
-    <string name="settings_global">सार्वत्रिक नकली डेटा का  उपयोग करे</string>
     <string name="settings_notify">अद्यतन सुचना</string>
-    <string name="settings_usage">Android उपयोग डेटा (पुनःप्रारंभ जरुरी)</string>
     <string name="settings_log">Debug log (पुनरारंभ जरूरी)</string>
     <string name="settings_expert">विशेषज्ञ mode</string>
     <string name="settings_dangerous">खतरनाक कार्य प्रतिबंधित करे</string>
     <string name="settings_confidence">अधिकतम विश्वसनीय fetch अंतराल</string>
     <string name="settings_experimental">प्रायोगिक कार्य (पुनःप्रारंभ जरुरी)</string>
+    <string name="settings_https">Use secure connections</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">Application</string>
     <string name="help_internet">इंटरनेट की अनुमति है</string>
     <string name="help_granted">Android की अनुमति है</string>
     <string name="help_used">इस डेटा का उपयोग किया है</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">अक्षम किया गया है</string>
     <string name="help_dangerous">खतरनाक है</string>
     <string name="help_half">आंशिक प्रतिबंध</string>
@@ -141,5 +158,6 @@
 \nविस्तृत प्रतिबन्ध व settings के लिए app icon को tap करे</string>
     <string name="tutorial_detailsheader">अधिक कार्य के लिए app icon को tap करे</string>
     <string name="tutorial_detailslist">प्रतिबंधित श्रेणी के अपवाद देखने के लिए down arrow को tap करे</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

@@ -1,11 +1,12 @@
 <resources>
 
-    <attr name="icon_checked" format="reference" />
+    <attr name="icon_restricted" format="reference" />
     <attr name="icon_granted" format="reference" />
     <attr name="icon_help" format="reference" />
     <attr name="icon_info" format="reference" />
     <attr name="icon_internet" format="reference" />
     <attr name="icon_used" format="reference" />
+    <attr name="icon_used_grayed" format="reference" />
     <attr name="icon_system" format="reference" />
     <attr name="icon_user" format="reference" />
     <attr name="icon_user_system" format="reference" />

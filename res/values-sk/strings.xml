@@ -1,10 +1,12 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Verzia frameworku Xposed %d+ nie je nainštalovaná</string>
-    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Inštalátori Xposed</string>
+    <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
+    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed Inštalátori</string>
     <string name="app_wrongandroid">Len pre Android 4.0+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
-    <string name="app_xversion" formatted="false">Verzia frameworku Xposed: %d</string>
+    <string name="app_description">Správca súkromia</string>
+    <string name="app_xversion" formatted="false">Verzia Xposed frameworku: %d</string>
     <string name="app_copyright">Autorské práva \u00A9 2013–2014 od M. Bokhorst (M66B)</string>
     <string name="menu_usage">Využitie dát</string>
     <string name="menu_refresh">Obnoviť</string>
@@ -19,6 +21,7 @@
     <string name="menu_pro">Pro verzia</string>
     <string name="menu_about">O aplikácii</string>
     <string name="menu_help">Pomocník</string>
+    <string name="menu_select_all">Vybrať všetky</string>
     <string name="menu_all">Všetko</string>
     <string name="menu_restriction_all">Prepnúť obmedzenia</string>
     <string name="menu_clear_all">Vymazať všetky</string>
@@ -35,22 +38,34 @@
     <string name="menu_applications">Povolené aplikácie</string>
     <string name="menu_contacts">Povolené kontakty</string>
     <string name="menu_tutorial">Príručka</string>
+    <string name="menu_exclude">Vylúčiť</string>
+    <string name="menu_close">Zavrieť</string>
+    <string name="msg_abort">Rušenie</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Nové</string>
     <string name="msg_update">Aktualizácia</string>
     <string name="msg_licensed" formatted="false">Licencované na: %s</string>
-    <string name="msg_loading">Prebieha načítavanie</string>
-    <string name="msg_applying">Aplikovanie</string>
+    <string name="msg_loading">Načítavanie &#8230;</string>
+    <string name="msg_applying">Aplikovanie &#8230;</string>
     <string name="msg_applied">Šablóny bola aplikovaná</string>
     <string name="msg_saved_to" formatted="false">Uložené do %s</string>
     <string name="msg_no_restrictions">Nenájdené žiadne obmedzenia</string>
-    <string name="msg_sure">Ste si istí?</string>
+    <string name="msg_sure">Ste si istý?</string>
+    <string name="msg_select">Vyberte prosím nejaké aplikácie</string>
+    <string name="msg_limit">Vyberte prosím menej než %d aplikácií</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadovaný reštart zariadenia</string>
     <string name="msg_random_now">Náhodné hodnoty</string>
     <string name="msg_random_access">Náhodné hodnoty po prístupe</string>
     <string name="msg_random_boot">Náhodné hodnoty pri štarte zariadenia</string>
-    <string name="msg_usage">Aktualizácia dát využitia</string>
     <string name="msg_restart">Vyžadovaný reštart aplikácie</string>
+    <string name="msg_register">Zaregistruje prosím vaše zariadenie</string>
+    <string name="msg_registered">Skontrolujte váš e-mail pre aktiváciu vášho zariadenia</string>
+    <string name="msg_service">Aktualizačná služba je spustená</string>
+    <string name="msg_migrating" formatted="false">Migrovanie %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizovanie %s</string>
+    <string name="msg_upgrading" formatted="false">Aktualizovanie %s</string>
+    <string name="msg_support_info">Vnútorná kontrola zlyhala. Chcete odoslať informácie na podporu?</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>
@@ -115,21 +130,23 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_country">Krajina</string>
     <string name="settings_operator">Operátor</string>
     <string name="settings_subscriber">IMSI</string>
-    <string name="settings_ua">Užívateľský agent</string>
+    <string name="settings_ua">Používateľský agent</string>
     <string name="settings_general">Všeobecné</string>
     <string name="settings_fake_data">Falošné údaje</string>
-    <string name="settings_global">Použiť globálne falošné údaje</string>
     <string name="settings_notify">Oznámenia o aktualizáciách</string>
-    <string name="settings_usage">Využitie dát (vyžadovaný reštart)</string>
     <string name="settings_log">Záznam na ladenie (vyžadovaný reštart)</string>
     <string name="settings_expert">Režim experta</string>
     <string name="settings_dangerous">Obmedziť nebezpečné funkcie</string>
     <string name="settings_confidence">Maximálny interval spoľahlivosti sťahovania</string>
     <string name="settings_experimental">Experimentálne funkcie (vyžadovaný reštart)</string>
+    <string name="settings_https">Použiť zabezpečené pripojenie</string>
+    <string name="settings_syscomponents">Obmedziť systémové komponenty (Android) (vyžadovaný reštart)</string>
+    <string name="settings_usagedata">Zobraziť využitie dát aplikácie (vyžadovaný reštart)</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>
     <string name="help_used">používala tieto dáta</string>
+    <string name="help_used_grayed">nedostupné využitie dát</string>
     <string name="help_frozen">je zakázaná</string>
     <string name="help_dangerous">je nebezpečná</string>
     <string name="help_half">čiastočne obmedzené</string>
@@ -137,10 +154,11 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="help_restricted">obmedzenia sú zmenené</string>
     <string name="help_shared">obmedzenia sú odoslané</string>
     <string name="tutorial_mainheader">Vyberte kategóriu na obmedzenie; vyberte viditeľné aplikácie pomocou filtrov</string>
-    <string name="tutorial_mainlist">Kliknite na zaškrtávacie pole ore obmedzenie vybranej kategórie pre aplikáciu\n
-\nAplikácie budú kŕmené prázdnymi alebo falošnými údaje pri obmedzených kategóriách\n
+    <string name="tutorial_mainlist">Kliknite na zaškrtávacie pole pre obmedzenie vybranej kategórie pre aplikáciu\n
+\nPri obmedzených kategóriách budú aplikáciám poskytované prázdne alebo falošné údaje\n
 \nKliknite na ikonu aplikácie pre podrobné obmedzenia a nastavenia</string>
     <string name="tutorial_detailsheader">Kliknite na ikonu aplikácie pre viac akcií</string>
     <string name="tutorial_detailslist">Kliknite na šípku nadol pre zobrazenie funkčných výnimiek pre kategóriu obmedzení</string>
+    <string name="permission_manage">Spravovať aplikácie, vrátane ich ukončenia</string>
 
 </resources>

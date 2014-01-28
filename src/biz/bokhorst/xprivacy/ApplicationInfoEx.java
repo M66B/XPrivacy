@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import android.annotation.SuppressLint;
@@ -39,7 +40,10 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	public ApplicationInfoEx(Context context, int uid) throws NameNotFoundException {
 		mMapAppInfo = new TreeMap<String, ApplicationInfo>();
 		PackageManager pm = context.getPackageManager();
-		for (String packageName : pm.getPackagesForUid(uid)) {
+		String[] packages = pm.getPackagesForUid(uid);
+		if (packages == null)
+			throw new NameNotFoundException();
+		for (String packageName : packages) {
 			ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
 			mMapAppInfo.put(pm.getApplicationLabel(appInfo).toString(), appInfo);
 		}
@@ -59,10 +63,14 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			try {
 				if (dialog != null)
 					dialog.setProgress(app + 1);
-				ApplicationInfoEx appInfo = new ApplicationInfoEx(context, listAppInfo.get(app).uid);
-				if (mapApp.get(appInfo.getUid()) == null) {
-					mapApp.put(appInfo.getUid(), appInfo);
-					listApp.add(appInfo);
+
+				ApplicationInfo appInfo = listAppInfo.get(app);
+				Util.log(null, Log.INFO, "package=" + appInfo.packageName + " uid=" + appInfo.uid);
+
+				ApplicationInfoEx appInfoEx = new ApplicationInfoEx(context, appInfo.uid);
+				if (mapApp.get(appInfoEx.getUid()) == null) {
+					mapApp.put(appInfoEx.getUid(), appInfoEx);
+					listApp.add(appInfoEx);
 				}
 			} catch (NameNotFoundException ex) {
 				Util.bug(null, ex);
@@ -75,6 +83,13 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	public List<String> getApplicationName() {
 		return new ArrayList<String>(mMapAppInfo.navigableKeySet());
+	}
+
+	public String getApplicationName(String packageName) {
+		for (Entry<String, ApplicationInfo> entry : mMapAppInfo.entrySet())
+			if (entry.getValue().packageName.equals(packageName))
+				return entry.getKey();
+		return null;
 	}
 
 	public List<String> getPackageName() {
@@ -103,6 +118,19 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 				listVersionName.add(ex.getMessage());
 			}
 		return listVersionName;
+	}
+
+	public String getPackageVersionName(Context context, String packageName) {
+		try {
+			getPackageInfo(context, packageName);
+			String version = mMapPkgInfo.get(packageName).versionName;
+			if (version == null)
+				return "???";
+			else
+				return version;
+		} catch (NameNotFoundException ex) {
+			return ex.getMessage();
+		}
 	}
 
 	public List<Integer> getPackageVersionCode(Context context) {
@@ -160,8 +188,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public int getState(Context context) {
-		return Integer.parseInt(PrivacyManager.getSetting(null, context,
-				getUid(), PrivacyManager.cSettingState, "1", false));
+		return Integer.parseInt(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingState, "1",
+				false));
 	}
 
 	public long getInstallTime(Context context) {
@@ -176,7 +204,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 						mInstallTime = time;
 				} catch (NameNotFoundException ex) {
 				}
-			if (mInstallTime == now) // no install time, maybe it came with the rom, and so is old
+			if (mInstallTime == now) // no install time, maybe it came with the
+										// rom, and so is old
 				mInstallTime = 0;
 		}
 		return mInstallTime;
@@ -199,8 +228,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	public long getModificationTime(Context context) {
 		if (mModificationTime == -1) {
-			mModificationTime = Long.parseLong(PrivacyManager.getSetting(null, context,
-					getUid(), PrivacyManager.cSettingMTime, "0", false));
+			mModificationTime = Long.parseLong(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingMTime,
+					"0", false));
 		}
 		return mModificationTime;
 	}

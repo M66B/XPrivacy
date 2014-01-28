@@ -266,7 +266,7 @@
                         android:layout_width="24dip"
                         android:layout_height="24dip"
                         android:contentDescription="@string/title_restrict"
-                        android:src="?attr/icon_checked" />
+                        android:src="?attr/icon_restricted" />
 
                     <CheckBox
                         android:id="@+id/cbFRestriction"
@@ -404,7 +404,7 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <!-- Thin divider -->
+    <!-- Progress -->
 
     <View
         android:id="@+id/vProgressEmpty"
@@ -432,7 +432,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/activity_horizontal_margin_list"
             android:layout_marginTop="6dip"
-            android:choiceMode="multipleChoice"
+            android:choiceMode="none"
             android:paddingRight="12dip"
             android:scrollbarStyle="insideInset" />
 

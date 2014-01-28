@@ -4,7 +4,7 @@
 
 	$min_diff = 0.50;
 	$max_confidence = 0.35;
-	$max_packages = 64;
+	$max_packages = 72;
 
 	function confidence($restricted, $not_restricted) {
 		// Agresti-Coull Interval
@@ -18,6 +18,15 @@
 		return $ci;
 	}
 
+	function log_error($message, $my_email, $data = null) {
+		error_log(
+			'XPrivacy message=' . $message . PHP_EOL . PHP_EOL .
+			' data=' . print_r($data, true) . PHP_EOL . PHP_EOL .
+			' request=' . print_r($_REQUEST, true) . PHP_EOL .
+			' server=' . print_r($_SERVER, true) . PHP_EOL,
+			1, $my_email);
+	}
+
 	// $_SERVER["HTTP_CONTENT_TYPE"]
 	// max_input_vars
 	// post_max_size
@@ -28,21 +37,30 @@
 	// Check if JSON request
 	parse_str($_SERVER['QUERY_STRING']);
 	if (!empty($format) && $format == 'json') {
+		// Send header
+		header('Content-Type: application/json');
+
 		// Get data
 		$ok = true;
 		$body = file_get_contents('php://input');
 		$data = json_decode($body);
-		if (empty($body) || empty($data))
-			error_log('XPrivacy empty: request=' . print_r($_REQUEST, true) . PHP_EOL, 1, $my_email);
+		if (empty($body) || empty($data)) {
+			log_error('json: empty request', $my_email, $data);
+			echo json_encode(array('ok' => false, 'errno' => 101, 'error' => 'Empty request'));
+			exit();
+		}
 
-		// Send header
-		header('Content-Type: application/json');
+		// Check XPrivacy version
+		if (empty($data->xprivacy_version) || (int)$data->xprivacy_version < 219) {
+			echo json_encode(array('ok' => false, 'errno' => 102, 'error' => 'Please upgrade to at least XPrivacy version 1.11'));
+			exit();
+		}
 
 		// Connect to database
 		$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 		if ($db->connect_errno) {
-			error_log('XPrivacy database connect: ' . $db->connect_error . PHP_EOL, 1, $my_email);
-			echo json_encode(array('ok' => false, 'error' => 'Error connecting to database'));
+			log_error('json: database connect: ' . $db->connect_error, $my_email, $data);
+			echo json_encode(array('ok' => false, 'errno' => 103, 'error' => 'Error connecting to database'));
 			exit();
 		}
 
@@ -52,15 +70,19 @@
 		// Store/update settings
 		if (empty($action) || $action == 'submit') {
 			// Validate
+			if (empty($data->android_id)) {
+				log_error('submit: Android ID missing', $my_email, $data);
+				echo json_encode(array('ok' => false, 'errno' => 202, 'error' => 'Android ID missing'));
+				exit();
+			}
 			if (empty($data->package_name)) {
-				echo json_encode(array('ok' => false, 'error' => 'Package name missing'));
+				log_error('submit: package name missing', $my_email, $data);
+				echo json_encode(array('ok' => false, 'errno' => 203, 'error' => 'Package name missing'));
 				exit();
 			}
 
 			// Fixes
-			if (empty($data->protocol_version))
-				$data->protocol_version = 0;
-			if ($data->protocol_version <= 3)
+			if (empty($data->protocol_version) || $data->protocol_version <= 3)
 				$data->android_id = md5($data->android_id);
 
 			if (empty($data->application_name))
@@ -72,7 +94,7 @@
 				$data->package_name = array($data->package_name);
 
 			if (!empty($data->package_version))
-				$data->package_version_name = $data->package_version; // compatibility
+				$data->package_version_name = $data->package_version; // legacy
 
 			if (empty($data->package_version_name))
 				$data->package_version_name = array('');
@@ -86,22 +108,73 @@
 
 			// Validate
 			if (count($data->package_name) > $max_packages) {
-				error_log('XPrivacy submit: packages=' . count($data->package_name) . '/' . $max_packages . PHP_EOL, 1, $my_email);
-				echo json_encode(array('ok' => false, 'error' => 'Too many packages for application'));
+				log_error('submit: too many packages count=' . count($data->package_name) . '/' . $max_packages, $my_email, $data);
+				echo json_encode(array('ok' => false, 'errno' => 204, 'error' => 'Too many packages for application'));
 				exit();
 			}
 
-			// Check if restrictions
-			$empty = true;
-			if (!empty($data->settings))
-				foreach ($data->settings as $restriction)
-					if ($restriction->restricted) {
-						$empty = false;
-						break;
+			// Check restrictions
+			if (!empty($data->settings)) {
+				foreach ($data->settings as $restriction) {
+					$found = false;
+
+					if ($restriction->restriction == 'accounts')
+						$found = true;
+					else if ($restriction->restriction == 'browser')
+						$found = true;
+					else if ($restriction->restriction == 'calendar')
+						$found = true;
+					else if ($restriction->restriction == 'calling')
+						$found = true;
+					else if ($restriction->restriction == 'clipboard')
+						$found = true;
+					else if ($restriction->restriction == 'contacts')
+						$found = true;
+					else if ($restriction->restriction == 'dictionary')
+						$found = true;
+					else if ($restriction->restriction == 'email')
+						$found = true;
+					else if ($restriction->restriction == 'identification')
+						$found = true;
+					else if ($restriction->restriction == 'internet')
+						$found = true;
+					else if ($restriction->restriction == 'ipc')
+						$found = true;
+					else if ($restriction->restriction == 'location')
+						$found = true;
+					else if ($restriction->restriction == 'media')
+						$found = true;
+					else if ($restriction->restriction == 'messages')
+						$found = true;
+					else if ($restriction->restriction == 'network')
+						$found = true;
+					else if ($restriction->restriction == 'nfc')
+						$found = true;
+					else if ($restriction->restriction == 'notifications')
+						$found = true;
+					else if ($restriction->restriction == 'overlay')
+						$found = true;
+					else if ($restriction->restriction == 'phone')
+						$found = true;
+					else if ($restriction->restriction == 'sensors')
+						$found = true;
+					else if ($restriction->restriction == 'shell')
+						$found = true;
+					else if ($restriction->restriction == 'storage')
+						$found = true;
+					else if ($restriction->restriction == 'system')
+						$found = true;
+					else if ($restriction->restriction == 'view')
+						$found = true;
+
+					if (!$found) {
+						if (empty($restriction->method))
+							$name = $restriction->restriction;
+						else
+							$name = $restriction->restriction . '/' . $restriction->method;
+						log_error('submit: restriction unknown: ' . $name , $my_email, $data);
 					}
-			if ($empty) {
-				echo json_encode(array('ok' => false, 'error' => 'Restrictions missing'));
-				exit();
+				}
 			}
 
 			// Process application
@@ -115,7 +188,7 @@
 					$sql .= " ON DUPLICATE KEY UPDATE";
 					$sql .= " modified=CURRENT_TIMESTAMP()";
 					if (!$db->query($sql)) {
-						error_log('XPrivacy insert application: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+						log_error('submit: insert application: ' . $db->error . ' query=' . $sql, $my_email, $data);
 						$ok = false;
 					}
 				}
@@ -134,7 +207,7 @@
 					$sql .= " restriction, method, restricted, allowed, used) VALUES ";
 					$sql .= "('" . $data->android_id . "'";
 					$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
-					$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : $db->real_escape_string($data->xprivacy_version)) . "";
+					$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : (int)$data->xprivacy_version) . "";
 					$sql .= ",'" . $db->real_escape_string($data->package_name[$i]) . "'";
 					$sql .= ",'" . ($i < count($data->package_version_name) ? $db->real_escape_string($data->package_version_name[$i]) : '') . "'";
 					$sql .= "," . ($i < count($data->package_version_code) ? (int)$data->package_version_code[$i] : 0);
@@ -151,13 +224,13 @@
 					$sql .= ", modified=CURRENT_TIMESTAMP()";
 					$sql .= ", updates=updates+1";
 					if (!$db->query($sql)) {
-						error_log('XPrivacy insert restrictions: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+						log_error('submit: insert restrictions: error=' . $db->error . ' query=' . $sql, $my_email, $data);
 						$ok = false;
 					}
 				}
 
 			// Send reponse
-			echo json_encode(array('ok' => $ok, 'error' => ($ok ? '' : 'Error storing restrictions')));
+			echo json_encode(array('ok' => $ok, 'errno' => ($ok ? 0 : 205), 'error' => ($ok ? '' : 'Error storing restrictions')));
 			exit();
 		}
 
@@ -169,15 +242,15 @@
 				$signature = bin2hex($signature);
 
 			if (empty($signature) || $signature != $data->signature) {
-				if (!empty($data->email))
-					error_log(date('c') . ' XPrivacy unauthorized: ' . $data->email . PHP_EOL, 1, $my_email);
-				echo json_encode(array('ok' => false, 'error' => 'Not authorized'));
+				log_error('fetch: not authorized', $my_email, $data);
+				echo json_encode(array('ok' => false, 'errno' => 301, 'error' => 'Not authorized'));
 				exit();
 			}
 
 			// Validate
 			if (empty($data->package_name)) {
-				echo json_encode(array('ok' => false, 'error' => 'Package name missing'));
+				log_error('fetch: package name missing', $my_email, $data);
+				echo json_encode(array('ok' => false, 'errno' => 303, 'error' => 'Package name missing'));
 				exit();
 			}
 
@@ -187,8 +260,8 @@
 
 			// Validate
 			if (count($data->package_name) > $max_packages) {
-				error_log('XPrivacy fetch: packages=' . count($data->package_name) . '/' . $max_packages . PHP_EOL, 1, $my_email);
-				echo json_encode(array('ok' => false, 'error' => 'Too many packages for application'));
+				log_error('fetch: too many packages count=' . count($data->package_name) . '/' . $max_packages, $my_email, $data);
+				echo json_encode(array('ok' => false, 'errno' => 304, 'error' => 'Too many packages for application'));
 				exit();
 			}
 
@@ -205,6 +278,8 @@
 
 			// Get restrictions
 			$settings = Array();
+			$empty = ($data->xprivacy_version >= 240);
+
 			$sql = "SELECT restriction, method";
 			$sql .= ", SUM(CASE WHEN restricted = 1 THEN 1 ELSE 0 END) AS restricted";
 			$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
@@ -220,6 +295,8 @@
 					$ci = confidence($row->restricted, $row->not_restricted);
 					$diff = $row->restricted / ($row->restricted + $row->not_restricted);
 					$restrict = ($ci < $max_ci && $diff > $min_diff && $row->allowed <= $row->not_allowed);
+					if ($restrict)
+						$empty = false;
 
 					$entry = Array();
 					$entry['restriction'] = $row->restriction;
@@ -231,12 +308,20 @@
 				}
 				$result->close();
 			} else {
-				error_log('XPrivacy fetch restrictions: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+				log_error('fetch: retrieve restrictions: ' . $db->error . ' query=' . $sql, $my_email, $data);
 				$ok = false;
 			}
 
 			// Send reponse
-			echo json_encode(array('ok' => $ok, 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
+			if ($ok && $empty)
+				echo json_encode(array('ok' => false, 'errno' => 305, 'error' => 'No restrictions available', 'settings' => $settings));
+			else
+				echo json_encode(array('ok' => $ok, 'errno' => ($ok ? 0 : 306), 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
+			exit();
+		}
+		else {
+			log_error('json: unknown action', $my_email, $data);
+			echo json_encode(array('ok' => false, 'errno' => 104, 'error' => 'Unknown action: ' . $action));
 			exit();
 		}
 
@@ -257,11 +342,11 @@
 		<meta name="description" content="XPrivacy">
 		<meta name="author" content="M66B">
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<link rel="shortcut icon" href="http://www.faircode.eu/favicon.ico" type="image/x-icon" />
 		<style type="text/css">
 			body { padding-left: 5px; padding-right: 5px; }
 			th, tr, td { padding: 0px !important; }
 			.page-header { margin-top: 0; }
+			.action { margin-right: 20px; }
 		</style>
 	</head>
 	<body>
@@ -296,7 +381,7 @@
 			// Connect to database
 			$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 			if ($db->connect_errno) {
-				error_log('XPrivacy database connect: ' . $db->connect_error . PHP_EOL, 1, $my_email);
+				log_error('web: database connect: ' . $db->connect_error, $my_email);
 				echo '<pre>Error connecting to database</pre>';
 				exit();
 			}
@@ -320,7 +405,7 @@
 					$result->close();
 				}
 				else
-					error_log('XPrivacy query count: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+					log_error('web: query count: ' . $db->error . ' query=' . $sql, $my_email);
 
 				// Get restriction count
 				$sql = "SELECT COUNT(*) AS total";
@@ -333,7 +418,7 @@
 					$result->close();
 				}
 				else
-					error_log('XPrivacy query total: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+					log_error('web: query total: ' . $db->error . ' query=' . $sql, $my_email);
 
 				// Display titles
 				if (empty($package_name)) {
@@ -355,7 +440,7 @@
 						$result->close();
 					}
 					else
-						error_log('XPrivacy query application names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+						log_error('web: query application names: ' . $db->error . ' query=' . $sql, $my_email);
 
 					// Get package names/versions
 					$apps = $application_names;
@@ -379,10 +464,11 @@
 							$result->close();
 						}
 						else
-							error_log('XPrivacy query package names: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+							log_error('web: query package names: ' . $db->error . ' query=' . $sql, $my_email);
 					}
 ?>
 					<h2><?php echo htmlentities(implode(', ', $application_names), ENT_COMPAT, 'UTF-8'); ?></h2>
+
 					<p style="font-size: smaller;">
 <?php
 					for ($i = 0; $i < count($package_names); $i++) {
@@ -391,9 +477,6 @@
 						echo htmlentities($package_versions[$i]) . ' ';
 					}
 ?>
-					</p>
-					<p>
-						<a href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank">Play store</a>
 					</p>
 <?php
 				}
@@ -405,7 +488,7 @@
 					<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
 					With a <a href="http://www.xprivacy.eu/">Pro license</a> you can fetch submitted restriction settings.<br />
-					There are currently <?php echo number_format($total, 0, '.', ','); ?> restriction settings
+					There are currently <?php echo number_format($total, 0, '.', ','); ?> rules
 					for <?php echo number_format($count, 0, '.', ',') ?> applications submitted.
 				</p>
 			</div>
@@ -430,7 +513,15 @@
 				}
 				else {
 ?>
-					<p><a href="#" id="details">Show details</a></p>
+					<div class="page-header">
+						<p>
+							<span class="glyphicon glyphicon-file"></span>
+							<a class="action" href="#" id="details">Show details</a>
+							<span class="glyphicon glyphicon-comment"></span>
+							<a class="action" href="http://forum.faircode.eu/forums/forum/android/xprivacy/applications/?package_name=<?php echo urlencode($package_name); ?>" target="_blank">Discussion</a>
+							<a class="action" href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank"><img src="play_logo_x2.png" style="width:95px; height:20px" alt="Play store" /></a>
+						</p>
+					</div>
 					<p style="font-size: smaller;">Rows marked with a <span style="background: lightgray;">grey background</span> will be restricted when fetched;
 					<strong>bold text</strong> means data was used</p>
 <?php
@@ -491,7 +582,7 @@
 							$result->close();
 						}
 						else
-							error_log('XPrivacy query application list: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+							log_error('web: query application list: ' . $db->error . ' query=' . $sql, $my_email);
 					} else {
 						// Display application details
 						$sql = "SELECT restriction, method";
@@ -558,7 +649,7 @@
 							$result->close();
 						}
 						else
-							error_log('XPrivacy query application details: ' . $db->error . ' query=' . $sql . PHP_EOL, 1, $my_email);
+							log_error('web: query application details: ' . $db->error . ' query=' . $sql, $my_email);
 					}
 ?>
 					</tbody>
@@ -597,8 +688,8 @@
 ?>
 		</div>
 
-		<script src="http://code.jquery.com/jquery.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 		<script>
 			jQuery(document).ready(function($) {
 				$('#details').click(function() {
@@ -611,20 +702,5 @@
 				});
 			});
 		</script>
-		<!-- Piwik -->
-		<script type="text/javascript">
-		  var _paq = _paq || [];
-		  _paq.push(["trackPageView"]);
-		  _paq.push(["enableLinkTracking"]);
-
-		  (function() {
-			var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.bokhorst.biz/";
-			_paq.push(["setTrackerUrl", u+"piwik.php"]);
-			_paq.push(["setSiteId", "15"]);
-			var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
-			g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-		  })();
-		</script>
-		<!-- End Piwik Code -->
 	</body>
 </html>

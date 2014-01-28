@@ -9,8 +9,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import biz.bokhorst.xprivacy.PrivacyManager.UsageData;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -59,7 +57,7 @@ public class ActivityUsage extends Activity {
 		super.onCreate(savedInstanceState);
 
 		// Set theme
-		String themeName = PrivacyManager.getSetting(null, this, 0, PrivacyManager.cSettingTheme, "", false);
+		String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
 		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 		setTheme(mThemeId);
 
@@ -82,12 +80,12 @@ public class ActivityUsage extends Activity {
 		lvUsage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-				PrivacyManager.UsageData usageData = mUsageAdapter.getItem(position);
+				ParcelableRestriction usageData = mUsageAdapter.getItem(position);
 				Intent intent = new Intent(ActivityUsage.this, ActivityApp.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				intent.putExtra(ActivityApp.cUid, usageData.getUid());
-				intent.putExtra(ActivityApp.cRestrictionName, usageData.getRestrictionName());
-				intent.putExtra(ActivityApp.cMethodName, usageData.getMethodName());
+				intent.putExtra(ActivityApp.cUid, usageData.uid);
+				intent.putExtra(ActivityApp.cRestrictionName, usageData.restrictionName);
+				intent.putExtra(ActivityApp.cMethodName, usageData.methodName);
 				startActivity(intent);
 			}
 		});
@@ -132,7 +130,7 @@ public class ActivityUsage extends Activity {
 			usageTask.executeOnExecutor(mExecutor, (Object) null);
 			return true;
 		case R.id.menu_clear:
-			PrivacyManager.deleteUsage(this, mUid);
+			PrivacyManager.deleteUsage(mUid);
 			usageTask = new UsageTask();
 			usageTask.executeOnExecutor(mExecutor, (Object) null);
 			return true;
@@ -143,19 +141,19 @@ public class ActivityUsage extends Activity {
 
 	// Tasks
 
-	private class UsageTask extends AsyncTask<Object, Object, List<PrivacyManager.UsageData>> {
+	private class UsageTask extends AsyncTask<Object, Object, List<ParcelableRestriction>> {
 		@Override
-		protected List<PrivacyManager.UsageData> doInBackground(Object... arg0) {
+		protected List<ParcelableRestriction> doInBackground(Object... arg0) {
 			long minTime = new Date().getTime() - 1000 * 60 * 60 * 24;
-			List<PrivacyManager.UsageData> listUsageData = new ArrayList<PrivacyManager.UsageData>();
-			for (PrivacyManager.UsageData usageData : PrivacyManager.getUsed(ActivityUsage.this, mUid))
-				if (usageData.getTimeStamp() > minTime)
+			List<ParcelableRestriction> listUsageData = new ArrayList<ParcelableRestriction>();
+			for (ParcelableRestriction usageData : PrivacyManager.getUsed(ActivityUsage.this, mUid))
+				if (usageData.time > minTime)
 					listUsageData.add(usageData);
 			return listUsageData;
 		}
 
 		@Override
-		protected void onPostExecute(List<PrivacyManager.UsageData> listUsageData) {
+		protected void onPostExecute(List<ParcelableRestriction> listUsageData) {
 			super.onPostExecute(listUsageData);
 
 			mUsageAdapter = new UsageAdapter(ActivityUsage.this, R.layout.usageentry, listUsageData);
@@ -167,13 +165,13 @@ public class ActivityUsage extends Activity {
 
 	// Adapters
 
-	private class UsageAdapter extends ArrayAdapter<PrivacyManager.UsageData> {
-		private List<PrivacyManager.UsageData> mListUsageData;
+	private class UsageAdapter extends ArrayAdapter<ParcelableRestriction> {
+		private List<ParcelableRestriction> mListUsageData;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		public UsageAdapter(Context context, int textViewResourceId, List<PrivacyManager.UsageData> objects) {
+		public UsageAdapter(Context context, int textViewResourceId, List<ParcelableRestriction> objects) {
 			super(context, textViewResourceId, objects);
-			mListUsageData = new ArrayList<PrivacyManager.UsageData>();
+			mListUsageData = new ArrayList<ParcelableRestriction>();
 			mListUsageData.addAll(objects);
 		}
 
@@ -194,9 +192,9 @@ public class ActivityUsage extends Activity {
 				boolean all = Boolean.parseBoolean((String) constraint);
 
 				// Match applications
-				List<PrivacyManager.UsageData> lstResult = new ArrayList<PrivacyManager.UsageData>();
-				for (PrivacyManager.UsageData usageData : UsageAdapter.this.mListUsageData) {
-					if (all ? true : usageData.getRestricted())
+				List<ParcelableRestriction> lstResult = new ArrayList<ParcelableRestriction>();
+				for (ParcelableRestriction usageData : UsageAdapter.this.mListUsageData) {
+					if (all ? true : usageData.restricted)
 						lstResult.add(usageData);
 				}
 
@@ -215,7 +213,7 @@ public class ActivityUsage extends Activity {
 				if (results.values == null)
 					notifyDataSetInvalidated();
 				else {
-					addAll((ArrayList<PrivacyManager.UsageData>) results.values);
+					addAll((ArrayList<ParcelableRestriction>) results.values);
 					notifyDataSetChanged();
 				}
 			}
@@ -244,10 +242,10 @@ public class ActivityUsage extends Activity {
 		private class HolderTask extends AsyncTask<Object, Object, Object> {
 			private int position;
 			private ViewHolder holder;
-			private UsageData usageData;
+			private ParcelableRestriction usageData;
 			private Drawable icon = null;
 
-			public HolderTask(int thePosition, ViewHolder theHolder, UsageData theUsageData) {
+			public HolderTask(int thePosition, ViewHolder theHolder, ParcelableRestriction theUsageData) {
 				position = thePosition;
 				holder = theHolder;
 				usageData = theUsageData;
@@ -255,10 +253,10 @@ public class ActivityUsage extends Activity {
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				if (holder.position == position && usageData != null)
+				if (usageData != null) {
 					try {
-						PackageManager pm = holder.row.getContext().getPackageManager();
-						String[] packages = pm.getPackagesForUid(usageData.getUid());
+						PackageManager pm = ActivityUsage.this.getPackageManager();
+						String[] packages = pm.getPackagesForUid(usageData.uid);
 						if (packages != null && packages.length > 0) {
 							ApplicationInfo app = pm.getApplicationInfo(packages[0], 0);
 							icon = pm.getApplicationIcon(app);
@@ -266,12 +264,14 @@ public class ActivityUsage extends Activity {
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
 					}
+					return holder;
+				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Object result) {
-				if (holder.position == position && icon != null) {
+				if (holder.position == position && result != null) {
 					holder.imgIcon.setImageDrawable(icon);
 					holder.imgIcon.setVisibility(View.VISIBLE);
 				}
@@ -291,17 +291,16 @@ public class ActivityUsage extends Activity {
 			}
 
 			// Get data
-			PrivacyManager.UsageData usageData = getItem(position);
+			ParcelableRestriction usageData = getItem(position);
 
 			// Build entry
-			Date date = new Date(usageData.getTimeStamp());
+			Date date = new Date(usageData.time);
 			SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ROOT);
 			holder.tvTime.setText(format.format(date));
 			holder.imgIcon.setVisibility(View.INVISIBLE);
-			holder.imgRestricted.setVisibility(usageData.getRestricted() ? View.VISIBLE : View.INVISIBLE);
-			holder.tvApp.setText(Integer.toString(usageData.getUid()));
-			holder.tvRestriction.setText(String.format("%s/%s", usageData.getRestrictionName(),
-					usageData.getMethodName()));
+			holder.imgRestricted.setVisibility(usageData.restricted ? View.VISIBLE : View.INVISIBLE);
+			holder.tvApp.setText(Integer.toString(usageData.uid));
+			holder.tvRestriction.setText(String.format("%s/%s", usageData.restrictionName, usageData.methodName));
 
 			// Async update
 			new HolderTask(position, holder, usageData).executeOnExecutor(mExecutor, (Object) null);

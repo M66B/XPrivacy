@@ -3,7 +3,9 @@
     <string name="app_notxposed" formatted="false">Xposed 框架版本 %d+ 未安装</string>
     <string name="app_notenabled">XPrivacy 没有在 Xposed 框架中启用</string>
     <string name="app_wrongandroid">仅支持 Android 4.0 以上的版本</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
+    <string name="app_description">终级隐私管理器</string>
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
     <string name="app_copyright">版权所有 \u00A9 2013–2014 M. Bokhorst (M66B)</string>
     <string name="menu_usage">权限使用记录</string>
@@ -19,38 +21,51 @@
     <string name="menu_pro">捐赠/升级到专业版</string>
     <string name="menu_about">关于</string>
     <string name="menu_help">帮助</string>
+    <string name="menu_select_all">选择全部</string>
     <string name="menu_all">全部权限</string>
     <string name="menu_restriction_all">全选/不选列表中的应用</string>
-    <string name="menu_clear_all">清除全部限制</string>
+    <string name="menu_clear_all">清除限制</string>
     <string name="menu_restrict_all">限制所有权限</string>
     <string name="menu_clear_usage">清除权限使用记录</string>
     <string name="menu_usage_all">过滤器开关</string>
-    <string name="menu_apply">套用默认权限模板</string>
+    <string name="menu_apply">应用默认权限模板</string>
     <string name="menu_clear">清除所有权限限制</string>
     <string name="menu_app_launch">启动应用</string>
-    <string name="menu_app_settings">应用信息</string>
+    <string name="menu_app_settings">模拟设置</string>
     <string name="menu_app_store">Play 商店</string>
     <string name="menu_app_kill">强制停止当前应用</string>
     <string name="menu_accounts">选择允许访问的帐号</string>
     <string name="menu_applications">选择允许访问的应用</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
     <string name="menu_tutorial">界面功能指引</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">新应用</string>
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
     <string name="msg_applying">正在应用过滤器…</string>
-    <string name="msg_applied">已套用模版</string>
+    <string name="msg_applied">已应用模版</string>
     <string name="msg_saved_to" formatted="false">保存到%s</string>
     <string name="msg_no_restrictions">没有找到权限限制规则</string>
     <string name="msg_sure">是否确定？</string>
+    <string name="msg_select">请选择一些应用程序</string>
+    <string name="msg_limit">请不要选择%d个以上应用程序</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">XPrivacy 需要在重启后才能生效</string>
     <string name="msg_random_now">生成随机数值</string>
     <string name="msg_random_access">访问时随机生成数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
-    <string name="msg_usage">正在更新用量统计数据…</string>
     <string name="msg_restart">需要重启应用使规则生效</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_service">Update service running</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
@@ -85,13 +100,13 @@
         <item quantity="other">%d个已启用的过滤器</item>
     </plurals>
 
-    <string name="title_fused">曾使用当前选中权限的应用</string>
-    <string name="title_finternet">含有联网权限的应用</string>
-    <string name="title_fpermission">仅显示应用已申请的权限</string>
-    <string name="title_frestricted">仅显示已限制权限的应用</string>
-    <string name="title_fuser">仅显示用户应用</string>
-    <string name="title_fsystem">仅显示系统应用</string>
-    <string name="title_fnot">反选</string>
+    <string name="title_fused">曾经使用</string>
+    <string name="title_finternet">网络权限</string>
+    <string name="title_fpermission">含有权限</string>
+    <string name="title_frestricted">限制使用</string>
+    <string name="title_fuser">用户应用</string>
+    <string name="title_fsystem">系统应用</string>
+    <string name="title_fnot">←反选</string>
     <string name="title_sort_by">Sort by</string>
 
     <string-array name="title_smodes">
@@ -117,21 +132,23 @@
     <string name="settings_ua">User Agent</string>
     <string name="settings_general">一般设置</string>
     <string name="settings_fake_data">模拟信息</string>
-    <string name="settings_global">使用全局模拟信息</string>
     <string name="settings_notify">通知栏提示</string>
-    <string name="settings_usage">Android 应用用量统计数据（需要重启）</string>
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
     <string name="settings_dangerous">限制可能导致应用异常的权限</string>
     <string name="settings_confidence">最大采样置信区间</string>
     <string name="settings_experimental">实验性功能</string>
+    <string name="settings_https">使用安全连接(https)</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">请输入应用名称</string>
-    <string name="help_internet">应用含有联网权限</string>
-    <string name="help_granted">应用已申请的权限（ Androidmanifest 中表明）</string>
-    <string name="help_used">应用曾使用的权限</string>
-    <string name="help_frozen">应用已被冻结/停用</string>
+    <string name="help_internet">应用含有网络访问权限</string>
+    <string name="help_granted">应用已经含有这种权限</string>
+    <string name="help_used">应用曾经用过这种权限</string>
+    <string name="help_used_grayed">应用没有用过这种权限</string>
+    <string name="help_frozen">应用已被暂停使用</string>
     <string name="help_dangerous">可能导致应用异常的权限</string>
-    <string name="help_half">已限制部分权限</string>
+    <string name="help_half">只限制部分权限</string>
     <string name="help_attention">可以下载限制规则的应用</string>
     <string name="help_restricted">限制规则已经生效的应用</string>
     <string name="help_shared">已经分享限制规则的应用</string>
@@ -141,6 +158,7 @@
 \n点击应用图标以查看详细权限限制规则和设置</string>
     <string name="tutorial_detailsheader">点击应用图标以查看更多操作</string>
     <string name="tutorial_detailslist">点击左侧向下的箭头以查看该类别的子权限</string>
+    <string name="permission_manage">管理应用程序，包括强行停止</string>
 
 </resources>
 

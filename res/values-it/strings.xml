@@ -3,7 +3,9 @@
     <string name="app_notxposed" formatted="false">Xposed framework versione %d+ non è installato</string>
     <string name="app_notenabled">XPrivacy non è abilitato nell\'installer di Xposed framework</string>
     <string name="app_wrongandroid">Solo per Android versione 4.0+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">Versione di XPrivacy: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Versione di Xposed framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Utilizzo</string>
@@ -19,6 +21,7 @@
     <string name="menu_pro">Versione Pro</string>
     <string name="menu_about">Riguardo a</string>
     <string name="menu_help">Aiuto</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Tutto</string>
     <string name="menu_restriction_all">Imposta restrizioni</string>
     <string name="menu_clear_all">Deseleziona tutto</string>
@@ -35,6 +38,10 @@
     <string name="menu_applications">Seleziona le applicazioni permesse</string>
     <string name="menu_contacts">Seleziona contatti consentiti</string>
     <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Nuovo</string>
     <string name="msg_update">Aggiorna</string>
     <string name="msg_licensed" formatted="false">Licenziato a: %s</string>
@@ -44,13 +51,21 @@
     <string name="msg_saved_to" formatted="false">Salvato su %s</string>
     <string name="msg_no_restrictions">Nessuna restrizione trovata</string>
     <string name="msg_sure">Sei sicuro?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Fatto</string>
     <string name="msg_reboot">Riavvio richiesto</string>
     <string name="msg_random_now">Generazione casuale</string>
     <string name="msg_random_access">Generazione casuale all\'accesso</string>
     <string name="msg_random_boot">Generazione casuale all\'avvio</string>
-    <string name="msg_usage">Aggiornamento dati di utilizzo</string>
     <string name="msg_restart">Richiesto riavvio dell\'applicazione</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_service">Update service running</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>XPrivacy è stato testato e sviluppato con cura,
 ma è impossibile garantire che funzionerà in modo impeccabile su ogni dispositivo e per ogni applicazione.
 \n\nUsalo a tuo rischio.</b>\n\nLeggi la licenza:</string>
@@ -117,18 +132,20 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="settings_ua">User agent</string>
     <string name="settings_general">Generale</string>
     <string name="settings_fake_data">Dati falsi</string>
-    <string name="settings_global">Usa dati falsi globali</string>
     <string name="settings_notify">Aggiorna notifiche</string>
-    <string name="settings_usage">Utilizzo dati di Android (richiede riavvio)</string>
     <string name="settings_log">Debug log (richiede riavvio)</string>
     <string name="settings_expert">Modalità esperto</string>
     <string name="settings_dangerous">Limita funzioni pericolose</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">Applicazione</string>
     <string name="help_internet">ha permesso internet</string>
     <string name="help_granted">ha permesso Android</string>
     <string name="help_used">ha usato questi dati</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">è disabilitato</string>
     <string name="help_dangerous">è pericoloso</string>
     <string name="help_half">parzialmente limitato</string>
@@ -141,5 +158,6 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
 \nTap the app icon for detailed restrictions and settings</string>
     <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
     <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

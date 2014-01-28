@@ -1,12 +1,10 @@
 package biz.bokhorst.xprivacy;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
 import android.telephony.CellLocation;
@@ -19,8 +17,6 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
-import static de.robv.android.xposed.XposedHelpers.findField;
 
 public class XTelephonyManager extends XHook {
 	private Methods mMethod;
@@ -61,10 +57,10 @@ public class XTelephonyManager extends XHook {
 	// public String getNetworkOperatorName()
 	// public int getNetworkType()
 	// public int getPhoneType()
-	// public static int getPhoneType(int networkMode)
 	// public String getSimCountryIso()
 	// public String getSimOperator()
 	// public String getSimOperatorName()
+	// public static int getPhoneType(int networkMode)
 	// public String getSimSerialNumber()
 	// public String getSubscriberId()
 	// public String getVoiceMailAlphaTag()
@@ -73,28 +69,49 @@ public class XTelephonyManager extends XHook {
 	// frameworks/base/telephony/java/android/telephony/TelephonyManager.java
 	// http://developer.android.com/reference/android/telephony/TelephonyManager.html
 
+	// @formatter:off
 	private enum Methods {
-		disableLocationUpdates, enableLocationUpdates, getAllCellInfo, getCellLocation, getDeviceId, getGroupIdLevel1, getIsimDomain, getIsimImpi, getIsimImpu, getLine1AlphaTag, getLine1Number, getMsisdn, getNeighboringCellInfo, getNetworkCountryIso, getNetworkOperator, getNetworkOperatorName, getNetworkType, getPhoneType, getSimCountryIso, getSimOperator, getSimOperatorName, getSimSerialNumber, getSubscriberId, getVoiceMailAlphaTag, getVoiceMailNumber, listen
+		disableLocationUpdates, enableLocationUpdates,
+		getAllCellInfo, getCellLocation,
+		getDeviceId, getGroupIdLevel1,
+		getIsimDomain, getIsimImpi, getIsimImpu,
+		getLine1AlphaTag, getLine1Number, getMsisdn,
+		getNeighboringCellInfo,
+		getNetworkCountryIso, getNetworkOperator, getNetworkOperatorName,
+		getNetworkType, getPhoneType,
+		getSimCountryIso, getSimOperator, getSimOperatorName, getSimSerialNumber,
+		getSubscriberId,
+		getVoiceMailAlphaTag, getVoiceMailNumber,
+		listen
 	};
+	// @formatter:on
 
 	public static List<XHook> getInstances(Object instance) {
 		String className = instance.getClass().getName();
-		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XTelephonyManager(Methods.enableLocationUpdates, PrivacyManager.cLocation, className));
-		listHook.add(new XTelephonyManager(Methods.getCellLocation, PrivacyManager.cLocation, className));
-		listHook.add(new XTelephonyManager(Methods.getNeighboringCellInfo, PrivacyManager.cLocation, className));
 
+		List<XHook> listHook = new ArrayList<XHook>();
+
+		listHook.add(new XTelephonyManager(Methods.disableLocationUpdates, PrivacyManager.cLocation, className));
+		listHook.add(new XTelephonyManager(Methods.enableLocationUpdates, PrivacyManager.cLocation, className));
+		listHook.add(new XTelephonyManager(Methods.getAllCellInfo, PrivacyManager.cLocation, className,
+				Build.VERSION_CODES.JELLY_BEAN_MR1));
+		listHook.add(new XTelephonyManager(Methods.getCellLocation, PrivacyManager.cLocation, className));
 		listHook.add(new XTelephonyManager(Methods.getDeviceId, PrivacyManager.cPhone, className));
+		listHook.add(new XTelephonyManager(Methods.getGroupIdLevel1, PrivacyManager.cPhone, className,
+				Build.VERSION_CODES.JELLY_BEAN_MR2));
 		listHook.add(new XTelephonyManager(Methods.getIsimDomain, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getIsimImpi, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getIsimImpu, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getLine1AlphaTag, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getLine1Number, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getMsisdn, PrivacyManager.cPhone, className));
+		listHook.add(new XTelephonyManager(Methods.getNeighboringCellInfo, PrivacyManager.cLocation, className));
 		listHook.add(new XTelephonyManager(Methods.getSimSerialNumber, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getSubscriberId, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getVoiceMailAlphaTag, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getVoiceMailNumber, PrivacyManager.cPhone, className));
+
+		listHook.add(new XTelephonyManager(Methods.listen, PrivacyManager.cLocation, className));
 		listHook.add(new XTelephonyManager(Methods.listen, PrivacyManager.cPhone, className));
 
 		// No permissions required
@@ -107,10 +124,6 @@ public class XTelephonyManager extends XHook {
 		listHook.add(new XTelephonyManager(Methods.getSimOperator, PrivacyManager.cPhone, className));
 		listHook.add(new XTelephonyManager(Methods.getSimOperatorName, PrivacyManager.cPhone, className));
 
-		listHook.add(new XTelephonyManager(Methods.getAllCellInfo, PrivacyManager.cLocation, className,
-				Build.VERSION_CODES.JELLY_BEAN_MR1));
-		listHook.add(new XTelephonyManager(Methods.getGroupIdLevel1, PrivacyManager.cPhone, className,
-				Build.VERSION_CODES.JELLY_BEAN_MR2));
 		return listHook;
 	}
 
@@ -175,49 +188,6 @@ public class XTelephonyManager extends XHook {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), mMethod.name()));
 			}
-	}
-
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = null;
-
-		// No context for static methods
-		if (param.thisObject != null) {
-			// TelephonyManager
-			boolean found = false;
-			try {
-				Field fieldContext = findField(param.thisObject.getClass(), "sContext");
-				context = (Context) fieldContext.get(param.thisObject);
-				found = true;
-			} catch (NoSuchFieldError ex) {
-			} catch (Throwable ex) {
-				Util.bug(this, ex);
-			}
-
-			// MultiSimTelephonyManager
-			if (!found)
-				try {
-					Field fieldContext = findField(param.thisObject.getClass(), "mContext");
-					context = (Context) fieldContext.get(param.thisObject);
-					found = true;
-				} catch (NoSuchFieldError ex) {
-				} catch (Throwable ex) {
-					Util.bug(this, ex);
-				}
-
-			// Duos
-			if (!found)
-				try {
-					Field fieldContext = findField(param.thisObject.getClass(), "sContextDuos");
-					context = (Context) fieldContext.get(param.thisObject);
-					found = true;
-				} catch (Throwable ex) {
-					Util.bug(this, ex);
-				}
-		}
-
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
 	}
 
 	private class XPhoneStateListener extends PhoneStateListener {

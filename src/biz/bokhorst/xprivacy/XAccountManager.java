@@ -1,9 +1,6 @@
 package biz.bokhorst.xprivacy;
 
-import static de.robv.android.xposed.XposedHelpers.findField;
-
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +13,6 @@ import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OnAccountsUpdateListener;
 import android.accounts.OperationCanceledException;
-import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -156,23 +152,6 @@ public class XAccountManager extends XHook {
 		}
 	}
 
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = getContext(param);
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
-	}
-
-	private Context getContext(MethodHookParam param) {
-		try {
-			Field fieldContext = findField(param.thisObject.getClass(), "mContext");
-			return (Context) fieldContext.get(param.thisObject);
-		} catch (Throwable ex) {
-			Util.bug(this, ex);
-			return null;
-		}
-	}
-
 	private Account[] filterAccounts(Account[] original, int uid) {
 		List<Account> listAccount = new ArrayList<Account>();
 		for (Account account : original)
@@ -188,7 +167,7 @@ public class XAccountManager extends XHook {
 	private boolean isAccountAllowed(String accountName, String accountType, int uid) {
 		try {
 			String sha1 = Util.sha1(accountName + accountType);
-			if (PrivacyManager.getSettingBool(this, null, 0, String.format("Account.%d.%s", uid, sha1), false, true))
+			if (PrivacyManager.getSettingBool(this, uid, PrivacyManager.cSettingAccount + sha1, false, true))
 				return true;
 		} catch (Throwable ex) {
 			Util.bug(this, ex);

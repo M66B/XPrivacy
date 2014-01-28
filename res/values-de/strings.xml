@@ -3,7 +3,9 @@
     <string name="app_notxposed" formatted="false">Xposed Framework Version %d+ ist nicht installiert</string>
     <string name="app_notenabled">XPrivacy ist im Xposed Installer nicht aktiviert</string>
     <string name="app_wrongandroid">Nur für Android-Version 4.0+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy Version: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed Framework Version: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Aktivitätslog</string>
@@ -14,17 +16,18 @@
     <string name="menu_export">Einstellungen exportieren</string>
     <string name="menu_import">Einstellungen importieren</string>
     <string name="menu_submit">Beschränkungen hochladen (Crowd)</string>
-    <string name="menu_fetch">Beschränkungen runterladen (Crowd)</string>
+    <string name="menu_fetch">Beschränkungen herunterladen (Crowd)</string>
     <string name="menu_theme">Theme wechseln</string>
     <string name="menu_pro">Pro-Version</string>
     <string name="menu_about">Über XPrivacy</string>
     <string name="menu_help">Hilfe</string>
+    <string name="menu_select_all">Alle auswählen</string>
     <string name="menu_all">Alles (beschränkt)</string>
     <string name="menu_restriction_all">Beschränkungen invertieren</string>
     <string name="menu_clear_all">Alles löschen</string>
     <string name="menu_restrict_all">Alles beschränken</string>
     <string name="menu_clear_usage">Löschen</string>
-    <string name="menu_usage_all">Filter invertieren</string>
+    <string name="menu_usage_all">Filter umkehren</string>
     <string name="menu_apply">Template übernehmen</string>
     <string name="menu_clear">Nichts (beschränkt)</string>
     <string name="menu_app_launch">Öffnen</string>
@@ -35,6 +38,10 @@
     <string name="menu_applications">Apps für Zugriff freigeben</string>
     <string name="menu_contacts">Kontakte für Zugriff freigeben</string>
     <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_exclude">Ausschließen</string>
+    <string name="menu_close">Schließen</string>
+    <string name="msg_abort">Abbrechen</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Neu</string>
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">Lizenziert für: %s</string>
@@ -44,13 +51,21 @@
     <string name="msg_saved_to" formatted="false">Gespeichert nach %s</string>
     <string name="msg_no_restrictions">Keine Beschränkung gefunden</string>
     <string name="msg_sure">Sind Sie sicher?</string>
+    <string name="msg_select">Bitte wählen Sie einige Apps aus</string>
+    <string name="msg_limit">Bitte wählen Sie weniger als %d App(s) aus</string>
     <string name="msg_done">Fertig</string>
     <string name="msg_reboot">Geräteneustart erforderlich</string>
     <string name="msg_random_now">Zufallswerte erzeugen</string>
-    <string name="msg_random_access">Zufallswerte bei Neustart</string>
+    <string name="msg_random_access">Zufallswerte bei Zugriff</string>
     <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
-    <string name="msg_usage">Aktualisiere Usage-Data</string>
     <string name="msg_restart">App-Neustart erforderlich</string>
+    <string name="msg_register">Bitte registrieren Sie ihr Gerät</string>
+    <string name="msg_registered">Überprüfen Sie ihre E-Mails um Ihr Gerät zu aktivieren</string>
+    <string name="msg_service">Update Dienst läuft</string>
+    <string name="msg_migrating" formatted="false">Migriere %s</string>
+    <string name="msg_randomizing" formatted="false">Zufall-Erzeugung %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">Eine interen Überprüfung ist fehlgeschlagen, möchten Sie die Supportinformationen senden?</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
 \ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
 \n\nVerwenden Sie XPrivacy ausschließlich auf Ihr eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>
@@ -117,29 +132,32 @@
     <string name="settings_ua">User-Agent (Browser)</string>
     <string name="settings_general">Allgemein</string>
     <string name="settings_fake_data">Daten manipulieren</string>
-    <string name="settings_global">Benutze globale gefälschte Daten</string>
     <string name="settings_notify">Update-Benachrichtigungen</string>
-    <string name="settings_usage">Android Usage-Data (erfordert Geräteneustart)</string>
     <string name="settings_log">Debug-Log (erfordert Geräteneustart)</string>
     <string name="settings_expert">Experten-Modus</string>
     <string name="settings_dangerous">Beschränke "bedenkliche" Funktionen</string>
     <string name="settings_confidence">Maximaler "runterladen" Konfidenzintervall</string>
     <string name="settings_experimental">Experimentelle Funktionen (Neustart erforderlich)</string>
+    <string name="settings_https">Benutze sichere Verbindung</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Zeige App Nutzungsdaten (Neustart erforderlich)</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>
     <string name="help_used">hat diese Daten benutzt</string>
+    <string name="help_used_grayed">keine Nutzungsdaten verfügbar</string>
     <string name="help_frozen">ist deaktiviert</string>
     <string name="help_dangerous">Beschränkung bedenklich (eventueller App-Absturz)</string>
     <string name="help_half">teilweise beschränkt</string>
-    <string name="help_attention">Beschränkungen bedarfen Beachtung</string>
-    <string name="help_restricted">Beschränkungen werden geändert</string>
-    <string name="help_shared">Beschränkungen werden eingereicht</string>
+    <string name="help_attention">Beschränkungen benötigen Aufmerksamkeit</string>
+    <string name="help_restricted">Beschränkungen wurden geändert</string>
+    <string name="help_shared">Beschränkungen sind eingereicht</string>
     <string name="tutorial_mainheader">Wählen Sie die zu beschränkende Kategorie; wählen Sie anzuzeigende Apps durch die Filter</string>
     <string name="tutorial_mainlist">Tippen Sie auf ein Kontrollkästchen, um die ausgewählte Kategorie für eine App zu beschränken\n
 \nApps werden mit leeren oder gefälschten Daten für die beschränkten Kategorien "gefüttert" \n
 \nTippen Sie auf das App-Icon für detaillierte Beschränkungen und Einstellungen</string>
     <string name="tutorial_detailsheader">Tippen Sie auf das App-Icon für weitere Aktionen</string>
     <string name="tutorial_detailslist">Tippen Sie auf den Pfeil, um die Ausnahmen-Funktionen von einer beschränkten Kategorie zu sehen</string>
+    <string name="permission_manage">Verwalte Apps, inklusive Beenden (kill)</string>
 
 </resources>

@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.content.ContentProvider;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
@@ -90,6 +88,18 @@ public class XContentProvider extends XHook {
 					"com.android.providers.contacts.CallLogProvider"));
 			listHook.add(new XContentProvider(PrivacyManager.cMessages, "VoicemailContentProvider",
 					"com.android.providers.contacts.VoicemailContentProvider"));
+		}
+
+		// Contacts provider of Motorola's Blur
+		else if (packageName.equals("com.motorola.blur.providers.contacts")) {
+			String[] uris = new String[] { "contacts/contacts", "contacts/data", "contacts/raw_contacts",
+					"contacts/phone_lookup", "contacts/profile" };
+			for (String uri : uris)
+				listHook.add(new XContentProvider(PrivacyManager.cContacts, "ContactsProvider2",
+						"com.android.providers.contacts.ContactsProvider2", "content://com.android." + uri));
+
+			listHook.add(new XContentProvider(PrivacyManager.cPhone, "BlurCallLogProvider",
+					"com.motorola.blur.providers.contacts.BlurCallLogProvider"));
 		}
 
 		// E-mail provider
@@ -186,11 +196,11 @@ public class XContentProvider extends XHook {
 							// Check if can be copied
 							boolean copy = false;
 							if (id >= 0)
-								copy = PrivacyManager.getSettingBool(this, null, 0,
-										String.format("Contact.%d.%d", Binder.getCallingUid(), id), false, true);
+								copy = PrivacyManager.getSettingBool(this, Binder.getCallingUid(),
+										PrivacyManager.cSettingContact + id, false, true);
 							if (!copy && rawid >= 0)
-								copy = PrivacyManager.getSettingBool(this, null, 0,
-										String.format("RawContact.%d.%d", Binder.getCallingUid(), rawid), false, true);
+								copy = PrivacyManager.getSettingBool(this, Binder.getCallingUid(),
+										PrivacyManager.cSettingRawContact + rawid, false, true);
 
 							// Conditionally copy row
 							if (copy)
@@ -208,7 +218,7 @@ public class XContentProvider extends XHook {
 						while (cursor.moveToNext()) {
 							int colPackage = cursor.getColumnIndex("package");
 							String packageName = (colPackage < 0 ? null : cursor.getString(colPackage));
-							if (packageName != null && XApplicationPackageManager.isPackageAllowed(packageName))
+							if (packageName != null && XPackageManager.isPackageAllowed(packageName))
 								copyColumns(cursor, result);
 						}
 						result.respond(cursor.getExtras());
@@ -254,13 +264,5 @@ public class XContentProvider extends XHook {
 		} catch (Throwable ex) {
 			Util.bug(this, ex);
 		}
-	}
-
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		ContentProvider contentProvider = (ContentProvider) param.thisObject;
-		Context context = contentProvider.getContext();
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
 	}
 }

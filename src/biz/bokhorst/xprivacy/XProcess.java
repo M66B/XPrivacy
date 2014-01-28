@@ -63,7 +63,7 @@ public class XProcess extends XHook {
 			if (param.args.length >= 5) {
 				// Check if restricted
 				int uid = (Integer) param.args[2];
-				if (getRestricted(null, uid, mAction, false)) {
+				if (getRestricted(uid, mAction, false)) {
 					// Get group IDs
 					int[] gids = (int[]) param.args[4];
 					if (gids == null)

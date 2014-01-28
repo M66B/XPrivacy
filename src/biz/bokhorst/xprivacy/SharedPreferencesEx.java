@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+// Based on:
 // https://github.com/rovo89/XposedBridge/blob/master/src/de/robv/android/xposed/XSharedPreferences.java
 
 import java.io.BufferedInputStream;
@@ -28,14 +29,13 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	private long mLastModified;
 	private long mFileSize;
 
+	private static int cTryMaxCount = 50;
+	private static int cTryWaitMs = 200;
+
 	public SharedPreferencesEx(File prefFile) {
 		mFile = prefFile;
 		mBackupFile = makeBackupFile(prefFile);
 		startLoadFromDisk();
-	}
-
-	public SharedPreferencesEx(String packageName) {
-		this(packageName, packageName + "_preferences");
 	}
 
 	public SharedPreferencesEx(String packageName, String prefFileName) {
@@ -62,7 +62,13 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void loadFromDiskLocked() {
 		int tries = 0;
-		while (!mLoaded && (mFile.exists() || mBackupFile.exists()) && ++tries < 10) {
+		while (++tries <= cTryMaxCount && !mLoaded && (mFile.exists() || mBackupFile.exists())) {
+			// Log retry
+			if (tries > 1)
+				Util.log(null, Log.WARN, "Load " + mFile + " try=" + tries + " exists=" + mFile.exists() + " readable="
+						+ mFile.canRead() + " backup=" + mBackupFile.exists());
+
+			// Read file if possible
 			if (mFile.exists() && mFile.canRead() && !mBackupFile.exists()) {
 				Map map = null;
 				long lastModified = mFile.lastModified();
@@ -72,15 +78,15 @@ public final class SharedPreferencesEx implements SharedPreferences {
 					str = new BufferedInputStream(new FileInputStream(mFile), 16 * 1024);
 					map = XmlUtils.readMapXml(str);
 				} catch (Throwable ex) {
-					Util.bug(null, ex);
+					Util.log(null, Log.WARN, "Error reading " + mFile + ": " + ex);
 				} finally {
 					if (str != null) {
 						try {
 							str.close();
 						} catch (RuntimeException rethrown) {
 							throw rethrown;
-						} catch (Throwable ignored) {
-							Util.bug(null, ignored);
+						} catch (Throwable ex) {
+							Util.log(null, Log.WARN, "Error closing " + mFile + ": " + ex);
 						}
 					}
 				}
@@ -92,16 +98,23 @@ public final class SharedPreferencesEx implements SharedPreferences {
 					notifyAll();
 				}
 			}
-			if (!mLoaded)
+
+			// Wait for next try
+			if (!mLoaded && tries < cTryMaxCount)
 				try {
-					Thread.sleep(200);
-					Util.log(null, Log.WARN, "Load " + mFile + " try " + tries);
+					Thread.sleep(cTryWaitMs);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
 		}
+
+		// File not read
 		if (!mLoaded) {
-			mLoaded = true;
+			if (tries >= cTryMaxCount)
+				// Not loaded: try to load again on next access
+				Util.log(null, Log.ERROR, "Not loaded " + mFile);
+			else
+				mLoaded = true;
 			mMap = new HashMap<String, Object>();
 			notifyAll();
 		}
@@ -122,23 +135,23 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	}
 
 	private boolean hasFileChanged() {
-		if (!mFile.canRead() || mBackupFile.exists()) {
+		// canRead returns false for non existing files
+		if (!mFile.canRead() || mBackupFile.exists())
 			return true;
-		}
+
 		long lastModified = mFile.lastModified();
 		long fileSize = mFile.length();
 		synchronized (this) {
-			return mLastModified != lastModified || mFileSize != fileSize;
+			return (mLastModified != lastModified || mFileSize != fileSize);
 		}
 	}
 
 	private void awaitLoadedLocked() {
-		while (!mLoaded) {
+		while (!mLoaded)
 			try {
 				wait();
 			} catch (InterruptedException unused) {
 			}
-		}
 	}
 
 	@Override
@@ -226,5 +239,4 @@ public final class SharedPreferencesEx implements SharedPreferences {
 	public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
 		throw new UnsupportedOperationException("listeners are not supported in this implementation");
 	}
-
 }

@@ -5,30 +5,38 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.net.InterfaceAddress;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.os.Build;
+import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class Requirements {
+	private static String[] cIncompatible = new String[] { "com.lbe.security" };
 
+	@SuppressWarnings("unchecked")
 	public static void check(final Context context) {
 		// Check Android version
-		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH
-				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
+		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR1
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN_MR2
 				&& Build.VERSION.SDK_INT != Build.VERSION_CODES.KITKAT) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
-			alertDialogBuilder.setMessage(context.getString(R.string.app_wrongandroid));
+			alertDialogBuilder.setTitle(R.string.app_name);
+			alertDialogBuilder.setMessage(R.string.app_wrongandroid);
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
@@ -48,10 +56,8 @@ public class Requirements {
 		if (xVersion < PrivacyManager.cXposedAppProcessMinVersion) {
 			String msg = String.format(context.getString(R.string.app_notxposed),
 					PrivacyManager.cXposedAppProcessMinVersion);
-			Util.log(null, Log.WARN, msg);
-
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
+			alertDialogBuilder.setTitle(R.string.app_name);
 			alertDialogBuilder.setMessage(msg);
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
@@ -68,13 +74,21 @@ public class Requirements {
 		}
 
 		// Check if XPrivacy is enabled
-		if (!Util.isXposedEnabled()) {
-			String msg = context.getString(R.string.app_notenabled);
-			Util.log(null, Log.WARN, msg);
-
+		if (Util.isXposedEnabled()) {
+			// Check privacy client
+			try {
+				if (PrivacyService.getClient() != null) {
+					List<String> listError = (List<String>) PrivacyService.getClient().check();
+					if (listError.size() > 0)
+						sendSupportInfo(TextUtils.join("\r\n", listError), context);
+				}
+			} catch (Throwable ex) {
+				sendSupportInfo(ex.toString(), context);
+			}
+		} else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
-			alertDialogBuilder.setMessage(msg);
+			alertDialogBuilder.setTitle(R.string.app_name);
+			alertDialogBuilder.setMessage(R.string.app_notenabled);
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
@@ -93,12 +107,9 @@ public class Requirements {
 		// Check pro enabler
 		Version version = Util.getProEnablerVersion(context);
 		if (version != null && !Util.isValidProEnablerVersion(version)) {
-			String msg = context.getString(R.string.app_wrongenabler);
-			Util.log(null, Log.WARN, msg);
-
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle(context.getString(R.string.app_name));
-			alertDialogBuilder.setMessage(msg);
+			alertDialogBuilder.setTitle(R.string.app_name);
+			alertDialogBuilder.setMessage(R.string.app_wrongenabler);
 			alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
@@ -113,9 +124,28 @@ public class Requirements {
 			alertDialog.show();
 		}
 
-		// Check activity manager
-		if (!checkField(context.getSystemService(Context.ACTIVITY_SERVICE), "mContext", Context.class))
-			reportClass(context.getSystemService(Context.ACTIVITY_SERVICE).getClass(), context);
+		// Check incompatible apps
+		for (String packageName : cIncompatible)
+			try {
+				ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
+				String name = context.getPackageManager().getApplicationLabel(appInfo).toString();
+
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+				alertDialogBuilder.setTitle(R.string.app_name);
+				alertDialogBuilder.setMessage(String.format(context.getString(R.string.app_incompatible), name));
+				alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 
 		// Check activity thread
 		try {
@@ -125,7 +155,7 @@ public class Requirements {
 			} catch (NoSuchMethodException ex) {
 				reportClass(clazz, context);
 			}
-		} catch (Throwable ex) {
+		} catch (ClassNotFoundException ex) {
 			sendSupportInfo(ex.toString(), context);
 		}
 
@@ -134,30 +164,30 @@ public class Requirements {
 			Class<?> clazz = Class.forName("android.app.ActivityThread$ReceiverData");
 			if (!checkField(clazz, "intent"))
 				reportClass(clazz, context);
-		} catch (Throwable ex) {
+		} catch (ClassNotFoundException ex) {
 			try {
 				reportClass(Class.forName("android.app.ActivityThread"), context);
-			} catch (Throwable exex) {
+			} catch (ClassNotFoundException exex) {
 				sendSupportInfo(exex.toString(), context);
 			}
 		}
 
-		// Check clipboard manager
-		if (!checkField(context.getSystemService(Context.CLIPBOARD_SERVICE), "mContext", Context.class))
-			reportClass(context.getSystemService(Context.CLIPBOARD_SERVICE).getClass(), context);
-
-		// Check content resolver
-		if (!checkField(context.getContentResolver(), "mContext", Context.class))
-			reportClass(context.getContentResolver().getClass(), context);
+		// Check file utils
+		try {
+			Class<?> clazz = Class.forName("android.os.FileUtils");
+			try {
+				clazz.getDeclaredMethod("setPermissions", String.class, int.class, int.class, int.class);
+			} catch (NoSuchMethodException ex) {
+				reportClass(clazz, context);
+			}
+		} catch (ClassNotFoundException ex) {
+			sendSupportInfo(ex.toString(), context);
+		}
 
 		// Check interface address
 		if (!checkField(InterfaceAddress.class, "address") || !checkField(InterfaceAddress.class, "broadcastAddress")
-				|| PrivacyManager.getDefacedProp(0, "InetAddress") == null)
+				|| (PrivacyService.getClient() != null && PrivacyManager.getDefacedProp(0, "InetAddress") == null))
 			reportClass(InterfaceAddress.class, context);
-
-		// Check package manager
-		if (!checkField(context.getPackageManager(), "mContext", Context.class))
-			reportClass(context.getPackageManager().getClass(), context);
 
 		// Check package manager service
 		try {
@@ -170,23 +200,53 @@ public class Requirements {
 			} catch (NoSuchMethodException ex) {
 				reportClass(clazz, context);
 			}
-		} catch (Throwable ex) {
+		} catch (ClassNotFoundException ex) {
 			sendSupportInfo(ex.toString(), context);
 		}
 
-		// Check runtime
+		// Check service manager
 		try {
-			Runtime.class.getDeclaredMethod("load", String.class, ClassLoader.class);
-			Runtime.class.getDeclaredMethod("loadLibrary", String.class, ClassLoader.class);
-		} catch (NoSuchMethodException ex) {
-			reportClass(Runtime.class, context);
-		}
+			Class<?> clazz = Class.forName("android.os.ServiceManager");
+			try {
+				// public static String[] listServices()
+				// public static IBinder checkService(String name)
+				Method listServices = clazz.getDeclaredMethod("listServices");
+				Method getService = clazz.getDeclaredMethod("getService", String.class);
 
-		// Check telephony manager
-		if (!checkField(context.getSystemService(Context.TELEPHONY_SERVICE), "sContext", Context.class)
-				&& !checkField(context.getSystemService(Context.TELEPHONY_SERVICE), "mContext", Context.class)
-				&& !checkField(context.getSystemService(Context.TELEPHONY_SERVICE), "sContextDuos", Context.class))
-			reportClass(context.getSystemService(Context.TELEPHONY_SERVICE).getClass(), context);
+				// Get services
+				Map<String, String> mapService = new HashMap<String, String>();
+				for (String service : (String[]) listServices.invoke(null)) {
+					IBinder binder = (IBinder) getService.invoke(null, service);
+					mapService.put(service, binder.getInterfaceDescriptor());
+				}
+
+				// Check services
+				List<String> listMissing = new ArrayList<String>();
+				for (String service : XBinder.cListService)
+					if (!"iphonesubinfo".equals(service) && !mapService.containsKey(service))
+						listMissing.add(service);
+				if (PrivacyManager.cTestVersion)
+					for (String serviceName : XBinder.cListServiceName)
+						if (!"com.android.internal.telephony.IPhoneSubInfo".equals(serviceName)
+								&& !mapService.containsValue(serviceName))
+							listMissing.add(serviceName);
+
+				// Check result
+				if (listMissing.size() > 0) {
+					List<String> listService = new ArrayList<String>();
+					for (String service : mapService.keySet())
+						listService.add(String.format("%s: %s", service, mapService.get(service)));
+					sendSupportInfo("Missing:\r\n" + TextUtils.join("\r\n", listMissing) + "\r\n\r\nAvailable:\r\n"
+							+ TextUtils.join("\r\n", listService), context);
+				}
+			} catch (NoSuchMethodException ex) {
+				reportClass(clazz, context);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		} catch (ClassNotFoundException ex) {
+			sendSupportInfo(ex.toString(), context);
+		}
 
 		// Check wifi info
 		if (!checkField(WifiInfo.class, "mSupplicantState") || !checkField(WifiInfo.class, "mBSSID")
@@ -200,10 +260,10 @@ public class Requirements {
 				Class<?> clazz = Class.forName("android.net.wifi.WifiSsid");
 				try {
 					clazz.getDeclaredMethod("createFromAsciiEncoded", String.class);
-				} catch (NoSuchMethodError ex) {
+				} catch (NoSuchMethodException ex) {
 					reportClass(clazz, context);
 				}
-			} catch (Throwable ex) {
+			} catch (ClassNotFoundException ex) {
 				sendSupportInfo(ex.toString(), context);
 			}
 
@@ -215,36 +275,11 @@ public class Requirements {
 		}
 	}
 
-	private static boolean checkField(Object obj, String fieldName, Class<?> expectedClass) {
-		try {
-			// Find field
-			Field field = null;
-			Class<?> superClass = (obj == null ? null : obj.getClass());
-			while (superClass != null)
-				try {
-					field = superClass.getDeclaredField(fieldName);
-					field.setAccessible(true);
-					break;
-				} catch (Throwable ex) {
-					superClass = superClass.getSuperclass();
-				}
-
-			// Check field
-			if (field != null) {
-				Object value = field.get(obj);
-				if (value == null || expectedClass.isAssignableFrom(value.getClass()))
-					return true;
-			}
-		} catch (Throwable ex) {
-		}
-		return false;
-	}
-
 	private static boolean checkField(Class<?> clazz, String fieldName) {
 		try {
 			clazz.getDeclaredField(fieldName);
 			return true;
-		} catch (Throwable ex) {
+		} catch (NoSuchFieldException ex) {
 			return false;
 		}
 	}
@@ -254,7 +289,7 @@ public class Requirements {
 		Util.log(null, Log.WARN, msg);
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-		alertDialogBuilder.setTitle(context.getString(R.string.app_name));
+		alertDialogBuilder.setTitle(R.string.app_name);
 		alertDialogBuilder.setMessage(msg);
 		alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
@@ -298,29 +333,48 @@ public class Requirements {
 		sendSupportInfo(sb.toString(), context);
 	}
 
-	private static void sendSupportInfo(String text, Context context) {
-		String xversion = null;
-		try {
-			PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-			xversion = pInfo.versionName;
-		} catch (Throwable ex) {
-		}
+	public static void sendSupportInfo(final String text, final Context context) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setTitle(R.string.app_name);
+		alertDialogBuilder.setMessage(R.string.msg_support_info);
+		alertDialogBuilder.setIcon(Util.getThemed(context, R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int _which) {
+						String xversion = null;
+						try {
+							PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+							xversion = pInfo.versionName;
+						} catch (Throwable ex) {
+						}
 
-		StringBuilder sb = new StringBuilder(text);
-		sb.insert(0, "\r\n");
-		sb.insert(0, String.format("Model: %s\r\n", android.os.Build.MODEL));
-		sb.insert(0, String.format("Android SDK int: %d\r\n", Build.VERSION.SDK_INT));
-		sb.insert(0, String.format("XPrivacy version: %s\r\n", xversion));
+						StringBuilder sb = new StringBuilder(text);
+						sb.insert(0, "\r\n");
+						sb.insert(0, String.format("Model: %s (%s)\r\n", Build.MODEL, Build.PRODUCT));
+						sb.insert(0, String.format("Android version: %s (SDK %d)\r\n", Build.VERSION.RELEASE,
+								Build.VERSION.SDK_INT));
+						sb.insert(0, String.format("XPrivacy version: %s\r\n", xversion));
 
-		Intent sendEmail = new Intent(Intent.ACTION_SEND);
-		sendEmail.setType("message/rfc822");
-		sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
-		sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy support info");
-		sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
-		try {
-			context.startActivity(sendEmail);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
+						Intent sendEmail = new Intent(Intent.ACTION_SEND);
+						sendEmail.setType("message/rfc822");
+						sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
+						sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy support info");
+						sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
+						try {
+							context.startActivity(sendEmail);
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						}
+					}
+				});
+		alertDialogBuilder.setNegativeButton(context.getString(android.R.string.cancel),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 }

@@ -170,7 +170,7 @@ public class XActivityThread extends XHook {
 								else
 									packageNames = new String[] { intent.getData().getEncodedSchemeSpecificPart() };
 								for (String packageName : packageNames)
-									if (!XApplicationPackageManager.isPackageAllowed(packageName)) {
+									if (!XPackageManager.isPackageAllowed(packageName)) {
 										finish(param);
 										param.setResult(null);
 										break;

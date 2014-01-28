@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
-    android:versionCode="221"
-    android:versionName="1.12.1" >
+    android:versionCode="253"
+    android:versionName="1.99.19" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -14,7 +14,7 @@
 
     <permission
         android:name="biz.bokhorst.xprivacy.MANAGE_PACKAGES"
-        android:description="@string/app_name"
+        android:description="@string/permission_manage"
         android:label="@string/app_name"
         android:protectionLevel="dangerous" />
 
@@ -42,12 +42,7 @@
             android:value="42+" />
         <meta-data
             android:name="xposeddescription"
-            android:value="The ultimate privacy manager" />
-
-        <!-- Google Play services -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@string/app_description" />
 
         <!-- Samsung multi window support -->
         <meta-data
@@ -69,7 +64,8 @@
         <activity
             android:name=".ActivityMain"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -79,6 +75,8 @@
         </activity>
         <activity
             android:name=".ActivityApp"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop"
             android:parentActivityName=".ActivityMain" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -86,6 +84,7 @@
         </activity>
         <activity
             android:name=".ActivityUsage"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".ActivityMain" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -93,11 +92,18 @@
         </activity>
         <activity
             android:name=".ActivityShare"
-            android:theme="@android:style/Theme.NoDisplay" >
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".ActivityMain" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="biz.bokhorst.xprivacy.ActivityMain" />
+
             <intent-filter>
                 <action android:name="biz.bokhorst.xprivacy.action.IMPORT" />
                 <action android:name="biz.bokhorst.xprivacy.action.EXPORT" />
                 <action android:name="biz.bokhorst.xprivacy.action.FETCH" />
+                <action android:name="biz.bokhorst.xprivacy.action.SUBMIT" />
+                <action android:name="biz.bokhorst.xprivacy.action.TOGGLE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -131,14 +137,10 @@
             </intent-filter>
         </receiver>
 
-        <provider
-            android:name=".PrivacyProvider"
-            android:authorities="biz.bokhorst.xprivacy.provider"
+        <service
+            android:name=".UpdateService"
             android:enabled="true"
-            android:exported="true"
-            android:process=":provider"
-            android:syncable="false" >
-        </provider>
+            android:process=":update" />
     </application>
 
 </manifest>

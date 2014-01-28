@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -34,11 +33,6 @@ public class XActivity extends XHook {
 		return "android.app.Activity";
 	}
 
-	@Override
-	public boolean isVisible() {
-		return !(mMethod == Methods.onDestroy || mMethod == Methods.onPause);
-	}
-
 	// @formatter:off
 
 	// public Object getSystemService(String name)
@@ -54,28 +48,21 @@ public class XActivity extends XHook {
 	// public void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode, Bundle options)
 	// public boolean startActivityIfNeeded(Intent intent, int requestCode)
 	// public boolean startActivityIfNeeded(Intent intent, int requestCode, Bundle options)
-	// protected void onPause()
-	// protected void onDestroy()
 	// frameworks/base/core/java/android/app/Activity.java
 
 	// @formatter:on
 
 	private enum Methods {
-		getSystemService, startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded, onPause, onDestroy
+		getSystemService, startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded
 	};
 
 	@SuppressLint("InlinedApi")
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-
 		listHook.add(new XActivity(Methods.getSystemService, null, null));
-		listHook.add(new XActivity(Methods.onDestroy, null, null));
-		listHook.add(new XActivity(Methods.onPause, null, null));
 
 		List<Methods> startMethods = new ArrayList<Methods>(Arrays.asList(Methods.values()));
 		startMethods.remove(Methods.getSystemService);
-		startMethods.remove(Methods.onDestroy);
-		startMethods.remove(Methods.onPause);
 
 		// Intent send: browser
 		for (Methods activity : startMethods)
@@ -102,8 +89,6 @@ public class XActivity extends XHook {
 		// Get intent(s)
 		Intent[] intents = null;
 		if (mMethod == Methods.getSystemService) {
-			// Do nothing
-		} else if (mMethod == Methods.onDestroy || mMethod == Methods.onPause) {
 			// Do nothing
 		} else if (mMethod == Methods.startActivity || mMethod == Methods.startActivityForResult
 				|| mMethod == Methods.startActivityIfNeeded) {
@@ -150,16 +135,12 @@ public class XActivity extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.getSystemService) {
+			// TODO: check if this hook is needed
 			if (param.args.length > 0 && param.args[0] != null) {
+				String name = (String) param.args[0];
 				Object instance = param.getResult();
-				if (instance != null)
-					XPrivacy.handleGetSystemService(this, (String) param.args[0], instance);
-			}
-		} else if (mMethod == Methods.onDestroy || mMethod == Methods.onPause) {
-			try {
-				PrivacyManager.sendUsageData(this, (Context) param.thisObject);
-			} catch (Throwable ex) {
-				Util.bug(this, ex);
+				if (name != null && instance != null)
+					XPrivacy.handleGetSystemService(this, name, instance);
 			}
 		}
 	}

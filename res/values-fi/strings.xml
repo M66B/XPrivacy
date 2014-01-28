@@ -3,7 +3,9 @@
     <string name="app_notxposed" formatted="false">Xposed framework versio %d+ ei ole asennettu</string>
     <string name="app_notenabled">XPrivacy ei ole enabloitu Xposed asennusohjelmassa</string>
     <string name="app_wrongandroid">Vain Android versiolle 4.0.3+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy versio: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed framework versio: %d</string>
     <string name="app_copyright">Tekijänoikeus \u00A9 2013–2014 M. Bokhorst (M66B)</string>
     <string name="menu_usage">Käyttötiedot</string>
@@ -19,6 +21,7 @@
     <string name="menu_pro">Pro versio</string>
     <string name="menu_about">Tietoja</string>
     <string name="menu_help">Apua</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Kaikki</string>
     <string name="menu_restriction_all">Vaihda rajoitukset</string>
     <string name="menu_clear_all">Clear all</string>
@@ -35,6 +38,10 @@
     <string name="menu_applications">Valitse sallittavat applikaatiot</string>
     <string name="menu_contacts">Valitse sallittavat kontaktit</string>
     <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Uusi</string>
     <string name="msg_update">Päivitä</string>
     <string name="msg_licensed" formatted="false">Lisensoitu: %s</string>
@@ -44,13 +51,21 @@
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_sure">Oletko varma?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Valmis</string>
     <string name="msg_reboot">Laite on käynnistettävä uudelleen</string>
     <string name="msg_random_now">Randomize now</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Satunnaista uudelleenkäynnistyksen jälkeen</string>
-    <string name="msg_usage">Updating usage data</string>
     <string name="msg_restart">Application restart required</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_service">Update service running</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>Xprivacy on tehty ja testattu huolellisesti, mutta on kuitenkin mahdotonta antaa takeita että se toimii virheettömästi kaikissa laitteissa ja jokaisessa applikaatiossa.
 \n\nKäyttö on täysin omalla vastuullasi.</b>\n\nKatso myös lisenssi:</string>
     <string name="restrict_accounts">Tilit (Google, Facebook, jne)</string>
@@ -116,18 +131,20 @@
     <string name="settings_ua">User agent</string>
     <string name="settings_general">General</string>
     <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Päivitä ilmoitukset</string>
-    <string name="settings_usage">Androidin käyttötiedot (vaatii uudelleenkäynnistyksen)</string>
     <string name="settings_log">Debuggaus logi (vaatii uudelleenkäynnistyksen)</string>
     <string name="settings_expert">Expert tila</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">Applikaatio</string>
     <string name="help_internet">on internet käyttöoikeus</string>
     <string name="help_granted">on Android käyttöoikeus</string>
     <string name="help_used">on käyttänyt tätä dataa</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">on disabloitu</string>
     <string name="help_dangerous">on vaarallinen, rajoitus voi aiheuttaa ongelmia</string>
     <string name="help_half">partly restricted</string>
@@ -140,5 +157,6 @@
 \nTap the app icon for detailed restrictions and settings</string>
     <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
     <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

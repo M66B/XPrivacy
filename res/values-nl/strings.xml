@@ -3,7 +3,9 @@
     <string name="app_notxposed" formatted="false">Xposed framework versie %d+ is niet geïnstalleerd</string>
     <string name="app_notenabled">XPrivacy is niet ingeschakeld in de Xposed installer</string>
     <string name="app_wrongandroid">Alleen voor Android versie 4.0.3+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is niet verenigbaar met %s</string>
     <string name="app_version" formatted="false">XPrivacy versie: %s (%d)</string>
+    <string name="app_description">De ultieme privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed framework versie: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">Gebruik</string>
@@ -19,6 +21,7 @@
     <string name="menu_pro">Pro versie</string>
     <string name="menu_about">Over</string>
     <string name="menu_help">Help</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Alle</string>
     <string name="menu_restriction_all">Schakel beperkingen</string>
     <string name="menu_clear_all">Alles wissen</string>
@@ -35,22 +38,34 @@
     <string name="menu_applications">Sta applicaties toe</string>
     <string name="menu_contacts">Sta contacten toe</string>
     <string name="menu_tutorial">Zelfstudie</string>
+    <string name="menu_exclude">Sluit uit</string>
+    <string name="menu_close">Sluiten</string>
+    <string name="msg_abort">Afbreken</string>
+    <string name="msg_aborted">Afgebroken</string>
     <string name="msg_new">Nieuw</string>
     <string name="msg_update">Bijgewerkt</string>
     <string name="msg_licensed" formatted="false">In licentie gegeven aan: %s</string>
-    <string name="msg_loading">Laden</string>
-    <string name="msg_applying">Toepassen</string>
+    <string name="msg_loading">Laden &#8230;</string>
+    <string name="msg_applying">Toepassen &#8230;</string>
     <string name="msg_applied">Sjabloon toegepast</string>
     <string name="msg_saved_to" formatted="false">Bewaard als %s</string>
     <string name="msg_no_restrictions">Geen beperkingen gevonden</string>
     <string name="msg_sure">Zeker weten?</string>
+    <string name="msg_select">Selecter a.u.b enige applicaties</string>
+    <string name="msg_limit">Selecteer a.u.b. minder dan %d applicaties</string>
     <string name="msg_done">Gereed</string>
     <string name="msg_reboot">Herstart apparaat vereist</string>
     <string name="msg_random_now">Willekeurig</string>
     <string name="msg_random_access">Willekeurig bij gebruik</string>
     <string name="msg_random_boot">Willekeurig na herstart</string>
-    <string name="msg_usage">Bijwerken van gegevensgebruik</string>
     <string name="msg_restart">Applicatie herstart vereist</string>
+    <string name="msg_register">Registreer a.u.b. uw apparaat</string>
+    <string name="msg_registered">Controleer uw e-mail om uw apparaat te activeren</string>
+    <string name="msg_service">Bijwerkdienst actief</string>
+    <string name="msg_migrating" formatted="false">Migratie %s</string>
+    <string name="msg_randomizing" formatted="false">Willekeurig %s</string>
+    <string name="msg_upgrading" formatted="false">Bijwerken %s</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
 \n\nGebruik is geheel op eigen risico.</b>\n\nZie ook de licentie:</string>
@@ -117,18 +132,20 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_ua">User agent</string>
     <string name="settings_general">Algemeen</string>
     <string name="settings_fake_data">Nepgegevens</string>
-    <string name="settings_global">Gebruik globale nep gegevens</string>
     <string name="settings_notify">Bijgewerkt notificaties</string>
-    <string name="settings_usage">Android gebruiksgegevens (herstart vereist)</string>
     <string name="settings_log">Debug log (herstart vereist)</string>
     <string name="settings_expert">Expertmodus</string>
     <string name="settings_dangerous">Beperk gevaarlijke functies</string>
     <string name="settings_confidence">Maximum betrouwbaarheidsinterval voor ophalen</string>
     <string name="settings_experimental">Experimentele functies (herstart vereist)</string>
+    <string name="settings_https">Gebruik veilige verbindingen</string>
+    <string name="settings_syscomponents">Beperk systemcomponenten (Android) (herstart vereist)</string>
+    <string name="settings_usagedata">Toon gebruiksgegevens (herstart vereist)</string>
     <string name="help_application">Applicatie</string>
     <string name="help_internet">heeft internet rechten</string>
     <string name="help_granted">heeft Android rechten</string>
     <string name="help_used">heeft deze gegevens gebruikt</string>
+    <string name="help_used_grayed">geen gebruiksgegevens beschikbaar</string>
     <string name="help_frozen">is uitgezet</string>
     <string name="help_dangerous">is gevaarlijk</string>
     <string name="help_half">is gedeeltelijk beperkt</string>
@@ -141,5 +158,6 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
 \nKlik op het app icoon voor gedetailleerde beperkingen en instellingen</string>
     <string name="tutorial_detailsheader">Klik op het app icoon voor meer akties</string>
     <string name="tutorial_detailslist">Klik op de pijl naar beneden voor functie-uitzonderingen</string>
+    <string name="permission_manage">Applicaties beheren, inclusief geforceerd stoppen</string>
 
 </resources>

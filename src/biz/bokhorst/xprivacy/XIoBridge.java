@@ -39,21 +39,13 @@ public class XIoBridge extends XHook {
 			String fileName = (String) param.args[0];
 			if (fileName != null && (fileName.startsWith(mFileName) || mFileName.contains("..."))) {
 				// Zygote, Android
-				if (Process.myUid() <= 0 || Util.getAppId(Process.myUid()) == PrivacyManager.cAndroidUid)
+				if (Process.myUid() <= 0 || Util.getAppId(Process.myUid()) == Process.SYSTEM_UID)
 					return;
 
-				// /proc
-				if (mFileName.equals("/proc")) {
-					// Allow command line
+				// Allow command line
+				if (mFileName.equals("/proc"))
 					if (fileName.equals("/proc/self/cmdline"))
 						return;
-
-					// Backward compatibility
-					Version sVersion = new Version(PrivacyManager.getSetting(this, null, 0,
-							PrivacyManager.cSettingVersion, "0.0", true));
-					if (sVersion.compareTo(new Version("1.7")) < 0)
-						return;
-				}
 
 				// Check if restricted
 				if (mFileName.contains("...")) {

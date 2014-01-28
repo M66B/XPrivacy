@@ -77,7 +77,7 @@ public class XRuntime extends XHook {
 			}
 		} else if (mMethod == Methods.load || mMethod == Methods.loadLibrary) {
 			// Skip pre Android
-			if (Process.myUid() != 0)
+			if (Process.myUid() > 0)
 				if (isRestricted(param))
 					param.setResult(new UnsatisfiedLinkError());
 		} else

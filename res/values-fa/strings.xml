@@ -5,7 +5,9 @@
     <string name="app_notxposed" formatted="false">فریم ورک اکس پوزد ویرایش %d+ نصب نشده است</string>
     <string name="app_notenabled"> نرم افزار ایکس پرایویسی در نصب کننده ی اکیس پوزد فعال نشده است</string>
     <string name="app_wrongandroid"> 4.0+ فقط برای اندروبد ورژن</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">%s (%d):نرم افزار ایکس پرایویسی ورژن </string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">%d :فریم ورک ایکس پرایویسی ورژن </string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="menu_usage">کاربرد</string>
@@ -21,6 +23,7 @@
     <string name="menu_pro">ورژن پرو</string>
     <string name="menu_about">درباره ی نرم افزار</string>
     <string name="menu_help">راهنما</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">همه</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
@@ -37,6 +40,10 @@
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">تماس هایی را که احازه می دهید انتخاب کنید</string>
     <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
     <string name="msg_licensed" formatted="false">%s مجوز به: </string>
@@ -46,13 +53,21 @@
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_sure">آبااطمینان دارید؟</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">انحام شد</string>
     <string name="msg_reboot">لازم است دستگاه خاموش و روشن گردد</string>
     <string name="msg_random_now">رندم سازی</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">رندم سازی پس از روشن شدن مجدد</string>
-    <string name="msg_usage">Updating usage data</string>
     <string name="msg_restart">Application restart required</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_service">Update service running</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>نرم افزار ایکس پرایوسی با دقت بالایی تولید و تست شده است، با این وجود تضمینی برای عملکرد صحیح
 این نرم افزار بر روی تمامی دستگاه ها و در مورد تمامی نرم افزارها وجود ندارد.
 \n\n ریسک استفاده از این نرم افزار بر عهده ی شما می باشد</b>\n\n:همچنین پروانه ی برنامه را مشاهده کنید</string>
@@ -119,18 +134,20 @@
     <string name="settings_ua">User agent</string>
     <string name="settings_general">General</string>
     <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">لاگ ایرادیابی (نیازمند دوباره راه اندازی می باشد)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">برنامه های کاربردی</string>
     <string name="help_internet">مجوز استفاده از اینترنت را دارد</string>
     <string name="help_granted">مجوز اندروید را دارد</string>
     <string name="help_used">از این داده استفاده کرده است</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">غیر فعال است</string>
     <string name="help_dangerous">خطرناک است</string>
     <string name="help_half">partly restricted</string>
@@ -143,5 +160,6 @@
 \nTap the app icon for detailed restrictions and settings</string>
     <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
     <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

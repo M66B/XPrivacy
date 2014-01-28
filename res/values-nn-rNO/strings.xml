@@ -3,7 +3,9 @@
     <string name="app_notxposed" formatted="false">Xposed rammeverk versjon %d+ er ikke installert</string>
     <string name="app_notenabled">XPrivacy er ikke frigitt i Xposed installasjon</string>
     <string name="app_wrongandroid">Kun for Android versjon 4.0+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013–2014</string>
     <string name="menu_usage">Databruk</string>
@@ -19,6 +21,7 @@
     <string name="menu_pro">Pro versjon</string>
     <string name="menu_about">Om</string>
     <string name="menu_help">Hjelp</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Alle</string>
     <string name="menu_restriction_all">Skift restriksjoner</string>
     <string name="menu_clear_all">Nullstill alt</string>
@@ -35,6 +38,10 @@
     <string name="menu_applications">Velg apper som skal tillates</string>
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
     <string name="menu_tutorial">Innføring</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Nytt</string>
     <string name="msg_update">Oppdater</string>
     <string name="msg_licensed" formatted="false">Lisensert til: %s</string>
@@ -44,13 +51,21 @@
     <string name="msg_saved_to" formatted="false">Lagre till %s</string>
     <string name="msg_no_restrictions">Ingen restriksjoner funnet</string>
     <string name="msg_sure">Er du sikker?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Ferdig</string>
     <string name="msg_reboot">Omstart nødvendig</string>
     <string name="msg_random_now">Tilfeldige verdier</string>
     <string name="msg_random_access">Tilfeldige verdier ved tilgang</string>
     <string name="msg_random_boot">Tilfeldige verdier etter omstart</string>
-    <string name="msg_usage">Oppdaterer databruk</string>
     <string name="msg_restart">Omstart av appen nødvendig</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_service">Update service running</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
@@ -115,18 +130,20 @@
     <string name="settings_ua">Brukeragent</string>
     <string name="settings_general">Generell</string>
     <string name="settings_fake_data">Forfalsket data</string>
-    <string name="settings_global">Bruk forfalsket data globalt</string>
     <string name="settings_notify">Oppdater varslinger</string>
-    <string name="settings_usage">Android data bruk (omstart nødvendig)</string>
     <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
     <string name="settings_expert">Ekspert modus</string>
     <string name="settings_dangerous">Blokker farlige funksjoner</string>
     <string name="settings_confidence">Maksimalt konfidensintervall for å hente restriksjoner</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">App</string>
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>
     <string name="help_used">har benyttet denne typen av data</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">er deaktivert</string>
     <string name="help_dangerous">er farlig</string>
     <string name="help_half">delvis blokkert</string>
@@ -140,5 +157,6 @@
 </string>
     <string name="tutorial_detailsheader">Trykk på app ikonet for å få flere valg/aksjoner</string>
     <string name="tutorial_detailslist">Trykk på pilene som viser ned for å se funksjonene innen en kategorie</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

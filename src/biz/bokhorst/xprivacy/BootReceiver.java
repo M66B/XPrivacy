@@ -6,21 +6,17 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.support.v4.app.NotificationCompat;
 
 public class BootReceiver extends BroadcastReceiver {
+
 	@Override
-	public void onReceive(Context context, Intent bootIntent) {
-		// Randomize settings
-		final Context fContext = context;
-		new Thread(new Runnable() {
-			public void run() {
-				randomizeSettings(fContext, 0);
-				for (ApplicationInfo aInfo : fContext.getPackageManager().getInstalledApplications(0))
-					randomizeSettings(fContext, aInfo.uid);
-			}
-		}).start();
+	public void onReceive(final Context context, Intent bootIntent) {
+		// Start boot update
+		Intent changeIntent = new Intent();
+		changeIntent.setClass(context, UpdateService.class);
+		changeIntent.putExtra(UpdateService.cAction, UpdateService.cActionBoot);
+		context.startService(changeIntent);
 
 		// Check if Xposed enabled
 		if (Util.isXposedEnabled())
@@ -47,37 +43,7 @@ public class BootReceiver extends BroadcastReceiver {
 			// Display notification
 			NotificationManager notificationManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.notify(0, notification);
-		}
-	}
-
-	private void randomizeSettings(Context context, int uid) {
-		boolean random = PrivacyManager.getSettingBool(null, context, uid, PrivacyManager.cSettingRandom, false, false);
-		if (random) {
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLatitude,
-					PrivacyManager.getRandomProp("LAT"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingLongitude,
-					PrivacyManager.getRandomProp("LON"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSerial,
-					PrivacyManager.getRandomProp("SERIAL"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingMac,
-					PrivacyManager.getRandomProp("MAC"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingPhone,
-					PrivacyManager.getRandomProp("PHONE"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingImei,
-					PrivacyManager.getRandomProp("IMEI"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingId,
-					PrivacyManager.getRandomProp("ANDROID_ID"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingGsfId,
-					PrivacyManager.getRandomProp("GSF_ID"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingAdId,
-					PrivacyManager.getRandomProp("AdvertisingId"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingCountry,
-					PrivacyManager.getRandomProp("ISO3166"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSubscriber,
-					PrivacyManager.getRandomProp("SubscriberId"));
-			PrivacyManager.setSetting(null, context, uid, PrivacyManager.cSettingSSID,
-					PrivacyManager.getRandomProp("SSID"));
+			notificationManager.notify(Util.NOTIFY_NOTXPOSED, notification);
 		}
 	}
 }

@@ -3,7 +3,9 @@
     <string name="app_notxposed" formatted="false">Chưa cài Xposed framework phiên bản %d+</string>
     <string name="app_notenabled">XPrivacy chưa được kích hoạt trong Xposed installer</string>
     <string name="app_wrongandroid">Chỉ hỗ trợ Android 4.0+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy phiên bản: %s (%d)</string>
+    <string name="app_description">Ứng dụng quản lý thông tin riêng tư tối đa</string>
     <string name="app_xversion" formatted="false">Xposed framework phiên bản: %d</string>
     <string name="app_copyright">Bản quyền \u00A9 2013–2014 thuộc về M. Bokhorst (M66B)</string>
     <string name="menu_usage">Sử dụng</string>
@@ -19,6 +21,7 @@
     <string name="menu_pro">Phiên bản Pro</string>
     <string name="menu_about">Giới thiệu</string>
     <string name="menu_help">Trợ giúp</string>
+    <string name="menu_select_all">Chọn tất cả</string>
     <string name="menu_all">Tất cả</string>
     <string name="menu_restriction_all">Thay đổi các sự hạn chế</string>
     <string name="menu_clear_all">Xóa tất cả</string>
@@ -35,6 +38,10 @@
     <string name="menu_applications">Chọn ứng dụng để cấp phép</string>
     <string name="menu_contacts">Chọn liên lạc cho phép</string>
     <string name="menu_tutorial">Hướng dẫn</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Mới</string>
     <string name="msg_update">Cập nhật</string>
     <string name="msg_licensed" formatted="false">Bản quyền: %s</string>
@@ -44,13 +51,21 @@
     <string name="msg_saved_to" formatted="false">Đã được lưu vào %s</string>
     <string name="msg_no_restrictions">Không có thông tin hạn chế nào được tìm thấy</string>
     <string name="msg_sure">Bạn có chắc không?</string>
+    <string name="msg_select">Vui lòng chọn một vài ứng dụng</string>
+    <string name="msg_limit">Vui lòng chọn ít hơn %d ứng dụng</string>
     <string name="msg_done">Xong</string>
     <string name="msg_reboot">Yêu cầu khởi động lại thiết bị</string>
     <string name="msg_random_now">Tạo thông tin ngẫu nhiên</string>
     <string name="msg_random_access">Tạo thông tin ngẫu nhiên lúc truy cập</string>
     <string name="msg_random_boot">Tạo thông tin ngẫu nhiên khi khởi động</string>
-    <string name="msg_usage">Đang cập nhật mức sử dụng dữ liệu</string>
     <string name="msg_restart">Yêu cầu khởi động lại ứng dụng</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_service">Update service running</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ hoạt động trơn tru trên mọi thiết bị cũng như với mọi ứng dụng.
 \n\nBạn tự chịu trách nhiệm khi sử dụng ứng dụng này.</b>\n\nXem thêm về bản quyền:</string>
     <string name="restrict_accounts">Các tài khoản (Google, Facebook, ...)</string>
@@ -116,18 +131,20 @@
     <string name="settings_ua">Nhận dạng trình duyệt</string>
     <string name="settings_general">Cài đặt chung</string>
     <string name="settings_fake_data">Dữ liệu giả</string>
-    <string name="settings_global">Sử dụng dữ liệu giả chung</string>
     <string name="settings_notify">Cập nhật thông báo</string>
-    <string name="settings_usage">Mức sử dụng dữ liệu hệ thống (cần khởi động lại)</string>
     <string name="settings_log">Nhật ký lỗi (cần khởi động lại)</string>
     <string name="settings_expert">Chế độ nâng cao</string>
     <string name="settings_dangerous">Hạn chế các chức năng nguy hiểm</string>
     <string name="settings_confidence">Tối đa khoảng thời gian lấy về các thiết lập</string>
     <string name="settings_experimental">Các chức năng thử nghiệm (Yêu cầu khởi động lại)</string>
+    <string name="settings_https">Sử dụng các kết nối được bảo mật</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">Ứng dụng</string>
     <string name="help_internet">có quyền truy cập mạng</string>
     <string name="help_granted">có quyền của hệ điều hành</string>
     <string name="help_used">đã sử dụng dữ liệu này</string>
+    <string name="help_used_grayed">không có thông tin sử dụng dữ liệu</string>
     <string name="help_frozen">đã được tắt</string>
     <string name="help_dangerous">nguy hiểm, hạn chế có thể gây lỗi</string>
     <string name="help_half">đã hạn chế một phần</string>
@@ -140,5 +157,6 @@
 \nChọn vào biểu tượng của ứng dụng để xem chi tiết các thiết lập và các sự hạn chế</string>
     <string name="tutorial_detailsheader">Chọn vào biểu tượng của ứng dụng để sử dụng các chức năng khác</string>
     <string name="tutorial_detailslist">Chọn vào mũi tên xuống để xem các hàm ngoại lệ của danh mục hạn chế</string>
+    <string name="permission_manage">Quản lý các ứng dụng, bao gồm tắt ứng dụng</string>
 
 </resources>

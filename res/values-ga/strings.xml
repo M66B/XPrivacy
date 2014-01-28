@@ -3,7 +3,9 @@
     <string name="app_notxposed" formatted="false">Ní Xposed framework leagan %d+ suiteáilte</string>
     <string name="app_notenabled">Ní XPrivacy chumasú i an suiteálaí Xposed</string>
     <string name="app_wrongandroid">Ach amháin le haghaidh Android version 4.0+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy leagan: %s (%d)</string>
+    <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed framework leagan: %d</string>
     <string name="app_copyright">Cóipcheart \ u00A9 2013–2014 le M. Bokhorst (M66B)</string>
     <string name="menu_usage">Úsáid</string>
@@ -19,6 +21,7 @@
     <string name="menu_pro">Gairmiúla leagan</string>
     <string name="menu_about">Maidir</string>
     <string name="menu_help">Cabhair</string>
+    <string name="menu_select_all">Select all</string>
     <string name="menu_all">Gach</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
@@ -35,6 +38,10 @@
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Roghnaigh cuntais a cheadú</string>
     <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_exclude">Exclude</string>
+    <string name="menu_close">Close</string>
+    <string name="msg_abort">Aborting</string>
+    <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Nua</string>
     <string name="msg_update">Nuashonrú</string>
     <string name="msg_licensed" formatted="false">Ceadúnaithe do: %s</string>
@@ -44,13 +51,21 @@
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_sure">An bhfuil tú cinnte?</string>
+    <string name="msg_select">Please select some applications</string>
+    <string name="msg_limit">Please select fewer than %d applications</string>
     <string name="msg_done">Arna dhéanamh</string>
     <string name="msg_reboot">Atosú teastáil</string>
     <string name="msg_random_now">Randomize now</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randamaigh tar éis tosaithe</string>
-    <string name="msg_usage">Updating usage data</string>
     <string name="msg_restart">Application restart required</string>
+    <string name="msg_register">Please register your device</string>
+    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_service">Update service running</string>
+    <string name="msg_migrating" formatted="false">Migrating %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_first"><b>cúram mór aire do a fhorbairt agus a thástáil XPrivacy,
 áfach, go bhfuil sé dodhéanta a ráthú go mbeidh sé obair flawless ar gach gléas agus do gach agus gach iarratas.
 \n\nBain úsáid as ar do phriacal féin.</b>\n\nFéach freisin an ceadúnas:</string>
@@ -117,18 +132,20 @@
     <string name="settings_ua">gníomhaire Úsáideoir</string>
     <string name="settings_general">General</string>
     <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
-    <string name="settings_usage">Android usage data (requires restart)</string>
     <string name="settings_log">logáil Debug (Éilíonn atosú)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_https">Use secure connections</string>
+    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
+    <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_application">Iarratais</string>
     <string name="help_internet">Tá cead idirlín</string>
     <string name="help_granted">Tá cead Android</string>
     <string name="help_used">Tá úsáid na sonraí seo</string>
+    <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">faoi mhíchumas</string>
     <string name="help_dangerous">contúirteacha</string>
     <string name="help_half">partly restricted</string>
@@ -141,5 +158,6 @@
 \nTap the app icon for detailed restrictions and settings</string>
     <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
     <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
+    <string name="permission_manage">Manage applications, including killing</string>
 
 </resources>

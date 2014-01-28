@@ -1,14 +1,9 @@
 package biz.bokhorst.xprivacy;
 
-import static de.robv.android.xposed.XposedHelpers.findField;
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActivityManager;
-import android.content.Context;
-import android.os.Binder;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -67,18 +62,5 @@ public class XActivityManager extends XHook {
 				param.setResult(new ArrayList<ActivityManager.RunningTaskInfo>());
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
-	}
-
-	@Override
-	protected boolean isRestricted(MethodHookParam param) throws Throwable {
-		Context context = null;
-		try {
-			Field fieldContext = findField(param.thisObject.getClass(), "mContext");
-			context = (Context) fieldContext.get(param.thisObject);
-		} catch (Throwable ex) {
-			Util.bug(this, ex);
-		}
-		int uid = Binder.getCallingUid();
-		return getRestricted(context, uid, true);
 	}
 }
