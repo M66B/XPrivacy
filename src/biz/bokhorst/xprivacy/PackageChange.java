@@ -57,29 +57,26 @@ public class PackageChange extends BroadcastReceiver {
 					// New/update notification
 					if (!replacing
 							|| PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingNotify, true, false)) {
-						Intent resultIntent = new Intent(Intent.ACTION_MAIN);
+						Intent resultIntent = new Intent(context, ActivityApp.class);
 						resultIntent.putExtra(ActivityApp.cUid, uid);
-						resultIntent.setClass(context.getApplicationContext(), ActivityApp.class);
 
 						// Build pending intent
 						PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
 								PendingIntent.FLAG_UPDATE_CURRENT);
 
 						// Build result intent settings
-						Intent resultIntentSettings = new Intent(Intent.ACTION_MAIN);
+						Intent resultIntentSettings = new Intent(context, ActivityApp.class);
 						resultIntentSettings.putExtra(ActivityApp.cUid, uid);
 						resultIntentSettings.putExtra(ActivityApp.cAction, ActivityApp.cActionSettings);
-						resultIntentSettings.setClass(context.getApplicationContext(), ActivityApp.class);
 
 						// Build pending intent settings
 						PendingIntent pendingIntentSettings = PendingIntent.getActivity(context, uid - 10000,
 								resultIntentSettings, PendingIntent.FLAG_UPDATE_CURRENT);
 
 						// Build result intent clear
-						Intent resultIntentClear = new Intent(Intent.ACTION_MAIN);
+						Intent resultIntentClear = new Intent(context, ActivityApp.class);
 						resultIntentClear.putExtra(ActivityApp.cUid, uid);
 						resultIntentClear.putExtra(ActivityApp.cAction, ActivityApp.cActionClear);
-						resultIntentClear.setClass(context.getApplicationContext(), ActivityApp.class);
 
 						// Build pending intent clear
 						PendingIntent pendingIntentClear = PendingIntent.getActivity(context, uid + 10000,

@@ -258,10 +258,23 @@ public class ActivityApp extends Activity {
 	}
 
 	@Override
+	protected void onNewIntent(Intent intent) {
+		setIntent(intent);
+		recreate();
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
 		if (mPrivacyListAdapter != null)
 			mPrivacyListAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mPackageChangeReceiver != null)
+			unregisterReceiver(mPackageChangeReceiver);
 	}
 
 	@Override
