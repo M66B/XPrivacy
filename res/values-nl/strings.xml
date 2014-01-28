@@ -120,7 +120,6 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_ua">User agent</string>
     <string name="settings_general">Algemeen</string>
     <string name="settings_fake_data">Nepgegevens</string>
-    <string name="settings_global">Gebruik globale nep gegevens</string>
     <string name="settings_notify">Bijgewerkt notificaties</string>
     <string name="settings_log">Debug log (herstart vereist)</string>
     <string name="settings_expert">Expertmodus</string>

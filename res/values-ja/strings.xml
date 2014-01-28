@@ -120,7 +120,6 @@
     <string name="settings_ua">ユーザーエージェント</string>
     <string name="settings_general">一般的</string>
     <string name="settings_fake_data">フェイクデータ</string>
-    <string name="settings_global">グローバルデータを使用</string>
     <string name="settings_notify">最新の情報に更新</string>
     <string name="settings_log">デバッグログ(再起動が必要)</string>
     <string name="settings_expert">エキスパートモード</string>

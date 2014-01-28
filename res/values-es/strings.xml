@@ -120,7 +120,6 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="settings_ua">Agente de usuario</string>
     <string name="settings_general">General</string>
     <string name="settings_fake_data">Datos falsos</string>
-    <string name="settings_global">Usa datos falsos globales</string>
     <string name="settings_notify">Notificaciones de actualización</string>
     <string name="settings_log">Registro de depuración (requiere inicio)</string>
     <string name="settings_expert">Modo experto</string>

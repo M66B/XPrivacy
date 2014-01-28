@@ -121,7 +121,6 @@
     <string name="settings_ua">User agent</string>
     <string name="settings_general">Общее</string>
     <string name="settings_fake_data">Фальшивые данные</string>
-    <string name="settings_global">Использовать общие фальшивые данные</string>
     <string name="settings_notify">Обновить уведомления</string>
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Экспертный режим</string>

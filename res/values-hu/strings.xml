@@ -120,7 +120,6 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="settings_ua">Böngésző azonosító</string>
     <string name="settings_general">Általános</string>
     <string name="settings_fake_data">Kamu adat</string>
-    <string name="settings_global">Globális kamu adat használata</string>
     <string name="settings_notify">Értesítések frissítése</string>
     <string name="settings_log">Debug log (újraindítás szükséges)</string>
     <string name="settings_expert">Szakértői mód</string>

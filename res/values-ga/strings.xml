@@ -120,7 +120,6 @@
     <string name="settings_ua">gníomhaire Úsáideoir</string>
     <string name="settings_general">General</string>
     <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_log">logáil Debug (Éilíonn atosú)</string>
     <string name="settings_expert">Expert mode</string>

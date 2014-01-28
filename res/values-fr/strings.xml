@@ -120,7 +120,6 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_ua">User agent</string>
     <string name="settings_general">Général</string>
     <string name="settings_fake_data">Fausses données</string>
-    <string name="settings_global">Utiliser les valeurs globales</string>
     <string name="settings_notify">Notifications de MàJ</string>
     <string name="settings_log">Debug log (redémarrage requis)</string>
     <string name="settings_expert">Mode expert</string>

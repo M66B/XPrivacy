@@ -120,7 +120,6 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_ua">User agent</string>
     <string name="settings_general">General</string>
     <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_log">Relatório de depuração (requer reinicialização)</string>
     <string name="settings_expert">Expert mode</string>

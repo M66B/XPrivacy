@@ -121,7 +121,6 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_ua">Používateľský agent</string>
     <string name="settings_general">Všeobecné</string>
     <string name="settings_fake_data">Falošné údaje</string>
-    <string name="settings_global">Použiť globálne falošné údaje</string>
     <string name="settings_notify">Oznámenia o aktualizáciách</string>
     <string name="settings_log">Záznam na ladenie (vyžadovaný reštart)</string>
     <string name="settings_expert">Režim experta</string>

@@ -118,7 +118,6 @@
     <string name="settings_ua">Agent d\'usuari</string>
     <string name="settings_general">General</string>
     <string name="settings_fake_data">Fake data</string>
-    <string name="settings_global">Use global fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_log">Registre de depuració (cal reiniciar)</string>
     <string name="settings_expert">Expert mode</string>

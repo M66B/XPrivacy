@@ -15,6 +15,8 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Further simplify application specific settings: no check mark or empty value means use global value
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.17 BETA**

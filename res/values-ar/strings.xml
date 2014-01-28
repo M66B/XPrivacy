@@ -120,7 +120,6 @@
     <string name="settings_ua">وكيل المستخدم</string>
     <string name="settings_general">عام</string>
     <string name="settings_fake_data">بيانات وهمية</string>
-    <string name="settings_global">إستخدام بيانات وهمية عامة</string>
     <string name="settings_notify">تحديث الإشعارات</string>
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
     <string name="settings_expert">وضع الخبراء</string>

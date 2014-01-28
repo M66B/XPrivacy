@@ -120,7 +120,6 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="settings_ua">User agent</string>
     <string name="settings_general">Generale</string>
     <string name="settings_fake_data">Dati falsi</string>
-    <string name="settings_global">Usa dati falsi globali</string>
     <string name="settings_notify">Aggiorna notifiche</string>
     <string name="settings_log">Debug log (richiede riavvio)</string>
     <string name="settings_expert">Modalità esperto</string>

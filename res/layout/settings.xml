@@ -146,12 +146,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/msg_random_now" />
 
-            <CheckBox
-                android:id="@+id/cbGlobal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_global" />
-
             <Button
                 android:id="@+id/btnClear"
                 android:layout_width="match_parent"

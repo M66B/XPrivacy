@@ -121,7 +121,6 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_ua">Agent prohlížeče</string>
     <string name="settings_general">Všeobecné</string>
     <string name="settings_fake_data">Falešné údaje</string>
-    <string name="settings_global">Použít globální falešné údaje</string>
     <string name="settings_notify">Upozorňovat při aktualizacích aplikací</string>
     <string name="settings_log">Ukládat ladící záznam (vyžaduje restart)</string>
     <string name="settings_expert">Režim experta</string>

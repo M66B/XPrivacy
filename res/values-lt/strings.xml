@@ -121,7 +121,6 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_ua">Vartotojo agentas</string>
     <string name="settings_general">Bendras</string>
     <string name="settings_fake_data">Netikri duomenys</string>
-    <string name="settings_global">Naudoti globalius netikrus duomenis</string>
     <string name="settings_notify">Atnaujinimų Pranesimas</string>
     <string name="settings_log">DEBUG žurnalas (Perkrauti prietaisą)</string>
     <string name="settings_expert">Eksperto režimas</string>
