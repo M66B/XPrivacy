@@ -825,6 +825,7 @@ public class PrivacyService {
 				db.beginTransaction();
 				try {
 					// http://www.sqlite.org/lang_createtable.html
+					Util.log(null, Log.WARN, "Creating database");
 					db.execSQL("CREATE TABLE restriction (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL)");
 					db.execSQL("CREATE TABLE setting (uid INTEGER NOT NULL, name TEXT NOT NULL, value TEXT)");
 					db.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
@@ -833,7 +834,6 @@ public class PrivacyService {
 					db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method)");
 					db.setVersion(1);
 					db.setTransactionSuccessful();
-					Util.log(null, Log.WARN, "Database created");
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				} finally {
@@ -845,6 +845,7 @@ public class PrivacyService {
 
 			} else {
 				if (db.needUpgrade(3)) {
+					Util.log(null, Log.WARN, "Upgrading database to version 3");
 					db.beginTransaction();
 					try {
 						db.execSQL("DELETE FROM usage WHERE method=''");
@@ -858,6 +859,7 @@ public class PrivacyService {
 				}
 
 				if (db.needUpgrade(4)) {
+					Util.log(null, Log.WARN, "Upgrading database to version 4");
 					db.beginTransaction();
 					try {
 						db.execSQL("DELETE FROM setting WHERE value IS NULL");
@@ -871,9 +873,11 @@ public class PrivacyService {
 				}
 
 				if (db.needUpgrade(5)) {
+					Util.log(null, Log.WARN, "Upgrading database to version 5");
 					db.beginTransaction();
 					try {
 						db.execSQL("DELETE FROM setting WHERE value = ''");
+						db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
 						db.setVersion(5);
 						db.setTransactionSuccessful();
 					} catch (Throwable ex) {

@@ -15,9 +15,13 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Further simplify application specific settings: no check mark or empty value means use global value
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.18 BETA**
+
+* Further simplify application specific settings: no check mark or empty value means use global value
+* Migration will no longer migrate empty values; existing empty values will be erased from the database
+* Display message *XPrivacy is incompatible with ...* (currently LBE Security Master only)
 
 **Version 1.99.17 BETA**
 

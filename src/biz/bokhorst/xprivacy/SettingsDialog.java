@@ -420,7 +420,7 @@ public class SettingsDialog {
 
 				// Random at boot
 				PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingRandom,
-						Boolean.toString(cbRandom.isChecked()));
+						cbRandom.isChecked() ? Boolean.toString(true) : null);
 
 				// Serial#
 				PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingSerial, getValue(cbSerial, etSerial));
