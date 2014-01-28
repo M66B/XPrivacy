@@ -60,7 +60,7 @@
     <string name="msg_random_boot">Losuj po restarcie</string>
     <string name="msg_restart">Wymagany restart aplikacji</string>
     <string name="msg_register">Proszę zarejestruj swoje urządzenie</string>
-    <string name="msg_registered">Sprawdź swój e-mail aby aktywowac urządzenie</string>
+    <string name="msg_registered">Sprawdź swój e-mail aby zaktywować urządzenie</string>
     <string name="msg_service">Usługa aktualizacji pracuje</string>
     <string name="msg_migrating" formatted="false">Migrowanie %s</string>
     <string name="msg_randomizing" formatted="false">Losowanie %s</string>
