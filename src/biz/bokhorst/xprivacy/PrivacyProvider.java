@@ -731,8 +731,9 @@ public class PrivacyProvider extends ContentProvider {
 					Context.MODE_WORLD_READABLE);
 			for (String name : prefs.getAll().keySet())
 				try {
-					String value = prefs.getString(name, "");
-					listWork.add(new ParcelableSetting(uid, name, value));
+					String value = prefs.getString(name, null);
+					if (value != null && !"".equals(value))
+						listWork.add(new ParcelableSetting(uid, name, value));
 				} catch (Throwable ex) {
 					// Legacy boolean
 					Util.bug(null, ex);

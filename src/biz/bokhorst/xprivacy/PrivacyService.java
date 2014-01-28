@@ -843,28 +843,44 @@ public class PrivacyService {
 			} else if (db.needUpgrade(2)) {
 				// Do nothing, done by migration
 
-			} else if (db.needUpgrade(3)) {
-				db.beginTransaction();
-				try {
-					db.execSQL("DELETE FROM usage WHERE method=''");
-					db.setVersion(3);
-					db.setTransactionSuccessful();
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				} finally {
-					db.endTransaction();
+			} else {
+				if (db.needUpgrade(3)) {
+					db.beginTransaction();
+					try {
+						db.execSQL("DELETE FROM usage WHERE method=''");
+						db.setVersion(3);
+						db.setTransactionSuccessful();
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+					} finally {
+						db.endTransaction();
+					}
 				}
 
-			} else if (db.needUpgrade(4)) {
-				db.beginTransaction();
-				try {
-					db.execSQL("DELETE FROM setting WHERE value IS NULL");
-					db.setVersion(4);
-					db.setTransactionSuccessful();
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				} finally {
-					db.endTransaction();
+				if (db.needUpgrade(4)) {
+					db.beginTransaction();
+					try {
+						db.execSQL("DELETE FROM setting WHERE value IS NULL");
+						db.setVersion(4);
+						db.setTransactionSuccessful();
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+					} finally {
+						db.endTransaction();
+					}
+				}
+
+				if (db.needUpgrade(5)) {
+					db.beginTransaction();
+					try {
+						db.execSQL("DELETE FROM setting WHERE value = ''");
+						db.setVersion(5);
+						db.setTransactionSuccessful();
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+					} finally {
+						db.endTransaction();
+					}
 				}
 			}
 
