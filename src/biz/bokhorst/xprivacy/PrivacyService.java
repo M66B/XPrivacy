@@ -126,7 +126,8 @@ public class PrivacyService {
 		@Override
 		public List<String> check() throws RemoteException {
 			enforcePermission();
-			if (!getDbFile().exists())
+			File dbFile = getDbFile();
+			if (!dbFile.exists() || !dbFile.canRead() || !dbFile.canWrite())
 				throw new InvalidParameterException("Database does not exist or is not accessible");
 			return mListError;
 		}
