@@ -486,13 +486,13 @@ The right order for ROM updates is:
 
 1. Export XPrivacy settings
 1. Enable flight mode
+1. Clear XPrivacy data (please note that this will erase the imported pro license file if any)
 1. Reboot to recovery
 1. Flash ROM
 1. Flash Google apps (optional)
 1. Re-activate Xposed using [Xposed toggle](http://forum.xda-developers.com/showpost.php?p=45188739)
 1. Reboot to Android
 1. Restore the android ID (when needed; with for example [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup))
-1. Clear XPrivacy data (please note that this will erase the imported pro license file if any)
 1. Import XPrivacy settings
 1. Disable flight mode
 1. Fake network type (Wi-Fi, mobile)
