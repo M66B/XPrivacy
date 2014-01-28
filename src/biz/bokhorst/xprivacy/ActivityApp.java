@@ -978,7 +978,7 @@ public class ActivityApp extends Activity {
 
 							// Notify restart
 							if (restart)
-								Toast.makeText(view.getContext(), getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
 										.show();
 						}
 					});
@@ -1167,7 +1167,7 @@ public class ActivityApp extends Activity {
 
 							// Notify restart
 							if (restart)
-								Toast.makeText(view.getContext(), getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
 										.show();
 						}
 					});

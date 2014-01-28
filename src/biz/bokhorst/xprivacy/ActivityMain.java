@@ -1342,12 +1342,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 												holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 												holder.vwState.setBackgroundColor(getResources()
 														.getColor(
-																Util.getThemed(view.getContext(),
+																Util.getThemed(ActivityMain.this,
 																		R.attr.color_state_attention)));
 
 												// Notify restart
 												if (restart)
-													Toast.makeText(view.getContext(), getString(R.string.msg_restart),
+													Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
 															Toast.LENGTH_SHORT).show();
 											}
 										});
@@ -1392,7 +1392,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 								// Notify restart
 								if (restart)
-									Toast.makeText(view.getContext(), getString(R.string.msg_restart),
+									Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
 											Toast.LENGTH_SHORT).show();
 							}
 
@@ -1433,11 +1433,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			holder.imgIcon.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					Intent intentSettings = new Intent(view.getContext(), ActivityApp.class);
+					Intent intentSettings = new Intent(ActivityMain.this, ActivityApp.class);
 					intentSettings.putExtra(ActivityApp.cUid, xAppInfo.getUid());
 					intentSettings.putExtra(ActivityApp.cRestrictionName, mRestrictionName);
 					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					view.getContext().startActivity(intentSettings);
+					ActivityMain.this.startActivity(intentSettings);
 				}
 			});
 
