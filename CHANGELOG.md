@@ -16,6 +16,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Close application details view on uninstall
+* Run upgrade after migrate ([issue](https://github.com/M66B/XPrivacy/issues/1165))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

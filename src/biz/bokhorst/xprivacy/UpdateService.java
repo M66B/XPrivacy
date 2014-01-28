@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,10 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -73,134 +76,128 @@ public class UpdateService extends Service {
 						// Check action
 						if (action == cActionBoot) {
 							// Boot received
-							List<ApplicationInfo> listApp = UpdateService.this.getPackageManager()
-									.getInstalledApplications(0);
+							migrate(UpdateService.this);
+							upgrade(UpdateService.this);
+							randomize(UpdateService.this);
 
-							// Start migrate
-							int first = 0;
-							String format = getString(R.string.msg_migrating);
-							PrivacyProvider.migrateLegacy(UpdateService.this);
-
-							// Migrate global settings
-							PrivacyManager.setSettingList(PrivacyProvider.migrateSettings(UpdateService.this, 0));
-							PrivacyProvider.finishMigrateSettings(0);
-
-							// Migrate application settings/restrictions
-							for (int i = 1; i <= listApp.size(); i++) {
-								int uid = listApp.get(i - 1).uid;
-								// Settings
-								List<ParcelableSetting> listSetting = PrivacyProvider.migrateSettings(
-										UpdateService.this, uid);
-								PrivacyManager.setSettingList(listSetting);
-								PrivacyProvider.finishMigrateSettings(uid);
-
-								// Restrictions
-								List<ParcelableRestriction> listRestriction = PrivacyProvider.migrateRestrictions(
-										UpdateService.this, uid);
-								PrivacyManager.setRestrictionList(listRestriction);
-								PrivacyProvider.finishMigrateRestrictions(uid);
-
-								if (first == 0)
-									if (listSetting.size() > 0 || listRestriction.size() > 0)
-										first = i;
-								if (first > 0)
-									notifyProgress(UpdateService.this, Util.NOTIFY_MIGRATE, format, 100 * (i - first)
-											/ (listApp.size() - first));
-							}
-							if (first == 0)
-								Util.log(null, Log.WARN, "Nothing to migrate");
-
-							// Complete migration
-							PrivacyService.getClient().migrated();
-
-							// Randomize
-							first = 0;
-							format = getString(R.string.msg_randomizing);
-
-							// Randomize global
-							PrivacyManager.setSettingList(getRandomizeWork(UpdateService.this, 0));
-
-							// Randomize applications
-							for (int i = 1; i <= listApp.size(); i++) {
-								int uid = listApp.get(i - 1).uid;
-								List<ParcelableSetting> listSetting = getRandomizeWork(UpdateService.this, uid);
-								PrivacyManager.setSettingList(listSetting);
-
-								if (first == 0)
-									if (listSetting.size() > 0)
-										first = i;
-								if (first > 0)
-									notifyProgress(UpdateService.this, Util.NOTIFY_RANDOMIZE, format, 100 * (i - first)
-											/ (listApp.size() - first));
-							}
-							if (first == 0)
-								Util.log(null, Log.WARN, "Nothing to randomize");
-
-							// Done
-							stopForeground(true);
-							stopSelf();
 						} else if (action == cActionUpdated) {
 							// Self updated
+							upgrade(UpdateService.this);
 
-							// Get previous version
-							PackageManager pm = UpdateService.this.getPackageManager();
-							PackageInfo pInfo = pm.getPackageInfo(UpdateService.this.getPackageName(), 0);
-							Version sVersion = new Version(PrivacyManager.getSetting(null, 0,
-									PrivacyManager.cSettingVersion, "0.0", false));
-
-							// Upgrade packages
-							if (sVersion.compareTo(new Version("0.0")) != 0) {
-								Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version "
-										+ pInfo.versionName);
-								boolean dangerous = PrivacyManager.getSettingBool(null, 0,
-										PrivacyManager.cSettingDangerous, false, false);
-								List<ApplicationInfo> listApp = UpdateService.this.getPackageManager()
-										.getInstalledApplications(0);
-
-								int first = 0;
-								String format = getString(R.string.msg_upgrading);
-
-								for (int i = 1; i <= listApp.size(); i++) {
-									int uid = listApp.get(i - 1).uid;
-									List<ParcelableRestriction> listRestriction = getUpgradeWork(sVersion, dangerous,
-											uid);
-									PrivacyManager.setRestrictionList(listRestriction);
-
-									if (first == 0)
-										if (listRestriction.size() > 0)
-											first = i;
-									if (first > 0)
-										notifyProgress(UpdateService.this, Util.NOTIFY_UPGRADE, format, 100
-												* (i - first) / (listApp.size() - first));
-								}
-								if (first == 0)
-									Util.log(null, Log.WARN, "Nothing to upgrade version=" + sVersion);
-							} else
-								Util.log(null, Log.WARN, "Noting to upgrade version=" + sVersion);
-
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
-
-							// Done
-							stopForeground(true);
-							stopSelf();
-						} else {
+						} else
 							Util.log(null, Log.ERROR, "Unknown action=" + action);
 
-							// Done
-							stopForeground(true);
-							stopSelf();
-						}
+						// Done
+						stopForeground(true);
+						stopSelf();
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
 						// Leave service running
 					}
 				}
+
 			});
 			mWorkerThread.start();
 		} else
 			Util.log(null, Log.ERROR, "Action missing");
 
 		return START_STICKY;
+	}
+
+	private static void migrate(Context context) throws IOException, RemoteException {
+		int first = 0;
+		String format = context.getString(R.string.msg_migrating);
+		List<ApplicationInfo> listApp = context.getPackageManager().getInstalledApplications(0);
+
+		// Start migrate
+		PrivacyProvider.migrateLegacy(context);
+
+		// Migrate global settings
+		PrivacyManager.setSettingList(PrivacyProvider.migrateSettings(context, 0));
+		PrivacyProvider.finishMigrateSettings(0);
+
+		// Migrate application settings/restrictions
+		for (int i = 1; i <= listApp.size(); i++) {
+			int uid = listApp.get(i - 1).uid;
+			// Settings
+			List<ParcelableSetting> listSetting = PrivacyProvider.migrateSettings(context, uid);
+			PrivacyManager.setSettingList(listSetting);
+			PrivacyProvider.finishMigrateSettings(uid);
+
+			// Restrictions
+			List<ParcelableRestriction> listRestriction = PrivacyProvider.migrateRestrictions(context, uid);
+			PrivacyManager.setRestrictionList(listRestriction);
+			PrivacyProvider.finishMigrateRestrictions(uid);
+
+			if (first == 0)
+				if (listSetting.size() > 0 || listRestriction.size() > 0)
+					first = i;
+			if (first > 0)
+				notifyProgress(context, Util.NOTIFY_MIGRATE, format, 100 * (i - first) / (listApp.size() - first));
+		}
+		if (first == 0)
+			Util.log(null, Log.WARN, "Nothing to migrate");
+
+		// Complete migration
+		PrivacyService.getClient().migrated();
+	}
+
+	private static void upgrade(Context context) throws NameNotFoundException {
+		// Get previous version
+		PackageManager pm = context.getPackageManager();
+		PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
+		Version sVersion = new Version(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingVersion, "0.0", false));
+
+		// Upgrade packages
+		if (sVersion.compareTo(new Version("0.0")) != 0) {
+			Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version " + pInfo.versionName);
+			boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false, false);
+			List<ApplicationInfo> listApp = context.getPackageManager().getInstalledApplications(0);
+
+			int first = 0;
+			String format = context.getString(R.string.msg_upgrading);
+
+			for (int i = 1; i <= listApp.size(); i++) {
+				int uid = listApp.get(i - 1).uid;
+				List<ParcelableRestriction> listRestriction = getUpgradeWork(sVersion, dangerous, uid);
+				PrivacyManager.setRestrictionList(listRestriction);
+
+				if (first == 0)
+					if (listRestriction.size() > 0)
+						first = i;
+				if (first > 0)
+					notifyProgress(context, Util.NOTIFY_UPGRADE, format, 100 * (i - first) / (listApp.size() - first));
+			}
+			if (first == 0)
+				Util.log(null, Log.WARN, "Nothing to upgrade version=" + sVersion);
+		} else
+			Util.log(null, Log.WARN, "Noting to upgrade version=" + sVersion);
+
+		PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
+	}
+
+	private static void randomize(Context context) {
+		int first = 0;
+		String format = context.getString(R.string.msg_randomizing);
+		List<ApplicationInfo> listApp = context.getPackageManager().getInstalledApplications(0);
+
+		// Randomize global
+		PrivacyManager.setSettingList(getRandomizeWork(context, 0));
+
+		// Randomize applications
+		for (int i = 1; i <= listApp.size(); i++) {
+			int uid = listApp.get(i - 1).uid;
+			List<ParcelableSetting> listSetting = getRandomizeWork(context, uid);
+			PrivacyManager.setSettingList(listSetting);
+
+			if (first == 0)
+				if (listSetting.size() > 0)
+					first = i;
+			if (first > 0)
+				notifyProgress(context, Util.NOTIFY_RANDOMIZE, format, 100 * (i - first) / (listApp.size() - first));
+		}
+		if (first == 0)
+			Util.log(null, Log.WARN, "Nothing to randomize");
 	}
 
 	private static List<ParcelableSetting> getRandomizeWork(Context context, int uid) {
