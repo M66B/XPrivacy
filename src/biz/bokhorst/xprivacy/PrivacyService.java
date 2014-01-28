@@ -2,6 +2,7 @@ package biz.bokhorst.xprivacy;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -125,6 +126,8 @@ public class PrivacyService {
 		@Override
 		public List<String> check() throws RemoteException {
 			enforcePermission();
+			if (!getDbFile().exists())
+				throw new InvalidParameterException("Database does not exist or is not accessible");
 			return mListError;
 		}
 

@@ -17,6 +17,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Fixed opening wrong application view from notification ([issue](https://github.com/M66B/XPrivacy/issues/717))
 * Close application details view on uninstall
+* Added checks for LBE Security Master and for accessibility of the database
 * Run upgrade after migrate ([issue](https://github.com/M66B/XPrivacy/issues/1165))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

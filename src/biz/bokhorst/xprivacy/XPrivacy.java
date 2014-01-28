@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -14,6 +15,7 @@ import android.app.AndroidAppHelper;
 import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Process;
 import android.util.Log;
 
@@ -27,6 +29,7 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 
 @SuppressLint("DefaultLocale")
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+	private static boolean mLBE = false;
 	private static String mSecret = null;
 	private static boolean mAccountManagerHooked = false;
 	private static boolean mActivityManagerHooked = false;
@@ -45,6 +48,15 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	@SuppressLint("InlinedApi")
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		Util.log(null, Log.INFO, String.format("Load %s", startupParam.modulePath));
+
+		// Check for LBE Security Guard (incompatible)
+		File apps = new File(Environment.getDataDirectory() + File.separator + "app");
+		for (File file : apps.listFiles())
+			if (file.getName().startsWith("com.lbe.security")) {
+				mLBE = true;
+				Util.log(null, Log.WARN, "LBE detected, not hooking");
+				return;
+			}
 
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
@@ -143,6 +155,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
+		if (mLBE)
+			return;
+
 		// Log load
 		Util.log(null, Log.INFO, String.format("Load package=%s uid=%d", lpparam.packageName, Process.myUid()));
 
@@ -185,6 +200,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	public static void handleGetSystemService(XHook hook, String name, Object instance) {
+		if (mLBE)
+			return;
+
 		Util.log(hook, Log.INFO,
 				"getSystemService " + name + "=" + instance.getClass().getName() + " uid=" + Binder.getCallingUid());
 
