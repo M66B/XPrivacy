@@ -17,6 +17,11 @@ Test and beta releases will have experimental functions enabled by default.
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+
+**Version 1.99.19 BETA**
+
+* Fixed always randomizing application settings when global randomization enabled
+
 **Version 1.99.18 BETA**
 
 * Further simplify application specific settings: no check mark or empty value means use global value
