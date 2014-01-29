@@ -43,7 +43,6 @@ public class PrivacyService {
 	private static List<String> mListError;
 	private static IPrivacyService mClient = null;
 	private static SQLiteDatabase mDatabase = null;
-	@SuppressWarnings("unused")
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
 
@@ -82,20 +81,6 @@ public class PrivacyService {
 			int memoryClass = (int) (Runtime.getRuntime().maxMemory() / 1024L / 1024L);
 			mUseCache = (memoryClass >= 32);
 			Util.log(null, Log.WARN, "Memory class=" + memoryClass + " cache=" + mUseCache);
-
-			// Start a worker thread
-			mWorker = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						Looper.prepare();
-						mHandler = new Handler();
-						Looper.loop();
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					}
-				}
-			});
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -325,11 +310,13 @@ public class PrivacyService {
 				}
 
 				// Ask to restrict
-				if (!restricted && usage && PrivacyManager.isApplication(restriction.uid))
+				if (!restricted && usage && PrivacyManager.isApplication(restriction.uid)) {
+					ensureWorker();
 					if (mHandler == null)
-						Util.log(null, Log.ERROR, "No handler");
+						Util.log(null, Log.ERROR, "No handler :-(");
 					else
 						restricted = onDemand(restriction);
+				}
 
 				// Log usage
 				if (usage && restriction.methodName != null)
@@ -476,6 +463,28 @@ public class PrivacyService {
 				Util.bug(null, ex);
 			}
 			return result.restricted;
+		}
+
+		private void ensureWorker() throws InterruptedException {
+			// Start a worker thread
+			if (mWorker == null || mHandler == null) {
+				mWorker = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							Looper.prepare();
+							mHandler = new Handler();
+							Looper.loop();
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						}
+					}
+				});
+
+				int i = 0;
+				while (++i < 100 && mHandler == null)
+					Thread.sleep(5);
+			}
 		}
 
 		@Override
