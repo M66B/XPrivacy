@@ -22,6 +22,7 @@
     <string name="menu_about">À propos</string>
     <string name="menu_help">Aide</string>
     <string name="menu_select_all">Tout sélectionner</string>
+    <string name="menu_sort">Trier</string>
     <string name="menu_all">Tous</string>
     <string name="menu_restriction_all">Inverser restrictions</string>
     <string name="menu_clear_all">Tout effacer</string>
@@ -107,6 +108,12 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_fuser">Filtrer les applis utilisateur</string>
     <string name="title_fsystem">Filtrer les applis système</string>
     <string name="title_fnot">Inverser</string>
+    <string name="title_sname">Par nom</string>
+    <string name="title_suid">Par uid</string>
+    <string name="title_sinstalled">Par date d\'installion</string>
+    <string name="title_supdated">Par date de mise à jour</string>
+    <string name="title_smodified">Par date de modification</string>
+    <string name="title_sinvert">Inverser l\'ordre</string>
     <string name="settings_serial">N° de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>

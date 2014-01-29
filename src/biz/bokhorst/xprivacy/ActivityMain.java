@@ -1,6 +1,8 @@
 package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
@@ -53,6 +55,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -69,11 +72,50 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mProgress = 0;
 	private String mSharingState = null;
 
+	private Comparator<ApplicationInfoEx> mSorter = new Comparator<ApplicationInfoEx>() {
+		@Override
+		public int compare(ApplicationInfoEx appInfo0, ApplicationInfoEx appInfo1) {
+			int sortMode = Integer.parseInt(PrivacyManager
+					.getSetting(null, 0, PrivacyManager.cSettingSMode, "0", false));
+			boolean sortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSInvert, false, false);
+			int sortOrder = sortInvert ? -1 : 1;
+			switch (sortMode) {
+			case SORT_BY_NAME:
+				return sortOrder * appInfo0.compareTo(appInfo1);
+			case SORT_BY_UID:
+				// default lowest first
+				return sortOrder * (appInfo0.getUid() - appInfo1.getUid());
+			case SORT_BY_INSTALL_TIME:
+				// default newest first
+				Long iTime0 = appInfo0.getInstallTime(ActivityMain.this);
+				Long iTime1 = appInfo1.getInstallTime(ActivityMain.this);
+				return sortOrder * iTime1.compareTo(iTime0);
+			case SORT_BY_UPDATE_TIME:
+				// default newest first
+				Long uTime0 = appInfo0.getUpdateTime(ActivityMain.this);
+				Long uTime1 = appInfo1.getUpdateTime(ActivityMain.this);
+				return sortOrder * uTime1.compareTo(uTime0);
+			case SORT_BY_MODIF_TIME:
+				// default newest first
+				Long mTime0 = appInfo0.getModificationTime(ActivityMain.this);
+				Long mTime1 = appInfo1.getModificationTime(ActivityMain.this);
+				return sortOrder * mTime1.compareTo(mTime0);
+			}
+			return 0;
+		}
+	};
+
 	private Handler mProHandler = new Handler();
 
 	public static final int STATE_ATTENTION = 0;
 	public static final int STATE_RESTRICTED = 1;
 	public static final int STATE_SHARED = 2;
+
+	private static final int SORT_BY_NAME = 0;
+	private static final int SORT_BY_UID = 1;
+	private static final int SORT_BY_INSTALL_TIME = 2;
+	private static final int SORT_BY_UPDATE_TIME = 3;
+	private static final int SORT_BY_MODIF_TIME = 4;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int LICENSED = 0x0100;
@@ -425,6 +467,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			case R.id.menu_select_all:
 				optionSelectAll();
 				return true;
+			case R.id.menu_sort:
+				optionSort();
+				return true;
 			case R.id.menu_tutorial:
 				optionTutorial();
 				return true;
@@ -553,6 +598,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			tvStateLayout.addRule(RelativeLayout.LEFT_OF, R.id.pbFilter);
 
 			mAppAdapter.getFilter().filter(filter);
+		}
+	}
+
+	private void applySort() {
+		if (mAppAdapter != null) {
+			mAppAdapter.sort();
 		}
 	}
 
@@ -758,6 +809,77 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		// Select all visible apps
 		if (mAppAdapter != null)
 			mAppAdapter.selectAllVisible();
+	}
+
+	private void optionSort() {
+		LayoutInflater LayoutInflater = (LayoutInflater) ActivityMain.this
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = LayoutInflater.inflate(R.layout.sort, null);
+		final RadioGroup rgSMode = (RadioGroup) view.findViewById(R.id.rgSMode);
+		final CheckBox cbSInvert = (CheckBox) view.findViewById(R.id.cbSInvert);
+
+		// Initialise controls
+		int sortMode = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSMode, "0", false));
+		boolean sortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSInvert, false, false);
+		switch (sortMode) {
+		case SORT_BY_NAME:
+			rgSMode.check(R.id.rbSName);
+			break;
+		case SORT_BY_UID:
+			rgSMode.check(R.id.rbSUid);
+			break;
+		case SORT_BY_INSTALL_TIME:
+			rgSMode.check(R.id.rbSInstalled);
+			break;
+		case SORT_BY_UPDATE_TIME:
+			rgSMode.check(R.id.rbSUpdated);
+			break;
+		case SORT_BY_MODIF_TIME:
+			rgSMode.check(R.id.rbSModified);
+			break;
+		}
+		cbSInvert.setChecked(sortInvert);
+
+		// Build dialog
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
+		alertDialogBuilder.setTitle(R.string.menu_sort);
+		alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
+		alertDialogBuilder.setView(view);
+		alertDialogBuilder.setPositiveButton(ActivityMain.this.getString(android.R.string.ok),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						switch (rgSMode.getCheckedRadioButtonId()) {
+						case R.id.rbSName:
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+									Integer.toString(SORT_BY_NAME));
+							break;
+						case R.id.rbSUid:
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+									Integer.toString(SORT_BY_UID));
+							break;
+						case R.id.rbSInstalled:
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+									Integer.toString(SORT_BY_INSTALL_TIME));
+							break;
+						case R.id.rbSUpdated:
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+									Integer.toString(SORT_BY_UPDATE_TIME));
+							break;
+						case R.id.rbSModified:
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+									Integer.toString(SORT_BY_MODIF_TIME));
+							break;
+						}
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSInvert,
+								Boolean.toString(cbSInvert.isChecked()));
+						applySort();
+					}
+				});
+
+		// Show dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 	private void optionTutorial() {
@@ -1096,6 +1218,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						lstApp.add(xAppInfo);
 				}
 
+				// Apply current sorting
+				Collections.sort(lstApp, mSorter);
+
 				synchronized (this) {
 					results.values = lstApp;
 					results.count = lstApp.size();
@@ -1135,6 +1260,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					AppListAdapter.this.showStats();
 				}
 			}
+		}
+
+		public void sort() {
+			sort(mSorter);
 		}
 
 		private class ViewHolder {
@@ -1190,8 +1319,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			protected Object doInBackground(Object... params) {
 				if (xAppInfo != null) {
 					// Get state
-					state = Integer.parseInt(PrivacyManager.getSetting(null, xAppInfo.getUid(),
-							PrivacyManager.cSettingState, "1", false));
+					state = xAppInfo.getState(ActivityMain.this);
 
 					// Get if used
 					used = (PrivacyManager.getUsed(xAppInfo.getUid(), mRestrictionName, null) != 0);
@@ -1328,8 +1456,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 											@Override
 											public void onClick(DialogInterface dialog, int which) {
 												// Update restriction
-												boolean restart = PrivacyManager.deleteRestrictions(xAppInfo.getUid(),
-														true);
+												boolean restart = PrivacyManager.deleteRestrictions(xAppInfo.getUid());
 												allRestricted = false;
 												someRestricted = false;
 
@@ -1366,7 +1493,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								boolean restart = false;
 								for (String restrictionName : listRestriction)
 									restart = PrivacyManager.setRestriction(null, xAppInfo.getUid(), restrictionName,
-											null, crestricted, true) || restart;
+											null, crestricted) || restart;
 
 								// Update all/some restricted
 								allRestricted = true;
@@ -1392,8 +1519,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							}
 
 							// Display new state
-							state = Integer.parseInt(PrivacyManager.getSetting(null, xAppInfo.getUid(),
-									PrivacyManager.cSettingState, "1", false));
+							state = xAppInfo.getState(ActivityMain.this);
 							if (state == STATE_ATTENTION)
 								holder.vwState.setBackgroundColor(getResources().getColor(
 										Util.getThemed(ActivityMain.this, R.attr.color_state_attention)));

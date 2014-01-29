@@ -22,6 +22,7 @@
     <string name="menu_about">Om</string>
     <string name="menu_help">Hjælp</string>
     <string name="menu_select_all">Select all</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">Alle</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
@@ -105,6 +106,12 @@
     <string name="title_fsystem">Filter on system applications</string>
     <string name="title_fuser">Filter on user applications</string>
     <string name="title_fnot">Negate</string>
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
+    <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Længdegrad</string>

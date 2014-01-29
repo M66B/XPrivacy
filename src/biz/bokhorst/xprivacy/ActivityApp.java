@@ -455,7 +455,7 @@ public class ActivityApp extends Activity {
 					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 					if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
 						restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null,
-								restricted, true) || restart;
+								restricted) || restart;
 				}
 
 				// Refresh display
@@ -484,7 +484,7 @@ public class ActivityApp extends Activity {
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				boolean restart = PrivacyManager.deleteRestrictions(mAppInfo.getUid(), true);
+				boolean restart = PrivacyManager.deleteRestrictions(mAppInfo.getUid());
 
 				// Refresh display
 				if (mPrivacyListAdapter != null)
@@ -949,7 +949,7 @@ public class ActivityApp extends Activity {
 									false, false, null);
 							crestricted = !crestricted;
 							boolean restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName,
-									null, crestricted, true);
+									null, crestricted);
 
 							// Update all/some restricted
 							allRestricted = true;
@@ -1155,7 +1155,7 @@ public class ActivityApp extends Activity {
 							restricted = !restricted;
 							holder.ctvMethodName.setChecked(restricted);
 							boolean restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName,
-									md.getName(), restricted, true);
+									md.getName(), restricted);
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent

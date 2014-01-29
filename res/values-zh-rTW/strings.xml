@@ -22,6 +22,7 @@
     <string name="menu_about">關於</string>
     <string name="menu_help">說明</string>
     <string name="menu_select_all">全選</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">所有程式</string>
     <string name="menu_restriction_all">套用預設規則</string>
     <string name="menu_clear_all">清除全部</string>
@@ -107,6 +108,12 @@
     <string name="title_fuser">顯示使用者app</string>
     <string name="title_fsystem">顯示系統app</string>
     <string name="title_fnot">←反選(無限制程式)</string>
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
+    <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">序號</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">經度</string>

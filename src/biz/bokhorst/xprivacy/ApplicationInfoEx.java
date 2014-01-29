@@ -33,6 +33,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private boolean mInternetDetermined = false;
 	private boolean mFrozen = false;
 	private boolean mFrozenDetermined = false;
+	private long mInstallTime = -1;
+	private long mUpdateTime = -1;
 
 	public ApplicationInfoEx(Context context, int uid) throws NameNotFoundException {
 		mMapAppInfo = new TreeMap<String, ApplicationInfo>();
@@ -182,6 +184,48 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	public int getUid() {
 		// All listed uid's are the same
 		return mMapAppInfo.firstEntry().getValue().uid;
+	}
+
+	public int getState(Context context) {
+		return Integer.parseInt(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingState, "1", false));
+	}
+
+	public long getInstallTime(Context context) {
+		if (mInstallTime == -1) {
+			long now = System.currentTimeMillis();
+			mInstallTime = now;
+			for (String packageName : this.getPackageName())
+				try {
+					getPackageInfo(context, packageName);
+					long time = mMapPkgInfo.get(packageName).firstInstallTime;
+					if (time < mInstallTime)
+						mInstallTime = time;
+				} catch (NameNotFoundException ex) {
+				}
+			if (mInstallTime == now)
+				// no install time, so assume it is old
+				mInstallTime = 0;
+		}
+		return mInstallTime;
+	}
+
+	public long getUpdateTime(Context context) {
+		if (mUpdateTime == -1) {
+			mUpdateTime = 0;
+			for (String packageName : this.getPackageName())
+				try {
+					getPackageInfo(context, packageName);
+					long time = mMapPkgInfo.get(packageName).lastUpdateTime;
+					if (time > mUpdateTime)
+						mUpdateTime = time;
+				} catch (NameNotFoundException ex) {
+				}
+		}
+		return mUpdateTime;
+	}
+
+	public long getModificationTime(Context context) {
+		return Long.parseLong(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingMTime, "0", false));
 	}
 
 	public boolean isSystem() {

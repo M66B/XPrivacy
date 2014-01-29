@@ -85,6 +85,9 @@ public class PrivacyManager {
 	public final static String cSettingFPermission = "FPermission";
 	public final static String cSettingFUser = "FUser";
 	public final static String cSettingFSystem = "FSystem";
+	public final static String cSettingSMode = "SMode";
+	public final static String cSettingSInvert = "SInvert";
+	public final static String cSettingMTime = "MTime";
 	public final static String cSettingTheme = "Theme";
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
@@ -289,7 +292,7 @@ public class PrivacyManager {
 	}
 
 	public static boolean setRestriction(XHook hook, int uid, String restrictionName, String methodName,
-			boolean restricted, boolean changeState) {
+			boolean restricted) {
 		// Check uid
 		if (uid == 0) {
 			Util.log(hook, Log.WARN, "uid=0");
@@ -310,13 +313,16 @@ public class PrivacyManager {
 			if (restricted && !dangerous) {
 				for (Hook md : getHooks(restrictionName))
 					if (md.isDangerous())
-						PrivacyManager.setRestriction(hook, uid, restrictionName, md.getName(), dangerous, changeState);
+						PrivacyManager.setRestriction(hook, uid, restrictionName, md.getName(), dangerous);
 			}
 
 		// Mark state as restricted
-		if (restricted && changeState)
+		if (restricted)
 			PrivacyManager.setSetting(hook, uid, PrivacyManager.cSettingState,
 					Integer.toString(ActivityMain.STATE_RESTRICTED));
+
+		// Change app modification time
+		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingMTime, Long.toString(System.currentTimeMillis()));
 
 		// Check if restart required
 		return shouldRestart(restrictionName, methodName, restricted);
@@ -360,7 +366,7 @@ public class PrivacyManager {
 		}
 	}
 
-	public static boolean deleteRestrictions(int uid, boolean changeState) {
+	public static boolean deleteRestrictions(int uid) {
 		// Check if restart required
 		boolean restart = false;
 		for (String restrictionName : getRestrictions()) {
@@ -382,9 +388,11 @@ public class PrivacyManager {
 		}
 
 		// Mark as new/changed
-		if (changeState)
-			PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingState,
-					Integer.toString(ActivityMain.STATE_ATTENTION));
+		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingState,
+				Integer.toString(ActivityMain.STATE_ATTENTION));
+
+		// Change app modification time
+		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingMTime, Long.toString(System.currentTimeMillis()));
 
 		return restart;
 	}

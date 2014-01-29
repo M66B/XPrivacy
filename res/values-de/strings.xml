@@ -22,6 +22,7 @@
     <string name="menu_about">Über XPrivacy</string>
     <string name="menu_help">Hilfe</string>
     <string name="menu_select_all">Alle auswählen</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">Alles (beschränkt)</string>
     <string name="menu_restriction_all">Beschränkungen invertieren</string>
     <string name="menu_clear_all">Alles löschen</string>
@@ -107,6 +108,12 @@
     <string name="title_fuser">Nach Benutzer-Apps filtern</string>
     <string name="title_fsystem">Nach System-Apps filtern</string>
     <string name="title_fnot">Negieren</string>
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
+    <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>

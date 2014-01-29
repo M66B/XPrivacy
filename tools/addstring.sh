@@ -1,6 +1,14 @@
 #!/bin/bash
-grep -RIl "\<string name=\"app_wrongandroid" res | xargs sed -i -e '/string name="app_wrongandroid/a \
-\ \ \ \ <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>'
+grep -RIl "\<string name=\"menu_select_all" res | xargs sed -i -e '/menu_select_all/a \
+\ \ \ \ <string name="menu_sort">Sort</string>'
 
-#grep -RIl "\<string name=\"settings_global" res | xargs sed -i -e '/settings_global/d'
-#grep -RIl "\<string name=\"settings_experimental" res | xargs sed -i -e 's/Experimental features/Experimental functions/g'
+grep -RIl "\<string name=\"title_fnot" res | xargs sed -i -e '/title_fnot/a \
+\ \ \ \ <string name="title_sname">By name</string>\
+    <string name="title_suid">By uid</string>\
+    <string name="title_sinstalled">By date installed</string>\
+    <string name="title_supdated">By date updated</string>\
+    <string name="title_smodified">By date modified</string>\
+    <string name="title_sinvert">Invert sort order</string>'
+
+#grep -RIl "\<string name=\"msg_edit" res | xargs sed -i -e '/msg_edit/d'
+#grep -RIl "\<string name=\"menu_app_store" res | xargs sed -i -e 's/title_sattention">Apps requiring attention first/title_sinvert">Invert sort order/g'

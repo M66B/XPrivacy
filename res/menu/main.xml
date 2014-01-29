@@ -12,6 +12,11 @@
         android:showAsAction="always"
         android:title="@string/menu_select_all"/>
     <item
+        android:id="@+id/menu_sort"
+        android:icon="@drawable/icon_sort"
+        android:showAsAction="always"
+        android:title="@string/menu_sort"/>
+    <item
         android:id="@+id/menu_tutorial"
         android:title="@string/menu_tutorial"/>
     <item

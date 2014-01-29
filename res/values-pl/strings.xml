@@ -22,6 +22,7 @@
     <string name="menu_about">O programie</string>
     <string name="menu_help">Pomoc</string>
     <string name="menu_select_all">Wybierz wszystko</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">Wszystko</string>
     <string name="menu_restriction_all">Przełącz restrykcje</string>
     <string name="menu_clear_all">Wyczyść wszystko</string>
@@ -108,6 +109,12 @@
     <string name="title_fuser">Filtruj wg aplikacji użytkownika</string>
     <string name="title_fsystem">Filtruj wg aplikacji systemowych</string>
     <string name="title_fnot">Odwróć</string>
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
+    <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>

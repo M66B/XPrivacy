@@ -22,6 +22,7 @@
     <string name="menu_about">Acerca de</string>
     <string name="menu_help">Ayuda</string>
     <string name="menu_select_all">Select all</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">Todas</string>
     <string name="menu_restriction_all">Restringir todo</string>
     <string name="menu_clear_all">Permitir todo</string>
@@ -107,6 +108,12 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="title_fuser">Filtrar aplicaciones de usuario</string>
     <string name="title_fsystem">Filtrar aplicaciones de sistema</string>
     <string name="title_fnot">Negar</string>
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
+    <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial"># de serie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
