@@ -67,6 +67,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private AppListAdapter mAppAdapter = null;
 	private Bitmap[] mCheck;
 	private int mTab;
+	private int mSortMode;
+	private boolean mSortInvert;
 	private int mProgressWidth = 0;
 	private int mProgress = 0;
 
@@ -111,14 +113,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private Comparator<ApplicationInfoEx> mSorter = new Comparator<ApplicationInfoEx>() {
+
 		@Override
 		public int compare(ApplicationInfoEx appInfo0, ApplicationInfoEx appInfo1) {
-			int sortMode = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSortMode, "0",
-					false));
-			boolean sortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSortInverted, false,
-					false);
-			int sortOrder = sortInvert ? -1 : 1;
-			switch (sortMode) {
+			int sortOrder = mSortInvert ? -1 : 1;
+			switch (mSortMode) {
 			case SORT_BY_NAME:
 				return sortOrder * appInfo0.compareTo(appInfo1);
 			case SORT_BY_UID:
@@ -221,6 +220,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			spRestriction.setAdapter(spAdapter);
 			spRestriction.setOnItemSelectedListener(this);
 			spRestriction.setSelection(pos);
+
+			// Setup sort
+			mSortMode = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSortMode, "0",
+					false));
+			mSortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSortInverted, false, false);
 
 			// Setup name filter
 			final EditText etFilter = (EditText) findViewById(R.id.etFilter);
@@ -823,10 +827,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		final CheckBox cbSInvert = (CheckBox) view.findViewById(R.id.cbSInvert);
 
 		// Initialise controls
-		int sortMode = Integer
-				.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSortMode, "0", false));
-		boolean sortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSortInverted, false, false);
-		switch (sortMode) {
+		switch (mSortMode) {
 		case SORT_BY_NAME:
 			rgSMode.check(R.id.rbSName);
 			break;
@@ -843,7 +844,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			rgSMode.check(R.id.rbSModified);
 			break;
 		}
-		cbSInvert.setChecked(sortInvert);
+		cbSInvert.setChecked(mSortInvert);
 
 		// Build dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
@@ -856,28 +857,28 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					public void onClick(DialogInterface dialog, int which) {
 						switch (rgSMode.getCheckedRadioButtonId()) {
 						case R.id.rbSName:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
-									Integer.toString(SORT_BY_NAME));
+							mSortMode = SORT_BY_NAME;
 							break;
 						case R.id.rbSUid:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
-									Integer.toString(SORT_BY_UID));
+							mSortMode = SORT_BY_UID;
 							break;
 						case R.id.rbSInstalled:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
-									Integer.toString(SORT_BY_INSTALL_TIME));
+							mSortMode = SORT_BY_INSTALL_TIME;
 							break;
 						case R.id.rbSUpdated:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
-									Integer.toString(SORT_BY_UPDATE_TIME));
+							mSortMode = SORT_BY_UPDATE_TIME;
 							break;
 						case R.id.rbSModified:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
-									Integer.toString(SORT_BY_MODIFY_TIME));
+							mSortMode = SORT_BY_MODIFY_TIME;
 							break;
 						}
+						mSortInvert = cbSInvert.isChecked();
+
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
+								Integer.toString(mSortMode));
 						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortInverted,
-								Boolean.toString(cbSInvert.isChecked()));
+								Boolean.toString(mSortInvert));
+
 						applySort();
 					}
 				});
@@ -1211,9 +1212,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							&& (fPermission ? permission : true) && (fUser ? user : true) && (fSystem ? system : true))
 						lstApp.add(xAppInfo);
 				}
+				
+				// Check again whether another filter has been started
+				if (filtersRunning != mFiltersRunning.get())
+					return null;
 
 				// Apply current sorting
 				Collections.sort(lstApp, mSorter);
+				
+				// Last check whether another filter has been started
+				if (filtersRunning != mFiltersRunning.get())
+					return null;
 
 				synchronized (this) {
 					results.values = lstApp;
