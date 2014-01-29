@@ -211,6 +211,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			spRestriction = (Spinner) findViewById(R.id.spRestriction);
 			spRestriction.setAdapter(spAdapter);
 			spRestriction.setOnItemSelectedListener(this);
+			String restrictionName = PrivacyManager
+					.getSetting(null, 0, PrivacyManager.cSettingTabCategory, null, false);
+			int pos = 0;
+			if (restrictionName != null)
+				for (String restriction : PrivacyManager.getRestrictions(this).values()) {
+					pos++;
+					if (restrictionName.equals(restriction))
+						break;
+				}
+			spRestriction.setSelection(pos);
 
 			// Setup name filter
 			final EditText etFilter = (EditText) findViewById(R.id.etFilter);
@@ -540,6 +550,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			String restrictionName = (pos == 0 ? null : (String) PrivacyManager.getRestrictions(this).values()
 					.toArray()[pos - 1]);
 			mAppAdapter.setRestrictionName(restrictionName);
+			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTabCategory, restrictionName);
 			applyFilter();
 		}
 	}
