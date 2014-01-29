@@ -65,9 +65,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
-	private boolean mFiltersHidden = true;
-	private boolean mCategoriesHidden = true;
 	private Bitmap[] mCheck;
+	private int mTab;
 	private int mProgressWidth = 0;
 	private int mProgress = 0;
 	private String mSharingState = null;
@@ -116,6 +115,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int SORT_BY_INSTALL_TIME = 2;
 	private static final int SORT_BY_UPDATE_TIME = 3;
 	private static final int SORT_BY_MODIF_TIME = 4;
+
+	private static final int TAB_NONE = 0;
+	private static final int TAB_CATEGORY = 1;
+	private static final int TAB_FILTERS = 2;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int LICENSED = 0x0100;
@@ -282,22 +285,22 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			cbFSystem.setChecked(fSystem);
 			cbFSystem.setOnCheckedChangeListener(this);
 
-			// Hide filters
-			if (savedInstanceState != null && savedInstanceState.containsKey("Filters"))
-				mFiltersHidden = !savedInstanceState.getBoolean("Filters");
-			toggleFiltersVisibility();
-
-			// Hide categories
-			if (savedInstanceState != null && savedInstanceState.containsKey("Categories"))
-				mCategoriesHidden = !savedInstanceState.getBoolean("Categories");
-			toggleCategoriesVisibility();
+			// Tab states
+			mTab = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingOpenTab,
+					Integer.toString(TAB_NONE), false));
+			openTab(mTab);
 
 			// Handle toggle filters visibility
 			TextView tvFilterDetail = (TextView) findViewById(R.id.tvFilterDetail);
 			tvFilterDetail.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					toggleFiltersVisibility();
+					int currentTab = Integer.parseInt(PrivacyManager.getSetting(null, 0,
+							PrivacyManager.cSettingOpenTab, Integer.toString(TAB_NONE), false));
+					if (currentTab == TAB_FILTERS)
+						openTab(TAB_NONE);
+					else
+						openTab(TAB_FILTERS);
 				}
 			});
 
@@ -306,7 +309,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			tvCategoryDetail.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					toggleCategoriesVisibility();
+					int currentTab = Integer.parseInt(PrivacyManager.getSetting(null, 0,
+							PrivacyManager.cSettingOpenTab, Integer.toString(TAB_NONE), false));
+					if (currentTab == TAB_CATEGORY)
+						openTab(TAB_NONE);
+					else
+						openTab(TAB_CATEGORY);
 				}
 			});
 
@@ -361,13 +369,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
 			((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
 		}
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		outState.putBoolean("Filters", mFiltersHidden);
-		outState.putBoolean("Categories", mCategoriesHidden);
-		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -883,14 +884,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionTutorial() {
-		if (mCategoriesHidden)
-			toggleCategoriesVisibility();
+		openTab(TAB_CATEGORY);
 		((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
 		((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
 		PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTutorialMain, Boolean.FALSE.toString());
 	}
 
-	private void toggleFiltersVisibility() {
+	private void openTab(int which) {
 		TextView tvFilterDetail = (TextView) findViewById(R.id.tvFilterDetail);
 		View vFilterHighlight = findViewById(R.id.vFilterHighlight);
 		EditText etFilter = (EditText) findViewById(R.id.etFilter);
@@ -902,20 +902,33 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
+		TextView tvCategories = (TextView) findViewById(R.id.tvCategoryDetail);
+		View vCategoryHighlight = findViewById(R.id.vCategoryHighlight);
 
-		if (mFiltersHidden) {
-			// Change visibility
-			llFilters.setVisibility(LinearLayout.VISIBLE);
-			llCategories.setVisibility(LinearLayout.GONE);
+		if (which == TAB_FILTERS) {
+			llFilters.setVisibility(View.VISIBLE);
+			llCategories.setVisibility(View.GONE);
 
 			tvFilterDetail.setText(R.string.title_filters);
+			tvCategories.setText((String) spRestriction.getSelectedItem());
 
-			if (!mCategoriesHidden)
-				toggleCategoriesVisibility();
+		} else if (which == TAB_CATEGORY) {
+			llFilters.setVisibility(View.GONE);
+			llCategories.setVisibility(View.VISIBLE);
+
+			tvCategories.setText(R.string.title_categories);
+
 		} else {
-			int numberOfFilters = 0;
+			llFilters.setVisibility(View.GONE);
+			llCategories.setVisibility(View.GONE);
 
-			// Count number of activate filters
+			tvCategories.setText((String) spRestriction.getSelectedItem());
+		}
+
+		// Filters title
+		if (which != TAB_FILTERS) {
+			// Count number of active filters
+			int numberOfFilters = 0;
 			if (etFilter.getText().length() > 0)
 				numberOfFilters++;
 			if (cbFUsed.isChecked())
@@ -931,41 +944,18 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			if (cbFSystem.isChecked())
 				numberOfFilters++;
 
-			// Change text
 			tvFilterDetail.setText(getResources().getQuantityString(R.plurals.title_active_filters, numberOfFilters,
 					numberOfFilters));
-
-			// Change visibility
-			llFilters.setVisibility(LinearLayout.GONE);
 		}
 
-		mFiltersHidden = !mFiltersHidden;
-		vFilterHighlight.setBackgroundResource(mFiltersHidden ? android.R.color.transparent : Util.getThemed(this,
-				android.R.attr.colorActivatedHighlight));
-	}
+		// Set highlights
+		vFilterHighlight.setBackgroundResource(which != TAB_FILTERS ? android.R.color.transparent : Util.getThemed(
+				this, android.R.attr.colorActivatedHighlight));
+		vCategoryHighlight.setBackgroundResource(which != TAB_CATEGORY ? android.R.color.transparent : Util.getThemed(
+				this, android.R.attr.colorActivatedHighlight));
 
-	private void toggleCategoriesVisibility() {
-		TextView tvCategories = (TextView) findViewById(R.id.tvCategoryDetail);
-		View vCategoryHighlight = findViewById(R.id.vCategoryHighlight);
-		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
-		LinearLayout llCategories = (LinearLayout) findViewById(R.id.llCategories);
-
-		if (mCategoriesHidden) {
-			// Change visibility
-			llFilters.setVisibility(LinearLayout.GONE);
-			llCategories.setVisibility(LinearLayout.VISIBLE);
-			tvCategories.setText(R.string.title_categories);
-			if (!mFiltersHidden)
-				toggleFiltersVisibility();
-		} else {
-			// Change visibility
-			llCategories.setVisibility(LinearLayout.GONE);
-			tvCategories.setText((String) spRestriction.getSelectedItem());
-		}
-
-		mCategoriesHidden = !mCategoriesHidden;
-		vCategoryHighlight.setBackgroundResource(mCategoriesHidden ? android.R.color.transparent : Util.getThemed(this,
-				android.R.attr.colorActivatedHighlight));
+		// Save setting
+		PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingOpenTab, Integer.toString(which));
 	}
 
 	// Tasks

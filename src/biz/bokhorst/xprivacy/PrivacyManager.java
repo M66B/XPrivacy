@@ -78,6 +78,7 @@ public class PrivacyManager {
 	public final static String cSettingSubscriber = "Subscriber";
 	public final static String cSettingSSID = "SSID";
 	public final static String cSettingUa = "UA";
+	public final static String cSettingOpenTab = "OpenTab";
 	public final static String cSettingFUsed = "FUsed";
 	public final static String cSettingFInternet = "FInternet";
 	public final static String cSettingFRestriction = "FRestriction";
