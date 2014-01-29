@@ -69,7 +69,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mTab;
 	private int mProgressWidth = 0;
 	private int mProgress = 0;
-	private String mSharingState = null;
 
 	private Handler mProHandler = new Handler();
 
@@ -329,13 +328,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						openTab(TAB_CATEGORY);
 				}
 			});
-
-			// Handle post share operation done message
-			if (mSharingState != null) {
-				TextView tvState = (TextView) findViewById(R.id.tvState);
-				tvState.setText(mSharingState);
-				mSharingState = null;
-			}
 
 			// Start task to get app list
 			AppListTask appListTask = new AppListTask();
