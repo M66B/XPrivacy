@@ -15,18 +15,20 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.20 BETA**
+
 * Fixed restricting accounts in some situations
 * Added application sort, thanks @[jpeg729](https://github.com/jpeg729)
-* Saving tab state (category, filters, none), thanks @[jpeg729](https://github.com/jpeg729) ([issue](https://github.com/M66B/XPrivacy/issues/1035))
+* Saving tab state (category, filters), thanks @[jpeg729](https://github.com/jpeg729) ([issue](https://github.com/M66B/XPrivacy/issues/1035))
 * Restrict access to Gmail information ([issue](https://github.com/M66B/XPrivacy/issues/1080))
 * Added XPrivacy version and device name to export file name ([issue](https://github.com/M66B/XPrivacy/issues/1116))
-* Using zero height for fake locations ([issue](https://github.com/M66B/XPrivacy/issues/1179))
+* Using zero altitude for fake locations ([issue](https://github.com/M66B/XPrivacy/issues/1179))
 * Updated Dutch translation
 * Updated French translation
 * Updated Lithuanian translation
 * Updated Polish translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.19 BETA**
 
