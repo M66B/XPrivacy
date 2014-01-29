@@ -35,7 +35,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private boolean mFrozenDetermined = false;
 	private long mInstallTime = -1;
 	private long mUpdateTime = -1;
-	private long mModificationTime = -1;
 
 	public ApplicationInfoEx(Context context, int uid) throws NameNotFoundException {
 		mMapAppInfo = new TreeMap<String, ApplicationInfo>();
@@ -188,8 +187,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public int getState(Context context) {
-		return Integer.parseInt(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingState, "1",
-				false));
+		return Integer.parseInt(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingState, "1", false));
 	}
 
 	public long getInstallTime(Context context) {
@@ -204,8 +202,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 						mInstallTime = time;
 				} catch (NameNotFoundException ex) {
 				}
-			if (mInstallTime == now) // no install time, maybe it came with the
-										// rom, and so is old
+			if (mInstallTime == now)
+				// no install time, so assume it is old
 				mInstallTime = 0;
 		}
 		return mInstallTime;
@@ -227,11 +225,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public long getModificationTime(Context context) {
-		if (mModificationTime == -1) {
-			mModificationTime = Long.parseLong(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingMTime,
-					"0", false));
-		}
-		return mModificationTime;
+		return Long.parseLong(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingMTime, "0", false));
 	}
 
 	public boolean isSystem() {

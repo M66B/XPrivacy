@@ -23,6 +23,7 @@
     <string name="menu_about">Apie</string>
     <string name="menu_help">Pagalba</string>
     <string name="menu_select_all">Pažymėti viską</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">Visos</string>
     <string name="menu_restriction_all">Išvalyti visus ribojimus</string>
     <string name="menu_clear_all">Išvalyti viską</string>
@@ -108,16 +109,11 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_fuser">Vartotojo programos</string>
     <string name="title_fsystem">Sistemos programos</string>
     <string name="title_fnot">Neriboti</string>
-    <string name="title_sort_by">Sort by</string>
-
-    <string-array name="title_smodes">
-        <item >name</item>
-        <item >uid</item>
-        <item >date installed</item>
-        <item >date updated</item>
-        <item >date modified</item>
-    </string-array>
-
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
     <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>

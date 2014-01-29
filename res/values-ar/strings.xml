@@ -22,6 +22,7 @@
     <string name="menu_about">عن التطبيق</string>
     <string name="menu_help">مساعدة</string>
     <string name="menu_select_all">إختر الكل</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">تحديد الكل</string>
     <string name="menu_restriction_all">تبديل القيود</string>
     <string name="menu_clear_all">مسح الكل</string>
@@ -107,16 +108,11 @@
     <string name="title_fuser">تصفية برامج المستخدم</string>
     <string name="title_fsystem">تصفية برامج النظام</string>
     <string name="title_fnot">العكس</string>
-    <string name="title_sort_by">Sort by</string>
-
-    <string-array name="title_smodes">
-        <item >name</item>
-        <item >uid</item>
-        <item >date installed</item>
-        <item >date updated</item>
-        <item >date modified</item>
-    </string-array>
-
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
     <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>

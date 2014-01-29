@@ -55,6 +55,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -63,7 +64,6 @@ import android.widget.Toast;
 public class ActivityMain extends Activity implements OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 	private int mThemeId;
 	private Spinner spRestriction = null;
-	private Spinner spSMode = null;
 	private AppListAdapter mAppAdapter = null;
 	private boolean mFiltersHidden = true;
 	private boolean mCategoriesHidden = true;
@@ -72,6 +72,38 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mProgress = 0;
 	private boolean mBatchOpRunning = false;
 	private String mSharingState = null;
+
+	private Comparator<ApplicationInfoEx> mSorter = new Comparator<ApplicationInfoEx>() {
+		@Override
+		public int compare(ApplicationInfoEx appInfo0, ApplicationInfoEx appInfo1) {
+			int sortMode = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSMode, "0", false));
+			boolean sortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSInvert, false, false);
+			int sortOrder = sortInvert ? -1 : 1;
+			switch (sortMode) {
+			case SORT_BY_NAME:
+				return sortOrder * appInfo0.compareTo(appInfo1);
+			case SORT_BY_UID:
+				// default lowest first
+				return sortOrder * (appInfo0.getUid() - appInfo1.getUid());
+			case SORT_BY_INSTALL_TIME:
+				// default newest first
+				Long iTime0 = appInfo0.getInstallTime(ActivityMain.this);
+				Long iTime1 = appInfo1.getInstallTime(ActivityMain.this);
+				return sortOrder * iTime1.compareTo(iTime0);
+			case SORT_BY_UPDATE_TIME:
+				// default newest first
+				Long uTime0 = appInfo0.getUpdateTime(ActivityMain.this);
+				Long uTime1 = appInfo1.getUpdateTime(ActivityMain.this);
+				return sortOrder * uTime1.compareTo(uTime0);
+			case SORT_BY_MODIF_TIME:
+				// default newest first
+				Long mTime0 = appInfo0.getModificationTime(ActivityMain.this);
+				Long mTime1 = appInfo1.getModificationTime(ActivityMain.this);
+				return sortOrder * mTime1.compareTo(mTime0);
+			}
+			return 0;
+		}
+	};
 
 	private Handler mProHandler = new Handler();
 
@@ -171,21 +203,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				}
 			});
 
-			// Setup category spinner
+			// Setup spinner
 			spRestriction = (Spinner) findViewById(R.id.spRestriction);
 			spRestriction.setAdapter(spAdapter);
 			spRestriction.setOnItemSelectedListener(this);
-
-			// Setup sort mode
-			int sMode = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSMode, "0", false));
-			spSMode = (Spinner) findViewById(R.id.spSMode);
-			spSMode.setOnItemSelectedListener(this);
-			spSMode.setSelection(sMode);
-
-			boolean sInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSInvert, false, false);
-			final CheckBox cbSInvert = (CheckBox) findViewById(R.id.cbSInvert);
-			cbSInvert.setChecked(sInvert);
-			cbSInvert.setOnCheckedChangeListener(this);
 
 			// Setup name filter
 			final EditText etFilter = (EditText) findViewById(R.id.etFilter);
@@ -450,6 +471,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			case R.id.menu_select_all:
 				optionSelectAll();
 				return true;
+			case R.id.menu_sort:
+				optionSort();
+				return true;
 			case R.id.menu_tutorial:
 				optionTutorial();
 				return true;
@@ -505,12 +529,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-		if (parent.equals(spRestriction)) {
-			selectRestriction(pos);
-		} else if (parent.equals(spSMode)) {
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode, Integer.toString(pos));
-			applySort();
-		}
+		selectRestriction(pos);
 	}
 
 	@Override
@@ -536,7 +555,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
 		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
 		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
-		CheckBox cbSInvert = (CheckBox) findViewById(R.id.cbSInvert);
 		if (buttonView == cbFUsed)
 			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFUsed, Boolean.toString(isChecked));
 		else if (buttonView == cbFInternet)
@@ -556,12 +574,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				cbFUser.setChecked(false);
 			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFSystem, Boolean.toString(isChecked));
 		}
-		if (buttonView == cbSInvert) {
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSInvert, Boolean.toString(isChecked));
-			applySort();
-		} else {
-			applyFilter();
-		}
+		applyFilter();
 	}
 
 	private void applyFilter() {
@@ -594,7 +607,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void applySort() {
 		if (mAppAdapter != null) {
-			mAppAdapter.setSortMode();
 			mAppAdapter.sort();
 		}
 	}
@@ -803,6 +815,71 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mAppAdapter.selectAllVisible();
 	}
 
+	private void optionSort() {
+		LayoutInflater LayoutInflater = (LayoutInflater) ActivityMain.this
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = LayoutInflater.inflate(R.layout.sort, null);
+		final RadioGroup rgSMode = (RadioGroup) view.findViewById(R.id.rgSMode);
+		final CheckBox cbSInvert = (CheckBox) view.findViewById(R.id.cbSInvert);
+
+		// Initialise controls
+		int sortMode = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSMode, "0", false));
+		boolean sortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSInvert, false, false);
+		switch (sortMode) {
+		case SORT_BY_NAME:
+			rgSMode.check(R.id.rbSName);
+			break;
+		case SORT_BY_UID:
+			rgSMode.check(R.id.rbSUid);
+			break;
+		case SORT_BY_INSTALL_TIME:
+			rgSMode.check(R.id.rbSInstalled);
+			break;
+		case SORT_BY_UPDATE_TIME:
+			rgSMode.check(R.id.rbSUpdated);
+			break;
+		case SORT_BY_MODIF_TIME:
+			rgSMode.check(R.id.rbSModified);
+			break;
+		}
+		cbSInvert.setChecked(sortInvert);
+
+		// Build dialog
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
+		alertDialogBuilder.setTitle(R.string.menu_sort);
+		alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
+		alertDialogBuilder.setView(view);
+		alertDialogBuilder.setPositiveButton(ActivityMain.this.getString(android.R.string.ok),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						switch (rgSMode.getCheckedRadioButtonId()) {
+						case R.id.rbSName:
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode, Integer.toString(SORT_BY_NAME));
+							break;
+						case R.id.rbSUid:
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode, Integer.toString(SORT_BY_UID));
+							break;
+						case R.id.rbSInstalled:
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode, Integer.toString(SORT_BY_INSTALL_TIME));
+							break;
+						case R.id.rbSUpdated:
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode, Integer.toString(SORT_BY_UPDATE_TIME));
+							break;
+						case R.id.rbSModified:
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode, Integer.toString(SORT_BY_MODIF_TIME));
+							break;
+						}
+					    PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSInvert, Boolean.toString(cbSInvert.isChecked()));
+					    applySort();
+					}
+				});
+
+		// Show dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
 	private void optionTutorial() {
 		if (mCategoriesHidden)
 			toggleCategoriesVisibility();
@@ -960,37 +1037,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		public final static int cSelectAppNone = 2;
 		public final static int cSelectAppUser = 3;
 
-		private int mSortMode = SORT_BY_NAME;
-		private int mSortOrder = 1;
-		private Comparator<ApplicationInfoEx> mSorter = new Comparator<ApplicationInfoEx>() {
-			@Override
-			public int compare(ApplicationInfoEx appInfo0, ApplicationInfoEx appInfo1) {
-				switch (mSortMode) {
-				case SORT_BY_NAME:
-					return mSortOrder * appInfo0.compareTo(appInfo1);
-				case SORT_BY_UID:
-					// default lowest first
-					return mSortOrder * (appInfo0.getUid() - appInfo1.getUid());
-				case SORT_BY_INSTALL_TIME:
-					// default newest first
-					Long iTime0 = appInfo0.getInstallTime(mContext);
-					Long iTime1 = appInfo1.getInstallTime(mContext);
-					return mSortOrder * iTime1.compareTo(iTime0);
-				case SORT_BY_UPDATE_TIME:
-					// default newest first
-					Long uTime0 = appInfo0.getUpdateTime(mContext);
-					Long uTime1 = appInfo1.getUpdateTime(mContext);
-					return mSortOrder * uTime1.compareTo(uTime0);
-				case SORT_BY_MODIF_TIME:
-					// default newest first
-					Long mTime0 = appInfo0.getModificationTime(mContext);
-					Long mTime1 = appInfo1.getModificationTime(mContext);
-					return mSortOrder * mTime1.compareTo(mTime0);
-				}
-				return 0;
-			}
-		};
-
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
 			super(context, resource, objects);
@@ -998,7 +1044,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			mListAppAll = new ArrayList<ApplicationInfoEx>();
 			mListAppAll.addAll(objects);
 			mRestrictionName = initialRestrictionName;
-			setSortMode();
 
 			TypedArray ta1 = context.getTheme().obtainStyledAttributes(
 					new int[] { android.R.attr.colorLongPressedHighlight });
@@ -1213,12 +1258,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					AppListAdapter.this.showStats();
 				}
 			}
-		}
-
-		public void setSortMode() {
-			mSortMode = spSMode.getSelectedItemPosition();
-			CheckBox cbSInvert = (CheckBox) findViewById(R.id.cbSInvert);
-			mSortOrder = cbSInvert.isChecked() ? -1 : 1;
 		}
 
 		public void sort() {

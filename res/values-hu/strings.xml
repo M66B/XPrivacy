@@ -22,6 +22,7 @@
     <string name="menu_about">Névjegy</string>
     <string name="menu_help">Segítség</string>
     <string name="menu_select_all">Select all</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">Minden</string>
     <string name="menu_restriction_all">Korlátozások kapcsolása</string>
     <string name="menu_clear_all">Összes törlése</string>
@@ -107,16 +108,11 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="title_fuser">Szűrés felhasználói alkalmazások alapján</string>
     <string name="title_fsystem">Szűrés rendszeralkalmazások alapján</string>
     <string name="title_fnot">Negálás</string>
-    <string name="title_sort_by">Sort by</string>
-
-    <string-array name="title_smodes">
-        <item >name</item>
-        <item >uid</item>
-        <item >date installed</item>
-        <item >date updated</item>
-        <item >date modified</item>
-    </string-array>
-
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
     <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">Sorozatszám#</string>
     <string name="settings_lat">Szélesség</string>

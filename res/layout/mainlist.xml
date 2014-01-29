@@ -97,59 +97,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dip"
                 android:layout_marginRight="3dip"
-                android:orientation="vertical" >
-                
-                <LinearLayout
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:orientation="horizontal" >
-	
-	                <Spinner
-	                    android:id="@+id/spRestriction"
-	                    android:layout_width="0dip"
-	                    android:layout_height="37dip"
-	                    android:layout_weight="1" />
-	
-	                <ImageView
-	                    android:id="@+id/imgInfo"
-	                    android:layout_width="32dip"
-	                    android:layout_height="32dip"
-	                    android:layout_gravity="center_vertical"
-	                    android:clickable="true"
-	                    android:contentDescription="@string/help_application"
-	                    android:focusable="true"
-	                    android:src="?attr/icon_info" />
-	            </LinearLayout>
-                
-                <LinearLayout
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:orientation="horizontal" >
+                android:orientation="horizontal" >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/title_sort_by"
-                   	    android:textAppearance="?android:attr/textAppearanceSmall" />
+                <Spinner
+                    android:id="@+id/spRestriction"
+                    android:layout_width="0dip"
+                    android:layout_height="37dip"
+                    android:layout_weight="1" />
 
-                    <Spinner
-                        android:id="@+id/spSMode"
-	                    android:layout_width="0dip"
-	                    android:layout_height="37dip"
-	                    android:layout_weight="1"
-	                    android:entries="@array/title_smodes" />
-	            </LinearLayout>
-
-                <CheckBox
-                    android:id="@+id/cbSInvert"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dip"
-                    android:layout_marginLeft="3dip"
-                    android:ellipsize="end"
-                    android:saveEnabled="false"
-                    android:singleLine="true"
-                    android:text="@string/title_sinvert"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                <ImageView
+                    android:id="@+id/imgInfo"
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    android:contentDescription="@string/help_application"
+                    android:focusable="true"
+                    android:src="?attr/icon_info" />
             </LinearLayout>
 
             <!-- Filters -->

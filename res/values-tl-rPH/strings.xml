@@ -22,6 +22,7 @@
     <string name="menu_about">Tungkulin</string>
     <string name="menu_help">Anong Kahulugan</string>
     <string name="menu_select_all">Piliin lahat</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">Kalahatan</string>
     <string name="menu_restriction_all">Bigyan ng lahat o walang paghihigpit</string>
     <string name="menu_clear_all">Burahin lahat ng paghihigpit</string>
@@ -107,6 +108,12 @@
     <string name="title_fuser">Bigyan ng Filter at ipakita lamang sa iyong mga User Applications</string>
     <string name="title_fsystem">Bigyan ng Filter at ipakita lamang sa iyong mga System Applications</string>
     <string name="title_fnot">Pagbaliktarin</string>
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
+    <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">Ang iyong Seryal#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longhitud</string>

@@ -22,6 +22,7 @@
     <string name="menu_about">アプリの情報</string>
     <string name="menu_help">ヘルプ</string>
     <string name="menu_select_all">Select all</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">全て</string>
     <string name="menu_restriction_all">制限の身に切り替え</string>
     <string name="menu_clear_all">Clear all</string>
@@ -107,16 +108,11 @@
     <string name="title_fuser">ユーザーアプリを表示</string>
     <string name="title_fsystem">システムアプリを表示</string>
     <string name="title_fnot">無視</string>
-    <string name="title_sort_by">Sort by</string>
-
-    <string-array name="title_smodes">
-        <item >name</item>
-        <item >uid</item>
-        <item >date installed</item>
-        <item >date updated</item>
-        <item >date modified</item>
-    </string-array>
-
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
     <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>

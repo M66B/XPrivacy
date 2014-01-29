@@ -22,6 +22,7 @@
     <string name="menu_about">O aplikaci</string>
     <string name="menu_help">Nápověda</string>
     <string name="menu_select_all">Vybrat vše</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">Vše</string>
     <string name="menu_restriction_all">Přepnout omezení</string>
     <string name="menu_clear_all">Vymazat vše</string>
@@ -108,16 +109,11 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="title_fsystem">Filtrovat systémové aplikace</string>
     <string name="title_fuser">Filtrovat uživatelské aplikace</string>
     <string name="title_fnot">Opačně</string>
-    <string name="title_sort_by">Sort by</string>
-
-    <string-array name="title_smodes">
-        <item >name</item>
-        <item >uid</item>
-        <item >date installed</item>
-        <item >date updated</item>
-        <item >date modified</item>
-    </string-array>
-
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
     <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zeměpisná šířka</string>

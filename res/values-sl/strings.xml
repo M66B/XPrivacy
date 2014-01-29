@@ -22,6 +22,7 @@
     <string name="menu_about">O programu</string>
     <string name="menu_help">Pomoč</string>
     <string name="menu_select_all">Select all</string>
+    <string name="menu_sort">Sort</string>
     <string name="menu_all">Vse</string>
     <string name="menu_restriction_all">Preklopi omejitve</string>
     <string name="menu_clear_all">Počisti vse</string>
@@ -109,16 +110,11 @@
     <string name="title_fuser">Filtriraj uporabniške programe</string>
     <string name="title_fsystem">Filtriraj sistemske programe</string>
     <string name="title_fnot">Negiraj</string>
-    <string name="title_sort_by">Sort by</string>
-
-    <string-array name="title_smodes">
-        <item >name</item>
-        <item >uid</item>
-        <item >date installed</item>
-        <item >date updated</item>
-        <item >date modified</item>
-    </string-array>
-
+    <string name="title_sname">By name</string>
+    <string name="title_suid">By uid</string>
+    <string name="title_sinstalled">By date installed</string>
+    <string name="title_supdated">By date updated</string>
+    <string name="title_smodified">By date modified</string>
     <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
