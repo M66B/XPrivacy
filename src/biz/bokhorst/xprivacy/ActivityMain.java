@@ -74,7 +74,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private Handler mProHandler = new Handler();
 
 	public static final int STATE_ATTENTION = 0;
-	public static final int STATE_RESTRICTED = 1;
+	public static final int STATE_CHANGED = 1;
 	public static final int STATE_SHARED = 2;
 
 	private static final int SORT_BY_NAME = 0;

@@ -318,10 +318,9 @@ public class PrivacyManager {
 						PrivacyManager.setRestriction(hook, uid, restrictionName, md.getName(), dangerous);
 			}
 
-		// Mark state as restricted
-		if (restricted)
-			PrivacyManager.setSetting(hook, uid, PrivacyManager.cSettingState,
-					Integer.toString(ActivityMain.STATE_RESTRICTED));
+		// Mark state as changed
+		PrivacyManager
+				.setSetting(hook, uid, PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
 
 		// Change app modification time
 		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingModifyTime,
