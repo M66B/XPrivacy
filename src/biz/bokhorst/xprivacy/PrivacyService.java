@@ -43,7 +43,6 @@ public class PrivacyService {
 	private static List<String> mListError;
 	private static IPrivacyService mClient = null;
 	private static SQLiteDatabase mDatabase = null;
-	@SuppressWarnings("unused")
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
 
@@ -96,6 +95,7 @@ public class PrivacyService {
 					}
 				}
 			});
+			mWorker.start();
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
