@@ -55,9 +55,8 @@ public class PackageChange extends BroadcastReceiver {
 					}
 
 					// New/update notification
-					boolean notify = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingNotify, true,
-							false);
-					if (!replacing || notify) {
+					if (!replacing
+							|| PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingNotify, true, false)) {
 						Intent resultIntent = new Intent(context, ActivityApp.class);
 						resultIntent.putExtra(ActivityApp.cUid, uid);
 

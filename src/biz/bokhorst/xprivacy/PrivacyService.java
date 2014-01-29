@@ -22,16 +22,13 @@ import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Binder;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 public class PrivacyService {
 	private static int mXUid = -1;
@@ -39,12 +36,9 @@ public class PrivacyService {
 	private static List<String> mListError;
 	private static IPrivacyService mClient = null;
 	private static SQLiteDatabase mDatabase = null;
-	private static Thread mWorker = null;
-	private static Handler mHandler = null;
 	private static boolean mSettings = false;
 	private static boolean mUsage = true;
 	private static boolean mSystem = false;
-	private static boolean mExperimental = false;
 
 	private static SQLiteStatement stmtGetRestriction = null;
 	private static SQLiteStatement stmtGetSetting = null;
@@ -212,8 +206,6 @@ public class PrivacyService {
 							Boolean.toString(true))).value);
 					mSystem = Boolean.parseBoolean(getSetting(new ParcelableSetting(0, PrivacyManager.cSettingSystem,
 							Boolean.toString(false))).value);
-					mExperimental = Boolean.parseBoolean(getSetting(new ParcelableSetting(0,
-							PrivacyManager.cSettingExperimental, Boolean.toString(PrivacyManager.cTestVersion))).value);
 				}
 
 				// Check for self
@@ -317,26 +309,6 @@ public class PrivacyService {
 							if (mRestrictionCache.containsKey(key))
 								mRestrictionCache.remove(key);
 							mRestrictionCache.put(key, key);
-						}
-					}
-				}
-
-				if (mExperimental && usage && !restricted && PrivacyManager.isApplication(restriction.uid)) {
-					boolean notify = PrivacyManager.getSettingBool(null, restriction.uid,
-							PrivacyManager.cSettingNotify, true, false);
-					if (notify) {
-						if (mHandler != null) {
-							mHandler.post(new Runnable() {
-								@Override
-								public void run() {
-									Context context = getContext();
-									if (context != null) {
-										String text = "uid=" + restriction.uid + " " + restriction.restrictionName
-												+ "/" + restriction.methodName;
-										Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
-									}
-								}
-							});
 						}
 					}
 				}
@@ -846,7 +818,6 @@ public class PrivacyService {
 	}
 
 	private static SQLiteDatabase getDatabase() {
-		// Create/upgrade database when needed
 		if (mDatabase == null) {
 			File dbFile = getDbFile();
 			SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
@@ -920,24 +891,6 @@ public class PrivacyService {
 			Util.log(null, Log.WARN, "Database version=" + db.getVersion());
 			mDatabase = db;
 		}
-
-		// Start a worker thread when needed
-		if (mWorker == null) {
-			mWorker = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						Looper.prepare();
-						mHandler = new Handler();
-						Looper.loop();
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					}
-				}
-			});
-			mWorker.start();
-		}
-
 		return mDatabase;
 	}
 }
