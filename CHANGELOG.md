@@ -22,6 +22,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Added XPrivacy version and device name to export file name ([issue](https://github.com/M66B/XPrivacy/issues/1116))
 * Using zero height for fake locations ([issue](https://github.com/M66B/XPrivacy/issues/1179))
 * Updated Dutch translation
+* Updated French translation
 * Updated Lithuanian translation
 * Updated Polish translation
 
