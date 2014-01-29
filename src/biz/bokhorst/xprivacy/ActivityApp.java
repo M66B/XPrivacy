@@ -530,16 +530,11 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionFetch() {
-		if (Util.hasProLicense(this) == null) {
-			// Redirect to pro page
-			Util.viewUri(this, ActivityMain.cProUri);
-		} else {
-			int[] uid = new int[] { mAppInfo.getUid() };
-			Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
-			intent.putExtra(ActivityShare.cUidList, uid);
-			intent.putExtra(ActivityShare.cInteractive, true);
-			startActivity(intent);
-		}
+		int[] uid = new int[] { mAppInfo.getUid() };
+		Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
+		intent.putExtra(ActivityShare.cUidList, uid);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		startActivity(intent);
 	}
 
 	private void optionAccounts() {

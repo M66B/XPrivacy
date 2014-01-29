@@ -142,14 +142,18 @@ public class ActivityShare extends Activity {
 		final String restriction = (extras != null ? extras.getString(cRestriction) : null);
 
 		// Licence check
-		if (action.equals(ACTION_IMPORT) && !Util.isProEnabled() && Util.hasProLicense(this) == null) {
-			Util.log(null, Log.WARN, "No licence found allowing importation");
-			finish();
-			return;
-		} else if (action.equals(ACTION_FETCH) && Util.hasProLicense(this) == null) {
-			Util.log(null, Log.WARN, "No licence found allowing fetching");
-			finish();
-			return;
+		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)) {
+			if (!Util.isProEnabled() && Util.hasProLicense(this) == null) {
+				Util.viewUri(this, ActivityMain.cProUri);
+				finish();
+				return;
+			}
+		} else if (action.equals(ACTION_FETCH)) {
+			if (Util.hasProLicense(this) == null) {
+				Util.viewUri(this, ActivityMain.cProUri);
+				finish();
+				return;
+			}
 		}
 
 		// Registration check
