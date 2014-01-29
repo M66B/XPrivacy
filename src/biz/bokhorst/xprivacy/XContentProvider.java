@@ -40,6 +40,7 @@ public class XContentProvider extends XHook {
 	// public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder, CancellationSignal cancellationSignal)
 	// frameworks/base/core/java/android/content/ContentProvider.java
 	// http://developer.android.com/reference/android/content/ContentProvider.html
+	// https://developers.google.com/gmail/android/
 
 	// packages/apps/Browser/src/com/android/browser/provider/BrowserProvider2.java
 	// packages/providers/CalendarProvider/src/com/android/providers/calendar/CalendarProvider2.java
@@ -106,6 +107,13 @@ public class XContentProvider extends XHook {
 		else if (packageName.equals("com.android.email"))
 			listHook.add(new XContentProvider(PrivacyManager.cEMail, "EMailProvider",
 					"com.android.email.provider.EmailProvider"));
+
+		// Gmail provider
+		else if (packageName.equals("com.google.android.gm")) {
+			Util.log(null, Log.WARN, "Hooking Gmail");
+			listHook.add(new XContentProvider(PrivacyManager.cEMail, "GMailProvider",
+					"com.google.android.gm.provider.PublicContentProvider"));
+		}
 
 		// Google services provider
 		else if (packageName.equals("com.google.android.gsf"))

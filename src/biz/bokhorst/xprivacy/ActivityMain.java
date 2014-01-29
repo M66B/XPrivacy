@@ -70,7 +70,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private Bitmap[] mCheck;
 	private int mProgressWidth = 0;
 	private int mProgress = 0;
-	private boolean mBatchOpRunning = false;
 	private String mSharingState = null;
 
 	private Comparator<ApplicationInfoEx> mSorter = new Comparator<ApplicationInfoEx>() {
@@ -448,15 +447,11 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		boolean pro = (Util.isProEnabled() || Util.hasProLicense(this) != null);
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
-		menu.findItem(R.id.menu_all).setEnabled(!mBatchOpRunning);
-		menu.findItem(R.id.menu_export).setEnabled(pro && mounted && !mBatchOpRunning);
-		menu.findItem(R.id.menu_import).setEnabled(pro && mounted && !mBatchOpRunning);
-		menu.findItem(R.id.menu_submit).setEnabled(!mBatchOpRunning);
-		menu.findItem(R.id.menu_fetch).setEnabled(!mBatchOpRunning);
-		menu.findItem(R.id.menu_pro).setVisible(!pro);
+		menu.findItem(R.id.menu_export).setEnabled(mounted);
+		menu.findItem(R.id.menu_import).setEnabled(mounted);
+		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
 
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -1154,7 +1149,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					// Send progress info to main activity
 					current++;
-					if (!mBatchOpRunning && current % 5 == 0) {
+					if (current % 5 == 0) {
 						final int position = current;
 						final int maximum = max;
 						runOnUiThread(new Runnable() {
