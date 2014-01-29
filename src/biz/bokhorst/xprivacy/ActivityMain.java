@@ -288,7 +288,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 			// Tab states
 			mTab = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingOpenTab,
-					Integer.toString(TAB_NONE), false));
+					Integer.toString(TAB_CATEGORY), false));
 			openTab(mTab);
 
 			// Handle toggle filters visibility

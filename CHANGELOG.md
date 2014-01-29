@@ -17,6 +17,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Fixed restricting accounts in some situations
 * Added application sort, thanks @[jpeg729](https://github.com/jpeg729)
+* Saving tab state (category, filters, none), thanks @[jpeg729](https://github.com/jpeg729) ([issue](https://github.com/M66B/XPrivacy/issues/1035))
 * Restrict access to Gmail information ([issue](https://github.com/M66B/XPrivacy/issues/1080))
 * Updated Lithuanian translation
 * Updated Polish translation
