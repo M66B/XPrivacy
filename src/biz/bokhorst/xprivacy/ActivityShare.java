@@ -47,6 +47,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -212,9 +213,9 @@ public class ActivityShare extends Activity {
 
 				// Get file name
 				if (action.equals(ACTION_EXPORT))
-					mFileName = getFileName(hasIntent);
+					mFileName = getFileName(this, hasIntent);
 				else
-					mFileName = (hasIntent ? null : getFileName(false));
+					mFileName = (hasIntent ? null : getFileName(this, false));
 				if (mFileName == null)
 					fileChooser();
 				else
@@ -305,7 +306,7 @@ public class ActivityShare extends Activity {
 
 			// Get on with exporting
 			String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-					: getFileName(false));
+					: getFileName(this, false));
 			new ExportTask().executeOnExecutor(mExecutor, new File(fileName), listUid);
 		}
 	}
@@ -1246,7 +1247,8 @@ public class ActivityShare extends Activity {
 											Integer.toString(ActivityMain.STATE_ATTENTION));
 
 									// Change app modification time
-									PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingModifyTime,
+									PrivacyManager.setSetting(null, appInfo.getUid(),
+											PrivacyManager.cSettingModifyTime,
 											Long.toString(System.currentTimeMillis()));
 
 									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS,
@@ -1705,14 +1707,22 @@ public class ActivityShare extends Activity {
 			return HTTP_BASE_URL;
 	}
 
-	public static String getFileName(boolean multiple) {
+	public static String getFileName(Context context, boolean multiple) {
 		File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
 				+ ".xprivacy");
 		folder.mkdir();
 		String fileName;
 		if (multiple) {
+			String versionName;
+			try {
+				PackageManager pm = context.getPackageManager();
+				PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
+				versionName = pInfo.versionName;
+			} catch (NameNotFoundException ex) {
+				versionName = "";
+			}
 			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT);
-			fileName = String.format("XPrivacy_%s.xml", format.format(new Date()));
+			fileName = String.format("XPrivacy_%s_%s_%s.xml", versionName, format.format(new Date()), Build.DEVICE);
 		} else
 			fileName = "XPrivacy.xml";
 		return new File(folder + File.separator + fileName).getAbsolutePath();
