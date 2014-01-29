@@ -516,23 +516,6 @@ It can take up to 15 seconds before changes in restrictions will be effective, b
 Changing the internet and storage restriction requires an application restart.
 Please note that in many cases pressing *back*, only moves the application to the background.
 
-<a name="FAQ18"></a>
-**(18) Can XPrivacy ask for restrictions on demand / display a message on data usage?**
-
-It cannot always, since it works deep within Android,
-and therefore it is IMHO not a good idea to ask for restrictions when it could,
-because this will probably result into confusion only.
-
-There is a lot of privacy sensitive data processed within Android,
-especially if there are a lot of applications installed.
-It would slow down your device significantly if XPrivacy would notify data usage.
-
-Newly installed applications are by default fully restricted.
-Restricting an application should not result into any force closes (crashes),
-please create an issue if this happens (see the support section below),
-it only means that an application cannot see the restricted data.
-If an application should see the data, you can remove the associated restriction at any time.
-
 <a name="FAQ19"></a>
 **(19) Does XPrivacy have a firewall?**
 
