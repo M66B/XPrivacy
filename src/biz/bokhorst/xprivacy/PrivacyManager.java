@@ -228,17 +228,14 @@ public class PrivacyManager {
 		boolean restricted = false;
 
 		// Check uid
-		if (uid <= 0) {
-			Util.log(hook, Log.WARN, "uid <= 0");
-			Util.logStack(hook);
-			return restricted;
-		}
+		if (uid <= 0)
+			return false;
 
 		// Check restriction
 		if (restrictionName == null || restrictionName.equals("")) {
 			Util.log(hook, Log.WARN, "restriction empty method=" + methodName);
 			Util.logStack(hook);
-			return restricted;
+			return false;
 		}
 
 		// Check usage

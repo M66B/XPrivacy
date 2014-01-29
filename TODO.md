@@ -15,3 +15,4 @@ For interested developers:
 * Hook more package manager methods (which return info about one package)
 * Check http://developer.android.com/reference/android/nfc/NfcManager.html
 * Remove indeterminate progress indicator?
+* Look into isolated processes
