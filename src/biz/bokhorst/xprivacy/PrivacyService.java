@@ -692,7 +692,8 @@ public class PrivacyService {
 					synchronized (mSettingCache) {
 						if (mSettingCache.containsKey(key))
 							mSettingCache.remove(key);
-						mSettingCache.put(key, key);
+						if (setting.value != null)
+							mSettingCache.put(key, key);
 					}
 				}
 			} catch (Throwable ex) {
