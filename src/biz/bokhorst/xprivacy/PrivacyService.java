@@ -10,12 +10,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
@@ -31,7 +35,7 @@ import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.WindowManager;
 
 public class PrivacyService {
 	private static int mXUid = -1;
@@ -39,12 +43,9 @@ public class PrivacyService {
 	private static List<String> mListError;
 	private static IPrivacyService mClient = null;
 	private static SQLiteDatabase mDatabase = null;
+	@SuppressWarnings("unused")
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
-	private static boolean mSettings = false;
-	private static boolean mUsage = true;
-	private static boolean mSystem = false;
-	private static boolean mExperimental = false;
 
 	private static SQLiteStatement stmtGetRestriction = null;
 	private static SQLiteStatement stmtGetSetting = null;
@@ -81,6 +82,20 @@ public class PrivacyService {
 			int memoryClass = (int) (Runtime.getRuntime().maxMemory() / 1024L / 1024L);
 			mUseCache = (memoryClass >= 32);
 			Util.log(null, Log.WARN, "Memory class=" + memoryClass + " cache=" + mUseCache);
+
+			// Start a worker thread
+			mWorker = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Looper.prepare();
+						mHandler = new Handler();
+						Looper.loop();
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+					}
+				}
+			});
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -205,17 +220,6 @@ public class PrivacyService {
 			try {
 				// No permissions enforced, but usage data requires a secret
 
-				// Cache settings
-				if (!mSettings) {
-					mSettings = true;
-					mUsage = Boolean.parseBoolean(getSetting(new ParcelableSetting(0, PrivacyManager.cSettingUsage,
-							Boolean.toString(true))).value);
-					mSystem = Boolean.parseBoolean(getSetting(new ParcelableSetting(0, PrivacyManager.cSettingSystem,
-							Boolean.toString(false))).value);
-					mExperimental = Boolean.parseBoolean(getSetting(new ParcelableSetting(0,
-							PrivacyManager.cSettingExperimental, Boolean.toString(PrivacyManager.cTestVersion))).value);
-				}
-
 				// Check for self
 				if (Util.getAppId(restriction.uid) == getXUid()) {
 					if (PrivacyManager.cIdentification.equals(restriction.restrictionName)
@@ -233,13 +237,12 @@ public class PrivacyService {
 
 				if (usage) {
 					// Check for system
-					if (!mSystem && !PrivacyManager.isApplication(restriction.uid))
-						return false;
+					if (!PrivacyManager.isApplication(restriction.uid))
+						if (!getSettingBool(0, PrivacyManager.cSettingSystem, false))
+							return false;
 
 					// Check if restrictions enabled
-					boolean enabled = Boolean.parseBoolean(getSetting(new ParcelableSetting(restriction.uid,
-							PrivacyManager.cSettingRestricted, Boolean.toString(true))).value);
-					if (!enabled)
+					if (!getSettingBool(restriction.uid, PrivacyManager.cSettingRestricted, true))
 						return false;
 				}
 
@@ -321,73 +324,158 @@ public class PrivacyService {
 					}
 				}
 
-				if (mExperimental && usage && !restricted && PrivacyManager.isApplication(restriction.uid)) {
-					boolean notify = PrivacyManager.getSettingBool(null, restriction.uid,
-							PrivacyManager.cSettingNotify, true, false);
-					if (notify) {
-						if (mHandler != null) {
-							mHandler.post(new Runnable() {
-								@Override
+				// Ask to restrict
+				if (!restricted && usage && PrivacyManager.isApplication(restriction.uid))
+					if (mHandler == null)
+						Util.log(null, Log.ERROR, "No handler");
+					else
+						restricted = onDemand(restriction);
+
+				// Log usage
+				if (usage && restriction.methodName != null)
+					if (getSettingBool(0, PrivacyManager.cSettingUsage, true)) {
+						// Check secret
+						boolean allowed = true;
+						if (Util.getAppId(Binder.getCallingUid()) != getXUid()) {
+							if (mSecret == null || !mSecret.equals(secret)) {
+								allowed = false;
+								Util.log(null, Log.WARN, "Invalid secret");
+							}
+						}
+
+						if (allowed) {
+							final boolean sRestricted = restricted;
+							mExecutor.execute(new Runnable() {
 								public void run() {
-									Context context = getContext();
-									if (context != null) {
-										String text = "uid=" + restriction.uid + " " + restriction.restrictionName
-												+ "/" + restriction.methodName;
-										Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+									try {
+										SQLiteDatabase db = getDatabase();
+
+										db.beginTransaction();
+										try {
+											ContentValues values = new ContentValues();
+											values.put("uid", restriction.uid);
+											values.put("restriction", restriction.restrictionName);
+											values.put("method", restriction.methodName);
+											values.put("restricted", sRestricted);
+											values.put("time", new Date().getTime());
+											db.insertWithOnConflict(cTableUsage, null, values,
+													SQLiteDatabase.CONFLICT_REPLACE);
+
+											db.setTransactionSuccessful();
+										} catch (Throwable ex) {
+											Util.bug(null, ex);
+										} finally {
+											db.endTransaction();
+										}
+									} catch (Throwable ex) {
+										Util.bug(null, ex);
 									}
 								}
 							});
 						}
 					}
-				}
-
-				// Log usage
-				if (mUsage && usage && restriction.methodName != null) {
-					// Check secret
-					boolean allowed = true;
-					if (Util.getAppId(Binder.getCallingUid()) != getXUid()) {
-						if (mSecret == null || !mSecret.equals(secret)) {
-							allowed = false;
-							Util.log(null, Log.WARN, "Invalid secret");
-						}
-					}
-
-					if (allowed) {
-						final boolean sRestricted = restricted;
-						mExecutor.execute(new Runnable() {
-							public void run() {
-								try {
-									SQLiteDatabase db = getDatabase();
-
-									db.beginTransaction();
-									try {
-										ContentValues values = new ContentValues();
-										values.put("uid", restriction.uid);
-										values.put("restriction", restriction.restrictionName);
-										values.put("method", restriction.methodName);
-										values.put("restricted", sRestricted);
-										values.put("time", new Date().getTime());
-										db.insertWithOnConflict(cTableUsage, null, values,
-												SQLiteDatabase.CONFLICT_REPLACE);
-
-										db.setTransactionSuccessful();
-									} catch (Throwable ex) {
-										Util.bug(null, ex);
-									} finally {
-										db.endTransaction();
-									}
-								} catch (Throwable ex) {
-									Util.bug(null, ex);
-								}
-							}
-						});
-					}
-				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return false;
 			}
 			return restricted;
+		}
+
+		private Object mDemandLock = new Object();
+
+		private Boolean onDemand(final ParcelableRestriction restriction) {
+			final ParcelableRestriction result = new ParcelableRestriction(restriction.uid,
+					restriction.restrictionName, null, false);
+			try {
+				if (getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false)) {
+					final String categorySetting = PrivacyManager.cSettingOnDemand + "." + restriction.restrictionName;
+					if (getSettingBool(restriction.uid, categorySetting, true)) {
+						synchronized (mDemandLock) {
+							// Create semaphore
+							final Semaphore semaphore = new Semaphore(1);
+							semaphore.acquireUninterruptibly();
+
+							// Run dialog in looper
+							mHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									try {
+										// Get am context
+										Context context = getContext();
+										if (context != null) {
+											// Get resources
+											String self = PrivacyService.class.getPackage().getName();
+											Resources resources = context.getPackageManager()
+													.getResourcesForApplication(self);
+
+											// Build message
+											ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
+											String message = String.format(resources.getString(R.string.msg_ondemand),
+													TextUtils.join(", ", appInfo.getApplicationName()),
+													restriction.restrictionName);
+
+											// Ask
+											AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+											alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
+											alertDialogBuilder.setMessage(message);
+											alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
+											alertDialogBuilder.setPositiveButton(
+													resources.getString(R.string.title_deny),
+													new DialogInterface.OnClickListener() {
+														@Override
+														public void onClick(DialogInterface dialog, int which) {
+															// Deny
+															try {
+																result.restricted = true;
+																setRestriction(result);
+																setSetting(new ParcelableSetting(restriction.uid,
+																		categorySetting, Boolean.toString(false)));
+															} catch (Throwable ex) {
+																Util.bug(null, ex);
+															} finally {
+																semaphore.release();
+															}
+														}
+													});
+											alertDialogBuilder.setNegativeButton(
+													resources.getString(R.string.title_allow),
+													new DialogInterface.OnClickListener() {
+														@Override
+														public void onClick(DialogInterface dialog, int which) {
+															// Allow
+															try {
+																result.restricted = false;
+																setRestriction(result);
+																setSetting(new ParcelableSetting(restriction.uid,
+																		categorySetting, Boolean.toString(false)));
+															} catch (Throwable ex) {
+																Util.bug(null, ex);
+															} finally {
+																semaphore.release();
+															}
+														}
+													});
+											AlertDialog alertDialog = alertDialogBuilder.create();
+											alertDialog.getWindow().setType(
+													WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+											alertDialog.show();
+										}
+									} catch (Throwable ex) {
+										Util.bug(null, ex);
+										semaphore.release();
+									}
+								}
+							});
+
+							// Wait for dialog
+							semaphore.acquireUninterruptibly();
+						}
+					}
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+			return result.restricted;
 		}
 
 		@Override
@@ -695,6 +783,11 @@ public class PrivacyService {
 			return result;
 		}
 
+		private boolean getSettingBool(int uid, String name, boolean defaultValue) throws RemoteException {
+			String value = getSetting(new ParcelableSetting(uid, name, Boolean.toString(defaultValue))).value;
+			return Boolean.parseBoolean(value);
+		}
+
 		@Override
 		public List<ParcelableSetting> getSettingList(int uid) throws RemoteException {
 			List<ParcelableSetting> listSetting = new ArrayList<ParcelableSetting>();
@@ -757,7 +850,7 @@ public class PrivacyService {
 
 	private static void enforcePermission() {
 		int callingUid = Util.getAppId(Binder.getCallingUid());
-		if (callingUid != getXUid()) {
+		if (callingUid != getXUid() && callingUid != Process.SYSTEM_UID) {
 			String callingPkg = null;
 			Context context = getContext();
 			if (context != null) {
@@ -919,23 +1012,6 @@ public class PrivacyService {
 
 			Util.log(null, Log.WARN, "Database version=" + db.getVersion());
 			mDatabase = db;
-		}
-
-		// Start a worker thread when needed
-		if (mWorker == null) {
-			mWorker = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						Looper.prepare();
-						mHandler = new Handler();
-						Looper.loop();
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					}
-				}
-			});
-			mWorker.start();
 		}
 
 		return mDatabase;

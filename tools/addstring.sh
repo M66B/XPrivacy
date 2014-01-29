@@ -1,6 +1,6 @@
 #!/bin/bash
-grep -RIl "\<string name=\"menu_select_all" res | xargs sed -i -e '/menu_select_all/a \
-\ \ \ \ <string name="menu_sort">Sort</string>'
+grep -RIl "\<string name=\"msg_support_info" res | xargs sed -i -e '/msg_support_info/a \
+\ \ \ \ <string name="msg_ondemand" formatted="false">%s is trying to use a function in the category %s, restrict this category?</string>'
 
 grep -RIl "\<string name=\"title_fnot" res | xargs sed -i -e '/title_fnot/a \
 \ \ \ \ <string name="title_sname">By name</string>\

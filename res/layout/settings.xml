@@ -51,6 +51,12 @@
                 android:text="@string/settings_notify" />
 
             <CheckBox
+                android:id="@+id/cbOnDemand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_ondemand" />
+
+            <CheckBox
                 android:id="@+id/cbUsage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -36,6 +36,7 @@ public class SettingsDialog {
 		View vwAppNameBorder = (View) dlgSettings.findViewById(R.id.vwAppNameBorder);
 
 		final CheckBox cbNotify = (CheckBox) dlgSettings.findViewById(R.id.cbNotify);
+		final CheckBox cbOnDemand = (CheckBox) dlgSettings.findViewById(R.id.cbOnDemand);
 
 		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
@@ -220,6 +221,8 @@ public class SettingsDialog {
 
 		// Application specific
 		boolean notify = PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingNotify, true, false);
+		final boolean ondemand = PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingOnDemand, false,
+				false);
 
 		String serial = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSerial, "", false);
 		String lat = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingLatitude, "", false);
@@ -238,6 +241,7 @@ public class SettingsDialog {
 		if (uid == 0) {
 			// Disable app settings
 			cbNotify.setVisibility(View.GONE);
+			cbOnDemand.setVisibility(View.GONE);
 
 			// Global settings
 			cbUsage.setChecked(usage);
@@ -270,6 +274,7 @@ public class SettingsDialog {
 
 			// Application specific settings
 			cbNotify.setChecked(notify);
+			cbOnDemand.setChecked(ondemand);
 		}
 
 		// Common
@@ -416,6 +421,13 @@ public class SettingsDialog {
 					// App specific settings
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingNotify,
 							Boolean.toString(cbNotify.isChecked()));
+					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingOnDemand,
+							Boolean.toString(cbOnDemand.isChecked()));
+
+					if (cbOnDemand.isChecked() != ondemand)
+						for (String restrictionName : PrivacyManager.getRestrictions())
+							PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingOnDemand + "."
+									+ restrictionName, null);
 				}
 
 				// Random at boot

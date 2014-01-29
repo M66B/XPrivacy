@@ -108,6 +108,7 @@ public class PrivacyManager {
 	public final static String cSettingUsage = "UsageData";
 	public final static String cSettingSystem = "RestrictSystem";
 	public final static String cSettingRestricted = "Retricted";
+	public final static String cSettingOnDemand = "OnDemand";
 
 	public final static String cSettingTemplate = "Template";
 	public final static String cSettingAccount = "Account.";
@@ -126,7 +127,6 @@ public class PrivacyManager {
 	private final static String cDeface = "DEFACE";
 	public final static int cRestrictionCacheTimeoutMs = 15 * 1000;
 	public final static int cSettingCacheTimeoutMs = 30 * 1000;
-	public final static int cUseProviderAfterMs = 3 * 60 * 1000;
 
 	// Static data
 	private static Map<String, List<Hook>> mMethod = new LinkedHashMap<String, List<Hook>>();
