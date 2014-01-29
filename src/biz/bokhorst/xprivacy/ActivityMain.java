@@ -222,8 +222,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			spRestriction.setSelection(pos);
 
 			// Setup sort
-			mSortMode = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSortMode, "0",
-					false));
+			mSortMode = Integer.parseInt(PrivacyManager
+					.getSetting(null, 0, PrivacyManager.cSettingSortMode, "0", false));
 			mSortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSortInverted, false, false);
 
 			// Setup name filter
@@ -874,8 +874,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 						}
 						mSortInvert = cbSInvert.isChecked();
 
-						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
-								Integer.toString(mSortMode));
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode, Integer.toString(mSortMode));
 						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortInverted,
 								Boolean.toString(mSortInvert));
 
@@ -1212,14 +1211,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 							&& (fPermission ? permission : true) && (fUser ? user : true) && (fSystem ? system : true))
 						lstApp.add(xAppInfo);
 				}
-				
+
 				// Check again whether another filter has been started
 				if (filtersRunning != mFiltersRunning.get())
 					return null;
 
 				// Apply current sorting
 				Collections.sort(lstApp, mSorter);
-				
+
 				// Last check whether another filter has been started
 				if (filtersRunning != mFiltersRunning.get())
 					return null;
