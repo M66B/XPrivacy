@@ -85,10 +85,10 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_messages">Správy (SMS, MMS)</string>
     <string name="restrict_network">Sieť (adresy)</string>
     <string name="restrict_notifications">Oznámenia</string>
-    <string name="restrict_overlay">Vrstva</string>
+    <string name="restrict_overlay">Prekrytie</string>
     <string name="restrict_phone">Telefón (ID, čísla, hovory)</string>
     <string name="restrict_sensors">Sensory</string>
-    <string name="restrict_storage">Úložisko (médiá, SD karta)</string>
+    <string name="restrict_storage">Úložisko (médiá, karta SD)</string>
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
