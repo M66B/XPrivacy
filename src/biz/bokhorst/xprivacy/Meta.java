@@ -41,6 +41,7 @@ public class Meta {
 		listHook.add(new Hook("contacts", "contacts/profile", false, false, "READ_CONTACTS", 10, null, null));
 		listHook.add(new Hook("dictionary", "UserDictionary", false, false, "READ_USER_DICTIONARY", 10, null, null));
 		listHook.add(new Hook("email", "EMailProvider", false, false, "com.android.email.permission.ACCESS_PROVIDER", 10, null, null));
+		listHook.add(new Hook("email", "GMailProvider", false, false, "com.google.android.gm.permission.READ_CONTENT_PROVIDER", 8, "1.99.20", null));
 		listHook.add(new Hook("identification", "%hostname", false, false, "", 10, null, null));
 		listHook.add(new Hook("identification", "%imei", false, false, "", 10, null, null));
 		listHook.add(new Hook("identification", "%macaddr", false, false, "", 10, null, null));
