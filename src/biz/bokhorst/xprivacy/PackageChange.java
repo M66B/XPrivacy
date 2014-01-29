@@ -36,7 +36,7 @@ public class PackageChange extends BroadcastReceiver {
 					if (PrivacyService.getClient() != null) {
 						if (!replacing) {
 							// Delete existing restrictions
-							PrivacyManager.deleteRestrictions(uid, true);
+							PrivacyManager.deleteRestrictions(uid);
 							PrivacyManager.deleteSettings(uid);
 							PrivacyManager.deleteUsage(uid);
 
@@ -45,7 +45,7 @@ public class PackageChange extends BroadcastReceiver {
 								for (String restrictionName : PrivacyManager.getRestrictions()) {
 									String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 									if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
-										PrivacyManager.setRestriction(null, uid, restrictionName, null, true, true);
+										PrivacyManager.setRestriction(null, uid, restrictionName, null, true);
 								}
 						}
 
@@ -137,7 +137,7 @@ public class PackageChange extends BroadcastReceiver {
 
 					// Delete restrictions
 					if (PrivacyService.getClient() != null) {
-						PrivacyManager.deleteRestrictions(uid, true);
+						PrivacyManager.deleteRestrictions(uid);
 						PrivacyManager.deleteSettings(uid);
 						PrivacyManager.deleteUsage(uid);
 					}

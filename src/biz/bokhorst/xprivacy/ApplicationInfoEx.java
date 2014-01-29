@@ -225,7 +225,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public long getModificationTime(Context context) {
-		return Long.parseLong(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingMTime, "0", false));
+		return Long.parseLong(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingModifyTime, "0", false));
 	}
 
 	public boolean isSystem() {

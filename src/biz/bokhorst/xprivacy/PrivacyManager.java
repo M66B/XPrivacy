@@ -85,9 +85,9 @@ public class PrivacyManager {
 	public final static String cSettingFPermission = "FPermission";
 	public final static String cSettingFUser = "FUser";
 	public final static String cSettingFSystem = "FSystem";
-	public final static String cSettingSMode = "SMode";
-	public final static String cSettingSInvert = "SInvert";
-	public final static String cSettingMTime = "MTime";
+	public final static String cSettingSortMode = "SortMode";
+	public final static String cSettingSortInverted = "SortInverted";
+	public final static String cSettingModifyTime = "ModifyTime";
 	public final static String cSettingTheme = "Theme";
 	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
@@ -322,7 +322,8 @@ public class PrivacyManager {
 					Integer.toString(ActivityMain.STATE_RESTRICTED));
 
 		// Change app modification time
-		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingMTime, Long.toString(System.currentTimeMillis()));
+		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingModifyTime,
+				Long.toString(System.currentTimeMillis()));
 
 		// Check if restart required
 		return shouldRestart(restrictionName, methodName, restricted);
@@ -392,7 +393,8 @@ public class PrivacyManager {
 				Integer.toString(ActivityMain.STATE_ATTENTION));
 
 		// Change app modification time
-		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingMTime, Long.toString(System.currentTimeMillis()));
+		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingModifyTime,
+				Long.toString(System.currentTimeMillis()));
 
 		return restart;
 	}

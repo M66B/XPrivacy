@@ -112,7 +112,7 @@
     <string name="title_suid">By uid</string>
     <string name="title_sinstalled">By date installed</string>
     <string name="title_supdated">By date updated</string>
-    <string name="title_smodified">By date modified</string>
+    <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>

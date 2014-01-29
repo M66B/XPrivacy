@@ -1246,7 +1246,7 @@ public class ActivityShare extends Activity {
 											Integer.toString(ActivityMain.STATE_ATTENTION));
 
 									// Change app modification time
-									PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingMTime,
+									PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingModifyTime,
 											Long.toString(System.currentTimeMillis()));
 
 									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS,

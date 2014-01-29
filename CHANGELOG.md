@@ -16,6 +16,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Fixed restricting accounts in some situations
+* Added application sort, thanks @[jpeg729](https://github.com/jpeg729)
 * Restrict access to Gmail information ([issue](https://github.com/M66B/XPrivacy/issues/1080))
 * Updated Lithuanian translation
 * Updated Polish translation

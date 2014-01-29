@@ -72,39 +72,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private int mProgress = 0;
 	private String mSharingState = null;
 
-	private Comparator<ApplicationInfoEx> mSorter = new Comparator<ApplicationInfoEx>() {
-		@Override
-		public int compare(ApplicationInfoEx appInfo0, ApplicationInfoEx appInfo1) {
-			int sortMode = Integer.parseInt(PrivacyManager
-					.getSetting(null, 0, PrivacyManager.cSettingSMode, "0", false));
-			boolean sortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSInvert, false, false);
-			int sortOrder = sortInvert ? -1 : 1;
-			switch (sortMode) {
-			case SORT_BY_NAME:
-				return sortOrder * appInfo0.compareTo(appInfo1);
-			case SORT_BY_UID:
-				// default lowest first
-				return sortOrder * (appInfo0.getUid() - appInfo1.getUid());
-			case SORT_BY_INSTALL_TIME:
-				// default newest first
-				Long iTime0 = appInfo0.getInstallTime(ActivityMain.this);
-				Long iTime1 = appInfo1.getInstallTime(ActivityMain.this);
-				return sortOrder * iTime1.compareTo(iTime0);
-			case SORT_BY_UPDATE_TIME:
-				// default newest first
-				Long uTime0 = appInfo0.getUpdateTime(ActivityMain.this);
-				Long uTime1 = appInfo1.getUpdateTime(ActivityMain.this);
-				return sortOrder * uTime1.compareTo(uTime0);
-			case SORT_BY_MODIF_TIME:
-				// default newest first
-				Long mTime0 = appInfo0.getModificationTime(ActivityMain.this);
-				Long mTime1 = appInfo1.getModificationTime(ActivityMain.this);
-				return sortOrder * mTime1.compareTo(mTime0);
-			}
-			return 0;
-		}
-	};
-
 	private Handler mProHandler = new Handler();
 
 	public static final int STATE_ATTENTION = 0;
@@ -115,7 +82,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int SORT_BY_UID = 1;
 	private static final int SORT_BY_INSTALL_TIME = 2;
 	private static final int SORT_BY_UPDATE_TIME = 3;
-	private static final int SORT_BY_MODIF_TIME = 4;
+	private static final int SORT_BY_MODIFY_TIME = 4;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int LICENSED = 0x0100;
@@ -140,6 +107,40 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			return t;
 		}
 	}
+
+	private Comparator<ApplicationInfoEx> mSorter = new Comparator<ApplicationInfoEx>() {
+		@Override
+		public int compare(ApplicationInfoEx appInfo0, ApplicationInfoEx appInfo1) {
+			int sortMode = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSortMode, "0",
+					false));
+			boolean sortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSortInverted, false,
+					false);
+			int sortOrder = sortInvert ? -1 : 1;
+			switch (sortMode) {
+			case SORT_BY_NAME:
+				return sortOrder * appInfo0.compareTo(appInfo1);
+			case SORT_BY_UID:
+				// default lowest first
+				return sortOrder * (appInfo0.getUid() - appInfo1.getUid());
+			case SORT_BY_INSTALL_TIME:
+				// default newest first
+				Long iTime0 = appInfo0.getInstallTime(ActivityMain.this);
+				Long iTime1 = appInfo1.getInstallTime(ActivityMain.this);
+				return sortOrder * iTime1.compareTo(iTime0);
+			case SORT_BY_UPDATE_TIME:
+				// default newest first
+				Long uTime0 = appInfo0.getUpdateTime(ActivityMain.this);
+				Long uTime1 = appInfo1.getUpdateTime(ActivityMain.this);
+				return sortOrder * uTime1.compareTo(uTime0);
+			case SORT_BY_MODIFY_TIME:
+				// default newest first
+				Long mTime0 = appInfo0.getModificationTime(ActivityMain.this);
+				Long mTime1 = appInfo1.getModificationTime(ActivityMain.this);
+				return sortOrder * mTime1.compareTo(mTime0);
+			}
+			return 0;
+		}
+	};
 
 	private BroadcastReceiver mPackageChangeReceiver = new BroadcastReceiver() {
 		@Override
@@ -602,9 +603,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void applySort() {
-		if (mAppAdapter != null) {
+		if (mAppAdapter != null)
 			mAppAdapter.sort();
-		}
 	}
 
 	// Options
@@ -812,15 +812,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private void optionSort() {
-		LayoutInflater LayoutInflater = (LayoutInflater) ActivityMain.this
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater LayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = LayoutInflater.inflate(R.layout.sort, null);
 		final RadioGroup rgSMode = (RadioGroup) view.findViewById(R.id.rgSMode);
 		final CheckBox cbSInvert = (CheckBox) view.findViewById(R.id.cbSInvert);
 
 		// Initialise controls
-		int sortMode = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSMode, "0", false));
-		boolean sortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSInvert, false, false);
+		int sortMode = Integer
+				.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSortMode, "0", false));
+		boolean sortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSortInverted, false, false);
 		switch (sortMode) {
 		case SORT_BY_NAME:
 			rgSMode.check(R.id.rbSName);
@@ -834,7 +834,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		case SORT_BY_UPDATE_TIME:
 			rgSMode.check(R.id.rbSUpdated);
 			break;
-		case SORT_BY_MODIF_TIME:
+		case SORT_BY_MODIFY_TIME:
 			rgSMode.check(R.id.rbSModified);
 			break;
 		}
@@ -851,27 +851,27 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					public void onClick(DialogInterface dialog, int which) {
 						switch (rgSMode.getCheckedRadioButtonId()) {
 						case R.id.rbSName:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
 									Integer.toString(SORT_BY_NAME));
 							break;
 						case R.id.rbSUid:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
 									Integer.toString(SORT_BY_UID));
 							break;
 						case R.id.rbSInstalled:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
 									Integer.toString(SORT_BY_INSTALL_TIME));
 							break;
 						case R.id.rbSUpdated:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
 									Integer.toString(SORT_BY_UPDATE_TIME));
 							break;
 						case R.id.rbSModified:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
-									Integer.toString(SORT_BY_MODIF_TIME));
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortMode,
+									Integer.toString(SORT_BY_MODIFY_TIME));
 							break;
 						}
-						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSInvert,
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSortInverted,
 								Boolean.toString(cbSInvert.isChecked()));
 						applySort();
 					}
