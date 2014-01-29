@@ -3,7 +3,7 @@
     <string name="app_notxposed" formatted="false">La version %d+ de l\'environnement Xposed n\'est pas installée</string>
     <string name="app_notenabled">XPrivacy n\'est pas activé dans l\'installateur Xposed</string>
     <string name="app_wrongandroid">Uniquement pour Android 4.0 et ultérieur</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
+    <string name="app_incompatible" formatted="false">XPrivacy est incompatible avec %s</string>
     <string name="app_version" formatted="false">Version XPrivacy : %s (%d)</string>
     <string name="app_description">Le gestionnaire de vie privée ultime</string>
     <string name="app_xversion" formatted="false">Version de l\'environnement Xposed : %d</string>
@@ -60,13 +60,13 @@
     <string name="msg_random_access">Randomiser à chaque accès</string>
     <string name="msg_random_boot">Randomiser après le démarrage</string>
     <string name="msg_restart">Redémarrage de l\'application nécessaire</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_service">Update service running</string>
+    <string name="msg_register">Inscrivez votre appareil, s.v.p.</string>
+    <string name="msg_registered">Vérifiez vos mails pour activer votre appareil</string>
+    <string name="msg_service">Service de mis-à-jour en fonctionnement</string>
     <string name="msg_migrating" formatted="false">Migration %s</string>
     <string name="msg_randomizing" formatted="false">Randomisation %s</string>
-    <string name="msg_upgrading" formatted="false">Mis à jour %s</string>
-    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
+    <string name="msg_upgrading" formatted="false">Mise-à-jour %s</string>
+    <string name="msg_support_info">Une vérification interne a échoué, voulez-vous envoyer le rapport d\'erreurs?</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
 \n\nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>
@@ -112,7 +112,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_suid">Par uid</string>
     <string name="title_sinstalled">Par date d\'installion</string>
     <string name="title_supdated">Par date de mise à jour</string>
-    <string name="title_smodified">Par date de modification</string>
+    <string name="title_smodified">Par date de modification (XPrivacy)</string>
     <string name="title_sinvert">Inverser l\'ordre</string>
     <string name="settings_serial">N° de série</string>
     <string name="settings_lat">Latitude</string>
@@ -136,7 +136,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_experimental">Fonctions expérimentales (redémarrage requis)</string>
     <string name="settings_https">Utiliser des connexions sécurisée</string>
     <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
-    <string name="settings_usagedata">Show application usage data (requires restart)</string>
+    <string name="settings_usagedata">Montrer les données d\'usage pour chaque application (requires restart)</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>
