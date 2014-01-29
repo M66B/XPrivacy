@@ -67,6 +67,7 @@
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
     <string name="msg_first"><b>XPrivacy er grundigt udviklet og testet, dog er det umuligt at garantere, at appen fungerer fejlfrit på alle enheder og for alle apps.\n\nBrug af denne app foregår udelukkende på egen risiko.</b>\n\nSe også licensen:</string>
     <string name="restrict_accounts">Konti (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Browser (bogmærker/historik)</string>
@@ -112,6 +113,8 @@
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
+    <string name="title_allow">Allow</string>
+    <string name="title_deny">Deny</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Længdegrad</string>
@@ -127,6 +130,7 @@
     <string name="settings_general">General</string>
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_notify">Update notifications</string>
+    <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Debug-log (kræver genstart)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_dangerous">Restrict dangerous functions</string>

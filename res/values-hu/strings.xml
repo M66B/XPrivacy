@@ -67,6 +67,7 @@
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
     <string name="msg_first"><b>Az XPrivacy fejlesztése és tesztelése nagy gondossággal történik,
 de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön és az összes alkalmazással.
 \n\nCsak saját felelősségre.</b>\n\nNézze meg a licenszet is:</string>
@@ -114,6 +115,8 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
+    <string name="title_allow">Allow</string>
+    <string name="title_deny">Deny</string>
     <string name="settings_serial">Sorozatszám#</string>
     <string name="settings_lat">Szélesség</string>
     <string name="settings_lon">Hosszúság</string>
@@ -129,6 +132,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="settings_general">Általános</string>
     <string name="settings_fake_data">Kamu adat</string>
     <string name="settings_notify">Értesítések frissítése</string>
+    <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Debug log (újraindítás szükséges)</string>
     <string name="settings_expert">Szakértői mód</string>
     <string name="settings_dangerous">Veszélyes funkciók korlátozása</string>

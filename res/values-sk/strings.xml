@@ -67,6 +67,7 @@
     <string name="msg_randomizing" formatted="false">Randomizovanie %s</string>
     <string name="msg_upgrading" formatted="false">Aktualizovanie %s</string>
     <string name="msg_support_info">Vnútorná kontrola zlyhala. Chcete odoslať informácie na podporu?</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>
@@ -115,6 +116,8 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_supdated">Podľa dátumu aktulizácie</string>
     <string name="title_smodified">Podľa dátumu zmeny (XPrivacy)</string>
     <string name="title_sinvert">Obrátiť poradenie zoradenia</string>
+    <string name="title_allow">Allow</string>
+    <string name="title_deny">Deny</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
@@ -130,6 +133,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_general">Všeobecné</string>
     <string name="settings_fake_data">Falošné údaje</string>
     <string name="settings_notify">Oznámenia o aktualizáciách</string>
+    <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Záznam na ladenie (vyžadovaný reštart)</string>
     <string name="settings_expert">Režim experta</string>
     <string name="settings_dangerous">Obmedziť nebezpečné funkcie</string>

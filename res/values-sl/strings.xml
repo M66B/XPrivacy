@@ -67,6 +67,7 @@
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
     <string name="msg_first"><b>Za razvoj in preizkušanje programa XPrivacy je bilo vloženo veliko truda, vendar pa
     je nemogoče zagotoviti brezhibno delovanje na vsaki napravi in za vsak program.\n\nUporaba programa je na lastno
     odgovornost</b>\n\nPreberite si tudi licenco:</string>
@@ -116,6 +117,8 @@
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
+    <string name="title_allow">Allow</string>
+    <string name="title_deny">Deny</string>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
@@ -131,6 +134,7 @@
     <string name="settings_general">Splošno</string>
     <string name="settings_fake_data">Lažni podatki</string>
     <string name="settings_notify">Obvestila ob posodobitvi</string>
+    <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Beleženje za razvijalce (zahteva ponovni zagon)</string>
     <string name="settings_expert">Način za strokovnjake</string>
     <string name="settings_dangerous">Omeji nevarne funkcije</string>

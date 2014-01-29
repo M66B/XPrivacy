@@ -67,6 +67,7 @@
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
     <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ hoạt động trơn tru trên mọi thiết bị cũng như với mọi ứng dụng.
 \n\nBạn tự chịu trách nhiệm khi sử dụng ứng dụng này.</b>\n\nXem thêm về bản quyền:</string>
     <string name="restrict_accounts">Các tài khoản (Google, Facebook, ...)</string>
@@ -113,6 +114,8 @@
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
+    <string name="title_allow">Allow</string>
+    <string name="title_deny">Deny</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>
@@ -128,6 +131,7 @@
     <string name="settings_general">Cài đặt chung</string>
     <string name="settings_fake_data">Dữ liệu giả</string>
     <string name="settings_notify">Cập nhật thông báo</string>
+    <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Nhật ký lỗi (cần khởi động lại)</string>
     <string name="settings_expert">Chế độ nâng cao</string>
     <string name="settings_dangerous">Hạn chế các chức năng nguy hiểm</string>
