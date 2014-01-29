@@ -3,7 +3,7 @@
     <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
     <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed Inštalátori</string>
     <string name="app_wrongandroid">Len pre Android 4.0+</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
+    <string name="app_incompatible" formatted="false">Aplikácia XPrivacy nie je kompatibilná s %s</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
     <string name="app_description">Správca súkromia</string>
     <string name="app_xversion" formatted="false">Verzia Xposed frameworku: %d</string>
@@ -22,7 +22,7 @@
     <string name="menu_about">O aplikácii</string>
     <string name="menu_help">Pomocník</string>
     <string name="menu_select_all">Vybrať všetky</string>
-    <string name="menu_sort">Sort</string>
+    <string name="menu_sort">Zoradiť</string>
     <string name="menu_all">Všetko</string>
     <string name="menu_restriction_all">Prepnúť obmedzenia</string>
     <string name="menu_clear_all">Vymazať všetky</string>
@@ -85,10 +85,10 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_messages">Správy (SMS, MMS)</string>
     <string name="restrict_network">Sieť (adresy)</string>
     <string name="restrict_notifications">Oznámenia</string>
-    <string name="restrict_overlay">Vrstva</string>
+    <string name="restrict_overlay">Prekrytie</string>
     <string name="restrict_phone">Telefón (ID, čísla, hovory)</string>
     <string name="restrict_sensors">Sensory</string>
-    <string name="restrict_storage">Úložisko (médiá, SD karta)</string>
+    <string name="restrict_storage">Úložisko (médiá, karta SD)</string>
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
@@ -109,12 +109,12 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_fuser">Filter na užívateľské aplikácie</string>
     <string name="title_fsystem">Filter na systémové aplikácie</string>
     <string name="title_fnot">Obrátene</string>
-    <string name="title_sname">By name</string>
-    <string name="title_suid">By uid</string>
-    <string name="title_sinstalled">By date installed</string>
-    <string name="title_supdated">By date updated</string>
-    <string name="title_smodified">By date modified (XPrivacy)</string>
-    <string name="title_sinvert">Invert sort order</string>
+    <string name="title_sname">Podľa názvu</string>
+    <string name="title_suid">Podľa UID</string>
+    <string name="title_sinstalled">Podľa dátumu inštalácie</string>
+    <string name="title_supdated">Podľa dátumu aktulizácie</string>
+    <string name="title_smodified">Podľa dátumu zmeny (XPrivacy)</string>
+    <string name="title_sinvert">Obrátiť poradenie zoradenia</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
