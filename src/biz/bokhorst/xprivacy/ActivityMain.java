@@ -75,7 +75,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private Comparator<ApplicationInfoEx> mSorter = new Comparator<ApplicationInfoEx>() {
 		@Override
 		public int compare(ApplicationInfoEx appInfo0, ApplicationInfoEx appInfo1) {
-			int sortMode = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSMode, "0", false));
+			int sortMode = Integer.parseInt(PrivacyManager
+					.getSetting(null, 0, PrivacyManager.cSettingSMode, "0", false));
 			boolean sortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSInvert, false, false);
 			int sortOrder = sortInvert ? -1 : 1;
 			switch (sortMode) {
@@ -850,23 +851,29 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					public void onClick(DialogInterface dialog, int which) {
 						switch (rgSMode.getCheckedRadioButtonId()) {
 						case R.id.rbSName:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode, Integer.toString(SORT_BY_NAME));
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+									Integer.toString(SORT_BY_NAME));
 							break;
 						case R.id.rbSUid:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode, Integer.toString(SORT_BY_UID));
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+									Integer.toString(SORT_BY_UID));
 							break;
 						case R.id.rbSInstalled:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode, Integer.toString(SORT_BY_INSTALL_TIME));
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+									Integer.toString(SORT_BY_INSTALL_TIME));
 							break;
 						case R.id.rbSUpdated:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode, Integer.toString(SORT_BY_UPDATE_TIME));
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+									Integer.toString(SORT_BY_UPDATE_TIME));
 							break;
 						case R.id.rbSModified:
-							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode, Integer.toString(SORT_BY_MODIF_TIME));
+							PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSMode,
+									Integer.toString(SORT_BY_MODIF_TIME));
 							break;
 						}
-					    PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSInvert, Boolean.toString(cbSInvert.isChecked()));
-					    applySort();
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSInvert,
+								Boolean.toString(cbSInvert.isChecked()));
+						applySort();
 					}
 				});
 
@@ -1449,8 +1456,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 											@Override
 											public void onClick(DialogInterface dialog, int which) {
 												// Update restriction
-												boolean restart = PrivacyManager.deleteRestrictions(xAppInfo.getUid(),
-														true);
+												boolean restart = PrivacyManager.deleteRestrictions(xAppInfo.getUid());
 												allRestricted = false;
 												someRestricted = false;
 
@@ -1487,7 +1493,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								boolean restart = false;
 								for (String restrictionName : listRestriction)
 									restart = PrivacyManager.setRestriction(null, xAppInfo.getUid(), restrictionName,
-											null, crestricted, true) || restart;
+											null, crestricted) || restart;
 
 								// Update all/some restricted
 								allRestricted = true;

@@ -629,13 +629,13 @@ public class ActivityShare extends Activity {
 
 					boolean restart = false;
 					if (restriction == null && mSomeRestricted)
-						restart = PrivacyManager.deleteRestrictions(uid, true) || restart;
+						restart = PrivacyManager.deleteRestrictions(uid) || restart;
 					else if (restriction == null) {
 						for (String restrictionName : PrivacyManager.getRestrictions())
-							restart = PrivacyManager.setRestriction(null, uid, restrictionName, null, !mSomeRestricted,
-									true) || restart;
+							restart = PrivacyManager.setRestriction(null, uid, restrictionName, null, !mSomeRestricted)
+									|| restart;
 					} else
-						restart = PrivacyManager.setRestriction(null, uid, restriction, null, !mSomeRestricted, true)
+						restart = PrivacyManager.setRestriction(null, uid, restriction, null, !mSomeRestricted)
 								|| restart;
 
 					mAppAdapter.setState(uid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
@@ -878,16 +878,16 @@ public class ActivityShare extends Activity {
 							mAppAdapter.setState(uid, STATE_RUNNING, null);
 
 							// Reset existing restrictions
-							boolean restart = PrivacyManager.deleteRestrictions(uid, true);
+							boolean restart = PrivacyManager.deleteRestrictions(uid);
 
 							// Set imported restrictions
 							for (String restrictionName : mapPackage.get(packageName).keySet()) {
-								restart = PrivacyManager.setRestriction(null, uid, restrictionName, null, true, true)
+								restart = PrivacyManager.setRestriction(null, uid, restrictionName, null, true)
 										|| restart;
 								for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(
 										restrictionName))
 									restart = PrivacyManager.setRestriction(null, uid, restrictionName,
-											md.getMethodName(), md.isRestricted(), true)
+											md.getMethodName(), md.isRestricted())
 											|| restart;
 							}
 
@@ -1042,30 +1042,20 @@ public class ActivityShare extends Activity {
 
 						// Progress report and pre-import cleanup
 						if (!mListRestrictionUid.contains(uid)) {
-							// Mark the app we have just imported as a success
-							if (mListRestrictionUid.size() > 0) {
-								int lastUid = mListRestrictionUid.get(mListRestrictionUid.size() - 1);
-								mAppAdapter.setState(lastUid, STATE_SUCCESS, null);
-							}
+							finishLastImport();
 
 							// Mark the next one as in progress
 							mListRestrictionUid.add(uid);
 							mAppAdapter.setState(uid, STATE_RUNNING, null);
 							runOnUiThread(mProgress);
 
-							// Apply settings
-							PrivacyManager.deleteSettings(uid);
-							if (mSettings.indexOfKey(uid) >= 0)
-								for (Entry<String, String> entry : mSettings.get(uid).entrySet())
-									PrivacyManager.setSetting(null, uid, entry.getKey(), entry.getValue());
-
 							// Delete restrictions
-							if (PrivacyManager.deleteRestrictions(uid, false))
+							if (PrivacyManager.deleteRestrictions(uid))
 								mListRestartUid.add(uid);
 						}
 
 						// Set restriction
-						if (PrivacyManager.setRestriction(null, uid, restrictionName, methodName, restricted, false)
+						if (PrivacyManager.setRestriction(null, uid, restrictionName, methodName, restricted)
 								&& !mListRestartUid.contains(uid))
 							mListRestartUid.add(uid);
 					}
@@ -1079,11 +1069,7 @@ public class ActivityShare extends Activity {
 		@Override
 		public void endElement(String uri, String localName, String qName) {
 			if (qName.equals("XPrivacy")) {
-				// Mark the last app as a success
-				if (mListRestrictionUid.size() > 0) {
-					int lastUid = mListRestrictionUid.get(mListRestrictionUid.size() - 1);
-					mAppAdapter.setState(lastUid, STATE_SUCCESS, null);
-				}
+				finishLastImport();
 
 				// Restart notifications
 				for (int uid : mListRestartUid)
@@ -1097,6 +1083,22 @@ public class ActivityShare extends Activity {
 				}
 
 				mAppAdapter.notifyDataSetChanged();
+			}
+		}
+
+		private void finishLastImport() {
+			// Finish import for the last app imported
+			if (mListRestrictionUid.size() > 0) {
+				int lastUid = mListRestrictionUid.get(mListRestrictionUid.size() - 1);
+
+				// Apply settings
+				PrivacyManager.deleteSettings(lastUid);
+				if (mSettings.indexOfKey(lastUid) >= 0)
+					for (Entry<String, String> entry : mSettings.get(lastUid).entrySet())
+						PrivacyManager.setSetting(null, lastUid, entry.getKey(), entry.getValue());
+
+				// Mark as success
+				mAppAdapter.setState(lastUid, STATE_SUCCESS, null);
 			}
 		}
 
@@ -1222,7 +1224,7 @@ public class ActivityShare extends Activity {
 								if (status.getBoolean("ok")) {
 									JSONArray settings = status.getJSONArray("settings");
 									// Delete existing restrictions
-									boolean restart = PrivacyManager.deleteRestrictions(appInfo.getUid(), true);
+									boolean restart = PrivacyManager.deleteRestrictions(appInfo.getUid());
 
 									// Set fetched restrictions
 									List<ParcelableRestriction> listRestriction = new ArrayList<ParcelableRestriction>();
@@ -1238,6 +1240,14 @@ public class ActivityShare extends Activity {
 													restrictionName, methodName, restricted));
 									}
 									restart = PrivacyManager.setRestrictionList(listRestriction);
+
+									// Mark as new/changed
+									PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingState,
+											Integer.toString(ActivityMain.STATE_ATTENTION));
+
+									// Change app modification time
+									PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingMTime,
+											Long.toString(System.currentTimeMillis()));
 
 									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS,
 											restart ? getString(R.string.msg_restart) : null);
