@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OnAccountsUpdateListener;
@@ -82,6 +83,7 @@ public class XAccountManager extends XHook {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.addOnAccountsUpdatedListener) {
 			if (param.args.length > 0 && param.args[0] != null)
@@ -109,11 +111,22 @@ public class XAccountManager extends XHook {
 						}
 					}
 				}
+		} else if (mMethod == Methods.getAccountsByTypeAndFeatures) {
+			if (param.args.length > 2 && param.args[2] != null) {
+				AccountManagerCallback<Account[]> callback = (AccountManagerCallback<Account[]>) param.args[2];
+				param.args[2] = new XAccountManagerCallbackAccount(callback, Binder.getCallingUid());
+			}
+		} else if (mMethod == Methods.getAuthToken) {
+			for (int i = 0; i < param.args.length; i++)
+				if (param.args[i] instanceof AccountManagerCallback<?>) {
+					AccountManagerCallback<Bundle> callback = (AccountManagerCallback<Bundle>) param.args[i];
+					param.args[i] = new XAccountManagerCallbackBundle(callback, Binder.getCallingUid());
+				}
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
+	@SuppressWarnings("unchecked")
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod != Methods.addOnAccountsUpdatedListener && mMethod != Methods.removeOnAccountsUpdatedListener) {
 			int uid = Binder.getCallingUid();
@@ -191,13 +204,15 @@ public class XAccountManager extends XHook {
 
 		@Override
 		public Account[] getResult() throws OperationCanceledException, IOException, AuthenticatorException {
-			return XAccountManager.this.filterAccounts(mFuture.getResult(), mUid);
+			Account[] account = mFuture.getResult();
+			return XAccountManager.this.filterAccounts(account, mUid);
 		}
 
 		@Override
 		public Account[] getResult(long timeout, TimeUnit unit) throws OperationCanceledException, IOException,
 				AuthenticatorException {
-			return XAccountManager.this.filterAccounts(mFuture.getResult(timeout, unit), mUid);
+			Account[] account = mFuture.getResult(timeout, unit);
+			return XAccountManager.this.filterAccounts(account, mUid);
 		}
 
 		@Override
@@ -301,6 +316,36 @@ public class XAccountManager extends XHook {
 		@Override
 		public void onAccountsUpdated(Account[] accounts) {
 			mListener.onAccountsUpdated(XAccountManager.this.filterAccounts(accounts, mUid));
+		}
+	}
+
+	private class XAccountManagerCallbackAccount implements AccountManagerCallback<Account[]> {
+		private AccountManagerCallback<Account[]> mCallback;
+		private int mUid;
+
+		public XAccountManagerCallbackAccount(AccountManagerCallback<Account[]> callback, int uid) {
+			mCallback = callback;
+			mUid = uid;
+		}
+
+		@Override
+		public void run(AccountManagerFuture<Account[]> future) {
+			mCallback.run(new XAccountManager.XFutureAccount(future, mUid));
+		}
+	}
+
+	private class XAccountManagerCallbackBundle implements AccountManagerCallback<Bundle> {
+		private AccountManagerCallback<Bundle> mCallback;
+		private int mUid;
+
+		public XAccountManagerCallbackBundle(AccountManagerCallback<Bundle> callback, int uid) {
+			mCallback = callback;
+			mUid = uid;
+		}
+
+		@Override
+		public void run(AccountManagerFuture<Bundle> future) {
+			mCallback.run(new XAccountManager.XFutureBundle(future, mUid));
 		}
 	}
 }
