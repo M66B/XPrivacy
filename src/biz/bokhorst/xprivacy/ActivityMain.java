@@ -208,18 +208,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			});
 
 			// Setup spinner
-			spRestriction = (Spinner) findViewById(R.id.spRestriction);
-			spRestriction.setAdapter(spAdapter);
-			spRestriction.setOnItemSelectedListener(this);
-			String restrictionName = PrivacyManager
-					.getSetting(null, 0, PrivacyManager.cSettingTabCategory, null, false);
 			int pos = 0;
+			String restrictionName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSelectedCategory, null,
+					false);
 			if (restrictionName != null)
 				for (String restriction : PrivacyManager.getRestrictions(this).values()) {
 					pos++;
 					if (restrictionName.equals(restriction))
 						break;
 				}
+
+			spRestriction = (Spinner) findViewById(R.id.spRestriction);
+			spRestriction.setAdapter(spAdapter);
+			spRestriction.setOnItemSelectedListener(this);
 			spRestriction.setSelection(pos);
 
 			// Setup name filter
@@ -550,7 +551,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			String restrictionName = (pos == 0 ? null : (String) PrivacyManager.getRestrictions(this).values()
 					.toArray()[pos - 1]);
 			mAppAdapter.setRestrictionName(restrictionName);
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTabCategory, restrictionName);
+			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSelectedCategory, restrictionName);
 			applyFilter();
 		}
 	}
