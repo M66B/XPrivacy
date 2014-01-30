@@ -48,7 +48,7 @@ public class PrivacyService {
 	private static SQLiteDatabase mDatabase = null;
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
-	private static int mUidDialog = 0;
+	private static boolean mOnDemanding = false;
 
 	private static SQLiteStatement stmtGetRestriction = null;
 	private static SQLiteStatement stmtGetSetting = null;
@@ -100,23 +100,18 @@ public class PrivacyService {
 
 			// Catch ANR's
 			try {
-				// public boolean inputDispatchingTimedOut(final ProcessRecord
-				// proc, final ActivityRecord activity, final ActivityRecord
-				// parent, final boolean aboveSystem, String reason)
+				// @formatter:off
+				// public long inputDispatchingTimedOut(int pid, final boolean aboveSystem, String reason)
+				// @formatter:on
 				final Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
-				final Class<?> pr = Class.forName("com.android.server.am.ProcessRecord");
-				Class<?> ar = Class.forName("com.android.server.am.ActivityRecord");
-				Method anr = cam.getDeclaredMethod("inputDispatchingTimedOut", pr, ar, ar, boolean.class, String.class);
+				Method anr = cam.getDeclaredMethod("inputDispatchingTimedOut", int.class, boolean.class, String.class);
 				XposedBridge.hookMethod(anr, new XC_MethodHook() {
 					@Override
 					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 						try {
-							int uid = (Integer) cam.getDeclaredField("uid").get(param.args[0]);
-							Util.log(null, Log.WARN, "ANR uid=" + uid + " dialog=" + mUidDialog);
-							if (uid == mUidDialog) {
-								Util.log(null, Log.WARN, "Delaying ANR uid=" + uid);
-								param.setResult(60 * 1000);
-							}
+							// Delay ANR while on demand dialog open
+							if (mOnDemanding)
+								param.setResult(5 * 1000);
 						} catch (Throwable ex) {
 							Util.bug(null, ex);
 							mListError.add(ex.toString());
@@ -850,8 +845,7 @@ public class PrivacyService {
 
 				// Go ask
 				synchronized (this) {
-					// Mark dialog uid
-					mUidDialog = restriction.uid;
+					mOnDemanding = true;
 
 					// Create semaphore
 					final Semaphore semaphore = new Semaphore(1);
@@ -916,7 +910,7 @@ public class PrivacyService {
 
 					// Wait for dialog
 					semaphore.acquireUninterruptibly();
-					mUidDialog = 0;
+					mOnDemanding = false;
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
