@@ -23,7 +23,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -123,9 +122,8 @@ public class ActivityApp extends Activity {
 			String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
 
 			// Get app info
-			try {
-				mAppInfo = new ApplicationInfoEx(this, uid);
-			} catch (NameNotFoundException ignored) {
+			mAppInfo = new ApplicationInfoEx(this, uid);
+			if (mAppInfo.getPackageName().size() == 0) {
 				finish();
 				return;
 			}

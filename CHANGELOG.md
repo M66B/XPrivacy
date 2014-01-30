@@ -20,6 +20,8 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Fixed bootloop for some devices
+* Fixed clearing restrictions / applying template for application groups ([issue](https://github.com/M66B/XPrivacy/issues/1202))
+* Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

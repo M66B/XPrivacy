@@ -36,16 +36,17 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private long mInstallTime = -1;
 	private long mUpdateTime = -1;
 
-	public ApplicationInfoEx(Context context, int uid) throws NameNotFoundException {
+	public ApplicationInfoEx(Context context, int uid) {
 		mMapAppInfo = new TreeMap<String, ApplicationInfo>();
 		PackageManager pm = context.getPackageManager();
 		String[] packages = pm.getPackagesForUid(uid);
-		if (packages == null)
-			throw new NameNotFoundException();
-		for (String packageName : packages) {
-			ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
-			mMapAppInfo.put(pm.getApplicationLabel(appInfo).toString(), appInfo);
-		}
+		if (packages != null)
+			for (String packageName : packages)
+				try {
+					ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
+					mMapAppInfo.put(pm.getApplicationLabel(appInfo).toString(), appInfo);
+				} catch (NameNotFoundException ignored) {
+				}
 	}
 
 	public static List<ApplicationInfoEx> getXApplicationList(Context context, ProgressDialog dialog) {
@@ -58,22 +59,19 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		List<ApplicationInfo> listAppInfo = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		if (dialog != null)
 			dialog.setMax(listAppInfo.size());
-		for (int app = 0; app < listAppInfo.size(); app++)
-			try {
-				if (dialog != null)
-					dialog.setProgress(app + 1);
+		for (int app = 0; app < listAppInfo.size(); app++) {
+			if (dialog != null)
+				dialog.setProgress(app + 1);
 
-				ApplicationInfo appInfo = listAppInfo.get(app);
-				Util.log(null, Log.INFO, "package=" + appInfo.packageName + " uid=" + appInfo.uid);
+			ApplicationInfo appInfo = listAppInfo.get(app);
+			Util.log(null, Log.INFO, "package=" + appInfo.packageName + " uid=" + appInfo.uid);
 
-				ApplicationInfoEx appInfoEx = new ApplicationInfoEx(context, appInfo.uid);
-				if (mapApp.get(appInfoEx.getUid()) == null) {
-					mapApp.put(appInfoEx.getUid(), appInfoEx);
-					listApp.add(appInfoEx);
-				}
-			} catch (NameNotFoundException ex) {
-				Util.bug(null, ex);
+			ApplicationInfoEx appInfoEx = new ApplicationInfoEx(context, appInfo.uid);
+			if (mapApp.get(appInfoEx.getUid()) == null) {
+				mapApp.put(appInfoEx.getUid(), appInfoEx);
+				listApp.add(appInfoEx);
 			}
+		}
 
 		// Sort result
 		Collections.sort(listApp);

@@ -23,7 +23,7 @@ public class PackageChange extends BroadcastReceiver {
 				NotificationManager notificationManager = (NotificationManager) context
 						.getSystemService(Context.NOTIFICATION_SERVICE);
 
-				Util.log(null, Log.INFO, "Package change action=" + intent.getAction() + " replacing=" + replacing
+				Util.log(null, Log.WARN, "Package change action=" + intent.getAction() + " replacing=" + replacing
 						+ " uid=" + uid);
 
 				// Check action
@@ -33,7 +33,7 @@ public class PackageChange extends BroadcastReceiver {
 					String packageName = inputUri.getSchemeSpecificPart();
 
 					// Default deny new user apps
-					if (PrivacyService.getClient() != null) {
+					if (PrivacyService.getClient() != null && appInfo.getPackageName().size() == 1) {
 						if (!replacing) {
 							// Delete existing restrictions
 							PrivacyManager.deleteRestrictions(uid);
@@ -143,7 +143,8 @@ public class PackageChange extends BroadcastReceiver {
 					notificationManager.cancel(uid);
 
 					// Delete restrictions
-					if (PrivacyService.getClient() != null) {
+					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
+					if (PrivacyService.getClient() != null && appInfo.getPackageName().size() == 0) {
 						PrivacyManager.deleteRestrictions(uid);
 						PrivacyManager.deleteSettings(uid);
 						PrivacyManager.deleteUsage(uid);
