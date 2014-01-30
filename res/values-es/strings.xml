@@ -67,6 +67,7 @@
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
     <string name="msg_first"><b>Se ha puesto mucho cuidado en el desarrollo y pruebas de XPrivacy,
 sin embargo no puedo garantizar que funcione sin ningún fallo para cada dispositivo y aplicación.
 \n\nÚselo bajo su responsabilidad.</b>\n\nVéase también el permiso:</string>
@@ -114,6 +115,8 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
+    <string name="title_allow">Allow</string>
+    <string name="title_deny">Deny</string>
     <string name="settings_serial"># de serie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
@@ -129,6 +132,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="settings_general">General</string>
     <string name="settings_fake_data">Datos falsos</string>
     <string name="settings_notify">Notificaciones de actualización</string>
+    <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Registro de depuración (requiere inicio)</string>
     <string name="settings_expert">Modo experto</string>
     <string name="settings_dangerous">Denegar funciones peligrosas</string>

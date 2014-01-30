@@ -67,6 +67,7 @@
     <string name="msg_randomizing" formatted="false">Probíhá generování náhodných hodnot %s</string>
     <string name="msg_upgrading" formatted="false">Probíhá upgrade %s</string>
     <string name="msg_support_info">Vnitřní kontrola selhala, přejete si odeslat informace na podporu?</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
     <string name="msg_first"><b>Vývoj a testování aplikace XPrivacy probíhaly s maximální možnou péčí,
 nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a se všemi aplikacemi.
 \n\nPoužívejte pouze na vlastní riziko.</b>\n\nLicence aplikace:</string>
@@ -115,6 +116,8 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
+    <string name="title_allow">Allow</string>
+    <string name="title_deny">Deny</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zeměpisná šířka</string>
     <string name="settings_lon">Zeměpisná délka</string>
@@ -130,6 +133,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_general">Všeobecné</string>
     <string name="settings_fake_data">Falešné údaje</string>
     <string name="settings_notify">Upozorňovat při aktualizacích aplikací</string>
+    <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Ukládat ladící záznam (vyžaduje restart)</string>
     <string name="settings_expert">Režim experta</string>
     <string name="settings_dangerous">Omezovat nebezpečné funkce</string>

@@ -67,6 +67,7 @@
     <string name="msg_randomizing" formatted="false">Randomisation %s</string>
     <string name="msg_upgrading" formatted="false">Mise-à-jour %s</string>
     <string name="msg_support_info">Une vérification interne a échoué, voulez-vous envoyer le rapport d\'erreurs?</string>
+    <string name="msg_ondemand" formatted="false">%1$s essaie d\'utiliser une fonction dans la catégorie %2$s</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
 \n\nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>
@@ -114,6 +115,8 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_supdated">Par date de mise à jour</string>
     <string name="title_smodified">Par date de modification (XPrivacy)</string>
     <string name="title_sinvert">Inverser l\'ordre</string>
+    <string name="title_allow">Permettre</string>
+    <string name="title_deny">Bloquer</string>
     <string name="settings_serial">N° de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
@@ -129,6 +132,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_general">Général</string>
     <string name="settings_fake_data">Fausses données</string>
     <string name="settings_notify">Notifications de MàJ</string>
+    <string name="settings_ondemand">Restrictions sur demande</string>
     <string name="settings_log">Debug log (redémarrage requis)</string>
     <string name="settings_expert">Mode expert</string>
     <string name="settings_dangerous">Restreindre fonctions dangereuses</string>

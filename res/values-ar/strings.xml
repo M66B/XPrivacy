@@ -67,6 +67,7 @@
     <string name="msg_randomizing" formatted="false">عشوائية %s</string>
     <string name="msg_upgrading" formatted="false">ترقية %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
     <string name="msg_first"><b>بُذلت عناية كبيرة لتطوير وإختبار XPrivacy,
 ومع ذلك فإنه من المستحيل ضمان أنه سيعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
 \n\nالإستخدام على مسئوليتك الخاصة.</b>\n\nراجع أيضاً الترخيص:</string>
@@ -114,6 +115,8 @@
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
+    <string name="title_allow">Allow</string>
+    <string name="title_deny">Deny</string>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
@@ -129,6 +132,7 @@
     <string name="settings_general">عام</string>
     <string name="settings_fake_data">بيانات وهمية</string>
     <string name="settings_notify">تحديث الإشعارات</string>
+    <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
     <string name="settings_expert">وضع الخبراء</string>
     <string name="settings_dangerous">تقييد الوظائف الخطيرة</string>

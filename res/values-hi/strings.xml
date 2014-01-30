@@ -67,6 +67,7 @@
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
     <string name="msg_first"><b>XPrivacy बनाने मैं बहुत ख्याल रखा गया है,
 किन्तु वह सभी साधन और सभी application के लिए बरोबर चलेगा उसकी गारंटी देना असंभव है।
 \n\nइसका उपयोग पूरी तरह से आपके अपने जोखिम पर है।</b>\n\nलाइसेंस को भी पढ़े:</string>
@@ -114,6 +115,8 @@
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
+    <string name="title_allow">Allow</string>
+    <string name="title_deny">Deny</string>
     <string name="settings_serial">क्रमांक#</string>
     <string name="settings_lat">अक्षांश</string>
     <string name="settings_lon">रेखांश</string>
@@ -129,6 +132,7 @@
     <string name="settings_general">सामान्य</string>
     <string name="settings_fake_data">नकली डेटा</string>
     <string name="settings_notify">अद्यतन सुचना</string>
+    <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Debug log (पुनरारंभ जरूरी)</string>
     <string name="settings_expert">विशेषज्ञ mode</string>
     <string name="settings_dangerous">खतरनाक कार्य प्रतिबंधित करे</string>
