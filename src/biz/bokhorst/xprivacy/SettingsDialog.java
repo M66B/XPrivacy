@@ -476,10 +476,12 @@ public class SettingsDialog {
 				dlgSettings.dismiss();
 
 				// Refresh application view
-				Intent intent = new Intent(context, ActivityApp.class);
-				intent.putExtra(ActivityApp.cUid, uid);
-				intent.putExtra(ActivityApp.cAction, ActivityApp.cActionRefresh);
-				context.startActivity(intent);
+				if (uid != 0) {
+					Intent intent = new Intent(context, ActivityApp.class);
+					intent.putExtra(ActivityApp.cUid, uid);
+					intent.putExtra(ActivityApp.cAction, ActivityApp.cActionRefresh);
+					context.startActivity(intent);
+				}
 			}
 		});
 
