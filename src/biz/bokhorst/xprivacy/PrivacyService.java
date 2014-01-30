@@ -112,6 +112,7 @@ public class PrivacyService {
 					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 						try {
 							int uid = (Integer) cam.getDeclaredField("uid").get(param.args[0]);
+							Util.log(null, Log.WARN, "ANR uid=" + uid + " dialog=" + mUidDialog);
 							if (uid == mUidDialog) {
 								Util.log(null, Log.WARN, "Delaying ANR uid=" + uid);
 								param.setResult(60 * 1000);
@@ -867,8 +868,11 @@ public class PrivacyService {
 
 								// Build message
 								ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
+								int stringId = resources.getIdentifier("restrict_" + restriction.restrictionName,
+										"string", self);
 								String message = String.format(resources.getString(R.string.msg_ondemand),
-										TextUtils.join(", ", appInfo.getApplicationName()), restriction.restrictionName);
+										TextUtils.join(", ", appInfo.getApplicationName()),
+										resources.getString(stringId));
 
 								// Ask
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);

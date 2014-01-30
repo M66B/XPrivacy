@@ -975,7 +975,7 @@ public class ActivityApp extends Activity {
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
-					holder.tvChosen.setVisibility(ondemand ? View.VISIBLE : View.INVISIBLE);
+					holder.tvChosen.setVisibility(!crestricted && ondemand ? View.VISIBLE : View.INVISIBLE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
