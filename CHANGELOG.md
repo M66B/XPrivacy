@@ -12,8 +12,16 @@ Test and beta releases will have experimental functions enabled by default.
 **Experimental functions**
 
 * Restricting on demand
+	* You can enable this feature in the application specific settings
+	* Newly installed applications will have this feature enabled by default (if experimental is enabled)
+	* You can clear the choices made by tapping on the application icon and selecting the appropriate menu
+	* Restrictions that will be asked for will have a question mark after the restriction check box
 
 **Next release**
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.21 BETA**
 
 * Restricting on demand
 * Fixed erased settings staying cached
@@ -22,8 +30,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Updated French translation
 * Updated Lithuanian translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.20 BETA**
 
