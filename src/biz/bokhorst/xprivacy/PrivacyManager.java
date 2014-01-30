@@ -319,7 +319,7 @@ public class PrivacyManager {
 		PrivacyManager
 				.setSetting(hook, uid, PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
 
-		// Change app modification time
+		// Update modification time
 		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingModifyTime,
 				Long.toString(System.currentTimeMillis()));
 
@@ -352,7 +352,7 @@ public class PrivacyManager {
 		return new ArrayList<ParcelableRestriction>();
 	}
 
-	private static boolean shouldRestart(String restrictionName, String methodName, boolean restricted) {
+	public static boolean shouldRestart(String restrictionName, String methodName, boolean restricted) {
 		boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false, false);
 		if (methodName == null) {
 			for (Hook md : getHooks(restrictionName))

@@ -368,8 +368,9 @@ public class PrivacyService {
 				}
 
 				// Ask to restrict
-				if (!restricted && usage && PrivacyManager.isApplication(restriction.uid))
-					restricted = onDemand(restriction);
+				if (!restricted && usage && restriction.methodName != null
+						&& PrivacyManager.isApplication(restriction.uid))
+					restricted = onDemandDialog(restriction);
 
 				// Log usage
 				if (usage && restriction.methodName != null)
@@ -818,114 +819,100 @@ public class PrivacyService {
 
 		// Helper methods
 
-		private Boolean onDemand(final ParcelableRestriction restriction) {
+		private Boolean onDemandDialog(final ParcelableRestriction restriction) {
 			final ParcelableRestriction result = new ParcelableRestriction(restriction.uid,
 					restriction.restrictionName, null, false);
-
 			try {
 				// Without handler nothing can be done
-				if (mHandler == null) {
-					Util.log(null, Log.ERROR, "No handler");
+				if (mHandler == null)
 					return false;
-				}
 
-				if (getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false)) {
-					final String categorySetting = PrivacyManager.cSettingOnDemand + "." + restriction.restrictionName;
-					if (getSettingBool(restriction.uid, categorySetting, true)) {
-						synchronized (this) {
-							// Register pid
-							mUidDialog = restriction.uid;
+				// Check if enabled
+				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
+					return false;
 
-							// Create semaphore
-							final Semaphore semaphore = new Semaphore(1);
-							semaphore.acquireUninterruptibly();
+				// Check if already answered
+				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand + "."
+						+ restriction.restrictionName, true))
+					return false;
 
-							// Run dialog in looper
-							mHandler.post(new Runnable() {
-								@Override
-								public void run() {
-									try {
-										// Get am context
-										Context context = getContext();
-										if (context != null) {
-											// Get resources
-											String self = PrivacyService.class.getPackage().getName();
-											Resources resources = context.getPackageManager()
-													.getResourcesForApplication(self);
+				// Skip dangerous methods
+				boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+				Hook hook = PrivacyManager.getHook(restriction.restrictionName, restriction.methodName);
+				if (!dangerous && hook.isDangerous())
+					return false;
 
-											// Build message
-											ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
-											String message = String.format(resources.getString(R.string.msg_ondemand),
-													TextUtils.join(", ", appInfo.getApplicationName()),
-													restriction.restrictionName);
+				// Get am context
+				final Context context = getContext();
+				if (context == null)
+					return false;
 
-											// Ask
-											AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-											alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
-											alertDialogBuilder.setMessage(message);
-											alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
-											alertDialogBuilder.setPositiveButton(
-													resources.getString(R.string.title_deny),
-													new DialogInterface.OnClickListener() {
-														@Override
-														public void onClick(DialogInterface dialog, int which) {
-															// Deny
-															try {
-																result.restricted = true;
-																setRestriction(result);
-																setSetting(new ParcelableSetting(restriction.uid,
-																		categorySetting, Boolean.toString(false)));
-															} catch (Throwable ex) {
-																Util.bug(null, ex);
-																synchronized (mListError) {
-																	mListError.add(ex.toString());
-																}
-															} finally {
-																semaphore.release();
-															}
-														}
-													});
-											alertDialogBuilder.setNegativeButton(
-													resources.getString(R.string.title_allow),
-													new DialogInterface.OnClickListener() {
-														@Override
-														public void onClick(DialogInterface dialog, int which) {
-															// Allow
-															try {
-																result.restricted = false;
-																setRestriction(result);
-																setSetting(new ParcelableSetting(restriction.uid,
-																		categorySetting, Boolean.toString(false)));
-															} catch (Throwable ex) {
-																Util.bug(null, ex);
-																synchronized (mListError) {
-																	mListError.add(ex.toString());
-																}
-															} finally {
-																semaphore.release();
-															}
-														}
-													});
-											AlertDialog alertDialog = alertDialogBuilder.create();
-											alertDialog.getWindow().setType(
-													WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-											alertDialog.show();
-										}
-									} catch (Throwable ex) {
-										Util.bug(null, ex);
-										synchronized (mListError) {
-											mListError.add(ex.toString());
-										}
-										semaphore.release();
-									}
+				// Go ask
+				synchronized (this) {
+					// Mark dialog uid
+					mUidDialog = restriction.uid;
+
+					// Create semaphore
+					final Semaphore semaphore = new Semaphore(1);
+					semaphore.acquireUninterruptibly();
+
+					// Run dialog in looper
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								// Get resources
+								String self = PrivacyService.class.getPackage().getName();
+								Resources resources = context.getPackageManager().getResourcesForApplication(self);
+
+								// Build message
+								ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
+								String message = String.format(resources.getString(R.string.msg_ondemand),
+										TextUtils.join(", ", appInfo.getApplicationName()), restriction.restrictionName);
+
+								// Ask
+								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+								alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
+								alertDialogBuilder.setMessage(message);
+								alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
+								alertDialogBuilder.setPositiveButton(resources.getString(R.string.title_deny),
+										new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												// Deny
+												result.restricted = true;
+												onDemandChoice(restriction, true);
+												semaphore.release();
+											}
+										});
+								alertDialogBuilder.setNegativeButton(resources.getString(R.string.title_allow),
+										new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												// Allow
+												result.restricted = false;
+												onDemandChoice(restriction, false);
+												semaphore.release();
+											}
+										});
+								AlertDialog alertDialog = alertDialogBuilder.create();
+								alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+								alertDialog.setCancelable(false);
+								alertDialog.setCanceledOnTouchOutside(false);
+								alertDialog.show();
+							} catch (Throwable ex) {
+								Util.bug(null, ex);
+								synchronized (mListError) {
+									mListError.add(ex.toString());
 								}
-							});
-
-							// Wait for dialog
-							semaphore.acquireUninterruptibly();
-							mUidDialog = 0;
+								semaphore.release();
+							}
 						}
-					}
+					});
+
+					// Wait for dialog
+					semaphore.acquireUninterruptibly();
+					mUidDialog = 0;
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -934,6 +921,43 @@ public class PrivacyService {
 				}
 			}
 			return result.restricted;
+		}
+
+		private void onDemandChoice(ParcelableRestriction restriction, boolean restricted) {
+			try {
+				// Apply choice
+				ParcelableRestriction result = new ParcelableRestriction(restriction.uid, restriction.restrictionName,
+						null, restricted);
+				setRestriction(result);
+
+				// Make exceptions for dangerous methods
+				boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+				if (restricted && !dangerous) {
+					result.restricted = dangerous;
+					for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
+						if (hook.isDangerous()) {
+							result.methodName = hook.getName();
+							setRestriction(result);
+						}
+				}
+
+				// Mark state as changed
+				setSetting(new ParcelableSetting(restriction.uid, PrivacyManager.cSettingState,
+						Integer.toString(ActivityMain.STATE_CHANGED)));
+
+				// Update modification time
+				setSetting(new ParcelableSetting(restriction.uid, PrivacyManager.cSettingModifyTime,
+						Long.toString(System.currentTimeMillis())));
+
+				// Do not ask again
+				String categorySetting = PrivacyManager.cSettingOnDemand + "." + restriction.restrictionName;
+				setSetting(new ParcelableSetting(restriction.uid, categorySetting, Boolean.toString(false)));
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				synchronized (mListError) {
+					mListError.add(ex.toString());
+				}
+			}
 		}
 
 		private boolean getSettingBool(int uid, String name, boolean defaultValue) throws RemoteException {
