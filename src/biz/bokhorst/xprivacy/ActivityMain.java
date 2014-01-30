@@ -143,6 +143,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	};
 
+	private boolean mPackageChangeReceiverRegistered = false;
+
 	private BroadcastReceiver mPackageChangeReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -158,7 +160,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		if (!Util.isXposedEnabled() || PrivacyService.getClient() == null) {
 			setContentView(R.layout.reboot);
 			Requirements.check(this);
-			mPackageChangeReceiver = null;
 		} else {
 			// Salt should be the same when exporting/importing
 			String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, null, false);
@@ -349,6 +350,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
 			iff.addDataScheme("package");
 			registerReceiver(mPackageChangeReceiver, iff);
+			mPackageChangeReceiverRegistered = true;
 
 			// First run
 			if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFirstRun, true, false)) {
@@ -394,8 +396,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (mPackageChangeReceiver != null)
+		if (mPackageChangeReceiverRegistered) {
 			unregisterReceiver(mPackageChangeReceiver);
+			mPackageChangeReceiverRegistered = false;
+		}
 	}
 
 	@Override

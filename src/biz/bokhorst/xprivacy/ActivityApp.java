@@ -91,6 +91,8 @@ public class ActivityApp extends Activity {
 		}
 	}
 
+	private boolean mPackageChangeReceiverRegistered = false;
+
 	private BroadcastReceiver mPackageChangeReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -223,6 +225,7 @@ public class ActivityApp extends Activity {
 			iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
 			iff.addDataScheme("package");
 			registerReceiver(mPackageChangeReceiver, iff);
+			mPackageChangeReceiverRegistered = true;
 
 			// Up navigation
 			getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -281,8 +284,10 @@ public class ActivityApp extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (mPackageChangeReceiver != null)
+		if (mPackageChangeReceiverRegistered) {
 			unregisterReceiver(mPackageChangeReceiver);
+			mPackageChangeReceiverRegistered = false;
+		}
 	}
 
 	@Override
