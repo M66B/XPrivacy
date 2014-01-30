@@ -23,7 +23,7 @@
     <string name="menu_about">Apie</string>
     <string name="menu_help">Pagalba</string>
     <string name="menu_select_all">Pažymėti viską</string>
-    <string name="menu_sort">Sort</string>
+    <string name="menu_sort">Rūšiuoti</string>
     <string name="menu_all">Visos</string>
     <string name="menu_restriction_all">Išvalyti visus ribojimus</string>
     <string name="menu_clear_all">Išvalyti viską</string>
@@ -117,8 +117,8 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_supdated">Pagal atnaujinimo datą</string>
     <string name="title_smodified">Pagal modifikavimo datą (XPrivacy)</string>
     <string name="title_sinvert">Atvirkštinė rūšiavimo tvarka</string>
-    <string name="title_allow">Allow</string>
-    <string name="title_deny">Deny</string>
+    <string name="title_allow">Leisti</string>
+    <string name="title_deny">Drausti</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
@@ -134,7 +134,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_general">Bendras</string>
     <string name="settings_fake_data">Netikri duomenys</string>
     <string name="settings_notify">Atnaujinimų Pranesimas</string>
-    <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_ondemand">Riboti pagal pareikalavimą</string>
     <string name="settings_log">DEBUG žurnalas (Perkrauti prietaisą)</string>
     <string name="settings_expert">Eksperto režimas</string>
     <string name="settings_dangerous">Apriboti pavojingas funkcijas</string>
