@@ -296,17 +296,15 @@ public class PrivacyManager {
 		return restricted;
 	}
 
-	public static boolean setRestriction(XHook hook, int uid, String restrictionName, String methodName,
+	public static void setRestriction(XHook hook, int uid, String restrictionName, String methodName,
 			boolean restricted) {
-		return setRestriction(hook, uid, restrictionName, methodName, restricted, restricted);
+		setRestriction(hook, uid, restrictionName, methodName, restricted, restricted);
 	}
 
-	public static boolean setRestriction(XHook hook, int uid, String restrictionName, String methodName,
-			boolean restricted, boolean asked) {
+	public static void setRestriction(XHook hook, int uid, String restrictionName, String methodName, boolean restricted, boolean asked) {
 		// Check uid
 		if (uid == 0) {
 			Util.log(hook, Log.WARN, "uid=0");
-			return false;
 		}
 
 		// Set restriction
@@ -331,24 +329,15 @@ public class PrivacyManager {
 
 		// Update modification time
 		setSetting(null, uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
-
-		// Check if restart required
-		return shouldRestart(restrictionName, methodName, restricted);
 	}
 
-	public static boolean setRestrictionList(List<ParcelableRestriction> listRestriction) {
-		boolean restart = false;
+	public static void setRestrictionList(List<ParcelableRestriction> listRestriction) {
 		if (listRestriction.size() > 0)
 			try {
-				for (ParcelableRestriction restriction : listRestriction)
-					restart = restart
-							|| shouldRestart(restriction.restrictionName, restriction.methodName,
-									restriction.restricted);
 				PrivacyService.getClient().setRestrictionList(listRestriction);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
-		return restart;
 	}
 
 	public static List<ParcelableRestriction> getRestrictionList(int uid, String restrictionName) {
@@ -361,33 +350,30 @@ public class PrivacyManager {
 		return new ArrayList<ParcelableRestriction>();
 	}
 
-	public static boolean shouldRestart(String restrictionName, String methodName, boolean restricted) {
-		boolean dangerous = getSettingBool(null, 0, cSettingDangerous, false, false);
-		if (methodName == null) {
-			for (Hook md : getHooks(restrictionName))
-				if (md.isRestartRequired() && !(restricted && !dangerous && md.isDangerous()))
-					return true;
-			return false;
-		} else {
-			Hook md = getHook(restrictionName, methodName);
-			return (md == null ? false : md.isRestartRequired());
+	public static List<Boolean> getListStateRestartHooks(int uid, String restrictionName) {
+		// Returns a list of restriction states for functions whose application
+		// requires the app to be restarted.
+		List<Boolean> listRestartRestriction = new ArrayList<Boolean>();
+
+		List<String> listRestriction = new ArrayList<String>();
+		if (restrictionName == null)
+			listRestriction = getRestrictions();
+		else
+			listRestriction.add(restrictionName);
+
+		try {
+			for (String restriction : listRestriction)
+				for (Hook md : getHooks(restrictionName))
+					if (md.isRestartRequired())
+						listRestartRestriction.add(getRestriction(null, uid, restriction, md.getName(), null));
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
 		}
+
+		return listRestartRestriction;
 	}
 
-	public static boolean deleteRestrictions(int uid) {
-		// Check if restart required
-		boolean restart = false;
-		for (String restrictionName : getRestrictions()) {
-			for (Hook md : getHooks(restrictionName))
-				if (getRestrictionEx(uid, restrictionName, md.getName()).restricted)
-					if (md.isRestartRequired()) {
-						restart = true;
-						break;
-					}
-			if (restart)
-				break;
-		}
-
+	public static void deleteRestrictions(int uid) {
 		// Delete restrictions
 		try {
 			PrivacyService.getClient().deleteRestrictions(uid);
@@ -400,8 +386,6 @@ public class PrivacyManager {
 
 		// Change app modification time
 		setSetting(null, uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
-
-		return restart;
 	}
 
 	// Usage

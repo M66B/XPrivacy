@@ -639,18 +639,18 @@ public class ActivityShare extends Activity {
 					publishProgress(++mProgressCurrent, lstUid.size() + 1);
 					mAppAdapter.setState(uid, STATE_RUNNING, null);
 
-					boolean restart = false;
+					List<Boolean> oldState = PrivacyManager.getListStateRestartHooks(uid, null);
 					if (restriction == null && mSomeRestricted)
-						restart = PrivacyManager.deleteRestrictions(uid) || restart;
+						PrivacyManager.deleteRestrictions(uid);
 					else if (restriction == null) {
 						for (String restrictionName : PrivacyManager.getRestrictions())
-							restart = PrivacyManager.setRestriction(null, uid, restrictionName, null, !mSomeRestricted)
-									|| restart;
+							PrivacyManager.setRestriction(null, uid, restrictionName, null, !mSomeRestricted);
 					} else
-						restart = PrivacyManager.setRestriction(null, uid, restriction, null, !mSomeRestricted)
-								|| restart;
+						PrivacyManager.setRestriction(null, uid, restriction, null, !mSomeRestricted);
+					List<Boolean> newState = PrivacyManager.getListStateRestartHooks(uid, null);
 
-					mAppAdapter.setState(uid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
+					mAppAdapter.setState(uid, STATE_SUCCESS,
+							!newState.equals(oldState) ? getString(R.string.msg_restart) : null);
 				} catch (Throwable ex) {
 					mAppAdapter.setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
 					return ex;
@@ -884,20 +884,21 @@ public class ActivityShare extends Activity {
 							mAppAdapter.setState(uid, STATE_RUNNING, null);
 
 							// Reset existing restrictions
-							boolean restart = PrivacyManager.deleteRestrictions(uid);
+							List<Boolean> oldState = PrivacyManager.getListStateRestartHooks(uid, null);
+							PrivacyManager.deleteRestrictions(uid);
 
 							// Set imported restrictions
 							for (String restrictionName : mapPackage.get(packageName).keySet()) {
-								restart = PrivacyManager.setRestriction(null, uid, restrictionName, null, true)
-										|| restart;
+								PrivacyManager.setRestriction(null, uid, restrictionName, null, true);
 								for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(
 										restrictionName))
-									restart = PrivacyManager.setRestriction(null, uid, restrictionName,
-											md.getMethodName(), md.isRestricted())
-											|| restart;
+									PrivacyManager.setRestriction(null, uid, restrictionName, md.getMethodName(),
+											md.isRestricted());
 							}
+							List<Boolean> newState = PrivacyManager.getListStateRestartHooks(uid, null);
 
-							mAppAdapter.setState(uid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
+							mAppAdapter.setState(uid, STATE_SUCCESS,
+									!newState.equals(oldState) ? getString(R.string.msg_restart) : null);
 						}
 					} catch (Throwable ex) {
 						if (uid > 0)
@@ -948,8 +949,8 @@ public class ActivityShare extends Activity {
 		private Runnable mProgress;
 		private SparseArray<Map<String, String>> mSettings = new SparseArray<Map<String, String>>();
 		private List<Integer> mListRestrictionUid = new ArrayList<Integer>();
-		private List<Integer> mListRestartUid = new ArrayList<Integer>();
 		private List<Integer> mListAbortedUid = new ArrayList<Integer>();
+		private SparseArray<List<Boolean>> mListRestartStates = new SparseArray<List<Boolean>>();
 
 		public ImportHandler(List<Integer> listUidSelected, Runnable progress) {
 			mListUidSelected = listUidSelected;
@@ -1057,14 +1058,12 @@ public class ActivityShare extends Activity {
 							runOnUiThread(mProgress);
 
 							// Delete restrictions
-							if (PrivacyManager.deleteRestrictions(uid))
-								mListRestartUid.add(uid);
+							mListRestartStates.put(uid, PrivacyManager.getListStateRestartHooks(uid, null));
+							PrivacyManager.deleteRestrictions(uid);
 						}
 
 						// Set restriction
-						if (PrivacyManager.setRestriction(null, uid, restrictionName, methodName, restricted, asked)
-								&& !mListRestartUid.contains(uid))
-							mListRestartUid.add(uid);
+						PrivacyManager.setRestriction(null, uid, restrictionName, methodName, restricted, asked);
 					}
 				} else
 					Util.log(null, Log.ERROR, "Unknown element name=" + qName);
@@ -1079,8 +1078,13 @@ public class ActivityShare extends Activity {
 				finishLastImport();
 
 				// Restart notifications
-				for (int uid : mListRestartUid)
-					mAppAdapter.setMessage(uid, getString(R.string.msg_restart));
+				for (int i = 0; i < mListRestartStates.size(); i++) {
+					int uid = mListRestartStates.keyAt(i);
+					List<Boolean> oldState = mListRestartStates.valueAt(i);
+					List<Boolean> newState = PrivacyManager.getListStateRestartHooks(uid, null);
+					if (!newState.equals(oldState))
+						mAppAdapter.setMessage(uid, getString(R.string.msg_restart));
+				}
 
 				// Abort notification
 				if (mListAbortedUid.size() > 0) {
@@ -1236,7 +1240,8 @@ public class ActivityShare extends Activity {
 								if (status.getBoolean("ok")) {
 									JSONArray settings = status.getJSONArray("settings");
 									// Delete existing restrictions
-									boolean restart = PrivacyManager.deleteRestrictions(appInfo.getUid());
+									List<Boolean> oldState = PrivacyManager.getListStateRestartHooks(appInfo.getUid(), null);
+									PrivacyManager.deleteRestrictions(appInfo.getUid());
 
 									// Set fetched restrictions
 									List<ParcelableRestriction> listRestriction = new ArrayList<ParcelableRestriction>();
@@ -1251,7 +1256,8 @@ public class ActivityShare extends Activity {
 											listRestriction.add(new ParcelableRestriction(appInfo.getUid(),
 													restrictionName, methodName, restricted));
 									}
-									restart = PrivacyManager.setRestrictionList(listRestriction);
+									PrivacyManager.setRestrictionList(listRestriction);
+									List<Boolean> newState = PrivacyManager.getListStateRestartHooks(appInfo.getUid(), null);
 
 									// Mark as new/changed
 									PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingState,
@@ -1263,7 +1269,7 @@ public class ActivityShare extends Activity {
 											Long.toString(System.currentTimeMillis()));
 
 									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS,
-											restart ? getString(R.string.msg_restart) : null);
+											!newState.equals(oldState) ? getString(R.string.msg_restart) : null);
 								} else {
 									int errno = status.getInt("errno");
 									String message = status.getString("error");
