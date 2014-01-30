@@ -27,6 +27,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed erased settings staying cached
 * Faster sorting, thanks @[jpeg729](https://github.com/jpeg729)
 * Change state to gray when unrestricting ([issue](https://github.com/M66B/XPrivacy/issues/1190))
+* Updated Dutch translation
 * Updated French translation
 * Updated Lithuanian translation
 * Updated Slovak translation
