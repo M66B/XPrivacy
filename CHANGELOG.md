@@ -23,7 +23,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Version 1.99.23 BETA**
 
-* Fixed bootloop for some devices
+* Prevent bootloops with not yet migrated restrictions
 * Fixed clearing restrictions / applying template for application groups ([issue](https://github.com/M66B/XPrivacy/issues/1202))
 * Added restriction for MCC/MNC found in configuration ([issue](https://github.com/M66B/XPrivacy/issues/1201))
 * Updated Lithuanian translation

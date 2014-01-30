@@ -346,9 +346,12 @@ public class PrivacyService {
 					}
 
 					// Fallback
-					if (restricted == false && db.getVersion() == 1)
-						restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
-								restriction.restrictionName, restriction.methodName);
+					if (!restricted && usage && restriction.methodName != null && db.getVersion() == 1) {
+						Hook hook = PrivacyManager.getHook(restriction.restrictionName, restriction.methodName);
+						if (hook != null && !hook.isDangerous())
+							restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
+									restriction.restrictionName, restriction.methodName);
+					}
 
 					// Update cache
 					if (mUseCache) {
