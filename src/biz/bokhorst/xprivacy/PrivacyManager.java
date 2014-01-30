@@ -172,7 +172,7 @@ public class PrivacyManager {
 		if (restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
 			if (!mMethod.containsKey(restrictionName)
 					|| !mMethod.get(restrictionName).contains(new Hook(restrictionName, methodName)))
-				Util.log(null, Log.WARN, "Missing method " + methodName);
+				Util.log(null, Log.WARN, "Missing method " + methodName + " SDK=" + Build.VERSION.SDK_INT);
 		}
 	}
 
