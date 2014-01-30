@@ -1,12 +1,11 @@
 package biz.bokhorst.xprivacy;
 
-import android.annotation.SuppressLint;
-
 public class Hook implements Comparable<Hook> {
 	private String mRestrictionName;
 	private String mMethodName;
 	private boolean mDangerous;
 	private boolean mRestart;
+	private boolean mNoUsageData;
 	private String[] mPermissions;
 	private int mSdk;
 	private Version mFrom;
@@ -23,6 +22,20 @@ public class Hook implements Comparable<Hook> {
 		mMethodName = methodName;
 		mDangerous = dangerous;
 		mRestart = restart;
+		mNoUsageData = restart;
+		mPermissions = (permissions == null ? null : permissions.split(","));
+		mSdk = sdk;
+		mFrom = (from == null ? null : new Version(from));
+		mReplaces = replaces;
+	}
+
+	public Hook(String restrictionName, String methodName, boolean dangerous, boolean restart, boolean noUsageData,
+			String permissions, int sdk, String from, String replaces) {
+		mRestrictionName = restrictionName;
+		mMethodName = methodName;
+		mDangerous = dangerous;
+		mRestart = restart;
+		mNoUsageData = noUsageData;
 		mPermissions = (permissions == null ? null : permissions.split(","));
 		mSdk = sdk;
 		mFrom = (from == null ? null : new Version(from));
@@ -51,9 +64,8 @@ public class Hook implements Comparable<Hook> {
 		return mRestart;
 	}
 
-	@SuppressLint("FieldGetter")
 	public boolean hasNoUsageData() {
-		return isRestartRequired();
+		return mNoUsageData;
 	}
 
 	public String[] getPermissions() {

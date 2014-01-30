@@ -717,6 +717,12 @@ public class PrivacyManager {
 		if (name.equals("ExtraInfo"))
 			return cDeface;
 
+		if (name.equals("MCC"))
+			return getSetting(null, uid, cSettingMcc, "001", true);
+
+		if (name.equals("MNC"))
+			return getSetting(null, uid, cSettingMnc, "01", true);
+
 		// Fallback
 		Util.log(null, Log.WARN, "Fallback value name=" + name);
 		return cDeface;

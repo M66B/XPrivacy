@@ -21,6 +21,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Fixed bootloop for some devices
 * Fixed clearing restrictions / applying template for application groups ([issue](https://github.com/M66B/XPrivacy/issues/1202))
+* Added restriction for MCC/MNC found in configuration ([issue](https://github.com/M66B/XPrivacy/issues/1201))
 * Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
