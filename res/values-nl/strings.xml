@@ -67,7 +67,7 @@
     <string name="msg_randomizing" formatted="false">Willekeurig %s</string>
     <string name="msg_upgrading" formatted="false">Bijwerken %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
+    <string name="msg_ondemand" formatted="false">%1$s probeert een functie in de %2$s categorie te gebruiken</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
 \n\nGebruik is geheel op eigen risico.</b>\n\nZie ook de licentie:</string>
@@ -115,8 +115,8 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_supdated">Op datum bijgewerkt</string>
     <string name="title_smodified">Op datum gewijzigd (XPrivacy)</string>
     <string name="title_sinvert">Omgekeerde sorteervolgorde</string>
-    <string name="title_allow">Allow</string>
-    <string name="title_deny">Deny</string>
+    <string name="title_allow">Toestaan</string>
+    <string name="title_deny">Blokkeren</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>
@@ -132,7 +132,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_general">Algemeen</string>
     <string name="settings_fake_data">Nepgegevens</string>
     <string name="settings_notify">Bijgewerkt notificaties</string>
-    <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_ondemand">Beperken op verzoek</string>
     <string name="settings_log">Debug log (herstart vereist)</string>
     <string name="settings_expert">Expertmodus</string>
     <string name="settings_dangerous">Beperk gevaarlijke functies</string>
