@@ -26,6 +26,7 @@
     <string name="menu_all">Vše</string>
     <string name="menu_restriction_all">Přepnout omezení</string>
     <string name="menu_clear_all">Vymazat vše</string>
+    <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Omezit vše</string>
     <string name="menu_clear_usage">Vymazat</string>
     <string name="menu_usage_all">Přepnout filtr</string>

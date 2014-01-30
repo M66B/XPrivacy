@@ -82,7 +82,6 @@ public class ActivityUsage extends Activity {
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
 				ParcelableRestriction usageData = mUsageAdapter.getItem(position);
 				Intent intent = new Intent(ActivityUsage.this, ActivityApp.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				intent.putExtra(ActivityApp.cUid, usageData.uid);
 				intent.putExtra(ActivityApp.cRestrictionName, usageData.restrictionName);
 				intent.putExtra(ActivityApp.cMethodName, usageData.methodName);

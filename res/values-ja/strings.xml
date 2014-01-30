@@ -26,6 +26,7 @@
     <string name="menu_all">全て</string>
     <string name="menu_restriction_all">制限の身に切り替え</string>
     <string name="menu_clear_all">Clear all</string>
+    <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_clear_usage">Clear</string>
     <string name="menu_usage_all">フィルタ</string>

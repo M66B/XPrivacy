@@ -26,6 +26,7 @@
     <string name="menu_all">Todas</string>
     <string name="menu_restriction_all">Restringir todo</string>
     <string name="menu_clear_all">Permitir todo</string>
+    <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Restringir todo</string>
     <string name="menu_clear_usage">Limpiar</string>
     <string name="menu_usage_all">Cambiar filtro</string>

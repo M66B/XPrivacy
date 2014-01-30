@@ -69,13 +69,15 @@ public class ActivityApp extends Activity {
 	public static final String cRestrictionName = "RestrictionName";
 	public static final String cMethodName = "MethodName";
 	public static final String cAction = "Action";
-	public static final String cActionClear = "Clear";
-	public static final String cActionSettings = "Settings";
+	public static final int cActionClear = 1;
+	public static final int cActionSettings = 2;
+	public static final int cActionRefresh = 3;
 
 	private static final int MENU_LAUNCH = 1;
 	private static final int MENU_SETTINGS = 2;
 	private static final int MENU_KILL = 3;
-	private static final int MENU_STORE = 4;
+	private static final int MENU_ONDEMAND = 4;
+	private static final int MENU_STORE = 5;
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -249,9 +251,9 @@ public class ActivityApp extends Activity {
 			if (extras.containsKey(cAction)) {
 				NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 				notificationManager.cancel(mAppInfo.getUid());
-				if (extras.getString(cAction).equals(cActionClear))
+				if (extras.getInt(cAction) == cActionClear)
 					optionClear();
-				else if (extras.getString(cAction).equals(cActionSettings))
+				else if (extras.getInt(cAction) == cActionSettings)
 					optionSettings();
 			}
 		}
@@ -259,8 +261,14 @@ public class ActivityApp extends Activity {
 
 	@Override
 	protected void onNewIntent(Intent intent) {
-		setIntent(intent);
-		recreate();
+		Bundle extras = intent.getExtras();
+		if (extras != null && extras.containsKey(cAction) && extras.getInt(cAction) == cActionRefresh) {
+			if (mPrivacyListAdapter != null)
+				mPrivacyListAdapter.notifyDataSetChanged();
+		} else {
+			setIntent(intent);
+			recreate();
+		}
 	}
 
 	@Override
@@ -326,7 +334,11 @@ public class ActivityApp extends Activity {
 
 			// Kill
 			MenuItem kill = appMenu.add(i, MENU_KILL, Menu.NONE, getString(R.string.menu_app_kill));
-			kill.setVisible(PrivacyManager.isApplication(mAppInfo.getUid()));
+			kill.setEnabled(PrivacyManager.isApplication(mAppInfo.getUid()));
+
+			// Clear on demand
+			MenuItem ondemand = appMenu.add(i, MENU_ONDEMAND, Menu.NONE, getString(R.string.menu_clear_ondemand));
+			ondemand.setEnabled(PrivacyManager.isApplication(mAppInfo.getUid()));
 
 			// Play store
 			MenuItem store = appMenu.add(i, MENU_STORE, Menu.NONE, getString(R.string.menu_app_store));
@@ -398,6 +410,9 @@ public class ActivityApp extends Activity {
 			return true;
 		case MENU_KILL:
 			optionKill(item.getGroupId());
+			return true;
+		case MENU_ONDEMAND:
+			optionOndemand(item.getGroupId());
 			return true;
 		case MENU_STORE:
 			optionStore(item.getGroupId());
@@ -507,7 +522,6 @@ public class ActivityApp extends Activity {
 	private void optionUsage() {
 		Intent intent = new Intent(this, ActivityUsage.class);
 		intent.putExtra(ActivityUsage.cUid, mAppInfo.getUid());
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 	}
 
@@ -596,6 +610,15 @@ public class ActivityApp extends Activity {
 		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
+	}
+
+	private void optionOndemand(int which) {
+		for (String restrictionName : PrivacyManager.getRestrictions())
+			PrivacyManager.setSetting(null, mAppInfo.getUid(), PrivacyManager.cSettingOnDemand + "." + restrictionName,
+					null);
+
+		if (mPrivacyListAdapter != null)
+			mPrivacyListAdapter.notifyDataSetChanged();
 	}
 
 	private void optionStore(int which) {
@@ -870,6 +893,7 @@ public class ActivityApp extends Activity {
 			public ImageView imgInfo;
 			public TextView tvName;
 			public ImageView imgCBName;
+			public TextView tvChosen;
 			public RelativeLayout rlName;
 
 			public GroupViewHolder(View theRow, int thePosition) {
@@ -881,6 +905,7 @@ public class ActivityApp extends Activity {
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCBName = (ImageView) row.findViewById(R.id.imgCBName);
+				tvChosen = (TextView) row.findViewById(R.id.tvChosen);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
@@ -894,6 +919,7 @@ public class ActivityApp extends Activity {
 			private boolean crestricted;
 			private boolean allRestricted;
 			private boolean someRestricted;
+			private boolean ondemand;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
@@ -919,6 +945,14 @@ public class ActivityApp extends Activity {
 						someRestricted = (someRestricted || restriction.restricted);
 					}
 
+					if (PrivacyManager.getSettingBool(null, -mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false,
+							false)) {
+						String categorySetting = PrivacyManager.cSettingOnDemand + "." + restrictionName;
+						ondemand = PrivacyManager
+								.getSettingBool(null, -mAppInfo.getUid(), categorySetting, true, false);
+					} else
+						ondemand = false;
+
 					return holder;
 				}
 				return null;
@@ -940,6 +974,8 @@ public class ActivityApp extends Activity {
 					else
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 					holder.imgCBName.setVisibility(View.VISIBLE);
+
+					holder.tvChosen.setVisibility(ondemand ? View.VISIBLE : View.INVISIBLE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
@@ -1029,6 +1065,7 @@ public class ActivityApp extends Activity {
 
 			// Display restriction
 			holder.imgCBName.setVisibility(View.INVISIBLE);
+			holder.tvChosen.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new GroupHolderTask(groupPosition, holder, restrictionName).executeOnExecutor(mExecutor, (Object) null);

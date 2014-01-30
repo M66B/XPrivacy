@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.text.TextUtils;
@@ -423,11 +424,6 @@ public class SettingsDialog {
 							Boolean.toString(cbNotify.isChecked()));
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingOnDemand,
 							Boolean.toString(cbOnDemand.isChecked()));
-
-					if (cbOnDemand.isChecked() != ondemand)
-						for (String restrictionName : PrivacyManager.getRestrictions())
-							PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingOnDemand + "."
-									+ restrictionName, null);
 				}
 
 				// Random at boot
@@ -478,6 +474,12 @@ public class SettingsDialog {
 				PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingUa, getValue(null, etUa));
 
 				dlgSettings.dismiss();
+
+				// Refresh application view
+				Intent intent = new Intent(context, ActivityApp.class);
+				intent.putExtra(ActivityApp.cUid, uid);
+				intent.putExtra(ActivityApp.cAction, ActivityApp.cActionRefresh);
+				context.startActivity(intent);
 			}
 		});
 

@@ -26,6 +26,7 @@
     <string name="menu_all">Alles (beschränkt)</string>
     <string name="menu_restriction_all">Beschränkungen invertieren</string>
     <string name="menu_clear_all">Alles löschen</string>
+    <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Alles beschränken</string>
     <string name="menu_clear_usage">Löschen</string>
     <string name="menu_usage_all">Filter umkehren</string>

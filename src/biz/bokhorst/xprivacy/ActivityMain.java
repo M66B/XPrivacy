@@ -629,7 +629,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 	private void optionUsage() {
 		Intent intent = new Intent(this, ActivityUsage.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 	}
 
@@ -1559,7 +1558,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					Intent intentSettings = new Intent(ActivityMain.this, ActivityApp.class);
 					intentSettings.putExtra(ActivityApp.cUid, xAppInfo.getUid());
 					intentSettings.putExtra(ActivityApp.cRestrictionName, mRestrictionName);
-					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					ActivityMain.this.startActivity(intentSettings);
 				}
 			});
