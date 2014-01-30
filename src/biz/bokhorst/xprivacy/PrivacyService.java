@@ -100,24 +100,24 @@ public class PrivacyService {
 
 			// Catch ANR's
 			try {
-				// @formatter:off
-				// public long inputDispatchingTimedOut(int pid, final boolean aboveSystem, String reason)
-				// @formatter:on
 				final Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
-				Method anr = cam.getDeclaredMethod("inputDispatchingTimedOut", int.class, boolean.class, String.class);
-				XposedBridge.hookMethod(anr, new XC_MethodHook() {
-					@Override
-					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-						try {
-							// Delay ANR while on demand dialog open
-							if (mOnDemanding)
-								param.setResult(5 * 1000);
-						} catch (Throwable ex) {
-							Util.bug(null, ex);
-							mListError.add(ex.toString());
-						}
+				for (Method anr : cam.getDeclaredMethods())
+					if (anr.getName().equals("inputDispatchingTimedOut")) {
+						Util.log(null, Log.WARN, "Hooking " + anr);
+						XposedBridge.hookMethod(anr, new XC_MethodHook() {
+							@Override
+							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+								try {
+									// Delay ANR while on demand dialog open
+									if (mOnDemanding)
+										param.setResult(5 * 1000);
+								} catch (Throwable ex) {
+									Util.bug(null, ex);
+									mListError.add(ex.toString());
+								}
+							}
+						});
 					}
-				});
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				mListError.add(ex.toString());
