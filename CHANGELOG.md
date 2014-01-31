@@ -23,7 +23,8 @@ Test and beta releases will have experimental functions enabled by default.
 * Display message for *media* restrictions
 * Added *deny once* (this will be cached for 15 seconds)
 * Added restriction for *getAuthenticatorTypes* (accounts)
-* Added restrictions for *getCurrentSync*, *getCurrentSyncs* and *getSyncAdapterTypes* (accounts) 
+* Added restrictions for *getCurrentSync*, *getCurrentSyncs* and *getSyncAdapterTypes* (accounts)
+* Added restriction for *onConfigurationChanged* ([issue](https://github.com/M66B/XPrivacy/issues/1201))
 * Updated Dutch translation
 * Updated Lithuanian translation
 

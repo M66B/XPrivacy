@@ -10,6 +10,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
 import android.os.Build;
@@ -47,12 +48,14 @@ public class XActivityThread extends XHook {
 	}
 
 	private enum Methods {
-		handleReceiver
+		handleReceiver, performConfigurationChanged
 	};
 
 	// @formatter:off
 
 	// private void handleReceiver(ReceiverData data)
+	// private static void performConfigurationChanged(ComponentCallbacks2 cb, Configuration config)
+	// private final void performConfigurationChanged(ComponentCallbacks2 cb, Configuration config)
 	// frameworks/base/core/java/android/app/ActivityThread.java
 
 	// @formatter:on
@@ -116,6 +119,8 @@ public class XActivityThread extends XHook {
 				Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE));
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
 				Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE));
+
+		listHook.add(new XActivityThread(Methods.performConfigurationChanged, PrivacyManager.cPhone, null));
 
 		return listHook;
 	}
@@ -183,6 +188,35 @@ public class XActivityThread extends XHook {
 					}
 				}
 			}
+
+		} else if (mMethod == Methods.performConfigurationChanged) {
+			if (param.args.length > 1 && param.args[1] != null) {
+				boolean restricted = false;
+				int uid = Binder.getCallingUid();
+				Configuration config = new Configuration((Configuration) param.args[1]);
+
+				if (getRestricted(uid, PrivacyManager.cPhone, "Configuration.MCC", false)) {
+					restricted = true;
+					try {
+						config.mcc = Integer.parseInt((String) PrivacyManager.getDefacedProp(uid, "MCC"));
+					} catch (Throwable ex) {
+						config.mcc = 1;
+					}
+				}
+
+				if (getRestricted(uid, PrivacyManager.cPhone, "Configuration.MNC", false)) {
+					restricted = true;
+					try {
+						config.mnc = Integer.parseInt((String) PrivacyManager.getDefacedProp(uid, "MNC"));
+					} catch (Throwable ex) {
+						config.mnc = 1;
+					}
+				}
+
+				if (restricted)
+					param.args[1] = config;
+			}
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + methodName);
 	}
