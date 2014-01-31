@@ -56,6 +56,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Process;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
 import android.util.Log;
@@ -89,6 +91,7 @@ public class ActivityShare extends Activity {
 	private int mProgressWidth = 0;
 	private String mFileName;
 	public boolean mSomeRestricted = false;
+	private boolean mInteractive = false;
 
 	private static final int STATE_WAITING = 0;
 	private static final int STATE_RUNNING = 1;
@@ -164,71 +167,75 @@ public class ActivityShare extends Activity {
 		}
 
 		// Check whether we need a ui
-		if (extras != null && extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false)) {
-			// Set theme
-			String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
-			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
-			setTheme(mThemeId);
+		if (extras != null && extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false))
+			mInteractive = true;
 
-			// Set layout
-			setContentView(R.layout.sharelist);
-			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		// Set theme
+		String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
+		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
+		setTheme(mThemeId);
 
-			// Set title
-			if (action.equals(ACTION_TOGGLE)) {
-				mActionId = R.string.menu_restriction_all;
-				setTitle(R.string.menu_restriction_all);
-			} else if (action.equals(ACTION_IMPORT)) {
-				mActionId = R.string.menu_import;
-				setTitle(R.string.menu_import);
-			} else if (action.equals(ACTION_EXPORT)) {
-				mActionId = R.string.menu_export;
-				setTitle(R.string.menu_export);
-			} else if (action.equals(ACTION_FETCH)) {
-				mActionId = R.string.menu_fetch;
-				setTitle(R.string.menu_fetch);
-			} else if (action.equals(ACTION_SUBMIT)) {
-				mActionId = R.string.menu_submit;
-				setTitle(R.string.menu_submit);
-			} else {
-				finish();
-				return;
-			}
+		// Set layout
+		setContentView(R.layout.sharelist);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-			// App list
-			ListView lvShare = (ListView) findViewById(R.id.lvShare);
-			AppListTask appListTask = new AppListTask();
-			appListTask.executeOnExecutor(mExecutor, uids, restriction);
+		// Set title
+		if (action.equals(ACTION_TOGGLE)) {
+			mActionId = R.string.menu_restriction_all;
+			setTitle(R.string.menu_restriction_all);
+		} else if (action.equals(ACTION_IMPORT)) {
+			mActionId = R.string.menu_import;
+			setTitle(R.string.menu_import);
+		} else if (action.equals(ACTION_EXPORT)) {
+			mActionId = R.string.menu_export;
+			setTitle(R.string.menu_export);
+		} else if (action.equals(ACTION_FETCH)) {
+			mActionId = R.string.menu_fetch;
+			setTitle(R.string.menu_fetch);
+		} else if (action.equals(ACTION_SUBMIT)) {
+			mActionId = R.string.menu_submit;
+			setTitle(R.string.menu_submit);
+		} else {
+			finish();
+			return;
+		}
 
-			// Allow users to remove apps from list
-			// TODO: replace by swipe left/right
+		// App list
+		ListView lvShare = (ListView) findViewById(R.id.lvShare);
+		AppListTask appListTask = new AppListTask();
+		appListTask.executeOnExecutor(mExecutor, uids, restriction);
+
+		// Allow users to remove apps from list
+		// TODO: replace by swipe left/right
+		if (mInteractive)
 			registerForContextMenu(lvShare);
 
-			// Import/export filename
-			if (action.equals(ACTION_EXPORT) || action.equals(ACTION_IMPORT)) {
-				// Check for availability of sharing intent
-				Intent file = new Intent(Intent.ACTION_GET_CONTENT);
-				file.setType("file/*");
-				boolean hasIntent = Util.isIntentAvailable(ActivityShare.this, file);
+		// Import/export filename
+		if (action.equals(ACTION_EXPORT) || action.equals(ACTION_IMPORT)) {
+			// Check for availability of sharing intent
+			Intent file = new Intent(Intent.ACTION_GET_CONTENT);
+			file.setType("file/*");
+			boolean hasIntent = Util.isIntentAvailable(ActivityShare.this, file);
 
-				// Get file name
-				if (action.equals(ACTION_EXPORT))
-					mFileName = getFileName(this, hasIntent);
-				else
-					mFileName = (hasIntent ? null : getFileName(this, false));
-				if (mFileName == null)
-					fileChooser();
-				else
-					showFileName();
-			} else {
-				TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
-				tvDescription.setText(getBaseURL(ActivityShare.this));
-			}
+			// Get file name
+			if (action.equals(ACTION_EXPORT))
+				mFileName = getFileName(this, hasIntent);
+			else
+				mFileName = (hasIntent ? null : getFileName(this, false));
+			if (mFileName == null)
+				fileChooser();
+			else
+				showFileName();
+		} else {
+			TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+			tvDescription.setText(getBaseURL(ActivityShare.this));
+		}
 
-			// Reference buttons
-			final Button btnOk = (Button) findViewById(R.id.btnOk);
-			final Button btnCancel = (Button) findViewById(R.id.btnCancel);
+		// Reference buttons
+		final Button btnOk = (Button) findViewById(R.id.btnOk);
+		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
 
+		if (mInteractive) {
 			// Enable ok (showFileName does this for export/import)
 			if (action.equals(ACTION_SUBMIT) || action.equals(ACTION_FETCH) || action.equals(ACTION_TOGGLE))
 				btnOk.setEnabled(true);
@@ -280,35 +287,24 @@ public class ActivityShare extends Activity {
 					}
 				}
 			});
-
-			// Listen for cancel
-			btnCancel.setOnClickListener(new Button.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if (mRunning) {
-						mAbort = true;
-						Toast.makeText(ActivityShare.this, getString(R.string.msg_abort), Toast.LENGTH_SHORT).show();
-					} else
-						finish();
-				}
-			});
-
-		} else if (action.equals(ACTION_EXPORT)) {
-			// Be the invisible man ;-)
-			mThemeId = android.R.style.Theme_NoDisplay;
-			setTheme(mThemeId);
-
-			// Build list of distinct uids
-			List<Integer> listUid = new ArrayList<Integer>();
-			for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
-				if (!listUid.contains(pInfo.applicationInfo.uid))
-					listUid.add(pInfo.applicationInfo.uid);
-
-			// Get on with exporting
-			String fileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName)
-					: getFileName(this, false));
-			new ExportTask().executeOnExecutor(mExecutor, new File(fileName), listUid);
+		} else {
+			// Hide ok button and separator
+			btnOk.setVisibility(View.GONE);
+			final View vButtonSeparator = findViewById(R.id.vButtonSeparator);
+			vButtonSeparator.setVisibility(View.GONE);
 		}
+
+		// Listen for cancel
+		btnCancel.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mRunning) {
+					mAbort = true;
+					Toast.makeText(ActivityShare.this, getString(R.string.msg_abort), Toast.LENGTH_SHORT).show();
+				} else
+					finish();
+			}
+		});
 	}
 
 	@Override
@@ -540,6 +536,18 @@ public class ActivityShare extends Activity {
 			List<AppHolder> apps = new ArrayList<AppHolder>();
 			mAppsByUid = new SparseArray<AppHolder>();
 
+			if (!mInteractive && mActionId == R.string.menu_export) {
+				// Build list of distinct uids for export
+				List<Integer> listUid = new ArrayList<Integer>();
+				for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
+					if (!listUid.contains(pInfo.applicationInfo.uid))
+						listUid.add(pInfo.applicationInfo.uid);
+				// Convert to primitive array
+				uids = new int[listUid.size()];
+				for (int i = 0; i < listUid.size(); i++)
+					uids[i] = listUid.get(i);
+			}
+
 			boolean some = false;
 			mProgressDialog.setMax(uids.length);
 			for (int i = 0; i < uids.length; i++) {
@@ -608,6 +616,12 @@ public class ActivityShare extends Activity {
 			// If toggling, set title
 			if (mActionId == R.string.menu_clear_all || mActionId == R.string.menu_restrict_all)
 				ActivityShare.this.setTitle(mActionId);
+
+			// Launch non-interactive export
+			if (!mInteractive && mActionId == R.string.menu_export) {
+				mRunning = true;
+				new ExportTask().executeOnExecutor(mExecutor, new File(mFileName));
+			}
 		}
 	}
 
@@ -661,23 +675,16 @@ public class ActivityShare extends Activity {
 		}
 	}
 
-	private class ExportTask extends AsyncTask<Object, Integer, Throwable> {
+	private class ExportTask extends AsyncTask<File, Integer, Throwable> {
 		private File mFile;
 
 		@Override
-		@SuppressWarnings("unchecked")
-		protected Throwable doInBackground(Object... params) {
+		protected Throwable doInBackground(File... params) {
 			mProgressCurrent = 0;
 			try {
-				mFile = (File) params[0];
+				mFile = params[0];
 
-				List<Integer> listUid;
-				if (params.length > 1 && params[1] instanceof List) {
-					// Export without ui
-					listUid = (List<Integer>) params[1];
-				} else {
-					listUid = mAppAdapter.getListUid();
-				}
+				List<Integer> listUid = mAppAdapter.getListUid();
 
 				Util.log(null, Log.INFO, "Exporting " + mFile);
 				String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
@@ -718,8 +725,8 @@ public class ActivityShare extends Activity {
 								throw new AbortException(ActivityShare.this);
 
 							publishProgress(++mProgressCurrent, listUid.size() + 1);
-							if (mThemeId != android.R.style.Theme_NoDisplay)
-								mAppAdapter.setState(uid, STATE_RUNNING, null);
+							// if (mInteractive)
+							mAppAdapter.setState(uid, STATE_RUNNING, null);
 
 							// Process application settings
 							List<ParcelableSetting> listAppSetting = PrivacyManager.getSettingList(uid);
@@ -767,11 +774,11 @@ public class ActivityShare extends Activity {
 								}
 							}
 
-							if (mThemeId != android.R.style.Theme_NoDisplay)
-								mAppAdapter.setState(uid, STATE_SUCCESS, null);
+							// if (mInteractive)
+							mAppAdapter.setState(uid, STATE_SUCCESS, null);
 						} catch (Throwable ex) {
-							if (mThemeId != android.R.style.Theme_NoDisplay)
-								mAppAdapter.setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
+							// if (mInteractive)
+							mAppAdapter.setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
 							throw ex;
 						}
 					// End serialization
@@ -795,14 +802,14 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			if (mThemeId != android.R.style.Theme_NoDisplay)
-				blueStreakOfProgress(values[0], values[1]);
+			// if (mInteractive)
+			blueStreakOfProgress(values[0], values[1]);
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected void onPostExecute(Throwable result) {
-			if (mThemeId != android.R.style.Theme_NoDisplay) {
+			if (mInteractive) {
 				done(result);
 
 				// Share
@@ -813,8 +820,10 @@ public class ActivityShare extends Activity {
 					startActivity(Intent.createChooser(intent,
 							String.format(getString(R.string.msg_saved_to), mFileName)));
 				}
-			} else
+			} else {
+				done(result);
 				finish();
+			}
 
 			super.onPostExecute(result);
 		}
