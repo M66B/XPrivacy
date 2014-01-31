@@ -68,7 +68,7 @@
     <string name="msg_randomizing" formatted="false">Willekeurig %s</string>
     <string name="msg_upgrading" formatted="false">Bijwerken %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_ondemand" formatted="false">%1$s probeert een functie in de %2$s categorie te gebruiken</string>
+    <string name="msg_ondemand" formatted="false">%1$s probeert %$3s in de categorie %2$s te gebruiken</string>
     <string name="msg_restrictedby">Beperkt door XPrivacy</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.

@@ -19,6 +19,9 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Fixed handling for automated export, thanks @[jpeg729](https://github.com/jpeg729)
+* Added function name to on demand restricting dialog
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.24 BETA**

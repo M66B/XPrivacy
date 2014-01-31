@@ -887,7 +887,7 @@ public class PrivacyService {
 										"string", self);
 								String message = String.format(resources.getString(R.string.msg_ondemand),
 										TextUtils.join(", ", appInfo.getApplicationName()),
-										resources.getString(stringId));
+										resources.getString(stringId), restriction.methodName);
 
 								// Ask
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);

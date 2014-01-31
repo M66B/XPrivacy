@@ -68,7 +68,7 @@
     <string name="msg_randomizing" formatted="false">Randomisation %s</string>
     <string name="msg_upgrading" formatted="false">Mise-à-jour %s</string>
     <string name="msg_support_info">Une vérification interne a échoué, voulez-vous envoyer le rapport d\'erreurs?</string>
-    <string name="msg_ondemand" formatted="false">%1$s essaie d\'utiliser une fonction dans la catégorie %2$s</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use %$3s in the %2$s category</string>
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.

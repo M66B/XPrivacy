@@ -68,7 +68,7 @@
     <string name="msg_randomizing" formatted="false">Randomizovanie %s</string>
     <string name="msg_upgrading" formatted="false">Aktualizovanie %s</string>
     <string name="msg_support_info">Vnútorná kontrola zlyhala. Chcete odoslať informácie na podporu?</string>
-    <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use %$3s in the %2$s category</string>
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
