@@ -1107,11 +1107,10 @@ public class ActivityShare extends Activity {
 				// Restart notification
 				List<Boolean> oldState = mListRestartStates.get(lastUid);
 				List<Boolean> newState = PrivacyManager.getListStateRestartHooks(lastUid, null);
-				if (!newState.equals(oldState))
-					mAppAdapter.setMessage(lastUid, getString(R.string.msg_restart));
 
 				// Mark as success
-				mAppAdapter.setState(lastUid, STATE_SUCCESS, null);
+				mAppAdapter.setState(lastUid, STATE_SUCCESS, 
+						!newState.equals(oldState) ? getString(R.string.msg_restart) : null);
 			}
 		}
 
