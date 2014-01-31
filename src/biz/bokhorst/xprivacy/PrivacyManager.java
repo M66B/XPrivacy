@@ -9,11 +9,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -131,6 +134,7 @@ public class PrivacyManager {
 
 	// Static data
 	private static Map<String, Map<String, Hook>> mMethod = new LinkedHashMap<String, Map<String, Hook>>();
+	private static Map<String, List<String>> mRestart = new LinkedHashMap<String, List<String>>();
 	private static Map<String, List<Hook>> mPermission = new LinkedHashMap<String, List<Hook>>();
 	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
@@ -154,6 +158,13 @@ public class PrivacyManager {
 				if (!mMethod.containsKey(restrictionName))
 					mMethod.put(restrictionName, new HashMap<String, Hook>());
 				mMethod.get(restrictionName).put(hook.getName(), hook);
+
+				// Cache restart required methods
+				if (hook.isRestartRequired()) {
+					if (!mRestart.containsKey(restrictionName))
+						mRestart.put(restrictionName, new ArrayList<String>());
+					mRestart.get(restrictionName).add(hook.getName());
+				}
 
 				// Enlist permissions
 				String[] permissions = hook.getPermissions();
@@ -355,17 +366,17 @@ public class PrivacyManager {
 		// requires the app to be restarted.
 		List<Boolean> listRestartRestriction = new ArrayList<Boolean>();
 
-		List<String> listRestriction = new ArrayList<String>();
+		Set<String> listRestriction = new HashSet<String>();
 		if (restrictionName == null)
-			listRestriction = getRestrictions();
-		else
+			listRestriction = mRestart.keySet();
+		else if (mRestart.keySet().contains(restrictionName))
 			listRestriction.add(restrictionName);
 
 		try {
-			for (String restriction : listRestriction)
-				for (Hook md : getHooks(restrictionName))
-					if (md.isRestartRequired())
-						listRestartRestriction.add(getRestriction(null, uid, restriction, md.getName(), null));
+			for (String restriction : listRestriction) {
+				for (String method : mRestart.get(restriction))
+					listRestartRestriction.add(getRestriction(null, uid, restriction, method, null));
+			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
