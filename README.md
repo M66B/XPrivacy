@@ -304,9 +304,6 @@ Compatibility
 XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat),
 and is reported to work with most Android variants, including stock ROMs.
 
-**Do not use permission "fixing" scripts or applications,
-like [Android Tuner](https://play.google.com/store/apps/details?id=ccc71.at.free)**.
-
 Installation
 ------------
 
@@ -447,19 +444,12 @@ Note that this will erase your pro license file too.
 <a name="FAQ6"></a>
 **(6) Can I backup XPrivacy restrictions, settings and usage data?**
 
-Yes, you can backup and restore the settings with Titanium backup or similar,
-but **on the same device** only.
+You cannot backup XPrivacy data with standard backup tools, like Titanium backup, since version 1.11.13 anymore.
+This is because the database (new in version 1.11.13) is not stored in the XPrivacy data folder, but in a system folder.
+It has been tried to store the database in the XPrivacy data folder, but this leads to all kind of permission problems.
 
-**Be sure** to disable usage data in the main settings and
-reboot before making a backup or your backup might be in an inconsistent state.
-
-Please note that the freezing feature of Titanium backup will not work, **you have** to disable usage data.
-XPrivacy runs within Android itself, which cannot be temporarily frozen by Titanium backup or similar.
-
-Also, you **need to** reboot after restoring.
-
-Exporting/importing settings will work across devices/ROMs.<br>
-To export/import settings you will need the [pro version](http://www.xprivacy.eu/).
+The best way to backup XPrivacy data is to use the export function,
+but this requires the [pro version](http://www.xprivacy.eu/).
 
 See for some more details [here](http://forum.xda-developers.com/showpost.php?p=49799507&postcount=6251).
 
