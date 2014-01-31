@@ -121,6 +121,7 @@ For easy usage, data is restricted by category:
 	* return an empty account type list
 	* return fake account info
 	* return empty authorization tokens
+	* return an empty list of synchronizations
 <a name="browser"></a>
 * Browser
 	* return an empty bookmark list
@@ -872,6 +873,7 @@ Testing:
 * [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 * [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 * [SIM Card](https://play.google.com/store/apps/details?id=com.gsmdev.simcard)
+* [Elixir 2](https://play.google.com/store/apps/details?id=com.bartat.android.elixir)
 
 Serious contributors do not have to donate for the [pro version](http://www.xprivacy.eu/).
 New translations are considered as a serious contribution, but translating a few lines of text is not.

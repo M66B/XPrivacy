@@ -20,6 +20,11 @@ public class Meta {
 		listHook.add(new Hook("accounts", "getTokenGoogle", false, false, "GET_ACCOUNTS", 10, null, null));
 		listHook.add(new Hook("accounts", "getTokenWithNotificationGoogle", false, false, "GET_ACCOUNTS", 10, null, null));
 
+		listHook.add(new Hook("accounts", "getAuthenticatorTypes", true, false, "GET_ACCOUNTS", 5, "1.99.24", null));
+		listHook.add(new Hook("accounts", "getCurrentSync", true, false, "GET_ACCOUNTS", 8, "1.99.24", null));
+		listHook.add(new Hook("accounts", "getCurrentSyncs", true, false, "GET_ACCOUNTS", 11, "1.99.24", null));
+		listHook.add(new Hook("accounts", "getSyncAdapterTypes", true, false, "GET_ACCOUNTS", 5, "1.99.24", null));
+
 		listHook.add(new Hook("browser", "BrowserProvider", false, false, "READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 10, null, null));
 		listHook.add(new Hook("browser", "BrowserProvider2", false, false, "READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 14, null, null));
 
