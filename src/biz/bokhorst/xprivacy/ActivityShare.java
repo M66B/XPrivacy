@@ -1085,7 +1085,12 @@ public class ActivityShare extends Activity {
 					mAppAdapter.setMessage(uid, getString(R.string.msg_aborted));
 				}
 
-				mAppAdapter.notifyDataSetChanged();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						mAppAdapter.notifyDataSetChanged();
+					}
+				});
 			}
 		}
 
