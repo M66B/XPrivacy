@@ -29,6 +29,7 @@
     <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Ogranicz wszystko</string>
     <string name="menu_clear_usage">Wyczyść</string>
+    <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">Przełącz filtry</string>
     <string name="menu_apply">Zastosuj szablon</string>
     <string name="menu_clear">Wyczyść</string>

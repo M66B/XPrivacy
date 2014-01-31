@@ -10,8 +10,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -144,18 +142,17 @@ public class UpdateService extends Service {
 
 	private static void upgrade(Context context) throws NameNotFoundException {
 		// Get previous version
-		PackageManager pm = context.getPackageManager();
-		PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
+		String currentVersion = Util.getSelfVersionName(context);
 		Version sVersion = new Version(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingVersion, "0.0", false));
 
 		// Upgrade packages
 		if (sVersion.compareTo(new Version("0.0")) != 0) {
-			Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version " + pInfo.versionName);
+			Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version " + currentVersion);
 			boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false, false);
-			List<ApplicationInfo> listApp = context.getPackageManager().getInstalledApplications(0);
 
 			int first = 0;
 			String format = context.getString(R.string.msg_upgrading);
+			List<ApplicationInfo> listApp = context.getPackageManager().getInstalledApplications(0);
 
 			for (int i = 1; i <= listApp.size(); i++) {
 				int uid = listApp.get(i - 1).uid;
@@ -173,7 +170,7 @@ public class UpdateService extends Service {
 		} else
 			Util.log(null, Log.WARN, "Noting to upgrade version=" + sVersion);
 
-		PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, pInfo.versionName);
+		PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, currentVersion);
 	}
 
 	private static void randomize(Context context) {

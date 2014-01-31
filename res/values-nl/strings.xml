@@ -29,6 +29,7 @@
     <string name="menu_clear_ondemand">Wis op verzoek keuzes</string>
     <string name="menu_restrict_all">Alles beperken</string>
     <string name="menu_clear_usage">Wissen</string>
+    <string name="menu_clear_db">Wis alle gegevens</string>
     <string name="menu_usage_all">Schakel filter</string>
     <string name="menu_apply">Pas sjabloon toe</string>
     <string name="menu_clear">Wissen</string>

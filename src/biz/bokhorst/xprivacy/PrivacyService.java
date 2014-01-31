@@ -58,7 +58,7 @@ public class PrivacyService {
 	private static SQLiteStatement stmtGetUsageRestriction = null;
 	private static SQLiteStatement stmtGetUsageMethod = null;
 
-	private static int cCurrentVersion = 245;
+	private static int cCurrentVersion = 258;
 	private static String cServiceName = "xprivacy" + cCurrentVersion;
 	private static String cTableRestriction = "restriction";
 	private static String cTableUsage = "usage";
@@ -149,6 +149,17 @@ public class PrivacyService {
 		}
 	}
 
+	public static boolean checkClient() {
+		try {
+			IPrivacyService client = getClient();
+			if (client != null)
+				return (client.getVersion() == cCurrentVersion);
+		} catch (RemoteException ex) {
+			Util.bug(null, ex);
+		}
+		return false;
+	}
+
 	public static IPrivacyService getClient() {
 		if (mClient == null)
 			try {
@@ -156,9 +167,6 @@ public class PrivacyService {
 				Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
 				Method mGetService = cServiceManager.getDeclaredMethod("getService", String.class);
 				mClient = IPrivacyService.Stub.asInterface((IBinder) mGetService.invoke(null, cServiceName));
-				if (mClient != null)
-					if (PrivacyService.getClient().getVersion() != cCurrentVersion)
-						mClient = null;
 			} catch (Throwable ex) {
 				mClient = null;
 				Util.bug(null, ex);
@@ -825,6 +833,43 @@ public class PrivacyService {
 					synchronized (mSettingCache) {
 						mSettingCache.clear();
 					}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				synchronized (mListError) {
+					mListError.add(ex.toString());
+				}
+				throw new RemoteException(ex.toString());
+			}
+		}
+
+		@Override
+		public void clear() throws RemoteException {
+			try {
+				enforcePermission();
+				SQLiteDatabase db = getDatabase();
+
+				db.beginTransaction();
+				try {
+					db.execSQL("DELETE FROM restriction");
+					db.execSQL("DELETE FROM setting");
+					db.execSQL("DELETE FROM usage");
+					Util.log(null, Log.WARN, "Database cleared");
+
+					db.setTransactionSuccessful();
+				} finally {
+					db.endTransaction();
+				}
+
+				// Clear caches
+				if (mUseCache) {
+					synchronized (mRestrictionCache) {
+						mRestrictionCache.clear();
+					}
+					synchronized (mSettingCache) {
+						mSettingCache.clear();
+					}
+					Util.log(null, Log.WARN, "Cache cleared");
+				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				synchronized (mListError) {

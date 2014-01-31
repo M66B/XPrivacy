@@ -29,6 +29,7 @@
     <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">सब प्रतिबंध करे</string>
     <string name="menu_clear_usage">Clear</string>
+    <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">फिल्टर toggle करे</string>
     <string name="menu_apply">टेम्पलेट लागू करें</string>
     <string name="menu_clear">साफ़ करे</string>

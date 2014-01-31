@@ -155,229 +155,229 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		// Check privacy service client
-		if (!Util.isXposedEnabled() || PrivacyService.getClient() == null) {
+		if (!PrivacyService.checkClient()) {
 			setContentView(R.layout.reboot);
-			Requirements.check(this);
-		} else {
-			// Salt should be the same when exporting/importing
-			String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, null, false);
-			if (salt == null) {
-				salt = Build.SERIAL;
-				if (salt == null)
-					salt = "";
-				PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSalt, salt);
-			}
-
-			// Set theme
-			String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
-			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
-			setTheme(mThemeId);
-
-			// Set layout
-			setContentView(R.layout.mainlist);
-			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-			if (Util.hasProLicense(this) != null)
-				setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_pro)));
-
-			// Get localized restriction name
-			List<String> listRestrictionName = new ArrayList<String>(PrivacyManager.getRestrictions(this)
-					.navigableKeySet());
-			listRestrictionName.add(0, getString(R.string.menu_all));
-
-			// Build spinner adapter
-			SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
-			spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spAdapter.addAll(listRestrictionName);
-
-			// Handle info
-			ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
-			imgInfo.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					int position = spRestriction.getSelectedItemPosition();
-					if (position != AdapterView.INVALID_POSITION) {
-						String query = (position == 0 ? "restrictions" : (String) PrivacyManager
-								.getRestrictions(ActivityMain.this).values().toArray()[position - 1]);
-						Util.viewUri(ActivityMain.this, Uri.parse(cXUrl + "#" + query));
-					}
-				}
-			});
-
-			// Setup spinner
-			int pos = 0;
-			String restrictionName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSelectedCategory, null,
-					false);
-			if (restrictionName != null)
-				for (String restriction : PrivacyManager.getRestrictions(this).values()) {
-					pos++;
-					if (restrictionName.equals(restriction))
-						break;
-				}
-
-			spRestriction = (Spinner) findViewById(R.id.spRestriction);
-			spRestriction.setAdapter(spAdapter);
-			spRestriction.setOnItemSelectedListener(this);
-			spRestriction.setSelection(pos);
-
-			// Setup sort
-			mSortMode = Integer.parseInt(PrivacyManager
-					.getSetting(null, 0, PrivacyManager.cSettingSortMode, "0", false));
-			mSortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSortInverted, false, false);
-
-			// Setup name filter
-			final EditText etFilter = (EditText) findViewById(R.id.etFilter);
-			etFilter.addTextChangedListener(new TextWatcher() {
-				@Override
-				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					String text = etFilter.getText().toString();
-					ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
-					imgClear.setImageDrawable(getResources().getDrawable(
-							Util.getThemed(ActivityMain.this, text.equals("") ? R.attr.icon_clear_grayed
-									: R.attr.icon_clear)));
-					applyFilter();
-				}
-
-				@Override
-				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				}
-
-				@Override
-				public void afterTextChanged(Editable s) {
-				}
-			});
-
-			ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
-			imgClear.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					etFilter.setText("");
-				}
-			});
-
-			// Setup used filter
-			boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
-			CheckBox cFbUsed = (CheckBox) findViewById(R.id.cbFUsed);
-			cFbUsed.setChecked(fUsed);
-			cFbUsed.setOnCheckedChangeListener(this);
-
-			// Setup internet filter
-			boolean fInternet = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFInternet, false, false);
-			CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
-			cbFInternet.setChecked(fInternet);
-			cbFInternet.setOnCheckedChangeListener(this);
-
-			// Setup restriction filter
-			boolean fRestriction = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFRestriction, false,
-					false);
-			CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
-			cbFRestriction.setChecked(fRestriction);
-			cbFRestriction.setOnCheckedChangeListener(this);
-
-			boolean fRestrictionNot = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFRestrictionNot,
-					false, false);
-			CheckBox cbFRestrictionNot = (CheckBox) findViewById(R.id.cbFRestrictionNot);
-			cbFRestrictionNot.setChecked(fRestrictionNot);
-			cbFRestrictionNot.setOnCheckedChangeListener(this);
-
-			// Setup permission filter
-			boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, true,
-					false);
-			CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
-			cbFPermission.setChecked(fPermission);
-			cbFPermission.setOnCheckedChangeListener(this);
-
-			// Setup user filter
-			boolean fUser = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUser, true, false);
-			final CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
-			cbFUser.setChecked(fUser);
-			cbFUser.setOnCheckedChangeListener(this);
-
-			// Setup system filter
-			boolean fSystem = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFSystem, false, false);
-			final CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
-			cbFSystem.setChecked(fSystem);
-			cbFSystem.setOnCheckedChangeListener(this);
-
-			// Tab states
-			mTab = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingOpenTab,
-					Integer.toString(TAB_CATEGORY), false));
-			openTab(mTab);
-
-			// Handle toggle filters visibility
-			TextView tvFilterDetail = (TextView) findViewById(R.id.tvFilterDetail);
-			tvFilterDetail.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					int currentTab = Integer.parseInt(PrivacyManager.getSetting(null, 0,
-							PrivacyManager.cSettingOpenTab, Integer.toString(TAB_NONE), false));
-					if (currentTab == TAB_FILTERS)
-						openTab(TAB_NONE);
-					else
-						openTab(TAB_FILTERS);
-				}
-			});
-
-			// Handle toggle categories visibility
-			TextView tvCategoryDetail = (TextView) findViewById(R.id.tvCategoryDetail);
-			tvCategoryDetail.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					int currentTab = Integer.parseInt(PrivacyManager.getSetting(null, 0,
-							PrivacyManager.cSettingOpenTab, Integer.toString(TAB_NONE), false));
-					if (currentTab == TAB_CATEGORY)
-						openTab(TAB_NONE);
-					else
-						openTab(TAB_CATEGORY);
-				}
-			});
-
-			// Start task to get app list
-			AppListTask appListTask = new AppListTask();
-			appListTask.executeOnExecutor(mExecutor, (Object) null);
-
-			// Check environment
-			Requirements.check(this);
-
-			// Licensing
-			checkLicense();
-
-			// Listen for package add/remove
-			IntentFilter iff = new IntentFilter();
-			iff.addAction(Intent.ACTION_PACKAGE_ADDED);
-			iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
-			iff.addDataScheme("package");
-			registerReceiver(mPackageChangeReceiver, iff);
-			mPackageChangeReceiverRegistered = true;
-
-			// First run
-			if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFirstRun, true, false)) {
-				optionAbout();
-				PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
-			}
-
-			// Build tri-state check box images
-			mCheck = Util.getTriStateCheckBox(this);
-
-			// Tutorial
-			if (!PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingTutorialMain, false, false)) {
-				((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
-				((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
-			}
-			View.OnClickListener listener = new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					ViewParent parent = view.getParent();
-					while (!parent.getClass().equals(RelativeLayout.class))
-						parent = parent.getParent();
-					((View) parent).setVisibility(View.GONE);
-					PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTutorialMain, Boolean.TRUE.toString());
-				}
-			};
-			((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
-			((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
+			if (PrivacyService.getClient() != null)
+				Requirements.check(this);
+			return;
 		}
+
+		// Salt should be the same when exporting/importing
+		String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, null, false);
+		if (salt == null) {
+			salt = Build.SERIAL;
+			if (salt == null)
+				salt = "";
+			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingSalt, salt);
+		}
+
+		// Set theme
+		String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
+		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
+		setTheme(mThemeId);
+
+		// Set layout
+		setContentView(R.layout.mainlist);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+		if (Util.hasProLicense(this) != null)
+			setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_pro)));
+
+		// Get localized restriction name
+		List<String> listRestrictionName = new ArrayList<String>(PrivacyManager.getRestrictions(this).navigableKeySet());
+		listRestrictionName.add(0, getString(R.string.menu_all));
+
+		// Build spinner adapter
+		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
+		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spAdapter.addAll(listRestrictionName);
+
+		// Handle info
+		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
+		imgInfo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				int position = spRestriction.getSelectedItemPosition();
+				if (position != AdapterView.INVALID_POSITION) {
+					String query = (position == 0 ? "restrictions" : (String) PrivacyManager
+							.getRestrictions(ActivityMain.this).values().toArray()[position - 1]);
+					Util.viewUri(ActivityMain.this, Uri.parse(cXUrl + "#" + query));
+				}
+			}
+		});
+
+		// Setup spinner
+		int pos = 0;
+		String restrictionName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSelectedCategory, null,
+				false);
+		if (restrictionName != null)
+			for (String restriction : PrivacyManager.getRestrictions(this).values()) {
+				pos++;
+				if (restrictionName.equals(restriction))
+					break;
+			}
+
+		spRestriction = (Spinner) findViewById(R.id.spRestriction);
+		spRestriction.setAdapter(spAdapter);
+		spRestriction.setOnItemSelectedListener(this);
+		spRestriction.setSelection(pos);
+
+		// Setup sort
+		mSortMode = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSortMode, "0", false));
+		mSortInvert = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingSortInverted, false, false);
+
+		// Setup name filter
+		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
+		etFilter.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				String text = etFilter.getText().toString();
+				ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
+				imgClear.setImageDrawable(getResources().getDrawable(
+						Util.getThemed(ActivityMain.this, text.equals("") ? R.attr.icon_clear_grayed
+								: R.attr.icon_clear)));
+				applyFilter();
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+
+		ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
+		imgClear.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				etFilter.setText("");
+			}
+		});
+
+		// Setup used filter
+		boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
+		CheckBox cFbUsed = (CheckBox) findViewById(R.id.cbFUsed);
+		cFbUsed.setChecked(fUsed);
+		cFbUsed.setOnCheckedChangeListener(this);
+
+		// Setup internet filter
+		boolean fInternet = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFInternet, false, false);
+		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
+		cbFInternet.setChecked(fInternet);
+		cbFInternet.setOnCheckedChangeListener(this);
+
+		// Setup restriction filter
+		boolean fRestriction = PrivacyManager
+				.getSettingBool(null, 0, PrivacyManager.cSettingFRestriction, false, false);
+		CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
+		cbFRestriction.setChecked(fRestriction);
+		cbFRestriction.setOnCheckedChangeListener(this);
+
+		boolean fRestrictionNot = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFRestrictionNot, false,
+				false);
+		CheckBox cbFRestrictionNot = (CheckBox) findViewById(R.id.cbFRestrictionNot);
+		cbFRestrictionNot.setChecked(fRestrictionNot);
+		cbFRestrictionNot.setOnCheckedChangeListener(this);
+
+		// Setup permission filter
+		boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, true, false);
+		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
+		cbFPermission.setChecked(fPermission);
+		cbFPermission.setOnCheckedChangeListener(this);
+
+		// Setup user filter
+		boolean fUser = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUser, true, false);
+		final CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
+		cbFUser.setChecked(fUser);
+		cbFUser.setOnCheckedChangeListener(this);
+
+		// Setup system filter
+		boolean fSystem = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFSystem, false, false);
+		final CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
+		cbFSystem.setChecked(fSystem);
+		cbFSystem.setOnCheckedChangeListener(this);
+
+		// Tab states
+		mTab = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingOpenTab,
+				Integer.toString(TAB_CATEGORY), false));
+		openTab(mTab);
+
+		// Handle toggle filters visibility
+		TextView tvFilterDetail = (TextView) findViewById(R.id.tvFilterDetail);
+		tvFilterDetail.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				int currentTab = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingOpenTab,
+						Integer.toString(TAB_NONE), false));
+				if (currentTab == TAB_FILTERS)
+					openTab(TAB_NONE);
+				else
+					openTab(TAB_FILTERS);
+			}
+		});
+
+		// Handle toggle categories visibility
+		TextView tvCategoryDetail = (TextView) findViewById(R.id.tvCategoryDetail);
+		tvCategoryDetail.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				int currentTab = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingOpenTab,
+						Integer.toString(TAB_NONE), false));
+				if (currentTab == TAB_CATEGORY)
+					openTab(TAB_NONE);
+				else
+					openTab(TAB_CATEGORY);
+			}
+		});
+
+		// Start task to get app list
+		AppListTask appListTask = new AppListTask();
+		appListTask.executeOnExecutor(mExecutor, (Object) null);
+
+		// Check environment
+		Requirements.check(this);
+
+		// Licensing
+		checkLicense();
+
+		// Listen for package add/remove
+		IntentFilter iff = new IntentFilter();
+		iff.addAction(Intent.ACTION_PACKAGE_ADDED);
+		iff.addAction(Intent.ACTION_PACKAGE_REMOVED);
+		iff.addDataScheme("package");
+		registerReceiver(mPackageChangeReceiver, iff);
+		mPackageChangeReceiverRegistered = true;
+
+		// First run
+		if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFirstRun, true, false)) {
+			optionAbout();
+			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
+		}
+
+		// Build tri-state check box images
+		mCheck = Util.getTriStateCheckBox(this);
+
+		// Tutorial
+		if (!PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingTutorialMain, false, false)) {
+			((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
+			((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
+		}
+		View.OnClickListener listener = new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				ViewParent parent = view.getParent();
+				while (!parent.getClass().equals(RelativeLayout.class))
+					parent = parent.getParent();
+				((View) parent).setVisibility(View.GONE);
+				PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTutorialMain, Boolean.TRUE.toString());
+			}
+		};
+		((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
+		((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
 	}
 
 	@Override
@@ -482,6 +482,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			case R.id.menu_sort:
 				optionSort();
 				return true;
+
 			case R.id.menu_tutorial:
 				optionTutorial();
 				return true;
@@ -490,15 +491,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 				return true;
 			case R.id.menu_usage:
 				optionUsage();
-				return true;
-			case R.id.menu_settings:
-				SettingsDialog.edit(ActivityMain.this, null);
-				return true;
-			case R.id.menu_template:
-				optionTemplate();
-				return true;
-			case R.id.menu_report:
-				optionReportIssue();
 				return true;
 			case R.id.menu_export:
 				optionExport();
@@ -515,11 +507,23 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			case R.id.menu_refresh:
 				optionRefresh();
 				return true;
+			case R.id.menu_pro:
+				optionPro();
+				return true;
+			case R.id.menu_report:
+				optionReportIssue();
+				return true;
 			case R.id.menu_theme:
 				optionSwitchTheme();
 				return true;
-			case R.id.menu_pro:
-				optionPro();
+			case R.id.menu_template:
+				optionTemplate();
+				return true;
+			case R.id.menu_settings:
+				SettingsDialog.edit(ActivityMain.this, null);
+				return true;
+			case R.id.menu_clear_db:
+				optionClearDB();
 				return true;
 			case R.id.menu_about:
 				optionAbout();
@@ -668,6 +672,31 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		});
 
 		// Show dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	private void optionClearDB() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
+		alertDialogBuilder.setTitle(R.string.menu_clear_db);
+		alertDialogBuilder.setMessage(R.string.msg_sure);
+		alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				try {
+					PrivacyService.getClient().clear();
+					ActivityMain.this.recreate();
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 	}

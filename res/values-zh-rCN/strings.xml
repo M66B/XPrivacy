@@ -29,6 +29,7 @@
     <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">限制所有权限</string>
     <string name="menu_clear_usage">清除权限使用记录</string>
+    <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">过滤器开关</string>
     <string name="menu_apply">应用默认权限模板</string>
     <string name="menu_clear">清除所有权限限制</string>

@@ -29,6 +29,7 @@
     <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Запретить все</string>
     <string name="menu_clear_usage">Очистить</string>
+    <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">Переключить фильтр</string>
     <string name="menu_apply">Применить шаблон</string>
     <string name="menu_clear">Очистить</string>

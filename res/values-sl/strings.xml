@@ -29,6 +29,7 @@
     <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Omeji vse</string>
     <string name="menu_clear_usage">Počisti</string>
+    <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">Preklopi filtre</string>
     <string name="menu_apply">Uporabi predlogo</string>
     <string name="menu_clear">Počisti</string>

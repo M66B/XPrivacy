@@ -29,6 +29,7 @@
     <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">تقييد الكل</string>
     <string name="menu_clear_usage">إزالة</string>
+    <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">تغيير الفلتر</string>
     <string name="menu_apply">تطبيق القالب</string>
     <string name="menu_clear">إلغاء التحديد</string>

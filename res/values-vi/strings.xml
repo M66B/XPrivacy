@@ -29,6 +29,7 @@
     <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Hạn chế tất cả</string>
     <string name="menu_clear_usage">Xóa</string>
+    <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">Thay đổi bộ lọc</string>
     <string name="menu_apply">Áp dụng thiết lập mẫu</string>
     <string name="menu_clear">Xóa thiết lập</string>

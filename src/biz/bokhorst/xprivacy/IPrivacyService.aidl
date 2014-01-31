@@ -23,4 +23,6 @@ interface IPrivacyService {
 	ParcelableSetting getSetting(in ParcelableSetting setting);
 	List<ParcelableSetting> getSettingList(int uid);
 	void deleteSettings(int uid);
+
+	void clear();
 }

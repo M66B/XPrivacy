@@ -314,6 +314,30 @@ public class Util {
 		return mHasLBE;
 	}
 
+	public static int getSelfVersionCode(Context context) {
+		try {
+			String self = Util.class.getPackage().getName();
+			PackageManager pm = context.getPackageManager();
+			PackageInfo pInfo = pm.getPackageInfo(self, 0);
+			return pInfo.versionCode;
+		} catch (NameNotFoundException ex) {
+			Util.bug(null, ex);
+			return 0;
+		}
+	}
+
+	public static String getSelfVersionName(Context context) {
+		try {
+			String self = Util.class.getPackage().getName();
+			PackageManager pm = context.getPackageManager();
+			PackageInfo pInfo = pm.getPackageInfo(self, 0);
+			return pInfo.versionName;
+		} catch (NameNotFoundException ex) {
+			Util.bug(null, ex);
+			return null;
+		}
+	}
+
 	private static byte[] hex2bytes(String hex) {
 		// Convert hex string to byte array
 		int len = hex.length();

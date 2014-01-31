@@ -29,6 +29,7 @@
     <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_clear_usage">Clear</string>
+    <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">Toggle filter</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Ryd</string>

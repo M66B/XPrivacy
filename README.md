@@ -451,7 +451,7 @@ I have tried to store the database in the XPrivacy data folder, but this leads t
 The best way to backup XPrivacy data is to use the export function,
 but this requires the [pro version](http://www.xprivacy.eu/).
 
-You can automate backups by sending on intent:
+You can automate backups by sending an intent:
 
 ```
 adb shell am start -a biz.bokhorst.xprivacy.action.EXPORT

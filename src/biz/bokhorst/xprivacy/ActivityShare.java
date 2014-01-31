@@ -47,7 +47,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -1716,16 +1715,9 @@ public class ActivityShare extends Activity {
 		folder.mkdir();
 		String fileName;
 		if (multiple) {
-			String versionName;
-			try {
-				PackageManager pm = context.getPackageManager();
-				PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
-				versionName = pInfo.versionName;
-			} catch (NameNotFoundException ex) {
-				versionName = "";
-			}
 			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT);
-			fileName = String.format("XPrivacy_%s_%s_%s.xml", versionName, format.format(new Date()), Build.DEVICE);
+			fileName = String.format("XPrivacy_%s_%s_%s.xml", Util.getSelfVersionName(context),
+					format.format(new Date()), Build.DEVICE);
 		} else
 			fileName = "XPrivacy.xml";
 		return new File(folder + File.separator + fileName).getAbsolutePath();

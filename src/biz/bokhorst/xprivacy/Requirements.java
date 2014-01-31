@@ -15,7 +15,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
@@ -342,19 +341,12 @@ public class Requirements {
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int _which) {
-						String xversion = null;
-						try {
-							PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-							xversion = pInfo.versionName;
-						} catch (Throwable ex) {
-						}
-
 						StringBuilder sb = new StringBuilder(text);
 						sb.insert(0, "\r\n");
 						sb.insert(0, String.format("Model: %s (%s)\r\n", Build.MODEL, Build.PRODUCT));
 						sb.insert(0, String.format("Android version: %s (SDK %d)\r\n", Build.VERSION.RELEASE,
 								Build.VERSION.SDK_INT));
-						sb.insert(0, String.format("XPrivacy version: %s\r\n", xversion));
+						sb.insert(0, String.format("XPrivacy version: %s\r\n", Util.getSelfVersionName(context)));
 
 						Intent sendEmail = new Intent(Intent.ACTION_SEND);
 						sendEmail.setType("message/rfc822");
