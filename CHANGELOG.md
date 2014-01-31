@@ -26,7 +26,8 @@ Test and beta releases will have experimental functions enabled by default.
 * Added restrictions for *getCurrentSync*, *getCurrentSyncs* and *getSyncAdapterTypes* (accounts)
 * Added restriction for *onConfigurationChanged* ([issue](https://github.com/M66B/XPrivacy/issues/1201))
 * Restrict isolated processes (since JellyBean)
-* Removed *largeHeap=true*
+* Disabled [largeHeap](http://developer.android.com/reference/android/R.attr.html#largeHeap) to conserve memory
+* Disabled [allowBackup](http://developer.android.com/reference/android/R.attr.html#allowBackup) for more privacy
 * Updated Dutch translation
 * Updated Lithuanian translation
 
