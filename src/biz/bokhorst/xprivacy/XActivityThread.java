@@ -120,7 +120,7 @@ public class XActivityThread extends XHook {
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
 				Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE));
 
-		listHook.add(new XActivityThread(Methods.performConfigurationChanged, PrivacyManager.cPhone, null));
+		listHook.add(new XActivityThread(Methods.performConfigurationChanged, null, null));
 
 		return listHook;
 	}
