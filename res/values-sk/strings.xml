@@ -120,6 +120,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_sinvert">Obrátiť poradenie zoradenia</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
+    <string name="title_denyonce">Deny once</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>

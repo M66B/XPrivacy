@@ -21,6 +21,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Compatibility with LBE Security Master ([issue](https://github.com/M66B/XPrivacy/issues/1167))
 * Display message for *media* restrictions
+* Added *deny once* (this will be cached for 15 seconds)
 * Added restriction for *getAuthenticatorTypes* (accounts)
 * Added restrictions for *getCurrentSync*, *getCurrentSyncs* and *getSyncAdapterTypes* (accounts) 
 * Updated Lithuanian translation

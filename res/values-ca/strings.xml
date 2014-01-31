@@ -117,6 +117,7 @@
     <string name="title_sinvert">Invert sort order</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
+    <string name="title_denyonce">Deny once</string>
     <string name="settings_serial">Número de sèrie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>

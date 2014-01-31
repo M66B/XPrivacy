@@ -118,6 +118,7 @@
     <string name="title_sinvert">Invert sort order</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
+    <string name="title_denyonce">Deny once</string>
     <string name="settings_serial">Seri no</string>
     <string name="settings_lat">Enlem</string>
     <string name="settings_lon">Boylam</string>

@@ -892,6 +892,15 @@ public class PrivacyService {
 												semaphore.release();
 											}
 										});
+								alertDialogBuilder.setNeutralButton(resources.getString(R.string.title_denyonce),
+										new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												// Deny
+												result.restricted = true;
+												semaphore.release();
+											}
+										});
 								alertDialogBuilder.setNegativeButton(resources.getString(R.string.title_allow),
 										new DialogInterface.OnClickListener() {
 											@Override

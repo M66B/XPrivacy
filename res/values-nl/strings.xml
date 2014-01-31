@@ -119,6 +119,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_sinvert">Omgekeerde sorteervolgorde</string>
     <string name="title_allow">Toestaan</string>
     <string name="title_deny">Blokkeren</string>
+    <string name="title_denyonce">1x Blokkeren</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>
