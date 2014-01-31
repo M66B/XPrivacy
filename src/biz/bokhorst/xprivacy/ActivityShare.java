@@ -56,8 +56,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Process;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
 import android.util.Log;
@@ -725,7 +723,6 @@ public class ActivityShare extends Activity {
 								throw new AbortException(ActivityShare.this);
 
 							publishProgress(++mProgressCurrent, listUid.size() + 1);
-							// if (mInteractive)
 							mAppAdapter.setState(uid, STATE_RUNNING, null);
 
 							// Process application settings
@@ -774,10 +771,8 @@ public class ActivityShare extends Activity {
 								}
 							}
 
-							// if (mInteractive)
 							mAppAdapter.setState(uid, STATE_SUCCESS, null);
 						} catch (Throwable ex) {
-							// if (mInteractive)
 							mAppAdapter.setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
 							throw ex;
 						}
@@ -802,7 +797,6 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			// if (mInteractive)
 			blueStreakOfProgress(values[0], values[1]);
 			super.onProgressUpdate(values);
 		}
