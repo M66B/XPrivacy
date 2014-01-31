@@ -3,7 +3,7 @@
     <string name="app_notxposed" formatted="false">Xposed programos versija %d+ neįdiegta</string>
     <string name="app_notenabled">XPrivacy neaktyvuota Xposed programoje</string>
     <string name="app_wrongandroid">Tik nuo Android 4.0+ versijos</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
+    <string name="app_incompatible" formatted="false">XPrivacy yra nesuderinama su %s</string>
     <string name="app_version" formatted="false">XPrivacy programos versija: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed programos versija: %d</string>
@@ -27,7 +27,7 @@
     <string name="menu_all">Visos</string>
     <string name="menu_restriction_all">Išvalyti visus ribojimus</string>
     <string name="menu_clear_all">Išvalyti viską</string>
-    <string name="menu_clear_ondemand">Clear on demand choices</string>
+    <string name="menu_clear_ondemand">Išvalyti ribojimus pagal pareikalavimą</string>
     <string name="menu_restrict_all">Įjungti visus ribojimus</string>
     <string name="menu_clear_usage">Valyti</string>
     <string name="menu_usage_all">Perjungti filtrą</string>
@@ -70,7 +70,7 @@
     <string name="msg_upgrading" formatted="false">Atnaujinti %s</string>
     <string name="msg_support_info">Vidinis patikrinimas nepavyko, ar norite siųsti paramos informaciją?</string>
     <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
-    <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_restrictedby">Ribojama su XPrivacy</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
 \n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>
