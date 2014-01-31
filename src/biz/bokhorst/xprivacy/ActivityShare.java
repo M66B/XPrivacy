@@ -1077,15 +1077,6 @@ public class ActivityShare extends Activity {
 			if (qName.equals("XPrivacy")) {
 				finishLastImport();
 
-				// Restart notifications
-				for (int i = 0; i < mListRestartStates.size(); i++) {
-					int uid = mListRestartStates.keyAt(i);
-					List<Boolean> oldState = mListRestartStates.valueAt(i);
-					List<Boolean> newState = PrivacyManager.getListStateRestartHooks(uid, null);
-					if (!newState.equals(oldState))
-						mAppAdapter.setMessage(uid, getString(R.string.msg_restart));
-				}
-
 				// Abort notification
 				if (mListAbortedUid.size() > 0) {
 					int uid = mListAbortedUid.get(0);
@@ -1112,6 +1103,12 @@ public class ActivityShare extends Activity {
 				if (mSettings.indexOfKey(lastUid) >= 0)
 					for (Entry<String, String> entry : mSettings.get(lastUid).entrySet())
 						PrivacyManager.setSetting(null, lastUid, entry.getKey(), entry.getValue());
+
+				// Restart notification
+				List<Boolean> oldState = mListRestartStates.get(lastUid);
+				List<Boolean> newState = PrivacyManager.getListStateRestartHooks(lastUid, null);
+				if (!newState.equals(oldState))
+					mAppAdapter.setMessage(lastUid, getString(R.string.msg_restart));
 
 				// Mark as success
 				mAppAdapter.setState(lastUid, STATE_SUCCESS, null);
