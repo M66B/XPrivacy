@@ -968,18 +968,24 @@ public class PrivacyService {
 		}
 
 		private void notifyRestricted(ParcelableRestriction restriction) {
-			Context context = getContext();
-			if (context != null)
-				try {
-					// Get resources
-					String self = PrivacyService.class.getPackage().getName();
-					Resources resources = context.getPackageManager().getResourcesForApplication(self);
+			final Context context = getContext();
+			if (context != null && mHandler != null)
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							// Get resources
+							String self = PrivacyService.class.getPackage().getName();
+							Resources resources = context.getPackageManager().getResourcesForApplication(self);
 
-					// Notify user
-					Toast.makeText(context, resources.getString(R.string.msg_restrictedby), Toast.LENGTH_LONG).show();
-				} catch (NameNotFoundException ex) {
-					Util.bug(null, ex);
-				}
+							// Notify user
+							Toast.makeText(context, resources.getString(R.string.msg_restrictedby), Toast.LENGTH_LONG)
+									.show();
+						} catch (NameNotFoundException ex) {
+							Util.bug(null, ex);
+						}
+					}
+				});
 		}
 
 		private boolean getSettingBool(int uid, String name, boolean defaultValue) throws RemoteException {
