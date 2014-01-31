@@ -19,6 +19,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Fixed accessing Google services ([issue](https://github.com/M66B/XPrivacy/issues/1206)) ([issue](https://github.com/M66B/XPrivacy/issues/1209))
 * Compatibility with LBE Security Master ([issue](https://github.com/M66B/XPrivacy/issues/1167))
 * Display message for *media* restrictions
 * Added *deny once* (this will be cached for 15 seconds)
