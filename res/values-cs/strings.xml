@@ -69,6 +69,7 @@
     <string name="msg_upgrading" formatted="false">Probíhá upgrade %s</string>
     <string name="msg_support_info">Vnitřní kontrola selhala, přejete si odeslat informace na podporu?</string>
     <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
+    <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_first"><b>Vývoj a testování aplikace XPrivacy probíhaly s maximální možnou péčí,
 nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a se všemi aplikacemi.
 \n\nPoužívejte pouze na vlastní riziko.</b>\n\nLicence aplikace:</string>

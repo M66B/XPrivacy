@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -39,6 +40,7 @@ import android.os.StrictMode.ThreadPolicy;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 public class PrivacyService {
 	private static int mXUid = -1;
@@ -370,6 +372,10 @@ public class PrivacyService {
 				if (!restricted && usage && restriction.methodName != null
 						&& PrivacyManager.isApplication(restriction.uid))
 					restricted = onDemandDialog(restriction);
+
+				// Media: notify user
+				if (restricted && usage && PrivacyManager.cMedia.equals(restriction.restrictionName))
+					notifyRestricted(restriction);
 
 				// Log usage
 				if (usage && restriction.methodName != null)
@@ -959,6 +965,21 @@ public class PrivacyService {
 					mListError.add(ex.toString());
 				}
 			}
+		}
+
+		private void notifyRestricted(ParcelableRestriction restriction) {
+			Context context = getContext();
+			if (context != null)
+				try {
+					// Get resources
+					String self = PrivacyService.class.getPackage().getName();
+					Resources resources = context.getPackageManager().getResourcesForApplication(self);
+
+					// Notify user
+					Toast.makeText(context, resources.getString(R.string.msg_restrictedby), Toast.LENGTH_LONG).show();
+				} catch (NameNotFoundException ex) {
+					Util.bug(null, ex);
+				}
 		}
 
 		private boolean getSettingBool(int uid, String name, boolean defaultValue) throws RemoteException {

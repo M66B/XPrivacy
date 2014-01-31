@@ -69,6 +69,7 @@
     <string name="msg_upgrading" formatted="false">正在更新 %s</string>
     <string name="msg_support_info">發生程式內部錯誤，請問是否傳送錯誤報告?</string>
     <string name="msg_ondemand" formatted="false">%1$s is trying to use a function in the %2$s category</string>
+    <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用
     \n\n請自行承擔使用XPrivacy的可能風險。</b>
     \n\n請參閱說明文件：</string>

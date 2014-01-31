@@ -29,17 +29,9 @@ public class Hook implements Comparable<Hook> {
 		mReplaces = replaces;
 	}
 
-	public Hook(String restrictionName, String methodName, boolean dangerous, boolean restart, boolean noUsageData,
-			String permissions, int sdk, String from, String replaces) {
-		mRestrictionName = restrictionName;
-		mMethodName = methodName;
-		mDangerous = dangerous;
-		mRestart = restart;
-		mNoUsageData = noUsageData;
-		mPermissions = (permissions == null ? null : permissions.split(","));
-		mSdk = sdk;
-		mFrom = (from == null ? null : new Version(from));
-		mReplaces = replaces;
+	public Hook noUsageData() {
+		mNoUsageData = true;
+		return this;
 	}
 
 	public String getRestrictionName() {
