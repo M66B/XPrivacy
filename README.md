@@ -118,6 +118,7 @@ For easy usage, data is restricted by category:
 <a name="accounts"></a>
 * Accounts
 	* return an empty account list
+	* return an empty account type list
 	* return fake account info
 	* return empty authorization tokens
 <a name="browser"></a>

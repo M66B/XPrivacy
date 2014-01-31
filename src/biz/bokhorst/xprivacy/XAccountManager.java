@@ -11,6 +11,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
+import android.accounts.AuthenticatorDescription;
 import android.accounts.AuthenticatorException;
 import android.accounts.OnAccountsUpdateListener;
 import android.accounts.OperationCanceledException;
@@ -50,6 +51,7 @@ public class XAccountManager extends XHook {
 	// public Account[] getAccountsByType(String type)
 	// public Account[] getAccountsByTypeForPackage(String type, String packageName)
 	// public AccountManagerFuture<Account[]> getAccountsByTypeAndFeatures(final String type, final String[] features, AccountManagerCallback<Account[]> callback, Handler handler)
+	// public AuthenticatorDescription[] getAuthenticatorTypes()
 	// public AccountManagerFuture<Bundle> getAuthToken(final Account account, final String authTokenType, final Bundle options, final Activity activity, AccountManagerCallback<Bundle> callback, Handler handler)
 	// public AccountManagerFuture<Bundle> getAuthToken(final Account account, final String authTokenType, final boolean notifyAuthFailure, AccountManagerCallback<Bundle> callback, Handler handler)
 	// public AccountManagerFuture<Bundle> getAuthToken(final Account account, final String authTokenType, final Bundle options, final boolean notifyAuthFailure, AccountManagerCallback<Bundle> callback, Handler handler)
@@ -61,9 +63,16 @@ public class XAccountManager extends XHook {
 
 	// @formatter:on
 
+	// @formatter:off
 	private enum Methods {
-		addOnAccountsUpdatedListener, blockingGetAuthToken, getAccounts, getAccountsByType, getAccountsByTypeForPackage, getAccountsByTypeAndFeatures, getAuthToken, getAuthTokenByFeatures, hasFeatures, removeOnAccountsUpdatedListener
+		addOnAccountsUpdatedListener,
+		blockingGetAuthToken,
+		getAccounts, getAccountsByType, getAccountsByTypeForPackage, getAccountsByTypeAndFeatures, getAuthenticatorTypes,
+		getAuthToken, getAuthTokenByFeatures,
+		hasFeatures,
+		removeOnAccountsUpdatedListener
 	};
+	// @formatter:on
 
 	public static List<XHook> getInstances(Object instance) {
 		String className = instance.getClass().getName();
@@ -75,6 +84,7 @@ public class XAccountManager extends XHook {
 		listHook.add(new XAccountManager(Methods.getAccountsByTypeForPackage, PrivacyManager.cAccounts, className,
 				Build.VERSION_CODES.JELLY_BEAN_MR2));
 		listHook.add(new XAccountManager(Methods.getAccountsByTypeAndFeatures, PrivacyManager.cAccounts, className));
+		listHook.add(new XAccountManager(Methods.getAuthenticatorTypes, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.getAuthToken, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.getAuthTokenByFeatures, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.hasFeatures, PrivacyManager.cAccounts, className));
@@ -137,22 +147,30 @@ public class XAccountManager extends XHook {
 						if (!isAccountAllowed(account, uid))
 							param.setResult(null);
 					}
+
 			} else if (mMethod == Methods.getAccounts || mMethod == Methods.getAccountsByType
 					|| mMethod == Methods.getAccountsByTypeForPackage) {
 				if (param.getResult() != null && isRestricted(param)) {
 					Account[] accounts = (Account[]) param.getResult();
 					param.setResult(filterAccounts(accounts, uid));
 				}
+
 			} else if (mMethod == Methods.getAccountsByTypeAndFeatures) {
 				if (param.getResult() != null && isRestricted(param)) {
 					AccountManagerFuture<Account[]> future = (AccountManagerFuture<Account[]>) param.getResult();
 					param.setResult(new XFutureAccount(future, uid));
 				}
+
+			} else if (mMethod == Methods.getAuthenticatorTypes) {
+				if (param.getResult() != null && isRestricted(param))
+					param.setResult(new AuthenticatorDescription[0]);
+
 			} else if (mMethod == Methods.getAuthToken || mMethod == Methods.getAuthTokenByFeatures) {
 				if (param.getResult() != null && isRestricted(param)) {
 					AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
 					param.setResult(new XFutureBundle(future, uid));
 				}
+
 			} else if (mMethod == Methods.hasFeatures) {
 				if (param.getResult() != null && isRestricted(param))
 					if (param.args.length > 0 && param.args[0] != null) {
@@ -160,6 +178,7 @@ public class XAccountManager extends XHook {
 						if (!isAccountAllowed(account, uid))
 							param.setResult(new XFutureBoolean());
 					}
+
 			} else
 				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 		}
