@@ -155,10 +155,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		Util.log(null, Log.WARN, "MCC=" + getResources().getConfiguration().mcc);
-		Util.log(null, Log.WARN, "MNC=" + getResources().getConfiguration().mnc);
-
 		// Check privacy service client
 		if (!Util.isXposedEnabled() || PrivacyService.getClient() == null) {
 			setContentView(R.layout.reboot);
