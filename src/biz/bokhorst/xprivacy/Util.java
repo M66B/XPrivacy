@@ -302,8 +302,9 @@ public class Util {
 			mHasLBEDetermined = true;
 			try {
 				File apps = new File(Environment.getDataDirectory() + File.separator + "app");
-				if (apps != null)
-					for (File file : apps.listFiles())
+				File[] files = (apps == null ? null : apps.listFiles());
+				if (files != null)
+					for (File file : files)
 						if (file.getName().startsWith("com.lbe.security"))
 							mHasLBE = true;
 			} catch (Throwable ex) {
