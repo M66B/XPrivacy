@@ -29,6 +29,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
@@ -126,10 +127,21 @@ public class PrivacyService {
 			}
 
 			// Register privacy service
+			// @formatter:off
 			// public static void addService(String name, IBinder service)
+			// public static void addService(String name, IBinder service, boolean allowIsolated)
+			// @formatter:on
 			Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
-			Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
-			mAddService.invoke(null, cServiceName, mPrivacyService);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+				Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class,
+						boolean.class);
+				Util.log(null, Log.WARN, "Invoking " + mAddService);
+				mAddService.invoke(null, cServiceName, mPrivacyService, true);
+			} else {
+				Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
+				Util.log(null, Log.WARN, "Invoking " + mAddService);
+				mAddService.invoke(null, cServiceName, mPrivacyService);
+			}
 			Util.log(null, Log.WARN, "Service registered name=" + cServiceName);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
