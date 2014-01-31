@@ -19,6 +19,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.24 BETA**
+
 * Fixed accessing Google services ([issue](https://github.com/M66B/XPrivacy/issues/1206)) ([issue](https://github.com/M66B/XPrivacy/issues/1209))
 * Compatibility with LBE Security Master ([issue](https://github.com/M66B/XPrivacy/issues/1167))
 * Display message for *media* restrictions
@@ -32,8 +36,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Enable on demand restricting for new applications only ([issue](https://github.com/M66B/XPrivacy/issues/1208))
 * Updated Dutch translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.23 BETA**
 
