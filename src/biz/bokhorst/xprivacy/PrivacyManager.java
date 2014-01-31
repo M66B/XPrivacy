@@ -247,6 +247,9 @@ public class PrivacyManager {
 					&& getHooks(restrictionName).indexOf(new Hook(restrictionName, methodName)) < 0)
 				Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
+		if (uid == Process.SYSTEM_UID && Util.hasLBE())
+			return false;
+		
 		// Check cache
 		boolean cached = false;
 		CRestriction key = new CRestriction(uid, restrictionName, methodName);
@@ -454,6 +457,9 @@ public class PrivacyManager {
 	public static String getSetting(XHook hook, int uid, String name, String defaultValue, boolean useCache) {
 		long start = System.currentTimeMillis();
 		String value = null;
+
+		if (uid == Process.SYSTEM_UID && Util.hasLBE())
+			return defaultValue;
 
 		// Check cache
 		boolean cached = false;

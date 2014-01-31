@@ -288,6 +288,7 @@ Limitations
 * Due to a custom implementation the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
 * You cannot restrict the Android ID used for submitting restrictions (only [pro version](http://www.xprivacy.eu/))
 * It is not possible to restrict hardware MAC addresses or the external IP address
+* With LBE Security Master installed, Android cannot be restricted
 * You cannot restrict *IPC* for XPrivacy, because it is needed for internal checks
 * You cannot restrict *storage* for XPrivacy, because it is needed for reading the pro license file
 * You cannot restrict *system* fro XPrivacy, because it is needed to get an application list
@@ -303,8 +304,6 @@ and is reported to work with most Android variants, including stock ROMs.
 
 **Do not use permission "fixing" scripts or applications,
 like [Android Tuner](https://play.google.com/store/apps/details?id=ccc71.at.free)**.
-
-XPrivacy from version 1.11.13 is not compatible with LBE Security Master, see [this issue](https://github.com/M66B/XPrivacy/issues/1167).
 
 Installation
 ------------

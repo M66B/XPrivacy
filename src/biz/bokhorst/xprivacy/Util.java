@@ -46,6 +46,9 @@ public class Util {
 	private static boolean mPro = false;
 	private static boolean mLog = true;
 	private static boolean mLogDetermined = false;
+	private static boolean mHasLBE = false;
+	private static boolean mHasLBEDetermined = false;
+
 	private static Version MIN_PRO_VERSION = new Version("1.12");
 	private static String LICENSE_FILE_NAME = "XPrivacy_license.txt";
 
@@ -292,6 +295,21 @@ public class Util {
 		Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 		infoIntent.setData(uri);
 		context.startActivity(infoIntent);
+	}
+
+	public static boolean hasLBE() {
+		if (!mHasLBEDetermined) {
+			mHasLBEDetermined = true;
+			try {
+				File apps = new File(Environment.getDataDirectory() + File.separator + "app");
+				for (File file : apps.listFiles())
+					if (file.getName().startsWith("com.lbe.security"))
+						mHasLBE = true;
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		}
+		return mHasLBE;
 	}
 
 	private static byte[] hex2bytes(String hex) {

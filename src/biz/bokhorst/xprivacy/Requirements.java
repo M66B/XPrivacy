@@ -25,7 +25,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 public class Requirements {
-	private static String[] cIncompatible = new String[] { "com.lbe.security" };
+	private static String[] cIncompatible = new String[] {};
 
 	@SuppressWarnings("unchecked")
 	public static void check(final Context context) {
