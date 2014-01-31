@@ -26,7 +26,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed handling for automated export, thanks @[jpeg729](https://github.com/jpeg729) ([issue](https://github.com/M66B/XPrivacy/issues/1211))
 	* See the [FAQ question 6](https://github.com/M66B/XPrivacy#FAQ6) for how to
 * Added function name to on demand restricting dialog
-* Move database back to /data/xprivacy, see also the [FAQ question 6](https://github.com/M66B/XPrivacy#FAQ6)
+* Moved database back to /data/xprivacy, see also the [FAQ question 6](https://github.com/M66B/XPrivacy#FAQ6)
 
 **Version 1.99.24 BETA**
 
