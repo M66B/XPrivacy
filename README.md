@@ -446,12 +446,18 @@ Note that this will erase your pro license file too.
 
 You cannot backup XPrivacy data with standard backup tools, like Titanium backup, since version 1.11.13 anymore.
 This is because the database (new in version 1.11.13) is not stored in the XPrivacy data folder, but in a system folder.
-It has been tried to store the database in the XPrivacy data folder, but this leads to all kind of permission problems.
+I have tried to store the database in the XPrivacy data folder, but this leads to all kind of permission problems.
 
 The best way to backup XPrivacy data is to use the export function,
 but this requires the [pro version](http://www.xprivacy.eu/).
 
-See for some more details [here](http://forum.xda-developers.com/showpost.php?p=49799507&postcount=6251).
+You can automate backups by sending on intent:
+
+```
+adb shell am start -a biz.bokhorst.xprivacy.action.EXPORT
+```
+
+This can be done with for example with [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm).
 
 <a name="FAQ10"></a>
 **(10) Which functions are exactly restricted?**
