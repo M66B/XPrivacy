@@ -69,7 +69,7 @@
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_ondemand" formatted="false">%1$s is trying to use %$3s in the %2$s category</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use %3$s in the %2$s category</string>
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_first"><b>cúram mór aire do a fhorbairt agus a thástáil XPrivacy,
 áfach, go bhfuil sé dodhéanta a ráthú go mbeidh sé obair flawless ar gach gléas agus do gach agus gach iarratas.

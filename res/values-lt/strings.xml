@@ -70,7 +70,7 @@
     <string name="msg_randomizing" formatted="false">Kaitalioti %s</string>
     <string name="msg_upgrading" formatted="false">Atnaujinti %s</string>
     <string name="msg_support_info">Vidinis patikrinimas nepavyko, ar norite siųsti paramos informaciją?</string>
-    <string name="msg_ondemand" formatted="false">%1$s is trying to use %$3s in the %2$s category</string>
+    <string name="msg_ondemand" formatted="false">%1$s is trying to use %3$s in the %2$s category</string>
     <string name="msg_restrictedby">Ribojama su XPrivacy</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
