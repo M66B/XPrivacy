@@ -28,6 +28,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Restrict isolated processes (since JellyBean)
 * Disabled [largeHeap](http://developer.android.com/reference/android/R.attr.html#largeHeap) to conserve memory
 * Disabled [allowBackup](http://developer.android.com/reference/android/R.attr.html#allowBackup) for more privacy
+* Enable on demand restricting for new applications only ([issue](https://github.com/M66B/XPrivacy/issues/1208))
 * Updated Dutch translation
 * Updated Lithuanian translation
 

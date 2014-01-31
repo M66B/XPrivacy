@@ -54,10 +54,11 @@ public class PackageChange extends BroadcastReceiver {
 								Integer.toString(ActivityMain.STATE_ATTENTION));
 
 						// Enable on demand
-						if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
-								PrivacyManager.cTestVersion, false))
-							PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingOnDemand,
-									Boolean.toString(true));
+						if (!replacing)
+							if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
+									PrivacyManager.cTestVersion, false))
+								PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingOnDemand,
+										Boolean.toString(true));
 					}
 
 					// New/update notification
