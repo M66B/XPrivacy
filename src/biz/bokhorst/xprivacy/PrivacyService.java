@@ -1063,8 +1063,7 @@ public class PrivacyService {
 	}
 
 	private static File getDbFile() {
-		return new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
-				+ PrivacyService.class.getPackage().getName() + File.separator + "xprivacy.db");
+		return new File(Environment.getDataDirectory() + File.separator + "xprivacy" + File.separator + "xprivacy.db");
 	}
 
 	public static void setupDatabase() {
@@ -1072,34 +1071,26 @@ public class PrivacyService {
 		try {
 			File dbFile = getDbFile();
 
-			// Move database from experimental location
-			File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
-			if (folder.exists()) {
-				File[] files = folder.listFiles();
-				if (files != null)
-					for (File file : files) {
+			// Create database folder
+			dbFile.getParentFile().mkdirs();
+
+			// Set database folder permissions
+			// Owner: rwx (system)
+			// Group: --- (system)
+			// World: ---
+			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0700, Process.SYSTEM_UID, Process.SYSTEM_UID);
+
+			// Move database from app folder
+			File folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
+					+ PrivacyService.class.getPackage().getName());
+			File[] files = folder.listFiles();
+			if (files != null)
+				for (File file : files)
+					if (file.getName().startsWith("xprivacy.db")) {
 						File target = new File(dbFile.getParentFile() + File.separator + file.getName());
 						boolean status = file.renameTo(target);
 						Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
 					}
-				folder.delete();
-			}
-
-			// Set application folder permission
-			// Owner: rwx (untouched)
-			// Group: rwx (set to system)
-			// World: --x
-			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0771, -1, Process.SYSTEM_UID);
-
-			// Set database files permissions
-			// Owner: rwx (untouched)
-			// Group: rwx (set to system)
-			// World: ---
-			if (dbFile.exists())
-				Util.setPermission(dbFile.getAbsolutePath(), 0770, -1, Process.SYSTEM_UID);
-			File journal = new File(dbFile + "-journal");
-			if (journal.exists())
-				Util.setPermission(journal.getAbsolutePath(), 0770, -1, Process.SYSTEM_UID);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
