@@ -435,11 +435,9 @@ Use your favorite search engine to find one.
 <a name="FAQ5"></a>
 **(5) How can I reset all XPrivacy settings?**
 
-*Manage apps* > *XPrivacy* > *Clear data*
+Menu > Clear all data
 
 Reboot.
-
-Note that this will erase your pro license file too.
 
 <a name="FAQ6"></a>
 **(6) Can I backup XPrivacy restrictions, settings and usage data?**
@@ -536,13 +534,9 @@ Enable debug logging using the settings menu and see [here](http://forum.xda-dev
 <a name="FAQ23"></a>
 **(23) Where are the settings of XPrivacy stored?**
 
-The restriction settings of XPrivacy are stored as private application data.
-It is possible to backup the application and the data,
-but you can restore it onto the same environment (device/ROM) only.
-This is because Android assigns different uid's to the same applications on different devices.
-Exporting settings on one device and importing settings onto another device will work,
-but this requires the [pro version](http://www.xprivacy.eu/).
-If you want to backup the exported settings, they are in the folder *.xprivacy* on the SD card.
+The restrictions, settings and usage data of XPrivacy are stored in an sqlite3 database in this folder:
+
+/data/xprivacy
 
 <a name="FAQ25"></a>
 **(25) Why doesn't clearing a data category restriction clear the function exceptions too?**
