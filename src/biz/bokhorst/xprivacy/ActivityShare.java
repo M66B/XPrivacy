@@ -164,7 +164,7 @@ public class ActivityShare extends Activity {
 		}
 
 		// Check whether we need a ui
-		if (extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false)) {
+		if (extras != null && extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false)) {
 			// Set theme
 			String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
 			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
