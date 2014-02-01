@@ -1115,18 +1115,22 @@ public class PrivacyService {
 			// Create database folder
 			dbFile.getParentFile().mkdirs();
 
-			// Set database folder permissions
+			// Set database file permissions
 			// Owner: rwx (system)
 			// Group: --- (system)
 			// World: ---
-			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0700, Process.SYSTEM_UID, Process.SYSTEM_UID);
+			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
+			File[] files = dbFile.getParentFile().listFiles();
+			if (files != null)
+				for (File file : files)
+					Util.setPermission(file.getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
 
 			// Move database from app folder
 			File folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
 					+ PrivacyService.class.getPackage().getName());
-			File[] files = folder.listFiles();
-			if (files != null)
-				for (File file : files)
+			File[] oldFiles = folder.listFiles();
+			if (oldFiles != null)
+				for (File file : oldFiles)
 					if (file.getName().startsWith("xprivacy.db")) {
 						File target = new File(dbFile.getParentFile() + File.separator + file.getName());
 						boolean status = file.renameTo(target);
