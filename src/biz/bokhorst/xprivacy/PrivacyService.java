@@ -904,6 +904,10 @@ public class PrivacyService {
 				if (!dangerous && hook.isDangerous())
 					return false;
 
+				// Skip hooks with no usage data
+				if (hook.hasNoUsageData())
+					return false;
+
 				// Get am context
 				final Context context = getContext();
 				if (context == null)
