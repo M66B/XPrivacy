@@ -395,14 +395,14 @@ public class PrivacyService {
 					}
 				}
 
+				// Media: notify user
+				if (result.restricted && usage && PrivacyManager.cMedia.equals(restriction.restrictionName))
+					notifyRestricted(restriction);
+
 				// Ask to restrict
 				if (!result.restricted && usage && restriction.methodName != null
 						&& PrivacyManager.isApplication(restriction.uid))
 					result.restricted = onDemandDialog(restriction);
-
-				// Media: notify user
-				if (result.restricted && usage && PrivacyManager.cMedia.equals(restriction.restrictionName))
-					notifyRestricted(restriction);
 
 				// Log usage
 				if (usage && restriction.methodName != null)
