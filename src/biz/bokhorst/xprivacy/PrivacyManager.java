@@ -249,17 +249,17 @@ public class PrivacyManager {
 
 		if (uid == Process.SYSTEM_UID && Util.hasLBE())
 			return false;
-		
+
 		// Check cache
 		boolean cached = false;
-		CRestriction key = new CRestriction(uid, restrictionName, methodName);
+		CRestriction key = new CRestriction(new ParcelableRestriction(uid, restrictionName, methodName));
 		if (useCache)
 			synchronized (mRestrictionCache) {
 				if (mRestrictionCache.containsKey(key)) {
 					CRestriction entry = mRestrictionCache.get(key);
 					if (!entry.isExpired()) {
 						cached = true;
-						restricted = entry.isRestricted();
+						restricted = entry.getRestriction().restricted;
 					}
 				}
 			}
@@ -268,10 +268,10 @@ public class PrivacyManager {
 		if (!cached)
 			try {
 				restricted = PrivacyService.getClient().getRestriction(
-						new ParcelableRestriction(uid, restrictionName, methodName, false), usage, secret);
+						new ParcelableRestriction(uid, restrictionName, methodName, false), usage, secret).restricted;
 
 				// Add to cache
-				key.setRestricted(restricted);
+				key.setRestriction(new ParcelableRestriction(uid, restrictionName, methodName, restricted));
 				synchronized (mRestrictionCache) {
 					if (mRestrictionCache.containsKey(key))
 						mRestrictionCache.remove(key);

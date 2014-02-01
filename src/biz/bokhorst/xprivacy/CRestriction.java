@@ -4,43 +4,39 @@ import java.util.Date;
 
 public class CRestriction {
 	private long mTimestamp;
-	private int mUid;
-	private String mRestrictionName;
-	private String mMethodName;
-	private boolean mRestricted;
+	private ParcelableRestriction mRestriction;
 
-	public CRestriction(int uid, String restrictionName, String methodName) {
+	public CRestriction(ParcelableRestriction restriction) {
 		mTimestamp = new Date().getTime();
-		mUid = uid;
-		mRestrictionName = restrictionName;
-		mMethodName = methodName;
-		mRestricted = false;
+		mRestriction = restriction;
 	}
 
-	public void setRestricted(boolean restricted) {
-		mRestricted = restricted;
+	public ParcelableRestriction getRestriction() {
+		return mRestriction;
+	}
+
+	public void setRestriction(ParcelableRestriction restriction) {
+		mRestriction = restriction;
 	}
 
 	public boolean isExpired() {
 		return (mTimestamp + PrivacyManager.cRestrictionCacheTimeoutMs < new Date().getTime());
 	}
 
-	public boolean isRestricted() {
-		return mRestricted;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		CRestriction other = (CRestriction) obj;
-		return (this.mUid == other.mUid && this.mRestrictionName.equals(other.mRestrictionName)
-				&& this.mMethodName == null ? other.mMethodName == null : this.mMethodName.equals(other.mMethodName));
+		return (this.mRestriction.uid == other.mRestriction.uid
+				&& this.mRestriction.restrictionName.equals(other.mRestriction.restrictionName)
+				&& this.mRestriction.methodName == null ? other.mRestriction.methodName == null
+				: this.mRestriction.methodName.equals(other.mRestriction.methodName));
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = mUid ^ mRestrictionName.hashCode();
-		if (mMethodName != null)
-			hash = hash ^ mMethodName.hashCode();
+		int hash = mRestriction.uid ^ mRestriction.restrictionName.hashCode();
+		if (mRestriction.methodName != null)
+			hash = hash ^ mRestriction.methodName.hashCode();
 		return hash;
 	}
 }
