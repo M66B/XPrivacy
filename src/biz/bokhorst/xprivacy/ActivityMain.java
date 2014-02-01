@@ -650,8 +650,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		boolean[] selection = new boolean[listLocalizedTitle.size()];
 		for (int i = 0; i < listLocalizedTitle.size(); i++) {
 			String templateName = PrivacyManager.cSettingTemplate + "." + listLocalizedTitle.get(i);
+			// TODO: change template default for on demand restricting
 			selection[i] = PrivacyManager.getSettingBool(null, 0, templateName, true, false);
-			PrivacyManager.setSetting(null, 0, templateName, Boolean.toString(selection[i]));
 		}
 
 		// Build dialog

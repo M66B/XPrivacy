@@ -442,6 +442,7 @@ public class ActivityApp extends Activity {
 		final List<String> listRestriction = PrivacyManager.getRestrictions();
 		for (String restrictionName : listRestriction) {
 			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
+			// TODO: change template default for on demand restricting
 			if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
 				if (PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted) {
 					some = true;
@@ -461,9 +462,10 @@ public class ActivityApp extends Activity {
 				boolean restart = false;
 				for (String restrictionName : listRestriction) {
 					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
+					// TODO: change template default for on demand restricting
 					if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
 						restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null,
-								restricted) || restart;
+								restricted, true) || restart;
 				}
 
 				// Refresh display

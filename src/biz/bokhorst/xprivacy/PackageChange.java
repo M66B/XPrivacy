@@ -50,8 +50,10 @@ public class PackageChange extends BroadcastReceiver {
 							if (!appInfo.isSystem())
 								for (String restrictionName : PrivacyManager.getRestrictions()) {
 									String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
+									// TODO: change template default for on
+									// demand restricting
 									if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
-										PrivacyManager.setRestriction(null, uid, restrictionName, null, true);
+										PrivacyManager.setRestriction(null, uid, restrictionName, null, true, true);
 								}
 						}
 
