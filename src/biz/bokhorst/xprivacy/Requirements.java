@@ -216,19 +216,34 @@ public class Requirements {
 				Map<String, String> mapService = new HashMap<String, String>();
 				for (String service : (String[]) listServices.invoke(null)) {
 					IBinder binder = (IBinder) getService.invoke(null, service);
-					mapService.put(service, binder.getInterfaceDescriptor());
+					String description = binder.getInterfaceDescriptor();
+					mapService.put(service, description);
 				}
 
-				// Check services
+				// Check services names
 				List<String> listMissing = new ArrayList<String>();
 				for (String service : XBinder.cListService)
-					if (!"iphonesubinfo".equals(service) && !mapService.containsKey(service))
-						listMissing.add(service);
-				if (PrivacyManager.cTestVersion)
-					for (String serviceName : XBinder.cListServiceName)
-						if (!"com.android.internal.telephony.IPhoneSubInfo".equals(serviceName)
-								&& !mapService.containsValue(serviceName))
-							listMissing.add(serviceName);
+					if (!service.contains("iphonesubinfo"))
+						if (service.equals("telephony.registry") || service.equals("telephony.msim.registry")) {
+							if (!(mapService.containsKey("telephony.registry") || mapService
+									.containsKey("telephony.msim.registry")))
+								listMissing.add(service);
+						} else {
+							if (!mapService.containsKey(service))
+								listMissing.add(service);
+						}
+
+				// Check service interfaces
+				for (String description : XBinder.cListDescription)
+					if (!description.contains("IPhoneSubInfo"))
+						if (description.startsWith("com.android.internal.telephony.ITelephonyRegistry")) {
+							if (!(mapService.containsValue("com.android.internal.telephony.ITelephonyRegistry") || mapService
+									.containsValue("com.android.internal.telephony.ITelephonyRegistryMSim")))
+								listMissing.add(description);
+						} else {
+							if (!mapService.containsValue(description))
+								listMissing.add(description);
+						}
 
 				// Check result
 				if (listMissing.size() > 0) {
