@@ -87,17 +87,6 @@
                 android:visibility="invisible" />
 
             <TextView
-                android:id="@+id/tvOnDemand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="@string/msg_question"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold"
-                android:visibility="invisible" />
-
-            <TextView
                 android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
