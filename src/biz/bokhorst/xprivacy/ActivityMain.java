@@ -10,6 +10,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import biz.bokhorst.xprivacy.Util.RState;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -1314,6 +1316,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			public ImageView imgFrozen;
 			public TextView tvName;
 			public ImageView imgCBName;
+			public ImageView imgCBName_new;
 			public TextView tvOnDemand;
 			public RelativeLayout rlName;
 
@@ -1329,6 +1332,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCBName = (ImageView) row.findViewById(R.id.imgCBName);
+				imgCBName_new = (ImageView) row.findViewById(R.id.imgCBName_new);
 				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
@@ -1347,6 +1351,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			private boolean allRestricted;
 			private boolean someRestricted;
 			private boolean onDemand;
+			private RState rstate;
 
 			public HolderTask(int thePosition, ViewHolder theHolder, ApplicationInfoEx theAppInfo) {
 				position = thePosition;
@@ -1408,6 +1413,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						if (onDemand && mRestrictionName != null)
 							onDemand = !query.asked;
 					}
+					
+					rstate = Util.getRestrictionState(xAppInfo.getUid(), mRestrictionName, null);
 
 					return holder;
 				}
@@ -1462,6 +1469,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					else
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 					holder.imgCBName.setVisibility(View.VISIBLE);
+
+					// Display restriction
+					if (!rstate.asked)
+						holder.imgCBName_new.setImageBitmap(mCheck[3]); // ?
+					else if (rstate.restricted == null)
+						holder.imgCBName_new.setImageBitmap(mCheck[1]); // Half
+					else if (rstate.restricted)
+						holder.imgCBName_new.setImageBitmap(mCheck[2]); // Full
+					else
+						holder.imgCBName_new.setImageBitmap(mCheck[0]); // Off
+					holder.imgCBName_new.setVisibility(View.VISIBLE);
 
 					// Display on demand state
 					holder.tvOnDemand.setVisibility(onDemand ? View.VISIBLE : View.INVISIBLE);
@@ -1524,6 +1542,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 												// Update visible state
 												holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+												holder.imgCBName_new.setImageBitmap(mCheck[0]); // Off
 												holder.tvOnDemand.setVisibility(View.VISIBLE);
 												holder.vwState.setBackgroundColor(getResources()
 														.getColor(
@@ -1578,6 +1597,17 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 									holder.imgCBName.setImageBitmap(mCheck[1]); // Half
 								else
 									holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+
+								// Display restriction
+								if (!rstate.asked)
+									holder.imgCBName_new.setImageBitmap(mCheck[3]); // ?
+								else if (rstate.restricted == null)
+									holder.imgCBName_new.setImageBitmap(mCheck[1]); // Half
+								else if (rstate.restricted)
+									holder.imgCBName_new.setImageBitmap(mCheck[2]); // Full
+								else
+									holder.imgCBName_new.setImageBitmap(mCheck[0]); // Off
+								holder.imgCBName_new.setVisibility(View.VISIBLE);
 
 								// Notify restart
 								if (!newState.equals(oldState))

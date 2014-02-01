@@ -11,6 +11,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import biz.bokhorst.xprivacy.Util.RState;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -898,6 +900,7 @@ public class ActivityApp extends Activity {
 			public ImageView imgInfo;
 			public TextView tvName;
 			public ImageView imgCBName;
+			public ImageView imgCBName_new;
 			public TextView tvOnDemand;
 			public RelativeLayout rlName;
 
@@ -910,6 +913,7 @@ public class ActivityApp extends Activity {
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCBName = (ImageView) row.findViewById(R.id.imgCBName);
+				imgCBName_new = (ImageView) row.findViewById(R.id.imgCBName_new);
 				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
@@ -925,6 +929,7 @@ public class ActivityApp extends Activity {
 			private boolean allRestricted;
 			private boolean someRestricted;
 			private boolean asked;
+			private RState rstate;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
@@ -955,6 +960,8 @@ public class ActivityApp extends Activity {
 						asked = query.asked;
 					else
 						asked = true;
+					
+					rstate = Util.getRestrictionState(mAppInfo.getUid(), restrictionName, null);
 
 					return holder;
 				}
@@ -977,6 +984,17 @@ public class ActivityApp extends Activity {
 					else
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 					holder.imgCBName.setVisibility(View.VISIBLE);
+
+					// Display restriction
+					if (!rstate.asked)
+						holder.imgCBName_new.setImageBitmap(mCheck[3]); // ?
+					else if (rstate.restricted == null)
+						holder.imgCBName_new.setImageBitmap(mCheck[1]); // Half
+					else if (rstate.restricted)
+						holder.imgCBName_new.setImageBitmap(mCheck[2]); // Full
+					else
+						holder.imgCBName_new.setImageBitmap(mCheck[0]); // Off
+					holder.imgCBName_new.setVisibility(View.VISIBLE);
 
 					holder.tvOnDemand.setVisibility(asked ? View.INVISIBLE : View.VISIBLE);
 
@@ -1008,6 +1026,17 @@ public class ActivityApp extends Activity {
 								holder.imgCBName.setImageBitmap(mCheck[1]); // Half
 							else
 								holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+
+							// Display restriction
+							if (!rstate.asked)
+								holder.imgCBName_new.setImageBitmap(mCheck[3]); // ?
+							else if (rstate.restricted == null)
+								holder.imgCBName_new.setImageBitmap(mCheck[1]); // Half
+							else if (rstate.restricted)
+								holder.imgCBName_new.setImageBitmap(mCheck[2]); // Full
+							else
+								holder.imgCBName_new.setImageBitmap(mCheck[0]); // Off
+							holder.imgCBName_new.setVisibility(View.VISIBLE);
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update childs
@@ -1125,6 +1154,7 @@ public class ActivityApp extends Activity {
 			public ImageView imgGranted;
 			public ImageView imgInfo;
 			public CheckedTextView ctvMethodName;
+			public ImageView imgCBName_new;
 			private TextView tvOnDemand;
 
 			private ChildViewHolder(View theRow, int gPosition, int cPosition) {
@@ -1135,6 +1165,7 @@ public class ActivityApp extends Activity {
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
+				imgCBName_new = (ImageView) row.findViewById(R.id.imgCBName_new);
 				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 			}
 		}
@@ -1150,6 +1181,7 @@ public class ActivityApp extends Activity {
 			private boolean permission;
 			private boolean restricted;
 			private boolean asked;
+			private RState rstate;
 
 			public ChildHolderTask(int gPosition, int cPosition, ChildViewHolder theHolder, String theRestrictionName) {
 				groupPosition = gPosition;
@@ -1175,6 +1207,8 @@ public class ActivityApp extends Activity {
 						asked = query.asked;
 					else
 						asked = true;
+					
+					rstate = Util.getRestrictionState(mAppInfo.getUid(), restrictionName, md.getName());
 
 					return holder;
 				}
@@ -1197,6 +1231,17 @@ public class ActivityApp extends Activity {
 					holder.ctvMethodName.setTypeface(null, lastUsage == 0 ? Typeface.NORMAL : Typeface.BOLD_ITALIC);
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 					holder.ctvMethodName.setChecked(restricted);
+
+					// Display restriction
+					if (!rstate.asked)
+						holder.imgCBName_new.setImageBitmap(mCheck[3]); // ?
+					else if (rstate.restricted == null)
+						holder.imgCBName_new.setImageBitmap(mCheck[1]); // Half
+					else if (rstate.restricted)
+						holder.imgCBName_new.setImageBitmap(mCheck[2]); // Full
+					else
+						holder.imgCBName_new.setImageBitmap(mCheck[0]); // Off
+					holder.imgCBName_new.setVisibility(View.VISIBLE);
 
 					holder.tvOnDemand.setVisibility(asked ? View.INVISIBLE : View.VISIBLE);
 
