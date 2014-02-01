@@ -26,7 +26,6 @@
     <string name="menu_all">Tous</string>
     <string name="menu_restriction_all">Inverser restrictions</string>
     <string name="menu_clear_all">Tout effacer</string>
-    <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Tout restreindre</string>
     <string name="menu_clear_usage">Effacer</string>
     <string name="menu_clear_db">Clear all data</string>

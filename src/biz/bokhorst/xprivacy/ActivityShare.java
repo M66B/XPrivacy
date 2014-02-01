@@ -745,25 +745,28 @@ public class ActivityShare extends Activity {
 							// Process restrictions
 							for (String restrictionName : PrivacyManager.getRestrictions()) {
 								// Category
-								boolean crestricted = PrivacyManager.getRestriction(null, uid, restrictionName, null,
-										false, false, null);
-								if (crestricted) {
+								ParcelableRestriction crestricted = PrivacyManager.getRestrictionEx(uid,
+										restrictionName, null);
+								if (crestricted.restricted || crestricted.asked) {
 									serializer.startTag(null, "Restriction");
 									serializer.attribute(null, "Id", Integer.toString(uid));
 									serializer.attribute(null, "Name", restrictionName);
-									serializer.attribute(null, "Restricted", Boolean.toString(crestricted));
+									serializer.attribute(null, "Restricted", Boolean.toString(crestricted.restricted));
+									serializer.attribute(null, "Asked", Boolean.toString(crestricted.asked));
 									serializer.endTag(null, "Restriction");
 
 									// Methods
 									for (Hook md : PrivacyManager.getHooks(restrictionName)) {
-										boolean mrestricted = PrivacyManager.getRestriction(null, uid, restrictionName,
-												md.getName(), false, false, null);
-										if (!mrestricted || md.isDangerous()) {
+										ParcelableRestriction mrestricted = PrivacyManager.getRestrictionEx(uid,
+												restrictionName, md.getName());
+										if (!mrestricted.restricted || mrestricted.asked || md.isDangerous()) {
 											serializer.startTag(null, "Restriction");
 											serializer.attribute(null, "Id", Integer.toString(uid));
 											serializer.attribute(null, "Name", restrictionName);
 											serializer.attribute(null, "Method", md.getName());
-											serializer.attribute(null, "Restricted", Boolean.toString(mrestricted));
+											serializer.attribute(null, "Restricted",
+													Boolean.toString(mrestricted.restricted));
+											serializer.attribute(null, "Asked", Boolean.toString(mrestricted.asked));
 											serializer.endTag(null, "Restriction");
 										}
 									}
@@ -1028,6 +1031,7 @@ public class ActivityShare extends Activity {
 					String restrictionName = attributes.getValue("Name");
 					String methodName = attributes.getValue("Method");
 					boolean restricted = Boolean.parseBoolean(attributes.getValue("Restricted"));
+					boolean asked = Boolean.parseBoolean(attributes.getValue("Asked"));
 
 					// Get uid
 					int uid = getUid(id);
@@ -1058,7 +1062,7 @@ public class ActivityShare extends Activity {
 						}
 
 						// Set restriction
-						if (PrivacyManager.setRestriction(null, uid, restrictionName, methodName, restricted)
+						if (PrivacyManager.setRestriction(null, uid, restrictionName, methodName, restricted, asked)
 								&& !mListRestartUid.contains(uid))
 							mListRestartUid.add(uid);
 					}
@@ -1365,8 +1369,8 @@ public class ActivityShare extends Activity {
 						// Encode restrictions
 						JSONArray jSettings = new JSONArray();
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
-							boolean restricted = PrivacyManager.getRestriction(null, appInfo.getUid(), restrictionName,
-									null, false, false, null);
+							boolean restricted = PrivacyManager.getRestrictionEx(appInfo.getUid(), restrictionName,
+									null).restricted;
 							// Category
 							long used = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, null);
 							JSONObject jRestriction = new JSONObject();
@@ -1384,8 +1388,8 @@ public class ActivityShare extends Activity {
 							// Methods
 							for (Hook md : PrivacyManager.getHooks(restrictionName)) {
 								boolean mRestricted = restricted
-										&& PrivacyManager.getRestriction(null, appInfo.getUid(), restrictionName,
-												md.getName(), false, false, null);
+										&& PrivacyManager.getRestrictionEx(appInfo.getUid(), restrictionName,
+												md.getName()).restricted;
 								long mUsed = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, md.getName());
 								JSONObject jMethod = new JSONObject();
 								jMethod.put("restriction", restrictionName);

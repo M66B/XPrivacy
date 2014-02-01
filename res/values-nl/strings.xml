@@ -26,7 +26,6 @@
     <string name="menu_all">Alle</string>
     <string name="menu_restriction_all">Schakel beperkingen</string>
     <string name="menu_clear_all">Alles wissen</string>
-    <string name="menu_clear_ondemand">Wis op verzoek keuzes</string>
     <string name="menu_restrict_all">Alles beperken</string>
     <string name="menu_clear_usage">Wissen</string>
     <string name="menu_clear_db">Wis alle gegevens</string>

@@ -1378,8 +1378,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					crestricted = false;
 					for (String restrictionName : listRestriction)
 						crestricted = crestricted
-								|| PrivacyManager.getRestriction(null, xAppInfo.getUid(), restrictionName, null, false,
-										false, null);
+								|| PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null).restricted;
 
 					// Get all/some restricted
 					allRestricted = true;
@@ -1519,8 +1518,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								crestricted = false;
 								for (String restrictionName : listRestriction)
 									crestricted = crestricted
-											|| PrivacyManager.getRestriction(null, xAppInfo.getUid(), restrictionName,
-													null, false, false, null);
+											|| PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null).restricted;
 								crestricted = !crestricted;
 
 								boolean restart = false;

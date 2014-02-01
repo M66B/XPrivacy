@@ -26,7 +26,6 @@
     <string name="menu_all">Wszystko</string>
     <string name="menu_restriction_all">Przełącz restrykcje</string>
     <string name="menu_clear_all">Wyczyść wszystko</string>
-    <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Ogranicz wszystko</string>
     <string name="menu_clear_usage">Wyczyść</string>
     <string name="menu_clear_db">Clear all data</string>

@@ -48,7 +48,7 @@ public class XResources extends XHook {
 			int uid = Binder.getCallingUid();
 			Configuration config = new Configuration((Configuration) param.getResult());
 
-			if (getRestricted(uid, PrivacyManager.cPhone, "Configuration.MCC", false)) {
+			if (getRestricted(uid, PrivacyManager.cPhone, "Configuration.MCC")) {
 				restricted = true;
 				try {
 					config.mcc = Integer.parseInt((String) PrivacyManager.getDefacedProp(uid, "MCC"));
@@ -57,7 +57,7 @@ public class XResources extends XHook {
 				}
 			}
 
-			if (getRestricted(uid, PrivacyManager.cPhone, "Configuration.MNC", false)) {
+			if (getRestricted(uid, PrivacyManager.cPhone, "Configuration.MNC")) {
 				restricted = true;
 				try {
 					config.mnc = Integer.parseInt((String) PrivacyManager.getDefacedProp(uid, "MNC"));

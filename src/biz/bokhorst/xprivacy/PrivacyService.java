@@ -218,10 +218,10 @@ public class PrivacyService {
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
-				// 0 not restricted
-				// 1 restricted
-				// 2 not restricted, ask
-				// 3 restricted, ask
+				// 0 not restricted, ask
+				// 1 restricted, ask
+				// 2 not restricted, asked
+				// 3 restricted, asked
 
 				db.beginTransaction();
 				try {
@@ -231,7 +231,7 @@ public class PrivacyService {
 						cvalues.put("uid", restriction.uid);
 						cvalues.put("restriction", restriction.restrictionName);
 						cvalues.put("method", "");
-						cvalues.put("restricted", (restriction.restricted ? 1 : 0) + (restriction.ask ? 2 : 0));
+						cvalues.put("restricted", (restriction.restricted ? 1 : 0) + (restriction.asked ? 2 : 0));
 						db.insertWithOnConflict(cTableRestriction, null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
 					}
 
@@ -241,7 +241,7 @@ public class PrivacyService {
 						mvalues.put("uid", restriction.uid);
 						mvalues.put("restriction", restriction.restrictionName);
 						mvalues.put("method", restriction.methodName);
-						mvalues.put("restricted", (restriction.restricted ? 0 : 1) + (restriction.ask ? 2 : 0));
+						mvalues.put("restricted", (restriction.restricted ? 0 : 1) + (restriction.asked ? 2 : 0));
 						db.insertWithOnConflict(cTableRestriction, null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
 					}
 
@@ -324,7 +324,7 @@ public class PrivacyService {
 							cached = true;
 							ParcelableRestriction cache = mRestrictionCache.get(key).getRestriction();
 							result.restricted = cache.restricted;
-							result.ask = cache.ask;
+							result.asked = cache.asked;
 						}
 					}
 				}
@@ -351,7 +351,7 @@ public class PrivacyService {
 								stmtGetRestriction.bindString(3, "");
 								long state = stmtGetRestriction.simpleQueryForLong();
 								result.restricted = ((state & 1) != 0);
-								result.ask = ((state & 2) != 0);
+								result.asked = ((state & 2) != 0);
 							}
 						} catch (SQLiteDoneException ignored) {
 						}
@@ -365,7 +365,7 @@ public class PrivacyService {
 									stmtGetRestriction.bindString(3, restriction.methodName);
 									long state = stmtGetRestriction.simpleQueryForLong();
 									result.restricted = ((state & 1) == 0);
-									result.ask = ((state & 2) != 0);
+									result.asked = ((state & 2) != 0);
 								}
 							} catch (SQLiteDoneException ignored) {
 								// no change
@@ -898,11 +898,6 @@ public class PrivacyService {
 				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
 					return false;
 
-				// Check if already answered
-				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand + "."
-						+ restriction.restrictionName, true))
-					return false;
-
 				// Skip dangerous methods
 				boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 				Hook hook = PrivacyManager.getHook(restriction.restrictionName, restriction.methodName);
@@ -1005,7 +1000,7 @@ public class PrivacyService {
 			try {
 				// Apply choice
 				ParcelableRestriction result = new ParcelableRestriction(restriction.uid, restriction.restrictionName,
-						null, restricted);
+						null, restricted, true);
 				setRestriction(result);
 
 				// Make exceptions for dangerous methods
@@ -1026,10 +1021,6 @@ public class PrivacyService {
 				// Update modification time
 				setSetting(new ParcelableSetting(restriction.uid, PrivacyManager.cSettingModifyTime,
 						Long.toString(System.currentTimeMillis())));
-
-				// Do not ask again
-				String categorySetting = PrivacyManager.cSettingOnDemand + "." + restriction.restrictionName;
-				setSetting(new ParcelableSetting(restriction.uid, categorySetting, Boolean.toString(false)));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				synchronized (mListError) {
@@ -1209,6 +1200,20 @@ public class PrivacyService {
 						db.execSQL("DELETE FROM setting WHERE value = ''");
 						db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
 						db.setVersion(5);
+						db.setTransactionSuccessful();
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+					} finally {
+						db.endTransaction();
+					}
+				}
+
+				if (db.needUpgrade(6)) {
+					Util.log(null, Log.WARN, "Upgrading database to version 6");
+					db.beginTransaction();
+					try {
+						db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
+						db.setVersion(6);
 						db.setTransactionSuccessful();
 					} catch (Throwable ex) {
 						Util.bug(null, ex);

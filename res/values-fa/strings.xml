@@ -28,7 +28,6 @@
     <string name="menu_all">همه</string>
     <string name="menu_restriction_all">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
-    <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_clear_usage">Clear</string>
     <string name="menu_clear_db">Clear all data</string>

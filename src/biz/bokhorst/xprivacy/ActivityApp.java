@@ -75,8 +75,7 @@ public class ActivityApp extends Activity {
 	private static final int MENU_LAUNCH = 1;
 	private static final int MENU_SETTINGS = 2;
 	private static final int MENU_KILL = 3;
-	private static final int MENU_ONDEMAND = 4;
-	private static final int MENU_STORE = 5;
+	private static final int MENU_STORE = 4;
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -303,12 +302,9 @@ public class ActivityApp extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// Accounts
-		boolean accountsRestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), PrivacyManager.cAccounts,
-				null, false, false, null);
-		boolean appsRestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), PrivacyManager.cSystem, null,
-				false, false, null);
-		boolean contactsRestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), PrivacyManager.cContacts,
-				null, false, false, null);
+		boolean accountsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cAccounts, null).restricted;
+		boolean appsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cSystem, null).restricted;
+		boolean contactsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cContacts, null).restricted;
 
 		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
 		menu.findItem(R.id.menu_applications).setEnabled(appsRestricted);
@@ -339,10 +335,6 @@ public class ActivityApp extends Activity {
 			// Kill
 			MenuItem kill = appMenu.add(i, MENU_KILL, Menu.NONE, getString(R.string.menu_app_kill));
 			kill.setEnabled(PrivacyManager.isApplication(mAppInfo.getUid()));
-
-			// Clear on demand
-			MenuItem ondemand = appMenu.add(i, MENU_ONDEMAND, Menu.NONE, getString(R.string.menu_clear_ondemand));
-			ondemand.setEnabled(PrivacyManager.isApplication(mAppInfo.getUid()));
 
 			// Play store
 			MenuItem store = appMenu.add(i, MENU_STORE, Menu.NONE, getString(R.string.menu_app_store));
@@ -415,9 +407,6 @@ public class ActivityApp extends Activity {
 		case MENU_KILL:
 			optionKill(item.getGroupId());
 			return true;
-		case MENU_ONDEMAND:
-			optionOndemand(item.getGroupId());
-			return true;
 		case MENU_STORE:
 			optionStore(item.getGroupId());
 			return true;
@@ -454,7 +443,7 @@ public class ActivityApp extends Activity {
 		for (String restrictionName : listRestriction) {
 			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 			if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
-				if (PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName, null, false, false, null)) {
+				if (PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted) {
 					some = true;
 					break;
 				}
@@ -614,15 +603,6 @@ public class ActivityApp extends Activity {
 		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
-	}
-
-	private void optionOndemand(int which) {
-		for (String restrictionName : PrivacyManager.getRestrictions())
-			PrivacyManager.setSetting(null, mAppInfo.getUid(), PrivacyManager.cSettingOnDemand + "." + restrictionName,
-					null);
-
-		if (mPrivacyListAdapter != null)
-			mPrivacyListAdapter.notifyDataSetChanged();
 	}
 
 	private void optionStore(int which) {
@@ -923,7 +903,7 @@ public class ActivityApp extends Activity {
 			private boolean crestricted;
 			private boolean allRestricted;
 			private boolean someRestricted;
-			private boolean ondemand;
+			private boolean asked;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
@@ -937,8 +917,9 @@ public class ActivityApp extends Activity {
 					// Get info
 					used = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
-					crestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName, null, false,
-							false, null);
+					ParcelableRestriction query = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName,
+							null);
+					crestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 
 					// Get all/some restricted
 					allRestricted = true;
@@ -950,12 +931,10 @@ public class ActivityApp extends Activity {
 					}
 
 					if (PrivacyManager.getSettingBool(null, -mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false,
-							false)) {
-						String categorySetting = PrivacyManager.cSettingOnDemand + "." + restrictionName;
-						ondemand = PrivacyManager
-								.getSettingBool(null, -mAppInfo.getUid(), categorySetting, true, false);
-					} else
-						ondemand = false;
+							false))
+						asked = query.asked;
+					else
+						asked = true;
 
 					return holder;
 				}
@@ -979,14 +958,13 @@ public class ActivityApp extends Activity {
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
-					holder.tvChosen.setVisibility(!crestricted && ondemand ? View.VISIBLE : View.INVISIBLE);
+					holder.tvChosen.setVisibility(asked ? View.INVISIBLE : View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							crestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName, null,
-									false, false, null);
+							crestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 							crestricted = !crestricted;
 							boolean restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName,
 									null, crestricted);
@@ -1158,11 +1136,9 @@ public class ActivityApp extends Activity {
 					// Get info
 					md = (Hook) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName());
-					parentRestricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName, null,
-							false, false, null);
+					parentRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
-					restricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(), restrictionName, md.getName(),
-							false, false, null);
+					restricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, md.getName()).restricted;
 
 					return holder;
 				}
@@ -1191,8 +1167,8 @@ public class ActivityApp extends Activity {
 					holder.ctvMethodName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							boolean restricted = PrivacyManager.getRestriction(null, mAppInfo.getUid(),
-									restrictionName, md.getName(), false, false, null);
+							boolean restricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName,
+									md.getName()).restricted;
 							restricted = !restricted;
 							holder.ctvMethodName.setChecked(restricted);
 							boolean restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName,

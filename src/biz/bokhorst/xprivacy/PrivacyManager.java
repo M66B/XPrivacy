@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Process;
+import android.os.RemoteException;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -222,8 +223,18 @@ public class PrivacyManager {
 
 	// Restrictions
 
+	public static ParcelableRestriction getRestrictionEx(int uid, String restrictionName, String methodName) {
+		ParcelableRestriction query = new ParcelableRestriction(uid, restrictionName, methodName, false);
+		try {
+			return PrivacyService.getClient().getRestriction(query, false, null);
+		} catch (RemoteException ex) {
+			Util.bug(null, ex);
+			return query;
+		}
+	}
+
 	public static boolean getRestriction(final XHook hook, int uid, String restrictionName, String methodName,
-			boolean usage, boolean useCache, String secret) {
+			String secret) {
 		long start = System.currentTimeMillis();
 		boolean restricted = false;
 
@@ -239,13 +250,12 @@ public class PrivacyManager {
 		}
 
 		// Check usage
-		if (usage)
-			if (methodName == null || methodName.equals("")) {
-				Util.log(hook, Log.WARN, "Method empty");
-				Util.logStack(hook);
-			} else if (PrivacyManager.cTestVersion
-					&& getHooks(restrictionName).indexOf(new Hook(restrictionName, methodName)) < 0)
-				Util.log(hook, Log.WARN, "Unknown method=" + methodName);
+		if (methodName == null || methodName.equals("")) {
+			Util.log(hook, Log.WARN, "Method empty");
+			Util.logStack(hook);
+		} else if (PrivacyManager.cTestVersion
+				&& getHooks(restrictionName).indexOf(new Hook(restrictionName, methodName)) < 0)
+			Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
 		if (uid == Process.SYSTEM_UID && Util.hasLBE())
 			return false;
@@ -253,22 +263,21 @@ public class PrivacyManager {
 		// Check cache
 		boolean cached = false;
 		CRestriction key = new CRestriction(new ParcelableRestriction(uid, restrictionName, methodName));
-		if (useCache)
-			synchronized (mRestrictionCache) {
-				if (mRestrictionCache.containsKey(key)) {
-					CRestriction entry = mRestrictionCache.get(key);
-					if (!entry.isExpired()) {
-						cached = true;
-						restricted = entry.getRestriction().restricted;
-					}
+		synchronized (mRestrictionCache) {
+			if (mRestrictionCache.containsKey(key)) {
+				CRestriction entry = mRestrictionCache.get(key);
+				if (!entry.isExpired()) {
+					cached = true;
+					restricted = entry.getRestriction().restricted;
 				}
 			}
+		}
 
 		// Get restriction
 		if (!cached)
 			try {
 				restricted = PrivacyService.getClient().getRestriction(
-						new ParcelableRestriction(uid, restrictionName, methodName, false), usage, secret).restricted;
+						new ParcelableRestriction(uid, restrictionName, methodName, false), true, secret).restricted;
 
 				// Add to cache
 				key.setRestriction(new ParcelableRestriction(uid, restrictionName, methodName, restricted));
@@ -295,6 +304,11 @@ public class PrivacyManager {
 
 	public static boolean setRestriction(XHook hook, int uid, String restrictionName, String methodName,
 			boolean restricted) {
+		return setRestriction(hook, uid, restrictionName, methodName, restricted, restricted);
+	}
+
+	public static boolean setRestriction(XHook hook, int uid, String restrictionName, String methodName,
+			boolean restricted, boolean asked) {
 		// Check uid
 		if (uid == 0) {
 			Util.log(hook, Log.WARN, "uid=0");
@@ -304,7 +318,7 @@ public class PrivacyManager {
 		// Set restriction
 		try {
 			PrivacyService.getClient().setRestriction(
-					new ParcelableRestriction(uid, restrictionName, methodName, restricted));
+					new ParcelableRestriction(uid, restrictionName, methodName, restricted, asked));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -315,7 +329,7 @@ public class PrivacyManager {
 			if (restricted && !dangerous) {
 				for (Hook md : getHooks(restrictionName))
 					if (md.isDangerous())
-						PrivacyManager.setRestriction(hook, uid, restrictionName, md.getName(), dangerous);
+						PrivacyManager.setRestriction(hook, uid, restrictionName, md.getName(), dangerous, asked);
 			}
 
 		// Mark state as changed
@@ -373,7 +387,7 @@ public class PrivacyManager {
 		boolean restart = false;
 		for (String restrictionName : getRestrictions()) {
 			for (Hook md : getHooks(restrictionName))
-				if (getRestriction(null, uid, restrictionName, md.getName(), false, false, null))
+				if (getRestrictionEx(uid, restrictionName, md.getName()).restricted)
 					if (md.isRestartRequired()) {
 						restart = true;
 						break;

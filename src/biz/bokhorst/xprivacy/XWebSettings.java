@@ -58,7 +58,7 @@ public class XWebSettings extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.getDefaultUserAgent) {
 			int uid = Binder.getCallingUid();
-			if (getRestricted(uid, true)) {
+			if (getRestricted(uid)) {
 				String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 				param.setResult(ua);
 			}

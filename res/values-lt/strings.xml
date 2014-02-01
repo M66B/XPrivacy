@@ -27,7 +27,6 @@
     <string name="menu_all">Visos</string>
     <string name="menu_restriction_all">Išvalyti visus ribojimus</string>
     <string name="menu_clear_all">Išvalyti viską</string>
-    <string name="menu_clear_ondemand">Išvalyti ribojimus pagal pareikalavimą</string>
     <string name="menu_restrict_all">Įjungti visus ribojimus</string>
     <string name="menu_clear_usage">Valyti</string>
     <string name="menu_clear_db">Clear all data</string>

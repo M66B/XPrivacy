@@ -69,7 +69,7 @@ public class XWebView extends XHook {
 		if (mMethod == Methods.WebView) {
 			if (param.args.length > 0) {
 				int uid = Binder.getCallingUid();
-				if (getRestricted(uid, true)) {
+				if (getRestricted(uid)) {
 					String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 					WebView webView = (WebView) param.thisObject;
 					webView.getSettings().setUserAgentString(ua);

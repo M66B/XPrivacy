@@ -26,7 +26,6 @@
     <string name="menu_all">Vse</string>
     <string name="menu_restriction_all">Preklopi omejitve</string>
     <string name="menu_clear_all">Počisti vse</string>
-    <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Omeji vse</string>
     <string name="menu_clear_usage">Počisti</string>
     <string name="menu_clear_db">Clear all data</string>

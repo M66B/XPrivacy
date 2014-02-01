@@ -40,6 +40,12 @@ public class PackageChange extends BroadcastReceiver {
 							PrivacyManager.deleteSettings(uid);
 							PrivacyManager.deleteUsage(uid);
 
+							if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
+									PrivacyManager.cTestVersion, false))
+								// Enable on demand
+								PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingOnDemand,
+										Boolean.toString(true));
+
 							// Restrict new non-system apps
 							if (!appInfo.isSystem())
 								for (String restrictionName : PrivacyManager.getRestrictions()) {
@@ -53,12 +59,6 @@ public class PackageChange extends BroadcastReceiver {
 						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingState,
 								Integer.toString(ActivityMain.STATE_ATTENTION));
 
-						// Enable on demand
-						if (!replacing)
-							if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
-									PrivacyManager.cTestVersion, false))
-								PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingOnDemand,
-										Boolean.toString(true));
 					}
 
 					// New/update notification

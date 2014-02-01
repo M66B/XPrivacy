@@ -26,7 +26,6 @@
     <string name="menu_all">Všetko</string>
     <string name="menu_restriction_all">Prepnúť obmedzenia</string>
     <string name="menu_clear_all">Vymazať všetky</string>
-    <string name="menu_clear_ondemand">Vymazať voľby na požiadanie</string>
     <string name="menu_restrict_all">Obmedziť všetky</string>
     <string name="menu_clear_usage">Vymazať</string>
     <string name="menu_clear_db">Vymazať všetky údaje</string>

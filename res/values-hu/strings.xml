@@ -26,7 +26,6 @@
     <string name="menu_all">Minden</string>
     <string name="menu_restriction_all">Korlátozások kapcsolása</string>
     <string name="menu_clear_all">Összes törlése</string>
-    <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">Összes korlátozása</string>
     <string name="menu_clear_usage">Clear</string>
     <string name="menu_clear_db">Clear all data</string>

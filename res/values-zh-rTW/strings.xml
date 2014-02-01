@@ -26,7 +26,6 @@
     <string name="menu_all">所有程式</string>
     <string name="menu_restriction_all">套用預設規則</string>
     <string name="menu_clear_all">清除全部</string>
-    <string name="menu_clear_ondemand">Clear on demand choices</string>
     <string name="menu_restrict_all">限制全部</string>
     <string name="menu_clear_usage">清除記錄</string>
     <string name="menu_clear_db">Clear all data</string>
