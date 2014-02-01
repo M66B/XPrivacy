@@ -51,7 +51,7 @@ public class PackageChange extends BroadcastReceiver {
 								for (String restrictionName : PrivacyManager.getRestrictions()) {
 									String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 									if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
-										PrivacyManager.setRestriction(null, uid, restrictionName, null, true);
+										PrivacyManager.setRestriction(null, uid, restrictionName, null, true, true);
 								}
 						}
 
