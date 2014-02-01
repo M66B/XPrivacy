@@ -1104,6 +1104,7 @@ public class ActivityApp extends Activity {
 			public ImageView imgUsed;
 			public ImageView imgGranted;
 			public CheckedTextView ctvMethodName;
+			private TextView tvChosen;
 
 			private ChildViewHolder(View theRow, int gPosition, int cPosition) {
 				row = theRow;
@@ -1112,6 +1113,7 @@ public class ActivityApp extends Activity {
 				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
+				tvChosen = (TextView) row.findViewById(R.id.tvChosen);
 			}
 		}
 
@@ -1125,6 +1127,7 @@ public class ActivityApp extends Activity {
 			private boolean parentRestricted;
 			private boolean permission;
 			private boolean restricted;
+			private boolean asked;
 
 			public ChildHolderTask(int gPosition, int cPosition, ChildViewHolder theHolder, String theRestrictionName) {
 				groupPosition = gPosition;
@@ -1141,7 +1144,14 @@ public class ActivityApp extends Activity {
 					lastUsage = PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName());
 					parentRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
-					restricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, md.getName()).restricted;
+					ParcelableRestriction query = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, md.getName());
+					restricted = query.restricted;
+
+					if (PrivacyManager.getSettingBool(null, -mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false,
+							false))
+						asked = query.asked;
+					else
+						asked = true;
 
 					return holder;
 				}
@@ -1165,6 +1175,8 @@ public class ActivityApp extends Activity {
 					holder.ctvMethodName.setTypeface(null, lastUsage == 0 ? Typeface.NORMAL : Typeface.BOLD_ITALIC);
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 					holder.ctvMethodName.setChecked(restricted);
+
+					holder.tvChosen.setVisibility(asked ? View.INVISIBLE : View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.ctvMethodName.setOnClickListener(new View.OnClickListener() {

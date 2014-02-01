@@ -47,6 +47,7 @@
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
+    <string name="menu_category">Act on the entire category</string>
     <string name="msg_abort">Aborting</string>
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">New</string>

@@ -42,6 +42,7 @@
     <string name="menu_tutorial">說明</string>
     <string name="menu_exclude">排除</string>
     <string name="menu_close">關閉</string>
+    <string name="menu_category">Act on the entire category</string>
     <string name="msg_abort">正在取消...</string>
     <string name="msg_aborted">已取消</string>
     <string name="msg_new">已安裝</string>

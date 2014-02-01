@@ -30,11 +30,21 @@
 
     <CheckedTextView
         android:id="@+id/ctvMethodName"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
+        android:layout_weight="1"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:gravity="center_vertical"
         android:paddingLeft="6dip"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvChosen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/msg_question"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:visibility="invisible" />
 
 </LinearLayout>
