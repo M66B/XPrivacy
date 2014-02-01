@@ -67,7 +67,7 @@
     <string name="msg_migrating" formatted="false">Migriere %s</string>
     <string name="msg_randomizing" formatted="false">Zufall-Erzeugung %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_support_info">Eine interen Überprüfung ist fehlgeschlagen, möchten Sie die Supportinformationen senden?</string>
+    <string name="msg_support_info">Eine interne Überprüfung ist fehlgeschlagen, möchten Sie die Supportinformationen senden?</string>
     <string name="msg_ondemand" formatted="false">%1$s is trying to use %3$s in the %2$s category</string>
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_first"><b>XPrivacy wurde unter größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
