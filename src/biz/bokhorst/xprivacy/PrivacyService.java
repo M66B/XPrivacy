@@ -1011,6 +1011,7 @@ public class PrivacyService {
 				boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 				if (restricted && !dangerous) {
 					result.restricted = dangerous;
+					result.asked = false;
 					for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
 						if (hook.isDangerous()) {
 							result.methodName = hook.getName();
