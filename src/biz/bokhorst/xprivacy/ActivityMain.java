@@ -1489,7 +1489,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 											@Override
 											public void onClick(DialogInterface dialog, int which) {
 												// Update restriction
-												List<Boolean> oldState = PrivacyManager.getListStateRestartHooks(
+												List<Boolean> oldState = PrivacyManager.getRestartStates(
 														xAppInfo.getUid(), mRestrictionName);
 												PrivacyManager.deleteRestrictions(xAppInfo.getUid());
 												allRestricted = false;
@@ -1524,12 +1524,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 											|| PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null).restricted;
 								crestricted = !crestricted;
 
-								List<Boolean> oldState = PrivacyManager.getListStateRestartHooks(xAppInfo.getUid(),
+								List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 										mRestrictionName);
 								for (String restrictionName : listRestriction)
 									PrivacyManager.setRestriction(null, xAppInfo.getUid(), restrictionName, null,
 											crestricted);
-								List<Boolean> newState = PrivacyManager.getListStateRestartHooks(xAppInfo.getUid(),
+								List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 										mRestrictionName);
 
 								// Update all/some restricted

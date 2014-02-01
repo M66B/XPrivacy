@@ -14,7 +14,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
@@ -307,15 +306,16 @@ public class PrivacyManager {
 		return restricted;
 	}
 
-	public static void setRestriction(XHook hook, int uid, String restrictionName, String methodName,
-			boolean restricted) {
+	public static void setRestriction(XHook hook, int uid, String restrictionName, String methodName, boolean restricted) {
 		setRestriction(hook, uid, restrictionName, methodName, restricted, restricted);
 	}
 
-	public static void setRestriction(XHook hook, int uid, String restrictionName, String methodName, boolean restricted, boolean asked) {
+	public static void setRestriction(XHook hook, int uid, String restrictionName, String methodName,
+			boolean restricted, boolean asked) {
 		// Check uid
 		if (uid == 0) {
 			Util.log(hook, Log.WARN, "uid=0");
+			return;
 		}
 
 		// Set restriction
@@ -361,7 +361,7 @@ public class PrivacyManager {
 		return new ArrayList<ParcelableRestriction>();
 	}
 
-	public static List<Boolean> getListStateRestartHooks(int uid, String restrictionName) {
+	public static List<Boolean> getRestartStates(int uid, String restrictionName) {
 		// Returns a list of restriction states for functions whose application
 		// requires the app to be restarted.
 		List<Boolean> listRestartRestriction = new ArrayList<Boolean>();

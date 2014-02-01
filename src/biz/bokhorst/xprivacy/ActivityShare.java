@@ -639,7 +639,7 @@ public class ActivityShare extends Activity {
 					publishProgress(++mProgressCurrent, lstUid.size() + 1);
 					mAppAdapter.setState(uid, STATE_RUNNING, null);
 
-					List<Boolean> oldState = PrivacyManager.getListStateRestartHooks(uid, null);
+					List<Boolean> oldState = PrivacyManager.getRestartStates(uid, null);
 					if (restriction == null && mSomeRestricted)
 						PrivacyManager.deleteRestrictions(uid);
 					else if (restriction == null) {
@@ -647,7 +647,7 @@ public class ActivityShare extends Activity {
 							PrivacyManager.setRestriction(null, uid, restrictionName, null, !mSomeRestricted);
 					} else
 						PrivacyManager.setRestriction(null, uid, restriction, null, !mSomeRestricted);
-					List<Boolean> newState = PrivacyManager.getListStateRestartHooks(uid, null);
+					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
 
 					mAppAdapter.setState(uid, STATE_SUCCESS,
 							!newState.equals(oldState) ? getString(R.string.msg_restart) : null);
@@ -884,7 +884,7 @@ public class ActivityShare extends Activity {
 							mAppAdapter.setState(uid, STATE_RUNNING, null);
 
 							// Reset existing restrictions
-							List<Boolean> oldState = PrivacyManager.getListStateRestartHooks(uid, null);
+							List<Boolean> oldState = PrivacyManager.getRestartStates(uid, null);
 							PrivacyManager.deleteRestrictions(uid);
 
 							// Set imported restrictions
@@ -895,7 +895,7 @@ public class ActivityShare extends Activity {
 									PrivacyManager.setRestriction(null, uid, restrictionName, md.getMethodName(),
 											md.isRestricted());
 							}
-							List<Boolean> newState = PrivacyManager.getListStateRestartHooks(uid, null);
+							List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
 
 							mAppAdapter.setState(uid, STATE_SUCCESS,
 									!newState.equals(oldState) ? getString(R.string.msg_restart) : null);
@@ -1058,7 +1058,7 @@ public class ActivityShare extends Activity {
 							runOnUiThread(mProgress);
 
 							// Delete restrictions
-							mListRestartStates.put(uid, PrivacyManager.getListStateRestartHooks(uid, null));
+							mListRestartStates.put(uid, PrivacyManager.getRestartStates(uid, null));
 							PrivacyManager.deleteRestrictions(uid);
 						}
 
@@ -1106,10 +1106,10 @@ public class ActivityShare extends Activity {
 
 				// Restart notification
 				List<Boolean> oldState = mListRestartStates.get(lastUid);
-				List<Boolean> newState = PrivacyManager.getListStateRestartHooks(lastUid, null);
+				List<Boolean> newState = PrivacyManager.getRestartStates(lastUid, null);
 
 				// Mark as success
-				mAppAdapter.setState(lastUid, STATE_SUCCESS, 
+				mAppAdapter.setState(lastUid, STATE_SUCCESS,
 						!newState.equals(oldState) ? getString(R.string.msg_restart) : null);
 			}
 		}
@@ -1236,7 +1236,7 @@ public class ActivityShare extends Activity {
 								if (status.getBoolean("ok")) {
 									JSONArray settings = status.getJSONArray("settings");
 									// Delete existing restrictions
-									List<Boolean> oldState = PrivacyManager.getListStateRestartHooks(appInfo.getUid(), null);
+									List<Boolean> oldState = PrivacyManager.getRestartStates(appInfo.getUid(), null);
 									PrivacyManager.deleteRestrictions(appInfo.getUid());
 
 									// Set fetched restrictions
@@ -1253,7 +1253,7 @@ public class ActivityShare extends Activity {
 													restrictionName, methodName, restricted));
 									}
 									PrivacyManager.setRestrictionList(listRestriction);
-									List<Boolean> newState = PrivacyManager.getListStateRestartHooks(appInfo.getUid(), null);
+									List<Boolean> newState = PrivacyManager.getRestartStates(appInfo.getUid(), null);
 
 									// Mark as new/changed
 									PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingState,

@@ -460,14 +460,13 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// Do toggle
-				List<Boolean> oldState = PrivacyManager.getListStateRestartHooks(mAppInfo.getUid(), null);
+				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
 				for (String restrictionName : listRestriction) {
 					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 					if (PrivacyManager.getSettingBool(null, 0, templateName, !ondemand, false))
-						PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null,
-								restricted);
+						PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null, restricted);
 				}
-				List<Boolean> newState = PrivacyManager.getListStateRestartHooks(mAppInfo.getUid(), null);
+				List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
 
 				// Refresh display
 				if (mPrivacyListAdapter != null)
@@ -495,7 +494,7 @@ public class ActivityApp extends Activity {
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				List<Boolean> oldState = PrivacyManager.getListStateRestartHooks(mAppInfo.getUid(), null);
+				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
 				PrivacyManager.deleteRestrictions(mAppInfo.getUid());
 
 				// Refresh display
@@ -970,10 +969,9 @@ public class ActivityApp extends Activity {
 						public void onClick(View view) {
 							crestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 							crestricted = !crestricted;
-							List<Boolean> oldState = PrivacyManager.getListStateRestartHooks(mAppInfo.getUid(), restrictionName);
-							PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName,
-									null, crestricted);
-							List<Boolean> newState = PrivacyManager.getListStateRestartHooks(mAppInfo.getUid(), restrictionName);
+							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
+							PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null, crestricted);
+							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
 							// Update all/some restricted
 							allRestricted = true;
@@ -1189,8 +1187,8 @@ public class ActivityApp extends Activity {
 									md.getName()).restricted;
 							restricted = !restricted;
 							holder.ctvMethodName.setChecked(restricted);
-							PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName,
-									md.getName(), restricted);
+							PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, md.getName(),
+									restricted);
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent
