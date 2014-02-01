@@ -8,9 +8,18 @@ public class ParcelableRestriction implements Parcelable {
 	public String restrictionName;
 	public String methodName;
 	public boolean restricted;
+	public boolean asked;
 	public long time;
 
 	public ParcelableRestriction() {
+	}
+
+	public ParcelableRestriction(int _uid, String category, String method) {
+		uid = _uid;
+		restrictionName = category;
+		methodName = method;
+		restricted = false;
+		asked = false;
 	}
 
 	public ParcelableRestriction(int _uid, String category, String method, boolean _restricted) {
@@ -18,6 +27,15 @@ public class ParcelableRestriction implements Parcelable {
 		restrictionName = category;
 		methodName = method;
 		restricted = _restricted;
+		asked = false;
+	}
+
+	public ParcelableRestriction(int _uid, String category, String method, boolean _restricted, boolean _asked) {
+		uid = _uid;
+		restrictionName = category;
+		methodName = method;
+		restricted = _restricted;
+		asked = _asked;
 	}
 
 	public static final Parcelable.Creator<ParcelableRestriction> CREATOR = new Parcelable.Creator<ParcelableRestriction>() {
@@ -42,6 +60,7 @@ public class ParcelableRestriction implements Parcelable {
 		if (methodName != null)
 			out.writeString(methodName);
 		out.writeInt(restricted ? 1 : 0);
+		out.writeInt(asked ? 1 : 0);
 		out.writeLong(time);
 	}
 
@@ -53,6 +72,7 @@ public class ParcelableRestriction implements Parcelable {
 		else
 			methodName = in.readString();
 		restricted = (in.readInt() > 0 ? true : false);
+		asked = (in.readInt() > 0 ? true : false);
 		time = in.readLong();
 	}
 
