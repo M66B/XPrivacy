@@ -23,10 +23,11 @@ public class XBinder extends XHook {
 	private static int BITS_MAGIC = 16;
 
 	public static List<String> cListService = Arrays.asList(new String[] { "account", "activity", "clipboard",
-			"connectivity", "location", "telephony.registry", "package", "iphonesubinfo", "window", "wifi" });
+			"connectivity", "location", "telephony.registry", "telephony.msim.registry", "package", "iphonesubinfo",
+			"iphonesubinfo_msim", "window", "wifi" });
 
 	// @formatter:off
-	public static List<String> cListServiceName = Arrays.asList(new String[] {
+	public static List<String> cListDescription = Arrays.asList(new String[] {
 		"android.accounts.IAccountManager",
 		"android.app.IActivityManager",
 		"android.content.IClipboard",
@@ -34,8 +35,10 @@ public class XBinder extends XHook {
 		"android.location.ILocationManager",
 		// TODO: sensor interface
 		"com.android.internal.telephony.ITelephonyRegistry",
+		"com.android.internal.telephony.ITelephonyRegistryMSim",
 		"android.content.pm.IPackageManager",
 		"com.android.internal.telephony.IPhoneSubInfo",
+		"com.android.internal.telephony.msim.IPhoneSubInfoMSim",
 		"android.view.IWindowManager",
 		"android.net.wifi.IWifiManager"
 	});
@@ -110,7 +113,7 @@ public class XBinder extends XHook {
 					// Get interface name
 					Binder binder = (Binder) param.thisObject;
 					String name = binder.getInterfaceDescriptor();
-					if (cListServiceName.contains(name)) {
+					if (cListDescription.contains(name)) {
 						Util.log(this, Log.WARN, "restrict name=" + name + " uid=" + uid + " my=" + Process.myUid());
 						if (getRestricted(uid, PrivacyManager.cIPC, name)) {
 							// Get reply parcel

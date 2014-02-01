@@ -94,8 +94,10 @@ public class Meta {
 		listHook.add(new Hook("ipc", "android.net.IConnectivityManager", false, false, "", 1, "1.99.1", null));
 		listHook.add(new Hook("ipc", "android.location.ILocationManager", false, false, "", 1, "1.99.1", null));
 		listHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistry", false, false, "", 1, "1.99.1", null));
+		listHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistryMSim", false, false, "", 1, "1.99.26", null));
 		listHook.add(new Hook("ipc", "android.content.pm.IPackageManager", false, false, "", 1, "1.99.1", null));
 		listHook.add(new Hook("ipc", "com.android.internal.telephony.IPhoneSubInfo", false, false, "", 1, "1.99.1", null));
+		listHook.add(new Hook("ipc", "com.android.internal.telephony.msim.IPhoneSubInfoMSim", false, false, "", 1, "1.99.26", null));
 		listHook.add(new Hook("ipc", "android.view.IWindowManager", false, false, "", 1, "1.99.1", null));
 		listHook.add(new Hook("ipc", "android.net.wifi.IWifiManager", false, false, "", 1, "1.99.1", null));
 
