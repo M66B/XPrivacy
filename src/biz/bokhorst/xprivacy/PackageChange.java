@@ -40,9 +40,11 @@ public class PackageChange extends BroadcastReceiver {
 							PrivacyManager.deleteSettings(uid);
 							PrivacyManager.deleteUsage(uid);
 
-							if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
-									PrivacyManager.cTestVersion, false))
-								// Enable on demand
+							boolean experimental = PrivacyManager.getSettingBool(null, 0,
+									PrivacyManager.cSettingExperimental, PrivacyManager.cTestVersion, false);
+
+							// Enable on demand
+							if (experimental)
 								PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingOnDemand,
 										Boolean.toString(true));
 
@@ -50,10 +52,8 @@ public class PackageChange extends BroadcastReceiver {
 							if (!appInfo.isSystem())
 								for (String restrictionName : PrivacyManager.getRestrictions()) {
 									String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-									// TODO: change template default for on
-									// demand restricting
-									if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
-										PrivacyManager.setRestriction(null, uid, restrictionName, null, true, true);
+									if (PrivacyManager.getSettingBool(null, 0, templateName, !experimental, false))
+										PrivacyManager.setRestriction(null, uid, restrictionName, null, true);
 								}
 						}
 

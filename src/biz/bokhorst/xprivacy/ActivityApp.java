@@ -437,13 +437,15 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionApply() {
+		final boolean experimental = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
+				PrivacyManager.cTestVersion, false);
+
 		// Get toggle
 		boolean some = false;
 		final List<String> listRestriction = PrivacyManager.getRestrictions();
 		for (String restrictionName : listRestriction) {
 			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-			// TODO: change template default for on demand restricting
-			if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
+			if (PrivacyManager.getSettingBool(null, 0, templateName, !experimental, false))
 				if (PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted) {
 					some = true;
 					break;
@@ -462,10 +464,9 @@ public class ActivityApp extends Activity {
 				boolean restart = false;
 				for (String restrictionName : listRestriction) {
 					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-					// TODO: change template default for on demand restricting
-					if (PrivacyManager.getSettingBool(null, 0, templateName, true, false))
+					if (PrivacyManager.getSettingBool(null, 0, templateName, !experimental, false))
 						restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null,
-								restricted, true) || restart;
+								restricted) || restart;
 				}
 
 				// Refresh display

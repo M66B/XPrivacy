@@ -645,13 +645,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		List<String> listRestrictionName = new ArrayList<String>(tmRestriction.navigableKeySet());
 		final List<String> listLocalizedTitle = new ArrayList<String>(tmRestriction.values());
 
+		boolean experimental = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
+				PrivacyManager.cTestVersion, false);
+
 		CharSequence[] options = new CharSequence[listLocalizedTitle.size()];
 		listRestrictionName.toArray(options);
 		boolean[] selection = new boolean[listLocalizedTitle.size()];
 		for (int i = 0; i < listLocalizedTitle.size(); i++) {
 			String templateName = PrivacyManager.cSettingTemplate + "." + listLocalizedTitle.get(i);
-			// TODO: change template default for on demand restricting
-			selection[i] = PrivacyManager.getSettingBool(null, 0, templateName, true, false);
+			selection[i] = PrivacyManager.getSettingBool(null, 0, templateName, !experimental, false);
 		}
 
 		// Build dialog
