@@ -130,7 +130,7 @@ public class PrivacyManager {
 	public final static int cSettingCacheTimeoutMs = 30 * 1000;
 
 	// Static data
-	private static Map<String, List<Hook>> mMethod = new LinkedHashMap<String, List<Hook>>();
+	private static Map<String, Map<String, Hook>> mMethod = new LinkedHashMap<String, Map<String, Hook>>();
 	private static Map<String, List<Hook>> mPermission = new LinkedHashMap<String, List<Hook>>();
 	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
@@ -152,8 +152,8 @@ public class PrivacyManager {
 
 				// Enlist method
 				if (!mMethod.containsKey(restrictionName))
-					mMethod.put(restrictionName, new ArrayList<Hook>());
-				mMethod.get(restrictionName).add(hook);
+					mMethod.put(restrictionName, new HashMap<String, Hook>());
+				mMethod.get(restrictionName).put(hook.getName(), hook);
 
 				// Enlist permissions
 				String[] permissions = hook.getPermissions();
@@ -171,8 +171,7 @@ public class PrivacyManager {
 
 	public static void registerHook(String restrictionName, String methodName, int sdk) {
 		if (restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
-			if (!mMethod.containsKey(restrictionName)
-					|| !mMethod.get(restrictionName).contains(new Hook(restrictionName, methodName)))
+			if (!mMethod.containsKey(restrictionName) || !mMethod.get(restrictionName).containsKey(methodName))
 				Util.log(null, Log.WARN, "Missing method " + methodName + " SDK=" + Build.VERSION.SDK_INT);
 		}
 	}
@@ -193,20 +192,16 @@ public class PrivacyManager {
 	}
 
 	public static Hook getHook(String restrictionName, String methodName) {
-		if (mMethod.containsKey(restrictionName)) {
-			Hook md = new Hook(restrictionName, methodName);
-			int pos = mMethod.get(restrictionName).indexOf(md);
-			return (pos < 0 ? null : mMethod.get(restrictionName).get(pos));
-		} else
-			return null;
+		if (mMethod.containsKey(restrictionName))
+			if (mMethod.get(restrictionName).containsKey(methodName))
+				return mMethod.get(restrictionName).get(methodName);
+		return null;
 	}
 
 	public static List<Hook> getHooks(String restrictionName) {
 		List<Hook> listMethod = new ArrayList<Hook>();
-		List<Hook> listMethodOrig = mMethod.get(restrictionName);
-		if (listMethodOrig != null)
-			listMethod.addAll(listMethodOrig);
-		// null can happen when upgrading
+		for (String methodName : mMethod.get(restrictionName).keySet())
+			listMethod.add(mMethod.get(restrictionName).get(methodName));
 		Collections.sort(listMethod);
 		return listMethod;
 	}

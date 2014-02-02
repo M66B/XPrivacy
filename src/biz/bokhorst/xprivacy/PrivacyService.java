@@ -300,16 +300,21 @@ public class PrivacyService {
 						return result;
 				}
 
-				if (usage) {
-					// Check for system
-					if (!PrivacyManager.isApplication(restriction.uid))
-						if (!getSettingBool(0, PrivacyManager.cSettingSystem, false))
-							return result;
+				// Get meta data
+				Hook hook = PrivacyManager.getHook(restriction.restrictionName, restriction.methodName);
 
-					// Check if restrictions enabled
-					if (!getSettingBool(restriction.uid, PrivacyManager.cSettingRestricted, true))
+				// Disable usage data
+				if (hook != null && hook.hasNoUsageData())
+					usage = false;
+
+				// Check for system component
+				if (usage && !PrivacyManager.isApplication(restriction.uid))
+					if (!getSettingBool(0, PrivacyManager.cSettingSystem, false))
 						return result;
-				}
+
+				// Check if restrictions enabled
+				if (usage && !getSettingBool(restriction.uid, PrivacyManager.cSettingRestricted, true))
+					return result;
 
 				// Check cache
 				boolean cached = false;
@@ -377,10 +382,12 @@ public class PrivacyService {
 					// Fallback
 					if (!result.restricted && usage && PrivacyManager.isApplication(restriction.uid)
 							&& !getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
-						Hook hook = PrivacyManager.getHook(restriction.restrictionName, restriction.methodName);
-						if (hook != null && !hook.isDangerous())
+						if (hook != null && !hook.isDangerous()) {
 							result.restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
 									restriction.restrictionName, restriction.methodName);
+							Util.log(null, Log.WARN, "Fallback uid=" + restriction.uid + " "
+									+ restriction.restrictionName + restriction.methodName + "=" + result.restricted);
+						}
 					}
 
 					// Update cache
@@ -399,9 +406,8 @@ public class PrivacyService {
 					notifyRestricted(restriction);
 
 				// Ask to restrict
-				if (!result.asked && usage && restriction.methodName != null
-						&& PrivacyManager.isApplication(restriction.uid))
-					result.restricted = onDemandDialog(restriction);
+				if (!result.asked && usage && PrivacyManager.isApplication(restriction.uid))
+					result.restricted = onDemandDialog(hook, restriction);
 
 				// Log usage
 				if (usage && restriction.methodName != null)
@@ -886,12 +892,15 @@ public class PrivacyService {
 
 		// Helper methods
 
-		private Boolean onDemandDialog(final ParcelableRestriction restriction) {
+		private Boolean onDemandDialog(Hook hook, final ParcelableRestriction restriction) {
 			final ParcelableRestriction result = new ParcelableRestriction(restriction.uid,
 					restriction.restrictionName, null, false);
 			try {
 				// Without handler nothing can be done
 				if (mHandler == null)
+					return false;
+
+				if (restriction.methodName == null)
 					return false;
 
 				// Check if enabled
@@ -902,12 +911,7 @@ public class PrivacyService {
 
 				// Skip dangerous methods
 				boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
-				Hook hook = PrivacyManager.getHook(restriction.restrictionName, restriction.methodName);
 				if (!dangerous && hook.isDangerous())
-					return false;
-
-				// Skip hooks with no usage data
-				if (hook.hasNoUsageData())
 					return false;
 
 				// Get am context
