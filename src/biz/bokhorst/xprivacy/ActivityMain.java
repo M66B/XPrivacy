@@ -1489,7 +1489,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 											@Override
 											public void onClick(DialogInterface dialog, int which) {
 												// Update restriction
-												boolean restart = PrivacyManager.deleteRestrictions(xAppInfo.getUid());
+												List<Boolean> oldState = PrivacyManager.getRestartStates(
+														xAppInfo.getUid(), mRestrictionName);
+												PrivacyManager.deleteRestrictions(xAppInfo.getUid());
 												allRestricted = false;
 												someRestricted = false;
 
@@ -1501,7 +1503,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 																		R.attr.color_state_attention)));
 
 												// Notify restart
-												if (restart)
+												if (oldState.contains(true))
 													Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
 															Toast.LENGTH_SHORT).show();
 											}
@@ -1522,10 +1524,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 											|| PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null).restricted;
 								crestricted = !crestricted;
 
-								boolean restart = false;
+								List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
+										mRestrictionName);
 								for (String restrictionName : listRestriction)
-									restart = PrivacyManager.setRestriction(null, xAppInfo.getUid(), restrictionName,
-											null, crestricted) || restart;
+									PrivacyManager.setRestriction(null, xAppInfo.getUid(), restrictionName, null,
+											crestricted);
+								List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
+										mRestrictionName);
 
 								// Update all/some restricted
 								allRestricted = true;
@@ -1545,7 +1550,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 									holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 
 								// Notify restart
-								if (restart)
+								if (!newState.equals(oldState))
 									Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
 											Toast.LENGTH_SHORT).show();
 							}

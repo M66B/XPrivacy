@@ -460,20 +460,20 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// Do toggle
-				boolean restart = false;
+				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
 				for (String restrictionName : listRestriction) {
 					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 					if (PrivacyManager.getSettingBool(null, 0, templateName, !ondemand, false))
-						restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null,
-								restricted) || restart;
+						PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null, restricted);
 				}
+				List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
 
 				// Refresh display
 				if (mPrivacyListAdapter != null)
 					mPrivacyListAdapter.notifyDataSetChanged();
 
 				// Notify restart
-				if (restart)
+				if (!newState.equals(oldState))
 					Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
 			}
 		});
@@ -494,14 +494,15 @@ public class ActivityApp extends Activity {
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				boolean restart = PrivacyManager.deleteRestrictions(mAppInfo.getUid());
+				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
+				PrivacyManager.deleteRestrictions(mAppInfo.getUid());
 
 				// Refresh display
 				if (mPrivacyListAdapter != null)
 					mPrivacyListAdapter.notifyDataSetChanged();
 
 				// Notify restart
-				if (restart)
+				if (oldState.contains(true))
 					Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
 			}
 		});
@@ -968,8 +969,9 @@ public class ActivityApp extends Activity {
 						public void onClick(View view) {
 							crestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 							crestricted = !crestricted;
-							boolean restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName,
-									null, crestricted);
+							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
+							PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null, crestricted);
+							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
 							// Update all/some restricted
 							allRestricted = true;
@@ -992,7 +994,7 @@ public class ActivityApp extends Activity {
 							notifyDataSetChanged(); // Needed to update childs
 
 							// Notify restart
-							if (restart)
+							if (!newState.equals(oldState))
 								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
 										.show();
 						}
@@ -1185,14 +1187,14 @@ public class ActivityApp extends Activity {
 									md.getName()).restricted;
 							restricted = !restricted;
 							holder.ctvMethodName.setChecked(restricted);
-							boolean restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName,
-									md.getName(), restricted);
+							PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, md.getName(),
+									restricted);
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent
 
 							// Notify restart
-							if (restart)
+							if (md.isRestartRequired())
 								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
 										.show();
 						}
