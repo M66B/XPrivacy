@@ -726,7 +726,8 @@ public class PrivacyService {
 				SQLiteDatabase db = getDatabase();
 
 				// Fallback
-				if (!getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
+				if (!PrivacyManager.cSettingMigrated.equals(setting.name)
+						&& !getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
 					if (setting.uid == 0)
 						result.value = PrivacyProvider.getSettingFallback(setting.name, null, false);
 					if (result.value == null) {
