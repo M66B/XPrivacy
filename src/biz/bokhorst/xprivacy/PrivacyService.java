@@ -197,13 +197,6 @@ public class PrivacyService {
 		}
 
 		@Override
-		public void migrated() throws RemoteException {
-			SQLiteDatabase db = getDatabase();
-			if (db.getVersion() < 2)
-				db.setVersion(2);
-		}
-
-		@Override
 		public List<String> check() throws RemoteException {
 			enforcePermission();
 			File dbFile = getDbFile();
@@ -382,7 +375,8 @@ public class PrivacyService {
 					}
 
 					// Fallback
-					if (!result.restricted && usage && restriction.methodName != null && db.getVersion() == 1) {
+					if (!result.restricted && usage && PrivacyManager.isApplication(restriction.uid)
+							&& !getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
 						Hook hook = PrivacyManager.getHook(restriction.restrictionName, restriction.methodName);
 						if (hook != null && !hook.isDangerous())
 							result.restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
@@ -732,7 +726,7 @@ public class PrivacyService {
 				SQLiteDatabase db = getDatabase();
 
 				// Fallback
-				if (db.getVersion() == 1) {
+				if (!getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
 					if (setting.uid == 0)
 						result.value = PrivacyProvider.getSettingFallback(setting.name, null, false);
 					if (result.value == null) {
@@ -1199,6 +1193,25 @@ public class PrivacyService {
 		if (mDatabase == null) {
 			File dbFile = getDbFile();
 			SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
+
+			// Update migration status
+			if (db.getVersion() > 1) {
+				Util.log(null, Log.WARN, "Updating migration status");
+				db.beginTransaction();
+				try {
+					ContentValues values = new ContentValues();
+					values.put("uid", 0);
+					values.put("name", PrivacyManager.cSettingMigrated);
+					values.put("value", Boolean.toString(true));
+					db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
+					db.setTransactionSuccessful();
+				} finally {
+					db.endTransaction();
+				}
+			}
+
+			// Upgrade database if needed
 			if (db.needUpgrade(1)) {
 				db.beginTransaction();
 				try {
@@ -1218,65 +1231,62 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 
-			} else if (db.needUpgrade(2)) {
-				// Do nothing, done by migration
+			}
 
-			} else {
-				if (db.needUpgrade(3)) {
-					Util.log(null, Log.WARN, "Upgrading database to version 3");
-					db.beginTransaction();
-					try {
-						db.execSQL("DELETE FROM usage WHERE method=''");
-						db.setVersion(3);
-						db.setTransactionSuccessful();
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					} finally {
-						db.endTransaction();
-					}
+			if (db.needUpgrade(2))
+				// Old migrated indication
+				db.setVersion(2);
+
+			if (db.needUpgrade(3)) {
+				db.beginTransaction();
+				try {
+					db.execSQL("DELETE FROM usage WHERE method=''");
+					db.setVersion(3);
+					db.setTransactionSuccessful();
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				} finally {
+					db.endTransaction();
 				}
+			}
 
-				if (db.needUpgrade(4)) {
-					Util.log(null, Log.WARN, "Upgrading database to version 4");
-					db.beginTransaction();
-					try {
-						db.execSQL("DELETE FROM setting WHERE value IS NULL");
-						db.setVersion(4);
-						db.setTransactionSuccessful();
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					} finally {
-						db.endTransaction();
-					}
+			if (db.needUpgrade(4)) {
+				db.beginTransaction();
+				try {
+					db.execSQL("DELETE FROM setting WHERE value IS NULL");
+					db.setVersion(4);
+					db.setTransactionSuccessful();
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				} finally {
+					db.endTransaction();
 				}
+			}
 
-				if (db.needUpgrade(5)) {
-					Util.log(null, Log.WARN, "Upgrading database to version 5");
-					db.beginTransaction();
-					try {
-						db.execSQL("DELETE FROM setting WHERE value = ''");
-						db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
-						db.setVersion(5);
-						db.setTransactionSuccessful();
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					} finally {
-						db.endTransaction();
-					}
+			if (db.needUpgrade(5)) {
+				db.beginTransaction();
+				try {
+					db.execSQL("DELETE FROM setting WHERE value = ''");
+					db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
+					db.setVersion(5);
+					db.setTransactionSuccessful();
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				} finally {
+					db.endTransaction();
 				}
+			}
 
-				if (db.needUpgrade(6)) {
-					Util.log(null, Log.WARN, "Upgrading database to version 6");
-					db.beginTransaction();
-					try {
-						db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
-						db.setVersion(6);
-						db.setTransactionSuccessful();
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					} finally {
-						db.endTransaction();
-					}
+			if (db.needUpgrade(6)) {
+				db.beginTransaction();
+				try {
+					db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
+					db.setVersion(6);
+					db.setTransactionSuccessful();
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				} finally {
+					db.endTransaction();
 				}
 			}
 

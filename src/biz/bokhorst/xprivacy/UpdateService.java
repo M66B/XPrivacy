@@ -137,7 +137,8 @@ public class UpdateService extends Service {
 			Util.log(null, Log.WARN, "Nothing to migrate");
 
 		// Complete migration
-		PrivacyService.getClient().migrated();
+		PrivacyService.getClient().setSetting(
+				new ParcelableSetting(0, PrivacyManager.cSettingMigrated, Boolean.toString(true)));
 	}
 
 	private static void upgrade(Context context) throws NameNotFoundException {
