@@ -115,6 +115,17 @@ public class PrivacyService {
 							@Override
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 								try {
+									int uid = -1;
+									try {
+										Class<?> pr = Class.forName("com.android.server.am.ProcessRecord");
+										if (param.args.length > 0 && param.args[0].getClass().equals(pr)) {
+											uid = (Integer) pr.getDeclaredField("uid").get(param.args[0]);
+										}
+									} catch (ClassNotFoundException ignored) {
+									} catch (NoSuchFieldException ignored) {
+									}
+									Util.log(null, Log.WARN, "ANR uid=" + uid + " ondemand=" + mOnDemanding);
+
 									// Delay ANR while on demand dialog open
 									if (mOnDemanding)
 										param.setResult(5 * 1000);
@@ -923,6 +934,9 @@ public class PrivacyService {
 					// Create semaphore
 					final Semaphore semaphore = new Semaphore(1);
 					semaphore.acquireUninterruptibly();
+
+					Util.log(null, Log.WARN, "On demand uid=" + restriction.uid + " " + restriction.restrictionName
+							+ "/" + restriction.methodName);
 
 					// Run dialog in looper
 					mHandler.post(new Runnable() {
