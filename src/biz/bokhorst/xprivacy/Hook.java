@@ -56,8 +56,8 @@ public class Hook implements Comparable<Hook> {
 		return mRestart;
 	}
 
-	public boolean hasNoUsageData() {
-		return mNoUsageData;
+	public boolean hasUsageData() {
+		return !mNoUsageData;
 	}
 
 	public String[] getPermissions() {

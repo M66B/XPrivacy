@@ -304,10 +304,6 @@ public class PrivacyService {
 				// Get meta data
 				Hook hook = PrivacyManager.getHook(restriction.restrictionName, restriction.methodName);
 
-				// Disable usage data
-				if (hook != null && hook.hasNoUsageData())
-					usage = false;
-
 				// Check for system component
 				if (usage && !PrivacyManager.isApplication(restriction.uid))
 					if (!getSettingBool(0, PrivacyManager.cSettingSystem, false))
@@ -411,7 +407,7 @@ public class PrivacyService {
 					result.restricted = onDemandDialog(hook, restriction);
 
 				// Log usage
-				if (usage && restriction.methodName != null)
+				if (usage && hook.hasUsageData() && restriction.methodName != null)
 					if (getSettingBool(0, PrivacyManager.cSettingUsage, true)) {
 						// Check secret
 						boolean allowed = true;
