@@ -12,7 +12,7 @@ public class XWifiConfigStore extends XHook {
 	private Methods mMethod;
 
 	private XWifiConfigStore(Methods method, String restrictionName) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name(), "Srv." + method.name());
 		mMethod = method;
 	}
 
