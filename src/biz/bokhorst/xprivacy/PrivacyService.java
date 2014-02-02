@@ -12,9 +12,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedBridge;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -46,6 +43,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
+import de.robv.android.xposed.XposedBridge;
 
 public class PrivacyService {
 	private static int mXUid = -1;
@@ -109,25 +110,22 @@ public class PrivacyService {
 			// Catch ANR's
 			try {
 				final Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
-				for (Method anr : cam.getDeclaredMethods())
+
+				for (Method anr : cam.getDeclaredMethods()) {
+					// Foreground
+					// @formatter:off
+					// public long inputDispatchingTimedOut(int pid, final boolean aboveSystem, String reason)
+					// public boolean inputDispatchingTimedOut(final ProcessRecord proc, final ActivityRecord activity, final ActivityRecord parent, final boolean aboveSystem, String reason)
+					// @formatter:on
 					if (anr.getName().equals("inputDispatchingTimedOut")) {
 						Util.log(null, Log.WARN, "Hooking " + anr);
 						XposedBridge.hookMethod(anr, new XC_MethodHook() {
 							@Override
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 								try {
-									int uid = -1;
-									try {
-										Class<?> pr = Class.forName("com.android.server.am.ProcessRecord");
-										if (param.args.length > 0 && param.args[0].getClass().equals(pr)) {
-											uid = (Integer) pr.getDeclaredField("uid").get(param.args[0]);
-										}
-									} catch (ClassNotFoundException ignored) {
-									} catch (NoSuchFieldException ignored) {
-									}
-									Util.log(null, Log.WARN, "ANR uid=" + uid + " ondemand=" + mOnDemanding);
-
 									// Delay ANR while on demand dialog open
+									Util.log(null, Log.WARN, "Foreground ANR uid=" + getUidANR(param) + " ondemand="
+											+ mOnDemanding);
 									if (mOnDemanding)
 										param.setResult(5 * 1000);
 								} catch (Throwable ex) {
@@ -138,6 +136,31 @@ public class PrivacyService {
 							}
 						});
 					}
+
+					// Background
+					// @formatter:off
+					// final void appNotResponding(ProcessRecord app, ActivityRecord activity, ActivityRecord parent, boolean aboveSystem, final String annotation)
+					// @formatter:on
+					if (anr.getName().equals("appNotResponding")) {
+						Util.log(null, Log.WARN, "Hooking " + anr);
+						XposedBridge.hookMethod(anr, new XC_MethodHook() {
+							@Override
+							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+								try {
+									// Ignore ANR while on demand dialog open
+									Util.log(null, Log.WARN, "Background ANR uid=" + getUidANR(param) + " ondemand="
+											+ mOnDemanding);
+									if (mOnDemanding)
+										param.setResult(null);
+								} catch (Throwable ex) {
+									Util.bug(null, ex);
+									mListError.add(ex.toString());
+									mListError.add(Log.getStackTraceString(ex));
+								}
+							}
+						});
+					}
+				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				mListError.add(ex.toString());
@@ -166,6 +189,19 @@ public class PrivacyService {
 			mListError.add(ex.toString());
 			mListError.add(Log.getStackTraceString(ex));
 		}
+	}
+
+	private static int getUidANR(MethodHookParam param) throws IllegalAccessException {
+		int uid = -1;
+		try {
+			Class<?> pr = Class.forName("com.android.server.am.ProcessRecord");
+			if (param.args.length > 0 && param.args[0].getClass().equals(pr)) {
+				uid = (Integer) pr.getDeclaredField("uid").get(param.args[0]);
+			}
+		} catch (ClassNotFoundException ignored) {
+		} catch (NoSuchFieldException ignored) {
+		}
+		return uid;
 	}
 
 	public static boolean checkClient() {
@@ -939,19 +975,14 @@ public class PrivacyService {
 				if (!dangerous && hook.isDangerous())
 					return false;
 
-				// Skip methods with no usage data
-				if (!hook.hasUsageData()) {
-					Util.log(null, Log.WARN, "No ondemand for " + restriction.restrictionName + "/"
-							+ restriction.methodName);
-					return false;
-				}
-
 				// Get am context
 				final Context context = getContext();
 				if (context == null)
 					return false;
 
 				// Go ask
+				Util.log(null, Log.WARN, "On demand uid=" + restriction.uid + " " + restriction.restrictionName + "/"
+						+ restriction.methodName);
 				synchronized (this) {
 					mOnDemanding = true;
 
@@ -959,7 +990,7 @@ public class PrivacyService {
 					final Semaphore semaphore = new Semaphore(1);
 					semaphore.acquireUninterruptibly();
 
-					Util.log(null, Log.WARN, "On demand uid=" + restriction.uid + " " + restriction.restrictionName
+					Util.log(null, Log.WARN, "On demanding uid=" + restriction.uid + " " + restriction.restrictionName
 							+ "/" + restriction.methodName);
 
 					// Run dialog in looper
