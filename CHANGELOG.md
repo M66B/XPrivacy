@@ -11,7 +11,13 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Experimental functions**
 
+* None at this time
+
 **Next release**
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.26 TEST**
 
 * Less restrictive database file permissions, always set on boot
 * Support for multi SIM IPC restrictions (Huawei and maybe others)
@@ -22,8 +28,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed randomize on access not sticking for latitude and longitude
 * Updated German translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.25 BETA**
 
