@@ -42,6 +42,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -944,34 +945,55 @@ public class PrivacyService {
 										TextUtils.join(", ", appInfo.getApplicationName()),
 										resources.getString(stringId), restriction.methodName);
 
-								// Ask
-								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-								alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
+								int hmargin = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+								int vmargin = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin);
 
-								LinearLayout llPrompt = new LinearLayout(context);
-								llPrompt.setOrientation(LinearLayout.VERTICAL);
-								LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
-										LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-								llPrompt.setLayoutParams(lParams);
+								// Build view
+								LinearLayout llContainer = new LinearLayout(context);
+								llContainer.setOrientation(LinearLayout.VERTICAL);
+								LinearLayout.LayoutParams llContainerParams = new LinearLayout.LayoutParams(
+										LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+								llContainer.setLayoutParams(llContainerParams);
+								llContainer.setPadding(hmargin, vmargin, hmargin, vmargin);
 
-								TextView tvMessage = new TextView(context);
-								tvMessage.setText(message);
-								lParams.setMargins(resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin),
-										resources.getDimensionPixelSize(R.dimen.activity_vertical_margin),
-										resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin), 0);
-								tvMessage.setLayoutParams(lParams);
-								llPrompt.addView(tvMessage);
+								// Container for icon & message
+								LinearLayout llApplication = new LinearLayout(context);
+								llApplication.setOrientation(LinearLayout.HORIZONTAL);
+								LinearLayout.LayoutParams llApplicationParams = new LinearLayout.LayoutParams(
+										LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+								llApplication.setLayoutParams(llApplicationParams);
+								{
+									// Application icon
+									ImageView ivApp = new ImageView(context);
+									ivApp.setImageDrawable(appInfo.getIcon(context));
+									llApplication.addView(ivApp);
 
+									// Message
+									TextView tvMessage = new TextView(context);
+									tvMessage.setText(message);
+									LinearLayout.LayoutParams tvMessageParams = new LinearLayout.LayoutParams(
+											LinearLayout.LayoutParams.WRAP_CONTENT,
+											LinearLayout.LayoutParams.WRAP_CONTENT);
+									tvMessageParams.setMargins(hmargin / 2, 0, 0, 0);
+									tvMessage.setLayoutParams(tvMessageParams);
+									llApplication.addView(tvMessage);
+								}
+								llContainer.addView(llApplication);
+
+								// Category check box
 								final CheckBox cbCategory = new CheckBox(context);
 								cbCategory.setText(resources.getString(R.string.menu_category));
 								cbCategory.setChecked(true);
-								lParams.setMargins(0, 0, 0,
-										resources.getDimensionPixelSize(R.dimen.activity_vertical_margin));
-								cbCategory.setLayoutParams(lParams);
-								llPrompt.addView(cbCategory);
+								LinearLayout.LayoutParams llCategoryParams = new LinearLayout.LayoutParams(
+										LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+								llCategoryParams.setMargins(0, vmargin / 2, 0, 0);
+								cbCategory.setLayoutParams(llCategoryParams);
+								llContainer.addView(cbCategory);
 
-								alertDialogBuilder.setView(llPrompt);
-
+								// Ask
+								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+								alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
+								alertDialogBuilder.setView(llContainer);
 								alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
 								alertDialogBuilder.setPositiveButton(resources.getString(R.string.title_deny),
 										new DialogInterface.OnClickListener() {
