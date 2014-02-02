@@ -275,7 +275,10 @@ public class SettingsDialog {
 
 			// Application specific settings
 			cbNotify.setChecked(notify);
-			cbOnDemand.setChecked(ondemand);
+			if (PrivacyManager.isApplication(uid))
+				cbOnDemand.setChecked(ondemand);
+			else
+				cbOnDemand.setVisibility(View.GONE);
 		}
 
 		// Common
