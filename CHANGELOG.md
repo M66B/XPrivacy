@@ -15,10 +15,13 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Attempt to fix reboot in relation to on demand  ([issue](https://github.com/M66B/XPrivacy/issues/1238))
-* Updated Lithuanian translation
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.28 TEST**
+
+* Attempt to fix reboot in relation to on demand  ([issue](https://github.com/M66B/XPrivacy/issues/1238))
+* Upgrading *Srv.getConfiguredNetworks* (dangerous function)
+* Updated Lithuanian translation
 
 **Version 1.99.27 TEST**
 

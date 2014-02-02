@@ -62,7 +62,7 @@ public class PrivacyService {
 	private static SQLiteStatement stmtGetUsageRestriction = null;
 	private static SQLiteStatement stmtGetUsageMethod = null;
 
-	private static int cCurrentVersion = 261;
+	private static int cCurrentVersion = 262;
 	private static String cServiceName = "xprivacy" + cCurrentVersion;
 	private static String cTableRestriction = "restriction";
 	private static String cTableUsage = "usage";

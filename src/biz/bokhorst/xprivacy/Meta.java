@@ -154,7 +154,7 @@ public class Meta {
 		listHook.add(new Hook("network", "getDhcpInfo", false, false, "ACCESS_WIFI_STATE", 10, null, null));
 		listHook.add(new Hook("network", "getScanResults", false, false, "ACCESS_WIFI_STATE", 10, null, null));
 		listHook.add(new Hook("network", "getWifiApConfiguration", false, false, "ACCESS_WIFI_STATE", 10, null, null));
-		listHook.add(new Hook("network", "Srv.getConfiguredNetworks", true, false, "", 1, "1.99.27", null));
+		listHook.add(new Hook("network", "Srv.getConfiguredNetworks", true, false, "", 1, "1.99.28", null));
 
 		listHook.add(new Hook("nfc", "getNfcAdapter", false, false, "NFC", 14, null, null));
 		listHook.add(new Hook("nfc", "getDefaultAdapter", false, false, "NFC", 10, null, null));
