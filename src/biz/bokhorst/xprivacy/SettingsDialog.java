@@ -434,26 +434,31 @@ public class SettingsDialog {
 				PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingSerial, getValue(cbSerial, etSerial));
 
 				// Set latitude
-				try {
-					float lat = Float.parseFloat(etLat.getText().toString().replace(',', '.'));
-					if (lat < -90 || lat > 90)
-						throw new InvalidParameterException();
-					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLatitude,
-							cbLat.isChecked() ? PrivacyManager.cValueRandom : Float.toString(lat));
-				} catch (Throwable ex) {
-					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLatitude, null);
-				}
+				if (cbLat.isChecked())
+					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLatitude, PrivacyManager.cValueRandom);
+				else
+					try {
+						float lat = Float.parseFloat(etLat.getText().toString().replace(',', '.'));
+						if (lat < -90 || lat > 90)
+							throw new InvalidParameterException();
+
+						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLatitude, Float.toString(lat));
+					} catch (Throwable ignored) {
+						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLatitude, null);
+					}
 
 				// Set longitude
-				try {
-					float lon = Float.parseFloat(etLon.getText().toString().replace(',', '.'));
-					if (lon < -180 || lon > 180)
-						throw new InvalidParameterException();
-					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLongitude,
-							cbLon.isChecked() ? PrivacyManager.cValueRandom : Float.toString(lon));
-				} catch (Throwable ex) {
-					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLongitude, null);
-				}
+				if (cbLon.isChecked())
+					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLongitude, PrivacyManager.cValueRandom);
+				else
+					try {
+						float lon = Float.parseFloat(etLon.getText().toString().replace(',', '.'));
+						if (lon < -180 || lon > 180)
+							throw new InvalidParameterException();
+						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLongitude, Float.toString(lon));
+					} catch (Throwable ignored) {
+						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLongitude, null);
+					}
 
 				// Other settings
 				PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingMac, getValue(cbMac, etMac));

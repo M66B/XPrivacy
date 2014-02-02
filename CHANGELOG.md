@@ -14,13 +14,14 @@ Test and beta releases will have experimental functions enabled by default.
 * Restricting on demand
 	* You can enable this feature in the application specific settings
 	* Newly installed applications will have this feature enabled by default (if experimental is enabled)
-	* You can clear the choices made by tapping on the application icon and selecting the appropriate menu
 	* Restrictions that will be asked for will have a question mark after the restriction check box
 
 **Next release**
 
 * Less restrictive database file permissions, always set on boot
 * Support for multi SIM IPC restrictions (Huawei and maybe others)
+* Added *act on category* check box to restricting on demand prompt, thanks @[jpeg729](https://github.com/jpeg729)
+* Fixed randomize on access not sticking for latitude and longitude
 * Updated German translation
 * Updated Slovak translation
 
