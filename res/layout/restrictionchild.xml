@@ -29,17 +29,17 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="?android:attr/listPreferredItemHeightSmall"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingLeft="6dip" >
 
         <CheckedTextView
             android:id="@+id/ctvMethodName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?android:attr/listPreferredItemHeightSmall"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center_vertical"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
