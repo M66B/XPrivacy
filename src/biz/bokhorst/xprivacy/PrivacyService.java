@@ -100,6 +100,7 @@ public class PrivacyService {
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
 						mListError.add(ex.toString());
+						mListError.add(Log.getStackTraceString(ex));
 					}
 				}
 			});
@@ -132,6 +133,7 @@ public class PrivacyService {
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
 									mListError.add(ex.toString());
+									mListError.add(Log.getStackTraceString(ex));
 								}
 							}
 						});
@@ -139,6 +141,7 @@ public class PrivacyService {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				mListError.add(ex.toString());
+				mListError.add(Log.getStackTraceString(ex));
 			}
 
 			// Register privacy service
@@ -161,6 +164,7 @@ public class PrivacyService {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 			mListError.add(ex.toString());
+			mListError.add(Log.getStackTraceString(ex));
 		}
 	}
 
@@ -276,6 +280,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 				throw new RemoteException(ex.toString());
 			}
@@ -454,6 +459,7 @@ public class PrivacyService {
 										Util.bug(null, ex);
 										synchronized (mListError) {
 											mListError.add(ex.toString());
+											mListError.add(Log.getStackTraceString(ex));
 										}
 									}
 								}
@@ -464,6 +470,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 			}
 			return result;
@@ -493,6 +500,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 				throw new RemoteException(ex.toString());
 			}
@@ -524,6 +532,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 				throw new RemoteException(ex.toString());
 			}
@@ -582,6 +591,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 				throw new RemoteException(ex.toString());
 			}
@@ -629,6 +639,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 				throw new RemoteException(ex.toString());
 			}
@@ -657,6 +668,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 				throw new RemoteException(ex.toString());
 			}
@@ -706,6 +718,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 				throw new RemoteException(ex.toString());
 			}
@@ -791,6 +804,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 			}
 			return result;
@@ -825,6 +839,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 				throw new RemoteException(ex.toString());
 			}
@@ -856,6 +871,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 				throw new RemoteException(ex.toString());
 			}
@@ -893,6 +909,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 				throw new RemoteException(ex.toString());
 			}
@@ -1050,6 +1067,7 @@ public class PrivacyService {
 								Util.bug(null, ex);
 								synchronized (mListError) {
 									mListError.add(ex.toString());
+									mListError.add(Log.getStackTraceString(ex));
 								}
 								semaphore.release();
 							}
@@ -1064,6 +1082,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 			}
 			return result.restricted;
@@ -1116,6 +1135,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				synchronized (mListError) {
 					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
 				}
 			}
 		}
