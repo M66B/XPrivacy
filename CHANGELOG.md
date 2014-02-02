@@ -15,6 +15,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Attempt to fix reboot in relation to on demand  ([issue](https://github.com/M66B/XPrivacy/issues/1238))
 * Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

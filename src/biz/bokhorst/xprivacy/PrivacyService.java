@@ -922,6 +922,13 @@ public class PrivacyService {
 				if (!dangerous && hook.isDangerous())
 					return false;
 
+				// Skip methods with no usage data
+				if (Process.myUid() == Process.SYSTEM_UID) {
+					Util.log(null, Log.WARN, "No ondemand for " + restriction.restrictionName + "/"
+							+ restriction.methodName);
+					return false;
+				}
+
 				// Get am context
 				final Context context = getContext();
 				if (context == null)
