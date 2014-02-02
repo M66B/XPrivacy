@@ -41,6 +41,9 @@ import android.os.StrictMode.ThreadPolicy;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class PrivacyService {
@@ -226,7 +229,7 @@ public class PrivacyService {
 				db.beginTransaction();
 				try {
 					// Create category record
-					if (restriction.methodName == null || restriction.restricted) {
+					if (restriction.methodName == null) {
 						ContentValues cvalues = new ContentValues();
 						cvalues.put("uid", restriction.uid);
 						cvalues.put("restriction", restriction.restrictionName);
@@ -356,7 +359,7 @@ public class PrivacyService {
 						} catch (SQLiteDoneException ignored) {
 						}
 
-						if (result.restricted && restriction.methodName != null)
+						if (restriction.methodName != null)
 							try {
 								synchronized (stmtGetRestriction) {
 									stmtGetRestriction.clearBindings();
@@ -364,8 +367,10 @@ public class PrivacyService {
 									stmtGetRestriction.bindString(2, restriction.restrictionName);
 									stmtGetRestriction.bindString(3, restriction.methodName);
 									long state = stmtGetRestriction.simpleQueryForLong();
-									result.restricted = ((state & 1) == 0);
-									result.asked = ((state & 2) != 0);
+									if (result.restricted)
+										result.restricted = ((state & 1) == 0);
+									if (!result.asked)
+										result.asked = ((state & 2) != 0);
 								}
 							} catch (SQLiteDoneException ignored) {
 								// no change
@@ -400,7 +405,7 @@ public class PrivacyService {
 					notifyRestricted(restriction);
 
 				// Ask to restrict
-				if (!result.restricted && usage && restriction.methodName != null
+				if (!result.asked && usage && restriction.methodName != null
 						&& PrivacyManager.isApplication(restriction.uid))
 					result.restricted = onDemandDialog(restriction);
 
@@ -941,7 +946,31 @@ public class PrivacyService {
 								// Ask
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 								alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
-								alertDialogBuilder.setMessage(message);
+
+								LinearLayout llPrompt = new LinearLayout(context);
+								llPrompt.setOrientation(LinearLayout.VERTICAL);
+								LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
+										LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+								llPrompt.setLayoutParams(lParams);
+
+								TextView tvMessage = new TextView(context);
+								tvMessage.setText(message);
+								lParams.setMargins(resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin),
+										resources.getDimensionPixelSize(R.dimen.activity_vertical_margin),
+										resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin), 0);
+								tvMessage.setLayoutParams(lParams);
+								llPrompt.addView(tvMessage);
+
+								final CheckBox cbCategory = new CheckBox(context);
+								cbCategory.setText(resources.getString(R.string.menu_category));
+								cbCategory.setChecked(true);
+								lParams.setMargins(0, 0, 0,
+										resources.getDimensionPixelSize(R.dimen.activity_vertical_margin));
+								cbCategory.setLayoutParams(lParams);
+								llPrompt.addView(cbCategory);
+
+								alertDialogBuilder.setView(llPrompt);
+
 								alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
 								alertDialogBuilder.setPositiveButton(resources.getString(R.string.title_deny),
 										new DialogInterface.OnClickListener() {
@@ -949,7 +978,7 @@ public class PrivacyService {
 											public void onClick(DialogInterface dialog, int which) {
 												// Deny
 												result.restricted = true;
-												onDemandChoice(restriction, true);
+												onDemandChoice(restriction, cbCategory.isChecked(), true);
 												semaphore.release();
 											}
 										});
@@ -968,7 +997,7 @@ public class PrivacyService {
 											public void onClick(DialogInterface dialog, int which) {
 												// Allow
 												result.restricted = false;
-												onDemandChoice(restriction, false);
+												onDemandChoice(restriction, cbCategory.isChecked(), false);
 												semaphore.release();
 											}
 										});
@@ -1000,23 +1029,40 @@ public class PrivacyService {
 			return result.restricted;
 		}
 
-		private void onDemandChoice(ParcelableRestriction restriction, boolean restricted) {
+		private void onDemandChoice(ParcelableRestriction restriction, boolean category, boolean restricted) {
 			try {
-				// Apply choice
-				ParcelableRestriction result = new ParcelableRestriction(restriction.uid, restriction.restrictionName,
-						null, restricted, true);
-				setRestriction(result);
+				if (category || restricted) {
+					// Set category restricted, but if the user has requested
+					// blocking a single function, keep asking for the others
+					ParcelableRestriction result = new ParcelableRestriction(restriction.uid,
+							restriction.restrictionName, null, restricted, category);
+					setRestriction(result);
 
-				// Make exceptions for dangerous methods
-				boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
-				if (restricted && !dangerous) {
-					result.restricted = dangerous;
-					result.asked = false;
-					for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
-						if (hook.isDangerous()) {
-							result.methodName = hook.getName();
-							setRestriction(result);
-						}
+					// Make exceptions for dangerous methods
+					boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+					if (restricted && !dangerous) {
+						result.restricted = dangerous;
+						result.asked = true;
+
+						for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
+							if (hook.isDangerous()) {
+								result.methodName = hook.getName();
+								setRestriction(result);
+							}
+					}
+
+					// Restrict the requested function & don't ask again
+					if (!category) {
+						result.methodName = restriction.methodName;
+						result.restricted = true;
+						result.asked = true;
+						setRestriction(result);
+					}
+				} else {
+					// Leave the category, add an exception for the function
+					ParcelableRestriction result = new ParcelableRestriction(restriction.uid,
+							restriction.restrictionName, restriction.methodName, restricted, true);
+					setRestriction(result);
 				}
 
 				// Mark state as changed
