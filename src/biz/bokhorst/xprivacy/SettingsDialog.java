@@ -211,8 +211,8 @@ public class SettingsDialog {
 		boolean log = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingLog, false, false);
 		boolean components = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingSystem, false, false);
 		boolean dangerous = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingDangerous, false, false);
-		boolean experimental = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingExperimental,
-				PrivacyManager.cTestVersion, false);
+		boolean experimental = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingExperimental, false,
+				false);
 		boolean https = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingHttps, true, false);
 		String confidence = PrivacyManager.getSetting(null, uid, PrivacyManager.cSettingConfidence, "", false);
 		final boolean expert = (components || dangerous || experimental || !https || !"".equals(confidence));
@@ -222,7 +222,7 @@ public class SettingsDialog {
 
 		// Application specific
 		boolean notify = PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingNotify, true, false);
-		final boolean ondemand = PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingOnDemand, false,
+		final boolean ondemand = PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingOnDemand, uid == 0,
 				false);
 
 		String serial = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSerial, "", false);
@@ -242,7 +242,6 @@ public class SettingsDialog {
 		if (uid == 0) {
 			// Disable app settings
 			cbNotify.setVisibility(View.GONE);
-			cbOnDemand.setVisibility(View.GONE);
 
 			// Global settings
 			cbUsage.setChecked(usage);
@@ -275,11 +274,12 @@ public class SettingsDialog {
 
 			// Application specific settings
 			cbNotify.setChecked(notify);
-			if (PrivacyManager.isApplication(uid))
-				cbOnDemand.setChecked(ondemand);
-			else
-				cbOnDemand.setVisibility(View.GONE);
 		}
+
+		if (uid == 0 || PrivacyManager.isApplication(uid))
+			cbOnDemand.setChecked(ondemand);
+		else
+			cbOnDemand.setVisibility(View.GONE);
 
 		// Common
 		cbRandom.setChecked(random);
@@ -425,9 +425,11 @@ public class SettingsDialog {
 					// App specific settings
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingNotify,
 							Boolean.toString(cbNotify.isChecked()));
+				}
+
+				if (uid == 0 || PrivacyManager.isApplication(uid))
 					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingOnDemand,
 							Boolean.toString(cbOnDemand.isChecked()));
-				}
 
 				// Random at boot
 				PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingRandom,

@@ -437,15 +437,14 @@ public class ActivityApp extends Activity {
 	}
 
 	private void optionApply() {
-		final boolean experimental = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingExperimental,
-				PrivacyManager.cTestVersion, false);
+		final boolean ondemand = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingOnDemand, true, false);
 
 		// Get toggle
 		boolean some = false;
 		final List<String> listRestriction = PrivacyManager.getRestrictions();
 		for (String restrictionName : listRestriction) {
 			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-			if (PrivacyManager.getSettingBool(null, 0, templateName, !experimental, false))
+			if (PrivacyManager.getSettingBool(null, 0, templateName, !ondemand, false))
 				if (PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted) {
 					some = true;
 					break;
@@ -464,7 +463,7 @@ public class ActivityApp extends Activity {
 				boolean restart = false;
 				for (String restrictionName : listRestriction) {
 					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-					if (PrivacyManager.getSettingBool(null, 0, templateName, !experimental, false))
+					if (PrivacyManager.getSettingBool(null, 0, templateName, !ondemand, false))
 						restart = PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null,
 								restricted) || restart;
 				}
@@ -1144,7 +1143,8 @@ public class ActivityApp extends Activity {
 					lastUsage = PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName());
 					parentRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
-					ParcelableRestriction query = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, md.getName());
+					ParcelableRestriction query = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName,
+							md.getName());
 					restricted = query.restricted;
 
 					if (PrivacyManager.getSettingBool(null, -mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false,

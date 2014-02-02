@@ -123,7 +123,6 @@ public class PrivacyManager {
 
 	// Constants
 	public final static int cXposedAppProcessMinVersion = 46;
-	public final static boolean cTestVersion = true;
 
 	private final static String cDeface = "DEFACE";
 	public final static int cRestrictionCacheTimeoutMs = 15 * 1000;
@@ -253,8 +252,7 @@ public class PrivacyManager {
 		if (methodName == null || methodName.equals("")) {
 			Util.log(hook, Log.WARN, "Method empty");
 			Util.logStack(hook);
-		} else if (PrivacyManager.cTestVersion
-				&& getHooks(restrictionName).indexOf(new Hook(restrictionName, methodName)) < 0)
+		} else if (getHooks(restrictionName).indexOf(new Hook(restrictionName, methodName)) < 0)
 			Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
 		if (uid == Process.SYSTEM_UID && Util.hasLBE())

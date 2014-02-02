@@ -900,6 +900,8 @@ public class PrivacyService {
 					return false;
 
 				// Check if enabled
+				if (!getSettingBool(0, PrivacyManager.cSettingOnDemand, true))
+					return false;
 				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
 					return false;
 
