@@ -255,7 +255,7 @@ public class PrivacyManager {
 		} else if (getHooks(restrictionName).indexOf(new Hook(restrictionName, methodName)) < 0)
 			Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
-		if (uid == Process.SYSTEM_UID && Util.hasLBE())
+		if (!isApplication(uid) && Util.hasLBE())
 			return false;
 
 		// Check cache
@@ -322,21 +322,19 @@ public class PrivacyManager {
 		}
 
 		// Make exceptions for dangerous methods
-		boolean dangerous = PrivacyManager.getSettingBool(hook, 0, PrivacyManager.cSettingDangerous, false, false);
+		boolean dangerous = getSettingBool(hook, 0, cSettingDangerous, false, false);
 		if (methodName == null)
 			if (restricted && !dangerous) {
 				for (Hook md : getHooks(restrictionName))
 					if (md.isDangerous())
-						PrivacyManager.setRestriction(hook, uid, restrictionName, md.getName(), dangerous, asked);
+						setRestriction(hook, uid, restrictionName, md.getName(), dangerous, asked);
 			}
 
 		// Mark state as changed
-		PrivacyManager
-				.setSetting(hook, uid, PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
+		setSetting(hook, uid, cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
 
 		// Update modification time
-		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingModifyTime,
-				Long.toString(System.currentTimeMillis()));
+		setSetting(null, uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
 
 		// Check if restart required
 		return shouldRestart(restrictionName, methodName, restricted);
@@ -368,7 +366,7 @@ public class PrivacyManager {
 	}
 
 	public static boolean shouldRestart(String restrictionName, String methodName, boolean restricted) {
-		boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false, false);
+		boolean dangerous = getSettingBool(null, 0, cSettingDangerous, false, false);
 		if (methodName == null) {
 			for (Hook md : getHooks(restrictionName))
 				if (md.isRestartRequired() && !(restricted && !dangerous && md.isDangerous()))
@@ -402,12 +400,10 @@ public class PrivacyManager {
 		}
 
 		// Mark as new/changed
-		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingState,
-				Integer.toString(ActivityMain.STATE_ATTENTION));
+		setSetting(null, uid, cSettingState, Integer.toString(ActivityMain.STATE_ATTENTION));
 
 		// Change app modification time
-		PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingModifyTime,
-				Long.toString(System.currentTimeMillis()));
+		setSetting(null, uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
 
 		return restart;
 	}
@@ -418,7 +414,7 @@ public class PrivacyManager {
 		try {
 			List<ParcelableRestriction> listRestriction = new ArrayList<ParcelableRestriction>();
 			if (restrictionName == null)
-				for (String sRestrictionName : PrivacyManager.getRestrictions())
+				for (String sRestrictionName : getRestrictions())
 					listRestriction.add(new ParcelableRestriction(uid, sRestrictionName, methodName, false));
 			else
 				listRestriction.add(new ParcelableRestriction(uid, restrictionName, methodName, false));
@@ -470,7 +466,7 @@ public class PrivacyManager {
 		long start = System.currentTimeMillis();
 		String value = null;
 
-		if (uid == Process.SYSTEM_UID && Util.hasLBE())
+		if (!isApplication(uid) && Util.hasLBE())
 			return defaultValue;
 
 		// Check cache
@@ -516,7 +512,7 @@ public class PrivacyManager {
 			}
 
 		long ms = System.currentTimeMillis() - start;
-		if (!willExpire && !PrivacyManager.cSettingLog.equals(name))
+		if (!willExpire && !cSettingLog.equals(name))
 			if (ms > 1)
 				Util.log(hook, Log.INFO, String.format("get setting uid=%d %s=%s%s %d ms", uid, name, value,
 						(cached ? " (cached)" : ""), ms));
@@ -910,8 +906,7 @@ public class PrivacyManager {
 		if (mPermissionRestrictionCache.get(uid) == null)
 			mPermissionRestrictionCache.append(uid, new HashMap<String, Boolean>());
 		if (!mPermissionRestrictionCache.get(uid).containsKey(restrictionName)) {
-			boolean permission = hasPermission(context, appInfo.getPackageName(),
-					PrivacyManager.getPermissions(restrictionName));
+			boolean permission = hasPermission(context, appInfo.getPackageName(), getPermissions(restrictionName));
 			mPermissionRestrictionCache.get(uid).put(restrictionName, permission);
 		}
 		return mPermissionRestrictionCache.get(uid).get(restrictionName);

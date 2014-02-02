@@ -17,6 +17,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Support for multi SIM IPC restrictions (Huawei and maybe others)
 * Added *act on category* check box to restricting on demand prompt, thanks @[jpeg729](https://github.com/jpeg729)
 * On demand restricting default enabled (there is a new main setting to disable it)
+* If LBE Security Master is enabled, only applications can be restricted ([issue](https://github.com/M66B/XPrivacy/issues/1231))
 * Fixed randomize on access not sticking for latitude and longitude
 * Updated German translation
 * Updated Slovak translation
