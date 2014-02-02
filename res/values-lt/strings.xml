@@ -29,7 +29,7 @@
     <string name="menu_clear_all">Išvalyti viską</string>
     <string name="menu_restrict_all">Įjungti visus ribojimus</string>
     <string name="menu_clear_usage">Valyti</string>
-    <string name="menu_clear_db">Clear all data</string>
+    <string name="menu_clear_db">Išvalyti visus duomenis</string>
     <string name="menu_usage_all">Perjungti filtrą</string>
     <string name="menu_apply">Taikyti šabloną</string>
     <string name="menu_clear">Išvalyti</string>
@@ -121,7 +121,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_sinvert">Atvirkštinė rūšiavimo tvarka</string>
     <string name="title_allow">Leisti</string>
     <string name="title_deny">Drausti</string>
-    <string name="title_denyonce">Deny once</string>
+    <string name="title_denyonce">Uždrausti kartą</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
