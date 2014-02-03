@@ -1228,13 +1228,25 @@ public class PrivacyService {
 				if (category || restricted) {
 					// Set category restricted, but if the user has requested
 					// blocking a single function, keep asking for the others
+					boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 					PRestriction result = new PRestriction(restriction.uid, restriction.restrictionName, null,
-							restricted, category);
+							restricted, category && !dangerous);
 					setRestrictionInternal(result);
 
-					// Make exceptions for dangerous methods
-					if (restricted) {
-						boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+					if (category && restricted && dangerous) {
+						// Set asked=true on each method except dangerous ones
+						result.restricted = true;
+
+						for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName)) {
+							// Only set it if it hasn't been marked asked
+							result.methodName = hook.getName();
+							if (!getRestriction(result, false, null).asked) {
+								result.asked = !hook.isDangerous();
+								setRestrictionInternal(result);
+							}
+						}
+					} else if (restricted) {
+						// Make exceptions for dangerous methods
 						result.restricted = dangerous;
 						result.asked = !dangerous;
 
