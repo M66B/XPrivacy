@@ -283,6 +283,11 @@ public class PrivacyService {
 
 		private void setRestrictionInternal(PRestriction restriction) throws RemoteException {
 			try {
+				if (restriction.restrictionName == null) {
+					Util.log(null, Log.ERROR, "Set invalid restriction " + restriction);
+					return;
+				}
+
 				SQLiteDatabase db = getDatabase();
 				// 0 not restricted, ask
 				// 1 restricted, ask
@@ -316,7 +321,7 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 
-				// Clear cache
+				// Update cache
 				if (mUseCache)
 					synchronized (mRestrictionCache) {
 						CRestriction key = new CRestriction(restriction);
@@ -349,6 +354,10 @@ public class PrivacyService {
 
 			try {
 				// No permissions enforced, but usage data requires a secret
+				if (restriction.restrictionName == null) {
+					Util.log(null, Log.ERROR, "Get invalid restriction " + restriction);
+					return result;
+				}
 
 				// Check for self
 				if (Util.getAppId(restriction.uid) == getXUid()) {
