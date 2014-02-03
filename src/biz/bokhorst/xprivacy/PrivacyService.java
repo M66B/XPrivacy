@@ -949,6 +949,13 @@ public class PrivacyService {
 					db.execSQL("DELETE FROM usage");
 					Util.log(null, Log.WARN, "Database cleared");
 
+					// Reset migrated
+					ContentValues values = new ContentValues();
+					values.put("uid", 0);
+					values.put("name", PrivacyManager.cSettingMigrated);
+					values.put("value", Boolean.toString(true));
+					db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
 					db.setTransactionSuccessful();
 				} finally {
 					db.endTransaction();
