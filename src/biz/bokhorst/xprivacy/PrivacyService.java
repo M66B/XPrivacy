@@ -211,7 +211,7 @@ public class PrivacyService {
 						});
 					}
 
-					// public void goingToSleep()
+					// public void wakingUp()
 					if (method.getName().equals("wakingUp")) {
 						Util.log(null, Log.WARN, "Hooking " + method);
 						XposedBridge.hookMethod(method, new XC_MethodHook() {
