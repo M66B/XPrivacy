@@ -755,7 +755,7 @@ public class PrivacyManager {
 		else
 			location.setLongitude(Float.parseFloat(sLon) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
 
-		location.setAltitude(0);
+		location.setAltitude(686 + (Math.random() * 2.0 - 1.0) * location.getAccuracy());
 
 		return location;
 	}
