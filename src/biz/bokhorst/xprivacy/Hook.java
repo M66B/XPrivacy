@@ -37,7 +37,6 @@ public class Hook implements Comparable<Hook> {
 
 	public Hook restart() {
 		mRestart = true;
-		mNoOnDemand = true;
 		return this;
 	}
 
