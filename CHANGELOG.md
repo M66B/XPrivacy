@@ -18,7 +18,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed on demand choice not sticking
 * Fixed on demand asking for same restriction
 * Fixed reboot problem in relation to on demand ([issue](https://github.com/M66B/XPrivacy/issues/1238))
-* Fake locations get a height of 686 meter +/- accuracy ([issue](https://github.com/M66B/XPrivacy/issues/1179))
+* Added setting for height ([issue](https://github.com/M66B/XPrivacy/issues/1179))
 * Added restriction for *getGpsStatus* ([issue](https://github.com/M66B/XPrivacy/issues/1179))
 * Removed restriction *Srv.getConfiguredNetworks*
 

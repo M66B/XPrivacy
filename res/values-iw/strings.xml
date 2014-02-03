@@ -124,6 +124,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">קו אורך</string>
     <string name="settings_lon">קו רוחב</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">כתובת MAC</string>
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">מספר טלפון</string>

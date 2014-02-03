@@ -226,6 +226,21 @@
 
                 <TableRow>
 
+                    <CheckBox android:id="@+id/cbAlt" />
+
+                    <TextView
+                        android:text="@string/settings_alt"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etAlt"
+                        android:hint="686"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:singleLine="true" />
+                </TableRow>
+
+                <TableRow>
+
                     <View />
 
                     <Button

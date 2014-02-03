@@ -124,6 +124,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>
+    <string name="settings_alt">Hoogte</string>
     <string name="settings_mac">MAC adres</string>
     <string name="settings_ip">IP adres</string>
     <string name="settings_phone">Telefoonnummer</string>

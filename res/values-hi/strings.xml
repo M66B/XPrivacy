@@ -124,6 +124,7 @@
     <string name="settings_serial">क्रमांक#</string>
     <string name="settings_lat">अक्षांश</string>
     <string name="settings_lon">रेखांश</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">MAC address</string>
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">फ़ोन संख्या</string>

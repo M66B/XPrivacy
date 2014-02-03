@@ -124,6 +124,7 @@
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">MAC-Adresse</string>
     <string name="settings_ip">IP-Adresse</string>
     <string name="settings_phone">Telefonnummer</string>

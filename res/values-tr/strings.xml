@@ -123,6 +123,7 @@
     <string name="settings_serial">Seri no</string>
     <string name="settings_lat">Enlem</string>
     <string name="settings_lon">Boylam</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">MAC adresi</string>
     <string name="settings_ip">IP adresi</string>
     <string name="settings_phone">Telefon numarası</string>

@@ -66,6 +66,7 @@ public class PrivacyManager {
 	public final static String cSettingSerial = "Serial";
 	public final static String cSettingLatitude = "Latitude";
 	public final static String cSettingLongitude = "Longitude";
+	public final static String cSettingAltitude = "Altitude";
 	public final static String cSettingMac = "Mac";
 	public final static String cSettingIP = "IP";
 	public final static String cSettingImei = "IMEI";
@@ -733,29 +734,29 @@ public class PrivacyManager {
 	}
 
 	public static Location getDefacedLocation(int uid, Location location) {
-		String sLat = getSetting(null, uid, cSettingLatitude, null, true);
-		String sLon = getSetting(null, uid, cSettingLongitude, null, true);
+		// Christmas Island ~ -10.5 / 105.667
+		String sLat = getSetting(null, uid, cSettingLatitude, "-10.5", true);
+		String sLon = getSetting(null, uid, cSettingLongitude, "105.667", true);
+		String sAlt = getSetting(null, uid, cSettingAltitude, "686", true);
+
+		// Backward compatibility
+		if ("".equals(sLat))
+			sLat = "-10.5";
+		if ("".equals(sLon))
+			sLon = "105.667";
 
 		if (cValueRandom.equals(sLat))
 			sLat = getRandomProp("LAT");
 		if (cValueRandom.equals(sLon))
 			sLon = getRandomProp("LON");
+		if (cValueRandom.equals(sAlt))
+			sAlt = getRandomProp("ALT");
 
 		// 1 degree ~ 111111 m
 		// 1 m ~ 0,000009 degrees
-		// Christmas Island ~ -10.5 / 105.667
-
-		if (sLat == null || "".equals(sLat))
-			location.setLatitude(-10.5);
-		else
-			location.setLatitude(Float.parseFloat(sLat) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
-
-		if (sLon == null || "".equals(sLon))
-			location.setLongitude(105.667);
-		else
-			location.setLongitude(Float.parseFloat(sLon) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
-
-		location.setAltitude(686 + (Math.random() * 2.0 - 1.0) * location.getAccuracy());
+		location.setLatitude(Float.parseFloat(sLat) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
+		location.setLongitude(Float.parseFloat(sLon) + (Math.random() * 2.0 - 1.0) * location.getAccuracy() * 9e-6);
+		location.setAltitude(Float.parseFloat(sAlt) + (Math.random() * 2.0 - 1.0) * location.getAccuracy());
 
 		return location;
 	}
@@ -830,6 +831,11 @@ public class PrivacyManager {
 		if (name.equals("LON")) {
 			double d = r.nextDouble() * 360 - 180;
 			d = Math.rint(d * 1e7) / 1e7;
+			return Double.toString(d);
+		}
+
+		if (name.equals("ALT")) {
+			double d = r.nextDouble() * 2 * 686;
 			return Double.toString(d);
 		}
 

@@ -125,6 +125,7 @@
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">Adres MAC</string>
     <string name="settings_ip">Adres IP</string>
     <string name="settings_phone">Numer telefonu</string>

@@ -17,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SettingsDialog {
 
@@ -56,6 +57,7 @@ public class SettingsDialog {
 		final EditText etSerial = (EditText) dlgSettings.findViewById(R.id.etSerial);
 		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
 		final EditText etLon = (EditText) dlgSettings.findViewById(R.id.etLon);
+		final EditText etAlt = (EditText) dlgSettings.findViewById(R.id.etAlt);
 		final EditText etSearch = (EditText) dlgSettings.findViewById(R.id.etSearch);
 		final Button btnSearch = (Button) dlgSettings.findViewById(R.id.btnSearch);
 		final EditText etMac = (EditText) dlgSettings.findViewById(R.id.etMac);
@@ -77,6 +79,7 @@ public class SettingsDialog {
 		final CheckBox cbSerial = (CheckBox) dlgSettings.findViewById(R.id.cbSerial);
 		final CheckBox cbLat = (CheckBox) dlgSettings.findViewById(R.id.cbLat);
 		final CheckBox cbLon = (CheckBox) dlgSettings.findViewById(R.id.cbLon);
+		final CheckBox cbAlt = (CheckBox) dlgSettings.findViewById(R.id.cbAlt);
 		final CheckBox cbMac = (CheckBox) dlgSettings.findViewById(R.id.cbMac);
 		final CheckBox cbImei = (CheckBox) dlgSettings.findViewById(R.id.cbImei);
 		final CheckBox cbPhone = (CheckBox) dlgSettings.findViewById(R.id.cbPhone);
@@ -90,10 +93,10 @@ public class SettingsDialog {
 		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
 		Button btnCancel = (Button) dlgSettings.findViewById(R.id.btnCancel);
 
-		final EditText[] edits = new EditText[] { etSerial, etLat, etLon, etMac, etIP, etImei, etPhone, etId, etGsfId,
-				etAdId, etMcc, etMnc, etCountry, etOperator, etIccId, etSubscriber, etSSID, etUa };
+		final EditText[] edits = new EditText[] { etSerial, etLat, etLon, etAlt, etMac, etIP, etImei, etPhone, etId,
+				etGsfId, etAdId, etMcc, etMnc, etCountry, etOperator, etIccId, etSubscriber, etSSID, etUa };
 
-		final CheckBox[] boxes = new CheckBox[] { cbSerial, cbLat, cbLon, cbMac, cbImei, cbPhone, cbId, cbGsfId,
+		final CheckBox[] boxes = new CheckBox[] { cbSerial, cbLat, cbLon, cbAlt, cbMac, cbImei, cbPhone, cbId, cbGsfId,
 				cbAdId, cbCountry, cbSubscriber, cbSSID };
 
 		// Listen for changes
@@ -133,6 +136,13 @@ public class SettingsDialog {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				etLon.setEnabled(!isChecked);
+			}
+		});
+
+		cbAlt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				etAlt.setEnabled(!isChecked);
 			}
 		});
 
@@ -228,6 +238,7 @@ public class SettingsDialog {
 		String serial = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingSerial, "", false);
 		String lat = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingLatitude, "", false);
 		String lon = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingLongitude, "", false);
+		String alt = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingAltitude, "", false);
 		String mac = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingMac, "", false);
 		String imei = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingImei, "", false);
 		String phone = PrivacyManager.getSetting(null, -uid, PrivacyManager.cSettingPhone, "", false);
@@ -288,6 +299,7 @@ public class SettingsDialog {
 		cbSerial.setChecked(serial.equals(PrivacyManager.cValueRandom));
 		cbLat.setChecked(lat.equals(PrivacyManager.cValueRandom));
 		cbLon.setChecked(lon.equals(PrivacyManager.cValueRandom));
+		cbAlt.setChecked(alt.equals(PrivacyManager.cValueRandom));
 		cbMac.setChecked(mac.equals(PrivacyManager.cValueRandom));
 		cbImei.setChecked(imei.equals(PrivacyManager.cValueRandom));
 		cbPhone.setChecked(phone.equals(PrivacyManager.cValueRandom));
@@ -302,6 +314,7 @@ public class SettingsDialog {
 		etSerial.setText(cbSerial.isChecked() ? "" : serial);
 		etLat.setText(cbLat.isChecked() ? "" : lat);
 		etLon.setText(cbLon.isChecked() ? "" : lon);
+		etAlt.setText(cbAlt.isChecked() ? "" : alt);
 		etMac.setText(cbMac.isChecked() ? "" : mac);
 		etImei.setText(cbImei.isChecked() ? "" : imei);
 		etPhone.setText(cbPhone.isChecked() ? "" : phone);
@@ -315,6 +328,7 @@ public class SettingsDialog {
 		etSerial.setEnabled(!cbSerial.isChecked());
 		etLat.setEnabled(!cbLat.isChecked());
 		etLon.setEnabled(!cbLon.isChecked());
+		etAlt.setEnabled(!cbAlt.isChecked());
 
 		etSearch.setEnabled(Geocoder.isPresent());
 		btnSearch.setEnabled(Geocoder.isPresent());
@@ -341,18 +355,20 @@ public class SettingsDialog {
 			@Override
 			public void onClick(View view) {
 				try {
-					etLat.setText("");
-					etLon.setText("");
 					String search = etSearch.getText().toString();
 					final List<Address> listAddress = new Geocoder(context).getFromLocationName(search, 1);
 					if (listAddress.size() > 0) {
 						Address address = listAddress.get(0);
 
 						// Get coordinates
-						if (address.hasLatitude())
+						if (address.hasLatitude()) {
+							cbLat.setChecked(false);
 							etLat.setText(Double.toString(address.getLatitude()));
-						if (address.hasLongitude())
+						}
+						if (address.hasLongitude()) {
+							cbLon.setChecked(false);
 							etLon.setText(Double.toString(address.getLongitude()));
+						}
 
 						// Get address
 						StringBuilder sb = new StringBuilder();
@@ -364,6 +380,7 @@ public class SettingsDialog {
 						etSearch.setText(sb.toString());
 					}
 				} catch (Throwable ex) {
+					Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
 					Util.bug(null, ex);
 				}
 			}
@@ -389,6 +406,7 @@ public class SettingsDialog {
 				etSerial.setText(PrivacyManager.getRandomProp("SERIAL"));
 				etLat.setText(PrivacyManager.getRandomProp("LAT"));
 				etLon.setText(PrivacyManager.getRandomProp("LON"));
+				etAlt.setText(PrivacyManager.getRandomProp("ALT"));
 				etMac.setText(PrivacyManager.getRandomProp("MAC"));
 				etImei.setText(PrivacyManager.getRandomProp("IMEI"));
 				etPhone.setText(PrivacyManager.getRandomProp("PHONE"));
@@ -463,6 +481,19 @@ public class SettingsDialog {
 						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLongitude, Float.toString(lon));
 					} catch (Throwable ignored) {
 						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingLongitude, null);
+					}
+
+				// Set altitude
+				if (cbAlt.isChecked())
+					PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingAltitude, PrivacyManager.cValueRandom);
+				else
+					try {
+						float alt = Float.parseFloat(etAlt.getText().toString().replace(',', '.'));
+						if (alt < -10000 || alt > 10000)
+							throw new InvalidParameterException();
+						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingAltitude, Float.toString(alt));
+					} catch (Throwable ignored) {
+						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingAltitude, null);
 					}
 
 				// Other settings

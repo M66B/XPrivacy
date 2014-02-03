@@ -124,6 +124,7 @@
     <string name="settings_serial">Sraithuimhir#</string>
     <string name="settings_lat">TX</string>
     <string name="settings_lon">Domhanfhad</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">MAC seoladh</string>
     <string name="settings_ip">seoladh IP</string>
     <string name="settings_phone">uimhir Fón</string>

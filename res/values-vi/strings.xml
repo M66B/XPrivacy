@@ -123,6 +123,7 @@
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">Địa chỉ MAC</string>
     <string name="settings_ip">Địa chỉ IP</string>
     <string name="settings_phone">Số điện thoại</string>

@@ -124,6 +124,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">MAC-adress</string>
     <string name="settings_ip">IP-adress</string>
     <string name="settings_phone">Telefonnummer</string>

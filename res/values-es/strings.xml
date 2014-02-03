@@ -124,6 +124,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="settings_serial"># de serie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">Dirección MAC</string>
     <string name="settings_ip">Dirección IP</string>
     <string name="settings_phone">Número de Teléfono</string>

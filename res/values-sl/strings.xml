@@ -126,6 +126,7 @@
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">MAC naslov</string>
     <string name="settings_ip">IP naslov</string>
     <string name="settings_phone">Telefonska številka</string>

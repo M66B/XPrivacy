@@ -30,11 +30,6 @@ public class UpdateService extends Service {
 	}
 
 	@Override
-	public void onTrimMemory(int level) {
-		Util.log(null, Log.WARN, "Service received trim memory level=" + level);
-	}
-
-	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// Check if work
 		if (intent == null) {
@@ -202,6 +197,7 @@ public class UpdateService extends Service {
 		if (PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingRandom, false, true)) {
 			listWork.add(new PSetting(uid, PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT")));
 			listWork.add(new PSetting(uid, PrivacyManager.cSettingLongitude, PrivacyManager.getRandomProp("LON")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingAltitude, PrivacyManager.getRandomProp("ALT")));
 			listWork.add(new PSetting(uid, PrivacyManager.cSettingSerial, PrivacyManager.getRandomProp("SERIAL")));
 			listWork.add(new PSetting(uid, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")));
 			listWork.add(new PSetting(uid, PrivacyManager.cSettingPhone, PrivacyManager.getRandomProp("PHONE")));

@@ -124,6 +124,7 @@
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">عنوان الماك</string>
     <string name="settings_ip">عنوان الايبي</string>
     <string name="settings_phone">رقم الهاتف</string>

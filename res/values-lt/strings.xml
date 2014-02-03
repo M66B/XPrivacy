@@ -125,6 +125,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">MAC adresas</string>
     <string name="settings_ip">IP addresas</string>
     <string name="settings_phone">Telefono nr.</string>

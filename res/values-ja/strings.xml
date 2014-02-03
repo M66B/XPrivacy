@@ -124,6 +124,7 @@
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">MAC アドレス</string>
     <string name="settings_ip">IP アドレス</string>
     <string name="settings_phone">電話番号</string>

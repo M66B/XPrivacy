@@ -125,6 +125,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">Adresa MAC</string>
     <string name="settings_ip">Adresa IP</string>
     <string name="settings_phone">Telefónne číslo</string>

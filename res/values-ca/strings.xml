@@ -122,6 +122,7 @@
     <string name="settings_serial">Número de sèrie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">Adreça MAC</string>
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">Número de telèfon</string>

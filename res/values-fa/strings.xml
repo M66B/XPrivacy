@@ -126,6 +126,7 @@
     <string name="settings_serial">شماره سریال</string>
     <string name="settings_lat">عرض جغرافیایی</string>
     <string name="settings_lon">طول جغرافیایی</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">آدرس مک</string>
     <string name="settings_ip">آدرس آی پی</string>
     <string name="settings_phone">شماره تلفن</string>

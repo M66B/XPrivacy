@@ -124,6 +124,7 @@
     <string name="settings_serial">Ang iyong Seryal#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longhitud</string>
+    <string name="settings_alt">Altitude</string>
     <string name="settings_mac">MAC address</string>
     <string name="settings_ip">IP address</string>
     <string name="settings_phone">Numero ng iyong telepono</string>
