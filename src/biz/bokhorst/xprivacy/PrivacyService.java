@@ -78,7 +78,7 @@ public class PrivacyService {
 	private static final String cTableRestriction = "restriction";
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
-	private static final int cMaxOnDemandDialog = 15; // seconds
+	private static final int cMaxOnDemandDialog = 10; // seconds
 
 	// TODO: define column names
 	// sqlite3 /data/data/biz.bokhorst.xprivacy/xprivacy.db
@@ -1058,6 +1058,13 @@ public class PrivacyService {
 				if (context == null)
 					return false;
 
+				// Get application info
+				final ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
+
+				// Check if system application
+				if (!dangerous && appInfo.isSystem())
+					return false;
+
 				// Go ask
 				Util.log(null, Log.WARN, "On demand " + restriction);
 				mOndemandLock.lock();
@@ -1091,8 +1098,8 @@ public class PrivacyService {
 								dialogLock.lock();
 								semaphore.release();
 
-								AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, result,
-										context, dialogLock);
+								AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
+										result, context, dialogLock);
 								AlertDialog alertDialog = builder.create();
 								alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 								alertDialog.setCancelable(false);
@@ -1142,14 +1149,13 @@ public class PrivacyService {
 		}
 
 		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, Hook hook,
-				final PRestriction result, Context context, final ReentrantLock dialogLock)
+				ApplicationInfoEx appInfo, final PRestriction result, Context context, final ReentrantLock dialogLock)
 				throws NameNotFoundException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
 
 			// Build message
-			ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
 			int stringId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
 			String message = String.format(resources.getString(R.string.msg_ondemand),
 					TextUtils.join(", ", appInfo.getApplicationName()), resources.getString(stringId),
@@ -1165,7 +1171,7 @@ public class PrivacyService {
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
 			llContainer.setLayoutParams(llContainerParams);
 			llContainer.setPadding(hmargin, vmargin, hmargin, vmargin);
-			if (hook.isDangerous())
+			if (hook.isDangerous() || appInfo.isSystem())
 				llContainer.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
 
 			// Container for icon & message
