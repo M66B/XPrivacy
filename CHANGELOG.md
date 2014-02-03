@@ -17,13 +17,14 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Fixed on demand choice not sticking
 * Fixed on demand asking for same restriction
+* Fixed reboot problem in relation to on demand ([issue](https://github.com/M66B/XPrivacy/issues/1238))
 * Removed restriction *Srv.getConfiguredNetworks*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.28 TEST**
 
-* Attempt to fix reboot in relation to on demand  ([issue](https://github.com/M66B/XPrivacy/issues/1238))
+* Attempt to fix reboot in relation to on demand ([issue](https://github.com/M66B/XPrivacy/issues/1238))
 * Upgrading *Srv.getConfiguredNetworks* (dangerous function)
 * Updated Lithuanian translation
 
