@@ -182,16 +182,19 @@ public class PrivacyService {
 						});
 					}
 
-					// public void setLockScreenShown(boolean shown)
+					// public void setLockScreenShown(boolean shown) from 4.1
 					if (method.getName().equals("setLockScreenShown")) {
 						Util.log(null, Log.WARN, "Hooking " + method);
 						XposedBridge.hookMethod(method, new XC_MethodHook() {
 							@Override
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								if (param.args.length > 0) {
-									mLockScreen = (Boolean) param.args[0];
-									Util.log(null, Log.WARN, "Lockscreen=" + mLockScreen);
-								}
+								if (param.args.length > 0)
+									try {
+										mLockScreen = (Boolean) param.args[0];
+										Util.log(null, Log.WARN, "Lockscreen=" + mLockScreen);
+									} catch (Throwable ex) {
+										Util.bug(null, ex);
+									}
 							}
 						});
 					}
