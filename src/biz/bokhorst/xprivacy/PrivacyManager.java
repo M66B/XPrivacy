@@ -258,7 +258,7 @@ public class PrivacyManager {
 		if (methodName == null || methodName.equals("")) {
 			Util.log(hook, Log.WARN, "Method empty");
 			Util.logStack(hook);
-		} else if (getHooks(restrictionName).indexOf(new Hook(restrictionName, methodName)) < 0)
+		} else if (getHook(restrictionName, methodName) == null)
 			Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
 		if (!isApplication(uid) && Util.hasLBE())
