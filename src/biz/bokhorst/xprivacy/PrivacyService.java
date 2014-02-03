@@ -73,7 +73,7 @@ public class PrivacyService {
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-	private static final int cCurrentVersion = 263;
+	private static final int cCurrentVersion = 264;
 	private static final String cServiceName = "xprivacy" + cCurrentVersion;
 	private static final String cTableRestriction = "restriction";
 	private static final String cTableUsage = "usage";
