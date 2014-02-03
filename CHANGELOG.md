@@ -15,14 +15,16 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.29 TEST**
+
 * Fixed on demand choice not sticking
 * Fixed on demand asking for same restriction
 * Fixed on demand reboot problem ([issue](https://github.com/M66B/XPrivacy/issues/1238))
 * Added setting for height ([issue](https://github.com/M66B/XPrivacy/issues/1179))
 * Added restriction for *getGpsStatus* ([issue](https://github.com/M66B/XPrivacy/issues/1179))
 * Removed restriction *Srv.getConfiguredNetworks*, use [Pry-Fi](http://forum.xda-developers.com/showthread.php?t=2631512)
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.28 TEST**
 
