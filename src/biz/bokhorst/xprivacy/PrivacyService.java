@@ -1116,6 +1116,20 @@ public class PrivacyService {
 				try {
 					Util.log(null, Log.WARN, "On demanding " + restriction);
 
+					// Check if not asked before
+					CRestriction key = new CRestriction(restriction);
+					synchronized (mRestrictionCache) {
+						if (mRestrictionCache.containsKey(key)) {
+							PRestriction cache = mRestrictionCache.get(key).getRestriction();
+							result.restricted = cache.restricted;
+							result.asked = cache.asked;
+						}
+					}
+					if (result.asked) {
+						Util.log(null, Log.WARN, "Already asked " + restriction);
+						return result.restricted;
+					}
+
 					final AlertDialogHolder holder = new AlertDialogHolder();
 					final CountDownLatch latch = new CountDownLatch(1);
 
