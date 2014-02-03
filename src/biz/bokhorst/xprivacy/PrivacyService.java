@@ -1259,12 +1259,10 @@ public class PrivacyService {
 					}
 
 					// Restrict the requested function & don't ask again
-					if (!category) {
-						result.methodName = restriction.methodName;
-						result.restricted = true;
-						result.asked = true;
-						setRestrictionInternal(result);
-					}
+					result.methodName = restriction.methodName;
+					result.restricted = true;
+					result.asked = true;
+					setRestrictionInternal(result);
 				} else {
 					// Leave the category, add an exception for the function
 					PRestriction result = new PRestriction(restriction.uid, restriction.restrictionName,
