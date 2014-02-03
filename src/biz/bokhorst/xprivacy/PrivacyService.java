@@ -60,6 +60,7 @@ public class PrivacyService {
 	private static Handler mHandler = null;
 	private static boolean mBootCompleted = false;
 	private static boolean mLockScreen = false;
+	private static boolean mSleeping = false;
 
 	private static Semaphore mOndemandSemaphore = new Semaphore(1, true);
 
@@ -191,6 +192,30 @@ public class PrivacyService {
 									mLockScreen = (Boolean) param.args[0];
 									Util.log(null, Log.WARN, "Lockscreen=" + mLockScreen);
 								}
+							}
+						});
+					}
+
+					// public void goingToSleep()
+					if (method.getName().equals("goingToSleep")) {
+						Util.log(null, Log.WARN, "Hooking " + method);
+						XposedBridge.hookMethod(method, new XC_MethodHook() {
+							@Override
+							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+								mSleeping = true;
+								Util.log(null, Log.WARN, "Sleeping");
+							}
+						});
+					}
+
+					// public void goingToSleep()
+					if (method.getName().equals("wakingUp")) {
+						Util.log(null, Log.WARN, "Hooking " + method);
+						XposedBridge.hookMethod(method, new XC_MethodHook() {
+							@Override
+							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+								mSleeping = false;
+								Util.log(null, Log.WARN, "Waking up");
 							}
 						});
 					}
@@ -1050,7 +1075,7 @@ public class PrivacyService {
 				if (mHandler == null)
 					return false;
 
-				if (!mBootCompleted || mLockScreen)
+				if (!mBootCompleted || mLockScreen || mSleeping)
 					return false;
 
 				if (restriction.methodName == null)
