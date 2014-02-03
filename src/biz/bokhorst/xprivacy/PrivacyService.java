@@ -58,6 +58,7 @@ public class PrivacyService {
 	private static SQLiteDatabase mDatabase = null;
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
+	private static boolean mBootCompleted = false;
 
 	private static ReentrantLock mOndemandLock = new ReentrantLock(true);
 
@@ -77,7 +78,7 @@ public class PrivacyService {
 	private static final String cTableRestriction = "restriction";
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
-	private static final int cMaxOnDemandDialog = 10; // seconds
+	private static final int cMaxOnDemandDialog = 15; // seconds
 
 	// TODO: define column names
 	// sqlite3 /data/data/biz.bokhorst.xprivacy/xprivacy.db
@@ -115,15 +116,15 @@ public class PrivacyService {
 			try {
 				final Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
 
-				for (Method anr : cam.getDeclaredMethods()) {
+				for (Method method : cam.getDeclaredMethods()) {
 					// Foreground
 					// @formatter:off
 					// public long inputDispatchingTimedOut(int pid, final boolean aboveSystem, String reason)
 					// public boolean inputDispatchingTimedOut(final ProcessRecord proc, final ActivityRecord activity, final ActivityRecord parent, final boolean aboveSystem, String reason)
 					// @formatter:on
-					if (anr.getName().equals("inputDispatchingTimedOut")) {
-						Util.log(null, Log.WARN, "Hooking " + anr);
-						XposedBridge.hookMethod(anr, new XC_MethodHook() {
+					if (method.getName().equals("inputDispatchingTimedOut")) {
+						Util.log(null, Log.WARN, "Hooking " + method);
+						XposedBridge.hookMethod(method, new XC_MethodHook() {
 							@Override
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 								try {
@@ -145,9 +146,9 @@ public class PrivacyService {
 					// @formatter:off
 					// final void appNotResponding(ProcessRecord app, ActivityRecord activity, ActivityRecord parent, boolean aboveSystem, final String annotation)
 					// @formatter:on
-					if (anr.getName().equals("appNotResponding")) {
-						Util.log(null, Log.WARN, "Hooking " + anr);
-						XposedBridge.hookMethod(anr, new XC_MethodHook() {
+					if (method.getName().equals("appNotResponding")) {
+						Util.log(null, Log.WARN, "Hooking " + method);
+						XposedBridge.hookMethod(method, new XC_MethodHook() {
 							@Override
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 								try {
@@ -161,6 +162,18 @@ public class PrivacyService {
 									mListError.add(ex.toString());
 									mListError.add(Log.getStackTraceString(ex));
 								}
+							}
+						});
+					}
+
+					// final void finishBooting()
+					if (method.getName().equals("finishBooting")) {
+						Util.log(null, Log.WARN, "Hooking " + method);
+						XposedBridge.hookMethod(method, new XC_MethodHook() {
+							@Override
+							protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+								mBootCompleted = true;
+								Util.log(null, Log.WARN, "Boot completed");
 							}
 						});
 					}
@@ -1018,6 +1031,9 @@ public class PrivacyService {
 			try {
 				// Without handler nothing can be done
 				if (mHandler == null)
+					return false;
+
+				if (!mBootCompleted)
 					return false;
 
 				if (restriction.methodName == null)
