@@ -11,6 +11,12 @@ public class PSetting implements Parcelable {
 	public PSetting() {
 	}
 
+	public PSetting(PSetting other) {
+		uid = other.uid;
+		name = other.name;
+		value = other.value;
+	}
+
 	public PSetting(int _uid, String _name, String _value) {
 		uid = _uid;
 		name = _name;

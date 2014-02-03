@@ -8,7 +8,7 @@ public class CRestriction {
 
 	public CRestriction(PRestriction restriction) {
 		mTimestamp = new Date().getTime();
-		mRestriction = restriction;
+		mRestriction = new PRestriction(restriction);
 	}
 
 	public PRestriction getRestriction() {
@@ -16,7 +16,7 @@ public class CRestriction {
 	}
 
 	public void setRestriction(PRestriction restriction) {
-		mRestriction = restriction;
+		mRestriction = new PRestriction(restriction);
 	}
 
 	public boolean isExpired() {

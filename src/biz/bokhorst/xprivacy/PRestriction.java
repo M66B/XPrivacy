@@ -14,6 +14,14 @@ public class PRestriction implements Parcelable {
 	public PRestriction() {
 	}
 
+	public PRestriction(PRestriction other) {
+		uid = other.uid;
+		restrictionName = other.restrictionName;
+		methodName = other.methodName;
+		restricted = other.restricted;
+		time = other.time;
+	}
+
 	public PRestriction(int _uid, String category, String method) {
 		uid = _uid;
 		restrictionName = category;

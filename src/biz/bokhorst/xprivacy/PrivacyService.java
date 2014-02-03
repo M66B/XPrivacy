@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -60,7 +60,7 @@ public class PrivacyService {
 	private static Handler mHandler = null;
 	private static boolean mBootCompleted = false;
 
-	private static ReentrantLock mOndemandLock = new ReentrantLock(true);
+	private static Semaphore mOndemandSemaphore = new Semaphore(1, true);
 
 	private static SQLiteStatement stmtGetRestriction = null;
 	private static SQLiteStatement stmtGetSetting = null;
@@ -81,7 +81,7 @@ public class PrivacyService {
 	private static final int cMaxOnDemandDialog = 10; // seconds
 
 	// TODO: define column names
-	// sqlite3 /data/data/biz.bokhorst.xprivacy/xprivacy.db
+	// sqlite3 /data/xprivacy/xprivacy.db
 
 	public static void register(List<String> listError, String secret) {
 		// Store secret and errors
@@ -129,9 +129,10 @@ public class PrivacyService {
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 								try {
 									// Delay ANR while on demand dialog open
+									boolean ondemanding = (mOndemandSemaphore.availablePermits() < 1);
 									Util.log(null, Log.WARN, "Foreground ANR uid=" + getUidANR(param) + " ondemand="
-											+ mOndemandLock.isLocked());
-									if (mOndemandLock.isLocked())
+											+ ondemanding);
+									if (ondemanding)
 										param.setResult(5 * 1000);
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
@@ -153,9 +154,10 @@ public class PrivacyService {
 							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 								try {
 									// Ignore ANR while on demand dialog open
+									boolean ondemanding = (mOndemandSemaphore.availablePermits() < 1);
 									Util.log(null, Log.WARN, "Background ANR uid=" + getUidANR(param) + " ondemand="
-											+ mOndemandLock.isLocked());
-									if (mOndemandLock.isLocked())
+											+ ondemanding);
+									if (ondemanding)
 										param.setResult(null);
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
@@ -509,7 +511,7 @@ public class PrivacyService {
 					notifyRestricted(restriction);
 
 				// Ask to restrict
-				if (!result.asked && usage && PrivacyManager.isApplication(restriction.uid))
+				if (!result.restricted && !result.asked && usage && PrivacyManager.isApplication(restriction.uid))
 					result.restricted = onDemandDialog(hook, restriction);
 
 				// Log usage
@@ -1067,23 +1069,9 @@ public class PrivacyService {
 
 				// Go ask
 				Util.log(null, Log.WARN, "On demand " + restriction);
-				mOndemandLock.lock();
+				mOndemandSemaphore.acquireUninterruptibly();
 				try {
 					Util.log(null, Log.WARN, "On demanding " + restriction);
-
-					// Check if not asked before
-					CRestriction key = new CRestriction(restriction);
-					synchronized (mRestrictionCache) {
-						if (mRestrictionCache.containsKey(key)) {
-							PRestriction cache = mRestrictionCache.get(key).getRestriction();
-							result.restricted = cache.restricted;
-							result.asked = cache.asked;
-						}
-					}
-					if (result.asked) {
-						Util.log(null, Log.WARN, "Already asked " + restriction);
-						return result.restricted;
-					}
 
 					final AlertDialogHolder holder = new AlertDialogHolder();
 					final CountDownLatch latch = new CountDownLatch(1);
@@ -1126,7 +1114,7 @@ public class PrivacyService {
 						});
 					}
 				} finally {
-					mOndemandLock.unlock();
+					mOndemandSemaphore.release();
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
