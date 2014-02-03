@@ -68,7 +68,7 @@ public class Meta {
 		listHook.add(new Hook("identification", "getString", false, false, "", 10, null, null));
 		listHook.add(new Hook("identification", "getDescriptor", false, false, "", 16, null, null));
 		listHook.add(new Hook("identification", "GservicesProvider", true, false, "READ_GSERVICES", 10, null, null));
-		listHook.add(new Hook("identification", "SERIAL", false, true, "", 10, null, null).noUsageData());
+		listHook.add(new Hook("identification", "SERIAL", false, true, "", 10, null, null).noUsageData().noOnDemand());
 
 		listHook.add(new Hook("internet", "getAllByName", false, false, "INTERNET", 10, null, null));
 		listHook.add(new Hook("internet", "getByAddress", false, false, "INTERNET", 10, null, null));
@@ -204,8 +204,8 @@ public class Meta {
 		listHook.add(new Hook("phone", "gsm.sim.operator.iso-country", false, false, "", 10, "1.99.1", null));
 		listHook.add(new Hook("phone", "gsm.sim.operator.numeric", false, false, "", 10, "1.99.1", null));
 		listHook.add(new Hook("phone", "gsm.sim.operator.alpha", false, false, "", 10, "1.99.1", null));
-		listHook.add(new Hook("phone", "Configuration.MCC", false, false, "", 1, "2.0", null).noUsageData());
-		listHook.add(new Hook("phone", "Configuration.MNC", false, false, "", 1, "2.0", null).noUsageData());
+		listHook.add(new Hook("phone", "Configuration.MCC", false, false, "", 1, "2.0", null).noUsageData().noOnDemand());
+		listHook.add(new Hook("phone", "Configuration.MNC", false, false, "", 1, "2.0", null).noUsageData().noOnDemand());
 
 		listHook.add(new Hook("sensors", "getDefaultSensor", false, false, "", 3, null, null));
 		listHook.add(new Hook("sensors", "getSensorList", false, false, "", 3, null, null));

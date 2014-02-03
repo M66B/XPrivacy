@@ -1024,6 +1024,9 @@ public class PrivacyService {
 				if (restriction.methodName == null)
 					return false;
 
+				if (!hook.canOnDemand())
+					return false;
+
 				// Check if enabled
 				if (!getSettingBool(0, PrivacyManager.cSettingOnDemand, true))
 					return false;
