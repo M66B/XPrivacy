@@ -1211,7 +1211,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Get some restricted
 					boolean someRestricted = false;
 					if (fRestricted)
-						for (ParcelableRestriction restriction : PrivacyManager.getRestrictionList(xAppInfo.getUid(),
+						for (PRestriction restriction : PrivacyManager.getRestrictionList(xAppInfo.getUid(),
 								mRestrictionName))
 							if (restriction.restricted) {
 								someRestricted = true;
@@ -1384,7 +1384,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 					// Get all/some restricted
 					allRestricted = true;
 					someRestricted = false;
-					for (ParcelableRestriction restriction : PrivacyManager.getRestrictionList(xAppInfo.getUid(),
+					for (PRestriction restriction : PrivacyManager.getRestrictionList(xAppInfo.getUid(),
 							mRestrictionName)) {
 						allRestricted = (allRestricted && restriction.restricted);
 						someRestricted = (someRestricted || restriction.restricted);
@@ -1535,8 +1535,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								// Update all/some restricted
 								allRestricted = true;
 								someRestricted = false;
-								for (ParcelableRestriction restriction : PrivacyManager.getRestrictionList(
-										xAppInfo.getUid(), mRestrictionName)) {
+								for (PRestriction restriction : PrivacyManager.getRestrictionList(xAppInfo.getUid(),
+										mRestrictionName)) {
 									allRestricted = (allRestricted && restriction.restricted);
 									someRestricted = (someRestricted || restriction.restricted);
 								}

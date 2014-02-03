@@ -228,8 +228,8 @@ public class PrivacyManager {
 
 	// Restrictions
 
-	public static ParcelableRestriction getRestrictionEx(int uid, String restrictionName, String methodName) {
-		ParcelableRestriction query = new ParcelableRestriction(uid, restrictionName, methodName, false);
+	public static PRestriction getRestrictionEx(int uid, String restrictionName, String methodName) {
+		PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
 		try {
 			return PrivacyService.getClient().getRestriction(query, false, null);
 		} catch (RemoteException ex) {
@@ -266,7 +266,7 @@ public class PrivacyManager {
 
 		// Check cache
 		boolean cached = false;
-		CRestriction key = new CRestriction(new ParcelableRestriction(uid, restrictionName, methodName));
+		CRestriction key = new CRestriction(new PRestriction(uid, restrictionName, methodName));
 		synchronized (mRestrictionCache) {
 			if (mRestrictionCache.containsKey(key)) {
 				CRestriction entry = mRestrictionCache.get(key);
@@ -281,10 +281,10 @@ public class PrivacyManager {
 		if (!cached)
 			try {
 				restricted = PrivacyService.getClient().getRestriction(
-						new ParcelableRestriction(uid, restrictionName, methodName, false), true, secret).restricted;
+						new PRestriction(uid, restrictionName, methodName, false), true, secret).restricted;
 
 				// Add to cache
-				key.setRestriction(new ParcelableRestriction(uid, restrictionName, methodName, restricted));
+				key.setRestriction(new PRestriction(uid, restrictionName, methodName, restricted));
 				synchronized (mRestrictionCache) {
 					if (mRestrictionCache.containsKey(key))
 						mRestrictionCache.remove(key);
@@ -321,7 +321,7 @@ public class PrivacyManager {
 		// Set restriction
 		try {
 			PrivacyService.getClient().setRestriction(
-					new ParcelableRestriction(uid, restrictionName, methodName, restricted, asked));
+					new PRestriction(uid, restrictionName, methodName, restricted, asked));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -342,7 +342,7 @@ public class PrivacyManager {
 		setSetting(null, uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
 	}
 
-	public static void setRestrictionList(List<ParcelableRestriction> listRestriction) {
+	public static void setRestrictionList(List<PRestriction> listRestriction) {
 		if (listRestriction.size() > 0)
 			try {
 				PrivacyService.getClient().setRestrictionList(listRestriction);
@@ -351,14 +351,13 @@ public class PrivacyManager {
 			}
 	}
 
-	public static List<ParcelableRestriction> getRestrictionList(int uid, String restrictionName) {
+	public static List<PRestriction> getRestrictionList(int uid, String restrictionName) {
 		try {
-			return PrivacyService.getClient().getRestrictionList(
-					new ParcelableRestriction(uid, restrictionName, null, false));
+			return PrivacyService.getClient().getRestrictionList(new PRestriction(uid, restrictionName, null, false));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
-		return new ArrayList<ParcelableRestriction>();
+		return new ArrayList<PRestriction>();
 	}
 
 	public static List<Boolean> getRestartStates(int uid, String restrictionName) {
@@ -403,12 +402,12 @@ public class PrivacyManager {
 
 	public static long getUsed(int uid, String restrictionName, String methodName) {
 		try {
-			List<ParcelableRestriction> listRestriction = new ArrayList<ParcelableRestriction>();
+			List<PRestriction> listRestriction = new ArrayList<PRestriction>();
 			if (restrictionName == null)
 				for (String sRestrictionName : getRestrictions())
-					listRestriction.add(new ParcelableRestriction(uid, sRestrictionName, methodName, false));
+					listRestriction.add(new PRestriction(uid, sRestrictionName, methodName, false));
 			else
-				listRestriction.add(new ParcelableRestriction(uid, restrictionName, methodName, false));
+				listRestriction.add(new PRestriction(uid, restrictionName, methodName, false));
 			return PrivacyService.getClient().getUsage(listRestriction);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -416,8 +415,8 @@ public class PrivacyManager {
 		}
 	}
 
-	public static List<ParcelableRestriction> getUsed(Context context, int uid) {
-		List<ParcelableRestriction> listUsage = new ArrayList<ParcelableRestriction>();
+	public static List<PRestriction> getUsed(Context context, int uid) {
+		List<PRestriction> listUsage = new ArrayList<PRestriction>();
 		try {
 			listUsage.addAll(PrivacyService.getClient().getUsageList(uid));
 		} catch (Throwable ex) {
@@ -427,9 +426,9 @@ public class PrivacyManager {
 		return listUsage;
 	}
 
-	public static class ParcelableRestrictionCompare implements Comparator<ParcelableRestriction> {
+	public static class ParcelableRestrictionCompare implements Comparator<PRestriction> {
 		@Override
-		public int compare(ParcelableRestriction one, ParcelableRestriction another) {
+		public int compare(PRestriction one, PRestriction another) {
 			if (one.time < another.time)
 				return 1;
 			else if (one.time > another.time)
@@ -483,10 +482,10 @@ public class PrivacyManager {
 				if (client == null)
 					value = defaultValue;
 				else {
-					value = client.getSetting(new ParcelableSetting(Math.abs(uid), name, null)).value;
+					value = client.getSetting(new PSetting(Math.abs(uid), name, null)).value;
 					if (value == null)
 						if (uid > 0)
-							value = client.getSetting(new ParcelableSetting(0, name, defaultValue)).value;
+							value = client.getSetting(new PSetting(0, name, defaultValue)).value;
 						else
 							value = defaultValue;
 				}
@@ -516,13 +515,13 @@ public class PrivacyManager {
 
 	public static void setSetting(XHook hook, int uid, String name, String value) {
 		try {
-			PrivacyService.getClient().setSetting(new ParcelableSetting(uid, name, value));
+			PrivacyService.getClient().setSetting(new PSetting(uid, name, value));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
 	}
 
-	public static void setSettingList(List<ParcelableSetting> listSetting) {
+	public static void setSettingList(List<PSetting> listSetting) {
 		if (listSetting.size() > 0)
 			try {
 				PrivacyService.getClient().setSettingList(listSetting);
@@ -531,13 +530,13 @@ public class PrivacyManager {
 			}
 	}
 
-	public static List<ParcelableSetting> getSettingList(int uid) {
+	public static List<PSetting> getSettingList(int uid) {
 		try {
 			return PrivacyService.getClient().getSettingList(uid);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
-		return new ArrayList<ParcelableSetting>();
+		return new ArrayList<PSetting>();
 	}
 
 	public static void deleteSettings(int uid) {

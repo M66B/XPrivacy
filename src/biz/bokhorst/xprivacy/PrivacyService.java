@@ -266,7 +266,7 @@ public class PrivacyService {
 		// Restrictions
 
 		@Override
-		public void setRestriction(ParcelableRestriction restriction) throws RemoteException {
+		public void setRestriction(PRestriction restriction) throws RemoteException {
 			try {
 				enforcePermission();
 				setRestrictionInternal(restriction);
@@ -280,7 +280,7 @@ public class PrivacyService {
 			}
 		}
 
-		private void setRestrictionInternal(ParcelableRestriction restriction) throws RemoteException {
+		private void setRestrictionInternal(PRestriction restriction) throws RemoteException {
 			try {
 				SQLiteDatabase db = getDatabase();
 				// 0 not restricted, ask
@@ -318,16 +318,10 @@ public class PrivacyService {
 				// Clear cache
 				if (mUseCache)
 					synchronized (mRestrictionCache) {
-						CRestriction key = new CRestriction(new ParcelableRestriction(restriction.uid,
-								restriction.restrictionName, null));
+						CRestriction key = new CRestriction(restriction);
 						if (mRestrictionCache.containsKey(key))
 							mRestrictionCache.remove(key);
-						for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName)) {
-							key = new CRestriction(new ParcelableRestriction(restriction.uid,
-									restriction.restrictionName, hook.getName()));
-							if (mRestrictionCache.containsKey(key))
-								mRestrictionCache.remove(key);
-						}
+						mRestrictionCache.put(key, key);
 					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -340,17 +334,17 @@ public class PrivacyService {
 		}
 
 		@Override
-		public void setRestrictionList(List<ParcelableRestriction> listRestriction) throws RemoteException {
+		public void setRestrictionList(List<PRestriction> listRestriction) throws RemoteException {
 			// Permission enforced by setRestriction
-			for (ParcelableRestriction restriction : listRestriction)
+			for (PRestriction restriction : listRestriction)
 				setRestriction(restriction);
 		}
 
 		@Override
-		public ParcelableRestriction getRestriction(final ParcelableRestriction restriction, boolean usage,
-				String secret) throws RemoteException {
-			final ParcelableRestriction result = new ParcelableRestriction(restriction.uid,
-					restriction.restrictionName, restriction.methodName);
+		public PRestriction getRestriction(final PRestriction restriction, boolean usage, String secret)
+				throws RemoteException {
+			final PRestriction result = new PRestriction(restriction.uid, restriction.restrictionName,
+					restriction.methodName);
 
 			try {
 				// No permissions enforced, but usage data requires a secret
@@ -389,7 +383,7 @@ public class PrivacyService {
 					synchronized (mRestrictionCache) {
 						if (mRestrictionCache.containsKey(key)) {
 							cached = true;
-							ParcelableRestriction cache = mRestrictionCache.get(key).getRestriction();
+							PRestriction cache = mRestrictionCache.get(key).getRestriction();
 							result.restricted = cache.restricted;
 							result.asked = cache.asked;
 						}
@@ -530,22 +524,21 @@ public class PrivacyService {
 		}
 
 		@Override
-		public List<ParcelableRestriction> getRestrictionList(ParcelableRestriction selector) throws RemoteException {
-			List<ParcelableRestriction> result = new ArrayList<ParcelableRestriction>();
+		public List<PRestriction> getRestrictionList(PRestriction selector) throws RemoteException {
+			List<PRestriction> result = new ArrayList<PRestriction>();
 			try {
 				enforcePermission();
 
 				if (selector.restrictionName == null)
 					for (String sRestrictionName : PrivacyManager.getRestrictions()) {
-						ParcelableRestriction restriction = new ParcelableRestriction(selector.uid, sRestrictionName,
-								null, false);
+						PRestriction restriction = new PRestriction(selector.uid, sRestrictionName, null, false);
 						restriction.restricted = getRestriction(restriction, false, mSecret).restricted;
 						result.add(restriction);
 					}
 				else
 					for (Hook md : PrivacyManager.getHooks(selector.restrictionName)) {
-						ParcelableRestriction restriction = new ParcelableRestriction(selector.uid,
-								selector.restrictionName, md.getName(), false);
+						PRestriction restriction = new PRestriction(selector.uid, selector.restrictionName,
+								md.getName(), false);
 						restriction.restricted = getRestriction(restriction, false, mSecret).restricted;
 						result.add(restriction);
 					}
@@ -594,7 +587,7 @@ public class PrivacyService {
 		// Usage
 
 		@Override
-		public long getUsage(List<ParcelableRestriction> listRestriction) throws RemoteException {
+		public long getUsage(List<PRestriction> listRestriction) throws RemoteException {
 			long lastUsage = 0;
 			try {
 				enforcePermission();
@@ -612,7 +605,7 @@ public class PrivacyService {
 
 				db.beginTransaction();
 				try {
-					for (ParcelableRestriction restriction : listRestriction) {
+					for (PRestriction restriction : listRestriction) {
 						if (restriction.methodName == null)
 							try {
 								synchronized (stmtGetUsageRestriction) {
@@ -652,8 +645,8 @@ public class PrivacyService {
 		}
 
 		@Override
-		public List<ParcelableRestriction> getUsageList(int uid) throws RemoteException {
-			List<ParcelableRestriction> result = new ArrayList<ParcelableRestriction>();
+		public List<PRestriction> getUsageList(int uid) throws RemoteException {
+			List<PRestriction> result = new ArrayList<PRestriction>();
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
@@ -672,7 +665,7 @@ public class PrivacyService {
 					else
 						try {
 							while (cursor.moveToNext()) {
-								ParcelableRestriction data = new ParcelableRestriction();
+								PRestriction data = new PRestriction();
 								data.uid = cursor.getInt(0);
 								data.restrictionName = cursor.getString(1);
 								data.methodName = cursor.getString(2);
@@ -730,7 +723,7 @@ public class PrivacyService {
 		// Settings
 
 		@Override
-		public void setSetting(ParcelableSetting setting) throws RemoteException {
+		public void setSetting(PSetting setting) throws RemoteException {
 			try {
 				enforcePermission();
 				setSettingInternal(setting);
@@ -744,7 +737,7 @@ public class PrivacyService {
 			}
 		}
 
-		public void setSettingInternal(ParcelableSetting setting) throws RemoteException {
+		public void setSettingInternal(PSetting setting) throws RemoteException {
 			try {
 				SQLiteDatabase db = getDatabase();
 
@@ -791,16 +784,16 @@ public class PrivacyService {
 		}
 
 		@Override
-		public void setSettingList(List<ParcelableSetting> listSetting) throws RemoteException {
+		public void setSettingList(List<PSetting> listSetting) throws RemoteException {
 			// Permission enforced by setSetting
-			for (ParcelableSetting setting : listSetting)
+			for (PSetting setting : listSetting)
 				setSetting(setting);
 		}
 
 		@Override
 		@SuppressLint("DefaultLocale")
-		public ParcelableSetting getSetting(ParcelableSetting setting) throws RemoteException {
-			ParcelableSetting result = new ParcelableSetting(setting.uid, setting.name, setting.value);
+		public PSetting getSetting(PSetting setting) throws RemoteException {
+			PSetting result = new PSetting(setting.uid, setting.name, setting.value);
 			try {
 				// No permissions enforced
 
@@ -877,8 +870,8 @@ public class PrivacyService {
 		}
 
 		@Override
-		public List<ParcelableSetting> getSettingList(int uid) throws RemoteException {
-			List<ParcelableSetting> listSetting = new ArrayList<ParcelableSetting>();
+		public List<PSetting> getSettingList(int uid) throws RemoteException {
+			List<PSetting> listSetting = new ArrayList<PSetting>();
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
@@ -892,7 +885,7 @@ public class PrivacyService {
 					else
 						try {
 							while (cursor.moveToNext())
-								listSetting.add(new ParcelableSetting(uid, cursor.getString(0), cursor.getString(1)));
+								listSetting.add(new PSetting(uid, cursor.getString(0), cursor.getString(1)));
 						} finally {
 							cursor.close();
 						}
@@ -983,9 +976,8 @@ public class PrivacyService {
 
 		// Helper methods
 
-		private Boolean onDemandDialog(Hook hook, final ParcelableRestriction restriction) {
-			final ParcelableRestriction result = new ParcelableRestriction(restriction.uid,
-					restriction.restrictionName, null, false);
+		private Boolean onDemandDialog(Hook hook, final PRestriction restriction) {
+			final PRestriction result = new PRestriction(restriction.uid, restriction.restrictionName, null, false);
 			try {
 				// Without handler nothing can be done
 				if (mHandler == null)
@@ -1020,7 +1012,7 @@ public class PrivacyService {
 					CRestriction key = new CRestriction(restriction);
 					synchronized (mRestrictionCache) {
 						if (mRestrictionCache.containsKey(key)) {
-							ParcelableRestriction cache = mRestrictionCache.get(key).getRestriction();
+							PRestriction cache = mRestrictionCache.get(key).getRestriction();
 							result.restricted = cache.restricted;
 							result.asked = cache.asked;
 						}
@@ -1046,9 +1038,7 @@ public class PrivacyService {
 								AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, result, context,
 										dialogLock);
 								AlertDialog alertDialog = builder.create();
-								alertDialog.getWindow().setType(
-										WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
-												| WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+								alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 								alertDialog.setCancelable(false);
 								alertDialog.setCanceledOnTouchOutside(false);
 								alertDialog.show();
@@ -1095,9 +1085,8 @@ public class PrivacyService {
 			public AlertDialog dialog;
 		}
 
-		private AlertDialog.Builder getOnDemandDialogBuilder(final ParcelableRestriction restriction,
-				final ParcelableRestriction result, final Context context, final ReentrantLock dialogLock)
-				throws NameNotFoundException {
+		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, final PRestriction result,
+				final Context context, final ReentrantLock dialogLock) throws NameNotFoundException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
@@ -1190,13 +1179,13 @@ public class PrivacyService {
 			return alertDialogBuilder;
 		}
 
-		private void onDemandChoice(ParcelableRestriction restriction, boolean category, boolean restricted) {
+		private void onDemandChoice(PRestriction restriction, boolean category, boolean restricted) {
 			try {
 				if (category || restricted) {
 					// Set category restricted, but if the user has requested
 					// blocking a single function, keep asking for the others
-					ParcelableRestriction result = new ParcelableRestriction(restriction.uid,
-							restriction.restrictionName, null, restricted, category);
+					PRestriction result = new PRestriction(restriction.uid, restriction.restrictionName, null,
+							restricted, category);
 					setRestrictionInternal(result);
 
 					// Make exceptions for dangerous methods
@@ -1221,17 +1210,17 @@ public class PrivacyService {
 					}
 				} else {
 					// Leave the category, add an exception for the function
-					ParcelableRestriction result = new ParcelableRestriction(restriction.uid,
-							restriction.restrictionName, restriction.methodName, restricted, true);
+					PRestriction result = new PRestriction(restriction.uid, restriction.restrictionName,
+							restriction.methodName, restricted, true);
 					setRestrictionInternal(result);
 				}
 
 				// Mark state as changed
-				setSettingInternal(new ParcelableSetting(restriction.uid, PrivacyManager.cSettingState,
+				setSettingInternal(new PSetting(restriction.uid, PrivacyManager.cSettingState,
 						Integer.toString(ActivityMain.STATE_CHANGED)));
 
 				// Update modification time
-				setSettingInternal(new ParcelableSetting(restriction.uid, PrivacyManager.cSettingModifyTime,
+				setSettingInternal(new PSetting(restriction.uid, PrivacyManager.cSettingModifyTime,
 						Long.toString(System.currentTimeMillis())));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -1242,7 +1231,7 @@ public class PrivacyService {
 			}
 		}
 
-		private void notifyRestricted(ParcelableRestriction restriction) {
+		private void notifyRestricted(PRestriction restriction) {
 			final Context context = getContext();
 			if (context != null && mHandler != null)
 				mHandler.post(new Runnable() {
@@ -1264,7 +1253,7 @@ public class PrivacyService {
 		}
 
 		private boolean getSettingBool(int uid, String name, boolean defaultValue) throws RemoteException {
-			String value = getSetting(new ParcelableSetting(uid, name, Boolean.toString(defaultValue))).value;
+			String value = getSetting(new PSetting(uid, name, Boolean.toString(defaultValue))).value;
 			return Boolean.parseBoolean(value);
 		}
 	};

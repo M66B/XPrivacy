@@ -1,26 +1,26 @@
 package biz.bokhorst.xprivacy;
 
-import biz.bokhorst.xprivacy.ParcelableRestriction;
-import biz.bokhorst.xprivacy.ParcelableSetting;
+import biz.bokhorst.xprivacy.PRestriction;
+import biz.bokhorst.xprivacy.PSetting;
 
 interface IPrivacyService {
 	int getVersion();
 	List /* String */ check();
 
-	void setRestriction(in ParcelableRestriction restriction);
-	void setRestrictionList(in List<ParcelableRestriction> listRestriction);
-	ParcelableRestriction getRestriction(in ParcelableRestriction restriction, boolean usage, String secret);
-	List<ParcelableRestriction> getRestrictionList(in ParcelableRestriction selector);
+	void setRestriction(in PRestriction restriction);
+	void setRestrictionList(in List<PRestriction> listRestriction);
+	PRestriction getRestriction(in PRestriction restriction, boolean usage, String secret);
+	List<PRestriction> getRestrictionList(in PRestriction selector);
 	void deleteRestrictions(int uid);
 
-	long getUsage(in List<ParcelableRestriction> restriction);
-	List<ParcelableRestriction> getUsageList(int uid);
+	long getUsage(in List<PRestriction> restriction);
+	List<PRestriction> getUsageList(int uid);
 	void deleteUsage(int uid);
 
-	void setSetting(in ParcelableSetting setting);
-	void setSettingList(in List<ParcelableSetting> listSetting);
-	ParcelableSetting getSetting(in ParcelableSetting setting);
-	List<ParcelableSetting> getSettingList(int uid);
+	void setSetting(in PSetting setting);
+	void setSettingList(in List<PSetting> listSetting);
+	PSetting getSetting(in PSetting setting);
+	List<PSetting> getSettingList(int uid);
 	void deleteSettings(int uid);
 
 	void clear();

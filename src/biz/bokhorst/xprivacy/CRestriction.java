@@ -4,18 +4,18 @@ import java.util.Date;
 
 public class CRestriction {
 	private long mTimestamp;
-	private ParcelableRestriction mRestriction;
+	private PRestriction mRestriction;
 
-	public CRestriction(ParcelableRestriction restriction) {
+	public CRestriction(PRestriction restriction) {
 		mTimestamp = new Date().getTime();
 		mRestriction = restriction;
 	}
 
-	public ParcelableRestriction getRestriction() {
+	public PRestriction getRestriction() {
 		return mRestriction;
 	}
 
-	public void setRestriction(ParcelableRestriction restriction) {
+	public void setRestriction(PRestriction restriction) {
 		mRestriction = restriction;
 	}
 

@@ -80,7 +80,7 @@ public class ActivityUsage extends Activity {
 		lvUsage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-				ParcelableRestriction usageData = mUsageAdapter.getItem(position);
+				PRestriction usageData = mUsageAdapter.getItem(position);
 				Intent intent = new Intent(ActivityUsage.this, ActivityApp.class);
 				intent.putExtra(ActivityApp.cUid, usageData.uid);
 				intent.putExtra(ActivityApp.cRestrictionName, usageData.restrictionName);
@@ -140,19 +140,19 @@ public class ActivityUsage extends Activity {
 
 	// Tasks
 
-	private class UsageTask extends AsyncTask<Object, Object, List<ParcelableRestriction>> {
+	private class UsageTask extends AsyncTask<Object, Object, List<PRestriction>> {
 		@Override
-		protected List<ParcelableRestriction> doInBackground(Object... arg0) {
+		protected List<PRestriction> doInBackground(Object... arg0) {
 			long minTime = new Date().getTime() - 1000 * 60 * 60 * 24;
-			List<ParcelableRestriction> listUsageData = new ArrayList<ParcelableRestriction>();
-			for (ParcelableRestriction usageData : PrivacyManager.getUsed(ActivityUsage.this, mUid))
+			List<PRestriction> listUsageData = new ArrayList<PRestriction>();
+			for (PRestriction usageData : PrivacyManager.getUsed(ActivityUsage.this, mUid))
 				if (usageData.time > minTime)
 					listUsageData.add(usageData);
 			return listUsageData;
 		}
 
 		@Override
-		protected void onPostExecute(List<ParcelableRestriction> listUsageData) {
+		protected void onPostExecute(List<PRestriction> listUsageData) {
 			super.onPostExecute(listUsageData);
 
 			mUsageAdapter = new UsageAdapter(ActivityUsage.this, R.layout.usageentry, listUsageData);
@@ -164,13 +164,13 @@ public class ActivityUsage extends Activity {
 
 	// Adapters
 
-	private class UsageAdapter extends ArrayAdapter<ParcelableRestriction> {
-		private List<ParcelableRestriction> mListUsageData;
+	private class UsageAdapter extends ArrayAdapter<PRestriction> {
+		private List<PRestriction> mListUsageData;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		public UsageAdapter(Context context, int textViewResourceId, List<ParcelableRestriction> objects) {
+		public UsageAdapter(Context context, int textViewResourceId, List<PRestriction> objects) {
 			super(context, textViewResourceId, objects);
-			mListUsageData = new ArrayList<ParcelableRestriction>();
+			mListUsageData = new ArrayList<PRestriction>();
 			mListUsageData.addAll(objects);
 		}
 
@@ -191,8 +191,8 @@ public class ActivityUsage extends Activity {
 				boolean all = Boolean.parseBoolean((String) constraint);
 
 				// Match applications
-				List<ParcelableRestriction> lstResult = new ArrayList<ParcelableRestriction>();
-				for (ParcelableRestriction usageData : UsageAdapter.this.mListUsageData) {
+				List<PRestriction> lstResult = new ArrayList<PRestriction>();
+				for (PRestriction usageData : UsageAdapter.this.mListUsageData) {
 					if (all ? true : usageData.restricted)
 						lstResult.add(usageData);
 				}
@@ -212,7 +212,7 @@ public class ActivityUsage extends Activity {
 				if (results.values == null)
 					notifyDataSetInvalidated();
 				else {
-					addAll((ArrayList<ParcelableRestriction>) results.values);
+					addAll((ArrayList<PRestriction>) results.values);
 					notifyDataSetChanged();
 				}
 			}
@@ -241,10 +241,10 @@ public class ActivityUsage extends Activity {
 		private class HolderTask extends AsyncTask<Object, Object, Object> {
 			private int position;
 			private ViewHolder holder;
-			private ParcelableRestriction usageData;
+			private PRestriction usageData;
 			private Drawable icon = null;
 
-			public HolderTask(int thePosition, ViewHolder theHolder, ParcelableRestriction theUsageData) {
+			public HolderTask(int thePosition, ViewHolder theHolder, PRestriction theUsageData) {
 				position = thePosition;
 				holder = theHolder;
 				usageData = theUsageData;
@@ -290,7 +290,7 @@ public class ActivityUsage extends Activity {
 			}
 
 			// Get data
-			ParcelableRestriction usageData = getItem(position);
+			PRestriction usageData = getItem(position);
 
 			// Build entry
 			Date date = new Date(usageData.time);

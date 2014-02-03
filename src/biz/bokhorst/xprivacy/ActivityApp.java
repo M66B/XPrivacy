@@ -920,14 +920,13 @@ public class ActivityApp extends Activity {
 					// Get info
 					used = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
-					ParcelableRestriction query = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName,
-							null);
+					PRestriction query = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null);
 					crestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 
 					// Get all/some restricted
 					allRestricted = true;
 					someRestricted = false;
-					for (ParcelableRestriction restriction : PrivacyManager.getRestrictionList(mAppInfo.getUid(),
+					for (PRestriction restriction : PrivacyManager.getRestrictionList(mAppInfo.getUid(),
 							restrictionName)) {
 						allRestricted = (allRestricted && restriction.restricted);
 						someRestricted = (someRestricted || restriction.restricted);
@@ -976,8 +975,8 @@ public class ActivityApp extends Activity {
 							// Update all/some restricted
 							allRestricted = true;
 							someRestricted = false;
-							for (ParcelableRestriction restriction : PrivacyManager.getRestrictionList(
-									mAppInfo.getUid(), restrictionName)) {
+							for (PRestriction restriction : PrivacyManager.getRestrictionList(mAppInfo.getUid(),
+									restrictionName)) {
 								allRestricted = (allRestricted && restriction.restricted);
 								someRestricted = (someRestricted || restriction.restricted);
 							}
@@ -1145,7 +1144,7 @@ public class ActivityApp extends Activity {
 					lastUsage = PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName());
 					parentRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
-					ParcelableRestriction query = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName,
+					PRestriction query = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName,
 							md.getName());
 					restricted = query.restricted;
 

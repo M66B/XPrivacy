@@ -118,12 +118,12 @@ public class UpdateService extends Service {
 		for (int i = 1; i <= listApp.size(); i++) {
 			int uid = listApp.get(i - 1).uid;
 			// Settings
-			List<ParcelableSetting> listSetting = PrivacyProvider.migrateSettings(context, uid);
+			List<PSetting> listSetting = PrivacyProvider.migrateSettings(context, uid);
 			PrivacyManager.setSettingList(listSetting);
 			PrivacyProvider.finishMigrateSettings(uid);
 
 			// Restrictions
-			List<ParcelableRestriction> listRestriction = PrivacyProvider.migrateRestrictions(context, uid);
+			List<PRestriction> listRestriction = PrivacyProvider.migrateRestrictions(context, uid);
 			PrivacyManager.setRestrictionList(listRestriction);
 			PrivacyProvider.finishMigrateRestrictions(uid);
 
@@ -137,8 +137,7 @@ public class UpdateService extends Service {
 			Util.log(null, Log.WARN, "Nothing to migrate");
 
 		// Complete migration
-		PrivacyService.getClient().setSetting(
-				new ParcelableSetting(0, PrivacyManager.cSettingMigrated, Boolean.toString(true)));
+		PrivacyService.getClient().setSetting(new PSetting(0, PrivacyManager.cSettingMigrated, Boolean.toString(true)));
 	}
 
 	private static void upgrade(Context context) throws NameNotFoundException {
@@ -157,7 +156,7 @@ public class UpdateService extends Service {
 
 			for (int i = 1; i <= listApp.size(); i++) {
 				int uid = listApp.get(i - 1).uid;
-				List<ParcelableRestriction> listRestriction = getUpgradeWork(sVersion, dangerous, uid);
+				List<PRestriction> listRestriction = getUpgradeWork(sVersion, dangerous, uid);
 				PrivacyManager.setRestrictionList(listRestriction);
 
 				if (first == 0)
@@ -185,7 +184,7 @@ public class UpdateService extends Service {
 		// Randomize applications
 		for (int i = 1; i <= listApp.size(); i++) {
 			int uid = listApp.get(i - 1).uid;
-			List<ParcelableSetting> listSetting = getRandomizeWork(context, uid);
+			List<PSetting> listSetting = getRandomizeWork(context, uid);
 			PrivacyManager.setSettingList(listSetting);
 
 			if (first == 0)
@@ -198,35 +197,28 @@ public class UpdateService extends Service {
 			Util.log(null, Log.WARN, "Nothing to randomize");
 	}
 
-	private static List<ParcelableSetting> getRandomizeWork(Context context, int uid) {
-		List<ParcelableSetting> listWork = new ArrayList<ParcelableSetting>();
+	private static List<PSetting> getRandomizeWork(Context context, int uid) {
+		List<PSetting> listWork = new ArrayList<PSetting>();
 		if (PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingRandom, false, true)) {
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingLatitude, PrivacyManager
-					.getRandomProp("LAT")));
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingLongitude, PrivacyManager
-					.getRandomProp("LON")));
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingSerial, PrivacyManager
-					.getRandomProp("SERIAL")));
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")));
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingPhone, PrivacyManager.getRandomProp("PHONE")));
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI")));
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingId, PrivacyManager
-					.getRandomProp("ANDROID_ID")));
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingGsfId, PrivacyManager
-					.getRandomProp("GSF_ID")));
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingAdId, PrivacyManager
-					.getRandomProp("AdvertisingId")));
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingCountry, PrivacyManager
-					.getRandomProp("ISO3166")));
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingSubscriber, PrivacyManager
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingLongitude, PrivacyManager.getRandomProp("LON")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingSerial, PrivacyManager.getRandomProp("SERIAL")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingPhone, PrivacyManager.getRandomProp("PHONE")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingId, PrivacyManager.getRandomProp("ANDROID_ID")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingGsfId, PrivacyManager.getRandomProp("GSF_ID")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingAdId, PrivacyManager.getRandomProp("AdvertisingId")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingCountry, PrivacyManager.getRandomProp("ISO3166")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingSubscriber, PrivacyManager
 					.getRandomProp("SubscriberId")));
-			listWork.add(new ParcelableSetting(uid, PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID")));
+			listWork.add(new PSetting(uid, PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID")));
 		}
 		return listWork;
 	}
 
-	private static List<ParcelableRestriction> getUpgradeWork(Version sVersion, boolean dangerous, int uid) {
-		List<ParcelableRestriction> listWork = new ArrayList<ParcelableRestriction>();
+	private static List<PRestriction> getUpgradeWork(Version sVersion, boolean dangerous, int uid) {
+		List<PRestriction> listWork = new ArrayList<PRestriction>();
 		for (String restrictionName : PrivacyManager.getRestrictions())
 			for (Hook md : PrivacyManager.getHooks(restrictionName))
 				if (md.getFrom() != null)
@@ -235,7 +227,7 @@ public class UpdateService extends Service {
 						if (!dangerous && md.isDangerous()) {
 							Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom() + " uid="
 									+ uid);
-							listWork.add(new ParcelableRestriction(uid, md.getRestrictionName(), md.getName(), false));
+							listWork.add(new PRestriction(uid, md.getRestrictionName(), md.getName(), false));
 						}
 
 						// Restrict replaced methods
@@ -244,7 +236,7 @@ public class UpdateService extends Service {
 								Util.log(null, Log.WARN,
 										"Replaced " + md.getReplaces() + " by " + md + " from=" + md.getFrom()
 												+ " uid=" + uid);
-								listWork.add(new ParcelableRestriction(uid, md.getRestrictionName(), md.getName(), true));
+								listWork.add(new PRestriction(uid, md.getRestrictionName(), md.getName(), true));
 							}
 					}
 		return listWork;

@@ -683,8 +683,8 @@ public class PrivacyProvider extends ContentProvider {
 		splitSettings(context);
 	}
 
-	public static List<ParcelableRestriction> migrateRestrictions(Context context, int uid) {
-		List<ParcelableRestriction> listWork = new ArrayList<ParcelableRestriction>();
+	public static List<PRestriction> migrateRestrictions(Context context, int uid) {
+		List<PRestriction> listWork = new ArrayList<PRestriction>();
 
 		File prefFile = new File(getPrefFileName(PREF_RESTRICTION, uid));
 		File migratedFile = new File(prefFile + ".migrated");
@@ -698,13 +698,13 @@ public class PrivacyProvider extends ContentProvider {
 			for (String restrictionName : PrivacyManager.getRestrictions())
 				if (getRestricted(restrictionName, null, prefs)) {
 					// Category
-					listWork.add(new ParcelableRestriction(uid, restrictionName, null, true));
+					listWork.add(new PRestriction(uid, restrictionName, null, true));
 
 					// Exceptions
 					for (Hook md : PrivacyManager.getHooks(restrictionName)) {
 						boolean restricted = getRestricted(restrictionName, md.getName(), prefs);
 						if (!restricted || md.isDangerous())
-							listWork.add(new ParcelableRestriction(uid, restrictionName, md.getName(), restricted));
+							listWork.add(new PRestriction(uid, restrictionName, md.getName(), restricted));
 					}
 				}
 		}
@@ -718,9 +718,9 @@ public class PrivacyProvider extends ContentProvider {
 		prefFile.renameTo(migratedFile);
 	}
 
-	public static List<ParcelableSetting> migrateSettings(Context context, int uid) {
+	public static List<PSetting> migrateSettings(Context context, int uid) {
 		// Process settings
-		List<ParcelableSetting> listWork = new ArrayList<ParcelableSetting>();
+		List<PSetting> listWork = new ArrayList<PSetting>();
 
 		File prefFile = new File(getPrefFileName(PREF_SETTINGS, uid));
 		File migratedFile = new File(prefFile + ".migrated");
@@ -733,7 +733,7 @@ public class PrivacyProvider extends ContentProvider {
 				try {
 					String value = prefs.getString(name, null);
 					if (value != null && !"".equals(value))
-						listWork.add(new ParcelableSetting(uid, name, value));
+						listWork.add(new PSetting(uid, name, value));
 				} catch (Throwable ex) {
 					// Legacy boolean
 					Util.bug(null, ex);

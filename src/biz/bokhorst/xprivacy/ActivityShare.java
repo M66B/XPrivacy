@@ -556,8 +556,7 @@ public class ActivityShare extends Activity {
 
 					// If toggling, check if some restricted
 					if (mActionId == R.string.menu_restriction_all)
-						for (ParcelableRestriction restriction : PrivacyManager.getRestrictionList(uids[i],
-								restrictionName))
+						for (PRestriction restriction : PrivacyManager.getRestrictionList(uids[i], restrictionName))
 							if (restriction.restricted) {
 								some = true;
 								break;
@@ -704,8 +703,8 @@ public class ActivityShare extends Activity {
 					}
 
 					// Process global settings
-					List<ParcelableSetting> listGlobalSetting = PrivacyManager.getSettingList(0);
-					for (ParcelableSetting setting : listGlobalSetting) {
+					List<PSetting> listGlobalSetting = PrivacyManager.getSettingList(0);
+					for (PSetting setting : listGlobalSetting) {
 						// Serialize setting
 						serializer.startTag(null, "Setting");
 						serializer.attribute(null, "Id", "");
@@ -725,8 +724,8 @@ public class ActivityShare extends Activity {
 							mAppAdapter.setState(uid, STATE_RUNNING, null);
 
 							// Process application settings
-							List<ParcelableSetting> listAppSetting = PrivacyManager.getSettingList(uid);
-							for (ParcelableSetting setting : listAppSetting) {
+							List<PSetting> listAppSetting = PrivacyManager.getSettingList(uid);
+							for (PSetting setting : listAppSetting) {
 								// Bind accounts/contacts to same device
 								if (setting.name.startsWith(PrivacyManager.cSettingAccount)
 										|| setting.name.startsWith(PrivacyManager.cSettingContact)
@@ -745,8 +744,7 @@ public class ActivityShare extends Activity {
 							// Process restrictions
 							for (String restrictionName : PrivacyManager.getRestrictions()) {
 								// Category
-								ParcelableRestriction crestricted = PrivacyManager.getRestrictionEx(uid,
-										restrictionName, null);
+								PRestriction crestricted = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
 								if (crestricted.restricted || crestricted.asked) {
 									serializer.startTag(null, "Restriction");
 									serializer.attribute(null, "Id", Integer.toString(uid));
@@ -757,7 +755,7 @@ public class ActivityShare extends Activity {
 
 									// Methods
 									for (Hook md : PrivacyManager.getHooks(restrictionName)) {
-										ParcelableRestriction mrestricted = PrivacyManager.getRestrictionEx(uid,
+										PRestriction mrestricted = PrivacyManager.getRestrictionEx(uid,
 												restrictionName, md.getName());
 										if (!mrestricted.restricted || mrestricted.asked || md.isDangerous()) {
 											serializer.startTag(null, "Restriction");
@@ -1240,7 +1238,7 @@ public class ActivityShare extends Activity {
 									PrivacyManager.deleteRestrictions(appInfo.getUid());
 
 									// Set fetched restrictions
-									List<ParcelableRestriction> listRestriction = new ArrayList<ParcelableRestriction>();
+									List<PRestriction> listRestriction = new ArrayList<PRestriction>();
 									for (int i = 0; i < settings.length(); i++) {
 										JSONObject entry = settings.getJSONObject(i);
 										String restrictionName = entry.getString("restriction");
@@ -1249,8 +1247,8 @@ public class ActivityShare extends Activity {
 										int voted_not_restricted = entry.getInt("not_restricted");
 										boolean restricted = (voted_restricted > voted_not_restricted);
 										if (methodName == null || restricted)
-											listRestriction.add(new ParcelableRestriction(appInfo.getUid(),
-													restrictionName, methodName, restricted));
+											listRestriction.add(new PRestriction(appInfo.getUid(), restrictionName,
+													methodName, restricted));
 									}
 									PrivacyManager.setRestrictionList(listRestriction);
 									List<Boolean> newState = PrivacyManager.getRestartStates(appInfo.getUid(), null);
