@@ -8,9 +8,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -1086,20 +1086,15 @@ public class PrivacyService {
 					}
 
 					final AlertDialogHolder holder = new AlertDialogHolder();
-					final ReentrantLock dialogLock = new ReentrantLock();
-					final Semaphore semaphore = new Semaphore(1);
-					semaphore.acquireUninterruptibly();
+					final CountDownLatch latch = new CountDownLatch(1);
 
 					// Run dialog in looper
 					mHandler.post(new Runnable() {
 						@Override
 						public void run() {
 							try {
-								dialogLock.lock();
-								semaphore.release();
-
 								AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
-										result, context, dialogLock);
+										result, context, latch);
 								AlertDialog alertDialog = builder.create();
 								alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 								alertDialog.setCancelable(false);
@@ -1112,22 +1107,20 @@ public class PrivacyService {
 									mListError.add(ex.toString());
 									mListError.add(Log.getStackTraceString(ex));
 								}
-								dialogLock.unlock();
+								latch.countDown();
 							}
 						}
 					});
 
-					// Wait for dialog to display
-					semaphore.acquireUninterruptibly();
-
 					// Wait for dialog to complete
-					if (!dialogLock.tryLock(cMaxOnDemandDialog, TimeUnit.SECONDS)) {
+					if (!latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS)) {
 						Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
 						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								if (holder.dialog != null)
-									holder.dialog.cancel();
+								AlertDialog dialog = holder.dialog;
+								if (dialog != null)
+									dialog.cancel();
 								result.restricted = true;
 							}
 						});
@@ -1150,7 +1143,7 @@ public class PrivacyService {
 		}
 
 		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, Hook hook,
-				ApplicationInfoEx appInfo, final PRestriction result, Context context, final ReentrantLock dialogLock)
+				ApplicationInfoEx appInfo, final PRestriction result, Context context, final CountDownLatch latch)
 				throws NameNotFoundException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
@@ -1220,7 +1213,7 @@ public class PrivacyService {
 							// Deny
 							result.restricted = true;
 							onDemandChoice(restriction, cbCategory.isChecked(), true);
-							dialogLock.unlock();
+							latch.countDown();
 						}
 					});
 			alertDialogBuilder.setNeutralButton(resources.getString(R.string.title_denyonce),
@@ -1229,7 +1222,7 @@ public class PrivacyService {
 						public void onClick(DialogInterface dialog, int which) {
 							// Deny
 							result.restricted = true;
-							dialogLock.unlock();
+							latch.countDown();
 						}
 					});
 			alertDialogBuilder.setNegativeButton(resources.getString(R.string.title_allow),
@@ -1239,7 +1232,7 @@ public class PrivacyService {
 							// Allow
 							result.restricted = false;
 							onDemandChoice(restriction, cbCategory.isChecked(), false);
-							dialogLock.unlock();
+							latch.countDown();
 						}
 					});
 			return alertDialogBuilder;
