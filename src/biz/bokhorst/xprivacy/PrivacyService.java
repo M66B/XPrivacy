@@ -116,6 +116,7 @@ public class PrivacyService {
 				final Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
 
 				for (Method anr : cam.getDeclaredMethods()) {
+					Util.log(null, Log.WARN, anr.toString());
 					// Foreground
 					// @formatter:off
 					// public long inputDispatchingTimedOut(int pid, final boolean aboveSystem, String reason)
