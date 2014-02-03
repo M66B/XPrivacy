@@ -17,18 +17,28 @@ public class Hook implements Comparable<Hook> {
 		mMethodName = methodName;
 	}
 
-	public Hook(String restrictionName, String methodName, boolean dangerous, boolean restart, String permissions,
-			int sdk, String from, String replaces) {
+	public Hook(String restrictionName, String methodName, String permissions, int sdk, String from, String replaces) {
 		mRestrictionName = restrictionName;
 		mMethodName = methodName;
-		mDangerous = dangerous;
-		mRestart = restart;
-		mNoUsageData = restart;
+		mDangerous = false;
+		mRestart = false;
+		mNoUsageData = false;
 		mNoOnDemand = false;
 		mPermissions = (permissions == null ? null : permissions.split(","));
 		mSdk = sdk;
 		mFrom = (from == null ? null : new Version(from));
 		mReplaces = replaces;
+	}
+
+	public Hook dangerous() {
+		mDangerous = true;
+		return this;
+	}
+
+	public Hook restart() {
+		mRestart = true;
+		mNoOnDemand = true;
+		return this;
 	}
 
 	public Hook noUsageData() {
