@@ -1128,6 +1128,7 @@ public class PrivacyService {
 							public void run() {
 								if (holder.dialog != null)
 									holder.dialog.cancel();
+								result.restricted = true;
 							}
 						});
 					}
