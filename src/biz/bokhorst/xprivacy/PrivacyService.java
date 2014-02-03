@@ -328,10 +328,27 @@ public class PrivacyService {
 				// Update cache
 				if (mUseCache)
 					synchronized (mRestrictionCache) {
-						CRestriction key = new CRestriction(restriction);
-						if (mRestrictionCache.containsKey(key))
-							mRestrictionCache.remove(key);
-						mRestrictionCache.put(key, key);
+						if (restriction.methodName == null) {
+							// Clear cache
+							synchronized (mRestrictionCache) {
+								CRestriction key = new CRestriction(new PRestriction(restriction.uid,
+										restriction.restrictionName, null));
+								if (mRestrictionCache.containsKey(key))
+									mRestrictionCache.remove(key);
+								for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName)) {
+									key = new CRestriction(new PRestriction(restriction.uid,
+											restriction.restrictionName, hook.getName()));
+									if (mRestrictionCache.containsKey(key))
+										mRestrictionCache.remove(key);
+								}
+							}
+						} else {
+							// Update cache
+							CRestriction key = new CRestriction(restriction);
+							if (mRestrictionCache.containsKey(key))
+								mRestrictionCache.remove(key);
+							mRestrictionCache.put(key, key);
+						}
 					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
