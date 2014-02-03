@@ -101,17 +101,19 @@ public class Meta {
 		listHook.add(new Hook("ipc", "android.view.IWindowManager", false, false, "", 1, "1.99.1", null));
 		listHook.add(new Hook("ipc", "android.net.wifi.IWifiManager", false, false, "", 1, "1.99.1", null));
 
-		listHook.add(new Hook("location", "addNmeaListener", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
-		listHook.add(new Hook("location", "addProximityAlert", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
-		listHook.add(new Hook("location", "getLastKnownLocation", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
-		listHook.add(new Hook("location", "getProviders", true, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, "1.99.1", null));
-		listHook.add(new Hook("location", "isProviderEnabled", true, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, "1.99.1", null));
-		listHook.add(new Hook("location", "removeUpdates", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
-		listHook.add(new Hook("location", "requestLocationUpdates", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
-		listHook.add(new Hook("location", "requestSingleUpdate", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
-		listHook.add(new Hook("location", "sendExtraCommand", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
 		listHook.add(new Hook("location", "addGeofence", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null));
+		listHook.add(new Hook("location", "addNmeaListener", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 5, null, null));
+		listHook.add(new Hook("location", "addProximityAlert", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
+		listHook.add(new Hook("location", "getGpsStatus", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, "1.99.29", null));
+		listHook.add(new Hook("location", "getLastKnownLocation", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
 		listHook.add(new Hook("location", "getLastLocation", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null));
+		listHook.add(new Hook("location", "getProviders", true, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "1.99.1", null));
+		listHook.add(new Hook("location", "isProviderEnabled", true, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "1.99.1", null));
+		listHook.add(new Hook("location", "removeUpdates", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
+		listHook.add(new Hook("location", "requestLocationUpdates", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
+		listHook.add(new Hook("location", "requestSingleUpdate", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 9, null, null));
+		listHook.add(new Hook("location", "sendExtraCommand", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, null, null));
+
 		listHook.add(new Hook("location", "disableLocationUpdates", false, false, "CONTROL_LOCATION_UPDATES", 10, null, null));
 		listHook.add(new Hook("location", "enableLocationUpdates", false, false, "CONTROL_LOCATION_UPDATES", 10, null, null));
 		listHook.add(new Hook("location", "getCellLocation", false, false, "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
