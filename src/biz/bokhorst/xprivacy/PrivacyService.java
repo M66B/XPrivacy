@@ -1217,15 +1217,17 @@ public class PrivacyService {
 					setRestrictionInternal(result);
 
 					// Make exceptions for dangerous methods
-					boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
-					if (restricted && !dangerous) {
+					if (restricted) {
+						boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 						result.restricted = dangerous;
-						result.asked = true;
+						result.asked = !dangerous;
 
 						for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
 							if (hook.isDangerous()) {
 								result.methodName = hook.getName();
-								setRestrictionInternal(result);
+								// Only set it if it hasn't been marked asked
+								if (!getRestriction(result, false, null).asked)
+									setRestrictionInternal(result);
 							}
 					}
 
