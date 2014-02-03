@@ -59,6 +59,7 @@ public class PrivacyService {
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
 	private static boolean mBootCompleted = false;
+	private static boolean mLockScreen = false;
 
 	private static Semaphore mOndemandSemaphore = new Semaphore(1, true);
 
@@ -176,6 +177,20 @@ public class PrivacyService {
 							protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 								mBootCompleted = true;
 								Util.log(null, Log.WARN, "Boot completed");
+							}
+						});
+					}
+
+					// public void setLockScreenShown(boolean shown)
+					if (method.getName().equals("setLockScreenShown")) {
+						Util.log(null, Log.WARN, "Hooking " + method);
+						XposedBridge.hookMethod(method, new XC_MethodHook() {
+							@Override
+							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+								if (param.args.length > 0) {
+									mLockScreen = (Boolean) param.args[0];
+									Util.log(null, Log.WARN, "Lockscreen=" + mLockScreen);
+								}
 							}
 						});
 					}
@@ -1035,7 +1050,7 @@ public class PrivacyService {
 				if (mHandler == null)
 					return false;
 
-				if (!mBootCompleted)
+				if (!mBootCompleted || mLockScreen)
 					return false;
 
 				if (restriction.methodName == null)
