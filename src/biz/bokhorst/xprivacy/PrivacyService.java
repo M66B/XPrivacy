@@ -738,7 +738,7 @@ public class PrivacyService {
 			}
 		}
 
-		public void setSettingInternal(PSetting setting) throws RemoteException {
+		private void setSettingInternal(PSetting setting) throws RemoteException {
 			try {
 				SQLiteDatabase db = getDatabase();
 
