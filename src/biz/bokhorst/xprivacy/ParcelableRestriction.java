@@ -80,4 +80,9 @@ public class ParcelableRestriction implements Parcelable {
 	public int describeContents() {
 		return 0;
 	}
+
+	@Override
+	public String toString() {
+		return "uid=" + uid + " " + restrictionName + "/" + methodName + "=" + restricted + (asked ? "!" : "?");
+	}
 }

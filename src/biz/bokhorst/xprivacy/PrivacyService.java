@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -56,24 +58,26 @@ public class PrivacyService {
 	private static SQLiteDatabase mDatabase = null;
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
-	private static boolean mOnDemanding = false;
+
+	private static ReentrantLock mOndemandLock = new ReentrantLock(true);
 
 	private static SQLiteStatement stmtGetRestriction = null;
 	private static SQLiteStatement stmtGetSetting = null;
 	private static SQLiteStatement stmtGetUsageRestriction = null;
 	private static SQLiteStatement stmtGetUsageMethod = null;
 
-	private static int cCurrentVersion = 262;
-	private static String cServiceName = "xprivacy" + cCurrentVersion;
-	private static String cTableRestriction = "restriction";
-	private static String cTableUsage = "usage";
-	private static String cTableSetting = "setting";
-
 	private static boolean mUseCache = false;
 	private static Map<CSetting, CSetting> mSettingCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+	private static final int cCurrentVersion = 262;
+	private static final String cServiceName = "xprivacy" + cCurrentVersion;
+	private static final String cTableRestriction = "restriction";
+	private static final String cTableUsage = "usage";
+	private static final String cTableSetting = "setting";
+	private static final int cMaxOnDemandDialog = 10; // seconds
 
 	// TODO: define column names
 	// sqlite3 /data/data/biz.bokhorst.xprivacy/xprivacy.db
@@ -125,8 +129,8 @@ public class PrivacyService {
 								try {
 									// Delay ANR while on demand dialog open
 									Util.log(null, Log.WARN, "Foreground ANR uid=" + getUidANR(param) + " ondemand="
-											+ mOnDemanding);
-									if (mOnDemanding)
+											+ mOndemandLock.isLocked());
+									if (mOndemandLock.isLocked())
 										param.setResult(5 * 1000);
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
@@ -149,8 +153,8 @@ public class PrivacyService {
 								try {
 									// Ignore ANR while on demand dialog open
 									Util.log(null, Log.WARN, "Background ANR uid=" + getUidANR(param) + " ondemand="
-											+ mOnDemanding);
-									if (mOnDemanding)
+											+ mOndemandLock.isLocked());
+									if (mOndemandLock.isLocked())
 										param.setResult(null);
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
@@ -265,6 +269,19 @@ public class PrivacyService {
 		public void setRestriction(ParcelableRestriction restriction) throws RemoteException {
 			try {
 				enforcePermission();
+				setRestrictionInternal(restriction);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				synchronized (mListError) {
+					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
+				}
+				throw new RemoteException(ex.toString());
+			}
+		}
+
+		private void setRestrictionInternal(ParcelableRestriction restriction) throws RemoteException {
+			try {
 				SQLiteDatabase db = getDatabase();
 				// 0 not restricted, ask
 				// 1 restricted, ask
@@ -716,6 +733,19 @@ public class PrivacyService {
 		public void setSetting(ParcelableSetting setting) throws RemoteException {
 			try {
 				enforcePermission();
+				setSettingInternal(setting);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				synchronized (mListError) {
+					mListError.add(ex.toString());
+					mListError.add(Log.getStackTraceString(ex));
+				}
+				throw new RemoteException(ex.toString());
+			}
+		}
+
+		public void setSettingInternal(ParcelableSetting setting) throws RemoteException {
+			try {
 				SQLiteDatabase db = getDatabase();
 
 				db.beginTransaction();
@@ -981,133 +1011,75 @@ public class PrivacyService {
 					return false;
 
 				// Go ask
-				Util.log(null, Log.WARN, "On demand uid=" + restriction.uid + " " + restriction.restrictionName + "/"
-						+ restriction.methodName);
-				synchronized (this) {
-					mOnDemanding = true;
+				Util.log(null, Log.WARN, "On demand " + restriction);
+				mOndemandLock.lock();
+				try {
+					Util.log(null, Log.WARN, "On demanding " + restriction);
 
-					// Create semaphore
+					// Check if not asked before
+					CRestriction key = new CRestriction(restriction);
+					synchronized (mRestrictionCache) {
+						if (mRestrictionCache.containsKey(key)) {
+							ParcelableRestriction cache = mRestrictionCache.get(key).getRestriction();
+							result.restricted = cache.restricted;
+							result.asked = cache.asked;
+						}
+					}
+					if (result.asked) {
+						Util.log(null, Log.WARN, "Already asked " + restriction);
+						return result.restricted;
+					}
+
+					final AlertDialogHolder holder = new AlertDialogHolder();
+					final ReentrantLock dialogLock = new ReentrantLock();
 					final Semaphore semaphore = new Semaphore(1);
 					semaphore.acquireUninterruptibly();
-
-					Util.log(null, Log.WARN, "On demanding uid=" + restriction.uid + " " + restriction.restrictionName
-							+ "/" + restriction.methodName);
 
 					// Run dialog in looper
 					mHandler.post(new Runnable() {
 						@Override
 						public void run() {
 							try {
-								// Get resources
-								String self = PrivacyService.class.getPackage().getName();
-								Resources resources = context.getPackageManager().getResourcesForApplication(self);
+								dialogLock.lock();
+								semaphore.release();
 
-								// Build message
-								ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
-								int stringId = resources.getIdentifier("restrict_" + restriction.restrictionName,
-										"string", self);
-								String message = String.format(resources.getString(R.string.msg_ondemand),
-										TextUtils.join(", ", appInfo.getApplicationName()),
-										resources.getString(stringId), restriction.methodName);
-
-								int hmargin = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin);
-								int vmargin = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin);
-
-								// Build view
-								LinearLayout llContainer = new LinearLayout(context);
-								llContainer.setOrientation(LinearLayout.VERTICAL);
-								LinearLayout.LayoutParams llContainerParams = new LinearLayout.LayoutParams(
-										LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-								llContainer.setLayoutParams(llContainerParams);
-								llContainer.setPadding(hmargin, vmargin, hmargin, vmargin);
-
-								// Container for icon & message
-								LinearLayout llApplication = new LinearLayout(context);
-								llApplication.setOrientation(LinearLayout.HORIZONTAL);
-								LinearLayout.LayoutParams llApplicationParams = new LinearLayout.LayoutParams(
-										LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-								llApplication.setLayoutParams(llApplicationParams);
-								{
-									// Application icon
-									ImageView ivApp = new ImageView(context);
-									ivApp.setImageDrawable(appInfo.getIcon(context));
-									llApplication.addView(ivApp);
-
-									// Message
-									TextView tvMessage = new TextView(context);
-									tvMessage.setText(message);
-									LinearLayout.LayoutParams tvMessageParams = new LinearLayout.LayoutParams(
-											LinearLayout.LayoutParams.WRAP_CONTENT,
-											LinearLayout.LayoutParams.WRAP_CONTENT);
-									tvMessageParams.setMargins(hmargin / 2, 0, 0, 0);
-									tvMessage.setLayoutParams(tvMessageParams);
-									llApplication.addView(tvMessage);
-								}
-								llContainer.addView(llApplication);
-
-								// Category check box
-								final CheckBox cbCategory = new CheckBox(context);
-								cbCategory.setText(resources.getString(R.string.menu_category));
-								cbCategory.setChecked(true);
-								LinearLayout.LayoutParams llCategoryParams = new LinearLayout.LayoutParams(
-										LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-								llCategoryParams.setMargins(0, vmargin / 2, 0, 0);
-								cbCategory.setLayoutParams(llCategoryParams);
-								llContainer.addView(cbCategory);
-
-								// Ask
-								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-								alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
-								alertDialogBuilder.setView(llContainer);
-								alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
-								alertDialogBuilder.setPositiveButton(resources.getString(R.string.title_deny),
-										new DialogInterface.OnClickListener() {
-											@Override
-											public void onClick(DialogInterface dialog, int which) {
-												// Deny
-												result.restricted = true;
-												onDemandChoice(restriction, cbCategory.isChecked(), true);
-												semaphore.release();
-											}
-										});
-								alertDialogBuilder.setNeutralButton(resources.getString(R.string.title_denyonce),
-										new DialogInterface.OnClickListener() {
-											@Override
-											public void onClick(DialogInterface dialog, int which) {
-												// Deny
-												result.restricted = true;
-												semaphore.release();
-											}
-										});
-								alertDialogBuilder.setNegativeButton(resources.getString(R.string.title_allow),
-										new DialogInterface.OnClickListener() {
-											@Override
-											public void onClick(DialogInterface dialog, int which) {
-												// Allow
-												result.restricted = false;
-												onDemandChoice(restriction, cbCategory.isChecked(), false);
-												semaphore.release();
-											}
-										});
-								AlertDialog alertDialog = alertDialogBuilder.create();
-								alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+								AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, result, context,
+										dialogLock);
+								AlertDialog alertDialog = builder.create();
+								alertDialog.getWindow().setType(
+										WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
+												| WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 								alertDialog.setCancelable(false);
 								alertDialog.setCanceledOnTouchOutside(false);
 								alertDialog.show();
+								holder.dialog = alertDialog;
 							} catch (Throwable ex) {
 								Util.bug(null, ex);
 								synchronized (mListError) {
 									mListError.add(ex.toString());
 									mListError.add(Log.getStackTraceString(ex));
 								}
-								semaphore.release();
+								dialogLock.unlock();
 							}
 						}
 					});
 
-					// Wait for dialog
+					// Wait for dialog to display
 					semaphore.acquireUninterruptibly();
-					mOnDemanding = false;
+
+					// Wait for dialog to complete
+					if (!dialogLock.tryLock(cMaxOnDemandDialog, TimeUnit.SECONDS)) {
+						Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								if (holder.dialog != null)
+									holder.dialog.cancel();
+							}
+						});
+					}
+				} finally {
+					mOndemandLock.unlock();
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -1119,6 +1091,105 @@ public class PrivacyService {
 			return result.restricted;
 		}
 
+		final class AlertDialogHolder {
+			public AlertDialog dialog;
+		}
+
+		private AlertDialog.Builder getOnDemandDialogBuilder(final ParcelableRestriction restriction,
+				final ParcelableRestriction result, final Context context, final ReentrantLock dialogLock)
+				throws NameNotFoundException {
+			// Get resources
+			String self = PrivacyService.class.getPackage().getName();
+			Resources resources = context.getPackageManager().getResourcesForApplication(self);
+
+			// Build message
+			ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
+			int stringId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
+			String message = String.format(resources.getString(R.string.msg_ondemand),
+					TextUtils.join(", ", appInfo.getApplicationName()), resources.getString(stringId),
+					restriction.methodName);
+
+			int hmargin = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+			int vmargin = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin);
+
+			// Build view
+			LinearLayout llContainer = new LinearLayout(context);
+			llContainer.setOrientation(LinearLayout.VERTICAL);
+			LinearLayout.LayoutParams llContainerParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+			llContainer.setLayoutParams(llContainerParams);
+			llContainer.setPadding(hmargin, vmargin, hmargin, vmargin);
+
+			// Container for icon & message
+			LinearLayout llApplication = new LinearLayout(context);
+			llApplication.setOrientation(LinearLayout.HORIZONTAL);
+			LinearLayout.LayoutParams llApplicationParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+			llApplication.setLayoutParams(llApplicationParams);
+			{
+				// Application icon
+				ImageView ivApp = new ImageView(context);
+				ivApp.setImageDrawable(appInfo.getIcon(context));
+				llApplication.addView(ivApp);
+
+				// Message
+				TextView tvMessage = new TextView(context);
+				tvMessage.setText(message);
+				LinearLayout.LayoutParams tvMessageParams = new LinearLayout.LayoutParams(
+						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+				tvMessageParams.setMargins(hmargin / 2, 0, 0, 0);
+				tvMessage.setLayoutParams(tvMessageParams);
+				llApplication.addView(tvMessage);
+			}
+			llContainer.addView(llApplication);
+
+			// Category check box
+			final CheckBox cbCategory = new CheckBox(context);
+			cbCategory.setText(resources.getString(R.string.menu_category));
+			cbCategory.setChecked(true);
+			LinearLayout.LayoutParams llCategoryParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			llCategoryParams.setMargins(0, vmargin / 2, 0, 0);
+			cbCategory.setLayoutParams(llCategoryParams);
+			llContainer.addView(cbCategory);
+
+			// Ask
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+			alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
+			alertDialogBuilder.setView(llContainer);
+			alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
+			alertDialogBuilder.setPositiveButton(resources.getString(R.string.title_deny),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// Deny
+							result.restricted = true;
+							onDemandChoice(restriction, cbCategory.isChecked(), true);
+							dialogLock.unlock();
+						}
+					});
+			alertDialogBuilder.setNeutralButton(resources.getString(R.string.title_denyonce),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// Deny
+							result.restricted = true;
+							dialogLock.unlock();
+						}
+					});
+			alertDialogBuilder.setNegativeButton(resources.getString(R.string.title_allow),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// Allow
+							result.restricted = false;
+							onDemandChoice(restriction, cbCategory.isChecked(), false);
+							dialogLock.unlock();
+						}
+					});
+			return alertDialogBuilder;
+		}
+
 		private void onDemandChoice(ParcelableRestriction restriction, boolean category, boolean restricted) {
 			try {
 				if (category || restricted) {
@@ -1126,7 +1197,7 @@ public class PrivacyService {
 					// blocking a single function, keep asking for the others
 					ParcelableRestriction result = new ParcelableRestriction(restriction.uid,
 							restriction.restrictionName, null, restricted, category);
-					setRestriction(result);
+					setRestrictionInternal(result);
 
 					// Make exceptions for dangerous methods
 					boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
@@ -1137,7 +1208,7 @@ public class PrivacyService {
 						for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
 							if (hook.isDangerous()) {
 								result.methodName = hook.getName();
-								setRestriction(result);
+								setRestrictionInternal(result);
 							}
 					}
 
@@ -1146,21 +1217,21 @@ public class PrivacyService {
 						result.methodName = restriction.methodName;
 						result.restricted = true;
 						result.asked = true;
-						setRestriction(result);
+						setRestrictionInternal(result);
 					}
 				} else {
 					// Leave the category, add an exception for the function
 					ParcelableRestriction result = new ParcelableRestriction(restriction.uid,
 							restriction.restrictionName, restriction.methodName, restricted, true);
-					setRestriction(result);
+					setRestrictionInternal(result);
 				}
 
 				// Mark state as changed
-				setSetting(new ParcelableSetting(restriction.uid, PrivacyManager.cSettingState,
+				setSettingInternal(new ParcelableSetting(restriction.uid, PrivacyManager.cSettingState,
 						Integer.toString(ActivityMain.STATE_CHANGED)));
 
 				// Update modification time
-				setSetting(new ParcelableSetting(restriction.uid, PrivacyManager.cSettingModifyTime,
+				setSettingInternal(new ParcelableSetting(restriction.uid, PrivacyManager.cSettingModifyTime,
 						Long.toString(System.currentTimeMillis())));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
