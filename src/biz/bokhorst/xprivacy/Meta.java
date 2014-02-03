@@ -204,8 +204,8 @@ public class Meta {
 		listHook.add(new Hook("phone", "gsm.sim.operator.iso-country", "", 10, "1.99.1", null));
 		listHook.add(new Hook("phone", "gsm.sim.operator.numeric", "", 10, "1.99.1", null));
 		listHook.add(new Hook("phone", "gsm.sim.operator.alpha", "", 10, "1.99.1", null));
-		listHook.add(new Hook("phone", "Configuration.MCC", "", 1, "2.0", null).noUsageData());
-		listHook.add(new Hook("phone", "Configuration.MNC", "", 1, "2.0", null).noUsageData());
+		listHook.add(new Hook("phone", "Configuration.MCC", "", 1, "2.0", null).noUsageData().noOnDemand());
+		listHook.add(new Hook("phone", "Configuration.MNC", "", 1, "2.0", null).noUsageData().noOnDemand());
 
 		listHook.add(new Hook("sensors", "getDefaultSensor", "", 3, null, null));
 		listHook.add(new Hook("sensors", "getSensorList", "", 3, null, null));
