@@ -374,7 +374,7 @@ public class PrivacyManager {
 		try {
 			for (String restriction : listRestriction) {
 				for (String method : mRestart.get(restriction))
-					listRestartRestriction.add(getRestriction(null, uid, restriction, method, null));
+					listRestartRestriction.add(getRestrictionEx(uid, restriction, method).restricted);
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);

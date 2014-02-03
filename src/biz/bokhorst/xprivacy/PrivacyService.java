@@ -550,14 +550,14 @@ public class PrivacyService {
 				if (selector.restrictionName == null)
 					for (String sRestrictionName : PrivacyManager.getRestrictions()) {
 						PRestriction restriction = new PRestriction(selector.uid, sRestrictionName, null, false);
-						restriction.restricted = getRestriction(restriction, false, mSecret).restricted;
+						restriction.restricted = getRestriction(restriction, false, null).restricted;
 						result.add(restriction);
 					}
 				else
 					for (Hook md : PrivacyManager.getHooks(selector.restrictionName)) {
 						PRestriction restriction = new PRestriction(selector.uid, selector.restrictionName,
 								md.getName(), false);
-						restriction.restricted = getRestriction(restriction, false, mSecret).restricted;
+						restriction.restricted = getRestriction(restriction, false, null).restricted;
 						result.add(restriction);
 					}
 			} catch (Throwable ex) {
