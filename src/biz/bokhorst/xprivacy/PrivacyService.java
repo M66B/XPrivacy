@@ -345,9 +345,9 @@ public class PrivacyService {
 
 		@Override
 		public void setRestrictionList(List<PRestriction> listRestriction) throws RemoteException {
-			// Permission enforced by setRestriction
+			enforcePermission();
 			for (PRestriction restriction : listRestriction)
-				setRestriction(restriction);
+				setRestrictionInternal(restriction);
 		}
 
 		@Override
@@ -803,9 +803,9 @@ public class PrivacyService {
 
 		@Override
 		public void setSettingList(List<PSetting> listSetting) throws RemoteException {
-			// Permission enforced by setSetting
+			enforcePermission();
 			for (PSetting setting : listSetting)
-				setSetting(setting);
+				setSettingInternal(setting);
 		}
 
 		@Override
