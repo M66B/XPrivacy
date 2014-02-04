@@ -311,10 +311,6 @@ public class PrivacyManager {
 		return restricted;
 	}
 
-	public static void setRestriction(int uid, String restrictionName, String methodName, boolean restricted) {
-		setRestriction(uid, restrictionName, methodName, restricted, restricted);
-	}
-
 	public static void setRestriction(int uid, String restrictionName, String methodName, boolean restricted,
 			boolean asked) {
 		// Check uid
@@ -322,14 +318,6 @@ public class PrivacyManager {
 			Util.log(null, Log.WARN, "uid=0");
 			return;
 		}
-
-		// Clear category
-		if (methodName == null && !restricted)
-			try {
-				PrivacyService.getClient().deleteRestrictions(uid, restrictionName);
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
 
 		// Create list of restrictions set set
 		List<PRestriction> listRestriction = new ArrayList<PRestriction>();

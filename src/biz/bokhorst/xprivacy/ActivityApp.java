@@ -972,7 +972,9 @@ public class ActivityApp extends Activity {
 							crestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 							crestricted = !crestricted;
 							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
-							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, null, crestricted);
+							if (!crestricted)
+								PrivacyManager.deleteRestrictions(mAppInfo.getUid(), restrictionName);
+							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, null, crestricted, false);
 							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
 							// Update all/some restricted
@@ -1189,7 +1191,8 @@ public class ActivityApp extends Activity {
 									md.getName()).restricted;
 							restricted = !restricted;
 							holder.ctvMethodName.setChecked(restricted);
-							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, md.getName(), restricted);
+							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, md.getName(), restricted,
+									false);
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent

@@ -647,7 +647,7 @@ public class ActivityShare extends Activity {
 							listPRestriction.add(new PRestriction(uid, restrictionName, null, !mSomeRestricted));
 						PrivacyManager.setRestrictionList(listPRestriction);
 					} else
-						PrivacyManager.setRestriction(uid, restriction, null, !mSomeRestricted);
+						PrivacyManager.setRestriction(uid, restriction, null, !mSomeRestricted, false);
 					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
 
 					mAppAdapter.setState(uid, STATE_SUCCESS,
@@ -890,11 +890,11 @@ public class ActivityShare extends Activity {
 
 							// Set imported restrictions
 							for (String restrictionName : mapPackage.get(packageName).keySet()) {
-								PrivacyManager.setRestriction(uid, restrictionName, null, true);
+								PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
 								for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(
 										restrictionName))
 									PrivacyManager.setRestriction(uid, restrictionName, md.getMethodName(),
-											md.isRestricted());
+											md.isRestricted(), false);
 							}
 							List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
 
