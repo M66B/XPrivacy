@@ -920,15 +920,25 @@ public class PrivacyService {
 					Util.log(null, Log.WARN, "On demanding " + restriction);
 
 					// Check if not asked before
+					boolean alreadyAsked = false;
 					CRestriction key = new CRestriction(restriction);
 					synchronized (mRestrictionCache) {
+						// Check method
 						if (mRestrictionCache.containsKey(key)) {
 							PRestriction cache = mRestrictionCache.get(key).getRestriction();
-							result.restricted = cache.restricted;
-							result.asked = cache.asked;
+							alreadyAsked = cache.asked;
+						}
+
+						// Check category
+						if (!alreadyAsked) {
+							key.getRestriction().methodName = null;
+							if (mRestrictionCache.containsKey(key)) {
+								PRestriction cache = mRestrictionCache.get(key).getRestriction();
+								alreadyAsked = cache.asked;
+							}
 						}
 					}
-					if (result.asked) {
+					if (alreadyAsked) {
 						Util.log(null, Log.WARN, "Already asked " + restriction);
 						return result.restricted;
 					}
