@@ -28,7 +28,7 @@
     <string name="menu_clear_all">Tout effacer</string>
     <string name="menu_restrict_all">Tout restreindre</string>
     <string name="menu_clear_usage">Effacer</string>
-    <string name="menu_clear_db">Effacer les données</string>
+    <string name="menu_clear_db">Effacer toutes les données</string>
     <string name="menu_usage_all">Basculer toutes/restreintes</string>
     <string name="menu_apply">Appliquer le modèle</string>
     <string name="menu_clear">Effacer</string>
