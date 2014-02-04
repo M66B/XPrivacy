@@ -2,7 +2,6 @@ package biz.bokhorst.xprivacy;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,7 +48,7 @@ import android.widget.Toast;
 public class PrivacyService {
 	private static int mXUid = -1;
 	private static String mSecret = null;
-	private static List<String> mListError;
+	private static List<String> mListError = new ArrayList<String>();
 	private static IPrivacyService mClient = null;
 	private static SQLiteDatabase mDatabase = null;
 	private static Thread mWorker = null;
@@ -81,7 +80,7 @@ public class PrivacyService {
 	public static void register(List<String> listError, String secret) {
 		// Store secret and errors
 		mSecret = secret;
-		mListError = listError;
+		mListError.addAll(listError);
 
 		try {
 			// Get memory class to enable/disable caching
@@ -99,9 +98,7 @@ public class PrivacyService {
 						mHandler = new Handler();
 						Looper.loop();
 					} catch (Throwable ex) {
-						Util.bug(null, ex);
-						mListError.add(ex.toString());
-						mListError.add(Log.getStackTraceString(ex));
+						reportError(Log.getStackTraceString(ex));
 					}
 				}
 			});
@@ -129,13 +126,12 @@ public class PrivacyService {
 			}
 			Util.log(null, Log.WARN, "Service registered name=" + cServiceName);
 		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			mListError.add(ex.toString());
-			mListError.add(Log.getStackTraceString(ex));
+			reportError(Log.getStackTraceString(ex));
 		}
 	}
 
 	public static boolean checkClient() {
+		// Runs client side
 		try {
 			IPrivacyService client = getClient();
 			if (client != null)
@@ -147,6 +143,7 @@ public class PrivacyService {
 	}
 
 	public static IPrivacyService getClient() {
+		// Runs client side
 		if (mClient == null)
 			try {
 				// public static IBinder getService(String name)
@@ -184,10 +181,12 @@ public class PrivacyService {
 			enforcePermission();
 			File dbFile = getDbFile();
 			if (!dbFile.exists() || !dbFile.canRead() || !dbFile.canWrite())
-				throw new InvalidParameterException("Database does not exist or is not accessible");
+				reportError("Database does not exist or is not accessible");
+			List<String> listError = new ArrayList<String>();
 			synchronized (mListError) {
-				return mListError;
+				listError.addAll(mListError);
 			}
+			return listError;
 		}
 
 		// Restrictions
@@ -198,11 +197,7 @@ public class PrivacyService {
 				enforcePermission();
 				setRestrictionInternal(restriction);
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -210,11 +205,7 @@ public class PrivacyService {
 		private void setRestrictionInternal(PRestriction restriction) throws RemoteException {
 			try {
 				if (restriction.restrictionName == null) {
-					String msg = "Set invalid restriction " + restriction;
-					Util.log(null, Log.ERROR, msg);
-					synchronized (mListError) {
-						mListError.add(msg);
-					}
+					reportError("Set invalid restriction " + restriction);
 					return;
 				}
 
@@ -273,11 +264,7 @@ public class PrivacyService {
 						mRestrictionCache.put(key, key);
 					}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -298,11 +285,7 @@ public class PrivacyService {
 			try {
 				// No permissions enforced, but usage data requires a secret
 				if (restriction.restrictionName == null) {
-					String msg = "Get invalid restriction " + restriction;
-					Util.log(null, Log.ERROR, msg);
-					synchronized (mListError) {
-						mListError.add(msg);
-					}
+					reportError("Get invalid restriction " + restriction);
 					return result;
 				}
 
@@ -460,22 +443,14 @@ public class PrivacyService {
 											db.endTransaction();
 										}
 									} catch (Throwable ex) {
-										Util.bug(null, ex);
-										synchronized (mListError) {
-											mListError.add(ex.toString());
-											mListError.add(Log.getStackTraceString(ex));
-										}
+										reportError(Log.getStackTraceString(ex));
 									}
 								}
 							});
 						}
 					}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 			}
 			return result;
 		}
@@ -500,11 +475,7 @@ public class PrivacyService {
 						result.add(restriction);
 					}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 			return result;
@@ -532,11 +503,7 @@ public class PrivacyService {
 						mRestrictionCache.clear();
 					}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -591,11 +558,7 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 			return lastUsage;
@@ -639,11 +602,7 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 			return result;
@@ -668,11 +627,7 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -685,11 +640,7 @@ public class PrivacyService {
 				enforcePermission();
 				setSettingInternal(setting);
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -731,11 +682,7 @@ public class PrivacyService {
 					}
 				}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -817,11 +764,7 @@ public class PrivacyService {
 					}
 				}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 			}
 			return result;
 		}
@@ -852,11 +795,7 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 			return listSetting;
@@ -884,11 +823,7 @@ public class PrivacyService {
 						mSettingCache.clear();
 					}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -929,11 +864,7 @@ public class PrivacyService {
 					Util.log(null, Log.WARN, "Cache cleared");
 				}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -1016,11 +947,7 @@ public class PrivacyService {
 								alertDialog.show();
 								holder.dialog = alertDialog;
 							} catch (Throwable ex) {
-								Util.bug(null, ex);
-								synchronized (mListError) {
-									mListError.add(ex.toString());
-									mListError.add(Log.getStackTraceString(ex));
-								}
+								reportError(Log.getStackTraceString(ex));
 								latch.countDown();
 							}
 						}
@@ -1043,11 +970,7 @@ public class PrivacyService {
 					mOndemandSemaphore.release();
 				}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 			}
 			return result.restricted;
 		}
@@ -1208,11 +1131,7 @@ public class PrivacyService {
 				setSettingInternal(new PSetting(restriction.uid, PrivacyManager.cSettingModifyTime,
 						Long.toString(System.currentTimeMillis())));
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				synchronized (mListError) {
-					mListError.add(ex.toString());
-					mListError.add(Log.getStackTraceString(ex));
-				}
+				reportError(Log.getStackTraceString(ex));
 			}
 		}
 
@@ -1231,7 +1150,7 @@ public class PrivacyService {
 							Toast.makeText(context, resources.getString(R.string.msg_restrictedby), Toast.LENGTH_LONG)
 									.show();
 						} catch (NameNotFoundException ex) {
-							Util.bug(null, ex);
+							reportError(Log.getStackTraceString(ex));
 						}
 					}
 				});
@@ -1267,7 +1186,7 @@ public class PrivacyService {
 				return null;
 			return (Context) cam.getDeclaredField("mContext").get(am);
 		} catch (Throwable ex) {
-			Util.bug(null, ex);
+			reportError(Log.getStackTraceString(ex));
 			return null;
 		}
 	}
@@ -1285,7 +1204,7 @@ public class PrivacyService {
 					}
 				}
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
+				reportError(Log.getStackTraceString(ex));
 			}
 		return mXUid;
 	}
@@ -1324,116 +1243,136 @@ public class PrivacyService {
 						Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
 					}
 		} catch (Throwable ex) {
-			Util.bug(null, ex);
+			reportError(Log.getStackTraceString(ex));
 		}
 	}
 
 	private static SQLiteDatabase getDatabase() {
-		// Create/upgrade database when needed
-		if (mDatabase == null) {
-			File dbFile = getDbFile();
-			SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
-
-			// Update migration status
-			if (db.getVersion() > 1) {
-				Util.log(null, Log.WARN, "Updating migration status");
-				db.beginTransaction();
-				try {
-					ContentValues values = new ContentValues();
-					values.put("uid", 0);
-					values.put("name", PrivacyManager.cSettingMigrated);
-					values.put("value", Boolean.toString(true));
-					db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-
-					db.setTransactionSuccessful();
-				} finally {
-					db.endTransaction();
-				}
-			}
-
-			// Upgrade database if needed
-			if (db.needUpgrade(1)) {
-				db.beginTransaction();
-				try {
-					// http://www.sqlite.org/lang_createtable.html
-					Util.log(null, Log.WARN, "Creating database");
-					db.execSQL("CREATE TABLE restriction (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL)");
-					db.execSQL("CREATE TABLE setting (uid INTEGER NOT NULL, name TEXT NOT NULL, value TEXT)");
-					db.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
-					db.execSQL("CREATE UNIQUE INDEX idx_restriction ON restriction(uid, restriction, method)");
-					db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, name)");
-					db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method)");
-					db.setVersion(1);
-					db.setTransactionSuccessful();
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				} finally {
-					db.endTransaction();
-				}
-
-			}
-
-			if (db.needUpgrade(2))
-				// Old migrated indication
-				db.setVersion(2);
-
-			if (db.needUpgrade(3)) {
-				db.beginTransaction();
-				try {
-					db.execSQL("DELETE FROM usage WHERE method=''");
-					db.setVersion(3);
-					db.setTransactionSuccessful();
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				} finally {
-					db.endTransaction();
-				}
-			}
-
-			if (db.needUpgrade(4)) {
-				db.beginTransaction();
-				try {
-					db.execSQL("DELETE FROM setting WHERE value IS NULL");
-					db.setVersion(4);
-					db.setTransactionSuccessful();
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				} finally {
-					db.endTransaction();
-				}
-			}
-
-			if (db.needUpgrade(5)) {
-				db.beginTransaction();
-				try {
-					db.execSQL("DELETE FROM setting WHERE value = ''");
-					db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
-					db.setVersion(5);
-					db.setTransactionSuccessful();
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				} finally {
-					db.endTransaction();
-				}
-			}
-
-			if (db.needUpgrade(6)) {
-				db.beginTransaction();
-				try {
-					db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
-					db.setVersion(6);
-					db.setTransactionSuccessful();
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				} finally {
-					db.endTransaction();
-				}
-			}
-
-			Util.log(null, Log.WARN, "Database version=" + db.getVersion());
-			mDatabase = db;
+		// Check current reference
+		if (mDatabase != null && !mDatabase.isOpen()) {
+			mDatabase = null;
+			reportError("Database not open");
 		}
 
+		if (mDatabase == null)
+			try {
+				// Create/upgrade database when needed
+				File dbFile = getDbFile();
+				SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
+
+				// Check database integrity
+				if (db.isDatabaseIntegrityOk())
+					Util.log(null, Log.WARN, "Database integrity ok");
+				else {
+					// http://www.sqlite.org/howtocorrupt.html
+					reportError("Database corrupt");
+					Cursor cursor = db.rawQuery("PRAGMA integrity_check", null);
+					while (cursor.moveToNext()) {
+						String message = cursor.getString(0);
+						reportError(message);
+					}
+				}
+
+				// Update migration status
+				if (db.getVersion() > 1) {
+					Util.log(null, Log.WARN, "Updating migration status");
+					db.beginTransaction();
+					try {
+						ContentValues values = new ContentValues();
+						values.put("uid", 0);
+						values.put("name", PrivacyManager.cSettingMigrated);
+						values.put("value", Boolean.toString(true));
+						db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
+						db.setTransactionSuccessful();
+					} finally {
+						db.endTransaction();
+					}
+				}
+
+				// Upgrade database if needed
+				if (db.needUpgrade(1)) {
+					db.beginTransaction();
+					try {
+						// http://www.sqlite.org/lang_createtable.html
+						Util.log(null, Log.WARN, "Creating database");
+						db.execSQL("CREATE TABLE restriction (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL)");
+						db.execSQL("CREATE TABLE setting (uid INTEGER NOT NULL, name TEXT NOT NULL, value TEXT)");
+						db.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
+						db.execSQL("CREATE UNIQUE INDEX idx_restriction ON restriction(uid, restriction, method)");
+						db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, name)");
+						db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method)");
+						db.setVersion(1);
+						db.setTransactionSuccessful();
+					} finally {
+						db.endTransaction();
+					}
+
+				}
+
+				if (db.needUpgrade(2))
+					// Old migrated indication
+					db.setVersion(2);
+
+				if (db.needUpgrade(3)) {
+					db.beginTransaction();
+					try {
+						db.execSQL("DELETE FROM usage WHERE method=''");
+						db.setVersion(3);
+						db.setTransactionSuccessful();
+					} finally {
+						db.endTransaction();
+					}
+				}
+
+				if (db.needUpgrade(4)) {
+					db.beginTransaction();
+					try {
+						db.execSQL("DELETE FROM setting WHERE value IS NULL");
+						db.setVersion(4);
+						db.setTransactionSuccessful();
+					} finally {
+						db.endTransaction();
+					}
+				}
+
+				if (db.needUpgrade(5)) {
+					db.beginTransaction();
+					try {
+						db.execSQL("DELETE FROM setting WHERE value = ''");
+						db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
+						db.setVersion(5);
+						db.setTransactionSuccessful();
+					} finally {
+						db.endTransaction();
+					}
+				}
+
+				if (db.needUpgrade(6)) {
+					db.beginTransaction();
+					try {
+						db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
+						db.setVersion(6);
+						db.setTransactionSuccessful();
+					} finally {
+						db.endTransaction();
+					}
+				}
+
+				Util.log(null, Log.WARN, "Database version=" + db.getVersion());
+				mDatabase = db;
+			} catch (Throwable ex) {
+				mDatabase = null; // retry
+				reportError(Log.getStackTraceString(ex));
+			}
+
 		return mDatabase;
+	}
+
+	private static void reportError(String message) {
+		Util.log(null, Log.ERROR, message);
+		synchronized (mListError) {
+			mListError.add(message);
+		}
 	}
 }

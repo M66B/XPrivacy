@@ -113,7 +113,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	}
 
 	private Comparator<ApplicationInfoEx> mSorter = new Comparator<ApplicationInfoEx>() {
-
 		@Override
 		public int compare(ApplicationInfoEx appInfo0, ApplicationInfoEx appInfo1) {
 			int sortOrder = mSortInvert ? -1 : 1;
