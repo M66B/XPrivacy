@@ -195,7 +195,6 @@ public class PrivacyService {
 	}
 
 	public static void reportErrorInternal(String message) {
-		Util.log(null, Log.ERROR, message);
 		synchronized (mListError) {
 			mListError.add(message);
 		}
@@ -236,7 +235,7 @@ public class PrivacyService {
 				listError.add("Database does not exists");
 			if (!dbFile.canRead())
 				listError.add("Database not readable");
-			if (dbFile.canWrite())
+			if (!dbFile.canWrite())
 				listError.add("Database not writable");
 
 			SQLiteDatabase db = getDatabase();
@@ -272,6 +271,7 @@ public class PrivacyService {
 					Util.log(null, Log.ERROR, "Set invalid restriction " + restriction);
 					return;
 				}
+				Util.log(null, Log.ERROR, restriction.toString());
 
 				SQLiteDatabase db = getDatabase();
 				// 0 not restricted, ask
