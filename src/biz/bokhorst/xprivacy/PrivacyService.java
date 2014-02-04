@@ -46,10 +46,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-import de.robv.android.xposed.XposedBridge;
-
 public class PrivacyService {
 	private static int mXUid = -1;
 	private static String mSecret = null;
@@ -58,9 +54,6 @@ public class PrivacyService {
 	private static SQLiteDatabase mDatabase = null;
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
-	private static boolean mBootCompleted = false;
-	private static boolean mLockScreen = false;
-	private static boolean mSleeping = false;
 
 	private static Semaphore mOndemandSemaphore = new Semaphore(1, true);
 
@@ -114,120 +107,9 @@ public class PrivacyService {
 			});
 			mWorker.start();
 
-			// Catch ANR's
-			try {
-				final Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
-
-				for (Method method : cam.getDeclaredMethods()) {
-					// Foreground
-					// @formatter:off
-					// public long inputDispatchingTimedOut(int pid, final boolean aboveSystem, String reason)
-					// public boolean inputDispatchingTimedOut(final ProcessRecord proc, final ActivityRecord activity, final ActivityRecord parent, final boolean aboveSystem, String reason)
-					// @formatter:on
-					if (method.getName().equals("inputDispatchingTimedOut")) {
-						Util.log(null, Log.WARN, "Hooking " + method);
-						XposedBridge.hookMethod(method, new XC_MethodHook() {
-							@Override
-							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								try {
-									// Delay ANR while on demand dialog open
-									boolean ondemanding = (mOndemandSemaphore.availablePermits() < 1);
-									Util.log(null, Log.WARN, "Foreground ANR uid=" + getUidANR(param) + " ondemand="
-											+ ondemanding);
-									if (ondemanding)
-										param.setResult(5 * 1000);
-								} catch (Throwable ex) {
-									Util.bug(null, ex);
-									mListError.add(ex.toString());
-									mListError.add(Log.getStackTraceString(ex));
-								}
-							}
-						});
-					}
-
-					// Background
-					// @formatter:off
-					// final void appNotResponding(ProcessRecord app, ActivityRecord activity, ActivityRecord parent, boolean aboveSystem, final String annotation)
-					// @formatter:on
-					if (method.getName().equals("appNotResponding")) {
-						Util.log(null, Log.WARN, "Hooking " + method);
-						XposedBridge.hookMethod(method, new XC_MethodHook() {
-							@Override
-							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								try {
-									// Ignore ANR while on demand dialog open
-									boolean ondemanding = (mOndemandSemaphore.availablePermits() < 1);
-									Util.log(null, Log.WARN, "Background ANR uid=" + getUidANR(param) + " ondemand="
-											+ ondemanding);
-									if (ondemanding)
-										param.setResult(null);
-								} catch (Throwable ex) {
-									Util.bug(null, ex);
-									mListError.add(ex.toString());
-									mListError.add(Log.getStackTraceString(ex));
-								}
-							}
-						});
-					}
-
-					// final void finishBooting()
-					if (method.getName().equals("finishBooting")) {
-						Util.log(null, Log.WARN, "Hooking " + method);
-						XposedBridge.hookMethod(method, new XC_MethodHook() {
-							@Override
-							protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-								mBootCompleted = true;
-								Util.log(null, Log.WARN, "Boot completed");
-							}
-						});
-					}
-
-					// public void setLockScreenShown(boolean shown) from 4.1
-					if (method.getName().equals("setLockScreenShown")) {
-						Util.log(null, Log.WARN, "Hooking " + method);
-						XposedBridge.hookMethod(method, new XC_MethodHook() {
-							@Override
-							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								if (param.args.length > 0)
-									try {
-										mLockScreen = (Boolean) param.args[0];
-										Util.log(null, Log.WARN, "Lockscreen=" + mLockScreen);
-									} catch (Throwable ex) {
-										Util.bug(null, ex);
-									}
-							}
-						});
-					}
-
-					// public void goingToSleep()
-					if (method.getName().equals("goingToSleep")) {
-						Util.log(null, Log.WARN, "Hooking " + method);
-						XposedBridge.hookMethod(method, new XC_MethodHook() {
-							@Override
-							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								mSleeping = true;
-								Util.log(null, Log.WARN, "Sleeping");
-							}
-						});
-					}
-
-					// public void wakingUp()
-					if (method.getName().equals("wakingUp")) {
-						Util.log(null, Log.WARN, "Hooking " + method);
-						XposedBridge.hookMethod(method, new XC_MethodHook() {
-							@Override
-							protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-								mSleeping = false;
-								Util.log(null, Log.WARN, "Waking up");
-							}
-						});
-					}
-				}
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-				mListError.add(ex.toString());
-				mListError.add(Log.getStackTraceString(ex));
-			}
+			// Hook into activity manager service
+			XActivityManagerService.setSemaphore(mOndemandSemaphore);
+			XPrivacy.hookAll(XActivityManagerService.getInstances(), secret);
 
 			// Register privacy service
 			// @formatter:off
@@ -251,19 +133,6 @@ public class PrivacyService {
 			mListError.add(ex.toString());
 			mListError.add(Log.getStackTraceString(ex));
 		}
-	}
-
-	private static int getUidANR(MethodHookParam param) throws IllegalAccessException {
-		int uid = -1;
-		try {
-			Class<?> pr = Class.forName("com.android.server.am.ProcessRecord");
-			if (param.args.length > 0 && param.args[0].getClass().equals(pr)) {
-				uid = (Integer) pr.getDeclaredField("uid").get(param.args[0]);
-			}
-		} catch (ClassNotFoundException ignored) {
-		} catch (NoSuchFieldException ignored) {
-		}
-		return uid;
 	}
 
 	public static boolean checkClient() {
@@ -1078,7 +947,7 @@ public class PrivacyService {
 				if (mHandler == null)
 					return false;
 
-				if (!mBootCompleted || mLockScreen || mSleeping)
+				if (!XActivityManagerService.canOnDemand())
 					return false;
 
 				if (restriction.methodName == null)
