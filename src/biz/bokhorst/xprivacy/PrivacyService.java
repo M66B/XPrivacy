@@ -1126,7 +1126,7 @@ public class PrivacyService {
 							if (hook.isDangerous()) {
 								result.methodName = hook.getName();
 								result.restricted = false;
-								result.asked = true;
+								result.asked = false;
 								setRestrictionInternal(result);
 							}
 					}
