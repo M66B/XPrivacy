@@ -897,26 +897,30 @@ public class PrivacyManager {
 
 	public static boolean hasPermission(Context context, ApplicationInfoEx appInfo, String restrictionName) {
 		int uid = appInfo.getUid();
-		if (mPermissionRestrictionCache.get(uid) == null)
-			mPermissionRestrictionCache.append(uid, new HashMap<String, Boolean>());
-		if (!mPermissionRestrictionCache.get(uid).containsKey(restrictionName)) {
-			boolean permission = hasPermission(context, appInfo.getPackageName(), getPermissions(restrictionName));
-			mPermissionRestrictionCache.get(uid).put(restrictionName, permission);
+		synchronized (mPermissionRestrictionCache) {
+			if (mPermissionRestrictionCache.get(uid) == null)
+				mPermissionRestrictionCache.append(uid, new HashMap<String, Boolean>());
+			if (!mPermissionRestrictionCache.get(uid).containsKey(restrictionName)) {
+				boolean permission = hasPermission(context, appInfo.getPackageName(), getPermissions(restrictionName));
+				mPermissionRestrictionCache.get(uid).put(restrictionName, permission);
+			}
+			return mPermissionRestrictionCache.get(uid).get(restrictionName);
 		}
-		return mPermissionRestrictionCache.get(uid).get(restrictionName);
 	}
 
 	public static boolean hasPermission(Context context, ApplicationInfoEx appInfo, Hook md) {
 		int uid = appInfo.getUid();
-		if (mPermissionHookCache.get(uid) == null)
-			mPermissionHookCache.append(uid, new HashMap<Hook, Boolean>());
-		if (!mPermissionHookCache.get(uid).containsKey(md)) {
+		synchronized (mPermissionHookCache) {
+			if (mPermissionHookCache.get(uid) == null)
+				mPermissionHookCache.append(uid, new HashMap<Hook, Boolean>());
+			if (!mPermissionHookCache.get(uid).containsKey(md)) {
 
-			List<String> listPermission = (md.getPermissions() == null ? null : Arrays.asList(md.getPermissions()));
-			boolean permission = hasPermission(context, appInfo.getPackageName(), listPermission);
-			mPermissionHookCache.get(uid).put(md, permission);
+				List<String> listPermission = (md.getPermissions() == null ? null : Arrays.asList(md.getPermissions()));
+				boolean permission = hasPermission(context, appInfo.getPackageName(), listPermission);
+				mPermissionHookCache.get(uid).put(md, permission);
+			}
+			return mPermissionHookCache.get(uid).get(md);
 		}
-		return mPermissionHookCache.get(uid).get(md);
 	}
 
 	@SuppressLint("DefaultLocale")
