@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -39,6 +41,7 @@ import android.os.StrictMode.ThreadPolicy;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -960,6 +963,7 @@ public class PrivacyService {
 							public void run() {
 								try {
 									int userId = Util.getUserId(restriction.uid);
+
 									AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
 											dangerous, result, context, latch);
 									AlertDialog alertDialog = builder.create();
@@ -967,10 +971,33 @@ public class PrivacyService {
 										alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 									else
 										alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
+									alertDialog.getWindow().requestFeature(Window.FEATURE_PROGRESS);
 									alertDialog.setCancelable(false);
 									alertDialog.setCanceledOnTouchOutside(false);
 									alertDialog.show();
 									holder.dialog = alertDialog;
+
+									holder.dialog.getWindow().setFeatureInt(Window.FEATURE_PROGRESS,
+											Window.PROGRESS_VISIBILITY_ON);
+
+									holder.countDown = new Runnable() {
+										@Override
+										public void run() {
+											try {
+												if (holder.dialog != null) {
+													Util.log(null, Log.WARN, "Progress=" + holder.progress);
+													holder.dialog.getWindow().setFeatureInt(Window.FEATURE_PROGRESS,
+															10000 * holder.progress++ / cMaxOnDemandDialog);
+													if (holder.progress < cMaxOnDemandDialog)
+														mHandler.postDelayed(this, 1000);
+												}
+											} catch (Throwable ex) {
+												Util.bug(null, ex);
+											}
+										}
+									};
+									holder.countDown.run();
+
 								} catch (Throwable ex) {
 									reportError(Log.getStackTraceString(ex));
 									latch.countDown();
@@ -992,6 +1019,10 @@ public class PrivacyService {
 								}
 							});
 						}
+
+						// Garbage collect
+						holder.dialog = null;
+						holder.countDown = null;
 					} finally {
 						mOndemandSemaphore.release();
 					}
@@ -1005,7 +1036,9 @@ public class PrivacyService {
 		}
 
 		final class AlertDialogHolder {
-			public AlertDialog dialog;
+			public AlertDialog dialog = null;
+			public Runnable countDown = null;
+			public int progress = 0;
 		}
 
 		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, Hook hook,
