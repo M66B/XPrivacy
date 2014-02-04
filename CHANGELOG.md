@@ -15,16 +15,18 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Fixed on demand asking for same restriction
-* Fixed on demand asking for secondary users
-* Fixed restrictions undone when using on demand restricting in some situation
-* Disabling a restriction category will delete exceptions ([issue](https://github.com/M66B/XPrivacy/issues/1198))
-* No on demand restricting while device locked ([issue](https://github.com/M66B/XPrivacy/issues/1243))
-* No on demand restricting while device sleeping ([issue](https://github.com/M66B/XPrivacy/issues/1243))
-* Several speed optimizations
-* Integrity check privacy database and better error handling
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.31 TEST**
+
+* Fixed on demand asking for secondary users
+* Fixed on demand asking for same restriction again
+* Fixed restrictions undone when using on demand restricting in some situation
+* Disabling a restriction category will delete exceptions in application details view ([issue](https://github.com/M66B/XPrivacy/issues/1198))
+* No on demand restricting while device is locked ([issue](https://github.com/M66B/XPrivacy/issues/1243))
+* No on demand restricting while device is sleeping ([issue](https://github.com/M66B/XPrivacy/issues/1243))
+* Several speed optimizations for the user interface
+* Checking integrity of privacy database on boot and better error handling in privacy service
 
 **Version 1.99.30 TEST**
 

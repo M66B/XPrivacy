@@ -292,11 +292,12 @@ Limitations
 * It is not possible to restrict hardware MAC addresses or the external IP address
 * With LBE Security Master installed, Android cannot be restricted
 * You cannot restrict *IPC* for XPrivacy, because it is needed for internal checks
-* You cannot restrict *storage* for XPrivacy, because it is needed for reading the pro license file
+* You cannot restrict *storage* for XPrivacy, because it is needed to read the pro license file
 * You cannot restrict *system* fro XPrivacy, because it is needed to get an application list
-* You cannot restrict *view* for XPrivacy, because it is needed to open links to the crowd sourced restrictions server
+* You cannot restrict *view* for XPrivacy, because it is needed to open links to the crowd sourced restrictions
+* No on demand restricting for *Configuration.MCC/MNC*
 
-Please note that you can still restrict accounts and contacts for XPrivacy.
+You can still restrict accounts, contacts and other things for XPrivacy.
 
 Compatibility
 -------------
