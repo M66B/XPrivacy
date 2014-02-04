@@ -640,7 +640,7 @@ public class ActivityShare extends Activity {
 
 					List<Boolean> oldState = PrivacyManager.getRestartStates(uid, null);
 					if (restriction == null && mSomeRestricted)
-						PrivacyManager.deleteRestrictions(uid);
+						PrivacyManager.deleteRestrictions(uid, null);
 					else if (restriction == null) {
 						for (String restrictionName : PrivacyManager.getRestrictions())
 							PrivacyManager.setRestriction(null, uid, restrictionName, null, !mSomeRestricted);
@@ -883,7 +883,7 @@ public class ActivityShare extends Activity {
 
 							// Reset existing restrictions
 							List<Boolean> oldState = PrivacyManager.getRestartStates(uid, null);
-							PrivacyManager.deleteRestrictions(uid);
+							PrivacyManager.deleteRestrictions(uid, null);
 
 							// Set imported restrictions
 							for (String restrictionName : mapPackage.get(packageName).keySet()) {
@@ -1057,7 +1057,7 @@ public class ActivityShare extends Activity {
 
 							// Delete restrictions
 							mListRestartStates.put(uid, PrivacyManager.getRestartStates(uid, null));
-							PrivacyManager.deleteRestrictions(uid);
+							PrivacyManager.deleteRestrictions(uid, null);
 						}
 
 						// Set restriction
@@ -1235,7 +1235,7 @@ public class ActivityShare extends Activity {
 									JSONArray settings = status.getJSONArray("settings");
 									// Delete existing restrictions
 									List<Boolean> oldState = PrivacyManager.getRestartStates(appInfo.getUid(), null);
-									PrivacyManager.deleteRestrictions(appInfo.getUid());
+									PrivacyManager.deleteRestrictions(appInfo.getUid(), null);
 
 									// Set fetched restrictions
 									List<PRestriction> listRestriction = new ArrayList<PRestriction>();

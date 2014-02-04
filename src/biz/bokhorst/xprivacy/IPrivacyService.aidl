@@ -11,7 +11,7 @@ interface IPrivacyService {
 	void setRestrictionList(in List<PRestriction> listRestriction);
 	PRestriction getRestriction(in PRestriction restriction, boolean usage, String secret);
 	List<PRestriction> getRestrictionList(in PRestriction selector);
-	void deleteRestrictions(int uid);
+	void deleteRestrictions(int uid, String restrictionName);
 
 	long getUsage(in List<PRestriction> restriction);
 	List<PRestriction> getUsageList(int uid);

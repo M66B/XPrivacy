@@ -232,7 +232,7 @@ public class PrivacyManager {
 	public static PRestriction getRestrictionEx(int uid, String restrictionName, String methodName) {
 		PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
 		try {
-			return PrivacyService.getClient().getRestriction(query, false, null);
+			return PrivacyService.getClient().getRestriction(query, false, "");
 		} catch (RemoteException ex) {
 			Util.bug(null, ex);
 			return query;
@@ -247,6 +247,10 @@ public class PrivacyManager {
 		// Check uid
 		if (uid <= 0)
 			return false;
+		if (secret == null) {
+			Util.log(null, Log.WARN, "Secret null");
+			secret = "";
+		}
 
 		// Check restriction
 		if (restrictionName == null || restrictionName.equals("")) {
@@ -319,6 +323,14 @@ public class PrivacyManager {
 			return;
 		}
 
+		// Clear category
+		if (methodName == null && !restricted)
+			try {
+				PrivacyService.getClient().deleteRestrictions(uid, restrictionName);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+
 		// Create list of restrictions set set
 		List<PRestriction> listRestriction = new ArrayList<PRestriction>();
 		listRestriction.add(new PRestriction(uid, restrictionName, methodName, restricted, asked));
@@ -382,10 +394,10 @@ public class PrivacyManager {
 		return listRestartRestriction;
 	}
 
-	public static void deleteRestrictions(int uid) {
+	public static void deleteRestrictions(int uid, String restrictionName) {
 		// Delete restrictions
 		try {
-			PrivacyService.getClient().deleteRestrictions(uid);
+			PrivacyService.getClient().deleteRestrictions(uid, restrictionName == null ? "" : restrictionName);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}

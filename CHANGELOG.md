@@ -18,6 +18,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed on demand asking for same restriction
 * Fixed on demand asking for secondary users
 * Fixed restrictions undone when using on demand restricting in some situation
+* Disabling a restriction category will delete exceptions ([issue](https://github.com/M66B/XPrivacy/issues/1198))
 * No on demand restricting while device locked ([issue](https://github.com/M66B/XPrivacy/issues/1243))
 * No on demand restricting while device sleeping ([issue](https://github.com/M66B/XPrivacy/issues/1243))
 * Integrity check privacy database and better error handling

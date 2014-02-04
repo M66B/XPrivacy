@@ -495,7 +495,7 @@ public class ActivityApp extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-				PrivacyManager.deleteRestrictions(mAppInfo.getUid());
+				PrivacyManager.deleteRestrictions(mAppInfo.getUid(), null);
 
 				// Refresh display
 				if (mPrivacyListAdapter != null)

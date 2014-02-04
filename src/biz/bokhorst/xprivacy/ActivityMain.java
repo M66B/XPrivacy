@@ -1490,7 +1490,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 												// Update restriction
 												List<Boolean> oldState = PrivacyManager.getRestartStates(
 														xAppInfo.getUid(), mRestrictionName);
-												PrivacyManager.deleteRestrictions(xAppInfo.getUid());
+												PrivacyManager.deleteRestrictions(xAppInfo.getUid(), null);
 												allRestricted = false;
 												someRestricted = false;
 

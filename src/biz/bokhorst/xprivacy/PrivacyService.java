@@ -485,15 +485,19 @@ public class PrivacyService {
 		}
 
 		@Override
-		public void deleteRestrictions(int uid) throws RemoteException {
+		public void deleteRestrictions(int uid, String restrictionName) throws RemoteException {
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
 
 				db.beginTransaction();
 				try {
-					db.delete(cTableRestriction, "uid=?", new String[] { Integer.toString(uid) });
-					Util.log(null, Log.WARN, "Restrictions deleted uid=" + uid);
+					if ("".equals(restrictionName))
+						db.delete(cTableRestriction, "uid=?", new String[] { Integer.toString(uid) });
+					else
+						db.delete(cTableRestriction, "uid=? AND restriction=?", new String[] { Integer.toString(uid),
+								restrictionName });
+					Util.log(null, Log.WARN, "Restrictions deleted uid=" + uid + " category=" + restrictionName);
 
 					db.setTransactionSuccessful();
 				} finally {
