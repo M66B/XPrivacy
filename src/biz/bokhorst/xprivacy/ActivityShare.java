@@ -642,10 +642,12 @@ public class ActivityShare extends Activity {
 					if (restriction == null && mSomeRestricted)
 						PrivacyManager.deleteRestrictions(uid, null);
 					else if (restriction == null) {
+						List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 						for (String restrictionName : PrivacyManager.getRestrictions())
-							PrivacyManager.setRestriction(null, uid, restrictionName, null, !mSomeRestricted);
+							listPRestriction.add(new PRestriction(uid, restrictionName, null, !mSomeRestricted));
+						PrivacyManager.setRestrictionList(listPRestriction);
 					} else
-						PrivacyManager.setRestriction(null, uid, restriction, null, !mSomeRestricted);
+						PrivacyManager.setRestriction(uid, restriction, null, !mSomeRestricted);
 					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
 
 					mAppAdapter.setState(uid, STATE_SUCCESS,
@@ -744,6 +746,7 @@ public class ActivityShare extends Activity {
 							// Process restrictions
 							for (String restrictionName : PrivacyManager.getRestrictions()) {
 								// Category
+								// TODO: use getRestrictionList
 								PRestriction crestricted = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
 								if (crestricted.restricted || crestricted.asked) {
 									serializer.startTag(null, "Restriction");
@@ -887,10 +890,10 @@ public class ActivityShare extends Activity {
 
 							// Set imported restrictions
 							for (String restrictionName : mapPackage.get(packageName).keySet()) {
-								PrivacyManager.setRestriction(null, uid, restrictionName, null, true);
+								PrivacyManager.setRestriction(uid, restrictionName, null, true);
 								for (ImportHandler.MethodDescription md : mapPackage.get(packageName).get(
 										restrictionName))
-									PrivacyManager.setRestriction(null, uid, restrictionName, md.getMethodName(),
+									PrivacyManager.setRestriction(uid, restrictionName, md.getMethodName(),
 											md.isRestricted());
 							}
 							List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
@@ -1061,6 +1064,7 @@ public class ActivityShare extends Activity {
 						}
 
 						// Set restriction
+						// TODO: use setRestrictionList
 						PrivacyManager.setRestriction(uid, restrictionName, methodName, restricted, asked);
 					}
 				} else
@@ -1369,6 +1373,7 @@ public class ActivityShare extends Activity {
 						// Encode restrictions
 						JSONArray jSettings = new JSONArray();
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
+							// TODO: use getRestrictionList
 							boolean restricted = PrivacyManager.getRestrictionEx(appInfo.getUid(), restrictionName,
 									null).restricted;
 							// Category

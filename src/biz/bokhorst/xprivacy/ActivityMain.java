@@ -1377,8 +1377,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 
 					crestricted = false;
 					for (String restrictionName : listRestriction)
-						crestricted = crestricted
-								|| PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null).restricted;
+						if (PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null).restricted) {
+							crestricted = true;
+							break;
+						}
 
 					// Get all/some restricted
 					allRestricted = true;
@@ -1519,15 +1521,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								// Update restriction
 								crestricted = false;
 								for (String restrictionName : listRestriction)
-									crestricted = crestricted
-											|| PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null).restricted;
+									if (PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null).restricted) {
+										crestricted = true;
+										break;
+									}
 								crestricted = !crestricted;
 
 								List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 										mRestrictionName);
+								List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 								for (String restrictionName : listRestriction)
-									PrivacyManager.setRestriction(null, xAppInfo.getUid(), restrictionName, null,
-											crestricted);
+									listPRestriction.add(new PRestriction(xAppInfo.getUid(), restrictionName, null,
+											crestricted));
+								PrivacyManager.setRestrictionList(listPRestriction);
 								List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 										mRestrictionName);
 

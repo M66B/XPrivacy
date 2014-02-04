@@ -21,6 +21,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Disabling a restriction category will delete exceptions ([issue](https://github.com/M66B/XPrivacy/issues/1198))
 * No on demand restricting while device locked ([issue](https://github.com/M66B/XPrivacy/issues/1243))
 * No on demand restricting while device sleeping ([issue](https://github.com/M66B/XPrivacy/issues/1243))
+* Several speed optimizations
 * Integrity check privacy database and better error handling
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

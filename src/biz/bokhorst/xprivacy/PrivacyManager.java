@@ -311,7 +311,7 @@ public class PrivacyManager {
 		return restricted;
 	}
 
-	public static void setRestriction(XHook hook, int uid, String restrictionName, String methodName, boolean restricted) {
+	public static void setRestriction(int uid, String restrictionName, String methodName, boolean restricted) {
 		setRestriction(uid, restrictionName, methodName, restricted, restricted);
 	}
 

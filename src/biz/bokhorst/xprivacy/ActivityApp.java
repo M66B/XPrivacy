@@ -440,6 +440,7 @@ public class ActivityApp extends Activity {
 		final boolean ondemand = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingOnDemand, true, false);
 
 		// Get toggle
+		// TOD: getRestrictionList
 		boolean some = false;
 		final List<String> listRestriction = PrivacyManager.getRestrictions();
 		for (String restrictionName : listRestriction) {
@@ -461,11 +462,13 @@ public class ActivityApp extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 				// Do toggle
 				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
+				List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 				for (String restrictionName : listRestriction) {
 					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 					if (PrivacyManager.getSettingBool(null, 0, templateName, !ondemand, false))
-						PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null, restricted);
+						listPRestriction.add(new PRestriction(mAppInfo.getUid(), restrictionName, null, restricted));
 				}
+				PrivacyManager.setRestrictionList(listPRestriction);
 				List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
 
 				// Refresh display
@@ -969,7 +972,7 @@ public class ActivityApp extends Activity {
 							crestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 							crestricted = !crestricted;
 							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
-							PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, null, crestricted);
+							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, null, crestricted);
 							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
 							// Update all/some restricted
@@ -1186,8 +1189,7 @@ public class ActivityApp extends Activity {
 									md.getName()).restricted;
 							restricted = !restricted;
 							holder.ctvMethodName.setChecked(restricted);
-							PrivacyManager.setRestriction(null, mAppInfo.getUid(), restrictionName, md.getName(),
-									restricted);
+							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, md.getName(), restricted);
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent
