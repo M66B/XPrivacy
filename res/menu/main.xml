@@ -17,6 +17,11 @@
         android:showAsAction="always"
         android:title="@string/menu_sort"/>
     <item
+        android:id="@+id/menu_filter"
+        android:icon="@drawable/icon_filter"
+        android:showAsAction="always"
+        android:title="@string/menu_filter"/>
+    <item
         android:id="@+id/menu_tutorial"
         android:title="@string/menu_tutorial"/>
     <item

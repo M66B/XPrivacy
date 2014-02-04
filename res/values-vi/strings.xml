@@ -23,6 +23,7 @@
     <string name="menu_help">Trợ giúp</string>
     <string name="menu_select_all">Chọn tất cả</string>
     <string name="menu_sort">Sort</string>
+    <string name="menu_filter">Filter</string>
     <string name="menu_all">Tất cả</string>
     <string name="menu_restriction_all">Thay đổi các sự hạn chế</string>
     <string name="menu_clear_all">Xóa tất cả</string>

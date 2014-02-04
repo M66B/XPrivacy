@@ -23,6 +23,7 @@
     <string name="menu_help">帮助</string>
     <string name="menu_select_all">选择全部</string>
     <string name="menu_sort">Sort</string>
+    <string name="menu_filter">Filter</string>
     <string name="menu_all">全部权限</string>
     <string name="menu_restriction_all">全选/不选列表中的应用</string>
     <string name="menu_clear_all">清除限制</string>
