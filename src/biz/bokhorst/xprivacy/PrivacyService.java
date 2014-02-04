@@ -36,6 +36,7 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
@@ -900,7 +901,7 @@ public class PrivacyService {
 					return false;
 
 				// Skip dangerous methods
-				boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+				final boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 				if (!dangerous && hook != null && hook.isDangerous())
 					return false;
 
@@ -960,7 +961,7 @@ public class PrivacyService {
 								try {
 									int userId = Util.getUserId(restriction.uid);
 									AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
-											result, context, latch);
+											dangerous, result, context, latch);
 									AlertDialog alertDialog = builder.create();
 									if (userId == 0)
 										alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
@@ -1008,8 +1009,8 @@ public class PrivacyService {
 		}
 
 		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, Hook hook,
-				ApplicationInfoEx appInfo, final PRestriction result, Context context, final CountDownLatch latch)
-				throws NameNotFoundException {
+				ApplicationInfoEx appInfo, boolean dangerous, final PRestriction result, Context context,
+				final CountDownLatch latch) throws NameNotFoundException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
@@ -1017,8 +1018,9 @@ public class PrivacyService {
 			// Build message
 			int stringId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
 			String message = String.format(resources.getString(R.string.msg_ondemand),
-					TextUtils.join(", ", appInfo.getApplicationName()), resources.getString(stringId),
-					restriction.methodName);
+					TextUtils.htmlEncode(TextUtils.join(", ", appInfo.getApplicationName())),
+					"<b>" + TextUtils.htmlEncode(resources.getString(stringId)) + "</b>",
+					"<b>" + TextUtils.htmlEncode(restriction.methodName) + "</b>");
 
 			int hmargin = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin);
 			int vmargin = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin);
@@ -1047,7 +1049,7 @@ public class PrivacyService {
 
 				// Message
 				TextView tvMessage = new TextView(context);
-				tvMessage.setText(message);
+				tvMessage.setText(Html.fromHtml(message));
 				LinearLayout.LayoutParams tvMessageParams = new LinearLayout.LayoutParams(
 						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 				tvMessageParams.setMargins(hmargin / 2, 0, 0, 0);
@@ -1059,7 +1061,8 @@ public class PrivacyService {
 			// Category check box
 			final CheckBox cbCategory = new CheckBox(context);
 			cbCategory.setText(resources.getString(R.string.menu_category));
-			cbCategory.setChecked(true);
+			cbCategory.setTextAppearance(context, android.R.attr.textAppearanceSmall);
+			cbCategory.setChecked(!dangerous);
 			LinearLayout.LayoutParams llCategoryParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			llCategoryParams.setMargins(0, vmargin / 2, 0, 0);
