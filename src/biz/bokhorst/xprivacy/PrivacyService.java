@@ -474,7 +474,7 @@ public class PrivacyService {
 					notifyRestricted(restriction);
 
 				// Ask to restrict
-				if (!result.restricted && !result.asked && usage && PrivacyManager.isApplication(restriction.uid))
+				if (!result.asked && usage && PrivacyManager.isApplication(restriction.uid))
 					result.restricted = onDemandDialog(hook, restriction);
 
 				// Log usage

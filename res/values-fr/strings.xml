@@ -28,7 +28,7 @@
     <string name="menu_clear_all">Tout effacer</string>
     <string name="menu_restrict_all">Tout restreindre</string>
     <string name="menu_clear_usage">Effacer</string>
-    <string name="menu_clear_db">Clear all data</string>
+    <string name="menu_clear_db">Effacer toutes les données</string>
     <string name="menu_usage_all">Basculer toutes/restreintes</string>
     <string name="menu_apply">Appliquer le modèle</string>
     <string name="menu_clear">Effacer</string>
@@ -42,7 +42,7 @@
     <string name="menu_tutorial">Didacticiel</string>
     <string name="menu_exclude">Exclure</string>
     <string name="menu_close">Fermer</string>
-    <string name="menu_category">Act on the entire category</string>
+    <string name="menu_category">Agir sur toute la catégorie</string>
     <string name="msg_abort">Arrêt en cours</string>
     <string name="msg_aborted">Arrêté</string>
     <string name="msg_new">Nouv. :</string>
@@ -50,7 +50,7 @@
     <string name="msg_licensed" formatted="false">Autorisé à : %s</string>
     <string name="msg_loading">Chargement</string>
     <string name="msg_applying">Application en cours</string>
-    <string name="msg_applied">Template appliquée</string>
+    <string name="msg_applied">Modèle appliqué</string>
     <string name="msg_saved_to" formatted="false">Sauvé dans %s</string>
     <string name="msg_no_restrictions">Pas de restriction trouvée</string>
     <string name="msg_sure">Êtes-vous certain ?</string>
@@ -64,13 +64,13 @@
     <string name="msg_restart">Redémarrage de l\'application nécessaire</string>
     <string name="msg_register">Inscrivez votre appareil, s.v.p.</string>
     <string name="msg_registered">Vérifiez vos mails pour activer votre appareil</string>
-    <string name="msg_service">Service de mis-à-jour en fonctionnement</string>
+    <string name="msg_service">Service de mise-à-jour en fonctionnement</string>
     <string name="msg_migrating" formatted="false">Migration %s</string>
     <string name="msg_randomizing" formatted="false">Randomisation %s</string>
     <string name="msg_upgrading" formatted="false">Mise-à-jour %s</string>
     <string name="msg_support_info">Une vérification interne a échoué, voulez-vous envoyer le rapport d\'erreurs?</string>
-    <string name="msg_ondemand" formatted="false">%1$s is trying to use %3$s in the %2$s category</string>
-    <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_ondemand" formatted="false">%1$s tente d'utiliser %3$s dans la catégorie %2$s</string>
+    <string name="msg_restrictedby">Restreint par XPrivacy</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
 \n\nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>
@@ -120,7 +120,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_sinvert">Inverser l\'ordre</string>
     <string name="title_allow">Permettre</string>
     <string name="title_deny">Bloquer</string>
-    <string name="title_denyonce">Deny once</string>
+    <string name="title_denyonce">Bloquer une fois</string>
     <string name="settings_serial">N° de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
@@ -144,8 +144,8 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_confidence">Intervalle de confiance maximum</string>
     <string name="settings_experimental">Fonctions expérimentales (redémarrage requis)</string>
     <string name="settings_https">Utiliser des connexions sécurisée</string>
-    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
-    <string name="settings_usagedata">Montrer les données d\'usage pour chaque application (requires restart)</string>
+    <string name="settings_syscomponents">Restreindre composants système (Android) (redémarrage requis)</string>
+    <string name="settings_usagedata">Montrer les données d\'usage pour chaque application (redémarrage requis)</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>
