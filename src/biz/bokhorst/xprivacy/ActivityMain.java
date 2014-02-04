@@ -1532,7 +1532,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 								List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 								for (String restrictionName : listRestriction)
 									listPRestriction.add(new PRestriction(xAppInfo.getUid(), restrictionName, null,
-											crestricted, crestricted));
+											crestricted));
 								PrivacyManager.setRestrictionList(listPRestriction);
 								List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 										mRestrictionName);
