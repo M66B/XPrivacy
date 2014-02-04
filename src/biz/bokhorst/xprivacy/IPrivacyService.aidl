@@ -6,6 +6,7 @@ import biz.bokhorst.xprivacy.PSetting;
 interface IPrivacyService {
 	int getVersion();
 	List /* String */ check();
+	void reportError(String message);
 
 	void setRestriction(in PRestriction restriction);
 	void setRestrictionList(in List<PRestriction> listRestriction);

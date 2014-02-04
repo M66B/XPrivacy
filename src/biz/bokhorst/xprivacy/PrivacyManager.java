@@ -548,6 +548,7 @@ public class PrivacyManager {
 
 	// Defacing
 
+	// TODO: change name to integer parameter
 	@SuppressLint("DefaultLocale")
 	public static Object getDefacedProp(int uid, String name) {
 		// Serial number

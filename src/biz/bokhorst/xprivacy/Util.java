@@ -37,6 +37,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
+import android.os.RemoteException;
 import android.os.UserHandle;
 import android.util.Base64;
 import android.util.Log;
@@ -76,6 +77,18 @@ public class Util {
 				Log.println(priority, "XPrivacy", msg);
 			else
 				Log.println(priority, String.format("XPrivacy/%s", hook.getClass().getSimpleName()), msg);
+
+		// Report to service
+		if (Process.myUid() > 0 && priority == Log.ERROR)
+			if (Process.myUid() == Process.SYSTEM_UID)
+				PrivacyService.reportErrorInternal(msg);
+			else
+				try {
+					IPrivacyService client = PrivacyService.getClient();
+					if (client != null)
+						client.reportError(msg);
+				} catch (RemoteException ignored) {
+				}
 	}
 
 	public static void bug(XHook hook, Throwable ex) {

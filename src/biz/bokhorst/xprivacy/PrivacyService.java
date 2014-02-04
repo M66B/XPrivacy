@@ -7,8 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -51,35 +49,57 @@ import android.widget.Toast;
 
 public class PrivacyService {
 	private static int mXUid = -1;
+	private static boolean mUseCache = false;
 	private static String mSecret = null;
-	private static List<String> mListError = new ArrayList<String>();
-	private static IPrivacyService mClient = null;
-	private static SQLiteDatabase mDatabase = null;
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
-
 	private static Semaphore mOndemandSemaphore = new Semaphore(1, true);
+	private static List<String> mListError = new ArrayList<String>();
+	private static IPrivacyService mClient = null;
 
-	private static SQLiteStatement stmtGetRestriction = null;
-	private static SQLiteStatement stmtGetSetting = null;
-	private static SQLiteStatement stmtGetUsageRestriction = null;
-	private static SQLiteStatement stmtGetUsageMethod = null;
-
-	private static boolean mUseCache = false;
-	private static Map<CSetting, CSetting> mSettingCache = new HashMap<CSetting, CSetting>();
-	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
-
-	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
-	private static final int cCurrentVersion = 265;
-	private static final String cServiceName = "xprivacy" + cCurrentVersion;
 	private static final String cTableRestriction = "restriction";
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
-	private static final int cMaxOnDemandDialog = 10; // seconds
+
+	private static final int cCurrentVersion = 265;
+	private static final String cServiceName = "xprivacy" + cCurrentVersion;
 
 	// TODO: define column names
 	// sqlite3 /data/xprivacy/xprivacy.db
+
+	public static void setupDatabase() {
+		// This is run from Zygote with root permissions
+		try {
+			File dbFile = getDbFile();
+
+			// Create database folder
+			dbFile.getParentFile().mkdirs();
+
+			// Set database file permissions
+			// Owner: rwx (system)
+			// Group: --- (system)
+			// World: ---
+			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
+			File[] files = dbFile.getParentFile().listFiles();
+			if (files != null)
+				for (File file : files)
+					Util.setPermission(file.getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
+
+			// Move database from app folder
+			File folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
+					+ PrivacyService.class.getPackage().getName());
+			File[] oldFiles = folder.listFiles();
+			if (oldFiles != null)
+				for (File file : oldFiles)
+					if (file.getName().startsWith("xprivacy.db")) {
+						File target = new File(dbFile.getParentFile() + File.separator + file.getName());
+						boolean status = file.renameTo(target);
+						Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
+					}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
 
 	public static void register(List<String> listError, String secret) {
 		// Store secret and errors
@@ -102,7 +122,7 @@ public class PrivacyService {
 						mHandler = new Handler();
 						Looper.loop();
 					} catch (Throwable ex) {
-						reportError(Log.getStackTraceString(ex));
+						Util.bug(null, ex);
 					}
 				}
 			});
@@ -130,7 +150,7 @@ public class PrivacyService {
 			}
 			Util.log(null, Log.WARN, "Service registered name=" + cServiceName);
 		} catch (Throwable ex) {
-			reportError(Log.getStackTraceString(ex));
+			Util.bug(null, ex);
 		}
 	}
 
@@ -170,7 +190,30 @@ public class PrivacyService {
 		return mClient;
 	}
 
+	private static File getDbFile() {
+		return new File(Environment.getDataDirectory() + File.separator + "xprivacy" + File.separator + "xprivacy.db");
+	}
+
+	public static void reportErrorInternal(String message) {
+		Util.log(null, Log.ERROR, message);
+		synchronized (mListError) {
+			mListError.add(message);
+		}
+	}
+
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
+		private SQLiteDatabase mDatabase = null;
+		private SQLiteStatement stmtGetRestriction = null;
+		private SQLiteStatement stmtGetSetting = null;
+		private SQLiteStatement stmtGetUsageRestriction = null;
+		private SQLiteStatement stmtGetUsageMethod = null;
+
+		private Map<CSetting, CSetting> mSettingCache = new HashMap<CSetting, CSetting>();
+		private Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
+
+		private ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+		private final int cMaxOnDemandDialog = 10; // seconds
 
 		// Management
 
@@ -182,14 +225,32 @@ public class PrivacyService {
 		@Override
 		public List<String> check() throws RemoteException {
 			enforcePermission();
-			File dbFile = getDbFile();
-			if (!dbFile.exists() || !dbFile.canRead() || !dbFile.canWrite())
-				reportError("Database does not exist or is not accessible");
+
 			List<String> listError = new ArrayList<String>();
 			synchronized (mListError) {
 				listError.addAll(mListError);
 			}
+
+			File dbFile = getDbFile();
+			if (!dbFile.exists())
+				listError.add("Database does not exists");
+			if (!dbFile.canRead())
+				listError.add("Database not readable");
+			if (dbFile.canWrite())
+				listError.add("Database not writable");
+
+			SQLiteDatabase db = getDatabase();
+			if (db == null)
+				listError.add("Database not available");
+			else if (!db.isOpen())
+				listError.add("Database not open");
+
 			return listError;
+		}
+
+		@Override
+		public void reportError(String message) throws RemoteException {
+			reportErrorInternal(message);
 		}
 
 		// Restrictions
@@ -200,7 +261,7 @@ public class PrivacyService {
 				enforcePermission();
 				setRestrictionInternal(restriction);
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -208,7 +269,7 @@ public class PrivacyService {
 		private void setRestrictionInternal(PRestriction restriction) throws RemoteException {
 			try {
 				if (restriction.restrictionName == null) {
-					reportError("Set invalid restriction " + restriction);
+					Util.log(null, Log.ERROR, "Set invalid restriction " + restriction);
 					return;
 				}
 
@@ -267,7 +328,7 @@ public class PrivacyService {
 						mRestrictionCache.put(key, key);
 					}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -289,11 +350,11 @@ public class PrivacyService {
 
 				// Sanity checks
 				if (restriction.restrictionName == null) {
-					reportError("Get invalid restriction " + restriction);
+					Util.log(null, Log.ERROR, "Get invalid restriction " + restriction);
 					return result;
 				}
 				if (usage && restriction.methodName == null) {
-					reportError("Get invalid restriction " + restriction);
+					Util.log(null, Log.ERROR, "Get invalid restriction " + restriction);
 					return result;
 				}
 
@@ -450,14 +511,14 @@ public class PrivacyService {
 											db.endTransaction();
 										}
 									} catch (Throwable ex) {
-										reportError(Log.getStackTraceString(ex));
+										Util.bug(null, ex);
 									}
 								}
 							});
 						}
 					}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 			}
 			return result;
 		}
@@ -482,7 +543,7 @@ public class PrivacyService {
 						result.add(restriction);
 					}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 			return result;
@@ -514,7 +575,7 @@ public class PrivacyService {
 						mRestrictionCache.clear();
 					}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -569,7 +630,7 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 			return lastUsage;
@@ -613,7 +674,7 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 			return result;
@@ -638,7 +699,7 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -651,7 +712,7 @@ public class PrivacyService {
 				enforcePermission();
 				setSettingInternal(setting);
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -693,7 +754,7 @@ public class PrivacyService {
 					}
 				}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -775,7 +836,7 @@ public class PrivacyService {
 					}
 				}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 			}
 			return result;
 		}
@@ -806,7 +867,7 @@ public class PrivacyService {
 					db.endTransaction();
 				}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 			return listSetting;
@@ -834,7 +895,7 @@ public class PrivacyService {
 						mSettingCache.clear();
 					}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -875,7 +936,7 @@ public class PrivacyService {
 					Util.log(null, Log.WARN, "Cache cleared");
 				}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
 			}
 		}
@@ -999,7 +1060,7 @@ public class PrivacyService {
 									holder.countDown.run();
 
 								} catch (Throwable ex) {
-									reportError(Log.getStackTraceString(ex));
+									Util.bug(null, ex);
 									latch.countDown();
 								}
 							}
@@ -1030,7 +1091,7 @@ public class PrivacyService {
 					Binder.restoreCallingIdentity(token);
 				}
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 			}
 			return result.restricted;
 		}
@@ -1179,7 +1240,7 @@ public class PrivacyService {
 				setSettingInternal(new PSetting(restriction.uid, PrivacyManager.cSettingModifyTime,
 						Long.toString(System.currentTimeMillis())));
 			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
+				Util.bug(null, ex);
 			}
 		}
 
@@ -1202,7 +1263,7 @@ public class PrivacyService {
 									.show();
 
 						} catch (NameNotFoundException ex) {
-							reportError(Log.getStackTraceString(ex));
+							Util.bug(null, ex);
 						} finally {
 							Binder.restoreCallingIdentity(token);
 						}
@@ -1214,211 +1275,166 @@ public class PrivacyService {
 			String value = getSetting(new PSetting(uid, name, Boolean.toString(defaultValue))).value;
 			return Boolean.parseBoolean(value);
 		}
-	};
 
-	private static void enforcePermission() {
-		int callingUid = Util.getAppId(Binder.getCallingUid());
-		if (callingUid != getXUid() && callingUid != Process.SYSTEM_UID)
-			throw new SecurityException("xuid=" + mXUid + " calling=" + Binder.getCallingUid());
-	}
+		private void enforcePermission() {
+			int callingUid = Util.getAppId(Binder.getCallingUid());
+			if (callingUid != getXUid() && callingUid != Process.SYSTEM_UID)
+				throw new SecurityException("xuid=" + mXUid + " calling=" + Binder.getCallingUid());
+		}
 
-	private static Context getContext() {
-		// public static ActivityManagerService self()
-		// frameworks/base/services/java/com/android/server/am/ActivityManagerService.java
-		try {
-			Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
-			Object am = cam.getMethod("self").invoke(null);
-			if (am == null)
+		private Context getContext() {
+			// public static ActivityManagerService self()
+			// frameworks/base/services/java/com/android/server/am/ActivityManagerService.java
+			try {
+				Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
+				Object am = cam.getMethod("self").invoke(null);
+				if (am == null)
+					return null;
+				return (Context) cam.getDeclaredField("mContext").get(am);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
 				return null;
-			return (Context) cam.getDeclaredField("mContext").get(am);
-		} catch (Throwable ex) {
-			reportError(Log.getStackTraceString(ex));
-			return null;
-		}
-	}
-
-	private static int getXUid() {
-		if (mXUid < 0)
-			try {
-				Context context = getContext();
-				if (context != null) {
-					PackageManager pm = context.getPackageManager();
-					if (pm != null) {
-						String self = PrivacyService.class.getPackage().getName();
-						ApplicationInfo xInfo = pm.getApplicationInfo(self, 0);
-						mXUid = xInfo.uid;
-					}
-				}
-			} catch (Throwable ex) {
-				reportError(Log.getStackTraceString(ex));
 			}
-		return mXUid;
-	}
-
-	private static File getDbFile() {
-		return new File(Environment.getDataDirectory() + File.separator + "xprivacy" + File.separator + "xprivacy.db");
-	}
-
-	public static void setupDatabase() {
-		// This is run from Zygote with root permissions
-		try {
-			File dbFile = getDbFile();
-
-			// Create database folder
-			dbFile.getParentFile().mkdirs();
-
-			// Set database file permissions
-			// Owner: rwx (system)
-			// Group: --- (system)
-			// World: ---
-			Util.setPermission(dbFile.getParentFile().getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
-			File[] files = dbFile.getParentFile().listFiles();
-			if (files != null)
-				for (File file : files)
-					Util.setPermission(file.getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
-
-			// Move database from app folder
-			File folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
-					+ PrivacyService.class.getPackage().getName());
-			File[] oldFiles = folder.listFiles();
-			if (oldFiles != null)
-				for (File file : oldFiles)
-					if (file.getName().startsWith("xprivacy.db")) {
-						File target = new File(dbFile.getParentFile() + File.separator + file.getName());
-						boolean status = file.renameTo(target);
-						Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
-					}
-		} catch (Throwable ex) {
-			reportError(Log.getStackTraceString(ex));
-		}
-	}
-
-	private static SQLiteDatabase getDatabase() {
-		// Check current reference
-		if (mDatabase != null && !mDatabase.isOpen()) {
-			mDatabase = null;
-			reportError("Database not open");
 		}
 
-		if (mDatabase == null)
-			try {
-				// Create/upgrade database when needed
-				File dbFile = getDbFile();
-				SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
-
-				// Check database integrity
-				if (db.isDatabaseIntegrityOk())
-					Util.log(null, Log.WARN, "Database integrity ok");
-				else {
-					// http://www.sqlite.org/howtocorrupt.html
-					reportError("Database corrupt");
-					Cursor cursor = db.rawQuery("PRAGMA integrity_check", null);
-					while (cursor.moveToNext()) {
-						String message = cursor.getString(0);
-						reportError(message);
+		private int getXUid() {
+			if (mXUid < 0)
+				try {
+					Context context = getContext();
+					if (context != null) {
+						PackageManager pm = context.getPackageManager();
+						if (pm != null) {
+							String self = PrivacyService.class.getPackage().getName();
+							ApplicationInfo xInfo = pm.getApplicationInfo(self, 0);
+							mXUid = xInfo.uid;
+						}
 					}
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
 				}
+			return mXUid;
+		}
 
-				// Update migration status
-				if (db.getVersion() > 1) {
-					Util.log(null, Log.WARN, "Updating migration status");
-					db.beginTransaction();
-					try {
-						ContentValues values = new ContentValues();
-						values.put("uid", 0);
-						values.put("name", PrivacyManager.cSettingMigrated);
-						values.put("value", Boolean.toString(true));
-						db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-
-						db.setTransactionSuccessful();
-					} finally {
-						db.endTransaction();
-					}
-				}
-
-				// Upgrade database if needed
-				if (db.needUpgrade(1)) {
-					db.beginTransaction();
-					try {
-						// http://www.sqlite.org/lang_createtable.html
-						Util.log(null, Log.WARN, "Creating database");
-						db.execSQL("CREATE TABLE restriction (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL)");
-						db.execSQL("CREATE TABLE setting (uid INTEGER NOT NULL, name TEXT NOT NULL, value TEXT)");
-						db.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
-						db.execSQL("CREATE UNIQUE INDEX idx_restriction ON restriction(uid, restriction, method)");
-						db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, name)");
-						db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method)");
-						db.setVersion(1);
-						db.setTransactionSuccessful();
-					} finally {
-						db.endTransaction();
-					}
-
-				}
-
-				if (db.needUpgrade(2))
-					// Old migrated indication
-					db.setVersion(2);
-
-				if (db.needUpgrade(3)) {
-					db.beginTransaction();
-					try {
-						db.execSQL("DELETE FROM usage WHERE method=''");
-						db.setVersion(3);
-						db.setTransactionSuccessful();
-					} finally {
-						db.endTransaction();
-					}
-				}
-
-				if (db.needUpgrade(4)) {
-					db.beginTransaction();
-					try {
-						db.execSQL("DELETE FROM setting WHERE value IS NULL");
-						db.setVersion(4);
-						db.setTransactionSuccessful();
-					} finally {
-						db.endTransaction();
-					}
-				}
-
-				if (db.needUpgrade(5)) {
-					db.beginTransaction();
-					try {
-						db.execSQL("DELETE FROM setting WHERE value = ''");
-						db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
-						db.setVersion(5);
-						db.setTransactionSuccessful();
-					} finally {
-						db.endTransaction();
-					}
-				}
-
-				if (db.needUpgrade(6)) {
-					db.beginTransaction();
-					try {
-						db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
-						db.setVersion(6);
-						db.setTransactionSuccessful();
-					} finally {
-						db.endTransaction();
-					}
-				}
-
-				Util.log(null, Log.WARN, "Database version=" + db.getVersion());
-				mDatabase = db;
-			} catch (Throwable ex) {
-				mDatabase = null; // retry
-				reportError(Log.getStackTraceString(ex));
+		private SQLiteDatabase getDatabase() {
+			// Check current reference
+			if (mDatabase != null && !mDatabase.isOpen()) {
+				mDatabase = null;
+				Util.log(null, Log.ERROR, "Database not open");
 			}
 
-		return mDatabase;
-	}
+			if (mDatabase == null)
+				try {
+					// Create/upgrade database when needed
+					File dbFile = getDbFile();
+					SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
 
-	private static void reportError(String message) {
-		Util.log(null, Log.ERROR, message);
-		synchronized (mListError) {
-			mListError.add(message);
+					// Check database integrity
+					if (db.isDatabaseIntegrityOk())
+						Util.log(null, Log.WARN, "Database integrity ok");
+					else {
+						// http://www.sqlite.org/howtocorrupt.html
+						Util.log(null, Log.ERROR, "Database corrupt");
+						Cursor cursor = db.rawQuery("PRAGMA integrity_check", null);
+						while (cursor.moveToNext()) {
+							String message = cursor.getString(0);
+							Util.log(null, Log.ERROR, message);
+						}
+					}
+
+					// Update migration status
+					if (db.getVersion() > 1) {
+						Util.log(null, Log.WARN, "Updating migration status");
+						db.beginTransaction();
+						try {
+							ContentValues values = new ContentValues();
+							values.put("uid", 0);
+							values.put("name", PrivacyManager.cSettingMigrated);
+							values.put("value", Boolean.toString(true));
+							db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
+							db.setTransactionSuccessful();
+						} finally {
+							db.endTransaction();
+						}
+					}
+
+					// Upgrade database if needed
+					if (db.needUpgrade(1)) {
+						db.beginTransaction();
+						try {
+							// http://www.sqlite.org/lang_createtable.html
+							Util.log(null, Log.WARN, "Creating database");
+							db.execSQL("CREATE TABLE restriction (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL)");
+							db.execSQL("CREATE TABLE setting (uid INTEGER NOT NULL, name TEXT NOT NULL, value TEXT)");
+							db.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
+							db.execSQL("CREATE UNIQUE INDEX idx_restriction ON restriction(uid, restriction, method)");
+							db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, name)");
+							db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method)");
+							db.setVersion(1);
+							db.setTransactionSuccessful();
+						} finally {
+							db.endTransaction();
+						}
+
+					}
+
+					if (db.needUpgrade(2))
+						// Old migrated indication
+						db.setVersion(2);
+
+					if (db.needUpgrade(3)) {
+						db.beginTransaction();
+						try {
+							db.execSQL("DELETE FROM usage WHERE method=''");
+							db.setVersion(3);
+							db.setTransactionSuccessful();
+						} finally {
+							db.endTransaction();
+						}
+					}
+
+					if (db.needUpgrade(4)) {
+						db.beginTransaction();
+						try {
+							db.execSQL("DELETE FROM setting WHERE value IS NULL");
+							db.setVersion(4);
+							db.setTransactionSuccessful();
+						} finally {
+							db.endTransaction();
+						}
+					}
+
+					if (db.needUpgrade(5)) {
+						db.beginTransaction();
+						try {
+							db.execSQL("DELETE FROM setting WHERE value = ''");
+							db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
+							db.setVersion(5);
+							db.setTransactionSuccessful();
+						} finally {
+							db.endTransaction();
+						}
+					}
+
+					if (db.needUpgrade(6)) {
+						db.beginTransaction();
+						try {
+							db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
+							db.setVersion(6);
+							db.setTransactionSuccessful();
+						} finally {
+							db.endTransaction();
+						}
+					}
+
+					Util.log(null, Log.WARN, "Database version=" + db.getVersion());
+					mDatabase = db;
+				} catch (Throwable ex) {
+					mDatabase = null; // retry
+					Util.bug(null, ex);
+				}
+
+			return mDatabase;
 		}
-	}
+	};
 }
