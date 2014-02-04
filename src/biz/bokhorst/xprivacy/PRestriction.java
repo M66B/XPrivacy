@@ -19,6 +19,7 @@ public class PRestriction implements Parcelable {
 		restrictionName = other.restrictionName;
 		methodName = other.methodName;
 		restricted = other.restricted;
+		asked = other.asked;
 		time = other.time;
 	}
 
@@ -28,6 +29,7 @@ public class PRestriction implements Parcelable {
 		methodName = method;
 		restricted = false;
 		asked = false;
+		time = 0;
 	}
 
 	public PRestriction(int _uid, String category, String method, boolean _restricted) {
@@ -36,6 +38,7 @@ public class PRestriction implements Parcelable {
 		methodName = method;
 		restricted = _restricted;
 		asked = false;
+		time = 0;
 	}
 
 	public PRestriction(int _uid, String category, String method, boolean _restricted, boolean _asked) {
@@ -44,6 +47,7 @@ public class PRestriction implements Parcelable {
 		methodName = method;
 		restricted = _restricted;
 		asked = _asked;
+		time = 0;
 	}
 
 	public static final Parcelable.Creator<PRestriction> CREATOR = new Parcelable.Creator<PRestriction>() {

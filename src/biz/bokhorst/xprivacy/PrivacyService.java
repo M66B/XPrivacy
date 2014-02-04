@@ -279,12 +279,17 @@ public class PrivacyService {
 		@Override
 		public PRestriction getRestriction(final PRestriction restriction, boolean usage, String secret)
 				throws RemoteException {
-			final PRestriction result = new PRestriction(restriction.uid, restriction.restrictionName,
-					restriction.methodName);
+			final PRestriction result = new PRestriction(restriction);
 
 			try {
 				// No permissions enforced, but usage data requires a secret
+
+				// Sanity checks
 				if (restriction.restrictionName == null) {
+					reportError("Get invalid restriction " + restriction);
+					return result;
+				}
+				if (usage && restriction.methodName == null) {
 					reportError("Get invalid restriction " + restriction);
 					return result;
 				}
@@ -385,8 +390,7 @@ public class PrivacyService {
 						if (hook != null && !hook.isDangerous()) {
 							result.restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
 									restriction.restrictionName, restriction.methodName);
-							Util.log(null, Log.WARN, "Fallback uid=" + restriction.uid + " "
-									+ restriction.restrictionName + restriction.methodName + "=" + result.restricted);
+							Util.log(null, Log.WARN, "Fallback " + result);
 						}
 					}
 
@@ -410,7 +414,7 @@ public class PrivacyService {
 					result.restricted = onDemandDialog(hook, restriction);
 
 				// Log usage
-				if (usage && hook.hasUsageData() && restriction.methodName != null)
+				if (usage && hook != null && hook.hasUsageData())
 					if (getSettingBool(0, PrivacyManager.cSettingUsage, true)) {
 						// Check secret
 						boolean allowed = true;
@@ -872,19 +876,18 @@ public class PrivacyService {
 		// Helper methods
 
 		private Boolean onDemandDialog(final Hook hook, final PRestriction restriction) {
-			final PRestriction result = new PRestriction(restriction.uid, restriction.restrictionName, null, false);
+			final PRestriction result = new PRestriction(restriction);
+
+			// Neither category nor method is restricted and asked for
 			try {
 				// Without handler nothing can be done
 				if (mHandler == null)
 					return false;
 
+				if (hook != null && !hook.canOnDemand())
+					return false;
+
 				if (!XActivityManagerService.canOnDemand())
-					return false;
-
-				if (restriction.methodName == null)
-					return false;
-
-				if (!hook.canOnDemand())
 					return false;
 
 				// Check if enabled
@@ -895,7 +898,7 @@ public class PrivacyService {
 
 				// Skip dangerous methods
 				boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
-				if (!dangerous && hook.isDangerous())
+				if (!dangerous && hook != null && hook.isDangerous())
 					return false;
 
 				// Get am context
@@ -962,6 +965,7 @@ public class PrivacyService {
 								AlertDialog dialog = holder.dialog;
 								if (dialog != null)
 									dialog.cancel();
+								// Deny once
 								result.restricted = true;
 							}
 						});
@@ -1002,7 +1006,7 @@ public class PrivacyService {
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
 			llContainer.setLayoutParams(llContainerParams);
 			llContainer.setPadding(hmargin, vmargin, hmargin, vmargin);
-			if (hook.isDangerous() || appInfo.isSystem())
+			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
 				llContainer.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
 
 			// Container for icon & message
@@ -1057,7 +1061,7 @@ public class PrivacyService {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// Deny
+							// Deny once
 							result.restricted = true;
 							latch.countDown();
 						}
@@ -1077,50 +1081,34 @@ public class PrivacyService {
 
 		private void onDemandChoice(PRestriction restriction, boolean category, boolean restricted) {
 			try {
-				if (category || restricted) {
-					// Set category restricted, but if the user has requested
-					// blocking a single function, keep asking for the others
-					boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
-					PRestriction result = new PRestriction(restriction.uid, restriction.restrictionName, null,
-							restricted, category && !dangerous);
+				PRestriction result = new PRestriction(restriction);
+
+				// Set category restriction
+				result.methodName = null;
+				result.restricted = restricted;
+				result.asked = category;
+				setRestrictionInternal(result);
+
+				// Set method restriction
+				if (!category) {
+					result.methodName = restriction.methodName;
+					result.restricted = restricted;
+					result.asked = true;
 					setRestrictionInternal(result);
+				}
 
-					if (category && restricted && dangerous) {
-						// Set asked=true on each method except dangerous ones
-						result.restricted = true;
-
-						for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName)) {
-							// Only set it if it hasn't been marked asked
-							result.methodName = hook.getName();
-							if (!getRestriction(result, false, null).asked) {
-								result.asked = !hook.isDangerous();
-								setRestrictionInternal(result);
-							}
-						}
-					} else if (restricted) {
-						// Make exceptions for dangerous methods
-						result.restricted = dangerous;
-						result.asked = !dangerous;
-
+				// Make exceptions for dangerous methods
+				if (category && restricted) {
+					boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+					if (restricted && !dangerous) {
 						for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
 							if (hook.isDangerous()) {
 								result.methodName = hook.getName();
-								// Only set it if it hasn't been marked asked
-								if (!getRestriction(result, false, null).asked)
-									setRestrictionInternal(result);
+								result.restricted = false;
+								result.asked = false;
+								setRestrictionInternal(result);
 							}
 					}
-
-					// Restrict the requested function & don't ask again
-					result.methodName = restriction.methodName;
-					result.restricted = true;
-					result.asked = true;
-					setRestrictionInternal(result);
-				} else {
-					// Leave the category, add an exception for the function
-					PRestriction result = new PRestriction(restriction.uid, restriction.restrictionName,
-							restriction.methodName, restricted, true);
-					setRestrictionInternal(result);
 				}
 
 				// Mark state as changed
