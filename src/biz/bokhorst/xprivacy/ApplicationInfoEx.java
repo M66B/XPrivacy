@@ -17,6 +17,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -86,7 +88,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		for (Entry<String, ApplicationInfo> entry : mMapAppInfo.entrySet())
 			if (entry.getValue().packageName.equals(packageName))
 				return entry.getKey();
-		return null;
+		return "";
 	}
 
 	public List<String> getPackageName() {
@@ -145,8 +147,9 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	public Drawable getIcon(Context context) {
 		if (mIcon == null)
 			// Pick first icon
-			mIcon = mMapAppInfo.firstEntry().getValue().loadIcon(context.getPackageManager());
-		return mIcon;
+			if (mMapAppInfo.size() > 0)
+				mIcon = mMapAppInfo.firstEntry().getValue().loadIcon(context.getPackageManager());
+		return (mIcon == null ? new ColorDrawable(Color.TRANSPARENT) : mIcon);
 	}
 
 	public boolean hasInternet(Context context) {
