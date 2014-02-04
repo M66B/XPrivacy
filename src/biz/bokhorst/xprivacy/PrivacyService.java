@@ -151,7 +151,6 @@ public class PrivacyService {
 				Method mGetService = cServiceManager.getDeclaredMethod("getService", String.class);
 				mClient = IPrivacyService.Stub.asInterface((IBinder) mGetService.invoke(null, cServiceName));
 			} catch (Throwable ex) {
-				mClient = null;
 				Util.bug(null, ex);
 			}
 

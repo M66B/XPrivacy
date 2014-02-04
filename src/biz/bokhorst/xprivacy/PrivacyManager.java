@@ -308,36 +308,34 @@ public class PrivacyManager {
 	}
 
 	public static void setRestriction(XHook hook, int uid, String restrictionName, String methodName, boolean restricted) {
-		setRestriction(hook, uid, restrictionName, methodName, restricted, restricted);
+		setRestriction(uid, restrictionName, methodName, restricted, restricted);
 	}
 
-	public static void setRestriction(XHook hook, int uid, String restrictionName, String methodName,
-			boolean restricted, boolean asked) {
+	public static void setRestriction(int uid, String restrictionName, String methodName, boolean restricted,
+			boolean asked) {
 		// Check uid
 		if (uid == 0) {
-			Util.log(hook, Log.WARN, "uid=0");
+			Util.log(null, Log.WARN, "uid=0");
 			return;
 		}
 
-		// Set restriction
-		try {
-			PrivacyService.getClient().setRestriction(
-					new PRestriction(uid, restrictionName, methodName, restricted, asked));
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
+		// Create list of restrictions set set
+		List<PRestriction> listRestriction = new ArrayList<PRestriction>();
+		listRestriction.add(new PRestriction(uid, restrictionName, methodName, restricted, asked));
 
 		// Make exceptions for dangerous methods
-		boolean dangerous = getSettingBool(hook, 0, cSettingDangerous, false, false);
+		boolean dangerous = getSettingBool(null, 0, cSettingDangerous, false, false);
 		if (methodName == null)
 			if (restricted && !dangerous) {
 				for (Hook md : getHooks(restrictionName))
 					if (md.isDangerous())
-						setRestriction(hook, uid, restrictionName, md.getName(), dangerous, asked);
+						listRestriction.add(new PRestriction(uid, restrictionName, md.getName(), dangerous, asked));
 			}
 
+		setRestrictionList(listRestriction);
+
 		// Mark state as changed
-		setSetting(hook, uid, cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
+		setSetting(null, uid, cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
 
 		// Update modification time
 		setSetting(null, uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
