@@ -906,82 +906,93 @@ public class PrivacyService {
 				if (context == null)
 					return false;
 
-				// Get application info
-				final ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
-
-				// Check if system application
-				if (!dangerous && appInfo.isSystem())
-					return false;
-
-				// Go ask
-				Util.log(null, Log.WARN, "On demand " + restriction);
-				mOndemandSemaphore.acquireUninterruptibly();
+				long token = 0;
 				try {
-					Util.log(null, Log.WARN, "On demanding " + restriction);
+					token = Binder.clearCallingIdentity();
 
-					// Check if not asked before
-					boolean alreadyAsked = false;
-					CRestriction key = new CRestriction(restriction);
-					synchronized (mRestrictionCache) {
-						// Check method
-						if (mRestrictionCache.containsKey(key)) {
-							PRestriction cache = mRestrictionCache.get(key).getRestriction();
-							alreadyAsked = cache.asked;
-						}
+					// Get application info
+					final ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
 
-						// Check category
-						if (!alreadyAsked) {
-							key.getRestriction().methodName = null;
+					// Check if system application
+					if (!dangerous && appInfo.isSystem())
+						return false;
+
+					// Go ask
+					Util.log(null, Log.WARN, "On demand " + restriction);
+					mOndemandSemaphore.acquireUninterruptibly();
+					try {
+						Util.log(null, Log.WARN, "On demanding " + restriction);
+
+						// Check if not asked before
+						boolean alreadyAsked = false;
+						CRestriction key = new CRestriction(restriction);
+						synchronized (mRestrictionCache) {
+							// Check method
 							if (mRestrictionCache.containsKey(key)) {
 								PRestriction cache = mRestrictionCache.get(key).getRestriction();
 								alreadyAsked = cache.asked;
 							}
-						}
-					}
-					if (alreadyAsked) {
-						Util.log(null, Log.WARN, "Already asked " + restriction);
-						return result.restricted;
-					}
 
-					final AlertDialogHolder holder = new AlertDialogHolder();
-					final CountDownLatch latch = new CountDownLatch(1);
-
-					// Run dialog in looper
-					mHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							try {
-								AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
-										result, context, latch);
-								AlertDialog alertDialog = builder.create();
-								alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-								alertDialog.setCancelable(false);
-								alertDialog.setCanceledOnTouchOutside(false);
-								alertDialog.show();
-								holder.dialog = alertDialog;
-							} catch (Throwable ex) {
-								reportError(Log.getStackTraceString(ex));
-								latch.countDown();
+							// Check category
+							if (!alreadyAsked) {
+								key.getRestriction().methodName = null;
+								if (mRestrictionCache.containsKey(key)) {
+									PRestriction cache = mRestrictionCache.get(key).getRestriction();
+									alreadyAsked = cache.asked;
+								}
 							}
 						}
-					});
+						if (alreadyAsked) {
+							Util.log(null, Log.WARN, "Already asked " + restriction);
+							return result.restricted;
+						}
 
-					// Wait for dialog to complete
-					if (!latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS)) {
-						Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
+						final AlertDialogHolder holder = new AlertDialogHolder();
+						final CountDownLatch latch = new CountDownLatch(1);
+
+						// Run dialog in looper
 						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								AlertDialog dialog = holder.dialog;
-								if (dialog != null)
-									dialog.cancel();
-								// Deny once
-								result.restricted = true;
+								try {
+									int userId = Util.getUserId(restriction.uid);
+									AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
+											result, context, latch);
+									AlertDialog alertDialog = builder.create();
+									if (userId == 0)
+										alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+									else
+										alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
+									alertDialog.setCancelable(false);
+									alertDialog.setCanceledOnTouchOutside(false);
+									alertDialog.show();
+									holder.dialog = alertDialog;
+								} catch (Throwable ex) {
+									reportError(Log.getStackTraceString(ex));
+									latch.countDown();
+								}
 							}
 						});
+
+						// Wait for dialog to complete
+						if (!latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS)) {
+							Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
+							mHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									AlertDialog dialog = holder.dialog;
+									if (dialog != null)
+										dialog.cancel();
+									// Deny once
+									result.restricted = true;
+								}
+							});
+						}
+					} finally {
+						mOndemandSemaphore.release();
 					}
 				} finally {
-					mOndemandSemaphore.release();
+					Binder.restoreCallingIdentity(token);
 				}
 			} catch (Throwable ex) {
 				reportError(Log.getStackTraceString(ex));
@@ -1139,7 +1150,10 @@ public class PrivacyService {
 				mHandler.post(new Runnable() {
 					@Override
 					public void run() {
+						long token = 0;
 						try {
+							token = Binder.clearCallingIdentity();
+
 							// Get resources
 							String self = PrivacyService.class.getPackage().getName();
 							Resources resources = context.getPackageManager().getResourcesForApplication(self);
@@ -1147,8 +1161,11 @@ public class PrivacyService {
 							// Notify user
 							Toast.makeText(context, resources.getString(R.string.msg_restrictedby), Toast.LENGTH_LONG)
 									.show();
+
 						} catch (NameNotFoundException ex) {
 							reportError(Log.getStackTraceString(ex));
+						} finally {
+							Binder.restoreCallingIdentity(token);
 						}
 					}
 				});
@@ -1162,16 +1179,8 @@ public class PrivacyService {
 
 	private static void enforcePermission() {
 		int callingUid = Util.getAppId(Binder.getCallingUid());
-		if (callingUid != getXUid() && callingUid != Process.SYSTEM_UID) {
-			String callingPkg = null;
-			Context context = getContext();
-			if (context != null) {
-				PackageManager pm = context.getPackageManager();
-				if (pm != null)
-					callingPkg = TextUtils.join(", ", pm.getPackagesForUid(Binder.getCallingUid()));
-			}
-			throw new SecurityException("xuid=" + mXUid + " calling=" + Binder.getCallingUid() + "/" + callingPkg);
-		}
+		if (callingUid != getXUid() && callingUid != Process.SYSTEM_UID)
+			throw new SecurityException("xuid=" + mXUid + " calling=" + Binder.getCallingUid());
 	}
 
 	private static Context getContext() {
