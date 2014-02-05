@@ -1,25 +1,25 @@
 <resources>
 
     <string name="app_notxposed" formatted="false">Xposedフレームワークバージョン %d+ がインストールされていません</string>
-    <string name="app_notenabled">XPrivacyがXposedインストーラで有効になっていません</string>
-    <string name="app_wrongandroid">Androidバージョン 4.0以降でのみを動作します</string>
+    <string name="app_notenabled">XPrivacyがXposedインストーラに有効になっていません</string>
+    <string name="app_wrongandroid">アンドロイドバージョン 4.0以降でのみを動作します</string>
     <string name="app_incompatible" formatted="false">XPrivacyは%sが非対応です</string>
     <string name="app_version" formatted="false">XPrivacy バージョン: %s (%d)</string>
-    <string name="app_description">The ultimate privacy manager</string>
+    <string name="app_description">ザ・ベスト・プライバシー・マネージャー</string>
     <string name="app_xversion" formatted="false">Xposedフレームワークバージョン: %d</string>
     <string name="app_copyright">著作権 \u00A9 2013–2014、 M. Bokhorst より(M66B)</string>
     <string name="menu_usage">利用履歴</string>
-    <string name="menu_refresh">再読込み</string>
+    <string name="menu_refresh">更新</string>
     <string name="menu_settings">設定</string>
     <string name="menu_template">テンプレート</string>
     <string name="menu_report">問題を報告</string>
     <string name="menu_export">エクスポート</string>
     <string name="menu_import">インポート</string>
-    <string name="menu_submit">制限状況を送信</string>
+    <string name="menu_submit">制限の状況を送信</string>
     <string name="menu_fetch">制限を読込む</string>
     <string name="menu_theme">テーマ</string>
     <string name="menu_pro">プロバージョンを購入</string>
-    <string name="menu_about">アプリの情報</string>
+    <string name="menu_about">XPrivacyについて</string>
     <string name="menu_help">ヘルプ</string>
     <string name="menu_select_all">全てを選択する</string>
     <string name="menu_sort">ソート</string>
@@ -43,7 +43,7 @@
     <string name="menu_tutorial">チュートリアル</string>
     <string name="menu_exclude">除外する</string>
     <string name="menu_close">閉じる</string>
-    <string name="msg_abort">中断</string>
+    <string name="msg_abort">中断する</string>
     <string name="msg_aborted">中断されました</string>
     <string name="msg_new">新規</string>
     <string name="msg_update">更新されました</string>
@@ -52,25 +52,25 @@
     <string name="msg_applying">適用中</string>
     <string name="msg_applied">テンプレートを適用しました</string>
     <string name="msg_saved_to" formatted="false">%sに保存されました</string>
-    <string name="msg_no_restrictions">制限などは見つかりませんでした</string>
+    <string name="msg_no_restrictions">アクティブな制限は見つかりませんでした</string>
     <string name="msg_sure">続行しますか</string>
     <string name="msg_select">アプリケーションを選択して下さい</string>
-    <string name="msg_limit">%d applicationswo</string>
+    <string name="msg_limit">%dより少ないアプリを選択して下さい</string>
     <string name="msg_done">終了</string>
     <string name="msg_reboot">再起動して下さい</string>
     <string name="msg_random_now">ランダム化</string>
-    <string name="msg_random_access">アプリにアクセスされたとき、バリューをランダム化する</string>
+    <string name="msg_random_access">アプリがアクセスするたび、バリューをランダム化する</string>
     <string name="msg_random_boot">端末を起動時にバリューをランダム化する</string>
-    <string name="msg_restart">アプリケーション再起動が必要です</string>
+    <string name="msg_restart">アプリケーションの再起動が必要となります</string>
     <string name="msg_register">デバイスを登録して下さい</string>
     <string name="msg_registered">デバイスをアクティベーションするためにメールをご覧ください</string>
     <string name="msg_service">アップデートサービス実行中</string>
     <string name="msg_migrating" formatted="false">移行中 %s</string>
     <string name="msg_randomizing" formatted="false">ランダム化しています %s</string>
-    <string name="msg_upgrading" formatted="false">アップグレード中 %s</string>
-    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_ondemand" formatted="false">%1$s is trying to use %3$s in the %2$s category</string>
-    <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_upgrading" formatted="false">アップグレード中%s</string>
+    <string name="msg_support_info">内部チェックは失敗しました。報告しますか</string>
+    <string name="msg_ondemand" formatted="false">%1$sは%3$sの%2$sカテゴリーにアクセスをしようとしてる</string>
+    <string name="msg_restrictedby">XPrivacyによりアクセスが制限されました</string>
     <string name="msg_first"><b>XPrivacyは細心の注意をして開発･テストしていますが、
 どの端末、どのアプリでも動作するという保証はありません。
 \n\n自己責任でお使いください。</b>\n\nライセンスの詳細はこちら:</string>
@@ -80,7 +80,7 @@
     <string name="restrict_calling">通話 (電話, SMS, MMS)</string>
     <string name="restrict_clipboard">クリップボード</string>
     <string name="restrict_contacts">電話帳</string>
-    <string name="restrict_dictionary">辞書 (ユーザー)</string>
+    <string name="restrict_dictionary">ユーザー辞書</string>
     <string name="restrict_email">メール</string>
     <string name="restrict_identification">ID (端末)</string>
     <string name="restrict_internet">インターネット</string>
@@ -89,7 +89,7 @@
     <string name="restrict_messages">メッセージ (SMS, MMS)</string>
     <string name="restrict_network">ネットワーク (アドレス)</string>
     <string name="restrict_notifications">通知</string>
-    <string name="restrict_overlay">Overlay</string>
+    <string name="restrict_overlay">オーバーレイ</string>
     <string name="restrict_phone">電話 (ID, 電話番号, 通話)</string>
     <string name="restrict_sensors">センサー</string>
     <string name="restrict_storage">ストレージ (メディア, SDカード)</string>
@@ -106,19 +106,19 @@
     <string name="title_fsystem">システムアプリを表示</string>
     <string name="title_fnot">無視</string>
     <string name="title_sname">タイトルで</string>
-    <string name="title_suid">uidで</string>
-    <string name="title_sinstalled">By date installed</string>
-    <string name="title_supdated">By date updated</string>
-    <string name="title_smodified">By date modified (XPrivacy)</string>
-    <string name="title_sinvert">Invert sort order</string>
-    <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_suid">uid順番</string>
+    <string name="title_sinstalled">インストール日付順</string>
+    <string name="title_supdated">アップデート日付順</string>
+    <string name="title_smodified">変更された日付順（Xprivacy）</string>
+    <string name="title_sinvert">並べ替え順序を反転する</string>
+    <string name="title_applycat">カテゴリー全体に適用する</string>
+    <string name="title_once">%1$s秒で一回</string>
     <string name="title_allow">許可</string>
     <string name="title_deny">拒否</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
-    <string name="settings_alt">Altitude</string>
+    <string name="settings_alt">標高</string>
     <string name="settings_mac">MAC アドレス</string>
     <string name="settings_ip">IP アドレス</string>
     <string name="settings_phone">電話番号</string>
@@ -131,33 +131,33 @@
     <string name="settings_general">一般的</string>
     <string name="settings_fake_data">フェイクデータ</string>
     <string name="settings_notify">最新の情報に更新</string>
-    <string name="settings_ondemand">Restrict on demand</string>
-    <string name="settings_log">デバッグログ(再起動が必要)</string>
+    <string name="settings_ondemand">要求に応じて制限する</string>
+    <string name="settings_log">デバッグログ（再起動が必要）</string>
     <string name="settings_expert">エキスパートモード</string>
     <string name="settings_dangerous">危険な可能を制限する</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions (requires restart)</string>
+    <string name="settings_confidence">最大のfetch confidenceインターバル</string>
+    <string name="settings_experimental">実験的な機能 （再起動が必要）</string>
     <string name="settings_https">セキュリティーで保護された接続を使用する</string>
-    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
-    <string name="settings_usagedata">Show application usage data (requires restart)</string>
-    <string name="help_longpress">Long press name to select</string>
+    <string name="settings_syscomponents">システムのコンポーネントにアクセスを制限する （アンドロイド）（再起動が必要となります）</string>
+    <string name="settings_usagedata">使用状況データを登録する（再起動が必要）</string>
+    <string name="help_longpress">タイトルを押してれば、選択ができます</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">はインターネット権限を持っています</string>
     <string name="help_granted">はアンドロイドの権限を持っています</string>
     <string name="help_used">はそのデータを使用しています</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_used_grayed">利用履歴がありません</string>
     <string name="help_frozen">は無効になっています</string>
     <string name="help_dangerous">はプライバシーに危険です</string>
     <string name="help_half">部分的に制限されました</string>
-    <string name="help_attention">制限が注意</string>
+    <string name="help_attention">注意</string>
     <string name="help_restricted">制限が更新しました</string>
     <string name="help_shared">制限が送信しました</string>
-    <string name="tutorial_mainheader">制限したいカテゴリーを制限する</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="tutorial_mainheader">アクセスを拒否したいカテゴリーを制限できる</string>
+    <string name="tutorial_mainlist">チェックボックスをタップして、カテゴリーにアクセスが制限となる\n
+\nアクセス制限されたカテゴリーによって、アプリに空の値か偽デートを送信します\n
+\nアプリのアイコンを押してれば、もっと制限と設定などができます</string>
+    <string name="tutorial_detailsheader">アプリケーションのアイコンをタップすれば、いろんな設定することができる</string>
+    <string name="tutorial_detailslist">下のアローキーを押してればファンクションの例外を選ぶことができます</string>
+    <string name="permission_manage">アプリケーションを管理する、強制終了など</string>
 
 </resources>
