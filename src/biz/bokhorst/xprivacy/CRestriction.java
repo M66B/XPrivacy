@@ -4,19 +4,26 @@ import java.util.Date;
 
 public class CRestriction {
 	private long mTimestamp;
-	private PRestriction mRestriction;
+	public int uid;
+	public String restrictionName;
+	public String methodName;
+	public boolean restricted;
+	public boolean asked;
+
+	public CRestriction(int _uid, String _restrictioName, String _methodName) {
+		mTimestamp = new Date().getTime();
+		uid = _uid;
+		restrictionName = _restrictioName;
+		methodName = _methodName;
+	}
 
 	public CRestriction(PRestriction restriction) {
 		mTimestamp = new Date().getTime();
-		mRestriction = new PRestriction(restriction);
-	}
-
-	public PRestriction getRestriction() {
-		return mRestriction;
-	}
-
-	public void setRestriction(PRestriction restriction) {
-		mRestriction = new PRestriction(restriction);
+		uid = restriction.uid;
+		restrictionName = restriction.restrictionName;
+		methodName = restriction.methodName;
+		restricted = restriction.restricted;
+		asked = restriction.asked;
 	}
 
 	public boolean isExpired() {
@@ -26,17 +33,19 @@ public class CRestriction {
 	@Override
 	public boolean equals(Object obj) {
 		CRestriction other = (CRestriction) obj;
-		return (this.mRestriction.uid == other.mRestriction.uid
-				&& this.mRestriction.restrictionName.equals(other.mRestriction.restrictionName)
-				&& this.mRestriction.methodName == null ? other.mRestriction.methodName == null
-				: this.mRestriction.methodName.equals(other.mRestriction.methodName));
+		return (uid == other.uid
+				&& (restrictionName == null ? other.restrictionName == null : restrictionName
+						.equals(other.restrictionName)) && (methodName == null ? other.methodName == null : methodName
+				.equals(other.methodName)));
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = mRestriction.uid ^ mRestriction.restrictionName.hashCode();
-		if (mRestriction.methodName != null)
-			hash = hash ^ mRestriction.methodName.hashCode();
+		int hash = uid;
+		if (restrictionName != null)
+			hash = hash ^ restrictionName.hashCode();
+		if (methodName != null)
+			hash = hash ^ methodName.hashCode();
 		return hash;
 	}
 }

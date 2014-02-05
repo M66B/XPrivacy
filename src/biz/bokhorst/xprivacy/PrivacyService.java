@@ -392,7 +392,7 @@ public class PrivacyService {
 					synchronized (mRestrictionCache) {
 						if (mRestrictionCache.containsKey(key)) {
 							cached = true;
-							PRestriction cache = mRestrictionCache.get(key).getRestriction();
+							CRestriction cache = mRestrictionCache.get(key);
 							result.restricted = cache.restricted;
 							result.asked = cache.asked;
 						}
@@ -996,18 +996,14 @@ public class PrivacyService {
 						CRestriction key = new CRestriction(restriction);
 						synchronized (mRestrictionCache) {
 							// Check method
-							if (mRestrictionCache.containsKey(key)) {
-								PRestriction cache = mRestrictionCache.get(key).getRestriction();
-								alreadyAsked = cache.asked;
-							}
+							if (mRestrictionCache.containsKey(key))
+								alreadyAsked = mRestrictionCache.get(key).asked;
 
 							// Check category
 							if (!alreadyAsked) {
-								key.getRestriction().methodName = null;
-								if (mRestrictionCache.containsKey(key)) {
-									PRestriction cache = mRestrictionCache.get(key).getRestriction();
-									alreadyAsked = cache.asked;
-								}
+								key.methodName = null;
+								if (mRestrictionCache.containsKey(key))
+									alreadyAsked = mRestrictionCache.get(key).asked;
 							}
 						}
 						if (alreadyAsked) {

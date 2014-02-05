@@ -271,13 +271,13 @@ public class PrivacyManager {
 
 		// Check cache
 		boolean cached = false;
-		CRestriction key = new CRestriction(new PRestriction(uid, restrictionName, methodName));
+		CRestriction key = new CRestriction(uid, restrictionName, methodName);
 		synchronized (mRestrictionCache) {
 			if (mRestrictionCache.containsKey(key)) {
 				CRestriction entry = mRestrictionCache.get(key);
 				if (!entry.isExpired()) {
 					cached = true;
-					restricted = entry.getRestriction().restricted;
+					restricted = entry.restricted;
 				}
 			}
 		}
@@ -289,7 +289,7 @@ public class PrivacyManager {
 						new PRestriction(uid, restrictionName, methodName, false), true, secret).restricted;
 
 				// Add to cache
-				key.setRestriction(new PRestriction(uid, restrictionName, methodName, restricted));
+				key.restricted = restricted;
 				synchronized (mRestrictionCache) {
 					if (mRestrictionCache.containsKey(key))
 						mRestrictionCache.remove(key);

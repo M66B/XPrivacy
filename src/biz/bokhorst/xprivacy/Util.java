@@ -63,10 +63,13 @@ public class Util {
 	public static void log(XHook hook, int priority, String msg) {
 		// Check if logging enabled
 		int uid = Process.myUid();
-		if (!mLogDetermined && uid > 0 && uid != Process.SYSTEM_UID) {
+		if (!mLogDetermined && uid > 0) {
 			mLogDetermined = true;
 			try {
-				mLog = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingLog, false, true);
+				if (uid == Process.SYSTEM_UID)
+					;
+				else
+					mLog = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingLog, false, true);
 			} catch (Throwable ignored) {
 				mLog = false;
 			}
