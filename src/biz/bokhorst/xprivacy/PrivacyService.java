@@ -1065,7 +1065,7 @@ public class PrivacyService {
 								public void run() {
 									AlertDialog dialog = holder.dialog;
 									if (dialog != null)
-										dialog.dismiss();
+										dialog.cancel();
 									// Deny once
 									result.restricted = true;
 								}
@@ -1073,7 +1073,6 @@ public class PrivacyService {
 						}
 
 						// Garbage collect
-						holder.dialog = null;
 						holder.thread.interrupt();
 						holder.thread = null;
 					} finally {
@@ -1155,7 +1154,7 @@ public class PrivacyService {
 			// Once check box
 			final CheckBox cbOnce = new CheckBox(context);
 			cbOnce.setText(String.format(resources.getString(R.string.title_once),
-					PrivacyManager.cSettingCacheTimeoutMs / 1000));
+					PrivacyManager.cRestrictionCacheTimeoutMs / 1000));
 			LinearLayout.LayoutParams llOnceParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			cbOnce.setLayoutParams(llOnceParams);
