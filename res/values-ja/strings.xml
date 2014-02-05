@@ -152,7 +152,7 @@
     <string name="help_attention">制限が注意</string>
     <string name="help_restricted">制限が更新しました</string>
     <string name="help_shared">制限が送信しました</string>
-    <string name="tutorial_mainheader">制限したいカテゴリーを制限する</string
+    <string name="tutorial_mainheader">制限したいカテゴリーを制限する</string>
     <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
 \nApps will be fed empty or fake data for restricted categories\n
 \nTap the app icon for detailed restrictions and settings</string>

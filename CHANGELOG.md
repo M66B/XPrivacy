@@ -21,6 +21,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Rewritten on demand restricting logic ([issue](/../../issues/1245)) ([issue](/../../issues/1247)) ([issue](/../../issues/1253))
 * Added progress bar for on demand restricting time out
 * Updated traditional Chinese translation
+* Updated Japanese translation
 * Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
