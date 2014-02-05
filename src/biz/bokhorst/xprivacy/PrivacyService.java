@@ -479,8 +479,8 @@ public class PrivacyService {
 					notifyRestricted(restriction);
 
 				// Ask to restrict
-				if (!result.restricted && !result.asked && usage && PrivacyManager.isApplication(restriction.uid))
-					result.restricted = onDemandDialog(hook, restriction);
+				if (!result.asked && usage && PrivacyManager.isApplication(restriction.uid))
+					onDemandDialog(hook, restriction, result);
 
 				// Log usage
 				if (usage && hook != null && hook.hasUsageData())
@@ -948,36 +948,34 @@ public class PrivacyService {
 
 		// Helper methods
 
-		private Boolean onDemandDialog(final Hook hook, final PRestriction restriction) {
-			final PRestriction result = new PRestriction(restriction);
-
+		private void onDemandDialog(final Hook hook, final PRestriction restriction, final PRestriction result) {
 			// Neither category nor method is restricted and asked for
 			try {
 				// Without handler nothing can be done
 				if (mHandler == null)
-					return false;
+					return;
 
 				if (hook != null && !hook.canOnDemand())
-					return false;
+					return;
 
 				if (!XActivityManagerService.canOnDemand())
-					return false;
+					return;
 
 				// Check if enabled
 				if (!getSettingBool(0, PrivacyManager.cSettingOnDemand, true))
-					return false;
+					return;
 				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
-					return false;
+					return;
 
 				// Skip dangerous methods
 				final boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 				if (!dangerous && hook != null && hook.isDangerous())
-					return false;
+					return;
 
 				// Get am context
 				final Context context = getContext();
 				if (context == null)
-					return false;
+					return;
 
 				long token = 0;
 				try {
@@ -988,7 +986,7 @@ public class PrivacyService {
 
 					// Check if system application
 					if (!dangerous && appInfo.isSystem())
-						return false;
+						return;
 
 					// Go ask
 					Util.log(null, Log.WARN, "On demand " + restriction);
@@ -1013,7 +1011,7 @@ public class PrivacyService {
 						}
 						if (alreadyAsked) {
 							Util.log(null, Log.WARN, "Already asked " + restriction);
-							return result.restricted;
+							return;
 						}
 
 						final AlertDialogHolder holder = new AlertDialogHolder();
@@ -1042,6 +1040,7 @@ public class PrivacyService {
 									holder.dialog.getWindow().setFeatureInt(Window.FEATURE_PROGRESS,
 											Window.PROGRESS_VISIBILITY_ON);
 
+									// TODO: make working
 									holder.countDown = new Runnable() {
 										@Override
 										public void run() {
@@ -1094,7 +1093,6 @@ public class PrivacyService {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
-			return result.restricted;
 		}
 
 		final class AlertDialogHolder {
@@ -1155,7 +1153,7 @@ public class PrivacyService {
 
 			// Category check box
 			final CheckBox cbCategory = new CheckBox(context);
-			cbCategory.setText(resources.getString(R.string.menu_category));
+			cbCategory.setText(resources.getString(R.string.title_applycat));
 			cbCategory.setTextAppearance(context, android.R.attr.textAppearanceSmall);
 			cbCategory.setChecked(!dangerous);
 			LinearLayout.LayoutParams llCategoryParams = new LinearLayout.LayoutParams(
@@ -1163,6 +1161,17 @@ public class PrivacyService {
 			llCategoryParams.setMargins(0, vmargin / 2, 0, 0);
 			cbCategory.setLayoutParams(llCategoryParams);
 			llContainer.addView(cbCategory);
+
+			// Once check box
+			final CheckBox cbOnce = new CheckBox(context);
+			cbOnce.setText(String.format(resources.getString(R.string.title_once),
+					PrivacyManager.cSettingCacheTimeoutMs / 1000));
+			cbOnce.setTextAppearance(context, android.R.attr.textAppearanceSmall);
+			LinearLayout.LayoutParams llOnceParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			llOnceParams.setMargins(0, vmargin / 2, 0, 0);
+			cbOnce.setLayoutParams(llOnceParams);
+			llContainer.addView(cbOnce);
 
 			// Ask
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
@@ -1175,16 +1184,8 @@ public class PrivacyService {
 						public void onClick(DialogInterface dialog, int which) {
 							// Deny
 							result.restricted = true;
-							onDemandChoice(restriction, cbCategory.isChecked(), true);
-							latch.countDown();
-						}
-					});
-			alertDialogBuilder.setNeutralButton(resources.getString(R.string.title_denyonce),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// Deny once
-							result.restricted = true;
+							if (!cbOnce.isChecked())
+								onDemandChoice(restriction, cbCategory.isChecked(), true);
 							latch.countDown();
 						}
 					});
@@ -1194,7 +1195,8 @@ public class PrivacyService {
 						public void onClick(DialogInterface dialog, int which) {
 							// Allow
 							result.restricted = false;
-							onDemandChoice(restriction, cbCategory.isChecked(), false);
+							if (!cbOnce.isChecked())
+								onDemandChoice(restriction, cbCategory.isChecked(), false);
 							latch.countDown();
 						}
 					});
@@ -1205,22 +1207,35 @@ public class PrivacyService {
 			try {
 				PRestriction result = new PRestriction(restriction);
 
+				// Get current values
+				CRestriction resCategory = null;
+				CRestriction resMethod = null;
+				CRestriction keyCategory = new CRestriction(restriction);
+				keyCategory.methodName = null;
+				CRestriction keyMethod = new CRestriction(restriction);
+				synchronized (mRestrictionCache) {
+					if (mRestrictionCache.containsKey(keyCategory))
+						resCategory = mRestrictionCache.get(keyCategory);
+					if (mRestrictionCache.containsKey(keyMethod))
+						resMethod = mRestrictionCache.get(keyMethod);
+				}
+
+				// TODO: factor in current values
+
 				// Set category restriction
 				result.methodName = null;
 				result.restricted = restricted;
-				result.asked = category;
+				result.asked = false;
 				setRestrictionInternal(result);
 
 				// Set method restriction
-				if (!category) {
-					result.methodName = restriction.methodName;
-					result.restricted = restricted;
-					result.asked = true;
-					setRestrictionInternal(result);
-				}
+				result.methodName = restriction.methodName;
+				result.restricted = restricted;
+				result.asked = true;
+				setRestrictionInternal(result);
 
 				// Make exceptions for dangerous methods
-				if (category && restricted) {
+				if (restricted) {
 					boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 					if (restricted && !dangerous) {
 						for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))

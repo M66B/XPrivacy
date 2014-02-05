@@ -43,7 +43,6 @@
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
-    <string name="menu_category">Act on the entire category</string>
     <string name="msg_abort">Aborting</string>
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">New</string>
@@ -113,9 +112,10 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
+    <string name="title_applycat">Apply to entire category</string>
+    <string name="title_once">Once for %1$s seconds</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
-    <string name="title_denyonce">Deny once</string>
     <string name="settings_serial">Seeria#</string>
     <string name="settings_lat">Laiuskraad</string>
     <string name="settings_lon">Pikkuskraad</string>

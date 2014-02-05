@@ -43,7 +43,6 @@
     <string name="menu_tutorial">Didacticiel</string>
     <string name="menu_exclude">Exclure</string>
     <string name="menu_close">Fermer</string>
-    <string name="menu_category">Agir sur toute la catégorie</string>
     <string name="msg_abort">Arrêt en cours</string>
     <string name="msg_aborted">Arrêté</string>
     <string name="msg_new">Nouv. :</string>
@@ -112,9 +111,10 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_supdated">Par date de mise à jour</string>
     <string name="title_smodified">Par date de modification (XPrivacy)</string>
     <string name="title_sinvert">Inverser l\'ordre</string>
+    <string name="title_applycat">Apply to entire category</string>
+    <string name="title_once">Once for %1$s seconds</string>
     <string name="title_allow">Permettre</string>
     <string name="title_deny">Bloquer</string>
-    <string name="title_denyonce">Bloquer une fois</string>
     <string name="settings_serial">N° de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
