@@ -7,6 +7,7 @@ public class PRestriction implements Parcelable {
 	public int uid;
 	public String restrictionName;
 	public String methodName;
+	public String extra;
 	public boolean restricted;
 	public boolean asked;
 	public long time;
@@ -18,6 +19,7 @@ public class PRestriction implements Parcelable {
 		uid = other.uid;
 		restrictionName = other.restrictionName;
 		methodName = other.methodName;
+		extra = null;
 		restricted = other.restricted;
 		asked = other.asked;
 		time = other.time;
@@ -27,6 +29,7 @@ public class PRestriction implements Parcelable {
 		uid = _uid;
 		restrictionName = category;
 		methodName = method;
+		extra = null;
 		restricted = false;
 		asked = false;
 		time = 0;
@@ -36,6 +39,7 @@ public class PRestriction implements Parcelable {
 		uid = _uid;
 		restrictionName = category;
 		methodName = method;
+		extra = null;
 		restricted = _restricted;
 		asked = false;
 		time = 0;
@@ -45,6 +49,7 @@ public class PRestriction implements Parcelable {
 		uid = _uid;
 		restrictionName = category;
 		methodName = method;
+		extra = null;
 		restricted = _restricted;
 		asked = _asked;
 		time = 0;
@@ -71,6 +76,9 @@ public class PRestriction implements Parcelable {
 		out.writeInt(methodName == null ? 1 : 0);
 		if (methodName != null)
 			out.writeString(methodName);
+		out.writeInt(extra == null ? 1 : 0);
+		if (extra != null)
+			out.writeString(extra);
 		out.writeInt(restricted ? 1 : 0);
 		out.writeInt(asked ? 1 : 0);
 		out.writeLong(time);
@@ -83,6 +91,10 @@ public class PRestriction implements Parcelable {
 			methodName = null;
 		else
 			methodName = in.readString();
+		if (in.readInt() > 0)
+			extra = null;
+		else
+			extra = in.readString();
 		restricted = (in.readInt() > 0 ? true : false);
 		asked = (in.readInt() > 0 ? true : false);
 		time = in.readLong();

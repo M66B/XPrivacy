@@ -48,7 +48,7 @@ public class XProcessBuilder extends XHook {
 				if (mCommand == null ? !(command.startsWith("sh") || command.startsWith("su")
 						|| command.contains("sh ") || command.contains("su ")) : command.startsWith(mCommand)
 						|| command.contains(mCommand + " "))
-					if (isRestricted(param))
+					if (isRestrictedExtra(param, command))
 						param.setThrowable(new IOException());
 			}
 		} else

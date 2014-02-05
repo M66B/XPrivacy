@@ -241,6 +241,11 @@ public class PrivacyManager {
 
 	public static boolean getRestriction(final XHook hook, int uid, String restrictionName, String methodName,
 			String secret) {
+		return getRestrictionExtra(hook, uid, restrictionName, methodName, null, secret);
+	}
+
+	public static boolean getRestrictionExtra(final XHook hook, int uid, String restrictionName, String methodName,
+			String extra, String secret) {
 		long start = System.currentTimeMillis();
 		boolean restricted = false;
 
@@ -285,8 +290,9 @@ public class PrivacyManager {
 		// Get restriction
 		if (!cached)
 			try {
-				restricted = PrivacyService.getClient().getRestriction(
-						new PRestriction(uid, restrictionName, methodName, false), true, secret).restricted;
+				PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
+				query.extra = extra;
+				restricted = PrivacyService.getClient().getRestriction(query, true, secret).restricted;
 
 				// Add to cache
 				key.restricted = restricted;

@@ -1101,10 +1101,13 @@ public class PrivacyService {
 
 			// Build message
 			int stringId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
-			String message = String.format(resources.getString(R.string.msg_ondemand),
+			String message = String.format(
+					resources.getString(R.string.msg_ondemand),
 					TextUtils.htmlEncode(TextUtils.join(", ", appInfo.getApplicationName())),
 					"<b>" + TextUtils.htmlEncode(resources.getString(stringId)) + "</b>",
-					"<b>" + TextUtils.htmlEncode(restriction.methodName) + "</b>");
+					"<b>"
+							+ TextUtils.htmlEncode(restriction.methodName
+									+ (restriction.extra == null ? "" : "(" + restriction.extra + ")")) + "</b>");
 
 			int hmargin = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin);
 			int vmargin = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin);
