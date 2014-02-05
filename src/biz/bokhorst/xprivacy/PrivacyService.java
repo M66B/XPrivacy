@@ -660,7 +660,8 @@ public class PrivacyService {
 						Util.log(null, Log.WARN, "Database cursor null (usage data)");
 					else
 						try {
-							while (cursor.moveToNext()) {
+							int count = 0;
+							while (count++ < 250 && cursor.moveToNext()) {
 								PRestriction data = new PRestriction();
 								data.uid = cursor.getInt(0);
 								data.restrictionName = cursor.getString(1);
