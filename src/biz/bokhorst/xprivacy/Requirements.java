@@ -218,8 +218,10 @@ public class Requirements {
 				if (services != null)
 					for (String service : services) {
 						IBinder binder = (IBinder) getService.invoke(null, service);
-						String description = binder.getInterfaceDescriptor();
-						mapService.put(service, description);
+						if (binder != null) {
+							String description = binder.getInterfaceDescriptor();
+							mapService.put(service, description);
+						}
 					}
 
 				// Check services names
