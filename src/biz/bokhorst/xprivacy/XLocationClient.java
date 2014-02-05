@@ -47,11 +47,11 @@ public class XLocationClient extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XLocationClient(Methods.addGeofences, PrivacyManager.cLocation));
-		listHook.add(new XLocationClient(Methods.getLastLocation, PrivacyManager.cLocation));
-		listHook.add(new XLocationClient(Methods.removeGeofences, PrivacyManager.cLocation));
-		listHook.add(new XLocationClient(Methods.removeLocationUpdates, PrivacyManager.cLocation));
-		listHook.add(new XLocationClient(Methods.requestLocationUpdates, PrivacyManager.cLocation));
+		listHook.add(new XLocationClient(Methods.addGeofences, PrivacyManager.cLocation).optional());
+		listHook.add(new XLocationClient(Methods.getLastLocation, PrivacyManager.cLocation).optional());
+		listHook.add(new XLocationClient(Methods.removeGeofences, PrivacyManager.cLocation).optional());
+		listHook.add(new XLocationClient(Methods.removeLocationUpdates, PrivacyManager.cLocation).optional());
+		listHook.add(new XLocationClient(Methods.requestLocationUpdates, PrivacyManager.cLocation).optional());
 		return listHook;
 	}
 

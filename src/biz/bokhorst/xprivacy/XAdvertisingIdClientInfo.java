@@ -33,7 +33,8 @@ public class XAdvertisingIdClientInfo extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XAdvertisingIdClientInfo(Methods.getId, PrivacyManager.cIdentification, "AdvertisingId"));
+		listHook.add(new XAdvertisingIdClientInfo(Methods.getId, PrivacyManager.cIdentification, "AdvertisingId")
+				.optional());
 		return listHook;
 	}
 

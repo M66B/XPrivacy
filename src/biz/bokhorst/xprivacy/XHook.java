@@ -10,6 +10,7 @@ public abstract class XHook {
 	private String mMethodName;
 	private String mSpecifier;
 	private int mSdk;
+	private boolean mOptional = false;
 	private String mSecret;
 
 	protected XHook(String restrictionName, String methodName, String specifier) {
@@ -28,8 +29,17 @@ public abstract class XHook {
 		PrivacyManager.registerHook(restrictionName, getSpecifier(), sdk);
 	}
 
+	protected XHook optional() {
+		mOptional = true;
+		return this;
+	}
+
 	public boolean isVisible() {
 		return true;
+	}
+
+	public boolean isOptional() {
+		return mOptional;
 	}
 
 	abstract public String getClassName();
