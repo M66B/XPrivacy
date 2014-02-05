@@ -132,6 +132,6 @@ public class XPackageManager extends XHook {
 		}
 
 		String name = PrivacyManager.cSettingApplication + packageName;
-		return PrivacyManager.getSettingBool(null, uid, name, false, true);
+		return PrivacyManager.getSettingBool(uid, name, false, true);
 	}
 }

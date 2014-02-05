@@ -168,7 +168,7 @@ public class ActivityShare extends Activity {
 			mInteractive = true;
 
 		// Set theme
-		String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
+		String themeName = PrivacyManager.getSetting(0, PrivacyManager.cSettingTheme, "", false);
 		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 		setTheme(mThemeId);
 
@@ -986,11 +986,11 @@ public class ActivityShare extends Activity {
 					if (id == null) {
 						// Legacy
 						Util.log(null, Log.WARN, "Legacy " + name + "=" + value);
-						PrivacyManager.setSetting(null, 0, name, value);
+						PrivacyManager.setSetting(0, name, value);
 					} else if ("".equals(id))
 						// Global setting
 						// TODO: clear global settings
-						PrivacyManager.setSetting(null, 0, name, value);
+						PrivacyManager.setSetting(0, name, value);
 					else {
 						// Application setting
 						int iid = Integer.parseInt(id);
@@ -1005,7 +1005,7 @@ public class ActivityShare extends Activity {
 								// This apps cached settings
 								// have already been applied,
 								// so add this one directly
-								PrivacyManager.setSetting(null, uid, name, value);
+								PrivacyManager.setSetting(uid, name, value);
 							}
 						}
 					}
@@ -1104,7 +1104,7 @@ public class ActivityShare extends Activity {
 				PrivacyManager.deleteSettings(lastUid);
 				if (mSettings.indexOfKey(lastUid) >= 0)
 					for (Entry<String, String> entry : mSettings.get(lastUid).entrySet())
-						PrivacyManager.setSetting(null, lastUid, entry.getKey(), entry.getValue());
+						PrivacyManager.setSetting(lastUid, entry.getKey(), entry.getValue());
 
 				// Restart notification
 				List<Boolean> oldState = mListRestartStates.get(lastUid);
@@ -1167,7 +1167,7 @@ public class ActivityShare extends Activity {
 				String[] license = Util.getProLicenseUnchecked();
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 				PackageInfo xInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-				String confidence = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingConfidence, "", false);
+				String confidence = PrivacyManager.getSetting(0, PrivacyManager.cSettingConfidence, "", false);
 
 				// Initialize progress
 				mProgressCurrent = 0;
@@ -1258,12 +1258,11 @@ public class ActivityShare extends Activity {
 									List<Boolean> newState = PrivacyManager.getRestartStates(appInfo.getUid(), null);
 
 									// Mark as new/changed
-									PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingState,
+									PrivacyManager.setSetting(appInfo.getUid(), PrivacyManager.cSettingState,
 											Integer.toString(ActivityMain.STATE_ATTENTION));
 
 									// Change app modification time
-									PrivacyManager.setSetting(null, appInfo.getUid(),
-											PrivacyManager.cSettingModifyTime,
+									PrivacyManager.setSetting(appInfo.getUid(), PrivacyManager.cSettingModifyTime,
 											Long.toString(System.currentTimeMillis()));
 
 									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS,
@@ -1330,7 +1329,7 @@ public class ActivityShare extends Activity {
 						AccountManager accountManager = AccountManager.get(ActivityShare.this);
 						for (Account account : accountManager.getAccounts()) {
 							String sha1 = Util.sha1(account.name + account.type);
-							boolean allowed = PrivacyManager.getSettingBool(null, appInfo.getUid(),
+							boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(),
 									PrivacyManager.cSettingAccount + sha1, false, false);
 							if (allowed) {
 								allowedAccounts = true;
@@ -1343,7 +1342,7 @@ public class ActivityShare extends Activity {
 						for (ApplicationInfoEx aAppInfo : ApplicationInfoEx.getXApplicationList(ActivityShare.this,
 								null))
 							for (String packageName : aAppInfo.getPackageName()) {
-								boolean allowed = PrivacyManager.getSettingBool(null, aAppInfo.getUid(),
+								boolean allowed = PrivacyManager.getSettingBool(aAppInfo.getUid(),
 										PrivacyManager.cSettingApplication + packageName, false, false);
 								if (allowed) {
 									allowedApplications = true;
@@ -1359,7 +1358,7 @@ public class ActivityShare extends Activity {
 							try {
 								while (cursor.moveToNext()) {
 									long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-									boolean allowed = PrivacyManager.getSettingBool(null, appInfo.getUid(),
+									boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(),
 											PrivacyManager.cSettingContact + id, false, false);
 									if (allowed) {
 										allowedContacts = true;
@@ -1470,7 +1469,7 @@ public class ActivityShare extends Activity {
 							JSONObject status = new JSONObject(out.toString("UTF-8"));
 							if (status.getBoolean("ok")) {
 								// Mark as shared
-								PrivacyManager.setSetting(null, appInfo.getUid(), PrivacyManager.cSettingState,
+								PrivacyManager.setSetting(appInfo.getUid(), PrivacyManager.cSettingState,
 										Integer.toString(ActivityMain.STATE_SHARED));
 								mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS, null);
 							} else {
@@ -1480,7 +1479,7 @@ public class ActivityShare extends Activity {
 
 								// Mark as unregistered
 								if (errno == ServerException.cErrorNotActivated) {
-									PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered,
+									PrivacyManager.setSetting(0, PrivacyManager.cSettingRegistered,
 											Boolean.toString(false));
 									throw ex;
 								} else
@@ -1517,7 +1516,7 @@ public class ActivityShare extends Activity {
 
 	public static boolean registerDevice(final Context context) {
 		if (Util.hasProLicense(context) == null
-				&& !PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingRegistered, false, false)) {
+				&& !PrivacyManager.getSettingBool(0, PrivacyManager.cSettingRegistered, false, false)) {
 			// Get accounts
 			String email = null;
 			for (Account account : AccountManager.get(context).getAccounts())
@@ -1602,7 +1601,7 @@ public class ActivityShare extends Activity {
 					JSONObject status = new JSONObject(out.toString("UTF-8"));
 					if (status.getBoolean("ok")) {
 						// Mark as registered
-						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingRegistered, Boolean.toString(true));
+						PrivacyManager.setSetting(0, PrivacyManager.cSettingRegistered, Boolean.toString(true));
 						return null;
 					} else {
 						int errno = status.getInt("errno");
@@ -1717,7 +1716,7 @@ public class ActivityShare extends Activity {
 	}
 
 	public static String getBaseURL(Context context) {
-		if (PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingHttps, true, true))
+		if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingHttps, true, true))
 			return HTTPS_BASE_URL;
 		else
 			return HTTP_BASE_URL;

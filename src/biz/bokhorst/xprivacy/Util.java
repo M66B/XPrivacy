@@ -67,9 +67,9 @@ public class Util {
 			mLogDetermined = true;
 			try {
 				if (uid == Process.SYSTEM_UID)
-					;
+					mLog = PrivacyService.getSettingBool(0, PrivacyManager.cSettingLog, false);
 				else
-					mLog = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingLog, false, true);
+					mLog = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingLog, false, true);
 			} catch (Throwable ignored) {
 				mLog = false;
 			}
@@ -395,7 +395,7 @@ public class Util {
 
 	public static String sha1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		// SHA1
-		String salt = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingSalt, "", true);
+		String salt = PrivacyManager.getSetting(0, PrivacyManager.cSettingSalt, "", true);
 		MessageDigest digest = MessageDigest.getInstance("SHA-1");
 		byte[] bytes = (text + salt).getBytes("UTF-8");
 		digest.update(bytes, 0, bytes.length);

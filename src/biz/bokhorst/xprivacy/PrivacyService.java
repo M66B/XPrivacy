@@ -200,6 +200,11 @@ public class PrivacyService {
 		}
 	}
 
+	public static boolean getSettingBool(int uid, String name, boolean defaultValue) throws RemoteException {
+		String value = mPrivacyService.getSetting(new PSetting(uid, name, Boolean.toString(defaultValue))).value;
+		return Boolean.parseBoolean(value);
+	}
+
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
 		private SQLiteDatabase mDatabase = null;
 		private SQLiteStatement stmtGetRestriction = null;

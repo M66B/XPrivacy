@@ -202,10 +202,10 @@ public class XContentProvider extends XHook {
 							// Check if can be copied
 							boolean copy = false;
 							if (id >= 0)
-								copy = PrivacyManager.getSettingBool(this, Binder.getCallingUid(),
+								copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
 										PrivacyManager.cSettingContact + id, false, true);
 							if (!copy && rawid >= 0)
-								copy = PrivacyManager.getSettingBool(this, Binder.getCallingUid(),
+								copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
 										PrivacyManager.cSettingRawContact + rawid, false, true);
 
 							// Conditionally copy row

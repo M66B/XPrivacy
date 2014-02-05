@@ -188,7 +188,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public int getState(Context context) {
-		return Integer.parseInt(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingState, "1", false));
+		return Integer.parseInt(PrivacyManager.getSetting(getUid(), PrivacyManager.cSettingState, "1", false));
 	}
 
 	public long getInstallTime(Context context) {
@@ -226,7 +226,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public long getModificationTime(Context context) {
-		return Long.parseLong(PrivacyManager.getSetting(null, getUid(), PrivacyManager.cSettingModifyTime, "0", false));
+		return Long.parseLong(PrivacyManager.getSetting(getUid(), PrivacyManager.cSettingModifyTime, "0", false));
 	}
 
 	public boolean isSystem() {

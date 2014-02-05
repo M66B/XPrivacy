@@ -324,7 +324,7 @@ public class PrivacyManager {
 		listRestriction.add(new PRestriction(uid, restrictionName, methodName, restricted, asked));
 
 		// Make exceptions for dangerous methods
-		boolean dangerous = getSettingBool(null, 0, cSettingDangerous, false, false);
+		boolean dangerous = getSettingBool(0, cSettingDangerous, false, false);
 		if (methodName == null)
 			if (restricted && !dangerous) {
 				for (Hook md : getHooks(restrictionName))
@@ -335,10 +335,10 @@ public class PrivacyManager {
 		setRestrictionList(listRestriction);
 
 		// Mark state as changed
-		setSetting(null, uid, cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
+		setSetting(uid, cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
 
 		// Update modification time
-		setSetting(null, uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
+		setSetting(uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
 	}
 
 	public static void setRestrictionList(List<PRestriction> listRestriction) {
@@ -391,10 +391,10 @@ public class PrivacyManager {
 		}
 
 		// Mark as new/changed
-		setSetting(null, uid, cSettingState, Integer.toString(ActivityMain.STATE_ATTENTION));
+		setSetting(uid, cSettingState, Integer.toString(ActivityMain.STATE_ATTENTION));
 
 		// Change app modification time
-		setSetting(null, uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
+		setSetting(uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
 	}
 
 	// Usage
@@ -447,11 +447,11 @@ public class PrivacyManager {
 
 	// Settings
 
-	public static boolean getSettingBool(XHook hook, int uid, String name, boolean defaultValue, boolean useCache) {
-		return Boolean.parseBoolean(getSetting(hook, uid, name, Boolean.toString(defaultValue), useCache));
+	public static boolean getSettingBool(int uid, String name, boolean defaultValue, boolean useCache) {
+		return Boolean.parseBoolean(getSetting(uid, name, Boolean.toString(defaultValue), useCache));
 	}
 
-	public static String getSetting(XHook hook, int uid, String name, String defaultValue, boolean useCache) {
+	public static String getSetting(int uid, String name, String defaultValue, boolean useCache) {
 		long start = System.currentTimeMillis();
 		String value = null;
 
@@ -497,22 +497,22 @@ public class PrivacyManager {
 					mSettingsCache.put(key, key);
 				}
 			} catch (Throwable ex) {
-				Util.bug(hook, ex);
+				Util.bug(null, ex);
 			}
 
 		long ms = System.currentTimeMillis() - start;
 		if (!willExpire && !cSettingLog.equals(name))
 			if (ms > 1)
-				Util.log(hook, Log.INFO, String.format("get setting uid=%d %s=%s%s %d ms", uid, name, value,
+				Util.log(null, Log.INFO, String.format("get setting uid=%d %s=%s%s %d ms", uid, name, value,
 						(cached ? " (cached)" : ""), ms));
 			else
-				Util.log(hook, Log.INFO,
+				Util.log(null, Log.INFO,
 						String.format("get setting uid=%d %s=%s%s", uid, name, value, (cached ? " (cached)" : "")));
 
 		return value;
 	}
 
-	public static void setSetting(XHook hook, int uid, String name, String value) {
+	public static void setSetting(int uid, String name, String value) {
 		try {
 			PrivacyService.getClient().setSetting(new PSetting(uid, name, value));
 		} catch (Throwable ex) {
@@ -553,7 +553,7 @@ public class PrivacyManager {
 	public static Object getDefacedProp(int uid, String name) {
 		// Serial number
 		if (name.equals("SERIAL") || name.equals("%serialno")) {
-			String value = getSetting(null, uid, cSettingSerial, cDeface, true);
+			String value = getSetting(uid, cSettingSerial, cDeface, true);
 			return (cValueRandom.equals(value) ? getRandomProp("SERIAL") : value);
 		}
 
@@ -563,7 +563,7 @@ public class PrivacyManager {
 
 		// MAC addresses
 		if (name.equals("MAC") || name.equals("%macaddr")) {
-			String mac = getSetting(null, uid, cSettingMac, "DE:FA:CE:DE:FA:CE", true);
+			String mac = getSetting(uid, cSettingMac, "DE:FA:CE:DE:FA:CE", true);
 			if (cValueRandom.equals(mac))
 				return getRandomProp("MAC");
 			StringBuilder sb = new StringBuilder(mac.replace(":", ""));
@@ -582,20 +582,20 @@ public class PrivacyManager {
 
 		// IMEI
 		if (name.equals("getDeviceId") || name.equals("%imei")) {
-			String value = getSetting(null, uid, cSettingImei, "000000000000000", true);
+			String value = getSetting(uid, cSettingImei, "000000000000000", true);
 			return (cValueRandom.equals(value) ? getRandomProp("IMEI") : value);
 		}
 
 		// Phone
 		if (name.equals("PhoneNumber") || name.equals("getLine1AlphaTag") || name.equals("getLine1Number")
 				|| name.equals("getMsisdn") || name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber")) {
-			String value = getSetting(null, uid, cSettingPhone, cDeface, true);
+			String value = getSetting(uid, cSettingPhone, cDeface, true);
 			return (cValueRandom.equals(value) ? getRandomProp("PHONE") : value);
 		}
 
 		// Android ID
 		if (name.equals("ANDROID_ID")) {
-			String value = getSetting(null, uid, cSettingId, cDeface, true);
+			String value = getSetting(uid, cSettingId, cDeface, true);
 			return (cValueRandom.equals(value) ? getRandomProp("ANDROID_ID") : value);
 		}
 
@@ -611,37 +611,37 @@ public class PrivacyManager {
 
 		if (name.equals("getNetworkCountryIso") || name.equals("gsm.operator.iso-country")) {
 			// ISO country code
-			String value = getSetting(null, uid, cSettingCountry, "XX", true);
+			String value = getSetting(uid, cSettingCountry, "XX", true);
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
 		if (name.equals("getNetworkOperator") || name.equals("gsm.operator.numeric"))
 			// MCC+MNC: test network
-			return getSetting(null, uid, cSettingMcc, "001", true) + getSetting(null, uid, cSettingMnc, "01", true);
+			return getSetting(uid, cSettingMcc, "001", true) + getSetting(uid, cSettingMnc, "01", true);
 		if (name.equals("getNetworkOperatorName") || name.equals("gsm.operator.alpha"))
-			return getSetting(null, uid, cSettingOperator, cDeface, true);
+			return getSetting(uid, cSettingOperator, cDeface, true);
 
 		if (name.equals("getSimCountryIso") || name.equals("gsm.sim.operator.iso-country")) {
 			// ISO country code
-			String value = getSetting(null, uid, cSettingCountry, "XX", true);
+			String value = getSetting(uid, cSettingCountry, "XX", true);
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
 		if (name.equals("getSimOperator") || name.equals("gsm.sim.operator.numeric"))
 			// MCC+MNC: test network
-			return getSetting(null, uid, cSettingMcc, "001", true) + getSetting(null, uid, cSettingMnc, "01", true);
+			return getSetting(uid, cSettingMcc, "001", true) + getSetting(uid, cSettingMnc, "01", true);
 		if (name.equals("getSimOperatorName") || name.equals("gsm.sim.operator.alpha"))
-			return getSetting(null, uid, cSettingOperator, cDeface, true);
+			return getSetting(uid, cSettingOperator, cDeface, true);
 
 		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber"))
-			return getSetting(null, uid, cSettingIccId, null, true);
+			return getSetting(uid, cSettingIccId, null, true);
 
 		if (name.equals("getSubscriberId")) { // IMSI for a GSM phone
-			String value = getSetting(null, uid, cSettingSubscriber, null, true);
+			String value = getSetting(uid, cSettingSubscriber, null, true);
 			return (cValueRandom.equals(value) ? getRandomProp("SubscriberId") : value);
 		}
 
 		if (name.equals("SSID")) {
 			// Default hidden network
-			String value = getSetting(null, uid, cSettingSSID, "", true);
+			String value = getSetting(uid, cSettingSSID, "", true);
 			return (cValueRandom.equals(value) ? getRandomProp("SSID") : value);
 		}
 
@@ -649,7 +649,7 @@ public class PrivacyManager {
 		if (name.equals("GSF_ID")) {
 			long gsfid = 0xDEFACE;
 			try {
-				String value = getSetting(null, uid, cSettingGsfId, "DEFACE", true);
+				String value = getSetting(uid, cSettingGsfId, "DEFACE", true);
 				if (cValueRandom.equals(value))
 					value = getRandomProp(name);
 				gsfid = Long.parseLong(value.toLowerCase(), 16);
@@ -661,7 +661,7 @@ public class PrivacyManager {
 
 		// Advertisement ID
 		if (name.equals("AdvertisingId")) {
-			String adid = getSetting(null, uid, cSettingAdId, "DEFACE00-0000-0000-0000-000000000000", true);
+			String adid = getSetting(uid, cSettingAdId, "DEFACE00-0000-0000-0000-000000000000", true);
 			if (cValueRandom.equals(adid))
 				adid = getRandomProp(name);
 			return adid;
@@ -669,7 +669,7 @@ public class PrivacyManager {
 
 		if (name.equals("InetAddress")) {
 			// Set address
-			String ip = getSetting(null, uid, cSettingIP, null, true);
+			String ip = getSetting(uid, cSettingIP, null, true);
 			if (ip != null)
 				try {
 					return InetAddress.getByName(ip);
@@ -690,7 +690,7 @@ public class PrivacyManager {
 
 		if (name.equals("IPInt")) {
 			// Set address
-			String ip = getSetting(null, uid, cSettingIP, null, true);
+			String ip = getSetting(uid, cSettingIP, null, true);
 			if (ip != null)
 				try {
 					InetAddress inet = InetAddress.getByName(ip);
@@ -710,7 +710,7 @@ public class PrivacyManager {
 			return new byte[] { (byte) 0xDE, (byte) 0xFA, (byte) 0xCE };
 
 		if (name.equals("UA"))
-			return getSetting(null, uid, cSettingUa,
+			return getSetting(uid, cSettingUa,
 					"Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9", true);
 
 		// InputDevice
@@ -722,10 +722,10 @@ public class PrivacyManager {
 			return cDeface;
 
 		if (name.equals("MCC"))
-			return getSetting(null, uid, cSettingMcc, "001", true);
+			return getSetting(uid, cSettingMcc, "001", true);
 
 		if (name.equals("MNC"))
-			return getSetting(null, uid, cSettingMnc, "01", true);
+			return getSetting(uid, cSettingMnc, "01", true);
 
 		// Fallback
 		Util.log(null, Log.WARN, "Fallback value name=" + name);
@@ -734,9 +734,9 @@ public class PrivacyManager {
 
 	public static Location getDefacedLocation(int uid, Location location) {
 		// Christmas Island ~ -10.5 / 105.667
-		String sLat = getSetting(null, uid, cSettingLatitude, "-10.5", true);
-		String sLon = getSetting(null, uid, cSettingLongitude, "105.667", true);
-		String sAlt = getSetting(null, uid, cSettingAltitude, "686", true);
+		String sLat = getSetting(uid, cSettingLatitude, "-10.5", true);
+		String sLon = getSetting(uid, cSettingLongitude, "105.667", true);
+		String sAlt = getSetting(uid, cSettingAltitude, "686", true);
 
 		// Backward compatibility
 		if ("".equals(sLat))

@@ -110,7 +110,7 @@ public class ActivityApp extends Activity {
 		}
 
 		// Set theme
-		String themeName = PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingTheme, "", false);
+		String themeName = PrivacyManager.getSetting(0, PrivacyManager.cSettingTheme, "", false);
 		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 		setTheme(mThemeId);
 
@@ -169,12 +169,12 @@ public class ActivityApp extends Activity {
 
 		// Display restriction state
 		Switch swEnabled = (Switch) findViewById(R.id.swEnable);
-		swEnabled.setChecked(PrivacyManager.getSettingBool(null, mAppInfo.getUid(), PrivacyManager.cSettingRestricted,
-				true, false));
+		swEnabled.setChecked(PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true,
+				false));
 		swEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				PrivacyManager.setSetting(null, mAppInfo.getUid(), PrivacyManager.cSettingRestricted,
+				PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingRestricted,
 						Boolean.toString(isChecked));
 			}
 		});
@@ -232,7 +232,7 @@ public class ActivityApp extends Activity {
 		mCheck = Util.getTriStateCheckBox(this);
 
 		// Tutorial
-		if (!PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingTutorialDetails, false, false)) {
+		if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTutorialDetails, false, false)) {
 			((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
 			((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
 		}
@@ -243,7 +243,7 @@ public class ActivityApp extends Activity {
 				while (!parent.getClass().equals(RelativeLayout.class))
 					parent = parent.getParent();
 				((View) parent).setVisibility(View.GONE);
-				PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTutorialDetails, Boolean.TRUE.toString());
+				PrivacyManager.setSetting(0, PrivacyManager.cSettingTutorialDetails, Boolean.TRUE.toString());
 			}
 		};
 		((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
@@ -433,11 +433,11 @@ public class ActivityApp extends Activity {
 	private void optionTutorial() {
 		((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
 		((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
-		PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTutorialDetails, Boolean.FALSE.toString());
+		PrivacyManager.setSetting(0, PrivacyManager.cSettingTutorialDetails, Boolean.FALSE.toString());
 	}
 
 	private void optionApply() {
-		final boolean ondemand = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingOnDemand, true, false);
+		final boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
 
 		// Get toggle
 		// TOD: getRestrictionList
@@ -445,7 +445,7 @@ public class ActivityApp extends Activity {
 		final List<String> listRestriction = PrivacyManager.getRestrictions();
 		for (String restrictionName : listRestriction) {
 			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-			if (PrivacyManager.getSettingBool(null, 0, templateName, !ondemand, false))
+			if (PrivacyManager.getSettingBool(0, templateName, !ondemand, false))
 				if (PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted) {
 					some = true;
 					break;
@@ -464,7 +464,7 @@ public class ActivityApp extends Activity {
 				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
 				for (String restrictionName : listRestriction) {
 					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-					if (PrivacyManager.getSettingBool(null, 0, templateName, !ondemand, false))
+					if (PrivacyManager.getSettingBool(0, templateName, !ondemand, false))
 						PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, null, restrict, false);
 				}
 				List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
@@ -631,8 +631,8 @@ public class ActivityApp extends Activity {
 				try {
 					mListAccount.add(String.format("%s (%s)", mAccounts[i].name, mAccounts[i].type));
 					String sha1 = Util.sha1(mAccounts[i].name + mAccounts[i].type);
-					mSelection[i] = PrivacyManager.getSettingBool(null, mAppInfo.getUid(),
-							PrivacyManager.cSettingAccount + sha1, false, false);
+					mSelection[i] = PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingAccount
+							+ sha1, false, false);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
@@ -651,8 +651,8 @@ public class ActivityApp extends Activity {
 							try {
 								Account account = mAccounts[whichButton];
 								String sha1 = Util.sha1(account.name + account.type);
-								PrivacyManager.setSetting(null, mAppInfo.getUid(), PrivacyManager.cSettingAccount
-										+ sha1, Boolean.toString(isChecked));
+								PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingAccount + sha1,
+										Boolean.toString(isChecked));
 							} catch (Throwable ex) {
 								Util.bug(null, ex);
 								Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
@@ -702,7 +702,7 @@ public class ActivityApp extends Activity {
 						String pkgName = appInfo.getPackageName().get(p);
 						mApp[i] = String.format("%s (%s)", appName, pkgName);
 						mPackage[i] = pkgName;
-						mSelection[i] = PrivacyManager.getSettingBool(null, mAppInfo.getUid(),
+						mSelection[i] = PrivacyManager.getSettingBool(mAppInfo.getUid(),
 								PrivacyManager.cSettingApplication + pkgName, false, false);
 						i++;
 					} catch (Throwable ex) {
@@ -720,7 +720,7 @@ public class ActivityApp extends Activity {
 			alertDialogBuilder.setMultiChoiceItems(mApp, mSelection, new DialogInterface.OnMultiChoiceClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 					try {
-						PrivacyManager.setSetting(null, mAppInfo.getUid(), PrivacyManager.cSettingApplication
+						PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingApplication
 								+ mPackage[whichButton], Boolean.toString(isChecked));
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
@@ -776,8 +776,8 @@ public class ActivityApp extends Activity {
 			for (Long id : mapContact.keySet()) {
 				mListContact.add(mapContact.get(id));
 				mIds[i] = id;
-				mSelection[i++] = PrivacyManager.getSettingBool(null, mAppInfo.getUid(), PrivacyManager.cSettingContact
-						+ id, false, false);
+				mSelection[i++] = PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingContact + id,
+						false, false);
 			}
 			return null;
 		}
@@ -792,7 +792,7 @@ public class ActivityApp extends Activity {
 					new DialogInterface.OnMultiChoiceClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 							// Contact
-							PrivacyManager.setSetting(null, mAppInfo.getUid(), PrivacyManager.cSettingContact
+							PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingContact
 									+ mIds[whichButton], Boolean.toString(isChecked));
 
 							// Raw contacts
@@ -802,9 +802,8 @@ public class ActivityApp extends Activity {
 									new String[] { String.valueOf(mIds[whichButton]) }, null);
 							try {
 								while (cursor.moveToNext()) {
-									PrivacyManager.setSetting(null, mAppInfo.getUid(),
-											PrivacyManager.cSettingRawContact + cursor.getLong(0),
-											Boolean.toString(isChecked));
+									PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingRawContact
+											+ cursor.getLong(0), Boolean.toString(isChecked));
 								}
 							} finally {
 								cursor.close();
@@ -844,9 +843,8 @@ public class ActivityApp extends Activity {
 			mRestrictions = new ArrayList<String>();
 			mHook = new LinkedHashMap<Integer, List<Hook>>();
 
-			boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
-			boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, false,
-					false);
+			boolean fUsed = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUsed, false, false);
+			boolean fPermission = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFPermission, false, false);
 
 			for (String rRestrictionName : PrivacyManager.getRestrictions(ActivityApp.this).values()) {
 				boolean isUsed = (PrivacyManager.getUsed(mAppInfo.getUid(), rRestrictionName, null) > 0);
@@ -933,8 +931,8 @@ public class ActivityApp extends Activity {
 						someRestricted = (someRestricted || restriction.restricted);
 					}
 
-					if (PrivacyManager.getSettingBool(null, -mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false,
-							false))
+					if (PrivacyManager
+							.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false, false))
 						asked = query.asked;
 					else
 						asked = true;
@@ -1063,9 +1061,9 @@ public class ActivityApp extends Activity {
 
 		private List<Hook> getHooks(int groupPosition) {
 			if (!mHook.containsKey(groupPosition)) {
-				boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
-				boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, false,
-						false);
+				boolean fUsed = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUsed, false, false);
+				boolean fPermission = PrivacyManager
+						.getSettingBool(0, PrivacyManager.cSettingFPermission, false, false);
 				List<Hook> listMethod = new ArrayList<Hook>();
 				String restrictionName = mRestrictions.get(groupPosition);
 				for (Hook md : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
@@ -1151,8 +1149,8 @@ public class ActivityApp extends Activity {
 							md.getName());
 					restricted = query.restricted;
 
-					if (PrivacyManager.getSettingBool(null, -mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false,
-							false))
+					if (PrivacyManager
+							.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false, false))
 						asked = query.asked;
 					else
 						asked = true;

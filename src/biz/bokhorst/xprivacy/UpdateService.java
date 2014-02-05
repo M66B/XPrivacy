@@ -138,12 +138,12 @@ public class UpdateService extends Service {
 	private static void upgrade(Context context) throws NameNotFoundException {
 		// Get previous version
 		String currentVersion = Util.getSelfVersionName(context);
-		Version sVersion = new Version(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingVersion, "0.0", false));
+		Version sVersion = new Version(PrivacyManager.getSetting(0, PrivacyManager.cSettingVersion, "0.0", false));
 
 		// Upgrade packages
 		if (sVersion.compareTo(new Version("0.0")) != 0) {
 			Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version " + currentVersion);
-			boolean dangerous = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingDangerous, false, false);
+			boolean dangerous = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingDangerous, false, false);
 
 			int first = 0;
 			String format = context.getString(R.string.msg_upgrading);
@@ -165,7 +165,7 @@ public class UpdateService extends Service {
 		} else
 			Util.log(null, Log.WARN, "Noting to upgrade version=" + sVersion);
 
-		PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingVersion, currentVersion);
+		PrivacyManager.setSetting(0, PrivacyManager.cSettingVersion, currentVersion);
 	}
 
 	private static void randomize(Context context) {
@@ -194,7 +194,7 @@ public class UpdateService extends Service {
 
 	private static List<PSetting> getRandomizeWork(Context context, int uid) {
 		List<PSetting> listWork = new ArrayList<PSetting>();
-		if (PrivacyManager.getSettingBool(null, -uid, PrivacyManager.cSettingRandom, false, true)) {
+		if (PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false, true)) {
 			listWork.add(new PSetting(uid, PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT")));
 			listWork.add(new PSetting(uid, PrivacyManager.cSettingLongitude, PrivacyManager.getRandomProp("LON")));
 			listWork.add(new PSetting(uid, PrivacyManager.cSettingAltitude, PrivacyManager.getRandomProp("ALT")));

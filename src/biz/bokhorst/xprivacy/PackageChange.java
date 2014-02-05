@@ -40,33 +40,31 @@ public class PackageChange extends BroadcastReceiver {
 							PrivacyManager.deleteSettings(uid);
 							PrivacyManager.deleteUsage(uid);
 
-							boolean ondemand = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingOnDemand,
-									true, false);
+							boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true,
+									false);
 
 							// Enable on demand
 							if (ondemand)
-								PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingOnDemand,
-										Boolean.toString(true));
+								PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 
 							// Restrict new non-system apps
 							if (!appInfo.isSystem()) {
 								for (String restrictionName : PrivacyManager.getRestrictions()) {
 									String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-									if (PrivacyManager.getSettingBool(null, 0, templateName, !ondemand, false))
+									if (PrivacyManager.getSettingBool(0, templateName, !ondemand, false))
 										PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
 								}
 							}
 						}
 
 						// Mark as new/changed
-						PrivacyManager.setSetting(null, uid, PrivacyManager.cSettingState,
+						PrivacyManager.setSetting(uid, PrivacyManager.cSettingState,
 								Integer.toString(ActivityMain.STATE_ATTENTION));
 
 					}
 
 					// New/update notification
-					boolean notify = PrivacyManager.getSettingBool(null, uid, PrivacyManager.cSettingNotify, true,
-							false);
+					boolean notify = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingNotify, true, false);
 					if (!replacing || notify) {
 						Intent resultIntent = new Intent(context, ActivityApp.class);
 						resultIntent.putExtra(ActivityApp.cUid, uid);
