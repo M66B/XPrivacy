@@ -125,26 +125,41 @@ public class XAccountManager extends XHook {
 
 		} else if (mMethod == Methods.getAccountsByTypeAndFeatures) {
 			if (param.args.length > 2 && param.args[2] != null)
-				if (isRestricted(param)) {
+				if (isRestrictedExtra(param, (String) param.args[0])) {
 					AccountManagerCallback<Account[]> callback = (AccountManagerCallback<Account[]>) param.args[2];
 					param.args[2] = new XAccountManagerCallbackAccount(callback, Binder.getCallingUid());
 				}
 
-		} else if (mMethod == Methods.getAuthToken || mMethod == Methods.getAuthTokenByFeatures) {
-			for (int i = 0; i < param.args.length; i++)
-				if (param.args[i] instanceof AccountManagerCallback<?>)
-					if (isRestricted(param)) {
-						AccountManagerCallback<Bundle> callback = (AccountManagerCallback<Bundle>) param.args[i];
-						param.args[i] = new XAccountManagerCallbackBundle(callback, Binder.getCallingUid());
-					}
+		} else if (mMethod == Methods.getAuthToken) {
+			if (param.args.length > 0) {
+				Account account = (Account) param.args[0];
+				for (int i = 0; i < param.args.length; i++)
+					if (param.args[i] instanceof AccountManagerCallback<?>)
+						if (isRestricted(param, account == null ? null : account.name)) {
+							AccountManagerCallback<Bundle> callback = (AccountManagerCallback<Bundle>) param.args[i];
+							param.args[i] = new XAccountManagerCallbackBundle(callback, Binder.getCallingUid());
+						}
+			}
+
+		} else if (mMethod == Methods.getAuthTokenByFeatures) {
+			if (param.args.length > 0)
+				for (int i = 0; i < param.args.length; i++)
+					if (param.args[i] instanceof AccountManagerCallback<?>)
+						if (isRestricted(param, (String) param.args[0])) {
+							AccountManagerCallback<Bundle> callback = (AccountManagerCallback<Bundle>) param.args[i];
+							param.args[i] = new XAccountManagerCallbackBundle(callback, Binder.getCallingUid());
+						}
 
 		} else if (mMethod == Methods.hasFeatures) {
-			for (int i = 0; i < param.args.length; i++)
-				if (param.args[i] instanceof AccountManagerCallback<?>)
-					if (isRestricted(param)) {
-						AccountManagerCallback<Boolean> callback = (AccountManagerCallback<Boolean>) param.args[i];
-						param.args[i] = new XAccountManagerCallbackBoolean(callback);
-					}
+			if (param.args.length > 0) {
+				Account account = (Account) param.args[0];
+				for (int i = 0; i < param.args.length; i++)
+					if (param.args[i] instanceof AccountManagerCallback<?>)
+						if (isRestricted(param, account == null ? null : account.name)) {
+							AccountManagerCallback<Boolean> callback = (AccountManagerCallback<Boolean>) param.args[i];
+							param.args[i] = new XAccountManagerCallbackBoolean(callback);
+						}
+			}
 		}
 	}
 
@@ -154,43 +169,59 @@ public class XAccountManager extends XHook {
 		if (mMethod != Methods.addOnAccountsUpdatedListener && mMethod != Methods.removeOnAccountsUpdatedListener) {
 			int uid = Binder.getCallingUid();
 			if (mMethod == Methods.blockingGetAuthToken) {
-				if (param.getResult() != null && isRestricted(param))
-					if (param.args.length > 0 && param.args[0] != null) {
-						Account account = (Account) param.args[0];
+				if (param.args.length > 0 && param.args[0] != null) {
+					Account account = (Account) param.args[0];
+					if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name))
 						if (!isAccountAllowed(account, uid))
 							param.setResult(null);
-					}
+				}
 
-			} else if (mMethod == Methods.getAccounts || mMethod == Methods.getAccountsByType
-					|| mMethod == Methods.getAccountsByTypeForPackage) {
+			} else if (mMethod == Methods.getAccounts) {
 				if (param.getResult() != null && isRestricted(param)) {
 					Account[] accounts = (Account[]) param.getResult();
 					param.setResult(filterAccounts(accounts, uid));
 				}
 
+			} else if (mMethod == Methods.getAccountsByType || mMethod == Methods.getAccountsByTypeForPackage) {
+				if (param.args.length > 0)
+					if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0])) {
+						Account[] accounts = (Account[]) param.getResult();
+						param.setResult(filterAccounts(accounts, uid));
+					}
+
 			} else if (mMethod == Methods.getAccountsByTypeAndFeatures) {
-				if (param.getResult() != null && isRestricted(param)) {
-					AccountManagerFuture<Account[]> future = (AccountManagerFuture<Account[]>) param.getResult();
-					param.setResult(new XFutureAccount(future, uid));
-				}
+				if (param.args.length > 0)
+					if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0])) {
+						AccountManagerFuture<Account[]> future = (AccountManagerFuture<Account[]>) param.getResult();
+						param.setResult(new XFutureAccount(future, uid));
+					}
 
 			} else if (mMethod == Methods.getAuthenticatorTypes) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(new AuthenticatorDescription[0]);
 
-			} else if (mMethod == Methods.getAuthToken || mMethod == Methods.getAuthTokenByFeatures) {
-				if (param.getResult() != null && isRestricted(param)) {
+			} else if (mMethod == Methods.getAuthToken) {
+				if (param.args.length > 0) {
+					Account account = (Account) param.args[0];
+					if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name)) {
+						AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
+						param.setResult(new XFutureBundle(future, uid));
+					}
+				}
+
+			} else if (mMethod == Methods.getAuthTokenByFeatures) {
+				if (param.getResult() != null && isRestricted(param, (String) param.args[0])) {
 					AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
 					param.setResult(new XFutureBundle(future, uid));
 				}
 
 			} else if (mMethod == Methods.hasFeatures) {
-				if (param.getResult() != null && isRestricted(param))
-					if (param.args.length > 0 && param.args[0] != null) {
-						Account account = (Account) param.args[0];
+				if (param.args.length > 0 && param.args[0] != null) {
+					Account account = (Account) param.args[0];
+					if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name))
 						if (!isAccountAllowed(account, uid))
 							param.setResult(new XFutureBoolean());
-					}
+				}
 
 			} else
 				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
