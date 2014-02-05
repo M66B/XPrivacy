@@ -16,9 +16,12 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Fixed respecting dangerous while applying template ([issue](/../../issues/1251))
-* Moved filter to action bar, thanks @[jpeg729](https://github.com/jpeg729)
-* Reporting of user interface errors
+* Moved filter to action bar, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1240))
+* Support info for user interface errors
+* Rewritten on demand restricting logic ([issue](/../../issues/1245)) ([issue](/../../issues/1247)) ([issue](/../../issues/1253))
+* Added progress bar for on demand restricting time out
 * Updated traditional Chinese translation
+* Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

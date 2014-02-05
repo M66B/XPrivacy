@@ -39,11 +39,11 @@ import android.os.StrictMode.ThreadPolicy;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -276,7 +276,6 @@ public class PrivacyService {
 					Util.log(null, Log.ERROR, "Set invalid restriction " + restriction);
 					return;
 				}
-				Util.log(null, Log.ERROR, restriction.toString());
 
 				SQLiteDatabase db = getDatabase();
 				// 0 not restricted, ask
@@ -1027,37 +1026,29 @@ public class PrivacyService {
 									AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
 											dangerous, result, context, latch);
 									AlertDialog alertDialog = builder.create();
-									if (userId == 0)
-										alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-									else
-										alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
-									alertDialog.getWindow().requestFeature(Window.FEATURE_PROGRESS);
+									alertDialog.getWindow().setType(
+											userId == 0 ? WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
+													: WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
 									alertDialog.setCancelable(false);
 									alertDialog.setCanceledOnTouchOutside(false);
 									alertDialog.show();
 									holder.dialog = alertDialog;
 
-									holder.dialog.getWindow().setFeatureInt(Window.FEATURE_PROGRESS,
-											Window.PROGRESS_VISIBILITY_ON);
-
-									// TODO: make working
-									holder.countDown = new Runnable() {
-										@Override
+									final ProgressBar mProgress = (ProgressBar) alertDialog.findViewById(1966);
+									holder.thread = new Thread(new Runnable() {
 										public void run() {
 											try {
-												if (holder.dialog != null) {
-													Util.log(null, Log.WARN, "Progress=" + holder.progress);
-													holder.dialog.getWindow().setFeatureInt(Window.FEATURE_PROGRESS,
-															10000 * holder.progress++ / cMaxOnDemandDialog);
-													if (holder.progress < cMaxOnDemandDialog)
-														mHandler.postDelayed(this, 1000);
+												while (mProgress.getProgress() < cMaxOnDemandDialog) {
+													Thread.sleep(1000);
+													mProgress.incrementProgressBy(1);
 												}
+											} catch (InterruptedException ignored) {
 											} catch (Throwable ex) {
 												Util.bug(null, ex);
 											}
 										}
-									};
-									holder.countDown.run();
+									});
+									holder.thread.start();
 
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
@@ -1074,7 +1065,7 @@ public class PrivacyService {
 								public void run() {
 									AlertDialog dialog = holder.dialog;
 									if (dialog != null)
-										dialog.cancel();
+										dialog.dismiss();
 									// Deny once
 									result.restricted = true;
 								}
@@ -1083,7 +1074,8 @@ public class PrivacyService {
 
 						// Garbage collect
 						holder.dialog = null;
-						holder.countDown = null;
+						holder.thread.interrupt();
+						holder.thread = null;
 					} finally {
 						mOndemandSemaphore.release();
 					}
@@ -1097,8 +1089,7 @@ public class PrivacyService {
 
 		final class AlertDialogHolder {
 			public AlertDialog dialog = null;
-			public Runnable countDown = null;
-			public int progress = 0;
+			public Thread thread = null;
 		}
 
 		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, final Hook hook,
@@ -1134,6 +1125,7 @@ public class PrivacyService {
 			LinearLayout.LayoutParams llApplicationParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
 			llApplication.setLayoutParams(llApplicationParams);
+			llApplication.setPadding(0, 0, 0, vmargin);
 			{
 				// Application icon
 				ImageView ivApp = new ImageView(context);
@@ -1154,11 +1146,9 @@ public class PrivacyService {
 			// Category check box
 			final CheckBox cbCategory = new CheckBox(context);
 			cbCategory.setText(resources.getString(R.string.title_applycat));
-			cbCategory.setTextAppearance(context, android.R.attr.textAppearanceSmall);
 			cbCategory.setChecked(!dangerous);
 			LinearLayout.LayoutParams llCategoryParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			llCategoryParams.setMargins(0, vmargin / 2, 0, 0);
 			cbCategory.setLayoutParams(llCategoryParams);
 			llContainer.addView(cbCategory);
 
@@ -1166,12 +1156,21 @@ public class PrivacyService {
 			final CheckBox cbOnce = new CheckBox(context);
 			cbOnce.setText(String.format(resources.getString(R.string.title_once),
 					PrivacyManager.cSettingCacheTimeoutMs / 1000));
-			cbOnce.setTextAppearance(context, android.R.attr.textAppearanceSmall);
 			LinearLayout.LayoutParams llOnceParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			llOnceParams.setMargins(0, vmargin / 2, 0, 0);
 			cbOnce.setLayoutParams(llOnceParams);
 			llContainer.addView(cbOnce);
+
+			// Progress bar
+			ProgressBar pbProgress = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
+			pbProgress.setId(1966);
+			pbProgress.setMax(cMaxOnDemandDialog);
+			pbProgress.setIndeterminate(false);
+			LinearLayout.LayoutParams llProgress = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			llProgress.setMargins(0, vmargin, 0, 0);
+			pbProgress.setLayoutParams(llProgress);
+			llContainer.addView(pbProgress);
 
 			// Ask
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
@@ -1256,6 +1255,8 @@ public class PrivacyService {
 						result.restricted = restricted;
 						result.asked = true;
 						setRestrictionInternal(result);
+
+						// Other methods are untouched
 
 						// Make exceptions for dangerous methods
 						if (restricted) {
