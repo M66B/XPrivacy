@@ -22,14 +22,14 @@
     <string name="menu_about">關於</string>
     <string name="menu_help">說明</string>
     <string name="menu_select_all">全選</string>
-    <string name="menu_sort">Sort</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_sort">排序</string>
+    <string name="menu_filter">篩選</string>
     <string name="menu_all">所有程式</string>
     <string name="menu_restriction_all">套用預設規則</string>
     <string name="menu_clear_all">清除全部</string>
     <string name="menu_restrict_all">限制全部</string>
     <string name="menu_clear_usage">清除記錄</string>
-    <string name="menu_clear_db">Clear all data</string>
+    <string name="menu_clear_db">清除所有資料</string>
     <string name="menu_usage_all">切換顯示限制項目</string>
     <string name="menu_apply">套用預設規則</string>
     <string name="menu_clear">清空</string>
@@ -70,8 +70,8 @@
     <string name="msg_randomizing" formatted="false">正在產生亂數 %s</string>
     <string name="msg_upgrading" formatted="false">正在更新 %s</string>
     <string name="msg_support_info">發生程式內部錯誤，請問是否傳送錯誤報告?</string>
-    <string name="msg_ondemand" formatted="false">%1$s is trying to use %3$s in the %2$s category</string>
-    <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_ondemand" formatted="false">%1$s 嘗試存取權限 [%2$s] > [%3$s]</string>
+    <string name="msg_restrictedby">已被 XPrivacy 限制權限</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用
     \n\n請自行承擔使用XPrivacy的可能風險。</b>
     \n\n請參閱說明文件：</string>
@@ -113,19 +113,19 @@
     <string name="title_fuser">顯示使用者app</string>
     <string name="title_fsystem">顯示系統app</string>
     <string name="title_fnot">←反選(無限制程式)</string>
-    <string name="title_sname">By name</string>
-    <string name="title_suid">By uid</string>
-    <string name="title_sinstalled">By date installed</string>
-    <string name="title_supdated">By date updated</string>
-    <string name="title_smodified">By date modified (XPrivacy)</string>
-    <string name="title_sinvert">Invert sort order</string>
-    <string name="title_allow">Allow</string>
-    <string name="title_deny">Deny</string>
-    <string name="title_denyonce">Deny once</string>
+    <string name="title_sname">名稱</string>
+    <string name="title_suid">UID</string>
+    <string name="title_sinstalled">安裝日期</string>
+    <string name="title_supdated">更新日期</string>
+    <string name="title_smodified">修改日期 (XPrivacy)</string>
+    <string name="title_sinvert">反序排列</string>
+    <string name="title_allow">允許</string></string>
+    <string name="title_deny">封鎖</string>
+    <string name="title_denyonce">封鎖一次</string>
     <string name="settings_serial">序號</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">經度</string>
-    <string name="settings_alt">Altitude</string>
+    <string name="settings_alt">海拔</string>
     <string name="settings_mac">MAC 位置</string>
     <string name="settings_ip">IP 位置</string>
     <string name="settings_phone">手機號碼</string>
@@ -137,8 +137,8 @@
     <string name="settings_ua">User agent</string>
     <string name="settings_general">一般設定</string>
     <string name="settings_fake_data">偽造資訊設定</string>
-    <string name="settings_notify">app更新時顯示通知</string>
-    <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_notify">APP更新時顯示通知</string>
+    <string name="settings_ondemand">互動式限制設定</string>
     <string name="settings_log">偵錯日誌 (需重新啟動)</string>
     <string name="settings_expert">進階模式</string>
     <string name="settings_dangerous">關閉高風險功能</string>
