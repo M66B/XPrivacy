@@ -13,6 +13,25 @@ Test and beta releases will have experimental functions enabled by default.
 
 * None at this time
 
+**On demand restricting logic**
+
+* The dialog will appear when the category and the function was not asked for yet (has a question mark)
+* *Apply to entire category* will:
+	* Set the category to be asked for
+	* Apply the choice (deny/allow) to the category only
+* When applying to a function (*Apply to entire category* not checked):
+	* If the choice matches the current category restriction:
+		* The function is set to be asked for
+		* The choice is applied to the function only
+	* If the choice doesn't match the current category restriction:
+		* The category is set to be not asked for
+			* This will result in the other functions to be asked for if not done before
+		* The choice is applied to the category
+		* The function is set to be asked for
+		* The choice is applied to the function
+* If *Restrict dangerous functions* is disabled:
+	* Any category change to restricted will result in exceptions for dangerous functions set to be not asked for
+
 **Next release**
 
 * Fixed respecting dangerous while applying template ([issue](/../../issues/1251))

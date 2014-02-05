@@ -1184,7 +1184,7 @@ public class PrivacyService {
 							// Deny
 							result.restricted = true;
 							if (!cbOnce.isChecked())
-								onDemandChoice(restriction, hook, cbCategory.isChecked(), true);
+								onDemandChoice(restriction, cbCategory.isChecked(), true);
 							latch.countDown();
 						}
 					});
@@ -1195,14 +1195,14 @@ public class PrivacyService {
 							// Allow
 							result.restricted = false;
 							if (!cbOnce.isChecked())
-								onDemandChoice(restriction, hook, cbCategory.isChecked(), false);
+								onDemandChoice(restriction, cbCategory.isChecked(), false);
 							latch.countDown();
 						}
 					});
 			return alertDialogBuilder;
 		}
 
-		private void onDemandChoice(PRestriction restriction, Hook hook, boolean category, boolean restricted) {
+		private void onDemandChoice(PRestriction restriction, boolean category, boolean restricted) {
 			try {
 				PRestriction result = new PRestriction(restriction);
 
@@ -1250,20 +1250,12 @@ public class PrivacyService {
 						result.asked = false; // Ask other methods
 						setRestrictionInternal(result);
 
-						// Set method restriction
-						result.methodName = restriction.methodName;
-						result.restricted = restricted;
-						result.asked = true;
-						setRestrictionInternal(result);
-
-						// Other methods are untouched
-
 						// Make exceptions for dangerous methods
 						if (restricted) {
 							boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 							if (restricted && !dangerous) {
 								for (Hook md : PrivacyManager.getHooks(restriction.restrictionName))
-									if (!md.equals(hook) && md.isDangerous()) {
+									if (md.isDangerous()) {
 										result.methodName = md.getName();
 										result.restricted = false;
 										result.asked = false;
@@ -1271,6 +1263,14 @@ public class PrivacyService {
 									}
 							}
 						}
+
+						// Set method restriction
+						result.methodName = restriction.methodName;
+						result.restricted = restricted;
+						result.asked = true;
+						setRestrictionInternal(result);
+
+						// Other methods are untouched
 					}
 				}
 
