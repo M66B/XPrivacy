@@ -18,7 +18,7 @@ public class XActivityManagerService extends XHook {
 	private static boolean mSleeping = false;
 
 	private XActivityManagerService(Methods method, int sdk) {
-		super(null, method.name(), null);
+		super(null, method.name(), null, sdk);
 		mMethod = method;
 	}
 
