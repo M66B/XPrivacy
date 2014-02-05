@@ -42,6 +42,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Updated traditional Chinese translation
 * Updated Japanese translation
 * Updated Lithuanian translation
+* Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
