@@ -15,7 +15,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **On demand restricting logic**
 
-* The dialog will appear when the category and the function was not asked for yet (has a question mark)
+* The dialog will appear if the category and the function was not asked for yet (has a question mark)
 * *Apply to entire category* will:
 	* Set the category to be asked for
 	* Apply the choice (deny/allow) to the category only
@@ -29,7 +29,7 @@ Test and beta releases will have experimental functions enabled by default.
 		* The choice is applied to the category
 		* The function is set to be asked for
 		* The choice is applied to the function
-* If *Restrict dangerous functions* is disabled:
+* If *Restrict dangerous functions* is disabled (the default):
 	* Any category change to restricted will result in exceptions for dangerous functions set to be not asked for
 
 **Next release**
