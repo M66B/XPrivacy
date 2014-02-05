@@ -1101,7 +1101,7 @@ public class PrivacyService {
 			public int progress = 0;
 		}
 
-		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, Hook hook,
+		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, final Hook hook,
 				ApplicationInfoEx appInfo, boolean dangerous, final PRestriction result, Context context,
 				final CountDownLatch latch) throws NameNotFoundException {
 			// Get resources
@@ -1185,7 +1185,7 @@ public class PrivacyService {
 							// Deny
 							result.restricted = true;
 							if (!cbOnce.isChecked())
-								onDemandChoice(restriction, cbCategory.isChecked(), true);
+								onDemandChoice(restriction, hook, cbCategory.isChecked(), true);
 							latch.countDown();
 						}
 					});
@@ -1196,55 +1196,80 @@ public class PrivacyService {
 							// Allow
 							result.restricted = false;
 							if (!cbOnce.isChecked())
-								onDemandChoice(restriction, cbCategory.isChecked(), false);
+								onDemandChoice(restriction, hook, cbCategory.isChecked(), false);
 							latch.countDown();
 						}
 					});
 			return alertDialogBuilder;
 		}
 
-		private void onDemandChoice(PRestriction restriction, boolean category, boolean restricted) {
+		private void onDemandChoice(PRestriction restriction, Hook hook, boolean category, boolean restricted) {
 			try {
 				PRestriction result = new PRestriction(restriction);
 
-				// Get current values
-				CRestriction resCategory = null;
-				CRestriction resMethod = null;
-				CRestriction keyCategory = new CRestriction(restriction);
-				keyCategory.methodName = null;
-				CRestriction keyMethod = new CRestriction(restriction);
+				// Get current category state
+				boolean prevRestricted = false;
+				CRestriction key = new CRestriction(restriction);
+				key.methodName = null;
 				synchronized (mRestrictionCache) {
-					if (mRestrictionCache.containsKey(keyCategory))
-						resCategory = mRestrictionCache.get(keyCategory);
-					if (mRestrictionCache.containsKey(keyMethod))
-						resMethod = mRestrictionCache.get(keyMethod);
+					if (mRestrictionCache.containsKey(key))
+						prevRestricted = mRestrictionCache.get(key).restricted;
 				}
 
-				// TODO: factor in current values
+				if (category) {
+					// Set category restriction
+					result.methodName = null;
+					result.restricted = restricted;
+					result.asked = true;
+					setRestrictionInternal(result);
 
-				// Set category restriction
-				result.methodName = null;
-				result.restricted = restricted;
-				result.asked = false;
-				setRestrictionInternal(result);
+					// Make exceptions for dangerous methods
+					// if no previously restricted
+					if (restricted && !prevRestricted) {
+						boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+						if (restricted && !dangerous) {
+							for (Hook md : PrivacyManager.getHooks(restriction.restrictionName))
+								if (md.isDangerous()) {
+									result.methodName = md.getName();
+									result.restricted = false;
+									result.asked = false;
+									setRestrictionInternal(result);
+								}
+						}
+					}
+				} else {
+					if (restricted == prevRestricted) {
+						// Set method restriction
+						result.methodName = restriction.methodName;
+						result.restricted = restricted;
+						result.asked = true;
+						setRestrictionInternal(result);
+					} else {
+						// Change category restriction
+						result.methodName = null;
+						result.restricted = restricted;
+						result.asked = false; // Ask other methods
+						setRestrictionInternal(result);
 
-				// Set method restriction
-				result.methodName = restriction.methodName;
-				result.restricted = restricted;
-				result.asked = true;
-				setRestrictionInternal(result);
+						// Set method restriction
+						result.methodName = restriction.methodName;
+						result.restricted = restricted;
+						result.asked = true;
+						setRestrictionInternal(result);
 
-				// Make exceptions for dangerous methods
-				if (restricted) {
-					boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
-					if (restricted && !dangerous) {
-						for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
-							if (hook.isDangerous()) {
-								result.methodName = hook.getName();
-								result.restricted = false;
-								result.asked = true;
-								setRestrictionInternal(result);
+						// Make exceptions for dangerous methods
+						if (restricted) {
+							boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+							if (restricted && !dangerous) {
+								for (Hook md : PrivacyManager.getHooks(restriction.restrictionName))
+									if (!md.equals(hook) && md.isDangerous()) {
+										result.methodName = md.getName();
+										result.restricted = false;
+										result.asked = false;
+										setRestrictionInternal(result);
+									}
 							}
+						}
 					}
 				}
 
