@@ -35,6 +35,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Fixed respecting dangerous while applying template ([issue](/../../issues/1251))
+* Fixed fetching function exceptions
 * Moved filter to action bar, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1240))
 * Support info for user interface errors
 * Rewritten on demand restricting logic ([issue](/../../issues/1245)) ([issue](/../../issues/1247)) ([issue](/../../issues/1253))

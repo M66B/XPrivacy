@@ -97,17 +97,11 @@ public class ActivityShare extends Activity {
 
 	private static final int ACTIVITY_IMPORT_SELECT = 0;
 
-	public static final String cFileName = "FileName";
 	public static final String cUidList = "UidList";
 	public static final String cRestriction = "Restriction";
 	public static final String cInteractive = "Interactive";
-	public static final String cErrorMessage = "ErrorMessage";
 	public static final String HTTP_BASE_URL = "http://crowd.xprivacy.eu/";
 	public static final String HTTPS_BASE_URL = "https://crowd.xprivacy.eu/";
-	public static final String cProgressReport = "ProgressReport";
-	public static final String cProgressMessage = "ProgressMessage";
-	public static final String cProgressValue = "ProgressValue";
-	public static final String cProgressMax = "ProgressMax";
 
 	public static final int cSubmitLimit = 10;
 	public static final int cProtocolVersion = 4;
@@ -1250,9 +1244,8 @@ public class ActivityShare extends Activity {
 										int voted_restricted = entry.getInt("restricted");
 										int voted_not_restricted = entry.getInt("not_restricted");
 										boolean restricted = (voted_restricted > voted_not_restricted);
-										if (methodName == null || restricted)
-											listRestriction.add(new PRestriction(appInfo.getUid(), restrictionName,
-													methodName, restricted));
+										listRestriction.add(new PRestriction(appInfo.getUid(), restrictionName,
+												methodName, restricted));
 									}
 									PrivacyManager.setRestrictionList(listRestriction);
 									List<Boolean> newState = PrivacyManager.getRestartStates(appInfo.getUid(), null);

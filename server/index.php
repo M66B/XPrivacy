@@ -288,7 +288,7 @@
 			$sql .= " FROM xprivacy";
 			$sql .= " WHERE package_name IN (" . $package_names . ")";
 			$sql .= " GROUP BY restriction, method";
-			$sql .= " ORDER BY restriction DESC, method DESC";
+			$sql .= " ORDER BY restriction ASC, method ASC";
 			$result = $db->query($sql);
 			if ($result) {
 				while (($row = $result->fetch_object())) {
@@ -389,7 +389,10 @@
 			// Select character set
 			$db->query("SET NAMES 'utf8'");
 ?>
-			<div class="page-header">
+			<div class="page-header" style="overflow: hidden;">
+				<div class="pull-right">
+					<a href="http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners" target="_blank"><img style="width: 158px; height: 167px;" src="open-source-rookie-of-the-year.png" alt="" /></a>
+				</div>
 <?php
 				$count = 0;
 				$total = 0;
