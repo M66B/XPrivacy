@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:contentDescription="@string/help_used"
+            android:src="?attr/icon_used" />
+
+        <CheckBox
+            android:id="@+id/cbFUsed"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_marginLeft="3dip"
+            android:ellipsize="end"
+            android:saveEnabled="false"
+            android:singleLine="true"
+            android:text="@string/title_fused"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:contentDescription="@string/help_internet"
+            android:src="?attr/icon_internet" />
+
+        <CheckBox
+            android:id="@+id/cbFInternet"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_marginLeft="3dip"
+            android:ellipsize="end"
+            android:saveEnabled="false"
+            android:singleLine="true"
+            android:text="@string/title_finternet"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:contentDescription="@string/help_granted"
+            android:src="?attr/icon_granted" />
+
+        <CheckBox
+            android:id="@+id/cbFPermission"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_marginLeft="3dip"
+            android:ellipsize="end"
+            android:saveEnabled="false"
+            android:singleLine="true"
+            android:text="@string/title_fpermission"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:contentDescription="@string/title_restrict"
+            android:src="?attr/icon_restricted" />
+
+        <CheckBox
+            android:id="@+id/cbFRestriction"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_marginLeft="3dip"
+            android:ellipsize="end"
+            android:saveEnabled="false"
+            android:singleLine="true"
+            android:text="@string/title_frestricted"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <CheckBox
+            android:id="@+id/cbFRestrictionNot"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_marginLeft="3dip"
+            android:ellipsize="end"
+            android:saveEnabled="false"
+            android:singleLine="true"
+            android:text="@string/title_fnot"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:contentDescription="@string/title_fuser"
+            android:src="@drawable/apps" />
+
+        <CheckBox
+            android:id="@+id/cbFUser"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_marginLeft="3dip"
+            android:ellipsize="end"
+            android:saveEnabled="false"
+            android:singleLine="true"
+            android:text="@string/title_fuser"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:contentDescription="@string/help_application"
+            android:src="?attr/icon_system" />
+
+        <CheckBox
+            android:id="@+id/cbFSystem"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_marginLeft="3dip"
+            android:ellipsize="end"
+            android:saveEnabled="false"
+            android:singleLine="true"
+            android:text="@string/title_fsystem"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+</LinearLayout>

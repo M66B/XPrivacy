@@ -24,6 +24,7 @@
     <string name="menu_help">Pagalba</string>
     <string name="menu_select_all">Pažymėti viską</string>
     <string name="menu_sort">Rūšiuoti</string>
+    <string name="menu_filter">Filter</string>
     <string name="menu_all">Visos</string>
     <string name="menu_restriction_all">Išvalyti visus ribojimus</string>
     <string name="menu_clear_all">Išvalyti viską</string>

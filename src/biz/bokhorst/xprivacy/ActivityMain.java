@@ -49,6 +49,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -61,12 +62,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActivityMain extends Activity implements OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+public class ActivityMain extends Activity implements OnItemSelectedListener {
 	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 	private Bitmap[] mCheck;
-	private int mTab;
 	private int mSortMode;
 	private boolean mSortInvert;
 	private int mProgressWidth = 0;
@@ -83,10 +83,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 	private static final int SORT_BY_INSTALL_TIME = 2;
 	private static final int SORT_BY_UPDATE_TIME = 3;
 	private static final int SORT_BY_MODIFY_TIME = 4;
-
-	private static final int TAB_NONE = 0;
-	private static final int TAB_CATEGORY = 1;
-	private static final int TAB_FILTERS = 2;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int LICENSED = 0x0100;
@@ -257,82 +253,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			}
 		});
 
-		// Setup used filter
-		boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
-		CheckBox cFbUsed = (CheckBox) findViewById(R.id.cbFUsed);
-		cFbUsed.setChecked(fUsed);
-		cFbUsed.setOnCheckedChangeListener(this);
-
-		// Setup internet filter
-		boolean fInternet = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFInternet, false, false);
-		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
-		cbFInternet.setChecked(fInternet);
-		cbFInternet.setOnCheckedChangeListener(this);
-
-		// Setup restriction filter
-		boolean fRestriction = PrivacyManager
-				.getSettingBool(null, 0, PrivacyManager.cSettingFRestriction, false, false);
-		CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
-		cbFRestriction.setChecked(fRestriction);
-		cbFRestriction.setOnCheckedChangeListener(this);
-
-		boolean fRestrictionNot = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFRestrictionNot, false,
-				false);
-		CheckBox cbFRestrictionNot = (CheckBox) findViewById(R.id.cbFRestrictionNot);
-		cbFRestrictionNot.setChecked(fRestrictionNot);
-		cbFRestrictionNot.setOnCheckedChangeListener(this);
-
-		// Setup permission filter
-		boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, true, false);
-		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
-		cbFPermission.setChecked(fPermission);
-		cbFPermission.setOnCheckedChangeListener(this);
-
-		// Setup user filter
-		boolean fUser = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUser, true, false);
-		final CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
-		cbFUser.setChecked(fUser);
-		cbFUser.setOnCheckedChangeListener(this);
-
-		// Setup system filter
-		boolean fSystem = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFSystem, false, false);
-		final CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
-		cbFSystem.setChecked(fSystem);
-		cbFSystem.setOnCheckedChangeListener(this);
-
-		// Tab states
-		mTab = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingOpenTab,
-				Integer.toString(TAB_CATEGORY), false));
-		openTab(mTab);
-
-		// Handle toggle filters visibility
-		TextView tvFilterDetail = (TextView) findViewById(R.id.tvFilterDetail);
-		tvFilterDetail.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				int currentTab = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingOpenTab,
-						Integer.toString(TAB_NONE), false));
-				if (currentTab == TAB_FILTERS)
-					openTab(TAB_NONE);
-				else
-					openTab(TAB_FILTERS);
-			}
-		});
-
-		// Handle toggle categories visibility
-		TextView tvCategoryDetail = (TextView) findViewById(R.id.tvCategoryDetail);
-		tvCategoryDetail.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				int currentTab = Integer.parseInt(PrivacyManager.getSetting(null, 0, PrivacyManager.cSettingOpenTab,
-						Integer.toString(TAB_NONE), false));
-				if (currentTab == TAB_CATEGORY)
-					openTab(TAB_NONE);
-				else
-					openTab(TAB_CATEGORY);
-			}
-		});
-
 		// Start task to get app list
 		AppListTask appListTask = new AppListTask();
 		appListTask.executeOnExecutor(mExecutor, (Object) null);
@@ -481,6 +401,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 			case R.id.menu_sort:
 				optionSort();
 				return true;
+			case R.id.menu_filter:
+				optionFilter();
+				return true;
 
 			case R.id.menu_tutorial:
 				optionTutorial();
@@ -558,54 +481,48 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		}
 	}
 
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		CheckBox cbFUsed = (CheckBox) findViewById(R.id.cbFUsed);
-		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
-		CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
-		CheckBox cbFRestrictionNot = (CheckBox) findViewById(R.id.cbFRestrictionNot);
-		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
-		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
-		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
-		if (buttonView == cbFUsed)
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFUsed, Boolean.toString(isChecked));
-		else if (buttonView == cbFInternet)
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFInternet, Boolean.toString(isChecked));
-		else if (buttonView == cbFRestriction)
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFRestriction, Boolean.toString(isChecked));
-		else if (buttonView == cbFRestrictionNot)
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFRestrictionNot, Boolean.toString(isChecked));
-		else if (buttonView == cbFPermission)
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFPermission, Boolean.toString(isChecked));
-		else if (buttonView == cbFUser) {
-			if (isChecked)
-				cbFSystem.setChecked(false);
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFUser, Boolean.toString(isChecked));
-		} else if (buttonView == cbFSystem) {
-			if (isChecked)
-				cbFUser.setChecked(false);
-			PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFSystem, Boolean.toString(isChecked));
-		}
-		applyFilter();
-	}
-
 	private void applyFilter() {
 		if (mAppAdapter != null) {
 			EditText etFilter = (EditText) findViewById(R.id.etFilter);
-			CheckBox cFbUsed = (CheckBox) findViewById(R.id.cbFUsed);
-			CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
-			CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
-			CheckBox cbFRestrictionNot = (CheckBox) findViewById(R.id.cbFRestrictionNot);
-			CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
-			CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
-			CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
 			ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
 			TextView tvStats = (TextView) findViewById(R.id.tvStats);
 			TextView tvState = (TextView) findViewById(R.id.tvState);
-			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(),
-					cFbUsed.isChecked(), cbFInternet.isChecked(), cbFRestriction.isChecked(),
-					cbFRestrictionNot.isChecked(), cbFPermission.isChecked(), cbFUser.isChecked(),
-					cbFSystem.isChecked());
+
+			// Get settings
+			boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
+			boolean fInternet = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFInternet, false, false);
+			boolean fRestriction = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFRestriction, false,
+					false);
+			boolean fRestrictionNot = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFRestrictionNot,
+					false, false);
+			boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, true,
+					false);
+			boolean fUser = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUser, true, false);
+			boolean fSystem = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFSystem, false, false);
+
+			// Filters title
+			// Count number of active filters
+			int numberOfFilters = 0;
+			if (etFilter.getText().length() > 0)
+				numberOfFilters++;
+			if (fUsed)
+				numberOfFilters++;
+			if (fInternet)
+				numberOfFilters++;
+			if (fRestriction)
+				numberOfFilters++;
+			if (fPermission)
+				numberOfFilters++;
+			if (fUser)
+				numberOfFilters++;
+			if (fSystem)
+				numberOfFilters++;
+
+			// tvFilterDetail.setText(getResources().getQuantityString(R.plurals.title_active_filters,
+			// numberOfFilters, numberOfFilters));
+
+			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(), fUsed,
+					fInternet, fRestriction, fRestrictionNot, fPermission, fUser, fSystem);
 			pbFilter.setVisibility(ProgressBar.VISIBLE);
 			tvStats.setVisibility(TextView.GONE);
 
@@ -918,79 +835,95 @@ public class ActivityMain extends Activity implements OnItemSelectedListener, Co
 		alertDialog.show();
 	}
 
+	private void optionFilter() {
+		LayoutInflater LayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = LayoutInflater.inflate(R.layout.filters, null);
+		final CheckBox cbFUsed = (CheckBox) view.findViewById(R.id.cbFUsed);
+		final CheckBox cbFInternet = (CheckBox) view.findViewById(R.id.cbFInternet);
+		final CheckBox cbFPermission = (CheckBox) view.findViewById(R.id.cbFPermission);
+		final CheckBox cbFRestriction = (CheckBox) view.findViewById(R.id.cbFRestriction);
+		final CheckBox cbFRestrictionNot = (CheckBox) view.findViewById(R.id.cbFRestrictionNot);
+		final CheckBox cbFUser = (CheckBox) view.findViewById(R.id.cbFUser);
+		final CheckBox cbFSystem = (CheckBox) view.findViewById(R.id.cbFSystem);
+
+		// Get settings
+		boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
+		boolean fInternet = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFInternet, false, false);
+		boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, true, false);
+		boolean fRestriction = PrivacyManager
+				.getSettingBool(null, 0, PrivacyManager.cSettingFRestriction, false, false);
+		boolean fRestrictionNot = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFRestrictionNot, false,
+				false);
+		boolean fUser = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUser, true, false);
+		boolean fSystem = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFSystem, false, false);
+
+		// Setup checkboxes
+		cbFUsed.setChecked(fUsed);
+		cbFInternet.setChecked(fInternet);
+		cbFPermission.setChecked(fPermission);
+		cbFRestriction.setChecked(fRestriction);
+		cbFRestrictionNot.setChecked(fRestrictionNot);
+		cbFUser.setChecked(fUser);
+		cbFSystem.setChecked(fSystem);
+
+		// Manage user/system filter exclusivity
+		OnCheckedChangeListener checkListener = new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (buttonView == cbFUser) {
+					if (isChecked)
+						cbFSystem.setChecked(false);
+				} else if (buttonView == cbFSystem)
+					if (isChecked)
+						cbFUser.setChecked(false);
+			}
+		};
+		cbFUser.setOnCheckedChangeListener(checkListener);
+		cbFSystem.setOnCheckedChangeListener(checkListener);
+
+		// Build dialog
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
+		alertDialogBuilder.setTitle(R.string.menu_filter);
+		alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
+		alertDialogBuilder.setView(view);
+		alertDialogBuilder.setPositiveButton(ActivityMain.this.getString(android.R.string.ok),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFUsed,
+								Boolean.toString(cbFUsed.isChecked()));
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFInternet,
+								Boolean.toString(cbFInternet.isChecked()));
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFRestriction,
+								Boolean.toString(cbFRestriction.isChecked()));
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFRestrictionNot,
+								Boolean.toString(cbFRestrictionNot.isChecked()));
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFPermission,
+								Boolean.toString(cbFPermission.isChecked()));
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFUser,
+								Boolean.toString(cbFUser.isChecked()));
+						PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingFSystem,
+								Boolean.toString(cbFSystem.isChecked()));
+
+						applyFilter();
+					}
+				});
+		alertDialogBuilder.setNegativeButton(ActivityMain.this.getString(android.R.string.cancel),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+
+		// Show dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
 	private void optionTutorial() {
-		openTab(TAB_CATEGORY);
 		((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
 		((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
 		PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingTutorialMain, Boolean.FALSE.toString());
-	}
-
-	private void openTab(int which) {
-		TextView tvFilterDetail = (TextView) findViewById(R.id.tvFilterDetail);
-		View vFilterHighlight = findViewById(R.id.vFilterHighlight);
-		EditText etFilter = (EditText) findViewById(R.id.etFilter);
-		LinearLayout llFilters = (LinearLayout) findViewById(R.id.llFilters);
-		LinearLayout llCategories = (LinearLayout) findViewById(R.id.llCategories);
-		CheckBox cbFUsed = (CheckBox) findViewById(R.id.cbFUsed);
-		CheckBox cbFInternet = (CheckBox) findViewById(R.id.cbFInternet);
-		CheckBox cbFRestriction = (CheckBox) findViewById(R.id.cbFRestriction);
-		CheckBox cbFPermission = (CheckBox) findViewById(R.id.cbFPermission);
-		CheckBox cbFUser = (CheckBox) findViewById(R.id.cbFUser);
-		CheckBox cbFSystem = (CheckBox) findViewById(R.id.cbFSystem);
-		TextView tvCategories = (TextView) findViewById(R.id.tvCategoryDetail);
-		View vCategoryHighlight = findViewById(R.id.vCategoryHighlight);
-
-		if (which == TAB_FILTERS) {
-			llFilters.setVisibility(View.VISIBLE);
-			llCategories.setVisibility(View.GONE);
-
-			tvFilterDetail.setText(R.string.title_filters);
-			tvCategories.setText((String) spRestriction.getSelectedItem());
-
-		} else if (which == TAB_CATEGORY) {
-			llFilters.setVisibility(View.GONE);
-			llCategories.setVisibility(View.VISIBLE);
-
-			tvCategories.setText(R.string.title_categories);
-
-		} else {
-			llFilters.setVisibility(View.GONE);
-			llCategories.setVisibility(View.GONE);
-
-			tvCategories.setText((String) spRestriction.getSelectedItem());
-		}
-
-		// Filters title
-		if (which != TAB_FILTERS) {
-			// Count number of active filters
-			int numberOfFilters = 0;
-			if (etFilter.getText().length() > 0)
-				numberOfFilters++;
-			if (cbFUsed.isChecked())
-				numberOfFilters++;
-			if (cbFInternet.isChecked())
-				numberOfFilters++;
-			if (cbFRestriction.isChecked())
-				numberOfFilters++;
-			if (cbFPermission.isChecked())
-				numberOfFilters++;
-			if (cbFUser.isChecked())
-				numberOfFilters++;
-			if (cbFSystem.isChecked())
-				numberOfFilters++;
-
-			tvFilterDetail.setText(getResources().getQuantityString(R.plurals.title_active_filters, numberOfFilters,
-					numberOfFilters));
-		}
-
-		// Set highlights
-		vFilterHighlight.setBackgroundResource(which != TAB_FILTERS ? android.R.color.transparent : Util.getThemed(
-				this, android.R.attr.colorActivatedHighlight));
-		vCategoryHighlight.setBackgroundResource(which != TAB_CATEGORY ? android.R.color.transparent : Util.getThemed(
-				this, android.R.attr.colorActivatedHighlight));
-
-		// Save setting
-		PrivacyManager.setSetting(null, 0, PrivacyManager.cSettingOpenTab, Integer.toString(which));
 	}
 
 	// Tasks

@@ -23,6 +23,7 @@
     <string name="menu_help">Anong Kahulugan</string>
     <string name="menu_select_all">Piliin lahat</string>
     <string name="menu_sort">Sort</string>
+    <string name="menu_filter">Filter</string>
     <string name="menu_all">Kalahatan</string>
     <string name="menu_restriction_all">Bigyan ng lahat o walang paghihigpit</string>
     <string name="menu_clear_all">Burahin lahat ng paghihigpit</string>

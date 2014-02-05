@@ -23,6 +23,7 @@
     <string name="menu_help">Aiuto</string>
     <string name="menu_select_all">Select all</string>
     <string name="menu_sort">Sort</string>
+    <string name="menu_filter">Filter</string>
     <string name="menu_all">Tutto</string>
     <string name="menu_restriction_all">Imposta restrizioni</string>
     <string name="menu_clear_all">Deseleziona tutto</string>
