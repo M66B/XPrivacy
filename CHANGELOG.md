@@ -34,6 +34,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.32 TEST**
+
 * Fixed respecting dangerous while applying template ([issue](/../../issues/1251))
 * Fixed fetching function exceptions
 * Moved filter to action bar, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1240))
@@ -47,8 +51,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Updated Japanese translation
 * Updated Lithuanian translation
 * Updated Polish translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.31 TEST**
 
