@@ -22,14 +22,14 @@
     <string name="menu_about">O programie</string>
     <string name="menu_help">Pomoc</string>
     <string name="menu_select_all">Wybierz wszystko</string>
-    <string name="menu_sort">Sort</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_sort">Sortuj</string>
+    <string name="menu_filter">Filtruj</string>
     <string name="menu_all">Wszystko</string>
     <string name="menu_restriction_all">Przełącz restrykcje</string>
     <string name="menu_clear_all">Wyczyść wszystko</string>
     <string name="menu_restrict_all">Ogranicz wszystko</string>
     <string name="menu_clear_usage">Wyczyść</string>
-    <string name="menu_clear_db">Clear all data</string>
+    <string name="menu_clear_db">Wyczyść wszystkie dane</string>
     <string name="menu_usage_all">Przełącz filtry</string>
     <string name="menu_apply">Zastosuj szablon</string>
     <string name="menu_clear">Wyczyść</string>
@@ -52,7 +52,7 @@
     <string name="msg_applying">Stosowanie</string>
     <string name="msg_applied">Zastosowano szablon</string>
     <string name="msg_saved_to" formatted="false">Zapisane do %s</string>
-    <string name="msg_no_restrictions">Nie znaleziono ograniczeń</string>
+    <string name="msg_no_restrictions">Nie znaleziono reguł blokowania</string>
     <string name="msg_sure">Czy jesteś pewny/a?</string>
     <string name="msg_select">Proszę wyberz jakieś aplikacje</string>
     <string name="msg_limit">Proszę wybierz mniej niż %d aplikacji</string>
@@ -70,7 +70,7 @@
     <string name="msg_upgrading" formatted="false">Aktualizacja %s</string>
     <string name="msg_support_info">Wewnętrzna kontrola się nie powiodła. Czy chcesz wysłać informacje do supportu?</string>
     <string name="msg_ondemand" formatted="false">%1$s is trying to use %3$s in the %2$s category</string>
-    <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_restrictedby">Ograniczone przez XPrivacy</string>
     <string name="msg_first"><b>Dołożyliśmy wszelkich starań podczas programowania i testów XPrivacy.
     Jednak nie możemy zagwarantować, że będzie on działać bezbłędnie na każdym urządzeniu oraz z każdą aplikacją.
 \n\nUżywasz go całkowicie na własne ryzyko.</b>\n\nZobacz też licencję:</string>
@@ -105,16 +105,16 @@
     <string name="title_fuser">Filtruj wg aplikacji użytkownika</string>
     <string name="title_fsystem">Filtruj wg aplikacji systemowych</string>
     <string name="title_fnot">Odwróć</string>
-    <string name="title_sname">By name</string>
-    <string name="title_suid">By uid</string>
-    <string name="title_sinstalled">By date installed</string>
-    <string name="title_supdated">By date updated</string>
-    <string name="title_smodified">By date modified (XPrivacy)</string>
-    <string name="title_sinvert">Invert sort order</string>
-    <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %1$s seconds</string>
-    <string name="title_allow">Allow</string>
-    <string name="title_deny">Deny</string>
+    <string name="title_sname">Po nazwie</string>
+    <string name="title_suid">Po uid</string>
+    <string name="title_sinstalled">Po dacie instalacji</string>
+    <string name="title_supdated">Po dacie aktualizacji</string>
+    <string name="title_smodified">Po dacie modyfikacji (XPrivacy)</string>
+    <string name="title_sinvert">Odwróć porządek sortowania</string>
+    <string name="title_applycat">Zastosuj do całej kategorii</string>
+    <string name="title_once">Raz na %1$s sekund</string>
+    <string name="title_allow">Pozwól</string>
+    <string name="title_deny">Zabroń</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>
@@ -131,7 +131,7 @@
     <string name="settings_general">Ogólne</string>
     <string name="settings_fake_data">Fałszowanie danych</string>
     <string name="settings_notify">Aktualizuj powiadomienia</string>
-    <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_ondemand">Ograniczanie na żądanie</string>
     <string name="settings_log">Log debugowania (wymaga restartu)</string>
     <string name="settings_expert">Tryb eksperta</string>
     <string name="settings_dangerous">Ogranicz niebezpieczne funkcje</string>
@@ -140,7 +140,7 @@
     <string name="settings_https">Użyj bezpiecznych połaczeń</string>
     <string name="settings_syscomponents">Ogranicz komponenty systemowe (Android) (wymaga restartu)</string>
     <string name="settings_usagedata">Pokaż użycie danych przez aplikacje (wymaga restartu)</string>
-    <string name="help_longpress">Long press name to select</string>
+    <string name="help_longpress">Przytrzymaj na nazwie aby wybrać</string>
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">ma dostęp do internetu</string>
     <string name="help_granted">ma dostęp do uprawnień Androida</string>
@@ -149,10 +149,10 @@
     <string name="help_frozen">jest wyłączona</string>
     <string name="help_dangerous">niebezpieczne uprawnienie, ograniczenie może spowodować problemy</string>
     <string name="help_half">częściowo ograniczone</string>
-    <string name="help_attention">ograniczenia wymagają sprawdzenia</string>
-    <string name="help_restricted">ograniczenia się zmieniły</string>
-    <string name="help_shared">ogrniczenia zostały wysłane</string>
-    <string name="tutorial_mainheader">Select the category to restrict</string>
+    <string name="help_attention">restrykcje wymagają sprawdzenia</string>
+    <string name="help_restricted">restrykcje się zmieniły</string>
+    <string name="help_shared">restrykcje zostały wysłane</string>
+    <string name="tutorial_mainheader">Wybierz kategorię do ograniczenia</string>
     <string name="tutorial_mainlist">Tapnij checkbox aby ograniczyć wybraną kategorię dla danej aplikacji\n
 \nDla ograniczonych kategorii aplikacjom będą podawane puste albo sfałszowane dane\n
 \nTapnij ikonę aplikacji aby uzyskać dostęp do szczegółowych ograniczeń i ustawień</string>
