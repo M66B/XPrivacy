@@ -23,7 +23,7 @@
     <string name="menu_help">Pagalba</string>
     <string name="menu_select_all">Pažymėti viską</string>
     <string name="menu_sort">Rūšiuoti</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_filter">Filtras</string>
     <string name="menu_all">Visos</string>
     <string name="menu_restriction_all">Išvalyti visus ribojimus</string>
     <string name="menu_clear_all">Išvalyti viską</string>
@@ -66,11 +66,11 @@
     <string name="msg_register">Prašome užregistruoti savo įrenginį</string>
     <string name="msg_registered">Patikrinkite savo el. paštą, kad aktyvuoti savo prietaisą</string>
     <string name="msg_service">Atnaujinimo paslauga veikia</string>
-    <string name="msg_migrating" formatted="false">Migruoti %s</string>
-    <string name="msg_randomizing" formatted="false">Kaitalioti %s</string>
-    <string name="msg_upgrading" formatted="false">Atnaujinti %s</string>
+    <string name="msg_migrating" formatted="false">Migruojama %s</string>
+    <string name="msg_randomizing" formatted="false">Keičiama %s</string>
+    <string name="msg_upgrading" formatted="false">Atnaujinama %s</string>
     <string name="msg_support_info">Vidinis patikrinimas nepavyko, ar norite siųsti paramos informaciją?</string>
-    <string name="msg_ondemand" formatted="false">%1$s is trying to use %3$s in the %2$s category</string>
+    <string name="msg_ondemand" formatted="false">%1$s bando naudoti %3$s šioje %2$s kategorijose</string>
     <string name="msg_restrictedby">Ribojama su XPrivacy</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
@@ -107,7 +107,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_fsystem">Sistemos programos</string>
     <string name="title_fnot">Neriboti</string>
     <string name="title_sname">Pagal pavadinimą</string>
-    <string name="title_suid">Pagal uid</string>
+    <string name="title_suid">Pagal UID</string>
     <string name="title_sinstalled">Pagal įdiegimo datą</string>
     <string name="title_supdated">Pagal atnaujinimo datą</string>
     <string name="title_smodified">Pagal modifikavimo datą (XPrivacy)</string>
@@ -152,7 +152,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="help_attention">Leidimams skirti dėmesį</string>
     <string name="help_restricted">Leidimai yra pakeisti</string>
     <string name="help_shared">Leidimai yra pateikti</string>
-    <string name="tutorial_mainheader">Select the category to restrict</string>
+    <string name="tutorial_mainheader">Pasirinkite kategoriją ribojimui</string>
     <string name="tutorial_mainlist">Bakstelėkite žymės langelį apriboti pasirinktą kategoriją\n
 \nProgramos bus įtrauktos ribojimų kategorijas\n
 \nBakstelėkite piktogramą išsamiems ribojimams ir parametrams</string>
