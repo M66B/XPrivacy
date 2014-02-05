@@ -146,15 +146,20 @@ public class XTelephonyManager extends XHook {
 									mListener.remove(listener);
 								}
 							}
-						} else {
-							// Replace
-							XPhoneStateListener xListener = new XPhoneStateListener(listener);
-							synchronized (mListener) {
-								mListener.put(listener, xListener);
-								Util.log(this, Log.INFO, "Added count=" + mListener.size());
+						} else
+							try {
+								// Replace
+								XPhoneStateListener xListener = new XPhoneStateListener(listener);
+								synchronized (mListener) {
+									mListener.put(listener, xListener);
+									Util.log(this, Log.INFO, "Added count=" + mListener.size());
+								}
+								param.args[0] = xListener;
+							} catch (Throwable ignored) {
+								// Some implementations require a looper
+								// which is not according to the documentation
+								// this does not happen in stock Android
 							}
-							param.args[0] = xListener;
-						}
 					}
 			}
 		} else if (mMethod == Methods.disableLocationUpdates || mMethod == Methods.enableLocationUpdates)
