@@ -140,6 +140,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_https">Gebruik veilige verbindingen</string>
     <string name="settings_syscomponents">Beperk systemcomponenten (Android)</string>
     <string name="settings_usagedata">Toon gebruiksgegevens</string>
+    <string name="help_longpress">Druk lang om te selecteren</string>
     <string name="help_application">Applicatie</string>
     <string name="help_internet">heeft internet rechten</string>
     <string name="help_granted">heeft Android rechten</string>

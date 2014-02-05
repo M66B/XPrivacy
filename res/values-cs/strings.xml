@@ -140,6 +140,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_https">Použít zabezpečené připojení</string>
     <string name="settings_syscomponents">Omezit systémové komponenty (Android) (vyžaduje restart)</string>
     <string name="settings_usagedata">Zobrazit využítí dat aplikace (vyžaduje restart)</string>
+    <string name="help_longpress">Long press name to select</string>
     <string name="help_application">Aplikace</string>
     <string name="help_internet">má oprávnění k Internetu</string>
     <string name="help_granted">má Android oprávnění</string>

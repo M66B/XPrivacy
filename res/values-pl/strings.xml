@@ -140,6 +140,7 @@
     <string name="settings_https">Użyj bezpiecznych połaczeń</string>
     <string name="settings_syscomponents">Ogranicz komponenty systemowe (Android) (wymaga restartu)</string>
     <string name="settings_usagedata">Pokaż użycie danych przez aplikacje (wymaga restartu)</string>
+    <string name="help_longpress">Long press name to select</string>
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">ma dostęp do internetu</string>
     <string name="help_granted">ma dostęp do uprawnień Androida</string>

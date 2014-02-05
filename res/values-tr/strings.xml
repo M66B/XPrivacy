@@ -139,6 +139,7 @@
     <string name="settings_https">Use secure connections</string>
     <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
     <string name="settings_usagedata">Show application usage data (requires restart)</string>
+    <string name="help_longpress">Long press name to select</string>
     <string name="help_application">Uygulama</string>
     <string name="help_internet">internet izni var</string>
     <string name="help_granted">Android izni var</string>
