@@ -1,8 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -53,13 +50,11 @@ public class PackageChange extends BroadcastReceiver {
 
 							// Restrict new non-system apps
 							if (!appInfo.isSystem()) {
-								List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 								for (String restrictionName : PrivacyManager.getRestrictions()) {
 									String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 									if (PrivacyManager.getSettingBool(null, 0, templateName, !ondemand, false))
-										listPRestriction.add(new PRestriction(uid, restrictionName, null, true));
+										PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
 								}
-								PrivacyManager.setRestrictionList(listPRestriction);
 							}
 						}
 

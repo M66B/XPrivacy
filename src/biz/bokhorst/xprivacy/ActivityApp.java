@@ -451,10 +451,10 @@ public class ActivityApp extends Activity {
 					break;
 				}
 		}
-		final boolean restricted = !some;
+		final boolean restrict = !some;
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-		alertDialogBuilder.setTitle(getString(restricted ? R.string.menu_apply : R.string.menu_clear_all));
+		alertDialogBuilder.setTitle(getString(restrict ? R.string.menu_apply : R.string.menu_clear_all));
 		alertDialogBuilder.setMessage(R.string.msg_sure);
 		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
@@ -462,13 +462,11 @@ public class ActivityApp extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 				// Do toggle
 				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-				List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 				for (String restrictionName : listRestriction) {
 					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
 					if (PrivacyManager.getSettingBool(null, 0, templateName, !ondemand, false))
-						listPRestriction.add(new PRestriction(mAppInfo.getUid(), restrictionName, null, restricted));
+						PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, null, restrict, false);
 				}
-				PrivacyManager.setRestrictionList(listPRestriction);
 				List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
 
 				// Refresh display

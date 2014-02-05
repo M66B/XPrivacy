@@ -15,6 +15,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Fixed respecting dangerous while applying template (#1251)
 * Moved filter to action bar, thanks @[jpeg729](https://github.com/jpeg729)
 * Reporting of user interface errors
 * Updated traditional Chinese translation
