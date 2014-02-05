@@ -99,14 +99,6 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="restrict_view">Zobrazení (v prohlížeči)</string>
     <string name="title_categories">Kategorie</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
-    <string name="title_filters">Filtry</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 aktivní filtr</item>
-        <item quantity="few">%d aktivní filtry</item>
-        <item quantity="other">%d aktivních filtrů</item>
-    </plurals>
-
     <string name="title_fused">Filtrovat přístup k datům</string>
     <string name="title_finternet">Filtrovat přístup k internetu</string>
     <string name="title_fpermission">Filtrovat oprávnění</string>

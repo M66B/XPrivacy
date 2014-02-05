@@ -99,13 +99,6 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_view">Tonen (browser)</string>
     <string name="title_categories">Categorieën</string>
     <string name="title_restrict">Vink aan om te beperken:</string>
-    <string name="title_filters">Filters</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 filter actief</item>
-        <item quantity="other">%d filters actief</item>
-    </plurals>
-
     <string name="title_fused">Filter op gegevensgebruik</string>
     <string name="title_finternet">Filter op internettoegang</string>
     <string name="title_fpermission">Filter op rechten</string>

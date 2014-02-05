@@ -99,13 +99,6 @@
     <string name="restrict_view">显示网页（内置浏览器）</string>
     <string name="title_categories">类别</string>
     <string name="title_restrict">勾选表示限制:</string>
-    <string name="title_filters">过滤器</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1个已启用的过滤器</item>
-        <item quantity="other">%d个已启用的过滤器</item>
-    </plurals>
-
     <string name="title_fused">曾经使用</string>
     <string name="title_finternet">网络权限</string>
     <string name="title_fpermission">含有权限</string>

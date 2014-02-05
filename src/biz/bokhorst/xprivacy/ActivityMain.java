@@ -23,8 +23,13 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -385,6 +390,50 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		menu.findItem(R.id.menu_import).setEnabled(mounted);
 		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
 
+		// Update filter count
+
+		// Get settings
+		boolean fUsed = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUsed, false, false);
+		boolean fInternet = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFInternet, false, false);
+		boolean fRestriction = PrivacyManager
+				.getSettingBool(null, 0, PrivacyManager.cSettingFRestriction, false, false);
+		boolean fPermission = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFPermission, true, false);
+		boolean fUser = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUser, true, false);
+		boolean fSystem = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFSystem, false, false);
+
+		// Count number of active filters
+		int numberOfFilters = 0;
+		if (fUsed)
+			numberOfFilters++;
+		if (fInternet)
+			numberOfFilters++;
+		if (fRestriction)
+			numberOfFilters++;
+		if (fPermission)
+			numberOfFilters++;
+		if (fUser)
+			numberOfFilters++;
+		if (fSystem)
+			numberOfFilters++;
+
+		if (numberOfFilters > 0) {
+			Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_filter).copy(
+					Bitmap.Config.ARGB_8888, true);
+
+			Paint paint = new Paint();
+			paint.setStyle(Style.FILL);
+			paint.setColor(Color.WHITE);
+			paint.setTextSize(30);
+
+			String text = Integer.toString(numberOfFilters);
+
+			Canvas canvas = new Canvas(bitmap);
+			canvas.drawText(text, bitmap.getWidth() - paint.measureText(text), 30, paint);
+
+			MenuItem fMenu = menu.findItem(R.id.menu_filter);
+			fMenu.setIcon(new BitmapDrawable(getResources(), bitmap));
+		}
+
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -500,27 +549,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			boolean fUser = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFUser, true, false);
 			boolean fSystem = PrivacyManager.getSettingBool(null, 0, PrivacyManager.cSettingFSystem, false, false);
 
-			// Filters title
-			// Count number of active filters
-			int numberOfFilters = 0;
-			if (etFilter.getText().length() > 0)
-				numberOfFilters++;
-			if (fUsed)
-				numberOfFilters++;
-			if (fInternet)
-				numberOfFilters++;
-			if (fRestriction)
-				numberOfFilters++;
-			if (fPermission)
-				numberOfFilters++;
-			if (fUser)
-				numberOfFilters++;
-			if (fSystem)
-				numberOfFilters++;
-
-			// tvFilterDetail.setText(getResources().getQuantityString(R.plurals.title_active_filters,
-			// numberOfFilters, numberOfFilters));
-
 			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(), fUsed,
 					fInternet, fRestriction, fRestrictionNot, fPermission, fUser, fSystem);
 			pbFilter.setVisibility(ProgressBar.VISIBLE);
@@ -531,6 +559,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			tvStateLayout.addRule(RelativeLayout.LEFT_OF, R.id.pbFilter);
 
 			mAppAdapter.getFilter().filter(filter);
+
+			invalidateOptionsMenu();
 		}
 	}
 

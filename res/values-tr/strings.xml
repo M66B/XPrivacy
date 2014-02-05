@@ -98,13 +98,6 @@
     <string name="restrict_view">Göster (tarayıcı)</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Engellemek için işaretle:</string>
-    <string name="title_filters">Filters</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 etkin filtre</item>
-        <item quantity="other">%d etkin filtre</item>
-    </plurals>
-
     <string name="title_fused">Filter on data usage</string>
     <string name="title_finternet">Filter on internet access</string>
     <string name="title_fpermission">Filter on permission</string>

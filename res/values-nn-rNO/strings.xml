@@ -97,13 +97,6 @@
     <string name="restrict_view">Betrakte (nettleser)</string>
     <string name="title_categories">Kategorier</string>
     <string name="title_restrict">Marker for å blokkere:</string>
-    <string name="title_filters">Filtere</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 filter aktivert</item>
-        <item quantity="other">%d filter aktivert</item>
-    </plurals>
-
     <string name="title_fused">Filtrer etter data bruk</string>
     <string name="title_finternet">Filtrer etter Internett bruk</string>
     <string name="title_fpermission">Filtrer etter tillatelse</string>

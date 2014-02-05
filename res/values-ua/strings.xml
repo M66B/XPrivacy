@@ -99,14 +99,6 @@
     <string name="restrict_view">Перегляд (браузер)</string>
     <string name="title_categories">Категорії</string>
     <string name="title_restrict">Позначте для заборони:</string>
-    <string name="title_filters">Фільтри</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 активний фільтр</item>
-        <item quantity="few">%d активних фільтра</item>
-        <item quantity="other">%d активних фільтров</item>
-    </plurals>
-
     <string name="title_fused">що використовують дані</string>
     <string name="title_finternet">з доступом до Інтернету</string>
     <string name="title_fpermission">з дозволами</string>

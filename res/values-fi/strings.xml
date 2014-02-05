@@ -98,13 +98,6 @@
     <string name="restrict_view">Katso (selaimessa)</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Valitse rajoittaaksesi:</string>
-    <string name="title_filters">Filters</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 aktiivinen suodatin</item>
-        <item quantity="other">%d aktiivista suodatinta</item>
-    </plurals>
-
     <string name="title_fused">Suodata datan käyttöön</string>
     <string name="title_finternet">Suodata internet yhteyksiin</string>
     <string name="title_fpermission">Suodata käyttöoikeuksiin</string>

@@ -99,13 +99,6 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="restrict_view">Visualizzazione (browser)</string>
     <string name="title_categories">Categorie</string>
     <string name="title_restrict">Spunta per limitare:</string>
-    <string name="title_filters">Filtri</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 filtro attivo</item>
-        <item quantity="other">%d filtri attivi</item>
-    </plurals>
-
     <string name="title_fused">Filtra per utilizzo dati</string>
     <string name="title_finternet">Filtra per accesso a internet</string>
     <string name="title_fpermission">Filtra per permesso</string>

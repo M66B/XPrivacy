@@ -99,13 +99,6 @@
     <string name="restrict_view">View (ब्राउज़र)</string>
     <string name="title_categories">श्रेणियाँ</string>
     <string name="title_restrict">प्रतिबंधित करने के लिए मार्क करे:</string>
-    <string name="title_filters">फिल्टर्स</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">१ सक्रिय फिल्टर</item>
-        <item quantity="other">%d सक्रिय फिल्टर</item>
-    </plurals>
-
     <string name="title_fused">डेटा उपयोग पर फिल्टर करे</string>
     <string name="title_finternet">इन्टरनेट उपयोग पर फिल्टर करे</string>
     <string name="title_fpermission">अनुमति के द्वारा फिल्टर करे</string>

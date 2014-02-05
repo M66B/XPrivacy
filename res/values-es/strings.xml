@@ -99,13 +99,6 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="restrict_view">Ver (navegador)</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Selecciona para restringir:</string>
-    <string name="title_filters">Filtros</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 filtro activo</item>
-        <item quantity="other">%d filtros activos</item>
-    </plurals>
-
     <string name="title_fused">Filtrar uso de datos</string>
     <string name="title_finternet">Filtrar acceso a Internet</string>
     <string name="title_fpermission">Filtrar permisos Android</string>

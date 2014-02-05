@@ -99,13 +99,6 @@
     <string name="restrict_view">Pahintulot sa Pagpapakita (ng Browser)</string>
     <string name="title_categories">Mga Pangkat</string>
     <string name="title_restrict">Lagyan ng Check para pahigpitan:</string>
-    <string name="title_filters">Mga Filters</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">Mga Filters: Iisa ang nakatakdang gumagana</item>
-        <item quantity="other">Mga Filters: %d ang nakatakdang gumagana</item>
-    </plurals>
-
     <string name="title_fused">Bigyan ng Filter at ipakita lamang sa mga Kaalaman na Nagamit</string>
     <string name="title_finternet">Bigyan ng Filter at ipakita lamang sa Pagdaan ng Internet</string>
     <string name="title_fpermission">Bigyan ng Filter at ipakita lamang sa mga may Pahintulot</string>

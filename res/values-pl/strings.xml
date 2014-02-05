@@ -99,14 +99,6 @@
     <string name="restrict_view">Widok (przeglądarka)</string>
     <string name="title_categories">Kategorie</string>
     <string name="title_restrict">Zaznacz aby zablokować:</string>
-    <string name="title_filters">Filtry</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 aktywny filtr</item>
-        <item quantity="few">%d aktywne filtry</item>
-        <item quantity="other">%d aktywnych filtrów</item>
-    </plurals>
-
     <string name="title_fused">Filtruj wg dostępu do danych</string>
     <string name="title_finternet">Filtruj wg dostępu do internetu</string>
     <string name="title_fpermission">Filtruj wg uprawnień</string>

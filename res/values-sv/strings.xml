@@ -99,13 +99,6 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="restrict_view">View (webbläsare)</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Markera för att blockera:</string>
-    <string name="title_filters">Filters</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 aktivt filter</item>
-        <item quantity="other">%d aktiva filter</item>
-    </plurals>
-
     <string name="title_fused">Filtrera efter använd data</string>
     <string name="title_finternet">Filtrera efter internetbehörighet</string>
     <string name="title_fpermission">Filtrera efter behörighet</string>

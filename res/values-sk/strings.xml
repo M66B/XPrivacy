@@ -99,14 +99,6 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
     <string name="title_categories">Kategórie</string>
     <string name="title_restrict">Zaškrtnite pre obmedzenie:</string>
-    <string name="title_filters">Filtre</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 aktívny filter</item>
-        <item quantity="few">%d aktívne filtre</item>
-        <item quantity="other">%d aktívnych filtrov</item>
-    </plurals>
-
     <string name="title_fused">Filter na využitie dát</string>
     <string name="title_finternet">Filter na prístup k internetu</string>
     <string name="title_fpermission">Filter na povolenie</string>

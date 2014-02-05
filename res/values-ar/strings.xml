@@ -99,13 +99,6 @@
     <string name="restrict_view">تصفح (المتصفح)</string>
     <string name="title_categories">الفئات</string>
     <string name="title_restrict">إختر للتقيد:</string>
-    <string name="title_filters">فلاتر</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 فلتر نشط</item>
-        <item quantity="other">%d فلاتر نشِطة</item>
-    </plurals>
-
     <string name="title_fused">التصفية حسب استخدام البيانات</string>
     <string name="title_finternet">التصفية حسب الوصول للإنترنت</string>
     <string name="title_fpermission">التصفية حسب الأُذونات</string>

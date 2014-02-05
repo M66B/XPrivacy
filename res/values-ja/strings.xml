@@ -99,13 +99,6 @@
     <string name="restrict_view">表示 (ブラウザ)</string>
     <string name="title_categories">カテゴリー</string>
     <string name="title_restrict">チェックで制限:</string>
-    <string name="title_filters">フィルター</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1個のフィルタ適用中</item>
-        <item quantity="other">%d個のフィルタ適用中</item>
-    </plurals>
-
     <string name="title_fused">データ使用有りを表示</string>
     <string name="title_finternet">ネットアクセス有りを表示</string>
     <string name="title_fpermission">権限有りを表示</string>

@@ -99,15 +99,6 @@
     <string name="restrict_view">Pogled (brskalnik)</string>
     <string name="title_categories">Kategorije</string>
     <string name="title_restrict">Označi za omejitev pravic:</string>
-    <string name="title_filters">Filterji</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 aktiven filter</item>
-        <item quantity="two">%d aktivna filtra</item>
-        <item quantity="few">%d aktivni filtri</item>
-        <item quantity="other">%d aktivnih filtrov</item>
-    </plurals>
-
     <string name="title_fused">Filtriraj po uporabi podatkov</string>
     <string name="title_finternet">Filtriraj po internetnem dostopu</string>
     <string name="title_fpermission">Filtriraj po pravicah</string>

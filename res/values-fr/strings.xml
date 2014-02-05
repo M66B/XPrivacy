@@ -99,13 +99,6 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_view">Vue (navigateur)</string>
     <string name="title_categories">Catégories</string>
     <string name="title_restrict">Cocher pour restreindre :</string>
-    <string name="title_filters">Filtres</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 filtre actif</item>
-        <item quantity="other">%d filtres actifs</item>
-    </plurals>
-
     <string name="title_fused">Filtrer utilisation des données</string>
     <string name="title_finternet">Filtrer ayant accès à internet</string>
     <string name="title_fpermission">Filtrer par permissions</string>

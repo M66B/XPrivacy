@@ -1306,7 +1306,7 @@ public class PrivacyService {
 						}
 					}
 				} catch (Throwable ignored) {
-					// The package manager may not up-to-date yet
+					// The package manager may not be up-to-date yet
 				}
 			return mXUid;
 		}

@@ -99,13 +99,6 @@
     <string name="restrict_view">Amharc (bhrabhsálaí)</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Seiceáil chun srian a chur ar:</string>
-    <string name="title_filters">Filters</string>
-
-    <plurals name="title_active_filters">
-        <item quantity="one">1 gníomhach scagaire</item>
-        <item quantity="other">%d scagairí atá gníomhach</item>
-    </plurals>
-
     <string name="title_fused">Scagaire ar úsáid sonraí</string>
     <string name="title_finternet">ar rochtain ar an idirlíon</string>
     <string name="title_fpermission">Scagaire ar chead</string>
