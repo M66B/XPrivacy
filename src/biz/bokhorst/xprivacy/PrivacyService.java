@@ -347,7 +347,7 @@ public class PrivacyService {
 		@Override
 		public PRestriction getRestriction(final PRestriction restriction, boolean usage, String secret)
 				throws RemoteException {
-			final PRestriction result = new PRestriction(restriction);
+			final PRestriction mresult = new PRestriction(restriction);
 
 			try {
 				// No permissions enforced, but usage data requires a secret
@@ -355,26 +355,26 @@ public class PrivacyService {
 				// Sanity checks
 				if (restriction.restrictionName == null) {
 					Util.log(null, Log.ERROR, "Get invalid restriction " + restriction);
-					return result;
+					return mresult;
 				}
 				if (usage && restriction.methodName == null) {
 					Util.log(null, Log.ERROR, "Get invalid restriction " + restriction);
-					return result;
+					return mresult;
 				}
 
 				// Check for self
 				if (Util.getAppId(restriction.uid) == getXUid()) {
 					if (PrivacyManager.cIdentification.equals(restriction.restrictionName)
 							&& "getString".equals(restriction.methodName))
-						return result;
+						return mresult;
 					if (PrivacyManager.cIPC.equals(restriction.restrictionName))
-						return result;
+						return mresult;
 					else if (PrivacyManager.cStorage.equals(restriction.restrictionName))
-						return result;
+						return mresult;
 					else if (PrivacyManager.cSystem.equals(restriction.restrictionName))
-						return result;
+						return mresult;
 					else if (PrivacyManager.cView.equals(restriction.restrictionName))
-						return result;
+						return mresult;
 				}
 
 				// Get meta data
@@ -383,11 +383,11 @@ public class PrivacyService {
 				// Check for system component
 				if (usage && !PrivacyManager.isApplication(restriction.uid))
 					if (!getSettingBool(0, PrivacyManager.cSettingSystem, false))
-						return result;
+						return mresult;
 
 				// Check if restrictions enabled
 				if (usage && !getSettingBool(restriction.uid, PrivacyManager.cSettingRestricted, true))
-					return result;
+					return mresult;
 
 				// Check cache
 				boolean cached = false;
@@ -397,13 +397,16 @@ public class PrivacyService {
 						if (mRestrictionCache.containsKey(key)) {
 							cached = true;
 							CRestriction cache = mRestrictionCache.get(key);
-							result.restricted = cache.restricted;
-							result.asked = cache.asked;
+							mresult.restricted = cache.restricted;
+							mresult.asked = cache.asked;
 						}
 					}
 				}
 
 				if (!cached) {
+					PRestriction cresult = new PRestriction(restriction);
+					cresult.methodName = null;
+
 					// No permissions required
 					SQLiteDatabase db = getDatabase();
 
@@ -424,8 +427,10 @@ public class PrivacyService {
 								stmtGetRestriction.bindString(2, restriction.restrictionName);
 								stmtGetRestriction.bindString(3, "");
 								long state = stmtGetRestriction.simpleQueryForLong();
-								result.restricted = ((state & 1) != 0);
-								result.asked = ((state & 2) != 0);
+								cresult.restricted = ((state & 1) != 0);
+								cresult.asked = ((state & 2) != 0);
+								mresult.restricted = cresult.restricted;
+								mresult.asked = cresult.asked;
 							}
 						} catch (SQLiteDoneException ignored) {
 						}
@@ -438,10 +443,10 @@ public class PrivacyService {
 									stmtGetRestriction.bindString(2, restriction.restrictionName);
 									stmtGetRestriction.bindString(3, restriction.methodName);
 									long state = stmtGetRestriction.simpleQueryForLong();
-									if (result.restricted)
-										result.restricted = ((state & 1) == 0);
-									if (!result.asked)
-										result.asked = ((state & 2) != 0);
+									if (mresult.restricted)
+										mresult.restricted = ((state & 1) == 0);
+									if (!mresult.asked)
+										mresult.asked = ((state & 2) != 0);
 								}
 							} catch (SQLiteDoneException ignored) {
 								// no change
@@ -453,33 +458,37 @@ public class PrivacyService {
 					}
 
 					// Fallback
-					if (!result.restricted && usage && PrivacyManager.isApplication(restriction.uid)
+					if (!mresult.restricted && usage && PrivacyManager.isApplication(restriction.uid)
 							&& !getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
 						if (hook != null && !hook.isDangerous()) {
-							result.restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
+							mresult.restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
 									restriction.restrictionName, restriction.methodName);
-							Util.log(null, Log.WARN, "Fallback " + result);
+							Util.log(null, Log.WARN, "Fallback " + mresult);
 						}
 					}
 
 					// Update cache
 					if (mUseCache) {
-						CRestriction key = new CRestriction(result);
+						CRestriction ckey = new CRestriction(cresult);
+						CRestriction mkey = new CRestriction(mresult);
 						synchronized (mRestrictionCache) {
-							if (mRestrictionCache.containsKey(key))
-								mRestrictionCache.remove(key);
-							mRestrictionCache.put(key, key);
+							if (mRestrictionCache.containsKey(ckey))
+								mRestrictionCache.remove(ckey);
+							mRestrictionCache.put(ckey, ckey);
+							if (mRestrictionCache.containsKey(mkey))
+								mRestrictionCache.remove(mkey);
+							mRestrictionCache.put(mkey, mkey);
 						}
 					}
 				}
 
 				// Media: notify user
-				if (result.restricted && usage && PrivacyManager.cMedia.equals(restriction.restrictionName))
+				if (mresult.restricted && usage && PrivacyManager.cMedia.equals(restriction.restrictionName))
 					notifyRestricted(restriction);
 
 				// Ask to restrict
-				if (!result.asked && usage && PrivacyManager.isApplication(restriction.uid))
-					onDemandDialog(hook, restriction, result);
+				if (!mresult.asked && usage && PrivacyManager.isApplication(restriction.uid))
+					onDemandDialog(hook, restriction, mresult);
 
 				// Log usage
 				if (usage && hook != null && hook.hasUsageData())
@@ -505,7 +514,7 @@ public class PrivacyService {
 											values.put("uid", restriction.uid);
 											values.put("restriction", restriction.restrictionName);
 											values.put("method", restriction.methodName);
-											values.put("restricted", result.restricted);
+											values.put("restricted", mresult.restricted);
 											values.put("time", new Date().getTime());
 											db.insertWithOnConflict(cTableUsage, null, values,
 													SQLiteDatabase.CONFLICT_REPLACE);
@@ -524,7 +533,7 @@ public class PrivacyService {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
-			return result;
+			return mresult;
 		}
 
 		@Override
@@ -995,23 +1004,13 @@ public class PrivacyService {
 						Util.log(null, Log.WARN, "On demanding " + restriction);
 
 						// Check if not asked before
-						boolean alreadyAsked = false;
 						CRestriction key = new CRestriction(restriction);
 						synchronized (mRestrictionCache) {
-							// Check method
 							if (mRestrictionCache.containsKey(key))
-								alreadyAsked = mRestrictionCache.get(key).asked;
-
-							// Check category
-							if (!alreadyAsked) {
-								key.methodName = null;
-								if (mRestrictionCache.containsKey(key))
-									alreadyAsked = mRestrictionCache.get(key).asked;
-							}
-						}
-						if (alreadyAsked) {
-							Util.log(null, Log.WARN, "Already asked " + restriction);
-							return;
+								if (mRestrictionCache.get(key).asked) {
+									Util.log(null, Log.WARN, "Already asked " + restriction);
+									return;
+								}
 						}
 
 						final AlertDialogHolder holder = new AlertDialogHolder();
