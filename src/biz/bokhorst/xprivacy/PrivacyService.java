@@ -1305,8 +1305,8 @@ public class PrivacyService {
 							mXUid = xInfo.uid;
 						}
 					}
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
+				} catch (Throwable ignored) {
+					// The package manager may not up-to-date yet
 				}
 			return mXUid;
 		}
