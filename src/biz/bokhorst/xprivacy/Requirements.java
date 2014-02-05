@@ -214,11 +214,13 @@ public class Requirements {
 
 				// Get services
 				Map<String, String> mapService = new HashMap<String, String>();
-				for (String service : (String[]) listServices.invoke(null)) {
-					IBinder binder = (IBinder) getService.invoke(null, service);
-					String description = binder.getInterfaceDescriptor();
-					mapService.put(service, description);
-				}
+				String[] services = (String[]) listServices.invoke(null);
+				if (services != null)
+					for (String service : services) {
+						IBinder binder = (IBinder) getService.invoke(null, service);
+						String description = binder.getInterfaceDescriptor();
+						mapService.put(service, description);
+					}
 
 				// Check services names
 				List<String> listMissing = new ArrayList<String>();
