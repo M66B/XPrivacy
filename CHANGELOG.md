@@ -47,6 +47,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Show shell command/library ([issue](/../../issues/1258))
 * Show account name/type ([issue](/../../issues/1258))
 * Show /proc/... ([issue](/../../issues/1258))
+* Limited usage data display to prevent crash
 * Updated traditional Chinese translation
 * Updated Japanese translation
 * Updated Lithuanian translation
