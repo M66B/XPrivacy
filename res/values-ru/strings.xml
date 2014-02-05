@@ -151,7 +151,7 @@
     <string name="help_attention">разрешения требуют внимания</string>
     <string name="help_restricted">разрешения изменены</string>
     <string name="help_shared">разрешения отправлены</string>
-    <string name="tutorial_mainheader">Выберите категорию для запрета; выберите видимые приложения с помощью фильтра</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Тапните по чекбоксу для запрета выбранной категории для приложения\n
 \nПриложения будут получать пустые или фальшивые данные для запрещенных категорий\n
 \nТапните по иконке приложения, чтобы увидеть подробные разрешения и настройки</string>

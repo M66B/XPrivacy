@@ -151,7 +151,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_attention">des restrictions ont besoin d\'attention</string>
     <string name="help_restricted">des restrictions sont changées</string>
     <string name="help_shared">les restrictions sont envoyées</string>
-    <string name="tutorial_mainheader">Choisir la catégorie à restreindre; choisir les applis à afficher avec les filtres</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Cocher une case pour restreindre la catégorie choisie pour l’appli\n
 \nL’appli sera dupée par des données vides ou modifiées\n
 \nAppuyer sur l’icône de l’appli pour les restrictions détaillées et les paramètres</string>

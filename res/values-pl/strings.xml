@@ -151,7 +151,7 @@
     <string name="help_attention">ograniczenia wymagają sprawdzenia</string>
     <string name="help_restricted">ograniczenia się zmieniły</string>
     <string name="help_shared">ogrniczenia zostały wysłane</string>
-    <string name="tutorial_mainheader">Wybierz kategorię do ograniczenia; wybierz widoczne aplikacje za pomocą filtrów</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Tapnij checkbox aby ograniczyć wybraną kategorię dla danej aplikacji\n
 \nDla ograniczonych kategorii aplikacjom będą podawane puste albo sfałszowane dane\n
 \nTapnij ikonę aplikacji aby uzyskać dostęp do szczegółowych ograniczeń i ustawień</string>

@@ -151,7 +151,7 @@
     <string name="help_attention">限制時需特別注意</string>
     <string name="help_restricted">規則已變更</string>
     <string name="help_shared">規則已上傳</string>
-    <string name="tutorial_mainheader">[分類]：依照APP調用之權限顯示。[篩選器]：依APP名稱或其他規則顯示。</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">點選勾選框可封鎖APP使無法取得敏感資訊或功能權限\n
      \n當特定資訊被封鎖時，該APP會接收到假資料或空白資料\n
      \n點選APP圖示可針對該APP做細部規則設定</string>

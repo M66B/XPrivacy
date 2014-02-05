@@ -151,7 +151,7 @@
     <string name="help_attention">قيود تحتاج لعناية</string>
     <string name="help_restricted">القيود التي تم تغييرها</string>
     <string name="help_shared">القيود تم تسجيلها</string>
-    <string name="tutorial_mainheader">إختر الفئة لتقييدها,إختر التطبيقات الظاهرة مع المرشحات</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">إلمس مربع الإختيار لتقييد الفئة المحددة للتطبيق\n
 \nوسوف يتم إعطاء بيانات فارغة أو وهمية للفئات المقيدة\n
 \nإلمس ايقونة التطبيق لتفاصيل القيود والإعدادات</string>

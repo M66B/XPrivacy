@@ -150,7 +150,7 @@
     <string name="help_attention">các sự hạn chế cần xem xét</string>
     <string name="help_restricted">các sự hạn chế đã được thay đổi</string>
     <string name="help_shared">các sự hạn chế đã được gửi đi</string>
-    <string name="tutorial_mainheader">Lựa chọn danh mục để hạn chế; chọn các ứng dụng hiển thị với các bộ lọc</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Tích vào một ô chọn để hạn chế danh mục đang được chọn cho một ứng dụng\n
 \nỨng dụng sẽ được nhập thông tin giả hoặc thông tin rỗng cho các danh mục bị hạn chế\n
 \nChọn vào biểu tượng của ứng dụng để xem chi tiết các thiết lập và các sự hạn chế</string>

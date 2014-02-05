@@ -151,7 +151,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="help_attention">Las restricciones requieren su atención</string>
     <string name="help_restricted">Restricciones cambiadas</string>
     <string name="help_shared">Restricciones subidas</string>
-    <string name="tutorial_mainheader">Seleciona la categoría que quieras restringir; elige las aplicaciones visibles con los filtros</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Pulsa un check box para restringir la categoría seleccionada para la aplicación\n
 \nLas aplicaciones no recibirán información o se les proporcionará información falsa\n
 \nPulsa el icono de la aplicación para ver las restricciones detalladas y algunas opciones</string>

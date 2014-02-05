@@ -149,7 +149,7 @@
     <string name="help_attention">restriksjoner trenger oppmerksomhet</string>
     <string name="help_restricted">restriksjoner ble forandret</string>
     <string name="help_shared">restriksjoner ble lastet opp</string> 
-    <string name="tutorial_mainheader">Velg kategorien som skal blokkeres; velg synlige apper med hjelp av filtere</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Sett hake for å blokkere kategorien som er valgt for en app\n
 \nApper får tom eller forfalsket data for kategorier som er blokkert\n
 \nTrykk på app ikonet for å se detaljerte restriksjoner og innstillinger

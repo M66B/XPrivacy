@@ -151,7 +151,7 @@
     <string name="help_attention">Beschränkungen benötigen Aufmerksamkeit</string>
     <string name="help_restricted">Beschränkungen wurden geändert</string>
     <string name="help_shared">Beschränkungen sind eingereicht</string>
-    <string name="tutorial_mainheader">Wählen Sie die zu beschränkende Kategorie; wählen Sie anzuzeigende Apps durch die Filter</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Tippen Sie auf ein Kontrollkästchen, um die ausgewählte Kategorie für eine App zu beschränken\n
 \nApps werden mit leeren oder gefälschten Daten für die beschränkten Kategorien "gefüttert" \n
 \nTippen Sie auf das App-Icon für detaillierte Beschränkungen und Einstellungen</string>

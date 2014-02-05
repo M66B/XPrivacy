@@ -151,7 +151,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="help_attention">Leidimams skirti dėmesį</string>
     <string name="help_restricted">Leidimai yra pakeisti</string>
     <string name="help_shared">Leidimai yra pateikti</string>
-    <string name="tutorial_mainheader">Pasirinkite kategoriją ribojimams; pasirinkti matomas programas su filtrais</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Bakstelėkite žymės langelį apriboti pasirinktą kategoriją\n
 \nProgramos bus įtrauktos ribojimų kategorijas\n
 \nBakstelėkite piktogramą išsamiems ribojimams ir parametrams</string>

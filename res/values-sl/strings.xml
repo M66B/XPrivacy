@@ -151,7 +151,7 @@
     <string name="help_attention">omejitve potrebujejo pozornost</string>
     <string name="help_restricted">omejitve so spremenjene</string>
     <string name="help_shared">omejitve so poslane</string>
-    <string name="tutorial_mainheader">Izberi kategorijo za omejevanje; izberi vidne aplikacije z uporabo filtrov</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Tapni na potrditveno polje za omejitev izbrane kategorije za aplikacije\n
 \nAplikacije bodo nahranjene s praznimi ali lažnimi podatki za omejene kotegorije\n
 \nTapni ikono aplikacije za podrobnejšo omejevanje in nastavljanje</string>

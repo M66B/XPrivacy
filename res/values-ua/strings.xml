@@ -151,7 +151,7 @@
     <string name="help_attention">обмеження потребують уваги</string>
     <string name="help_restricted">обмеження змінені</string>
     <string name="help_shared">обмеження відправлені</string>
-    <string name="tutorial_mainheader">Оберіть категорію для обмежень; оберіть видимі програми з фільтрами</string>
+    <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Натисніть чекбокс для застосування обмежень з обраної категоріі до програми\n
 \nПрограми будуть отримувати порожні або фальшиві дані для обраних категорій\n
 \nНатисніть іконку програми для детальних обмежень та налаштувань</string>
