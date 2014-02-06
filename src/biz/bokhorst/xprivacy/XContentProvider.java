@@ -67,9 +67,9 @@ public class XContentProvider extends XHook {
 		// Browser provider
 		else if (packageName.equals("com.android.browser")) {
 			listHook.add(new XContentProvider(PrivacyManager.cBrowser, "BrowserProvider",
-					"com.android.browser.provider.BrowserProvider"));
+					"com.android.browser.provider.BrowserProvider").optional());
 			listHook.add(new XContentProvider(PrivacyManager.cBrowser, "BrowserProvider2",
-					"com.android.browser.provider.BrowserProvider2"));
+					"com.android.browser.provider.BrowserProvider2").optional());
 		}
 
 		// Calendar provider
