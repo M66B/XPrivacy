@@ -47,6 +47,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed all issues reported with the support info
 * Fixed caching of category restrictions for on demand restricting
 * Clear category on change for on demand restricting
+* Fixed a few corner cases in on demand restricting logic
 * Remember last choice for *Apply to entire category* and *Once for ... seconds*
 * Clearing restriction from the application list will enable on demand restricting
 * Increased usage data list to maximum 500 entries (was 250 entries)
