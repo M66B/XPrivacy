@@ -258,4 +258,10 @@ public class Meta {
 		// @formatter:on
 		return listHook;
 	}
+
+	public static void annotate() {
+		// @formatter:off
+		PrivacyManager.getHook("accounts", "addOnAccountsUpdatedListener").annotate("<a href=\"http://developer.android.com/reference/android/accounts/AccountManager.html#addOnAccountsUpdatedListener(android.accounts.OnAccountsUpdateListener, android.os.Handler, boolean)\">Google documentation</a>");
+		// @formatter:on
+	}
 }

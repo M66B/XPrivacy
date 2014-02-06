@@ -27,6 +27,15 @@
             android:src="?attr/icon_granted" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imgInfo"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/help_application"
+        android:src="?attr/icon_info"
+        android:visibility="gone" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"

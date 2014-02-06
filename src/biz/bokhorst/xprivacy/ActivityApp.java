@@ -34,8 +34,10 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -46,6 +48,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
@@ -53,6 +56,7 @@ import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -1103,6 +1107,7 @@ public class ActivityApp extends Activity {
 			private int childPosition;
 			public ImageView imgUsed;
 			public ImageView imgGranted;
+			public ImageView imgInfo;
 			public CheckedTextView ctvMethodName;
 			private TextView tvOnDemand;
 
@@ -1112,6 +1117,7 @@ public class ActivityApp extends Activity {
 				childPosition = cPosition;
 				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
+				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
 				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 			}
@@ -1254,6 +1260,41 @@ public class ActivityApp extends Activity {
 
 			// Display if permissions
 			holder.imgGranted.setVisibility(View.INVISIBLE);
+
+			List<String> listAnnotation = md.getAnnotations();
+			if (listAnnotation.size() == 0)
+				holder.imgInfo.setVisibility(View.GONE);
+			else {
+				holder.imgInfo.setVisibility(View.VISIBLE);
+				holder.imgInfo.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						LayoutInflater inflator = LayoutInflater.from(ActivityApp.this);
+						View layout = inflator.inflate(R.layout.popup, null);
+
+						TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
+						tvTitle.setText(md.getName());
+
+						TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
+						tvInfo.setText(Html.fromHtml(TextUtils.join("<br />", md.getAnnotations())));
+						tvInfo.setMovementMethod(LinkMovementMethod.getInstance());
+
+						final PopupWindow popup = new PopupWindow(layout);
+						popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+						popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+
+						Button btnOk = (Button) layout.findViewById(R.id.btnOk);
+						btnOk.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								popup.dismiss();
+							}
+						});
+
+						popup.showAsDropDown(view);
+					}
+				});
+			}
 
 			// Display restriction
 			holder.ctvMethodName.setChecked(false);

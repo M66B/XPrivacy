@@ -178,6 +178,8 @@ public class PrivacyManager {
 								mPermission.get(aPermission).add(hook);
 						}
 			}
+
+		Meta.annotate();
 	}
 
 	public static void registerHook(String restrictionName, String methodName, int sdk) {
