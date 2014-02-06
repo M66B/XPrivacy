@@ -53,7 +53,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed all issues reported with the support info
 * Fixed caching of category restrictions for on demand restricting
 * Fixed a few corner cases in on demand restricting logic
-* Attempt to fix on demand dialog not appearing ([issue](/../../issues/1261))
+* Fixed on demand dialog not appearing ([issue](/../../issues/1261))
 * Set category to restricted on change for on demand restricting
 * Remember last choice for *Apply to entire category* and *Once for ... seconds*
 * Display on demand restriction status in application list
