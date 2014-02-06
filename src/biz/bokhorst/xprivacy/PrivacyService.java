@@ -410,6 +410,7 @@ public class PrivacyService {
 				if (!cached) {
 					PRestriction cresult = new PRestriction(restriction);
 					cresult.methodName = null;
+					boolean methodFound = false;
 
 					// No permissions required
 					SQLiteDatabase db = getDatabase();
@@ -453,17 +454,19 @@ public class PrivacyService {
 									// Category takes precedence
 									if (!mresult.asked)
 										mresult.asked = ((state & 2) != 0);
+									methodFound = true;
 								}
-							} catch (SQLiteDoneException ex) {
-								if (hook != null && hook.isDangerous())
-									if (!getSettingBool(0, PrivacyManager.cSettingDangerous, false))
-										mresult.restricted = false;
+							} catch (SQLiteDoneException ignored) {
 							}
 
 						db.setTransactionSuccessful();
 					} finally {
 						db.endTransaction();
 					}
+
+					if (!methodFound && hook != null && hook.isDangerous())
+						if (!getSettingBool(0, PrivacyManager.cSettingDangerous, false))
+							mresult.restricted = false;
 
 					// Fallback
 					if (!mresult.restricted && usage && PrivacyManager.isApplication(restriction.uid)
