@@ -83,12 +83,16 @@ public class XLocationManager extends XHook {
 		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods loc : Methods.values())
-			if (loc != Methods.addGeofence && loc != Methods.getLastLocation)
+			if (loc == Methods.addGeofence)
+				listHook.add(new XLocationManager(Methods.addGeofence, PrivacyManager.cLocation, className,
+						Build.VERSION_CODES.JELLY_BEAN_MR1));
+			else if (loc == Methods.getLastLocation)
+				listHook.add(new XLocationManager(Methods.getLastLocation, PrivacyManager.cLocation, className,
+						Build.VERSION_CODES.JELLY_BEAN_MR1));
+			else if (loc == Methods.removeUpdates)
+				listHook.add(new XLocationManager(loc, null, className));
+			else
 				listHook.add(new XLocationManager(loc, PrivacyManager.cLocation, className));
-		listHook.add(new XLocationManager(Methods.addGeofence, PrivacyManager.cLocation, className,
-				Build.VERSION_CODES.JELLY_BEAN_MR1));
-		listHook.add(new XLocationManager(Methods.getLastLocation, PrivacyManager.cLocation, className,
-				Build.VERSION_CODES.JELLY_BEAN_MR1));
 		return listHook;
 	}
 
@@ -103,8 +107,7 @@ public class XLocationManager extends XHook {
 				param.setResult(null);
 
 		} else if (mMethod == Methods.removeUpdates) {
-			if (isRestricted(param))
-				removeLocationListener(param);
+			removeLocationListener(param);
 
 		} else if (mMethod == Methods.requestLocationUpdates) {
 			if (isRestricted(param))
@@ -179,9 +182,7 @@ public class XLocationManager extends XHook {
 			LocationListener listener = (LocationListener) param.args[0];
 			synchronized (mListener) {
 				XLocationListener xlistener = mListener.get(listener);
-				if (xlistener == null)
-					Util.log(this, Log.WARN, "Not found count=" + mListener.size() + " uid=" + Binder.getCallingUid());
-				else {
+				if (xlistener != null) {
 					param.args[0] = xlistener;
 					mListener.remove(listener);
 				}

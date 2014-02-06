@@ -88,7 +88,7 @@ public class XAccountManager extends XHook {
 		listHook.add(new XAccountManager(Methods.getAuthToken, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.getAuthTokenByFeatures, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.hasFeatures, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, PrivacyManager.cAccounts, className));
+		listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, null, className));
 		return listHook;
 	}
 
@@ -110,16 +110,12 @@ public class XAccountManager extends XHook {
 
 		} else if (mMethod == Methods.removeOnAccountsUpdatedListener) {
 			if (param.args.length > 0 && param.args[0] != null)
-				if (isRestricted(param)) {
-					synchronized (mListener) {
-						OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
-						XOnAccountsUpdateListener xlistener = mListener.get(listener);
-						if (xlistener == null)
-							Util.log(this, Log.WARN, "Not found count=" + mListener.size());
-						else {
-							param.args[0] = xlistener;
-							mListener.remove(listener);
-						}
+				synchronized (mListener) {
+					OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
+					XOnAccountsUpdateListener xlistener = mListener.get(listener);
+					if (xlistener != null) {
+						param.args[0] = xlistener;
+						mListener.remove(listener);
 					}
 				}
 

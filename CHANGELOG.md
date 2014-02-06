@@ -57,6 +57,7 @@ Test and beta releases will have experimental functions enabled by default.
 	* Backup old database
 	* Create new, empty database
 	* The is default Android behavior
+* Automatically handle *removeOnAccountsUpdatedListener*, *removeUpdates* and *GMS.removeLocationUpdates*
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

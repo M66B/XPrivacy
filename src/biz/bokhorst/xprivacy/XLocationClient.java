@@ -50,7 +50,7 @@ public class XLocationClient extends XHook {
 		listHook.add(new XLocationClient(Methods.addGeofences, PrivacyManager.cLocation).optional());
 		listHook.add(new XLocationClient(Methods.getLastLocation, PrivacyManager.cLocation).optional());
 		listHook.add(new XLocationClient(Methods.removeGeofences, PrivacyManager.cLocation).optional());
-		listHook.add(new XLocationClient(Methods.removeLocationUpdates, PrivacyManager.cLocation).optional());
+		listHook.add(new XLocationClient(Methods.removeLocationUpdates, null).optional());
 		listHook.add(new XLocationClient(Methods.requestLocationUpdates, PrivacyManager.cLocation).optional());
 		return listHook;
 	}
@@ -60,14 +60,17 @@ public class XLocationClient extends XHook {
 		if (mMethod == Methods.addGeofences || mMethod == Methods.removeGeofences) {
 			if (isRestricted(param))
 				param.setResult(null);
+
 		} else if (mMethod == Methods.getLastLocation) {
 			// Do nothing
+
 		} else if (mMethod == Methods.removeLocationUpdates) {
-			if (isRestricted(param))
-				removeLocationListener(param);
+			removeLocationListener(param);
+
 		} else if (mMethod == Methods.requestLocationUpdates) {
 			if (isRestricted(param))
 				replaceLocationListener(param);
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
@@ -76,14 +79,18 @@ public class XLocationClient extends XHook {
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.addGeofences || mMethod == Methods.removeGeofences) {
 			// Do nothing
+
 		} else if (mMethod == Methods.getLastLocation) {
 			Location location = (Location) param.getResult();
 			if (location != null && isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
+
 		} else if (mMethod == Methods.removeLocationUpdates) {
 			// Do nothing
+
 		} else if (mMethod == Methods.requestLocationUpdates) {
 			// Do nothing
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
@@ -112,9 +119,7 @@ public class XLocationClient extends XHook {
 			LocationListener listener = (LocationListener) param.args[0];
 			synchronized (mListener) {
 				XLocationListener xlistener = mListener.get(listener);
-				if (xlistener == null)
-					Util.log(this, Log.WARN, "Not found count=" + mListener.size());
-				else {
+				if (xlistener != null) {
 					param.args[0] = xlistener;
 					mListener.remove(listener);
 				}
