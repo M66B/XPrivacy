@@ -1339,125 +1339,127 @@ public class PrivacyService {
 		}
 
 		private SQLiteDatabase getDatabase() {
-			// Check current reference
-			if (mDatabase != null && !mDatabase.isOpen()) {
-				mDatabase = null;
-				Util.log(null, Log.ERROR, "Database not open");
-			}
-
-			if (mDatabase == null)
-				try {
-					// Create/upgrade database when needed
-					File dbFile = getDbFile();
-					SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
-
-					// Check database integrity
-					if (db.isDatabaseIntegrityOk())
-						Util.log(null, Log.WARN, "Database integrity ok");
-					else {
-						// http://www.sqlite.org/howtocorrupt.html
-						Util.log(null, Log.ERROR, "Database corrupt");
-						Cursor cursor = db.rawQuery("PRAGMA integrity_check", null);
-						while (cursor.moveToNext()) {
-							String message = cursor.getString(0);
-							Util.log(null, Log.ERROR, message);
-						}
-					}
-
-					// Update migration status
-					if (db.getVersion() > 1) {
-						Util.log(null, Log.WARN, "Updating migration status");
-						db.beginTransaction();
-						try {
-							ContentValues values = new ContentValues();
-							values.put("uid", 0);
-							values.put("name", PrivacyManager.cSettingMigrated);
-							values.put("value", Boolean.toString(true));
-							db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-
-							db.setTransactionSuccessful();
-						} finally {
-							db.endTransaction();
-						}
-					}
-
-					// Upgrade database if needed
-					if (db.needUpgrade(1)) {
-						db.beginTransaction();
-						try {
-							// http://www.sqlite.org/lang_createtable.html
-							Util.log(null, Log.WARN, "Creating database");
-							db.execSQL("CREATE TABLE restriction (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL)");
-							db.execSQL("CREATE TABLE setting (uid INTEGER NOT NULL, name TEXT NOT NULL, value TEXT)");
-							db.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
-							db.execSQL("CREATE UNIQUE INDEX idx_restriction ON restriction(uid, restriction, method)");
-							db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, name)");
-							db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method)");
-							db.setVersion(1);
-							db.setTransactionSuccessful();
-						} finally {
-							db.endTransaction();
-						}
-
-					}
-
-					if (db.needUpgrade(2))
-						// Old migrated indication
-						db.setVersion(2);
-
-					if (db.needUpgrade(3)) {
-						db.beginTransaction();
-						try {
-							db.execSQL("DELETE FROM usage WHERE method=''");
-							db.setVersion(3);
-							db.setTransactionSuccessful();
-						} finally {
-							db.endTransaction();
-						}
-					}
-
-					if (db.needUpgrade(4)) {
-						db.beginTransaction();
-						try {
-							db.execSQL("DELETE FROM setting WHERE value IS NULL");
-							db.setVersion(4);
-							db.setTransactionSuccessful();
-						} finally {
-							db.endTransaction();
-						}
-					}
-
-					if (db.needUpgrade(5)) {
-						db.beginTransaction();
-						try {
-							db.execSQL("DELETE FROM setting WHERE value = ''");
-							db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
-							db.setVersion(5);
-							db.setTransactionSuccessful();
-						} finally {
-							db.endTransaction();
-						}
-					}
-
-					if (db.needUpgrade(6)) {
-						db.beginTransaction();
-						try {
-							db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
-							db.setVersion(6);
-							db.setTransactionSuccessful();
-						} finally {
-							db.endTransaction();
-						}
-					}
-
-					Util.log(null, Log.WARN, "Database version=" + db.getVersion());
-					mDatabase = db;
-				} catch (Throwable ex) {
-					mDatabase = null; // retry
-					Util.bug(null, ex);
+			synchronized (this) {
+				// Check current reference
+				if (mDatabase != null && !mDatabase.isOpen()) {
+					mDatabase = null;
+					Util.log(null, Log.ERROR, "Database not open");
 				}
 
-			return mDatabase;
+				if (mDatabase == null)
+					try {
+						// Create/upgrade database when needed
+						File dbFile = getDbFile();
+						SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
+
+						// Check database integrity
+						if (db.isDatabaseIntegrityOk())
+							Util.log(null, Log.WARN, "Database integrity ok");
+						else {
+							// http://www.sqlite.org/howtocorrupt.html
+							Util.log(null, Log.ERROR, "Database corrupt");
+							Cursor cursor = db.rawQuery("PRAGMA integrity_check", null);
+							while (cursor.moveToNext()) {
+								String message = cursor.getString(0);
+								Util.log(null, Log.ERROR, message);
+							}
+						}
+
+						// Update migration status
+						if (db.getVersion() > 1) {
+							Util.log(null, Log.WARN, "Updating migration status");
+							db.beginTransaction();
+							try {
+								ContentValues values = new ContentValues();
+								values.put("uid", 0);
+								values.put("name", PrivacyManager.cSettingMigrated);
+								values.put("value", Boolean.toString(true));
+								db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
+								db.setTransactionSuccessful();
+							} finally {
+								db.endTransaction();
+							}
+						}
+
+						// Upgrade database if needed
+						if (db.needUpgrade(1)) {
+							db.beginTransaction();
+							try {
+								// http://www.sqlite.org/lang_createtable.html
+								Util.log(null, Log.WARN, "Creating database");
+								db.execSQL("CREATE TABLE restriction (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL)");
+								db.execSQL("CREATE TABLE setting (uid INTEGER NOT NULL, name TEXT NOT NULL, value TEXT)");
+								db.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
+								db.execSQL("CREATE UNIQUE INDEX idx_restriction ON restriction(uid, restriction, method)");
+								db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, name)");
+								db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method)");
+								db.setVersion(1);
+								db.setTransactionSuccessful();
+							} finally {
+								db.endTransaction();
+							}
+
+						}
+
+						if (db.needUpgrade(2))
+							// Old migrated indication
+							db.setVersion(2);
+
+						if (db.needUpgrade(3)) {
+							db.beginTransaction();
+							try {
+								db.execSQL("DELETE FROM usage WHERE method=''");
+								db.setVersion(3);
+								db.setTransactionSuccessful();
+							} finally {
+								db.endTransaction();
+							}
+						}
+
+						if (db.needUpgrade(4)) {
+							db.beginTransaction();
+							try {
+								db.execSQL("DELETE FROM setting WHERE value IS NULL");
+								db.setVersion(4);
+								db.setTransactionSuccessful();
+							} finally {
+								db.endTransaction();
+							}
+						}
+
+						if (db.needUpgrade(5)) {
+							db.beginTransaction();
+							try {
+								db.execSQL("DELETE FROM setting WHERE value = ''");
+								db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
+								db.setVersion(5);
+								db.setTransactionSuccessful();
+							} finally {
+								db.endTransaction();
+							}
+						}
+
+						if (db.needUpgrade(6)) {
+							db.beginTransaction();
+							try {
+								db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
+								db.setVersion(6);
+								db.setTransactionSuccessful();
+							} finally {
+								db.endTransaction();
+							}
+						}
+
+						Util.log(null, Log.WARN, "Database version=" + db.getVersion());
+						mDatabase = db;
+					} catch (Throwable ex) {
+						mDatabase = null; // retry
+						Util.bug(null, ex);
+					}
+
+				return mDatabase;
+			}
 		}
 	};
 }
