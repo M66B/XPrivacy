@@ -96,7 +96,8 @@ public class Util {
 	}
 
 	public static void bug(XHook hook, Throwable ex) {
-		log(hook, Log.ERROR, ex.toString() + " uid=" + Process.myUid() + "\n" + Log.getStackTraceString(ex));
+		log(hook, ex instanceof OutOfMemoryError ? Log.WARN : Log.ERROR, ex.toString() + " uid=" + Process.myUid()
+				+ "\n" + Log.getStackTraceString(ex));
 	}
 
 	public static void logStack(XHook hook) {
