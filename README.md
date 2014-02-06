@@ -26,54 +26,18 @@ Index
 Description
 -----------
 
-XPrivacy can prevent applications from leaking privacy sensitive data.
-XPrivacy can restrict the categories of data an application can access.
-This is done by feeding an application with no or fake data.
-There are several data categories which can be restricted, for example *contacts* or *location*.
-For example, if you restrict access to contacts for an application,
-this will result in sending an empty contact list to the application.
-Similarly, restricting an application's access to your location
-will result in a fake location being sent to the application.
+XPrivacy can prevent applications from leaking privacy-sensitive data by restricting the categories of data an application can access. XPrivacy feeds applications fake data or no data at all. It can restrict several data categories, such as *contacts* or *location*. For example, if you restrict an application's access to contacts, that application will receive an empty contacts list. Similarly, restricting an application's access to your location will send a fake location to that application.
 
-XPrivacy doesn't revoke (i.e. block) permissions from an application,
-which means that most applications will continue to work as before and won't force close.
-There are two exceptions to this, access to the internet and to external storage (typically an SD card)
-is restricted by denying access (revoking permissions).
-There is no other way to implement this, since these permissions are handled by Android in a special way.
-Android delegates handling of these permission to the underlying Linux network/file system.
-XPrivacy will fake offline (internet) and/or unmounted (storage) state,
-but some applications try to access the internet/storage nevertheless,
-potentially resulting in crashes or error messages.
+XPrivacy doesn't revoke or block permissions from an application, so most applications will continue to work as before and won't force close (crash). There are two exceptions: access to the internet and to external storage (typically an SD card) are restricted by denying access (revoking permissions). There is no other way to restrict such access because Android delegates handling these permissions to the underlying Linux network/file system. XPrivacy can fake an offline (internet) and unmounted (storage) state, but some applications still try to access the internet and storage, potentially resulting in crashes or error messages. If restricting a category of data for an application causes that application to work badly, XPrivacy can once again allow access to the data category to solve the issue.
 
-If restricting a category of data for an application results in problems for the application,
-it is possible to allow access to the data category again to solve the issue.
+By default, all newly installed applications cannot access any data category, which prevents a new application from leaking sensitive data right after installing it. Shortly after installing a new application, XPrivacy will ask which data categories you want the new application to have access to.
+XPrivacy comes with an application browser that allows you to quickly enable or disable applications' access to any data category. You can edit all of an application's data categories.
 
-By default, all newly installed applications will have no access to any data category at all,
-to prevent a new application from leaking sensitive data right after installation.
-Shortly after installing a new application,
-XPrivacy will ask which data categories you want the new application to have access to.
-XPrivacy comes with an application browser,
-which allows you to quickly enable or disable applications' access to a particular data category
-for example to view your calendar.
-It is also possible to edit all data categories for one application.
+To help you identify potential data leaks, XPrivacy will monitor all applications' attempts to access sensitive data. An orange warning triangle icon will be displayed in XPrivacy when an attempt has been made to access data in a category. If an application has requested Android permissions to access data, XPrivacy will display a green key icon. XPrivacy will also display an internet icon if an application has internet access, which will make it clear that the application poses a risk of sharing data with an external server.
 
-To help you identify potential data leaks,
-XPrivacy will monitor attempts made by all applications to access sensitive data.
-XPrivacy will display an orange warning triangle icon as soon as data of a data category has been used.
-If an application has requested Android permissions to access data in a data category,
-this will be displayed with a green key icon.
-XPrivacy will also display if an application has internet access,
-indicating that the application poses a risk of sharing the data it obtains with an external server.
+XPrivacy is built using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), which it uses to tap into a vast number of carefully selected Android functions. Depending on the function, XPrivacy skips execution of the original function (for example when an application tries to set a proximity alert) or alters the result of the original function (for example to return an empty message list).
 
-XPrivacy is built using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401).
-XPrivacy taps into a vast number of carefully selected functions of Android through the Xposed framework.
-Depending on the function, XPrivacy conditionally skips execution of the original function
-(for example when an application tries to set a proximity alert)
-or alters the result of the original function (for example to return an empty message list).
-
-XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat),
-and is reported to work with most Android variants, including stock ROMs.
-Root access is needed to install the Xposed framework.
+XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat), and is reported to work with most Android variants, including stock ROMs. Root access is needed to install the Xposed framework.
 
 
 **XPrivacy was a lot of work, so please support this project**
@@ -82,7 +46,7 @@ Donate a few dollars for the [pro version](http://www.xprivacy.eu/)
 
 OR
 
-buy [the pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) from Google play
+buy [the pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) from Google Play Store
 
 OR
 
