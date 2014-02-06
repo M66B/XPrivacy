@@ -52,7 +52,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed caching of category restrictions for on demand restricting
 * Fixed a few corner cases in on demand restricting logic
 * Attempt to fix on demand dialog not appearing ([issue](/../../issues/1261))
-* Clear category on change to restricted for on demand restricting
+* Set category to restricted on change for on demand restricting
 * Remember last choice for *Apply to entire category* and *Once for ... seconds*
 * Display on demand restriction status in application list
 * Clearing restrictions from the application list will enable on demand restricting
@@ -60,11 +60,11 @@ Test and beta releases will have experimental functions enabled by default.
 * If a corrupt database is detected:
 	* Backup old database
 	* Create new, empty database
-	* The is default Android behavior
+	* This is default Android behavior
 * Automatically handle *removeOnAccountsUpdatedListener*, *removeUpdates* and *GMS.removeLocationUpdates*
 * Toggle will apply template and take into account dangerous functions ([issue](/../../issues/1266))
-* Notify usage for *Calling* and *Clipboard* category and *action.VIEW* (like for *Media* category)
-* Display account name when retrieving through Play services
+* Notify usage for *Calling* and *Clipboard* category and *action.VIEW* (like the *Media* category)
+* Display account name when retrieving accounts through Google Play services
 * Display URL for *View/loadUrl*
 * Fixed cursor blinking with an ugly hack
 * Updated Dutch translation
