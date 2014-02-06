@@ -39,7 +39,7 @@ public class XActivityManagerService extends XHook {
 	// 4.0.3+ final void finishBooting()
 	// 4.1+ public void setLockScreenShown(boolean shown)
 	// 4.0.3+ public void goingToSleep()
-	// 4.0.4+ public void wakingUp()
+	// 4.0.3+ public void wakingUp()
 	// 
 	// @formatter:on
 

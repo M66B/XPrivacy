@@ -330,13 +330,11 @@ public class PrivacyManager {
 		listRestriction.add(new PRestriction(uid, restrictionName, methodName, restricted, asked));
 
 		// Make exceptions for dangerous methods
-		boolean dangerous = getSettingBool(0, cSettingDangerous, false, false);
 		if (methodName == null)
-			if (restricted && !dangerous) {
+			if (!getSettingBool(0, cSettingDangerous, false, false))
 				for (Hook md : getHooks(restrictionName))
 					if (md.isDangerous())
-						listRestriction.add(new PRestriction(uid, restrictionName, md.getName(), dangerous, asked));
-			}
+						listRestriction.add(new PRestriction(uid, restrictionName, md.getName(), false, false));
 
 		setRestrictionList(listRestriction);
 

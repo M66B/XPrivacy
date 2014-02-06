@@ -1240,7 +1240,7 @@ public class PrivacyService {
 						boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 						for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
 							result.methodName = md.getName();
-							result.restricted = (restricted && !dangerous && md.isDangerous() ? false : restricted);
+							result.restricted = (md.isDangerous() && !dangerous ? false : restricted);
 							result.asked = false;
 							setRestrictionInternal(result);
 						}
