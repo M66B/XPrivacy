@@ -224,38 +224,40 @@ public class Requirements {
 						}
 					}
 
-				// Check services names
-				List<String> listMissing = new ArrayList<String>();
-				for (String service : XBinder.cListService)
-					if (!service.contains("iphonesubinfo"))
-						if (service.equals("telephony.registry") || service.equals("telephony.msim.registry")) {
-							if (!(mapService.containsKey("telephony.registry") || mapService
-									.containsKey("telephony.msim.registry")))
-								listMissing.add(service);
-						} else {
-							if (!mapService.containsKey(service))
-								listMissing.add(service);
-						}
+				if (mapService.size() > 0) {
+					// Check services names
+					List<String> listMissing = new ArrayList<String>();
+					for (String service : XBinder.cListService)
+						if (!service.contains("iphonesubinfo"))
+							if (service.equals("telephony.registry") || service.equals("telephony.msim.registry")) {
+								if (!(mapService.containsKey("telephony.registry") || mapService
+										.containsKey("telephony.msim.registry")))
+									listMissing.add(service);
+							} else {
+								if (!mapService.containsKey(service))
+									listMissing.add(service);
+							}
 
-				// Check service interfaces
-				for (String description : XBinder.cListDescription)
-					if (!description.contains("IPhoneSubInfo"))
-						if (description.startsWith("com.android.internal.telephony.ITelephonyRegistry")) {
-							if (!(mapService.containsValue("com.android.internal.telephony.ITelephonyRegistry") || mapService
-									.containsValue("com.android.internal.telephony.ITelephonyRegistryMSim")))
-								listMissing.add(description);
-						} else {
-							if (!mapService.containsValue(description))
-								listMissing.add(description);
-						}
+					// Check service interfaces
+					for (String description : XBinder.cListDescription)
+						if (!description.contains("IPhoneSubInfo"))
+							if (description.startsWith("com.android.internal.telephony.ITelephonyRegistry")) {
+								if (!(mapService.containsValue("com.android.internal.telephony.ITelephonyRegistry") || mapService
+										.containsValue("com.android.internal.telephony.ITelephonyRegistryMSim")))
+									listMissing.add(description);
+							} else {
+								if (!mapService.containsValue(description))
+									listMissing.add(description);
+							}
 
-				// Check result
-				if (listMissing.size() > 0) {
-					List<String> listService = new ArrayList<String>();
-					for (String service : mapService.keySet())
-						listService.add(String.format("%s: %s", service, mapService.get(service)));
-					sendSupportInfo("Missing:\r\n" + TextUtils.join("\r\n", listMissing) + "\r\n\r\nAvailable:\r\n"
-							+ TextUtils.join("\r\n", listService), context);
+					// Check result
+					if (listMissing.size() > 0) {
+						List<String> listService = new ArrayList<String>();
+						for (String service : mapService.keySet())
+							listService.add(String.format("%s: %s", service, mapService.get(service)));
+						sendSupportInfo("Missing:\r\n" + TextUtils.join("\r\n", listMissing) + "\r\n\r\nAvailable:\r\n"
+								+ TextUtils.join("\r\n", listService), context);
+					}
 				}
 			} catch (NoSuchMethodException ex) {
 				reportClass(clazz, context);
