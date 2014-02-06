@@ -44,6 +44,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.33 TEST**
+
 * Fixed all issues reported with the support info
 * Fixed caching of category restrictions for on demand restricting
 * Fixed a few corner cases in on demand restricting logic
@@ -65,8 +69,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed cursor blinking with an ugly hack
 * Updated Dutch translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.32 TEST**
 
