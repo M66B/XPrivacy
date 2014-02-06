@@ -26,47 +26,19 @@ Index
 Description
 -----------
 
-XPrivacy can prevent applications from leaking privacy-sensitive data by restricting the categories of data an application can access.
-XPrivacy feeds applications fake data or no data at all.
-It can restrict several data categories, such as *contacts* or *location*.
-For example, if you restrict an application's access to contacts,
-that application will receive an empty contacts list.
-Similarly, restricting an application's access to your location
-will send a fake location to that application.
+XPrivacy can prevent applications from leaking privacy-sensitive data by restricting the categories of data an application can access. XPrivacy feeds applications fake data or no data at all. It can restrict several data categories, such as *contacts* or *location*. For example, if you restrict an application's access to contacts, that application will receive an empty contacts list. Similarly, restricting an application's access to your location will send a fake location to that application.
 
-XPrivacy doesn't revoke or block permissions from an application,
-so most applications will continue to work as before and won't force close (crash).
-There are two exceptions: access to the internet and to external storage (typically an SD card)
-are restricted by denying access (revoking permissions).
-There is no other way to restrict such access because Android delegates handling these permissions to the underlying Linux network/file system.
-XPrivacy will fake an offline (internet) and unmounted (storage) state,
-but some applications still try to access the internet and storage,
-potentially resulting in crashes or error messages.
+XPrivacy doesn't revoke or block permissions from an application, so most applications will continue to work as before and won't force close (crash). There are two exceptions: access to the internet and to external storage (typically an SD card) are restricted by denying access (revoking permissions). There is no other way to restrict such access because Android delegates handling these permissions to the underlying Linux network/file system. XPrivacy will fake an offline (internet) and unmounted (storage) state, but some applications still try to access the internet and storage, potentially resulting in crashes or error messages. If restricting a category of data for an application causes that application to work badly, XPrivacy can once again allow access to the data category to solve the issue.
 
-If restricting a category of data for an application causes that application to work baddly,
-XPrivacy can once again allow access to the data category to solve the issue.
-
-By default, all newly installed applications have no access to any data category at all
-to prevent a new application from leaking sensitive data right after installing it.
-Shortly after installing a new application,
-XPrivacy will ask which data categories you want the new application to have access to.
+By default, all newly installed applications have no access to any data category at all to prevent a new application from leaking sensitive data right after installing it. Shortly after installing a new application, XPrivacy will ask which data categories you want the new application to have access to.
 XPrivacy comes with an application browser that allows you to quickly enable or disable applications' access to any data category, such as your calendary, for example. You can edit all of an application's data categories.
 
-To help you identify potential data leaks,
-XPrivacy will monitor all applications' attempts to access sensitive data.
-An orange warning triangle icon will be displayed in XPrivacy as soon as data in a category has been accessed.
-If an application has requested Android permissions to access data,
-XPrivacy will display a green key icon.
-XPrivacy will also display an internet icon if an application has internet access to make it clear the application poses a risk of sharing data with an external server.
+To help you identify potential data leaks, XPrivacy will monitor all applications' attempts to access sensitive data. An orange warning triangle icon will be displayed in XPrivacy as soon as data in a category has been accessed. If an application has requested Android permissions to access data,
+XPrivacy will display a green key icon. XPrivacy will also display an internet icon if an application has internet access to make it clear the application poses a risk of sharing data with an external server.
 
-XPrivacy is built using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), which it uses to tap into a vast number of carefully selected Android functions.
-Depending on the function, XPrivacy skips execution of the original function
-(for example when an application tries to set a proximity alert)
-or alters the result of the original function (for example to return an empty message list).
+XPrivacy is built using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), which it uses to tap into a vast number of carefully selected Android functions. Depending on the function, XPrivacy skips execution of the original function (for example when an application tries to set a proximity alert) or alters the result of the original function (for example to return an empty message list).
 
-XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat),
-and is reported to work with most Android variants, including stock ROMs.
-Root access is needed to install the Xposed framework.
+XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat), and is reported to work with most Android variants, including stock ROMs. Root access is needed to install the Xposed framework.
 
 
 **XPrivacy was a lot of work, so please support this project**
@@ -75,7 +47,7 @@ Donate a few dollars for the [pro version](http://www.xprivacy.eu/)
 
 OR
 
-buy [the pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) from Google play
+buy [the pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) from Google Play Store
 
 OR
 
