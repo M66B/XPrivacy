@@ -58,6 +58,7 @@ Test and beta releases will have experimental functions enabled by default.
 	* Create new, empty database
 	* The is default Android behavior
 * Automatically handle *removeOnAccountsUpdatedListener*, *removeUpdates* and *GMS.removeLocationUpdates*
+* Toggle will apply template and take into account dangerous functions ([issue](/../../issues/1266))
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

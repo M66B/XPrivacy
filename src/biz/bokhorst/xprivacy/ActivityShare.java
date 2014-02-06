@@ -635,12 +635,13 @@ public class ActivityShare extends Activity {
 					List<Boolean> oldState = PrivacyManager.getRestartStates(uid, null);
 					if (restriction == null && mSomeRestricted)
 						PrivacyManager.deleteRestrictions(uid, null);
-					else if (restriction == null) {
-						List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
-						for (String restrictionName : PrivacyManager.getRestrictions())
-							listPRestriction.add(new PRestriction(uid, restrictionName, null, !mSomeRestricted));
-						PrivacyManager.setRestrictionList(listPRestriction);
-					} else
+					else if (restriction == null)
+						for (String restrictionName : PrivacyManager.getRestrictions()) {
+							String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
+							if (PrivacyManager.getSettingBool(0, templateName, true, false))
+								PrivacyManager.setRestriction(uid, restrictionName, null, !mSomeRestricted, false);
+						}
+					else
 						PrivacyManager.setRestriction(uid, restriction, null, !mSomeRestricted, false);
 					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
 
