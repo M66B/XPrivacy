@@ -459,6 +459,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			case R.id.menu_all:
 				optionAll();
 				return true;
+			case R.id.menu_clear_db:
+				optionClearDB();
+				return true;
 			case R.id.menu_usage:
 				optionUsage();
 				return true;
@@ -491,9 +494,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				return true;
 			case R.id.menu_settings:
 				SettingsDialog.edit(ActivityMain.this, null);
-				return true;
-			case R.id.menu_clear_db:
-				optionClearDB();
 				return true;
 			case R.id.menu_about:
 				optionAbout();
@@ -577,6 +577,31 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		startActivity(intent);
 	}
 
+	private void optionClearDB() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
+		alertDialogBuilder.setTitle(R.string.menu_clear_db);
+		alertDialogBuilder.setMessage(R.string.msg_sure);
+		alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				try {
+					PrivacyService.getClient().clear();
+					ActivityMain.this.recreate();
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
 	private void optionUsage() {
 		Intent intent = new Intent(this, ActivityUsage.class);
 		startActivity(intent);
@@ -616,31 +641,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		});
 
 		// Show dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
-	}
-
-	private void optionClearDB() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
-		alertDialogBuilder.setTitle(R.string.menu_clear_db);
-		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				try {
-					PrivacyService.getClient().clear();
-					ActivityMain.this.recreate();
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 	}
