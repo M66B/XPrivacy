@@ -1226,7 +1226,7 @@ public class PrivacyService {
 			return alertDialogBuilder;
 		}
 
-		private void onDemandChoice(PRestriction restriction, boolean category, boolean restricted) {
+		private void onDemandChoice(PRestriction restriction, boolean category, boolean restrict) {
 			try {
 				PRestriction result = new PRestriction(restriction);
 
@@ -1239,10 +1239,13 @@ public class PrivacyService {
 						prevRestricted = mRestrictionCache.get(key).restricted;
 				}
 
-				if (category || (restricted && restricted != prevRestricted)) {
+				Util.log(null, Log.WARN, "On demand choice " + restriction + " category=" + category + "/"
+						+ prevRestricted + " restrict=" + restrict);
+
+				if (category || (restrict && restrict != prevRestricted)) {
 					// Set category restriction
 					result.methodName = null;
-					result.restricted = restricted;
+					result.restricted = restrict;
 					result.asked = category;
 					setRestrictionInternal(result);
 
@@ -1250,7 +1253,7 @@ public class PrivacyService {
 					boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 					for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
 						result.methodName = md.getName();
-						result.restricted = (md.isDangerous() && !dangerous ? false : restricted);
+						result.restricted = (md.isDangerous() && !dangerous ? false : restrict);
 						result.asked = category;
 						setRestrictionInternal(result);
 					}
@@ -1259,7 +1262,7 @@ public class PrivacyService {
 				if (!category) {
 					// Set method restriction
 					result.methodName = restriction.methodName;
-					result.restricted = restricted;
+					result.restricted = restrict;
 					result.asked = true;
 					setRestrictionInternal(result);
 				}
