@@ -212,11 +212,15 @@ public class PrivacyService {
 		private SQLiteStatement stmtGetUsageRestriction = null;
 		private SQLiteStatement stmtGetUsageMethod = null;
 
+		private boolean mSelectCategory = true;
+		private boolean mSelectOnce = false;
+
 		private Map<CSetting, CSetting> mSettingCache = new HashMap<CSetting, CSetting>();
 		private Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
 		private ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
+		private final int cMaxUsageData = 500; // entries
 		private final int cMaxOnDemandDialog = 10; // seconds
 
 		// Management
@@ -443,8 +447,10 @@ public class PrivacyService {
 									stmtGetRestriction.bindString(2, restriction.restrictionName);
 									stmtGetRestriction.bindString(3, restriction.methodName);
 									long state = stmtGetRestriction.simpleQueryForLong();
+									// Method can be excepted
 									if (mresult.restricted)
 										mresult.restricted = ((state & 1) == 0);
+									// Category takes precedence
 									if (!mresult.asked)
 										mresult.asked = ((state & 2) != 0);
 								}
@@ -670,7 +676,7 @@ public class PrivacyService {
 					else
 						try {
 							int count = 0;
-							while (count++ < 250 && cursor.moveToNext()) {
+							while (count++ < cMaxUsageData && cursor.moveToNext()) {
 								PRestriction data = new PRestriction();
 								data.uid = cursor.getInt(0);
 								data.restrictionName = cursor.getString(1);
@@ -1148,7 +1154,7 @@ public class PrivacyService {
 			// Category check box
 			final CheckBox cbCategory = new CheckBox(context);
 			cbCategory.setText(resources.getString(R.string.title_applycat));
-			cbCategory.setChecked(!dangerous);
+			cbCategory.setChecked(mSelectCategory);
 			LinearLayout.LayoutParams llCategoryParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			cbCategory.setLayoutParams(llCategoryParams);
@@ -1158,6 +1164,7 @@ public class PrivacyService {
 			final CheckBox cbOnce = new CheckBox(context);
 			cbOnce.setText(String.format(resources.getString(R.string.title_once),
 					PrivacyManager.cRestrictionCacheTimeoutMs / 1000));
+			cbOnce.setChecked(mSelectOnce);
 			LinearLayout.LayoutParams llOnceParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			cbOnce.setLayoutParams(llOnceParams);
@@ -1185,6 +1192,8 @@ public class PrivacyService {
 						public void onClick(DialogInterface dialog, int which) {
 							// Deny
 							result.restricted = true;
+							mSelectCategory = cbCategory.isChecked();
+							mSelectOnce = cbOnce.isChecked();
 							if (!cbOnce.isChecked())
 								onDemandChoice(restriction, cbCategory.isChecked(), true);
 							latch.countDown();
@@ -1196,6 +1205,8 @@ public class PrivacyService {
 						public void onClick(DialogInterface dialog, int which) {
 							// Allow
 							result.restricted = false;
+							mSelectCategory = cbCategory.isChecked();
+							mSelectOnce = cbOnce.isChecked();
 							if (!cbOnce.isChecked())
 								onDemandChoice(restriction, cbCategory.isChecked(), false);
 							latch.countDown();
@@ -1208,7 +1219,7 @@ public class PrivacyService {
 			try {
 				PRestriction result = new PRestriction(restriction);
 
-				// Get current category state
+				// Get current category restriction state
 				boolean prevRestricted = false;
 				CRestriction key = new CRestriction(restriction);
 				key.methodName = null;
@@ -1217,63 +1228,31 @@ public class PrivacyService {
 						prevRestricted = mRestrictionCache.get(key).restricted;
 				}
 
-				if (category) {
+				if (category || restricted != prevRestricted) {
 					// Set category restriction
 					result.methodName = null;
 					result.restricted = restricted;
-					result.asked = true;
+					result.asked = category;
 					setRestrictionInternal(result);
 
-					// Make exceptions for dangerous methods
-					// if no previously restricted
-					if (restricted && !prevRestricted) {
+					// Clear category on change
+					if (restricted != prevRestricted) {
 						boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
-						if (restricted && !dangerous) {
-							for (Hook md : PrivacyManager.getHooks(restriction.restrictionName))
-								if (md.isDangerous()) {
-									result.methodName = md.getName();
-									result.restricted = false;
-									result.asked = false;
-									setRestrictionInternal(result);
-								}
+						for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
+							result.methodName = md.getName();
+							result.restricted = (restricted && !dangerous && md.isDangerous() ? false : restricted);
+							result.asked = false;
+							setRestrictionInternal(result);
 						}
 					}
-				} else {
-					if (restricted == prevRestricted) {
-						// Set method restriction
-						result.methodName = restriction.methodName;
-						result.restricted = restricted;
-						result.asked = true;
-						setRestrictionInternal(result);
-					} else {
-						// Change category restriction
-						result.methodName = null;
-						result.restricted = restricted;
-						result.asked = false; // Ask other methods
-						setRestrictionInternal(result);
+				}
 
-						// Make exceptions for dangerous methods
-						if (restricted) {
-							boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
-							if (restricted && !dangerous) {
-								for (Hook md : PrivacyManager.getHooks(restriction.restrictionName))
-									if (md.isDangerous()) {
-										result.methodName = md.getName();
-										result.restricted = false;
-										result.asked = false;
-										setRestrictionInternal(result);
-									}
-							}
-						}
-
-						// Set method restriction
-						result.methodName = restriction.methodName;
-						result.restricted = restricted;
-						result.asked = true;
-						setRestrictionInternal(result);
-
-						// Other methods are untouched
-					}
+				if (!category) {
+					// Set method restriction
+					result.methodName = restriction.methodName;
+					result.restricted = restricted;
+					result.asked = true;
+					setRestrictionInternal(result);
 				}
 
 				// Mark state as changed

@@ -15,24 +15,40 @@ Test and beta releases will have experimental functions enabled by default.
 
 **On demand restricting logic**
 
-* The dialog will appear if the category and the function was not asked for yet (has a question mark)
+* The dialog will appear if:
+	* On demand restricting is enabled in the main settings
+	* On demand restricting is enabled in the application settings
+	* The category and the function were not asked for yet (has a question mark)
+	* The function is not excepted (only *Phone/Configuration.MCC/MNC*)
+	* The function is not dangerous or if *Restrict dangerous functions* is enabled
+	* The application is a user application or if *Restrict dangerous functions* is enabled
 * *Apply to entire category* will:
 	* Set the category to be asked for
 	* Apply the choice (deny/allow) to the category only
-* When applying to a function (*Apply to entire category* not checked):
+	* If the choice doesn't match the current category restriction:
+		* The function exceptions are reset and set to be not asked for
+* When applying to a function only (*Apply to entire category* not checked):
 	* If the choice matches the current category restriction:
 		* The function is set to be asked for
 		* The choice is applied to the function only
 	* If the choice doesn't match the current category restriction:
 		* The category is set to be not asked for
-			* This will result in the other functions to be asked for if not done before
 		* The choice is applied to the category
+		* All functions are set to match the category and to be not asked for
 		* The function is set to be asked for
 		* The choice is applied to the function
 * If *Restrict dangerous functions* is disabled (the default):
-	* Any category change to restricted will result in exceptions for dangerous functions set to be not asked for
+	* Any category change to restricted will result in exceptions for dangerous functions:
+		* Set to be not asked for
+		* Set to be not restricted
 
 **Next release**
+
+* Fixed all issues reported with the support info
+* Fixed caching of category restrictions for on demand restricting
+* Clear category on change for on demand restricting
+* Remember last choice for *Apply to entire category* and *Once for ... seconds*
+* Increased usage data list to maximum 500 entries (was 250 entries)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
