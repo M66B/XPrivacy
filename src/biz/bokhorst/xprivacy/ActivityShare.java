@@ -582,6 +582,7 @@ public class ActivityShare extends Activity {
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			mProgressDialog.setProgressNumberFormat(null);
 			mProgressDialog.setCancelable(false);
+			mProgressDialog.setCanceledOnTouchOutside(false);
 			mProgressDialog.show();
 		}
 

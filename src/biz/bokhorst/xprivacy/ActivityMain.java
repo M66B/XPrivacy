@@ -976,6 +976,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			mProgressDialog.setProgressNumberFormat(null);
 			mProgressDialog.setCancelable(false);
+			mProgressDialog.setCanceledOnTouchOutside(false);
 			mProgressDialog.show();
 		}
 
