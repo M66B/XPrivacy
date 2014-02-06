@@ -40,6 +40,7 @@ import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -1291,7 +1292,7 @@ public class ActivityApp extends Activity {
 							}
 						});
 
-						popup.showAsDropDown(view);
+						popup.showAtLocation(view, Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
 					}
 				});
 			}
