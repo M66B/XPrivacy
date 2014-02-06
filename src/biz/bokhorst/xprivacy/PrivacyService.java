@@ -1241,7 +1241,7 @@ public class PrivacyService {
 					for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
 						result.methodName = md.getName();
 						result.restricted = (md.isDangerous() && !dangerous ? false : restricted);
-						result.asked = false;
+						result.asked = category;
 						setRestrictionInternal(result);
 					}
 				}
