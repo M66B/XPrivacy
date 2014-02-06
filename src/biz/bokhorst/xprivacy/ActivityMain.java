@@ -373,13 +373,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (PrivacyService.getClient() == null)
-			return false;
-		else {
+		if (PrivacyService.checkClient()) {
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.main, menu);
 			return true;
-		}
+		} else
+			return false;
 	}
 
 	@Override

@@ -69,6 +69,7 @@
             android:layout_centerVertical="true"
             android:text="@string/msg_question"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"
             android:visibility="invisible" />
 
         <TextView

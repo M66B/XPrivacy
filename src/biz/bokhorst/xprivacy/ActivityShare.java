@@ -136,7 +136,7 @@ public class ActivityShare extends Activity {
 		final String restriction = (extras != null ? extras.getString(cRestriction) : null);
 		// TODO: show localized restriction name
 
-		// Licence check
+		// License check
 		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)) {
 			if (!Util.isProEnabled() && Util.hasProLicense(this) == null) {
 				Util.viewUri(this, ActivityMain.cProUri);

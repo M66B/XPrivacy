@@ -50,6 +50,7 @@
         android:gravity="center_vertical"
         android:text="@string/msg_question"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold"
         android:visibility="invisible" />
 
 </LinearLayout>
