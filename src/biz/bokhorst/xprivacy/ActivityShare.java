@@ -168,7 +168,6 @@ public class ActivityShare extends Activity {
 
 		// Set layout
 		setContentView(R.layout.sharelist);
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		// Set title
 		if (action.equals(ACTION_TOGGLE)) {
