@@ -1232,14 +1232,12 @@ public class PrivacyService {
 					setRestrictionInternal(result);
 
 					// Clear category on change
-					if (restricted && restricted != prevRestricted) {
-						boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
-						for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
-							result.methodName = md.getName();
-							result.restricted = (md.isDangerous() && !dangerous ? false : restricted);
-							result.asked = false;
-							setRestrictionInternal(result);
-						}
+					boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+					for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
+						result.methodName = md.getName();
+						result.restricted = (md.isDangerous() && !dangerous ? false : restricted);
+						result.asked = false;
+						setRestrictionInternal(result);
 					}
 				}
 
