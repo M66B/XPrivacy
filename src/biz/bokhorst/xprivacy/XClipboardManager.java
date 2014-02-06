@@ -60,9 +60,11 @@ public class XClipboardManager extends XHook {
 				|| mMethod == Methods.getText) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(null);
+
 		} else if (mMethod == Methods.hasPrimaryClip || mMethod == Methods.hasText) {
 			if (isRestricted(param))
 				param.setResult(false);
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

@@ -44,6 +44,7 @@ public class XInputDevice extends XHook {
 		if (mMethod == Methods.getDescriptor) {
 			if (isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "DeviceDescriptor"));
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

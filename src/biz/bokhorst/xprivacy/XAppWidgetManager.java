@@ -44,6 +44,7 @@ public class XAppWidgetManager extends XHook {
 		if (mMethod == Methods.getInstalledProviders) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<AppWidgetProviderInfo>());
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

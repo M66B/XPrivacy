@@ -46,6 +46,7 @@ public class XEnvironment extends XHook {
 		if (mMethod == Methods.getExternalStorageState) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(Environment.MEDIA_UNMOUNTED);
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

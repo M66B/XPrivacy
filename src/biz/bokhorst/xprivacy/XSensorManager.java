@@ -48,9 +48,11 @@ public class XSensorManager extends XHook {
 		if (mMethod == Methods.getDefaultSensor) {
 			if (isRestricted(param))
 				param.setResult(null);
+
 		} else if (mMethod == Methods.getSensorList) {
 			if (isRestricted(param))
 				param.setResult(new ArrayList<Sensor>());
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

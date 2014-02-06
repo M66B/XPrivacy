@@ -48,6 +48,7 @@ public class XCamera extends XHook {
 				|| mMethod == Methods.setOneShotPreviewCallback || mMethod == Methods.takePicture) {
 			if (isRestricted(param))
 				param.setResult(null);
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

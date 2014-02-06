@@ -53,9 +53,11 @@ public class XIoBridge extends XHook {
 					if (fileName.startsWith(component[0]) && fileName.endsWith(component[1]))
 						if (isRestricted(param, mFileName))
 							param.setThrowable(new FileNotFoundException());
+
 				} else if (mFileName.equals("/proc")) {
 					if (isRestrictedExtra(param, mFileName, fileName))
 						param.setThrowable(new FileNotFoundException());
+
 				} else {
 					if (isRestricted(param, mFileName))
 						param.setThrowable(new FileNotFoundException());

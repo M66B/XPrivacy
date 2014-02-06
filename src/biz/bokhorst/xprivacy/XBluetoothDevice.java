@@ -45,6 +45,7 @@ public class XBluetoothDevice extends XHook {
 		if (mMethod == Methods.getAddress) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC"));
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

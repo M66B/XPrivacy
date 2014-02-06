@@ -50,9 +50,11 @@ public class XConnectivityManager extends XHook {
 		if (mMethod == Methods.getActiveNetworkInfo || mMethod == Methods.getNetworkInfo) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(null);
+
 		} else if (mMethod == Methods.getAllNetworkInfo) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new NetworkInfo[0]);
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

@@ -45,6 +45,7 @@ public class XContextImpl extends XHook {
 			Object instance = param.getResult();
 			if (instance != null)
 				XPrivacy.handleGetSystemService(this, "PackageManager", instance);
+
 		} else if (mMethod == Methods.getSystemService) {
 			if (param.args.length > 0 && param.args[0] != null) {
 				String name = (String) param.args[0];
@@ -52,6 +53,7 @@ public class XContextImpl extends XHook {
 				if (name != null && instance != null)
 					XPrivacy.handleGetSystemService(this, name, instance);
 			}
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

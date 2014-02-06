@@ -75,11 +75,13 @@ public class XRuntime extends XHook {
 					if (isRestrictedExtra(param, command))
 						param.setThrowable(new IOException());
 			}
+
 		} else if (mMethod == Methods.load || mMethod == Methods.loadLibrary) {
 			// Skip pre Android
 			if (Process.myUid() > 0)
 				if (isRestrictedExtra(param, (String) param.args[0]))
 					param.setResult(new UnsatisfiedLinkError());
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

@@ -231,6 +231,7 @@ public class XContentProvider extends XHook {
 						param.setResult(result);
 						cursor.close();
 					}
+
 				} else {
 					if (isRestricted(param)) {
 						// Return empty cursor

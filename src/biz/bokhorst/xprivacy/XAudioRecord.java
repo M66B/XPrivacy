@@ -39,6 +39,7 @@ public class XAudioRecord extends XHook {
 		if (mMethod == Methods.startRecording) {
 			if (isRestricted(param))
 				param.setResult(null);
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

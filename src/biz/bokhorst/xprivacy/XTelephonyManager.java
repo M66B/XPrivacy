@@ -170,21 +170,27 @@ public class XTelephonyManager extends XHook {
 			if (mMethod == Methods.getAllCellInfo) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(new ArrayList<CellInfo>());
+
 			} else if (mMethod == Methods.getCellLocation) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(CellLocation.getEmpty());
+
 			} else if (mMethod == Methods.getIsimImpu) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), mMethod.name()));
+
 			} else if (mMethod == Methods.getNeighboringCellInfo) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(new ArrayList<NeighboringCellInfo>());
+
 			} else if (mMethod == Methods.getNetworkType) {
 				if (isRestricted(param))
 					param.setResult(TelephonyManager.NETWORK_TYPE_UNKNOWN);
+
 			} else if (mMethod == Methods.getPhoneType) {
 				if (isRestricted(param))
 					param.setResult(TelephonyManager.PHONE_TYPE_GSM); // IMEI
+
 			} else {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), mMethod.name()));

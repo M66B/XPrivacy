@@ -54,12 +54,15 @@ public class XWebView extends XHook {
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.WebView || mMethod == Methods.getSettings) {
 			// Do nothing
+
 		} else if (mMethod == Methods.loadUrl) {
-			if (isRestricted(param)) {
-				String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
-				WebView webView = (WebView) param.thisObject;
-				webView.getSettings().setUserAgentString(ua);
-			}
+			if (param.args.length > 0)
+				if (isRestrictedExtra(param, (String) param.args[0])) {
+					String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
+					WebView webView = (WebView) param.thisObject;
+					webView.getSettings().setUserAgentString(ua);
+				}
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
@@ -75,8 +78,10 @@ public class XWebView extends XHook {
 					webView.getSettings().setUserAgentString(ua);
 				}
 			}
+
 		} else if (mMethod == Methods.loadUrl) {
 			// Do nothing
+
 		} else if (mMethod == Methods.getSettings) {
 			if (param.getResult() != null) {
 				Class<?> clazz = param.getResult().getClass();
@@ -85,6 +90,7 @@ public class XWebView extends XHook {
 					XPrivacy.hookAll(XWebSettings.getInstances(param.getResult()), getSecret());
 				}
 			}
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

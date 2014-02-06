@@ -74,8 +74,10 @@ public class XNetworkInterface extends XHook {
 					|| mMethod == Methods.getNetworkInterfaces) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(null);
+
 			} else
 				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+
 		} else if (getRestrictionName().equals(PrivacyManager.cNetwork)) {
 			// Network
 			NetworkInterface ni = (NetworkInterface) param.thisObject;
@@ -86,6 +88,7 @@ public class XNetworkInterface extends XHook {
 						long lMac = Long.parseLong(mac.replace(":", ""), 16);
 						byte[] address = ByteBuffer.allocate(8).putLong(lMac).array();
 						param.setResult(address);
+
 					} else if (mMethod == Methods.getInetAddresses) {
 						@SuppressWarnings("unchecked")
 						Enumeration<InetAddress> addresses = (Enumeration<InetAddress>) param.getResult();
@@ -97,6 +100,7 @@ public class XNetworkInterface extends XHook {
 								listAddress.add((InetAddress) PrivacyManager.getDefacedProp(Binder.getCallingUid(),
 										"InetAddress"));
 						param.setResult(Collections.enumeration(listAddress));
+
 					} else if (mMethod == Methods.getInterfaceAddresses) {
 						@SuppressWarnings("unchecked")
 						List<InterfaceAddress> listAddress = (List<InterfaceAddress>) param.getResult();
@@ -119,6 +123,7 @@ public class XNetworkInterface extends XHook {
 								Util.bug(this, ex);
 							}
 						}
+
 					} else
 						Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 		}

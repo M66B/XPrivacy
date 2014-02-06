@@ -68,6 +68,7 @@ public class XWifiManager extends XHook {
 		if (mMethod == Methods.getConfiguredNetworks) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<WifiConfiguration>());
+
 		} else if (mMethod == Methods.getConnectionInfo) {
 			if (param.getResult() != null && isRestricted(param)) {
 				WifiInfo wInfo = (WifiInfo) param.getResult();
@@ -79,6 +80,7 @@ public class XWifiManager extends XHook {
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
 					}
+
 				} else {
 					// BSSID
 					try {
@@ -135,12 +137,15 @@ public class XWifiManager extends XHook {
 				dInfo.dns2 = dInfo.ipAddress;
 				dInfo.serverAddress = dInfo.ipAddress;
 			}
+
 		} else if (mMethod == Methods.getScanResults) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ScanResult>());
+
 		} else if (mMethod == Methods.getWifiApConfiguration) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(null);
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

@@ -36,9 +36,9 @@ public class Meta {
 		listHook.add(new Hook("calling", "android.intent.action.CALL", "CALL_PHONE", 10, null, null).doNotify());
 
 		listHook.add(new Hook("clipboard", "addPrimaryClipChangedListener", "", 11, null, null));
-		listHook.add(new Hook("clipboard", "getPrimaryClip", "", 11, null, null));
+		listHook.add(new Hook("clipboard", "getPrimaryClip", "", 11, null, null).doNotify());
 		listHook.add(new Hook("clipboard", "getPrimaryClipDescription", "", 11, null, null));
-		listHook.add(new Hook("clipboard", "getText", "", 10, null, null));
+		listHook.add(new Hook("clipboard", "getText", "", 10, null, null).doNotify());
 		listHook.add(new Hook("clipboard", "hasPrimaryClip", "", 11, null, null));
 		listHook.add(new Hook("clipboard", "hasText", "", 10, null, null));
 		listHook.add(new Hook("clipboard", "removePrimaryClipChangedListener", "", 11, null, null));

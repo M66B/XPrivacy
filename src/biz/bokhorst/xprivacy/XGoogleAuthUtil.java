@@ -51,8 +51,10 @@ public class XGoogleAuthUtil extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.getToken || mMethod == Methods.getTokenWithNotification) {
-			if (param.getResult() != null && isRestricted(param))
-				param.setThrowable(new IOException());
+			if (param.args.length > 1)
+				if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[1]))
+					param.setThrowable(new IOException());
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

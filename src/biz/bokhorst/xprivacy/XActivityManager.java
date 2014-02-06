@@ -51,15 +51,19 @@ public class XActivityManager extends XHook {
 		if (mMethod == Methods.getRecentTasks) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ActivityManager.RecentTaskInfo>());
+
 		} else if (mMethod == Methods.getRunningAppProcesses) {
 			if (param.getResult() != null && isRestricted(param))
+
 				param.setResult(new ArrayList<ActivityManager.RunningAppProcessInfo>());
 		} else if (mMethod == Methods.getRunningServices) {
 			if (param.getResult() != null && isRestricted(param))
+
 				param.setResult(new ArrayList<ActivityManager.RunningServiceInfo>());
 		} else if (mMethod == Methods.getRunningTasks) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ActivityManager.RunningTaskInfo>());
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

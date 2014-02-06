@@ -62,24 +62,29 @@ public class XWebSettings extends XHook {
 				String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 				param.setResult(ua);
 			}
+
 		} else if (mMethod == Methods.getUserAgent) {
 			if (isRestricted(param))
 				param.setResult(-1); // User defined
+
 		} else if (mMethod == Methods.getUserAgentString) {
 			if (isRestricted(param)) {
 				String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 				param.setResult(ua);
 			}
+
 		} else if (mMethod == Methods.setUserAgent) {
 			if (param.args.length > 0)
 				if (isRestricted(param))
 					param.args[0] = -1; // User defined
+
 		} else if (mMethod == Methods.setUserAgentString) {
 			if (param.args.length > 0)
 				if (isRestricted(param)) {
 					String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 					param.args[0] = ua;
 				}
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

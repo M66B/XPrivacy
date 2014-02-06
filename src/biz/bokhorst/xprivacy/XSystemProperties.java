@@ -75,9 +75,11 @@ public class XSystemProperties extends XHook {
 				if (mMethod == Methods.get) {
 					if (param.getResult() != null && isRestricted(param, mPropertyName))
 						param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), mPropertyName));
+
 				} else if (param.args.length > 1) {
 					if (isRestricted(param, mPropertyName))
 						param.setResult(param.args[1]);
+
 				} else
 					Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

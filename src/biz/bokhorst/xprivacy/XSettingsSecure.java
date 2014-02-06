@@ -52,6 +52,7 @@ public class XSettingsSecure extends XHook {
 			if (Settings.Secure.ANDROID_ID.equals(name))
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "ANDROID_ID"));
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

@@ -73,18 +73,22 @@ public class XPackageManager extends XHook {
 		if (mMethod == Methods.getInstalledApplications) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(filterApplicationInfo((List<ApplicationInfo>) param.getResult()));
+
 		} else if (mMethod == Methods.getInstalledPackages || mMethod == Methods.getPackagesHoldingPermissions
 				|| mMethod == Methods.getPreferredPackages) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(filterPackageInfo((List<PackageInfo>) param.getResult()));
+
 		} else if (mMethod == Methods.queryBroadcastReceivers || mMethod == Methods.queryIntentActivities
 				|| mMethod == Methods.queryIntentActivityOptions || mMethod == Methods.queryIntentContentProviders
 				|| mMethod == Methods.queryIntentServices) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(filterResolveInfo((List<ResolveInfo>) param.getResult()));
+
 		} else if (mMethod == Methods.queryContentProviders) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}

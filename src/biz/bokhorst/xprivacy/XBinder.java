@@ -80,11 +80,13 @@ public class XBinder extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (mMethod == Methods.execTransact) {
+		if (mMethod == Methods.execTransact)
 			checkIPC(param);
-		} else if (mMethod == Methods.transact) {
+
+		else if (mMethod == Methods.transact)
 			markIPC(param);
-		} else
+
+		else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 

@@ -43,6 +43,7 @@ public class XAdvertisingIdClientInfo extends XHook {
 		if (mMethod == Methods.getId) {
 			if (isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "AdvertisingId"));
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
