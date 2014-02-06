@@ -31,7 +31,7 @@ Test and beta releases will have experimental functions enabled by default.
 	* If the choice matches the current category restriction:
 		* The function is set to be asked for
 		* The choice is applied to the function only
-	* If the choice doesn't match the current category restriction:
+	* If the choice doesn't match the current category restriction and was deny:
 		* The category is set to be not asked for
 		* The choice is applied to the category
 		* All functions are set to match the category and to be not asked for
