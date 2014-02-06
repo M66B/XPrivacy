@@ -38,7 +38,7 @@ XPrivacy doesn't revoke or block permissions from an application,
 so most applications will continue to work as before and won't force close (crash).
 There are two exceptions: access to the internet and to external storage (typically an SD card)
 are restricted by denying access (revoking permissions).
-There is no other way to restrict such access because Android delegates handling these permission to the underlying Linux network/file system.
+There is no other way to restrict such access because Android delegates handling these permissions to the underlying Linux network/file system.
 XPrivacy will fake an offline (internet) and unmounted (storage) state,
 but some applications still try to access the internet and storage,
 potentially resulting in crashes or error messages.
