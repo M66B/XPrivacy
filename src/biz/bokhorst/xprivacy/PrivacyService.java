@@ -1358,10 +1358,29 @@ public class PrivacyService {
 							// http://www.sqlite.org/howtocorrupt.html
 							Util.log(null, Log.ERROR, "Database corrupt");
 							Cursor cursor = db.rawQuery("PRAGMA integrity_check", null);
-							while (cursor.moveToNext()) {
-								String message = cursor.getString(0);
-								Util.log(null, Log.ERROR, message);
+							try {
+								while (cursor.moveToNext()) {
+									String message = cursor.getString(0);
+									Util.log(null, Log.ERROR, message);
+								}
+							} finally {
+								cursor.close();
 							}
+							db.close();
+
+							// Backup database file
+							File dbBackup = new File(dbFile.getParentFile() + File.separator + "xprivacy.backup");
+							dbBackup.delete();
+							dbFile.renameTo(dbBackup);
+
+							File dbJournal = new File(dbFile.getAbsolutePath() + "-journal");
+							File dbJournalBackup = new File(dbBackup.getAbsolutePath() + "-journal");
+							dbJournalBackup.delete();
+							dbJournal.renameTo(dbJournalBackup);
+
+							// Create new database
+							db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
+							Util.log(null, Log.ERROR, "Database reset");
 						}
 
 						// Update migration status
