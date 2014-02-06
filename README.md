@@ -26,14 +26,14 @@ Index
 Description
 -----------
 
-XPrivacy can prevent applications from leaking privacy sensitive data.
+XPrivacy can prevent applications from leaking privacy-sensitive data.
 XPrivacy can restrict the categories of data an application can access.
-This is done by feeding an application with no or fake data.
-There are several data categories which can be restricted, for example *contacts* or *location*.
-For example, if you restrict access to contacts for an application,
-this will result in sending an empty contact list to the application.
+XPrivacy feeds applications fake data or no data at all.
+XPrivacy can restrict several data categories. For example, *contacts* or *location*.
+For example, if you restrict an application's access to contacts,
+that application will receive an empty contact list.
 Similarly, restricting an application's access to your location
-will result in a fake location being sent to the application.
+will send a fake location to that application.
 
 XPrivacy doesn't revoke (i.e. block) permissions from an application,
 which means that most applications will continue to work as before and won't force close.
