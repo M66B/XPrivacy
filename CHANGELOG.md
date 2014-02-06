@@ -59,6 +59,7 @@ Test and beta releases will have experimental functions enabled by default.
 	* The is default Android behavior
 * Automatically handle *removeOnAccountsUpdatedListener*, *removeUpdates* and *GMS.removeLocationUpdates*
 * Toggle will apply template and take into account dangerous functions ([issue](/../../issues/1266))
+* Notify usage for *Calling* category and *android.intent.action.VIEW* (like for *Media* category)
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

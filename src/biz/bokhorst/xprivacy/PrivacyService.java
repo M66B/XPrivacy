@@ -495,7 +495,7 @@ public class PrivacyService {
 				}
 
 				// Media: notify user
-				if (mresult.restricted && usage && PrivacyManager.cMedia.equals(restriction.restrictionName))
+				if (mresult.restricted && usage && hook != null && hook.shouldNotify())
 					notifyRestricted(restriction);
 
 				// Ask to restrict

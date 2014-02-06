@@ -7,6 +7,7 @@ public class Hook implements Comparable<Hook> {
 	private boolean mRestart;
 	private boolean mNoUsageData;
 	private boolean mNoOnDemand;
+	private boolean mNotify;
 	private String[] mPermissions;
 	private int mSdk;
 	private Version mFrom;
@@ -24,6 +25,7 @@ public class Hook implements Comparable<Hook> {
 		mRestart = false;
 		mNoUsageData = false;
 		mNoOnDemand = false;
+		mNotify = false;
 		mPermissions = (permissions == null ? null : permissions.split(","));
 		mSdk = sdk;
 		mFrom = (from == null ? null : new Version(from));
@@ -47,6 +49,11 @@ public class Hook implements Comparable<Hook> {
 
 	public Hook noOnDemand() {
 		mNoOnDemand = true;
+		return this;
+	}
+
+	public Hook doNotify() {
+		mNotify = true;
 		return this;
 	}
 
@@ -78,6 +85,10 @@ public class Hook implements Comparable<Hook> {
 
 	public boolean canOnDemand() {
 		return !mNoOnDemand;
+	}
+
+	public boolean shouldNotify() {
+		return mNotify;
 	}
 
 	public String[] getPermissions() {

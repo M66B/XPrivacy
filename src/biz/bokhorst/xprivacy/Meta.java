@@ -29,11 +29,11 @@ public class Meta {
 
 		listHook.add(new Hook("calendar", "CalendarProvider2", "READ_CALENDAR", 10, null, null));
 
-		listHook.add(new Hook("calling", "sendDataMessage", "SEND_SMS", 4, null, null));
-		listHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null));
-		listHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null));
-		listHook.add(new Hook("calling", "android.intent.action.RESPOND_VIA_MESSAGE", "SEND_RESPOND_VIA_MESSAGE", 18, null, null));
-		listHook.add(new Hook("calling", "android.intent.action.CALL", "CALL_PHONE", 10, null, null));
+		listHook.add(new Hook("calling", "sendDataMessage", "SEND_SMS", 4, null, null).doNotify());
+		listHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).doNotify());
+		listHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).doNotify());
+		listHook.add(new Hook("calling", "android.intent.action.RESPOND_VIA_MESSAGE", "SEND_RESPOND_VIA_MESSAGE", 18, null, null).doNotify());
+		listHook.add(new Hook("calling", "android.intent.action.CALL", "CALL_PHONE", 10, null, null).doNotify());
 
 		listHook.add(new Hook("clipboard", "addPrimaryClipChangedListener", "", 11, null, null));
 		listHook.add(new Hook("clipboard", "getPrimaryClip", "", 11, null, null));
@@ -124,15 +124,15 @@ public class Meta {
 		listHook.add(new Hook("location", "GMS.removeGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
 		listHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
 
-		listHook.add(new Hook("media", "startRecording", "RECORD_AUDIO", 10, null, null));
-		listHook.add(new Hook("media", "setPreviewCallback", "CAMERA", 10, null, null));
-		listHook.add(new Hook("media", "setPreviewCallbackWithBuffer", "CAMERA", 10, null, null));
-		listHook.add(new Hook("media", "setOneShotPreviewCallback", "CAMERA", 10, null, null));
-		listHook.add(new Hook("media", "takePicture", "CAMERA", 10, null, null));
-		listHook.add(new Hook("media", "setOutputFile", "RECORD_AUDIO,RECORD_VIDEO", 10, null, null));
-		listHook.add(new Hook("media", "android.media.action.IMAGE_CAPTURE", "CAMERA", 10, null, null));
-		listHook.add(new Hook("media", "android.media.action.IMAGE_CAPTURE_SECURE", "CAMERA", 17, null, null));
-		listHook.add(new Hook("media", "android.media.action.VIDEO_CAPTURE", "CAMERA", 10, null, null));
+		listHook.add(new Hook("media", "startRecording", "RECORD_AUDIO", 10, null, null).doNotify());
+		listHook.add(new Hook("media", "setPreviewCallback", "CAMERA", 10, null, null).doNotify());
+		listHook.add(new Hook("media", "setPreviewCallbackWithBuffer", "CAMERA", 10, null, null).doNotify());
+		listHook.add(new Hook("media", "setOneShotPreviewCallback", "CAMERA", 10, null, null).doNotify());
+		listHook.add(new Hook("media", "takePicture", "CAMERA", 10, null, null).doNotify());
+		listHook.add(new Hook("media", "setOutputFile", "RECORD_AUDIO,RECORD_VIDEO", 10, null, null).doNotify());
+		listHook.add(new Hook("media", "android.media.action.IMAGE_CAPTURE", "CAMERA", 10, null, null).doNotify());
+		listHook.add(new Hook("media", "android.media.action.IMAGE_CAPTURE_SECURE", "CAMERA", 17, null, null).doNotify());
+		listHook.add(new Hook("media", "android.media.action.VIDEO_CAPTURE", "CAMERA", 10, null, null).doNotify());
 
 		listHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null));
 		listHook.add(new Hook("messages", "SmsProvider", "READ_SMS", 10, null, null));
@@ -254,7 +254,7 @@ public class Meta {
 		listHook.add(new Hook("view", "getUserAgentString", "", 1, null, null));
 		listHook.add(new Hook("view", "setUserAgent", "", 1, null, null));
 		listHook.add(new Hook("view", "setUserAgentString", "", 1, null, null));
-		listHook.add(new Hook("view", "android.intent.action.VIEW", "", 10, null, null));
+		listHook.add(new Hook("view", "android.intent.action.VIEW", "", 10, null, null).doNotify());
 		// @formatter:on
 		return listHook;
 	}
