@@ -238,7 +238,9 @@ public class Util {
 				os.flush();
 				os.close();
 
-				out.setWritable(false);
+				// Protect license file
+				setPermissions(out.getAbsolutePath(), 0700, Process.myUid(), Process.myUid());
+
 				licenseFile.delete();
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -426,7 +428,7 @@ public class Util {
 		return (packageManager.queryIntentActivities(intent, PackageManager.GET_ACTIVITIES).size() > 0);
 	}
 
-	public static void setPermission(String path, int mode, int uid, int gid) {
+	public static void setPermissions(String path, int mode, int uid, int gid) {
 		try {
 			// frameworks/base/core/java/android/os/FileUtils.java
 			Class<?> fileUtils = Class.forName("android.os.FileUtils");
