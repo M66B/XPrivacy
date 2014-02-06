@@ -454,8 +454,10 @@ public class PrivacyService {
 									if (!mresult.asked)
 										mresult.asked = ((state & 2) != 0);
 								}
-							} catch (SQLiteDoneException ignored) {
-								// no change
+							} catch (SQLiteDoneException ex) {
+								if (hook != null && hook.isDangerous())
+									if (!getSettingBool(0, PrivacyManager.cSettingDangerous, false))
+										mresult.restricted = false;
 							}
 
 						db.setTransactionSuccessful();
