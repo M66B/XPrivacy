@@ -115,6 +115,7 @@
     <string name="title_once">Once for %1$s seconds</string>
     <string name="title_allow">允許</string>
     <string name="title_deny">封鎖</string>
+    <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="settings_serial">序號</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">經度</string>

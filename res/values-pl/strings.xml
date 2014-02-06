@@ -115,6 +115,7 @@
     <string name="title_once">Raz na %1$s sekund</string>
     <string name="title_allow">Pozwól</string>
     <string name="title_deny">Zabroń</string>
+    <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>

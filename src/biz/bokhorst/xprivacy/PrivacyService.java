@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteStatement;
+import android.graphics.Typeface;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
@@ -1170,6 +1171,15 @@ public class PrivacyService {
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			cbOnce.setLayoutParams(llOnceParams);
 			llContainer.addView(cbOnce);
+
+			// Message
+			TextView tvPlease = new TextView(context);
+			tvPlease.setText(resources.getString(R.string.title_pleasesubmit));
+			tvPlease.setTypeface(null, Typeface.ITALIC);
+			LinearLayout.LayoutParams tvPleaseParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			tvPlease.setLayoutParams(tvPleaseParams);
+			llContainer.addView(tvPlease);
 
 			// Progress bar
 			ProgressBar pbProgress = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);

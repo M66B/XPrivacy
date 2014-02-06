@@ -115,6 +115,7 @@
     <string name="title_once">Once for %1$s seconds</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
+    <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="settings_serial">Ang iyong Seryal#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longhitud</string>
