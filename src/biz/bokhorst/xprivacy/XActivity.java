@@ -135,7 +135,6 @@ public class XActivity extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.getSystemService) {
-			// TODO: check if this hook is needed
 			if (param.args.length > 0 && param.args[0] != null) {
 				String name = (String) param.args[0];
 				Object instance = param.getResult();

@@ -77,8 +77,6 @@ public class XLocationManager extends XHook {
 	};
 	// @formatter:on
 
-	// TODO: tie removeUpdates to requestLocationUpdates
-
 	public static List<XHook> getInstances(Object instance) {
 		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();

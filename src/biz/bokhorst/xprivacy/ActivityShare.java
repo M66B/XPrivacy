@@ -197,6 +197,7 @@ public class ActivityShare extends Activity {
 
 		// Allow users to remove apps from list
 		// TODO: replace by swipe left/right
+		// http://stackoverflow.com/questions/18585345/swipe-to-delete-a-listview-item
 		if (mInteractive)
 			registerForContextMenu(lvShare);
 
