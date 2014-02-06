@@ -421,13 +421,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 			Paint paint = new Paint();
 			paint.setStyle(Style.FILL);
-			paint.setColor(Color.WHITE);
+			paint.setColor(Color.GRAY);
 			paint.setTextSize(bitmap.getWidth() / 3);
 
 			String text = Integer.toString(numberOfFilters);
 
 			Canvas canvas = new Canvas(bitmap);
-			canvas.drawText(text, bitmap.getWidth() - paint.measureText(text), bitmap.getWidth() / 3, paint);
+			canvas.drawText(text, bitmap.getWidth() - paint.measureText(text), bitmap.getHeight(), paint);
 
 			MenuItem fMenu = menu.findItem(R.id.menu_filter);
 			fMenu.setIcon(new BitmapDrawable(getResources(), bitmap));
