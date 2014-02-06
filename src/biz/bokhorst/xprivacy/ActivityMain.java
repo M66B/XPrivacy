@@ -422,6 +422,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			paint.setStyle(Style.FILL);
 			paint.setColor(Color.GRAY);
 			paint.setTextSize(bitmap.getWidth() / 3);
+			paint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 
 			String text = Integer.toString(numberOfFilters);
 
