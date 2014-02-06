@@ -61,6 +61,15 @@
                 android:layout_marginRight="3dip"
                 android:orientation="horizontal" >
 
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" >
+
+                    <requestFocus />
+                </LinearLayout>
+
                 <EditText
                     android:id="@+id/etFilter"
                     android:layout_width="match_parent"

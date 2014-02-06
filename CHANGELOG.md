@@ -62,6 +62,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Notify usage for *Calling* and *Clipboard* category and *action.VIEW* (like for *Media* category)
 * Display account name when retrieving through Play services
 * Display URL for *View/loadUrl*
+* Fixed cursor blinking with an ugly hack
 * Updated Dutch translation
 * Updated Lithuanian translation
 
