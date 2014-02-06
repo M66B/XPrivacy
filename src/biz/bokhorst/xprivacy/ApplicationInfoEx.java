@@ -184,7 +184,10 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	public int getUid() {
 		// All listed uid's are the same
-		return mMapAppInfo.firstEntry().getValue().uid;
+		if (mMapAppInfo.size() > 0)
+			return mMapAppInfo.firstEntry().getValue().uid;
+		else
+			return -1;
 	}
 
 	public int getState(Context context) {
@@ -257,8 +260,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	@Override
 	public String toString() {
 		// All uid's are the same
-		return String.format("%d %s", mMapAppInfo.firstEntry().getValue().uid,
-				TextUtils.join(", ", getApplicationName()));
+		return String.format("%d %s", getUid(), TextUtils.join(", ", getApplicationName()));
 	}
 
 	@Override
