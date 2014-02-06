@@ -27,7 +27,7 @@ Description
 -----------
 
 XPrivacy can prevent applications from leaking privacy-sensitive data by restricting the categories of data an application can access.
-XPrivacy feeds applications fake data or no data at all
+XPrivacy feeds applications fake data or no data at all.
 It can restrict several data categories, such as *contacts* or *location*.
 For example, if you restrict an application's access to contacts,
 that application will receive an empty contacts list.
