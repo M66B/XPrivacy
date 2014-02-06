@@ -1378,9 +1378,11 @@ public class PrivacyService {
 							dbJournalBackup.delete();
 							dbJournal.renameTo(dbJournalBackup);
 
+							Util.log(null, Log.ERROR, "Old database backup: " + dbBackup.getAbsolutePath());
+
 							// Create new database
 							db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
-							Util.log(null, Log.ERROR, "Database reset");
+							Util.log(null, Log.ERROR, "New, empty database created");
 						}
 
 						// Update migration status

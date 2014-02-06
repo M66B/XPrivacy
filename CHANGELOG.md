@@ -53,6 +53,10 @@ Test and beta releases will have experimental functions enabled by default.
 * Display on demand restriction status in application list
 * Clearing restrictions from the application list will enable on demand restricting
 * Increased usage data list to maximum 500 entries (was 250 entries)
+* If a corrupt database is detected:
+	* Backup old database
+	* Create new, empty database
+	* The is default Android behavior
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
