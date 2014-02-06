@@ -148,7 +148,7 @@ public class XActivityManagerService extends XHook {
 		int uid = -1;
 		try {
 			Class<?> pr = Class.forName("com.android.server.am.ProcessRecord");
-			if (param.args.length > 0 && param.args[0].getClass().equals(pr)) {
+			if (param.args.length > 0 && param.args[0] != null && param.args[0].getClass().equals(pr)) {
 				uid = (Integer) pr.getDeclaredField("uid").get(param.args[0]);
 			}
 		} catch (ClassNotFoundException ignored) {
