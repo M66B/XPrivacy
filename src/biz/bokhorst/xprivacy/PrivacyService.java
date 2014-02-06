@@ -1027,8 +1027,6 @@ public class PrivacyService {
 							@Override
 							public void run() {
 								try {
-									int userId = Util.getUserId(restriction.uid);
-
 									AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
 											dangerous, result, context, latch);
 									AlertDialog alertDialog = builder.create();
@@ -1226,7 +1224,7 @@ public class PrivacyService {
 						prevRestricted = mRestrictionCache.get(key).restricted;
 				}
 
-				if (category || restricted != prevRestricted) {
+				if (category || (restricted && restricted != prevRestricted)) {
 					// Set category restriction
 					result.methodName = null;
 					result.restricted = restricted;
@@ -1234,7 +1232,7 @@ public class PrivacyService {
 					setRestrictionInternal(result);
 
 					// Clear category on change
-					if (restricted != prevRestricted) {
+					if (restricted && restricted != prevRestricted) {
 						boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 						for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
 							result.methodName = md.getName();
