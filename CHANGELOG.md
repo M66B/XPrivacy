@@ -44,11 +44,9 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* New icon for filter, thanks @[danielmmmm](https://github.com/danielmmmm)
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 1.99.33 TEST**
+**Version 1.99.33-3 TEST**
 
 * Fixed all issues reported with the support info
 * Fixed caching of category restrictions for on demand restricting
@@ -69,6 +67,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Display account name when retrieving accounts through Google Play services
 * Display URL for *View/loadUrl*
 * Fixed cursor blinking with an ugly hack
+* New icon for filter, thanks @[danielmmmm](https://github.com/danielmmmm)
 * Updated Dutch translation
 * Updated Lithuanian translation
 
