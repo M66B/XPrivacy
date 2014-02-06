@@ -134,6 +134,7 @@ public class ActivityShare extends Activity {
 		final String action = getIntent().getAction();
 		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 		final String restriction = (extras != null ? extras.getString(cRestriction) : null);
+		// TODO: show localized restriction name
 
 		// Licence check
 		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)) {
