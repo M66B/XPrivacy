@@ -48,6 +48,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed caching of category restrictions for on demand restricting
 * Clear category on change for on demand restricting
 * Remember last choice for *Apply to entire category* and *Once for ... seconds*
+* Clearing restriction from the application list will enable on demand restricting
 * Increased usage data list to maximum 500 entries (was 250 entries)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

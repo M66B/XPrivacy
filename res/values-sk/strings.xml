@@ -141,6 +141,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_syscomponents">Obmedziť systémové komponenty (Android) (vyžadovaný reštart)</string>
     <string name="settings_usagedata">Zobraziť využitie dát aplikácie (vyžadovaný reštart)</string>
     <string name="help_longpress">Long press name to select</string>
+    <string name="help_ondemand">restrictions will be asked</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>

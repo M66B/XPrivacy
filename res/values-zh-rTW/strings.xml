@@ -141,6 +141,7 @@
     <string name="settings_syscomponents">允許限制系統元件(Android)(需重新啟動)</string>
     <string name="settings_usagedata">開啟操作記錄(需重新啟動)</string>
     <string name="help_longpress">Long press name to select</string>
+    <string name="help_ondemand">restrictions will be asked</string>
     <string name="help_application">程式</string>
     <string name="help_internet">表示有網際網路權限</string>
     <string name="help_granted">表示有手機權限</string>

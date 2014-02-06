@@ -141,6 +141,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_syscomponents">Riboti sistemos komponentus (Android) (reikia perkrauti)</string>
     <string name="settings_usagedata">Rodyti programos duomenų naudojimą (reikia perkrauti)</string>
     <string name="help_longpress">Long press name to select</string>
+    <string name="help_ondemand">restrictions will be asked</string>
     <string name="help_application">Programa</string>
     <string name="help_internet">Interneto leidimai</string>
     <string name="help_granted">Android leidimai</string>

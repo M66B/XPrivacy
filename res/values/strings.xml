@@ -155,6 +155,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="settings_syscomponents">Restrict system components (Android)</string>
     <string name="settings_usagedata">Show application usage data</string>
     <string name="help_longpress">Long press name to select</string>
+    <string name="help_ondemand">restrictions will be asked</string>
     <string name="help_application">Application</string>
     <string name="help_internet">has internet permission</string>
     <string name="help_granted">has Android permission</string>

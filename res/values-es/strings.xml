@@ -141,6 +141,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
     <string name="settings_usagedata">Show application usage data (requires restart)</string>
     <string name="help_longpress">Long press name to select</string>
+    <string name="help_ondemand">restrictions will be asked</string>
     <string name="help_application">Aplicación</string>
     <string name="help_internet">Tiene acceso a Internet</string>
     <string name="help_granted">Tiene permisos Android</string>

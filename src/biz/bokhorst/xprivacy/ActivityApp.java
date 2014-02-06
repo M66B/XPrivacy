@@ -879,7 +879,7 @@ public class ActivityApp extends Activity {
 			public ImageView imgInfo;
 			public TextView tvName;
 			public ImageView imgCBName;
-			public TextView tvChosen;
+			public TextView tvOnDemand;
 			public RelativeLayout rlName;
 
 			public GroupViewHolder(View theRow, int thePosition) {
@@ -891,7 +891,7 @@ public class ActivityApp extends Activity {
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCBName = (ImageView) row.findViewById(R.id.imgCBName);
-				tvChosen = (TextView) row.findViewById(R.id.tvChosen);
+				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
@@ -959,7 +959,7 @@ public class ActivityApp extends Activity {
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
-					holder.tvChosen.setVisibility(asked ? View.INVISIBLE : View.VISIBLE);
+					holder.tvOnDemand.setVisibility(asked ? View.INVISIBLE : View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
@@ -1051,7 +1051,7 @@ public class ActivityApp extends Activity {
 
 			// Display restriction
 			holder.imgCBName.setVisibility(View.INVISIBLE);
-			holder.tvChosen.setVisibility(View.INVISIBLE);
+			holder.tvOnDemand.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new GroupHolderTask(groupPosition, holder, restrictionName).executeOnExecutor(mExecutor, (Object) null);
@@ -1105,7 +1105,7 @@ public class ActivityApp extends Activity {
 			public ImageView imgUsed;
 			public ImageView imgGranted;
 			public CheckedTextView ctvMethodName;
-			private TextView tvChosen;
+			private TextView tvOnDemand;
 
 			private ChildViewHolder(View theRow, int gPosition, int cPosition) {
 				row = theRow;
@@ -1114,7 +1114,7 @@ public class ActivityApp extends Activity {
 				imgUsed = (ImageView) row.findViewById(R.id.imgUsed);
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				ctvMethodName = (CheckedTextView) row.findViewById(R.id.ctvMethodName);
-				tvChosen = (TextView) row.findViewById(R.id.tvChosen);
+				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 			}
 		}
 
@@ -1177,7 +1177,7 @@ public class ActivityApp extends Activity {
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 					holder.ctvMethodName.setChecked(restricted);
 
-					holder.tvChosen.setVisibility(asked ? View.INVISIBLE : View.VISIBLE);
+					holder.tvOnDemand.setVisibility(asked ? View.INVISIBLE : View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.ctvMethodName.setOnClickListener(new View.OnClickListener() {

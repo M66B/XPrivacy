@@ -312,7 +312,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 	@Override
 	protected void onNewIntent(Intent intent) {
-		// Do nothing
+		if (mAppAdapter != null)
+			mAppAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -1268,6 +1269,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			public ImageView imgFrozen;
 			public TextView tvName;
 			public ImageView imgCBName;
+			public TextView tvOnDemand;
 			public RelativeLayout rlName;
 
 			public ViewHolder(View theRow, int thePosition) {
@@ -1282,6 +1284,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCBName = (ImageView) row.findViewById(R.id.imgCBName);
+				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
@@ -1298,6 +1301,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			private boolean crestricted;
 			private boolean allRestricted;
 			private boolean someRestricted;
+			private boolean onDemand;
 
 			public HolderTask(int thePosition, ViewHolder theHolder, ApplicationInfoEx theAppInfo) {
 				position = thePosition;
@@ -1347,6 +1351,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						allRestricted = (allRestricted && restriction.restricted);
 						someRestricted = (someRestricted || restriction.restricted);
 					}
+
+					// Get if on demand
+					onDemand = false;
+					if (mRestrictionName == null)
+						if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false))
+							onDemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(),
+									PrivacyManager.cSettingOnDemand, false, false);
 
 					return holder;
 				}
@@ -1402,9 +1413,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
+					// Display on demand state
+					if (mRestrictionName == null)
+						holder.tvOnDemand.setVisibility(onDemand ? View.VISIBLE : View.INVISIBLE);
+					else
+						holder.tvOnDemand.setVisibility(View.GONE);
+
 					// Display enabled state
 					holder.tvName.setEnabled(enabled);
 					holder.imgCBName.setEnabled(enabled);
+					holder.tvOnDemand.setEnabled(enabled);
 					holder.rlName.setEnabled(enabled);
 
 					// Display selection
@@ -1450,11 +1468,16 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 												List<Boolean> oldState = PrivacyManager.getRestartStates(
 														xAppInfo.getUid(), mRestrictionName);
 												PrivacyManager.deleteRestrictions(xAppInfo.getUid(), null);
+												PrivacyManager.setSetting(xAppInfo.getUid(),
+														PrivacyManager.cSettingOnDemand, Boolean.toString(true));
+
 												allRestricted = false;
 												someRestricted = false;
+												onDemand = true;
 
 												// Update visible state
 												holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+												holder.tvOnDemand.setVisibility(View.VISIBLE);
 												holder.vwState.setBackgroundColor(getResources()
 														.getColor(
 																Util.getThemed(ActivityMain.this,
@@ -1572,8 +1595,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
 			holder.imgCBName.setVisibility(View.INVISIBLE);
+			holder.tvOnDemand.setVisibility(View.INVISIBLE);
 			holder.tvName.setEnabled(false);
 			holder.imgCBName.setEnabled(false);
+			holder.tvOnDemand.setEnabled(false);
 			holder.rlName.setEnabled(false);
 
 			// Async update

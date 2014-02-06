@@ -510,8 +510,11 @@ public class SettingsDialog {
 
 				dlgSettings.dismiss();
 
-				// Refresh application view
-				if (uid != 0) {
+				// Refresh view
+				if (uid == 0) {
+					Intent intent = new Intent(context, ActivityMain.class);
+					context.startActivity(intent);
+				} else {
 					Intent intent = new Intent(context, ActivityApp.class);
 					intent.putExtra(ActivityApp.cUid, uid);
 					intent.putExtra(ActivityApp.cAction, ActivityApp.cActionRefresh);
