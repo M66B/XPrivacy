@@ -819,7 +819,7 @@ public class PrivacyManager {
 
 		if (name.equals("GSF_ID")) {
 			long v = r.nextLong();
-			return Long.toHexString(v).toUpperCase();
+			return Long.toString(v, 16).toUpperCase();
 		}
 
 		if (name.equals("AdvertisingId"))
