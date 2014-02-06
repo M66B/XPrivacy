@@ -102,6 +102,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_fpermission">Filter na povolenie</string>
     <string name="title_frestricted">Filter na obmedzené</string>
     <string name="title_fuser">Filter na užívateľské aplikácie</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Filter na systémové aplikácie</string>
     <string name="title_fnot">Obrátene</string>
     <string name="title_sname">Podľa názvu</string>

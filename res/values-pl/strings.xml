@@ -102,6 +102,7 @@
     <string name="title_fpermission">Filtruj wg uprawnień</string>
     <string name="title_frestricted">Filtruj wg ograniczeń</string>
     <string name="title_fuser">Filtruj wg aplikacji użytkownika</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Filtruj wg aplikacji systemowych</string>
     <string name="title_fnot">Odwróć</string>
     <string name="title_sname">Po nazwie</string>

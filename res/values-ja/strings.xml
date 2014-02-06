@@ -102,6 +102,7 @@
     <string name="title_fpermission">権限有りを表示</string>
     <string name="title_frestricted">制限済みを表示</string>
     <string name="title_fuser">ユーザーアプリを表示</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">システムアプリを表示</string>
     <string name="title_fnot">無視</string>
     <string name="title_sname">タイトルで</string>

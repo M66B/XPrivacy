@@ -103,6 +103,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="title_frestricted">Filtrovat omezení</string>
     <string name="title_fsystem">Filtrovat systémové aplikace</string>
     <string name="title_fuser">Filtrovat uživatelské aplikace</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fnot">Opačně</string>
     <string name="title_sname">By name</string>
     <string name="title_suid">By uid</string>

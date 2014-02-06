@@ -543,11 +543,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			boolean fRestrictionNot = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFRestrictionNot, false,
 					false);
 			boolean fPermission = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFPermission, true, false);
+			boolean fOnDemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFOnDemand, false, false);
+			boolean fOnDemandNot = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFOnDemandNot, false, false);
 			boolean fUser = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUser, true, false);
 			boolean fSystem = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFSystem, false, false);
 
-			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(), fUsed,
-					fInternet, fRestriction, fRestrictionNot, fPermission, fUser, fSystem);
+			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(),
+					fUsed, fInternet, fRestriction, fRestrictionNot, fPermission, fOnDemand, fOnDemandNot, fUser,
+					fSystem);
 			pbFilter.setVisibility(ProgressBar.VISIBLE);
 			tvStats.setVisibility(TextView.GONE);
 
@@ -869,6 +872,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		final CheckBox cbFPermission = (CheckBox) view.findViewById(R.id.cbFPermission);
 		final CheckBox cbFRestriction = (CheckBox) view.findViewById(R.id.cbFRestriction);
 		final CheckBox cbFRestrictionNot = (CheckBox) view.findViewById(R.id.cbFRestrictionNot);
+		final CheckBox cbFOnDemand = (CheckBox) view.findViewById(R.id.cbFOnDemand);
+		final CheckBox cbFOnDemandNot = (CheckBox) view.findViewById(R.id.cbFOnDemandNot);
 		final CheckBox cbFUser = (CheckBox) view.findViewById(R.id.cbFUser);
 		final CheckBox cbFSystem = (CheckBox) view.findViewById(R.id.cbFSystem);
 
@@ -879,6 +884,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		boolean fRestriction = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFRestriction, false, false);
 		boolean fRestrictionNot = PrivacyManager
 				.getSettingBool(0, PrivacyManager.cSettingFRestrictionNot, false, false);
+		boolean fOnDemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFOnDemand, false, false);
+		boolean fOnDemandNot = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFOnDemandNot, false, false);
 		boolean fUser = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUser, true, false);
 		boolean fSystem = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFSystem, false, false);
 
@@ -888,6 +895,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		cbFPermission.setChecked(fPermission);
 		cbFRestriction.setChecked(fRestriction);
 		cbFRestrictionNot.setChecked(fRestrictionNot);
+		cbFOnDemand.setChecked(fOnDemand);
+		cbFOnDemandNot.setChecked(fOnDemandNot);
 		cbFUser.setChecked(fUser);
 		cbFSystem.setChecked(fSystem);
 
@@ -925,6 +934,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 								Boolean.toString(cbFRestrictionNot.isChecked()));
 						PrivacyManager.setSetting(0, PrivacyManager.cSettingFPermission,
 								Boolean.toString(cbFPermission.isChecked()));
+						PrivacyManager.setSetting(0, PrivacyManager.cSettingFOnDemand,
+								Boolean.toString(cbFOnDemand.isChecked()));
+						PrivacyManager.setSetting(0, PrivacyManager.cSettingFOnDemandNot,
+								Boolean.toString(cbFOnDemandNot.isChecked()));
 						PrivacyManager.setSetting(0, PrivacyManager.cSettingFUser,
 								Boolean.toString(cbFUser.isChecked()));
 						PrivacyManager.setSetting(0, PrivacyManager.cSettingFSystem,
@@ -1126,8 +1139,10 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				boolean fRestricted = Boolean.parseBoolean(components[3]);
 				boolean fRestrictedNot = Boolean.parseBoolean(components[4]);
 				boolean fPermission = Boolean.parseBoolean(components[5]);
-				boolean fUser = Boolean.parseBoolean(components[6]);
-				boolean fSystem = Boolean.parseBoolean(components[7]);
+				boolean fOnDemand = Boolean.parseBoolean(components[6]);
+				boolean fOnDemandNot = Boolean.parseBoolean(components[7]);
+				boolean fUser = Boolean.parseBoolean(components[8]);
+				boolean fSystem = Boolean.parseBoolean(components[9]);
 
 				// Match applications
 				int current = 0;
@@ -1185,6 +1200,15 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 								|| PrivacyManager.getUsage(xAppInfo.getUid(), mRestrictionName, null) > 0)
 							permission = true;
 
+					// Get if onDemand
+					boolean onDemand = false;
+					if (fOnDemand) {
+						onDemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
+								false, false);
+						if (onDemand && mRestrictionName != null)
+							onDemand = !PrivacyManager.getRestrictionEx(xAppInfo.getUid(), mRestrictionName, null).asked;
+					}
+
 					// Get if user
 					boolean user = false;
 					if (fUser)
@@ -1198,7 +1222,9 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					// Apply filters
 					if ((fName.equals("") ? true : contains) && (fUsed ? used : true) && (fInternet ? internet : true)
 							&& (fRestricted ? (fRestrictedNot ? !someRestricted : someRestricted) : true)
-							&& (fPermission ? permission : true) && (fUser ? user : true) && (fSystem ? system : true))
+							&& (fPermission ? permission : true)
+							&& (fOnDemand ? (fOnDemandNot ? !onDemand : onDemand) : true) && (fUser ? user : true)
+							&& (fSystem ? system : true))
 						lstApp.add(xAppInfo);
 				}
 
@@ -1338,11 +1364,14 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					}
 
 					crestricted = false;
-					for (String restrictionName : listRestriction)
-						if (PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null).restricted) {
+					PRestriction query = null;
+					for (String restrictionName : listRestriction) {
+						query = PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null);
+						if (query.restricted) {
 							crestricted = true;
 							break;
 						}
+					}
 
 					// Get all/some restricted
 					allRestricted = true;
@@ -1355,10 +1384,12 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 					// Get if on demand
 					onDemand = false;
-					if (mRestrictionName == null)
-						if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false))
-							onDemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(),
-									PrivacyManager.cSettingOnDemand, false, false);
+					if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false)) {
+						onDemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
+								false, false);
+						if (onDemand && mRestrictionName != null)
+							onDemand = !query.asked;
+					}
 
 					return holder;
 				}
@@ -1415,10 +1446,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
 					// Display on demand state
-					if (mRestrictionName == null)
-						holder.tvOnDemand.setVisibility(onDemand ? View.VISIBLE : View.INVISIBLE);
-					else
-						holder.tvOnDemand.setVisibility(View.GONE);
+					holder.tvOnDemand.setVisibility(onDemand ? View.VISIBLE : View.INVISIBLE);
 
 					// Display enabled state
 					holder.tvName.setEnabled(enabled);

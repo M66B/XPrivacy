@@ -89,6 +89,8 @@ public class PrivacyManager {
 	public final static String cSettingFRestriction = "FRestriction";
 	public final static String cSettingFRestrictionNot = "FRestrictionNot";
 	public final static String cSettingFPermission = "FPermission";
+	public final static String cSettingFOnDemand = "FOnDemand";
+	public final static String cSettingFOnDemandNot = "FOnDemandNot";
 	public final static String cSettingFUser = "FUser";
 	public final static String cSettingFSystem = "FSystem";
 	public final static String cSettingSortMode = "SortMode";

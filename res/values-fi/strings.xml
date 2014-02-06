@@ -101,6 +101,7 @@
     <string name="title_fpermission">Suodata käyttöoikeuksiin</string>
     <string name="title_frestricted">Suodata rajoitettuihin</string>
     <string name="title_fuser">Suodata käyttäjän applikaatioihin</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Suodata järjestelmän applikaatioihin</string>
     <string name="title_fnot">invertoi</string>
     <string name="title_sname">By name</string>

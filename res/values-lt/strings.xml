@@ -102,6 +102,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_fpermission">Aktyvūs leidimai</string>
     <string name="title_frestricted">Riboti leidimai</string>
     <string name="title_fuser">Vartotojo programos</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Sistemos programos</string>
     <string name="title_fnot">Neriboti</string>
     <string name="title_sname">Pagal pavadinimą</string>
