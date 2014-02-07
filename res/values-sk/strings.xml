@@ -23,7 +23,7 @@
     <string name="menu_help">Pomocník</string>
     <string name="menu_select_all">Vybrať všetky</string>
     <string name="menu_sort">Zoradiť</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_filter">Filtrovať</string>
     <string name="menu_all">Všetko</string>
     <string name="menu_restriction_all">Prepnúť obmedzenia</string>
     <string name="menu_clear_all">Vymazať všetky</string>
@@ -31,7 +31,7 @@
     <string name="menu_clear_usage">Vymazať</string>
     <string name="menu_clear_db">Vymazať všetky údaje</string>
     <string name="menu_usage_all">Prepnúť filter</string>
-    <string name="menu_apply">Použiť šablónu</string>
+    <string name="menu_apply">Aplikovať šablónu</string>
     <string name="menu_clear">Vymazať</string>
     <string name="menu_app_launch">Spustiť</string>
     <string name="menu_app_settings">Nastavenia</string>
@@ -110,19 +110,19 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_supdated">Podľa dátumu aktulizácie</string>
     <string name="title_smodified">Podľa dátumu zmeny (XPrivacy)</string>
     <string name="title_sinvert">Obrátiť poradenie zoradenia</string>
-    <string name="title_attempt">Usage attempt of:</string>
-    <string name="title_category">Category:</string>
-    <string name="title_function">Function:</string>
-    <string name="title_parameters">Parameters:</string>
-    <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_attempt">Pokus o použitie:</string>
+    <string name="title_category">Kategória:</string>
+    <string name="title_function">Funkcia:</string>
+    <string name="title_parameters">Parametre:</string>
+    <string name="title_applycat">Aplikovať na celú kategóriu</string>
+    <string name="title_once">Raz za %1$s sek.</string>
     <string name="title_allow">Povoliť</string>
     <string name="title_deny">Odmietnuť</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
-    <string name="settings_alt">Altitude</string>
+    <string name="settings_alt">Nadmorská výška</string>
     <string name="settings_mac">Adresa MAC</string>
     <string name="settings_ip">Adresa IP</string>
     <string name="settings_phone">Telefónne číslo</string>
@@ -144,8 +144,8 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_https">Použiť zabezpečené pripojenie</string>
     <string name="settings_syscomponents">Obmedziť systémové komponenty (Android) (vyžadovaný reštart)</string>
     <string name="settings_usagedata">Zobraziť využitie dát aplikácie (vyžadovaný reštart)</string>
-    <string name="help_longpress">Long press name to select</string>
-    <string name="help_ondemand">restrictions will be asked</string>
+    <string name="help_longpress">Vybrať dlhým stlačením názvu</string>
+    <string name="help_ondemand">obmedzenia budú požadované</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
     <string name="help_granted">má Android povolenie</string>
@@ -157,7 +157,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="help_attention">obmedzenia vyžadujú pozornosť</string>
     <string name="help_restricted">obmedzenia sú zmenené</string>
     <string name="help_shared">obmedzenia sú odoslané</string>
-    <string name="tutorial_mainheader">Select the category to restrict</string>
+    <string name="tutorial_mainheader">Vyberte kategóriu na obmedzenie</string>
     <string name="tutorial_mainlist">Kliknite na zaškrtávacie pole pre obmedzenie vybranej kategórie pre aplikáciu\n
 \nPri obmedzených kategóriách budú aplikáciám poskytované prázdne alebo falošné údaje\n
 \nKliknite na ikonu aplikácie pre podrobné obmedzenia a nastavenia</string>
