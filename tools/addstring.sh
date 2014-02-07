@@ -1,5 +1,5 @@
 #!/bin/bash
-grep -rIl "\<string name=\"title_sinvert" res | xargs sed -i -e '/title_sinvert/a \
+grep -RIl "\<string name=\"title_sinvert" res | xargs sed -i -e '/title_sinvert/a \
 \ \ \ \ <string name="title_attempt">Usage attempt of:</string>'
 
 #grep -RIl "\<string name=\"msg_ondemand" res | xargs sed -i -e '/msg_ondemand/d'
