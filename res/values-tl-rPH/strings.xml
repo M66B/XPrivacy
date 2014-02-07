@@ -69,7 +69,6 @@
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_ondemand" formatted="false">%1$s is trying to use %3$s in the %2$s category</string>
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_first"><b>Malaking pag-aalaga ang ginampanan sa pagkabuo at sa pagsusuri ng XPrivacy,
     ngunit sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bawat sa isa\'t isang aplikasyon. 
@@ -111,6 +110,10 @@
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
+    <string name="title_attempt">Usage attempt of:</string>
+    <string name="title_category">Category:</string>
+    <string name="title_function">Function:</string>
+    <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
     <string name="title_allow">Allow</string>

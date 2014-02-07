@@ -38,7 +38,6 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
@@ -46,6 +45,8 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -1167,17 +1168,6 @@ public class PrivacyService {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
-
-			// Build message
-			int stringId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
-			String message = String.format(
-					resources.getString(R.string.msg_ondemand),
-					TextUtils.htmlEncode(TextUtils.join(", ", appInfo.getApplicationName())),
-					"<b>" + TextUtils.htmlEncode(resources.getString(stringId)) + "</b>",
-					"<b>"
-							+ TextUtils.htmlEncode(restriction.methodName
-									+ (restriction.extra == null ? "" : "(" + restriction.extra + ")")) + "</b>");
-
 			int hmargin = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin);
 			int vmargin = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin);
 
@@ -1204,16 +1194,69 @@ public class PrivacyService {
 				ivApp.setImageDrawable(appInfo.getIcon(context));
 				llApplication.addView(ivApp);
 
-				// Message
-				TextView tvMessage = new TextView(context);
-				tvMessage.setText(Html.fromHtml(message));
+				// Application name
+				TextView tvApp = new TextView(context);
+				tvApp.setText(TextUtils.join(", ", appInfo.getApplicationName()));
+				tvApp.setTextAppearance(context, android.R.attr.textAppearanceMedium);
 				LinearLayout.LayoutParams tvMessageParams = new LinearLayout.LayoutParams(
 						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 				tvMessageParams.setMargins(hmargin / 2, 0, 0, 0);
-				tvMessage.setLayoutParams(tvMessageParams);
-				llApplication.addView(tvMessage);
+				tvApp.setLayoutParams(tvMessageParams);
+				llApplication.addView(tvApp);
 			}
 			llContainer.addView(llApplication);
+
+			// Table for restriction
+			TableLayout table = new TableLayout(context);
+			{
+				TableRow row1 = new TableRow(context);
+				TableRow row2 = new TableRow(context);
+				TableRow row3 = new TableRow(context);
+				TableRow row4 = new TableRow(context);
+
+				// Attempt
+				TextView titleAttempt = new TextView(context);
+				titleAttempt.setText(resources.getString(R.string.title_attempt));
+				titleAttempt.setTypeface(null, Typeface.ITALIC);
+				row1.addView(titleAttempt);
+
+				// Category
+				TextView titleCategory = new TextView(context);
+				titleCategory.setText(resources.getString(R.string.title_category));
+				row2.addView(titleCategory);
+
+				TextView category = new TextView(context);
+				int catId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
+				category.setText(resources.getString(catId));
+				category.setTypeface(null, Typeface.BOLD);
+				row2.addView(category);
+
+				// Method
+				TextView titleMethod = new TextView(context);
+				titleMethod.setText(resources.getString(R.string.title_function));
+				row3.addView(titleMethod);
+
+				TextView method = new TextView(context);
+				method.setText(restriction.methodName);
+				method.setTypeface(null, Typeface.BOLD);
+				row3.addView(method);
+
+				// Arguments
+				TextView titleArguments = new TextView(context);
+				titleArguments.setText(resources.getString(R.string.title_parameters));
+				row4.addView(titleArguments);
+
+				TextView argument = new TextView(context);
+				argument.setText(restriction.extra == null ? "-" : restriction.extra);
+				argument.setTypeface(null, Typeface.BOLD);
+				row4.addView(argument);
+
+				table.addView(row1);
+				table.addView(row2);
+				table.addView(row3);
+				table.addView(row4);
+			}
+			llContainer.addView(table);
 
 			// Category check box
 			final CheckBox cbCategory = new CheckBox(context);

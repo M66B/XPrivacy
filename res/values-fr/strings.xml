@@ -69,7 +69,6 @@
     <string name="msg_randomizing" formatted="false">Randomisation %s</string>
     <string name="msg_upgrading" formatted="false">Mise-à-jour %s</string>
     <string name="msg_support_info">Une vérification interne a échoué, voulez-vous envoyer le rapport d\'erreurs?</string>
-    <string name="msg_ondemand" formatted="false">%1$s tente d\'utiliser %3$s dans la catégorie %2$s</string>
     <string name="msg_restrictedby">Restreint par XPrivacy</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
@@ -111,6 +110,10 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_supdated">Par date de mise à jour</string>
     <string name="title_smodified">Par date de modification (XPrivacy)</string>
     <string name="title_sinvert">Inverser l\'ordre</string>
+    <string name="title_attempt">Usage attempt of:</string>
+    <string name="title_category">Category:</string>
+    <string name="title_function">Function:</string>
+    <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
     <string name="title_allow">Permettre</string>

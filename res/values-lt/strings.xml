@@ -69,7 +69,6 @@
     <string name="msg_randomizing" formatted="false">Keičiama %s</string>
     <string name="msg_upgrading" formatted="false">Atnaujinama %s</string>
     <string name="msg_support_info">Vidinis patikrinimas nepavyko, ar norite siųsti paramos informaciją?</string>
-    <string name="msg_ondemand" formatted="false">%1$s bando naudoti %3$s šioje %2$s kategorijose</string>
     <string name="msg_restrictedby">Ribojama su XPrivacy</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
@@ -111,6 +110,10 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_supdated">Pagal atnaujinimo datą</string>
     <string name="title_smodified">Pagal modifikavimo datą (XPrivacy)</string>
     <string name="title_sinvert">Atvirkštinė rūšiavimo tvarka</string>
+    <string name="title_attempt">Usage attempt of:</string>
+    <string name="title_category">Category:</string>
+    <string name="title_function">Function:</string>
+    <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Taikyti esamoje kategorijoje</string>
     <string name="title_once">Vieną kartą %1$s sekundžių</string>
     <string name="title_allow">Leisti</string>

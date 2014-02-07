@@ -69,7 +69,6 @@
     <string name="msg_randomizing" formatted="false">ランダム化しています %s</string>
     <string name="msg_upgrading" formatted="false">アップグレード中%s</string>
     <string name="msg_support_info">内部チェックは失敗しました。報告しますか</string>
-    <string name="msg_ondemand" formatted="false">%1$sは%3$sの%2$sカテゴリーにアクセスをしようとしてる</string>
     <string name="msg_restrictedby">XPrivacyによりアクセスが制限されました</string>
     <string name="msg_first"><b>XPrivacyは細心の注意をして開発･テストしていますが、
 どの端末、どのアプリでも動作するという保証はありません。
@@ -111,6 +110,10 @@
     <string name="title_supdated">アップデート日付順</string>
     <string name="title_smodified">変更された日付順（Xprivacy）</string>
     <string name="title_sinvert">並べ替え順序を反転する</string>
+    <string name="title_attempt">Usage attempt of:</string>
+    <string name="title_category">Category:</string>
+    <string name="title_function">Function:</string>
+    <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">カテゴリー全体に適用する</string>
     <string name="title_once">%1$s秒で一回</string>
     <string name="title_allow">許可</string>

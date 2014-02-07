@@ -69,7 +69,6 @@
     <string name="msg_randomizing" formatted="false">正在產生亂數 %s</string>
     <string name="msg_upgrading" formatted="false">正在更新 %s</string>
     <string name="msg_support_info">發生程式內部錯誤，請問是否傳送錯誤報告?</string>
-    <string name="msg_ondemand" formatted="false">%1$s 嘗試存取權限 [%2$s] > [%3$s]</string>
     <string name="msg_restrictedby">已被 XPrivacy 限制權限</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用
     \n\n請自行承擔使用XPrivacy的可能風險。</b>
@@ -111,6 +110,10 @@
     <string name="title_supdated">更新日期</string>
     <string name="title_smodified">修改日期 (XPrivacy)</string>
     <string name="title_sinvert">反序排列</string>
+    <string name="title_attempt">Usage attempt of:</string>
+    <string name="title_category">Category:</string>
+    <string name="title_function">Function:</string>
+    <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
     <string name="title_allow">允許</string>

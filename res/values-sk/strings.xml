@@ -69,7 +69,6 @@
     <string name="msg_randomizing" formatted="false">Randomizovanie %s</string>
     <string name="msg_upgrading" formatted="false">Aktualizovanie %s</string>
     <string name="msg_support_info">Vnútorná kontrola zlyhala. Chcete odoslať informácie na podporu?</string>
-    <string name="msg_ondemand" formatted="false">Aplikácia %1$s sa snaží použiť %3$s v kategórii %2$s</string>
     <string name="msg_restrictedby">Obmedzené pomocou XPrivacy</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
@@ -111,6 +110,10 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_supdated">Podľa dátumu aktulizácie</string>
     <string name="title_smodified">Podľa dátumu zmeny (XPrivacy)</string>
     <string name="title_sinvert">Obrátiť poradenie zoradenia</string>
+    <string name="title_attempt">Usage attempt of:</string>
+    <string name="title_category">Category:</string>
+    <string name="title_function">Function:</string>
+    <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
     <string name="title_allow">Povoliť</string>
