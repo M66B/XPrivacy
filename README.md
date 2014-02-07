@@ -274,27 +274,27 @@ Installation
 
 **Instead of following the steps below, you can use the [XPrivacy Installer](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.installer).**
 
-It seems like a lot of steps, but it is done in no time:
+Installation may seem lengthy, but you can actually do it quickly:
 
 1. Requirements:
 	* Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat); check with *System Settings* > *About phone* > *Android version*
 	* Custom recovery ([CWM](http://forum.xda-developers.com/wiki/ClockworkMod_Recovery), [TWRP](http://teamw.in/project/twrp2) or similar)
 	* Read about [compatibility](https://github.com/M66B/XPrivacy#compatibility) before installing
 1. **Make a backup**
-1. If not done already: root your device; the procedure depends on the brand and model of your device
+1. If you haven't already, root your device; the rooting procedure depends on your device's brand and model.
 	* You can find a guide [here](http://www.androidcentral.com/root) for most devices
 1. Enable *System settings* > *Security* > *Unknown sources*
 1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 	* Be sure to install [the latest version](http://dl.xposed.info/latest.apk)
 	* The Xposed fix is not needed anymore
 1. Download and install XPrivacy from [here](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
-	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
+	* Alternatively download it from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
 1. Enable XPrivacy from the Xposed installer
 1. Reboot
 
 I do not recommend using XPrivacy in combination with any of the
 [similar solutions](https://github.com/M66B/XPrivacy#similar-solutions),
-because it could result in conflicts (with as possible consequence data leakage).
+because this could result in conflicts, and possibly leak data).
 
 If you want to uninstall XPrivacy, you have two options:
 
@@ -305,63 +305,51 @@ Upgrading
 ---------
 
 * **Make a backup**
-* **Do not remove the previous version** (else your settings will get lost)
+* **Do not remove the previous version** (or else your settings will get lost)
 * Download the new version
 * Install the new version over the previous version
 * Reboot your device
 
-When following this procedure your data will not leak, because the Xposed part of XPrivacy keeps running.
+When following this procedure, your data will not leak because the Xposed part of XPrivacy keeps running.
 
 Usage
 -----
 
-The application starts in the main view, where at the top a data category can be selected.
-By ticking one or more check boxes in the list below, the selected data category can be restricted for the chosen applications.
+The application starts in the main view, where a data category can be selected at the top.
+By ticking one or more check boxes in the list below, you can restrict the selected data category for the chosen applications.
 The default category is *All*, meaning that all data categories will be restricted.
 
-Tapping on an application icon shows the detailed view, where all the data categories for the selected application can be managed.
-This view will also appear by tapping on the notification that appears after updating or installing an application.
-By default all data categories will be restricted for new installed applications to prevent leaking privacy sensitive data from the beginning.
+Tapping on an application icon shows the detailed view where you can manage all the data categories for the selected application.
+This view will also appear when you tap on the notification that appears after updating or installing an application.
+By default, all data categories will be restricted for newly installed applications to prevent leaking privacy-sensitive data.
 You can change which data categories will be restricted by changing the *Template* available from the main menu.
 
-Data categories exist to make it easier to manage restrictions.
-The data categories in the detailed view can be drilled down to individual functions.
-If the category is restricted, individual functions can be allowed by clearing the function check boxes.
+Data categories make it easier to manage restrictions.
+You can drill down the data categories in the detailed view to reveal individual functions.
+If the category is restricted, you can un-restrict individual functions by clearing the function's check box.
 
-To see it in action: try restricting the category *Identification* for
+To see restriction in action, try restricting the category *Identification* for
 [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 or try restriction the category *Contacts* for the Contacts application.
 
 **Applying some restrictions require restarting applications and/or your device**
 
-If an application requested Android permissions for a data category,
+If an application has requested Android permissions for a data category,
 the category will be marked with a green key icon.
-If an application used/tried to use data, the data category will be marked with an orange warning triangle icon.
-If an application has internet permissions a world globe icon will be shown.
-These icons are just a guideline, because an application can access some privacy sensitive data without Android permissions,
-for example the serial number of your device
-and because is not possible to monitor data usage in each and every situation,
-for example not for access to the internet or the external storage.
-Be aware that an application could access the internet through other (sister) applications.
+If an application has used or tried to use data, the data category will be marked with an orange warning triangle icon.
+If an application has internet permissions, a world globe icon will be shown.
+These icons are just a guideline because an application can still access some privacy sensitive data without Android permissions, such as your device's serial number, and because it is not possible to monitor data usage in each and every situation, such as access to the internet or the external storage.
+Be aware that an application can still access the internet through other (sister) applications.
 
-Enabling the internet or storage restriction means blocking access to the internet
-or to the external storage (typically the SD card).
-This may result in error messages and even in forced closes of the application.
+Restricting internet or storage means blocking access to the internet and to external storage (typically the SD card), respectively. Either of these may result in error messages and even cause applications to force close (crash).
 
-Some category and function restrictions are considered dangerous.
-These categories and functions are marked with a redish background color.
-Some applications will crash if you restrict these categories and/or functions.
+Category and function restrictions considered dangerous are marked with a reddish background color. Some applications will crash if you restrict these dangerous categories and functions.
 
-There are global settings and application specific settings,
-respectively accessible from the menu of the application list and the menu of the application details view.
-The global settings, like a randomized or set latitude/longitude, apply to all applications,
-unless you set any application specific setings.
-In that case all global settings are overriden by the application specific settings.
-There is one special case: saving empty specific application settings (you can use the clear button)
-will erase all application specific settings, so that the global settings will be used again.
+Global settings and application specific settings are accessible from the application list's menu and from the menu of the application's detailed view. The global settings, such as randomized or set latitude/longitude, apply to all applications unless you override them with specific application settings. But saving an empty set of specific application settings (you can use the clear button)
+will erase all application specific settings so that the global settings will again be in force.
 
-The template, available from the main menu is applied to newly installed applications
-or if you use the menu apply template from the application details view.
+The restrictions template (in the main menu) is applied automatically to newly installed applications
+and manually via the menu item "Apply template" in the application's detailed view.
 
 **Using XPrivacy is entirely at your own risk**
 
