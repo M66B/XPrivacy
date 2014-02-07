@@ -56,13 +56,15 @@ public class XWebView extends XHook {
 			// Do nothing
 
 		} else if (mMethod == Methods.loadUrl) {
-			if (param.args.length > 0)
-				if (isRestrictedExtra(param, (String) param.args[0])) {
+			if (param.args.length > 0) {
+				String extra = (param.args[0] instanceof String ? (String) param.args[0] : null);
+				if (isRestrictedExtra(param, extra)) {
 					String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 					WebView webView = (WebView) param.thisObject;
 					if (webView != null)
 						webView.getSettings().setUserAgentString(ua);
 				}
+			}
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
