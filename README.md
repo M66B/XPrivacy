@@ -33,7 +33,7 @@ XPrivacy doesn't revoke or block permissions from an application, so most applic
 By default, all newly installed applications cannot access any data category, which prevents a new application from leaking sensitive data right after installing it. Shortly after installing a new application, XPrivacy will ask which data categories you want the new application to have access to.
 XPrivacy comes with an application browser that allows you to quickly enable or disable applications' access to any data category. You can edit all of an application's data categories.
 
-To help you identify potential data leaks, XPrivacy will monitor all applications' attempts to access sensitive data. An orange warning triangle icon will be displayed in XPrivacy when an attempt has been made to access data in a category. If an application has requested Android permissions to access data, XPrivacy will display a green key icon. XPrivacy will also display an internet icon if an application has internet access, which will make it clear that the application poses a risk of sharing data with an external server.
+To help you identify potential data leaks, XPrivacy monitors all applications' attempts to access sensitive data. XPrivacy displays an orange warning triangle icon when an application has attempted to access data. If an application has requested Android permissions to access data, XPrivacy displays a green key icon. XPrivacy also displays an internet icon if an application has internet access, which clarifies that the application poses a risk of sharing data with an external server.
 
 XPrivacy is built using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401), which it uses to tap into a vast number of carefully selected Android functions. Depending on the function, XPrivacy skips execution of the original function (for example when an application tries to set a proximity alert) or alters the result of the original function (for example to return an empty message list).
 
@@ -245,28 +245,28 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
-* /proc, CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because it will result in bootloops
+* /proc, CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because restricting these will result in bootloops.
 * /proc/self/cmdline will not be restricted by /proc, because it will result in instability
-* Phone number cannot be restricted for the standard phone application
-* Internet and storage can only be restricted for applications/providers/services started by the Android package manager
-* Due to its static nature [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized on application start and there is no usage data
-* Due to a bug in Chromium the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
-* Due to a custom implementation the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
-* You cannot restrict the Android ID used for submitting restrictions (only [pro version](http://www.xprivacy.eu/))
-* It is not possible to restrict hardware MAC addresses or the external IP address
-* With LBE Security Master installed, Android cannot be restricted
-* You cannot restrict *IPC* for XPrivacy, because it is needed for internal checks
-* You cannot restrict *storage* for XPrivacy, because it is needed to read the pro license file
-* You cannot restrict *system* fro XPrivacy, because it is needed to get an application list
-* You cannot restrict *view* for XPrivacy, because it is needed to open links to the crowd sourced restrictions
-* No on demand restricting for *Configuration.MCC/MNC*
+* The phone number cannot be restricted for the standard phone application.
+* Internet and storage can only be restricted for applications, providers, and services started by the Android package manager.
+* Because it is static, [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized when an application starts, and there is no usage data.
+* Due to a bug in Chromium, the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825)).
+* Due to a custom implementation, the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857)).
+* It is not possible to restrict hardware MAC addresses or the external IP address.
+* With LBE Security Master installed, Android cannot be restricted.
+* You cannot restrict the Android ID for XPrivacy because it is used for submitting restrictions (only [pro version](http://www.xprivacy.eu/)).
+* You cannot restrict *IPC* for XPrivacy because it is needed for internal checks.
+* You cannot restrict *storage* for XPrivacy because it is needed to read the XPrivacy Pro license file.
+* You cannot restrict *system* fro XPrivacy because it is needed to get an application list.
+* You cannot restrict *view* for XPrivacy because it is needed to open links to the crowdsourced restrictions.
+* You cannot restrict *Configuration.MCC/MNC* on demand.
 
-You can still restrict accounts, contacts and other things for XPrivacy.
+You can still restrict the XPrivacy app's access to accounts, contacts, and other things.
 
 Compatibility
 -------------
 
-XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat),
+XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat)
 and is reported to work with most Android variants, including stock ROMs.
 
 Installation
@@ -274,27 +274,27 @@ Installation
 
 **Instead of following the steps below, you can use the [XPrivacy Installer](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.installer).**
 
-It seems like a lot of steps, but it is done in no time:
+Installation may seem lengthy, but you can actually do it quickly:
 
 1. Requirements:
 	* Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat); check with *System Settings* > *About phone* > *Android version*
 	* Custom recovery ([CWM](http://forum.xda-developers.com/wiki/ClockworkMod_Recovery), [TWRP](http://teamw.in/project/twrp2) or similar)
 	* Read about [compatibility](https://github.com/M66B/XPrivacy#compatibility) before installing
 1. **Make a backup**
-1. If not done already: root your device; the procedure depends on the brand and model of your device
+1. If you haven't already, root your device; the rooting procedure depends on your device's brand and model.
 	* You can find a guide [here](http://www.androidcentral.com/root) for most devices
 1. Enable *System settings* > *Security* > *Unknown sources*
 1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
 	* Be sure to install [the latest version](http://dl.xposed.info/latest.apk)
 	* The Xposed fix is not needed anymore
 1. Download and install XPrivacy from [here](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
-	* Alternatively download from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
+	* Alternatively download it from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
 1. Enable XPrivacy from the Xposed installer
 1. Reboot
 
 I do not recommend using XPrivacy in combination with any of the
 [similar solutions](https://github.com/M66B/XPrivacy#similar-solutions),
-because it could result in conflicts (with as possible consequence data leakage).
+because this could result in conflicts, and possibly leak data).
 
 If you want to uninstall XPrivacy, you have two options:
 
@@ -305,63 +305,51 @@ Upgrading
 ---------
 
 * **Make a backup**
-* **Do not remove the previous version** (else your settings will get lost)
+* **Do not remove the previous version** (or else your settings will get lost)
 * Download the new version
 * Install the new version over the previous version
 * Reboot your device
 
-When following this procedure your data will not leak, because the Xposed part of XPrivacy keeps running.
+When following this procedure, your data will not leak because the Xposed part of XPrivacy keeps running.
 
 Usage
 -----
 
-The application starts in the main view, where at the top a data category can be selected.
-By ticking one or more check boxes in the list below, the selected data category can be restricted for the chosen applications.
+The application starts in the main view, where a data category can be selected at the top.
+By ticking one or more check boxes in the list below, you can restrict the selected data category for the chosen applications.
 The default category is *All*, meaning that all data categories will be restricted.
 
-Tapping on an application icon shows the detailed view, where all the data categories for the selected application can be managed.
-This view will also appear by tapping on the notification that appears after updating or installing an application.
-By default all data categories will be restricted for new installed applications to prevent leaking privacy sensitive data from the beginning.
+Tapping on an application icon shows the detailed view where you can manage all the data categories for the selected application.
+This view will also appear when you tap on the notification that appears after updating or installing an application.
+By default, all data categories will be restricted for newly installed applications to prevent leaking privacy-sensitive data.
 You can change which data categories will be restricted by changing the *Template* available from the main menu.
 
-Data categories exist to make it easier to manage restrictions.
-The data categories in the detailed view can be drilled down to individual functions.
-If the category is restricted, individual functions can be allowed by clearing the function check boxes.
+Data categories make it easier to manage restrictions.
+You can drill down the data categories in the detailed view to reveal individual functions.
+If the category is restricted, you can un-restrict individual functions by clearing the function's check box.
 
-To see it in action: try restricting the category *Identification* for
+To see restriction in action, try restricting the category *Identification* for
 [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 or try restriction the category *Contacts* for the Contacts application.
 
 **Applying some restrictions require restarting applications and/or your device**
 
-If an application requested Android permissions for a data category,
+If an application has requested Android permissions for a data category,
 the category will be marked with a green key icon.
-If an application used/tried to use data, the data category will be marked with an orange warning triangle icon.
-If an application has internet permissions a world globe icon will be shown.
-These icons are just a guideline, because an application can access some privacy sensitive data without Android permissions,
-for example the serial number of your device
-and because is not possible to monitor data usage in each and every situation,
-for example not for access to the internet or the external storage.
-Be aware that an application could access the internet through other (sister) applications.
+If an application has used or tried to use data, the data category will be marked with an orange warning triangle icon.
+If an application has internet permissions, a world globe icon will be shown.
+These icons are just a guideline because an application can still access some privacy sensitive data without Android permissions, such as your device's serial number, and because it is not possible to monitor data usage in each and every situation, such as access to the internet or the external storage.
+Be aware that an application can still access the internet through other (sister) applications.
 
-Enabling the internet or storage restriction means blocking access to the internet
-or to the external storage (typically the SD card).
-This may result in error messages and even in forced closes of the application.
+Restricting internet or storage means blocking access to the internet and to external storage (typically the SD card), respectively. Either of these may result in error messages and even cause applications to force close (crash).
 
-Some category and function restrictions are considered dangerous.
-These categories and functions are marked with a redish background color.
-Some applications will crash if you restrict these categories and/or functions.
+Category and function restrictions considered dangerous are marked with a reddish background color. These dangerous categories and functions are more likely to cause applications to crash if you restrict them.
 
-There are global settings and application specific settings,
-respectively accessible from the menu of the application list and the menu of the application details view.
-The global settings, like a randomized or set latitude/longitude, apply to all applications,
-unless you set any application specific setings.
-In that case all global settings are overriden by the application specific settings.
-There is one special case: saving empty specific application settings (you can use the clear button)
-will erase all application specific settings, so that the global settings will be used again.
+Global settings and application specific settings are accessible from the application list's menu and from the menu of the application's detailed view. The global settings, such as randomized or set latitude/longitude, apply to all applications unless you override them with specific application settings. But saving an empty set of specific application settings (you can use the clear button)
+will erase all application specific settings so that the global settings will again be in force.
 
-The template, available from the main menu is applied to newly installed applications
-or if you use the menu apply template from the application details view.
+The restrictions template (in the main menu) is applied automatically to newly installed applications
+and manually via the menu item "Apply template" in the application's detailed view.
 
 **Using XPrivacy is entirely at your own risk**
 
