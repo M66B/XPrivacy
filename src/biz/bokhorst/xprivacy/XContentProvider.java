@@ -146,101 +146,103 @@ public class XContentProvider extends XHook {
 	@Override
 	@SuppressLint("DefaultLocale")
 	protected void after(MethodHookParam param) throws Throwable {
-		// Check uri
-		Uri uri = (param.args.length > 0 ? (Uri) param.args[0] : null);
-		String sUri = (uri == null ? null : uri.toString().toLowerCase());
-		if (sUri != null && (mUriStart == null || sUri.startsWith(mUriStart))) {
-			Cursor cursor = (Cursor) param.getResult();
-			if (cursor != null)
-				if (sUri.startsWith("content://com.google.android.gsf.gservices")) {
-					// Google services provider: block only android_id
-					if (param.args.length > 3 && param.args[3] != null) {
-						List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
-						if (Util.containsIgnoreCase(selectionArgs, "android_id"))
-							if (isRestricted(param)) {
-								MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
-								gsfCursor.addRow(new Object[] { "android_id",
-										PrivacyManager.getDefacedProp(Binder.getCallingUid(), "GSF_ID") });
-								gsfCursor.respond(cursor.getExtras());
-								param.setResult(gsfCursor);
-								cursor.close();
+		// Check URI
+		if (param.args.length > 0 && param.args[0] instanceof Uri) {
+			Uri uri = (Uri) param.args[0];
+			String sUri = uri.toString().toLowerCase();
+			if (mUriStart == null || sUri.startsWith(mUriStart)) {
+				Cursor cursor = (Cursor) param.getResult();
+				if (cursor != null)
+					if (sUri.startsWith("content://com.google.android.gsf.gservices")) {
+						// Google services provider: block only android_id
+						if (param.args.length > 3 && param.args[3] != null) {
+							List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
+							if (Util.containsIgnoreCase(selectionArgs, "android_id"))
+								if (isRestricted(param)) {
+									MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
+									gsfCursor.addRow(new Object[] { "android_id",
+											PrivacyManager.getDefacedProp(Binder.getCallingUid(), "GSF_ID") });
+									gsfCursor.respond(cursor.getExtras());
+									param.setResult(gsfCursor);
+									cursor.close();
+								}
+						}
+
+					} else if (sUri.startsWith("content://com.android.contacts")
+							&& !sUri.startsWith("content://com.android.contacts/profile")) {
+						// Contacts provider: allow selected contacts
+						if (isRestricted(param)) {
+							// Get contact ID index
+							int iid = -1;
+							if (sUri.startsWith("content://com.android.contacts/contacts"))
+								iid = cursor.getColumnIndex("_id");
+							else if (sUri.startsWith("content://com.android.contacts/data"))
+								iid = cursor.getColumnIndex("contact_id");
+							else if (sUri.startsWith("content://com.android.contacts/phone_lookup"))
+								iid = cursor.getColumnIndex("_id");
+							else if (sUri.startsWith("content://com.android.contacts/raw_contacts"))
+								iid = cursor.getColumnIndex("contact_id");
+
+							// Get raw contact ID index
+							int irawid = -1;
+							if (sUri.startsWith("content://com.android.contacts/contacts"))
+								irawid = cursor.getColumnIndex("name_raw_contact_id");
+							else if (sUri.startsWith("content://com.android.contacts/data"))
+								irawid = cursor.getColumnIndex("raw_contact_id");
+							else if (sUri.startsWith("content://com.android.contacts/phone_lookup"))
+								irawid = cursor.getColumnIndex("name_raw_contact_id");
+							else if (sUri.startsWith("content://com.android.contacts/raw_contacts"))
+								irawid = cursor.getColumnIndex("_id");
+
+							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+							while (cursor.moveToNext()) {
+								// Get contact ID
+								long id = (iid < 0 ? -1 : cursor.getLong(iid));
+								long rawid = (irawid < 0 ? -1 : cursor.getLong(irawid));
+
+								// Check if can be copied
+								boolean copy = false;
+								if (id >= 0)
+									copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
+											PrivacyManager.cSettingContact + id, false, true);
+								if (!copy && rawid >= 0)
+									copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
+											PrivacyManager.cSettingRawContact + rawid, false, true);
+
+								// Conditionally copy row
+								if (copy)
+									copyColumns(cursor, result);
 							}
-					}
-
-				} else if (sUri.startsWith("content://com.android.contacts")
-						&& !sUri.startsWith("content://com.android.contacts/profile")) {
-					// Contacts provider: allow selected contacts
-					if (isRestricted(param)) {
-						// Get contact ID index
-						int iid = -1;
-						if (sUri.startsWith("content://com.android.contacts/contacts"))
-							iid = cursor.getColumnIndex("_id");
-						else if (sUri.startsWith("content://com.android.contacts/data"))
-							iid = cursor.getColumnIndex("contact_id");
-						else if (sUri.startsWith("content://com.android.contacts/phone_lookup"))
-							iid = cursor.getColumnIndex("_id");
-						else if (sUri.startsWith("content://com.android.contacts/raw_contacts"))
-							iid = cursor.getColumnIndex("contact_id");
-
-						// Get raw contact ID index
-						int irawid = -1;
-						if (sUri.startsWith("content://com.android.contacts/contacts"))
-							irawid = cursor.getColumnIndex("name_raw_contact_id");
-						else if (sUri.startsWith("content://com.android.contacts/data"))
-							irawid = cursor.getColumnIndex("raw_contact_id");
-						else if (sUri.startsWith("content://com.android.contacts/phone_lookup"))
-							irawid = cursor.getColumnIndex("name_raw_contact_id");
-						else if (sUri.startsWith("content://com.android.contacts/raw_contacts"))
-							irawid = cursor.getColumnIndex("_id");
-
-						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
-						while (cursor.moveToNext()) {
-							// Get contact ID
-							long id = (iid < 0 ? -1 : cursor.getLong(iid));
-							long rawid = (irawid < 0 ? -1 : cursor.getLong(irawid));
-
-							// Check if can be copied
-							boolean copy = false;
-							if (id >= 0)
-								copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
-										PrivacyManager.cSettingContact + id, false, true);
-							if (!copy && rawid >= 0)
-								copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
-										PrivacyManager.cSettingRawContact + rawid, false, true);
-
-							// Conditionally copy row
-							if (copy)
-								copyColumns(cursor, result);
+							result.respond(cursor.getExtras());
+							param.setResult(result);
+							cursor.close();
 						}
-						result.respond(cursor.getExtras());
-						param.setResult(result);
-						cursor.close();
-					}
 
-				} else if (sUri.startsWith("content://applications")) {
-					// Applications provider: allow selected applications
-					if (isRestricted(param)) {
-						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
-						while (cursor.moveToNext()) {
-							int colPackage = cursor.getColumnIndex("package");
-							String packageName = (colPackage < 0 ? null : cursor.getString(colPackage));
-							if (packageName != null && XPackageManager.isPackageAllowed(packageName))
-								copyColumns(cursor, result);
+					} else if (sUri.startsWith("content://applications")) {
+						// Applications provider: allow selected applications
+						if (isRestricted(param)) {
+							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+							while (cursor.moveToNext()) {
+								int colPackage = cursor.getColumnIndex("package");
+								String packageName = (colPackage < 0 ? null : cursor.getString(colPackage));
+								if (packageName != null && XPackageManager.isPackageAllowed(packageName))
+									copyColumns(cursor, result);
+							}
+							result.respond(cursor.getExtras());
+							param.setResult(result);
+							cursor.close();
 						}
-						result.respond(cursor.getExtras());
-						param.setResult(result);
-						cursor.close();
-					}
 
-				} else {
-					if (isRestricted(param)) {
-						// Return empty cursor
-						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
-						result.respond(cursor.getExtras());
-						param.setResult(result);
-						cursor.close();
+					} else {
+						if (isRestricted(param)) {
+							// Return empty cursor
+							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+							result.respond(cursor.getExtras());
+							param.setResult(result);
+							cursor.close();
+						}
 					}
-				}
+			}
 		}
 	}
 
