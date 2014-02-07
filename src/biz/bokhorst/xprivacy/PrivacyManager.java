@@ -659,8 +659,7 @@ public class PrivacyManager {
 				if (cValueRandom.equals(value))
 					value = getRandomProp(name);
 				gsfid = Long.parseLong(value.toLowerCase(), 16);
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
+			} catch (Throwable ignored) {
 			}
 			return gsfid;
 		}
