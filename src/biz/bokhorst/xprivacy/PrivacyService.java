@@ -1141,7 +1141,8 @@ public class PrivacyService {
 									if (dialog != null)
 										dialog.cancel();
 									// Deny once
-									result.restricted = true;
+									result.restricted = dangerous
+											|| (!(hook != null && hook.isDangerous()) && !appInfo.isSystem());
 								}
 							});
 						}
@@ -1181,21 +1182,21 @@ public class PrivacyService {
 					LinearLayout.LayoutParams.WRAP_CONTENT);
 			scroll.setLayoutParams(scrollParam);
 			scroll.setPadding(hmargin, vmargin, hmargin, vmargin);
+			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
+				scroll.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
 
 			// Container
 			LinearLayout llContainer = new LinearLayout(context);
 			llContainer.setOrientation(LinearLayout.VERTICAL);
 			LinearLayout.LayoutParams llContainerParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			llContainer.setLayoutParams(llContainerParams);
-			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
-				llContainer.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
 
 			// Container for icon & message
 			LinearLayout llApplication = new LinearLayout(context);
 			llApplication.setOrientation(LinearLayout.HORIZONTAL);
 			LinearLayout.LayoutParams llApplicationParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			llApplication.setLayoutParams(llApplicationParams);
 			{
 				// Application icon
@@ -1212,64 +1213,70 @@ public class PrivacyService {
 				TextView tvApp = new TextView(context);
 				tvApp.setText(TextUtils.join(", ", appInfo.getApplicationName()));
 				tvApp.setTextAppearance(context, android.R.attr.textAppearanceMedium);
-				LinearLayout.LayoutParams tvMessageParams = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams tvAppParams = new LinearLayout.LayoutParams(
 						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-				tvMessageParams.setMargins(hmargin / 2, 0, 0, 0);
-				tvApp.setLayoutParams(tvMessageParams);
+				tvAppParams.setMargins(hmargin / 2, 0, 0, 0);
+				tvApp.setLayoutParams(tvAppParams);
 				llApplication.addView(tvApp);
 			}
 			llContainer.addView(llApplication);
 
+			// Attempt
+			TextView titleAttempt = new TextView(context);
+			titleAttempt.setText(resources.getString(R.string.title_attempt));
+			LinearLayout.LayoutParams tvAttemptParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			tvAttemptParams.setMargins(0, vmargin / 2, 0, 0);
+			titleAttempt.setLayoutParams(tvAttemptParams);
+			titleAttempt.setPaintFlags(titleAttempt.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+			llContainer.addView(titleAttempt);
+
 			// Table for restriction
 			TableLayout table = new TableLayout(context);
-			table.setPadding(0, vmargin / 2, 0, vmargin / 2);
+			LinearLayout.LayoutParams llTableParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			table.setLayoutParams(llTableParams);
+			table.setPadding(0, 0, 0, vmargin / 2);
+			table.setShrinkAllColumns(true);
 			{
 				TableRow row1 = new TableRow(context);
 				TableRow row2 = new TableRow(context);
 				TableRow row3 = new TableRow(context);
-				TableRow row4 = new TableRow(context);
-
-				// Attempt
-				TextView titleAttempt = new TextView(context);
-				titleAttempt.setText(resources.getString(R.string.title_attempt));
-				titleAttempt.setPaintFlags(titleAttempt.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-				row1.addView(titleAttempt);
 
 				// Category
 				TextView titleCategory = new TextView(context);
 				titleCategory.setText(resources.getString(R.string.title_category));
-				row2.addView(titleCategory);
+				row1.addView(titleCategory);
 
 				TextView category = new TextView(context);
 				int catId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
 				category.setText(resources.getString(catId));
 				category.setTypeface(null, Typeface.BOLD);
-				row2.addView(category);
+				row1.addView(category);
 
 				// Method
 				TextView titleMethod = new TextView(context);
 				titleMethod.setText(resources.getString(R.string.title_function));
-				row3.addView(titleMethod);
+				row2.addView(titleMethod);
 
 				TextView method = new TextView(context);
 				method.setText(restriction.methodName);
 				method.setTypeface(null, Typeface.BOLD);
-				row3.addView(method);
+				row2.addView(method);
 
 				// Arguments
 				TextView titleArguments = new TextView(context);
 				titleArguments.setText(resources.getString(R.string.title_parameters));
-				row4.addView(titleArguments);
+				row3.addView(titleArguments);
 
 				TextView argument = new TextView(context);
-				argument.setText(restriction.extra == null ? "-" : restriction.extra);
+				argument.setText(restriction.extra == null ? "" : restriction.extra);
 				argument.setTypeface(null, Typeface.BOLD);
-				row4.addView(argument);
+				row3.addView(argument);
 
 				table.addView(row1);
 				table.addView(row2);
 				table.addView(row3);
-				table.addView(row4);
 			}
 			llContainer.addView(table);
 

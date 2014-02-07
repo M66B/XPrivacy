@@ -41,6 +41,10 @@ Test and beta releases will have experimental functions enabled by default.
 	* Any category change to restricted will result in exceptions for dangerous functions:
 		* Set to be not asked for
 		* Set to be not restricted
+* The default after dialog timeout is deny
+	* Unless restrict dangerous not is enabled
+		* And the function is dangerous
+		* Or the application is a system application
 
 **Next release**
 
