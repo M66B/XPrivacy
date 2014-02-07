@@ -44,6 +44,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
@@ -876,6 +877,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		final CheckBox cbFOnDemandNot = (CheckBox) view.findViewById(R.id.cbFOnDemandNot);
 		final CheckBox cbFUser = (CheckBox) view.findViewById(R.id.cbFUser);
 		final CheckBox cbFSystem = (CheckBox) view.findViewById(R.id.cbFSystem);
+		final Button btnClear = (Button) view.findViewById(R.id.btnClear);
 
 		// Get settings
 		boolean fUsed = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUsed, false, false);
@@ -914,6 +916,22 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		};
 		cbFUser.setOnCheckedChangeListener(checkListener);
 		cbFSystem.setOnCheckedChangeListener(checkListener);
+
+		// Clear button
+		btnClear.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				cbFUsed.setChecked(false);
+				cbFInternet.setChecked(false);
+				cbFPermission.setChecked(false);
+				cbFRestriction.setChecked(false);
+				cbFRestrictionNot.setChecked(false);
+				cbFOnDemand.setChecked(false);
+				cbFOnDemandNot.setChecked(false);
+				cbFUser.setChecked(false);
+				cbFSystem.setChecked(false);
+			}
+		});
 
 		// Build dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
