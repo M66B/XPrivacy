@@ -352,6 +352,7 @@ public class PrivacyManager {
 			try {
 				PrivacyService.getClient().setRestrictionList(listRestriction);
 			} catch (Throwable ex) {
+				Util.log(null, Log.ERROR, "setRestrictionList");
 				Util.bug(null, ex);
 			}
 	}
@@ -360,6 +361,7 @@ public class PrivacyManager {
 		try {
 			return PrivacyService.getClient().getRestrictionList(new PRestriction(uid, restrictionName, null, false));
 		} catch (Throwable ex) {
+			Util.log(null, Log.ERROR, "getRestrictionList");
 			Util.bug(null, ex);
 		}
 		return new ArrayList<PRestriction>();
@@ -405,7 +407,7 @@ public class PrivacyManager {
 
 	// Usage
 
-	public static long getUsed(int uid, String restrictionName, String methodName) {
+	public static long getUsage(int uid, String restrictionName, String methodName) {
 		try {
 			List<PRestriction> listRestriction = new ArrayList<PRestriction>();
 			if (restrictionName == null)
@@ -420,11 +422,12 @@ public class PrivacyManager {
 		}
 	}
 
-	public static List<PRestriction> getUsed(Context context, int uid) {
+	public static List<PRestriction> getUsageList(Context context, int uid) {
 		List<PRestriction> listUsage = new ArrayList<PRestriction>();
 		try {
 			listUsage.addAll(PrivacyService.getClient().getUsageList(uid));
 		} catch (Throwable ex) {
+			Util.log(null, Log.ERROR, "getUsageList");
 			Util.bug(null, ex);
 		}
 		Collections.sort(listUsage, new ParcelableRestrictionCompare());
@@ -531,6 +534,7 @@ public class PrivacyManager {
 			try {
 				PrivacyService.getClient().setSettingList(listSetting);
 			} catch (Throwable ex) {
+				Util.log(null, Log.ERROR, "setSettingList");
 				Util.bug(null, ex);
 			}
 	}
@@ -539,6 +543,7 @@ public class PrivacyManager {
 		try {
 			return PrivacyService.getClient().getSettingList(uid);
 		} catch (Throwable ex) {
+			Util.log(null, Log.ERROR, "getSettingList");
 			Util.bug(null, ex);
 		}
 		return new ArrayList<PSetting>();

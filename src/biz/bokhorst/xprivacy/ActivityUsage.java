@@ -145,7 +145,7 @@ public class ActivityUsage extends Activity {
 		protected List<PRestriction> doInBackground(Object... arg0) {
 			long minTime = new Date().getTime() - 1000 * 60 * 60 * 24;
 			List<PRestriction> listUsageData = new ArrayList<PRestriction>();
-			for (PRestriction usageData : PrivacyManager.getUsed(ActivityUsage.this, mUid))
+			for (PRestriction usageData : PrivacyManager.getUsageList(ActivityUsage.this, mUid))
 				if (usageData.time > minTime)
 					listUsageData.add(usageData);
 			return listUsageData;

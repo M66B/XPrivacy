@@ -1159,7 +1159,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					// Get if used
 					boolean used = false;
 					if (fUsed)
-						used = (PrivacyManager.getUsed(xAppInfo.getUid(), mRestrictionName, null) != 0);
+						used = (PrivacyManager.getUsage(xAppInfo.getUid(), mRestrictionName, null) != 0);
 
 					// Get if internet
 					boolean internet = false;
@@ -1182,7 +1182,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						if (mRestrictionName == null)
 							permission = true;
 						else if (PrivacyManager.hasPermission(mContext, xAppInfo, mRestrictionName)
-								|| PrivacyManager.getUsed(xAppInfo.getUid(), mRestrictionName, null) > 0)
+								|| PrivacyManager.getUsage(xAppInfo.getUid(), mRestrictionName, null) > 0)
 							permission = true;
 
 					// Get if user
@@ -1317,7 +1317,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 					state = xAppInfo.getState(ActivityMain.this);
 
 					// Get if used
-					used = (PrivacyManager.getUsed(xAppInfo.getUid(), mRestrictionName, null) != 0);
+					used = (PrivacyManager.getUsage(xAppInfo.getUid(), mRestrictionName, null) != 0);
 
 					// Get if enabled
 					enabled = PrivacyManager.getSettingBool(xAppInfo.getUid(), PrivacyManager.cSettingRestricted, true,

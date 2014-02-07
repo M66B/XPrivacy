@@ -861,7 +861,7 @@ public class ActivityApp extends Activity {
 			boolean fPermission = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFPermission, false, false);
 
 			for (String rRestrictionName : PrivacyManager.getRestrictions(ActivityApp.this).values()) {
-				boolean isUsed = (PrivacyManager.getUsed(mAppInfo.getUid(), rRestrictionName, null) > 0);
+				boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), rRestrictionName, null) > 0);
 				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, rRestrictionName);
 				if (mSelectedRestrictionName != null
 						|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
@@ -931,7 +931,7 @@ public class ActivityApp extends Activity {
 			protected Object doInBackground(Object... params) {
 				if (restrictionName != null) {
 					// Get info
-					used = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, null) != 0);
+					used = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
 					PRestriction query = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null);
 					crestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
@@ -1081,7 +1081,7 @@ public class ActivityApp extends Activity {
 				List<Hook> listMethod = new ArrayList<Hook>();
 				String restrictionName = mRestrictions.get(groupPosition);
 				for (Hook md : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
-					boolean isUsed = (PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName()) > 0);
+					boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, md.getName()) > 0);
 					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
 					if (mSelectedMethodName != null
 							|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
@@ -1158,7 +1158,7 @@ public class ActivityApp extends Activity {
 				if (restrictionName != null) {
 					// Get info
 					md = (Hook) getChild(groupPosition, childPosition);
-					lastUsage = PrivacyManager.getUsed(mAppInfo.getUid(), restrictionName, md.getName());
+					lastUsage = PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, md.getName());
 					parentRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted;
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
 					PRestriction query = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName,

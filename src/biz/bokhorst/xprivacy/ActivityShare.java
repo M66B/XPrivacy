@@ -1371,7 +1371,7 @@ public class ActivityShare extends Activity {
 							boolean restricted = PrivacyManager.getRestrictionEx(appInfo.getUid(), restrictionName,
 									null).restricted;
 							// Category
-							long used = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, null);
+							long used = PrivacyManager.getUsage(appInfo.getUid(), restrictionName, null);
 							JSONObject jRestriction = new JSONObject();
 							jRestriction.put("restriction", restrictionName);
 							jRestriction.put("restricted", restricted);
@@ -1389,7 +1389,7 @@ public class ActivityShare extends Activity {
 								boolean mRestricted = restricted
 										&& PrivacyManager.getRestrictionEx(appInfo.getUid(), restrictionName,
 												md.getName()).restricted;
-								long mUsed = PrivacyManager.getUsed(appInfo.getUid(), restrictionName, md.getName());
+								long mUsed = PrivacyManager.getUsage(appInfo.getUid(), restrictionName, md.getName());
 								JSONObject jMethod = new JSONObject();
 								jMethod.put("restriction", restrictionName);
 								jMethod.put("method", md.getName());
