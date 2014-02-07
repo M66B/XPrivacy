@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.net.UnknownHostException;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -96,8 +97,14 @@ public class Util {
 	}
 
 	public static void bug(XHook hook, Throwable ex) {
-		log(hook, ex instanceof OutOfMemoryError ? Log.WARN : Log.ERROR, ex.toString() + " uid=" + Process.myUid()
-				+ "\n" + Log.getStackTraceString(ex));
+		int priority;
+		if (ex instanceof OutOfMemoryError)
+			priority = Log.WARN;
+		else if (ex instanceof UnknownHostException)
+			priority = Log.WARN;
+		else
+			priority = Log.ERROR;
+		log(hook, priority, ex.toString() + " uid=" + Process.myUid() + "\n" + Log.getStackTraceString(ex));
 	}
 
 	public static void logStack(XHook hook) {
