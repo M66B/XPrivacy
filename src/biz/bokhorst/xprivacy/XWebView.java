@@ -61,8 +61,7 @@ public class XWebView extends XHook {
 				if (isRestrictedExtra(param, extra)) {
 					String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 					WebView webView = (WebView) param.thisObject;
-					if (webView != null)
-						webView.getSettings().setUserAgentString(ua);
+					webView.getSettings().setUserAgentString(ua);
 				}
 			}
 

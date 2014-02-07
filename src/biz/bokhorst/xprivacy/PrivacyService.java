@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteStatement;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Binder;
 import android.os.Build;
@@ -40,11 +41,13 @@ import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -647,7 +650,7 @@ public class PrivacyService {
 					stmtGetUsageMethod = db.compileStatement(sql);
 				}
 
-				mLock.readLock().unlock();
+				mLock.readLock().lock();
 				db.beginTransaction();
 				try {
 					for (PRestriction restriction : listRestriction) {
@@ -1170,14 +1173,21 @@ public class PrivacyService {
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
 			int hmargin = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin);
 			int vmargin = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin);
+			float density = context.getResources().getDisplayMetrics().density;
 
 			// Build view
+			ScrollView scroll = new ScrollView(context);
+			ViewGroup.LayoutParams scrollParam = new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT);
+			scroll.setLayoutParams(scrollParam);
+			scroll.setPadding(hmargin, vmargin, hmargin, vmargin);
+
+			// Container
 			LinearLayout llContainer = new LinearLayout(context);
 			llContainer.setOrientation(LinearLayout.VERTICAL);
 			LinearLayout.LayoutParams llContainerParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
 			llContainer.setLayoutParams(llContainerParams);
-			llContainer.setPadding(hmargin, vmargin, hmargin, vmargin);
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
 				llContainer.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
 
@@ -1187,11 +1197,15 @@ public class PrivacyService {
 			LinearLayout.LayoutParams llApplicationParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
 			llApplication.setLayoutParams(llApplicationParams);
-			llApplication.setPadding(0, 0, 0, vmargin);
 			{
 				// Application icon
 				ImageView ivApp = new ImageView(context);
 				ivApp.setImageDrawable(appInfo.getIcon(context));
+				LinearLayout.LayoutParams ivAppParams = new LinearLayout.LayoutParams(
+						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+				ivAppParams.height = (int) (density * 32);
+				ivAppParams.width = (int) (density * 32);
+				ivApp.setLayoutParams(ivAppParams);
 				llApplication.addView(ivApp);
 
 				// Application name
@@ -1208,6 +1222,7 @@ public class PrivacyService {
 
 			// Table for restriction
 			TableLayout table = new TableLayout(context);
+			table.setPadding(0, vmargin / 2, 0, vmargin / 2);
 			{
 				TableRow row1 = new TableRow(context);
 				TableRow row2 = new TableRow(context);
@@ -1217,7 +1232,7 @@ public class PrivacyService {
 				// Attempt
 				TextView titleAttempt = new TextView(context);
 				titleAttempt.setText(resources.getString(R.string.title_attempt));
-				titleAttempt.setTypeface(null, Typeface.ITALIC);
+				titleAttempt.setPaintFlags(titleAttempt.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 				row1.addView(titleAttempt);
 
 				// Category
@@ -1297,10 +1312,12 @@ public class PrivacyService {
 			pbProgress.setLayoutParams(llProgress);
 			llContainer.addView(pbProgress);
 
+			scroll.addView(llContainer);
+
 			// Ask
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
-			alertDialogBuilder.setView(llContainer);
+			alertDialogBuilder.setView(scroll);
 			alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
 			alertDialogBuilder.setPositiveButton(resources.getString(R.string.title_deny),
 					new DialogInterface.OnClickListener() {
@@ -1388,7 +1405,7 @@ public class PrivacyService {
 			}
 		}
 
-		private void notifyRestricted(PRestriction restriction) {
+		private void notifyRestricted(final PRestriction restriction) {
 			final Context context = getContext();
 			if (context != null && mHandler != null)
 				mHandler.post(new Runnable() {
@@ -1403,8 +1420,9 @@ public class PrivacyService {
 							Resources resources = context.getPackageManager().getResourcesForApplication(self);
 
 							// Notify user
-							Toast.makeText(context, resources.getString(R.string.msg_restrictedby), Toast.LENGTH_LONG)
-									.show();
+							String text = resources.getString(R.string.msg_restrictedby);
+							text += " (" + restriction.restrictionName + "/" + restriction.methodName + ")";
+							Toast.makeText(context, text, Toast.LENGTH_LONG).show();
 
 						} catch (NameNotFoundException ex) {
 							Util.bug(null, ex);
