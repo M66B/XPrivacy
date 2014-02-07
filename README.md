@@ -343,7 +343,7 @@ Be aware that an application can still access the internet through other (sister
 
 Restricting internet or storage means blocking access to the internet and to external storage (typically the SD card), respectively. Either of these may result in error messages and even cause applications to force close (crash).
 
-Category and function restrictions considered dangerous are marked with a reddish background color. Some applications will crash if you restrict these dangerous categories and functions.
+Category and function restrictions considered dangerous are marked with a reddish background color. These dangerous categories and functions are more likely to cause applications to crash if you restrict them.
 
 Global settings and application specific settings are accessible from the application list's menu and from the menu of the application's detailed view. The global settings, such as randomized or set latitude/longitude, apply to all applications unless you override them with specific application settings. But saving an empty set of specific application settings (you can use the clear button)
 will erase all application specific settings so that the global settings will again be in force.
