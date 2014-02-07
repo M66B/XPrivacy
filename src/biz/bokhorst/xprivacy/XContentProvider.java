@@ -111,7 +111,7 @@ public class XContentProvider extends XHook {
 		// Gmail provider
 		else if (packageName.equals("com.google.android.gm"))
 			listHook.add(new XContentProvider(PrivacyManager.cEMail, "GMailProvider",
-					"com.google.android.gm.provider.PublicContentProvider"));
+					"com.google.android.gm.provider.PublicContentProvider").optional());
 
 		// Google services provider
 		else if (packageName.equals("com.google.android.gsf"))
