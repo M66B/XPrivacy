@@ -673,16 +673,16 @@ public class PrivacyService {
 					Cursor cursor;
 					if (uid == 0)
 						cursor = db.query(cTableUsage, new String[] { "uid", "restriction", "method", "restricted",
-								"time" }, null, new String[] {}, null, null, null);
+								"time" }, null, new String[] {}, null, null, "time DESC LIMIT " + cMaxUsageData);
 					else
 						cursor = db.query(cTableUsage, new String[] { "uid", "restriction", "method", "restricted",
-								"time" }, "uid=?", new String[] { Integer.toString(uid) }, null, null, null);
+								"time" }, "uid=?", new String[] { Integer.toString(uid) }, null, null,
+								"time DESC LIMIT " + cMaxUsageData);
 					if (cursor == null)
 						Util.log(null, Log.WARN, "Database cursor null (usage data)");
 					else
 						try {
-							int count = 0;
-							while (count++ < cMaxUsageData && cursor.moveToNext()) {
+							while (cursor.moveToNext()) {
 								PRestriction data = new PRestriction();
 								data.uid = cursor.getInt(0);
 								data.restrictionName = cursor.getString(1);
