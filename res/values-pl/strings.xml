@@ -112,14 +112,14 @@
     <string name="title_smodified">Po dacie modyfikacji (XPrivacy)</string>
     <string name="title_sinvert">Odwróć porządek sortowania</string>
     <string name="title_applycat">Zastosuj do całej kategorii</string>
-    <string name="title_once">Raz na %1$s sekund</string>
+    <string name="title_once">Jednorazowo na %1$s sekund</string>
     <string name="title_allow">Pozwól</string>
     <string name="title_deny">Zabroń</string>
-    <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
+    <string name="title_pleasesubmit">Proszę wyślij twoje ograniczenia aby pomóc innym</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>
-    <string name="settings_alt">Altitude</string>
+    <string name="settings_alt">Wysokość</string>
     <string name="settings_mac">Adres MAC</string>
     <string name="settings_ip">Adres IP</string>
     <string name="settings_phone">Numer telefonu</string>
@@ -142,7 +142,7 @@
     <string name="settings_syscomponents">Ogranicz komponenty systemowe (Android) (wymaga restartu)</string>
     <string name="settings_usagedata">Pokaż użycie danych przez aplikacje (wymaga restartu)</string>
     <string name="help_longpress">Przytrzymaj na nazwie aby wybrać</string>
-    <string name="help_ondemand">restrictions will be asked</string>
+    <string name="help_ondemand">będą pytania o ograniczenia</string>
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">ma dostęp do internetu</string>
     <string name="help_granted">ma dostęp do uprawnień Androida</string>
