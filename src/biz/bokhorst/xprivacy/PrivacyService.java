@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -207,6 +208,7 @@ public class PrivacyService {
 	}
 
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
+		private ReentrantReadWriteLock mLock = new ReentrantReadWriteLock(true);
 		private SQLiteDatabase mDatabase = null;
 		private SQLiteStatement stmtGetRestriction = null;
 		private SQLiteStatement stmtGetSetting = null;
@@ -288,6 +290,7 @@ public class PrivacyService {
 				// 2 not restricted, asked
 				// 3 restricted, asked
 
+				mLock.writeLock().lock();
 				db.beginTransaction();
 				try {
 					// Create category record
@@ -312,7 +315,11 @@ public class PrivacyService {
 
 					db.setTransactionSuccessful();
 				} finally {
-					db.endTransaction();
+					try {
+						db.endTransaction();
+					} finally {
+						mLock.writeLock().unlock();
+					}
 				}
 
 				// Update cache
@@ -424,6 +431,7 @@ public class PrivacyService {
 					}
 
 					// Execute statement
+					mLock.readLock().lock();
 					db.beginTransaction();
 					try {
 						try {
@@ -462,7 +470,11 @@ public class PrivacyService {
 
 						db.setTransactionSuccessful();
 					} finally {
-						db.endTransaction();
+						try {
+							db.endTransaction();
+						} finally {
+							mLock.readLock().unlock();
+						}
 					}
 
 					if (!methodFound && hook != null && hook.isDangerous())
@@ -520,6 +532,7 @@ public class PrivacyService {
 									try {
 										SQLiteDatabase db = getDatabase();
 
+										mLock.writeLock().lock();
 										db.beginTransaction();
 										try {
 											ContentValues values = new ContentValues();
@@ -533,7 +546,11 @@ public class PrivacyService {
 
 											db.setTransactionSuccessful();
 										} finally {
-											db.endTransaction();
+											try {
+												db.endTransaction();
+											} finally {
+												mLock.writeLock().unlock();
+											}
 										}
 									} catch (Throwable ex) {
 										Util.bug(null, ex);
@@ -580,6 +597,7 @@ public class PrivacyService {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
 
+				mLock.writeLock().lock();
 				db.beginTransaction();
 				try {
 					if ("".equals(restrictionName))
@@ -591,7 +609,11 @@ public class PrivacyService {
 
 					db.setTransactionSuccessful();
 				} finally {
-					db.endTransaction();
+					try {
+						db.endTransaction();
+					} finally {
+						mLock.writeLock().unlock();
+					}
 				}
 
 				// Clear cache
@@ -624,6 +646,7 @@ public class PrivacyService {
 					stmtGetUsageMethod = db.compileStatement(sql);
 				}
 
+				mLock.readLock().unlock();
 				db.beginTransaction();
 				try {
 					for (PRestriction restriction : listRestriction) {
@@ -652,7 +675,11 @@ public class PrivacyService {
 
 					db.setTransactionSuccessful();
 				} finally {
-					db.endTransaction();
+					try {
+						db.endTransaction();
+					} finally {
+						mLock.readLock().unlock();
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -668,6 +695,7 @@ public class PrivacyService {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
 
+				mLock.readLock().lock();
 				db.beginTransaction();
 				try {
 					Cursor cursor;
@@ -697,7 +725,11 @@ public class PrivacyService {
 
 					db.setTransactionSuccessful();
 				} finally {
-					db.endTransaction();
+					try {
+						db.endTransaction();
+					} finally {
+						mLock.readLock().unlock();
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -712,6 +744,7 @@ public class PrivacyService {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
 
+				mLock.writeLock().lock();
 				db.beginTransaction();
 				try {
 					if (uid == 0)
@@ -722,7 +755,11 @@ public class PrivacyService {
 
 					db.setTransactionSuccessful();
 				} finally {
-					db.endTransaction();
+					try {
+						db.endTransaction();
+					} finally {
+						mLock.writeLock().unlock();
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -747,6 +784,7 @@ public class PrivacyService {
 			try {
 				SQLiteDatabase db = getDatabase();
 
+				mLock.writeLock().lock();
 				db.beginTransaction();
 				try {
 					if (setting.value == null)
@@ -765,7 +803,11 @@ public class PrivacyService {
 
 					db.setTransactionSuccessful();
 				} finally {
-					db.endTransaction();
+					try {
+						db.endTransaction();
+					} finally {
+						mLock.writeLock().unlock();
+					}
 				}
 
 				// Update cache
@@ -832,6 +874,7 @@ public class PrivacyService {
 				}
 
 				// Execute statement
+				mLock.readLock().lock();
 				db.beginTransaction();
 				try {
 					try {
@@ -848,7 +891,11 @@ public class PrivacyService {
 
 					db.setTransactionSuccessful();
 				} finally {
-					db.endTransaction();
+					try {
+						db.endTransaction();
+					} finally {
+						mLock.readLock().unlock();
+					}
 				}
 
 				// Add to cache
@@ -874,6 +921,7 @@ public class PrivacyService {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
 
+				mLock.readLock().lock();
 				db.beginTransaction();
 				try {
 					Cursor cursor = db.query(cTableSetting, new String[] { "name", "value" }, "uid=?",
@@ -890,7 +938,11 @@ public class PrivacyService {
 
 					db.setTransactionSuccessful();
 				} finally {
-					db.endTransaction();
+					try {
+						db.endTransaction();
+					} finally {
+						mLock.readLock().unlock();
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -905,6 +957,7 @@ public class PrivacyService {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
 
+				mLock.writeLock().lock();
 				db.beginTransaction();
 				try {
 					db.delete(cTableSetting, "uid=?", new String[] { Integer.toString(uid) });
@@ -912,7 +965,11 @@ public class PrivacyService {
 
 					db.setTransactionSuccessful();
 				} finally {
-					db.endTransaction();
+					try {
+						db.endTransaction();
+					} finally {
+						mLock.writeLock().unlock();
+					}
 				}
 
 				// Clear cache
@@ -932,6 +989,7 @@ public class PrivacyService {
 				enforcePermission();
 				SQLiteDatabase db = getDatabase();
 
+				mLock.writeLock().lock();
 				db.beginTransaction();
 				try {
 					db.execSQL("DELETE FROM restriction");
@@ -948,7 +1006,11 @@ public class PrivacyService {
 
 					db.setTransactionSuccessful();
 				} finally {
-					db.endTransaction();
+					try {
+						db.endTransaction();
+					} finally {
+						mLock.writeLock().unlock();
+					}
 				}
 
 				// Clear caches
@@ -1405,6 +1467,7 @@ public class PrivacyService {
 						// Update migration status
 						if (db.getVersion() > 1) {
 							Util.log(null, Log.WARN, "Updating migration status");
+							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
 								ContentValues values = new ContentValues();
@@ -1415,12 +1478,17 @@ public class PrivacyService {
 
 								db.setTransactionSuccessful();
 							} finally {
-								db.endTransaction();
+								try {
+									db.endTransaction();
+								} finally {
+									mLock.writeLock().unlock();
+								}
 							}
 						}
 
 						// Upgrade database if needed
 						if (db.needUpgrade(1)) {
+							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
 								// http://www.sqlite.org/lang_createtable.html
@@ -1434,7 +1502,11 @@ public class PrivacyService {
 								db.setVersion(1);
 								db.setTransactionSuccessful();
 							} finally {
-								db.endTransaction();
+								try {
+									db.endTransaction();
+								} finally {
+									mLock.writeLock().unlock();
+								}
 							}
 
 						}
@@ -1444,28 +1516,39 @@ public class PrivacyService {
 							db.setVersion(2);
 
 						if (db.needUpgrade(3)) {
+							mLock.writeLock().unlock();
 							db.beginTransaction();
 							try {
 								db.execSQL("DELETE FROM usage WHERE method=''");
 								db.setVersion(3);
 								db.setTransactionSuccessful();
 							} finally {
-								db.endTransaction();
+								try {
+									db.endTransaction();
+								} finally {
+									mLock.writeLock().unlock();
+								}
 							}
 						}
 
 						if (db.needUpgrade(4)) {
+							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
 								db.execSQL("DELETE FROM setting WHERE value IS NULL");
 								db.setVersion(4);
 								db.setTransactionSuccessful();
 							} finally {
-								db.endTransaction();
+								try {
+									db.endTransaction();
+								} finally {
+									mLock.writeLock().unlock();
+								}
 							}
 						}
 
 						if (db.needUpgrade(5)) {
+							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
 								db.execSQL("DELETE FROM setting WHERE value = ''");
@@ -1473,18 +1556,27 @@ public class PrivacyService {
 								db.setVersion(5);
 								db.setTransactionSuccessful();
 							} finally {
-								db.endTransaction();
+								try {
+									db.endTransaction();
+								} finally {
+									mLock.writeLock().unlock();
+								}
 							}
 						}
 
 						if (db.needUpgrade(6)) {
+							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
 								db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
 								db.setVersion(6);
 								db.setTransactionSuccessful();
 							} finally {
-								db.endTransaction();
+								try {
+									db.endTransaction();
+								} finally {
+									mLock.writeLock().unlock();
+								}
 							}
 						}
 
