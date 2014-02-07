@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.security.InvalidParameterException;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -420,6 +421,7 @@ public class SettingsDialog {
 		// Handle OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
+			@SuppressLint("DefaultLocale")
 			public void onClick(View view) {
 				if (uid == 0) {
 					// Global settings
@@ -490,6 +492,15 @@ public class SettingsDialog {
 					} catch (Throwable ignored) {
 						PrivacyManager.setSetting(uid, PrivacyManager.cSettingAltitude, null);
 					}
+
+				// Check Gsf ID
+				try {
+					String value = etGsfId.getText().toString();
+					if (!"".equals(value))
+						Long.parseLong(value.toLowerCase(), 16);
+				} catch (NumberFormatException ignored) {
+					etGsfId.setText("");
+				}
 
 				// Other settings
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingMac, getValue(cbMac, etMac));
