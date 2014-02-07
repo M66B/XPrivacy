@@ -10,7 +10,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import javax.net.ssl.SSLPeerUnverifiedException;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -99,6 +101,12 @@ public class Util {
 	public static void bug(XHook hook, Throwable ex) {
 		int priority;
 		if (ex instanceof OutOfMemoryError)
+			priority = Log.WARN;
+		else if (ex instanceof IOException)
+			priority = Log.WARN;
+		else if (ex instanceof SocketTimeoutException)
+			priority = Log.WARN;
+		else if (ex instanceof SSLPeerUnverifiedException)
 			priority = Log.WARN;
 		else if (ex instanceof UnknownHostException)
 			priority = Log.WARN;
