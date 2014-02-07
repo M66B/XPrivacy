@@ -239,6 +239,8 @@ public class XActivityThread extends XHook {
 		try {
 			BroadcastReceiver.PendingResult pr = (BroadcastReceiver.PendingResult) param.args[0];
 			pr.finish();
+		} catch (IllegalStateException ignored) {
+			// No receivers for action ...
 		} catch (Throwable ex) {
 			Util.bug(this, ex);
 		}
