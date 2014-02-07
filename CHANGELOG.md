@@ -48,15 +48,18 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.34 BETA**
+
 * Fixed all issues reported with the support info
 * Fixed database locking problem
+* Attempt to fix usage data list
 * Improved layout of on demand restricting dialog
 * Added category and function name to *Restricted by XPrivacy* message
 * Updated Dutch translation
 * Updated Slovak translation
 * Updated Polish translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.33-3 TEST**
 
