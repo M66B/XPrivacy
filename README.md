@@ -245,28 +245,28 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
-* /proc, CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because it will result in bootloops
+* /proc, CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because restricting these will result in bootloops.
 * /proc/self/cmdline will not be restricted by /proc, because it will result in instability
-* Phone number cannot be restricted for the standard phone application
-* Internet and storage can only be restricted for applications/providers/services started by the Android package manager
-* Due to its static nature [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized on application start and there is no usage data
-* Due to a bug in Chromium the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
-* Due to a custom implementation the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
-* You cannot restrict the Android ID used for submitting restrictions (only [pro version](http://www.xprivacy.eu/))
-* It is not possible to restrict hardware MAC addresses or the external IP address
-* With LBE Security Master installed, Android cannot be restricted
-* You cannot restrict *IPC* for XPrivacy, because it is needed for internal checks
-* You cannot restrict *storage* for XPrivacy, because it is needed to read the pro license file
-* You cannot restrict *system* fro XPrivacy, because it is needed to get an application list
-* You cannot restrict *view* for XPrivacy, because it is needed to open links to the crowd sourced restrictions
-* No on demand restricting for *Configuration.MCC/MNC*
+* The phone number cannot be restricted for the standard phone application.
+* Internet and storage can only be restricted for applications, providers, and services started by the Android package manager.
+* Because t is static, [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized when an application starts, and there is no usage data.
+* Due to a bug in Chromium, the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825)).
+* Due to a custom implementation, the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857)).
+* You cannot restrict the Android ID used for submitting restrictions (only [pro version](http://www.xprivacy.eu/)).
+* It is not possible to restrict hardware MAC addresses or the external IP address.
+* With LBE Security Master installed, Android cannot be restricted.
+* You cannot restrict *IPC* for XPrivacy because it is needed for internal checks.
+* You cannot restrict *storage* for XPrivacy because it is needed to read the XPrivacy Pro license file.
+* You cannot restrict *system* fro XPrivacy because it is needed to get an application list.
+* You cannot restrict *view* for XPrivacy because it is needed to open links to the crowdsourced restrictions.
+* You cannot restrict *Configuration.MCC/MNC* on demand.
 
-You can still restrict accounts, contacts and other things for XPrivacy.
+You can still restrict the XPrivacy app's access to accounts, contacts, and other things.
 
 Compatibility
 -------------
 
-XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat),
+XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat)
 and is reported to work with most Android variants, including stock ROMs.
 
 Installation
