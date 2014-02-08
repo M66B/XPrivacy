@@ -22,6 +22,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed filter count (adding on-demand filter)
 * XPrivacy will not start with LBE Security master installed ([issue](/../../issues/1231))
 * Respect *Restrict dangerous functions* setting when fetching restrictions
+* Updated Lithuanian translation
 
 **Version 1.99.35 BETA**
 
