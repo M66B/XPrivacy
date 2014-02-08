@@ -61,6 +61,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Added category and function name to *Restricted by XPrivacy* message
 * Updated Dutch translation
 * Updated Slovak translation
+* Updated Spanish translation
 * Updated Polish translation
 
 **Version 1.99.33-3 TEST**
