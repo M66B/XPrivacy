@@ -63,6 +63,7 @@
     <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
     <string name="msg_restart">App-Neustart erforderlich</string>
     <string name="msg_register">Bitte registrieren Sie ihr Gerät</string>
+    <string name="msg_email">Please enter your e-mail address:</string>
     <string name="msg_registered">Überprüfen Sie ihre E-Mails um Ihr Gerät zu aktivieren</string>
     <string name="msg_service">Update Dienst läuft</string>
     <string name="msg_migrating" formatted="false">Migriere %s</string>

@@ -63,6 +63,7 @@
     <string name="msg_random_boot">重新啟動後進行亂數</string>
     <string name="msg_restart">需要重新啓動程式</string>
     <string name="msg_register">請先註冊您的 Android 裝置</string>
+    <string name="msg_email">Please enter your e-mail address:</string>
     <string name="msg_registered">請到信箱驗證啟用您的 Android 裝置</string>
     <string name="msg_service">更新服務執行中</string>
     <string name="msg_migrating" formatted="false">正在移植 %s</string>

@@ -63,6 +63,7 @@
     <string name="msg_random_boot">Inventar en el arranque</string>
     <string name="msg_restart">Reinicio de aplicación requerido</string>
     <string name="msg_register">Por favor, registre su dispositivo</string>
+    <string name="msg_email">Please enter your e-mail address:</string>
     <string name="msg_registered">Compruebe su e-mail para activar su dispositivo</string>
     <string name="msg_service">Actualizando</string>
     <string name="msg_migrating" formatted="false">Migrando %s</string>

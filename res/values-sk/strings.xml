@@ -63,6 +63,7 @@
     <string name="msg_random_boot">Náhodné hodnoty pri štarte zariadenia</string>
     <string name="msg_restart">Vyžadovaný reštart aplikácie</string>
     <string name="msg_register">Zaregistruje prosím vaše zariadenie</string>
+    <string name="msg_email">Please enter your e-mail address:</string>
     <string name="msg_registered">Skontrolujte váš e-mail pre aktiváciu vášho zariadenia</string>
     <string name="msg_service">Aktualizačná služba je spustená</string>
     <string name="msg_migrating" formatted="false">Migrovanie %s</string>

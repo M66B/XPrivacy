@@ -63,6 +63,7 @@
     <string name="msg_random_boot">Randomiser après le démarrage</string>
     <string name="msg_restart">Redémarrage de l\'application nécessaire</string>
     <string name="msg_register">Inscrivez votre appareil, s.v.p.</string>
+    <string name="msg_email">Please enter your e-mail address:</string>
     <string name="msg_registered">Vérifiez vos mails pour activer votre appareil</string>
     <string name="msg_service">Service de mise-à-jour en fonctionnement</string>
     <string name="msg_migrating" formatted="false">Migration %s</string>

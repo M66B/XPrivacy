@@ -63,6 +63,7 @@
     <string name="msg_random_boot">عشوائي بعد الإقلاع</string>
     <string name="msg_restart">التطبيق يتطلب إعادة التشغيل</string>
     <string name="msg_register">الرجاء قم بتسجيل جهازك</string>
+    <string name="msg_email">Please enter your e-mail address:</string>
     <string name="msg_registered">إفحص بريدك الإلكتروني لتفعيل جهازك</string>
     <string name="msg_service">Update service running</string>
     <string name="msg_migrating" formatted="false">ترحيل %s</string>

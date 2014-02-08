@@ -63,6 +63,7 @@
     <string name="msg_random_boot">端末を起動時にバリューをランダム化する</string>
     <string name="msg_restart">アプリケーションの再起動が必要となります</string>
     <string name="msg_register">デバイスを登録して下さい</string>
+    <string name="msg_email">Please enter your e-mail address:</string>
     <string name="msg_registered">デバイスをアクティベーションするためにメールをご覧ください</string>
     <string name="msg_service">アップデートサービス実行中</string>
     <string name="msg_migrating" formatted="false">移行中 %s</string>
