@@ -433,7 +433,7 @@ Assuming you don't wish to wipe data and that Xposed and XPrivacye are already i
 
 1. Export XPrivacy settings
 1. Enable flight mode
-1. Clear XPrivacy data (please note that this will erase the imported pro license, if there is one.)
+1. Use the menu option in XPrivacy to clear all data.
 1. Reboot to recovery
 1. Flash ROM
 1. Flash Google apps (optional)
@@ -484,7 +484,7 @@ XPrivacy's restrictions, settings, and usage data are stored in an sqlite3 datab
 <a name="FAQ16"></a>
 **(16) Why doesn't clearing the check box for a data category also clear the functions inside that category?**
 
-If you accidentally uncheck a data category's checkbox, the restriction settings inside that category would be lost. The restriction settings inside a category only apply when that category is restricted.
+In the app details view, it will. In the main list view you are protected against losing the restriction settings inside a data category by accidentally unchecking that category's checkbox. The restriction settings inside a category only apply when that category is restricted.
 
 <a name="FAQ17"></a>
 **(17) How can I export/import my settings?**
