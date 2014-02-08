@@ -1112,9 +1112,11 @@ public class PrivacyService {
 									holder.thread = new Thread(new Runnable() {
 										public void run() {
 											try {
-												while (mProgress.getProgress() < cMaxOnDemandDialog) {
-													Thread.sleep(1000);
-													mProgress.incrementProgressBy(1);
+												mProgress.setMax(cMaxOnDemandDialog * 20);
+												mProgress.setProgress(cMaxOnDemandDialog * 20);
+												while (mProgress.getProgress() > 0) {
+													Thread.sleep(50);
+													mProgress.incrementProgressBy(-1);
 												}
 											} catch (InterruptedException ignored) {
 											} catch (Throwable ex) {
@@ -1311,7 +1313,6 @@ public class PrivacyService {
 			// Progress bar
 			ProgressBar pbProgress = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
 			pbProgress.setId(1966);
-			pbProgress.setMax(cMaxOnDemandDialog);
 			pbProgress.setIndeterminate(false);
 			LinearLayout.LayoutParams llProgress = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
