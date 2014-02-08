@@ -48,6 +48,8 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Fixed a locking bug for new instalation, which resulted in a bootloop ([issue](/../../issues/1282))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.34 BETA**
