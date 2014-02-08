@@ -50,7 +50,9 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Fixed a locking bug for new installation, which resulted in a bootloop ([issue](/../../issues/1282))
 * Clear button for filters, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1281))
-* Added filter for on-demand, thanks @[jpeg729](https://github.com/jpeg729)
+* Added filter for on-demand restricting, thanks @[jpeg729](https://github.com/jpeg729)
+* Smooth count down for on-demand restricting, thanks @[jpeg729](https://github.com/jpeg729)
+* Updated documentation, thanks @[Jimmy34742](https://github.com/Jimmy34742) and reviewers
 * Updated Dutch translation
 * Updated German translation
 * Updated Spanish translation
