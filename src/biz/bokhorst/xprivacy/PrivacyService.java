@@ -228,7 +228,7 @@ public class PrivacyService {
 		private ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 		private final int cMaxUsageData = 500; // entries
-		private final int cMaxOnDemandDialog = 10; // seconds
+		private final int cMaxOnDemandDialog = 20; // seconds
 
 		// Management
 

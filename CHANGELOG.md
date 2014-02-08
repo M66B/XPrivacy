@@ -15,6 +15,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Updated Lithuanian translation
+* Increased on demand restricting timeout to 20 seconds ([issue](/../../issues/1293))
+* When registering, nicely ask for e-mail address
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.36 BETA**
@@ -22,7 +26,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Fixed filter count (adding on-demand filter)
 * XPrivacy will not start with LBE Security master installed ([issue](/../../issues/1231))
 * Respect *Restrict dangerous functions* setting when fetching restrictions
-* Updated Lithuanian translation
 
 **Version 1.99.35 BETA**
 
