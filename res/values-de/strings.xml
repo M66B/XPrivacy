@@ -22,7 +22,7 @@
     <string name="menu_about">Über XPrivacy</string>
     <string name="menu_help">Hilfe</string>
     <string name="menu_select_all">Alle auswählen</string>
-    <string name="menu_sort">Sort</string>
+    <string name="menu_sort">Sortieren</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_all">Alles (beschränkt)</string>
     <string name="menu_restriction_all">Beschränkungen invertieren</string>
@@ -63,7 +63,7 @@
     <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
     <string name="msg_restart">App-Neustart erforderlich</string>
     <string name="msg_register">Bitte registrieren Sie ihr Gerät</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
+    <string name="msg_email">Bitte geben Sie Ihre E-Mail Adresse ein:</string>
     <string name="msg_registered">Überprüfen Sie ihre E-Mails um Ihr Gerät zu aktivieren</string>
     <string name="msg_service">Update Dienst läuft</string>
     <string name="msg_migrating" formatted="false">Migriere %s</string>
@@ -73,7 +73,7 @@
     <string name="msg_restrictedby">Durch XPrivacy beschränkt</string>
     <string name="msg_first"><b>XPrivacy wurde mit größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
 \ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
-\n\nSie verwenden XPrivacy ausschließlich auf eigenes Risiko.</b>\n\nBitte beachten Sie auch die Lizenz:</string>
+\n\nSie verwenden XPrivacy ausschließlich auf eigenes Risiko!</b>\n\nBitte beachten Sie auch die Lizenz:</string>
     <string name="restrict_accounts">Konten (Google, Facebook, etc.)</string>
     <string name="restrict_browser">Browser (Lesezeichen, Verlauf)</string>
     <string name="restrict_calendar">Kalender</string>
@@ -106,25 +106,25 @@
     <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Nach System-Apps filtern</string>
     <string name="title_fnot">Negieren</string>
-    <string name="title_sname">By name</string>
-    <string name="title_suid">By uid</string>
-    <string name="title_sinstalled">By date installed</string>
-    <string name="title_supdated">By date updated</string>
-    <string name="title_smodified">By date modified (XPrivacy)</string>
-    <string name="title_sinvert">Sortierreihenfolge umkehren</string>
-    <string name="title_attempt">Usage attempt of:</string>
+    <string name="title_sname">nach Name</string>
+    <string name="title_suid">nach UID</string>
+    <string name="title_sinstalled">nach Installationsdatum</string>
+    <string name="title_supdated">nach Update-Datum</string>
+    <string name="title_smodified">nach Änderungsdatum (XPrivacy)</string>
+    <string name="title_sinvert">Sortierreihenfolge invertieren</string>
+    <string name="title_attempt">Versuch der Verwendung von:</string>
     <string name="title_category">Kategorie:</string>
     <string name="title_function">Funktion:</string>
     <string name="title_parameters">Parameter:</string>
     <string name="title_applycat">Auf die gesamte Kategorie anwenden</string>
-    <string name="title_once">Einmalig für %1$s Sekunden</string>
+    <string name="title_once">Nur einmal für %1$s Sekunden</string>
     <string name="title_allow">Erlauben</string>
     <string name="title_deny">Ablehnen</string>
     <string name="title_pleasesubmit">Bitte geben Sie Ihre Einstellungen der Beschränkungen weiter um anderen zu helfen</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
-    <string name="settings_alt">Altitude</string>
+    <string name="settings_alt">Höhe über NN</string>
     <string name="settings_mac">MAC-Adresse</string>
     <string name="settings_ip">IP-Adresse</string>
     <string name="settings_phone">Telefonnummer</string>
@@ -137,7 +137,7 @@
     <string name="settings_general">Allgemein</string>
     <string name="settings_fake_data">Daten manipulieren</string>
     <string name="settings_notify">Update-Benachrichtigungen</string>
-    <string name="settings_ondemand">Auf Anforderung beschränken</string>
+    <string name="settings_ondemand">Beschränkungen nach Aufforderung setzen</string>
     <string name="settings_log">Debug-Log (erfordert Geräteneustart)</string>
     <string name="settings_expert">Experten-Modus</string>
     <string name="settings_dangerous">Beschränke "bedenkliche" Funktionen</string>
@@ -147,7 +147,7 @@
     <string name="settings_syscomponents">Beschränke Systemkomponenten (Android) (Neustart erforderlich)</string>
     <string name="settings_usagedata">Zeige App Nutzungsdaten (Neustart erforderlich)</string>
     <string name="help_longpress">Für Auswahl dauerhaft Name drücken</string>
-    <string name="help_ondemand">Beschränkungen werden abgefragt</string>
+    <string name="help_ondemand">Setzen der Beschränkungen nach Aufforderung</string>
     <string name="help_application">App</string>
     <string name="help_internet">hat Internet-Berechtigung</string>
     <string name="help_granted">hat Android-Berechtigung</string>
@@ -156,7 +156,7 @@
     <string name="help_frozen">ist deaktiviert</string>
     <string name="help_dangerous">Beschränkung bedenklich (eventueller App-Absturz)</string>
     <string name="help_half">teilweise beschränkt</string>
-    <string name="help_attention">Beschränkungen benötigen Aufmerksamkeit</string>
+    <string name="help_attention">Beschränkungen sollten überprüft werden</string>
     <string name="help_restricted">Beschränkungen wurden geändert</string>
     <string name="help_shared">Beschränkungen sind eingereicht</string>
     <string name="tutorial_mainheader">Wählen Sie die zu beschränkende Kategorie</string>
