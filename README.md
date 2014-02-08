@@ -624,33 +624,21 @@ To prevent a malicious application maker from automatically submitting a lot of 
 * The on demand restricting dialog will appear if:
 	* On demand restricting is enabled in the main settings
 	* On demand restricting is enabled in the application settings
-	* The category and the function were not asked for yet (has a question mark)
-	* The function is not excepted (only *Phone/Configuration.MCC/MNC*)
-	* The function is not dangerous or if *Restrict dangerous functions* is enabled
-	* The application is a user application or if *Restrict dangerous functions* is enabled
+	* The category and the function are still marked with question marks
+	* However a few functions are exempted from prompting (only *Phone/Configuration.MCC/MNC*)
+	* Prompts will not be shown for dangerous functions unless *Restrict dangerous functions* is enabled
+	* Prompts will not be shown for System applications unless *Restrict dangerous functions* is enabled
 * *Apply to entire category* will:
-	* Set the category to be asked for
-	* Apply the choice (deny/allow) to the category only
-	* If the choice doesn't match the current category restriction:
-		* The function exceptions are reset and set to be not asked for
+	* Set the entire category definitively according to your choice (deny/allow)
+	* Existing settings for individual functions are forgotten
 * When applying to a function only (*Apply to entire category* not checked):
-	* If the choice matches the current category restriction:
-		* The function is set to be asked for
-		* The choice is applied to the function only
-	* If the choice doesn't match the current category restriction and was deny:
-		* The category is set to be not asked for
-		* The choice is applied to the category
-		* All functions are set to match the category and to be not asked for
-		* The function is set to be asked for
-		* The choice is applied to the function
+	* The function is set definitively according to your choice
 * If *Restrict dangerous functions* is disabled (the default):
-	* Any category change to restricted will result in exceptions for dangerous functions:
-		* Set to be not asked for
-		* Set to be not restricted
-* The default after dialog timeout is deny
-	* Unless restrict dangerous not is enabled
-		* And the function is dangerous
-		* Or the application is a system application
+	* You will never be asked whether to restrict dangerous functions
+	* Setting any category to restricted will not restrict any of its dangerous functions
+* The default after dialog timeout:
+	* for a user application the default is to deny temporarily
+	* for a system applications the default is to allow temporarily, unless *Restrict dangerous functions* is enabled
 
 Support
 -------
