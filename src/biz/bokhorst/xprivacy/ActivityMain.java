@@ -397,6 +397,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		boolean fInternet = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFInternet, false, false);
 		boolean fRestriction = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFRestriction, false, false);
 		boolean fPermission = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFPermission, true, false);
+		boolean fOnDemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFOnDemand, false, false);
 		boolean fUser = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUser, true, false);
 		boolean fSystem = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFSystem, false, false);
 
@@ -409,6 +410,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		if (fRestriction)
 			numberOfFilters++;
 		if (fPermission)
+			numberOfFilters++;
+		if (fOnDemand)
 			numberOfFilters++;
 		if (fUser)
 			numberOfFilters++;
