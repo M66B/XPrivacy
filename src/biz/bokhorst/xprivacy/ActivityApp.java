@@ -124,6 +124,11 @@ public class ActivityApp extends Activity {
 
 		// Get arguments
 		Bundle extras = getIntent().getExtras();
+		if (extras == null) {
+			finish();
+			return;
+		}
+
 		int uid = extras.getInt(cUid);
 		String restrictionName = (extras.containsKey(cRestrictionName) ? extras.getString(cRestrictionName) : null);
 		String methodName = (extras.containsKey(cMethodName) ? extras.getString(cMethodName) : null);
