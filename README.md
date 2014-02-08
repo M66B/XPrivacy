@@ -246,9 +246,10 @@ Limitations
 -----------
 
 * /proc, CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because restricting these will result in bootloops.
-* /proc/self/cmdline will not be restricted by /proc, because it will result in instability
+* /proc/self/cmdline will not be restricted by /proc, because it will result in instability.
 * The phone number cannot be restricted for the standard phone application.
 * Internet and storage can only be restricted for applications, providers, and services started by the Android package manager.
+* There is no usage data for *inet*, *media* and *sdcard*, since this is technically not possible.
 * Because it is static, [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized when an application starts, and there is no usage data.
 * Due to a bug in Chromium, the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825)).
 * Due to a custom implementation, the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857)).
