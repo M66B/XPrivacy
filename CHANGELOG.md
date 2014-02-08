@@ -48,11 +48,13 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.36 BETA**
+
 * Fixed filter count (adding on-demand filter)
 * XPrivacy will not start with LBE Security master installed ([issue](/../../issues/1231))
 * Respect *Restrict dangerous functions* setting when fetching restrictions
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.35 BETA**
 
