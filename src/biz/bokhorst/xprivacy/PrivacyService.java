@@ -1584,7 +1584,7 @@ public class PrivacyService {
 							db.setVersion(2);
 
 						if (db.needUpgrade(3)) {
-							mLock.writeLock().unlock();
+							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
 								db.execSQL("DELETE FROM usage WHERE method=''");
