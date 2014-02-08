@@ -655,6 +655,8 @@ To prevent a malicious application maker from automatically submitting a lot of 
 Support
 -------
 
+*Please read everything below first*
+
 If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
 Include a [logcat](#FAQ22) when relevant
