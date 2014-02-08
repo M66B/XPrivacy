@@ -102,6 +102,7 @@
     <string name="title_fpermission">Bigyan ng Filter at ipakita lamang sa mga may Pahintulot</string>
     <string name="title_frestricted">Bigyan ng Filter at ipakita lamang sa mga may Paghihigpit</string>
     <string name="title_fuser">Bigyan ng Filter at ipakita lamang sa iyong mga User Applications</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Bigyan ng Filter at ipakita lamang sa iyong mga System Applications</string>
     <string name="title_fnot">Pagbaliktarin</string>
     <string name="title_sname">By name</string>

@@ -102,6 +102,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="title_fpermission">Filtrera efter behörighet</string>
     <string name="title_frestricted">Filtrera efter begränsad</string>
     <string name="title_fuser">Filtrera efter vanliga appar</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Filtrera efter systemappar</string>
     <string name="title_fnot">Negate</string>
     <string name="title_sname">By name</string>

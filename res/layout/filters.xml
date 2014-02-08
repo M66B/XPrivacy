@@ -113,6 +113,39 @@
         <ImageView
             android:layout_width="24dip"
             android:layout_height="24dip"
+            android:contentDescription="@string/title_fondemand"
+            android:src="@drawable/ondemand" />
+
+        <CheckBox
+            android:id="@+id/cbFOnDemand"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_marginLeft="3dip"
+            android:ellipsize="end"
+            android:saveEnabled="false"
+            android:singleLine="true"
+            android:text="@string/title_fondemand"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <CheckBox
+            android:id="@+id/cbFOnDemandNot"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_marginLeft="3dip"
+            android:ellipsize="end"
+            android:saveEnabled="false"
+            android:singleLine="true"
+            android:text="@string/title_fnot"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:layout_width="24dip"
+            android:layout_height="24dip"
             android:contentDescription="@string/title_fuser"
             android:src="@drawable/apps" />
 
@@ -135,7 +168,7 @@
         <ImageView
             android:layout_width="24dip"
             android:layout_height="24dip"
-            android:contentDescription="@string/help_application"
+            android:contentDescription="@string/title_fsystem"
             android:src="?attr/icon_system" />
 
         <CheckBox
@@ -149,5 +182,12 @@
             android:text="@string/title_fsystem"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/menu_clear_all" />
 
 </LinearLayout>

@@ -102,6 +102,7 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="title_fpermission">Filtra per permesso</string>
     <string name="title_frestricted">Filtra per restrizione</string>
     <string name="title_fuser">Filtra per app utente</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Filtra per app di sistema</string>
     <string name="title_fnot">Nega</string>
     <string name="title_sname">By name</string>

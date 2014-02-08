@@ -102,6 +102,7 @@
     <string name="title_fpermission">з дозволами</string>
     <string name="title_frestricted">заборонені</string>
     <string name="title_fuser">програми користувача</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">системні програми</string>
     <string name="title_fnot">Переключити</string>
     <string name="title_sname">By name</string>

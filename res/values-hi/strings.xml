@@ -102,6 +102,7 @@
     <string name="title_fpermission">अनुमति के द्वारा फिल्टर करे</string>
     <string name="title_frestricted">प्रतिबंध पर फिल्टर करे</string>
     <string name="title_fuser">उपयोगकर्ता की Applications पर फिल्टर करे</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">सिस्टम की Applications पर फिल्टर करे</string>
     <string name="title_fnot">नकारे</string>
     <string name="title_sname">By name</string>

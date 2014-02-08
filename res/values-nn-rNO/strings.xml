@@ -100,6 +100,7 @@
     <string name="title_fpermission">Filtrer etter tillatelse</string>
     <string name="title_frestricted">Filtrer etter restriksjon</string>
     <string name="title_fuser">Filtrer etter vanlige apper</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Filtrer etter system apper</string>
     <string name="title_fnot">Inverter</string>
     <string name="title_sname">By name</string>

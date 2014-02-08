@@ -102,6 +102,7 @@
     <string name="title_fpermission">Filtriraj po pravicah</string>
     <string name="title_frestricted">Filtriraj po omejitvah</string>
     <string name="title_fuser">Filtriraj uporabniške programe</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Filtriraj sistemske programe</string>
     <string name="title_fnot">Negiraj</string>
     <string name="title_sname">By name</string>

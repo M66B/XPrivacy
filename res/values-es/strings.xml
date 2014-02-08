@@ -102,6 +102,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="title_fpermission">Filtrar permisos Android</string>
     <string name="title_frestricted">Filtrar permisos restringidos</string>
     <string name="title_fuser">Filtrar aplicaciones de usuario</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Filtrar aplicaciones de sistema</string>
     <string name="title_fnot">Negar</string>
     <string name="title_sname">Por nombre</string>

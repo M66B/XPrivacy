@@ -102,6 +102,7 @@
     <string name="title_fpermission">Scagaire ar chead</string>
     <string name="title_frestricted">Scagaire ar shrianta</string>
     <string name="title_fuser">ar iarratais úsáideora</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Scagaire maidir le hiarratais ar chóras</string>
     <string name="title_fnot">Negate</string>
     <string name="title_sname">By name</string>

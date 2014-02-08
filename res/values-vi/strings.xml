@@ -101,6 +101,7 @@
     <string name="title_fpermission">Lọc theo quyền</string>
     <string name="title_frestricted">Lọc các ứng dụng đã thiết lập hạn chế</string>
     <string name="title_fuser">Lọc các ứng dụng người dùng</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Lọc các ứng dụng hệ thống</string>
     <string name="title_fnot">Negate</string>
     <string name="title_sname">By name</string>

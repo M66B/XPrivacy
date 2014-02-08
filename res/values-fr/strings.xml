@@ -102,6 +102,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_fpermission">Filtrer par permissions</string>
     <string name="title_frestricted">Filtrer restreintes</string>
     <string name="title_fuser">Filtrer les applis utilisateur</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Filtrer les applis système</string>
     <string name="title_fnot">Inverser</string>
     <string name="title_sname">Par nom</string>

@@ -100,6 +100,7 @@
     <string name="title_fpermission">Filtra per permís</string>
     <string name="title_frestricted">Filtra per restringit</string>
     <string name="title_fuser">Filtra per aplicacions d\'usuari</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Filtra per aplicacions de sistema</string>
     <string name="title_fnot">Negate</string>
     <string name="title_sname">By name</string>

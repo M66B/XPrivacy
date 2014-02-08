@@ -102,6 +102,7 @@
     <string name="title_fpermission">程式要求手機權限</string>
     <string name="title_frestricted">已被限制程式</string>
     <string name="title_fuser">顯示使用者app</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">顯示系統app</string>
     <string name="title_fnot">←反選(無限制程式)</string>
     <string name="title_sname">名稱</string>

@@ -102,6 +102,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="title_fpermission">Szűrés engedély alapján</string>
     <string name="title_frestricted">Szűrés korlátozás alapján</string>
     <string name="title_fuser">Szűrés felhasználói alkalmazások alapján</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Szűrés rendszeralkalmazások alapján</string>
     <string name="title_fnot">Negálás</string>
     <string name="title_sname">By name</string>

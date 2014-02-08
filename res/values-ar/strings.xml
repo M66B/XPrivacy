@@ -102,6 +102,7 @@
     <string name="title_fpermission">التصفية حسب الأُذونات</string>
     <string name="title_frestricted">التصفية حسب التقييد</string>
     <string name="title_fuser">تصفية برامج المستخدم</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">تصفية برامج النظام</string>
     <string name="title_fnot">العكس</string>
     <string name="title_sname">By name</string>

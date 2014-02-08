@@ -104,6 +104,7 @@
     <string name="title_fpermission">Filter on permission</string>
     <string name="title_frestricted">Filter on restricted</string>
     <string name="title_fuser">Filter on user applications</string>
+    <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Filter on system applications</string>
     <string name="title_fnot">Negate</string>
     <string name="title_sname">By name</string>
