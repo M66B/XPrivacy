@@ -358,13 +358,13 @@ Permissions
 
 XPrivacy asks for the following Android permissions:
 
-* Accounts: to select accounts to allow for applications
-* Contacts: to select contacts to allow for applications
-* Boot: to check if XPrivacy is enabled
-* Internet: to submit/fetch [crowd sourced restrictions](http://crowd.xprivacy.eu/)
-* Storage: to export settings to the SD card (only [pro version](http://www.xprivacy.eu/))
+* Accounts: to be able to restrict applications' access to accounts
+* Contacts: to be able to restrict applications' access to contacts
+* Boot: to be able to check if XPrivacy is enabled
+* Internet: to be able to submit and fetch [crowd sourced restrictions](http://crowd.xprivacy.eu/)
+* Storage: to be able to export XPrivacy's settings to the SD card (only [pro version](http://www.xprivacy.eu/))
 
-If you don't like this, you can always restrict XPrivacy itself ...
+If desired, you can even restrict XPrivacy from accessing any of the above.
 
 Frequently asked questions
 --------------------------
@@ -372,10 +372,10 @@ Frequently asked questions
 <a name="FAQ1"></a>
 **(1) Will XPrivacy make my device slower?**
 
-Maybe a little bit, but it will probably not be noticeable.
+Maybe a little bit, but you probably won't notice.
 
 <a name="FAQ2"></a>
-**(2) Does XPrivacy use a lot of memory or battery?**
+**(2) Does XPrivacy use a lot of memory and battery?**
 
 Almost nothing.
 
@@ -386,21 +386,16 @@ There are already enough [guides](http://www.androidcentral.com/root) to help yo
 Use your favorite search engine to find one.
 
 <a name="FAQ5"></a>
-**(5) How can I reset all XPrivacy settings?**
+**(5) How can I reset an application's XPrivacy settings?**
 
-Menu > Clear all data
-
-Reboot.
+While viewing an application's restrictions, do "Menu > Clear," then reboot.
 
 <a name="FAQ6"></a>
-**(6) Can I backup XPrivacy restrictions, settings and usage data?**
+**(6) Can I backup XPrivacy's restrictions, settings, and usage data?**
 
-You cannot backup XPrivacy data with standard backup tools, like Titanium backup, since version 1.11.13 anymore.
-This is because the database (new in version 1.11.13) is not stored in the XPrivacy data folder, but in a system folder.
-I have tried to store the database in the XPrivacy data folder, but this leads to all kind of permission problems.
+Starting with version 1.11.13, you can no longer backup XPrivacy's data with standard backup tools, such as Titanium Backup. This is because database is no longer stored in the XPrivacy data folder, but in a system folder. I have tried to store the database in the XPrivacy data folder, but this leads to all kinds of permission problems.
 
-The best way to backup XPrivacy data is to use the export function,
-but this requires the [pro version](http://www.xprivacy.eu/).
+The best practice is to use XPrivacy's export function (Main Menu > Export) to backup XPrivacy data, but please note that this requires the [pro version](http://www.xprivacy.eu/).
 
 You can automate backups by sending an intent:
 
@@ -408,23 +403,22 @@ You can automate backups by sending an intent:
 adb shell am start -a biz.bokhorst.xprivacy.action.EXPORT
 ```
 
-This can be done with for example with [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm).
+You can do this with [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm), for example:
 
-New task: Any name you like
+New task: <any task name>
 Action Category: Misc/Send Intent
 Action: biz.bokhorst.xprivacy.action.EXPORT
 Target: Activity
 
 <a name="FAQ10"></a>
-**(10) Which functions are exactly restricted?**
+**(10) Precisely hich functions does XPrivacy restrict?**
 
-Many, see [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
+Many. See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
 
 <a name="FAQ12"></a>
 **(12) How safe is XPrivacy?**
 
-Great care has been taken to develop XPrivacy, nevertheless data could leak and applications can crash,
-although this is fortunately rare.
+Great care has been taken to develop XPrivacy. Nevertheless, data can leak and applications can crash. Fortunately, this is rare.
 
 <a name="FAQ14"></a>
 **(14) I get 'Incompatible ...' !**
