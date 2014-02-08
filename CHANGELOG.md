@@ -48,6 +48,10 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.35 BETA**
+
 * Fixed all issues reported with the support info
 * Fixed a locking bug for new installation, which resulted in a bootloop ([issue](/../../issues/1282))
 * Clear button for filters, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1281))
@@ -57,8 +61,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Updated Dutch translation
 * Updated German translation
 * Updated Spanish translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.34 BETA**
 
