@@ -44,6 +44,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	@SuppressLint("InlinedApi")
 	public void initZygote(StartupParam startupParam) throws Throwable {
+		// Check for LBE security master
+		if (Util.hasLBE())
+			return;
+
 		Util.log(null, Log.INFO, String.format("Load %s", startupParam.modulePath));
 
 		// Generate secret
@@ -149,6 +153,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
+		// Check for LBE security master
+		if (Util.hasLBE())
+			return;
+
 		// Log load
 		Util.log(null, Log.INFO, String.format("Load package=%s uid=%d", lpparam.packageName, Process.myUid()));
 

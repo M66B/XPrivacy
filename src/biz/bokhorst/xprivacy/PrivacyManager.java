@@ -275,9 +275,6 @@ public class PrivacyManager {
 		} else if (getHook(restrictionName, methodName) == null)
 			Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
-		if (!isApplication(uid) && Util.hasLBE())
-			return false;
-
 		// Check cache
 		boolean cached = false;
 		CRestriction key = new CRestriction(uid, restrictionName, methodName);
@@ -465,9 +462,6 @@ public class PrivacyManager {
 	public static String getSetting(int uid, String name, String defaultValue, boolean useCache) {
 		long start = System.currentTimeMillis();
 		String value = null;
-
-		if (!isApplication(uid) && Util.hasLBE())
-			return defaultValue;
 
 		// Check cache
 		boolean cached = false;
