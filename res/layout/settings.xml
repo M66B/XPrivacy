@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/drawable_background"
@@ -7,7 +8,8 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:ignore="HardcodedText,TooManyViews,Overdraw" >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -124,7 +126,8 @@
                     android:layout_height="wrap_content"
                     android:hint="35"
                     android:inputType="numberDecimal"
-                    android:maxLength="2" />
+                    android:maxLength="2"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <TextView
@@ -171,7 +174,8 @@
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:maxHeight="20sp"
-                        android:src="@drawable/ic_arrow" />
+                        android:src="@drawable/ic_arrow"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:layout_span="2"
@@ -191,7 +195,8 @@
                         android:id="@+id/etSerial"
                         android:hint="DEFACE"
                         android:inputType="textNoSuggestions"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -206,7 +211,8 @@
                         android:id="@+id/etLat"
                         android:hint="-10.5"
                         android:inputType="numberDecimal|numberSigned"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -221,7 +227,8 @@
                         android:id="@+id/etLon"
                         android:hint="105.667"
                         android:inputType="numberDecimal|numberSigned"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -236,7 +243,8 @@
                         android:id="@+id/etAlt"
                         android:hint="686"
                         android:inputType="numberDecimal|numberSigned"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -254,7 +262,8 @@
                         android:id="@+id/etSearch"
                         android:hint="Christmas Island"
                         android:inputType="textNoSuggestions"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -271,7 +280,8 @@
                         android:hint="DE:FA:CE:DE:FA:CE"
                         android:inputType="textCapCharacters|textNoSuggestions"
                         android:maxLength="18"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -287,7 +297,8 @@
                         android:digits="0123456789ABCDEF.:"
                         android:hint="0.0.0.0"
                         android:inputType="textCapCharacters|textNoSuggestions"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -303,7 +314,8 @@
                         android:hint="000000000000000"
                         android:inputType="numberDecimal|textNoSuggestions"
                         android:maxLength="16"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -318,7 +330,8 @@
                         android:id="@+id/etPhone"
                         android:hint="DEFACE"
                         android:inputType="textNoSuggestions|phone"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -334,7 +347,8 @@
                         android:digits="0123456789ABCDEF"
                         android:hint="DEFACE"
                         android:inputType="textCapCharacters|textNoSuggestions"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -350,7 +364,8 @@
                         android:digits="0123456789ABCDEF"
                         android:hint="DEFACE"
                         android:inputType="textCapCharacters|textNoSuggestions"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -366,7 +381,8 @@
                         android:digits="0123456789ABCDEF-"
                         android:hint="DEFACE00-0000-0000-0000-000000000000"
                         android:inputType="textCapCharacters|textNoSuggestions"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -382,7 +398,8 @@
                         android:hint="001"
                         android:inputType="numberDecimal|textNoSuggestions"
                         android:maxLength="3"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -398,7 +415,8 @@
                         android:hint="01"
                         android:inputType="numberDecimal|textNoSuggestions"
                         android:maxLength="3"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -415,7 +433,8 @@
                         android:hint="XX"
                         android:inputType="textCapCharacters|textNoSuggestions"
                         android:maxLength="2"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -430,7 +449,8 @@
                         android:id="@+id/etOperator"
                         android:hint="DEFACED"
                         android:inputType="text|textNoSuggestions"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -445,7 +465,8 @@
                         android:id="@+id/etIccId"
                         android:inputType="numberDecimal|textNoSuggestions"
                         android:maxLength="20"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
 
                 <TableRow>
@@ -489,7 +510,8 @@
                         android:id="@+id/etUa"
                         android:hint="Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9"
                         android:inputType="text|textNoSuggestions"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
                 </TableRow>
             </TableLayout>
         </LinearLayout>
@@ -506,7 +528,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:text="@android:string/cancel" />
+            android:text="@android:string/cancel"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btnOk"
@@ -514,7 +537,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:text="@android:string/ok" />
+            android:text="@android:string/ok"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
 </LinearLayout>

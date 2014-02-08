@@ -25,7 +25,7 @@ import android.os.Process;
 import android.util.Log;
 
 @SuppressWarnings("deprecation")
-@SuppressLint({ "DefaultLocale", "WorldReadableFiles" })
+@SuppressLint({ "DefaultLocale", "WorldReadableFiles", "Registered" })
 public class PrivacyProvider extends ContentProvider {
 	private static final String AUTHORITY = "biz.bokhorst.xprivacy.provider";
 	private static final String PREF_RESTRICTION = AUTHORITY;
