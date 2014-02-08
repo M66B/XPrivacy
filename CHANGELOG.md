@@ -48,7 +48,12 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Fixed a locking bug for new instalation, which resulted in a bootloop ([issue](/../../issues/1282))
+* Fixed a locking bug for new installation, which resulted in a bootloop ([issue](/../../issues/1282))
+* Clear button for filters, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1281))
+* Added filter for on-demand, thanks @[jpeg729](https://github.com/jpeg729)
+* Updated Dutch translation
+* Updated German translation
+* Updated Spanish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
@@ -61,7 +66,6 @@ Test and beta releases will have experimental functions enabled by default.
 * Added category and function name to *Restricted by XPrivacy* message
 * Updated Dutch translation
 * Updated Slovak translation
-* Updated Spanish translation
 * Updated Polish translation
 
 **Version 1.99.33-3 TEST**

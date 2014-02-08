@@ -10,7 +10,6 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
 import android.os.Build;
