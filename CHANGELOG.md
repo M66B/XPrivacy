@@ -48,6 +48,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+* Fixed all issues reported with the support info
 * Fixed a locking bug for new installation, which resulted in a bootloop ([issue](/../../issues/1282))
 * Clear button for filters, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1281))
 * Added filter for on-demand restricting, thanks @[jpeg729](https://github.com/jpeg729)

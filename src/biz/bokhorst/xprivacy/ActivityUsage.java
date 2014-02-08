@@ -153,12 +153,14 @@ public class ActivityUsage extends Activity {
 
 		@Override
 		protected void onPostExecute(List<PRestriction> listUsageData) {
-			super.onPostExecute(listUsageData);
+			if (!ActivityUsage.this.isFinishing()) {
+				mUsageAdapter = new UsageAdapter(ActivityUsage.this, R.layout.usageentry, listUsageData);
+				ListView lvUsage = (ListView) findViewById(R.id.lvUsage);
+				lvUsage.setAdapter(mUsageAdapter);
+				mUsageAdapter.getFilter().filter(Boolean.toString(mAll));
+			}
 
-			mUsageAdapter = new UsageAdapter(ActivityUsage.this, R.layout.usageentry, listUsageData);
-			ListView lvUsage = (ListView) findViewById(R.id.lvUsage);
-			lvUsage.setAdapter(mUsageAdapter);
-			mUsageAdapter.getFilter().filter(Boolean.toString(mAll));
+			super.onPostExecute(listUsageData);
 		}
 	}
 

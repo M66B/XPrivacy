@@ -590,29 +590,27 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(List<AppHolder> listApp) {
-			super.onPostExecute(listApp);
+			if (!ActivityShare.this.isFinishing()) {
+				// Display app list
+				mAppAdapter = new AppListAdapter(ActivityShare.this, R.layout.shareentry, listApp);
+				ListView lvShare = (ListView) findViewById(R.id.lvShare);
+				lvShare.setAdapter(mAppAdapter);
 
-			// Display app list
-			mAppAdapter = new AppListAdapter(ActivityShare.this, R.layout.shareentry, listApp);
-			ListView lvShare = (ListView) findViewById(R.id.lvShare);
-			lvShare.setAdapter(mAppAdapter);
-
-			// Dismiss progress dialog
-			try {
+				// Dismiss progress dialog
 				mProgressDialog.dismiss();
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
+
+				// If toggling, set title
+				if (mActionId == R.string.menu_clear_all || mActionId == R.string.menu_restrict_all)
+					ActivityShare.this.setTitle(mActionId);
+
+				// Launch non-interactive export
+				if (!mInteractive && mActionId == R.string.menu_export) {
+					mRunning = true;
+					new ExportTask().executeOnExecutor(mExecutor, new File(mFileName));
+				}
 			}
 
-			// If toggling, set title
-			if (mActionId == R.string.menu_clear_all || mActionId == R.string.menu_restrict_all)
-				ActivityShare.this.setTitle(mActionId);
-
-			// Launch non-interactive export
-			if (!mInteractive && mActionId == R.string.menu_export) {
-				mRunning = true;
-				new ExportTask().executeOnExecutor(mExecutor, new File(mFileName));
-			}
+			super.onPostExecute(listApp);
 		}
 	}
 
@@ -664,7 +662,8 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(Throwable result) {
-			done(result);
+			if (!ActivityShare.this.isFinishing())
+				done(result);
 			super.onPostExecute(result);
 		}
 	}
@@ -802,21 +801,22 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(Throwable result) {
-			if (mInteractive) {
-				done(result);
+			if (!ActivityShare.this.isFinishing())
+				if (mInteractive) {
+					done(result);
 
-				// Share
-				if (result == null) {
-					Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-					intent.setType("text/xml");
-					intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + mFileName));
-					startActivity(Intent.createChooser(intent,
-							String.format(getString(R.string.msg_saved_to), mFileName)));
+					// Share
+					if (result == null) {
+						Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+						intent.setType("text/xml");
+						intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + mFileName));
+						startActivity(Intent.createChooser(intent,
+								String.format(getString(R.string.msg_saved_to), mFileName)));
+					}
+				} else {
+					done(result);
+					finish();
 				}
-			} else {
-				done(result);
-				finish();
-			}
 
 			super.onPostExecute(result);
 		}
@@ -922,17 +922,19 @@ public class ActivityShare extends Activity {
 		@Override
 		protected void onPostExecute(Throwable result) {
 			// Mark as failed the apps that weren't found
-			if (result == null) {
-				List<AppHolder> listWaiting = new ArrayList<AppHolder>();
-				listWaiting.addAll(mAppAdapter.mAppsWaiting);
-				for (AppHolder app : listWaiting) {
-					mAppAdapter.setState(app.appInfo.getUid(), STATE_FAILURE);
-					mAppAdapter.setMessage(app.appInfo.getUid(), getString(R.string.msg_no_restrictions));
+			if (!ActivityShare.this.isFinishing()) {
+				if (result == null) {
+					List<AppHolder> listWaiting = new ArrayList<AppHolder>();
+					listWaiting.addAll(mAppAdapter.mAppsWaiting);
+					for (AppHolder app : listWaiting) {
+						mAppAdapter.setState(app.appInfo.getUid(), STATE_FAILURE);
+						mAppAdapter.setMessage(app.appInfo.getUid(), getString(R.string.msg_no_restrictions));
+					}
+					mAppAdapter.notifyDataSetChanged();
 				}
-				mAppAdapter.notifyDataSetChanged();
-			}
 
-			done(result);
+				done(result);
+			}
 			super.onPostExecute(result);
 		}
 	}
@@ -1293,7 +1295,8 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(Throwable result) {
-			done(result);
+			if (!ActivityShare.this.isFinishing())
+				done(result);
 			super.onPostExecute(result);
 		}
 	}
@@ -1504,7 +1507,8 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(Throwable result) {
-			done(result);
+			if (!ActivityShare.this.isFinishing())
+				done(result);
 			super.onPostExecute(result);
 		}
 	}
@@ -1616,27 +1620,30 @@ public class ActivityShare extends Activity {
 
 		@Override
 		protected void onPostExecute(Throwable result) {
-			String message;
-			if (result == null)
-				message = mContext.getString(R.string.msg_registered);
-			else
-				message = result.getLocalizedMessage();
+			if (mContext != null) {
+				String message;
+				if (result == null)
+					message = mContext.getString(R.string.msg_registered);
+				else
+					message = result.getLocalizedMessage();
 
-			// Build dialog
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
-			alertDialogBuilder.setTitle(R.string.app_name);
-			alertDialogBuilder.setMessage(message);
-			alertDialogBuilder.setIcon(Util.getThemed(mContext, R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(mContext.getString(android.R.string.ok),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					});
+				// Build dialog
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
+				alertDialogBuilder.setTitle(R.string.app_name);
+				alertDialogBuilder.setMessage(message);
+				alertDialogBuilder.setIcon(Util.getThemed(mContext, R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(mContext.getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
 
-			// Show dialog
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
+				// Show dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			}
+			super.onPostExecute(result);
 		}
 	}
 

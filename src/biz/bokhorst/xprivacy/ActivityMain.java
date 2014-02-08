@@ -1013,22 +1013,20 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 		@Override
 		protected void onPostExecute(List<ApplicationInfoEx> listApp) {
-			super.onPostExecute(listApp);
+			if (!ActivityMain.this.isFinishing()) {
+				// Display app list
+				mAppAdapter = new AppListAdapter(ActivityMain.this, R.layout.mainentry, listApp, mRestrictionName);
+				ListView lvApp = (ListView) findViewById(R.id.lvApp);
+				lvApp.setAdapter(mAppAdapter);
 
-			// Display app list
-			mAppAdapter = new AppListAdapter(ActivityMain.this, R.layout.mainentry, listApp, mRestrictionName);
-			ListView lvApp = (ListView) findViewById(R.id.lvApp);
-			lvApp.setAdapter(mAppAdapter);
-
-			// Dismiss progress dialog
-			try {
+				// Dismiss progress dialog
 				mProgressDialog.dismiss();
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
+
+				// Restore state
+				ActivityMain.this.selectRestriction(spRestriction.getSelectedItemPosition());
 			}
 
-			// Restore state
-			ActivityMain.this.selectRestriction(spRestriction.getSelectedItemPosition());
+			super.onPostExecute(listApp);
 		}
 	}
 
