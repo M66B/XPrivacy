@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.lang.SecurityException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import javax.net.ssl.SSLPeerUnverifiedException;
@@ -103,6 +104,8 @@ public class Util {
 		if (ex instanceof OutOfMemoryError)
 			priority = Log.WARN;
 		else if (ex instanceof IOException)
+			priority = Log.WARN;
+		else if (ex instanceof SecurityException)
 			priority = Log.WARN;
 		else if (ex instanceof SocketTimeoutException)
 			priority = Log.WARN;
