@@ -270,6 +270,8 @@ Compatibility
 XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat)
 and is reported to work with most Android variants, including stock ROMs.
 
+**XPrivacy is not compatible with LBE Security Master**
+
 Installation
 ------------
 
@@ -677,6 +679,8 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 
 It is okay to use my personal or XDA e-mail for things that cannot be shared in public,
 such as security reports.
+
+**There is no support for anything else than privacy, so not for game cheating, root cloacking, etc.**
 
 Changelog
 ---------
