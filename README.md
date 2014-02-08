@@ -358,13 +358,13 @@ Permissions
 
 XPrivacy asks for the following Android permissions:
 
-* Accounts: to select accounts to allow for applications
-* Contacts: to select contacts to allow for applications
-* Boot: to check if XPrivacy is enabled
-* Internet: to submit/fetch [crowd sourced restrictions](http://crowd.xprivacy.eu/)
-* Storage: to export settings to the SD card (only [pro version](http://www.xprivacy.eu/))
+* Accounts: to be able to restrict applications' access to accounts
+* Contacts: to be able to restrict applications' access to contacts
+* Boot: to be able to check if XPrivacy is enabled
+* Internet: to be able to submit and fetch [crowd sourced restrictions](http://crowd.xprivacy.eu/)
+* Storage: to be able to export XPrivacy's settings to the SD card (only [pro version](http://www.xprivacy.eu/))
 
-If you don't like this, you can always restrict XPrivacy itself ...
+If desired, you can even restrict XPrivacy from accessing any of the above.
 
 Frequently asked questions
 --------------------------
@@ -372,10 +372,10 @@ Frequently asked questions
 <a name="FAQ1"></a>
 **(1) Will XPrivacy make my device slower?**
 
-Maybe a little bit, but it will probably not be noticeable.
+Maybe a little bit, but you probably won't notice.
 
 <a name="FAQ2"></a>
-**(2) Does XPrivacy use a lot of memory or battery?**
+**(2) Does XPrivacy use a lot of memory and battery?**
 
 Almost nothing.
 
@@ -385,22 +385,17 @@ Almost nothing.
 There are already enough [guides](http://www.androidcentral.com/root) to help you to root your device.
 Use your favorite search engine to find one.
 
+<a name="FAQ4"></a>
+**(4) How can I reset an application's XPrivacy settings?**
+
+While viewing an application's restrictions, do "Menu > Clear," then reboot.
+
 <a name="FAQ5"></a>
-**(5) How can I reset all XPrivacy settings?**
+**(5) Can I backup XPrivacy's restrictions, settings, and usage data?**
 
-Menu > Clear all data
+Starting with version 1.11.13, you can no longer backup XPrivacy's data with standard backup tools, such as Titanium Backup. This is because database is no longer stored in the XPrivacy data folder, but in a system folder. I have tried to store the database in the XPrivacy data folder, but this leads to all kinds of permission problems.
 
-Reboot.
-
-<a name="FAQ6"></a>
-**(6) Can I backup XPrivacy restrictions, settings and usage data?**
-
-You cannot backup XPrivacy data with standard backup tools, like Titanium backup, since version 1.11.13 anymore.
-This is because the database (new in version 1.11.13) is not stored in the XPrivacy data folder, but in a system folder.
-I have tried to store the database in the XPrivacy data folder, but this leads to all kind of permission problems.
-
-The best way to backup XPrivacy data is to use the export function,
-but this requires the [pro version](http://www.xprivacy.eu/).
+The best practice is to use XPrivacy's export function (Main Menu > Export) to backup XPrivacy data, but please note that this requires the [pro version](http://www.xprivacy.eu/).
 
 You can automate backups by sending an intent:
 
@@ -408,273 +403,217 @@ You can automate backups by sending an intent:
 adb shell am start -a biz.bokhorst.xprivacy.action.EXPORT
 ```
 
-This can be done with for example with [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm).
+You can do this with [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm), for example:
 
 New task: Any name you like
 Action Category: Misc/Send Intent
 Action: biz.bokhorst.xprivacy.action.EXPORT
 Target: Activity
 
-<a name="FAQ10"></a>
-**(10) Which functions are exactly restricted?**
+<a name="FAQ6"></a>
+**(6) Precisely which functions does XPrivacy restrict?**
 
-Many, see [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
+Many. See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
 
-<a name="FAQ12"></a>
-**(12) How safe is XPrivacy?**
+<a name="FAQ7"></a>
+**(7) How safe is XPrivacy?**
 
-Great care has been taken to develop XPrivacy, nevertheless data could leak and applications can crash,
-although this is fortunately rare.
+Great care has been taken to develop XPrivacy. Nevertheless, on rare occasions, data can leak and applications can crash.
 
-<a name="FAQ14"></a>
-**(14) I get 'Incompatible ...' !**
+<a name="FAQ8"></a>
+**(8) I get "Incompatible..." !**
 
 An internal check of XPrivacy failed, resulting in potential data leakage.
-Please press *OK* to send me the support information, so I can look into it.
+Please press *OK* to send me the support information so I can look into it.
 
-<a name="FAQ15"></a>
-**(15) What is the procedure for a ROM update?**
+<a name="FAQ9"></a>
+**(9) What is the procedure to update a ROM?**
 
-The right order for ROM updates is:
+Assuming you don't wish to wipe data and that Xposed and XPrivacye are already installed before updating the ROM, the best procedure to update a ROM is:
 
 1. Export XPrivacy settings
 1. Enable flight mode
-1. Clear XPrivacy data (please note that this will erase the imported pro license file if any)
+1. Clear XPrivacy data (please note that this will erase the imported pro license, if there is one.)
 1. Reboot to recovery
 1. Flash ROM
 1. Flash Google apps (optional)
 1. Re-activate Xposed using [Xposed toggle](http://forum.xda-developers.com/showpost.php?p=45188739)
 1. Reboot to Android
-1. Restore the android ID (when needed; with for example [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup))
+1. Restore the android ID (when needed. For example, with [Titanium backup](https://play.google.com/store/apps/details?id=com.keramidas.TitaniumBackup))
 1. Import XPrivacy settings
 1. Disable flight mode
 1. Fake network type (Wi-Fi, mobile)
 
-(this assumes no data wipe and Xposed and XPrivacy installed before updating the ROM)
+If you skip the export, clear, or import steps above, some system applications can end up with the wrong restrictions because the the ROM update might have changed these applications' UID's.
 
-If you skip the XPrivacy import/clear/export steps some system applications can have the wrong restrictions,
-because the uid's of these applications might have been changed.
+To import and export XPrivacy's data, you need the [pro version](http://www.xprivacy.eu/).
 
-For export/importing XPrivacy data you need [pro version](http://www.xprivacy.eu/).
+<a name="FAQ10"></a>
+**(10) Can I restrict root access?**
 
-<a name="FAQ16"></a>
-**(16) Can I restrict root access?**
+Yes, via "Shell (commands, superuser) > su".
 
-Yes, you can by restricting su shell access.
+<a name="FAQ11"></a>
+**(11) Will restrictions be applied immediately?**
 
-<a name="FAQ17"></a>
-**(17) Will restrictions be applied immediately?**
+Changes to restrictions may require up to 15 seconds to take effect because of caching. Changing internet and storage restrictions requires restarting the application. Please note that in many cases pressing *back* merely moves the application to the background.
 
-It can take up to 15 seconds before changes in restrictions will be effective, because of caching.
-Changing the internet and storage restriction requires an application restart.
-Please note that in many cases pressing *back*, only moves the application to the background.
+<a name="FAQ12"></a>
+**(12) Does XPrivacy have a firewall?**
 
-<a name="FAQ19"></a>
-**(19) Does XPrivacy have a firewall?**
-
-Yes, you can restrict internet access for any application.
-If you want to partly enable internet, for example for Wi-Fi only,
-you will have to use a firewall application, like [AFWall+](http://forum.xda-developers.com/showthread.php?t=1957231).
-The reason is that XPrivacy works within Android
+You can restrict internet access for any application. But if you want to partly enable internet, for example for Wi-Fi only, you will have to use a firewall application, such as [AFWall+](http://forum.xda-developers.com/showthread.php?t=1957231). XPrivacy works within Android,
 and detailed firewall rules can only be applied within the Linux kernel.
 
-<a name="FAQ21"></a>
-**(21) I get 'Unable to parse package'**
+<a name="FAQ13"></a>
+**(13) I get "Unable to parse package."**
 
-This means the downloaded apk file is corrupt.
-Try disabling your popup blocker or download using another computer.
+This means XPrivacy's apk file is corrupt. Try disabling your popup blocker or download using another computer.
 
-<a name="FAQ22"></a>
-**(22) How can I make a logcat?**
+<a name="FAQ14"></a>
+**(14) How can I make a logcat?**
 
-Enable debug logging using the settings menu and see [here](http://forum.xda-developers.com/showthread.php?t=1726238).
+Enable "Settings > Debug log (requires restart)" and see [here](http://forum.xda-developers.com/showthread.php?t=1726238).
 
-<a name="FAQ23"></a>
-**(23) Where are the settings of XPrivacy stored?**
+<a name="FAQ15"></a>
+**(15) Where are XPrivacy's settings stored?**
 
-The restrictions, settings and usage data of XPrivacy are stored in an sqlite3 database in this folder:
+XPrivacy's restrictions, settings, and usage data are stored in an sqlite3 database in this folder:
 
 /data/xprivacy
 
-<a name="FAQ25"></a>
-**(25) Why doesn't clearing a data category restriction clear the function exceptions too?**
+<a name="FAQ16"></a>
+**(16) Why doesn't clearing the check box for a data category also clear the functions inside that category?**
 
-If you accidentally undo a data category restriction all the function exception would be lost.
-The function exceptions only apply when the data category is restricted.
+If you accidentally uncheck a data category's checkbox, the restriction settings inside that category would be lost. The restriction settings inside a category only apply when that category is restricted.
 
-<a name="FAQ26"></a>
-**(26) How can I export/import my settings?**
+<a name="FAQ17"></a>
+**(17) How can I export/import my settings?**
 
-For this you need the [pro version](http://www.xprivacy.eu/).
-Exported settings are stored in the folder *.xprivacy* in the file *XPrivacy.xml*.
-You can copy this file to the same place on a second device.
-When importing, settings are only applied to applications that exist on the second device.
-This also applies to system applications.
+You need the [pro version](http://www.xprivacy.eu/) to import your settings. Exported settings are stored in the folder *.xprivacy* in the file *XPrivacy.xml*. You can copy this file to the same place on any other device. When importing, settings are only applied to applications and system applications that actually exist on the other device.
 
-Note that allowed accounts and allowed contacts (not the accounts and contacts itself)
-can only be imported when the android ID is the same.
-See question 15 about what to do when updating your ROM.
+Note that allowed accounts and allowed contacts (not the accounts and contacts themselves) can only be imported when the Android ID is the same. Also see the above FAQ about what to do when updating your ROM.
 
-<a name="FAQ28"></a>
-**(28) I have restricted locations but my GPS status icon still appears**
+<a name="FAQ18"></a>
+**(18) I have restricted locations, but my GPS status icon still appears.**
 
-That is correct, XPrivacy only replaces the real location by a fake location.
-It even uses the real location to randomize the fake location.
-The idea is that everything should appear as normal as possible to an application.
+That is correct. XPrivacy only replaces the real location with a fake location. It even uses the real location to randomize the fake location. The idea is that everything should appear as normal as possible to an application.
 
-<a name="FAQ29"></a>
-**(29) How about multi-user support?**
+<a name="FAQ19"></a>
+**(19) How about multi-user support?**
 
-Additional users can install and use XPrivacy like the primary user.
+Additional users can install and use XPrivacy the same way as the primary user.
 
-<a name="FAQ30"></a>
-**(30) Why is the location search in the settings disabled?**
+<a name="FAQ20"></a>
+**(20) Why is the "Settings > FAKE DATA > Search" button disabled?**
 
 Because some Google components are not installed.
 
-<a name="FAQ31"></a>
+<a name="FAQ21"></a>
 **(31) Do I still need root after installing Xposed?**
 
 No.
 
-<a name="FAQ32"></a>
-**(32) Why is XPrivacy not available in the Play store anymore?**
+<a name="FAQ22"></a>
+**(22) Why isn't XPrivacy available in the Play Store anymore?**
 
-Read [here](http://forum.xda-developers.com/showpost.php?p=44427089&postcount=2433) why.
+Read the explanation [here](http://forum.xda-developers.com/showpost.php?p=44427089&postcount=2433).
 
-<a name="FAQ33"></a>
-**(33) What is 'Template' used for?**
+<a name="FAQ23"></a>
+**(23) What is "Template" used for?**
 
-The template is used to apply restrictions to newly installed applications
-and when you use the menu *Apply template*.
+XPrivacy uses the template to apply restrictions to newly installed applications and when you do "*Apply template*" from the menu inside an application.
 
-<a name="FAQ34"></a>
-**(34) Will there be a iOS / Window phone version?**
+<a name="FAQ24"></a>
+**(24) Will there be iOS or Windows Phone versions?**
 
-No, because these OS'es are to closed to implement something like XPrivacy.
+No, because it's too difficult to implement something like XPrivacy on these OS's.
 
-<a name="FAQ35"></a>
-**(35) Will you restrict ...?**
+<a name="FAQ25"></a>
+**(25) Will you restrict...?**
 
-* The device brand/manufacturer
-* The device model/product name
-* The device (phone) type
-* The network type (mobile, Wi-Fi, etc.)
-* Synchronization state
-* Screen locking
-* Display settings
+* device brand/manufacturer
+* device model/product name
+* device (phone) type
+* network type (mobile, Wi-Fi, etc.)
+* synchronization state
+* screen locking
+* sisplay settings
 * Wi-Fi settings
 * Bluetooth settings
-* Shortcuts
-* Starting other applications
+* shortcuts
+* starting other applications
 * Android version
-* Vibration
-* Checks for root
+* vibration
+* checks for root
 
-No, because I don't consider this as privacy sensitive data (=able to identify you and collect data about you).
-I am happy to add new restrictions for data that is really privacy sensitive.
+No, because I don't consider these privacy-sensitive data, i.e., able to identify you and collect data about you. I am happy to add new restrictions for data that is really privacy-sensitive.
 
-<a name="FAQ36"></a>
-**(36) What are the experimental functions?**
+<a name="FAQ26"></a>
+**(26) What are the "Experimental functions"?**
 
 See the [change log](https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md)
 
-<a name="FAQ37"></a>
-**(37) Does XPrivacy work with SELinux (Fort Knox) ?**
+<a name="FAQ27"></a>
+**(27) Does XPrivacy work with SELinux (Fort Knox)?**
 
 Yes.
 
-<a name="FAQ39"></a>
-**(39) How does the tri-state check box work?**
+<a name="FAQ28"></a>
+**(28) How does the tri-state check box work?**
 
-The tri-state check box follows this pattern:
+The tri-state check box works this way:
 
-* Unchecked = no retrictions
-* Solid square = some restrictions
-* Check mark = all restrictions
+* unchecked = nothing under the category is restricted
+* solid square = some things under the category are restricted
+* check mark = everything under the checked category is restricted
 
-Some/all is determined as follows:
+Note: by default, categories and functions are filtered by permission, so you may not see all of them. The check box state is independent of this.
 
-* All category: some/all other categories
-* Other categories: some/all functions
+<a name="FAQ29"></a>
+**(29) Why doesn't the  pro enabler make all pro features available?**
 
-Be aware that by default categories and functions are filtered by permission,
-so you may not see all of them. The check box state is independent of this.
+The [pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) is in the Play Store by request of some early XPrivacy users. In the beginning, there was just one pro feature: export and import all restrictions and settings. Later, fetching [crowd sourced restrictions](http://crowd.xprivacy.eu/) was added as a pro feature. Processing the crowd sourced restrictions requires a big server that has to be paid for. The pro enabler's low price (don't forget Google takes 30%) prevented providing this feature for free. Looking back, I would never have added the pro enabler to the Play Store, but I can no longer remove it because of the existing users.
 
-<a name="FAQ41"></a>
-**(41) Why are not all pro features available with the pro enabler?**
+<a name="FAQ30"></a>
+**(30) What should I do if an application force closes (crashes)?**
 
-The [pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro)
-is in the Play store on request of some early XPrivacy users.
-In the beginning there was just one pro feature: export/import of all restrictions and settings.
-In a later stage fetching [crowd sourced restrictions](http://crowd.xprivacy.eu/)
-were added as a pro feature.
-Processing of the crowd sourced restrictions requires a big server which has to be paid for.
-The low price of the pro enabler, don't forget Google takes already 30%,
-didn't allow to give this feature for free to existing users.
-Looking back I would never have put the pro enabler into the Play store,
-but I cannot remove it anymore now, because of the existing users.
+Inspect the application's usage view, via its menu's "Usage data" item to see which restrictions the application accesses. Restrict and unrestrict one by one until you have found which one causes the application to force close. Help others by submitting your working set of restrictions.
 
-<a name="FAQ42"></a>
-**(42) What should I do if an application force closes (crashes)?**
+<a name="FAQ31"></a>
+**(31) Can XPrivacy handle non-Java applications?**
 
-Take a look into the usage view of the application,
-available through the menu in the application details view,
-to see which functions the application uses.
-Disable category and/or function restrictions one by one
-until you have found the one causing the force close.
-Help others by submitting your working restrictions.
+In general, due to Android's isolated virtual machine architecture, calls to native libraries and binaries are via Java and so XPrivacy can restrict them. XPrivacy can cover any route to a native library or binary.
 
-<a name="FAQ43"></a>
-**(43) Can XPrivacy handle non-Java applications?**
+XPrivacy cannot hook into native libraries, but can prevent native libraries from loading. This can break applications such as Facebook, but can prevent malware from doing its work.
 
-In general, due to the architecture of Android (isolated virtual machines),
-any call to native libraries and binaries is through Java
-and can thus be restricted by XPrivacy.
-As far as known any route to a native library or binary is covered by XPrivacy.
+XPrivacy can also restrict access to the Linux shell (including superuser) to prevent native binaries from running. You can find these restrictions in the *Shell* category.
 
-XPrivacy cannot hook into native libraries, but can prevent native libraries from loading.
-This could break applications, like Facebook, but can prevent malware from doing its work.
+Starting with version 2.0, XPrivacy will protect against direct interprocess communication (IPC).
 
-XPrivacy can also restrict access to the Linux shell (including superuser),
-to prevent native binaries from running.
+<a name="FAQ32"></a>
+**(32) I see data usage without Android permissions!**
 
-You can find the restrictions in the *Shell* category.
+Many functions do not require Android permissions, so this is quite normal. Sometimes an application tries to access a function that it doesn't have Android permission for. Since XPrivacy usually runs prior to the function, such access will be registered.
 
-Version 2.0+ has protection against direct interprocess communication (IPC).
+If you filter on permissions and an application tries to use a function without having permission, the application will still be shown.
 
-<a name="FAQ44"></a>
-**(44) I see data usage without Android permissions!**
+If you think a function requires permissions while XPrivacy shows it doesn't, please report it.
 
-A lot of functions do not require Android permissions, so this is quite normal.
-Sometimes an application tries to use a function which it doesn't have Android permission for.
-Since XPrivacy mostly runs before the function is run, this will be registered.
-
-If you filter on permissions and an application tried to use a function without having these permissions,
-the application will still be shown.
-
-If you think a function requires permissions, while XPrivacy shows not, please report this.
-
-<a name="FAQ45"></a>
-**(45) How can I restrict the hardware/external MAC/IP/IMEI address/number?**
+<a name="FAQ33"></a>
+**(33) How can I restrict the hardware, external MAC, IP, and IMEI number?**
 
 You can restrict the IP and MAC addresses and IMEI number for any application.
 
-The external IP is assigned by your provider and can thus not be changed.
-You could use a [VPN](http://en.wikipedia.org/wiki/Virtual_private_network)
-or [TOR](http://en.wikipedia.org/wiki/Tor_\(anonymity_network\)) to hide your external IP to a certain extend.
+The external IP is assigned by your provider and cannot be changed. You could use a [VPN](http://en.wikipedia.org/wiki/Virtual_private_network) or [TOR](http://en.wikipedia.org/wiki/Tor_\(anonymity_network\)) to hide your external IP to a certain extent.
 
-The hardware MAC address can be changed on some devices,
-but this is device dependent and can only be done on driver or kernel level.
-XPrivacy works only on Android level and device independent.
+The hardware MAC address can be changed on some devices, but this is device-dependent and can only be done at the driver or kernel level. XPrivacy only works on the Android level and is device-independent.
 
-The same applies to the IMEI number, with as additional problem legal issues in most countries.
+The same applies to the IMEI number, additionally complicated by legal issues in most countries.
 
-<a name="FAQ46"></a>
-**(46) Why do I need to register to submit restrictions?**
+<a name="FAQ34"></a>
+**(34) Why do I need to register to submit restrictions?**
 
-This is to prevent a malicious application maker from automatically submitting a lot of *allow* restriction
-to outvote user submitted restrictions.
+To prevent a malicious application maker from automatically submitting a lot of *allow* restrictions to outvote the other users.
 
 Support
 -------
