@@ -1740,7 +1740,7 @@ public class ActivityShare extends Activity {
 
 	// Helper classes
 
-	private static class AbortException extends Exception {
+	public static class AbortException extends Exception {
 		private static final long serialVersionUID = 1L;
 
 		public AbortException(Context context) {

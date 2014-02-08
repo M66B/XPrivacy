@@ -103,6 +103,8 @@ public class Util {
 		int priority;
 		if (ex instanceof OutOfMemoryError)
 			priority = Log.WARN;
+		else if (ex instanceof ActivityShare.AbortException)
+			priority = Log.WARN;
 		else if (ex instanceof IOException)
 			priority = Log.WARN;
 		else if (ex instanceof SecurityException)
