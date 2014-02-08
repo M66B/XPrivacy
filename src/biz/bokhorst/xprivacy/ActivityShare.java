@@ -1166,6 +1166,7 @@ public class ActivityShare extends Activity {
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 				PackageInfo xInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 				String confidence = PrivacyManager.getSetting(0, PrivacyManager.cSettingConfidence, "", false);
+				boolean dangerous = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingDangerous, false, false);
 
 				// Initialize progress
 				mProgressCurrent = 0;
@@ -1245,11 +1246,15 @@ public class ActivityShare extends Activity {
 										JSONObject entry = settings.getJSONObject(i);
 										String restrictionName = entry.getString("restriction");
 										String methodName = entry.has("method") ? entry.getString("method") : null;
-										int voted_restricted = entry.getInt("restricted");
-										int voted_not_restricted = entry.getInt("not_restricted");
-										boolean restricted = (voted_restricted > voted_not_restricted);
-										listRestriction.add(new PRestriction(appInfo.getUid(), restrictionName,
-												methodName, restricted));
+										Hook hook = (methodName == null ? null : PrivacyManager.getHook(
+												restrictionName, methodName));
+										if (dangerous || hook == null || !hook.isDangerous()) {
+											int voted_restricted = entry.getInt("restricted");
+											int voted_not_restricted = entry.getInt("not_restricted");
+											boolean restricted = (voted_restricted > voted_not_restricted);
+											listRestriction.add(new PRestriction(appInfo.getUid(), restrictionName,
+													methodName, restricted));
+										}
 									}
 									PrivacyManager.setRestrictionList(listRestriction);
 									List<Boolean> newState = PrivacyManager.getRestartStates(appInfo.getUid(), null);
