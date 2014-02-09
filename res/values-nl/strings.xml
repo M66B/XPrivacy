@@ -103,7 +103,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_fpermission">Filter op rechten</string>
     <string name="title_frestricted">Filter op beperkingen</string>
     <string name="title_fuser">Filter op gebruikersapplicaties</string>
-    <string name="title_fondemand">Filter opy on-demand</string>
+    <string name="title_fondemand">Filter op on-demand</string>
     <string name="title_fsystem">Filter op systeemapplicaties</string>
     <string name="title_fnot">Negatief</string>
     <string name="title_sname">Op naam</string>
