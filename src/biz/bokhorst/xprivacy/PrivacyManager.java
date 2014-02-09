@@ -148,47 +148,39 @@ public class PrivacyManager {
 	static {
 		List<String> listRestriction = getRestrictions();
 
-		for (Hook hook : Meta.get())
-			if (Build.VERSION.SDK_INT >= hook.getSdk()) {
-				String restrictionName = hook.getRestrictionName();
+		for (Hook hook : Meta.get()) {
+			String restrictionName = hook.getRestrictionName();
 
-				// Check restriction
-				if (!listRestriction.contains(restrictionName))
-					Util.log(null, Log.WARN, "Not found restriction=" + restrictionName);
+			// Check restriction
+			if (!listRestriction.contains(restrictionName))
+				Util.log(null, Log.WARN, "Not found restriction=" + restrictionName);
 
-				// Enlist method
-				if (!mMethod.containsKey(restrictionName))
-					mMethod.put(restrictionName, new HashMap<String, Hook>());
-				mMethod.get(restrictionName).put(hook.getName(), hook);
+			// Enlist method
+			if (!mMethod.containsKey(restrictionName))
+				mMethod.put(restrictionName, new HashMap<String, Hook>());
+			mMethod.get(restrictionName).put(hook.getName(), hook);
 
-				// Cache restart required methods
-				if (hook.isRestartRequired()) {
-					if (!mRestart.containsKey(restrictionName))
-						mRestart.put(restrictionName, new ArrayList<String>());
-					mRestart.get(restrictionName).add(hook.getName());
-				}
-
-				// Enlist permissions
-				String[] permissions = hook.getPermissions();
-				if (permissions != null)
-					for (String perm : permissions)
-						if (!perm.equals("")) {
-							String aPermission = (perm.contains(".") ? perm : "android.permission." + perm);
-							if (!mPermission.containsKey(aPermission))
-								mPermission.put(aPermission, new ArrayList<Hook>());
-							if (!mPermission.get(aPermission).contains(hook))
-								mPermission.get(aPermission).add(hook);
-						}
+			// Cache restart required methods
+			if (hook.isRestartRequired()) {
+				if (!mRestart.containsKey(restrictionName))
+					mRestart.put(restrictionName, new ArrayList<String>());
+				mRestart.get(restrictionName).add(hook.getName());
 			}
 
-		Meta.annotate();
-	}
-
-	public static void registerHook(String restrictionName, String methodName, int sdk) {
-		if (restrictionName != null && methodName != null && Build.VERSION.SDK_INT >= sdk) {
-			if (!mMethod.containsKey(restrictionName) || !mMethod.get(restrictionName).containsKey(methodName))
-				Util.log(null, Log.WARN, "Missing method " + methodName + " SDK=" + Build.VERSION.SDK_INT);
+			// Enlist permissions
+			String[] permissions = hook.getPermissions();
+			if (permissions != null)
+				for (String perm : permissions)
+					if (!perm.equals("")) {
+						String aPermission = (perm.contains(".") ? perm : "android.permission." + perm);
+						if (!mPermission.containsKey(aPermission))
+							mPermission.put(aPermission, new ArrayList<Hook>());
+						if (!mPermission.get(aPermission).contains(hook))
+							mPermission.get(aPermission).add(hook);
+					}
 		}
+
+		// Meta.annotate();
 	}
 
 	public static List<String> getRestrictions() {
@@ -215,8 +207,11 @@ public class PrivacyManager {
 
 	public static List<Hook> getHooks(String restrictionName) {
 		List<Hook> listMethod = new ArrayList<Hook>();
-		for (String methodName : mMethod.get(restrictionName).keySet())
-			listMethod.add(mMethod.get(restrictionName).get(methodName));
+		for (String methodName : mMethod.get(restrictionName).keySet()) {
+			Hook md = mMethod.get(restrictionName).get(methodName);
+			if (Build.VERSION.SDK_INT >= md.getSdk())
+				listMethod.add(mMethod.get(restrictionName).get(methodName));
+		}
 		Collections.sort(listMethod);
 		return listMethod;
 	}

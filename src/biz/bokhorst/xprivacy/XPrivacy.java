@@ -375,11 +375,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						Process.myUid());
 				mListHookError.add(message);
 				Util.log(hook, hook.isOptional() ? Log.WARN : Log.ERROR, message);
-				for (Method declared : hookClass.getDeclaredMethods()) {
-					String dMethod = "Declared method=" + declared;
-					Util.log(hook, hook.isOptional() ? Log.WARN : Log.ERROR, dMethod);
-					mListHookError.add(dMethod);
-				}
 				return;
 			}
 		} catch (Throwable ex) {

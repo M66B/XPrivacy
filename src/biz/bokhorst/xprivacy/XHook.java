@@ -17,7 +17,6 @@ public abstract class XHook {
 		mMethodName = methodName;
 		mSpecifier = specifier;
 		mSdk = 0;
-		PrivacyManager.registerHook(restrictionName, getSpecifier(), mSdk);
 	}
 
 	protected XHook(String restrictionName, String methodName, String specifier, int sdk) {
@@ -25,7 +24,6 @@ public abstract class XHook {
 		mMethodName = methodName;
 		mSpecifier = specifier;
 		mSdk = sdk;
-		PrivacyManager.registerHook(restrictionName, getSpecifier(), sdk);
 	}
 
 	protected XHook optional() {
