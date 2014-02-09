@@ -1243,7 +1243,7 @@ public class PrivacyService {
 			// Table for restriction
 			TableLayout table = new TableLayout(context);
 			LinearLayout.LayoutParams llTableParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			table.setLayoutParams(llTableParams);
 			table.setPadding(0, 0, 0, vmargin / 2);
 			table.setShrinkAllColumns(true);
@@ -1252,40 +1252,60 @@ public class PrivacyService {
 				TableRow row2 = new TableRow(context);
 				TableRow row3 = new TableRow(context);
 
+				TableRow.LayoutParams cellParams0 = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+						TableRow.LayoutParams.WRAP_CONTENT);
+				TableRow.LayoutParams cellParams1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1);
+				cellParams1.setMargins(hmargin / 2, 0, 0, 0);
+
 				// Category
 				TextView titleCategory = new TextView(context);
 				titleCategory.setText(resources.getString(R.string.title_category));
-				row1.addView(titleCategory);
+				titleCategory.setSingleLine(true);
+				row1.addView(titleCategory, cellParams0);
 
 				TextView category = new TextView(context);
 				int catId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
 				category.setText(resources.getString(catId));
 				category.setTypeface(null, Typeface.BOLD);
-				row1.addView(category);
+				category.setSingleLine(true);
+				category.setEllipsize(TextUtils.TruncateAt.END);
+				row1.addView(category, cellParams1);
 
 				// Method
 				TextView titleMethod = new TextView(context);
 				titleMethod.setText(resources.getString(R.string.title_function));
-				row2.addView(titleMethod);
+				titleMethod.setSingleLine(true);
+				row2.addView(titleMethod, cellParams0);
 
 				TextView method = new TextView(context);
 				method.setText(restriction.methodName);
 				method.setTypeface(null, Typeface.BOLD);
-				row2.addView(method);
+				method.setSingleLine(true);
+				method.setEllipsize(TextUtils.TruncateAt.START);
+				row2.addView(method, cellParams1);
 
 				// Arguments
-				TextView titleArguments = new TextView(context);
-				titleArguments.setText(resources.getString(R.string.title_parameters));
-				row3.addView(titleArguments);
+				if (restriction.extra != null) {
+					TextView titleArguments = new TextView(context);
+					titleArguments.setText(resources.getString(R.string.title_parameters));
+					titleArguments.setSingleLine(true);
+					row3.addView(titleArguments, cellParams0);
 
-				TextView argument = new TextView(context);
-				argument.setText(restriction.extra == null ? "" : restriction.extra);
-				argument.setTypeface(null, Typeface.BOLD);
-				row3.addView(argument);
+					TextView argument = new TextView(context);
+					argument.setText(restriction.extra);
+					argument.setTypeface(null, Typeface.BOLD);
+					argument.setSingleLine(true);
+					argument.setEllipsize(TextUtils.TruncateAt.END);
+					row3.addView(argument, cellParams1);
+				}
 
-				table.addView(row1);
-				table.addView(row2);
-				table.addView(row3);
+				TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(
+						TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+
+				table.addView(row1, rowParams);
+				table.addView(row2, rowParams);
+				if (restriction.extra != null)
+					table.addView(row3, rowParams);
 			}
 			llContainer.addView(table);
 
