@@ -472,7 +472,7 @@ public class Util {
 	}
 
 	public static Bitmap[] getTriStateCheckBox(Context context) {
-		Bitmap[] bitmap = new Bitmap[4];
+		Bitmap[] bitmap = new Bitmap[3];
 
 		// Get highlight color
 		TypedArray ta1 = context.getTheme()
@@ -520,22 +520,6 @@ public class Util {
 		checkmark.draw(canvas2);
 		checkmarkOutline.draw(canvas2);
 
-		// Get question mark
-		Drawable questionmark = context.getResources().getDrawable(R.drawable.ondemand);
-		questionmark.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
-		questionmark.setColorFilter(highlightColor, Mode.SRC_ATOP);
-
-		// Get question mark outline
-		Drawable questionmarkOutline = context.getResources().getDrawable(R.drawable.questionmark_outline);
-		questionmarkOutline.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
-
-		// Create question check box
-		bitmap[3] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
-		Canvas canvas3 = new Canvas(bitmap[3]);
-		off.draw(canvas3);
-		questionmark.draw(canvas3);
-		questionmarkOutline.draw(canvas3);
-
 		return bitmap;
 	}
 
@@ -543,51 +527,5 @@ public class Util {
 		TypedValue tv = new TypedValue();
 		context.getTheme().resolveAttribute(attr, tv, true);
 		return tv.resourceId;
-	}
-
-	public static class RState {
-		public Boolean restricted;
-		public boolean asked;
-	}
-
-	public static RState getRestrictionState(int uid, String restrictionName, String methodName) {
-		RState state = new RState();
-
-		// Get if on demand
-		boolean onDemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
-		if (onDemand)
-			onDemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
-
-		boolean crestricted = false;
-		boolean allRestricted = true;
-		boolean someRestricted = false;
-		boolean someToAsk = false;
-
-		if (methodName != null) {
-			// Examine the method state
-			PRestriction query = PrivacyManager.getRestrictionEx(uid, restrictionName, methodName);
-			allRestricted = query.restricted;
-			someToAsk = !query.asked;
-		} else {
-			// Examine the category/method states
-			for (PRestriction restriction : PrivacyManager.getRestrictionList(uid, restrictionName)) {
-				boolean asked = (restriction.asked || !onDemand);
-				allRestricted = (allRestricted && (restriction.restricted && asked));
-				someRestricted = (someRestricted || (restriction.restricted && asked));
-				someToAsk = (someToAsk || !restriction.asked);
-			}
-			// Get the category state, if relevant
-			if (restrictionName != null) {
-				PRestriction query = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
-				crestricted = query.restricted;
-			}
-		}
-
-		state.restricted = crestricted || allRestricted || someRestricted;
-		if (state.restricted && !allRestricted)
-			state.restricted = null; // neither fully true, nor fully false
-		state.asked = !(onDemand && someToAsk);
-
-		return state;
 	}
 }

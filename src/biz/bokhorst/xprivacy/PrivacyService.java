@@ -484,7 +484,7 @@ public class PrivacyService {
 									// Method can be excepted
 									if (mresult.restricted)
 										mresult.restricted = ((state & 1) == 0);
-									// Category asked=true takes precedence
+									// Category takes precedence
 									if (!mresult.asked)
 										mresult.asked = ((state & 2) != 0);
 									methodFound = true;
@@ -594,23 +594,18 @@ public class PrivacyService {
 			List<PRestriction> result = new ArrayList<PRestriction>();
 			try {
 				enforcePermission();
-				
-				PRestriction query;
+
 				if (selector.restrictionName == null)
 					for (String sRestrictionName : PrivacyManager.getRestrictions()) {
 						PRestriction restriction = new PRestriction(selector.uid, sRestrictionName, null, false);
-						query = getRestriction(restriction, false, null);
-						restriction.restricted = query.restricted;
-						restriction.asked = query.asked;
+						restriction.restricted = getRestriction(restriction, false, null).restricted;
 						result.add(restriction);
 					}
 				else
 					for (Hook md : PrivacyManager.getHooks(selector.restrictionName)) {
 						PRestriction restriction = new PRestriction(selector.uid, selector.restrictionName,
 								md.getName(), false);
-						query = getRestriction(restriction, false, null);
-						restriction.restricted = query.restricted;
-						restriction.asked = query.asked;
+						restriction.restricted = getRestriction(restriction, false, null).restricted;
 						result.add(restriction);
 					}
 			} catch (Throwable ex) {

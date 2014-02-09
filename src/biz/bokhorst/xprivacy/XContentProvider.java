@@ -142,26 +142,54 @@ public class XContentProvider extends XHook {
 	}
 
 	@Override
+	@SuppressLint("DefaultLocale")
 	protected void before(MethodHookParam param) throws Throwable {
-		// Do nothing
+		// Check URI
+		if (param.args.length > 1 && param.args[0] instanceof Uri && param.args[1] instanceof String[]) {
+			String uri = ((Uri) param.args[0]).toString().toLowerCase();
+			String[] projection = (String[]) param.args[1];
+			if (mUriStart == null || uri.startsWith(mUriStart))
+				if (uri.startsWith("content://com.android.contacts")
+						&& !uri.startsWith("content://com.android.contacts/profile"))
+					if (isRestrictedExtra(param, uri))
+						if (projection != null) {
+							String id = null;
+							if (uri.startsWith("content://com.android.contacts/contacts"))
+								id = "name_raw_contact_id";
+							else if (uri.startsWith("content://com.android.contacts/data"))
+								id = "raw_contact_id";
+							else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
+								id = "name_raw_contact_id";
+							else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
+								id = "_id";
+							else
+								Util.log(this, Log.ERROR, "Unexpected uri=" + uri);
+
+							if (id != null) {
+								List<String> listProjection = new ArrayList<String>();
+								listProjection.addAll(Arrays.asList(projection));
+								listProjection.add(id);
+							}
+						}
+		}
 	}
 
 	@Override
 	@SuppressLint("DefaultLocale")
 	protected void after(MethodHookParam param) throws Throwable {
 		// Check URI
-		if (param.args.length > 0 && param.args[0] instanceof Uri) {
-			Uri uri = (Uri) param.args[0];
-			String sUri = uri.toString().toLowerCase();
-			if (mUriStart == null || sUri.startsWith(mUriStart)) {
+		if (param.args.length > 1 && param.args[0] instanceof Uri && param.args[1] instanceof String[]) {
+			String uri = ((Uri) param.args[0]).toString().toLowerCase();
+			String[] projection = (String[]) param.args[1];
+			if (mUriStart == null || uri.startsWith(mUriStart)) {
 				Cursor cursor = (Cursor) param.getResult();
 				if (cursor != null)
-					if (sUri.startsWith("content://com.google.android.gsf.gservices")) {
+					if (uri.startsWith("content://com.google.android.gsf.gservices")) {
 						// Google services provider: block only android_id
 						if (param.args.length > 3 && param.args[3] != null) {
 							List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
 							if (Util.containsIgnoreCase(selectionArgs, "android_id"))
-								if (isRestrictedExtra(param, sUri)) {
+								if (isRestrictedExtra(param, uri)) {
 									MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
 									gsfCursor.addRow(new Object[] { "android_id",
 											PrivacyManager.getDefacedProp(Binder.getCallingUid(), "GSF_ID") });
@@ -171,58 +199,53 @@ public class XContentProvider extends XHook {
 								}
 						}
 
-					} else if (sUri.startsWith("content://com.android.contacts")
-							&& !sUri.startsWith("content://com.android.contacts/profile")) {
+					} else if (uri.startsWith("content://com.android.contacts")
+							&& !uri.startsWith("content://com.android.contacts/profile")) {
 						// Contacts provider: allow selected contacts
-						if (isRestrictedExtra(param, sUri)) {
-							// Get contact ID index
-							int iid = -1;
-							if (sUri.startsWith("content://com.android.contacts/contacts"))
-								iid = cursor.getColumnIndex("_id");
-							else if (sUri.startsWith("content://com.android.contacts/data"))
-								iid = cursor.getColumnIndex("contact_id");
-							else if (sUri.startsWith("content://com.android.contacts/phone_lookup"))
-								iid = cursor.getColumnIndex("_id");
-							else if (sUri.startsWith("content://com.android.contacts/raw_contacts"))
-								iid = cursor.getColumnIndex("contact_id");
-
+						if (isRestrictedExtra(param, uri)) {
 							// Get raw contact ID index
 							int irawid = -1;
-							if (sUri.startsWith("content://com.android.contacts/contacts"))
-								irawid = cursor.getColumnIndex("name_raw_contact_id");
-							else if (sUri.startsWith("content://com.android.contacts/data"))
-								irawid = cursor.getColumnIndex("raw_contact_id");
-							else if (sUri.startsWith("content://com.android.contacts/phone_lookup"))
-								irawid = cursor.getColumnIndex("name_raw_contact_id");
-							else if (sUri.startsWith("content://com.android.contacts/raw_contacts"))
-								irawid = cursor.getColumnIndex("_id");
-							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+							if (uri.startsWith("content://com.android.contacts/contacts"))
+								irawid = cursor.getColumnCount() - 1;
+							else if (uri.startsWith("content://com.android.contacts/data"))
+								irawid = cursor.getColumnCount() - 1;
+							else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
+								irawid = cursor.getColumnCount() - 1;
+							else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
+								irawid = cursor.getColumnCount() - 1;
+							else
+								Util.log(this, Log.ERROR, "Unexpected uri=" + uri);
+
+							List<String> listColumn = new ArrayList<String>();
+							listColumn.addAll(Arrays.asList(cursor.getColumnNames()));
+							if (projection != null)
+								listColumn.remove(listColumn.size() - 1);
+
+							MatrixCursor result = new MatrixCursor(listColumn.toArray(new String[0]));
 							while (cursor.moveToNext()) {
 								// Get contact ID
-								long id = (iid < 0 ? -1 : cursor.getLong(iid));
 								long rawid = (irawid < 0 ? -1 : cursor.getLong(irawid));
 
 								// Check if can be copied
 								boolean copy = false;
-								if (id >= 0)
-									copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
-											PrivacyManager.cSettingContact + id, false, true);
-								if (!copy && rawid >= 0)
+								if (rawid >= 0)
 									copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
 											PrivacyManager.cSettingRawContact + rawid, false, true);
 
 								// Conditionally copy row
 								if (copy)
-									copyColumns(cursor, result);
+									copyColumns(cursor, result, listColumn.size());
 							}
+							if (result.getCount() == 0)
+								Util.log(this, Log.WARN, "Empty uri=" + uri);
 							result.respond(cursor.getExtras());
 							param.setResult(result);
 							cursor.close();
 						}
 
-					} else if (sUri.startsWith("content://applications")) {
+					} else if (uri.startsWith("content://applications")) {
 						// Applications provider: allow selected applications
-						if (isRestrictedExtra(param, sUri)) {
+						if (isRestrictedExtra(param, uri)) {
 							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 							while (cursor.moveToNext()) {
 								int colPackage = cursor.getColumnIndex("package");
@@ -236,7 +259,7 @@ public class XContentProvider extends XHook {
 						}
 
 					} else {
-						if (isRestrictedExtra(param, sUri)) {
+						if (isRestrictedExtra(param, uri)) {
 							// Return empty cursor
 							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 							result.respond(cursor.getExtras());
@@ -249,9 +272,13 @@ public class XContentProvider extends XHook {
 	}
 
 	private void copyColumns(Cursor cursor, MatrixCursor result) {
+		copyColumns(cursor, result, cursor.getColumnCount());
+	}
+
+	private void copyColumns(Cursor cursor, MatrixCursor result, int count) {
 		try {
-			Object[] columns = new Object[cursor.getColumnCount()];
-			for (int i = 0; i < cursor.getColumnCount(); i++)
+			Object[] columns = new Object[count];
+			for (int i = 0; i < count; i++)
 				switch (cursor.getType(i)) {
 				case Cursor.FIELD_TYPE_NULL:
 					columns[i] = null;
