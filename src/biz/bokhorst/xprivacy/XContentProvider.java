@@ -145,9 +145,9 @@ public class XContentProvider extends XHook {
 	@SuppressLint("DefaultLocale")
 	protected void before(MethodHookParam param) throws Throwable {
 		// Check URI
-		if (param.args.length > 1 && param.args[0] instanceof Uri && param.args[1] instanceof String[]) {
+		if (param.args.length > 1 && param.args[0] instanceof Uri) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
-			String[] projection = (String[]) param.args[1];
+			String[] projection = (param.args[0] instanceof String[] ? (String[]) param.args[1] : null);
 			if (mUriStart == null || uri.startsWith(mUriStart))
 				if (uri.startsWith("content://com.android.contacts")
 						&& !uri.startsWith("content://com.android.contacts/profile"))
@@ -172,9 +172,9 @@ public class XContentProvider extends XHook {
 	@SuppressLint("DefaultLocale")
 	protected void after(MethodHookParam param) throws Throwable {
 		// Check URI
-		if (param.args.length > 1 && param.args[0] instanceof Uri && param.args[1] instanceof String[]) {
+		if (param.args.length > 1 && param.args[0] instanceof Uri) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
-			String[] projection = (String[]) param.args[1];
+			String[] projection = (param.args[0] instanceof String[] ? (String[]) param.args[1] : null);
 			if (mUriStart == null || uri.startsWith(mUriStart)) {
 				Cursor cursor = (Cursor) param.getResult();
 				if (cursor != null)
@@ -235,7 +235,6 @@ public class XContentProvider extends XHook {
 							param.setResult(result);
 							cursor.close();
 						}
-						// }
 
 					} else if (uri.startsWith("content://applications")) {
 						// Applications provider: allow selected applications
