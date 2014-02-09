@@ -151,26 +151,20 @@ public class XContentProvider extends XHook {
 			if (mUriStart == null || uri.startsWith(mUriStart))
 				if (uri.startsWith("content://com.android.contacts")
 						&& !uri.startsWith("content://com.android.contacts/profile"))
-					if (isRestrictedExtra(param, uri))
-						if (projection != null) {
-							String id = null;
-							if (uri.startsWith("content://com.android.contacts/contacts"))
-								id = "name_raw_contact_id";
-							else if (uri.startsWith("content://com.android.contacts/data"))
-								id = "raw_contact_id";
-							else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
-								id = "name_raw_contact_id";
-							else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
-								id = "_id";
-							else
-								Util.log(this, Log.ERROR, "Unexpected uri=" + uri);
+					if (projection != null && isRestrictedExtra(param, uri)) {
+						boolean added = false;
+						String id = getIdForUri(uri);
 
-							if (id != null) {
-								List<String> listProjection = new ArrayList<String>();
-								listProjection.addAll(Arrays.asList(projection));
-								listProjection.add(id);
-							}
+						List<String> listProjection = new ArrayList<String>();
+						listProjection.addAll(Arrays.asList(projection));
+						if (id != null && !listProjection.contains(id)) {
+							added = true;
+							listProjection.add(id);
 						}
+
+						param.args[1] = listProjection.toArray(new String[0]);
+						param.setObjectExtra("column_added", added);
+					}
 		}
 	}
 
@@ -202,46 +196,46 @@ public class XContentProvider extends XHook {
 					} else if (uri.startsWith("content://com.android.contacts")
 							&& !uri.startsWith("content://com.android.contacts/profile")) {
 						// Contacts provider: allow selected contacts
-						if (isRestrictedExtra(param, uri)) {
-							// Get raw contact ID index
-							int irawid = -1;
-							if (uri.startsWith("content://com.android.contacts/contacts"))
-								irawid = cursor.getColumnCount() - 1;
-							else if (uri.startsWith("content://com.android.contacts/data"))
-								irawid = cursor.getColumnCount() - 1;
-							else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
-								irawid = cursor.getColumnCount() - 1;
-							else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
-								irawid = cursor.getColumnCount() - 1;
-							else
-								Util.log(this, Log.ERROR, "Unexpected uri=" + uri);
+						if (projection != null && isRestrictedExtra(param, uri)) {
+							String id = getIdForUri(uri);
+							boolean added = (Boolean) param.getObjectExtra("column_added");
+							boolean restricted = isRestrictedExtra(param, uri);
 
+							// Column names
 							List<String> listColumn = new ArrayList<String>();
 							listColumn.addAll(Arrays.asList(cursor.getColumnNames()));
-							if (projection != null)
+							if (added)
 								listColumn.remove(listColumn.size() - 1);
 
+							int iid = (id == null ? -1 : cursor.getColumnIndex(id));
 							MatrixCursor result = new MatrixCursor(listColumn.toArray(new String[0]));
-							while (cursor.moveToNext()) {
-								// Get contact ID
-								long rawid = (irawid < 0 ? -1 : cursor.getLong(irawid));
+							if (iid >= 0)
+								while (cursor.moveToNext()) {
+									// Get raw contact ID
+									long rawid = cursor.getLong(iid);
 
-								// Check if can be copied
-								boolean copy = false;
-								if (rawid >= 0)
-									copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
-											PrivacyManager.cSettingRawContact + rawid, false, true);
+									// Check if can be copied
+									boolean copy = false;
+									if (restricted) {
+										if (rawid == 0)
+											copy = !isRestricted(param, "contacts/profile");
+										else
+											copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
+													PrivacyManager.cSettingRawContact + rawid, false, true);
+										if (copy)
+											Util.log(this, Log.WARN, "Allowing contact id=" + rawid + " uri=" + uri);
+									} else
+										copy = true;
 
-								// Conditionally copy row
-								if (copy)
-									copyColumns(cursor, result, listColumn.size());
-							}
-							if (result.getCount() == 0)
-								Util.log(this, Log.WARN, "Empty uri=" + uri);
+									// Conditionally copy row
+									if (copy)
+										copyColumns(cursor, result, listColumn.size());
+								}
 							result.respond(cursor.getExtras());
 							param.setResult(result);
 							cursor.close();
 						}
+						// }
 
 					} else if (uri.startsWith("content://applications")) {
 						// Applications provider: allow selected applications
@@ -269,6 +263,21 @@ public class XContentProvider extends XHook {
 					}
 			}
 		}
+	}
+
+	private String getIdForUri(String uri) {
+		String id = null;
+		if (uri.startsWith("content://com.android.contacts/contacts"))
+			id = "name_raw_contact_id";
+		else if (uri.startsWith("content://com.android.contacts/data"))
+			id = "raw_contact_id";
+		else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
+			id = "name_raw_contact_id";
+		else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
+			id = "_id";
+		else
+			Util.log(this, Log.ERROR, "Unexpected uri=" + uri);
+		return id;
 	}
 
 	private void copyColumns(Cursor cursor, MatrixCursor result) {

@@ -17,6 +17,7 @@ Test and beta releases will have experimental functions enabled by default.
 
 * Show URI for content providers
 * Restrict ICC provider (SIM contacts)
+* Fixed allowing contacts in some situations
 * Updated Arabic translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
