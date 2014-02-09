@@ -12,7 +12,6 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
@@ -27,12 +26,6 @@ public class XActivityThread extends XHook {
 
 	private XActivityThread(Methods method, String restrictionName, String actionName) {
 		super(restrictionName, method.name(), actionName);
-		mMethod = method;
-		mActionName = actionName;
-	}
-
-	private XActivityThread(Methods method, String restrictionName, String actionName, int sdk) {
-		super(restrictionName, method.name(), actionName, sdk);
 		mMethod = method;
 		mActionName = actionName;
 	}
@@ -69,7 +62,7 @@ public class XActivityThread extends XHook {
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED));
 
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cCalling,
-				TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, Build.VERSION_CODES.JELLY_BEAN_MR2));
+				TelephonyManager.ACTION_RESPOND_VIA_MESSAGE));
 
 		// Intent receive: C2DM
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNotifications,
@@ -79,22 +72,22 @@ public class XActivityThread extends XHook {
 
 		// Intent receive: NFC
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc,
-				NfcAdapter.ACTION_ADAPTER_STATE_CHANGED, Build.VERSION_CODES.JELLY_BEAN_MR2));
+				NfcAdapter.ACTION_ADAPTER_STATE_CHANGED));
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc, NfcAdapter.ACTION_NDEF_DISCOVERED));
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc, NfcAdapter.ACTION_TAG_DISCOVERED));
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc, NfcAdapter.ACTION_TECH_DISCOVERED));
 
 		// Intent receive: SMS
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cMessages,
-				Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
+				Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION));
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cMessages,
-				Telephony.Sms.Intents.SMS_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
+				Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cMessages,
-				Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, Build.VERSION_CODES.KITKAT));
+				Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION));
 
 		// Intent receive: notifications
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNotifications,
-				NotificationListenerService.SERVICE_INTERFACE, Build.VERSION_CODES.JELLY_BEAN_MR2));
+				NotificationListenerService.SERVICE_INTERFACE));
 
 		// Intent receive: package changes
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem, Intent.ACTION_PACKAGE_ADDED));

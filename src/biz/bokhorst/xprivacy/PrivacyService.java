@@ -394,7 +394,12 @@ public class PrivacyService {
 				}
 
 				// Get meta data
-				Hook hook = PrivacyManager.getHook(restriction.restrictionName, restriction.methodName);
+				Hook hook = null;
+				if (restriction.restrictionName != null) {
+					hook = PrivacyManager.getHook(restriction.restrictionName, restriction.methodName);
+					if (hook == null)
+						Util.log(null, Log.ERROR, "Hook not found in service: " + restriction);
+				}
 
 				// Check for system component
 				if (usage && !PrivacyManager.isApplication(restriction.uid))

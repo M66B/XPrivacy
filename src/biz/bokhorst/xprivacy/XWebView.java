@@ -19,6 +19,11 @@ public class XWebView extends XHook {
 		mMethod = method;
 	}
 
+	private XWebView(Methods method, String restrictionName, int sdk) {
+		super(restrictionName, method.name(), null, sdk);
+		mMethod = method;
+	}
+
 	public String getClassName() {
 		return "android.webkit.WebView";
 	}
@@ -46,7 +51,7 @@ public class XWebView extends XHook {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XWebView(Methods.WebView, PrivacyManager.cView));
 		listHook.add(new XWebView(Methods.loadUrl, PrivacyManager.cView));
-		listHook.add(new XWebView(Methods.getSettings, null));
+		listHook.add(new XWebView(Methods.getSettings, null, 1));
 		return listHook;
 	}
 

@@ -16,7 +16,6 @@ import android.accounts.AuthenticatorException;
 import android.accounts.OnAccountsUpdateListener;
 import android.accounts.OperationCanceledException;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -81,14 +80,13 @@ public class XAccountManager extends XHook {
 		listHook.add(new XAccountManager(Methods.blockingGetAuthToken, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.getAccounts, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.getAccountsByType, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.getAccountsByTypeForPackage, PrivacyManager.cAccounts, className,
-				Build.VERSION_CODES.JELLY_BEAN_MR2));
+		listHook.add(new XAccountManager(Methods.getAccountsByTypeForPackage, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.getAccountsByTypeAndFeatures, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.getAuthenticatorTypes, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.getAuthToken, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.getAuthTokenByFeatures, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.hasFeatures, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, null, className));
+		listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, null, className, 5));
 		return listHook;
 	}
 

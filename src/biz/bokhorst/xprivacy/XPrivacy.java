@@ -280,7 +280,25 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	private static void hook(final XHook hook, ClassLoader classLoader, String secret) {
 		// Check SDK version
-		if (Build.VERSION.SDK_INT < hook.getSdk())
+		Hook md = null;
+		if (hook.getRestrictionName() == null) {
+			if (hook.getSdk() == 0)
+				Util.log(null, Log.ERROR, "No SDK specified for " + hook.getClassName() + "." + hook.getMethodName());
+		} else {
+			md = PrivacyManager.getHook(hook.getRestrictionName(), hook.getSpecifier());
+			if (md == null)
+				Util.log(null, Log.ERROR, "Hook not found " + hook.getRestrictionName() + "/" + hook.getSpecifier());
+			else if (hook.getSdk() != 0)
+				Util.log(null, Log.ERROR, "SDK specified for " + hook.getRestrictionName() + "/" + hook.getSpecifier());
+		}
+
+		int sdk = 0;
+		if (hook.getRestrictionName() == null)
+			sdk = hook.getSdk();
+		else if (md != null)
+			sdk = md.getSdk();
+
+		if (Build.VERSION.SDK_INT < sdk)
 			return;
 
 		// Provide secret
@@ -363,15 +381,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					mListHookError.add(dMethod);
 				}
 				return;
-			}
-
-			// Log
-			for (XC_MethodHook.Unhook unhook : hookSet) {
-				String packageName = AndroidAppHelper.currentPackageName();
-				String restrictionName = hook.getRestrictionName();
-				String message = String.format("%s: hooked %s for %s/%s uid=%d", packageName, unhook.getHookedMethod(),
-						restrictionName, hook.getSpecifier(), Process.myUid());
-				Util.log(hook, Log.INFO, message);
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);

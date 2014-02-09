@@ -12,8 +12,8 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XResources extends XHook {
 	private Methods mMethod;
 
-	private XResources(Methods method) {
-		super(null, method.name(), null);
+	private XResources(Methods method, int sdk) {
+		super(null, method.name(), null, sdk);
 		mMethod = method;
 	}
 
@@ -32,7 +32,7 @@ public class XResources extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XResources(Methods.updateConfiguration));
+		listHook.add(new XResources(Methods.updateConfiguration, 1));
 		return listHook;
 	}
 

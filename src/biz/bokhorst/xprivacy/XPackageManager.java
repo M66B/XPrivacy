@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Binder;
-import android.os.Build;
 import android.util.Log;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -51,14 +50,7 @@ public class XPackageManager extends XHook {
 		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods am : Methods.values())
-			if (am == Methods.getPackagesHoldingPermissions) {
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-					listHook.add(new XPackageManager(am, PrivacyManager.cSystem, className));
-			} else if (am == Methods.queryIntentContentProviders) {
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-					listHook.add(new XPackageManager(am, PrivacyManager.cSystem, className));
-			} else
-				listHook.add(new XPackageManager(am, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(am, PrivacyManager.cSystem, className));
 		return listHook;
 	}
 

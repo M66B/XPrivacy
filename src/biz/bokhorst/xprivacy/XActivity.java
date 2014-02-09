@@ -7,7 +7,6 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
 
@@ -59,7 +58,7 @@ public class XActivity extends XHook {
 	@SuppressLint("InlinedApi")
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XActivity(Methods.getSystemService, null, null));
+		listHook.add(new XActivity(Methods.getSystemService, null, null, 1));
 
 		List<Methods> startMethods = new ArrayList<Methods>(Arrays.asList(Methods.values()));
 		startMethods.remove(Methods.getSystemService);
@@ -75,8 +74,7 @@ public class XActivity extends XHook {
 		// Intent send: media
 		for (Methods activity : startMethods) {
 			listHook.add(new XActivity(activity, PrivacyManager.cMedia, MediaStore.ACTION_IMAGE_CAPTURE));
-			listHook.add(new XActivity(activity, PrivacyManager.cMedia, MediaStore.ACTION_IMAGE_CAPTURE_SECURE,
-					Build.VERSION_CODES.JELLY_BEAN_MR1));
+			listHook.add(new XActivity(activity, PrivacyManager.cMedia, MediaStore.ACTION_IMAGE_CAPTURE_SECURE));
 			listHook.add(new XActivity(activity, PrivacyManager.cMedia, MediaStore.ACTION_VIDEO_CAPTURE));
 		}
 

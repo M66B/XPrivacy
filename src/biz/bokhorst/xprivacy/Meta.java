@@ -105,7 +105,6 @@ public class Meta {
 		listHook.add(new Hook("location", "addProximityAlert", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
 		listHook.add(new Hook("location", "getGpsStatus", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, "1.99.29", null));
 		listHook.add(new Hook("location", "getLastKnownLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
-		listHook.add(new Hook("location", "getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null));
 		listHook.add(new Hook("location", "getProviders", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "1.99.1", null).dangerous());
 		listHook.add(new Hook("location", "isProviderEnabled", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "1.99.1", null).dangerous());
 		listHook.add(new Hook("location", "requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
@@ -220,7 +219,7 @@ public class Meta {
 
 		listHook.add(new Hook("system", "getInstalledApplications", "", 1, null, null).dangerous());
 		listHook.add(new Hook("system", "getInstalledPackages", "", 1, null, null).dangerous());
-		listHook.add(new Hook("system", "getPackagesHoldingPermissions", "", 1, "1.99.1", null).dangerous());
+		listHook.add(new Hook("system", "getPackagesHoldingPermissions", "", 18, "1.99.1", null).dangerous());
 		listHook.add(new Hook("system", "getPreferredPackages", "", 1, null, null).dangerous());
 		listHook.add(new Hook("system", "queryBroadcastReceivers", "", 1, null, null).dangerous());
 		listHook.add(new Hook("system", "queryContentProviders", "", 1, null, null).dangerous());

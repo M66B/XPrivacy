@@ -10,8 +10,8 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XContextImpl extends XHook {
 	private Methods mMethod;
 
-	private XContextImpl(Methods method, String restrictionName) {
-		super(restrictionName, method.name(), null);
+	private XContextImpl(Methods method, String restrictionName, int sdk) {
+		super(restrictionName, method.name(), null, sdk);
 		mMethod = method;
 	}
 
@@ -19,6 +19,7 @@ public class XContextImpl extends XHook {
 		return "android.app.ContextImpl";
 	}
 
+	// public PackageManager getPackageManager()
 	// public Object getSystemService(String name)
 	// frameworks/base/core/java/android/app/ContextImpl.java
 
@@ -28,8 +29,8 @@ public class XContextImpl extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XContextImpl(Methods.getPackageManager, null));
-		listHook.add(new XContextImpl(Methods.getSystemService, null));
+		listHook.add(new XContextImpl(Methods.getPackageManager, null, 1));
+		listHook.add(new XContextImpl(Methods.getSystemService, null, 1));
 		return listHook;
 	}
 

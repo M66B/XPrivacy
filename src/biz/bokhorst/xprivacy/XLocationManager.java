@@ -8,7 +8,6 @@ import java.util.WeakHashMap;
 
 import android.location.Location;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.location.GpsSatellite;
@@ -69,7 +68,7 @@ public class XLocationManager extends XHook {
 	private enum Methods {
 		addGeofence, addNmeaListener, addProximityAlert,
 		getGpsStatus,
-		getLastKnownLocation, getLastLocation,
+		getLastKnownLocation,
 		getProviders, isProviderEnabled,
 		removeUpdates,
 		requestLocationUpdates, requestSingleUpdate,
@@ -81,14 +80,8 @@ public class XLocationManager extends XHook {
 		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods loc : Methods.values())
-			if (loc == Methods.addGeofence)
-				listHook.add(new XLocationManager(Methods.addGeofence, PrivacyManager.cLocation, className,
-						Build.VERSION_CODES.JELLY_BEAN_MR1));
-			else if (loc == Methods.getLastLocation)
-				listHook.add(new XLocationManager(Methods.getLastLocation, PrivacyManager.cLocation, className,
-						Build.VERSION_CODES.JELLY_BEAN_MR1));
-			else if (loc == Methods.removeUpdates)
-				listHook.add(new XLocationManager(loc, null, className));
+			if (loc == Methods.removeUpdates)
+				listHook.add(new XLocationManager(loc, null, className, 3));
 			else
 				listHook.add(new XLocationManager(loc, PrivacyManager.cLocation, className));
 		return listHook;
@@ -138,7 +131,7 @@ public class XLocationManager extends XHook {
 						Util.bug(null, ex);
 					}
 				}
-			} else if (mMethod == Methods.getLastLocation || mMethod == Methods.getLastKnownLocation) {
+			} else if (mMethod == Methods.getLastKnownLocation) {
 				Location location = (Location) param.getResult();
 				if (location != null && isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));

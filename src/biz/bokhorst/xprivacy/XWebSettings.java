@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Binder;
-import android.os.Build;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -15,12 +14,6 @@ public class XWebSettings extends XHook {
 
 	private XWebSettings(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
-		mMethod = method;
-		mClassName = className;
-	}
-
-	private XWebSettings(Methods method, String restrictionName, String className, int sdk) {
-		super(restrictionName, method.name(), null, sdk);
 		mMethod = method;
 		mClassName = className;
 	}
@@ -45,8 +38,7 @@ public class XWebSettings extends XHook {
 		String className = instance.getClass().getName();
 		Util.log(null, Log.INFO, "Hooking class=" + className + " uid=" + Binder.getCallingUid());
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XWebSettings(Methods.getDefaultUserAgent, PrivacyManager.cView, className,
-				Build.VERSION_CODES.JELLY_BEAN_MR1));
+		listHook.add(new XWebSettings(Methods.getDefaultUserAgent, PrivacyManager.cView, className));
 		listHook.add(new XWebSettings(Methods.getUserAgent, PrivacyManager.cView, className));
 		listHook.add(new XWebSettings(Methods.getUserAgentString, PrivacyManager.cView, className));
 		listHook.add(new XWebSettings(Methods.setUserAgent, PrivacyManager.cView, className));
