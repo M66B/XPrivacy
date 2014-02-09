@@ -18,6 +18,7 @@ public class XBinder extends XHook {
 
 	private static long mToken = 0;
 	private static int BITS_TOKEN = 8;
+	private static int MASK_TOKEN = 0xFFFFFF;
 
 	public static List<String> cListService = Arrays.asList(new String[] { "account", "activity", "clipboard",
 			"connectivity", "location", "telephony.registry", "telephony.msim.registry", "package", "iphonesubinfo",
@@ -57,7 +58,7 @@ public class XBinder extends XHook {
 	@Override
 	public void setSecret(String secret) {
 		super.setSecret(secret);
-		mToken = (secret.hashCode() & 0xFFFFFF);
+		mToken = (secret.hashCode() & MASK_TOKEN);
 	}
 
 	// @formatter:off
@@ -104,7 +105,7 @@ public class XBinder extends XHook {
 	private void checkIPC(MethodHookParam param) {
 		// Entry point from android_util_Binder.cpp's onTransact
 		int flags = (Integer) param.args[3];
-		long token = (flags >> BITS_TOKEN);
+		long token = (flags >> BITS_TOKEN) & MASK_TOKEN;
 		flags &= IBinder.FLAG_ONEWAY;
 		param.args[3] = flags;
 
