@@ -70,10 +70,7 @@ public class Util {
 		if (!mLogDetermined && uid > 0) {
 			mLogDetermined = true;
 			try {
-				if (uid == Process.SYSTEM_UID)
-					mLog = PrivacyService.getSettingBool(0, PrivacyManager.cSettingLog, false);
-				else
-					mLog = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingLog, false, true);
+				mLog = PrivacyService.isLoggingEnabled();
 			} catch (Throwable ignored) {
 				mLog = false;
 			}

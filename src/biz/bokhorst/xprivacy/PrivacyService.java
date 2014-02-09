@@ -55,6 +55,7 @@ import android.widget.Toast;
 
 public class PrivacyService {
 	private static int mXUid = -1;
+	private static boolean mRegistered = false;
 	private static boolean mUseCache = false;
 	private static String mSecret = null;
 	private static Thread mWorker = null;
@@ -154,6 +155,8 @@ public class PrivacyService {
 				Util.log(null, Log.WARN, "Invoking " + mAddService);
 				mAddService.invoke(null, cServiceName, mPrivacyService);
 			}
+
+			mRegistered = true;
 			Util.log(null, Log.WARN, "Service registered name=" + cServiceName);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -206,9 +209,12 @@ public class PrivacyService {
 		}
 	}
 
-	public static boolean getSettingBool(int uid, String name, boolean defaultValue) throws RemoteException {
-		String value = mPrivacyService.getSetting(new PSetting(uid, name, Boolean.toString(defaultValue))).value;
-		return Boolean.parseBoolean(value);
+	public static boolean isLoggingEnabled() throws RemoteException {
+		if (mRegistered)
+			return Boolean.parseBoolean(mPrivacyService.getSetting(new PSetting(0, PrivacyManager.cSettingLog, Boolean
+					.toString(false))).value);
+		else
+			return PrivacyManager.getSettingBool(0, PrivacyManager.cSettingLog, false, true);
 	}
 
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
