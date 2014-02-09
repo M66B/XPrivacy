@@ -3,7 +3,7 @@
     <string name="app_notxposed" formatted="false">لم يتم تثبيت إطار xposed نسخة %d+</string>
     <string name="app_notenabled">لم يتم تفعيل XPrivacy</string>
     <string name="app_wrongandroid">فقط لأندرويد نسخة 4.0+</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
+    <string name="app_incompatible" formatted="false">XPrivacy غير متوافق مع %s</string>
     <string name="app_version" formatted="false">نسخة XPrivacy : %s (%d)</string>
     <string name="app_description">مدير الخصوصية الرئيسي</string>
     <string name="app_xversion" formatted="false">إطار  Xposed نسخة : %d</string>
@@ -22,14 +22,14 @@
     <string name="menu_about">عن التطبيق</string>
     <string name="menu_help">مساعدة</string>
     <string name="menu_select_all">إختر الكل</string>
-    <string name="menu_sort">Sort</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_sort">ترتيب</string>
+    <string name="menu_filter">فلتر</string>
     <string name="menu_all">تحديد الكل</string>
     <string name="menu_restriction_all">تبديل القيود</string>
     <string name="menu_clear_all">مسح الكل</string>
     <string name="menu_restrict_all">تقييد الكل</string>
     <string name="menu_clear_usage">إزالة</string>
-    <string name="menu_clear_db">Clear all data</string>
+    <string name="menu_clear_db">مسح جميع البيانات</string>
     <string name="menu_usage_all">تغيير الفلتر</string>
     <string name="menu_apply">تطبيق القالب</string>
     <string name="menu_clear">إلغاء التحديد</string>
@@ -44,7 +44,7 @@
     <string name="menu_exclude">إستبعاد</string>
     <string name="menu_close">إغلاق</string>
     <string name="msg_abort">إيقاف</string>
-    <string name="msg_aborted">Aborted</string>
+    <string name="msg_aborted">تم الإيقاف</string>
     <string name="msg_new">جديد</string>
     <string name="msg_update">تحديث</string>
     <string name="msg_licensed" formatted="false">مرخص ل: %s</string>
@@ -63,14 +63,14 @@
     <string name="msg_random_boot">عشوائي بعد الإقلاع</string>
     <string name="msg_restart">التطبيق يتطلب إعادة التشغيل</string>
     <string name="msg_register">الرجاء قم بتسجيل جهازك</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
+    <string name="msg_email">الرجاء أدخل عنوان بريدك الإلكتروني:</string>
     <string name="msg_registered">إفحص بريدك الإلكتروني لتفعيل جهازك</string>
-    <string name="msg_service">Update service running</string>
+    <string name="msg_service">تحديث الخدمة قيد التشغيل</string>
     <string name="msg_migrating" formatted="false">ترحيل %s</string>
     <string name="msg_randomizing" formatted="false">عشوائية %s</string>
     <string name="msg_upgrading" formatted="false">ترقية %s</string>
-    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_support_info">فشل الفحص الداخلي, هل تريد إرسال معلومات الدعم؟</string>
+    <string name="msg_restrictedby">تم التقييد بواسطة XPrivacy</string>
     <string name="msg_first"><b>بُذلت عناية كبيرة لتطوير وإختبار XPrivacy,
 ومع ذلك فإنه من المستحيل ضمان أنه سيعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
 \n\nالإستخدام على مسئوليتك الخاصة.</b>\n\nراجع أيضاً الترخيص:</string>
@@ -84,7 +84,7 @@
     <string name="restrict_email">البريد الإلكتروني</string>
     <string name="restrict_identification">الهوية (الجهاز)</string>
     <string name="restrict_internet">الإنترنت</string>
-    <string name="restrict_location">تحديد الموقع (ناعم,خشن)</string>
+    <string name="restrict_location">تحديد الموقع(دقيق,تقريبي)</string>
     <string name="restrict_media">الميديا (صوت,صورة,فيديو) </string>
     <string name="restrict_messages">الرسائل (النصية , الوسائط)</string>
     <string name="restrict_network">الشبكة (العناوين)</string>
@@ -106,25 +106,25 @@
     <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">تصفية برامج النظام</string>
     <string name="title_fnot">العكس</string>
-    <string name="title_sname">By name</string>
-    <string name="title_suid">By uid</string>
-    <string name="title_sinstalled">By date installed</string>
-    <string name="title_supdated">By date updated</string>
-    <string name="title_smodified">By date modified (XPrivacy)</string>
-    <string name="title_sinvert">Invert sort order</string>
-    <string name="title_attempt">Usage attempt of:</string>
-    <string name="title_category">Category:</string>
-    <string name="title_function">Function:</string>
-    <string name="title_parameters">Parameters:</string>
-    <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %1$s seconds</string>
-    <string name="title_allow">Allow</string>
-    <string name="title_deny">Deny</string>
-    <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
+    <string name="title_sname">بالإسم</string>
+    <string name="title_suid">بواسطة UID</string>
+    <string name="title_sinstalled">بواسطة تاريخ التثبيت</string>
+    <string name="title_supdated">بواسطة تاريخ التحديث</string>
+    <string name="title_smodified">بواسطة تاريخ التعديل (XPrivacy)</string>
+    <string name="title_sinvert">عكس ترتيب الفرز</string>
+    <string name="title_attempt">محاولة استخدام:</string>
+    <string name="title_category">فئة:</string>
+    <string name="title_function">وظيفة:</string>
+    <string name="title_parameters">مدخلات:</string>
+    <string name="title_applycat">تطبيق على الفئة بأكملها</string>
+    <string name="title_once">مرة واحدة ل %1$s ثانية</string>
+    <string name="title_allow">تمكين</string>
+    <string name="title_deny">منع</string>
+    <string name="title_pleasesubmit">الرجاء إرسال القيود لمساعدة الآخرين</string>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
-    <string name="settings_alt">Altitude</string>
+    <string name="settings_alt">الإرتفاع</string>
     <string name="settings_mac">عنوان الماك</string>
     <string name="settings_ip">عنوان الايبي</string>
     <string name="settings_phone">رقم الهاتف</string>
@@ -137,17 +137,17 @@
     <string name="settings_general">عام</string>
     <string name="settings_fake_data">بيانات وهمية</string>
     <string name="settings_notify">تحديث الإشعارات</string>
-    <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_ondemand">تقييد عند الطلب</string>
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
     <string name="settings_expert">وضع الخبراء</string>
     <string name="settings_dangerous">تقييد الوظائف الخطيرة</string>
     <string name="settings_confidence">الحد الأقصى لجلب فترة الثقة</string>
     <string name="settings_experimental">وظائف تجريبية</string>
     <string name="settings_https">إستخدم الإتصال الآمن</string>
-    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
-    <string name="settings_usagedata">Show application usage data (requires restart)</string>
-    <string name="help_longpress">Long press name to select</string>
-    <string name="help_ondemand">restrictions will be asked</string>
+    <string name="settings_syscomponents">تقييد مكونات نظام (أندرويد) (يتطلب إعادة التشغيل)</string>
+    <string name="settings_usagedata">إظهار بيانات استخدام التطبيق (يتطلب إعادة التشغيل)</string>
+    <string name="help_longpress">ضغطة طويلة في الإسم لتحديده</string>
+    <string name="help_ondemand">سوف يتم السؤال عن القيود</string>
     <string name="help_application">التطبيق</string>
     <string name="help_internet">لديه صلاحية الوصول للإنترنت</string>
     <string name="help_granted">لديه صلاحية أندرويد</string>
@@ -159,7 +159,7 @@
     <string name="help_attention">قيود تحتاج لعناية</string>
     <string name="help_restricted">القيود التي تم تغييرها</string>
     <string name="help_shared">القيود تم تسجيلها</string>
-    <string name="tutorial_mainheader">Select the category to restrict</string>
+    <string name="tutorial_mainheader">إختر الفئة لتقييدها</string>
     <string name="tutorial_mainlist">إلمس مربع الإختيار لتقييد الفئة المحددة للتطبيق\n
 \nوسوف يتم إعطاء بيانات فارغة أو وهمية للفئات المقيدة\n
 \nإلمس ايقونة التطبيق لتفاصيل القيود والإعدادات</string>
