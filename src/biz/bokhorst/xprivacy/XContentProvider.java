@@ -194,28 +194,32 @@ public class XContentProvider extends XHook {
 							else if (sUri.startsWith("content://com.android.contacts/raw_contacts"))
 								irawid = cursor.getColumnIndex("_id");
 
-							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
-							while (cursor.moveToNext()) {
-								// Get contact ID
-								long id = (iid < 0 ? -1 : cursor.getLong(iid));
-								long rawid = (irawid < 0 ? -1 : cursor.getLong(irawid));
+							if (iid < 0 && irawid < 0)
+								Util.log(null, Log.WARN, "No ID uri=" + sUri);
+							else {
+								MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+								while (cursor.moveToNext()) {
+									// Get contact ID
+									long id = (iid < 0 ? -1 : cursor.getLong(iid));
+									long rawid = (irawid < 0 ? -1 : cursor.getLong(irawid));
 
-								// Check if can be copied
-								boolean copy = false;
-								if (id >= 0)
-									copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
-											PrivacyManager.cSettingContact + id, false, true);
-								if (!copy && rawid >= 0)
-									copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
-											PrivacyManager.cSettingRawContact + rawid, false, true);
+									// Check if can be copied
+									boolean copy = false;
+									if (id >= 0)
+										copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
+												PrivacyManager.cSettingContact + id, false, true);
+									if (!copy && rawid >= 0)
+										copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
+												PrivacyManager.cSettingRawContact + rawid, false, true);
 
-								// Conditionally copy row
-								if (copy)
-									copyColumns(cursor, result);
+									// Conditionally copy row
+									if (copy)
+										copyColumns(cursor, result);
+								}
+								result.respond(cursor.getExtras());
+								param.setResult(result);
+								cursor.close();
 							}
-							result.respond(cursor.getExtras());
-							param.setResult(result);
-							cursor.close();
 						}
 
 					} else if (sUri.startsWith("content://applications")) {
