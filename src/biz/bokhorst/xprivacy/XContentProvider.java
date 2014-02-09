@@ -80,7 +80,7 @@ public class XContentProvider extends XHook {
 		// Contacts provider
 		else if (packageName.equals("com.android.providers.contacts")) {
 			String[] uris = new String[] { "contacts/contacts", "contacts/data", "contacts/raw_contacts",
-					"contacts/phone_lookup", "contacts/profile" };
+					"contacts/phone_lookup", "contacts/profile", "contacts/sim" };
 			for (String uri : uris)
 				listHook.add(new XContentProvider(PrivacyManager.cContacts, "ContactsProvider2",
 						"com.android.providers.contacts.ContactsProvider2", "content://com.android." + uri).optional());
@@ -94,7 +94,7 @@ public class XContentProvider extends XHook {
 		// Contacts provider of Motorola's Blur
 		else if (packageName.equals("com.motorola.blur.providers.contacts")) {
 			String[] uris = new String[] { "contacts/contacts", "contacts/data", "contacts/raw_contacts",
-					"contacts/phone_lookup", "contacts/profile" };
+					"contacts/phone_lookup", "contacts/profile", "contacts/sim" };
 			for (String uri : uris)
 				listHook.add(new XContentProvider(PrivacyManager.cContacts, "ContactsProvider2",
 						"com.android.providers.contacts.ContactsProvider2", "content://com.android." + uri).optional());
@@ -150,6 +150,7 @@ public class XContentProvider extends XHook {
 			String[] projection = (param.args[0] instanceof String[] ? (String[]) param.args[1] : null);
 			if (mUriStart == null || uri.startsWith(mUriStart))
 				if (uri.startsWith("content://com.android.contacts")
+						&& !uri.startsWith("content://com.android.contacts/sim")
 						&& !uri.startsWith("content://com.android.contacts/profile"))
 					if (projection != null && isRestrictedExtra(param, uri)) {
 						boolean added = false;
@@ -194,6 +195,7 @@ public class XContentProvider extends XHook {
 						}
 
 					} else if (uri.startsWith("content://com.android.contacts")
+							&& !uri.startsWith("content://com.android.contacts/sim")
 							&& !uri.startsWith("content://com.android.contacts/profile")) {
 						// Contacts provider: allow selected contacts
 						if (projection != null && isRestrictedExtra(param, uri)) {
