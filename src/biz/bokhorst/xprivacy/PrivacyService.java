@@ -1301,7 +1301,7 @@ public class PrivacyService {
 					argument.setText(restriction.extra);
 					argument.setTypeface(null, Typeface.BOLD);
 					argument.setSingleLine(true);
-					argument.setEllipsize(TextUtils.TruncateAt.END);
+					argument.setEllipsize(TextUtils.TruncateAt.MIDDLE);
 					row3.addView(argument, cellParams1);
 				}
 
