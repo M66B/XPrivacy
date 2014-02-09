@@ -291,7 +291,7 @@ Installation may seem lengthy, but you can actually do it quickly:
 	* Be sure to install [the latest version](http://dl.xposed.info/latest.apk)
 	* The Xposed fix is not needed anymore
 1. Download and install XPrivacy from [here](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
-	* Alternatively download it from [here](http://d-h.st/users/M66B/?fld_id=19078#files)
+	* Alternatively download it from [here](https://github.com/M66B/XPrivacy/releases)
 1. Enable XPrivacy from the Xposed installer
 1. Reboot
 
