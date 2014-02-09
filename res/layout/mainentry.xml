@@ -86,6 +86,17 @@
                 android:contentDescription="@string/title_restrict"
                 android:visibility="invisible" />
 
+            <ImageView
+                android:id="@+id/imgCBName_new"
+                android:layout_width="32dip"
+                android:layout_height="32dip"
+                android:layout_toLeftOf="@id/imgCBName"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dip"
+                android:layout_marginRight="6dip"
+                android:contentDescription="@string/title_restrict"
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tvOnDemand"
                 android:layout_width="wrap_content"
