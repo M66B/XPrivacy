@@ -158,7 +158,7 @@ public class XContentProvider extends XHook {
 						if (param.args.length > 3 && param.args[3] != null) {
 							List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
 							if (Util.containsIgnoreCase(selectionArgs, "android_id"))
-								if (isRestricted(param)) {
+								if (isRestrictedExtra(param, sUri)) {
 									MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
 									gsfCursor.addRow(new Object[] { "android_id",
 											PrivacyManager.getDefacedProp(Binder.getCallingUid(), "GSF_ID") });
@@ -171,7 +171,7 @@ public class XContentProvider extends XHook {
 					} else if (sUri.startsWith("content://com.android.contacts")
 							&& !sUri.startsWith("content://com.android.contacts/profile")) {
 						// Contacts provider: allow selected contacts
-						if (isRestricted(param)) {
+						if (isRestrictedExtra(param, sUri)) {
 							// Get contact ID index
 							int iid = -1;
 							if (sUri.startsWith("content://com.android.contacts/contacts"))
@@ -220,7 +220,7 @@ public class XContentProvider extends XHook {
 
 					} else if (sUri.startsWith("content://applications")) {
 						// Applications provider: allow selected applications
-						if (isRestricted(param)) {
+						if (isRestrictedExtra(param, sUri)) {
 							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 							while (cursor.moveToNext()) {
 								int colPackage = cursor.getColumnIndex("package");
@@ -234,7 +234,7 @@ public class XContentProvider extends XHook {
 						}
 
 					} else {
-						if (isRestricted(param)) {
+						if (isRestrictedExtra(param, sUri)) {
 							// Return empty cursor
 							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 							result.respond(cursor.getExtras());
