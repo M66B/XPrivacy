@@ -1004,8 +1004,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			super.onPreExecute();
 
 			// Show progress dialog
-			ListView lvApp = (ListView) findViewById(R.id.lvApp);
-			mProgressDialog = new ProgressDialog(lvApp.getContext());
+			mProgressDialog = new ProgressDialog(ActivityMain.this);
 			mProgressDialog.setMessage(getString(R.string.msg_loading));
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			mProgressDialog.setProgressNumberFormat(null);

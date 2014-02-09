@@ -578,8 +578,7 @@ public class ActivityShare extends Activity {
 			super.onPreExecute();
 
 			// Show progress dialog
-			ListView lvShare = (ListView) findViewById(R.id.lvShare);
-			mProgressDialog = new ProgressDialog(lvShare.getContext());
+			mProgressDialog = new ProgressDialog(ActivityShare.this);
 			mProgressDialog.setMessage(getString(R.string.msg_loading));
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			mProgressDialog.setProgressNumberFormat(null);
