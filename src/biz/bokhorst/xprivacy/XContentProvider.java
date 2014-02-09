@@ -199,7 +199,6 @@ public class XContentProvider extends XHook {
 						if (projection != null && isRestrictedExtra(param, uri)) {
 							String id = getIdForUri(uri);
 							boolean added = (Boolean) param.getObjectExtra("column_added");
-							boolean restricted = isRestrictedExtra(param, uri);
 
 							// Column names
 							List<String> listColumn = new ArrayList<String>();
@@ -215,17 +214,14 @@ public class XContentProvider extends XHook {
 									long rawid = cursor.getLong(iid);
 
 									// Check if can be copied
-									boolean copy = false;
-									if (restricted) {
-										if (rawid == 0)
-											copy = !isRestricted(param, "contacts/profile");
-										else
-											copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
-													PrivacyManager.cSettingRawContact + rawid, false, true);
-										if (copy)
-											Util.log(this, Log.WARN, "Allowing contact id=" + rawid + " uri=" + uri);
-									} else
-										copy = true;
+									boolean copy;
+									if (rawid == 0)
+										copy = !isRestricted(param, "contacts/profile");
+									else
+										copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
+												PrivacyManager.cSettingRawContact + rawid, false, true);
+									if (copy)
+										Util.log(this, Log.WARN, "Allowing contact id=" + rawid + " uri=" + uri);
 
 									// Conditionally copy row
 									if (copy)
