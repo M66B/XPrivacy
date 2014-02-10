@@ -23,7 +23,7 @@
     <string name="menu_restriction_all">Переключити довзоли</string>
     <string name="menu_clear_all">Очистити всі</string>
     <string name="menu_restrict_all">Заборонити всі</string>
-    <string name="menu_clear_usage">Clear</string>
+    <string name="menu_clear_usage">Очистити</string>
     <string name="menu_usage_all">Переключити фільтр</string>
     <string name="menu_apply">Застосувати шаблон</string>
     <string name="menu_clear">Очистити</string>
@@ -38,7 +38,7 @@
     <string name="msg_new">Нове</string>
     <string name="msg_update">Оновити</string>
     <string name="msg_licensed" formatted="false">Власник ліцензіі: %s</string>
-    <string name="msg_loading">Загрузка</string>
+    <string name="msg_loading">Завантаження</string>
     <string name="msg_applying">Застосовується</string>
     <string name="msg_applied">Шаблон застосовано</string>
     <string name="msg_saved_to" formatted="false">Збережено в %s</string>
@@ -109,8 +109,8 @@
     <string name="settings_fake_data">Фальшиві дані</string>
     <string name="settings_global">Використовувати загальні фальшиві дані</string>
     <string name="settings_notify">Оновити сповіщення</string>
-    <string name="settings_usage">Андроид - данные об использовании (требует перезапуска)</string>
-    <string name="settings_log">Отладочный лог (требует перезапуска)</string>
+    <string name="settings_usage">Android - дані про використання (потрібне перезавантаження)</string>
+    <string name="settings_log">Відлагоджувальний лог (потрібне перезавантаження)</string>
     <string name="settings_expert">Експертний режим</string>
     <string name="settings_dangerous">Заборона небезпечних функцій</string>
     <string name="settings_confidence">Максимальний інтервал отримання конфіденційних даних</string>
