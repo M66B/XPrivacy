@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
+import android.text.TextUtils;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -165,14 +166,14 @@ public class XContentProvider extends XHook {
 						List<String> listProjection = new ArrayList<String>();
 						listProjection.addAll(Arrays.asList(projection));
 
-						String id = getIdForUri(uri);
+						String id = getRawIdForUri(uri);
 						if (id != null && !listProjection.contains(id)) {
 							added = true;
 							listProjection.add(id);
 						}
-
 						param.args[1] = listProjection.toArray(new String[0]);
 					}
+
 					param.setObjectExtra("column_added", added);
 				}
 		}
@@ -215,19 +216,28 @@ public class XContentProvider extends XHook {
 							MatrixCursor result = new MatrixCursor(listColumn.toArray(new String[0]));
 
 							// Filter rows
-							String id = getIdForUri(uri);
-							int iid = (id == null ? -1 : cursor.getColumnIndex(id));
-							if (iid >= 0)
+							String sid = getIdForUri(uri);
+							int iid = (sid == null ? -1 : cursor.getColumnIndex(sid));
+							String srawid = getRawIdForUri(uri);
+							int irawid = (srawid == null ? -1 : cursor.getColumnIndex(srawid));
+							if (iid >= 0 || irawid >= 0)
 								while (cursor.moveToNext()) {
 									// Check if allowed
-									long rawid = cursor.getLong(iid);
-									boolean allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(),
-											PrivacyManager.cSettingRawContact + rawid, false, true);
-									if (allowed) {
-										Util.log(this, Log.WARN, "Allowing contact id=" + rawid + " uri=" + uri);
+									boolean allowed = false;
+									long id = (iid < 0 ? -1 : cursor.getLong(iid));
+									long rawid = (irawid < 0 ? -1 : cursor.getLong(irawid));
+									if (id >= 0)
+										allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(),
+												PrivacyManager.cSettingContact + id, false, true);
+									if (rawid >= 0 && !allowed)
+										allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(),
+												PrivacyManager.cSettingRawContact + rawid, false, true);
+									if (allowed)
 										copyColumns(cursor, result, listColumn.size());
-									}
 								}
+							else if (!isRestricted(param, "ContactsProvider2"))
+								while (cursor.moveToNext())
+									copyColumns(cursor, result, listColumn.size());
 
 							result.respond(cursor.getExtras());
 							param.setResult(result);
@@ -267,21 +277,34 @@ public class XContentProvider extends XHook {
 		}
 	}
 
-	private String getIdForUri(String uri) {
-		String id = null;
+	private String getRawIdForUri(String uri) {
 		if (uri.startsWith("content://com.android.contacts/contacts"))
-			id = "name_raw_contact_id";
+			return "name_raw_contact_id";
 		else if (uri.startsWith("content://com.android.contacts/data"))
-			id = "raw_contact_id";
+			return "raw_contact_id";
 		else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
-			id = "name_raw_contact_id";
+			return "name_raw_contact_id";
 		else if (uri.startsWith("content://com.android.contacts/profile"))
-			id = "_id";
+			return "_id";
 		else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
-			id = "_id";
+			return "_id";
 		else
 			Util.log(this, Log.ERROR, "Unexpected uri=" + uri);
-		return id;
+		return null;
+	}
+
+	private String getIdForUri(String uri) {
+		if (uri.startsWith("content://com.android.contacts/contacts"))
+			return "_id";
+		else if (uri.startsWith("content://com.android.contacts/data"))
+			return "contact_id";
+		else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
+			return "_id";
+		else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
+			return "contact_id";
+		else
+			Util.log(this, Log.ERROR, "Unexpected uri=" + uri);
+		return null;
 	}
 
 	private void copyColumns(Cursor cursor, MatrixCursor result) {
@@ -315,5 +338,35 @@ public class XContentProvider extends XHook {
 		} catch (Throwable ex) {
 			Util.bug(this, ex);
 		}
+	}
+
+	@SuppressWarnings("unused")
+	private void dumpCursor(String uri, Cursor cursor) {
+		Util.log(this, Log.WARN, TextUtils.join(", ", cursor.getColumnNames()));
+		while (cursor.moveToNext()) {
+			String[] columns = new String[cursor.getColumnCount()];
+			for (int i = 0; i < cursor.getColumnCount(); i++)
+				switch (cursor.getType(i)) {
+				case Cursor.FIELD_TYPE_NULL:
+					columns[i] = null;
+					break;
+				case Cursor.FIELD_TYPE_INTEGER:
+					columns[i] = Integer.toString(cursor.getInt(i));
+					break;
+				case Cursor.FIELD_TYPE_FLOAT:
+					columns[i] = Float.toString(cursor.getFloat(i));
+					break;
+				case Cursor.FIELD_TYPE_STRING:
+					columns[i] = cursor.getString(i);
+					break;
+				case Cursor.FIELD_TYPE_BLOB:
+					columns[i] = "[blob]";
+					break;
+				default:
+					Util.log(this, Log.WARN, "Unknown cursor data type=" + cursor.getType(i));
+				}
+			Util.log(this, Log.WARN, TextUtils.join(", ", columns));
+		}
+		cursor.moveToFirst();
 	}
 }
