@@ -524,8 +524,10 @@ public class PrivacyService {
 					}
 
 					if (!methodFound && hook != null && hook.isDangerous())
-						if (!getSettingBool(0, PrivacyManager.cSettingDangerous, false))
+						if (!getSettingBool(0, PrivacyManager.cSettingDangerous, false)) {
 							mresult.restricted = false;
+							mresult.asked = true;
+						}
 
 					// Fallback
 					if (!mresult.restricted && usage && PrivacyManager.isApplication(restriction.uid)
