@@ -330,7 +330,7 @@ public class PrivacyManager {
 			if (!getSettingBool(0, cSettingDangerous, false, false))
 				for (Hook md : getHooks(restrictionName))
 					if (md.isDangerous())
-						listRestriction.add(new PRestriction(uid, restrictionName, md.getName(), false, false));
+						listRestriction.add(new PRestriction(uid, restrictionName, md.getName(), false, true));
 
 		setRestrictionList(listRestriction);
 
