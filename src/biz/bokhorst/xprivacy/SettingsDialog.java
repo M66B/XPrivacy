@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -22,7 +21,7 @@ import android.widget.Toast;
 
 public class SettingsDialog {
 
-	public static void edit(final Context context, ApplicationInfoEx appInfo) {
+	public static void edit(final ActivityBase context, ApplicationInfoEx appInfo) {
 		final int uid = (appInfo == null ? 0 : appInfo.getUid());
 
 		// Build dialog
@@ -32,7 +31,7 @@ public class SettingsDialog {
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgSettings.setTitle(R.string.menu_settings);
 		dlgSettings.setContentView(R.layout.settings);
-		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(context, R.attr.icon_launcher));
+		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, context.getThemed(R.attr.icon_launcher));
 
 		// Reference controls
 		TextView tvAppName = (TextView) dlgSettings.findViewById(R.id.tvAppName);

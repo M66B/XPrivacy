@@ -13,7 +13,6 @@ import java.util.concurrent.ThreadFactory;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.NotificationManager;
@@ -62,7 +61,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActivityApp extends Activity {
+public class ActivityApp extends ActivityBase {
 	private int mThemeId;
 	private ApplicationInfoEx mAppInfo = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
@@ -161,7 +160,7 @@ public class ActivityApp extends Activity {
 		// Background color
 		if (mAppInfo.isSystem()) {
 			LinearLayout llInfo = (LinearLayout) findViewById(R.id.llInfo);
-			llInfo.setBackgroundColor(getResources().getColor(Util.getThemed(this, R.attr.color_dangerous)));
+			llInfo.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 		}
 
 		// Display app icon
@@ -238,7 +237,7 @@ public class ActivityApp extends Activity {
 		// Up navigation
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		mCheck = Util.getTriStateCheckBox(this);
+		mCheck = getTriStateCheckBox();
 
 		// Tutorial
 		if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTutorialDetails, false, false)) {
@@ -431,7 +430,7 @@ public class ActivityApp extends Activity {
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dialog.setTitle(R.string.menu_help);
 		dialog.setContentView(R.layout.help);
-		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
+		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		ImageView imgHelpHalf = (ImageView) dialog.findViewById(R.id.imgHelpHalf);
 		imgHelpHalf.setImageBitmap(mCheck[1]);
 		dialog.setCancelable(true);
@@ -464,7 +463,7 @@ public class ActivityApp extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 		alertDialogBuilder.setTitle(getString(restrict ? R.string.menu_apply : R.string.menu_clear_all));
 		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -499,7 +498,7 @@ public class ActivityApp extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 		alertDialogBuilder.setTitle(R.string.menu_clear_all);
 		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -600,7 +599,7 @@ public class ActivityApp extends Activity {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 		alertDialogBuilder.setTitle(R.string.menu_app_kill);
 		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int _which) {
@@ -653,7 +652,7 @@ public class ActivityApp extends Activity {
 				// Build dialog
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 				alertDialogBuilder.setTitle(R.string.menu_accounts);
-				alertDialogBuilder.setIcon(Util.getThemed(ActivityApp.this, R.attr.icon_launcher));
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 				alertDialogBuilder.setMultiChoiceItems(mListAccount.toArray(new CharSequence[0]), mSelection,
 						new DialogInterface.OnMultiChoiceClickListener() {
 							public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
@@ -728,7 +727,7 @@ public class ActivityApp extends Activity {
 				// Build dialog
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 				alertDialogBuilder.setTitle(R.string.menu_applications);
-				alertDialogBuilder.setIcon(Util.getThemed(ActivityApp.this, R.attr.icon_launcher));
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 				alertDialogBuilder.setMultiChoiceItems(mApp, mSelection,
 						new DialogInterface.OnMultiChoiceClickListener() {
 							public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
@@ -803,7 +802,7 @@ public class ActivityApp extends Activity {
 				// Build dialog
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 				alertDialogBuilder.setTitle(R.string.menu_contacts);
-				alertDialogBuilder.setIcon(Util.getThemed(ActivityApp.this, R.attr.icon_launcher));
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 				alertDialogBuilder.setMultiChoiceItems(mListContact.toArray(new CharSequence[0]), mSelection,
 						new DialogInterface.OnMultiChoiceClickListener() {
 							public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
@@ -1001,8 +1000,8 @@ public class ActivityApp extends Activity {
 			final String restrictionName = (String) getGroup(groupPosition);
 
 			// Indicator state
-			holder.imgIndicator.setImageResource(Util.getThemed(ActivityApp.this,
-					isExpanded ? R.attr.icon_expander_maximized : R.attr.icon_expander_minimized));
+			holder.imgIndicator.setImageResource(getThemed(isExpanded ? R.attr.icon_expander_maximized
+					: R.attr.icon_expander_minimized));
 
 			// Disable indicator for empty groups
 			if (getChildrenCount(groupPosition) == 0)
@@ -1146,8 +1145,8 @@ public class ActivityApp extends Activity {
 						holder.tvMethodName.setText(String.format("%s (%s)", md.getName(), sLastUsage));
 					}
 					holder.tvMethodName.setEnabled(parent.restricted || !parent.asked);
-					holder.imgUsed.setImageResource(Util.getThemed(ActivityApp.this,
-							md.hasUsageData() ? R.attr.icon_used : R.attr.icon_used_grayed));
+					holder.imgUsed.setImageResource(getThemed(md.hasUsageData() ? R.attr.icon_used
+							: R.attr.icon_used_grayed));
 					holder.imgUsed.setVisibility(lastUsage == 0 && md.hasUsageData() ? View.INVISIBLE : View.VISIBLE);
 					holder.tvMethodName.setTypeface(null, lastUsage == 0 ? Typeface.NORMAL : Typeface.BOLD_ITALIC);
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
@@ -1192,8 +1191,8 @@ public class ActivityApp extends Activity {
 
 							// Reset background color
 							if (md.isDangerous())
-								holder.row.setBackgroundColor(getResources().getColor(
-										Util.getThemed(ActivityApp.this, R.attr.color_dangerous)));
+								holder.row.setBackgroundColor(getResources()
+										.getColor(getThemed(R.attr.color_dangerous)));
 							else
 								holder.row.setBackgroundColor(Color.TRANSPARENT);
 
@@ -1224,8 +1223,7 @@ public class ActivityApp extends Activity {
 
 			// Set background color
 			if (md.isDangerous())
-				holder.row.setBackgroundColor(getResources().getColor(
-						Util.getThemed(ActivityApp.this, R.attr.color_dangerous)));
+				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
 

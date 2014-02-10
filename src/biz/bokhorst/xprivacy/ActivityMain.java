@@ -11,7 +11,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -68,7 +67,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActivityMain extends Activity implements OnItemSelectedListener {
+public class ActivityMain extends ActivityBase implements OnItemSelectedListener {
 	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
@@ -236,8 +235,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				String text = etFilter.getText().toString();
 				ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
 				imgClear.setImageDrawable(getResources().getDrawable(
-						Util.getThemed(ActivityMain.this, text.equals("") ? R.attr.icon_clear_grayed
-								: R.attr.icon_clear)));
+						getThemed(text.equals("") ? R.attr.icon_clear_grayed : R.attr.icon_clear)));
 				applyFilter();
 			}
 
@@ -283,7 +281,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		}
 
 		// Build tri-state check box images
-		mCheck = Util.getTriStateCheckBox(this);
+		mCheck = getTriStateCheckBox();
 
 		// Tutorial
 		if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTutorialMain, false, false)) {
@@ -588,7 +586,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
 		alertDialogBuilder.setTitle(R.string.menu_clear_db);
 		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -633,7 +631,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		// Build dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(R.string.menu_template);
-		alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialogBuilder.setMultiChoiceItems(options, selection, new DialogInterface.OnMultiChoiceClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 				String templateName = PrivacyManager.cSettingTemplate + "." + listLocalizedTitle.get(whichButton);
@@ -681,7 +679,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 				alertDialogBuilder.setTitle(R.string.app_name);
 				alertDialogBuilder.setMessage(R.string.msg_select);
-				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
 						new DialogInterface.OnClickListener() {
 							@Override
@@ -701,7 +699,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 				alertDialogBuilder.setTitle(R.string.app_name);
 				alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
-				alertDialogBuilder.setIcon(Util.getThemed(this, R.attr.icon_launcher));
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
 						new DialogInterface.OnClickListener() {
 							@Override
@@ -754,7 +752,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgAbout.setTitle(R.string.menu_about);
 		dlgAbout.setContentView(R.layout.about);
-		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
+		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 
 		// Show version
 		try {
@@ -789,7 +787,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dialog.setTitle(R.string.menu_help);
 		dialog.setContentView(R.layout.help);
-		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, Util.getThemed(this, R.attr.icon_launcher));
+		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		ImageView imgHelpHalf = (ImageView) dialog.findViewById(R.id.imgHelpHalf);
 		imgHelpHalf.setImageBitmap(mCheck[1]);
 		dialog.setCancelable(true);
@@ -831,7 +829,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		// Build dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
 		alertDialogBuilder.setTitle(R.string.menu_sort);
-		alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialogBuilder.setView(view);
 		alertDialogBuilder.setPositiveButton(ActivityMain.this.getString(android.R.string.ok),
 				new DialogInterface.OnClickListener() {
@@ -939,7 +937,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 		// Build dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
 		alertDialogBuilder.setTitle(R.string.menu_filter);
-		alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialogBuilder.setView(view);
 		alertDialogBuilder.setPositiveButton(ActivityMain.this.getString(android.R.string.ok),
 				new DialogInterface.OnClickListener() {
@@ -1380,21 +1378,20 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				if (holder.position == position && result != null) {
 					// Set background color
 					if (xAppInfo.isSystem())
-						holder.llAppType.setBackgroundColor(getResources().getColor(
-								Util.getThemed(ActivityMain.this, R.attr.color_dangerous)));
+						holder.llAppType.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 					else
 						holder.llAppType.setBackgroundColor(Color.TRANSPARENT);
 
 					// Display state
 					if (state == STATE_ATTENTION)
 						holder.vwState.setBackgroundColor(getResources().getColor(
-								Util.getThemed(ActivityMain.this, R.attr.color_state_attention)));
+								getThemed(R.attr.color_state_attention)));
 					else if (state == STATE_SHARED)
-						holder.vwState.setBackgroundColor(getResources().getColor(
-								Util.getThemed(ActivityMain.this, R.attr.color_state_shared)));
+						holder.vwState
+								.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_state_shared)));
 					else
 						holder.vwState.setBackgroundColor(getResources().getColor(
-								Util.getThemed(ActivityMain.this, R.attr.color_state_restricted)));
+								getThemed(R.attr.color_state_restricted)));
 
 					// Display icon
 					holder.imgIcon.setImageDrawable(xAppInfo.getIcon(ActivityMain.this));
@@ -1465,7 +1462,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
 								alertDialogBuilder.setTitle(R.string.menu_clear_all);
 								alertDialogBuilder.setMessage(R.string.msg_sure);
-								alertDialogBuilder.setIcon(Util.getThemed(ActivityMain.this, R.attr.icon_launcher));
+								alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 								alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
 										new DialogInterface.OnClickListener() {
 											@Override
@@ -1479,10 +1476,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 
 												// Update visible state
 												holder.imgCBName.setImageBitmap(mCheck[3]); // ?
-												holder.vwState.setBackgroundColor(getResources()
-														.getColor(
-																Util.getThemed(ActivityMain.this,
-																		R.attr.color_state_attention)));
+												holder.vwState.setBackgroundColor(getResources().getColor(
+														getThemed(R.attr.color_state_attention)));
 
 												// Update stored state
 												rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
@@ -1552,13 +1547,13 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 							state = xAppInfo.getState(ActivityMain.this);
 							if (state == STATE_ATTENTION)
 								holder.vwState.setBackgroundColor(getResources().getColor(
-										Util.getThemed(ActivityMain.this, R.attr.color_state_attention)));
+										getThemed(R.attr.color_state_attention)));
 							else if (state == STATE_SHARED)
 								holder.vwState.setBackgroundColor(getResources().getColor(
-										Util.getThemed(ActivityMain.this, R.attr.color_state_shared)));
+										getThemed(R.attr.color_state_shared)));
 							else
 								holder.vwState.setBackgroundColor(getResources().getColor(
-										Util.getThemed(ActivityMain.this, R.attr.color_state_restricted)));
+										getThemed(R.attr.color_state_restricted)));
 						}
 					});
 				}
