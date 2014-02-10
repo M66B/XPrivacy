@@ -15,10 +15,11 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
-* Fixed allowing contacts in some situations
+* Fixed allowing contacts in some situations ([issue](/../../issues/1155))
 * Show URI for content providers
 * Added restriction for ICC provider (SIM contacts)
-* Added restriction for *contacts/sim*
+* Added restriction for profile provider (contacts)
+* Added restriction for contacts provider (fallback)
 * Updated Arabic translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

@@ -18,6 +18,9 @@ public class XContentProvider extends XHook {
 	private String mClassName;
 	private String mUriStart;
 
+	private static final String[] cContactsUris = new String[] { "contacts/contacts", "contacts/data",
+			"contacts/raw_contacts", "contacts/phone_lookup", "contacts/profile" };
+
 	private XContentProvider(String restrictionName, String providerName, String className) {
 		super(restrictionName, "query", providerName);
 		mClassName = className;
@@ -79,11 +82,14 @@ public class XContentProvider extends XHook {
 
 		// Contacts provider
 		else if (packageName.equals("com.android.providers.contacts")) {
-			String[] uris = new String[] { "contacts/contacts", "contacts/data", "contacts/raw_contacts",
-					"contacts/phone_lookup", "contacts/profile", "contacts/sim" };
-			for (String uri : uris)
+			for (String uri : cContactsUris)
 				listHook.add(new XContentProvider(PrivacyManager.cContacts, "ContactsProvider2",
 						"com.android.providers.contacts.ContactsProvider2", "content://com.android." + uri).optional());
+
+			listHook.add(new XContentProvider(PrivacyManager.cContacts, "ContactsProvider2",
+					"com.android.providers.contacts.ContactsProvider2").optional());
+			listHook.add(new XContentProvider(PrivacyManager.cContacts, "ProfileProvider",
+					"com.android.providers.contacts.ProfileProvider").optional());
 
 			listHook.add(new XContentProvider(PrivacyManager.cPhone, "CallLogProvider",
 					"com.android.providers.contacts.CallLogProvider").optional());
@@ -93,11 +99,14 @@ public class XContentProvider extends XHook {
 
 		// Contacts provider of Motorola's Blur
 		else if (packageName.equals("com.motorola.blur.providers.contacts")) {
-			String[] uris = new String[] { "contacts/contacts", "contacts/data", "contacts/raw_contacts",
-					"contacts/phone_lookup", "contacts/profile", "contacts/sim" };
-			for (String uri : uris)
+			for (String uri : cContactsUris)
 				listHook.add(new XContentProvider(PrivacyManager.cContacts, "ContactsProvider2",
 						"com.android.providers.contacts.ContactsProvider2", "content://com.android." + uri).optional());
+
+			listHook.add(new XContentProvider(PrivacyManager.cContacts, "ContactsProvider2",
+					"com.android.providers.contacts.ContactsProvider2").optional());
+			listHook.add(new XContentProvider(PrivacyManager.cContacts, "ProfileProvider",
+					"com.android.providers.contacts.ProfileProvider").optional());
 
 			listHook.add(new XContentProvider(PrivacyManager.cPhone, "BlurCallLogProvider",
 					"com.motorola.blur.providers.contacts.BlurCallLogProvider").optional());
@@ -148,24 +157,24 @@ public class XContentProvider extends XHook {
 		if (param.args.length > 1 && param.args[0] instanceof Uri) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
 			String[] projection = (param.args[0] instanceof String[] ? (String[]) param.args[1] : null);
-			if (mUriStart == null || uri.startsWith(mUriStart))
-				if (uri.startsWith("content://com.android.contacts")
-						&& !uri.startsWith("content://com.android.contacts/sim")
-						&& !uri.startsWith("content://com.android.contacts/profile"))
-					if (projection != null && isRestrictedExtra(param, uri)) {
-						boolean added = false;
-						String id = getIdForUri(uri);
-
+			if (mUriStart != null && uri.startsWith("content://com.android.contacts"))
+				if (isRestrictedExtra(param, uri)) {
+					// Modify projection
+					boolean added = false;
+					if (projection != null) {
 						List<String> listProjection = new ArrayList<String>();
 						listProjection.addAll(Arrays.asList(projection));
+
+						String id = getIdForUri(uri);
 						if (id != null && !listProjection.contains(id)) {
 							added = true;
 							listProjection.add(id);
 						}
 
 						param.args[1] = listProjection.toArray(new String[0]);
-						param.setObjectExtra("column_added", added);
 					}
+					param.setObjectExtra("column_added", added);
+				}
 		}
 	}
 
@@ -175,7 +184,6 @@ public class XContentProvider extends XHook {
 		// Check URI
 		if (param.args.length > 1 && param.args[0] instanceof Uri) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
-			String[] projection = (param.args[0] instanceof String[] ? (String[]) param.args[1] : null);
 			if (mUriStart == null || uri.startsWith(mUriStart)) {
 				Cursor cursor = (Cursor) param.getResult();
 				if (cursor != null)
@@ -194,41 +202,33 @@ public class XContentProvider extends XHook {
 								}
 						}
 
-					} else if (uri.startsWith("content://com.android.contacts")
-							&& !uri.startsWith("content://com.android.contacts/sim")
-							&& !uri.startsWith("content://com.android.contacts/profile")) {
+					} else if (mUriStart != null && uri.startsWith("content://com.android.contacts")) {
 						// Contacts provider: allow selected contacts
-						if (projection != null && isRestrictedExtra(param, uri)) {
-							String id = getIdForUri(uri);
+						if (isRestrictedExtra(param, uri)) {
+							// Modify column names
 							boolean added = (Boolean) param.getObjectExtra("column_added");
-
-							// Column names
 							List<String> listColumn = new ArrayList<String>();
 							listColumn.addAll(Arrays.asList(cursor.getColumnNames()));
 							if (added)
 								listColumn.remove(listColumn.size() - 1);
 
-							int iid = (id == null ? -1 : cursor.getColumnIndex(id));
 							MatrixCursor result = new MatrixCursor(listColumn.toArray(new String[0]));
+
+							// Filter rows
+							String id = getIdForUri(uri);
+							int iid = (id == null ? -1 : cursor.getColumnIndex(id));
 							if (iid >= 0)
 								while (cursor.moveToNext()) {
-									// Get raw contact ID
+									// Check if allowed
 									long rawid = cursor.getLong(iid);
-
-									// Check if can be copied
-									boolean copy;
-									if (rawid == 0)
-										copy = !isRestricted(param, "contacts/profile");
-									else
-										copy = PrivacyManager.getSettingBool(Binder.getCallingUid(),
-												PrivacyManager.cSettingRawContact + rawid, false, true);
-									if (copy)
+									boolean allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(),
+											PrivacyManager.cSettingRawContact + rawid, false, true);
+									if (allowed) {
 										Util.log(this, Log.WARN, "Allowing contact id=" + rawid + " uri=" + uri);
-
-									// Conditionally copy row
-									if (copy)
 										copyColumns(cursor, result, listColumn.size());
+									}
 								}
+
 							result.respond(cursor.getExtras());
 							param.setResult(result);
 							cursor.close();
@@ -250,6 +250,11 @@ public class XContentProvider extends XHook {
 						}
 
 					} else {
+						if (uri.startsWith("content://com.android.contacts"))
+							for (String curi : cContactsUris)
+								if (uri.startsWith("content://com.android." + curi))
+									return;
+
 						if (isRestrictedExtra(param, uri)) {
 							// Return empty cursor
 							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
@@ -270,6 +275,8 @@ public class XContentProvider extends XHook {
 			id = "raw_contact_id";
 		else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
 			id = "name_raw_contact_id";
+		else if (uri.startsWith("content://com.android.contacts/profile"))
+			id = "_id";
 		else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
 			id = "_id";
 		else
