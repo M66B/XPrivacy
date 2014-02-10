@@ -539,7 +539,7 @@ public class PrivacyService {
 					onDemandDialog(hook, restriction, mresult);
 
 				// Log usage
-				if (usage && hook != null && hook.hasUsageData() && XActivityManagerService.canWriteUsageData())
+				if (usage && hook != null && hook.hasUsageData())
 					if (getSettingBool(0, PrivacyManager.cSettingUsage, true)) {
 						// Check secret
 						boolean allowed = true;
@@ -554,26 +554,28 @@ public class PrivacyService {
 							mExecutor.execute(new Runnable() {
 								public void run() {
 									try {
-										SQLiteDatabase db = getDatabase();
+										if (XActivityManagerService.canWriteUsageData()) {
+											SQLiteDatabase db = getDatabase();
 
-										mLock.writeLock().lock();
-										db.beginTransaction();
-										try {
-											ContentValues values = new ContentValues();
-											values.put("uid", restriction.uid);
-											values.put("restriction", restriction.restrictionName);
-											values.put("method", restriction.methodName);
-											values.put("restricted", mresult.restricted);
-											values.put("time", new Date().getTime());
-											db.insertWithOnConflict(cTableUsage, null, values,
-													SQLiteDatabase.CONFLICT_REPLACE);
-
-											db.setTransactionSuccessful();
-										} finally {
+											mLock.writeLock().lock();
+											db.beginTransaction();
 											try {
-												db.endTransaction();
+												ContentValues values = new ContentValues();
+												values.put("uid", restriction.uid);
+												values.put("restriction", restriction.restrictionName);
+												values.put("method", restriction.methodName);
+												values.put("restricted", mresult.restricted);
+												values.put("time", new Date().getTime());
+												db.insertWithOnConflict(cTableUsage, null, values,
+														SQLiteDatabase.CONFLICT_REPLACE);
+
+												db.setTransactionSuccessful();
 											} finally {
-												mLock.writeLock().unlock();
+												try {
+													db.endTransaction();
+												} finally {
+													mLock.writeLock().unlock();
+												}
 											}
 										}
 									} catch (Throwable ex) {
