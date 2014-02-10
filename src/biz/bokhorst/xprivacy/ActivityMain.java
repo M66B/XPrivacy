@@ -10,6 +10,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import biz.bokhorst.xprivacy.Util.RState;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -1314,7 +1316,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			public ImageView imgFrozen;
 			public TextView tvName;
 			public ImageView imgCBName;
-			public TextView tvOnDemand;
 			public RelativeLayout rlName;
 
 			public ViewHolder(View theRow, int thePosition) {
@@ -1329,7 +1330,6 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 				imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCBName = (ImageView) row.findViewById(R.id.imgCBName);
-				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
@@ -1342,11 +1342,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			private boolean used;
 			private boolean enabled;
 			private boolean granted;
-			private List<String> listRestriction;
-			private boolean crestricted;
-			private boolean allRestricted;
-			private boolean someRestricted;
-			private boolean onDemand;
+			private RState rstate;
 
 			public HolderTask(int thePosition, ViewHolder theHolder, ApplicationInfoEx theAppInfo) {
 				position = thePosition;
@@ -1373,41 +1369,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						if (!PrivacyManager.hasPermission(ActivityMain.this, xAppInfo, mRestrictionName))
 							granted = false;
 
-					// Get restrictions
-					if (mRestrictionName == null)
-						listRestriction = PrivacyManager.getRestrictions();
-					else {
-						listRestriction = new ArrayList<String>();
-						listRestriction.add(mRestrictionName);
-					}
-
-					crestricted = false;
-					PRestriction query = null;
-					for (String restrictionName : listRestriction) {
-						query = PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null);
-						if (query.restricted) {
-							crestricted = true;
-							break;
-						}
-					}
-
-					// Get all/some restricted
-					allRestricted = true;
-					someRestricted = false;
-					for (PRestriction restriction : PrivacyManager.getRestrictionList(xAppInfo.getUid(),
-							mRestrictionName)) {
-						allRestricted = (allRestricted && restriction.restricted);
-						someRestricted = (someRestricted || restriction.restricted);
-					}
-
-					// Get if on demand
-					onDemand = false;
-					if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false)) {
-						onDemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
-								false, false);
-						if (onDemand && mRestrictionName != null)
-							onDemand = !query.asked;
-					}
+					// Get restriction/ask state
+					rstate = Util.getRestrictionState(xAppInfo.getUid(), mRestrictionName, null);
 
 					return holder;
 				}
@@ -1455,21 +1418,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 							.setVisibility(xAppInfo.isFrozen(ActivityMain.this) ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					if (allRestricted)
-						holder.imgCBName.setImageBitmap(mCheck[2]); // Full
-					else if (someRestricted || crestricted)
+					if (!rstate.asked)
+						holder.imgCBName.setImageBitmap(mCheck[3]); // ?
+					else if (rstate.partial)
 						holder.imgCBName.setImageBitmap(mCheck[1]); // Half
+					else if (rstate.restricted)
+						holder.imgCBName.setImageBitmap(mCheck[2]); // Full
 					else
 						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
-					// Display on demand state
-					holder.tvOnDemand.setVisibility(onDemand ? View.VISIBLE : View.INVISIBLE);
-
 					// Display enabled state
 					holder.tvName.setEnabled(enabled);
 					holder.imgCBName.setEnabled(enabled);
-					holder.tvOnDemand.setEnabled(enabled);
 					holder.rlName.setEnabled(enabled);
 
 					// Display selection
@@ -1502,7 +1463,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 						@Override
 						public void onClick(final View view) {
 							// Process click
-							if (mRestrictionName == null && someRestricted) {
+							if (mRestrictionName == null && rstate.restricted != false) {
 								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
 								alertDialogBuilder.setTitle(R.string.menu_clear_all);
 								alertDialogBuilder.setMessage(R.string.msg_sure);
@@ -1518,18 +1479,19 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 												PrivacyManager.setSetting(xAppInfo.getUid(),
 														PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 
-												allRestricted = false;
-												someRestricted = false;
-												onDemand = true;
-
 												// Update visible state
-												holder.imgCBName.setImageBitmap(mCheck[0]); // Off
-												holder.tvOnDemand.setVisibility(View.VISIBLE);
+												holder.imgCBName.setImageBitmap(mCheck[3]); // ?
 												holder.vwState.setBackgroundColor(getResources()
 														.getColor(
 																Util.getThemed(ActivityMain.this,
 																		R.attr.color_state_attention)));
 
+												// Update stored state
+												rstate = Util.getRestrictionState(xAppInfo.getUid(), mRestrictionName,
+														null);
+
+												rstate = Util.getRestrictionState(xAppInfo.getUid(), mRestrictionName,
+														null);
 												// Notify restart
 												if (oldState.contains(true))
 													Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
@@ -1545,39 +1507,45 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 								AlertDialog alertDialog = alertDialogBuilder.create();
 								alertDialog.show();
 							} else {
-								// Update restriction
-								crestricted = false;
-								for (String restrictionName : listRestriction)
-									if (PrivacyManager.getRestrictionEx(xAppInfo.getUid(), restrictionName, null).restricted) {
-										crestricted = true;
-										break;
-									}
-								crestricted = !crestricted;
+								// Set change
+								boolean ask = rstate.asked;
+								boolean restrict = ask ? !rstate.restricted : rstate.restricted;
+
+								// Tweak to get to all three states when no
+								// category has been selected
+								if (mRestrictionName == null && !rstate.restricted && rstate.asked) {
+									restrict = true;
+									ask = false;
+								}
+
+								// Get restrictions to change
+								List<String> listRestriction;
+								if (mRestrictionName == null)
+									listRestriction = PrivacyManager.getRestrictions();
+								else {
+									listRestriction = new ArrayList<String>();
+									listRestriction.add(mRestrictionName);
+								}
 
 								List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 										mRestrictionName);
 								for (String restrictionName : listRestriction)
-									PrivacyManager.setRestriction(xAppInfo.getUid(), restrictionName, null,
-											crestricted, false);
+									PrivacyManager.setRestriction(xAppInfo.getUid(), restrictionName, null, restrict,
+											!ask);
 								List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 										mRestrictionName);
 
-								// Update all/some restricted
-								allRestricted = true;
-								someRestricted = false;
-								for (PRestriction restriction : PrivacyManager.getRestrictionList(xAppInfo.getUid(),
-										mRestrictionName)) {
-									allRestricted = (allRestricted && restriction.restricted);
-									someRestricted = (someRestricted || restriction.restricted);
-								}
-
-								// Update visible state
-								if (allRestricted)
-									holder.imgCBName.setImageBitmap(mCheck[2]); // Full
-								else if (someRestricted || crestricted)
+								// Update restriction display
+								rstate = Util.getRestrictionState(xAppInfo.getUid(), mRestrictionName, null);
+								if (!rstate.asked)
+									holder.imgCBName.setImageBitmap(mCheck[3]); // ?
+								else if (rstate.partial)
 									holder.imgCBName.setImageBitmap(mCheck[1]); // Half
+								else if (rstate.restricted)
+									holder.imgCBName.setImageBitmap(mCheck[2]); // Full
 								else
 									holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+								holder.imgCBName.setVisibility(View.VISIBLE);
 
 								// Notify restart
 								if (!newState.equals(oldState))
@@ -1640,10 +1608,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
 			holder.imgCBName.setVisibility(View.INVISIBLE);
-			holder.tvOnDemand.setVisibility(View.INVISIBLE);
 			holder.tvName.setEnabled(false);
 			holder.imgCBName.setEnabled(false);
-			holder.tvOnDemand.setEnabled(false);
 			holder.rlName.setEnabled(false);
 
 			// Async update

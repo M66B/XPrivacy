@@ -36,30 +36,33 @@
         android:src="?attr/icon_info"
         android:visibility="gone" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
+    <RelativeLayout
+        android:id="@+id/rlMethodName"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/listPreferredItemHeightSmall"
+        android:background="@drawable/list_item_pressed"
+        android:clickable="true"
         android:paddingLeft="6dip" >
 
-        <CheckedTextView
-            android:id="@+id/ctvMethodName"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/listPreferredItemHeightSmall"
-            android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-            android:gravity="center_vertical"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/imgCBMethodName"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="3dip"
+            android:layout_marginRight="6dip"
+            android:contentDescription="@string/title_restrict"
+            android:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/tvOnDemand"
-        android:layout_width="wrap_content"
-        android:layout_height="?android:attr/listPreferredItemHeightSmall"
-        android:gravity="center_vertical"
-        android:text="@string/msg_question"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        <TextView
+            android:id="@+id/tvMethodName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/imgCBName"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
 
 </LinearLayout>
