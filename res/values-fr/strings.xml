@@ -120,7 +120,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_once">Une fois pendant %1$s secondes</string>
     <string name="title_allow">Permettre</string>
     <string name="title_deny">Bloquer</string>
-    <string name="title_pleasesubmit">Veuillez envoyer vos restrictions à aider les autres</string>
+    <string name="title_pleasesubmit">Veuillez envoyer vos restrictions pour aider les autres</string>
     <string name="settings_serial">N° de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
