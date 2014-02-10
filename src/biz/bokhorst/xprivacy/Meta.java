@@ -47,9 +47,9 @@ public class Meta {
 		listHook.add(new Hook("contacts", "contacts/data", "READ_CONTACTS", 10, null, null));
 		listHook.add(new Hook("contacts", "contacts/raw_contacts", "READ_CONTACTS", 10, null, null));
 		listHook.add(new Hook("contacts", "contacts/phone_lookup", "READ_CONTACTS", 10, null, null));
-		listHook.add(new Hook("contacts", "contacts/profile", "READ_CONTACTS", 10, null, null));
-		listHook.add(new Hook("contacts", "contacts/sim", "READ_CONTACTS", 10, null, null));
-		listHook.add(new Hook("contacts", "IccProvider", "", 10, null, null));
+		listHook.add(new Hook("contacts", "contacts/profile", "READ_PROFILE", 10, "1.99.38", null).dangerous());
+		listHook.add(new Hook("contacts", "contacts/sim", "READ_CONTACTS", 10, "1.99.38", null));
+		listHook.add(new Hook("contacts", "IccProvider", "", 10, "1.99.38", null));
 
 		listHook.add(new Hook("dictionary", "UserDictionary", "READ_USER_DICTIONARY", 10, null, null));
 
