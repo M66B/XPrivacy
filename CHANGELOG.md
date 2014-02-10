@@ -16,6 +16,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Fixed allowing contacts in some situations ([issue](/../../issues/1155))
+* Fixed checkbox logic when *Restrict dangerous functions* was not set, thanks @[jpeg729](https://github.com/jpeg729)
 * Improved performance
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
