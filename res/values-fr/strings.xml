@@ -63,7 +63,7 @@
     <string name="msg_random_boot">Randomiser après le démarrage</string>
     <string name="msg_restart">Redémarrage de l\'application nécessaire</string>
     <string name="msg_register">Inscrivez votre appareil, s.v.p.</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
+    <string name="msg_email">Veuillez entrer votre adresse e-mail:</string>
     <string name="msg_registered">Vérifiez vos mails pour activer votre appareil</string>
     <string name="msg_service">Service de mise-à-jour en fonctionnement</string>
     <string name="msg_migrating" formatted="false">Migration %s</string>
@@ -112,15 +112,15 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_supdated">Par date de mise à jour</string>
     <string name="title_smodified">Par date de modification (XPrivacy)</string>
     <string name="title_sinvert">Inverser l\'ordre</string>
-    <string name="title_attempt">Usage attempt of:</string>
-    <string name="title_category">Category:</string>
-    <string name="title_function">Function:</string>
-    <string name="title_parameters">Parameters:</string>
-    <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_attempt">Tentative d\'utilisation de:</string>
+    <string name="title_category">Catégorie:</string>
+    <string name="title_function">Fonction:</string>
+    <string name="title_parameters">Paramètres:</string>
+    <string name="title_applycat">Appliquer à toute la catégorie</string>
+    <string name="title_once">Une fois pendant %1$s secondes</string>
     <string name="title_allow">Permettre</string>
     <string name="title_deny">Bloquer</string>
-    <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
+    <string name="title_pleasesubmit">Veuillez envoyer vos restrictions à aider les autres</string>
     <string name="settings_serial">N° de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
@@ -156,10 +156,10 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_frozen">est désactivée</string>
     <string name="help_dangerous">est dangereuse, restreindre peut causer des problèmes</string>
     <string name="help_half">partiellement restreinte</string>
-    <string name="help_attention">des restrictions ont besoin d\'attention</string>
-    <string name="help_restricted">des restrictions sont changées</string>
+    <string name="help_attention">les restrictions ont besoin d\'attention</string>
+    <string name="help_restricted">les restrictions sont changées</string>
     <string name="help_shared">les restrictions sont envoyées</string>
-    <string name="tutorial_mainheader">Select the category to restrict</string>
+    <string name="tutorial_mainheader">Sélectionnez la catégorie à restreindre</string>
     <string name="tutorial_mainlist">Cocher une case pour restreindre la catégorie choisie pour l’appli\n
 \nL’appli sera dupée par des données vides ou modifiées\n
 \nAppuyer sur l’icône de l’appli pour les restrictions détaillées et les paramètres</string>
