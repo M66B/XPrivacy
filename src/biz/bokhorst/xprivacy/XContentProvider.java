@@ -285,7 +285,7 @@ public class XContentProvider extends XHook {
 		else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
 			return "name_raw_contact_id";
 		else if (uri.startsWith("content://com.android.contacts/profile"))
-			return "_id";
+			return null;
 		else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
 			return "_id";
 		else
@@ -300,6 +300,8 @@ public class XContentProvider extends XHook {
 			return "contact_id";
 		else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
 			return "_id";
+		else if (uri.startsWith("content://com.android.contacts/profile"))
+			return null;
 		else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
 			return "contact_id";
 		else
