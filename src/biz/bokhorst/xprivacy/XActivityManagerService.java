@@ -16,6 +16,7 @@ public class XActivityManagerService extends XHook {
 	private static boolean mFinishedBooting = false;
 	private static boolean mLockScreen = false;
 	private static boolean mSleeping = false;
+	private static boolean mShutdown = false;
 
 	private XActivityManagerService(Methods method, int sdk) {
 		super(null, method.name(), null, sdk);
@@ -40,11 +41,12 @@ public class XActivityManagerService extends XHook {
 	// 4.1+ public void setLockScreenShown(boolean shown)
 	// 4.0.3+ public void goingToSleep()
 	// 4.0.3+ public void wakingUp()
-	// 
+	// 4.0.3+ public boolean shutdown(int timeout)
+	// frameworks/base/services/java/com/android/server/am/ActivityManagerService.java
 	// @formatter:on
 
 	private enum Methods {
-		inputDispatchingTimedOut, appNotResponding, systemReady, finishBooting, setLockScreenShown, goingToSleep, wakingUp
+		inputDispatchingTimedOut, appNotResponding, systemReady, finishBooting, setLockScreenShown, goingToSleep, wakingUp, shutdown
 	};
 
 	public static List<XHook> getInstances() {
@@ -56,6 +58,7 @@ public class XActivityManagerService extends XHook {
 		listHook.add(new XActivityManagerService(Methods.setLockScreenShown, Build.VERSION_CODES.JELLY_BEAN).optional());
 		listHook.add(new XActivityManagerService(Methods.goingToSleep, Build.VERSION_CODES.JELLY_BEAN));
 		listHook.add(new XActivityManagerService(Methods.wakingUp, Build.VERSION_CODES.JELLY_BEAN));
+		listHook.add(new XActivityManagerService(Methods.shutdown, Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1));
 		// setLockScreenShown appears not to be present in some 4.2.2 ROMs
 		return listHook;
 	}
@@ -66,6 +69,10 @@ public class XActivityManagerService extends XHook {
 
 	public static boolean canOnDemand() {
 		return (mFinishedBooting && !mLockScreen && !mSleeping);
+	}
+
+	public static boolean canWriteUsageData() {
+		return !mShutdown;
 	}
 
 	@Override
@@ -115,6 +122,10 @@ public class XActivityManagerService extends XHook {
 
 		} else if (mMethod == Methods.wakingUp) {
 			// Do nothing
+
+		} else if (mMethod == Methods.shutdown) {
+			mShutdown = true;
+			Util.log(this, Log.WARN, "Shutdown");
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());

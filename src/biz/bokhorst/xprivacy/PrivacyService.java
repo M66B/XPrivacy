@@ -539,7 +539,7 @@ public class PrivacyService {
 					onDemandDialog(hook, restriction, mresult);
 
 				// Log usage
-				if (usage && hook != null && hook.hasUsageData())
+				if (usage && hook != null && hook.hasUsageData() && XActivityManagerService.canWriteUsageData())
 					if (getSettingBool(0, PrivacyManager.cSettingUsage, true)) {
 						// Check secret
 						boolean allowed = true;
