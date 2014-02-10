@@ -15,6 +15,9 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+
+**Version 1.99.38 TEST**
+
 * Fixed allowing contacts in some situations ([issue](/../../issues/1155))
 * Show URI for content providers
 * Added restriction for ICC provider (SIM contacts)
