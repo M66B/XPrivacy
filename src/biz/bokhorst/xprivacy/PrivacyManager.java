@@ -231,7 +231,7 @@ public class PrivacyManager {
 	public static PRestriction getRestrictionEx(int uid, String restrictionName, String methodName) {
 		PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
 		try {
-			return PrivacyService.getClient().getRestriction(query, false, "");
+			return PrivacyService.getRestriction(query, false, "");
 		} catch (RemoteException ex) {
 			Util.bug(null, ex);
 			return query;
@@ -288,7 +288,7 @@ public class PrivacyManager {
 			try {
 				PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
 				query.extra = extra;
-				restricted = PrivacyService.getClient().getRestriction(query, true, secret).restricted;
+				restricted = PrivacyService.getRestriction(query, true, secret).restricted;
 
 				// Add to cache
 				key.restricted = restricted;
@@ -477,17 +477,12 @@ public class PrivacyManager {
 		// Get settings
 		if (!cached)
 			try {
-				IPrivacyService client = PrivacyService.getClient();
-				if (client == null)
-					value = defaultValue;
-				else {
-					value = client.getSetting(new PSetting(Math.abs(uid), name, null)).value;
-					if (value == null)
-						if (uid > 0)
-							value = client.getSetting(new PSetting(0, name, defaultValue)).value;
-						else
-							value = defaultValue;
-				}
+				value = PrivacyService.getSetting(new PSetting(Math.abs(uid), name, null)).value;
+				if (value == null)
+					if (uid > 0)
+						value = PrivacyService.getSetting(new PSetting(0, name, defaultValue)).value;
+					else
+						value = defaultValue;
 
 				// Add to cache
 				key.setValue(value);

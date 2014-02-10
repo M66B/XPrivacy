@@ -63,7 +63,7 @@ public class Util {
 		if (!mLogDetermined && uid > 0) {
 			mLogDetermined = true;
 			try {
-				mLog = PrivacyService.isLoggingEnabled();
+				mLog = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingLog, false, false);
 			} catch (Throwable ignored) {
 				mLog = false;
 			}

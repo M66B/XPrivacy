@@ -156,8 +156,8 @@ public class PrivacyService {
 				mAddService.invoke(null, cServiceName, mPrivacyService);
 			}
 
-			mRegistered = true;
 			Util.log(null, Log.WARN, "Service registered name=" + cServiceName);
+			mRegistered = true;
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -209,12 +209,33 @@ public class PrivacyService {
 		}
 	}
 
-	public static boolean isLoggingEnabled() throws RemoteException {
+	public static PRestriction getRestriction(final PRestriction restriction, boolean usage, String secret)
+			throws RemoteException {
 		if (mRegistered)
-			return Boolean.parseBoolean(mPrivacyService.getSetting(new PSetting(0, PrivacyManager.cSettingLog, Boolean
-					.toString(false))).value);
-		else
-			return PrivacyManager.getSettingBool(0, PrivacyManager.cSettingLog, false, true);
+			return mPrivacyService.getRestriction(restriction, usage, secret);
+		else {
+			IPrivacyService client = getClient();
+			if (client == null) {
+				Log.w("XPrivacy", "No client for " + restriction);
+				PRestriction result = new PRestriction(restriction);
+				result.restricted = false;
+				return result;
+			} else
+				return client.getRestriction(restriction, usage, secret);
+		}
+	}
+
+	public static PSetting getSetting(PSetting setting) throws RemoteException {
+		if (mRegistered)
+			return mPrivacyService.getSetting(setting);
+		else {
+			IPrivacyService client = getClient();
+			if (client == null) {
+				Log.w("XPrivacy", "No client for " + setting + " uid=" + Process.myUid() + " pid=" + Process.myPid());
+				return setting;
+			} else
+				return client.getSetting(setting);
+		}
 	}
 
 	private static final IPrivacyService.Stub mPrivacyService = new IPrivacyService.Stub() {
