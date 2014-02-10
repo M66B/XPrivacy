@@ -33,6 +33,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.NetworkOnMainThreadException;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.UserHandle;
@@ -95,6 +96,8 @@ public class Util {
 		else if (ex instanceof ActivityShare.AbortException)
 			priority = Log.WARN;
 		else if (ex instanceof IOException)
+			priority = Log.WARN;
+		else if (ex instanceof NetworkOnMainThreadException)
 			priority = Log.WARN;
 		else if (ex instanceof SecurityException)
 			priority = Log.WARN;
