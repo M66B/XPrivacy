@@ -261,6 +261,8 @@ Limitations
 * You cannot restrict *system* fro XPrivacy because it is needed to get an application list.
 * You cannot restrict *view* for XPrivacy because it is needed to open links to the crowdsourced restrictions.
 * You cannot restrict *Configuration.MCC/MNC* on demand.
+* Allowing contacts mostly work, but there are a few corner cases where is doesn't ([issue](https://github.com/M66B/XPrivacy/issues/1155)).
+* Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?).
 
 You can still restrict the XPrivacy app's access to accounts, contacts, and other things.
 
