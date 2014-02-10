@@ -614,12 +614,7 @@ The hardware MAC address can be changed on some devices, but this is device-depe
 The same applies to the IMEI number, additionally complicated by legal issues in most countries.
 
 <a name="FAQ34"></a>
-**(34) Why do I need to register to submit restrictions?**
-
-To prevent a malicious application maker from automatically submitting a lot of *allow* restrictions to outvote the other users.
-
-<a name="FAQ35"></a>
-**(35) What is the logic behind on demand restricting?**
+**(34) What is the logic behind on demand restricting?**
 
 * The on demand restricting dialog will appear if:
 	* On demand restricting is enabled in the main settings
@@ -639,6 +634,11 @@ To prevent a malicious application maker from automatically submitting a lot of 
 * The default after dialog timeout:
 	* for a user application the default is to deny temporarily
 	* for a system applications the default is to allow temporarily, unless *Restrict dangerous functions* is enabled
+
+<a name="FAQ46"></a>
+**(46) Why do I need to register to submit restrictions?**
+
+To prevent a malicious application maker from automatically submitting a lot of *allow* restrictions to outvote the other users.
 
 Support
 -------
