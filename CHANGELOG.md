@@ -24,6 +24,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Added restriction for ICC provider (SIM contacts)
 * Added restriction for profile provider (contacts)
 * Added restriction for contacts provider (fallback)
+* Option to disable asking per function, thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Arabic translation
 
 **Version 1.99.37 BETA**
