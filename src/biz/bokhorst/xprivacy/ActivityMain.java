@@ -10,8 +10,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import biz.bokhorst.xprivacy.Util.RState;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -1370,7 +1368,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 							granted = false;
 
 					// Get restriction/ask state
-					rstate = Util.getRestrictionState(xAppInfo.getUid(), mRestrictionName, null);
+					rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
 
 					return holder;
 				}
@@ -1487,11 +1485,8 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 																		R.attr.color_state_attention)));
 
 												// Update stored state
-												rstate = Util.getRestrictionState(xAppInfo.getUid(), mRestrictionName,
-														null);
+												rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
 
-												rstate = Util.getRestrictionState(xAppInfo.getUid(), mRestrictionName,
-														null);
 												// Notify restart
 												if (oldState.contains(true))
 													Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
@@ -1536,7 +1531,7 @@ public class ActivityMain extends Activity implements OnItemSelectedListener {
 										mRestrictionName);
 
 								// Update restriction display
-								rstate = Util.getRestrictionState(xAppInfo.getUid(), mRestrictionName, null);
+								rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
 								if (!rstate.asked)
 									holder.imgCBName.setImageBitmap(mCheck[3]); // ?
 								else if (rstate.partial)

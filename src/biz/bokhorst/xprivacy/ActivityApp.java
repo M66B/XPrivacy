@@ -11,8 +11,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import biz.bokhorst.xprivacy.Util.RState;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -934,7 +932,7 @@ public class ActivityApp extends Activity {
 					// Get info
 					used = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
-					rstate = Util.getRestrictionState(mAppInfo.getUid(), restrictionName, null);
+					rstate = RState.get(mAppInfo.getUid(), restrictionName, null);
 
 					return holder;
 				}
@@ -1131,7 +1129,7 @@ public class ActivityApp extends Activity {
 					lastUsage = PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, md.getName());
 					parent = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
-					rstate = Util.getRestrictionState(mAppInfo.getUid(), restrictionName, md.getName());
+					rstate = RState.get(mAppInfo.getUid(), restrictionName, md.getName());
 
 					return holder;
 				}
