@@ -1,8 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Hook implements Comparable<Hook> {
 	private String mRestrictionName;
 	private String mMethodName;
@@ -15,7 +12,7 @@ public class Hook implements Comparable<Hook> {
 	private int mSdk;
 	private Version mFrom;
 	private String mReplaces;
-	private List<String> mListAnnotation = new ArrayList<String>();
+	private String mAnnotation = null;
 
 	public Hook(String restrictionName, String methodName) {
 		mRestrictionName = restrictionName;
@@ -82,7 +79,7 @@ public class Hook implements Comparable<Hook> {
 	}
 
 	public void annotate(String text) {
-		mListAnnotation.add(text);
+		mAnnotation = text;
 	}
 
 	// Getters
@@ -119,8 +116,8 @@ public class Hook implements Comparable<Hook> {
 		return mReplaces;
 	}
 
-	public List<String> getAnnotations() {
-		return mListAnnotation;
+	public String getAnnotation() {
+		return mAnnotation;
 	}
 
 	@Override

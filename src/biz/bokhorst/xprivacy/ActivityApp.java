@@ -266,6 +266,9 @@ public class ActivityApp extends ActivityBase {
 			else if (extras.getInt(cAction) == cActionSettings)
 				optionSettings();
 		}
+
+		// Annotate
+		Meta.annotate(this);
 	}
 
 	@Override
@@ -1237,8 +1240,8 @@ public class ActivityApp extends ActivityBase {
 			// Display if permissions
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 
-			List<String> listAnnotation = md.getAnnotations();
-			if (listAnnotation.size() == 0)
+			final String annotation = md.getAnnotation();
+			if (annotation == null)
 				holder.imgInfo.setVisibility(View.GONE);
 			else {
 				holder.imgInfo.setVisibility(View.VISIBLE);
@@ -1252,7 +1255,7 @@ public class ActivityApp extends ActivityBase {
 						tvTitle.setText(md.getName());
 
 						TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
-						tvInfo.setText(Html.fromHtml(TextUtils.join("<br />", md.getAnnotations())));
+						tvInfo.setText(Html.fromHtml(annotation));
 						tvInfo.setMovementMethod(LinkMovementMethod.getInstance());
 
 						final PopupWindow popup = new PopupWindow(layout);
