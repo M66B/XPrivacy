@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.lang.SecurityException;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import javax.net.ssl.SSLPeerUnverifiedException;
@@ -100,6 +101,8 @@ public class Util {
 		else if (ex instanceof NetworkOnMainThreadException)
 			priority = Log.WARN;
 		else if (ex instanceof SecurityException)
+			priority = Log.WARN;
+		else if (ex instanceof SocketException)
 			priority = Log.WARN;
 		else if (ex instanceof SocketTimeoutException)
 			priority = Log.WARN;
