@@ -25,6 +25,7 @@ public class Meta {
 		listHook.add(new Hook("accounts", "getSyncAdapterTypes", "GET_ACCOUNTS", 5, "1.99.24", null).dangerous());
 
 		listHook.add(new Hook("browser", "BrowserProvider2", "READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 1, null, null));
+		listHook.add(new Hook("browser", "Downloads", "ACCESS_DOWNLOAD_MANAGER,ACCESS_DOWNLOAD_MANAGER_ADVANCED,ACCESS_ALL_DOWNLOADS", 1, null, null));
 
 		listHook.add(new Hook("calendar", "CalendarProvider2", "READ_CALENDAR", 1, null, null));
 

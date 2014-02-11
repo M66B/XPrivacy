@@ -275,6 +275,11 @@ public class XContentResolver extends XHook {
 						methodName = "VoicemailContentProvider";
 					}
 
+					else if (uri.startsWith("content://downloads")) {
+						restrictionName = PrivacyManager.cBrowser;
+						methodName = "Downloads";
+					}
+
 					// Check if know / restricted
 					if (methodName != null && isRestrictedExtra(param, restrictionName, methodName, uri)) {
 						// Return empty cursor
