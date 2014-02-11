@@ -24,10 +24,9 @@ public class Meta {
 		listHook.add(new Hook("accounts", "getCurrentSyncs", "GET_ACCOUNTS", 11, "1.99.24", null).dangerous());
 		listHook.add(new Hook("accounts", "getSyncAdapterTypes", "GET_ACCOUNTS", 5, "1.99.24", null).dangerous());
 
-		listHook.add(new Hook("browser", "BrowserProvider", "READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 10, null, null));
-		listHook.add(new Hook("browser", "BrowserProvider2", "READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 14, null, null));
+		listHook.add(new Hook("browser", "BrowserProvider2", "READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 1, null, null));
 
-		listHook.add(new Hook("calendar", "CalendarProvider2", "READ_CALENDAR", 10, null, null));
+		listHook.add(new Hook("calendar", "CalendarProvider2", "READ_CALENDAR", 1, null, null));
 
 		listHook.add(new Hook("calling", "sendDataMessage", "SEND_SMS", 4, null, null).doNotify());
 		listHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).doNotify());
@@ -43,18 +42,17 @@ public class Meta {
 		listHook.add(new Hook("clipboard", "hasText", "", 10, null, null));
 		listHook.add(new Hook("clipboard", "removePrimaryClipChangedListener", "", 11, null, null));
 
-		listHook.add(new Hook("contacts", "contacts/contacts", "READ_CONTACTS", 10, null, null));
-		listHook.add(new Hook("contacts", "contacts/data", "READ_CONTACTS", 10, null, null));
-		listHook.add(new Hook("contacts", "contacts/raw_contacts", "READ_CONTACTS", 10, null, null));
-		listHook.add(new Hook("contacts", "contacts/phone_lookup", "READ_CONTACTS", 10, null, null));
-		listHook.add(new Hook("contacts", "contacts/profile", "READ_PROFILE", 10, "1.99.38", null).dangerous());
-		listHook.add(new Hook("contacts", "ContactsProvider2", "READ_CONTACTS,READ_PROFILE", 10, "1.99.38", null).dangerous());
-		listHook.add(new Hook("contacts", "ProfileProvider", "READ_PROFILE", 10, "1.99.38", null).dangerous());
-		listHook.add(new Hook("contacts", "IccProvider", "", 10, "1.99.38", null));
+		listHook.add(new Hook("contacts", "contacts/contacts", "READ_CONTACTS", 1, null, null));
+		listHook.add(new Hook("contacts", "contacts/data", "READ_CONTACTS", 1, null, null));
+		listHook.add(new Hook("contacts", "contacts/raw_contacts", "READ_CONTACTS", 1, null, null));
+		listHook.add(new Hook("contacts", "contacts/phone_lookup", "READ_CONTACTS", 1, null, null));
+		listHook.add(new Hook("contacts", "contacts/profile", "READ_PROFILE", 1, "1.99.38", null).dangerous());
+		listHook.add(new Hook("contacts", "ContactsProvider2", "READ_CONTACTS,READ_PROFILE", 1, "1.99.38", null).dangerous());
+		listHook.add(new Hook("contacts", "IccProvider", "", 1, "1.99.38", null));
 
-		listHook.add(new Hook("dictionary", "UserDictionary", "READ_USER_DICTIONARY", 10, null, null));
+		listHook.add(new Hook("dictionary", "UserDictionary", "READ_USER_DICTIONARY", 1, null, null));
 
-		listHook.add(new Hook("email", "EMailProvider", "com.android.email.permission.ACCESS_PROVIDER", 10, null, null));
+		listHook.add(new Hook("email", "EMailProvider", "com.android.email.permission.ACCESS_PROVIDER", 1, null, null));
 		listHook.add(new Hook("email", "GMailProvider", "com.google.android.gm.permission.READ_CONTENT_PROVIDER", 8, "1.99.20", null));
 
 		listHook.add(new Hook("identification", "%hostname", "", 10, null, null));
@@ -94,6 +92,7 @@ public class Meta {
 		listHook.add(new Hook("ipc", "android.app.IActivityManager", "", 1, "1.99.1", null));
 		listHook.add(new Hook("ipc", "android.content.IClipboard", "", 1, "1.99.1", null));
 		listHook.add(new Hook("ipc", "android.net.IConnectivityManager", "", 1, "1.99.1", null));
+		listHook.add(new Hook("ipc", "android.content.IContentService", "", 1, "1.99.40", null));
 		listHook.add(new Hook("ipc", "android.location.ILocationManager", "", 1, "1.99.1", null));
 		listHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistry", "", 1, "1.99.1", null));
 		listHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistryMSim", "", 1, "1.99.26", null));
@@ -137,10 +136,10 @@ public class Meta {
 		listHook.add(new Hook("media", "android.media.action.VIDEO_CAPTURE", "CAMERA", 10, null, null).doNotify());
 
 		listHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null));
-		listHook.add(new Hook("messages", "SmsProvider", "READ_SMS", 10, null, null));
-		listHook.add(new Hook("messages", "MmsProvider", "READ_SMS", 10, null, null));
-		listHook.add(new Hook("messages", "MmsSmsProvider", "READ_SMS", 10, null, null));
-		listHook.add(new Hook("messages", "VoicemailContentProvider", "READ_WRITE_ALL_VOICEMAIL", 14, null, null));
+		listHook.add(new Hook("messages", "SmsProvider", "READ_SMS", 1, null, null));
+		listHook.add(new Hook("messages", "MmsProvider", "READ_SMS", 1, null, null));
+		listHook.add(new Hook("messages", "MmsSmsProvider", "READ_SMS", 1, null, null));
+		listHook.add(new Hook("messages", "VoicemailContentProvider", "READ_WRITE_ALL_VOICEMAIL", 1, null, null));
 		listHook.add(new Hook("messages", "android.intent.action.DATA_SMS_RECEIVED", "RECEIVE_SMS", 19, null, null));
 		listHook.add(new Hook("messages", "android.provider.Telephony.SMS_RECEIVED", "RECEIVE_SMS", 19, null, null));
 		listHook.add(new Hook("messages", "android.provider.Telephony.WAP_PUSH_RECEIVED", "RECEIVE_WAP_PUSH", 19, null, null));
@@ -194,8 +193,8 @@ public class Meta {
 		listHook.add(new Hook("phone", "getGroupIdLevel1", "READ_PHONE_STATE", 18, null, null));
 		listHook.add(new Hook("phone", "android.intent.action.NEW_OUTGOING_CALL", "PROCESS_OUTGOING_CALLS", 10, null, null));
 		listHook.add(new Hook("phone", "android.intent.action.PHONE_STATE", "READ_PHONE_STATE", 10, null, null));
-		listHook.add(new Hook("phone", "TelephonyProvider", "WRITE_APN_SETTINGS", 10, null, null));
-		listHook.add(new Hook("phone", "CallLogProvider", "READ_CALL_LOG", 10, null, null));
+		listHook.add(new Hook("phone", "TelephonyProvider", "WRITE_APN_SETTINGS", 1, null, null));
+		listHook.add(new Hook("phone", "CallLogProvider", "READ_CALL_LOG", 1, null, null));
 		listHook.add(new Hook("phone", "gsm.operator.iso-country", "", 10, "1.99.1", null));
 		listHook.add(new Hook("phone", "gsm.operator.numeric", "", 10, "1.99.1", null));
 		listHook.add(new Hook("phone", "gsm.operator.alpha", "", 10, "1.99.1", null));
@@ -247,7 +246,7 @@ public class Meta {
 		listHook.add(new Hook("system", "android.intent.action.PACKAGE_VERIFIED", "", 17, null, null).dangerous());
 		listHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE", "", 10, null, null).dangerous());
 		listHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE", "", 10, null, null).dangerous());
-		listHook.add(new Hook("system", "ApplicationsProvider", "", 10, null, null));
+		listHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null));
 
 		listHook.add(new Hook("view", "loadUrl", "", 1, null, null));
 		listHook.add(new Hook("view", "WebView", "", 1, null, null));

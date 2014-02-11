@@ -21,8 +21,8 @@ public class XBinder extends XHook {
 	private static int MASK_TOKEN = 0xFFFFFF;
 
 	public static List<String> cListService = Arrays.asList(new String[] { "account", "activity", "clipboard",
-			"connectivity", "location", "telephony.registry", "telephony.msim.registry", "package", "iphonesubinfo",
-			"iphonesubinfo_msim", "window", "wifi" });
+			"connectivity", "content", "location", "telephony.registry", "telephony.msim.registry", "package",
+			"iphonesubinfo", "iphonesubinfo_msim", "window", "wifi" });
 
 	// @formatter:off
 	public static List<String> cListDescription = Arrays.asList(new String[] {
@@ -30,6 +30,7 @@ public class XBinder extends XHook {
 		"android.app.IActivityManager",
 		"android.content.IClipboard",
 		"android.net.IConnectivityManager",
+		"android.content.IContentService",
 		"android.location.ILocationManager",
 		// TODO: sensor interface
 		"com.android.internal.telephony.ITelephonyRegistry",

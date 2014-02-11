@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 
+@SuppressLint("Registered")
 public class ActivityBase extends Activity {
 
 	protected Bitmap[] getTriStateCheckBox() {

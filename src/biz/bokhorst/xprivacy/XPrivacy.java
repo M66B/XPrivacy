@@ -172,9 +172,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			XposedHelpers.setStaticObjectField(Build.class, "SERIAL",
 					PrivacyManager.getDefacedProp(Process.myUid(), "SERIAL"));
 
-		// Providers
-		hookAll(XContentProvider.getInstances(lpparam.packageName), lpparam.classLoader, mSecret);
-
 		// Advertising Id
 		try {
 			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, lpparam.classLoader);

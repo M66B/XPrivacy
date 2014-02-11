@@ -14,6 +14,7 @@ import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
+// TODO: remove class
 public class XContentProvider extends XHook {
 
 	private String mClassName;
