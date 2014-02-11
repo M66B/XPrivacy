@@ -141,6 +141,19 @@ For easy usage, data is restricted by category:
 <a name="IPC"></a>
 * IPC
 	* Direct inter process calls
+		* android.accounts.IAccountManager
+		* android.app.IActivityManager
+		* android.content.IClipboard
+		* android.net.IConnectivityManager
+		* android.content.IContentService
+		* android.location.ILocationManager
+		* com.android.internal.telephony.ITelephonyRegistry
+		* com.android.internal.telephony.ITelephonyRegistryMSim
+		* android.content.pm.IPackageManager
+		* com.android.internal.telephony.IPhoneSubInfo
+		* com.android.internal.telephony.msim.IPhoneSubInfoMSim
+		* android.view.IWindowManager
+		* android.net.wifi.IWifiManager
 <a name="location"></a>
 * Location
 	* return a random or set location (also for Google Play services)

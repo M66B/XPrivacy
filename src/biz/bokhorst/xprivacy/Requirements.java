@@ -224,30 +224,43 @@ public class Requirements {
 					}
 
 				if (mapService.size() > 0) {
-					// Check services names
+					// Check services
+					int i = 0;
 					List<String> listMissing = new ArrayList<String>();
-					for (String service : XBinder.cListService)
-						if (!service.contains("iphonesubinfo"))
-							if (service.equals("telephony.registry") || service.equals("telephony.msim.registry")) {
-								if (!(mapService.containsKey("telephony.registry") || mapService
-										.containsKey("telephony.msim.registry")))
-									listMissing.add(service);
+					for (String name : XBinder.cServiceName) {
+						String descriptor = XBinder.cServiceDescriptor.get(i++);
+
+						// Skip iphonesubinfo, it is often not running
+						if (!name.equals("iphonesubinfo") && !name.equals("iphonesubinfo_msim")) {
+							// Check name
+							boolean checkDescriptor = false;
+							if (name.equals("telephony.registry")) {
+								if (mapService.containsKey(name))
+									checkDescriptor = true;
+								else if (!mapService.containsKey("telephony.msim.registry"))
+									listMissing.add(name);
+
+							} else if (name.equals("telephony.msim.registry")) {
+								if (mapService.containsKey(name))
+									checkDescriptor = true;
+								else if (!mapService.containsKey("telephony.registry"))
+									listMissing.add(name);
+
 							} else {
-								if (!mapService.containsKey(service))
-									listMissing.add(service);
+								if (mapService.containsKey(name))
+									checkDescriptor = true;
+								else
+									listMissing.add(name);
 							}
 
-					// Check service interfaces
-					for (String description : XBinder.cListDescription)
-						if (!description.contains("IPhoneSubInfo"))
-							if (description.startsWith("com.android.internal.telephony.ITelephonyRegistry")) {
-								if (!(mapService.containsValue("com.android.internal.telephony.ITelephonyRegistry") || mapService
-										.containsValue("com.android.internal.telephony.ITelephonyRegistryMSim")))
-									listMissing.add(description);
-							} else {
-								if (!mapService.containsValue(description))
-									listMissing.add(description);
+							// Check descriptor
+							if (checkDescriptor) {
+								String d = mapService.get(name);
+								if (d != null && !d.equals(descriptor))
+									listMissing.add(descriptor);
 							}
+						}
+					}
 
 					// Check result
 					if (listMissing.size() > 0) {

@@ -20,19 +20,35 @@ public class XBinder extends XHook {
 	private static int BITS_TOKEN = 8;
 	private static int MASK_TOKEN = 0xFFFFFF;
 
-	public static List<String> cListService = Arrays.asList(new String[] { "account", "activity", "clipboard",
-			"connectivity", "content", "location", "telephony.registry", "telephony.msim.registry", "package",
-			"iphonesubinfo", "iphonesubinfo_msim", "window", "wifi" });
+	// Service name should one-to-one correspond to a service descriptor
+	// TODO: sensor interface
 
 	// @formatter:off
-	public static List<String> cListDescription = Arrays.asList(new String[] {
+	public static List<String> cServiceName = Arrays.asList(new String[] {
+		"account",
+		"activity",
+		"clipboard",
+		"connectivity",
+		"content",
+		"location",
+		"telephony.registry",
+		"telephony.msim.registry",
+		"package",
+		"iphonesubinfo",
+		"iphonesubinfo_msim",
+		"window",
+		"wifi"
+	});
+	// @formatter:on
+
+	// @formatter:off
+	public static List<String> cServiceDescriptor = Arrays.asList(new String[] {
 		"android.accounts.IAccountManager",
 		"android.app.IActivityManager",
 		"android.content.IClipboard",
 		"android.net.IConnectivityManager",
 		"android.content.IContentService",
 		"android.location.ILocationManager",
-		// TODO: sensor interface
 		"com.android.internal.telephony.ITelephonyRegistry",
 		"com.android.internal.telephony.ITelephonyRegistryMSim",
 		"android.content.pm.IPackageManager",
@@ -116,10 +132,11 @@ public class XBinder extends XHook {
 				if (token != mToken && PrivacyManager.isApplication(uid)) {
 					// Get interface name
 					Binder binder = (Binder) param.thisObject;
-					String name = binder.getInterfaceDescriptor();
-					if (cListDescription.contains(name)) {
-						Util.log(this, Log.WARN, "restrict name=" + name + " uid=" + uid + " my=" + Process.myUid());
-						if (getRestricted(uid, PrivacyManager.cIPC, name)) {
+					String descriptor = binder.getInterfaceDescriptor();
+					if (cServiceDescriptor.contains(descriptor)) {
+						Util.log(this, Log.WARN,
+								"restrict name=" + descriptor + " uid=" + uid + " my=" + Process.myUid());
+						if (getRestricted(uid, PrivacyManager.cIPC, descriptor)) {
 							// Get reply parcel
 							Parcel reply = null;
 							try {
