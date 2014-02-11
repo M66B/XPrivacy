@@ -63,8 +63,8 @@
     <string name="msg_random_boot">Losuj po restarcie</string>
     <string name="msg_restart">Wymagany restart aplikacji</string>
     <string name="msg_register">Proszę zarejestruj swoje urządzenie</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
-    <string name="msg_registered">Sprawdź swój e-mail aby zaktywować urządzenie</string>
+    <string name="msg_email">Porszę podaj swój adres e-mail:</string>
+    <string name="msg_registered">Sprawdź swój e-mail aby aktywować urządzenie</string>
     <string name="msg_service">Usługa aktualizacji pracuje</string>
     <string name="msg_migrating" formatted="false">Migrowanie %s</string>
     <string name="msg_randomizing" formatted="false">Losowanie %s</string>
@@ -112,10 +112,10 @@
     <string name="title_supdated">Po dacie aktualizacji</string>
     <string name="title_smodified">Po dacie modyfikacji (XPrivacy)</string>
     <string name="title_sinvert">Odwróć porządek sortowania</string>
-    <string name="title_attempt">Usage attempt of:</string>
-    <string name="title_category">Category:</string>
-    <string name="title_function">Function:</string>
-    <string name="title_parameters">Parameters:</string>
+    <string name="title_attempt">Próba dostępu do:</string>
+    <string name="title_category">Kategoria:</string>
+    <string name="title_function">Funkcja:</string>
+    <string name="title_parameters">Parametry:</string>
     <string name="title_applycat">Zastosuj do całej kategorii</string>
     <string name="title_once">Jednorazowo na %1$s sekund</string>
     <string name="title_allow">Pozwól</string>
