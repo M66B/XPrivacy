@@ -16,6 +16,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Rewritten URI restrictions for better compatibility
+* Simplified restricting / allowing contacts
 * Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

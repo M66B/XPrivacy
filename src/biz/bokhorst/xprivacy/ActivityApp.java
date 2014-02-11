@@ -806,8 +806,22 @@ public class ActivityApp extends ActivityBase {
 				alertDialogBuilder.setMultiChoiceItems(mListContact.toArray(new CharSequence[0]), mSelection,
 						new DialogInterface.OnMultiChoiceClickListener() {
 							public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+								// Contact
 								PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingContact
 										+ mIds[whichButton], Boolean.toString(isChecked));
+
+								// Raw contacts
+								Cursor cursor = getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI,
+										new String[] { ContactsContract.RawContacts._ID },
+										ContactsContract.RawContacts.CONTACT_ID + "=?",
+										new String[] { String.valueOf(mIds[whichButton]) }, null);
+								try {
+									while (cursor.moveToNext())
+										PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingRawContact
+												+ cursor.getLong(0), Boolean.toString(isChecked));
+								} finally {
+									cursor.close();
+								}
 							}
 						});
 				alertDialogBuilder.setPositiveButton(getString(R.string.msg_done),

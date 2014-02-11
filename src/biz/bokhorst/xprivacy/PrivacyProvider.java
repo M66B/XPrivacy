@@ -638,7 +638,8 @@ public class PrivacyProvider extends ContentProvider {
 					String[] component = name.split("\\.");
 					if (name.startsWith(PrivacyManager.cSettingAccount)
 							|| name.startsWith(PrivacyManager.cSettingApplication)
-							|| name.startsWith(PrivacyManager.cSettingContact)) {
+							|| name.startsWith(PrivacyManager.cSettingContact)
+							|| name.startsWith(PrivacyManager.cSettingRawContact)) {
 						try {
 							// name.uid.key
 							uid = Integer.parseInt(component[1]);

@@ -99,25 +99,23 @@ public class XContentResolver extends XHook {
 		// Check URI
 		if (param.args.length > 1 && param.args[0] instanceof Uri) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
-			String[] projection = (param.args[0] instanceof String[] ? (String[]) param.args[1] : null);
+			String[] projection = (param.args[1] instanceof String[] ? (String[]) param.args[1] : null);
 			if (uri.startsWith("content://com.android.contacts/contacts")
 					|| uri.startsWith("content://com.android.contacts/data")
-					|| uri.startsWith("content://com.android.contacts/phone_lookup")
-					|| uri.startsWith("content://com.android.contacts/profile")) {
+					|| uri.startsWith("content://com.android.contacts/phone_lookup")) {
 				String[] components = uri.replace("content://com.android.", "").split("/");
 				if (components.length >= 2) {
-					String methodName = components[0] + "/" + components[1];
+					String methodName = components[0] + "/" + components[1].split("\\?")[0];
 					if (isRestrictedExtra(param, PrivacyManager.cContacts, methodName, uri)) {
 						// Modify projection
 						boolean added = false;
-						if (projection == null)
-							Util.log(this, Log.WARN, "Projection null uri=" + uri);
-						else {
+						if (projection != null) {
 							List<String> listProjection = new ArrayList<String>();
 							listProjection.addAll(Arrays.asList(projection));
-							if (!listProjection.contains("_id")) {
+							ContactID id = getIdForUri(uri);
+							if (id != null && !listProjection.contains(id.name)) {
 								added = true;
-								listProjection.add("_id");
+								listProjection.add(id.name);
 							}
 							param.args[1] = listProjection.toArray(new String[0]);
 						}
@@ -167,10 +165,10 @@ public class XContentResolver extends XHook {
 
 				} else if (uri.startsWith("content://com.android.contacts/contacts")
 						|| uri.startsWith("content://com.android.contacts/data")
-						|| uri.startsWith("content://com.android.contacts/phone_lookup")
-						|| uri.startsWith("content://com.android.contacts/profile")) {
+						|| uri.startsWith("content://com.android.contacts/phone_lookup")) {
 					// Contacts provider: allow selected contacts
-					String methodName = "contacts/" + uri.replace("content://com.android.contacts/", "").split("/")[0];
+					String methodName = "contacts/"
+							+ uri.replace("content://com.android.contacts/", "").split("/")[0].split("\\?")[0];
 					if (isRestrictedExtra(param, PrivacyManager.cContacts, methodName, uri)) {
 						// Modify column names back
 						boolean added = (Boolean) param.getObjectExtra("column_added");
@@ -182,24 +180,21 @@ public class XContentResolver extends XHook {
 						MatrixCursor result = new MatrixCursor(listColumn.toArray(new String[0]));
 
 						// Filter rows
-						int iid = cursor.getColumnIndex("_id");
-						if (iid >= 0)
+						ContactID cid = getIdForUri(uri);
+						int iid = (cid == null ? -1 : cursor.getColumnIndex(cid.name));
+						if (iid >= 0) {
 							while (cursor.moveToNext()) {
 								// Check if allowed
 								long id = cursor.getLong(iid);
-								boolean allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(),
-										PrivacyManager.cSettingContact + id, false, true);
+								String settingName = (cid.raw ? PrivacyManager.cSettingRawContact
+										: PrivacyManager.cSettingContact);
+								boolean allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(), settingName
+										+ id, false, true);
 								if (allowed)
 									copyColumns(cursor, result, listColumn.size());
 							}
-						else {
-							if (!isRestrictedExtra(param, PrivacyManager.cContacts, "ContactsProvider2", uri)) {
-								Util.log(this, Log.WARN, "_id missing uri=" + uri);
-								dumpCursor(uri, cursor);
-								while (cursor.moveToNext())
-									copyColumns(cursor, result, listColumn.size());
-							}
-						}
+						} else
+							Util.log(this, Log.ERROR, "ID missing uri=" + uri);
 
 						result.respond(cursor.getExtras());
 						param.setResult(result);
@@ -225,13 +220,17 @@ public class XContentResolver extends XHook {
 						methodName = "CallLogProvider";
 					}
 
+					else if (uri.startsWith("content://com.android.contacts/profile")) {
+						restrictionName = PrivacyManager.cContacts;
+						methodName = "contacts/profile";
+					}
+
 					else if (uri.startsWith("content://com.android.contacts")) {
 						restrictionName = PrivacyManager.cContacts;
 						methodName = "ContactsProvider2"; // fall-back
 					}
 
 					else if (uri.startsWith("content://com.android.email.provider")) {
-						// TODO: content://com.google.android.email.provider
 						restrictionName = PrivacyManager.cEMail;
 						methodName = "EMailProvider";
 					}
@@ -276,20 +275,38 @@ public class XContentResolver extends XHook {
 						methodName = "VoicemailContentProvider";
 					}
 
-					if (methodName != null)
-						if (isRestrictedExtra(param, restrictionName, methodName, uri)) {
-							if (methodName.equals("ContactsProvider2")) {
-								Util.log(this, Log.WARN, "Contacts fall-back uri=" + uri);
-								dumpCursor(uri, cursor);
-							}
-							// Return empty cursor
-							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
-							result.respond(cursor.getExtras());
-							param.setResult(result);
-							cursor.close();
-						}
+					// Check if know / restricted
+					if (methodName != null && isRestrictedExtra(param, restrictionName, methodName, uri)) {
+						// Return empty cursor
+						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+						result.respond(cursor.getExtras());
+						param.setResult(result);
+						cursor.close();
+					}
 				}
 		}
+	}
+
+	private static class ContactID {
+		public String name;
+		public boolean raw;
+
+		public ContactID(String _name, boolean _raw) {
+			name = _name;
+			raw = _raw;
+		}
+	}
+
+	private ContactID getIdForUri(String uri) {
+		if (uri.startsWith("content://com.android.contacts/contacts"))
+			return new ContactID("name_raw_contact_id", true);
+		else if (uri.startsWith("content://com.android.contacts/data"))
+			return new ContactID("raw_contact_id", true);
+		else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
+			return new ContactID("_id", false);
+		else
+			Util.log(this, Log.ERROR, "Unexpected uri=" + uri);
+		return null;
 	}
 
 	private void copyColumns(Cursor cursor, MatrixCursor result) {
@@ -326,32 +343,36 @@ public class XContentResolver extends XHook {
 	}
 
 	@SuppressWarnings("unused")
-	private void dumpCursor(String uri, Cursor cursor) {
-		Util.log(this, Log.WARN, TextUtils.join(", ", cursor.getColumnNames()));
-		while (cursor.moveToNext()) {
-			String[] columns = new String[cursor.getColumnCount()];
-			for (int i = 0; i < cursor.getColumnCount(); i++)
-				switch (cursor.getType(i)) {
-				case Cursor.FIELD_TYPE_NULL:
-					columns[i] = null;
-					break;
-				case Cursor.FIELD_TYPE_INTEGER:
-					columns[i] = Integer.toString(cursor.getInt(i));
-					break;
-				case Cursor.FIELD_TYPE_FLOAT:
-					columns[i] = Float.toString(cursor.getFloat(i));
-					break;
-				case Cursor.FIELD_TYPE_STRING:
-					columns[i] = cursor.getString(i);
-					break;
-				case Cursor.FIELD_TYPE_BLOB:
-					columns[i] = "[blob]";
-					break;
-				default:
-					Util.log(this, Log.WARN, "Unknown cursor data type=" + cursor.getType(i));
-				}
-			Util.log(this, Log.WARN, TextUtils.join(", ", columns));
-		}
+	private void _dumpCursor(String uri, Cursor cursor) {
+		Util.log(this, Log.WARN, TextUtils.join(", ", cursor.getColumnNames()) + " uri=" + uri);
+		int i = 0;
+		while (cursor.moveToNext() && i++ < 10)
+			_dumpColumns(cursor, "");
 		cursor.moveToFirst();
+	}
+
+	private void _dumpColumns(Cursor cursor, String msg) {
+		String[] columns = new String[cursor.getColumnCount()];
+		for (int i = 0; i < cursor.getColumnCount(); i++)
+			switch (cursor.getType(i)) {
+			case Cursor.FIELD_TYPE_NULL:
+				columns[i] = null;
+				break;
+			case Cursor.FIELD_TYPE_INTEGER:
+				columns[i] = Integer.toString(cursor.getInt(i));
+				break;
+			case Cursor.FIELD_TYPE_FLOAT:
+				columns[i] = Float.toString(cursor.getFloat(i));
+				break;
+			case Cursor.FIELD_TYPE_STRING:
+				columns[i] = cursor.getString(i);
+				break;
+			case Cursor.FIELD_TYPE_BLOB:
+				columns[i] = "[blob]";
+				break;
+			default:
+				Util.log(this, Log.WARN, "Unknown cursor data type=" + cursor.getType(i));
+			}
+		Util.log(this, Log.WARN, TextUtils.join(", ", columns) + " " + msg);
 	}
 }
