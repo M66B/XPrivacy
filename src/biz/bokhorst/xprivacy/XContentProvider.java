@@ -219,20 +219,14 @@ public class XContentProvider extends XHook {
 							// Filter rows
 							String sid = getIdForUri(uri);
 							int iid = (sid == null ? -1 : cursor.getColumnIndex(sid));
-							String srawid = getRawIdForUri(uri);
-							int irawid = (srawid == null ? -1 : cursor.getColumnIndex(srawid));
-							if (iid >= 0 || irawid >= 0)
+							if (iid >= 0)
 								while (cursor.moveToNext()) {
 									// Check if allowed
 									boolean allowed = false;
 									long id = (iid < 0 ? -1 : cursor.getLong(iid));
-									long rawid = (irawid < 0 ? -1 : cursor.getLong(irawid));
 									if (id >= 0)
 										allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(),
 												PrivacyManager.cSettingContact + id, false, true);
-									if (rawid >= 0 && !allowed)
-										allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(),
-												PrivacyManager.cSettingRawContact + rawid, false, true);
 									if (allowed)
 										copyColumns(cursor, result, listColumn.size());
 								}

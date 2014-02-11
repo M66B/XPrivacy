@@ -722,8 +722,7 @@ public class ActivityShare extends ActivityBase {
 							for (PSetting setting : listAppSetting) {
 								// Bind accounts/contacts to same device
 								if (setting.name.startsWith(PrivacyManager.cSettingAccount)
-										|| setting.name.startsWith(PrivacyManager.cSettingContact)
-										|| setting.name.startsWith(PrivacyManager.cSettingRawContact))
+										|| setting.name.startsWith(PrivacyManager.cSettingContact))
 									setting.name += "." + android_id;
 
 								// Serialize setting
@@ -971,8 +970,7 @@ public class ActivityShare extends ActivityBase {
 
 					// Import accounts/contacts only for same device
 					if (name.startsWith(PrivacyManager.cSettingAccount)
-							|| name.startsWith(PrivacyManager.cSettingContact)
-							|| name.startsWith(PrivacyManager.cSettingRawContact))
+							|| name.startsWith(PrivacyManager.cSettingContact))
 						if (name.endsWith("." + android_id))
 							name = name.replace("." + android_id, "");
 						else
