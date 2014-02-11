@@ -3,6 +3,8 @@ XPrivacy
 
 The ultimate, yet easy to use, privacy manager for Android
 
+![Open source Rookie of the year](http://www.xprivacy.eu/open-source-rookie-of-the-year-resized.png)
+
 Index
 -----
 
@@ -89,6 +91,7 @@ For easy usage, data is restricted by category:
 <a name="browser"></a>
 * Browser
 	* return an empty bookmark list
+	* return an empty download list
 	* return empty search history
 <a name="calendar"></a>
 * Calendar
@@ -105,8 +108,9 @@ For easy usage, data is restricted by category:
 <a name="contacts"></a>
 * Contacts
 	* return an empty contact list
+		* content://com.android.contacts
+		* content://com.android.contacts/contacts
 		* content://com.android.contacts/data
-		* content://com.android.contacts/raw_contacts
 		* content://com.android.contacts/phone_lookup
 		* content://com.android.contacts/profile
 <a name="dictionary"></a>
@@ -115,6 +119,7 @@ For easy usage, data is restricted by category:
 <a name="email"></a>
 * E-mail
 	* return an empty list of accounts, e-mails, etc (provider)
+	* return an empty list of accounts, e-mails, etc (Gmail)
 <a name="identification"></a>
 * Identification
 	* return a fake Android ID
