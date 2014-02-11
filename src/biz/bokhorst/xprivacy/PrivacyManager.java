@@ -925,23 +925,26 @@ public class PrivacyManager {
 		try {
 			if (listPermission == null || listPermission.size() == 0 || listPermission.contains(""))
 				return true;
+
 			PackageManager pm = context.getPackageManager();
 			for (String packageName : listPackage) {
+				// Check absolute permissions
+				for (String apermission : listPermission)
+					if (apermission.contains("."))
+						if (pm.checkPermission(apermission, packageName) == PackageManager.PERMISSION_GRANTED)
+							return true;
+
+				// Check relative permissions
 				PackageInfo pInfo = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
 				if (pInfo != null && pInfo.requestedPermissions != null)
 					for (String rPermission : pInfo.requestedPermissions)
 						for (String permission : listPermission)
-							if (permission.equals("")) {
-								// No permission required
-								return true;
-							} else if (rPermission.toLowerCase().contains(permission.toLowerCase())) {
+							if (rPermission.toLowerCase().contains(permission.toLowerCase())) {
 								String aPermission = "android.permission." + permission;
 								if (!aPermission.equals(rPermission))
 									Util.log(null, Log.WARN, "Check permission=" + permission + "/" + rPermission);
 								return true;
-							} else if (permission.contains("."))
-								if (pm.checkPermission(permission, packageName) == PackageManager.PERMISSION_GRANTED)
-									return true;
+							}
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
