@@ -230,6 +230,11 @@ public class XContentResolver extends XHook {
 						methodName = "ContactsProvider2"; // fall-back
 					}
 
+					else if (uri.startsWith("content://downloads")) {
+						restrictionName = PrivacyManager.cBrowser;
+						methodName = "Downloads";
+					}
+
 					else if (uri.startsWith("content://com.android.email.provider")) {
 						restrictionName = PrivacyManager.cEMail;
 						methodName = "EMailProvider";
@@ -273,11 +278,6 @@ public class XContentResolver extends XHook {
 					else if (uri.startsWith("content://com.android.voicemail")) {
 						restrictionName = PrivacyManager.cMessages;
 						methodName = "VoicemailContentProvider";
-					}
-
-					else if (uri.startsWith("content://downloads")) {
-						restrictionName = PrivacyManager.cBrowser;
-						methodName = "Downloads";
 					}
 
 					// Check if know / restricted

@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Meta {
 	public static List<Hook> get() {
+		// http://developer.android.com/reference/android/Manifest.permission.html
+
 		List<Hook> listHook = new ArrayList<Hook>();
 		// @formatter:off
 		listHook.add(new Hook("accounts", "addOnAccountsUpdatedListener", "GET_ACCOUNTS", 10, null, null));
@@ -24,7 +26,7 @@ public class Meta {
 		listHook.add(new Hook("accounts", "getCurrentSyncs", "GET_ACCOUNTS", 11, "1.99.24", null).dangerous());
 		listHook.add(new Hook("accounts", "getSyncAdapterTypes", "GET_ACCOUNTS", 5, "1.99.24", null).dangerous());
 
-		listHook.add(new Hook("browser", "BrowserProvider2", "READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 1, null, null));
+		listHook.add(new Hook("browser", "BrowserProvider2", "com.android.browser.permission.READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 1, null, null));
 		listHook.add(new Hook("browser", "Downloads", "ACCESS_DOWNLOAD_MANAGER,ACCESS_DOWNLOAD_MANAGER_ADVANCED,ACCESS_ALL_DOWNLOADS", 1, null, null));
 
 		listHook.add(new Hook("calendar", "CalendarProvider2", "READ_CALENDAR", 1, null, null));
@@ -139,13 +141,13 @@ public class Meta {
 		listHook.add(new Hook("messages", "SmsProvider", "READ_SMS", 1, null, null));
 		listHook.add(new Hook("messages", "MmsProvider", "READ_SMS", 1, null, null));
 		listHook.add(new Hook("messages", "MmsSmsProvider", "READ_SMS", 1, null, null));
-		listHook.add(new Hook("messages", "VoicemailContentProvider", "READ_WRITE_ALL_VOICEMAIL", 1, null, null));
+		listHook.add(new Hook("messages", "VoicemailContentProvider", "com.android.voicemail.permission.READ_WRITE_ALL_VOICEMAIL", 1, null, null));
 		listHook.add(new Hook("messages", "android.intent.action.DATA_SMS_RECEIVED", "RECEIVE_SMS", 19, null, null));
 		listHook.add(new Hook("messages", "android.provider.Telephony.SMS_RECEIVED", "RECEIVE_SMS", 19, null, null));
 		listHook.add(new Hook("messages", "android.provider.Telephony.WAP_PUSH_RECEIVED", "RECEIVE_WAP_PUSH", 19, null, null));
 
-		listHook.add(new Hook("network", "getAddress", "BLUETOOTH", 5, null, null));
-		listHook.add(new Hook("network", "getBondedDevices", "BLUETOOTH", 5, null, null));
+		listHook.add(new Hook("network", "getAddress", "android.permission.BLUETOOTH", 5, null, null));
+		listHook.add(new Hook("network", "getBondedDevices", "android.permission.BLUETOOTH", 5, null, null));
 		listHook.add(new Hook("network", "getHardwareAddress", "ACCESS_NETWORK_STATE", 10, null, null));
 		listHook.add(new Hook("network", "getInetAddresses", "ACCESS_NETWORK_STATE", 10, null, null));
 		listHook.add(new Hook("network", "getInterfaceAddresses", "ACCESS_NETWORK_STATE", 10, null, null));
@@ -155,12 +157,12 @@ public class Meta {
 		listHook.add(new Hook("network", "getScanResults", "ACCESS_WIFI_STATE", 10, null, null));
 		listHook.add(new Hook("network", "getWifiApConfiguration", "ACCESS_WIFI_STATE", 10, null, null));
 
-		listHook.add(new Hook("nfc", "getNfcAdapter", "NFC", 14, null, null));
-		listHook.add(new Hook("nfc", "getDefaultAdapter", "NFC", 10, null, null));
-		listHook.add(new Hook("nfc", "android.nfc.action.ADAPTER_STATE_CHANGED", "NFC", 18, null, null));
-		listHook.add(new Hook("nfc", "android.nfc.action.NDEF_DISCOVERED", "NFC", 10, null, null));
-		listHook.add(new Hook("nfc", "android.nfc.action.TAG_DISCOVERED", "NFC", 10, null, null));
-		listHook.add(new Hook("nfc", "android.nfc.action.TECH_DISCOVERED", "NFC", 10, null, null));
+		listHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null));
+		listHook.add(new Hook("nfc", "getDefaultAdapter", "android.permission.NFC", 10, null, null));
+		listHook.add(new Hook("nfc", "android.nfc.action.ADAPTER_STATE_CHANGED", "android.permission.NFC", 18, null, null));
+		listHook.add(new Hook("nfc", "android.nfc.action.NDEF_DISCOVERED", "android.permission.NFC", 10, null, null));
+		listHook.add(new Hook("nfc", "android.nfc.action.TAG_DISCOVERED", "android.permission.NFC", 10, null, null));
+		listHook.add(new Hook("nfc", "android.nfc.action.TECH_DISCOVERED", "android.permission.NFC", 10, null, null));
 
 		listHook.add(new Hook("notifications", "android.service.notification.NotificationListenerService", "BIND_NOTIFICATION_LISTENER_SERVICE", 18, null, null));
 		listHook.add(new Hook("notifications", "com.google.android.c2dm.intent.REGISTRATION", "com.google.android.c2dm.permission.RECEIVE", 10, null, null).dangerous());
