@@ -42,6 +42,8 @@ public class XContentResolver extends XHook {
 	// public Cursor query(Uri url, String[] projection, String selection, String[] selectionArgs, String sortOrder)
 	// public Cursor query(Uri url, String[] projection, String selection, String[] selectionArgs, String sortOrder, CancellationSignal cancellationSignal)
 
+	// TODO: public final void registerContentObserver(Uri uri, boolean notifyForDescendents, ContentObserver observer)
+
 	// https://developers.google.com/gmail/android/
 	// http://developer.android.com/reference/android/content/ContentResolver.html
 	// http://developer.android.com/reference/android/content/ContentProviderClient.html
@@ -50,6 +52,7 @@ public class XContentResolver extends XHook {
 	// http://developer.android.com/reference/android/provider/ContactsContract.Data.html
 	// http://developer.android.com/reference/android/provider/ContactsContract.PhoneLookup.html
 	// http://developer.android.com/reference/android/provider/ContactsContract.Profile.html
+	// http://developer.android.com/reference/android/provider/ContactsContract.RawContacts.html
 
 	// @formatter:on
 
@@ -102,7 +105,8 @@ public class XContentResolver extends XHook {
 			String[] projection = (param.args[1] instanceof String[] ? (String[]) param.args[1] : null);
 			if (uri.startsWith("content://com.android.contacts/contacts")
 					|| uri.startsWith("content://com.android.contacts/data")
-					|| uri.startsWith("content://com.android.contacts/phone_lookup")) {
+					|| uri.startsWith("content://com.android.contacts/phone_lookup")
+					|| uri.startsWith("content://com.android.contacts/raw_contacts")) {
 				String[] components = uri.replace("content://com.android.", "").split("/");
 				if (components.length >= 2) {
 					String methodName = components[0] + "/" + components[1].split("\\?")[0];
@@ -165,7 +169,8 @@ public class XContentResolver extends XHook {
 
 				} else if (uri.startsWith("content://com.android.contacts/contacts")
 						|| uri.startsWith("content://com.android.contacts/data")
-						|| uri.startsWith("content://com.android.contacts/phone_lookup")) {
+						|| uri.startsWith("content://com.android.contacts/phone_lookup")
+						|| uri.startsWith("content://com.android.contacts/raw_contacts")) {
 					// Contacts provider: allow selected contacts
 					String methodName = "contacts/"
 							+ uri.replace("content://com.android.contacts/", "").split("/")[0].split("\\?")[0];
@@ -193,8 +198,10 @@ public class XContentResolver extends XHook {
 								if (allowed)
 									copyColumns(cursor, result, listColumn.size());
 							}
-						} else
+						} else {
 							Util.log(this, Log.ERROR, "ID missing uri=" + uri);
+							_dumpCursor(uri, cursor);
+						}
 
 						result.respond(cursor.getExtras());
 						param.setResult(result);
@@ -228,6 +235,8 @@ public class XContentResolver extends XHook {
 					else if (uri.startsWith("content://com.android.contacts")) {
 						restrictionName = PrivacyManager.cContacts;
 						methodName = "ContactsProvider2"; // fall-back
+						Util.log(this, Log.WARN, "Contact fallback uri=" + uri);
+						_dumpCursor(uri, cursor);
 					}
 
 					else if (uri.startsWith("content://downloads")) {
@@ -278,6 +287,8 @@ public class XContentResolver extends XHook {
 					else if (uri.startsWith("content://com.android.voicemail")) {
 						restrictionName = PrivacyManager.cMessages;
 						methodName = "VoicemailContentProvider";
+					} else {
+						Util.log(this, Log.WARN, "Unknown uri=" + uri);
 					}
 
 					// Check if know / restricted
@@ -309,6 +320,8 @@ public class XContentResolver extends XHook {
 			return new ContactID("raw_contact_id", true);
 		else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
 			return new ContactID("_id", false);
+		else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
+			return new ContactID("contact_id", false);
 		else
 			Util.log(this, Log.ERROR, "Unexpected uri=" + uri);
 		return null;
