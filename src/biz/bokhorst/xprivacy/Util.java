@@ -100,6 +100,8 @@ public class Util {
 			priority = Log.WARN;
 		else if (ex instanceof NetworkOnMainThreadException)
 			priority = Log.WARN;
+		else if (ex instanceof RemoteException)
+			priority = Log.WARN;
 		else if (ex instanceof SecurityException)
 			priority = Log.WARN;
 		else if (ex instanceof SocketException)
