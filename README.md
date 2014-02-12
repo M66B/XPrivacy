@@ -322,7 +322,9 @@ because this could result in conflicts, and possibly leak data).
 If you want to uninstall XPrivacy, you have two options:
 
 1. Disable XPrivacy in the Xposed installer
-1. Uninstall Xposed using the Xposed installer
+1. Uninstall the XPrivacy application
+
+Don't forget to reboot.
 
 Upgrading
 ---------
