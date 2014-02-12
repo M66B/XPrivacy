@@ -27,15 +27,6 @@
             android:src="?attr/icon_granted" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imgInfo"
-        android:layout_width="32dip"
-        android:layout_height="32dip"
-        android:layout_gravity="center_vertical"
-        android:contentDescription="@string/help_application"
-        android:src="?attr/icon_info"
-        android:visibility="gone" />
-
     <RelativeLayout
         android:id="@+id/rlMethodName"
         android:layout_width="match_parent"
@@ -55,13 +46,23 @@
             android:contentDescription="@string/title_restrict"
             android:visibility="invisible" />
 
+        <ImageView
+            android:id="@+id/imgInfo"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/imgCBMethodName"
+            android:contentDescription="@string/help_application"
+            android:src="?attr/icon_info"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tvMethodName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/imgCBMethodName"
+            android:layout_toLeftOf="@id/imgInfo"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 
