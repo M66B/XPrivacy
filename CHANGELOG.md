@@ -16,6 +16,7 @@ Test and beta releases will have experimental functions enabled by default.
 **Next release**
 
 * Added reboot reasons to reboot view
+* Easier multiple select ([issue](/../../issues/1318))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

@@ -1029,6 +1029,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	@SuppressLint("DefaultLocale")
 	private class AppListAdapter extends ArrayAdapter<ApplicationInfoEx> {
 		private Context mContext;
+		private boolean mSelecting = false;
 		private List<ApplicationInfoEx> mListAppAll;
 		private List<ApplicationInfoEx> mListAppSelected = new ArrayList<ApplicationInfoEx>();
 		private String mRestrictionName;
@@ -1426,15 +1427,15 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.rlName.setOnLongClickListener(new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View view) {
-							if (mListAppSelected.contains(xAppInfo))
-								mListAppSelected.remove(xAppInfo);
-							else
+							if (mListAppSelected.contains(xAppInfo)) {
+								mSelecting = false;
+								mListAppSelected.clear();
+								mAppAdapter.notifyDataSetChanged();
+							} else {
+								mSelecting = true;
 								mListAppSelected.add(xAppInfo);
-
-							if (mListAppSelected.contains(xAppInfo))
 								holder.row.setBackgroundColor(mHighlightColor);
-							else
-								holder.row.setBackgroundColor(Color.TRANSPARENT);
+							}
 
 							AppListAdapter.this.showStats();
 							return true;
@@ -1445,105 +1446,115 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(final View view) {
-							// Process click
-							if (mRestrictionName == null && rstate.restricted != false) {
-								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
-								alertDialogBuilder.setTitle(R.string.menu_clear_all);
-								alertDialogBuilder.setMessage(R.string.msg_sure);
-								alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-								alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
-										new DialogInterface.OnClickListener() {
-											@Override
-											public void onClick(DialogInterface dialog, int which) {
-												// Update restriction
-												List<Boolean> oldState = PrivacyManager.getRestartStates(
-														xAppInfo.getUid(), mRestrictionName);
-												PrivacyManager.deleteRestrictions(xAppInfo.getUid(), null);
-												PrivacyManager.setSetting(xAppInfo.getUid(),
-														PrivacyManager.cSettingOnDemand, Boolean.toString(true));
-
-												// Update visible state
-												holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
-												holder.vwState.setBackgroundColor(getResources().getColor(
-														getThemed(R.attr.color_state_attention)));
-
-												// Update stored state
-												rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
-
-												// Notify restart
-												if (oldState.contains(true))
-													Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
-															Toast.LENGTH_SHORT).show();
-											}
-										});
-								alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-										new DialogInterface.OnClickListener() {
-											@Override
-											public void onClick(DialogInterface dialog, int which) {
-											}
-										});
-								AlertDialog alertDialog = alertDialogBuilder.create();
-								alertDialog.show();
+							if (mSelecting) {
+								if (mListAppSelected.contains(xAppInfo)) {
+									mListAppSelected.remove(xAppInfo);
+									holder.row.setBackgroundColor(Color.TRANSPARENT);
+								} else {
+									mListAppSelected.add(xAppInfo);
+									holder.row.setBackgroundColor(mHighlightColor);
+								}
 							} else {
-								// Set change
-								boolean ask = rstate.asked;
-								boolean restrict = ask ? !rstate.restricted : rstate.restricted;
+								if (mRestrictionName == null && rstate.restricted != false) {
+									AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
+									alertDialogBuilder.setTitle(R.string.menu_clear_all);
+									alertDialogBuilder.setMessage(R.string.msg_sure);
+									alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+									alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+											new DialogInterface.OnClickListener() {
+												@Override
+												public void onClick(DialogInterface dialog, int which) {
+													// Update restriction
+													List<Boolean> oldState = PrivacyManager.getRestartStates(
+															xAppInfo.getUid(), mRestrictionName);
+													PrivacyManager.deleteRestrictions(xAppInfo.getUid(), null);
+													PrivacyManager.setSetting(xAppInfo.getUid(),
+															PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 
-								// Tweak to get to all three states when no
-								// category has been selected
-								if (mRestrictionName == null && !rstate.restricted && rstate.asked) {
-									restrict = true;
-									ask = false;
+													// Update visible state
+													holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
+													holder.vwState.setBackgroundColor(getResources().getColor(
+															getThemed(R.attr.color_state_attention)));
+
+													// Update stored state
+													rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
+
+													// Notify restart
+													if (oldState.contains(true))
+														Toast.makeText(ActivityMain.this,
+																getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+																.show();
+												}
+											});
+									alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
+											new DialogInterface.OnClickListener() {
+												@Override
+												public void onClick(DialogInterface dialog, int which) {
+												}
+											});
+									AlertDialog alertDialog = alertDialogBuilder.create();
+									alertDialog.show();
+								} else {
+									// Set change
+									boolean ask = rstate.asked;
+									boolean restrict = ask ? !rstate.restricted : rstate.restricted;
+
+									// Tweak to get to all three states when no
+									// category has been selected
+									if (mRestrictionName == null && !rstate.restricted && rstate.asked) {
+										restrict = true;
+										ask = false;
+									}
+
+									// Get restrictions to change
+									List<String> listRestriction;
+									if (mRestrictionName == null)
+										listRestriction = PrivacyManager.getRestrictions();
+									else {
+										listRestriction = new ArrayList<String>();
+										listRestriction.add(mRestrictionName);
+									}
+
+									List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
+											mRestrictionName);
+									if (mRestrictionName != null && !restrict)
+										PrivacyManager.deleteRestrictions(xAppInfo.getUid(), mRestrictionName);
+									for (String restrictionName : listRestriction)
+										PrivacyManager.setRestriction(xAppInfo.getUid(), restrictionName, null,
+												restrict, !ask);
+									List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
+											mRestrictionName);
+
+									// Update restriction display
+									rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
+									if (!rstate.asked)
+										holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
+									else if (rstate.partial)
+										holder.imgCBName.setImageBitmap(getHalfCheckBox());
+									else if (rstate.restricted)
+										holder.imgCBName.setImageBitmap(getFullCheckBox());
+									else
+										holder.imgCBName.setImageBitmap(getOffCheckBox());
+									holder.imgCBName.setVisibility(View.VISIBLE);
+
+									// Notify restart
+									if (!newState.equals(oldState))
+										Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
+												Toast.LENGTH_SHORT).show();
 								}
 
-								// Get restrictions to change
-								List<String> listRestriction;
-								if (mRestrictionName == null)
-									listRestriction = PrivacyManager.getRestrictions();
-								else {
-									listRestriction = new ArrayList<String>();
-									listRestriction.add(mRestrictionName);
-								}
-
-								List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
-										mRestrictionName);
-								if (mRestrictionName != null && !restrict)
-									PrivacyManager.deleteRestrictions(xAppInfo.getUid(), mRestrictionName);
-								for (String restrictionName : listRestriction)
-									PrivacyManager.setRestriction(xAppInfo.getUid(), restrictionName, null, restrict,
-											!ask);
-								List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
-										mRestrictionName);
-
-								// Update restriction display
-								rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
-								if (!rstate.asked)
-									holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
-								else if (rstate.partial)
-									holder.imgCBName.setImageBitmap(getHalfCheckBox());
-								else if (rstate.restricted)
-									holder.imgCBName.setImageBitmap(getFullCheckBox());
+								// Display new state
+								state = xAppInfo.getState(ActivityMain.this);
+								if (state == STATE_ATTENTION)
+									holder.vwState.setBackgroundColor(getResources().getColor(
+											getThemed(R.attr.color_state_attention)));
+								else if (state == STATE_SHARED)
+									holder.vwState.setBackgroundColor(getResources().getColor(
+											getThemed(R.attr.color_state_shared)));
 								else
-									holder.imgCBName.setImageBitmap(getOffCheckBox());
-								holder.imgCBName.setVisibility(View.VISIBLE);
-
-								// Notify restart
-								if (!newState.equals(oldState))
-									Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
-											Toast.LENGTH_SHORT).show();
+									holder.vwState.setBackgroundColor(getResources().getColor(
+											getThemed(R.attr.color_state_restricted)));
 							}
-
-							// Display new state
-							state = xAppInfo.getState(ActivityMain.this);
-							if (state == STATE_ATTENTION)
-								holder.vwState.setBackgroundColor(getResources().getColor(
-										getThemed(R.attr.color_state_attention)));
-							else if (state == STATE_SHARED)
-								holder.vwState.setBackgroundColor(getResources().getColor(
-										getThemed(R.attr.color_state_shared)));
-							else
-								holder.vwState.setBackgroundColor(getResources().getColor(
-										getThemed(R.attr.color_state_restricted)));
 						}
 					});
 				}
