@@ -93,19 +93,19 @@
         </LinearLayout>
 
         <ScrollView
+            android:id="@+id/svTutorialHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/llHeader"
             android:layout_alignTop="@id/llHeader"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <RelativeLayout
-                android:id="@+id/rlTutorialHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="?background_tutorial"
-                android:visibility="gone" >
+                android:background="?background_tutorial" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -199,18 +199,18 @@
             android:scrollbarStyle="insideInset" />
 
         <ScrollView
+            android:id="@+id/svTutorialDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/lvApp"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <RelativeLayout
-                android:id="@+id/rlTutorialDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="?background_tutorial"
-                android:visibility="gone" >
+                android:background="?background_tutorial" >
 
                 <TextView
                     android:id="@+id/tvTutorialDetails"

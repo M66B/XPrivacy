@@ -63,6 +63,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -271,14 +272,14 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Tutorial
 		if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTutorialMain, false, false)) {
-			((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
-			((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
+			((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
+			((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
 		}
 		View.OnClickListener listener = new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				ViewParent parent = view.getParent();
-				while (!parent.getClass().equals(RelativeLayout.class))
+				while (!parent.getClass().equals(ScrollView.class))
 					parent = parent.getParent();
 				((View) parent).setVisibility(View.GONE);
 				PrivacyManager.setSetting(0, PrivacyManager.cSettingTutorialMain, Boolean.TRUE.toString());
@@ -966,8 +967,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	}
 
 	private void optionTutorial() {
-		((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
-		((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
+		((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
+		((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
 		PrivacyManager.setSetting(0, PrivacyManager.cSettingTutorialMain, Boolean.FALSE.toString());
 	}
 

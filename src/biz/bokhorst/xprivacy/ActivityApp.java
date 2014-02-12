@@ -56,6 +56,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -229,14 +230,14 @@ public class ActivityApp extends ActivityBase {
 
 		// Tutorial
 		if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTutorialDetails, false, false)) {
-			((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
-			((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
+			((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
+			((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
 		}
 		View.OnClickListener listener = new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				ViewParent parent = view.getParent();
-				while (!parent.getClass().equals(RelativeLayout.class))
+				while (!parent.getClass().equals(ScrollView.class))
 					parent = parent.getParent();
 				((View) parent).setVisibility(View.GONE);
 				PrivacyManager.setSetting(0, PrivacyManager.cSettingTutorialDetails, Boolean.TRUE.toString());
@@ -431,8 +432,8 @@ public class ActivityApp extends ActivityBase {
 	}
 
 	private void optionTutorial() {
-		((RelativeLayout) findViewById(R.id.rlTutorialHeader)).setVisibility(View.VISIBLE);
-		((RelativeLayout) findViewById(R.id.rlTutorialDetails)).setVisibility(View.VISIBLE);
+		((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
+		((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
 		PrivacyManager.setSetting(0, PrivacyManager.cSettingTutorialDetails, Boolean.FALSE.toString());
 	}
 
