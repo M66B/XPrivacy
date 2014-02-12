@@ -4,16 +4,16 @@
 
     <solid android:color="#D0008B8B" />
 
-    <corners android:radius="20dip" />
+    <corners android:radius="5dip" />
 
     <stroke
         android:width="1dip"
         android:color="#808080" />
 
     <padding
-        android:bottom="12dip"
-        android:left="12dip"
-        android:right="12dip"
-        android:top="12dip" />
+        android:bottom="@dimen/activity_vertical_margin"
+        android:left="@dimen/activity_horizontal_margin"
+        android:right="@dimen/activity_horizontal_margin"
+        android:top="@dimen/activity_vertical_margin" />
 
 </shape>
