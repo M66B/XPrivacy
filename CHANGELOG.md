@@ -18,6 +18,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Rewritten URI restrictions for better compatibility
 * Simplified restricting / allowing contacts
 * Added restriction for browser downloads
+* Added Kurdish translation
 * Updated traditional Chinese translation
 * Updated Norwegian translation
 * Updated Polish translation

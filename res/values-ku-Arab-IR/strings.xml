@@ -1,0 +1,171 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_notxposed" formatted="false">اکسپوسید فریمورک ویرژه نی %d+ دانه ندراوه</string>
+    <string name="app_notenabled">اکس پرایوسی له ناو اکسپوسید کارا نه کراوه</string>
+    <string name="app_wrongandroid">ته نیا بو ویرژه نی اندروید  4.0.3+</string>
+    <string name="app_incompatible" formatted="false">اکس پرای وه سی گونجاو نی یه له گه ل %s</string>
+    <string name="app_version" formatted="false">اکس پرایوه سی ویرژه نی: %s (%d)</string>
+    <string name="app_description">به هیز ترین به رنامه ی نیهینی پاریز</string>
+    <string name="app_xversion" formatted="false">ویرژه نی اکپوسید فریمورک: %d</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2014 خاوه نی M. Bokhorst (M66B)</string>
+    <string name="menu_usage">زانیاری به کار هینراو</string>
+    <string name="menu_refresh">نوی کردنه وه</string>
+    <string name="menu_settings">ریک خستن</string>
+    <string name="menu_template">قالب</string>
+    <string name="menu_report">ئاگه دار کردنه وه له بونی هه له</string>
+    <string name="menu_export">هه نارده کردن</string>
+    <string name="menu_import">هاورده کردن</string>
+    <string name="menu_submit">ناردنی هه لبژارده کانت</string>
+    <string name="menu_fetch">دابه زاندنی داتای هه ل بژیردراو</string>
+    <string name="menu_theme">گورینی شیوه ی به رنامه</string>
+    <string name="menu_pro">ویرژه نی پاره</string>
+    <string name="menu_about">زانیاری زیاتر</string>
+    <string name="menu_help">یارمه تی</string>
+    <string name="menu_select_all">دیاری کردنی هه موویان</string>
+    <string name="menu_sort">ریزکردن</string>
+    <string name="menu_filter">پالاوتن</string>
+    <string name="menu_all">هه موو</string>
+    <string name="menu_restriction_all">سنوردارکردن / سنوردار نه کردن</string>
+    <string name="menu_clear_all">به تال کردنی هه مویان</string>
+    <string name="menu_restrict_all">سنوردار کردنی هه مویان</string>
+    <string name="menu_clear_usage">به تال کردن</string>
+    <string name="menu_clear_db">ره شکردنه وه ی هه موو داتاکان</string>
+    <string name="menu_usage_all">پالاوتن / نه پالاوتن</string>
+    <string name="menu_apply">کارپیکردنی قالب</string>
+    <string name="menu_clear">به تال کردن</string>
+    <string name="menu_app_launch">هه لگیرساندن</string>
+    <string name="menu_app_settings">ریکخستن</string>
+    <string name="menu_app_store">پله ی استور</string>
+    <string name="menu_app_kill">داخستنی به رنامه که</string>
+    <string name="menu_accounts">ریپیدان به به کار هینانی ئه م حيسابانه</string>
+    <string name="menu_applications">ریپیدان به به کارهینانی ئه م به رنامانه</string>
+    <string name="menu_contacts">ریپیدان به به کارهینانی ئه م ژماره ته له فونانه</string>
+    <string name="menu_tutorial">فیربون</string>
+    <string name="menu_exclude">جیاکردن</string>
+    <string name="menu_close">داخستن</string>
+    <string name="msg_abort">پاشگه ز بوونه وه</string>
+    <string name="msg_aborted">پاشگه ز کرا</string>
+    <string name="msg_new">نوی</string>
+    <string name="msg_update">نوی کردنه وه ی ویرژه ن</string>
+    <string name="msg_licensed" formatted="false">ناوی کریار: %s</string>
+    <string name="msg_loading">بارکردن &#8230;</string>
+    <string name="msg_applying">به کارده هیندریت &#8230;</string>
+    <string name="msg_applied">قالبه کان به کارهینران</string>
+    <string name="msg_saved_to" formatted="false">زانیاریه کان هه ل گیران له %s</string>
+    <string name="msg_no_restrictions">هیچ زانیارییه کی سنوردار کراو نه دوزرایه وه</string>
+    <string name="msg_sure">ئایا دلنیایت؟</string>
+    <string name="msg_select">ته کایه چه ند به رنامه یک هه لبژیره</string>
+    <string name="msg_limit">ته کایه ژماره یه کی که متر له %d به رنامه هه لبژیره</string>
+    <string name="msg_done">جیبه جی کرا</string>
+    <string name="msg_reboot">پیویست به دوباره هه لگیرساندنی موبایل ده کات</string>
+    <string name="msg_random_now">هه ره مه کی کردنی زانیاریه کان</string>
+    <string name="msg_random_access">ناردنی زانیاری هه ره مه کی له کاتی به کارهینانیان</string>
+    <string name="msg_random_boot">هه ره مه كى كردن له كاتى هه لگیرسانی موبایل</string>
+    <string name="msg_restart">پیویست به دوباره داگیرساندن ده کات</string>
+    <string name="msg_register">ته کایه خوت تومارکه</string>
+    <string name="msg_email">ته کایه ئيمه يله كه ت داخيل كه:</string>
+    <string name="msg_registered">سه ره دانى ئيمه يله كه ت بكه بو ته واو كردنى خو توماركردنه كه ت</string>
+    <string name="msg_service">خزمه تگوزارى نويكردنه وه كارايه</string>
+    <string name="msg_migrating" formatted="false">گواستنه وه %s</string>
+    <string name="msg_randomizing" formatted="false">هه ره مه كى كردن %s</string>
+    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_support_info">هه له يه ك هه يه له م به رنامه يه ئايا ده ته ويت خاوه نى ئاگه دار بکه یته وه؟</string>
+    <string name="msg_restrictedby">له لایه ن اکسپراوسی یه وه ری لی گیرا</string>
+    <string name="msg_first"><b>هه ول و ماندو بوونیکی زور دراوه بو دروستکردن و تاقیکردنه وه ی ئه م به رنامه يه به لام له گه ل ئه وه شدا ناتوانين دلنياتان بكه ين له وه ىكه ئه م به رنامه يه بى هه له يه و له سه ر هه موو موبايليك ياخود بو هه ر به رنامه يه ك كار ده كات.
+\n\nته نيا خوت به رپرسیاریت له به کارهینانی ئه م به رنامه يه.</b>\n\nهه روه ها سه يريكى موله تى ريپیدان بکه:</string>
+    <string name="restrict_accounts" tools:ignore="UnusedResources">حیسابه کان (گوگل, فه یسبوک, هتد)</string>
+    <string name="restrict_browser" tools:ignore="UnusedResources">Browser (bookmarks/history)</string>
+    <string name="restrict_calendar" tools:ignore="UnusedResources">روژ ژمیر</string>
+    <string name="restrict_calling" tools:ignore="UnusedResources">ته له فون کردن (ته له فون,کورته نامه, نامه ی ره نگی)</string>
+    <string name="restrict_clipboard" tools:ignore="UnusedResources">ئه و نوسينانه ى کوپیت کردون</string>
+    <string name="restrict_contacts" tools:ignore="UnusedResources">ژماره ته له فونه کان</string>
+    <string name="restrict_dictionary" tools:ignore="UnusedResources">فه رهه نگ (به کار هینه ر)</string>
+    <string name="restrict_email" tools:ignore="UnusedResources">ئيمه يل</string>
+    <string name="restrict_identification" tools:ignore="UnusedResources">ناسینه وه (موبایل)</string>
+    <string name="restrict_internet" tools:ignore="UnusedResources">ئينته رنيت</string>
+    <string name="restrict_ipc" translatable="false" tools:ignore="UnusedResources">IPC</string>
+    <string name="restrict_location" tools:ignore="UnusedResources">شوین (شوینه که ت/جیگه ت)</string>
+    <string name="restrict_media" tools:ignore="UnusedResources">میدیا (ده نگ, وینه, ویدیو)</string>
+    <string name="restrict_messages" tools:ignore="UnusedResources">نامه کان (کورته نامه, نامه ی ره نگی)</string>
+    <string name="restrict_network" tools:ignore="UnusedResources">تور (ئه دريسه كان)</string>
+    <string name="restrict_nfc" translatable="false" tools:ignore="UnusedResources">NFC</string>
+    <string name="restrict_notifications" tools:ignore="UnusedResources">ئاگه داریه کان</string>
+    <string name="restrict_overlay" tools:ignore="UnusedResources">داپوشین</string>
+    <string name="restrict_phone" tools:ignore="UnusedResources">موبایل (ناوه کان, ژماره کان, ته له فونه کان)</string>
+    <string name="restrict_sensors" tools:ignore="UnusedResources">هه سته وه ره کان</string>
+    <string name="restrict_storage" tools:ignore="UnusedResources">کوگا (میدیا, کارت حافیزه)</string>
+    <string name="restrict_shell" tools:ignore="UnusedResources">Shell (commands, superuser)</string>
+    <string name="restrict_system" tools:ignore="UnusedResources">سیسته م (ئه م به رنامانه ى دانراون)</string>
+    <string name="restrict_view" tools:ignore="UnusedResources">View (browser)</string>
+    <string name="title_categories" tools:ignore="UnusedResources">پولین کردن</string>
+    <string name="title_restrict">هه ل بژیره بوو سنوردارکردنی:</string>
+    <string name="title_fused">پالاوتن به هوی داتا به کارهینراوه کان</string>
+    <string name="title_finternet">پالاوتنی ئه و به رنامانه ی ئينته ر نيت به كاردينن</string>
+    <string name="title_fpermission">پالاوتنی ئه و زانياريانه ى كه ده توانريت به كاربهينرين</string>
+    <string name="title_frestricted">پالاوتنی به رنامه ی سنوردارکراو</string>
+    <string name="title_fuser">پالاوتنی به رنامه کانی به کار هینه ر</string>
+    <string name="title_fondemand">پالاوتنی ئه و به رنامانه ی که بو سنوردارکردنیان داوات لی بکریت</string>
+    <string name="title_fsystem">پالاوتنی به رنامه کانی سیسته م</string>
+    <string name="title_fnot">پیچه وانه</string>
+    <string name="title_sname">به پی ناوه کان</string>
+    <string name="title_suid">به پی uid</string>
+    <string name="title_sinstalled">به پی کاتی دابه زاندن</string>
+    <string name="title_supdated">به پی کاتی نوی کردن بوونه وه</string>
+    <string name="title_smodified">به پی کاتی دروست بوونی (اکس پرایوسی)</string>
+    <string name="title_sinvert">پیچه وانه ی شیوه ی ریز بوون</string>
+    <string name="title_attempt">هه ول ده دات ئه مانه به كاربينت:</string>
+    <string name="title_category">پول:</string>
+    <string name="title_function">ئيش:</string>
+    <string name="title_parameters">Parameters:</string>
+    <string name="title_applycat">بو هه موو به شه که</string>
+    <string name="title_once">ته نیا جاریک بو %1$s چرکه</string>
+    <string name="title_allow">ریگه دان</string>
+    <string name="title_deny">ریگه نه دان</string>
+    <string name="title_pleasesubmit">ته کایه بو یارمه تی دانی که سانی تریش ئه و شتانه ى سنوردارتكردوون به لاو بكه </string>
+    <string name="settings_serial">سريال نه مبرى موبايل</string>
+    <string name="settings_lat">هیلی پانی</string>
+    <string name="settings_lon">هیلی دریژی</string>
+    <string name="settings_alt">به رزی له ئاستى ده يا</string>
+    <string name="settings_mac">مه ك ئه دريس</string>
+    <string name="settings_ip">ئاي پی ئه دريس</string>
+    <string name="settings_phone">ژماره ی ته له فون</string>
+    <string name="settings_id">ناسنامه ئه ندرويد</string>
+    <string name="settings_adid">ناسنامه ى ريكلامه كان</string>
+    <string name="settings_country">ولات</string>
+    <string name="settings_operator">Operator</string>
+    <string name="settings_subscriber">ناسنامه ی به شداربوو</string>
+    <string name="settings_ua">User agent</string>
+    <string name="settings_general">گشتی</string>
+    <string name="settings_fake_data">زانیاری هه له</string>
+    <string name="settings_notify">نوی کردنه وهی ئاگه داریه کان</string>
+    <string name="settings_ondemand">داوات لیبکریت بو سنوردار کردنیان</string>
+    <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_expert">چه ند هه لبژاردنیکی مه ترسیدار که تایبه ته به که سانی شاره زا</string>
+    <string name="settings_dangerous">سنوردار کردنی ئه و فرمانانه ى كه سنوردار كردنيان مه ترسيداره</string>
+    <string name="settings_confidence">زورترین راده ی دلنیابوون له زانیاریه دابه زینراوه کان</string>
+    <string name="settings_experimental">فرمانی ئه زمونى(پیویست به دوباره داگیرساندنی موبایل ده کات)</string>
+    <string name="settings_https">به کارهینانی هیلی پاریزراو</string>
+    <string name="settings_syscomponents">سنوردار کردنی شته بنچینه یه کانی سیسته مه که ت (موبایله که ت)</string>
+    <string name="settings_usagedata">پیشاندنی ئه و زانياريانه ى به كارهينراون</string>
+    <string name="help_longpress">په نجه ت دابگره له سه ر ئه و ناوه ى كه ده ته ویت هه لی بژیریت</string>
+    <string name="help_ondemand">داوات لیده کریت بو سنوردار کردن</string>
+    <string name="help_application">به رنامه کان</string>
+    <string name="help_internet">توانای به کارهینانی ئينته رنيتى هه يه</string>
+    <string name="help_granted">تواناى به كار هينانى ئه م زانياريانه ى هه يه</string>
+    <string name="help_used">ئه م زانياريانه ى به كار هيناوه</string>
+    <string name="help_used_grayed">زانيارى به كار هينراو به رده ست نیه</string>
+    <string name="help_frozen">راگیراوه</string>
+    <string name="help_dangerous">مه ترسیداره سنوردار کردنی له وانه یه ببیته هوی دروست بوونی کیشه</string>
+    <string name="help_half">به شیکی سنورداره کراوه</string>
+    <string name="help_attention">ئه وشتانه ى سنورداركراون پیویستیان به سه رنجدانه</string>
+    <string name="help_restricted">گورانیک له سنوردار کراوه کان رویداوه</string>
+    <string name="help_shared">ئه و شتانه ى سنوردارت كردوون به لاو كران</string>
+    <string name="tutorial_mainheader">ئه و به شه ی ده ته ویت سنورداری بکه یت هه لبژیره</string>
+    <string name="tutorial_mainlist">ئه و به شه هه لبژیره که ده ته ویت سنورداری بکه یت بو به رنامه یک\n
+\nبه رنامه که زانیاری به تال یاخود هه له ی پیده دریت له سه ر ئه م به شه\n
+\nپه نجه بنی له سه ر ئايكونى به رنامه که بو سنوردار کردنی ووردتر و ریکخستنه کانی</string>
+    <string name="tutorial_detailsheader">په نجه بنی به سه ر ئايكونى به رنامه كه بو فرمانى زياتر</string>
+    <string name="tutorial_detailslist">په نجه بنی له سه ر هیمای به ره و خوار بو دیتنی فرمانه کان و ووردتر سنوردار کردنی به شه که</string>
+    <string name="permission_manage">به ریوه بردنی به رنامه کان ,داخستنیشیان</string>
+
+</resources>
