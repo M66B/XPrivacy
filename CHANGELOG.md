@@ -15,11 +15,13 @@ Test and beta releases will have experimental functions enabled by default.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.41 BETA**
+
 * Fixed some UI elements not working ([issue](/../../issues/1321))
 * Added reboot reasons to reboot view
 * Easier multiple select ([issue](/../../issues/1318))
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.40 BETA**
 
