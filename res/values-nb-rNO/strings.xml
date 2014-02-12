@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Kun for Android versjon 4.0+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
-    <string name="app_description">The ultimate privacy manager</string>
+    <string name="app_description">Den ultimative personvernbehandleren</string>
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013–2014</string>
     <string name="menu_usage">Databruk</string>
@@ -21,30 +21,30 @@
     <string name="menu_pro">Pro versjon</string>
     <string name="menu_about">Om</string>
     <string name="menu_help">Hjelp</string>
-    <string name="menu_select_all">Select all</string>
-    <string name="menu_sort">Sort</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_select_all">Marker alle</string>
+    <string name="menu_sort">Sorter</string>
+    <string name="menu_filter">Filtrer</string>
     <string name="menu_all">Alle</string>
     <string name="menu_restriction_all">Skift restriksjoner</string>
     <string name="menu_clear_all">Nullstill alt</string>
     <string name="menu_restrict_all">Blokk alt</string>
-    <string name="menu_clear_usage">Clear</string>
-    <string name="menu_clear_db">Clear all data</string>
+    <string name="menu_clear_usage">Nullstill</string>
+    <string name="menu_clear_db">Nullstill data</string>
     <string name="menu_usage_all">Skift filter</string>
     <string name="menu_apply">Bruk skjema</string>
-    <string name="menu_clear">Slett</string>
+    <string name="menu_clear">Nullstill</string>
     <string name="menu_app_launch">Kjør</string>
     <string name="menu_app_settings">Innstillinger</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">Avslutt</string>
     <string name="menu_accounts">Velg konto som skal tillates</string>
     <string name="menu_applications">Velg apper som skal tillates</string>
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
     <string name="menu_tutorial">Innføring</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
-    <string name="msg_abort">Aborting</string>
-    <string name="msg_aborted">Aborted</string>
+    <string name="menu_exclude">Ekskluder</string>
+    <string name="menu_close">Lukk</string>
+    <string name="msg_abort">Avbryter</string>
+    <string name="msg_aborted">Avbrutt</string>
     <string name="msg_new">Nytt</string>
     <string name="msg_update">Oppdater</string>
     <string name="msg_licensed" formatted="false">Lisensert til: %s</string>
@@ -54,23 +54,23 @@
     <string name="msg_saved_to" formatted="false">Lagre till %s</string>
     <string name="msg_no_restrictions">Ingen restriksjoner funnet</string>
     <string name="msg_sure">Er du sikker?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Vennligst velg noen apper</string>
+    <string name="msg_limit">Vennligst velg mindre enn %d apper</string>
     <string name="msg_done">Ferdig</string>
     <string name="msg_reboot">Omstart nødvendig</string>
     <string name="msg_random_now">Tilfeldige verdier</string>
     <string name="msg_random_access">Tilfeldige verdier ved tilgang</string>
     <string name="msg_random_boot">Tilfeldige verdier etter omstart</string>
     <string name="msg_restart">Omstart av appen nødvendig</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_service">Update service running</string>
-    <string name="msg_migrating" formatted="false">Migrating %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
-    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_register">Vennligst registrer enheten din</string>
+    <string name="msg_email">Vennligst angi e-mail adressen din:</string>
+    <string name="msg_registered">Sjekk e-mailen din for å aktivere enheten din</string>
+    <string name="msg_service">Oppdateringstjeneste startet</string>
+    <string name="msg_migrating" formatted="false">Migrerer %s</string>
+    <string name="msg_randomizing" formatted="false">Danner tilfeldige verdier %s</string>
+    <string name="msg_upgrading" formatted="false">Oppdaterer %s</string>
+    <string name="msg_support_info">En intern sjekk mislyktes, vil du sende støtteinformasjon?</string>
+    <string name="msg_restrictedby">Blokkert av XPrivacy</string>
     <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
@@ -96,33 +96,33 @@
     <string name="restrict_view">Betrakte (nettleser)</string>
     <string name="title_categories">Kategorier</string>
     <string name="title_restrict">Marker for å blokkere:</string>
-    <string name="title_fused">Filtrer etter data bruk</string>
+    <string name="title_fused">Filtrer etter databruk</string>
     <string name="title_finternet">Filtrer etter Internett bruk</string>
     <string name="title_fpermission">Filtrer etter tillatelse</string>
     <string name="title_frestricted">Filtrer etter restriksjon</string>
     <string name="title_fuser">Filtrer etter vanlige apper</string>
-    <string name="title_fondemand">Filter by on-demand</string>
-    <string name="title_fsystem">Filtrer etter system apper</string>
+    <string name="title_fondemand">Filtrer etter restriksjon på forespørsel</string>
+    <string name="title_fsystem">Filtrer etter systemapper</string>
     <string name="title_fnot">Inverter</string>
-    <string name="title_sname">By name</string>
-    <string name="title_suid">By uid</string>
-    <string name="title_sinstalled">By date installed</string>
-    <string name="title_supdated">By date updated</string>
-    <string name="title_smodified">By date modified (XPrivacy)</string>
-    <string name="title_sinvert">Invert sort order</string>
-    <string name="title_attempt">Usage attempt of:</string>
-    <string name="title_category">Category:</string>
-    <string name="title_function">Function:</string>
-    <string name="title_parameters">Parameters:</string>
-    <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %1$s seconds</string>
-    <string name="title_allow">Allow</string>
-    <string name="title_deny">Deny</string>
-    <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
+    <string name="title_sname">Etter navn</string>
+    <string name="title_suid">Etter uid</string>
+    <string name="title_sinstalled">Etter dato, installert</string>
+    <string name="title_supdated">Etter dato, oppdatert</string>
+    <string name="title_smodified">Etter dato, modifisert (XPrivacy)</string>
+    <string name="title_sinvert">Inverter sorteringsrekkefølge</string>
+    <string name="title_attempt">Forsøk å bruke:</string>
+    <string name="title_category">Kategori:</string>
+    <string name="title_function">Funksjon:</string>
+    <string name="title_parameters">Parametere:</string>
+    <string name="title_applycat">Bruk for hele kategorien</string>
+    <string name="title_once">En gang i %1$s sekunder</string>
+    <string name="title_allow">Tillat</string>
+    <string name="title_deny">Nekt</string>
+    <string name="title_pleasesubmit">Vennligst last opp restriksjonene dine for å hjelpe andre</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>
-    <string name="settings_alt">Altitude</string>
+    <string name="settings_alt">Høyde</string>
     <string name="settings_mac">MAC adresse</string>
     <string name="settings_ip">IP adresse</string>
     <string name="settings_phone">Telefonnummer</string>
@@ -135,35 +135,35 @@
     <string name="settings_general">Generell</string>
     <string name="settings_fake_data">Forfalsket data</string>
     <string name="settings_notify">Oppdater varslinger</string>
-    <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_ondemand">Blokker på forespørsel</string>
     <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
     <string name="settings_expert">Ekspert modus</string>
     <string name="settings_dangerous">Blokker farlige funksjoner</string>
     <string name="settings_confidence">Maksimalt konfidensintervall for å hente restriksjoner</string>
-    <string name="settings_experimental">Experimental functions (requires restart)</string>
-    <string name="settings_https">Use secure connections</string>
-    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
-    <string name="settings_usagedata">Show application usage data (requires restart)</string>
-    <string name="help_longpress">Long press name to select</string>
-    <string name="help_ondemand">restrictions will be asked</string>
+    <string name="settings_experimental">Eksperimentelle funksjoner (omstart nødvendig)</string>
+    <string name="settings_https">Bruk trygg forbindelse</string>
+    <string name="settings_syscomponents">Blokker systemkomponenter (Android) (omstart nødvendig)</string>
+    <string name="settings_usagedata">Vis brukerdata til apper (omstart nødvendig)</string>
+    <string name="help_longpress">>Trykk lenge på navnet som skal markeres</string>
+    <string name="help_ondemand">apper spør om tillatelse</string>
     <string name="help_application">App</string>
     <string name="help_internet">har internet tillatelse</string>
     <string name="help_granted">har Android tillatelse</string>
     <string name="help_used">har benyttet denne typen av data</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_used_grayed">databruk er ikke tilgjengelig</string>
     <string name="help_frozen">er deaktivert</string>
     <string name="help_dangerous">er farlig</string>
     <string name="help_half">delvis blokkert</string>
     <string name="help_attention">restriksjoner trenger oppmerksomhet</string>
     <string name="help_restricted">restriksjoner ble forandret</string>
     <string name="help_shared">restriksjoner ble lastet opp</string> 
-    <string name="tutorial_mainheader">Select the category to restrict</string>
+    <string name="tutorial_mainheader">Marker kategori som skal blokkeres</string>
     <string name="tutorial_mainlist">Sett hake for å blokkere kategorien som er valgt for en app\n
 \nApper får tom eller forfalsket data for kategorier som er blokkert\n
 \nTrykk på app ikonet for å se detaljerte restriksjoner og innstillinger
 </string>
     <string name="tutorial_detailsheader">Trykk på app ikonet for å få flere valg/aksjoner</string>
     <string name="tutorial_detailslist">Trykk på pilene som viser ned for å se funksjonene innen en kategorie</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="permission_manage">Behandle apper, inklusive avslutting</string>
 
 </resources>
