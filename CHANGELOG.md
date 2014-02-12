@@ -20,6 +20,7 @@ Test and beta releases will have experimental functions enabled by default.
 * Added restriction for browser downloads
 * Updated traditional Chinese translation
 * Updated Polish translation
+* Updated Ukrainian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
