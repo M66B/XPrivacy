@@ -83,12 +83,10 @@
     <string name="restrict_email" tools:ignore="UnusedResources">ئيمه يل</string>
     <string name="restrict_identification" tools:ignore="UnusedResources">ناسینه وه (موبایل)</string>
     <string name="restrict_internet" tools:ignore="UnusedResources">ئينته رنيت</string>
-    <string name="restrict_ipc" translatable="false" tools:ignore="UnusedResources">IPC</string>
     <string name="restrict_location" tools:ignore="UnusedResources">شوین (شوینه که ت/جیگه ت)</string>
     <string name="restrict_media" tools:ignore="UnusedResources">میدیا (ده نگ, وینه, ویدیو)</string>
     <string name="restrict_messages" tools:ignore="UnusedResources">نامه کان (کورته نامه, نامه ی ره نگی)</string>
     <string name="restrict_network" tools:ignore="UnusedResources">تور (ئه دريسه كان)</string>
-    <string name="restrict_nfc" translatable="false" tools:ignore="UnusedResources">NFC</string>
     <string name="restrict_notifications" tools:ignore="UnusedResources">ئاگه داریه کان</string>
     <string name="restrict_overlay" tools:ignore="UnusedResources">داپوشین</string>
     <string name="restrict_phone" tools:ignore="UnusedResources">موبایل (ناوه کان, ژماره کان, ته له فونه کان)</string>

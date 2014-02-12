@@ -774,7 +774,7 @@ Current translations:
 1. Irish (ga)
 1. Italian (it)
 1. Japanese (ja)
-1. Kurdish (ku-Arab-IR, ku-Arab-IQ)
+1. Kurdish (ku-rIR, ku-rIQ)
 1. Lithuanian (lt)
 1. Norwegian (nb-rNO, nn-rNO, no-rNO)
 1. Polish (pl)
