@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- accounts -->
     <string name="accounts_addOnAccountsUpdatedListener" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/accounts/AccountManager.html#addOnAccountsUpdatedListener(android.accounts.OnAccountsUpdateListener,%20android.os.Handler,%20boolean)">Google documentation</a>]]></string>
     <string name="accounts_blockingGetAuthToken" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/accounts/AccountManager.html#blockingGetAuthToken(android.accounts.Account,%20java.lang.String,%20boolean)">Google documentation</a>]]></string>
     <string name="accounts_getAccounts" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/accounts/AccountManager.html#getAccounts()">Google documentation</a>]]></string>
@@ -15,5 +16,36 @@
     <string name="accounts_getCurrentSync" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/ContentResolver.html#getCurrentSync()">Google documentation</a>]]></string>
     <string name="accounts_getCurrentSyncs" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/ContentResolver.html#getCurrentSyncs()">Google documentation</a>]]></string>
     <string name="accounts_getSyncAdapterTypes" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/ContentResolver.html#getSyncAdapterTypes()">Google documentation</a>]]></string>
+    <!-- browser -->
+    <string name="browser_BrowserProvider2" translatable="false"><![CDATA[Will restrict access to the browser bookmarks and browser history]]></string>
+    <string name="browser_Downloads" translatable="false"><![CDATA[Will restrict access to the browser downloads]]></string>
+    <!-- calendar -->
+    <string name="calendar_CalendarProvider2" translatable="false"><![CDATA[Will restrict access to the Android calendar]]></string>
+    <!-- calling -->
+    <string name="calling_sendDataMessage" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/gsm/SmsManager.html#sendDataMessage(java.lang.String,%20java.lang.String,%20short,%20byte[],%20android.app.PendingIntent,%20android.app.PendingIntent)">Google documentation</a>]]></string>
+    <string name="calling_sendMultipartTextMessage" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/gsm/SmsManager.html#sendMultipartTextMessage(java.lang.String,%20java.lang.String,%20java.util.ArrayList&lt;java.lang.String&gt;,%20java.util.ArrayList&lt;android.app.PendingIntent&gt;,%20java.util.ArrayList&lt;android.app.PendingIntent&gt;)">Google documentation</a>]]></string>
+    <string name="calling_sendTextMessage" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/gsm/SmsManager.html#sendTextMessage(java.lang.String,%20java.lang.String,%20java.lang.String,%20android.app.PendingIntent,%20android.app.PendingIntent)">Google documentation</a>]]></string>
+    <string name="calling_android.intent.action.RESPOND_VIA_MESSAGE" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#ACTION_RESPOND_VIA_MESSAGE">Google documentation</a>]]></string>
+    <string name="calling_android.intent.action.CALL" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/Intent.html#ACTION_CALL">Google documentation</a>]]></string>
+    <!-- clipboard -->
+    <!-- contacts -->
+    <!-- dictionary -->
+    <!-- email -->
+    <!-- identification -->
+    <!-- internet -->
+    <!-- ipc -->
+    <!-- location -->
+    <!-- media -->
+    <!-- messages -->
+    <!-- network -->
+    <!-- nfc -->
+    <!-- notifications -->
+    <!-- overlay -->
+    <!-- phone -->
+    <!-- sensors -->
+    <!-- shell -->
+    <!-- storage -->
+    <!-- system -->
+    <!-- view -->
 
 </resources>
