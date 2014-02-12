@@ -54,6 +54,8 @@ public class XContentResolver extends XHook {
 	// http://developer.android.com/reference/android/provider/ContactsContract.Profile.html
 	// http://developer.android.com/reference/android/provider/ContactsContract.RawContacts.html
 
+	// frameworks/base/core/java/android/content/ContentResolver.java
+
 	// @formatter:on
 
 	private enum Methods {
@@ -187,7 +189,7 @@ public class XContentResolver extends XHook {
 						// Filter rows
 						ContactID cid = getIdForUri(uri);
 						int iid = (cid == null ? -1 : cursor.getColumnIndex(cid.name));
-						if (iid >= 0) {
+						if (iid >= 0)
 							while (cursor.moveToNext()) {
 								// Check if allowed
 								long id = cursor.getLong(iid);
@@ -197,11 +199,10 @@ public class XContentResolver extends XHook {
 										+ id, false, true);
 								if (allowed)
 									copyColumns(cursor, result, listColumn.size());
+								_dumpColumns(cursor, "allowed=" + allowed);
 							}
-						} else {
+						else
 							Util.log(this, Log.ERROR, "ID missing uri=" + uri);
-							_dumpCursor(uri, cursor);
-						}
 
 						result.respond(cursor.getExtras());
 						param.setResult(result);
@@ -236,7 +237,6 @@ public class XContentResolver extends XHook {
 						restrictionName = PrivacyManager.cContacts;
 						methodName = "ContactsProvider2"; // fall-back
 						Util.log(this, Log.WARN, "Contact fallback uri=" + uri);
-						_dumpCursor(uri, cursor);
 					}
 
 					else if (uri.startsWith("content://downloads")) {
@@ -287,8 +287,6 @@ public class XContentResolver extends XHook {
 					else if (uri.startsWith("content://com.android.voicemail")) {
 						restrictionName = PrivacyManager.cMessages;
 						methodName = "VoicemailContentProvider";
-					} else {
-						Util.log(this, Log.WARN, "Unknown uri=" + uri);
 					}
 
 					// Check if know / restricted
@@ -362,11 +360,15 @@ public class XContentResolver extends XHook {
 
 	@SuppressWarnings("unused")
 	private void _dumpCursor(String uri, Cursor cursor) {
-		Util.log(this, Log.WARN, TextUtils.join(", ", cursor.getColumnNames()) + " uri=" + uri);
+		_dumpHeader(uri, cursor);
 		int i = 0;
 		while (cursor.moveToNext() && i++ < 10)
 			_dumpColumns(cursor, "");
 		cursor.moveToFirst();
+	}
+
+	private void _dumpHeader(String uri, Cursor cursor) {
+		Util.log(this, Log.WARN, TextUtils.join(", ", cursor.getColumnNames()) + " uri=" + uri);
 	}
 
 	private void _dumpColumns(Cursor cursor, String msg) {
