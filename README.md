@@ -128,7 +128,7 @@ For easy usage, data is restricted by category:
 	* return a fake Google services framework ID
 	* return file not found for folder /proc
 	* return a fake Google advertising ID
-	* return a fake system property CID (Card Identification Register)
+	* return a fake system property CID (Card Identification Register = SD card serial number)
 	* return file not found for /sys/block/.../cid
 	* return file not found for /sys/class/.../cid
 	* return fake input device descriptor

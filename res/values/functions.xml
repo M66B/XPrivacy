@@ -48,6 +48,20 @@
     <string name="email_EMailProvider" translatable="false"><![CDATA[Will restrict access to the Android E-mail information (accounts, messages, attachments)]]></string>
     <string name="email_GMailProvider" translatable="false"><![CDATA[<a href="https://developers.google.com/gmail/android/">Google documentation</a>]]></string>
     <!-- identification -->
+    <string name="identification__hostname" translatable="false"><![CDATA[Will restrict access to any system property with the name containing \'hostname\' (<a href="http://en.wikipedia.org/wiki/Hostname">Wikipedia</a>)]]></string>
+    <string name="identification__imei" translatable="false"><![CDATA[Will restrict access to any system property with the name containing \'imei\' (<a href="http://en.wikipedia.org/wiki/International_Mobile_Station_Equipment_Identity">Wikipedia</a>)]]></string>
+    <string name="identification__macaddr" translatable="false"><![CDATA[Will restrict access to any system property with the name containing \'macaddr\' (<a href="http://en.wikipedia.org/wiki/MAC_address">Wikipedia</a>)]]></string>
+    <string name="identification__serialno" translatable="false"><![CDATA[Will restrict access to any system property with the name containing \'serialno\']]></string>
+    <string name="identification__cid" translatable="false"><![CDATA[Will restrict access to any system property with the name containing \'cid\' (Card Identification Register = SD card serial number)]]></string>
+    <string name="identification__proc" translatable="false"><![CDATA[Will restrict access to /proc (<a href="http://linux.die.net/man/5/proc">Manual page</a>)]]></string>
+    <string name="identification__system_build_prop" translatable="false"><![CDATA[Will restrict access to the system build properties file]]></string>
+    <string name="identification__sys_block_____cid" translatable="false"><![CDATA[Will restrict direct access to CID (Card Identification Register = SD card serial number)]]></string>
+    <string name="identification__sys_class_____cid" translatable="false"><![CDATA[Will restrict direct access to CID (Card Identification Register = SD card serial number)]]></string>
+    <string name="identification_AdvertisingId" translatable="false"><![CDATA[Will restrict access to the Google advertising identifier]]></string>
+    <string name="identification_getString" translatable="false"><![CDATA[Will restrict access to the Android ID]]></string>
+    <string name="identification_getDescriptor" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/view/InputDevice.html#getDescriptor()">Google documentation</a>]]></string>
+    <string name="identification_GservicesProvider" translatable="false"><![CDATA[Will restrict direct access to android_id, acquired through the Google services provider]]></string>
+    <string name="identification_SERIAL" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/os/Build.html#SERIAL">Google documentation</a>]]></string>
     <!-- internet -->
     <!-- ipc -->
     <!-- location -->
