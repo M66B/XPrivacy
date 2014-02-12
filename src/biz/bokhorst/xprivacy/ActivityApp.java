@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -64,7 +63,6 @@ import android.widget.Toast;
 public class ActivityApp extends ActivityBase {
 	private ApplicationInfoEx mAppInfo = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
-	private Bitmap[] mCheck;
 
 	public static final String cUid = "Uid";
 	public static final String cRestrictionName = "RestrictionName";
@@ -228,8 +226,6 @@ public class ActivityApp extends ActivityBase {
 
 		// Up navigation
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-		mCheck = getTriStateCheckBox();
 
 		// Tutorial
 		if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTutorialDetails, false, false)) {
@@ -427,9 +423,9 @@ public class ActivityApp extends ActivityBase {
 		dialog.setContentView(R.layout.help);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		ImageView imgHelpHalf = (ImageView) dialog.findViewById(R.id.imgHelpHalf);
-		imgHelpHalf.setImageBitmap(mCheck[1]);
+		imgHelpHalf.setImageBitmap(getHalfCheckBox());
 		ImageView imgHelpOnDemand = (ImageView) dialog.findViewById(R.id.imgHelpOnDemand);
-		imgHelpOnDemand.setImageBitmap(mCheck[3]);
+		imgHelpOnDemand.setImageBitmap(getOnDemandCheckBox());
 		dialog.setCancelable(true);
 		dialog.show();
 	}
@@ -944,13 +940,13 @@ public class ActivityApp extends ActivityBase {
 
 					// Display restriction
 					if (!rstate.asked)
-						holder.imgCBName.setImageBitmap(mCheck[3]); // ?
+						holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
 					else if (rstate.partial)
-						holder.imgCBName.setImageBitmap(mCheck[1]); // Half
+						holder.imgCBName.setImageBitmap(getHalfCheckBox());
 					else if (rstate.restricted)
-						holder.imgCBName.setImageBitmap(mCheck[2]); // Full
+						holder.imgCBName.setImageBitmap(getFullCheckBox());
 					else
-						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+						holder.imgCBName.setImageBitmap(getOffCheckBox());
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
@@ -1149,13 +1145,13 @@ public class ActivityApp extends ActivityBase {
 
 					// Display restriction
 					if (!rstate.asked)
-						holder.imgCBMethodName.setImageBitmap(mCheck[3]); // ?
+						holder.imgCBMethodName.setImageBitmap(getOnDemandCheckBox());
 					else if (rstate.partial)
-						holder.imgCBMethodName.setImageBitmap(mCheck[1]); // Half
+						holder.imgCBMethodName.setImageBitmap(getHalfCheckBox());
 					else if (rstate.restricted)
-						holder.imgCBMethodName.setImageBitmap(mCheck[2]); // Full
+						holder.imgCBMethodName.setImageBitmap(getFullCheckBox());
 					else
-						holder.imgCBMethodName.setImageBitmap(mCheck[0]); // Off
+						holder.imgCBMethodName.setImageBitmap(getOffCheckBox());
 					holder.imgCBMethodName.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes

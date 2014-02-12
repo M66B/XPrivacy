@@ -17,6 +17,7 @@ import android.widget.TextView;
 @SuppressLint("Registered")
 public class ActivityBase extends Activity {
 	private int mThemeId;
+	private Bitmap[] mCheck = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,32 @@ public class ActivityBase extends Activity {
 		}
 	}
 
-	protected Bitmap[] getTriStateCheckBox() {
-		Bitmap[] bitmap = new Bitmap[4];
+	protected Bitmap getOffCheckBox() {
+		if (mCheck == null)
+			buildCheckBoxes();
+		return mCheck[0];
+	}
+
+	protected Bitmap getHalfCheckBox() {
+		if (mCheck == null)
+			buildCheckBoxes();
+		return mCheck[1];
+	}
+
+	protected Bitmap getFullCheckBox() {
+		if (mCheck == null)
+			buildCheckBoxes();
+		return mCheck[2];
+	}
+
+	protected Bitmap getOnDemandCheckBox() {
+		if (mCheck == null)
+			buildCheckBoxes();
+		return mCheck[3];
+	}
+
+	private void buildCheckBoxes() {
+		mCheck = new Bitmap[4];
 
 		// Get highlight color
 		TypedArray ta1 = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorActivatedHighlight });
@@ -65,13 +90,13 @@ public class ActivityBase extends Activity {
 		checkmarkOutline.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
 
 		// Create off check box
-		bitmap[0] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
-		Canvas canvas0 = new Canvas(bitmap[0]);
+		mCheck[0] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
+		Canvas canvas0 = new Canvas(mCheck[0]);
 		off.draw(canvas0);
 
 		// Create half check box
-		bitmap[1] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
-		Canvas canvas1 = new Canvas(bitmap[1]);
+		mCheck[1] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
+		Canvas canvas1 = new Canvas(mCheck[1]);
 		off.draw(canvas1);
 		Paint paint1 = new Paint();
 		paint1.setStyle(Paint.Style.FILL);
@@ -82,8 +107,8 @@ public class ActivityBase extends Activity {
 				paint1);
 
 		// Create full check box
-		bitmap[2] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
-		Canvas canvas2 = new Canvas(bitmap[2]);
+		mCheck[2] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
+		Canvas canvas2 = new Canvas(mCheck[2]);
 		off.draw(canvas2);
 		checkmark.draw(canvas2);
 		checkmarkOutline.draw(canvas2);
@@ -98,13 +123,11 @@ public class ActivityBase extends Activity {
 		questionmarkOutline.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
 
 		// Create question check box
-		bitmap[3] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
-		Canvas canvas3 = new Canvas(bitmap[3]);
+		mCheck[3] = Bitmap.createBitmap(off.getIntrinsicWidth(), off.getIntrinsicHeight(), Config.ARGB_8888);
+		Canvas canvas3 = new Canvas(mCheck[3]);
 		off.draw(canvas3);
 		questionmark.draw(canvas3);
 		questionmarkOutline.draw(canvas3);
-
-		return bitmap;
 	}
 
 	public int getThemed(int attr) {

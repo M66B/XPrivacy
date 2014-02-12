@@ -70,7 +70,6 @@ import android.widget.Toast;
 public class ActivityMain extends ActivityBase implements OnItemSelectedListener {
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
-	private Bitmap[] mCheck;
 	private int mSortMode;
 	private boolean mSortInvert;
 	private int mProgressWidth = 0;
@@ -269,9 +268,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			optionAbout();
 			PrivacyManager.setSetting(0, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
 		}
-
-		// Build tri-state check box images
-		mCheck = getTriStateCheckBox();
 
 		// Tutorial
 		if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTutorialMain, false, false)) {
@@ -779,9 +775,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		dialog.setContentView(R.layout.help);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		ImageView imgHelpHalf = (ImageView) dialog.findViewById(R.id.imgHelpHalf);
-		imgHelpHalf.setImageBitmap(mCheck[1]);
+		imgHelpHalf.setImageBitmap(getHalfCheckBox());
 		ImageView imgHelpOnDemand = (ImageView) dialog.findViewById(R.id.imgHelpOnDemand);
-		imgHelpOnDemand.setImageBitmap(mCheck[3]);
+		imgHelpOnDemand.setImageBitmap(getOnDemandCheckBox());
 		dialog.setCancelable(true);
 		dialog.show();
 	}
@@ -1406,13 +1402,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 					// Display restriction
 					if (!rstate.asked)
-						holder.imgCBName.setImageBitmap(mCheck[3]); // ?
+						holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
 					else if (rstate.partial)
-						holder.imgCBName.setImageBitmap(mCheck[1]); // Half
+						holder.imgCBName.setImageBitmap(getHalfCheckBox());
 					else if (rstate.restricted)
-						holder.imgCBName.setImageBitmap(mCheck[2]); // Full
+						holder.imgCBName.setImageBitmap(getFullCheckBox());
 					else
-						holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+						holder.imgCBName.setImageBitmap(getOffCheckBox());
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
 					// Display enabled state
@@ -1467,7 +1463,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 														PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 
 												// Update visible state
-												holder.imgCBName.setImageBitmap(mCheck[3]); // ?
+												holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
 												holder.vwState.setBackgroundColor(getResources().getColor(
 														getThemed(R.attr.color_state_attention)));
 
@@ -1522,13 +1518,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 								// Update restriction display
 								rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
 								if (!rstate.asked)
-									holder.imgCBName.setImageBitmap(mCheck[3]); // ?
+									holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
 								else if (rstate.partial)
-									holder.imgCBName.setImageBitmap(mCheck[1]); // Half
+									holder.imgCBName.setImageBitmap(getHalfCheckBox());
 								else if (rstate.restricted)
-									holder.imgCBName.setImageBitmap(mCheck[2]); // Full
+									holder.imgCBName.setImageBitmap(getFullCheckBox());
 								else
-									holder.imgCBName.setImageBitmap(mCheck[0]); // Off
+									holder.imgCBName.setImageBitmap(getOffCheckBox());
 								holder.imgCBName.setVisibility(View.VISIBLE);
 
 								// Notify restart
