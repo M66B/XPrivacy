@@ -199,7 +199,6 @@ public class XContentResolver extends XHook {
 										+ id, false, true);
 								if (allowed)
 									copyColumns(cursor, result, listColumn.size());
-								_dumpColumns(cursor, "allowed=" + allowed);
 							}
 						else
 							Util.log(this, Log.ERROR, "ID missing uri=" + uri);
