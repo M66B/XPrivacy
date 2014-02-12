@@ -107,10 +107,8 @@ public class ActivityApp extends ActivityBase {
 		super.onCreate(savedInstanceState);
 
 		// Check privacy service client
-		if (!PrivacyService.checkClient()) {
-			setContentView(R.layout.reboot);
+		if (!PrivacyService.checkClient())
 			return;
-		}
 
 		// Set theme
 		String themeName = PrivacyManager.getSetting(0, PrivacyManager.cSettingTheme, "", false);

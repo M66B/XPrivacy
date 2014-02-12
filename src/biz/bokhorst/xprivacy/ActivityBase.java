@@ -9,10 +9,31 @@ import android.graphics.Paint;
 import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.TextView;
 
 @SuppressLint("Registered")
 public class ActivityBase extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		// Check privacy service client
+		if (!PrivacyService.checkClient()) {
+			setContentView(R.layout.reboot);
+			if (PrivacyService.getClient() == null) {
+				TextView tvRebootClient = (TextView) findViewById(R.id.tvRebootClient);
+				tvRebootClient.setVisibility(View.VISIBLE);
+			} else {
+				TextView tvRebootClient = (TextView) findViewById(R.id.tvRebootVersion);
+				tvRebootClient.setVisibility(View.VISIBLE);
+				Requirements.check(this);
+			}
+		}
+	}
 
 	protected Bitmap[] getTriStateCheckBox() {
 		Bitmap[] bitmap = new Bitmap[4];

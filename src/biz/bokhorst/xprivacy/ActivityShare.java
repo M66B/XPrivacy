@@ -128,6 +128,10 @@ public class ActivityShare extends ActivityBase {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Check privacy service client
+		if (!PrivacyService.checkClient())
+			return;
+
 		// Get data
 		final Bundle extras = getIntent().getExtras();
 		final String action = getIntent().getAction();

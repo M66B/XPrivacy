@@ -56,6 +56,10 @@ public class ActivityUsage extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Check privacy service client
+		if (!PrivacyService.checkClient())
+			return;
+
 		// Set theme
 		String themeName = PrivacyManager.getSetting(0, PrivacyManager.cSettingTheme, "", false);
 		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);

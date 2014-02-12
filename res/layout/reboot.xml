@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -33,5 +34,25 @@
         android:text="@string/msg_reboot"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvRebootClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot?"
+        android:textAppearance="?android:attr/textAppearance"
+        android:visibility="gone"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/tvRebootVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="Privacy service version mismatch; did you reboot after upgrading XPrivacy?"
+        android:textAppearance="?android:attr/textAppearance"
+        android:visibility="gone"
+        tools:ignore="HardcodedText" />
 
 </LinearLayout>

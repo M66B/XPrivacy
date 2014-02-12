@@ -157,12 +157,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		super.onCreate(savedInstanceState);
 
 		// Check privacy service client
-		if (!PrivacyService.checkClient()) {
-			setContentView(R.layout.reboot);
-			if (PrivacyService.getClient() != null)
-				Requirements.check(this);
+		if (!PrivacyService.checkClient())
 			return;
-		}
 
 		// Salt should be the same when exporting/importing
 		String salt = PrivacyManager.getSetting(0, PrivacyManager.cSettingSalt, null, false);
@@ -174,6 +170,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 
 		// Set theme
+		// TODO: move to activity base
 		String themeName = PrivacyManager.getSetting(0, PrivacyManager.cSettingTheme, "", false);
 		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 		setTheme(mThemeId);
