@@ -657,6 +657,16 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 	* for a user application the default is to deny temporarily
 	* for a system applications the default is to allow temporarily, unless *Restrict dangerous functions* is enabled
 
+<a name="FAQ35"></a>
+**(35) Do I need the pro enabler to use the pro license?**
+
+No, the pro license can be used independently.
+
+<a name="FAQ36"></a>
+**(36) Is PayPal/Bitcoin the only way to donate?**
+
+Yes, it is not feasible to add other donation methods at this moment.
+
 <a name="FAQ46"></a>
 **(46) Why do I need to register to submit restrictions?**
 
