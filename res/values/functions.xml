@@ -25,8 +25,8 @@
     <string name="calling_sendDataMessage" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/gsm/SmsManager.html#sendDataMessage(java.lang.String,%20java.lang.String,%20short,%20byte[],%20android.app.PendingIntent,%20android.app.PendingIntent)">Google documentation</a>]]></string>
     <string name="calling_sendMultipartTextMessage" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/gsm/SmsManager.html#sendMultipartTextMessage(java.lang.String,%20java.lang.String,%20java.util.ArrayList&lt;java.lang.String&gt;,%20java.util.ArrayList&lt;android.app.PendingIntent&gt;,%20java.util.ArrayList&lt;android.app.PendingIntent&gt;)">Google documentation</a>]]></string>
     <string name="calling_sendTextMessage" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/gsm/SmsManager.html#sendTextMessage(java.lang.String,%20java.lang.String,%20java.lang.String,%20android.app.PendingIntent,%20android.app.PendingIntent)">Google documentation</a>]]></string>
-    <string name="calling_android.intent.action.RESPOND_VIA_MESSAGE" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#ACTION_RESPOND_VIA_MESSAGE">Google documentation</a>]]></string>
-    <string name="calling_android.intent.action.CALL" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/Intent.html#ACTION_CALL">Google documentation</a>]]></string>
+    <string name="calling_android_intent_action_RESPOND_VIA_MESSAGE" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#ACTION_RESPOND_VIA_MESSAGE">Google documentation</a>]]></string>
+    <string name="calling_android_intent_action_CALL" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/Intent.html#ACTION_CALL">Google documentation</a>]]></string>
     <!-- clipboard -->
     <string name="clipboard_addPrimaryClipChangedListener" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/ClipboardManager.html#addPrimaryClipChangedListener(android.content.ClipboardManager.OnPrimaryClipChangedListener)">Google documentation</a>]]></string>
     <string name="clipboard_getPrimaryClip" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/ClipboardManager.html#getPrimaryClip()">Google documentation</a>]]></string>
@@ -35,8 +35,18 @@
     <string name="clipboard_hasPrimaryClip" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/ClipboardManager.html#hasPrimaryClip()">Google documentation</a>]]></string>
     <string name="clipboard_hasText" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/ClipboardManager.html#hasText()">Google documentation</a>]]></string>
     <!-- contacts -->
+    <string name="contacts_contacts_contacts" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/provider/ContactsContract.Contacts.html">Google documentation</a>]]></string>
+    <string name="contacts_contacts_data" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/provider/ContactsContract.Data.html">Google documentation</a>]]></string>
+    <string name="contacts_contacts_phone_lookup" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/provider/ContactsContract.PhoneLookup.html">Google documentation</a>]]></string>
+    <string name="contacts_contacts_profile" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/provider/ContactsContract.Profile.html">Google documentation</a>]]></string>
+    <string name="contacts_contacts_raw_contacts" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/provider/ContactsContract.RawContacts.html">Google documentation</a>]]></string>
+    <string name="contacts_ContactsProvider2" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/provider/ContactsContract.html">Google documentation</a>]]></string>
+    <string name="contacts_IccProvider" translatable="false"><![CDATA[Will restrict access to the SIM contacts]]></string>
     <!-- dictionary -->
+    <string name="dictionary_UserDictionary" translatable="false"><![CDATA[Will restrict access to the user dictionary]]></string>
     <!-- email -->
+    <string name="email_EMailProvider" translatable="false"><![CDATA[Will restrict access to the Android E-mail information (accounts, messages, attachments)]]></string>
+    <string name="email_GMailProvider" translatable="false"><![CDATA[<a href="https://developers.google.com/gmail/android/">Google documentation</a>]]></string>
     <!-- identification -->
     <!-- internet -->
     <!-- ipc -->
