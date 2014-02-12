@@ -49,7 +49,6 @@ public class Meta {
 		mListHook.add(new Hook("clipboard", "getText", "", 10, null, null).doNotify());
 		mListHook.add(new Hook("clipboard", "hasPrimaryClip", "", 11, null, null));
 		mListHook.add(new Hook("clipboard", "hasText", "", 10, null, null));
-		mListHook.add(new Hook("clipboard", "removePrimaryClipChangedListener", "", 11, null, null));
 
 		mListHook.add(new Hook("contacts", "contacts/contacts", "READ_CONTACTS", 1, null, null));
 		mListHook.add(new Hook("contacts", "contacts/data", "READ_CONTACTS", 1, null, null));
