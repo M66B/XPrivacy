@@ -33,7 +33,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class ActivityUsage extends Activity {
-	private int mThemeId;
 	private boolean mAll = true;
 	private int mUid;
 	private UsageAdapter mUsageAdapter;
@@ -59,11 +58,6 @@ public class ActivityUsage extends Activity {
 		// Check privacy service client
 		if (!PrivacyService.checkClient())
 			return;
-
-		// Set theme
-		String themeName = PrivacyManager.getSetting(0, PrivacyManager.cSettingTheme, "", false);
-		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
-		setTheme(mThemeId);
 
 		// Set layout
 		setContentView(R.layout.usagelist);

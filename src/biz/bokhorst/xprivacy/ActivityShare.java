@@ -76,7 +76,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class ActivityShare extends ActivityBase {
-	private int mThemeId;
 	private int mActionId;
 	private AppListAdapter mAppAdapter;
 	private SparseArray<AppHolder> mAppsByUid;
@@ -163,11 +162,6 @@ public class ActivityShare extends ActivityBase {
 		// Check whether we need a ui
 		if (extras != null && extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false))
 			mInteractive = true;
-
-		// Set theme
-		String themeName = PrivacyManager.getSetting(0, PrivacyManager.cSettingTheme, "", false);
-		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
-		setTheme(mThemeId);
 
 		// Set layout
 		setContentView(R.layout.sharelist);

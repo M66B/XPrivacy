@@ -16,13 +16,19 @@ import android.widget.TextView;
 
 @SuppressLint("Registered")
 public class ActivityBase extends Activity {
+	private int mThemeId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Check privacy service client
-		if (!PrivacyService.checkClient()) {
+		if (PrivacyService.checkClient()) {
+			// Set theme
+			String themeName = PrivacyManager.getSetting(0, PrivacyManager.cSettingTheme, "", false);
+			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
+			setTheme(mThemeId);
+		} else {
+			// Privacy client now available
 			setContentView(R.layout.reboot);
 			if (PrivacyService.getClient() == null) {
 				TextView tvRebootClient = (TextView) findViewById(R.id.tvRebootClient);

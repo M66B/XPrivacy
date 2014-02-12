@@ -68,7 +68,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityMain extends ActivityBase implements OnItemSelectedListener {
-	private int mThemeId;
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 	private Bitmap[] mCheck;
@@ -168,12 +167,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				salt = "";
 			PrivacyManager.setSetting(0, PrivacyManager.cSettingSalt, salt);
 		}
-
-		// Set theme
-		// TODO: move to activity base
-		String themeName = PrivacyManager.getSetting(0, PrivacyManager.cSettingTheme, "", false);
-		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
-		setTheme(mThemeId);
 
 		// Set layout
 		setContentView(R.layout.mainlist);

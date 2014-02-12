@@ -62,7 +62,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityApp extends ActivityBase {
-	private int mThemeId;
 	private ApplicationInfoEx mAppInfo = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 	private Bitmap[] mCheck;
@@ -109,11 +108,6 @@ public class ActivityApp extends ActivityBase {
 		// Check privacy service client
 		if (!PrivacyService.checkClient())
 			return;
-
-		// Set theme
-		String themeName = PrivacyManager.getSetting(0, PrivacyManager.cSettingTheme, "", false);
-		mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
-		setTheme(mThemeId);
 
 		// Set layout
 		setContentView(R.layout.restrictionlist);
