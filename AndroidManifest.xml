@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
-    android:versionCode="275"
-    android:versionName="1.99.41" >
+    android:versionCode="276"
+    android:versionName="1.99.42" >
 
     <uses-sdk
         android:minSdkVersion="15"
