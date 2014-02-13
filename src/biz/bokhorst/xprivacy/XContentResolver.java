@@ -235,7 +235,6 @@ public class XContentResolver extends XHook {
 					else if (uri.startsWith("content://com.android.contacts")) {
 						restrictionName = PrivacyManager.cContacts;
 						methodName = "ContactsProvider2"; // fall-back
-						Util.log(this, Log.WARN, "Contact fallback uri=" + uri);
 					}
 
 					else if (uri.startsWith("content://downloads")) {
@@ -313,6 +312,10 @@ public class XContentResolver extends XHook {
 	private ContactID getIdForUri(String uri) {
 		if (uri.startsWith("content://com.android.contacts/contacts"))
 			return new ContactID("name_raw_contact_id", true);
+		else if (uri.startsWith("content://com.android.contacts/data/emails"))
+			return new ContactID("contact_id", false);
+		else if (uri.startsWith("content://com.android.contacts/data/phones"))
+			return new ContactID("raw_contact_id", true);
 		else if (uri.startsWith("content://com.android.contacts/data"))
 			return new ContactID("raw_contact_id", true);
 		else if (uri.startsWith("content://com.android.contacts/phone_lookup"))

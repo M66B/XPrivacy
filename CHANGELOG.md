@@ -10,6 +10,7 @@ Changelog
 **Next release**
 
 * Fixed cycling through restriction states, thanks @[jpeg729](https://github.com/jpeg729)
+* Fixed Gmail contact restricting ([issue](/../../issues/1336))
 * Added documentation for messages ([issue](/../../issues/838))
 * Make *Browser/Downloads* dangerous
 * Updated German translation
