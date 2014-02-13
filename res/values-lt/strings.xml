@@ -105,7 +105,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_fuser">Vartotojo programos</string>
     <string name="title_fondemand">Pagal reikalavimą</string>
     <string name="title_fsystem">Sistemos programos</string>
-    <string name="title_fnot"></string>neriboti</string>
+    <string name="title_fnot">neriboti</string>
     <string name="title_sname">Pagal pavadinimą</string>
     <string name="title_suid">Pagal UID</string>
     <string name="title_sinstalled">Pagal įdiegimo datą</string>
