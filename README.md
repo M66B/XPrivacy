@@ -688,6 +688,17 @@ It takes care of migrating settings, randomization of fake data and upgrading se
 
 To prevent a malicious application maker from automatically submitting a lot of *allow* restrictions to outvote the other users.
 
+<a name="FAQ47"></a>
+**(47) What is IPC?**
+
+See [here](http://forum.xda-developers.com/showpost.php?p=50274730&postcount=7006) for more information.
+
+<a name="FAQ48"></a>
+**(48) Can XPrivacy be detected by other application?**
+
+Yes, but I don't see this as a problem,
+since [security through obscurity](http://en.wikipedia.org/wiki/Security_through_obscurity) is not a good principle.
+
 Support
 -------
 
