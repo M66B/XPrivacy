@@ -667,7 +667,7 @@ No, the pro license can be used independently.
 Yes, it is not feasible to add other donation methods at this moment.
 
 <a name="FAQ37"></a>
-**(35) Do I need to have the Play store/services installed for the pro version?**
+**(37) Do I need to have the Play store/services installed for the pro version?**
 
 Only for the pro enabler, not for the pro license.
 See [here](http://www.xprivacy.eu/) for the differences between the pro enabler and pro license.
