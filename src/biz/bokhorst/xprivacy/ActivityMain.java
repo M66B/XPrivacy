@@ -1499,18 +1499,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									alertDialog.show();
 								} else {
 									// Set change
-									boolean restrict;
-									boolean ask;
-									if (rstate.restricted) {
-										restrict = false;
-										ask = true;
-									} else if (!rstate.asked) {
-										restrict = false;
-										ask = false;
-									} else {
-										restrict = true;
-										ask = false;
-									}
+									RState next = rstate.next();
 
 									// Get restrictions to change
 									List<String> listRestriction;
@@ -1523,11 +1512,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 									List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
-									if (mRestrictionName != null && !restrict)
+									if (mRestrictionName != null && !next.restricted)
 										PrivacyManager.deleteRestrictions(xAppInfo.getUid(), mRestrictionName);
 									for (String restrictionName : listRestriction)
 										PrivacyManager.setRestriction(xAppInfo.getUid(), restrictionName, null,
-												restrict, !ask);
+												next.restricted, next.asked);
 									List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
 

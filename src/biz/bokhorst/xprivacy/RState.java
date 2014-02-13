@@ -44,4 +44,19 @@ public class RState {
 
 		return state;
 	}
+
+	public RState next() {
+		RState next = new RState();
+		if (this.restricted) {
+			next.restricted = false;
+			next.asked = false;
+		} else if (!this.asked) {
+			next.restricted = false;
+			next.asked = true;
+		} else {
+			next.restricted = true;
+			next.asked = true;
+		}
+		return next;
+	}
 }
