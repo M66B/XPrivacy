@@ -1451,6 +1451,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 								if (mListAppSelected.contains(xAppInfo)) {
 									mListAppSelected.remove(xAppInfo);
 									holder.row.setBackgroundColor(Color.TRANSPARENT);
+									
+									if (mListAppSelected.size() == 0) {
+										mSelecting = false;
+									}
 								} else {
 									mListAppSelected.add(xAppInfo);
 									holder.row.setBackgroundColor(mHighlightColor);
