@@ -10,6 +10,7 @@ Changelog
 **Next release**
 
 * Fixed dark theme usage list ([issue](/../../issues/1331))
+* Even easier multiple select, thanks @[paour](https://github.com/paour) ([issue](/../../issues/1318))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
