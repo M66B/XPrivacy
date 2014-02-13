@@ -13,6 +13,7 @@ Changelog
 * Fixed Gmail contact restricting ([issue](/../../issues/1336))
 * Added documentation for messages ([issue](/../../issues/838))
 * Make *Browser/Downloads* dangerous
+* Updated French translation
 * Updated German translation
 * Updated Lithuanian translation
 
