@@ -63,30 +63,30 @@ public class Meta {
 		mListHook.add(new Hook("email", "EMailProvider", "com.android.email.permission.ACCESS_PROVIDER", 1, null, null));
 		mListHook.add(new Hook("email", "GMailProvider", "com.google.android.gm.permission.READ_CONTENT_PROVIDER", 8, "1.99.20", null));
 
-		mListHook.add(new Hook("identification", "%hostname", "", 10, null, null));
-		mListHook.add(new Hook("identification", "%imei", "", 10, null, null));
-		mListHook.add(new Hook("identification", "%macaddr", "", 10, null, null));
-		mListHook.add(new Hook("identification", "%serialno", "", 10, null, null));
-		mListHook.add(new Hook("identification", "%cid", "", 10, null, null));
-		mListHook.add(new Hook("identification", "/proc", "", 10, "1.7", null).dangerous());
-		mListHook.add(new Hook("identification", "/system/build.prop", "", 10, "1.9.9", null).dangerous());
-		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 10, null, null));
-		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 10, null, null));
-		mListHook.add(new Hook("identification", "AdvertisingId", "", 10, null, null));
-		mListHook.add(new Hook("identification", "getString", "", 10, null, null));
+		mListHook.add(new Hook("identification", "%hostname", "", 1, null, null));
+		mListHook.add(new Hook("identification", "%imei", "", 1, null, null));
+		mListHook.add(new Hook("identification", "%macaddr", "", 1, null, null));
+		mListHook.add(new Hook("identification", "%serialno", "", 1, null, null));
+		mListHook.add(new Hook("identification", "%cid", "", 1, null, null));
+		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).dangerous());
+		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).dangerous());
+		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, null, null));
+		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, null, null));
+		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null));
+		mListHook.add(new Hook("identification", "getString", "", 1, null, null));
 		mListHook.add(new Hook("identification", "getDescriptor", "", 16, null, null));
-		mListHook.add(new Hook("identification", "GservicesProvider", "com.google.android.providers.gsf.permission.READ_GSERVICES", 10, null, null).dangerous());
-		mListHook.add(new Hook("identification", "SERIAL", "", 10, null, null).restart().noUsageData());
+		mListHook.add(new Hook("identification", "GservicesProvider", "com.google.android.providers.gsf.permission.READ_GSERVICES", 1, null, null).dangerous());
+		mListHook.add(new Hook("identification", "SERIAL", "", 1, null, null).restart().noUsageData());
 
-		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 10, null, null));
-		mListHook.add(new Hook("internet", "getByAddress", "INTERNET", 10, null, null));
-		mListHook.add(new Hook("internet", "getByName", "INTERNET", 10, null, null));
-		mListHook.add(new Hook("internet", "getByInetAddress", "INTERNET", 10, null, null));
-		mListHook.add(new Hook("internet", "getNetworkInterfaces", "INTERNET", 10, null, null));
-		mListHook.add(new Hook("internet", "inet", "INTERNET", 10, null, null).dangerous().restart().noUsageData());
-		mListHook.add(new Hook("internet", "getActiveNetworkInfo", null, 10, null, null).dangerous());
-		mListHook.add(new Hook("internet", "getAllNetworkInfo", null, 10, null, null));
-		mListHook.add(new Hook("internet", "getNetworkInfo", null, 10, null, null).dangerous());
+		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, null, null));
+		mListHook.add(new Hook("internet", "getByAddress", "INTERNET", 1, null, null));
+		mListHook.add(new Hook("internet", "getByName", "INTERNET", 1, null, null));
+		mListHook.add(new Hook("internet", "getByInetAddress", "INTERNET", 1, null, null));
+		mListHook.add(new Hook("internet", "getNetworkInterfaces", "INTERNET", 1, null, null));
+		mListHook.add(new Hook("internet", "inet", "INTERNET", 1, null, null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("internet", "getActiveNetworkInfo", null, 1, null, null).dangerous());
+		mListHook.add(new Hook("internet", "getAllNetworkInfo", null, 1, null, null));
+		mListHook.add(new Hook("internet", "getNetworkInfo", null, 1, null, null).dangerous());
 
 		mListHook.add(new Hook("internet", "getDetailedState", null, 1, null, null));
 		mListHook.add(new Hook("internet", "getExtraInfo", null, 1, null, null));
@@ -122,11 +122,11 @@ public class Meta {
 		mListHook.add(new Hook("location", "sendExtraCommand", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, null, null));
 
 		mListHook.add(new Hook("location", "enableLocationUpdates", "CONTROL_LOCATION_UPDATES", 10, null, null));
-		mListHook.add(new Hook("location", "getCellLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
-		mListHook.add(new Hook("location", "getNeighboringCellInfo", "ACCESS_COARSE_UPDATES", 10, null, null));
+		mListHook.add(new Hook("location", "getCellLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
+		mListHook.add(new Hook("location", "getNeighboringCellInfo", "ACCESS_COARSE_UPDATES", 3, null, null));
 		mListHook.add(new Hook("location", "getAllCellInfo", "ACCESS_COARSE_UPDATES", 17, null, null));
-		mListHook.add(new Hook("location", "getScanResults", "ACCESS_WIFI_STATE", 10, null, null).dangerous());
-		mListHook.add(new Hook("location", "listen", "ACCESS_COARSE_LOCATION", 10, null, null));
+		mListHook.add(new Hook("location", "getScanResults", "ACCESS_WIFI_STATE", 1, null, null).dangerous());
+		mListHook.add(new Hook("location", "listen", "ACCESS_COARSE_LOCATION", 1, null, null));
 		mListHook.add(new Hook("location", "GMS.addGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
 		mListHook.add(new Hook("location", "GMS.getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
 		mListHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
@@ -152,9 +152,9 @@ public class Meta {
 
 		mListHook.add(new Hook("network", "getAddress", "android.permission.BLUETOOTH", 5, null, null));
 		mListHook.add(new Hook("network", "getBondedDevices", "android.permission.BLUETOOTH", 5, null, null));
-		mListHook.add(new Hook("network", "getHardwareAddress", "ACCESS_NETWORK_STATE", 10, null, null));
-		mListHook.add(new Hook("network", "getInetAddresses", "ACCESS_NETWORK_STATE", 10, null, null));
-		mListHook.add(new Hook("network", "getInterfaceAddresses", "ACCESS_NETWORK_STATE", 10, null, null));
+		mListHook.add(new Hook("network", "getHardwareAddress", "ACCESS_NETWORK_STATE", 9, null, null));
+		mListHook.add(new Hook("network", "getInetAddresses", "ACCESS_NETWORK_STATE", 9, null, null));
+		mListHook.add(new Hook("network", "getInterfaceAddresses", "ACCESS_NETWORK_STATE", 9, null, null));
 		mListHook.add(new Hook("network", "getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, null, null));
 		mListHook.add(new Hook("network", "getConnectionInfo", "ACCESS_WIFI_STATE", 10, null, null));
 		mListHook.add(new Hook("network", "getDhcpInfo", "ACCESS_WIFI_STATE", 10, null, null));
