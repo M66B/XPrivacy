@@ -54,7 +54,7 @@ public class XLocationClient extends XHook {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XLocationClient(Methods.addGeofences, PrivacyManager.cLocation).optional());
 		listHook.add(new XLocationClient(Methods.getLastLocation, PrivacyManager.cLocation).optional());
-		listHook.add(new XLocationClient(Methods.removeGeofences, PrivacyManager.cLocation).optional());
+		listHook.add(new XLocationClient(Methods.removeGeofences, null, 1).optional());
 		listHook.add(new XLocationClient(Methods.removeLocationUpdates, null, 1).optional());
 		listHook.add(new XLocationClient(Methods.requestLocationUpdates, PrivacyManager.cLocation).optional());
 		return listHook;
@@ -62,8 +62,12 @@ public class XLocationClient extends XHook {
 
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
-		if (mMethod == Methods.addGeofences || mMethod == Methods.removeGeofences) {
+		if (mMethod == Methods.addGeofences) {
 			if (isRestricted(param))
+				param.setResult(null);
+
+		} else if (mMethod == Methods.removeGeofences) {
+			if (isRestricted(param, PrivacyManager.cLocation, "addGeofences"))
 				param.setResult(null);
 
 		} else if (mMethod == Methods.getLastLocation) {

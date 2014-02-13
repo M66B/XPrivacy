@@ -130,7 +130,6 @@ public class Meta {
 		mListHook.add(new Hook("location", "listen", "ACCESS_COARSE_LOCATION", 10, null, null));
 		mListHook.add(new Hook("location", "GMS.addGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
 		mListHook.add(new Hook("location", "GMS.getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
-		mListHook.add(new Hook("location", "GMS.removeGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
 		mListHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
 
 		mListHook.add(new Hook("media", "startRecording", "RECORD_AUDIO", 10, null, null).doNotify());
