@@ -1231,8 +1231,7 @@ public class ActivityApp extends ActivityBase {
 			// Display if permissions
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 
-			final String annotation = md.getAnnotation();
-			if (annotation == null)
+			if (md.getAnnotation() == null)
 				holder.imgInfo.setVisibility(View.GONE);
 			else {
 				holder.imgInfo.setVisibility(View.VISIBLE);
@@ -1245,8 +1244,18 @@ public class ActivityApp extends ActivityBase {
 						TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
 						tvTitle.setText(md.getName());
 
+						String text = md.getAnnotation();
+						String[] permissions = md.getPermissions();
+						if (permissions != null && permissions.length > 0) {
+							text += "<br /><br /><b>Permissions</b><br /><br />";
+							if (permissions[0].equals(""))
+								text += "None";
+							else
+								text += TextUtils.join("<br />", permissions);
+						}
+
 						TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
-						tvInfo.setText(Html.fromHtml(annotation));
+						tvInfo.setText(Html.fromHtml(text));
 						tvInfo.setMovementMethod(LinkMovementMethod.getInstance());
 
 						final PopupWindow popup = new PopupWindow(layout);
