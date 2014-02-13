@@ -131,15 +131,15 @@ public class Meta {
 		mListHook.add(new Hook("location", "GMS.getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
 		mListHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
 
-		mListHook.add(new Hook("media", "startRecording", "RECORD_AUDIO", 10, null, null).doNotify());
-		mListHook.add(new Hook("media", "setPreviewCallback", "CAMERA", 10, null, null).doNotify());
-		mListHook.add(new Hook("media", "setPreviewCallbackWithBuffer", "CAMERA", 10, null, null).doNotify());
-		mListHook.add(new Hook("media", "setOneShotPreviewCallback", "CAMERA", 10, null, null).doNotify());
-		mListHook.add(new Hook("media", "takePicture", "CAMERA", 10, null, null).doNotify());
-		mListHook.add(new Hook("media", "setOutputFile", "RECORD_AUDIO,RECORD_VIDEO", 10, null, null).doNotify());
-		mListHook.add(new Hook("media", "android.media.action.IMAGE_CAPTURE", "CAMERA", 10, null, null).doNotify());
+		mListHook.add(new Hook("media", "startRecording", "RECORD_AUDIO", 3, null, null).doNotify());
+		mListHook.add(new Hook("media", "setPreviewCallback", "CAMERA", 1, null, null).doNotify());
+		mListHook.add(new Hook("media", "setPreviewCallbackWithBuffer", "CAMERA", 8, null, null).doNotify());
+		mListHook.add(new Hook("media", "setOneShotPreviewCallback", "CAMERA", 3, null, null).doNotify());
+		mListHook.add(new Hook("media", "takePicture", "CAMERA", 1, null, null).doNotify());
+		mListHook.add(new Hook("media", "setOutputFile", "RECORD_AUDIO,RECORD_VIDEO", 1, null, null).doNotify());
+		mListHook.add(new Hook("media", "android.media.action.IMAGE_CAPTURE", "CAMERA", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", "android.media.action.IMAGE_CAPTURE_SECURE", "CAMERA", 17, null, null).doNotify());
-		mListHook.add(new Hook("media", "android.media.action.VIDEO_CAPTURE", "CAMERA", 10, null, null).doNotify());
+		mListHook.add(new Hook("media", "android.media.action.VIDEO_CAPTURE", "CAMERA", 3, null, null).doNotify());
 
 		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null));
 		mListHook.add(new Hook("messages", "SmsProvider", "READ_SMS", 1, null, null));
