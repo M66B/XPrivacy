@@ -727,8 +727,8 @@ Similar solutions
 * [PDroid](http://forum.xda-developers.com/showthread.php?t=1357056)
 * [PDroid 2.0](http://forum.xda-developers.com/showthread.php?t=1923576)
 * [OpenPDroid](http://forum.xda-developers.com/showthread.php?t=2098156)
-* [LBE Privacy Guard](https://play.google.com/store/apps/details?id=com.lbe.security.lite)
-* [CyanogenMod Incognito Mode](https://plus.google.com/100275307499530023476/posts/6jzWcRR6hyu)
+* [LBE Privacy Guard](https://play.google.com/store/apps/details?id=com.lbe.security.lite) (now LBE Security Master)
+* [CyanogenMod Incognito Mode](https://plus.google.com/100275307499530023476/posts/6jzWcRR6hyu) (now Paranoid Android Privacy Guard)
 * [Per App Settings Module](http://forum.xda-developers.com/showthread.php?t=2072081)
 * [Android 4.3+ Permission Manager](http://www.androidpolice.com/2013/07/25/app-ops-android-4-3s-hidden-app-permission-manager-control-permissions-for-individual-apps/)
 
