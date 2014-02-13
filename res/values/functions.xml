@@ -140,6 +140,8 @@
     <string name="overlay_updateViewLayout" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/view/ViewManager.html#updateViewLayout(android.view.View, android.view.ViewGroup.LayoutParams)">Google documentation</a>]]></string>
     <!-- phone -->
     <!-- sensors -->
+    <string name="sensors_getDefaultSensor" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/hardware/SensorManager.html#getDefaultSensor(int)">Google documentation</a>]]></string>
+    <string name="sensors_getSensorList" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/hardware/SensorManager.html#getSensorList(int)">Google documentation</a>]]></string>
     <!-- shell -->
     <!-- storage -->
     <string name="storage_media" translatable="false"><![CDATA[Will restrict access to secondary external storage(s) (<a href="http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/">article</a>)]]></string>
