@@ -135,6 +135,9 @@
     <!-- nfc -->
     <!-- notifications -->
     <!-- overlay -->
+    <string name="overlay_addView" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/view/ViewManager.html#addView(android.view.View, android.view.ViewGroup.LayoutParams)">Google documentation</a>]]></string>
+    <string name="overlay_removeView" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/view/ViewManager.html#removeView(android.view.View)">Google documentation</a>]]></string>
+    <string name="overlay_updateViewLayout" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/view/ViewManager.html#updateViewLayout(android.view.View, android.view.ViewGroup.LayoutParams)">Google documentation</a>]]></string>
     <!-- phone -->
     <!-- sensors -->
     <!-- shell -->
