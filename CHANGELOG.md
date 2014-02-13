@@ -9,15 +9,17 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.43 BETA**
+
 * Fixed cycling through restriction states, thanks @[jpeg729](https://github.com/jpeg729)
 * Fixed Gmail contact restricting ([issue](/../../issues/1336))
 * Added documentation for messages and storage ([issue](/../../issues/838))
-* Make *Browser/Downloads* dangerous
+* Made *Browser/Downloads* dangerous
 * Updated French translation
 * Updated German translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.42 BETA**
 
