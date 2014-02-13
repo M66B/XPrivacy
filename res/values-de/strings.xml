@@ -142,7 +142,7 @@
     <string name="settings_expert">Experten-Modus</string>
     <string name="settings_dangerous">Beschränke "bedenkliche" Funktionen</string>
     <string name="settings_confidence">Maximales Abruf-Konfidenzintervall</string>
-    <string name="settings_experimental">Experimentelle Funktionen (erfordert Geräteneustart)</string>
+    <string name="settings_experimental">Experimentelle Funktionen\n (erfordert Geräteneustart)</string>
     <string name="settings_https">Benutze sichere Verbindung</string>
     <string name="settings_syscomponents">Beschränke Systemkomponenten (Android) (erfordert Geräteneustart)</string>
     <string name="settings_usagedata">Zeige App Nutzungsdaten\n (erfordert Geräteneustart)</string>
