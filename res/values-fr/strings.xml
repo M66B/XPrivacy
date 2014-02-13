@@ -23,7 +23,7 @@
     <string name="menu_help">Aide</string>
     <string name="menu_select_all">Tout sélectionner</string>
     <string name="menu_sort">Trier</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_filter">Filtre</string>
     <string name="menu_all">Tous</string>
     <string name="menu_restriction_all">Inverser restrictions</string>
     <string name="menu_clear_all">Tout effacer</string>
@@ -48,8 +48,8 @@
     <string name="msg_new">Nouv. :</string>
     <string name="msg_update">MàJ :</string>
     <string name="msg_licensed" formatted="false">Autorisé à : %s</string>
-    <string name="msg_loading">Chargement</string>
-    <string name="msg_applying">Application en cours</string>
+    <string name="msg_loading">Chargement...</string>
+    <string name="msg_applying">Application en cours...</string>
     <string name="msg_applied">Modèle appliqué</string>
     <string name="msg_saved_to" formatted="false">Sauvé dans %s</string>
     <string name="msg_no_restrictions">Pas de restriction trouvée</string>
@@ -65,15 +65,15 @@
     <string name="msg_register">Inscrivez votre appareil, s.v.p.</string>
     <string name="msg_email">Veuillez entrer votre adresse e-mail:</string>
     <string name="msg_registered">Vérifiez vos mails pour activer votre appareil</string>
-    <string name="msg_service">Service de mise-à-jour en fonctionnement</string>
+    <string name="msg_service">Service de mise à jour en fonctionnement</string>
     <string name="msg_migrating" formatted="false">Migration %s</string>
     <string name="msg_randomizing" formatted="false">Randomisation %s</string>
-    <string name="msg_upgrading" formatted="false">Mise-à-jour %s</string>
+    <string name="msg_upgrading" formatted="false">Mise à niveau %s</string>
     <string name="msg_support_info">Une vérification interne a échoué, voulez-vous envoyer le rapport d\'erreurs?</string>
     <string name="msg_restrictedby">Restreint par XPrivacy</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
-\n\nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>
+\n\nSon utilisation est à vos risques et périls!</b>\n\nVeuillez prendre connaissance de la licence :</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc)</string>
     <string name="restrict_browser">Navigateur (marque-pages/historique)</string>
     <string name="restrict_calendar">Calendrier</string>
@@ -103,7 +103,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_fpermission">Filtrer par permissions</string>
     <string name="title_frestricted">Filtrer restreintes</string>
     <string name="title_fuser">Filtrer les applis utilisateur</string>
-    <string name="title_fondemand">Filter by on-demand</string>
+    <string name="title_fondemand">Filtrer par sur-demande</string>
     <string name="title_fsystem">Filtrer les applis système</string>
     <string name="title_fnot">Inverser</string>
     <string name="title_sname">Par nom</string>
@@ -146,8 +146,8 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_https">Utiliser des connexions sécurisée</string>
     <string name="settings_syscomponents">Restreindre composants système (Android) (redémarrage requis)</string>
     <string name="settings_usagedata">Montrer les données d\'usage pour chaque application (redémarrage requis)</string>
-    <string name="help_longpress">Long press name to select</string>
-    <string name="help_ondemand">restrictions will be asked</string>
+    <string name="help_longpress">Maintenez appuyé le nom de l\'appli pour le selectionner</string>
+    <string name="help_ondemand">Détermination des restrictions sur demande</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
     <string name="help_granted">a les permissions Android</string>
@@ -162,9 +162,9 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="tutorial_mainheader">Sélectionnez la catégorie à restreindre</string>
     <string name="tutorial_mainlist">Cocher une case pour restreindre la catégorie choisie pour l’appli\n
 \nL’appli sera dupée par des données vides ou modifiées\n
-\nAppuyer sur l’icône de l’appli pour les restrictions détaillées et les paramètres</string>
-    <string name="tutorial_detailsheader">Appuyer sur l’icône pour plus d’actions</string>
-    <string name="tutorial_detailslist">Appuyer sur la flèche vers les bas pour voir les exceptions d’une catégorie de restrictions</string>
+\nAppuyez sur l’icône de l’appli pour les restrictions détaillées et les paramètres</string>
+    <string name="tutorial_detailsheader">Appuyez sur l’icône pour plus d’actions</string>
+    <string name="tutorial_detailslist">Appuyez sur la flèche vers les bas pour voir les exceptions d’une catégorie de restrictions</string>
     <string name="permission_manage">Gérer les applications, y compris les tuer</string>
 
 </resources>
