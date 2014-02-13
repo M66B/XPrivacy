@@ -955,8 +955,18 @@ public class ActivityApp extends ActivityBase {
 						@Override
 						public void onClick(View view) {
 							// Set change
-							boolean ask = rstate.asked;
-							boolean restrict = ask ? !rstate.restricted : rstate.restricted;
+							boolean restrict;
+							boolean ask;
+							if (rstate.restricted) {
+								restrict = false;
+								ask = true;
+							} else if (!rstate.asked) {
+								restrict = false;
+								ask = false;
+							} else {
+								restrict = true;
+								ask = false;
+							}
 
 							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 							if (!restrict)
@@ -1160,8 +1170,18 @@ public class ActivityApp extends ActivityBase {
 						@Override
 						public void onClick(View view) {
 							// Set change
-							boolean ask = rstate.asked;
-							boolean restrict = ask ? !rstate.restricted : rstate.restricted;
+							boolean restrict;
+							boolean ask;
+							if (rstate.restricted) {
+								restrict = false;
+								ask = true;
+							} else if (!rstate.asked) {
+								restrict = false;
+								ask = false;
+							} else {
+								restrict = true;
+								ask = false;
+							}
 
 							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, md.getName(), restrict,
 									!ask);

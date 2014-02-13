@@ -1499,12 +1499,15 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									alertDialog.show();
 								} else {
 									// Set change
-									boolean ask = rstate.asked;
-									boolean restrict = ask ? !rstate.restricted : rstate.restricted;
-
-									// Tweak to get to all three states when no
-									// category has been selected
-									if (mRestrictionName == null && !rstate.restricted && rstate.asked) {
+									boolean restrict;
+									boolean ask;
+									if (rstate.restricted) {
+										restrict = false;
+										ask = true;
+									} else if (!rstate.asked) {
+										restrict = false;
+										ask = false;
+									} else {
 										restrict = true;
 										ask = false;
 									}
