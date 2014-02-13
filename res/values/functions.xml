@@ -139,6 +139,9 @@
     <!-- sensors -->
     <!-- shell -->
     <!-- storage -->
+    <string name="storage_media" translatable="false"><![CDATA[Will restrict access to secondary external storage(s) (<a href="http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/">article</a>)]]></string>
+    <string name="storage_sdcard" translatable="false"><![CDATA[Will restrict access to primary external storage (<a href="http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/">article</a>)]]></string>
+    <string name="storage_getExternalStorageState" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/os/Environment.html#getExternalStorageState()">Google documentation</a>]]></string>
     <!-- system -->
     <!-- view -->
 
