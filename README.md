@@ -667,9 +667,15 @@ No, the pro license can be used independently.
 Yes, it is not feasible to add other donation methods at this moment.
 
 <a name="FAQ37"></a>
-**(37)What are the experimental functions?**
+**(37) What are the experimental functions?**
 
 None at this time.
+
+<a name="FAQ38"></a>
+**(38) What does the update service do?**
+
+The update services runs after upgrading XPrivacy and after boot.
+It takes care of migrating settings, randomization of fake data and upgrading settings for new versions.
 
 <a name="FAQ46"></a>
 **(46) Why do I need to register to submit restrictions?**
