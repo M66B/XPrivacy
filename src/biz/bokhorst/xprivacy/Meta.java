@@ -121,16 +121,15 @@ public class Meta {
 		mListHook.add(new Hook("location", "requestSingleUpdate", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 9, null, null));
 		mListHook.add(new Hook("location", "sendExtraCommand", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, null, null));
 
-		mListHook.add(new Hook("location", "disableLocationUpdates", "CONTROL_LOCATION_UPDATES", 10, null, null));
 		mListHook.add(new Hook("location", "enableLocationUpdates", "CONTROL_LOCATION_UPDATES", 10, null, null));
 		mListHook.add(new Hook("location", "getCellLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 10, null, null));
 		mListHook.add(new Hook("location", "getNeighboringCellInfo", "ACCESS_COARSE_UPDATES", 10, null, null));
 		mListHook.add(new Hook("location", "getAllCellInfo", "ACCESS_COARSE_UPDATES", 17, null, null));
 		mListHook.add(new Hook("location", "getScanResults", "ACCESS_WIFI_STATE", 10, null, null).dangerous());
 		mListHook.add(new Hook("location", "listen", "ACCESS_COARSE_LOCATION", 10, null, null));
-		mListHook.add(new Hook("location", "GMS.addGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
-		mListHook.add(new Hook("location", "GMS.getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
-		mListHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 0, null, null));
+		mListHook.add(new Hook("location", "GMS.addGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
+		mListHook.add(new Hook("location", "GMS.getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
+		mListHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
 
 		mListHook.add(new Hook("media", "startRecording", "RECORD_AUDIO", 10, null, null).doNotify());
 		mListHook.add(new Hook("media", "setPreviewCallback", "CAMERA", 10, null, null).doNotify());

@@ -28,6 +28,12 @@ public class XTelephonyManager extends XHook {
 		mClassName = className;
 	}
 
+	private XTelephonyManager(Methods method, String restrictionName, String className, int sdk) {
+		super(restrictionName, method.name(), null, sdk);
+		mMethod = method;
+		mClassName = className;
+	}
+
 	public String getClassName() {
 		return mClassName;
 	}
@@ -85,7 +91,7 @@ public class XTelephonyManager extends XHook {
 		List<XHook> listHook = new ArrayList<XHook>();
 
 		listHook.add(new XTelephonyManager(Methods.disableLocationUpdates, PrivacyManager.cLocation, className));
-		listHook.add(new XTelephonyManager(Methods.enableLocationUpdates, PrivacyManager.cLocation, className));
+		listHook.add(new XTelephonyManager(Methods.enableLocationUpdates, null, className, 10));
 		listHook.add(new XTelephonyManager(Methods.getAllCellInfo, PrivacyManager.cLocation, className));
 		listHook.add(new XTelephonyManager(Methods.getCellLocation, PrivacyManager.cLocation, className));
 
@@ -153,8 +159,12 @@ public class XTelephonyManager extends XHook {
 							// and stock source code
 						}
 			}
-		} else if (mMethod == Methods.disableLocationUpdates || mMethod == Methods.enableLocationUpdates)
+		} else if (mMethod == Methods.enableLocationUpdates) {
 			if (isRestricted(param))
+				param.setResult(null);
+
+		} else if (mMethod == Methods.disableLocationUpdates)
+			if (isRestricted(param, PrivacyManager.cLocation, "enableLocationUpdates"))
 				param.setResult(null);
 	}
 
