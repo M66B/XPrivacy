@@ -11,7 +11,7 @@ Changelog
 
 * Fixed dark theme usage list ([issue](/../../issues/1331))
 * Even easier multiple select, thanks @[paour](https://github.com/paour) ([issue](/../../issues/1318))
-* Added documentation for identification, internet, ipc ([issue](/../../issues/838))
+* Added documentation for identification, internet, ipc, location ([issue](/../../issues/838))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
