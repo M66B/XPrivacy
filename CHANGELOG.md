@@ -9,7 +9,10 @@ Changelog
 
 **Next release**
 
-Added documentation for messages ([issue](/../../issues/838))
+* Fixed cycling through restriction states, thanks @[jpeg729](https://github.com/jpeg729)
+* Added documentation for messages ([issue](/../../issues/838))
+* Updated German translation
+* Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
