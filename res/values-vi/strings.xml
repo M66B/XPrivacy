@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Chưa cài Xposed framework phiên bản %d+</string>
     <string name="app_notenabled">XPrivacy chưa được kích hoạt trong Xposed installer</string>
-    <string name="app_wrongandroid">Chỉ hỗ trợ Android 4.0+</string>
+    <string name="app_wrongandroid">Chỉ hỗ trợ Android 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy phiên bản: %s (%d)</string>
     <string name="app_description">Ứng dụng quản lý thông tin riêng tư tối đa</string>

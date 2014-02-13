@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework version %d+ är inte installerad</string>
     <string name="app_notenabled">XPrivacy är inte aktiverad i Xposed Installer</string>
-    <string name="app_wrongandroid">Endast för Android 4.0+</string>
+    <string name="app_wrongandroid">Endast för Android 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy version: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>

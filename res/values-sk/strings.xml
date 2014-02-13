@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
     <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed Inštalátori</string>
-    <string name="app_wrongandroid">Len pre Android 4.0+</string>
+    <string name="app_wrongandroid">Len pre Android 4.0.3+</string>
     <string name="app_incompatible" formatted="false">Aplikácia XPrivacy nie je kompatibilná s %s</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
     <string name="app_description">Správca súkromia</string>

@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Není nainstalován Xposed framework verze %d+</string>
     <string name="app_notenabled">Není povolen modul XPrivacy v Xposed installeru</string>
-    <string name="app_wrongandroid">Pouze pro Android verze 4.0+</string>
+    <string name="app_wrongandroid">Pouze pro Android verze 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">Verze XPrivacy: %s (%d)</string>
     <string name="app_description">Ultimátní správce soukromí</string>

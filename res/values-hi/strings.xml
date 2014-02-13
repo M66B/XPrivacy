@@ -2,7 +2,7 @@
 
     <string name="app_notxposed" formatted="false">Xposed framework का वर्शन %d+ इन्सटाल्ड नहीं हैं</string>
     <string name="app_notenabled">Xposed इनस्टॉलर मैं XPrivacy इनेबल नहीं हैं</string>
-    <string name="app_wrongandroid">सिर्फ Android वर्शन 4.0+ के लिये</string>
+    <string name="app_wrongandroid">सिर्फ Android वर्शन 4.0.3+ के लिये</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy वर्शन: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
