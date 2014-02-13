@@ -17,6 +17,7 @@ Changelog
 * Fixed Gmail contact restricting ([issue](/../../issues/1336))
 * Added documentation for messages and storage ([issue](/../../issues/838))
 * Made *Browser/Downloads* dangerous
+* Updated Dutch translation
 * Updated French translation
 * Updated German translation
 * Updated Lithuanian translation
