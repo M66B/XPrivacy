@@ -955,23 +955,12 @@ public class ActivityApp extends ActivityBase {
 						@Override
 						public void onClick(View view) {
 							// Set change
-							boolean restrict;
-							boolean ask;
-							if (rstate.restricted) {
-								restrict = false;
-								ask = true;
-							} else if (!rstate.asked) {
-								restrict = false;
-								ask = false;
-							} else {
-								restrict = true;
-								ask = false;
-							}
+							RState next = rstate.next();
 
 							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
-							if (!restrict)
+							if (!next.restricted)
 								PrivacyManager.deleteRestrictions(mAppInfo.getUid(), restrictionName);
-							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, null, restrict, !ask);
+							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, null, next.restricted, next.asked);
 							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
 							// Refresh display
@@ -1170,21 +1159,10 @@ public class ActivityApp extends ActivityBase {
 						@Override
 						public void onClick(View view) {
 							// Set change
-							boolean restrict;
-							boolean ask;
-							if (rstate.restricted) {
-								restrict = false;
-								ask = true;
-							} else if (!rstate.asked) {
-								restrict = false;
-								ask = false;
-							} else {
-								restrict = true;
-								ask = false;
-							}
+							RState next = rstate.next();
 
-							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, md.getName(), restrict,
-									!ask);
+							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, md.getName(), next.restricted,
+									next.asked);
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent
