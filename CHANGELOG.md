@@ -9,13 +9,15 @@ Changelog
 
 **Next release**
 
+Added documentation for messages ([issue](/../../issues/838))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.42 BETA**
 
 * Fixed dark theme usage list ([issue](/../../issues/1331))
 * Even easier multiple select, thanks @[paour](https://github.com/paour) ([issue](/../../issues/1318))
-* Added documentation for identification, internet, ipc, location, media ([issue](/../../issues/838))
+* Added documentation for identification, internet, ipc, location and media ([issue](/../../issues/838))
 * Show required permissions in information dialog
 
 **Version 1.99.41 BETA**
