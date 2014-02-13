@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.conn.ConnectTimeoutException;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -95,6 +97,8 @@ public class Util {
 		if (ex instanceof OutOfMemoryError)
 			priority = Log.WARN;
 		else if (ex instanceof ActivityShare.AbortException)
+			priority = Log.WARN;
+		else if (ex instanceof ConnectTimeoutException)
 			priority = Log.WARN;
 		else if (ex instanceof IOException)
 			priority = Log.WARN;

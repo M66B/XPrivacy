@@ -90,8 +90,8 @@ public class XTelephonyManager extends XHook {
 
 		List<XHook> listHook = new ArrayList<XHook>();
 
-		listHook.add(new XTelephonyManager(Methods.disableLocationUpdates, PrivacyManager.cLocation, className));
-		listHook.add(new XTelephonyManager(Methods.enableLocationUpdates, null, className, 10));
+		listHook.add(new XTelephonyManager(Methods.disableLocationUpdates, null, className, 10));
+		listHook.add(new XTelephonyManager(Methods.enableLocationUpdates, PrivacyManager.cLocation, className));
 		listHook.add(new XTelephonyManager(Methods.getAllCellInfo, PrivacyManager.cLocation, className));
 		listHook.add(new XTelephonyManager(Methods.getCellLocation, PrivacyManager.cLocation, className));
 

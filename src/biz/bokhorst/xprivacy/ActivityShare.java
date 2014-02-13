@@ -1793,6 +1793,7 @@ public class ActivityShare extends ActivityBase {
 			// 'errno' => 304, 'error' => 'Too many packages for application'
 			// 'errno' => 305, 'error' => 'No restrictions available'
 			// 'errno' => 306, 'error' => 'Error retrieving restrictions'
+			// 'errno' => 307, 'error' => 'There is a maximum of five devices per license'
 		}
 	}
 }

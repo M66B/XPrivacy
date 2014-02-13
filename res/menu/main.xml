@@ -3,12 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools" >
 
     <item
-        android:id="@+id/menu_help"
-        android:icon="?attr/icon_help"
-        android:showAsAction="always"
-        android:title="@string/menu_help"
-        tools:ignore="AlwaysShowAction"/>
-    <item
         android:id="@+id/menu_select_all"
         android:icon="@drawable/icon_select_all"
         android:showAsAction="always"
@@ -23,6 +17,12 @@
         android:icon="@drawable/icon_filter"
         android:showAsAction="always"
         android:title="@string/menu_filter"/>
+    <item
+        android:id="@+id/menu_help"
+        android:icon="?attr/icon_help"
+        android:showAsAction="always"
+        android:title="@string/menu_help"
+        tools:ignore="AlwaysShowAction"/>
     <item
         android:id="@+id/menu_tutorial"
         android:title="@string/menu_tutorial"/>
