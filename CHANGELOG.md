@@ -7,12 +7,6 @@ Changelog
 * BETA: new or updated features with a lower risk for bugs
 * STABLE: all known bugs fixed; low risk for bugs
 
-Test and beta releases will have experimental functions enabled by default.
-
-**Experimental functions**
-
-* None at this time
-
 **Next release**
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

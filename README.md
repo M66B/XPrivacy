@@ -279,7 +279,6 @@ Limitations
 * You cannot restrict *system* fro XPrivacy because it is needed to get an application list.
 * You cannot restrict *view* for XPrivacy because it is needed to open links to the crowdsourced restrictions.
 * You cannot restrict *Configuration.MCC/MNC* on demand.
-* Allowing contacts mostly work, but there are a few corner cases where is doesn't ([issue](https://github.com/M66B/XPrivacy/issues/1155)).
 * Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?).
 
 You can still restrict the XPrivacy app's access to accounts, contacts, and other things.
@@ -666,6 +665,11 @@ No, the pro license can be used independently.
 **(36) Is PayPal/Bitcoin the only way to donate?**
 
 Yes, it is not feasible to add other donation methods at this moment.
+
+<a name="FAQ37"></a>
+**(37)What are the experimental functions?**
+
+None at this time.
 
 <a name="FAQ46"></a>
 **(46) Why do I need to register to submit restrictions?**
