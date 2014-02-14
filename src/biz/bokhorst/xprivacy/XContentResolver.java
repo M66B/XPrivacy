@@ -75,7 +75,11 @@ public class XContentResolver extends XHook {
 	@Override
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.query || mMethod == Methods.cquery)
-			handleUriBefore(param);
+			try {
+				handleUriBefore(param);
+			} catch (Throwable ex) {
+				Util.bug(this, ex);
+			}
 	}
 
 	@Override
@@ -93,7 +97,11 @@ public class XContentResolver extends XHook {
 				param.setResult(new SyncAdapterType[0]);
 
 		} else if (mMethod == Methods.query || mMethod == Methods.cquery) {
-			handleUriAfter(param);
+			try {
+				handleUriAfter(param);
+			} catch (Throwable ex) {
+				Util.bug(this, ex);
+			}
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
