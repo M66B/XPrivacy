@@ -132,6 +132,16 @@
     <string name="messages_android_provider_Telephony_SMS_RECEIVED" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/provider/Telephony.Sms.Intents.html#SMS_RECEIVED_ACTION">Google documentation</a>]]></string>
     <string name="messages_android_provider_Telephony_WAP_PUSH_RECEIVED" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/provider/Telephony.Sms.Intents.html#WAP_PUSH_RECEIVED_ACTION">Google documentation</a>]]></string>
     <!-- network -->
+    <string name="network_getAddress" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#getAddress()">Google documentation</a><br /><a href="http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#getAddress()">Google documentation</a>]]></string>
+    <string name="network_getBondedDevices" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#getBondedDevices()">Google documentation</a>]]></string>
+    <string name="network_getHardwareAddress" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/java/net/NetworkInterface.html#getHardwareAddress()">Google documentation</a>]]></string>
+    <string name="network_getInetAddresses" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/java/net/NetworkInterface.html#getInetAddresses()">Google documentation</a>]]></string>
+    <string name="network_getInterfaceAddresses" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/java/net/NetworkInterface.html#getInterfaceAddresses()">Google documentation</a>]]></string>
+    <string name="network_getConfiguredNetworks" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/net/wifi/WifiManager.html#getConfiguredNetworks()">Google documentation</a>]]></string>
+    <string name="network_getConnectionInfo" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/net/wifi/WifiManager.html#getConnectionInfo()">Google documentation</a>]]></string>
+    <string name="network_getDhcpInfo" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/net/wifi/WifiManager.html#getDhcpInfo()">Google documentation</a>]]></string>
+    <string name="network_getScanResults" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/net/wifi/WifiManager.html#getScanResults()">Google documentation</a>]]></string>
+    <string name="network_getWifiApConfiguration" translatable="false"><![CDATA[Hidden function to get <a href="http://developer.android.com/reference/android/net/wifi/WifiConfiguration.html">WifiConfiguration</a>]]></string>
     <!-- nfc -->
     <!-- notifications -->
     <!-- overlay -->

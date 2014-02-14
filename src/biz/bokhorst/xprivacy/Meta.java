@@ -152,9 +152,11 @@ public class Meta {
 
 		mListHook.add(new Hook("network", "getAddress", "android.permission.BLUETOOTH", 5, null, null));
 		mListHook.add(new Hook("network", "getBondedDevices", "android.permission.BLUETOOTH", 5, null, null));
+
 		mListHook.add(new Hook("network", "getHardwareAddress", "ACCESS_NETWORK_STATE", 9, null, null));
 		mListHook.add(new Hook("network", "getInetAddresses", "ACCESS_NETWORK_STATE", 9, null, null));
 		mListHook.add(new Hook("network", "getInterfaceAddresses", "ACCESS_NETWORK_STATE", 9, null, null));
+
 		mListHook.add(new Hook("network", "getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, null, null));
 		mListHook.add(new Hook("network", "getConnectionInfo", "ACCESS_WIFI_STATE", 10, null, null));
 		mListHook.add(new Hook("network", "getDhcpInfo", "ACCESS_WIFI_STATE", 10, null, null));
