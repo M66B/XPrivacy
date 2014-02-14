@@ -639,7 +639,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	private void optionReportIssue() {
 		// Report issue
-		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy/issues"));
+		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy/issues?mobile=0"));
 	}
 
 	private void optionExport() {
