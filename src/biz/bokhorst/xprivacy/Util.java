@@ -433,8 +433,10 @@ public class Util {
 		return sb.toString();
 	}
 
-	public static String md5(String string) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		byte[] bytes = MessageDigest.getInstance("MD5").digest(string.getBytes("UTF-8"));
+	public static String md5(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		// MD5
+		String salt = PrivacyManager.getSetting(0, PrivacyManager.cSettingSalt, "", true);
+		byte[] bytes = MessageDigest.getInstance("MD5").digest((text + salt).getBytes("UTF-8"));
 		StringBuilder sb = new StringBuilder();
 		for (byte b : bytes)
 			sb.append(String.format("%02X", b));
